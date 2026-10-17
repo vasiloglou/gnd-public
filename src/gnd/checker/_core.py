@@ -270,6 +270,7 @@ from gnd.model import (
     iter_derivation_clauses,  # historical compatibility export
 )
 from gnd.model_index import ModelIndex
+from gnd.model_index import scoped as _index_scoped
 from gnd.population import Population
 from gnd.proof_bridge import adapt_phase1_slice, phase1_refusal_reason
 from gnd.proof_kernel import MAX_SLICE_CONSTRAINTS, SliceInput, SliceVerdict, phase1_decide
@@ -1774,6 +1775,7 @@ def _partial_constraint_report(
     }) if changed else report
 
 
+@_index_scoped
 def _check_dispatch(model: Model, population: Population) -> CheckReport:
     """Preserve exact-term unavailability instead of consuming an empty relation."""
     report = _partial_constraint_report(

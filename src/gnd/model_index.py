@@ -1,14 +1,25 @@
 """Detached model query snapshots with a bounded, content-keyed cache.
 
 The cache marker is internal. It does not replace any public model identity.
+
+Within one public call, ``index_scope`` reuses one index per ``Model`` object, so a hit
+costs no dump, walk or hash. Invalidation rule (its one home): a scope lives for exactly
+one public call and drops every entry on exit, so the next call recomputes the canonical
+key and the content-keyed cache decides; a mutated model therefore never reuses a stale
+index across calls, including an operations-only mutation the population marker does not
+see. Inside a scope a ``Model`` object is assumed unchanged, because GND does not mutate
+model content while serving a call. A nested scope joins the outer one.
 """
 from __future__ import annotations
 
 import hashlib
 from collections import OrderedDict
 from collections.abc import Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
 from copy import deepcopy
 from dataclasses import dataclass, field
+from functools import wraps
 from threading import RLock
 from typing import Any, Literal
 
@@ -20,6 +31,33 @@ from gnd.model_queries import primitive_for
 _CACHE: OrderedDict[str, ModelIndex] = OrderedDict()
 _LOCK = RLock()
 _LIMIT = 32
+#: id(model) -> (model, index) for the public call in progress; None outside any call.
+#: Each entry keeps its model alive, so an id cannot be reused within the scope.
+_SCOPE: ContextVar[dict[int, tuple[Model, ModelIndex]] | None] = ContextVar(
+    'gnd_model_index_scope', default=None)
+_SCOPE_LIMIT = 8
+
+
+def scoped(function):
+    """Run ``function`` inside an index scope: the decorator public entry points use."""
+    @wraps(function)
+    def run_scoped(*args, **kwargs):
+        with index_scope():
+            return function(*args, **kwargs)
+    return run_scoped
+
+
+@contextmanager
+def index_scope() -> Iterator[None]:
+    """Reuse one ModelIndex per Model object for the duration of one public call."""
+    if _SCOPE.get() is not None:
+        yield
+        return
+    token = _SCOPE.set({})
+    try:
+        yield
+    finally:
+        _SCOPE.reset(token)
 
 
 def cache_info() -> dict[str, int]:
@@ -53,6 +91,20 @@ class ModelIndex:
     def for_model(cls, model: Model) -> ModelIndex:
         if not isinstance(model, Model):
             raise TypeError('ModelIndex requires a Model')
+        scope = _SCOPE.get()
+        if scope is not None:
+            entry = scope.get(id(model))
+            if entry is not None and entry[0] is model:
+                return entry[1]
+        index = cls._for_model_uncached(model)
+        if scope is not None:
+            scope[id(model)] = (model, index)
+            while len(scope) > _SCOPE_LIMIT:
+                del scope[next(iter(scope))]
+        return index
+
+    @classmethod
+    def _for_model_uncached(cls, model: Model) -> ModelIndex:
         document = model.model_dump(exclude={'warnings'}, warnings=False)
         try:
             pending = [document]

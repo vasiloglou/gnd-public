@@ -92,6 +92,7 @@ from gnd.model import (
     load_model,  # noqa: F401 -- historical compatibility binding
     structured_derivation_ids,
 )
+from gnd.model_index import scoped as _index_scoped
 from gnd.population import (
     Population,
     PopulationLoadError,  # noqa: F401 -- historical compatibility binding
@@ -469,6 +470,7 @@ def _run_validate(
 
 
 
+@_index_scoped
 def _run_transition(
     model_input: str | os.PathLike[str] | Model,
     pre_input: str | os.PathLike[str] | Population,

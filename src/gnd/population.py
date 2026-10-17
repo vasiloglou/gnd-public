@@ -55,6 +55,7 @@ from gnd.errors import (
     PopulationValidationError,
     ValidationIssue,
 )
+from gnd.model_index import scoped as _index_scoped
 from gnd.popvalidate import population_validate
 from gnd.values import MODEL_DIGEST_EXCLUDED_FIELDS  # noqa: F401 -- compatibility export
 from gnd.values import (
@@ -495,6 +496,7 @@ def _combine_validated_populations(
     return result
 
 
+@_index_scoped
 def load_population_bytes(
     data: bytes,
     *,

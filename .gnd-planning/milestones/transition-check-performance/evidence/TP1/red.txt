@@ -1,0 +1,8 @@
+E       AttributeError: module 'gnd.model_index' has no attribute 'index_scope'
+tests/test_tp1_index_scope.py:145: AttributeError
+FAILED tests/test_tp1_index_scope.py::test_t1_reporter_and_course_bounds - as...
+FAILED tests/test_tp1_index_scope.py::test_t3_identity_keyed_mutant_is_caught
+FAILED tests/test_tp1_index_scope.py::test_t4_hits_cost_no_dump_and_the_scope_is_capped
+FAILED tests/test_tp1_index_scope.py::test_t5_type_error_first_inside_a_scope
+FAILED tests/test_tp1_index_scope.py::test_t6_no_leaks_and_nested_scopes_join
+5 failed, 3 passed, 1 deselected in 26.06s

@@ -1,0 +1,6 @@
+KILLED   checking_service._run_check: 1 failed in 0.20s
+KILLED   api._run_transition: 1 failed in 0.25s
+KILLED   batch.check_population_directory: 1 failed in 0.20s
+KILLED   population.load_population_bytes: 1 failed in 0.14s
+KILLED   checker._core._check_dispatch: 1 failed in 0.15s
+KILLED   D3: uncacheable snapshots not stored: 1 failed, 15 deselected in 0.11s

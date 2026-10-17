@@ -56,14 +56,14 @@
         ]
       },
       "after": {
-        "raw_sha256": "66e01ebc05d8195cad46391bd1c897ed52ca604698d00bb42f47d4b403b7c95f",
-        "algorithm_sha256": "b74bf1b6005c34ffee01cd2fe2a7d513d7cc6f0d39a9be66677d32311c868e8e",
+        "raw_sha256": "12b539188ada0b3923f83d4ffadc7e001c5919e3821c1f29d3cc2c28e1c81630",
+        "algorithm_sha256": "56f9a144da4a711d09188af1587fb426e52ff666115f0aef5ca16b58fe19a1cb",
         "imports": [
           "build_admission",
           "wire_verdicts"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged."
     },
     {
       "kind": "RF5",
@@ -145,6 +145,51 @@
         "imports": []
       },
       "reason": "CS1 compiled-subset snapshot scopes retain assurance unavailable and do not alter the frozen historical phase-3 proof denominator."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "check_legacy",
+      "home": "gnd.checker._core",
+      "before": "5d79cae37e2eba75bfa449a62a1270056a878f1d98ebce04a234b932d31c8238",
+      "after": "351bc07424c30c90265e4b44287ed92b68e1b6e22f3e3ae583b2b8c66b93c42a",
+      "reason": "Approved transition-check-performance TP2: reads fact types through the non-copying internal ModelIndex accessor; results unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "_record_aggregate_guarded_outcomes",
+      "home": "gnd.checker._core",
+      "before": "98c3d99bf4938595399fd5454253157e7a02d81696553713756f1f8083aae720",
+      "after": "bbd4f0c3b9f099e53e5ae5361bfa11feebe6b161dc8e6ce6540323df08c8d628",
+      "reason": "Approved transition-check-performance TP2: reads fact types through the non-copying internal ModelIndex accessor; results unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "_partial_constraint_report",
+      "home": "gnd.checker._core",
+      "before": "7e597ada924135a43b834de8101b9338f2fd7b9b6f61519c4f20da0ff3b7d51e",
+      "after": "9e71e3c073804a0ef888b3e62e94c367168089b2a7cc576edf2c57bdab59ce2d",
+      "reason": "Approved transition-check-performance TP2: reads fact types through the non-copying internal ModelIndex accessor; results unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "_anchored_verdicts",
+      "home": "gnd.checker._core",
+      "before": "c167aa37e600a6c554c28753abad0898c50ad52cf82e9b8dd13889c2b5219bca",
+      "after": "4aeb9a35ac1b2b1139b563b5d45d080ccfe2fd2a525b64385bb8a9e96e3bccad",
+      "reason": "Approved transition-check-performance TP2: reads fact types through the non-copying internal ModelIndex accessor; results unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "_check_dispatch",
+      "home": "gnd.checker._core",
+      "before": "ab86d401e35dd1601486670ac7d1f8facc9751e6d75e9441b1dd81f52d34e4d5",
+      "after": "3e20b7995cf4bf68ec7a77ee9b8d9444160d69711768e0a4b8c75b20fa889f3a",
+      "reason": "Approved transition-check-performance TP1 per-call ModelIndex scope decorator and TP2 non-copying fact-type reads; results unchanged."
     }
   ]
 }

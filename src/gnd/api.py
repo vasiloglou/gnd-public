@@ -169,7 +169,8 @@ def check_with_receipt(
         raise TypeError("check_with_receipt requires loaded Model and Population objects")
     with index_scope(), calculation_scope(model, population):
         anchored = any(c.get("type") == "anchored"
-                       for ft in model.fact_types for c in ft.get("constraints") or [])
+                       for ft in ModelIndex.for_model(model).iter_fact_types_shared()
+                       for c in ft.get("constraints") or [])
         # The direct route pre-runs the transition's own pre-check once and feeds that
         # report to the api.check builder. Anything that cannot yield a reusable receipt
         # (an anchored model, an unvalidated population, or a pre-run that raises) takes

@@ -24,14 +24,15 @@
         ]
       },
       "after": {
-        "raw_sha256": "9227524efe0046579bbb706c35e5d1cd20719ff0625121371b678dc9b1b5f9fe",
-        "algorithm_sha256": "49b7fd2a06e94bb8348dd2ac3d64119aab1ea99a1518e706bef2fb64e0082e13",
+        "raw_sha256": "b0d83c5f9cad626bb3762f13f738f0f33419b52deece9f93d64c59a2365fa11f",
+        "algorithm_sha256": "19e8413c80180da753cf019f8b038ecbe4b52c896b87c1f1c930b9f57e446baf",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
           "MAX_DOCUMENT_BYTES",
           "bind_anchors",
           "bind_population",
+          "calculation_scope",
           "compose",
           "read_anchor_sidecar",
           "read_regular_path",
@@ -39,7 +40,7 @@
           "validate_anchor_sidecar"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates)."
     },
     {
       "kind": "RF4",
@@ -125,8 +126,8 @@
       "name": "check",
       "home": "gnd.checker._core",
       "before": "e2d73e23de3da792f005b89a03e385f041715aeead37906475badf24023d6630",
-      "after": "6a8da7606f0924c83fdac4e1563f95ee381b91361f8164329f32a5e0681b1978",
-      "reason": "Approved CS1 explicit checker opt-in composition; ordinary snapshots remain unchanged."
+      "after": "3164f5610d8e2f4f8e73339b3bd70121ff2aee515accccbe4018705b367c08f6",
+      "reason": "Approved CS1 explicit checker opt-in composition; ordinary snapshots remain unchanged. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates)."
     },
     {
       "kind": "RF4",

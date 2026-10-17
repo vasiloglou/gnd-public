@@ -104,6 +104,19 @@
       "reason": "Retained failure meaning at approved RF6/7/8/9 physical or restriction successor",
       "after_old": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n",
       "after_new": "def reconstruct(store, contract, *, allow_terminal=False, policy_sha256=None):\n    raise RuntimeError(\"rf1-mutant\")\n"
+    },
+    {
+      "id": "M-HELP-validation-issues-gnd-population-schema-issues",
+      "before_file": "src/gnd/population.py",
+      "after_file": "src/gnd/population.py",
+      "old": "def _schema_issues(doc: Any) -> list[ValidationIssue]:\n    validator = Draft202012Validator(_load_population_schema())\n",
+      "new": "def _schema_issues(doc: Any) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n    validator = Draft202012Validator(_load_population_schema())\n",
+      "expect_red": [
+        "tests/test_rf1_helper_pins.py::test_helper[validation_issues|gnd.population:_schema_issues]"
+      ],
+      "reason": "Retained failure meaning after the analytics-m3-repairs phase-8 frozen population schema preparation (65b6de0) changed the function's first statement.",
+      "after_old": "def _schema_issues(doc: Any) -> list[ValidationIssue]:\n    schema = _prepared_population_schema(_load_population_schema())\n",
+      "after_new": "def _schema_issues(doc: Any) -> list[ValidationIssue]:\n    raise RuntimeError(\"rf1-mutant\")\n    schema = _prepared_population_schema(_load_population_schema())\n"
     }
   ]
 }

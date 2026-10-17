@@ -169,6 +169,15 @@ class ModelIndex:
     def iter_fact_types(self) -> Iterator[dict[str, Any]]:
         return iter(self.fact_types)
 
+    def iter_fact_types_shared(self) -> Iterator[dict[str, Any]]:
+        """Internal readers only: the index's own fact-type rows, not copied.
+
+        Callers must never mutate a row or anything inside it. The index is shared across
+        calls through the content-keyed cache, so a write would corrupt every later caller.
+        Public callers use ``iter_fact_types`` / ``fact_types``, which return detached copies.
+        """
+        return iter(self._document.get('fact_types') or [])
+
     def role_object_types(self) -> dict[str, dict[str, str]]:
         return {
             str(ft.get('id')): {

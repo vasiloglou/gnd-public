@@ -26,9 +26,9 @@ TP1 is complete under the owner-approved spec ([spec](notes/phase-TP1-spec.md), 
 
 **Results on the reporter replay:**
 
-- : 540 → 26, exactly as predicted.
-- : 457, unchanged.
-- : 25, unchanged.
+- `model_index_key_paths`: 540 → 26, exactly as predicted.
+- `model_dumps_other`: 457, unchanged.
+- `checker_runs`: 25, unchanged.
 - Every TP0 digest is unchanged.
 
 ## Gates

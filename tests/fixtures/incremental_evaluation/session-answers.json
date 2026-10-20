@@ -1,0 +1,50 @@
+{
+  "S1": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S2": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "zero exclusive unchanged evaluator/body work"
+  },
+  "S3": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "zero exclusive unchanged evaluator/body work"
+  },
+  "S4": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S5": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S6": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S7": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S8": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S9": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S10": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S11": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  },
+  "S12": {
+    "semantic": "full uncached payload/exit/branches and current typed origins",
+    "acceptance": "original refusal/fresh fallback; no stale result"
+  }
+}

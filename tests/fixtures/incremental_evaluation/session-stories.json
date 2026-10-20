@@ -1,0 +1,50 @@
+[
+  {
+    "id": "S1",
+    "story": "facade opt-in signatures and default parity"
+  },
+  {
+    "id": "S2",
+    "story": "no-op actual evaluator/body zero"
+  },
+  {
+    "id": "S3",
+    "story": "independent inline scope keeps unrelated work zero"
+  },
+  {
+    "id": "S4",
+    "story": "ordered witnesses and live projection origins"
+  },
+  {
+    "id": "S5",
+    "story": "model/operations/options/marker/refusal invalidation"
+  },
+  {
+    "id": "S6",
+    "story": "private receipt/public report and consumed copy integrity"
+  },
+  {
+    "id": "S7",
+    "story": "computed and declared post with intermediate admission"
+  },
+  {
+    "id": "S8",
+    "story": "reference/anchor/clock unsupported modes fresh"
+  },
+  {
+    "id": "S9",
+    "story": "caps/rollback/cancellation/reset/close/busy and private payload"
+  },
+  {
+    "id": "S10",
+    "story": "same13-call reporter full trace and strict body reduction"
+  },
+  {
+    "id": "S11",
+    "story": "bounded trusted record keys, foreign/cyclic/deep refusal"
+  },
+  {
+    "id": "S12",
+    "story": "mint exception duplicate work investigation"
+  }
+]

@@ -1,0 +1,174 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_________________ test_explicit_facade_and_noop_evaluator_zero _________________
+
+    def test_explicit_facade_and_noop_evaluator_zero():
+        m, p = next(tool.localized_inputs())
+>       owner = session(m)
+                ^^^^^^^^^^
+
+tests/test_incremental_sessions.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = Model(version=1, model_id='urn:gnd-fixture:incremental@1', source={'kind': 'text-conversation', 'confidence': 'standar....'}}]}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+kwargs = {}
+
+    def session(model, **kwargs):
+>       return api.EvaluationSession(model, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.api' has no attribute 'EvaluationSession'
+
+tests/test_incremental_sessions.py:11: AttributeError
+______________ test_localized_full_payload_and_result_detachment _______________
+
+    def test_localized_full_payload_and_result_detachment():
+        owner = None
+        for m, p in tool.localized_inputs():
+            if owner is None:
+>               owner = session(m)
+                        ^^^^^^^^^^
+
+tests/test_incremental_sessions.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = Model(version=1, model_id='urn:gnd-fixture:incremental@1', source={'kind': 'text-conversation', 'confidence': 'standar....'}}]}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+kwargs = {}
+
+    def session(model, **kwargs):
+>       return api.EvaluationSession(model, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.api' has no attribute 'EvaluationSession'
+
+tests/test_incremental_sessions.py:11: AttributeError
+__________________ test_session_bounds_preserve_full_fallback __________________
+
+    def test_session_bounds_preserve_full_fallback():
+        m, p = next(tool.localized_inputs())
+>       owner = session(m, max_bytes=1)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_incremental_sessions.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = Model(version=1, model_id='urn:gnd-fixture:incremental@1', source={'kind': 'text-conversation', 'confidence': 'standar....'}}]}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+kwargs = {'max_bytes': 1}
+
+    def session(model, **kwargs):
+>       return api.EvaluationSession(model, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.api' has no attribute 'EvaluationSession'
+
+tests/test_incremental_sessions.py:11: AttributeError
+_________ test_receipt_public_report_mutation_cannot_change_transition _________
+
+    def test_receipt_public_report_mutation_cannot_change_transition():
+        from gnd.model import load_model
+        from gnd.population import load_population
+        root = tool.previous.COURSE
+        m = load_model(root / 'model.orm.json')
+        p = load_population(root / 'state.pop.json', model=m)
+        steps = tool.previous._course_steps('attempt-3.steps.json')
+        _, receipt = api.check_with_receipt(m, p)
+        assert receipt.reusable
+        expected = api.transition(m, p, steps, pre_receipt=receipt)
+        assert receipt.report.verdicts
+        receipt.report.verdicts[0].message = 'Public receipt mutation probe'
+>       assert api.transition(m, p, steps, pre_receipt=receipt) == expected
+E       AssertionError: assert {'schema_vers...ccepted', ...} == {'schema_vers...ccepted', ...}
+E         
+E         Omitting 21 identical items, use -vv to show
+E         Differing items:
+E         {'transition': {'evaluated': True, 'model_digest': 'sha256:03ed0cb89b55e9a119cbfbc98ee76d8ca9074fb5547d54a06bd71f0a7be...perations_digest': 'sha256:da9f1b78fa0cb0b15929d84dcc416e47e10b6a6610e9bd8a32f77cf196c22bbf', 'pre_digest': None, ...}} != {'transition': {'evaluated': True, 'model_digest': 'sha256:03ed0cb89b55e9a119cbfbc98ee76d8ca9074fb5547d54a06bd71f0a7be...perations_digest': 'sha256:da9f1b78fa0cb0b15929d84dcc416e47e10b6a6610e9bd8a32f77cf196c22bbf', 'pre_digest': None, ...}}
+E         Use -v to get more diff
+
+tests/test_incremental_sessions.py:70: AssertionError
+__________ test_session_declared_and_computed_walks_preserve_payloads __________
+
+    def test_session_declared_and_computed_walks_preserve_payloads():
+        from gnd.model import load_model
+        from gnd.population import load_population
+        root = tool.previous.COURSE
+        m = load_model(root / 'model.orm.json')
+        p = load_population(root / 'state.pop.json', model=m)
+>       owner = session(m)
+                ^^^^^^^^^^
+
+tests/test_incremental_sessions.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = Model(version=2, model_id='urn:gnd-example:course', source={'kind': 'text-conversation', 'confidence': 'standard', 'mo...ser_quote': '{Student} is admitted'}}], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+kwargs = {}
+
+    def session(model, **kwargs):
+>       return api.EvaluationSession(model, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.api' has no attribute 'EvaluationSession'
+
+tests/test_incremental_sessions.py:11: AttributeError
+_______________ test_mutation_error_does_not_advance_generation ________________
+
+    def test_mutation_error_does_not_advance_generation():
+        m, p = next(tool.localized_inputs())
+>       owner = session(m)
+                ^^^^^^^^^^
+
+tests/test_incremental_sessions.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = Model(version=1, model_id='urn:gnd-fixture:incremental@1', source={'kind': 'text-conversation', 'confidence': 'standar....'}}]}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+kwargs = {}
+
+    def session(model, **kwargs):
+>       return api.EvaluationSession(model, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.api' has no attribute 'EvaluationSession'
+
+tests/test_incremental_sessions.py:11: AttributeError
+____________ test_trusted_semantic_records_have_bounded_typed_keys _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1081c3010>
+
+    def test_trusted_semantic_records_have_bounded_typed_keys(monkeypatch):
+        from gnd import extension_preparation as preparation
+        from gnd.semantic_ir import Scalar
+        integer = Scalar('number', '', 1, 1, True, 'number')
+        boolean = Scalar('boolean', 'true', 0, 1, False, 'boolean')
+>       assert preparation.fingerprint(integer) is not None
+E       AssertionError: assert None is not None
+E        +  where None = <function fingerprint at 0x107cbe480>(Scalar(kind='number', token='', num=1, den=1, ordered=True, identity_kind='number'))
+E        +    where <function fingerprint at 0x107cbe480> = <module 'gnd.extension_preparation' from '/Users/nikolaosvasiloglou/github-repos/gnd-public/src/gnd/extension_preparation.py'>.fingerprint
+
+tests/test_incremental_sessions.py:101: AssertionError
+________ test_independent_inline_constraint_executes_no_right_evaluator ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108215310>
+
+    def test_independent_inline_constraint_executes_no_right_evaluator(monkeypatch):
+        from gnd import correspondence
+        from gnd.population import load_population
+        m, p = next(tool.localized_inputs())
+>       current = session(m)
+                  ^^^^^^^^^^
+
+tests/test_incremental_sessions.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = Model(version=1, model_id='urn:gnd-fixture:incremental@1', source={'kind': 'text-conversation', 'confidence': 'standar....'}}]}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+kwargs = {}
+
+    def session(model, **kwargs):
+>       return api.EvaluationSession(model, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'gnd.api' has no attribute 'EvaluationSession'
+
+tests/test_incremental_sessions.py:11: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_sessions.py::test_explicit_facade_and_noop_evaluator_zero
+FAILED tests/test_incremental_sessions.py::test_localized_full_payload_and_result_detachment
+FAILED tests/test_incremental_sessions.py::test_session_bounds_preserve_full_fallback
+FAILED tests/test_incremental_sessions.py::test_receipt_public_report_mutation_cannot_change_transition
+FAILED tests/test_incremental_sessions.py::test_session_declared_and_computed_walks_preserve_payloads
+FAILED tests/test_incremental_sessions.py::test_mutation_error_does_not_advance_generation
+FAILED tests/test_incremental_sessions.py::test_trusted_semantic_records_have_bounded_typed_keys
+FAILED tests/test_incremental_sessions.py::test_independent_inline_constraint_executes_no_right_evaluator
+8 failed in 0.30s

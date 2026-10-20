@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-20",
+  "artifacts": [
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "25d625fd21e61f96c617faf7f295084d8ae5e7b454ab1c2c9abf00917e436d74"
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "sha256": "7a5524571aed8c2a5c14d51711b4df46c24f2d08ead3e9f32125d246f3f1178d"
+    },
+    {
+      "path": "src/gnd/extension_preparation.py",
+      "sha256": "1dade95600f2069ab02ecca70c6e94f4e76bccff55be02db11e06e51b2c3d68e"
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "sha256": "a9b8a443849afa001b88246ee7279406ed4c7c5407e7a38d8c755af87a11cc73"
+    },
+    {
+      "path": "tests/test_incremental_sessions.py",
+      "sha256": "be576c85ec307c8ca6c0f0cfb8d73bd92b3543f8412fb9ccba0d0489d1c3d982"
+    },
+    {
+      "path": "tests/test_incremental_session_replay.py",
+      "sha256": "62c642e930e6312b3fdb7ec8f8142d62eb78b74c2f7140418d33d9293e1caeb3"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "2b395b6bc7f8950bc6985ce3fb528cc7f73a70aa561e4d498769e60259b5c90f"
+    },
+    {
+      "path": "tools/run_public_acceptance.py",
+      "sha256": "c00de330095a8707b0c5a3192ad66b0dde65e0e281b0a1fb9c7a478743ec8923"
+    }
+  ]
+}

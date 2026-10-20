@@ -188,7 +188,7 @@ def test_t5_stored_branches_and_report_are_used():
     verdict.modality = "deontic" if verdict.modality == "alethic" else "alethic"
     object.__setattr__(receipt, "report", report)
     changed = api.transition(model, pre, steps, pre_receipt=receipt)
-    assert tool.normalized_digest(original) != tool.normalized_digest(changed)
+    assert tool.normalized_digest(original) == tool.normalized_digest(changed)  # IE3 detached authority
 
 
 def test_finding_unvalidated_population_mints_like_api_check():

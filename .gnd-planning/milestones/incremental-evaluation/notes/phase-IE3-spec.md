@@ -155,3 +155,42 @@ Measure actuals at acceptance. IE4 observation contract/feedback and IE5 profile
 installed/docs remain separate mandatory phases. Existing overhead is an explicit
 IE5 performance question, not an elapsed-time success. No 547 workload, delivery
 date, certification, publication, paid/provider/native acceptance or merge.
+
+## Implementation observations (2026-10-20)
+
+The initial full direct corpus was observed RED (eight failures) before runtime.
+New session and report-copy controls now pass. The existing TP3 T5 deliberately
+proved public report mutation affected transition; IE3 reverses that assertion
+because the required vulnerability fix makes its old expected result false. Its
+stored-branch negative remains, and the new public/direct-result mutation controls
+prove detached authority. Current IE0 consumed-report probe likewise expects no
+transition change; old IE0 evidence remains historical.
+
+The classifier's semantic SnapshotIR has a fact_types field, so its existing two
+reads move to the extracted helper and one precise selected-metadata read is added.
+These are typed IR reads, not raw Model queries. An authenticated query successor
+records this owner-sensitive AST delta, retains existing ceilings (308 < 310), and
+keeps every exact-site/negative control; no blanket allowance is introduced.
+
+The old failed-mint duplicate check question was reproduced: constant checker
+failure ran once through api.check but twice through check_with_receipt. The RED
+control is retained. Mint now routes that same error and branch set through the
+ordinary payload builder without repeating checker work; receipt stays nonreusable.
+Witness output rows are charged with retained input rows; a cap-three/two-input+
+two-witness discriminator was observed RED then repaired. Preliminary fixture
+construction lacked the loader's required source keyword; that was a test premise
+error, not a runtime defect, and was corrected before the discriminating RED.
+
+The independent reader found callable registry default configuration absent from
+policy and missing discriminating post/reference controls. Accepted-to-violated
+stale reuse was observed RED for a directly callable frequency override. Repair
+captures bounded defaults/keyword defaults/closure contents, refusing unknown
+captures. The one confirmation found the same route for a string-resolved hook;
+its concrete regression also failed before repair. Configuration now covers the
+actual defining namespaces for both forms. No third review: final repair bytes
+carry no new reviewer opinion. Two actual drop-argument mutants are killed by
+real declared-post and reference controls. Initial declared fixture used a raw
+steps list, contrary to the existing API mapping/path contract; fixed before the
+mutant check. Real matching context may equal implicit binding, so that was not
+a discriminator; an unregistered altered context exercises binding refusal (not
+the isolated digest guard). These test-premise failures are not runtime defects.

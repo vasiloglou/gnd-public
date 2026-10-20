@@ -1,0 +1,35 @@
+Retained output; edited only to replace machine repository/user paths.
+Original SHA256: 570ade7b350178a1032ad46dd40544544136ef0e59390fe482528b59d81fb0dc
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_failed_receipt_mint_does_not_repeat_checker _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a533dd0>
+
+    def test_failed_receipt_mint_does_not_repeat_checker(monkeypatch):
+        from gnd.model import load_model
+        from gnd.population import load_population
+        m = load_model(tool.previous.COURSE / 'model.orm.json')
+        p = load_population(tool.previous.COURSE / 'state.pop.json', model=m)
+        calls = []
+    
+        def fail(*args, **kwargs):
+            calls.append(1)
+            raise RuntimeError('injected checker failure')
+    
+        monkeypatch.setattr(api.checker_module, 'check', fail)
+        expected = api.check(m, p)
+        assert len(calls) == 1
+        calls.clear()
+        payload, receipt = api.check_with_receipt(m, p)
+        assert payload == expected
+        assert not receipt.reusable
+>       assert len(calls) == 1
+E       assert 2 == 1
+E        +  where 2 = len([1, 1])
+
+tests/test_incremental_sessions.py:223: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_sessions.py::test_failed_receipt_mint_does_not_repeat_checker
+1 failed, 12 deselected in 0.12s

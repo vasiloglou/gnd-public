@@ -4,15 +4,25 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from contextvars import ContextVar
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, fields, replace
 from fractions import Fraction
 from functools import cmp_to_key
-from typing import Any, Literal
+from types import FunctionType
+from typing import Any, Literal, get_origin
 
-from gnd import semantic_rows, semantic_spec
+from gnd import (
+    constraint_families,
+    semantic_adapter,
+    semantic_rows,
+    semantic_spec,
+    temporal_guarded,
+    terms,
+)
 from gnd.branches import REGISTRY, record_branch, snapshot_branch, violated_branch
 from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.documents import Model
+from gnd.extension_preparation import fingerprint
+from gnd.incremental_state import active_state
 from gnd.population import Population
 from gnd.semantic_adapter import (
     AdaptedSnapshot,
@@ -829,6 +839,199 @@ def _indexed_guarded_exists_verdict(
     return verdict, None, witness
 
 
+def _evaluate_constraint(adapted, constraint, aliases, reference_work):
+    semantic_snapshot = adapted.snapshot
+    if constraint.family not in {"mandatory", "mandatory-disjunctive"}:
+        # `covers` is an epistemic input for mandatory participation.  The
+        # production checker has always evaluated other declared families
+        # over admitted facts even when a caller omitted the optional
+        # coverage assertion.  Give the pure provider that same admitted
+        # relation view without altering the observation or public
+        # coverage report.
+        semantic_snapshot = replace(
+            adapted.snapshot,
+            covers=tuple(row.id for row in adapted.snapshot.fact_types),
+        )
+    from gnd.temporal_guarded import evaluate_temporal_guard
+
+    temporal = evaluate_temporal_guard(constraint, semantic_snapshot)
+    applicability = (
+        "evaluate"
+        if temporal is not None
+        else semantic_spec.applicability_of(constraint, semantic_snapshot)
+    )
+    guarded_bindings: tuple[tuple[Scalar, ...], ...] | None = None
+    guarded_names: tuple[str, ...] = ()
+    guarded_valid = False
+    work_exceeded = False
+    if constraint.family == "guarded" and temporal is None:
+        try:
+            guarded_valid, guarded_names, guarded_bindings = _indexed_guarded_bindings(
+                constraint, semantic_snapshot, reference_work
+            )
+        except ReferenceJoinLimit:
+            work_exceeded = True
+    if work_exceeded:
+        applicability = "evaluate"
+        verdict, reason, witness = "unchecked", "reference-join-work-limit", ()
+    elif temporal is not None:
+        verdict, reason, witness = temporal
+    elif guarded_bindings == () and guarded_valid and not applicability.startswith("vacuous-"):
+        # NS-ORDER-OF-RESOLUTION-1: an implication with no antecedent
+        # bindings is clean before an unused consequent is type-checked.
+        applicability = "evaluate"
+        verdict, reason, witness = "pass", None, ()
+    else:
+        indexed = None
+        if applicability == "evaluate":
+            if (
+                constraint.family == "guarded"
+                and guarded_valid
+                and guarded_bindings is not None
+            ):
+                if constraint.variant == "exists":
+                    try:
+                        indexed = _indexed_guarded_exists_verdict(
+                            constraint,
+                            semantic_snapshot,
+                            guarded_names,
+                            guarded_bindings,
+                            adapted.snapshot.covers,
+                            reference_work=reference_work,
+                        )
+                    except ReferenceJoinLimit:
+                        indexed = ("unchecked", "reference-join-work-limit", ())
+                else:
+                    indexed = _indexed_guarded_verdict(
+                        constraint,
+                        semantic_snapshot,
+                        guarded_names,
+                        guarded_bindings,
+                    )
+            if indexed is None:
+                indexed = _indexed_mandatory_result(constraint, semantic_snapshot)
+            if indexed is None:
+                indexed = _inline_uniqueness_result(constraint, semantic_snapshot)
+            if indexed is None:
+                indexed = _legacy_string_order_result(constraint, semantic_snapshot)
+            entry = FAMILIES.get(constraint.family)
+            if indexed is None and entry is not None and entry.production is not None:
+                indexed = resolve_hook(entry.production, vars(semantic_rows))(
+                    constraint, semantic_snapshot
+                )
+        verdict, reason, witness = (
+            indexed
+            if indexed is not None
+            else semantic_spec.verdict_of(constraint, semantic_snapshot)
+        )
+    if constraint.refused == "opaque-value" and temporal is None:
+        verdict, reason, witness = "unchecked", "opaque-value", ()
+    if verdict == "unchecked" and reason != "opaque-value":
+        reason = _registered_unchecked_reason(constraint, reason)
+    variant = aliases.get(constraint.ref, constraint.variant)
+    witness_keys: tuple[str, ...] = ()
+    if constraint.family == "guarded":
+        witness_keys = semantic_spec.guarded_variable_names(constraint)
+        if (
+            constraint.variant == "exists"
+            and verdict == "unchecked"
+            and reason is not None
+            and reason.startswith("term:")
+        ):
+            ordered = list(witness_keys)
+            for atom in constraint.exists_atoms:
+                for _role, term in atom.bindings:
+                    if term.kind == "variable" and term.variable not in ordered:
+                        ordered.append(term.variable)
+            witness_keys = tuple(ordered)
+    elif constraint.family == "uniqueness" and constraint.variant == "inline":
+        fact_index = semantic_spec.snapshot_fact_index(adapted.snapshot, constraint.fact_type)
+        if fact_index >= 0:
+            witness_keys = tuple(
+                role.name for role in adapted.snapshot.fact_types[fact_index].roles
+            )
+    scope_id = _finding_scope(
+        constraint,
+        semantic_snapshot,
+        verdict,
+        reason,
+        applicability,
+        variant=variant,
+        guarded_binding_count=(
+            len(guarded_bindings) if guarded_bindings is not None and guarded_valid else None
+        ),
+    )
+    record_branch(scope_id, outcome=verdict)
+    return CorrespondedFinding(
+            scope_id=scope_id,
+            constraint_id=constraint.ref,
+            family=constraint.family,
+            modality=constraint.modality,
+            verdict=verdict,
+            reason_code=reason,
+            witness=witness,
+            witness_keys=witness_keys,
+            applicable_scope_ids=(scope_id,),
+        )
+
+
+def _constraint_reuse(adapted, constraint, aliases, reference_work, calculate):
+    owner = active_state()
+    if owner is None or reference_work is not None or constraint.family in {"guarded", "anchored"}:
+        return calculate()
+    try:
+        if any(operand.kind == "clock" for operand in constraint.operands):
+            return calculate()
+        snapshot = adapted.snapshot
+        if constraint.family == "uniqueness" and constraint.variant == "inline":
+            facts = tuple(row for row in snapshot.fact_types if row.id == constraint.fact_type)
+            relations = tuple(row for row in snapshot.relations if row.fact_type == constraint.fact_type)
+            inputs = (constraint, facts, relations, snapshot.finite, snapshot.refusals,
+                      aliases.get(constraint.ref, constraint.variant))
+        else:
+            relations = snapshot.relations
+            inputs = (constraint, snapshot, aliases.get(constraint.ref, constraint.variant))
+        own = tuple(sorted((name, value) for name, value in globals().items()
+                           if callable(value) and get_origin(value) is None and value is not Literal))
+        homes = tuple(tuple(sorted((name, value) for name, value in vars(home).items()
+                                   if isinstance(value, FunctionType)))
+                      for home in (semantic_spec, semantic_rows, temporal_guarded, terms,
+                                   semantic_adapter, constraint_families))
+        registry = tuple((name, tuple(getattr(entry, f.name) for f in fields(entry)))
+                         for name, entry in FAMILIES.items())
+        # Callable registry overrides may change configuration without changing
+        # function identity/code. Unsupported captures deliberately stay fresh.
+        configured = []
+        seen_hooks = set()
+        namespaces = (globals(), *(vars(home) for home in (
+            semantic_spec, semantic_rows, temporal_guarded, terms,
+            semantic_adapter, constraint_families)))
+        for entry in FAMILIES.values():
+            for field in fields(entry):
+                declared = getattr(entry, field.name)
+                hooks = ([space[declared] for space in namespaces if declared in space]
+                         if isinstance(declared, str) else [declared])
+                for hook in hooks:
+                    if not callable(hook) or id(hook) in seen_hooks:
+                        continue
+                    seen_hooks.add(id(hook))
+                    if not isinstance(hook, FunctionType):
+                        return calculate()
+                    configuration = fingerprint((
+                        hook.__defaults__, hook.__kwdefaults__,
+                        tuple(cell.cell_contents for cell in (hook.__closure__ or ())),
+                    ))
+                    if configuration is None:
+                        return calculate()
+                    configured.append((hook, configuration))
+        policy = (own, homes, registry, tuple(configured), GUARDED_EXISTS_WORK_LIMIT)
+        rows = sum(len(relation.rows) for relation in relations)
+    except Exception:  # noqa: BLE001 -- optional memo setup must not replace normal evaluation
+        return calculate()
+    return owner.reuse("constraint", constraint.ref, inputs, calculate,
+                       policy=policy, rows=lambda finding: rows + len(finding.witness))
+
+
 def evaluate_snapshot(
     adapted: AdaptedSnapshot,
     *,
@@ -842,141 +1045,9 @@ def evaluate_snapshot(
     aliases = variant_aliases or {}
     findings: list[CorrespondedFinding] = []
     for constraint in adapted.snapshot.constraints:
-        semantic_snapshot = adapted.snapshot
-        if constraint.family not in {"mandatory", "mandatory-disjunctive"}:
-            # `covers` is an epistemic input for mandatory participation.  The
-            # production checker has always evaluated other declared families
-            # over admitted facts even when a caller omitted the optional
-            # coverage assertion.  Give the pure provider that same admitted
-            # relation view without altering the observation or public
-            # coverage report.
-            semantic_snapshot = replace(
-                adapted.snapshot,
-                covers=tuple(row.id for row in adapted.snapshot.fact_types),
-            )
-        from gnd.temporal_guarded import evaluate_temporal_guard
-
-        temporal = evaluate_temporal_guard(constraint, semantic_snapshot)
-        applicability = (
-            "evaluate"
-            if temporal is not None
-            else semantic_spec.applicability_of(constraint, semantic_snapshot)
-        )
-        guarded_bindings: tuple[tuple[Scalar, ...], ...] | None = None
-        guarded_names: tuple[str, ...] = ()
-        guarded_valid = False
-        work_exceeded = False
-        if constraint.family == "guarded" and temporal is None:
-            try:
-                guarded_valid, guarded_names, guarded_bindings = _indexed_guarded_bindings(
-                    constraint, semantic_snapshot, reference_work
-                )
-            except ReferenceJoinLimit:
-                work_exceeded = True
-        if work_exceeded:
-            applicability = "evaluate"
-            verdict, reason, witness = "unchecked", "reference-join-work-limit", ()
-        elif temporal is not None:
-            verdict, reason, witness = temporal
-        elif guarded_bindings == () and guarded_valid and not applicability.startswith("vacuous-"):
-            # NS-ORDER-OF-RESOLUTION-1: an implication with no antecedent
-            # bindings is clean before an unused consequent is type-checked.
-            applicability = "evaluate"
-            verdict, reason, witness = "pass", None, ()
-        else:
-            indexed = None
-            if applicability == "evaluate":
-                if (
-                    constraint.family == "guarded"
-                    and guarded_valid
-                    and guarded_bindings is not None
-                ):
-                    if constraint.variant == "exists":
-                        try:
-                            indexed = _indexed_guarded_exists_verdict(
-                                constraint,
-                                semantic_snapshot,
-                                guarded_names,
-                                guarded_bindings,
-                                adapted.snapshot.covers,
-                                reference_work=reference_work,
-                            )
-                        except ReferenceJoinLimit:
-                            indexed = ("unchecked", "reference-join-work-limit", ())
-                    else:
-                        indexed = _indexed_guarded_verdict(
-                            constraint,
-                            semantic_snapshot,
-                            guarded_names,
-                            guarded_bindings,
-                        )
-                if indexed is None:
-                    indexed = _indexed_mandatory_result(constraint, semantic_snapshot)
-                if indexed is None:
-                    indexed = _inline_uniqueness_result(constraint, semantic_snapshot)
-                if indexed is None:
-                    indexed = _legacy_string_order_result(constraint, semantic_snapshot)
-                entry = FAMILIES.get(constraint.family)
-                if indexed is None and entry is not None and entry.production is not None:
-                    indexed = resolve_hook(entry.production, vars(semantic_rows))(
-                        constraint, semantic_snapshot
-                    )
-            verdict, reason, witness = (
-                indexed
-                if indexed is not None
-                else semantic_spec.verdict_of(constraint, semantic_snapshot)
-            )
-        if constraint.refused == "opaque-value" and temporal is None:
-            verdict, reason, witness = "unchecked", "opaque-value", ()
-        if verdict == "unchecked" and reason != "opaque-value":
-            reason = _registered_unchecked_reason(constraint, reason)
-        variant = aliases.get(constraint.ref, constraint.variant)
-        witness_keys: tuple[str, ...] = ()
-        if constraint.family == "guarded":
-            witness_keys = semantic_spec.guarded_variable_names(constraint)
-            if (
-                constraint.variant == "exists"
-                and verdict == "unchecked"
-                and reason is not None
-                and reason.startswith("term:")
-            ):
-                ordered = list(witness_keys)
-                for atom in constraint.exists_atoms:
-                    for _role, term in atom.bindings:
-                        if term.kind == "variable" and term.variable not in ordered:
-                            ordered.append(term.variable)
-                witness_keys = tuple(ordered)
-        elif constraint.family == "uniqueness" and constraint.variant == "inline":
-            fact_index = semantic_spec.snapshot_fact_index(adapted.snapshot, constraint.fact_type)
-            if fact_index >= 0:
-                witness_keys = tuple(
-                    role.name for role in adapted.snapshot.fact_types[fact_index].roles
-                )
-        scope_id = _finding_scope(
-            constraint,
-            semantic_snapshot,
-            verdict,
-            reason,
-            applicability,
-            variant=variant,
-            guarded_binding_count=(
-                len(guarded_bindings) if guarded_bindings is not None and guarded_valid else None
-            ),
-        )
-        record_branch(scope_id, outcome=verdict)
-        findings.append(
-            CorrespondedFinding(
-                scope_id=scope_id,
-                constraint_id=constraint.ref,
-                family=constraint.family,
-                modality=constraint.modality,
-                verdict=verdict,
-                reason_code=reason,
-                witness=witness,
-                witness_keys=witness_keys,
-                applicable_scope_ids=(scope_id,),
-            )
-        )
+        def calculate(constraint=constraint):
+            return _evaluate_constraint(adapted, constraint, aliases, reference_work)
+        findings.append(_constraint_reuse(adapted, constraint, aliases, reference_work, calculate))
     band = semantic_spec.band_of(tuple((row.modality, row.verdict) for row in findings))
     if band != 1 and any(row.reason_code == "reference-join-work-limit" for row in findings):
         band = 4

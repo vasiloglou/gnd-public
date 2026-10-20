@@ -147,7 +147,7 @@ def test_r12_timing_split(monkeypatch):
 def test_r13_consumed_receipt_probe():
     result = tool.receipt_probe()
     assert result['reusable']
-    assert result['transition_changed']
+    assert not result['transition_changed']  # IE3 protects the authoritative receipt report
 
 
 def test_r6_materialized_controls_do_not_share_mutable_models():

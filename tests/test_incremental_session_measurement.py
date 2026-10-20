@@ -41,14 +41,14 @@ def test_mode_comparison_rejects_corrupted_semantic_surfaces():
 
     row = {'payload': 'typed-payload', 'exit': 2, 'branches': ['registered'],
            'calculations': ['typed-complete-envelope']}
-    modes = {mode: {'calls': [deepcopy(row)]} for mode in 'ABC'}
-    compare_modes(modes)
+    modes = {mode: {'calls': [deepcopy(row) for _ in range(13)]} for mode in 'ABC'}
+    compare_modes(modes, workload="reporter")
     for key, value in [('payload', 'wrong'), ('exit', 1), ('branches', []),
                        ('calculations', ['wrong'])]:
         corrupted = deepcopy(modes)
         corrupted['C']['calls'][0][key] = value
         with pytest.raises(ValueError):
-            compare_modes(corrupted)
+            compare_modes(corrupted, workload="reporter")
 
 
 def test_observed_calculations_preserve_order_and_multiplicity(monkeypatch):
@@ -80,7 +80,7 @@ def test_all_matching_errors_cannot_satisfy_frozen_workload():
     # The original comparator accepted these three common failures. The
     # required workload-aware entry point must reject them.
     with pytest.raises(ValueError):
-        compare_modes(modes)
+        compare_modes(modes, workload="course")
 
 
 def test_session_timing_refuses_profiled_measurements(monkeypatch):
@@ -127,4 +127,19 @@ def test_ordered_trace_comparison_rejects_delete_duplicate_permutation():
         mutant = deepcopy(modes)
         mutant['C']['calls'][0]['calculations'] = changed
         with pytest.raises(ValueError):
-            compare_modes(mutant)
+            compare_modes(mutant, workload="reporter")
+
+
+def test_observer_payload_fingerprint_is_not_runtime_work():
+    rows = []
+    token = tool.COMPLETE_CALL_SINK.set(rows)
+    try:
+        with tool.count_work() as counts:
+            tool.extension_preparation.fingerprint({'runtime': 1})
+            runtime_nodes = counts['fingerprint_nodes']
+            assert runtime_nodes > 0
+            tool.public_call(lambda: {'exit_code': 0})
+            assert counts['fingerprint_nodes'] == runtime_nodes
+    finally:
+        tool.COMPLETE_CALL_SINK.reset(token)
+    assert len(rows) == 1

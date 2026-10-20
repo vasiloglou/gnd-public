@@ -199,3 +199,18 @@ Current pending exploratory output becomes invalid when these repairs change byt
 rerun final evidence rather than rewriting its source identity. Rebuild installed
 candidate for the new diagnostic runtime bytes. Same one-reader/one-confirmation
 budget and bounds; no third review. No production publication or release authority.
+
+## Bounded confirmation disposition (2026-10-20)
+
+One additional adjacent measurement finding reproduced RED: a public callback
+performing no fingerprints increased fingerprint_nodes from3 to6 solely because
+the observer hashed its returned payload. Add a scoped diagnostic-work ContextVar;
+the actual work counter ignores diagnostic projection frames while preserving
+positive runtime fingerprint events and per-call deltas. Calculation-key hashing
+already runs inside profiler callbacks (profiling disabled there). No runtime API
+or counted derivation/evaluator behavior changes. The confirmation itself states
+this does not invalidate body savings or uninstrumented timing; final evidence
+will rerun anyway with final source identities. No third review is authorized.
+One of one confirmation findings concerns pre-existing adjacent IE5 observer code,
+not repair-created code (ratio0/1); the maximum-round stop still applies. Final
+repair has author RED/GREEN evidence, not an invented third reviewer opinion.

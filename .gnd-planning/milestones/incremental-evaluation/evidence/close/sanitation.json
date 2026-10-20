@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-20",
+  "runtime_changed": false,
+  "repairs": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE0-codex-review.md",
+      "before_sha256": "2d20591d0c8c2a4766a5fd5db9361381e83865f05f9e73836029b8a7521df369",
+      "after_sha256": "9d1300d5902a623dbd8db3ef7619541ce0076d20a1b46595b5183937e21734b4",
+      "reproduction": "literal /Users/ present before; absent after",
+      "change": "remaining repository root replaced with <REPO>, disclosure header prepended"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE3/corpus-red.txt",
+      "before_sha256": "a907173ee94617bd7c8d18178862acb1296eae70053ddf22d0d2854f1f2112c3",
+      "after_sha256": "8b8ab56b1ab1ae983508f0b440274adafffe1afcba14e59c08c421656cd1a864",
+      "reproduction": "literal /Users/ present before; absent after",
+      "change": "remaining repository root replaced with <REPO>, disclosure header prepended"
+    }
+  ]
+}

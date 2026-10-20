@@ -1,3 +1,5 @@
+Evidence sanitation correction at milestone close, 2026-10-20: edited only the remaining machine repository root to <REPO>; retained prior content otherwise. Pre-correction SHA-256: a907173ee94617bd7c8d18178862acb1296eae70053ddf22d0d2854f1f2112c3. Historical record digests remain scoped to original commits.
+
 FFFFFFFF                                                                 [100%]
 =================================== FAILURES ===================================
 _________________ test_explicit_facade_and_noop_evaluator_zero _________________
@@ -136,7 +138,7 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1081c3010>
 >       assert preparation.fingerprint(integer) is not None
 E       AssertionError: assert None is not None
 E        +  where None = <function fingerprint at 0x107cbe480>(Scalar(kind='number', token='', num=1, den=1, ordered=True, identity_kind='number'))
-E        +    where <function fingerprint at 0x107cbe480> = <module 'gnd.extension_preparation' from '/Users/nikolaosvasiloglou/github-repos/gnd-public/src/gnd/extension_preparation.py'>.fingerprint
+E        +    where <function fingerprint at 0x107cbe480> = <module 'gnd.extension_preparation' from '<REPO>/src/gnd/extension_preparation.py'>.fingerprint
 
 tests/test_incremental_sessions.py:101: AssertionError
 ________ test_independent_inline_constraint_executes_no_right_evaluator ________

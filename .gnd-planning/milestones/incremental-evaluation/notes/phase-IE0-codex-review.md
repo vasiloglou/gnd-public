@@ -1,3 +1,5 @@
+Evidence sanitation correction at milestone close, 2026-10-20: edited only the remaining machine repository root to <REPO>; retained prior content otherwise. Pre-correction SHA-256: 2d20591d0c8c2a4766a5fd5db9361381e83865f05f9e73836029b8a7521df369. Historical record digests remain scoped to original commits.
+
 # IE0 independent Codex CLI review
 
 Retained response; absolute repository paths in Markdown links were sanitized
@@ -30,7 +32,7 @@ Findings survived. These are static findings; the regression cases below were no
 
 10. **Hardening — partial join work is silently omitted.** `tools/measure_incremental_evaluation.py:91` samples join deltas only around `_clause_bindings`. Partial execution indexes candidates through `_partial_bindings`, without entering that function. **Minimal regression:** evaluate an opaque recursive two-atom join under partial mode; require positive partial join work whenever its `JoinWork.join_candidates_indexed` increases.
 
-11. **Blocking — B is not receipt-only for two advertised workloads.** [tools/measure_incremental_evaluation.py:140](/Users/nikolaosvasilogrou/github-repos/gnd-public/tools/measure_incremental_evaluation.py:140) ignores `receipts` for localized and course replay. Their B samples execute the same full route as A/C. **Minimal regression:** spy on receipt minting and consumption during each workload’s B replay; require the declared receipt behavior, or explicitly mark that arm unavailable.
+11. **Blocking — B is not receipt-only for two advertised workloads.** [tools/measure_incremental_evaluation.py:140](<REPO>/tools/measure_incremental_evaluation.py:140) ignores `receipts` for localized and course replay. Their B samples execute the same full route as A/C. **Minimal regression:** spy on receipt minting and consumption during each workload’s B replay; require the declared receipt behavior, or explicitly mark that arm unavailable.
 
 12. **Blocking — timing boundaries are not separated.** `tools/measure_incremental_evaluation.py:175` emits only elapsed replay totals. There are no uninstrumented loading/evaluation samples; `instrumented_seconds` cannot supply that missing split. **Minimal regression:** add controlled loader delay and require only the loading component and total to increase, while retaining raw evaluation samples.
 

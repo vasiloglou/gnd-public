@@ -98,3 +98,19 @@ results unchanged. On the reporter's 13-call workload:
 GND time fell by about a third on the default path and by about 42% with receipts.
 Incremental evaluation is carried to a successor milestone. See the
 [close record](milestones/transition-check-performance/006-milestone-close.md).
+
+
+## incremental-evaluation — locally closed, 2026-10-20
+
+Six phases IE0–IE5 deliver explicit in-process EvaluationSession reuse, validated
+host observations, bounded separate feedback and private receipt detachment.
+The frozen reporter replay preserves full payload/exit/branch/ordered calculation
+parity and reduces derivation bodies4878→179, but median wall time grows5.83→6.79s
+against receipts. No elapsed speedup is established. Four independent local close
+readers returned close-with-carryovers. [009 close record](milestones/incremental-evaluation/009-milestone-close.md)
+and its separate delegated acceptance bind the local result under the owner's
+named auto delegation. [PR33](https://github.com/vasiloglou/gnd-public/pull/33)
+contains the isolated topic work. Performance bookkeeping and reporter-owned
+547-program downstream acceptance remain explicit follow-ups; no date, merge,
+publication or certification is inferred. Earlier milestone entries retain their
+historical scope.

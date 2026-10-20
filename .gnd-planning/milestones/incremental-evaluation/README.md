@@ -32,10 +32,13 @@ IE2 completed: 245 focused tests and lint; component envelope reuse and twelve r
 IE3 completed:1,079 affected checks plus68 final repair checks; opt-in sessions and private receipts.
 IE4 completed:614 affected checks; validated host observations, closed feedback and atomic progress.
 IE5 completed: frozen replay body work4878→179 with full parity; installed smoke and focused gates pass.
-Measured session wall time is slower on the small public fixtures. Four-reader close is next.
+Measured session wall time is slower on the small public fixtures. Four-reader close is complete.
 The old public workload is available; the newly offered workload is not supplied.
 It blocks claims about the 547-program census, not drafting or the local baseline.
 No delivery date or downstream performance result is promised.
 
-Execution continues through IE1–IE5 under the named `auto=true` delegation.
-No merge, publication or certification is authorized. IE0–IE5 have been accepted; milestone close remains.
+All six phases and local milestone close are accepted under the named `auto=true` delegation.
+Four independent close readers returned close-with-carryovers; see [009](009-milestone-close.md),
+[question sweep](notes/close-question-sweep.md) and [PR33](https://github.com/vasiloglou/gnd-public/pull/33).
+The separate delegated ruling binds exact final bytes in evidence/close/acceptance.json.
+No merge, publication or certification is authorized.

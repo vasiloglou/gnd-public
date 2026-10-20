@@ -414,3 +414,25 @@ the review instrument; it does not approve plan/spec bytes. No approval hashes e
 
 Next action (p1): owner disposition of the reviewed plan and its open decisions; then explicitly select `process-phase IE0 incremental-evaluation` for its
 owner gate. Planning authorship supplies none of those approvals.
+
+## Close reconciliation annotation, 2026-10-20
+
+This annotation supersedes the retained pending/status and auto=false drafting
+statements above; it does not rewrite the owner-approved pre-annotation r2 or
+claim new owner personal readings.001 binds the original approved bytes;002
+subsequently delegates named execution and close under auto=true.003–008 record
+all six accepted phases and their concrete spec/amendment gates.009 records
+local close with four independent reader opinions, the final question sweep,
+PR33 and a separately bound delegated close acceptance.
+
+Completion predicates1–7 are discharged in009. The frozen reporter denominator
+remains4878; session bodies179, with complete ordered parity. Reporter median
+wall time regresses5.8306→6.7885 seconds; D7 makes timing informational, not a
+speedup claim. Constraint primitives remain1365 in both receipt/session reporter
+arms. IE-Q1 assigns bookkeeping performance to a future explicitly selected
+framework-performance effort. The absent547-program bundle stays reporter-owned.
+No delivery date, default activation, production publication, certification or
+merge is inferred. Historical TP3 records remain unchanged;006's in-place reasoning
+correction is explicitly disclosed and owned by009, not silently treated as
+original record bytes. See notes/close-question-sweep.md for all18 inherited rows,
+IE-Q1..Q10 and D1–D9 dispositions. No successor execution is selected.

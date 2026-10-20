@@ -1,0 +1,109 @@
+Edited only to replace machine/user paths.
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+__________ test_observation_is_validated_relation_replacement[rows0] ___________
+
+rows = []
+
+    @pytest.mark.parametrize('rows', [[], [{'item': 'replacement'}],
+                                      [{'item': 'same'}, {'item': 'same'}]])
+    def test_observation_is_validated_relation_replacement(rows):
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        owner.check(p)
+        before = owner.stats()['generation']
+>       observed = owner.observe(p, {'left': rows})
+                   ^^^^^^^^^^^^^
+E       AttributeError: 'EvaluationSession' object has no attribute 'observe'
+
+tests/test_incremental_observations.py:23: AttributeError
+__________ test_observation_is_validated_relation_replacement[rows1] ___________
+
+rows = [{'item': 'replacement'}]
+
+    @pytest.mark.parametrize('rows', [[], [{'item': 'replacement'}],
+                                      [{'item': 'same'}, {'item': 'same'}]])
+    def test_observation_is_validated_relation_replacement(rows):
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        owner.check(p)
+        before = owner.stats()['generation']
+>       observed = owner.observe(p, {'left': rows})
+                   ^^^^^^^^^^^^^
+E       AttributeError: 'EvaluationSession' object has no attribute 'observe'
+
+tests/test_incremental_observations.py:23: AttributeError
+__________ test_observation_is_validated_relation_replacement[rows2] ___________
+
+rows = [{'item': 'same'}, {'item': 'same'}]
+
+    @pytest.mark.parametrize('rows', [[], [{'item': 'replacement'}],
+                                      [{'item': 'same'}, {'item': 'same'}]])
+    def test_observation_is_validated_relation_replacement(rows):
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        owner.check(p)
+        before = owner.stats()['generation']
+>       observed = owner.observe(p, {'left': rows})
+                   ^^^^^^^^^^^^^
+E       AttributeError: 'EvaluationSession' object has no attribute 'observe'
+
+tests/test_incremental_observations.py:23: AttributeError
+______________ test_observation_bad_unknown_and_stale_are_atomic _______________
+
+    def test_observation_bad_unknown_and_stale_are_atomic():
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        owner.check(p)
+        before = owner.stats().copy()
+        for replacement in ({'unknown': []}, {'left': [{'missing_role': 'x'}]},
+                            {'left': 'not rows'}):
+            with pytest.raises((ValueError, TypeError)):
+>               owner.observe(p, replacement)
+                ^^^^^^^^^^^^^
+E               AttributeError: 'EvaluationSession' object has no attribute 'observe'
+
+tests/test_incremental_observations.py:42: AttributeError
+_______________ test_observation_busy_closed_and_noop_ownership ________________
+
+    def test_observation_busy_closed_and_noop_ownership():
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+>       observed = owner.observe(p, {})
+                   ^^^^^^^^^^^^^
+E       AttributeError: 'EvaluationSession' object has no attribute 'observe'
+
+tests/test_incremental_observations.py:53: AttributeError
+____________ test_two_attempt_feedback_full_parity_and_retry_order _____________
+
+    def test_two_attempt_feedback_full_parity_and_retry_order():
+>       from gnd.evaluation_feedback import build_feedback
+E       ModuleNotFoundError: No module named 'gnd.evaluation_feedback'
+
+tests/test_incremental_observations.py:66: ModuleNotFoundError
+_____________ test_feedback_closed_version_strict_types_and_bounds _____________
+
+    def test_feedback_closed_version_strict_types_and_bounds():
+>       from gnd.evaluation_feedback import SessionFeedback
+E       ModuleNotFoundError: No module named 'gnd.evaluation_feedback'
+
+tests/test_incremental_observations.py:95: ModuleNotFoundError
+_____________ test_feedback_count_overflow_and_empty_are_distinct ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aebb990>
+
+    def test_feedback_count_overflow_and_empty_are_distinct(monkeypatch):
+>       from gnd import evaluation_feedback as feedback
+E       ImportError: cannot import name 'evaluation_feedback' from 'gnd' (<REPO>/src/gnd/__init__.py)
+
+tests/test_incremental_observations.py:111: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_observations.py::test_observation_is_validated_relation_replacement[rows0]
+FAILED tests/test_incremental_observations.py::test_observation_is_validated_relation_replacement[rows1]
+FAILED tests/test_incremental_observations.py::test_observation_is_validated_relation_replacement[rows2]
+FAILED tests/test_incremental_observations.py::test_observation_bad_unknown_and_stale_are_atomic
+FAILED tests/test_incremental_observations.py::test_observation_busy_closed_and_noop_ownership
+FAILED tests/test_incremental_observations.py::test_two_attempt_feedback_full_parity_and_retry_order
+FAILED tests/test_incremental_observations.py::test_feedback_closed_version_strict_types_and_bounds
+FAILED tests/test_incremental_observations.py::test_feedback_count_overflow_and_empty_are_distinct
+8 failed in 0.50s

@@ -1,0 +1,36 @@
+{
+  "phase": "IE4",
+  "contract": "phase-IE4-spec.md",
+  "stories": [
+    {
+      "id": "O1",
+      "input": "whole relation replacement: empty, replacement, duplicate, equal",
+      "expected": "normal loader validates detached new snapshot; omitted relations retained"
+    },
+    {
+      "id": "O2",
+      "input": "unknown fact, bad row, stale marker, busy/closed",
+      "expected": "reject without advancing generation or attempt"
+    },
+    {
+      "id": "F1",
+      "input": "attempt1, invalid retry, rejected observation, valid observation, attempt2",
+      "expected": "ordered closed bounded feedback; old bytes unchanged"
+    },
+    {
+      "id": "F2",
+      "input": "empty/unavailable/overflow/reference/error counts",
+      "expected": "explicit distinct states; no raw values, witnesses or cache handles"
+    },
+    {
+      "id": "F3",
+      "input": "extra wire field, wrong kind/version, boolean attempt, huge rows/ids",
+      "expected": "closed strict reader and bounded deterministic projection"
+    },
+    {
+      "id": "D1",
+      "input": "full and incremental two-attempt host loop",
+      "expected": "same complete payload, branches and feedback; unchanged component zero work"
+    }
+  ]
+}

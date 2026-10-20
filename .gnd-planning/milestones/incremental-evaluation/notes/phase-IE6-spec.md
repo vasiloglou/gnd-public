@@ -178,3 +178,40 @@ its performance expectation was unsafe. Exact prior test/expectation remains at
 e897967. Keep rootwalk/builtin/raw-hit reduction gates and exact equality controls.
 This correction has no inherited initial opinion; bounded confirmation checks it.
 The original reduced-hash proposal and initial corpus RED are preserved as history.
+
+
+Initial Astra review returns3findings: hashability blocking (reproduced and fixed
+under safety amendment); custom metaclass equality suppresses dataclass dict charge
+(hardening of this phase's accounting deliverable, actual RED); root-only traversal
+assertions miss descendant rescans (instrument hardening, exact mutant to be tested).
+Fix builtin fast path using identity dispatch after scalar handling; retain original
+custom storage and finite/cycle/depth logic. Strengthen named visit assertions to
+count160 normalized descriptor children as well as root, including warm and dirty
+lookups. New unsafe metadata wrapper is not introduced. All repairs within original
+C1/C2/C3 scope. Initial source/test hashes in response identify its exact review
+boundary; one reviewer is one reviewer, no panel or execution claim.
+
+
+Measurement audit finding: first revision driver guarded runtime Python and test
+fixtures but omitted imported legacy tool source and packaged non-Python course
+inputs. No actual helper/input changed; nevertheless its metadata did not support
+complete dependency drift detection. Retain initial run as exploratory; do not use
+it as final acceptance. Actual helper-mutation negative exits1 under initial driver
+and0 under repaired guard. Final driver includes all package source/data, all tool
+Python and test fixtures/configs, checks its own hash in each worker and at end,
+then repeats the same predeclared3balanced samples. No threshold or runtime code
+changed; integrated oracle/486tests remain exact-current-source evidence.
+
+
+## Final status annotation, 2026-10-20
+
+The historical awaiting-gate status is superseded by010/e897967 and the explicit
+safety amendment3dcf4f2. All current criteria are accepted in011 under named auto.
+Initial three findings were reproduced and fixed; the single bounded Astra
+confirmation returns None survived at exact final runtime/test hashes. Final
+focused gate486passed. Earlier480-pass execution loaded intermediate source;
+it is retained as historical, not final-byte assurance. Scalar fastpath root/cap/
+finite/bad-limit branches have five parameter cases in the final gate. No third
+phase review. Revision comparison and integrated measurement complete without
+source/fixture drift. Their distinct ABC arm meanings are explicit in each JSON.
+Optional setup/fingerprint refactors remain named follow-ups, not hidden scope.

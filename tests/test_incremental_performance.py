@@ -18,7 +18,7 @@ def _large_policy():
 
 
 def test_prepared_policy_tree_is_measured_once_for_many_misses(monkeypatch):
-    owner, m = None, model()
+    m = model()
     owner = ReuseState(m)
     visited = []
     original = state._children
@@ -32,9 +32,14 @@ def test_prepared_policy_tree_is_measured_once_for_many_misses(monkeypatch):
         policy = owner.prepare_policy(_large_policy())
         for index in range(12):
             assert owner.reuse('work', index, (), _helper, policy=policy) == [1]
+        for snapshot in ((), ('dirty',), ('dirty',)):
+            for index in range(12):
+                assert owner.reuse('work', index, snapshot, _helper, policy=policy) == [1]
     # The exact normalized policy root was already bounded during preparation.
     assert sum(item is policy.key for item in visited) == 1
-    assert owner.stats()['misses'] == 12
+    assert _policy_pair_visits(visited) == 160
+    assert owner.stats()['misses'] == 24
+    assert owner.stats()['hits'] == 24
     assert owner.stats()['entries'] == 12
 
 
@@ -159,16 +164,17 @@ def test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk(monkeypatch):
     original = state._children
 
     def children(value):
-        if type(value) is tuple and len(value) == 160:
-            traversals.append(value)
+        traversals.append(value)
         return original(value)
 
     monkeypatch.setattr(state, '_children', children)
     with owner.transaction(m):
         for _ in range(5):
             assert owner.reuse('raw', 'one', (), _helper, policy=_large_policy()) == [1]
+        assert owner.reuse('raw', 'one', ('dirty',), _helper, policy=_large_policy()) == [1]
     assert owner.stats()['hits'] == 4
-    assert len(traversals) == 1
+    assert sum(type(value) is tuple and len(value) == 160 for value in traversals) == 2
+    assert _policy_pair_visits(traversals) == 320
 
 
 def test_prepared_policy_rechecks_live_hashability(monkeypatch):
@@ -192,3 +198,40 @@ def test_prepared_policy_rechecks_live_hashability(monkeypatch):
         monkeypatch.setattr(MutableHash, '__hash__', None)
         assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 2
     assert owner.stats()['bypasses'] == 1
+
+
+def test_custom_metaclass_equality_cannot_hide_record_dictionary():
+    class Meta(type):
+        __hash__ = type.__hash__
+
+        def __eq__(cls, other):
+            return cls is other or other is type(None)
+
+    @dataclass
+    class Record(metaclass=Meta):
+        values: list
+
+    Record.__module__ = 'gnd.test'
+    value = Record([])
+    minimum = sum(state.sys.getsizeof(item) for item in (value, value.__dict__, value.values))
+    assert state._measure(value, minimum-1) is None
+
+
+def _policy_pair_visits(visited):
+    return sum(type(value) is tuple and len(value) == 2 and type(value[0]) is tuple
+               and len(value[0]) == 2 and value[0][0] == 'str'
+               and type(value[0][1]) is str and value[0][1].startswith('helper-')
+               for value in visited)
+
+
+@pytest.mark.parametrize('value', [None, 'value', 123, True, 1.5])
+def test_scalar_fastpath_preserves_size_and_root_limits(monkeypatch, value):
+    size = state.sys.getsizeof(value)
+    assert state._measure(value, size) == size
+    assert state._measure(value, size-1) is None
+    assert state._measure(value, None) is None
+    monkeypatch.setattr(state, 'MAX_NODES', 0)
+    assert state._measure(value, 10**6) is None
+    monkeypatch.setattr(state, 'MAX_NODES', 100_000)
+    monkeypatch.setattr(state, 'MAX_DEPTH', -1)
+    assert state._measure(value, 10**6) is None

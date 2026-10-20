@@ -411,10 +411,29 @@ experiment sessions and never serializes cache handles.
 
 Measured on the frozen public reporter replay (13 calls), receipts executed 4,878
 rule bodies and sessions with receipts executed 179, with matching reports and
-ordered logical calculation results. In the final three-round interleaving on a
+ordered logical calculation results. In the initial IE5 three-round interleaving on a
 shared macOS/Python3.11.15 host, medians were 5.83 s with receipts and 6.79 s with
 sessions plus receipts. The session was slower on this fixture despite less rule
 work. Course/localized controls were also slower. These are workload-specific
 observations, not a reason to change existing defaults or a prediction for the
 unsupplied 547-program workload. Maintainer evidence records ranges, cold/no-op/
 dirty cases, bounds and source identities in the incremental-evaluation milestone.
+
+
+IE6 reduces repeated policy-size traversal with bounded immutable accounting
+summaries and exact builtin fast paths. Live signature hashing, mutable/code guards,
+private cloning and current-content admission remain in place. A separate balanced
+same-host comparison (three samples per arm, one warmup per worker) measured:
+
+| Workload | Pre-IE6 session + receipts | IE6 session + receipts | IE6 full + receipts |
+|---|---:|---:|---:|
+| Reporter | 9.59 s | 9.03 s | 8.50 s |
+| Course | 2.41 s | 1.99 s | 0.86 s |
+| Localized | 0.574 s | 0.541 s | 0.423 s |
+
+Session medians improved by about 6%, 17% and 6% against the archived pre-IE6
+implementation in that comparison; all remained slower than full evaluation with
+receipts. These are shared-host observations with small samples and recorded ranges,
+not guaranteed speedups. Compare arms within a run; the earlier IE5 numbers use a
+separate measurement and must not be chained into a speedup claim. The missing
+547-program workload still prevents downstream performance acceptance.

@@ -15,10 +15,15 @@ minting also avoids a repeated checker invocation.
 
 The frozen public reporter replay executes 4,878 rule bodies with receipts and 179
 with sessions plus receipts. Complete reports, branches and ordered logical
-calculation results match. Wall time regressed on the measured small public
+calculation results match. Initial IE5 wall time regressed on the measured small public
 fixtures: reporter medians 5.83 s versus 6.79 s in one balanced shared-host run.
-Counted savings do not establish elapsed-time gains; bookkeeping remains a named
-performance follow-up.
+IE6 then reduced repeated policy accounting, preserving live hashing, mutation
+guards, cloning and limits. In a new balanced comparison, session medians improved
+9.59→9.03 s on the reporter, 2.41→1.99 s on course and 0.574→0.541 s on localized
+controls against the archived pre-IE6 session. Full evaluation with receipts was
+still faster in each comparison (8.50 s, 0.86 s and 0.423 s). Small shared-host
+samples establish no general speedup; remaining bookkeeping stays an explicit
+performance follow-up. Do not compare elapsed values across these separate runs.
 
 The session is in-process and bounded to one generation, 100,000 retained rows and
 32 MiB projected cache content by default. Unknown/reference/observer modes and

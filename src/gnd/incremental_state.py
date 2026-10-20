@@ -50,13 +50,27 @@ def _children(value):
     raise _Unsupported
 
 
-def _measure(value, limit):
-    """Bound work before cloning; count shared objects once and reject cycles."""
+@dataclasses.dataclass(frozen=True, slots=True)
+class _Footprint:
+    size: int
+    nodes: int
+    depth: int
+
+
+def _footprint(value, limit, *, policy_footprint=None):
+    """Conservative storage and logical work, with a verified immutable subtree.
+
+    The optional summary is created locally from a normalized policy, never
+    supplied by a cache value. Skipping it may overcount sharing with the rest
+    of the entry; it cannot hide bytes, logical node occurrences or depth.
+    """
     seen, active = set(), set()
-    nodes, total = 0, 0
+    nodes, total, deepest = 0, 0, 0
 
     def walk(item, depth):
-        nonlocal nodes, total
+        nonlocal nodes, total, deepest
+        if depth > deepest:  # noqa: PLR1730 -- avoid a function call per accounting node
+            deepest = depth
         nodes += 1
         if nodes > MAX_NODES or depth > MAX_DEPTH:
             raise _Unsupported
@@ -66,6 +80,14 @@ def _measure(value, limit):
         if identity in seen:
             return
         seen.add(identity)
+        if policy_footprint is not None and item is policy_footprint[0]:
+            summary = policy_footprint[1]
+            nodes += summary.nodes - 1
+            deepest = max(deepest, depth + summary.depth)
+            total += summary.size
+            if nodes > MAX_NODES or deepest > MAX_DEPTH or total > limit:
+                raise _Unsupported
+            return
         kind = type(item)
         if isinstance(item, (FunctionType, BuiltinFunctionType, CodeType, type)):
             total += 8  # borrowed module/code/type handle; never traverse globals
@@ -75,8 +97,6 @@ def _measure(value, limit):
             if len(item) > MAX_NODES:
                 raise _Unsupported
             total += sys.getsizeof(dict(item))
-        if dataclasses.is_dataclass(item) and hasattr(item, "__dict__"):
-            total += sys.getsizeof(item.__dict__)
         if total > limit:
             raise _Unsupported
         if item is None or kind in (str, int, bool):
@@ -85,6 +105,12 @@ def _measure(value, limit):
             if not math.isfinite(item):
                 raise _Unsupported
             return
+        if (not (kind is dict or kind is tuple or kind is list or kind is frozenset
+                 or kind is MappingProxyType)
+                and dataclasses.is_dataclass(item) and hasattr(item, "__dict__")):
+            total += sys.getsizeof(item.__dict__)
+            if total > limit:
+                raise _Unsupported
         active.add(identity)
         try:
             for child in _children(item):
@@ -94,9 +120,24 @@ def _measure(value, limit):
 
     try:
         walk(value, 0)
-        return total
+        return _Footprint(total, nodes, deepest)
     except (TypeError, ValueError, OverflowError, RecursionError, _Unsupported):
         return None
+
+
+def _measure(value, limit, *, policy_footprint=None):
+    """Bound work before cloning; count shared objects once and reject cycles."""
+    kind = type(value)
+    if (value is None or kind is str or kind is int or kind is bool or kind is float):
+        try:
+            if MAX_NODES < 1 or MAX_DEPTH < 0 or (kind is float and not math.isfinite(value)):
+                return None
+            size = sys.getsizeof(value)
+            return size if size <= limit else None
+        except (TypeError, ValueError, OverflowError):
+            return None
+    result = _footprint(value, limit, policy_footprint=policy_footprint)
+    return result.size if result is not None else None
 
 
 def _clone(value):
@@ -174,6 +215,7 @@ class _PreparedPolicy:
     guards: tuple
     mutable: tuple
     mutable_key: object
+    footprint: _Footprint | None
 
 
 _DIAGNOSTICS = (
@@ -367,15 +409,17 @@ class ReuseState:
         if active_state() is not self:
             raise ReuseRefused("not-active")
         guards, mutable = [], []
-        key = mutable_key = None
+        key = mutable_key = footprint = None
         try:
             key = _policy(policy, guards=guards, mutable=mutable)
             mutable_key = fingerprint(tuple(mutable))
-            if mutable_key is None or _measure(key, self._max_bytes) is None:
+            footprint = _footprint(key, self._max_bytes)
+            if mutable_key is None or footprint is None:
                 key = None
         except (TypeError, ValueError, OverflowError, RecursionError, _Unsupported):
             key = None
-        return _PreparedPolicy(self._authority, key, tuple(guards), tuple(mutable), mutable_key)
+        return _PreparedPolicy(self._authority, key, tuple(guards), tuple(mutable),
+                               mutable_key, footprint)
 
     def reuse(self, namespace, unit, snapshot, calculate, *, policy=(), rows=0):
         if self._closed:
@@ -401,11 +445,13 @@ class ReuseState:
                         or any(function.__code__ is not code for function, code in policy.guards)
                         or fingerprint(policy.mutable) != policy.mutable_key):
                     raise _Unsupported
-                policy_key = policy.key
+                policy_key, policy_size = policy.key, policy.footprint
             else:
                 policy_key = _policy(policy)
-            signature = (policy_key, getattr(calculate, "__code__", calculate), shape)
-            hash(signature)
+                policy_size = None  # admission metadata is unnecessary on a hit
+            calculation_key = getattr(calculate, "__code__", calculate)
+            signature = (policy_key, calculation_key, shape)
+            hash(signature)  # class/metaclass hashability may change after preparation
             previous = self._candidate.get(key, self._prior.get(key))
             if previous is not None and previous.signature == signature:
                 result = _clone(previous.value)
@@ -428,8 +474,15 @@ class ReuseState:
             self._stats["bypasses"] += 1
             self._candidate.pop(key, None)
             return value
+        if policy_size is None:
+            policy_size = _footprint(policy_key, self._max_bytes)
+        if policy_size is None:
+            self._candidate.pop(key, None)
+            self._stats["bypasses"] += 1
+            return value
         measured = _measure(
-            (key, signature, value, tuple(branches)), max(0, self._max_bytes - ENTRY_METADATA_BYTES)
+            (key, signature, value, tuple(branches)), max(0, self._max_bytes - ENTRY_METADATA_BYTES),
+            policy_footprint=(policy_key, policy_size),
         )
         if measured is None or type(count) is not int or count < 0:
             self._candidate.pop(key, None)
@@ -445,6 +498,7 @@ class ReuseState:
         measured = _measure(
             (key, signature, private, stored_branches),
             max(0, self._max_bytes - ENTRY_METADATA_BYTES),
+            policy_footprint=(policy_key, policy_size),
         )
         if measured is None:
             self._stats["bypasses"] += 1

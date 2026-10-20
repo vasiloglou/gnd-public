@@ -1,0 +1,3 @@
+Sanitation annotation: machine root replaced with <REPO>.
+Building wheel (uv build backend)...
+Successfully built /private/tmp/gnd-ie6-dist/get_nick_done-0.1.0-py3-none-any.whl

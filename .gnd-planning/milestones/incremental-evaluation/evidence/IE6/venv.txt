@@ -1,0 +1,4 @@
+Sanitation annotation: machine root replaced with <REPO>.
+Using CPython 3.11.15 interpreter at: .venv/bin/python
+Creating virtual environment at: /private/tmp/gnd-ie6-311-venv
+Activate with: source /private/tmp/gnd-ie6-311-venv/bin/activate

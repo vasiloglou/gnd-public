@@ -1,0 +1,12 @@
+Sanitation annotation: machine root replaced with <REPO>.
+Using Python 3.14.3 environment at: /private/tmp/gnd-ie6-final-venv
+  × No solution found when resolving dependencies:
+  ╰─▶ Because jsonschema was not found in the cache and get-nick-done==0.1.0
+      depends on jsonschema==4.26.0, we can conclude that get-nick-done==0.1.0
+      cannot be used.
+      And because only get-nick-done==0.1.0 is available and you require
+      get-nick-done, we can conclude that your requirements are unsatisfiable.
+
+      hint: Packages were unavailable because the network was disabled. When
+      the network is disabled, registry packages may only be read from the
+      cache.

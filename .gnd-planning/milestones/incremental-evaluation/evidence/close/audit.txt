@@ -1,0 +1,6 @@
+final identities: 30/30 match
+measurement maps: 238 source / 346 fixture match
+historical phase identities: 115 match at original commits; per phase [10, 16, 20, 17, 18, 34]
+close readers: 4 distinct retained opinions; close-with-carryovers
+sanitation: 2 reproduced before/after repairs; machine-home scan clear
+runtime unchanged since final measurement; data-only audit exit 0

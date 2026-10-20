@@ -1,0 +1,6 @@
+Sanitation annotation: machine root replaced with <REPO>.
+Traceback (most recent call last):
+  File "<REPO>/.gnd-planning/milestones/incremental-evaluation/evidence/IE6/identity_negative.py", line 22, in <module>
+    assert before != module.identity(root), 'runtime input mutation escaped identity map'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: runtime input mutation escaped identity map

@@ -1,0 +1,66 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "authorization": "002 owner whole-milestone execution delegation and explicit CLI phase-review transfer authorization",
+  "scope": "IE1 corpus correction and reproduced review repairs; no new review opinion on repaired bytes",
+  "instrument": "corpus first plus one CLI reader and bounded confirmation",
+  "budget": "one committed generation and staging; 100000 rows; 32 MiB retained Python object projection; no third review",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/approval.json",
+      "sha256": "13ebc12c68fedff535ed3b3c532ca6ddebef54061835440eaa2953316e3ecd46"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/confirmation-red.txt",
+      "sha256": "f2fac4c7eddfb2cd6b435e6008d9874aa6a3d3720303458d5cbc3b3cc62670ec"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/corpus-red.txt",
+      "sha256": "6a596e06c2b1dcaabe10d60e77c6e2110a9df8c5ece44fc8678d133061e655a9"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/dynamic-query-successor.json",
+      "sha256": "61b223e728cb0444efeedcc2ded5ce9b501246cf1df66aa5b37aac3f0e422bb2"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/review-red.txt",
+      "sha256": "302ffd54b7e6a543a271c26299f06d42c11f2772c076a56c4e4622b67d18b2a7"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE1-codex-confirmation.md",
+      "sha256": "43ea3b45f013b8b29442c287ed81ac1356f30720fc8de3f622b673117bcb8fb0"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE1-codex-review.md",
+      "sha256": "baa93baa16f4a1c655e9aa1e97690bac114458e87de3804d441c018f39fb29a2"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE1-spec.md",
+      "sha256": "295dcb0d64d89c00cbd0a912ec97ab7ae0c6d2d85e7552ce324361a137fde55b"
+    },
+    {
+      "path": "src/gnd/incremental_state.py",
+      "sha256": "9d0902ec417f95e77165683304dd80dca43ee06e7f47fd4561e31d126057b0a4"
+    },
+    {
+      "path": "src/gnd/model_index.py",
+      "sha256": "a342040b95d33182da92ff265be5be4e1d9ef4d1d2b98ca887abf20c7a5b06a8"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "4249acfb4af8974ddc035dccd2f9dc7d44226142ca10fad3ec384ac627dec730"
+    },
+    {
+      "path": "tests/test_incremental_state.py",
+      "sha256": "009ccde0371d0c60a425e61dffb46f082cde62ba253afdaf836dff334f063aea"
+    },
+    {
+      "path": "tests/test_incremental_state_review.py",
+      "sha256": "1f6f0c74d3eda0b442a710eea1b06efe76de9f1b4068520e25f6c9a97978c2aa"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "f553f9dd9a8f81b8caee782ae0adf67996d653ae0ea4bddfacd02638ef0e4af1"
+    }
+  ]
+}

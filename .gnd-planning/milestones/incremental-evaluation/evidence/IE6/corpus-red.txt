@@ -1,0 +1,77 @@
+Sanitation annotation: machine root replaced with <REPO>; runtime addresses remain diagnostic only.
+FFF.......                                                               [100%]
+=================================== FAILURES ===================================
+__________ test_prepared_policy_tree_is_measured_once_for_many_misses __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c576b10>
+
+    def test_prepared_policy_tree_is_measured_once_for_many_misses(monkeypatch):
+        owner, m = None, model()
+        owner = ReuseState(m)
+        visited = []
+        original = state._children
+    
+        def children(value):
+            visited.append(value)
+            return original(value)
+    
+        monkeypatch.setattr(state, '_children', children)
+        with owner.transaction(m):
+            policy = owner.prepare_policy(_large_policy())
+            for index in range(12):
+                assert owner.reuse('work', index, (), _helper, policy=policy) == [1]
+        # The exact normalized policy root was already bounded during preparation.
+>       assert sum(item is policy.key for item in visited) == 1
+E       assert 25 == 1
+E        +  where 25 = sum(<generator object test_prepared_policy_tree_is_measured_once_for_many_misses.<locals>.<genexpr> at 0x10c845620>)
+
+tests/test_incremental_performance.py:36: AssertionError
+____________ test_prepared_policy_hash_not_repeated_at_each_lookup _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c834190>
+
+    def test_prepared_policy_hash_not_repeated_at_each_lookup(monkeypatch):
+        import builtins
+    
+        hashed = []
+    
+        def observed(value):
+            hashed.append(value)
+            return builtins.hash(value)
+    
+        monkeypatch.setattr(state, 'hash', observed, raising=False)
+        m = model()
+        owner = ReuseState(m)
+        with owner.transaction(m):
+            policy = owner.prepare_policy(_large_policy())
+            for index in range(12):
+                owner.reuse('work', index, (), _helper, policy=policy)
+>       assert not any(type(value) is tuple and len(value) == 3 and value[0] is policy.key
+                       for value in hashed)
+E       assert not True
+E        +  where True = any(<generator object test_prepared_policy_hash_not_repeated_at_each_lookup.<locals>.<genexpr> at 0x10c8457e0>)
+
+tests/test_incremental_performance.py:57: AssertionError
+_____________ test_builtin_size_walk_skips_dataclass_introspection _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c862c50>
+
+    def test_builtin_size_walk_skips_dataclass_introspection(monkeypatch):
+        original = state.dataclasses.is_dataclass
+        inspected = []
+    
+        def observed(value):
+            inspected.append(type(value))
+            return original(value)
+    
+        monkeypatch.setattr(state.dataclasses, 'is_dataclass', observed)
+        assert state._measure({'a': [1, True, None, 2.0], 'b': (2, 'x')}, 10**6)
+>       assert not inspected
+E       AssertionError: assert not [<class 'dict'>, <class 'str'>, <class 'list'>, <class 'int'>, <class 'bool'>, <class 'NoneType'>, ...]
+
+tests/test_incremental_performance.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_performance.py::test_prepared_policy_tree_is_measured_once_for_many_misses
+FAILED tests/test_incremental_performance.py::test_prepared_policy_hash_not_repeated_at_each_lookup
+FAILED tests/test_incremental_performance.py::test_builtin_size_walk_skips_dataclass_introspection
+3 failed, 7 passed in 0.41s

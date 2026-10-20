@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/incremental-evaluation/evidence/IE3/dynamic-query-successor.json",
+  "predecessor_sha256": "50ef3b70c3898321033a0e77d80e7d360f924a9341bf6a83684b80f58a7366ba",
+  "reason": "IE4 new lower checking feedback wire annotations and host facade signatures; exact AST inventory only, no raw model-query or runtime import waiver.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/api.py",
+      "check_with_feedback",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/api.py",
+      "check_with_feedback",
+      "tuple[dict[str, Any], dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "<module>",
+      "Annotated[int, Field(strict=True, ge=0, le=2 ** 31 - 1)]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "<module>",
+      "Literal['available', 'unavailable', 'not-evaluated', 'overflow']",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "FactCount",
+      "Annotated[str, Field(min_length=1, max_length=256)]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "FactCount",
+      "Literal['available', 'not-evaluated', 'overflow']",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "SessionFeedback",
+      "Annotated[int, Field(strict=True, ge=1, le=1000000)]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "SessionFeedback",
+      "Annotated[tuple[FactCount, ...], Field(max_length=128)]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "SessionFeedback",
+      "Literal[0, 1, 2, 3, 4, 70]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "SessionFeedback",
+      "tuple[FactCount, ...]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "build_feedback",
+      "counts.get(key, 0)",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "build_feedback",
+      "population.facts.get(name, ())",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "build_feedback",
+      "view.facts[name]",
+      1
+    ],
+    [
+      "src/gnd/evaluation_feedback.py",
+      "compose_observation",
+      "getattr(population, key)",
+      2
+    ]
+  ],
+  "result_distinct_rows": 6209,
+  "result_occurrences": 7792
+}

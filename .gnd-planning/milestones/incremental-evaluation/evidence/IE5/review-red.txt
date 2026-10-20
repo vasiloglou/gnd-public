@@ -1,0 +1,78 @@
+Machine/user paths sanitized only.
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_observed_calculations_preserve_order_and_multiplicity __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109fcb210>
+
+    def test_observed_calculations_preserve_order_and_multiplicity(monkeypatch):
+        from contextlib import contextmanager
+    
+        @contextmanager
+        def calculations():
+            yield ['first', 'first', 'second']
+    
+        monkeypatch.setattr(tool, 'capture_complete', calculations)
+        rows = []
+        token = tool.COMPLETE_CALL_SINK.set(rows)
+        try:
+            tool.public_call(lambda: {'exit_code': 0})
+        finally:
+            tool.COMPLETE_CALL_SINK.reset(token)
+>       assert rows[0]['calculations'] == ['first', 'first', 'second']
+E       AssertionError: assert ['first', 'second'] == ['first', 'first', 'second']
+E         
+E         At index 1 diff: 'second' != 'first'
+E         Right contains one more item: 'second'
+E         Use -v to get more diff
+
+tests/test_incremental_session_measurement.py:68: AssertionError
+___________ test_all_matching_errors_cannot_satisfy_frozen_workload ____________
+
+    def test_all_matching_errors_cannot_satisfy_frozen_workload():
+        from copy import deepcopy
+    
+        import pytest
+        from measure_evaluation_sessions import compare_modes
+    
+        row = {'payload': 'same-error', 'exit': 70, 'branches': ['registered'],
+               'calculations': ['same-envelope']}
+        modes = {mode: {'calls': [deepcopy(row) for _ in range(3)]} for mode in 'ABC'}
+        # The original comparator accepted these three common failures. The
+        # required workload-aware entry point must reject them.
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_session_measurement.py:82: Failed
+______________ test_session_timing_refuses_profiled_measurements _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a0b6290>
+
+    def test_session_timing_refuses_profiled_measurements(monkeypatch):
+        import pytest
+    
+        monkeypatch.setattr(tool.sys, 'getprofile', lambda: object())
+>       with pytest.raises(ValueError, match='instrument'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_session_measurement.py:90: Failed
+_______ test_lookup_denominator_counts_once_even_when_miss_also_bypasses _______
+
+    def test_lookup_denominator_counts_once_even_when_miss_also_bypasses():
+        m, _ = next(tool.localized_inputs())
+        owner = ReuseState(m, max_rows=0)
+        with owner.transaction(m):
+            assert owner.reuse('unit', 'cap', (), lambda: 7, rows=1) == 7
+        stats = owner.stats()
+        assert stats['misses'] == stats['bypasses'] == 1
+>       assert stats['lookups'] == 1
+               ^^^^^^^^^^^^^^^^
+E       KeyError: 'lookups'
+
+tests/test_incremental_prepared_policy.py:169: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_session_measurement.py::test_observed_calculations_preserve_order_and_multiplicity
+FAILED tests/test_incremental_session_measurement.py::test_all_matching_errors_cannot_satisfy_frozen_workload
+FAILED tests/test_incremental_session_measurement.py::test_session_timing_refuses_profiled_measurements
+FAILED tests/test_incremental_prepared_policy.py::test_lookup_denominator_counts_once_even_when_miss_also_bypasses
+4 failed, 12 deselected in 5.44s

@@ -1,0 +1,33 @@
+{
+  "bodies": 179,
+  "exits": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "state": {
+    "hits": 4414,
+    "misses": 71,
+    "bypasses": 0,
+    "generation": 13,
+    "entries": 65,
+    "rows": 999,
+    "bytes": 5356769
+  },
+  "boundary": "Exploratory IE2 payload-only reporter smoke, not full trace acceptance or timing gate. Literal true payload parity printed by local probe; IE3/IE5 own final integrated gates.",
+  "payload_parity": true,
+  "source_sha256": {
+    "src/gnd/extensions.py": "617903b8b5baae2f4aec46f18af0c29d08decf01446139927e65c177797bfb4a",
+    "src/gnd/incremental_state.py": "2c5dfc3391e09396146c93b53ba305226da88bc4b387a2d02060f3b617d360b5"
+  }
+}

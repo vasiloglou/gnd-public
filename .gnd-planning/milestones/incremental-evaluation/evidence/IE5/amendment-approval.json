@@ -1,0 +1,22 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "authorization": "002 owner named milestone auto",
+  "scope": "IE5 reproduced evaluator-error boundary and stable-source measurement guard; corrected diagnostic fixture",
+  "instrument": "same authorized one reviewer plus at most one confirmation",
+  "budget": "same bounds and phase scope; no public service bypass or extra review round",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE5-spec.md",
+      "sha256": "91d559797fe7197175ba5ff6b62d4e8f09120662f3c1668e8c91a8a1c0e38688"
+    },
+    {
+      "path": "tests/test_incremental_prepared_policy.py",
+      "sha256": "07b8b118cd9c543a324e68441dc8b57527bec3a1e8de46fbf04268946c3db66e"
+    },
+    {
+      "path": "tests/test_incremental_session_measurement.py",
+      "sha256": "079fd0f04660a4d4dd41912e007fb274176f3897207c02f5303def0ac656dca8"
+    }
+  ]
+}

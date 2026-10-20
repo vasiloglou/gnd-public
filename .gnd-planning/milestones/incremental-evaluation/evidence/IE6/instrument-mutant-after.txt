@@ -1,0 +1,62 @@
+Sanitation annotation: machine root replaced with <REPO>.
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_prepared_policy_tree_is_measured_once_for_many_misses __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c08d810>
+
+    def test_prepared_policy_tree_is_measured_once_for_many_misses(monkeypatch):
+        m = model()
+        owner = ReuseState(m)
+        visited = []
+        original = state._children
+    
+        def children(value):
+            visited.append(value)
+            return original(value)
+    
+        monkeypatch.setattr(state, '_children', children)
+        with owner.transaction(m):
+            policy = owner.prepare_policy(_large_policy())
+            for index in range(12):
+                assert owner.reuse('work', index, (), _helper, policy=policy) == [1]
+            for snapshot in ((), ('dirty',), ('dirty',)):
+                for index in range(12):
+                    assert owner.reuse('work', index, snapshot, _helper, policy=policy) == [1]
+        # The exact normalized policy root was already bounded during preparation.
+        assert sum(item is policy.key for item in visited) == 1
+>       assert _policy_pair_visits(visited) == 160
+E       assert 7840 == 160
+E        +  where 7840 = _policy_pair_visits([(), ('ee12265c2c9d49edf7c29ee2b3fbb16a7776b643e00a74a6142bc1bfceea68db', ('tuple', ())), ('tuple', ()), (), ((('str',...cd770, file "<REPO>/tests/test_incremental_performance.py", line 12>)), ...])
+
+tests/test_incremental_performance.py:40: AssertionError
+_________ test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c127350>
+
+    def test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk(monkeypatch):
+        m = model()
+        owner = ReuseState(m)
+        traversals = []
+        original = state._children
+    
+        def children(value):
+            traversals.append(value)
+            return original(value)
+    
+        monkeypatch.setattr(state, '_children', children)
+        with owner.transaction(m):
+            for _ in range(5):
+                assert owner.reuse('raw', 'one', (), _helper, policy=_large_policy()) == [1]
+            assert owner.reuse('raw', 'one', ('dirty',), _helper, policy=_large_policy()) == [1]
+        assert owner.stats()['hits'] == 4
+        assert sum(type(value) is tuple and len(value) == 160 for value in traversals) == 2
+>       assert _policy_pair_visits(traversals) == 320
+E       assert 1280 == 320
+E        +  where 1280 = _policy_pair_visits([(), ('ee12265c2c9d49edf7c29ee2b3fbb16a7776b643e00a74a6142bc1bfceea68db', ('tuple', ())), ('tuple', ()), (), (), (('st...cd770, file "<REPO>/tests/test_incremental_performance.py", line 12>)), ...])
+
+tests/test_incremental_performance.py:177: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_performance.py::test_prepared_policy_tree_is_measured_once_for_many_misses
+FAILED tests/test_incremental_performance.py::test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk
+2 failed in 0.30s

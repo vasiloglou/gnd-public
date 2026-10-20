@@ -1,0 +1,11 @@
+{
+  "scope": "frozen before IE1 optimization",
+  "source": "initial IE0 replay; refresh identities after tool-only repairs without changing denominator",
+  "reporter_receipt_calls": 13,
+  "checker_runs": 19,
+  "full_derivation_bodies": 4878,
+  "incremental_target": "strictly less than 4878 on identical 13-call receipt replay; complete parity first",
+  "localized_target": "zero body/evaluator execution for unchanged independent component; no-op zero for both",
+  "new_workload": "not supplied",
+  "timing_gate": false
+}

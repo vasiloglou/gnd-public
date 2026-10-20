@@ -1,0 +1,125 @@
+Machine/user paths sanitized only.
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_________ test_feedback_reader_requires_explicit_discriminators[kind] __________
+
+tag = 'kind'
+
+    @pytest.mark.parametrize('tag', ['kind', 'schema_version', 'operation'])
+    def test_feedback_reader_requires_explicit_discriminators(tag):
+        from gnd.evaluation_feedback import SessionFeedback
+    
+        m, p = next(tool.localized_inputs())
+        _, feedback = api.EvaluationSession(m).check_with_feedback(p, attempt=1)
+        feedback.pop(tag)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_observations.py:270: Failed
+____ test_feedback_reader_requires_explicit_discriminators[schema_version] _____
+
+tag = 'schema_version'
+
+    @pytest.mark.parametrize('tag', ['kind', 'schema_version', 'operation'])
+    def test_feedback_reader_requires_explicit_discriminators(tag):
+        from gnd.evaluation_feedback import SessionFeedback
+    
+        m, p = next(tool.localized_inputs())
+        _, feedback = api.EvaluationSession(m).check_with_feedback(p, attempt=1)
+        feedback.pop(tag)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_observations.py:270: Failed
+_______ test_feedback_reader_requires_explicit_discriminators[operation] _______
+
+tag = 'operation'
+
+    @pytest.mark.parametrize('tag', ['kind', 'schema_version', 'operation'])
+    def test_feedback_reader_requires_explicit_discriminators(tag):
+        from gnd.evaluation_feedback import SessionFeedback
+    
+        m, p = next(tool.localized_inputs())
+        _, feedback = api.EvaluationSession(m).check_with_feedback(p, attempt=1)
+        feedback.pop(tag)
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_observations.py:270: Failed
+________ test_feedback_reader_rejects_duplicate_version_before_collapse ________
+
+    def test_feedback_reader_rejects_duplicate_version_before_collapse():
+        from gnd.evaluation_feedback import SessionFeedback
+    
+        m, p = next(tool.localized_inputs())
+        _, feedback = api.EvaluationSession(m).check_with_feedback(p, attempt=1)
+        encoded = wire(feedback).replace(b'"schema_version":1',
+                                        b'"schema_version":2,"schema_version":1')
+>       with pytest.raises(ValueError, match='duplicate'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_observations.py:281: Failed
+____ test_cancellation_after_feedback_computation_does_not_consume_attempt _____
+
+    def test_cancellation_after_feedback_computation_does_not_consume_attempt():
+        import inspect
+        import sys
+    
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        owner.check(p)
+        generation = owner.stats()['generation']
+        lines, start = inspect.getsourcelines(api.EvaluationSession._call)
+        target = start + next(i for i, line in enumerate(lines) if 'return payload' in line)
+        armed = True
+    
+        def cancel(frame, event, arg):
+            nonlocal armed
+            if armed and event == 'line' and frame.f_code is api.EvaluationSession._call.__code__ and frame.f_lineno == target:
+                armed = False
+                raise KeyboardInterrupt('injected before transaction publication')
+            return cancel
+    
+        previous = sys.gettrace()
+        try:
+            sys.settrace(cancel)
+            with pytest.raises(KeyboardInterrupt):
+                owner.check_with_feedback(p, attempt=1)
+        finally:
+            sys.settrace(previous)
+        assert not armed
+        assert owner.stats()['generation'] == generation
+>       assert owner.check_with_feedback(p, attempt=1)[1]['attempt'] == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_incremental_observations.py:313: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/gnd/api.py:1074: in check_with_feedback
+    return self._call(run, options=(False, False), attempt=attempt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gnd.api.EvaluationSession object at 0x10847a190>
+function = <function EvaluationSession.check_with_feedback.<locals>.run at 0x107ddc7c0>
+options = (False, False), fresh = False, attempt = 1
+
+    def _call(self, function, *, options=(), fresh=False, attempt=None):
+        # An unsupported key deliberately disables both extension and finding
+        # reuse while retaining the same busy/closed/rollback boundary.
+        fresh = fresh or bool(self._model.reference_populations)
+        binding = (object(),) if fresh else options
+        with self._state.transaction(self._model, options=binding):
+            if attempt is not None and (type(attempt) is not int or
+                                        not 1 <= attempt <= 1_000_000 or
+                                        attempt != self._feedback_attempt + 1):
+>               raise ValueError("attempt must be the next sequential feedback attempt")
+E               ValueError: attempt must be the next sequential feedback attempt
+
+src/gnd/api.py:1013: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_observations.py::test_feedback_reader_requires_explicit_discriminators[kind]
+FAILED tests/test_incremental_observations.py::test_feedback_reader_requires_explicit_discriminators[schema_version]
+FAILED tests/test_incremental_observations.py::test_feedback_reader_requires_explicit_discriminators[operation]
+FAILED tests/test_incremental_observations.py::test_feedback_reader_rejects_duplicate_version_before_collapse
+FAILED tests/test_incremental_observations.py::test_cancellation_after_feedback_computation_does_not_consume_attempt
+5 failed, 15 deselected in 0.81s

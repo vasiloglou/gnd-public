@@ -1,0 +1,116 @@
+Retained output; edited only to replace machine repository/user paths.
+Original SHA256: 917d82b15da86d9a75967c794f75690123bc198ee787b3f72b91ac13e40387b3
+
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______________ test_callable_family_default_change_invalidates ________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<USER>/pytest-4100/test_callable_family_default_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aa79cd0>
+
+    def test_callable_family_default_change_invalidates(tmp_path, monkeypatch):
+        from dataclasses import replace
+    
+        import test_public_branch_runtime as corpus
+    
+        from gnd.constraint_families import FAMILIES
+    
+        m, p = corpus._build('P2-039', tmp_path)
+    
+        def evaluator(constraint, snapshot, state=1):
+            return state, []
+    
+        monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+        owner = session(m)
+        same_payload(owner.check(p), api.check(m, p))
+        evaluator.__defaults__ = (0,)
+>       same_payload(owner.check(p), api.check(m, p))
+
+tests/test_incremental_sessions.py:269: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actual = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'accepted', ...}
+expected = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'violated', ...}
+
+    def same_payload(actual, expected):
+        actual_key, expected_key = fingerprint(actual), fingerprint(expected)
+        assert actual_key is not None and expected_key is not None
+>       assert actual_key == expected_key
+E       AssertionError: assert ('dict', ((('... True)), ...)) == ('dict', ((('...False)), ...))
+E         
+E         At index 1 diff: ((('str', 'schema_version'), ('int', 7)), (('str', 'tool'), ('str', 'gnd')), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str', 'accepted')), (('str', 'exit_code'), ('int', 0)), (('str', 'acceptance_ready'), ('bool', True)), (('str', 'model'), ('NoneType', None)), (('str', 'model_digest'), ('str', 'sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd')), (('str', 'population'), ('NoneType', None)), (('str', 'counts'), ('dict', ((('str', 'pass'), ('int', 14)), (('str', 'fail'), ('int', 0)), (('str', 'warning'), ('int'...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_sessions.py:18: AssertionError
+_____________________ test_real_declared_post_is_forwarded _____________________
+
+    def test_real_declared_post_is_forwarded():
+        import json
+    
+        import test_public_transition_contract as corpus
+    
+        from gnd.model import load_model
+        from gnd.population import load_population
+    
+        m = load_model(corpus.MODEL)
+        root = corpus.CORPUS / 'walks' / 'clean-walk'
+        pre = load_population(root / 'pre.pop.yaml', model=m)
+        # The pre-state is deliberately the wrong declared post: dropping it must
+        # not silently produce the successful computed-post result.
+        steps = json.loads((root / 'steps.json').read_text())['steps']
+>       expected = api.transition(m, pre, steps, pre)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_incremental_sessions.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/gnd/api.py:882: in transition
+    _check_steps_input(steps)
+src/gnd/api.py:258: in _check_steps_input
+    _path(value, name="steps")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = [{'op': 'approve_expense', 'bindings': {'expense': 41, 'approver': 'alice'}}, {'op': 'submit_expense_to_workday', 'bindings': {'expense': 41, 'submission': 'WD-9001', 'chain': 'c-1'}}]
+name = 'steps'
+
+    def _path(value: object, *, name: str) -> str:
+        if not isinstance(value, (str, os.PathLike)):
+>           raise TypeError(f"{name} must be a path or loaded GND object")
+E           TypeError: steps must be a path or loaded GND object
+
+src/gnd/checking_service.py:57: TypeError
+______________________ test_real_bound_reference_context _______________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<USER>/pytest-4100/test_real_bound_reference_cont0')
+
+    def test_real_bound_reference_context(tmp_path):
+        import test_reference_population_corpus as corpus
+    
+        from gnd.model import load_model
+        from gnd.population import load_population
+        from gnd.references import bind_references
+    
+        domain = next(iter(corpus.INPUTS['domains']))
+        bundle = corpus._bundle(domain, tmp_path / 'references')
+        m = load_model(bundle['root'] / 'model.orm.yaml')
+        p = load_population(bundle['root'] / 'candidate.pop.json', model=m)
+        references = bind_references(m, root=bundle['root'])
+        expected = api.check(m, p, references=references)
+        assert expected['schema_version'] == 12
+        assert expected['reference_binding']['references']
+        current = session(m)
+        same_payload(current.check(p, references=references), expected)
+        assert current.stats()['entries'] == 0
+>       assert fingerprint(api.check(m, p)) != fingerprint(expected)
+E       AssertionError: assert ('dict', ((('str', 'schema_version'), ('int', 12)), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str...9308de53d3749fb54fe9e8a356961cc3b')), (('str', 'reference_binding'), ('dict', (((...), (...)), ((...), (...))))), ...)) != ('dict', ((('str', 'schema_version'), ('int', 12)), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str...9308de53d3749fb54fe9e8a356961cc3b')), (('str', 'reference_binding'), ('dict', (((...), (...)), ((...), (...))))), ...))
+E        +  where ('dict', ((('str', 'schema_version'), ('int', 12)), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str...9308de53d3749fb54fe9e8a356961cc3b')), (('str', 'reference_binding'), ('dict', (((...), (...)), ((...), (...))))), ...)) = fingerprint({'schema_version': 12, 'command': 'check', 'outcome': 'accepted', 'exit_code': 0, ...})
+E        +    where {'schema_version': 12, 'command': 'check', 'outcome': 'accepted', 'exit_code': 0, ...} = <function check at 0x10a991b20>(Model(version=4, model_id='urn:gnd-fixture:v71-dispatch-references@1', source={'kind': 'text-conversation', 'confidenc...d9050019bfdd94d214', 'fact_types': ['dispatch_catalog_allows']}], rejected_proposals=[], deontic_notes=[], warnings=[]), Population(format_version=1, model='model.orm.yaml', model_id='urn:gnd-fixture:v71-dispatch-references@1', source='fix...P-17', 'warehouse': 'WH-A'}], 'dispatch_subject_product': [{'shipment': 'SHIP-17', 'product': 'GEAR-2'}]}, warnings=[]))
+E        +      where <function check at 0x10a991b20> = api.check
+E        +  and   ('dict', ((('str', 'schema_version'), ('int', 12)), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str...9308de53d3749fb54fe9e8a356961cc3b')), (('str', 'reference_binding'), ('dict', (((...), (...)), ((...), (...))))), ...)) = fingerprint({'schema_version': 12, 'command': 'check', 'outcome': 'accepted', 'exit_code': 0, ...})
+
+tests/test_incremental_sessions.py:310: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_sessions.py::test_callable_family_default_change_invalidates
+FAILED tests/test_incremental_sessions.py::test_real_declared_post_is_forwarded
+FAILED tests/test_incremental_sessions.py::test_real_bound_reference_context
+3 failed, 14 deselected in 0.73s

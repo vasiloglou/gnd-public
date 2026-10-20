@@ -23,6 +23,8 @@ operating system, Python version, provider, or native toolchain. See the
 | Use a fixed catalog | Version-4 reference populations with path and byte-hash binding | Candidate/reference fact ownership is disjoint | [Data and transitions](../guides/data-and-transitions.md) |
 | Audit an operation walk | `check --pre --steps --post`; `api.transition` | Frame checks cover the walk's touched fact types | [Python API](python-api.md) |
 | Reuse a checked pre-state | `api.check_with_receipt`; `api.transition(pre_receipt=...)` | In-process, default options; only the pre-state check is skipped | [Python API](python-api.md#reusing-a-checked-pre-state) |
+| Recheck related snapshots | `api.EvaluationSession` | Explicit loaded-input session; conservative fresh fallback, one bounded generation, full snapshot validation | [Python API](python-api.md#reusing-evaluation-work-across-snapshots) |
+| Incorporate host observations | `EvaluationSession.observe`, `check_with_feedback` | Validated relation replacement; counts are diagnostic, not external truth; separate in-process feedback wire | [Host loop](../agents/dev-session.md#a-host-loop-in-one-python-process) |
 | Generate a Python project | `codegen` plus explicitly selected skill | Developer writes extension behavior; temporal models refused | [Generated projects](../guides/generated-projects.md) |
 | Detect model/project drift | `conformance`; static architecture checks | Does not execute the app or verify all extension behavior | [Generated projects](../guides/generated-projects.md) |
 | Change an existing model | Staged `evolve preview/apply/finalize` | Explicit reviewed changes; no automatic regeneration | [Evolution](../guides/evolution-and-recovery.md) |

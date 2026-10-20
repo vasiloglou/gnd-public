@@ -1,0 +1,22 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE3 implementation observations and reproduced review repairs",
+  "authorization": "002 and explicit owner Codex CLI transfer authorization",
+  "instrument": "one independent CLI reader and one bounded confirmation; no third review",
+  "budget": "same IE1/IE2 bounds; no new scope, publication, merge or certification",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE3-spec.md",
+      "sha256": "01e7ca1c7eceb6e5456f00a108b4c16f26ef66b835d07614237b56b6c11fb1d0"
+    },
+    {
+      "path": "tests/test_incremental_sessions.py",
+      "sha256": "be576c85ec307c8ca6c0f0cfb8d73bd92b3543f8412fb9ccba0d0489d1c3d982"
+    },
+    {
+      "path": "tests/test_incremental_session_replay.py",
+      "sha256": "62c642e930e6312b3fdb7ec8f8142d62eb78b74c2f7140418d33d9293e1caeb3"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd-fixture:incremental@1",
+    "source": "fixture",
+    "label": "boundary",
+    "covers": [
+      "left",
+      "right",
+      "left_copy",
+      "right_copy"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "left": [
+      {
+        "item": "alpha"
+      },
+      {
+        "item": "beta"
+      },
+      {
+        "item": "gamma"
+      }
+    ],
+    "right": [
+      {
+        "item": "other"
+      }
+    ],
+    "left_copy": [],
+    "right_copy": []
+  }
+}

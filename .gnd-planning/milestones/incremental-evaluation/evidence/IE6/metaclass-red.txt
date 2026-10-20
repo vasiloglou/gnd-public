@@ -1,0 +1,28 @@
+Sanitation annotation: machine root replaced with <REPO>.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_custom_metaclass_equality_cannot_hide_record_dictionary _________
+
+    def test_custom_metaclass_equality_cannot_hide_record_dictionary():
+        class Meta(type):
+            __hash__ = type.__hash__
+    
+            def __eq__(cls, other):
+                return cls is other or other is type(None)
+    
+        @dataclass
+        class Record(metaclass=Meta):
+            values: list
+    
+        Record.__module__ = 'gnd.test'
+        value = Record([])
+        minimum = sum(state.sys.getsizeof(item) for item in (value, value.__dict__, value.values))
+>       assert state._measure(value, minimum-1) is None
+E       assert 112 is None
+E        +  where 112 = <function _measure at 0x108609080>(test_custom_metaclass_equality_cannot_hide_record_dictionary.<locals>.Record(values=[]), (408 - 1))
+E        +    where <function _measure at 0x108609080> = state._measure
+
+tests/test_incremental_performance.py:211: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_performance.py::test_custom_metaclass_equality_cannot_hide_record_dictionary
+1 failed in 0.20s

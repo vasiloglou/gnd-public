@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/incremental-evaluation/evidence/IE4/dynamic-query-successor.json",
+  "predecessor_sha256": "f580f46064aaf9671b3d82d518ee5e479ec1732d2b26d849e15edfd700fa6714",
+  "reason": "IE5 measured no registered dynamic-candidate row delta. This authenticated no-delta attestation preserves exact current inventory with zero new raw-query/import allowances.",
+  "removed": [],
+  "added": [],
+  "result_distinct_rows": 6209,
+  "result_occurrences": 7792
+}

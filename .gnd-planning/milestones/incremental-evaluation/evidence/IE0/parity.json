@@ -1,0 +1,292 @@
+[
+  {
+    "case": "0",
+    "digest": "9f32a0a397b7b3d71ad44a79494e01d7fe5f0515b9e19a61a27d31a4f219e223",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "1",
+    "digest": "9f32a0a397b7b3d71ad44a79494e01d7fe5f0515b9e19a61a27d31a4f219e223",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "2",
+    "digest": "84b41c00a22e0a34bc5d2aad4df21bf2feed91a4835e2d4369ba54351328f4f7",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "3",
+    "digest": "f717006f77f7661aa25eab3f063d7bd2c8d1917fe69a489c365d3d8f8903b588",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "4",
+    "digest": "15335fee837afb76f387e7bc2d27a416b6c0d08c632b1ac719d33269acd39eec",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "5",
+    "digest": "8f7108279ea1c361cf5b73315efde393479969b0dc9ea7517673929a60cfa545",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "recursive",
+    "digest": "2fda3d1e08c40c6c9137767cb8dfc5e7f0bac247c39b787a0143c1c558d3ab55",
+    "exit": 0,
+    "expected_exit": 0,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "recursive-delete",
+    "digest": "fdcf32ef3e7706d94dfa3d607742a8136972ada9c50071ac5e74b48bbdd0f0e5",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "recursive-alternate-delete",
+    "digest": "65e25be55cbf1ce36214668cc4956cd89e2e449094ad313eeb2d47b94e05d6bd",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "recursive-alternate",
+    "digest": "732d9ea863b949b4bbc960e123cdae52c0ef70aba97e4c36853623c25c60dec7",
+    "exit": 0,
+    "expected_exit": 0,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "partial",
+    "digest": "414aeef05055817e57da4986f42aef99ba3bc098c04d43b6034bbedcd469da0f",
+    "exit": 4,
+    "expected_exit": 4,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "aggregate",
+    "digest": "eb6cced6021d2135401126b6d27880a8be3e66d6ac59ab72244a00297cde6213",
+    "exit": 0,
+    "expected_exit": 0,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "unavailable",
+    "digest": "eb61adc231e146d2495be50b08c210cedbffeeb8009c77f8a6ad09305ca49a4d",
+    "exit": 4,
+    "expected_exit": 4,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "negative-absent",
+    "digest": "d45df8f5b920a6a74e0a1965dc5c89752fd6a445a59fd2cc7d2f49d46a2c34d5",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "negative-present",
+    "digest": "808774aeaada2c80ba446bf88dbe3b876c1cf5ef661ca75e5c8716ee457c234e",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "roster-empty",
+    "digest": "ddcc9c3f0e94f9e9f984467e8018408a842fb8264c93e5c112e88c871c50a23b",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "roster-added",
+    "digest": "28cd590a79a846e8e1786700699df227fda30508af7e21501f9c8bb594b00e97",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": [],
+    "surfaces": [
+      "payload",
+      "exit",
+      "branches",
+      "extensions",
+      "lineage",
+      "unavailable",
+      "possible"
+    ]
+  },
+  {
+    "case": "reference-initial",
+    "exit": 0,
+    "expected_exit": 0,
+    "mismatches": []
+  },
+  {
+    "case": "reference-changed",
+    "exit": 1,
+    "expected_exit": 1,
+    "mismatches": []
+  },
+  {
+    "case": "option-compiled",
+    "exit": 4,
+    "expected_exit": 4,
+    "mismatches": []
+  }
+]

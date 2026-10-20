@@ -1,0 +1,1 @@
+Only machine repository root replaced with <REPO> in JSON path fields and retained output. Identity map keys are repository-relative and hash/measurement values are unchanged. Original raw outputs remain in /private/tmp/ie6-*.json. Retained JSON formatting uses indent2.

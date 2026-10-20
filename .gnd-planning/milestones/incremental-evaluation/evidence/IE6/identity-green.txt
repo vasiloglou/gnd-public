@@ -1,0 +1,2 @@
+Sanitation annotation: machine root replaced with <REPO>.
+legacy-helper mutation rejected

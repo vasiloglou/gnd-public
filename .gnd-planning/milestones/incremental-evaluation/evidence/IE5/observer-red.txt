@@ -1,0 +1,32 @@
+Machine/user paths sanitized only.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_complete_observer_uses_one_outer_boundary_including_cached_returns ____
+
+    def test_complete_observer_uses_one_outer_boundary_including_cached_returns():
+        from gnd import extensions
+        from gnd.extension_preparation import calculation_scope
+        from gnd.incremental_state import ReuseState
+        from gnd.model import load_model
+        from gnd.population import load_population
+    
+        root = tool.ROOT / 'tests/fixtures/v70-phase4'
+        model = load_model(root / 'recursive.orm.yaml')
+        population = load_population(root / 'recursive.pop.json', model=model)
+        relations = extensions.base_relations(model, population)
+        with calculation_scope(model, population), tool.capture_complete() as full:
+            for _ in range(2):
+                extensions._exact_extension_calculator(model, relations)
+        owner = ReuseState(model)
+        with owner.transaction(model), calculation_scope(model, population), tool.capture_complete() as reused:
+            for _ in range(2):
+                extensions._exact_extension_calculator(model, relations)
+>       assert len(full) == len(reused) == 2
+E       AssertionError: assert 3 == 4
+E        +  where 3 = len(['8e66fcd71af8bb749a5cc4a3421477362b59b2f13e8d96dcb63c17d204bdf49c', '8e66fcd71af8bb749a5cc4a3421477362b59b2f13e8d96dcb63c17d204bdf49c', '8e66fcd71af8bb749a5cc4a3421477362b59b2f13e8d96dcb63c17d204bdf49c'])
+E        +  and   4 = len(['8e66fcd71af8bb749a5cc4a3421477362b59b2f13e8d96dcb63c17d204bdf49c', '8e66fcd71af8bb749a5cc4a3421477362b59b2f13e8d96dc...49a5cc4a3421477362b59b2f13e8d96dcb63c17d204bdf49c', '8e66fcd71af8bb749a5cc4a3421477362b59b2f13e8d96dcb63c17d204bdf49c'])
+
+tests/test_incremental_session_measurement.py:112: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_session_measurement.py::test_complete_observer_uses_one_outer_boundary_including_cached_returns
+1 failed, 7 deselected in 0.43s

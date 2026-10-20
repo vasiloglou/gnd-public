@@ -1,0 +1,18 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE4 corpus-driven overflow/unavailable and encoded-reader amendment",
+  "authorization": "002 named owner delegation",
+  "decision": "explicit asserted status; valid indeterminate diagnostics allowed; prior cache discard policy retained",
+  "budget": "same bounds, instrument and phase scope",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE4-spec.md",
+      "sha256": "31ab303b3ca2d19ae85198eb5f898a634c14bccb0bebaf77dcc1d76250c0b56f"
+    },
+    {
+      "path": "tests/test_incremental_observations.py",
+      "sha256": "43bc80c6a0fc0042a5fc88df30418c96a87b3231ab52f46fcf9ca1c359fb605b"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+Machine/user paths sanitized.
+........F...F                                                            [100%]
+=================================== FAILURES ===================================
+______________________ test_asserted_overflow_is_explicit ______________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108685610>
+
+    def test_asserted_overflow_is_explicit(monkeypatch):
+        from gnd import evaluation_feedback as feedback
+    
+        m, p = next(tool.localized_inputs())
+        monkeypatch.setattr(feedback, 'MAX_COUNT', 1)
+        result = feedback.build_feedback(m, p, api.check(m, p), attempt=1)
+        row = next(row for row in result['rows'] if row['fact_type'] == 'left')
+        assert row['asserted_count'] is None
+>       assert row['asserted_status'] == 'overflow'
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'asserted_status'
+
+tests/test_incremental_observations.py:133: KeyError
+________________ test_current_unavailable_counts_are_not_empty _________________
+
+    def test_current_unavailable_counts_are_not_empty():
+        from gnd.evaluation_feedback import build_feedback
+        from gnd.extensions import structured_extension_view
+        from gnd.model import load_model
+        from gnd.population import load_population
+    
+        root = tool.ROOT / 'tests/fixtures/v62-phase3'
+        m = load_model(root / 'models/exact-terms.orm.yaml')
+        p = load_population(root / 'populations/term-input.pop.yaml', model=m)
+        view = structured_extension_view(m, p)
+        assert view.unavailable
+        result = build_feedback(m, p, api.check(m, p), attempt=1)
+        rows = {row['fact_type']: row for row in result['rows']}
+        for name in view.unavailable:
+>           assert rows[name]['computed_status'] == 'unavailable'
+E           AssertionError: assert 'not-evaluated' == 'unavailable'
+E             
+E             - unavailable
+E             + not-evaluated
+
+tests/test_incremental_observations.py:213: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_observations.py::test_asserted_overflow_is_explicit
+FAILED tests/test_incremental_observations.py::test_current_unavailable_counts_are_not_empty
+2 failed, 11 passed in 1.70s

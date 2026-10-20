@@ -35,6 +35,36 @@ RETAINED_EXTERNAL_REFERENCES = {
     },
 }
 
+# Review snapshots preserve the exact original text, including relative links.
+# Validate those links from their original document home, never exempt them.
+IE_HOME = Path('.gnd-planning/milestones/incremental-evaluation')
+RETAINED_DOCUMENT_ORIGINS = {
+    IE_HOME / 'evidence/plan-review-r1/incremental-evaluation-plan.md': (
+        IE_HOME / 'notes/incremental-evaluation-plan.md',
+        '34b1004e9d7e5e60f3162dae423e78b3d42bf98678edcccc0ad358517f086de1'),
+    IE_HOME / 'evidence/plan-review-r1/phase-IE0-spec.md': (
+        IE_HOME / 'notes/phase-IE0-spec.md',
+        'd49a5bcc4f06b5f1b500bd231637d54dcedc2bd9778976ba5817edb6a9ba19da'),
+    IE_HOME / 'evidence/plan-approval/incremental-evaluation-plan.md': (
+        IE_HOME / 'notes/incremental-evaluation-plan.md',
+        'b7503db4af6ab7ab5916e0c0fa8a6f7bbcbe6aab5464e9fdd99422fe53e160b1'),
+}
+
+
+def check_document_references(root, path):
+    relative = path.relative_to(root)
+    base = path.parent
+    if relative in RETAINED_DOCUMENT_ORIGINS:
+        original, digest = RETAINED_DOCUMENT_ORIGINS[relative]
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == digest, relative
+        base = (root / original).parent
+    for href in re.findall(r'\]\(([^)]+)\)', path.read_text()):
+        if '://' in href or href.startswith(('#', '<')):
+            continue
+        if href in RETAINED_EXTERNAL_REFERENCES.get(relative, ()):
+            continue
+        assert (base / href.split('#')[0]).exists(), (path, href)
+
 
 def check_references(root):
     for path in REQUIRED:
@@ -42,12 +72,7 @@ def check_references(root):
     for path in root.rglob('*.md'):
         if any(part in {'.git', '.venv', '__pycache__'} for part in path.parts):
             continue
-        for href in re.findall(r'\]\(([^)]+)\)', path.read_text()):
-            if '://' in href or href.startswith(('#', '<')):
-                continue  # URLs, anchors and <placeholder> paths retained verbatim in records
-            if href in RETAINED_EXTERNAL_REFERENCES.get(path.relative_to(root), ()):
-                continue
-            assert (path.parent / href.split('#')[0]).exists(), (path, href)
+        check_document_references(root, path)
     boot = (root / 'docs/development/bootstrap.md').read_text()
     assert 'No source-checkout bootstrap is required' in boot
     assert 'historical' in boot and 'Phase 3' in boot
@@ -115,6 +140,33 @@ def check_ledger(root):
 
 def test_reference_closure_and_declared_bootstrap():
     check_references(ROOT)
+
+
+@pytest.mark.parametrize('snapshot', RETAINED_DOCUMENT_ORIGINS)
+@pytest.mark.parametrize('mutation', ['none', 'changed-snapshot', 'missing-target'])
+def test_retained_document_origin_still_checks_bytes_and_targets(tmp_path, snapshot, mutation):
+    path = tmp_path / snapshot
+    path.parent.mkdir(parents=True)
+    path.write_bytes((ROOT / snapshot).read_bytes())
+    original, _digest = RETAINED_DOCUMENT_ORIGINS[snapshot]
+    targets = []
+    for href in re.findall(r'\]\(([^)]+)\)', path.read_text()):
+        if '://' in href or href.startswith(('#', '<')):
+            continue
+        target = (tmp_path / original).parent / href.split('#')[0]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.touch()
+        targets.append(target)
+    assert targets
+    if mutation == 'changed-snapshot':
+        path.write_text(path.read_text() + '\nchanged\n')
+    elif mutation == 'missing-target':
+        targets[0].unlink()
+    if mutation == 'none':
+        check_document_references(tmp_path, path)
+    else:
+        with pytest.raises(AssertionError):
+            check_document_references(tmp_path, path)
 
 
 @pytest.mark.parametrize('case', ['retained', 'other-document', 'unknown-target', 'relative'])

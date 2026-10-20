@@ -1,0 +1,26 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "authorization": "002 owner named milestone auto and CLI transfer selection",
+  "scope": "IE3 only",
+  "instrument": "corpus-first; one CLI reader plus at most one confirmation",
+  "budget": "IE1 bounds and IE2 envelope; no source/service bypass, broad/native lane, publication or merge",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE3-spec.md",
+      "sha256": "fc82060d80ed809826300713578573cf422345792d039a1eb9077b8d1806bbee"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/session-stories.json",
+      "sha256": "fd23be9d805ddd99b8810b668dd243549b23addfbf90978715c2781966879580"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/session-answers.json",
+      "sha256": "a1e2b8a6b086ec8585c9c1835bfa65ac56598f6750de4194305e06227a5b93c5"
+    },
+    {
+      "path": "tests/test_incremental_sessions.py",
+      "sha256": "22371f0eeef994cecb98c10dbd4c6b50d65d5d3de46a496f58a8ba2e8306a4f7"
+    }
+  ]
+}

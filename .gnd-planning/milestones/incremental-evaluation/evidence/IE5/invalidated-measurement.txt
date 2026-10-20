@@ -1,0 +1,12 @@
+Expected rejected run: authorized review repair changed source while this exploratory run was active. No final artifact was emitted. Machine/user paths sanitized.
+
+Traceback (most recent call last):
+  File "<REPO>/tools/measure_evaluation_sessions.py", line 209, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "<REPO>/tools/measure_evaluation_sessions.py", line 198, in main
+    evidence = run(repeat=args.repeat)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tools/measure_evaluation_sessions.py", line 176, in run
+    raise ValueError('source or fixture bytes changed during measurement')
+ValueError: source or fixture bytes changed during measurement

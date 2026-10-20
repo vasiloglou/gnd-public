@@ -1,0 +1,33 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE4 host observation and separate closed in-process feedback contract",
+  "authorization": "002 named owner auto execution delegation",
+  "decisions": [
+    "whole ordered relation replacement through normal loader",
+    "separate feedback kind/version; old persistent wires unchanged",
+    "explicit sequential attempt; reset preserves lifetime numbering",
+    "closed counts-only wire with explicit unavailable/overflow and byte limits"
+  ],
+  "instrument": "corpus-first; one authorized independent CLI reader plus at most one confirmation",
+  "budget": "128 count rows,256 identifier chars,16KiB feedback; normal loader10MiB; existing cache bounds; no history/provider/native/merge/publication",
+  "implementability": "loader/header/marker, original extension view, atomic transaction and model index inspected; 8 direct tests observed RED before runtime",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE4-spec.md",
+      "sha256": "9460efe9a004839cf1f595e3d71a32de7ecb794e86892012df6f2d14a045a1b7"
+    },
+    {
+      "path": "tests/test_incremental_observations.py",
+      "sha256": "2eb1426da893dc080c72116abd8d4f2374c3e8e67687569d84907d5b39410ce4"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/observation-stories.json",
+      "sha256": "336b0c3a589c9190b2716976d01a5b80bbc3f71b221b06c7e6b694cdce0c8369"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/observation-answers.json",
+      "sha256": "cec5b220d6b7b2163db68544b3a669f4947fed364bda495cd1eb20b84f4b0ef8"
+    }
+  ]
+}

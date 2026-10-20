@@ -1,0 +1,4 @@
+Sanitation annotation: machine root replaced with <REPO>.
+Using CPython 3.14.3
+Creating virtual environment at: /private/tmp/gnd-ie6-final-venv
+Activate with: source /private/tmp/gnd-ie6-final-venv/bin/activate

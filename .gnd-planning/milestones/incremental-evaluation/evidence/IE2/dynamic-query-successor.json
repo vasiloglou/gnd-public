@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/dynamic-query-successor.json",
+  "predecessor_sha256": "61b223e728cb0444efeedcc2ded5ce9b501246cf1df66aa5b37aac3f0e422bb2",
+  "reason": "IE2 component memo hooks, typed dependency envelope and original per-head ordinary callback. No new raw model query waivers.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/extensions.py",
+      "_build_incremental_context",
+      "getattr(DEFAULT_LIMITS, f.name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_build_incremental_context",
+      "getattr(value, f.name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_incremental_components",
+      "getattr(counted, f.name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_incremental_components",
+      "getattr(work, f.name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_python_extension_calculator",
+      "getattr(counted, f.name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_python_extension_calculator",
+      "getattr(work, f.name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_python_extension_calculator",
+      "unit[fact_type_id]",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_reuse_extension_unit",
+      "graph.get(head, ())",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_reuse_extension_unit",
+      "relations[name]",
+      6
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_reuse_extension_unit",
+      "unavailable.get(name)",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "compute",
+      "origins[h]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6189,
+  "result_occurrences": 7764
+}

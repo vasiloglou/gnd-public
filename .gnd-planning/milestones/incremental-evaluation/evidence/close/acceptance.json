@@ -1,0 +1,137 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "incremental-evaluation local milestone close, predicates1\u20137, explicit carryovers",
+  "authorization": "002 named owner execution delegation, including milestone close; selected four local close reviewers",
+  "ruling": "close-with-carryovers",
+  "decisions": [
+    "hard counted/parity predicates passed unchanged",
+    "timing regression accepted only as informational under D7; IE-Q1 follow-up retained",
+    "all18 inherited rows and IE-Q1..Q10 explicitly dispositioned",
+    "no547downstream acceptance, broad/native/provider/certification/publication/merge authority"
+  ],
+  "instrument": "four distinct independent local close readers; one initial round, no confirmation; static-only limits retained",
+  "budget": "existing bounded cache/wire limits and repeat schedule unchanged; no successor execution",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/009-milestone-close.md",
+      "sha256": "8298e7d6b182fef3659ddca3918a9ad0fbf0a0c871ebce0fe4ec39f9e830d902"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/001-plan-gate.md",
+      "sha256": "a313752da6f5b30fa2a569afeabb0aca76e8b3f05653ba1a2f9b39a1fdff7ea7"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/002-execution-delegation.md",
+      "sha256": "7f776af776a3713f2ed2a71a7eb02dc8654b2d3e6e7b52668392e159494530fd"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/003-phase-IE0.md",
+      "sha256": "de134aeb35b382308aa1ea6ad503c99a224e490f2095ad1671ceb7998bc03eb8"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/004-phase-IE1.md",
+      "sha256": "7d9a0e0e7b4a64c55ac9e5ef323b1fee7df84b909c3d10ce5bd00d469fee0008"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/005-phase-IE2.md",
+      "sha256": "5517d4b8478899ed23b7a4d4aeeb4cd33e82232581d20212488b2d40ddb2ec63"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/006-phase-IE3.md",
+      "sha256": "104f520c84ff4498b65a65c352000e45763c22ac5e2485501c7961bc10d71880"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/007-phase-IE4.md",
+      "sha256": "a2adde0c2211f0c4c2599570d9743ebfef39e7915d0212339cc197387b2aae89"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/008-phase-IE5.md",
+      "sha256": "30435297ec1d6843e5fa28ce60d2c5616d209741e41bd5b1bb639b96e52e511b"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/incremental-evaluation-plan.md",
+      "sha256": "be624dc874f0328b4a5b4167ddb3ca0a7f31f6258cd3ef69cb55470b47fc5428"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/close-question-sweep.md",
+      "sha256": "a7081284c13e51a79656cc48d41f9a6a060a28e0f68290907b894f8a3e475161"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/README.md",
+      "sha256": "4c1663b977c29e43b6c52ea248a60a145b03e2dc67aa66c5659516f959d8fdcf"
+    },
+    {
+      "path": ".gnd-planning/PROJECT.md",
+      "sha256": "24550f3f1bb7357943896e5e00838dd0e999c0a97f5c732971e80f4cb7262a4a"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/audit.py",
+      "sha256": "edfcc84e01fef1c318c5e52f2f7e38c40d72a8eec53901f23ed1bf128c6247e6"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/audit.txt",
+      "sha256": "f093e4dc9a83098cd71dbf11c4f906778affe664bd855460bb44e5921d868bc6"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/correctness.md",
+      "sha256": "70f257d21b16ca2deb726abdcfa658931b871f515c86eeb96388f09030638a37"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/disposition.md",
+      "sha256": "741e14b27f67eb1d68f76003867364a1734fbeef6e47be7de63f4043cef869d7"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/measurement.md",
+      "sha256": "87783eda63fad7c60bbf3a6b2da967d413ae7b4a9e6a334104423113e8010f1f"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/protocol.md",
+      "sha256": "805284e5f36769b00f49d17118d0948104db5ff5ba7d278791f212ce0de57961"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/sanitation.json",
+      "sha256": "5fe13099a9b550e1d26824102344fd0eb09ec4ae22c7d9cdafd896181c7b506b"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/close/structure.md",
+      "sha256": "45f7508245107216ae0ca8eac96f8f48bad28a7f0644dd7c9fe700a0caee8dc8"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/acceptance.json",
+      "sha256": "81cb7b28c87be9558e1a4a3a162f043ef0d98c869fbe8758bf2fd213babea54e"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/final-identities.json",
+      "sha256": "c83917d4ab7d8cc605b3c7cf3a413d2ef595005157e46fcb9c78441958d90903"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/measurement.json",
+      "sha256": "299d649a3cd0ba800e0eaf143522acf5d54e954c4bb9ea2f1706c003f4e13186"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/measurement-stdout.txt",
+      "sha256": "1a33c7b8ca764a8ee2d901e6f12c9d10a4ab9d50a4546efd2593aa1c69f5280e"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/wheel-manifest.json",
+      "sha256": "630cf29ea2298d77760b9f2fd71b8c459698311379ad53e64afbe31ac5d89363"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/installed-smoke.txt",
+      "sha256": "b6227a2830a32bc835cbad9dfced11b1ec0da14d0f61f7b1788d27e0acb3ebdb"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/installed-cli-check.json",
+      "sha256": "e8f91f958b4a9330abeb2b5fc9c3e87181c8af23564df4d1a221f351e2056a08"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE0-codex-review.md",
+      "sha256": "9d1300d5902a623dbd8db3ef7619541ce0076d20a1b46595b5183937e21734b4"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE3/corpus-red.txt",
+      "sha256": "8b8ab56b1ab1ae983508f0b440274adafffe1afcba14e59c08c421656cd1a864"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "independent-and-edits": "model.orm.json; initial/noop/insert/delete/replace/reorder.pop.json",
+  "recursive": "recursive base, delete sole support, alternate support, delete B-C while retaining A-C; extra_controls()",
+  "negation-and-aggregate": "tests/fixtures/v62-phase4/cases.json",
+  "origins": "reorder.pop.json",
+  "unavailable-partial": "tests/fixtures/v70-phase4/recursive.orm.yaml and tests/fixtures/v62-phase4/cases.json",
+  "roster-reference-marker": "extra_controls() roster pair; reference_and_option_controls() rehashed catalog change and compiled partial option; marker refusal in direct tests"
+}

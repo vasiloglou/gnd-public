@@ -1,0 +1,872 @@
+{
+  "dependencies": {
+    "expr_type": [
+      "column_type",
+      "expr_kind",
+      "expr_literal",
+      "expr_ref"
+    ],
+    "bad_st01_owners": [
+      "column_at",
+      "step_output"
+    ],
+    "bad_st01_fields": [
+      "bad_st01_owners",
+      "column_at",
+      "column_name",
+      "column_nullable",
+      "column_type",
+      "has_column_name_column",
+      "has_column_nullable_column",
+      "has_column_type_column",
+      "has_step_kind_step",
+      "program_step",
+      "step_kind"
+    ],
+    "bad_st01_positions": [
+      "answer_item_count",
+      "answer_item_max",
+      "answer_order_count",
+      "answer_order_max",
+      "bad_st01_owners",
+      "bad_st02_filter_payload",
+      "bad_st02_traverse_payload",
+      "bad_st06_signature",
+      "column_at",
+      "expr_operand_count",
+      "expr_operand_max",
+      "group_key_count",
+      "group_key_max",
+      "schema_count",
+      "schema_max",
+      "step_output"
+    ],
+    "bad_st01_names": [
+      "column_at",
+      "column_name",
+      "folded_name"
+    ],
+    "bad_st01_provenance": [
+      "column_at",
+      "column_concept",
+      "column_depends",
+      "column_derived",
+      "column_role",
+      "provenance_exists"
+    ],
+    "bad_st02_scan_payload": [
+      "bad_st01_owners",
+      "has_scan_concept_step",
+      "schema_count",
+      "step_kind",
+      "step_output"
+    ],
+    "bad_st02_traverse_payload": [
+      "bad_st01_names",
+      "bad_st01_owners",
+      "column_at",
+      "column_name",
+      "column_nullable",
+      "column_type",
+      "copy_at",
+      "has_traverse_on_step",
+      "step_input",
+      "step_kind",
+      "step_output"
+    ],
+    "bad_st02_filter_payload": [
+      "bad_st01_names",
+      "bad_st01_owners",
+      "column_at",
+      "column_name",
+      "column_nullable",
+      "column_type",
+      "copy_at",
+      "has_filter_root_step",
+      "step_input",
+      "step_kind",
+      "step_output"
+    ],
+    "bad_st02_aggregate_payload": [
+      "bad_st01_owners",
+      "column_at",
+      "projected_column",
+      "step_kind",
+      "step_output"
+    ],
+    "bad_st02_answer_payload": [
+      "bad_st01_owners",
+      "column_at",
+      "has_answer_item_step_position",
+      "projected_column",
+      "step_kind",
+      "step_output"
+    ],
+    "bad_st03_producer": [
+      "bad_st01_owners",
+      "program_step",
+      "step_input",
+      "step_output"
+    ],
+    "bad_st03_predecessor": [
+      "bad_st01_owners",
+      "predecessor",
+      "program_step"
+    ],
+    "bad_st03_terminal": [
+      "answer_present",
+      "bad_st01_owners",
+      "metadata_complete",
+      "program_step",
+      "step_kind"
+    ],
+    "bad_st04_scan_model": [
+      "bad_st01_owners",
+      "column_at",
+      "column_concept",
+      "column_nullable",
+      "column_type",
+      "concept_exists",
+      "concept_type",
+      "has_concept_type_concept",
+      "scan_concept",
+      "step_output"
+    ],
+    "bad_st05_traverse_model": [
+      "bad_st01_owners",
+      "column_entity_player",
+      "column_nullable",
+      "column_type",
+      "has_fact_role_fact_type_role_player",
+      "has_fact_role_fact_type_role_type",
+      "traverse_on",
+      "traverse_role"
+    ],
+    "bad_st06_ref": [
+      "bad_st01_owners",
+      "expr_ref",
+      "expression_step",
+      "has_column_at_variable_column",
+      "step_input"
+    ],
+    "bad_st06_graph": [
+      "bad_st01_owners",
+      "expr_depends",
+      "expr_operand",
+      "expression_step"
+    ],
+    "bad_st06_signature": [
+      "allowed_expr",
+      "bad_st01_owners",
+      "bool_operator",
+      "expr_kind",
+      "expr_operand",
+      "expr_operand_count",
+      "expr_operator",
+      "expr_type",
+      "expression_step",
+      "filter_root",
+      "has_expr_operand_expression_position"
+    ],
+    "bad_st06_types": [
+      "column_type",
+      "escape_mode",
+      "expr_escape",
+      "expr_kind",
+      "expr_literal",
+      "expr_operand",
+      "expr_ref",
+      "expr_type",
+      "sql_type",
+      "text_type",
+      "type_compatible"
+    ],
+    "bad_st07_groups": [
+      "bad_st01_owners",
+      "bad_st02_filter_payload",
+      "bad_st02_traverse_payload",
+      "column_nullable",
+      "column_type",
+      "group_key",
+      "has_column_at_variable_column",
+      "step_input",
+      "step_output"
+    ],
+    "bad_st07_items": [
+      "aggregate_arg",
+      "aggregate_fn",
+      "aggregate_item",
+      "aggregate_result",
+      "bad_st01_owners",
+      "column_nullable",
+      "column_type",
+      "has_aggregate_argument",
+      "has_column_at_variable_column",
+      "numeric_type",
+      "step_input"
+    ],
+    "bad_st07_item_filter": [
+      "aggregate_filter",
+      "bad_st01_owners",
+      "expr_type"
+    ],
+    "bad_st08_projection": [
+      "answer_item",
+      "bad_st01_owners",
+      "column_nullable",
+      "column_type"
+    ],
+    "bad_st08_order": [
+      "answer_limit",
+      "answer_order",
+      "answer_order_present",
+      "bad_st01_owners",
+      "has_column_at_variable_column",
+      "null_mode",
+      "order_direction",
+      "step_input"
+    ],
+    "bad_st08_limit": [
+      "answer_limit",
+      "bad_st01_owners"
+    ],
+    "bad_st_p01_traverse_fanout": [
+      "bad_st01_owners",
+      "role_functional",
+      "traverse_on"
+    ],
+    "bad_st_p02_aggregate_fanout": [
+      "bad_st01_owners",
+      "step_input",
+      "step_kind",
+      "variable_fanout"
+    ],
+    "bad_st_p03_literal_known": [
+      "bad_st01_owners",
+      "column_base_role",
+      "expr_kind",
+      "expr_literal",
+      "expr_operand",
+      "expr_operator",
+      "expr_ref",
+      "expression_step",
+      "role_literal"
+    ],
+    "expr_depends": [
+      "expr_depends",
+      "expr_operand"
+    ],
+    "column_depends": [
+      "column_depends",
+      "column_operand"
+    ],
+    "column_base_role": [
+      "column_base_role",
+      "column_copy",
+      "column_role",
+      "concept_column"
+    ],
+    "column_entity_player": [
+      "column_at",
+      "column_concept",
+      "column_copy",
+      "column_entity_player",
+      "column_role",
+      "concept_column",
+      "concept_exists",
+      "fact_role",
+      "scan_concept",
+      "step_output"
+    ],
+    "variable_fanout": [
+      "role_functional",
+      "step_input",
+      "step_output",
+      "traverse_on",
+      "variable_fanout"
+    ],
+    "ready_step": [
+      "predecessor",
+      "program_step",
+      "step_executed"
+    ],
+    "schema_count": [
+      "column_at"
+    ],
+    "schema_max": [
+      "column_at"
+    ],
+    "group_key_count": [
+      "group_key"
+    ],
+    "group_key_max": [
+      "group_key"
+    ],
+    "answer_item_count": [
+      "answer_item"
+    ],
+    "answer_item_max": [
+      "answer_item"
+    ],
+    "answer_order_count": [
+      "answer_order"
+    ],
+    "answer_order_max": [
+      "answer_order"
+    ],
+    "expr_operand_count": [
+      "expr_operand"
+    ],
+    "expr_operand_max": [
+      "expr_operand"
+    ],
+    "projected_column": [
+      "aggregate_item",
+      "answer_item",
+      "group_key"
+    ],
+    "has_column_name_column": [
+      "column_name"
+    ],
+    "has_column_type_column": [
+      "column_type"
+    ],
+    "has_column_nullable_column": [
+      "column_nullable"
+    ],
+    "has_step_kind_step": [
+      "step_kind"
+    ],
+    "provenance_exists": [
+      "column_concept",
+      "column_derived",
+      "column_role"
+    ],
+    "has_scan_concept_step": [
+      "scan_concept"
+    ],
+    "has_traverse_on_step": [
+      "traverse_on"
+    ],
+    "has_filter_root_step": [
+      "filter_root"
+    ],
+    "has_answer_item_step_position": [
+      "answer_item"
+    ],
+    "answer_present": [
+      "program_step",
+      "step_kind"
+    ],
+    "has_concept_type_concept": [
+      "concept_type"
+    ],
+    "has_fact_role_fact_type_role_player": [
+      "fact_role"
+    ],
+    "has_column_at_variable_column": [
+      "column_at"
+    ],
+    "has_expr_operand_expression_position": [
+      "expr_operand"
+    ],
+    "answer_order_present": [
+      "answer_order"
+    ],
+    "has_fact_role_fact_type_role_type": [
+      "fact_role"
+    ],
+    "finish_available": [
+      "source_identity",
+      "walk_complete"
+    ],
+    "concept_column": [
+      "column_concept"
+    ],
+    "has_aggregate_argument": [
+      "aggregate_arg"
+    ]
+  },
+  "observed_check_deltas": [
+    {
+      "changed_facts": [
+        "distinct_key",
+        "nulls",
+        "observation_digest",
+        "ready_step",
+        "rows",
+        "step_executed",
+        "step_observed",
+        "variable_available"
+      ],
+      "dirty_heads": [
+        "ready_step"
+      ],
+      "unaffected_heads": [
+        "answer_item_count",
+        "answer_item_max",
+        "answer_order_count",
+        "answer_order_max",
+        "answer_order_present",
+        "answer_present",
+        "bad_st01_fields",
+        "bad_st01_names",
+        "bad_st01_owners",
+        "bad_st01_positions",
+        "bad_st01_provenance",
+        "bad_st02_aggregate_payload",
+        "bad_st02_answer_payload",
+        "bad_st02_filter_payload",
+        "bad_st02_scan_payload",
+        "bad_st02_traverse_payload",
+        "bad_st03_predecessor",
+        "bad_st03_producer",
+        "bad_st03_terminal",
+        "bad_st04_scan_model",
+        "bad_st05_traverse_model",
+        "bad_st06_graph",
+        "bad_st06_ref",
+        "bad_st06_signature",
+        "bad_st06_types",
+        "bad_st07_groups",
+        "bad_st07_item_filter",
+        "bad_st07_items",
+        "bad_st08_limit",
+        "bad_st08_order",
+        "bad_st08_projection",
+        "bad_st_p01_traverse_fanout",
+        "bad_st_p02_aggregate_fanout",
+        "bad_st_p03_literal_known",
+        "column_base_role",
+        "column_depends",
+        "column_entity_player",
+        "concept_column",
+        "expr_depends",
+        "expr_operand_count",
+        "expr_operand_max",
+        "expr_type",
+        "finish_available",
+        "group_key_count",
+        "group_key_max",
+        "has_aggregate_argument",
+        "has_answer_item_step_position",
+        "has_column_at_variable_column",
+        "has_column_name_column",
+        "has_column_nullable_column",
+        "has_column_type_column",
+        "has_concept_type_concept",
+        "has_expr_operand_expression_position",
+        "has_fact_role_fact_type_role_player",
+        "has_fact_role_fact_type_role_type",
+        "has_filter_root_step",
+        "has_scan_concept_step",
+        "has_step_kind_step",
+        "has_traverse_on_step",
+        "projected_column",
+        "provenance_exists",
+        "schema_count",
+        "schema_max",
+        "variable_fanout"
+      ]
+    },
+    {
+      "changed_facts": [
+        "distinct_key",
+        "max_distinct_target",
+        "nulls",
+        "observation_digest",
+        "ready_step",
+        "rows",
+        "step_executed",
+        "step_observed",
+        "variable_available"
+      ],
+      "dirty_heads": [
+        "ready_step"
+      ],
+      "unaffected_heads": [
+        "answer_item_count",
+        "answer_item_max",
+        "answer_order_count",
+        "answer_order_max",
+        "answer_order_present",
+        "answer_present",
+        "bad_st01_fields",
+        "bad_st01_names",
+        "bad_st01_owners",
+        "bad_st01_positions",
+        "bad_st01_provenance",
+        "bad_st02_aggregate_payload",
+        "bad_st02_answer_payload",
+        "bad_st02_filter_payload",
+        "bad_st02_scan_payload",
+        "bad_st02_traverse_payload",
+        "bad_st03_predecessor",
+        "bad_st03_producer",
+        "bad_st03_terminal",
+        "bad_st04_scan_model",
+        "bad_st05_traverse_model",
+        "bad_st06_graph",
+        "bad_st06_ref",
+        "bad_st06_signature",
+        "bad_st06_types",
+        "bad_st07_groups",
+        "bad_st07_item_filter",
+        "bad_st07_items",
+        "bad_st08_limit",
+        "bad_st08_order",
+        "bad_st08_projection",
+        "bad_st_p01_traverse_fanout",
+        "bad_st_p02_aggregate_fanout",
+        "bad_st_p03_literal_known",
+        "column_base_role",
+        "column_depends",
+        "column_entity_player",
+        "concept_column",
+        "expr_depends",
+        "expr_operand_count",
+        "expr_operand_max",
+        "expr_type",
+        "finish_available",
+        "group_key_count",
+        "group_key_max",
+        "has_aggregate_argument",
+        "has_answer_item_step_position",
+        "has_column_at_variable_column",
+        "has_column_name_column",
+        "has_column_nullable_column",
+        "has_column_type_column",
+        "has_concept_type_concept",
+        "has_expr_operand_expression_position",
+        "has_fact_role_fact_type_role_player",
+        "has_fact_role_fact_type_role_type",
+        "has_filter_root_step",
+        "has_scan_concept_step",
+        "has_step_kind_step",
+        "has_traverse_on_step",
+        "projected_column",
+        "provenance_exists",
+        "schema_count",
+        "schema_max",
+        "variable_fanout"
+      ]
+    },
+    {
+      "changed_facts": [
+        "distinct_key",
+        "nulls",
+        "observation_digest",
+        "ready_step",
+        "rows",
+        "step_executed",
+        "step_observed",
+        "variable_available"
+      ],
+      "dirty_heads": [
+        "ready_step"
+      ],
+      "unaffected_heads": [
+        "answer_item_count",
+        "answer_item_max",
+        "answer_order_count",
+        "answer_order_max",
+        "answer_order_present",
+        "answer_present",
+        "bad_st01_fields",
+        "bad_st01_names",
+        "bad_st01_owners",
+        "bad_st01_positions",
+        "bad_st01_provenance",
+        "bad_st02_aggregate_payload",
+        "bad_st02_answer_payload",
+        "bad_st02_filter_payload",
+        "bad_st02_scan_payload",
+        "bad_st02_traverse_payload",
+        "bad_st03_predecessor",
+        "bad_st03_producer",
+        "bad_st03_terminal",
+        "bad_st04_scan_model",
+        "bad_st05_traverse_model",
+        "bad_st06_graph",
+        "bad_st06_ref",
+        "bad_st06_signature",
+        "bad_st06_types",
+        "bad_st07_groups",
+        "bad_st07_item_filter",
+        "bad_st07_items",
+        "bad_st08_limit",
+        "bad_st08_order",
+        "bad_st08_projection",
+        "bad_st_p01_traverse_fanout",
+        "bad_st_p02_aggregate_fanout",
+        "bad_st_p03_literal_known",
+        "column_base_role",
+        "column_depends",
+        "column_entity_player",
+        "concept_column",
+        "expr_depends",
+        "expr_operand_count",
+        "expr_operand_max",
+        "expr_type",
+        "finish_available",
+        "group_key_count",
+        "group_key_max",
+        "has_aggregate_argument",
+        "has_answer_item_step_position",
+        "has_column_at_variable_column",
+        "has_column_name_column",
+        "has_column_nullable_column",
+        "has_column_type_column",
+        "has_concept_type_concept",
+        "has_expr_operand_expression_position",
+        "has_fact_role_fact_type_role_player",
+        "has_fact_role_fact_type_role_type",
+        "has_filter_root_step",
+        "has_scan_concept_step",
+        "has_step_kind_step",
+        "has_traverse_on_step",
+        "projected_column",
+        "provenance_exists",
+        "schema_count",
+        "schema_max",
+        "variable_fanout"
+      ]
+    },
+    {
+      "changed_facts": [
+        "distinct_key",
+        "nulls",
+        "observation_digest",
+        "ready_step",
+        "rows",
+        "step_executed",
+        "step_observed",
+        "variable_available"
+      ],
+      "dirty_heads": [
+        "ready_step"
+      ],
+      "unaffected_heads": [
+        "answer_item_count",
+        "answer_item_max",
+        "answer_order_count",
+        "answer_order_max",
+        "answer_order_present",
+        "answer_present",
+        "bad_st01_fields",
+        "bad_st01_names",
+        "bad_st01_owners",
+        "bad_st01_positions",
+        "bad_st01_provenance",
+        "bad_st02_aggregate_payload",
+        "bad_st02_answer_payload",
+        "bad_st02_filter_payload",
+        "bad_st02_scan_payload",
+        "bad_st02_traverse_payload",
+        "bad_st03_predecessor",
+        "bad_st03_producer",
+        "bad_st03_terminal",
+        "bad_st04_scan_model",
+        "bad_st05_traverse_model",
+        "bad_st06_graph",
+        "bad_st06_ref",
+        "bad_st06_signature",
+        "bad_st06_types",
+        "bad_st07_groups",
+        "bad_st07_item_filter",
+        "bad_st07_items",
+        "bad_st08_limit",
+        "bad_st08_order",
+        "bad_st08_projection",
+        "bad_st_p01_traverse_fanout",
+        "bad_st_p02_aggregate_fanout",
+        "bad_st_p03_literal_known",
+        "column_base_role",
+        "column_depends",
+        "column_entity_player",
+        "concept_column",
+        "expr_depends",
+        "expr_operand_count",
+        "expr_operand_max",
+        "expr_type",
+        "finish_available",
+        "group_key_count",
+        "group_key_max",
+        "has_aggregate_argument",
+        "has_answer_item_step_position",
+        "has_column_at_variable_column",
+        "has_column_name_column",
+        "has_column_nullable_column",
+        "has_column_type_column",
+        "has_concept_type_concept",
+        "has_expr_operand_expression_position",
+        "has_fact_role_fact_type_role_player",
+        "has_fact_role_fact_type_role_type",
+        "has_filter_root_step",
+        "has_scan_concept_step",
+        "has_step_kind_step",
+        "has_traverse_on_step",
+        "projected_column",
+        "provenance_exists",
+        "schema_count",
+        "schema_max",
+        "variable_fanout"
+      ]
+    },
+    {
+      "changed_facts": [
+        "nulls",
+        "observation_digest",
+        "ready_step",
+        "rows",
+        "step_executed",
+        "step_observed",
+        "variable_available"
+      ],
+      "dirty_heads": [
+        "ready_step"
+      ],
+      "unaffected_heads": [
+        "answer_item_count",
+        "answer_item_max",
+        "answer_order_count",
+        "answer_order_max",
+        "answer_order_present",
+        "answer_present",
+        "bad_st01_fields",
+        "bad_st01_names",
+        "bad_st01_owners",
+        "bad_st01_positions",
+        "bad_st01_provenance",
+        "bad_st02_aggregate_payload",
+        "bad_st02_answer_payload",
+        "bad_st02_filter_payload",
+        "bad_st02_scan_payload",
+        "bad_st02_traverse_payload",
+        "bad_st03_predecessor",
+        "bad_st03_producer",
+        "bad_st03_terminal",
+        "bad_st04_scan_model",
+        "bad_st05_traverse_model",
+        "bad_st06_graph",
+        "bad_st06_ref",
+        "bad_st06_signature",
+        "bad_st06_types",
+        "bad_st07_groups",
+        "bad_st07_item_filter",
+        "bad_st07_items",
+        "bad_st08_limit",
+        "bad_st08_order",
+        "bad_st08_projection",
+        "bad_st_p01_traverse_fanout",
+        "bad_st_p02_aggregate_fanout",
+        "bad_st_p03_literal_known",
+        "column_base_role",
+        "column_depends",
+        "column_entity_player",
+        "concept_column",
+        "expr_depends",
+        "expr_operand_count",
+        "expr_operand_max",
+        "expr_type",
+        "finish_available",
+        "group_key_count",
+        "group_key_max",
+        "has_aggregate_argument",
+        "has_answer_item_step_position",
+        "has_column_at_variable_column",
+        "has_column_name_column",
+        "has_column_nullable_column",
+        "has_column_type_column",
+        "has_concept_type_concept",
+        "has_expr_operand_expression_position",
+        "has_fact_role_fact_type_role_player",
+        "has_fact_role_fact_type_role_type",
+        "has_filter_root_step",
+        "has_scan_concept_step",
+        "has_step_kind_step",
+        "has_traverse_on_step",
+        "projected_column",
+        "provenance_exists",
+        "schema_count",
+        "schema_max",
+        "variable_fanout"
+      ]
+    },
+    {
+      "changed_facts": [
+        "finish_available",
+        "walk_complete"
+      ],
+      "dirty_heads": [
+        "finish_available"
+      ],
+      "unaffected_heads": [
+        "answer_item_count",
+        "answer_item_max",
+        "answer_order_count",
+        "answer_order_max",
+        "answer_order_present",
+        "answer_present",
+        "bad_st01_fields",
+        "bad_st01_names",
+        "bad_st01_owners",
+        "bad_st01_positions",
+        "bad_st01_provenance",
+        "bad_st02_aggregate_payload",
+        "bad_st02_answer_payload",
+        "bad_st02_filter_payload",
+        "bad_st02_scan_payload",
+        "bad_st02_traverse_payload",
+        "bad_st03_predecessor",
+        "bad_st03_producer",
+        "bad_st03_terminal",
+        "bad_st04_scan_model",
+        "bad_st05_traverse_model",
+        "bad_st06_graph",
+        "bad_st06_ref",
+        "bad_st06_signature",
+        "bad_st06_types",
+        "bad_st07_groups",
+        "bad_st07_item_filter",
+        "bad_st07_items",
+        "bad_st08_limit",
+        "bad_st08_order",
+        "bad_st08_projection",
+        "bad_st_p01_traverse_fanout",
+        "bad_st_p02_aggregate_fanout",
+        "bad_st_p03_literal_known",
+        "column_base_role",
+        "column_depends",
+        "column_entity_player",
+        "concept_column",
+        "expr_depends",
+        "expr_operand_count",
+        "expr_operand_max",
+        "expr_type",
+        "group_key_count",
+        "group_key_max",
+        "has_aggregate_argument",
+        "has_answer_item_step_position",
+        "has_column_at_variable_column",
+        "has_column_name_column",
+        "has_column_nullable_column",
+        "has_column_type_column",
+        "has_concept_type_concept",
+        "has_expr_operand_expression_position",
+        "has_fact_role_fact_type_role_player",
+        "has_fact_role_fact_type_role_type",
+        "has_filter_root_step",
+        "has_scan_concept_step",
+        "has_step_kind_step",
+        "has_traverse_on_step",
+        "projected_column",
+        "provenance_exists",
+        "ready_step",
+        "schema_count",
+        "schema_max",
+        "variable_fanout"
+      ]
+    }
+  ]
+}

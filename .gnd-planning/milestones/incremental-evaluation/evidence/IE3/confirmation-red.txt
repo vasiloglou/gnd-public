@@ -1,0 +1,46 @@
+Retained output; edited only to replace machine repository/user paths.
+Original SHA256: a83269699ccce11a88c25eea525eb0b682835ce4ee00870ea9c5cee861fd17d9
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_string_resolved_family_default_change_invalidates ____________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<USER>/pytest-4104/test_string_resolved_family_de0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c83f3d0>
+
+    def test_string_resolved_family_default_change_invalidates(tmp_path, monkeypatch):
+        import test_public_branch_runtime as corpus
+    
+        from gnd import semantic_spec
+    
+        m, p = corpus._build('P2-039', tmp_path)
+    
+        def evaluator(constraint, snapshot, state=1):
+            return state, []
+    
+        monkeypatch.setattr(semantic_spec, '_family_result_frequency', evaluator)
+        owner = session(m)
+        same_payload(owner.check(p), api.check(m, p))
+        evaluator.__defaults__ = (0,)
+>       same_payload(owner.check(p), api.check(m, p))
+
+tests/test_incremental_sessions.py:330: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actual = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'accepted', ...}
+expected = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'violated', ...}
+
+    def same_payload(actual, expected):
+        actual_key, expected_key = fingerprint(actual), fingerprint(expected)
+        assert actual_key is not None and expected_key is not None
+>       assert actual_key == expected_key
+E       AssertionError: assert ('dict', ((('... True)), ...)) == ('dict', ((('...False)), ...))
+E         
+E         At index 1 diff: ((('str', 'schema_version'), ('int', 7)), (('str', 'tool'), ('str', 'gnd')), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str', 'accepted')), (('str', 'exit_code'), ('int', 0)), (('str', 'acceptance_ready'), ('bool', True)), (('str', 'model'), ('NoneType', None)), (('str', 'model_digest'), ('str', 'sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd')), (('str', 'population'), ('NoneType', None)), (('str', 'counts'), ('dict', ((('str', 'pass'), ('int', 14)), (('str', 'fail'), ('int', 0)), (('str', 'warning'), ('int'...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_sessions.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_sessions.py::test_string_resolved_family_default_change_invalidates
+1 failed, 17 deselected in 0.49s

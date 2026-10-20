@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_live_term_default_limits_are_part_of_policy _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a002cd0>
+
+    def test_live_term_default_limits_are_part_of_policy(monkeypatch):
+        m, relations = exact_inputs(clean=True)
+        state = ReuseState(m)
+        with state.transaction(m):
+            ext._exact_extension_calculator(m, relations)
+        modified = dict(terms.evaluate_term.__kwdefaults__)
+        modified['limits'] = replace(terms.DEFAULT_LIMITS, max_value_bits=1)
+        monkeypatch.setattr(terms.evaluate_term, '__kwdefaults__', modified)
+        fresh = ext._exact_extension_calculator(m, relations)
+        with state.transaction(m):
+            actual = ext._exact_extension_calculator(m, relations)
+>       assert envelope(actual) == envelope(fresh)
+E       AssertionError: assert ('dict', ((('.....)), ...))))) == ('dict', ((('.....)), ...)))))
+E         
+E         At index 1 diff: ((('str', 'relations'), ('dict', ((('str', 'residue'), ('tuple', (('str', 'residue'), ('tuple', (('tuple', (('str', 'ticket'), ('str', 'String'))), ('tuple', (('str', 'residue'), ('str', 'Integer'))))), ('tuple', (('tuple', (('str', 'SECRET-TERM-314159'), ('int', 29))), ('tuple', (('str', 'negative'), ('int', 29))), ('tuple', (('str', 'negative-divisor'), ('int', -29))))), ('tuple', (('tuple', (('tuple', (('str', 'facts'), ('str', 'input'), ('int', 2))),)), ('tuple', (('tuple', (('str', 'facts'), ('str', 'input'), ('int', 0))),)), ('tuple', (('tuple', (...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_extensions_review.py:93: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_extensions_review.py::test_live_term_default_limits_are_part_of_policy
+1 failed, 8 deselected in 0.14s

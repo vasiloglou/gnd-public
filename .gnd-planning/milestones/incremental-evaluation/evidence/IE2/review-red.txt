@@ -1,0 +1,194 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_________ test_defining_helper_mutation_cannot_reuse_old_exact_result __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108926c10>
+
+    def test_defining_helper_mutation_cannot_reuse_old_exact_result(monkeypatch):
+        m, relations = exact_inputs()
+        state = ReuseState(m)
+        with state.transaction(m):
+            ext._exact_extension_calculator(m, relations)
+        monkeypatch.setattr(terms, '_too_wide', lambda *args: True)
+        expected = ext._exact_extension_calculator(m, relations)
+        with state.transaction(m):
+            actual = ext._exact_extension_calculator(m, relations)
+>       assert envelope(actual) == envelope(expected)
+E       AssertionError: assert ({'extensions...bed': 0, ...}) == ({'extensions...bed': 0, ...})
+E         
+E         At index 0 diff: {'extensions': {}, 'lineage': {}, 'unavailable': {'residue': {'relation': 'residue', 'reason': 'term:mod-zero', 'binding': {'ticket': 'zero', 'value': 7, 'divisor': 0}, 'source_relation': None}, 'doubled_residue': {'relation': 'doubled_residue', 'reason': 'term:mod-zero', 'binding': {'ticket': 'zero', 'value': 7, 'divisor': 0}, 'source_relation': 'residue'}, 'permitted': {'relation': 'permitted', 'reason': 'term:mod-zero', 'binding': {'ticket': 'zero', 'value': 7, 'divisor': 0}, 'source_relation': 'residue'}}, 'possible': {}} != {'extensions': {}, 'line...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_extensions_review.py:30: AssertionError
+________ test_opaque_dictionary_subclass_preserves_possible_rows[False] ________
+
+exact = False
+
+    @pytest.mark.parametrize('exact', [False, True])
+    def test_opaque_dictionary_subclass_preserves_possible_rows(exact):
+        class Opaque(dict):
+            pass
+    
+        m, p = next(tool.localized_inputs())
+        relations = dict(ext.base_relations(m, p))
+        relations['left'] = replace(relations['left'], rows=((Opaque({'$opaque': 'unknown'}),),),
+                                    row_lineage=((),))
+        expected = ext._evaluate_stratified_extensions(m, relations, exact=exact)
+        state = ReuseState(m)
+        with state.transaction(m):
+            actual = ext._evaluate_stratified_extensions(m, relations, exact=exact)
+>       assert envelope(actual) == envelope(expected)
+E       AssertionError: assert ({'extensions...bed': 8, ...}) == ({'extensions...bed': 8, ...})
+E         
+E         At index 0 diff: {'extensions': {'left_copy': [], 'right_copy': [['other']]}, 'lineage': {'left_copy': [], 'right_copy': [[['facts', 'right', 0]]]}, 'unavailable': {}, 'possible': {}} != {'extensions': {'left_copy': [], 'right_copy': [['other']]}, 'lineage': {'left_copy': [], 'right_copy': [[['facts', 'right', 0]]]}, 'unavailable': {}, 'possible': {'left_copy': [[{'primitive': 'String', 'coordinate': ['left', 0, 'item']}]], 'right_copy': [['other']]}}
+E         Use -v to get more diff
+
+tests/test_incremental_extensions_review.py:46: AssertionError
+________ test_opaque_dictionary_subclass_preserves_possible_rows[True] _________
+
+exact = True
+
+    @pytest.mark.parametrize('exact', [False, True])
+    def test_opaque_dictionary_subclass_preserves_possible_rows(exact):
+        class Opaque(dict):
+            pass
+    
+        m, p = next(tool.localized_inputs())
+        relations = dict(ext.base_relations(m, p))
+        relations['left'] = replace(relations['left'], rows=((Opaque({'$opaque': 'unknown'}),),),
+                                    row_lineage=((),))
+        expected = ext._evaluate_stratified_extensions(m, relations, exact=exact)
+        state = ReuseState(m)
+        with state.transaction(m):
+            actual = ext._evaluate_stratified_extensions(m, relations, exact=exact)
+>       assert envelope(actual) == envelope(expected)
+E       AssertionError: assert ({'extensions...bed': 8, ...}) == ({'extensions...bed': 8, ...})
+E         
+E         At index 0 diff: {'extensions': {'left_copy': [], 'right_copy': [['other']]}, 'lineage': {'left_copy': [], 'right_copy': [[['facts', 'right', 0]]]}, 'unavailable': {}, 'possible': {}} != {'extensions': {'left_copy': [], 'right_copy': [['other']]}, 'lineage': {'left_copy': [], 'right_copy': [[['facts', 'right', 0]]]}, 'unavailable': {}, 'possible': {'left_copy': [[{'primitive': 'String', 'coordinate': ['left', 0, 'item']}]], 'right_copy': [['other']]}}
+E         Use -v to get more diff
+
+tests/test_incremental_extensions_review.py:46: AssertionError
+_________ test_unrelated_malformed_relation_still_refuses_on_warm_hit __________
+
+    def test_unrelated_malformed_relation_still_refuses_on_warm_hit():
+        m, relations = exact_inputs(clean=True)
+        state = ReuseState(m)
+        with state.transaction(m):
+            ext._exact_extension_calculator(m, relations)
+        malformed = dict(relations, unused=replace(relations['ticket_status'],
+                                                        fact_type='unused',
+                                                        rows=(('one', 'two', 'three'),),
+                                                        row_lineage=((),)))
+        with pytest.raises(ValueError):
+            ext._exact_extension_calculator(m, malformed)
+>       with pytest.raises(ValueError), state.transaction(m):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_incremental_extensions_review.py:60: Failed
+____ test_differential_oracle_discriminates_complete_typed_metadata[roles] _____
+
+field = 'roles'
+
+    @pytest.mark.parametrize('field', ['roles', 'identity_codec_version', 'fact_type', 'bool-int'])
+    def test_differential_oracle_discriminates_complete_typed_metadata(field):
+        m, p = next(tool.localized_inputs())
+        first = ext._python_extension_calculator(m, ext.base_relations(m, p))
+        values = dict(first.extensions)
+        relation = values['left_copy']
+        if field == 'bool-int':
+            first = replace(first, extensions=MappingProxyType(dict(values,
+                            left_copy=replace(relation, rows=((True,),)))))
+            relation = replace(relation, rows=((1,),))
+        else:
+            relation = replace(relation, **{field: {'roles': (('renamed', 'Integer'),),
+                               'identity_codec_version': 'other', 'fact_type': 'other'}[field]})
+        second = replace(first, extensions=MappingProxyType(dict(values, left_copy=relation)))
+>       assert envelope(first) != envelope(second)
+E       AssertionError: assert ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) != ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...})
+E        +  where ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('item', 'String')...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+E        +  and   ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('renamed', 'Integ...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+
+tests/test_incremental_extensions_review.py:78: AssertionError
+_ test_differential_oracle_discriminates_complete_typed_metadata[identity_codec_version] _
+
+field = 'identity_codec_version'
+
+    @pytest.mark.parametrize('field', ['roles', 'identity_codec_version', 'fact_type', 'bool-int'])
+    def test_differential_oracle_discriminates_complete_typed_metadata(field):
+        m, p = next(tool.localized_inputs())
+        first = ext._python_extension_calculator(m, ext.base_relations(m, p))
+        values = dict(first.extensions)
+        relation = values['left_copy']
+        if field == 'bool-int':
+            first = replace(first, extensions=MappingProxyType(dict(values,
+                            left_copy=replace(relation, rows=((True,),)))))
+            relation = replace(relation, rows=((1,),))
+        else:
+            relation = replace(relation, **{field: {'roles': (('renamed', 'Integer'),),
+                               'identity_codec_version': 'other', 'fact_type': 'other'}[field]})
+        second = replace(first, extensions=MappingProxyType(dict(values, left_copy=relation)))
+>       assert envelope(first) != envelope(second)
+E       AssertionError: assert ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) != ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...})
+E        +  where ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('item', 'String')...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+E        +  and   ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('item', 'String')...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+
+tests/test_incremental_extensions_review.py:78: AssertionError
+__ test_differential_oracle_discriminates_complete_typed_metadata[fact_type] ___
+
+field = 'fact_type'
+
+    @pytest.mark.parametrize('field', ['roles', 'identity_codec_version', 'fact_type', 'bool-int'])
+    def test_differential_oracle_discriminates_complete_typed_metadata(field):
+        m, p = next(tool.localized_inputs())
+        first = ext._python_extension_calculator(m, ext.base_relations(m, p))
+        values = dict(first.extensions)
+        relation = values['left_copy']
+        if field == 'bool-int':
+            first = replace(first, extensions=MappingProxyType(dict(values,
+                            left_copy=replace(relation, rows=((True,),)))))
+            relation = replace(relation, rows=((1,),))
+        else:
+            relation = replace(relation, **{field: {'roles': (('renamed', 'Integer'),),
+                               'identity_codec_version': 'other', 'fact_type': 'other'}[field]})
+        second = replace(first, extensions=MappingProxyType(dict(values, left_copy=relation)))
+>       assert envelope(first) != envelope(second)
+E       AssertionError: assert ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) != ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...})
+E        +  where ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('item', 'String')...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+E        +  and   ({'extensions': {'left_copy': [['alpha'], ['beta']], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='other', roles=(('item', 'String'),), ...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+
+tests/test_incremental_extensions_review.py:78: AssertionError
+___ test_differential_oracle_discriminates_complete_typed_metadata[bool-int] ___
+
+field = 'bool-int'
+
+    @pytest.mark.parametrize('field', ['roles', 'identity_codec_version', 'fact_type', 'bool-int'])
+    def test_differential_oracle_discriminates_complete_typed_metadata(field):
+        m, p = next(tool.localized_inputs())
+        first = ext._python_extension_calculator(m, ext.base_relations(m, p))
+        values = dict(first.extensions)
+        relation = values['left_copy']
+        if field == 'bool-int':
+            first = replace(first, extensions=MappingProxyType(dict(values,
+                            left_copy=replace(relation, rows=((True,),)))))
+            relation = replace(relation, rows=((1,),))
+        else:
+            relation = replace(relation, **{field: {'roles': (('renamed', 'Integer'),),
+                               'identity_codec_version': 'other', 'fact_type': 'other'}[field]})
+        second = replace(first, extensions=MappingProxyType(dict(values, left_copy=relation)))
+>       assert envelope(first) != envelope(second)
+E       AssertionError: assert ({'extensions': {'left_copy': [[True]], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', 'left', 0]], ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) != ({'extensions': {'left_copy': [[1]], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', 'left', 0]], [['...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...})
+E        +  where ({'extensions': {'left_copy': [[True]], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', 'left', 0]], ...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('item', 'String')...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+E        +  and   ({'extensions': {'left_copy': [[1]], 'right_copy': [['other']]}, 'lineage': {'left_copy': [[['facts', 'left', 0]], [['...rms_read': 3, 'positive_candidate_rows_emitted': 3, 'join_candidates_indexed': 0, 'join_left_bindings_probed': 0, ...}) = envelope(_ExtensionResult(extensions=mappingproxy({'left_copy': _TypedRelation(fact_type='left_copy', roles=(('item', 'String')...rged=0, component_product_rows_emitted=3, negation_rows_indexed=0, negation_bindings_probed=0, head_cells_projected=3)))
+
+tests/test_incremental_extensions_review.py:78: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_extensions_review.py::test_defining_helper_mutation_cannot_reuse_old_exact_result
+FAILED tests/test_incremental_extensions_review.py::test_opaque_dictionary_subclass_preserves_possible_rows[False]
+FAILED tests/test_incremental_extensions_review.py::test_opaque_dictionary_subclass_preserves_possible_rows[True]
+FAILED tests/test_incremental_extensions_review.py::test_unrelated_malformed_relation_still_refuses_on_warm_hit
+FAILED tests/test_incremental_extensions_review.py::test_differential_oracle_discriminates_complete_typed_metadata[roles]
+FAILED tests/test_incremental_extensions_review.py::test_differential_oracle_discriminates_complete_typed_metadata[identity_codec_version]
+FAILED tests/test_incremental_extensions_review.py::test_differential_oracle_discriminates_complete_typed_metadata[fact_type]
+FAILED tests/test_incremental_extensions_review.py::test_differential_oracle_discriminates_complete_typed_metadata[bool-int]
+8 failed in 0.21s

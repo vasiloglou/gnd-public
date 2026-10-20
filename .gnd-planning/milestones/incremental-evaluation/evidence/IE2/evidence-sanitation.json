@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-20",
+  "reason": "Correct retained regression outputs containing machine-specific paths; no source, test or outcome changed. Prior identities remain historical in phase IE1 record and Git.",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/corpus-red.txt",
+      "prior_sha256": "6a596e06c2b1dcaabe10d60e77c6e2110a9df8c5ece44fc8678d133061e655a9",
+      "sanitized_sha256": "ca0432faa5224fc5d801fba880410e7e89a6c8350b0e3ec8214fb71f5f123cdb"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE1/confirmation-red.txt",
+      "prior_sha256": "f2fac4c7eddfb2cd6b435e6008d9874aa6a3d3720303458d5cbc3b3cc62670ec",
+      "sanitized_sha256": "7ca0af7aa9939214ae18f85697e7fb4ed6aa81e4c55d349d0ee73ca44d42a3f2"
+    }
+  ]
+}

@@ -1923,8 +1923,14 @@ def _evaluate_to_state(
         if pre_receipt is not None:
             for branch_id in pre_receipt.branches:
                 record_branch(branch_id)
+        checked = None
+        if pre_receipt is not None:
+            try:
+                checked = copy.deepcopy(pre_receipt._checked_report)
+            except Exception:  # noqa: BLE001 -- ordinary pre-check remains the safe fallback
+                checked = None
         report = TransitionReport(
-            pre_snapshot=check(model, pre) if pre_receipt is None else pre_receipt.report,
+            pre_snapshot=check(model, pre) if checked is None else checked,
             pre_snapshot_verdicts=_compiled_verdicts_for_dynamic_walk(model, pre),
         )
         covers = list(pre.covers or [])

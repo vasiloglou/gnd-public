@@ -1,0 +1,42 @@
+[
+  {
+    "id": "E1",
+    "story": "cold/noop/independent"
+  },
+  {
+    "id": "E2",
+    "story": "positive/negative/aggregate edits"
+  },
+  {
+    "id": "E3",
+    "story": "self/mutual recursion and alternate support deletion"
+  },
+  {
+    "id": "E4",
+    "story": "ordered origins and row replacement"
+  },
+  {
+    "id": "E5",
+    "story": "unavailable/available transitions"
+  },
+  {
+    "id": "E6",
+    "story": "opaque/partial/callback fallback"
+  },
+  {
+    "id": "E7",
+    "story": "returned envelope tampering"
+  },
+  {
+    "id": "E8",
+    "story": "row/byte and unsupported fallback"
+  },
+  {
+    "id": "E9",
+    "story": "helper/limit/model/option changes"
+  },
+  {
+    "id": "E10",
+    "story": "failure after prior component rollback"
+  }
+]

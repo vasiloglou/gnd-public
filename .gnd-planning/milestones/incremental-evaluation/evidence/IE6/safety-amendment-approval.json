@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-20",
+  "ruling": "delegated approval (auto=true)",
+  "authority": "002 and current owner reopened IE6 implementation",
+  "decision": "Withdraw unsafe hash-removal expectation; preserve original live per-lookup signature hash and all other existing gates. No elapsed threshold changed.",
+  "subjects": {
+    ".gnd-planning/milestones/incremental-evaluation/notes/incremental-evaluation-plan.md": "57146d5e2dc58c663a6209e981fb1758ed981bc019afdfdef489e326d33a5a29",
+    ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE6-spec.md": "b0bae1cc845a51da1c304090ec7f44f785d06928468f497b8da079303be5efcf",
+    "tests/test_incremental_performance.py": "dd9ff8ade1c1fbecaab98298a2dbe1b9aecb22bc9829715b2e8382b3a2f87a5b",
+    ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/hashability-red.txt": "0e5a3afe02263abb7954f1052cdba2e0b33f92b66dbd1cf6f082849adbfb2b74"
+  }
+}

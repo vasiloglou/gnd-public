@@ -1,0 +1,241 @@
+Machine/user paths sanitized only.
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+____________ test_prepared_policy_normalizes_once_with_same_results ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a465a50>
+
+    def test_prepared_policy_normalizes_once_with_same_results(monkeypatch):
+        from gnd import incremental_state
+    
+        m, _ = next(tool.localized_inputs())
+        owner = ReuseState(m)
+        original = incremental_state._policy
+        calls = []
+    
+        def observed(*args, **kwargs):
+            calls.append(1)
+            return original(*args, **kwargs)
+    
+        monkeypatch.setattr(incremental_state, '_policy', observed)
+        with owner.transaction(m):
+>           policy = owner.prepare_policy((len, ('limit', 3)))
+                     ^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'ReuseState' object has no attribute 'prepare_policy'
+
+tests/test_incremental_prepared_policy.py:22: AttributeError
+____________ test_prepared_policy_expired_and_foreign_compute_fresh ____________
+
+    def test_prepared_policy_expired_and_foreign_compute_fresh():
+        m, _ = next(tool.localized_inputs())
+        owner, foreign = ReuseState(m), ReuseState(m)
+        calls = []
+    
+        def calculate():
+            calls.append(1)
+            return len(calls)
+    
+        with owner.transaction(m):
+>           policy = owner.prepare_policy((calculate,))
+                     ^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'ReuseState' object has no attribute 'prepare_policy'
+
+tests/test_incremental_prepared_policy.py:39: AttributeError
+_______ test_prepared_policy_checks_live_code_and_mutable_configuration ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a4cbd50>
+
+    def test_prepared_policy_checks_live_code_and_mutable_configuration(monkeypatch):
+        m, _ = next(tool.localized_inputs())
+        owner = ReuseState(m)
+    
+        def helper():
+            return 1
+    
+        def alternate():
+            return 2
+    
+        config = {'limit': 1}
+        with owner.transaction(m):
+>           policy = owner.prepare_policy((helper, config))
+                     ^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'ReuseState' object has no attribute 'prepare_policy'
+
+tests/test_incremental_prepared_policy.py:61: AttributeError
+_______ test_unsupported_prepared_policy_keeps_full_fallback_and_bounds ________
+
+    def test_unsupported_prepared_policy_keeps_full_fallback_and_bounds():
+        m, _ = next(tool.localized_inputs())
+        owner = ReuseState(m, max_bytes=1)
+        with owner.transaction(m):
+>           policy = owner.prepare_policy((object(),))
+                     ^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'ReuseState' object has no attribute 'prepare_policy'
+
+tests/test_incremental_prepared_policy.py:74: AttributeError
+_________ test_whole_call_fallback_diagnostic_is_not_unit_bypass_rate __________
+
+    def test_whole_call_fallback_diagnostic_is_not_unit_bypass_rate():
+        from gnd import api
+    
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        actual = owner.check(p, references=object())
+>       assert actual['exit_code'] not in (0, 1, 2)
+E       assert 1 not in (0, 1, 2)
+
+tests/test_incremental_prepared_policy.py:87: AssertionError
+_____________ test_context_diagnostics_stay_outside_public_payload _____________
+
+    def test_context_diagnostics_stay_outside_public_payload():
+        from gnd import api
+        from tests.test_incremental_sessions import same_payload
+    
+        m, p = next(tool.localized_inputs())
+        owner = api.EvaluationSession(m)
+        same_payload(owner.check(p), api.check(m, p))
+        stats = owner.stats()
+>       assert stats['extension_context_calls'] > 0
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'extension_context_calls'
+
+tests/test_incremental_prepared_policy.py:102: KeyError
+_ test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh[callable] _
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<USER>/pytest-4121/test_unknown_registry_hook_wit0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109f7bc90>
+route = 'callable'
+
+    @pytest.mark.parametrize('route', ['callable', 'string'])
+    def test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh(tmp_path, monkeypatch, route):
+        from dataclasses import replace
+    
+        import test_public_branch_runtime as corpus
+    
+        from gnd import api, semantic_spec
+        from gnd.constraint_families import FAMILIES
+        from tests.test_incremental_sessions import same_payload
+    
+        m, p = corpus._build('P2-039', tmp_path)
+        monkeypatch.setitem(globals(), '_test_hook_state', 1)
+    
+        def evaluator(constraint, snapshot):
+            return _test_hook_state, []  # noqa: F821 -- installed global is the unclassified dependency
+    
+        if route == 'callable':
+            monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+        else:
+            monkeypatch.setattr(semantic_spec, '_family_result_frequency', evaluator)
+        owner = api.EvaluationSession(m)
+        same_payload(owner.check(p), api.check(m, p))
+        monkeypatch.setitem(globals(), '_test_hook_state', 0)
+>       same_payload(owner.check(p), api.check(m, p))
+
+tests/test_incremental_prepared_policy.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actual = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'accepted', ...}
+expected = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'violated', ...}
+
+    def same_payload(actual, expected):
+        actual_key, expected_key = fingerprint(actual), fingerprint(expected)
+        assert actual_key is not None and expected_key is not None
+>       assert actual_key == expected_key
+E       AssertionError: assert ('dict', ((('... True)), ...)) == ('dict', ((('...False)), ...))
+E         
+E         At index 1 diff: ((('str', 'schema_version'), ('int', 7)), (('str', 'tool'), ('str', 'gnd')), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str', 'accepted')), (('str', 'exit_code'), ('int', 0)), (('str', 'acceptance_ready'), ('bool', True)), (('str', 'model'), ('NoneType', None)), (('str', 'model_digest'), ('str', 'sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd')), (('str', 'population'), ('NoneType', None)), (('str', 'counts'), ('dict', ((('str', 'pass'), ('int', 14)), (('str', 'fail'), ('int', 0)), (('str', 'warning'), ('int'...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_sessions.py:18: AssertionError
+_ test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh[string] _
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<USER>/pytest-4121/test_unknown_registry_hook_wit1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a5ad8d0>
+route = 'string'
+
+    @pytest.mark.parametrize('route', ['callable', 'string'])
+    def test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh(tmp_path, monkeypatch, route):
+        from dataclasses import replace
+    
+        import test_public_branch_runtime as corpus
+    
+        from gnd import api, semantic_spec
+        from gnd.constraint_families import FAMILIES
+        from tests.test_incremental_sessions import same_payload
+    
+        m, p = corpus._build('P2-039', tmp_path)
+        monkeypatch.setitem(globals(), '_test_hook_state', 1)
+    
+        def evaluator(constraint, snapshot):
+            return _test_hook_state, []  # noqa: F821 -- installed global is the unclassified dependency
+    
+        if route == 'callable':
+            monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+        else:
+            monkeypatch.setattr(semantic_spec, '_family_result_frequency', evaluator)
+        owner = api.EvaluationSession(m)
+        same_payload(owner.check(p), api.check(m, p))
+        monkeypatch.setitem(globals(), '_test_hook_state', 0)
+>       same_payload(owner.check(p), api.check(m, p))
+
+tests/test_incremental_prepared_policy.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actual = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'accepted', ...}
+expected = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'violated', ...}
+
+    def same_payload(actual, expected):
+        actual_key, expected_key = fingerprint(actual), fingerprint(expected)
+        assert actual_key is not None and expected_key is not None
+>       assert actual_key == expected_key
+E       AssertionError: assert ('dict', ((('... True)), ...)) == ('dict', ((('...False)), ...))
+E         
+E         At index 1 diff: ((('str', 'schema_version'), ('int', 7)), (('str', 'tool'), ('str', 'gnd')), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str', 'accepted')), (('str', 'exit_code'), ('int', 0)), (('str', 'acceptance_ready'), ('bool', True)), (('str', 'model'), ('NoneType', None)), (('str', 'model_digest'), ('str', 'sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd')), (('str', 'population'), ('NoneType', None)), (('str', 'counts'), ('dict', ((('str', 'pass'), ('int', 14)), (('str', 'fail'), ('int', 0)), (('str', 'warning'), ('int'...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_sessions.py:18: AssertionError
+_______ test_session_timing_uses_balanced_uninstrumented_distinct_modes ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a95ef10>
+
+    def test_session_timing_uses_balanced_uninstrumented_distinct_modes(monkeypatch):
+        reached = []
+    
+        def replay(workload, *, receipts, incremental=False):
+            reached.append((receipts, incremental))
+            return []
+    
+        monkeypatch.setattr(tool, 'replay_full', replay)
+>       result = tool.measure_session_modes('localized', repeat=3)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'measure_incremental_evaluation' has no attribute 'measure_session_modes'
+
+tests/test_incremental_session_measurement.py:13: AttributeError
+________ test_complete_calculation_key_rejects_typed_metadata_mutation _________
+
+    def test_complete_calculation_key_rejects_typed_metadata_mutation():
+        from dataclasses import replace
+    
+        from gnd import extensions
+    
+        m, p = next(tool.localized_inputs())
+        original = extensions._python_extension_calculator(m, extensions.base_relations(m, p))
+>       key = tool.complete_calculation_key(original)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'measure_incremental_evaluation' has no attribute 'complete_calculation_key'
+
+tests/test_incremental_session_measurement.py:29: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_prepared_policy.py::test_prepared_policy_normalizes_once_with_same_results
+FAILED tests/test_incremental_prepared_policy.py::test_prepared_policy_expired_and_foreign_compute_fresh
+FAILED tests/test_incremental_prepared_policy.py::test_prepared_policy_checks_live_code_and_mutable_configuration
+FAILED tests/test_incremental_prepared_policy.py::test_unsupported_prepared_policy_keeps_full_fallback_and_bounds
+FAILED tests/test_incremental_prepared_policy.py::test_whole_call_fallback_diagnostic_is_not_unit_bypass_rate
+FAILED tests/test_incremental_prepared_policy.py::test_context_diagnostics_stay_outside_public_payload
+FAILED tests/test_incremental_prepared_policy.py::test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh[callable]
+FAILED tests/test_incremental_prepared_policy.py::test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh[string]
+FAILED tests/test_incremental_session_measurement.py::test_session_timing_uses_balanced_uninstrumented_distinct_modes
+FAILED tests/test_incremental_session_measurement.py::test_complete_calculation_key_rejects_typed_metadata_mutation
+10 failed in 1.15s

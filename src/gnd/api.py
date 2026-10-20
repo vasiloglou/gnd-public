@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-import copy  # noqa: F401 -- historical compatibility binding
+import copy
 import json  # noqa: F401 -- historical compatibility binding
 import os
 from collections.abc import Callable, Mapping  # noqa: F401 -- historical compatibility binding
 from dataclasses import (  # noqa: F401 -- historical compatibility binding  # noqa: F401 -- historical compatibility binding
     dataclass,
+    field,
     replace,
 )
 from pathlib import Path
@@ -115,7 +116,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession")  # noqa: RUF022 - approved stable order
 
 
 
@@ -145,6 +146,7 @@ class CheckReceipt:
     branches: frozenset[str]
     reusable: bool
     _token: object
+    _checked_report: CheckReport | None = field(default=None, repr=False, compare=False)
 
     def __new__(cls):
         raise TypeError("CheckReceipt is minted by check_with_receipt")
@@ -177,12 +179,14 @@ def check_with_receipt(
         # the normal api.check route instead, so the payload always equals api.check's.
         direct = not anchored and population.matches_validation_marker(model)
         report = None
+        failure = None
         if direct:
             try:
                 with capture_branches() as branches:
                     report = checker_module.check(model, population)
-            except Exception:  # noqa: BLE001 -- api.check maps the same failure to a payload
+            except Exception as error:  # noqa: BLE001 -- api.check maps the same failure to a payload
                 direct = False
+                failure = error
         if direct:
             def precomputed(_model, _population):
                 # Re-record the pre-run's branch ids inside the builder's own trace capture,
@@ -194,16 +198,27 @@ def check_with_receipt(
             result = _run_check(model, population, unredacted=unredacted,
                                 evaluator=precomputed)
         else:
+            fallback = {}
+            if failure is not None:
+                def failed(_model, _population, branch_ids=tuple(branches)):
+                    for branch_id in branch_ids:
+                        record_branch(branch_id)
+                    raise failure
+                fallback["evaluator"] = failed
             with capture_branches() as branches:
-                result = _run_check(model, population, unredacted=unredacted)
+                result = _run_check(model, population, unredacted=unredacted, **fallback)
             report = result.report
         key = ModelIndex.for_model(model).digest
         receipt = object.__new__(CheckReceipt)
+        try:
+            private_report = copy.deepcopy(report)
+        except Exception:  # noqa: BLE001 -- check payload still owns normal error mapping
+            private_report = None
         for name, value in {
             "model": model, "model_key": key, "population_digest": _content_digest(population),
             "options": (), "report": report, "branches": frozenset(branches),
-            "reusable": direct and result.exit_code in (0, 2) and key is not None,
-            "_token": _RECEIPT_TOKEN,
+            "reusable": direct and result.exit_code in (0, 2) and key is not None and private_report is not None,
+            "_token": _RECEIPT_TOKEN, "_checked_report": private_report,
         }.items():
             object.__setattr__(receipt, name, value)
     return result.payload, receipt
@@ -974,3 +989,94 @@ def judgments(
     ):
         result.update(error={"reason": "binding", "message": "invalid bound judgment input"})
     return result
+
+
+class EvaluationSession:
+    """Opt-in bounded reuse for related checks; reports keep ordinary API semantics."""
+
+    def __init__(self, model: Model, *, max_rows: int = 100_000,
+                 max_bytes: int = 32 * 1024 * 1024) -> None:
+        from gnd.incremental_state import ReuseState
+        self._model = model
+        self._state = ReuseState(model, max_rows=max_rows, max_bytes=max_bytes)
+
+    def _call(self, function, *, options=(), fresh=False, attempt=None):
+        # An unsupported key deliberately disables both extension and finding
+        # reuse while retaining the same busy/closed/rollback boundary.
+        fresh = fresh or bool(self._model.reference_populations)
+        binding = (object(),) if fresh else options
+        with self._state.transaction(self._model, options=binding, sequence=attempt):
+            self._state.note("session_calls")
+            if fresh:
+                self._state.note("session_fresh_calls")
+            payload = function()
+            result = payload[0] if isinstance(payload, tuple) else payload
+            if result.get("exit_code") not in (0, 1, 2):
+                self._state.discard()
+            return payload
+
+    def check(self, population: Population, *, compiled_operations: bool = False,
+              unredacted: bool = False, anchors: Any = None,
+              document: bytes | str | os.PathLike[str] | None = None,
+              population_bytes: bytes | None = None, admission: bool = False,
+              references: BoundReferenceContext | None = None) -> dict[str, Any]:
+        def run():
+            if not isinstance(population, Population):
+                raise TypeError("EvaluationSession requires a loaded Population")
+            return check(self._model, population, compiled_operations=compiled_operations,
+                         unredacted=unredacted, anchors=anchors, document=document,
+                         population_bytes=population_bytes, admission=admission, references=references)
+        return self._call(run, options=(compiled_operations, admission),
+                          fresh=references is not None or anchors is not None or document is not None
+                          or population_bytes is not None or admission or compiled_operations)
+
+    def check_with_receipt(self, population: Population, *, unredacted: bool = False
+                           ) -> tuple[dict[str, Any], CheckReceipt]:
+        def run():
+            if not isinstance(population, Population):
+                raise TypeError("EvaluationSession requires a loaded Population")
+            return check_with_receipt(self._model, population, unredacted=unredacted)
+        return self._call(run, options=(False, False))
+
+    def transition(self, pre: Population, steps, post: Population | None = None, *,
+                   unredacted: bool = False, references: BoundReferenceContext | None = None,
+                   pre_receipt: CheckReceipt | None = None) -> dict[str, Any]:
+        def run():
+            if not isinstance(pre, Population) or (post is not None and not isinstance(post, Population)):
+                raise TypeError("EvaluationSession requires loaded Population inputs")
+            return transition(self._model, pre, steps, post, unredacted=unredacted,
+                              references=references, pre_receipt=pre_receipt)
+        return self._call(run, options=(False, False), fresh=references is not None)
+
+    def observe(self, population: Population, replacements: dict) -> Population:
+        """Validate whole ordered relation replacements between evaluations."""
+        from gnd.evaluation_feedback import compose_observation
+
+        with self._state.transaction(self._model, options=(False, False)):
+            observed = compose_observation(self._model, population, replacements)
+            self._state.discard()
+            return observed
+
+    def check_with_feedback(self, population: Population, *, attempt: int
+                            ) -> tuple[dict[str, Any], dict[str, Any]]:
+        """Check and return separate bounded counts; attempt numbering is lifetime-scoped."""
+        from gnd.evaluation_feedback import build_feedback
+
+        def run():
+            if not isinstance(population, Population):
+                raise TypeError("EvaluationSession requires a loaded Population")
+            payload = check(self._model, population)
+            return payload, build_feedback(self._model, population, payload, attempt=attempt)
+        return self._call(run, options=(False, False), attempt=attempt)
+
+    def reset(self) -> None:
+        self._state.reset()
+
+    def close(self) -> None:
+        self._state.close()
+
+    def stats(self) -> dict[str, int]:
+        return self._state.stats()
+
+    def __reduce__(self):
+        raise TypeError("EvaluationSession cannot be serialized")

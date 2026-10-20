@@ -1,0 +1,1 @@
+{"parity": true, "reporter_full_bodies": 4878, "reporter_session_bodies": 179, "reporter_timing_medians": {"A": 6.447771791135892, "B": 5.830629916861653, "C": 6.788488249992952}}

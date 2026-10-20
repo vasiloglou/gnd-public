@@ -1,0 +1,6 @@
+identity corruption negative live
+phase identities: 58 match; current measurement maps verified
+complete ordered parity and frozen bodies 4878/179 verified; close clears retained state
+both revision maps/driver identities match; all timed census/exits valid
+wheel archive manifest verified; historical009 unchanged; machine-home scan clear
+data-only IE6 audit exit 0

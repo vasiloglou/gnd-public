@@ -1,0 +1,18 @@
+{
+  "phase": "IE4",
+  "answers": {
+    "left_asserted_initial": 2,
+    "left_copy_asserted_initial": 0,
+    "left_copy_computed_initial": 2,
+    "empty_computed_count": 0,
+    "feedback_kind": "evaluation-session-feedback",
+    "schema_version": 1,
+    "max_rows": 128,
+    "max_wire_bytes": 16384,
+    "max_identifier_chars": 256,
+    "max_count": 2147483647,
+    "mutation_canary": "SECRET-cell",
+    "observation_advances_generation": false,
+    "reset_next_attempt": 3
+  }
+}

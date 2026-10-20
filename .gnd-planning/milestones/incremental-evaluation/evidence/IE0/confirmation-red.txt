@@ -1,0 +1,51 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_confirmation_receipt_semantics_cannot_be_deleted_or_corrupted ______
+
+    def test_confirmation_receipt_semantics_cannot_be_deleted_or_corrupted():
+        for delete in (False, True):
+            document = accepted_document()
+            semantics = document['work']['reporter']['receipts']['semantic_replay']
+            if delete:
+                del semantics['lineage']
+            else:
+                semantics['lineage'] = ['changed-only-in-receipt-arm']
+>           assert not tool.validate_evidence(document)
+E           AssertionError: assert not True
+E            +  where True = <function validate_evidence at 0x109e565c0>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'reporter': {'full': {'calls': 13, 'totals': {'ch... 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'expected_exit': 0, 'mismatches': []}], ...})
+E            +    where <function validate_evidence at 0x109e565c0> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:182: AssertionError
+______________ test_confirmation_course_expected_exit_is_binding _______________
+
+    def test_confirmation_course_expected_exit_is_binding():
+        document = accepted_document()
+        modes = document['work'].pop('reporter')
+        for row in modes.values():
+            row['calls'] = 3
+            row['payload_digests'] = ['same'] * 3
+            row['semantic_replay']['exit'] = [1, 1, 1]
+        document['work']['course'] = modes
+>       assert not tool.validate_evidence(document)
+E       AssertionError: assert not True
+E        +  where True = <function validate_evidence at 0x109e565c0>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'course': {'full': {'calls': 3, 'totals': {'check... 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'expected_exit': 0, 'mismatches': []}], ...})
+E        +    where <function validate_evidence at 0x109e565c0> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:193: AssertionError
+___________ test_confirmation_missing_one_executed_identity_refuses ____________
+
+    def test_confirmation_missing_one_executed_identity_refuses():
+        document = accepted_document()
+        document['identities'] = tool.identities()
+        del document['identities']['tools/measure_transition_cost.py']
+>       assert not tool.validate_evidence(document)
+E       AssertionError: assert not True
+E        +  where True = <function validate_evidence at 0x109e565c0>({'source_head': 'source', 'identities': {'pyproject.toml': 'ff0da954a63e4b9f4a1a71a8626574490a813ed122b88375da25cc13ec... 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'expected_exit': 0, 'mismatches': []}], ...})
+E        +    where <function validate_evidence at 0x109e565c0> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:200: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_baseline_review.py::test_confirmation_receipt_semantics_cannot_be_deleted_or_corrupted
+FAILED tests/test_incremental_baseline_review.py::test_confirmation_course_expected_exit_is_binding
+FAILED tests/test_incremental_baseline_review.py::test_confirmation_missing_one_executed_identity_refuses
+3 failed, 18 deselected in 0.13s

@@ -1,0 +1,57 @@
+# Incremental evaluation
+
+Current result, 2026-10-20: seven phases IE0–IE6 are locally accepted with
+carryovers under the named auto delegation. The owner-requested performance
+follow-up is recorded in [010](010-IE6-reopening-gate.md),
+[011](011-phase-IE6.md) and the renewed [012 close](012-milestone-close.md).
+The final balanced comparison observes session median reductions of about
+6% / 17% / 6% against pre-IE6 sessions on reporter/course/localized controls;
+full evaluation with receipts remains faster. These are small shared-host samples.
+[Successor question sweep](notes/IE6-close-question-sweep.md) retains the
+framework performance and reporter-owned downstream carryovers. Four fresh
+close opinions and exact delegated acceptance are in evidence/IE6-close.
+PR33 remains the review vehicle; merge/publication/certification require separate
+owner authority. The six-phase account below describes historical close009.
+
+Plan approved, 2026-10-19. Owner subsequently delegated milestone execution
+with `auto=true` ([delegation](002-execution-delegation.md)).
+
+- [Canonical plan](notes/incremental-evaluation-plan.md)
+- [Owner plan approval and decision rulings](001-plan-gate.md)
+- [IE0 spec and amendments](notes/phase-IE0-spec.md)
+- [IE0 completed record](003-phase-IE0.md)
+- [IE1 completed record](004-phase-IE1.md)
+- [IE2 completed record](005-phase-IE2.md)
+- [IE3 completed record](006-phase-IE3.md)
+- [IE4 completed record](007-phase-IE4.md)
+- [IE5 completed record](008-phase-IE5.md)
+- [Four-reader plan review and disposition](notes/plan-review-r1-disposition.md)
+- [Issue #24](https://github.com/vasiloglou/gnd-public/issues/24)
+- [Prior milestone close](../transition-check-performance/006-milestone-close.md)
+
+Six phases: IE0 baseline → IE1 invalidation → IE2 extension reuse → IE3 selective
+checks and session API → IE4 observations/feedback → IE5 integration/docs.
+Milestone close is separate. The prior milestone's deferred TP4 is carried here;
+its closed records and phase IDs are preserved.
+
+Review instrument: four local reviewer agents, selected by the owner.
+Plan review complete: three approve, one approve-with-fixes, no blockers.
+The timing-schedule repair and status correction are recorded in the disposition;
+amended bytes have no new review opinion.
+The owner approved amended plan r2 and its proposed milestone decisions.
+IE0 completed: 49 focused tests, lint and strict serial baseline passed.
+IE1 completed: 1,419 focused tests and lint; eight reproduced review findings repaired.
+IE2 completed: 245 focused tests and lint; component envelope reuse and twelve review controls.
+IE3 completed:1,079 affected checks plus68 final repair checks; opt-in sessions and private receipts.
+IE4 completed:614 affected checks; validated host observations, closed feedback and atomic progress.
+IE5 completed: frozen replay body work4878→179 with full parity; installed smoke and focused gates pass.
+Measured session wall time is slower on the small public fixtures. Four-reader close is complete.
+The old public workload is available; the newly offered workload is not supplied.
+It blocks claims about the 547-program census, not drafting or the local baseline.
+No delivery date or downstream performance result is promised.
+
+All six phases and local milestone close are accepted under the named `auto=true` delegation.
+Four independent close readers returned close-with-carryovers; see [009](009-milestone-close.md),
+[question sweep](notes/close-question-sweep.md) and [PR33](https://github.com/vasiloglou/gnd-public/pull/33).
+The separate delegated ruling binds exact final bytes in evidence/close/acceptance.json.
+No merge, publication or certification is authorized.

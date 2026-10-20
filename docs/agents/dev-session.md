@@ -269,3 +269,58 @@ result.json and close the experiment.
 The skill writes `SPEC.md`, `session.contract.json` and `CONCLUSIONS.md`. Every claim
 it makes about the outcome comes from `result.json` and the exit codes, not from its
 own judgment.
+
+
+## A host loop in one Python process
+
+`api.EvaluationSession` reuses eligible evaluation work across loaded snapshots.
+Its `observe` method replaces complete ordered relations through normal population
+validation. Omitted relations stay unchanged; an empty list deletes the relation's
+rows; duplicates stay present. This admits host assertions, not externally verified
+facts. Observations run between calls and cannot mutate prior attempt evidence.
+
+For an offline example using the packaged course fixture:
+
+```python
+import json
+from importlib.resources import files
+from gnd import api
+from gnd.examples.plan_apps.core import Example, steps_document
+from gnd.model import load_model
+from gnd.population import load_population
+
+root = files("gnd") / "examples" / "plan_apps" / "course"
+model = load_model(root / "model.orm.json")
+pre = load_population(root / "state.pop.json", model=model)
+plan = json.loads((root / "plans" / "attempt-3.steps.json").read_text())
+steps = steps_document(Example(root), plan["steps"])
+session = api.EvaluationSession(model)
+first, first_feedback = session.check_with_feedback(pre, attempt=1)
+first_walk = session.transition(pre, steps)
+observed = session.observe(pre, {"passed": [*pre.facts["passed"],
+                            {"student": "maya", "course": "STAT210"}]})
+second, second_feedback = session.check_with_feedback(observed, attempt=2)
+second_walk = session.transition(observed, steps)
+session.close()
+```
+
+The separate closed feedback kind `evaluation-session-feedback`, version 1, gives
+asserted and computed counts with availability/overflow status. It contains no
+cell values, witnesses, messages or cache handles; declared fact identifiers are
+included. At most 128 rows, 256 characters per identifier and 16 KiB of canonical JSON
+are emitted; omissions are explicit. Count overflow is null with status overflow,
+not an exact saturated count. Unavailable differs from available empty 0. Valid
+indeterminate checks may supply unavailable counts while discarding cache staging.
+
+Feedback attempts must be consecutive, starting at 1. A returned error feedback
+consumes its attempt; invalid observations, rejected attempts and construction
+failures do not. `reset()` clears cached work and preserves lifetime numbering.
+Returned populations/feedback are detached. Closing releases retained state.
+The cache is in-process, bounded to one generation, and cannot be serialized.
+This host loop has a separate wire from persistent `gnd exp` sessions: contracts,
+old feedback versions and retained attempt artifacts keep their existing formats.
+Use the persistent workflow above when retained experiment evidence is needed.
+
+On the packaged fixture above the checks exit 0, the first walk exits 0 and the
+walk after observation exits 1. The new observation changes the constraints the
+next plan must satisfy; successful observation admission does not approve a plan.

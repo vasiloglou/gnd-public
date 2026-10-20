@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_reuse_only_classifier_failure_preserves_ordinary_calculation _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c768e50>
+
+    def test_reuse_only_classifier_failure_preserves_ordinary_calculation(monkeypatch):
+        m, p = next(tool.localized_inputs())
+        relations = ext.base_relations(m, p)
+        state = ReuseState(m)
+    
+        def broken(*args):
+            raise RuntimeError('injected reuse-only classification failure')
+    
+        monkeypatch.setattr(ext, 'derivation_classifications', broken)
+        fresh = ext._python_extension_calculator(m, relations)
+        with state.transaction(m):
+>           actual = ext._python_extension_calculator(m, relations)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_incremental_extensions_review.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/gnd/extensions.py:1132: in _python_extension_calculator
+    incremental = _incremental_context(model, relations)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/extensions.py:1033: in _incremental_context
+    if any(not row.complete for row in derivation_classifications(document)):
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'fact_types': [{'id': 'left', 'reading': '{Item} is left', 'roles': [{'object_type': 'item', 'role_name': 'item'}]},... '{Item} is right_copy', 'roles': [{'object_type': 'item', 'role_name': 'item'}], 'derivation': 'semiderived', ...}]},)
+
+    def broken(*args):
+>       raise RuntimeError('injected reuse-only classification failure')
+E       RuntimeError: injected reuse-only classification failure
+
+tests/test_incremental_extensions_review.py:132: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_extensions_review.py::test_reuse_only_classifier_failure_preserves_ordinary_calculation
+1 failed, 11 deselected in 0.13s

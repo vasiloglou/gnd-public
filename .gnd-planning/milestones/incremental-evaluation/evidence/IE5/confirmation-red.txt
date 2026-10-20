@@ -1,0 +1,21 @@
+Machine/user paths sanitized only.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_observer_payload_fingerprint_is_not_runtime_work _____________
+
+    def test_observer_payload_fingerprint_is_not_runtime_work():
+        rows = []
+        token = tool.COMPLETE_CALL_SINK.set(rows)
+        try:
+            with tool.count_work() as counts:
+                tool.extension_preparation.fingerprint({'runtime': 1})
+                runtime_nodes = counts['fingerprint_nodes']
+                assert runtime_nodes > 0
+                tool.public_call(lambda: {'exit_code': 0})
+>               assert counts['fingerprint_nodes'] == runtime_nodes
+E               assert 6 == 3
+
+tests/test_incremental_session_measurement.py:142: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_session_measurement.py::test_observer_payload_fingerprint_is_not_runtime_work
+1 failed, 8 deselected in 0.24s

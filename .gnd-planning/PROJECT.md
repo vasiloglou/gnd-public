@@ -98,3 +98,38 @@ results unchanged. On the reporter's 13-call workload:
 GND time fell by about a third on the default path and by about 42% with receipts.
 Incremental evaluation is carried to a successor milestone. See the
 [close record](milestones/transition-check-performance/006-milestone-close.md).
+
+
+## incremental-evaluation — locally closed, 2026-10-20
+
+Six phases IE0–IE5 deliver explicit in-process EvaluationSession reuse, validated
+host observations, bounded separate feedback and private receipt detachment.
+The frozen reporter replay preserves full payload/exit/branch/ordered calculation
+parity and reduces derivation bodies4878→179, but median wall time grows5.83→6.79s
+against receipts. No elapsed speedup is established. Four independent local close
+readers returned close-with-carryovers. [009 close record](milestones/incremental-evaluation/009-milestone-close.md)
+and its separate delegated acceptance bind the local result under the owner's
+named auto delegation. [PR33](https://github.com/vasiloglou/gnd-public/pull/33)
+contains the isolated topic work. Performance bookkeeping and reporter-owned
+547-program downstream acceptance remain explicit follow-ups; no date, merge,
+publication or certification is inferred. Earlier milestone entries retain their
+historical scope.
+
+### Incremental-evaluation IE6 follow-up — locally closed, 2026-10-20
+
+The owner reopened the milestone for a seventh phase. IE6 reuses conservative
+immutable policy-footprint summaries and reduces scalar/container accounting
+overhead while preserving live signature hashing, clone isolation and caps.
+The final balanced pre-IE6/current comparison observes session median reductions
+of about 6% / 17% / 6% on reporter/course/localized controls; all session medians
+remain slower than full evaluation with receipts. Small shared-host samples
+establish no general or 547-program downstream speedup. The 486-test focused
+gate, current ordered parity oracle, installed Python3.11 candidate smoke and
+Astra review/confirmation are recorded in
+[011](milestones/incremental-evaluation/011-phase-IE6.md).
+Four renewed local close opinions and a separate delegated exact-byte ruling
+support [012](milestones/incremental-evaluation/012-milestone-close.md).
+The [successor sweep](milestones/incremental-evaluation/notes/IE6-close-question-sweep.md)
+preserves all prior questions and names remaining framework/reporter owners.
+[PR33](https://github.com/vasiloglou/gnd-public/pull/33) contains all seven phases;
+no merge, publication or certification is authorized by this local close.

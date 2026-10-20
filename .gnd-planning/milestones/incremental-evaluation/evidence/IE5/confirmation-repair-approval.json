@@ -1,0 +1,17 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE5 reproduced observer-cost accounting repair; no third review",
+  "authorization": "002 named owner auto delegation",
+  "budget": "same phase/instrument/bounds; tool-only observer pause; runtime unchanged",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE5-spec.md",
+      "sha256": "4f93da3749f6aa68b10c6c29d9c8203f3f02ac1f1a45d9726ab5f5dd0dde8e9a"
+    },
+    {
+      "path": "tests/test_incremental_session_measurement.py",
+      "sha256": "b10fd6b00d7e1acfb94a8d74832a2084e3fd441c26e7e08a1ba03e1e1da0786d"
+    }
+  ]
+}

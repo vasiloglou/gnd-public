@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "model_id": "urn:gnd-fixture:incremental@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "item",
+      "name": "Item",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "left",
+      "reading": "{Item} is left",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "reading": "{Item} is right",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ]
+    },
+    {
+      "id": "left_copy",
+      "reading": "{Item} is left_copy",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ],
+      "derivation": "semiderived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "left",
+            "bind": {
+              "item": "$i"
+            }
+          }
+        ],
+        "head": {
+          "item": "$i"
+        }
+      },
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "item"
+          ],
+          "modality": "alethic",
+          "source": "explicit",
+          "status": "confirmed",
+          "provenance": {
+            "user_quote": "Each item occurs once."
+          }
+        }
+      ]
+    },
+    {
+      "id": "right_copy",
+      "reading": "{Item} is right_copy",
+      "roles": [
+        {
+          "object_type": "item",
+          "role_name": "item"
+        }
+      ],
+      "derivation": "semiderived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "right",
+            "bind": {
+              "item": "$i"
+            }
+          }
+        ],
+        "head": {
+          "item": "$i"
+        }
+      },
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "item"
+          ],
+          "modality": "alethic",
+          "source": "explicit",
+          "status": "confirmed",
+          "provenance": {
+            "user_quote": "Each item occurs once."
+          }
+        }
+      ]
+    }
+  ],
+  "constraints": [],
+  "rejected_proposals": []
+}

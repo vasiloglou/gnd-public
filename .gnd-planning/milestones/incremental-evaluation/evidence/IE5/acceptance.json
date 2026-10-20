@@ -1,0 +1,32 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE5-C1..C3 and recorded limits; all six phases locally complete, milestone close still pending",
+  "authorization": "002 owner named execution delegation; explicit CLI review authorization",
+  "decisions": [
+    "parity/body target passed unchanged",
+    "timing regression accepted as informational per D7; named follow-up, defaults unchanged",
+    "one-generation caps and separate bounded allocation proof",
+    "fresh installed candidate public smoke; no broad/native/provider/certification/publication/merge"
+  ],
+  "instrument": "one independent CLI reader plus one confirmation; final observer-cost repair author RED/GREEN; no third review",
+  "budget": "unchanged existing cache/wire bounds and bounded repeat counts",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/008-phase-IE5.md",
+      "sha256": "30435297ec1d6843e5fa28ce60d2c5616d209741e41bd5b1bb639b96e52e511b"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE5-spec.md",
+      "sha256": "4f93da3749f6aa68b10c6c29d9c8203f3f02ac1f1a45d9726ab5f5dd0dde8e9a"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/final-identities.json",
+      "sha256": "c83917d4ab7d8cc605b3c7cf3a413d2ef595005157e46fcb9c78441958d90903"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/measurement.json",
+      "sha256": "299d649a3cd0ba800e0eaf143522acf5d54e954c4bb9ea2f1706c003f4e13186"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/pyrel-applications/evidence/PA5R/query-successor.json",
+  "predecessor_sha256": "bdc2c2014b921fb7da9d1088bd6bc566730fcc759c92ad1fe9d2d14fec293490",
+  "reason": "IE3 relocates two pre-existing adapted SnapshotIR reads into the single-constraint helper and adds one typed SnapshotIR fact metadata read for the inline reuse key. These are semantic IR records, not raw Model queries. Exact site counts and original ceiling remain enforced.",
+  "removed": [
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "adapted.snapshot.fact_types",
+      2
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/correspondence.py",
+      "_constraint_reuse",
+      "snapshot.fact_types",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "adapted.snapshot.fact_types",
+      2
+    ]
+  ],
+  "result_distinct_rows": 294,
+  "result_occurrences": 363,
+  "original_metric_current": 308
+}

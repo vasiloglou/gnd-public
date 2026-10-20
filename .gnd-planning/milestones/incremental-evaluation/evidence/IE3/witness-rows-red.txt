@@ -1,0 +1,30 @@
+Retained output; edited only to replace machine repository/user paths.
+Original SHA256: d415ded82fd4ecede0977c24346ad530e5fdac4f1dba9f5d9d385460e4c94740
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_fact_row_budget_charges_retained_witness_rows ______________
+
+    def test_fact_row_budget_charges_retained_witness_rows():
+        import json
+        from gnd.model import Model
+        from gnd.population import load_population_bytes
+        original, _ = next(tool.localized_inputs())
+        document = original.model_dump()
+        for fact in document['fact_types']:
+            fact.pop('derivation', None)
+            fact.pop('derivation_rule', None)
+        m = Model.model_validate(document)
+        data = json.loads((tool.FIXTURE / 'initial.pop.json').read_text())
+        data['facts']['left_copy'] = [{'item': 'duplicate'}, {'item': 'duplicate'}]
+        p = load_population_bytes(json.dumps(data).encode(), model=m, source="fixture:witness-rows")
+        owner = session(m, max_rows=3)
+        assert owner.check(p) == api.check(m, p)
+        # Two input rows plus two retained witness rows exceed the cap.
+>       assert owner.stats()['entries'] == 0
+E       assert 2 == 0
+
+tests/test_incremental_sessions.py:242: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_sessions.py::test_fact_row_budget_charges_retained_witness_rows
+1 failed, 13 deselected in 0.16s

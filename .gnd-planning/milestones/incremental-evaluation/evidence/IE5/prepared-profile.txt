@@ -1,0 +1,37 @@
+full 0.134697 2
+cold 0.477444 2
+warm 0.162323 2
+         1828907 function calls (1625422 primitive calls) in 0.388 seconds
+
+   Ordered by: cumulative time
+   List reduced from 670 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.393    0.393 api.py:1018(check)
+        1    0.000    0.000    0.393    0.393 api.py:1003(_call)
+        1    0.000    0.000    0.383    0.383 api.py:1023(run)
+        1    0.000    0.000    0.383    0.383 api.py:638(check)
+      2/1    0.000    0.000    0.383    0.383 model_index.py:54(run_scoped)
+        1    0.000    0.000    0.383    0.383 checking_service.py:555(_run_check)
+        1    0.000    0.000    0.365    0.365 checking_service.py:137(_run_check_raw)
+        1    0.000    0.000    0.321    0.321 _core.py:2054(check)
+        1    0.001    0.001    0.321    0.321 _core.py:1778(_check_dispatch)
+        1    0.000    0.000    0.250    0.250 _core.py:331(check_legacy)
+        3    0.000    0.000    0.208    0.069 extensions.py:1813(_exact_extension_calculator)
+        3    0.000    0.000    0.208    0.069 extensions.py:1421(prepared)
+        3    0.002    0.001    0.208    0.069 extensions.py:1093(_incremental_components)
+        1    0.000    0.000    0.167    0.167 correspondence.py:1200(correspond_snapshot)
+        1    0.001    0.001    0.164    0.164 semantic_adapter.py:796(adapt_snapshot_observed)
+      195    0.001    0.000    0.154    0.001 extensions.py:1079(_reuse_extension_unit)
+      195    0.005    0.000    0.152    0.001 incremental_state.py:380(reuse)
+        1    0.001    0.001    0.118    0.118 applicability.py:13(applicable_scope_ids)
+        1    0.000    0.000    0.075    0.075 extensions.py:2654(_evaluate_derivations_dispatch)
+        1    0.000    0.000    0.075    0.075 extensions.py:2973(effective_view)
+     1730    0.001    0.000    0.069    0.000 incremental_state.py:53(_measure)
+47540/1730    0.041    0.000    0.068    0.000 incremental_state.py:58(walk)
+     2119    0.001    0.000    0.067    0.000 extension_preparation.py:95(fingerprint)
+43914/2119    0.042    0.000    0.066    0.000 extension_preparation.py:35(freeze)
+48498/2133    0.008    0.000    0.063    0.000 extension_preparation.py:90(<genexpr>)
+
+
+{'session_calls': 3, 'session_fresh_calls': 0, 'extension_context_calls': 9, 'extension_context_fallbacks': 0, 'constraint_calls': 108, 'constraint_fallbacks': 108, 'hits': 520, 'misses': 65, 'bypasses': 0, 'generation': 3, 'entries': 65, 'rows': 995, 'bytes': 11893231}

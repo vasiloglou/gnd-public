@@ -1,0 +1,31 @@
+Sanitation annotation: machine repository root replaced with <REPO>.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10888a750>
+
+    def test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk(monkeypatch):
+        m = model()
+        owner = ReuseState(m)
+        traversals = []
+        original = state._children
+    
+        def children(value):
+            if type(value) is tuple and len(value) == 160:
+                traversals.append(value)
+            return original(value)
+    
+        monkeypatch.setattr(state, '_children', children)
+        with owner.transaction(m):
+            for _ in range(5):
+                assert owner.reuse('raw', 'one', (), _helper, policy=_large_policy()) == [1]
+        assert owner.stats()['hits'] == 4
+>       assert len(traversals) == 1
+E       assert 5 == 1
+E        +  where 5 = len([((('str', 'helper-0'), (<class 'function'>, <function _helper at 0x108437ce0>, <code object _helper at 0x1083db0f0, f...b0f0, file "<REPO>/tests/test_incremental_performance.py", line 12>)), ...)])
+
+tests/test_incremental_performance.py:192: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_performance.py::test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk
+1 failed in 0.28s

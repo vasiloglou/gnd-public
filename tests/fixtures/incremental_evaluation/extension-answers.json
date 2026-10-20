@@ -1,0 +1,42 @@
+{
+  "E1": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "no-op and independent unchanged bodies zero"
+  },
+  "E2": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E3": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E4": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E5": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E6": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E7": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E8": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E9": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  },
+  "E10": {
+    "semantic": "fresh full envelope and logical work/branches",
+    "work": "dirty fresh or explicit bounded fallback"
+  }
+}

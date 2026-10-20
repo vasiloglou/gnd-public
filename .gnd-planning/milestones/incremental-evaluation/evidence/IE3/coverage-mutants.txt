@@ -1,0 +1,5 @@
+Retained output; edited only to replace machine repository/user paths.
+Original SHA256: 521e790f87ae686bf39d7e2dd2a1f48a4f4c5069950199e472fcf7a3745fc396
+
+declared-post drop: killed (expected payload assertion)
+reference drop: killed (expected payload assertion)

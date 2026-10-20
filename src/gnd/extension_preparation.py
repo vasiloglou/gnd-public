@@ -5,7 +5,7 @@ import math
 from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from contextvars import ContextVar
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields, is_dataclass
 from enum import Enum
 from typing import TypeVar, cast
 
@@ -57,6 +57,18 @@ class _Fingerprint:
             return (kind.__name__, value)
         if isinstance(value, Enum):
             return ("enum", kind, self.freeze(value.value, depth+1))
+        if (is_dataclass(value) and not isinstance(value, type)
+                and kind.__module__.startswith("gnd.")):
+            if id(value) in self.active:
+                raise _Unsupported
+            self.active.add(id(value))
+            try:
+                return ("record", kind, tuple(
+                    (self.freeze(f.name, depth + 1), self.freeze(getattr(value, f.name), depth + 1))
+                    for f in fields(value)
+                ))
+            finally:
+                self.active.remove(id(value))
         if isinstance(value, BaseModel):
             if id(value) in self.active:
                 raise _Unsupported
@@ -83,7 +95,7 @@ class _Fingerprint:
 def fingerprint(value: object) -> tuple | None:
     try:
         return _Fingerprint().freeze(value)
-    except (_Unsupported, TypeError, ValueError, RecursionError):
+    except (_Unsupported, TypeError, ValueError, AttributeError, RecursionError):
         return None
 
 

@@ -7,6 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = ROOT / '.gnd-planning/milestones/pyrel-applications/evidence'
 PHASES = ['PA1', 'PA2', 'PA3', 'PA4', 'PA5R']
+QUERY_SUCCESSORS = [
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE3/query-successor.json',
+]
 
 
 def authenticated(name, predecessor, phase):
@@ -42,8 +45,12 @@ def delta(rows, data):
 
 def query_policy(predecessor):
     policy = json.loads(predecessor.read_text())
-    for phase in PHASES:
-        data = authenticated('query-successor.json', predecessor, phase)
+    paths = [EVIDENCE / phase / 'query-successor.json' for phase in PHASES] + QUERY_SUCCESSORS
+    for path in paths:
+        data = json.loads(path.read_text())
+        assert data['schema_version'] == 1 and data['reason']
+        assert data['predecessor'] == predecessor.relative_to(ROOT).as_posix()
+        assert data['predecessor_sha256'] == hashlib.sha256(predecessor.read_bytes()).hexdigest()
         rows = [[r['path'], r['owner'], r['expression'], r['count']] for r in policy['rows']]
         reasons = {(r['path'], r['owner'], r['expression']): r['reason'] for r in policy['rows']}
         for row in data['added']:
@@ -51,12 +58,19 @@ def query_policy(predecessor):
         policy['rows'] = [dict(zip(['path', 'owner', 'expression', 'count'], row, strict=True),
                                reason=reasons[tuple(row[:3])]) for row in delta(rows, data)]
         policy['original_attribute_get_metric']['current'] = data['original_metric_current']
-        predecessor = EVIDENCE / phase / 'query-successor.json'
+        predecessor = path
     return policy
 
 
 #: Later authenticated dynamic-query deltas, outside the PyRel application phases.
-DYNAMIC_SUCCESSORS = [ROOT / '.gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json']
+DYNAMIC_SUCCESSORS = [
+    ROOT / '.gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE2/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE3/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE4/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE5/dynamic-query-successor.json',
+]
 
 
 def dynamic_rows(rows, predecessor):

@@ -125,3 +125,33 @@ names its operation/precondition source, so single and batch callers can compare
 identical obligation sets. The option cannot combine with occurrence admission.
 See the [canonical compiled-obligation contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#compiled-obligations)
 for coverage, uncertainty, work limits and the walk-only boundary.
+
+
+## Recheck related populations in one process
+
+Create an explicit `api.EvaluationSession` when a host repeatedly checks related
+validated snapshots. Current content and model bindings determine eligibility.
+A change propagates through positive, negative and aggregate dependencies to whole
+recursive components. Unchanged components reuse their private complete envelope;
+dirty components calculate from current inputs. Constraint reuse keeps current
+witness coordinates and final report composition. Unsupported modes run fresh.
+
+```mermaid
+flowchart LR
+    V[Validate current snapshot and model] --> K[Compare typed ordered dependencies]
+    K --> D[Dirty component and transitive dependents]
+    K --> U[Unchanged component]
+    D --> F[Recompute component from current inputs]
+    U --> R[Reuse detached envelope and branch evidence]
+    F --> C[Evaluate or reuse constraint findings]
+    R --> C
+    C --> P[Compose current report and atomically publish]
+```
+
+Full admission, operation obligations, intermediate snapshots, declared/computed
+post-state checks and refusal precedence remain in place. Existing explicit
+pre-receipts retain their narrower pre-check skip. Session results are not portable
+assurance evidence. See the [Python contract](../reference/python-api.md#reusing-evaluation-work-across-snapshots)
+for lifetime, caps and fallback counters, and the [host loop](../agents/dev-session.md#a-host-loop-in-one-python-process)
+for observations validated before the next attempt. No row-delta recursion or
+constant-time snapshot comparison is promised.

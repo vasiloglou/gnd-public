@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/incremental-evaluation/evidence/IE2/dynamic-query-successor.json",
+  "predecessor_sha256": "f4d895aa0a92e91d4aba74bfd6c96a02191a652012ace1aa43de1ec45bfabcf3",
+  "reason": "IE3 trusted dataclass fingerprints, selected constraint reuse and explicit session/receipt facade. Counted syntax changes; no raw model-query waiver.",
+  "removed": [
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "FAMILIES.get(constraint.family)",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "adapted.snapshot.fact_types[fact_index]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "aliases.get(constraint.ref, constraint.variant)",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "tuple[str, ...]",
+      2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "evaluate_snapshot",
+      "tuple[tuple[Scalar, ...], ...]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/api.py",
+      "check",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "check",
+      "os.PathLike[str]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "check_with_receipt",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "check_with_receipt",
+      "tuple[dict[str, Any], CheckReceipt]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "stats",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "transition",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_constraint_reuse",
+      "aliases.get(constraint.ref, constraint.variant)",
+      2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_constraint_reuse",
+      "getattr(entry, f.name)",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_constraint_reuse",
+      "getattr(entry, field.name)",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_constraint_reuse",
+      "space[declared]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "FAMILIES.get(constraint.family)",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "adapted.snapshot.fact_types[fact_index]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "aliases.get(constraint.ref, constraint.variant)",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "tuple[str, ...]",
+      2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "tuple[tuple[Scalar, ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/extension_preparation.py",
+      "freeze",
+      "getattr(value, f.name)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6195,
+  "result_occurrences": 7776
+}

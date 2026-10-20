@@ -1,0 +1,55 @@
+Evidence sanitation 2026-10-20: edited only to replace the machine-specific repository root with <REPO>; regression outcomes unchanged. Original bytes remain in Git phase history.
+
+.......FFF                                                               [100%]
+=================================== FAILURES ===================================
+__________________ test_accounting_measures_the_private_clone __________________
+
+    def test_accounting_measures_the_private_clone():
+        m = model()
+        state = ReuseState(m)
+    
+        def calculate():
+            return [[n] for n in range(1000)]
+    
+        with state.transaction(m):
+            state.reuse('clone', 'lists', (), calculate)
+        key, entry = next(iter(state._entries.items()))
+        actual = state_module._measure((key, entry.signature, entry.value, entry.branches), 10**8)
+>       assert entry.size >= actual + state_module.ENTRY_METADATA_BYTES
+E       assert 102446 >= (125422 + 1024)
+E        +  where 102446 = _Entry(signature=((), <code object calculate at 0x107d125b0, file "<REPO>/t... [988], [989], [990], [991], [992], [993], [994], [995], [996], [997], [998], [999]], branches=(), rows=0, size=102446).size
+E        +  and   1024 = state_module.ENTRY_METADATA_BYTES
+
+tests/test_incremental_state_review.py:104: AssertionError
+_________ test_changed_binding_charges_committed_entries_before_yield __________
+
+    def test_changed_binding_charges_committed_entries_before_yield():
+        m = model()
+        state = ReuseState(m, max_bytes=12_000)
+    
+        def calculate():
+            return 'v' * 7000
+    
+        with state.transaction(m):
+            state.reuse('n', 'u', (), calculate)
+        assert state.stats()['entries'] == 1
+        with state.transaction(m, options=('x' * 7000,)):
+>           assert state._disabled
+E           assert False
+E            +  where False = <gnd.incremental_state.ReuseState object at 0x1082ec990>._disabled
+
+tests/test_incremental_state_review.py:118: AssertionError
+___________ test_opaque_rule_cannot_prove_clean_dependency_selection ___________
+
+    def test_opaque_rule_cannot_prove_clean_dependency_selection():
+        m = model()
+        m.fact_types[2]['derivation_rule'] = 'An opaque rule may depend on left.'
+>       with pytest.raises(ReuseRefused, match='incomplete-dependencies'):
+E       Failed: DID NOT RAISE ReuseRefused
+
+tests/test_incremental_state_review.py:124: Failed
+=========================== short test summary info ============================
+FAILED tests/test_incremental_state_review.py::test_accounting_measures_the_private_clone
+FAILED tests/test_incremental_state_review.py::test_changed_binding_charges_committed_entries_before_yield
+FAILED tests/test_incremental_state_review.py::test_opaque_rule_cannot_prove_clean_dependency_selection
+3 failed, 7 passed in 0.13s

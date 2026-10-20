@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-20",
+  "artifacts": [
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "18b97dca4c52b9bfa67feeaef42e3f6c3e6a13318566ed3e13a6e05f3eae81f9"
+    },
+    {
+      "path": "src/gnd/incremental_state.py",
+      "sha256": "bf637c1816821fa0b0fd35aaac1ca41a3d241fc3142dab88952bcb5a82632878"
+    },
+    {
+      "path": "src/gnd/evaluation_feedback.py",
+      "sha256": "ca688c5f90f23d1e10e82eb7f44cbba27c2c30bb8330697566eb82d0671727e5"
+    },
+    {
+      "path": "src/gnd/skills/gnd-dev-session/SKILL.md",
+      "sha256": "92d633e7d12107ce7f0e3249aadf081596af9986ce3c540b55422977ae6355ab"
+    },
+    {
+      "path": "docs/agents/dev-session.md",
+      "sha256": "d39c2f9c2876da9d5fb86fac2756c9739a01bb02ea52e5b4cf4bd53bab26ff6c"
+    },
+    {
+      "path": "tests/test_incremental_observations.py",
+      "sha256": "a3a2acb8b6e9f4268ebff3d2a873260b6bd6784b9fb20160afd3af8749cc464d"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "8c990217072d12c1eec0ad211790af5f606e9f481dbb5c93d96968fa6f563281"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "3268546b7f7051d6ae38c1560ec2e8e50de37544ed7b33e799784bdbc81204f4"
+    }
+  ]
+}

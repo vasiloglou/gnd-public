@@ -36,3 +36,13 @@ that the owner personally read the spec. No implementation yet.
 
 Work branch `codex/incremental-evaluation` starts at fetched `origin/main`;
 unrelated video branch/history and untracked user files are preserved.
+
+## Phase reviewer transfer authorization
+
+The first Codex CLI launch was sandbox-blocked. Its escalated retry was rejected
+by automatic approval review because milestone execution alone did not explicitly
+authorize sending repository code/review prompts to the configured provider.
+No workaround reviewer was launched. The owner subsequently explicitly answered
+“Authorize Codex CLI phase reviews for incremental-evaluation” to that specific
+transfer question. This authorizes the required CLI phase reviews for this named
+milestone, using the read-only configured harness and relevant code/prompts only.

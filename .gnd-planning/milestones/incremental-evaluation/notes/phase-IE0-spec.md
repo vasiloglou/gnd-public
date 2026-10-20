@@ -294,3 +294,42 @@ observation can count actual body/constraint execution without runtime edits;
 existing typed semantic views can supply the differential envelope. All stories
 have reachable current fixture syntax. Any missing mandatory counter or envelope
 remains a failed gate, not a zero. Commit this spec before implementation.
+
+## Implementation findings (IE0)
+
+- The reporter has 65 structured heads and takes the exact recursive/stratified
+  route; simple acyclic-only caching cannot meet its mandatory gain criterion.
+- Smoke controls rejected non-enum population labels and exposed the difference
+  between mandatory `role` and uniqueness `roles`. Corrected synthetic inputs;
+  no production semantic change. The roster discriminator now changes a real
+  mandatory verdict rather than merely changing admitted input.
+- Low-level derivation evaluation is not a public admission boundary. The marker
+  negative control calls `checker.check`, which enforces the precondition.
+- uv's default cache is sandbox-protected; commands use
+  `UV_CACHE_DIR=/private/tmp/gnd-ie-uv-cache uv run --offline`, preserving locked
+  dependencies and the selected pytest lanes.
+
+## Review repair amendment — delegated approval (auto=true), 2026-10-19
+
+The independent CLI reader found 13 instrument gaps, reproduced/dispositioned
+in `notes/phase-IE0-review-disposition.md`. Same scoped owner delegation.
+Approve diagnostic repairs before acceptance: observe successful evaluator
+primitive returns and guarded binding execution instead of finding labels;
+record actual full/receipt/fresh-full calculation-envelope traces; require exact
+expected exits and reporter 13/25/19 plus nonzero work; run compiled partial
+control with nonempty possible patterns; isolate materialized control models;
+complete alternate-support deletion/reference/options discriminators; instrument
+partial joins; exercise receipt mint/consumption in each applicable B arm; split
+loading/driver from public evaluation timing; consume a reusable mutated receipt
+in the probe. These change no product/runtime semantics or frozen body target.
+The localized workload has checks only: its B arm mints receipts but has no
+transition in which to consume them; report this explicitly, not as reuse gain.
+Course B mints the precheck receipt then consumes it within each complete walk.
+
+Run the direct regression gate with `tests/test_incremental_baseline_review.py`
+in addition to both original selected files, under the same default exclusions.
+Source identities include that file, old driver, all executed fixture/schema
+inputs and current dirty paths. Previous exploratory evidence is invalidated
+and must be regenerated serially on final tool/test bytes. The first reader is
+retained; one bounded confirmation checks reproduced blocking repairs on stable
+bytes, with no speculative third round. No paid panel or broad suite selected.

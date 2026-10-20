@@ -1,0 +1,35 @@
+Sanitation annotation: machine root replaced with <REPO>.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_prepared_policy_rechecks_live_hashability ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109c5e490>
+
+    def test_prepared_policy_rechecks_live_hashability(monkeypatch):
+        class MutableHash(type):
+            pass
+    
+        class PolicyClass(metaclass=MutableHash):
+            pass
+    
+        m = model()
+        owner = ReuseState(m)
+        calls = []
+    
+        def calculate():
+            calls.append(1)
+            return len(calls)
+    
+        with owner.transaction(m):
+            policy = owner.prepare_policy((PolicyClass,))
+            assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 1
+            monkeypatch.setattr(MutableHash, '__hash__', None)
+>           assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 2
+E           AssertionError: assert 1 == 2
+E            +  where 1 = reuse('unit', 'one', (), <function test_prepared_policy_rechecks_live_hashability.<locals>.calculate at 0x109c31760>, policy=_PreparedPolicy(authority=(<gnd.incremental_state.ReuseState object at 0x109c275d0>, (8335597952, None), <object objec...cyClass'>, None),), guards=(), mutable=(), mutable_key=('tuple', ()), footprint=_Footprint(size=144, nodes=5, depth=2)))
+E            +    where reuse = <gnd.incremental_state.ReuseState object at 0x109c275d0>.reuse
+
+tests/test_incremental_performance.py:214: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_performance.py::test_prepared_policy_rechecks_live_hashability
+1 failed in 0.22s

@@ -150,3 +150,31 @@ metadata is transient per prepared context and not added to retained entries, so
 entry accounting remains full signature/private clone/branches plus1024 allowance.
 Initial primary implementation excludes optional correspondence/extension planning
 changes pending actual measurement; those recommendations can remain named debt.
+
+
+## Implementation findings
+
+Initial metadata implementation passed47 direct cases but exploratory course
+latency regressed: raw-policy hits unnecessarily built size metadata that is only
+used on admission. The new raw-policy warm-hit test observed5 rootwalks versus1
+(RED1failed). Move raw metadata construction after the actual miss/calculation;
+live raw normalization/hash still happens on each lookup. Avoid an unnecessary
+max() call per measurement node by a direct depth comparison. Neither changes
+approved semantics. First CLI review began on initial state SHA256
+02bab4efed074221822e4dd9a0ee84c01bbd0c583d071c20425ad848f180ad9d;
+its source snapshot is retained outside Git /private/tmp/ie6-initial-reviewed-state.py.
+Later fixes carry no initial-opinion claim and are subjects for bounded confirmation.
+
+
+## Live-hashability repair amendment (delegated auto, 2026-10-20)
+
+Astra CLI's first review identifies a mutable metaclass hashability change.
+`test_prepared_policy_rechecks_live_hashability` reproduced RED1failed:hit1 versus
+fresh2. Blocking within this phase's guard-preservation promise. Restore original
+`hash(signature)` on every lookup, omit new preparation/raw redundant hashes.
+The approved `test_prepared_policy_hash_not_repeated_at_each_lookup` expected
+answer is explicitly superseded and replaced by this live-hashability regression;
+its performance expectation was unsafe. Exact prior test/expectation remains at
+e897967. Keep rootwalk/builtin/raw-hit reduction gates and exact equality controls.
+This correction has no inherited initial opinion; bounded confirmation checks it.
+The original reduced-hash proposal and initial corpus RED are preserved as history.

@@ -506,3 +506,17 @@ Review budget: one initial four-reader amendment review, at most one confirmatio
 of reproduced blocking issues, using the existing convergence rule by reference.
 Phase review uses the previously authorized read-only Codex CLI; renewed close
 uses the selected four local reviewers. Optional phase-spec panel omitted.
+
+
+### IE6 safety amendment (delegated, 2026-10-20)
+
+Initial implementation review supplied a concrete live-hashability counterexample:
+a prepared policy class can become unhashable through its metaclass after
+preparation, so a one-time hash check is insufficient. Reproduced actual RED:
+cache returned1 when original fresh fallback must return2. IE6-C2's hash-removal
+proposal is withdrawn; preserve original per-lookup full signature hashing and
+avoid introducing extra hash calls during preparation. Deterministic full-policy
+accounting-walk reduction remains the hard optimization gate; no elapsed threshold
+is weakened. This bounded safety ruling follows the already approved preservation
+of live guards, not a new semantic expansion. No new panel round: one reproduced
+implementation blocker is repaired under phase review, at most one confirmation.

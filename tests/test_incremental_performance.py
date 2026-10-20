@@ -38,27 +38,6 @@ def test_prepared_policy_tree_is_measured_once_for_many_misses(monkeypatch):
     assert owner.stats()['entries'] == 12
 
 
-def test_prepared_policy_hash_not_repeated_at_each_lookup(monkeypatch):
-    import builtins
-
-    hashed = []
-
-    def observed(value):
-        hashed.append(value)
-        return builtins.hash(value)
-
-    monkeypatch.setattr(state, 'hash', observed, raising=False)
-    m = model()
-    owner = ReuseState(m)
-    with owner.transaction(m):
-        policy = owner.prepare_policy(_large_policy())
-        for index in range(12):
-            owner.reuse('work', index, (), _helper, policy=policy)
-    assert not any(type(value) is tuple and len(value) == 3 and value[0] is policy.key
-                   for value in hashed)
-    assert sum(value is policy.key for value in hashed) == 1
-
-
 def test_builtin_size_walk_skips_dataclass_introspection(monkeypatch):
     original = state.dataclasses.is_dataclass
     inspected = []
@@ -171,3 +150,45 @@ def test_custom_record_proxy_cycle_and_nonfinite_still_measured():
     cycle.append(cycle)
     for bad in (cycle, float('inf'), object()):
         assert state._measure(bad, 10**6) is None
+
+
+def test_raw_policy_warm_hits_do_not_repeat_admission_tree_walk(monkeypatch):
+    m = model()
+    owner = ReuseState(m)
+    traversals = []
+    original = state._children
+
+    def children(value):
+        if type(value) is tuple and len(value) == 160:
+            traversals.append(value)
+        return original(value)
+
+    monkeypatch.setattr(state, '_children', children)
+    with owner.transaction(m):
+        for _ in range(5):
+            assert owner.reuse('raw', 'one', (), _helper, policy=_large_policy()) == [1]
+    assert owner.stats()['hits'] == 4
+    assert len(traversals) == 1
+
+
+def test_prepared_policy_rechecks_live_hashability(monkeypatch):
+    class MutableHash(type):
+        pass
+
+    class PolicyClass(metaclass=MutableHash):
+        pass
+
+    m = model()
+    owner = ReuseState(m)
+    calls = []
+
+    def calculate():
+        calls.append(1)
+        return len(calls)
+
+    with owner.transaction(m):
+        policy = owner.prepare_policy((PolicyClass,))
+        assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 1
+        monkeypatch.setattr(MutableHash, '__hash__', None)
+        assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 2
+    assert owner.stats()['bypasses'] == 1

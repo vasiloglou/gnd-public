@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_course_pair_has_the_same_explicit_public_precheck ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10828a310>
+
+    def test_course_pair_has_the_same_explicit_public_precheck(monkeypatch):
+        calls = Counter()
+        check = api.check
+        transition = api.transition
+        def counted_check(*a, **k):
+            calls['check'] += 1
+            return check(*a, **k)
+        def counted_transition(*a, **k):
+            calls['transition'] += 1
+            return transition(*a, **k)
+        monkeypatch.setattr(api, 'check', counted_check)
+        monkeypatch.setattr(api, 'transition', counted_transition)
+        tool.replay_full('course', receipts=False)
+>       assert calls == {'check': 3, 'transition': 3}
+E       AssertionError: assert Counter({'transition': 3}) == {'check': 3, 'transition': 3}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'check': 3}
+E         Use -v to get more diff
+
+tests/test_incremental_baseline_review.py:216: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_baseline_review.py::test_course_pair_has_the_same_explicit_public_precheck
+1 failed, 21 deselected in 0.57s

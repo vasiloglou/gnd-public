@@ -1,10 +1,12 @@
 # Incremental evaluation
 
-Plan approved, 2026-10-19; `auto=false`. No implementation started.
+Plan approved, 2026-10-19. Owner subsequently delegated milestone execution
+with `auto=true` ([delegation](002-execution-delegation.md)).
 
 - [Canonical plan](notes/incremental-evaluation-plan.md)
 - [Owner plan approval and decision rulings](001-plan-gate.md)
-- [First draft phase spec: IE0](notes/phase-IE0-spec.md)
+- [IE0 spec and amendments](notes/phase-IE0-spec.md)
+- [IE0 completed record](003-phase-IE0.md)
 - [Four-reader plan review and disposition](notes/plan-review-r1-disposition.md)
 - [Issue #24](https://github.com/vasiloglou/gnd-public/issues/24)
 - [Prior milestone close](../transition-check-performance/006-milestone-close.md)
@@ -19,10 +21,12 @@ Plan review complete: three approve, one approve-with-fixes, no blockers.
 The timing-schedule repair and status correction are recorded in the disposition;
 amended bytes have no new review opinion.
 The owner approved amended plan r2 and its proposed milestone decisions.
-Pending: IE0's concrete spec gate and explicit phase workflow selection.
+IE0 completed: 49 focused tests, lint and strict serial baseline passed.
+IE1 is next; its spec/corpus gate follows the existing scoped delegation.
 The old public workload is available; the newly offered workload is not supplied.
 It blocks claims about the 547-program census, not drafting or the local baseline.
 No delivery date or downstream performance result is promised.
 
-Next: explicitly select `process-phase IE0 incremental-evaluation` for its
-concrete spec gate. The plan gate records the owner decisions and boundaries.
+Execution continues through IE1–IE5 under the named `auto=true` delegation.
+No merge, publication or certification is authorized. No implementation beyond
+IE0 has been accepted yet.

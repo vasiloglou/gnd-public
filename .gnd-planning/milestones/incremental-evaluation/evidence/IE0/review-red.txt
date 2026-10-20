@@ -1,0 +1,189 @@
+F.FFFFFF.FFFF.F                                                          [100%]
+=================================== FAILURES ===================================
+_________________ test_r1_count_evaluators_not_finding_labels __________________
+
+    def test_r1_count_evaluators_not_finding_labels():
+        m, p = next(tool.localized_inputs())
+        adapted = adapt_snapshot_observed(m, p)
+        constraint = adapted.snapshot.constraints[0]
+        with tool.count_work() as counts:
+            for _ in range(2):
+                correspondence._inline_uniqueness_result(constraint, adapted.snapshot)
+            before = counts['constraint_evaluations']
+            correspondence._finding_scope(constraint, adapted.snapshot, 'pass', None, 'evaluate', variant='inline')
+>       assert before == 2
+E       assert 0 == 2
+
+tests/test_incremental_baseline_review.py:23: AssertionError
+_____________ test_r3_wrong_denominators_and_dead_counters_refuse ______________
+
+    def test_r3_wrong_denominators_and_dead_counters_refuse():
+        original = accepted_document()
+        assert tool.validate_evidence(original)
+        for field, value in [('calls', 1), ('checker_runs', 1), ('derivation_body_evaluations', 0), ('constraint_evaluations', 0)]:
+            changed = copy.deepcopy(original)
+            row = changed['work']['reporter']['receipts']
+            (row if field == 'calls' else row['totals'])[field] = value
+>           assert not tool.validate_evidence(changed)
+E           AssertionError: assert not True
+E            +  where True = <function validate_evidence at 0x108acda80>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'reporter': {'full': {'calls': 13, 'totals': {'ch...'x', 'x', 'x', ...], 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'mismatches': []}], ...})
+E            +    where <function validate_evidence at 0x108acda80> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:63: AssertionError
+___________ test_r4_transition_semantic_corruption_refuses[branches] ___________
+
+surface = 'branches'
+
+    @pytest.mark.parametrize('surface', ['branches', 'lineage', 'possible'])
+    def test_r4_transition_semantic_corruption_refuses(surface):
+        document = accepted_document()
+        changed = document['work']['reporter']['fresh_full']
+        changed['semantic_replay'][surface] = ['wrong']
+>       assert not tool.validate_evidence(document)
+E       AssertionError: assert not True
+E        +  where True = <function validate_evidence at 0x108acda80>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'reporter': {'full': {'calls': 13, 'totals': {'ch...'x', 'x', 'x', ...], 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'mismatches': []}], ...})
+E        +    where <function validate_evidence at 0x108acda80> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:71: AssertionError
+___________ test_r4_transition_semantic_corruption_refuses[lineage] ____________
+
+surface = 'lineage'
+
+    @pytest.mark.parametrize('surface', ['branches', 'lineage', 'possible'])
+    def test_r4_transition_semantic_corruption_refuses(surface):
+        document = accepted_document()
+        changed = document['work']['reporter']['fresh_full']
+        changed['semantic_replay'][surface] = ['wrong']
+>       assert not tool.validate_evidence(document)
+E       AssertionError: assert not True
+E        +  where True = <function validate_evidence at 0x108acda80>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'reporter': {'full': {'calls': 13, 'totals': {'ch...'x', 'x', 'x', ...], 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'mismatches': []}], ...})
+E        +    where <function validate_evidence at 0x108acda80> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:71: AssertionError
+___________ test_r4_transition_semantic_corruption_refuses[possible] ___________
+
+surface = 'possible'
+
+    @pytest.mark.parametrize('surface', ['branches', 'lineage', 'possible'])
+    def test_r4_transition_semantic_corruption_refuses(surface):
+        document = accepted_document()
+        changed = document['work']['reporter']['fresh_full']
+        changed['semantic_replay'][surface] = ['wrong']
+>       assert not tool.validate_evidence(document)
+E       AssertionError: assert not True
+E        +  where True = <function validate_evidence at 0x108acda80>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'reporter': {'full': {'calls': 13, 'totals': {'ch...'x', 'x', 'x', ...], 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 0, 'mismatches': []}], ...})
+E        +    where <function validate_evidence at 0x108acda80> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:71: AssertionError
+______________________ test_r5_partial_patterns_are_live _______________________
+
+    def test_r5_partial_patterns_are_live():
+        _, m, p = next(row for row in tool.extra_controls() if row[0] == 'partial')
+>       observed = tool.observation(m, p, compiled=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: observation() got an unexpected keyword argument 'compiled'
+
+tests/test_incremental_baseline_review.py:79: TypeError
+___________________ test_r6_equal_errors_are_not_acceptance ____________________
+
+    def test_r6_equal_errors_are_not_acceptance():
+        document = accepted_document()
+        document['parity'][0]['exit'] = 70
+>       assert not tool.validate_evidence(document)
+E       AssertionError: assert not True
+E        +  where True = <function validate_evidence at 0x108acda80>({'source_head': 'source', 'identities': {'file': 'digest'}, 'work': {'reporter': {'full': {'calls': 13, 'totals': {'ch...x', 'x', 'x', ...], 'branches': ['branch'], ...}}}, 'parity': [{'case': 'control', 'exit': 70, 'mismatches': []}], ...})
+E        +    where <function validate_evidence at 0x108acda80> = tool.validate_evidence
+
+tests/test_incremental_baseline_review.py:89: AssertionError
+_________________ test_r9_alternate_support_survives_deletion __________________
+
+    def test_r9_alternate_support_survives_deletion():
+        rows = {n: tool.semantic_envelope(m, p) for n, m, p in tool.extra_controls() if n.startswith('recursive')}
+        assert rows['recursive-alternate']['extensions']['reaches'] != []
+>       after = rows['recursive-alternate-delete']
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'recursive-alternate-delete'
+
+tests/test_incremental_baseline_review.py:101: KeyError
+_______________________ test_r10_partial_work_is_counted _______________________
+
+    def test_r10_partial_work_is_counted():
+        _, m, p = next(row for row in tool.extra_controls() if row[0] == 'partial')
+        token = extensions.PARTIAL_OPAQUE.set(True)
+        try:
+            with tool.count_work() as counts:
+                extensions.evaluate_derivations(m, p)
+            assert counts['partial_body_evaluations'] > 0
+>           assert counts['partial_join_candidates'] > 0
+E           assert 0 > 0
+
+tests/test_incremental_baseline_review.py:114: AssertionError
+_________________ test_r11_receipt_arm_uses_receipts[course-3] _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108bc4610>
+workload = 'course', expected = 3
+
+    @pytest.mark.parametrize('workload,expected', [('course', 3), ('localized', 6)])
+    def test_r11_receipt_arm_uses_receipts(monkeypatch, workload, expected):
+        calls = Counter()
+        mint = api.check_with_receipt
+        transition = api.transition
+        def counted_mint(*a, **k):
+            calls['mint'] += 1
+            return mint(*a, **k)
+        def counted_transition(*a, **k):
+            calls['consume'] += k.get('pre_receipt') is not None
+            return transition(*a, **k)
+        monkeypatch.setattr(api, 'check_with_receipt', counted_mint)
+        monkeypatch.setattr(api, 'transition', counted_transition)
+        tool.replay_full(workload, receipts=True)
+>       assert calls['mint'] == expected
+E       assert 0 == 3
+
+tests/test_incremental_baseline_review.py:133: AssertionError
+_______________ test_r11_receipt_arm_uses_receipts[localized-6] ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108c42410>
+workload = 'localized', expected = 6
+
+    @pytest.mark.parametrize('workload,expected', [('course', 3), ('localized', 6)])
+    def test_r11_receipt_arm_uses_receipts(monkeypatch, workload, expected):
+        calls = Counter()
+        mint = api.check_with_receipt
+        transition = api.transition
+        def counted_mint(*a, **k):
+            calls['mint'] += 1
+            return mint(*a, **k)
+        def counted_transition(*a, **k):
+            calls['consume'] += k.get('pre_receipt') is not None
+            return transition(*a, **k)
+        monkeypatch.setattr(api, 'check_with_receipt', counted_mint)
+        monkeypatch.setattr(api, 'transition', counted_transition)
+        tool.replay_full(workload, receipts=True)
+>       assert calls['mint'] == expected
+E       assert 0 == 6
+
+tests/test_incremental_baseline_review.py:133: AssertionError
+_______________________ test_r13_consumed_receipt_probe ________________________
+
+    def test_r13_consumed_receipt_probe():
+        result = tool.receipt_probe()
+>       assert result['reusable']
+               ^^^^^^^^^^^^^^^^^^
+E       KeyError: 'reusable'
+
+tests/test_incremental_baseline_review.py:149: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_baseline_review.py::test_r1_count_evaluators_not_finding_labels
+FAILED tests/test_incremental_baseline_review.py::test_r3_wrong_denominators_and_dead_counters_refuse
+FAILED tests/test_incremental_baseline_review.py::test_r4_transition_semantic_corruption_refuses[branches]
+FAILED tests/test_incremental_baseline_review.py::test_r4_transition_semantic_corruption_refuses[lineage]
+FAILED tests/test_incremental_baseline_review.py::test_r4_transition_semantic_corruption_refuses[possible]
+FAILED tests/test_incremental_baseline_review.py::test_r5_partial_patterns_are_live
+FAILED tests/test_incremental_baseline_review.py::test_r6_equal_errors_are_not_acceptance
+FAILED tests/test_incremental_baseline_review.py::test_r9_alternate_support_survives_deletion
+FAILED tests/test_incremental_baseline_review.py::test_r10_partial_work_is_counted
+FAILED tests/test_incremental_baseline_review.py::test_r11_receipt_arm_uses_receipts[course-3]
+FAILED tests/test_incremental_baseline_review.py::test_r11_receipt_arm_uses_receipts[localized-6]
+FAILED tests/test_incremental_baseline_review.py::test_r13_consumed_receipt_probe
+12 failed, 3 passed in 0.79s

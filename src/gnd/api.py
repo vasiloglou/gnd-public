@@ -1000,12 +1000,12 @@ class EvaluationSession:
         self._model = model
         self._state = ReuseState(model, max_rows=max_rows, max_bytes=max_bytes)
 
-    def _call(self, function, *, options=(), fresh=False):
+    def _call(self, function, *, options=(), fresh=False, attempt=None):
         # An unsupported key deliberately disables both extension and finding
         # reuse while retaining the same busy/closed/rollback boundary.
         fresh = fresh or bool(self._model.reference_populations)
         binding = (object(),) if fresh else options
-        with self._state.transaction(self._model, options=binding):
+        with self._state.transaction(self._model, options=binding, sequence=attempt):
             payload = function()
             result = payload[0] if isinstance(payload, tuple) else payload
             if result.get("exit_code") not in (0, 1, 2):
@@ -1044,6 +1044,27 @@ class EvaluationSession:
             return transition(self._model, pre, steps, post, unredacted=unredacted,
                               references=references, pre_receipt=pre_receipt)
         return self._call(run, options=(False, False), fresh=references is not None)
+
+    def observe(self, population: Population, replacements: dict) -> Population:
+        """Validate whole ordered relation replacements between evaluations."""
+        from gnd.evaluation_feedback import compose_observation
+
+        with self._state.transaction(self._model, options=(False, False)):
+            observed = compose_observation(self._model, population, replacements)
+            self._state.discard()
+            return observed
+
+    def check_with_feedback(self, population: Population, *, attempt: int
+                            ) -> tuple[dict[str, Any], dict[str, Any]]:
+        """Check and return separate bounded counts; attempt numbering is lifetime-scoped."""
+        from gnd.evaluation_feedback import build_feedback
+
+        def run():
+            if not isinstance(population, Population):
+                raise TypeError("EvaluationSession requires a loaded Population")
+            payload = check(self._model, population)
+            return payload, build_feedback(self._model, population, payload, attempt=attempt)
+        return self._call(run, options=(False, False), attempt=attempt)
 
     def reset(self) -> None:
         self._state.reset()

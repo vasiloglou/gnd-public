@@ -282,7 +282,8 @@ def test_feedback_reader_rejects_duplicate_version_before_collapse():
         SessionFeedback.model_validate_json(encoded)
 
 
-def test_cancellation_after_feedback_computation_does_not_consume_attempt():
+@pytest.mark.parametrize('site', ['facade-return', 'transaction-publication'])
+def test_cancellation_after_feedback_computation_does_not_consume_attempt(site):
     import inspect
     import sys
 
@@ -290,13 +291,21 @@ def test_cancellation_after_feedback_computation_does_not_consume_attempt():
     owner = api.EvaluationSession(m)
     owner.check(p)
     generation = owner.stats()['generation']
-    lines, start = inspect.getsourcelines(api.EvaluationSession._call)
-    target = start + next(i for i, line in enumerate(lines) if 'return payload' in line)
+    from gnd.incremental_state import ReuseState
+
+    function = (api.EvaluationSession._call if site == 'facade-return' else
+                ReuseState.transaction.__wrapped__)
+    lines, start = inspect.getsourcelines(function)
+    marker = 'return payload' if site == 'facade-return' else 'yield self'
+    target = start + next(i for i, line in enumerate(lines) if marker in line)
+    if site == 'transaction-publication':
+        target += 1
+    before = owner._state._committed
     armed = True
 
     def cancel(frame, event, arg):
         nonlocal armed
-        if armed and event == 'line' and frame.f_code is api.EvaluationSession._call.__code__ and frame.f_lineno == target:
+        if armed and event == 'line' and frame.f_code is function.__code__ and frame.f_lineno == target:
             armed = False
             raise KeyboardInterrupt('injected before transaction publication')
         return cancel
@@ -310,4 +319,5 @@ def test_cancellation_after_feedback_computation_does_not_consume_attempt():
         sys.settrace(previous)
     assert not armed
     assert owner.stats()['generation'] == generation
+    assert owner._state._committed is before
     assert owner.check_with_feedback(p, attempt=1)[1]['attempt'] == 1

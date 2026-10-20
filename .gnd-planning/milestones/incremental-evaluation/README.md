@@ -10,6 +10,7 @@ with `auto=true` ([delegation](002-execution-delegation.md)).
 - [IE1 completed record](004-phase-IE1.md)
 - [IE2 completed record](005-phase-IE2.md)
 - [IE3 completed record](006-phase-IE3.md)
+- [IE4 completed record](007-phase-IE4.md)
 - [Four-reader plan review and disposition](notes/plan-review-r1-disposition.md)
 - [Issue #24](https://github.com/vasiloglou/gnd-public/issues/24)
 - [Prior milestone close](../transition-check-performance/006-milestone-close.md)
@@ -28,10 +29,11 @@ IE0 completed: 49 focused tests, lint and strict serial baseline passed.
 IE1 completed: 1,419 focused tests and lint; eight reproduced review findings repaired.
 IE2 completed: 245 focused tests and lint; component envelope reuse and twelve review controls.
 IE3 completed:1,079 affected checks plus68 final repair checks; opt-in sessions and private receipts.
-IE4 is next under the existing scoped delegation.
+IE4 completed:614 affected checks; validated host observations, closed feedback and atomic progress.
+IE5 is next under the existing scoped delegation.
 The old public workload is available; the newly offered workload is not supplied.
 It blocks claims about the 547-program census, not drafting or the local baseline.
 No delivery date or downstream performance result is promised.
 
 Execution continues through IE1–IE5 under the named `auto=true` delegation.
-No merge, publication or certification is authorized. IE0–IE3 have been accepted; IE4–IE5 remain.
+No merge, publication or certification is authorized. IE0–IE4 have been accepted; IE5 and milestone close remain.

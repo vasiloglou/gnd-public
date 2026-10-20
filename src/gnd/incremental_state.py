@@ -172,6 +172,15 @@ class _Entry:
     size: int
 
 
+@dataclasses.dataclass(frozen=True, slots=True)
+class _Committed:
+    entries: dict
+    binding: object = None
+    binding_size: int = 0
+    generation: int = 0
+    sequence: int = 0
+
+
 def _owner():
     try:
         task = asyncio.current_task()
@@ -236,21 +245,31 @@ class ReuseState:
         self._max_bytes = max_bytes
         self._closed = False
         self._lock = Lock()
-        self._entries = {}
+        self._committed = _Committed({})
         self._candidate = {}
-        self._binding = None
-        self._binding_size = 0
         self._authority = None
         self._prior = {}
         self._disabled = False
         self._abort = False
-        self._stats = Counter(hits=0, misses=0, bypasses=0, generation=0)
+        self._stats = Counter(hits=0, misses=0, bypasses=0)
+
+    @property
+    def _entries(self):
+        return self._committed.entries
+
+    @property
+    def _binding(self):
+        return self._committed.binding
+
+    @property
+    def _binding_size(self):
+        return self._committed.binding_size
 
     def owns_model(self, model):
         return self._model is model and active_state() is self
 
     @contextmanager
-    def transaction(self, model, *, options=()):
+    def transaction(self, model, *, options=(), sequence=None):
         if self._closed:
             raise ReuseRefused("closed")
         if not self._lock.acquire(blocking=False):
@@ -258,6 +277,10 @@ class ReuseState:
         try:
             if self._closed:
                 raise ReuseRefused("closed")
+            if sequence is not None and (type(sequence) is not int or
+                                         not 1 <= sequence <= 1_000_000 or
+                                         sequence != self._committed.sequence + 1):
+                raise ReuseRefused("attempt must be the next sequential feedback attempt")
             if model is not self._model:
                 raise ReuseRefused("model-object")
             with independent_index_scope(model) as index:
@@ -286,11 +309,19 @@ class ReuseState:
                 token = _ACTIVE.set(self._authority)
                 try:
                     yield self
+                    previous = self._committed
+                    next_sequence = previous.sequence if sequence is None else sequence
                     if not self._abort:
-                        self._entries = {} if self._disabled else self._candidate
-                        self._binding = None if self._disabled else binding
-                        self._binding_size = 0 if self._disabled else binding_size
-                        self._stats["generation"] += 1
+                        committed = _Committed(
+                            {} if self._disabled else self._candidate,
+                            None if self._disabled else binding,
+                            0 if self._disabled else binding_size,
+                            previous.generation + 1, next_sequence,
+                        )
+                    else:
+                        committed = dataclasses.replace(previous, sequence=next_sequence)
+                    # One publication point for all persistent session state.
+                    self._committed = committed
                 finally:
                     self._authority = None
                     _ACTIVE.reset(token)
@@ -392,9 +423,8 @@ class ReuseState:
         try:
             if self._closed:
                 raise ReuseRefused("closed")
-            self._entries = {}
-            self._binding = None
-            self._binding_size = 0
+            self._committed = dataclasses.replace(
+                self._committed, entries={}, binding=None, binding_size=0)
         finally:
             self._lock.release()
 
@@ -402,9 +432,8 @@ class ReuseState:
         if not self._lock.acquire(blocking=False):
             raise ReuseRefused("busy")
         try:
-            self._entries = {}
-            self._binding = None
-            self._binding_size = 0
+            self._committed = dataclasses.replace(
+                self._committed, entries={}, binding=None, binding_size=0)
             self._closed = True
         finally:
             self._lock.release()
@@ -412,6 +441,7 @@ class ReuseState:
     def stats(self):
         return dict(
             self._stats,
+            generation=self._committed.generation,
             entries=len(self._entries),
             rows=sum(v.rows for v in self._entries.values()),
             bytes=self._binding_size + sum(v.size for v in self._entries.values()),

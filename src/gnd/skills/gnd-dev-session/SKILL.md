@@ -5,6 +5,14 @@ description: Drives GND's data-driven development session — `gnd exp init` to 
 
 # GND Dev Session
 
+## Separate in-process host loops
+
+The Python api.EvaluationSession is a separate opt-in host loop. Its validated
+whole-relation observations and bounded counts-only evaluation-session-feedback
+version1 do not modify this skill's persistent contracts, feedback versions or
+retained attempt evidence. Cache handles are process-local and never serialized.
+Use this skill for the persistent experiment workflow described below.
+
 ## Summary
 
 **What:** one bounded loop over one experiment directory. A `kind: data-driven`

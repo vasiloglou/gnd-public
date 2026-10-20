@@ -1,0 +1,26 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-19",
+  "authorization": "owner process-milestone incremental-evaluation auto, recorded in 002",
+  "instrument": "corpus-first",
+  "decisions": "D1-D5 as in spec; no panel; required CLI diff review",
+  "scope": "IE1 only; no merge/publish/certification",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE1-spec.md",
+      "sha256": "6827e4e1882862670c926914cd0fb919ae9e61dc9f034797c3171ddfbc2a0d1a"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/state-stories.json",
+      "sha256": "9edff9c36c03ee98eb6381887a98170fbc93821c549ca1d987553d3f42f25049"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/state-answers.json",
+      "sha256": "78b102daf8fbb50bbf474df31a0ed63d8a7322f74bc13df7be8fd83e747d2007"
+    },
+    {
+      "path": "tests/test_incremental_state.py",
+      "sha256": "bcae6984ad9fd5242cc765e9a842c5635cb4566137ced2924f9e89b9bf130b7f"
+    }
+  ]
+}

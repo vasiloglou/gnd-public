@@ -1,0 +1,62 @@
+[
+  {
+    "id": "C1",
+    "story": "Change left; dirty left_copy, keep right_copy clean."
+  },
+  {
+    "id": "C2",
+    "story": "Negative and aggregate dependencies propagate through the existing graph."
+  },
+  {
+    "id": "C3",
+    "story": "A recursive component is invalidated as a whole."
+  },
+  {
+    "id": "C4",
+    "story": "Unknown/implicit changed subject conservatively invalidates all structured heads."
+  },
+  {
+    "id": "C5",
+    "story": "Model source mutation between calls prevents stale reuse."
+  },
+  {
+    "id": "C6",
+    "story": "Operations-only mutation under a caller-held index scope still gets a fresh session key."
+  },
+  {
+    "id": "C7",
+    "story": "Delete, replace and reorder input rows; no set or identity shortcut."
+  },
+  {
+    "id": "C8",
+    "story": "Options, roster, covers and reference identities are reuse inputs."
+  },
+  {
+    "id": "C9",
+    "story": "A lost population marker still refuses inside a reuse transaction."
+  },
+  {
+    "id": "C10",
+    "story": "Mutating fresh and hit results cannot mutate retained state."
+  },
+  {
+    "id": "C11",
+    "story": "Exceptions and cancellation roll back the candidate generation."
+  },
+  {
+    "id": "C12",
+    "story": "Reset clears entries; close is terminal and rejects later calls."
+  },
+  {
+    "id": "C13",
+    "story": "Overlapping calls refuse; independent nested sessions restore their context."
+  },
+  {
+    "id": "C14",
+    "story": "Row and byte limits include both retained generations; overflow evaluates fresh."
+  },
+  {
+    "id": "C15",
+    "story": "Cyclic, deep and unsupported input/value shapes bypass within bounded work."
+  }
+]

@@ -146,3 +146,5 @@ Gate output (verbatim): **1419 passed in 34.20s**. Lint: **All checks passed!**.
   }
 ]
 ```
+
+Evidence sanitation annotation (2026-10-20): IE2/evidence-sanitation.json records old/new hashes for corpus-red.txt and confirmation-red.txt, replacing only the machine-specific root with <REPO>. The identities above describe the originally accepted bytes; source/gate claims are unchanged. Original outputs remain in Git history.

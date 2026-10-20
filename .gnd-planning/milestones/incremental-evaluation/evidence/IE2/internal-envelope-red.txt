@@ -1,0 +1,29 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_stratified_unavailable_origin_propagates_even_without_public_metadata[False] _
+
+exact = False
+
+    @pytest.mark.parametrize('exact', [False, True])
+    def test_stratified_unavailable_origin_propagates_even_without_public_metadata(exact):
+        from gnd.model import load_model
+        from gnd.population import load_population
+        root = tool.ROOT / 'tests/fixtures/v62-phase3'
+        m = load_model(root / 'models/exact-terms.orm.yaml')
+        p = load_population(root / 'populations/term-input.pop.yaml', model=m)
+        relations = ext.base_relations(m, p)
+        fresh = ext._evaluate_stratified_extensions(m, relations, exact=exact)
+        state = ReuseState(m)
+        for _ in range(2):
+            with state.transaction(m):
+                actual = ext._evaluate_stratified_extensions(m, relations, exact=exact)
+>           assert envelope(actual) == envelope(fresh)
+E           AssertionError: assert ({'extensions...bed': 0, ...}) == ({'extensions...bed': 0, ...})
+E             
+E             At index 0 diff: {'extensions': {'doubled_residue': [], 'permitted': []}, 'lineage': {'doubled_residue': [], 'permitted': []}, 'unavailable': {}, 'possible': {}} != {'extensions': {}, 'lineage': {}, 'unavailable': {}, 'possible': {}}
+E             Use -v to get more diff
+
+tests/test_incremental_extensions.py:221: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_extensions.py::test_stratified_unavailable_origin_propagates_even_without_public_metadata[False]
+1 failed, 1 passed, 11 deselected in 0.29s

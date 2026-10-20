@@ -145,7 +145,7 @@ def _policy(value):
         if nodes > MAX_NODES or depth > MAX_DEPTH:
             raise _Unsupported
         if isinstance(item, (FunctionType, BuiltinFunctionType, type, CodeType)):
-            return (type(item), item, getattr(item, "__code__", None))
+            return (type(item), item, item.__code__ if isinstance(item, FunctionType) else None)
         if type(item) is tuple:
             # Refuse shared tuple DAGs: both expansion and tuple hashing would
             # otherwise revisit their descendants exponentially.
@@ -245,6 +245,9 @@ class ReuseState:
         self._disabled = False
         self._abort = False
         self._stats = Counter(hits=0, misses=0, bypasses=0, generation=0)
+
+    def owns_model(self, model):
+        return self._model is model and active_state() is self
 
     @contextmanager
     def transaction(self, model, *, options=()):

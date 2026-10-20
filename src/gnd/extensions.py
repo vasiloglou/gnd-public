@@ -9,18 +9,19 @@ from decimal import Decimal
 from fractions import Fraction
 from functools import wraps
 from types import FunctionType, MappingProxyType
-from typing import Any, Literal
+from typing import Any, Literal, get_origin
 
 from pydantic import BaseModel, Field, model_validator
 
+from gnd import atoms, model_queries, terms, universe, values, verbalize
 from gnd import extension_preparation as _extension_preparation
-from gnd import verbalize
 from gnd.address import derivation_address
 from gnd.atoms import atom_bind
 from gnd.branches import UnregisteredBranchError, branch, record_branch
 from gnd.documents import Model
 from gnd.errors import UnvalidatedPopulationError
 from gnd.extension_preparation import current_scope
+from gnd.incremental_state import active_state
 from gnd.model import (
     AggregateAnalysis,
     _derivation_variable,
@@ -31,6 +32,8 @@ from gnd.model import (
     derivation_strata,
     iter_derivation_clauses,
 )
+from gnd.model import _validation as model_validation
+from gnd.model_index import ModelIndex
 from gnd.population import Population
 from gnd.terms import (
     DEFAULT_LIMITS,
@@ -1004,6 +1007,114 @@ def _project_lineage(
     return tuple(unique[key] for key in sorted(unique))
 
 
+def _incremental_context(model, relations):
+    try:
+        return _build_incremental_context(model, relations)
+    except Exception:  # noqa: BLE001 -- optional reuse setup never changes fresh semantics
+        return None
+
+
+def _build_incremental_context(model, relations):
+    owner = active_state()
+    if (owner is None or not owner.owns_model(model)
+            or _WITNESS_TRACE.get() is not None
+            or _REFERENCE_PRESENTATION_WORK.get() is not None
+            or any(isinstance(value, dict) for rel in relations.values()
+                   for row in rel.rows for value in row)):
+        return None
+    # Materialization remains a checked boundary even when all component
+    # bodies hit: malformed unrelated rows must retain the original refusal.
+    try:
+        _relation_facts(relations)
+    except Exception:  # noqa: BLE001 -- original calculator owns error/order
+        return None
+    try:
+        facts = list(ModelIndex.for_model(model).iter_fact_types_shared())
+        document = {"fact_types": facts}
+        strata = derivation_strata(document)
+    except Exception:  # noqa: BLE001 -- reuse-only lookup cannot change fresh evaluation
+        return None
+    if any(f.get("derivation") in ("derived", "semiderived")
+           and type(f.get("derivation_rule")) is not dict for f in facts):
+        return None
+    if any(not row.complete for row in derivation_classifications(document)):
+        return None
+    policy = tuple(sorted((name, value) for name, value in globals().items()
+                          if callable(value) and get_origin(value) is None and value is not Literal))
+    # Imported helpers resolve further calls at their defining homes. Bind
+    # those live lookup namespaces too, without traversing function globals.
+    homes = tuple(tuple(sorted((name, value) for name, value in vars(home).items()
+                               if isinstance(value, FunctionType)))
+                  for home in (terms, atoms, universe, values, model_queries, model_validation))
+    term_policy = (terms.EXACT_FUNCTION_ARITY, terms.FLOAT_FUNCTION_ARITY,
+                   terms.FLOAT_FUNCTION_RESULT_PRIMITIVE, terms.EARTH_RADIUS_KM,
+                   terms.MAX_DURATION_DAYS)
+    term_defaults = []
+    for function in (evaluate_term, compare_terms, terms.evaluate_term, terms.compare_terms):
+        defaults = getattr(function, "__kwdefaults__", None) or {}
+        term_defaults.append(tuple(
+            (name, tuple((f.name, getattr(value, f.name)) for f in fields(value))
+             if isinstance(value, terms.ExactTermLimits) else value)
+            for name, value in sorted(defaults.items())
+        ))
+    limits = tuple((f.name, getattr(DEFAULT_LIMITS, f.name)) for f in fields(DEFAULT_LIMITS))
+    index_policy = tuple(sorted(
+        (name, value.__func__ if isinstance(value, (classmethod, staticmethod)) else value)
+        for name, value in vars(ModelIndex).items()
+        if isinstance(value, (FunctionType, classmethod, staticmethod))
+    ))
+    return owner, derivation_dependencies(document), (
+        policy, homes, term_policy, tuple(term_defaults), limits, index_policy, math.isfinite,
+        _PARTIAL_OPAQUE.get(),
+    ), strata
+
+
+def _reuse_extension_unit(context, namespace, component, relations, unavailable, calculate):
+    if context is None:
+        return calculate()
+    owner, graph, policy, _strata = context
+    dependencies = sorted(set().union(*(graph.get(head, ()) for head in component)) - set(component))
+    inputs = tuple((name, None if name not in relations else (
+        relations[name].fact_type, relations[name].roles, relations[name].rows,
+        relations[name].row_lineage, relations[name].identity_codec_version,
+    ), unavailable.get(name)) for name in dependencies)
+    input_rows = sum(len(relations[name].rows) for name in dependencies if name in relations)
+    return owner.reuse(namespace, tuple(component), inputs, calculate, policy=policy,
+                       rows=lambda value: input_rows + sum(len(r.rows) for r in value[0].values()))
+
+
+def _incremental_components(model, relations, calculate, *, exact, fixpoint):
+    context = _incremental_context(model, relations)
+    if context is None:
+        return None
+    state = dict(relations)
+    extensions = {}
+    unavailable = {}
+    work = _FixpointJoinWork() if fixpoint else _ExactJoinWork()
+    for component in context[3]:
+        def compute(component=component):
+            result = calculate(state, component, unavailable)
+            origins = getattr(result.extensions, "unavailable", {})
+            return (dict(result.extensions), {h: origins[h] for h in component if h in origins},
+                    result.counted_operations)
+        unit, origins, counted = _reuse_extension_unit(
+            context, f"extension:{exact}:{fixpoint}", component, state, unavailable, compute,
+        )
+        for head in component:
+            state.pop(head, None)
+            unavailable.pop(head, None)
+        state.update(unit)
+        extensions.update(unit)
+        unavailable.update(origins)
+        for f in fields(work):
+            current = getattr(work, f.name)
+            amount = getattr(counted, f.name)
+            setattr(work, f.name, max(current, amount) if "max" in f.name else current + amount)
+    if exact:
+        return _ExactExtensionResult(_ExactExtensions(extensions, unavailable=unavailable), work)
+    return _ExtensionResult(MappingProxyType(extensions), work)
+
+
 def _python_extension_calculator(
     model: Model,
     relations: Mapping[str, _TypedRelation],
@@ -1025,21 +1136,36 @@ def _python_extension_calculator(
     extensions: dict[str, _TypedRelation] = {}
     work = _JoinWork()
     fact_types = {str(fact_type.get("id")): fact_type for fact_type in model.fact_types}
+    incremental = _incremental_context(model, relations)
+    current_relations = dict(relations)
     for component in derivation_strata(model.model_dump()):
         fact_type_id = component[0]
         fact_type = fact_types[fact_type_id]
         rule = fact_type["derivation_rule"]
-        fact_view = MappingProxyType(facts)
-        bindings = _clause_bindings(rule, fact_view, work)
-        binding_lineages = _binding_lineages(rule, bindings, fact_view, fact_lineages)
-        projected_rows = _project_extension(fact_type, bindings, work)
-        projected_lineage = _project_lineage(fact_type, bindings, binding_lineages)
-        relation = _TypedRelation(
-            fact_type_id,
-            _relation_roles(model, fact_type),
-            projected_rows,
-            row_lineage=projected_lineage,
+
+        def compute(rule=rule, fact_type=fact_type, fact_type_id=fact_type_id):
+            unit_work = _JoinWork()
+            fact_view = MappingProxyType(facts)
+            bindings = _clause_bindings(rule, fact_view, unit_work)
+            binding_lineages = _binding_lineages(rule, bindings, fact_view, fact_lineages)
+            projected_rows = _project_extension(fact_type, bindings, unit_work)
+            projected_lineage = _project_lineage(fact_type, bindings, binding_lineages)
+            relation = _TypedRelation(
+                fact_type_id,
+                _relation_roles(model, fact_type),
+                projected_rows,
+                row_lineage=projected_lineage,
+            )
+
+            return {fact_type_id: relation}, {}, unit_work
+
+        unit, _origins, counted = _reuse_extension_unit(
+            incremental, "extension:ordinary", component, current_relations, {}, compute,
         )
+        relation = unit[fact_type_id]
+        current_relations[fact_type_id] = relation
+        for f in fields(work):
+            setattr(work, f.name, getattr(work, f.name) + getattr(counted, f.name))
         facts[fact_type_id] = _relation_facts({fact_type_id: relation})[fact_type_id]
         fact_lineages[fact_type_id] = relation.row_lineage
         extensions[fact_type_id] = relation
@@ -1291,6 +1417,16 @@ def _prepared_stratified(function: Callable[..., _ExtensionResult | _ExactExtens
         def calculate():
             return function(model, relations, heads=heads, prior_unavailable=prior_unavailable,
                             prior_possible=prior_possible, observe_partial=observe_partial, exact=exact)
+        if (active_state() is not None and heads is None and prior_unavailable is None
+                and prior_possible is None and observe_partial is None):
+            result = _incremental_components(
+                model, relations,
+                lambda state, component, origins: function(
+                    model, state, heads=component, prior_unavailable=origins, exact=True),
+                exact=exact, fixpoint=True,
+            )
+            if result is not None:
+                return result
         scope = current_scope()
         if (scope is None or scope.model is not model or type(exact) is not bool
                 or type(_PARTIAL_OPAQUE.get()) is not bool or heads is not None
@@ -1682,6 +1818,15 @@ def _exact_extension_calculator(
         return _evaluate_stratified_extensions(
             model, relations, heads=heads, prior_unavailable=prior_unavailable, exact=True
         )
+    if active_state() is not None and heads is None and prior_unavailable is None:
+        result = _incremental_components(
+            model, relations,
+            lambda state, component, origins: _exact_extension_calculator(
+                model, state, heads=component, prior_unavailable=origins),
+            exact=True, fixpoint=False,
+        )
+        if result is not None:
+            return result
     facts = dict(_relation_facts(relations))
     fact_lineages = {
         fact_type_id: relation.row_lineage for fact_type_id, relation in relations.items()

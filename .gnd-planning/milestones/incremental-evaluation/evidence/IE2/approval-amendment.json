@@ -1,0 +1,34 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE2 corpus instrument correction, complete typed oracle and reproduced initial/confirmation repairs only",
+  "authorization": "002 owner milestone execution auto and explicit CLI phase-review transfer",
+  "instrument": "corpus first; one CLI reader plus bounded confirmation; no third review",
+  "budget": "IE1 bounds; one prior generation plus staging; unsupported reuse setup fresh; no timing claim",
+  "artifacts": [
+    {
+      "path": "src/gnd/extensions.py",
+      "sha256": "d0c650ed489540308c3d8dfc9506c4bdd3f3b59c0c3dc57c7f9465b326ede7db"
+    },
+    {
+      "path": "src/gnd/incremental_state.py",
+      "sha256": "2c5dfc3391e09396146c93b53ba305226da88bc4b387a2d02060f3b617d360b5"
+    },
+    {
+      "path": "tests/test_incremental_extensions.py",
+      "sha256": "4f424731246e2250b2dc72e8b55d6e6bbff0c0b32d1c880ec7689be2f2f6769b"
+    },
+    {
+      "path": "tests/test_incremental_extensions_review.py",
+      "sha256": "edab96a25709c703442115ec296778ee159623c3ccf82808162a8d34090caa11"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "20d4908735fe8534496e1e201fe83c026e29615d8f5f6c25a837acfcfcc4937b"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE2-spec.md",
+      "sha256": "b05ebee006d3a9bab9272fe1d7195a117bad92247e6d3d6f3ecd2d863164eec9"
+    }
+  ]
+}

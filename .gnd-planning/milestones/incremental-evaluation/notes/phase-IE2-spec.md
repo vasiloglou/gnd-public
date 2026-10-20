@@ -86,3 +86,29 @@ No current source-successor row names these calculators (mechanical harvest); RF
 ## Out of scope and residuals
 
 IE3 owns selective constraints/public sessions/report immutability; IE4 observation/retry feedback; IE5 reporter acceptance and installed distributions. The new 547 workload is absent. No timing, RSS, production date, broad-suite, native/provider or certification claim. Historical source evidence is not current-byte acceptance. A full fallback may forgo savings; it cannot change semantics.
+
+## Implementation findings and corpus correction (2026-10-20)
+
+The body profiler's legacy counter layer installs wrappers at real lookup seams.
+Reinstalling it separately for each call changes the helper identities and must
+invalidate reuse. The amended paired test holds one counter scope across cold,
+warm and dirty calls; expected zero-work outputs are unchanged. Ordinary/exact
+and recursive tests then discriminate actual body execution. This is a delegated
+corpus instrument correction, not a relaxation of helper-policy invalidation.
+
+The function type's class-level __code__ attribute is a descriptor rather than a
+function code object. Policy normalization now records __code__ only on actual
+FunctionType instances; supported borrowed type handles remain bounded. A new
+read-only owns_model check prevents nested evaluation of another model from
+claiming the active owner's unit namespace.
+
+A direct non-exact stratified test refuted throwing away internal unavailable
+metadata between selected components (RED retained). Component calculations now
+request the original exact envelope internally, since the original exact flag
+only chooses the returned container at this algorithm; the assembled outer result
+retains the caller's original exact/non-exact surface. No unknown is substituted
+with an empty relation. Complete current direct tests include negative blockers,
+source origin reorder, mutual/self recursion, alternate support deletion, partial
+and witness fallback, helper mutation, foreign model and rollback.
+
+Review repairs (2026-10-20, delegated auto amendment): four initial findings reproduce in eight variants. Bind defining-home helpers and live term defaults; opaque subclasses use full fallback; original materialization remains checked; the diagnostic oracle now includes typed roles/codec/fact identity and refuses missing projections. Two confirmation findings reproduce against repaired bytes: bind all actual ModelIndex callable/static/class method lookups, and make optional reuse setup failures fall back. A related classifier failure has its own RED control. The malformed-shape proposal required clean term input and a truly unrelated relation to discriminate; the initial ticket_status example was already fresh because it is a negative dependency. Twelve review controls are now green. Confirmation ratio 2/2 attacks newly introduced repair code; declared two-round budget exhausted, no third review. Repaired bytes have no fresh reviewer opinion. IE5 retains the measured small-fixture overhead question and owns balanced final timing, without relaxing the counted-work gate.

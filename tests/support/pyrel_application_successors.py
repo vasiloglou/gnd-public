@@ -59,6 +59,7 @@ def query_policy(predecessor):
 DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE2/dynamic-query-successor.json',
 ]
 
 

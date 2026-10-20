@@ -1,7 +1,9 @@
+Evidence sanitation 2026-10-20: edited only to replace the machine-specific repository root with <REPO>; regression outcomes unchanged. Original bytes remain in Git phase history.
+
 
 ==================================== ERRORS ====================================
 _______________ ERROR collecting tests/test_incremental_state.py _______________
-ImportError while importing test module '/Users/nikolaosvasiloglou/github-repos/gnd-public/tests/test_incremental_state.py'.
+ImportError while importing test module '<REPO>/tests/test_incremental_state.py'.
 Hint: make sure your test modules/packages have valid Python names.
 Traceback:
 ../../.local/share/uv/python/cpython-3.11.15-macos-aarch64-none/lib/python3.11/importlib/__init__.py:126: in import_module

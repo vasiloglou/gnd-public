@@ -1,3 +1,5 @@
+Evidence sanitation 2026-10-20: edited only to replace the machine-specific repository root with <REPO>; regression outcomes unchanged. Original bytes remain in Git phase history.
+
 .......FFF                                                               [100%]
 =================================== FAILURES ===================================
 __________________ test_accounting_measures_the_private_clone __________________
@@ -15,7 +17,7 @@ __________________ test_accounting_measures_the_private_clone __________________
         actual = state_module._measure((key, entry.signature, entry.value, entry.branches), 10**8)
 >       assert entry.size >= actual + state_module.ENTRY_METADATA_BYTES
 E       assert 102446 >= (125422 + 1024)
-E        +  where 102446 = _Entry(signature=((), <code object calculate at 0x107d125b0, file "/Users/nikolaosvasiloglou/github-repos/gnd-public/t... [988], [989], [990], [991], [992], [993], [994], [995], [996], [997], [998], [999]], branches=(), rows=0, size=102446).size
+E        +  where 102446 = _Entry(signature=((), <code object calculate at 0x107d125b0, file "<REPO>/t... [988], [989], [990], [991], [992], [993], [994], [995], [996], [997], [998], [999]], branches=(), rows=0, size=102446).size
 E        +  and   1024 = state_module.ENTRY_METADATA_BYTES
 
 tests/test_incremental_state_review.py:104: AssertionError

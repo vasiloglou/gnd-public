@@ -1,0 +1,66 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_object_map_lookup_policy_cannot_reuse_stale_roles ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c394a50>
+
+    def test_object_map_lookup_policy_cannot_reuse_stale_roles(monkeypatch):
+        from gnd.model_index import ModelIndex
+        m, p = next(tool.localized_inputs())
+        relations = ext.base_relations(m, p)
+        state = ReuseState(m)
+        with state.transaction(m):
+            ext._python_extension_calculator(m, relations)
+        monkeypatch.setattr(ModelIndex, 'object_map', staticmethod(lambda model: {}))
+        fresh = ext._python_extension_calculator(m, relations)
+        with state.transaction(m):
+            actual = ext._python_extension_calculator(m, relations)
+>       assert envelope(actual) == envelope(fresh)
+E       AssertionError: assert ('dict', ((('.....)), ...))))) == ('dict', ((('.....)), ...)))))
+E         
+E         At index 1 diff: ((('str', 'relations'), ('dict', ((('str', 'left_copy'), ('tuple', (('str', 'left_copy'), ('tuple', (('tuple', (('str', 'item'), ('str', 'String'))),)), ('tuple', (('tuple', (('str', 'alpha'),)), ('tuple', (('str', 'beta'),)))), ('tuple', (('tuple', (('tuple', (('str', 'facts'), ('str', 'left'), ('int', 0))),)), ('tuple', (('tuple', (('str', 'facts'), ('str', 'left'), ('int', 1))),)))), ('str', 'gnd-identity-json/1')))), (('str', 'right_copy'), ('tuple', (('str', 'right_copy'), ('tuple', (('tuple', (('str', 'item'), ('str', 'String'))),)), ('tuple', (('...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_extensions_review.py:107: AssertionError
+_________ test_reuse_only_index_failure_preserves_ordinary_calculation _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c361f10>
+
+    def test_reuse_only_index_failure_preserves_ordinary_calculation(monkeypatch):
+        from gnd.model_index import ModelIndex
+        m, p = next(tool.localized_inputs())
+        relations = ext.base_relations(m, p)
+        state = ReuseState(m)
+    
+        def broken(cls, model):
+            raise RuntimeError('injected reuse-only index failure')
+    
+        monkeypatch.setattr(ModelIndex, 'for_model', classmethod(broken))
+        fresh = ext._python_extension_calculator(m, relations)
+        with state.transaction(m):
+>           actual = ext._python_extension_calculator(m, relations)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_incremental_extensions_review.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/gnd/extensions.py:1126: in _python_extension_calculator
+    incremental = _incremental_context(model, relations)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/extensions.py:1024: in _incremental_context
+    facts = list(ModelIndex.for_model(model).iter_fact_types_shared())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'gnd.model_index.ModelIndex'>
+model = Model(version=1, model_id='urn:gnd-fixture:incremental@1', source={'kind': 'text-conversation', 'confidence': 'standar....'}}]}], constraints=[], operations=[], reference_populations=[], rejected_proposals=[], deontic_notes=[], warnings=[])
+
+    def broken(cls, model):
+>       raise RuntimeError('injected reuse-only index failure')
+E       RuntimeError: injected reuse-only index failure
+
+tests/test_incremental_extensions_review.py:117: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_extensions_review.py::test_object_map_lookup_policy_cannot_reuse_stale_roles
+FAILED tests/test_incremental_extensions_review.py::test_reuse_only_index_failure_preserves_ordinary_calculation
+2 failed, 9 deselected in 0.16s

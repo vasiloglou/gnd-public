@@ -5,24 +5,12 @@ import pytest
 
 from gnd import extensions as ext
 from gnd.branches import capture_branches
-from gnd.extension_preparation import fingerprint
 from gnd.incremental_state import ReuseState
 from tests.test_incremental_baseline import tool
 
 
 def envelope(result):
-    values = result.extensions
-    complete = {
-        'relations': {name: (relation.fact_type, relation.roles, relation.rows,
-                             relation.row_lineage, relation.identity_codec_version)
-                      for name, relation in values.items()},
-        'unavailable': tool.packed(getattr(values, 'unavailable', {})),
-        'possible': tool.packed(getattr(values, 'possible', {})),
-        'logical_work': tool.packed(result.counted_operations),
-    }
-    key = fingerprint(complete)
-    assert key is not None, 'a refused diagnostic projection is not parity'
-    return key
+    return tool.complete_calculation_key(result)
 
 
 @pytest.mark.parametrize('exact', [False, True])

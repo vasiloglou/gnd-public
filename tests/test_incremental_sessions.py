@@ -328,3 +328,30 @@ def test_string_resolved_family_default_change_invalidates(tmp_path, monkeypatch
     same_payload(owner.check(p), api.check(m, p))
     evaluator.__defaults__ = (0,)
     same_payload(owner.check(p), api.check(m, p))
+
+
+def test_real_reference_population_receipt_minting_compatibility(tmp_path):
+    import test_reference_population_corpus as corpus
+
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    domain = next(iter(corpus.INPUTS['domains']))
+    bundle = corpus._bundle(domain, tmp_path / 'receipt-references')
+    m = load_model(bundle['root'] / 'model.orm.yaml')
+    p = load_population(bundle['root'] / 'candidate.pop.json', model=m)
+    with capture_branches() as expected_branches:
+        expected = api.check(m, p)
+    with capture_branches() as minted_branches:
+        payload, receipt = api.check_with_receipt(m, p)
+    same_payload(payload, expected)
+    assert expected['schema_version'] == 12
+    assert minted_branches == expected_branches
+    assert receipt.report is not receipt._checked_report
+    current = session(m)
+    with capture_branches() as session_branches:
+        payload, session_receipt = current.check_with_receipt(p)
+    same_payload(payload, expected)
+    assert session_branches == expected_branches
+    assert session_receipt.reusable == receipt.reusable
+    assert current.stats()['entries'] == 0

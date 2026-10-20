@@ -975,13 +975,25 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
         )
 
 
+class _FreshConstraint(Exception):
+    """Optional key refusal; the evaluator runs outside the setup catch."""
+
+
 def _constraint_reuse(adapted, constraint, aliases, reference_work, calculate):
     owner = active_state()
-    if owner is None or reference_work is not None or constraint.family in {"guarded", "anchored"}:
+    if owner is None:
         return calculate()
+    owner.note("constraint_calls")
+
+    def fresh():
+        owner.note("constraint_fallbacks")
+        return calculate()
+
+    if reference_work is not None or constraint.family in {"guarded", "anchored"}:
+        return fresh()
     try:
         if any(operand.kind == "clock" for operand in constraint.operands):
-            return calculate()
+            raise _FreshConstraint
         snapshot = adapted.snapshot
         if constraint.family == "uniqueness" and constraint.variant == "inline":
             facts = tuple(row for row in snapshot.fact_types if row.id == constraint.fact_type)
@@ -1015,19 +1027,22 @@ def _constraint_reuse(adapted, constraint, aliases, reference_work, calculate):
                     if not callable(hook) or id(hook) in seen_hooks:
                         continue
                     seen_hooks.add(id(hook))
-                    if not isinstance(hook, FunctionType):
-                        return calculate()
+                    if (not isinstance(hook, FunctionType) or
+                            not any(hook.__globals__ is space for space in namespaces)):
+                        # Unclassified external hooks may read arbitrary mutable
+                        # globals or perform effects. Configuration is not purity.
+                        raise _FreshConstraint
                     configuration = fingerprint((
                         hook.__defaults__, hook.__kwdefaults__,
                         tuple(cell.cell_contents for cell in (hook.__closure__ or ())),
                     ))
                     if configuration is None:
-                        return calculate()
+                        raise _FreshConstraint
                     configured.append((hook, configuration))
         policy = (own, homes, registry, tuple(configured), GUARDED_EXISTS_WORK_LIMIT)
         rows = sum(len(relation.rows) for relation in relations)
     except Exception:  # noqa: BLE001 -- optional memo setup must not replace normal evaluation
-        return calculate()
+        return fresh()
     return owner.reuse("constraint", constraint.ref, inputs, calculate,
                        policy=policy, rows=lambda finding: rows + len(finding.witness))
 

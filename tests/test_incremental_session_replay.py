@@ -1,14 +1,11 @@
 """IE3 paired public replay, with complete typed calculation observations."""
 import hashlib
 import json
-import sys
-from contextlib import contextmanager
 
-from gnd import api, extensions
+from gnd import api
 from gnd.branches import capture_branches
 from gnd.extension_preparation import fingerprint
 from tests.test_incremental_baseline import tool
-from tests.test_incremental_extensions import envelope
 
 
 def digest(value):
@@ -17,39 +14,7 @@ def digest(value):
     return hashlib.sha256(tool.canonical_json_bytes(key)).hexdigest()
 
 
-def complete_calculation(result):
-    return hashlib.sha256(tool.canonical_json_bytes(envelope(result))).hexdigest()
-
-
-@contextmanager
-def observe_calculations():
-    reached = []
-    assembly = extensions._incremental_components.__code__
-    calculators = {extensions._python_extension_calculator.__code__,
-                   extensions._exact_extension_calculator.__code__,
-                   extensions._evaluate_stratified_extensions.__wrapped__.__code__}
-    depth = 0
-    previous = sys.getprofile()
-
-    def profile(frame, event, result):
-        nonlocal depth
-        if previous is not None:
-            previous(frame, event, result)
-        if frame.f_code is assembly:
-            if event == 'call':
-                depth += 1
-            elif event == 'return':
-                depth -= 1
-                if result is not None:
-                    reached.append(complete_calculation(result))
-        elif event == 'return' and frame.f_code in calculators and depth == 0 and result is not None:
-            reached.append(complete_calculation(result))
-
-    sys.setprofile(profile)
-    try:
-        yield reached
-    finally:
-        sys.setprofile(previous)
+observe_calculations = tool.capture_complete
 
 
 def reporter_replay(*, incremental):
@@ -69,7 +34,7 @@ def reporter_replay(*, incremental):
                     payload = (owner.transition(population, steps, pre_receipt=receipt) if owner else
                                api.transition(model, population, steps, pre_receipt=receipt))
             calls.append({'payload': digest(payload), 'exit': payload['exit_code'],
-                          'branches': sorted(branches), 'calculations': sorted(set(calculations))})
+                          'branches': sorted(branches), 'calculations': list(calculations)})
     return calls, dict(counts), owner.stats() if owner else None
 
 

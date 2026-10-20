@@ -1008,10 +1008,16 @@ def _project_lineage(
 
 
 def _incremental_context(model, relations):
+    owner = active_state()
+    if owner is not None:
+        owner.note("extension_context_calls")
     try:
-        return _build_incremental_context(model, relations)
+        context = _build_incremental_context(model, relations)
     except Exception:  # noqa: BLE001 -- optional reuse setup never changes fresh semantics
-        return None
+        context = None
+    if owner is not None and context is None:
+        owner.note("extension_context_fallbacks")
+    return context
 
 
 def _build_incremental_context(model, relations):
@@ -1063,10 +1069,11 @@ def _build_incremental_context(model, relations):
         for name, value in vars(ModelIndex).items()
         if isinstance(value, (FunctionType, classmethod, staticmethod))
     ))
-    return owner, derivation_dependencies(document), (
+    prepared = owner.prepare_policy((
         policy, homes, term_policy, tuple(term_defaults), limits, index_policy, math.isfinite,
         _PARTIAL_OPAQUE.get(),
-    ), strata
+    ))
+    return owner, derivation_dependencies(document), prepared, strata
 
 
 def _reuse_extension_unit(context, namespace, component, relations, unavailable, calculate):

@@ -135,7 +135,7 @@ def _clone(value):
     return clone(value)
 
 
-def _policy(value):
+def _policy(value, *, guards=None, mutable=None):
     seen = set()
     nodes = 0
 
@@ -145,6 +145,8 @@ def _policy(value):
         if nodes > MAX_NODES or depth > MAX_DEPTH:
             raise _Unsupported
         if isinstance(item, (FunctionType, BuiltinFunctionType, type, CodeType)):
+            if guards is not None and isinstance(item, FunctionType):
+                guards.append((item, item.__code__))
             return (type(item), item, item.__code__ if isinstance(item, FunctionType) else None)
         if type(item) is tuple:
             # Refuse shared tuple DAGs: both expansion and tuple hashing would
@@ -156,11 +158,28 @@ def _policy(value):
         if _measure(item, 32 * 1024 * 1024) is None:
             raise _Unsupported
         key = fingerprint(item)
+        if mutable is not None and type(item) not in (type(None), bool, int, float, str, bytes):
+            mutable.append(item)
         if key is None:
             raise _Unsupported
         return key
 
     return walk(value, 0)
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class _PreparedPolicy:
+    authority: object
+    key: object
+    guards: tuple
+    mutable: tuple
+    mutable_key: object
+
+
+_DIAGNOSTICS = (
+    "session_calls", "session_fresh_calls", "extension_context_calls",
+    "extension_context_fallbacks", "constraint_calls", "constraint_fallbacks",
+)
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -251,7 +270,7 @@ class ReuseState:
         self._prior = {}
         self._disabled = False
         self._abort = False
-        self._stats = Counter(hits=0, misses=0, bypasses=0)
+        self._stats = Counter(dict.fromkeys(_DIAGNOSTICS, 0), hits=0, misses=0, bypasses=0, lookups=0)
 
     @property
     def _entries(self):
@@ -335,11 +354,35 @@ class ReuseState:
             raise ReuseRefused("not-active")
         self._abort = True
 
+    def note(self, event):
+        """Bounded out-of-band event diagnostics, never semantic feedback."""
+        if active_state() is not self:
+            raise ReuseRefused("not-active")
+        if event not in _DIAGNOSTICS:
+            raise ValueError("unknown diagnostic event")
+        self._stats[event] += 1
+
+    def prepare_policy(self, policy):
+        """Normalize once; preserve live guards and exact transaction authority."""
+        if active_state() is not self:
+            raise ReuseRefused("not-active")
+        guards, mutable = [], []
+        key = mutable_key = None
+        try:
+            key = _policy(policy, guards=guards, mutable=mutable)
+            mutable_key = fingerprint(tuple(mutable))
+            if mutable_key is None or _measure(key, self._max_bytes) is None:
+                key = None
+        except (TypeError, ValueError, OverflowError, RecursionError, _Unsupported):
+            key = None
+        return _PreparedPolicy(self._authority, key, tuple(guards), tuple(mutable), mutable_key)
+
     def reuse(self, namespace, unit, snapshot, calculate, *, policy=(), rows=0):
         if self._closed:
             raise ReuseRefused("closed")
         if active_state() is not self:
             raise ReuseRefused("not-active")
+        self._stats["lookups"] += 1
         key = None
         try:
             if (
@@ -353,7 +396,15 @@ class ReuseState:
             if unit_key is None or shape is None:
                 raise _Unsupported
             key = (namespace, unit_key)
-            signature = (_policy(policy), getattr(calculate, "__code__", calculate), shape)
+            if isinstance(policy, _PreparedPolicy):
+                if (policy.authority is not self._authority or policy.key is None
+                        or any(function.__code__ is not code for function, code in policy.guards)
+                        or fingerprint(policy.mutable) != policy.mutable_key):
+                    raise _Unsupported
+                policy_key = policy.key
+            else:
+                policy_key = _policy(policy)
+            signature = (policy_key, getattr(calculate, "__code__", calculate), shape)
             hash(signature)
             previous = self._candidate.get(key, self._prior.get(key))
             if previous is not None and previous.signature == signature:

@@ -76,6 +76,63 @@ CALCULATOR_CODES = {extensions._evaluate_stratified_extensions.__wrapped__.__cod
 SEMANTIC_SINK = ContextVar('incremental_measurement_semantics', default=None)
 
 
+COMPLETE_CALL_SINK = ContextVar('session_complete_calls', default=None)
+SESSION_STATS_SINK = ContextVar('session_stats_sink', default=None)
+DIAGNOSTIC_WORK = ContextVar('session_diagnostic_work', default=False)
+
+
+def complete_calculation_key(result):
+    values = result.extensions
+    complete = {
+        'relations': {name: (relation.fact_type, relation.roles, relation.rows,
+                             relation.row_lineage, relation.identity_codec_version)
+                      for name, relation in values.items()},
+        'unavailable': packed(getattr(values, 'unavailable', {})),
+        'possible': packed(getattr(values, 'possible', {})),
+        'logical_work': packed(result.counted_operations),
+    }
+    key = extension_preparation.fingerprint(complete)
+    if key is None:
+        raise ValueError('refused complete diagnostic projection')
+    return key
+
+
+@contextlib.contextmanager
+def capture_complete():
+    reached = []
+    boundaries = CALCULATOR_CODES | {
+        extensions._incremental_components.__code__,
+        extensions._evaluate_stratified_extensions.__code__,
+    }
+    depth = 0
+    old = sys.getprofile()
+
+    def profile(frame, event, result):
+        nonlocal depth
+        if old is not None:
+            old(frame, event, result)
+        if frame.f_code in boundaries:
+            if event == 'call':
+                depth += 1
+            elif event == 'return':
+                depth -= 1
+                if depth == 0 and result is not None:
+                    reached.append(hashlib.sha256(canonical_json_bytes(
+                        complete_calculation_key(result))).hexdigest())
+
+    sys.setprofile(profile)
+    try:
+        yield reached
+    finally:
+        sys.setprofile(old)
+
+
+def _session_stats(owner):
+    sink = SESSION_STATS_SINK.get()
+    if owner is not None and sink is not None:
+        sink.append(owner.stats())
+
+
 def calculation_envelope(calculated):
     return {
         'extensions': packed({name: relation.rows for name, relation in calculated.items()}),
@@ -152,6 +209,8 @@ def count_work():
         def profile(frame, event, arg):
             if old:
                 old(frame, event, arg)
+            if DIAGNOSTIC_WORK.get():
+                return
             if event == 'call':
                 name = CODE_COUNTERS.get(frame.f_code)
                 if name:
@@ -200,7 +259,22 @@ def public_call(function):
     semantic = SEMANTIC_SINK.get()
     positions = {key: len(semantic[key]) for key in ('extensions', 'lineage', 'unavailable', 'possible')} if semantic is not None else {}
     started = time.perf_counter()
-    result = function()
+    complete = COMPLETE_CALL_SINK.get()
+    if complete is None:
+        result = function()
+    else:
+        with capture_branches() as branches, capture_complete() as calculations:
+            result = function()
+        diagnostic_token = DIAGNOSTIC_WORK.set(True)
+        try:
+            payload_key = extension_preparation.fingerprint(result)
+            if payload_key is None:
+                raise ValueError('refused public payload projection')
+            complete.append({'payload': hashlib.sha256(canonical_json_bytes(payload_key)).hexdigest(),
+                             'exit': result['exit_code'], 'branches': sorted(branches),
+                             'calculations': list(calculations)})
+        finally:
+            DIAGNOSTIC_WORK.reset(diagnostic_token)
     elapsed = time.perf_counter() - started
     if TIME_SINK.get() is not None:
         TIME_SINK.get().append(elapsed)
@@ -213,43 +287,55 @@ def public_call(function):
     return result
 
 
-def replay_full(workload: str, *, receipts: bool) -> list[dict[str, Any]]:
+def replay_full(workload: str, *, receipts: bool, incremental: bool = False) -> list[dict[str, Any]]:
     if workload == 'localized':
-        return [public_call(lambda m=m, p=p: api.check_with_receipt(m, p)[0] if receipts else api.check(m, p)) for m, p in localized_inputs()]
-    if workload == 'course':
-        model = load_model(previous.COURSE / 'model.orm.json')
-        result = []
+        result, owner = [], None
+        for model, population in localized_inputs():
+            if incremental and owner is None:
+                owner = api.EvaluationSession(model)
+            def checked(m=model, p=population, owner=owner):
+                if owner:
+                    return owner.check_with_receipt(p)[0] if receipts else owner.check(p)
+                return api.check_with_receipt(m, p)[0] if receipts else api.check(m, p)
+            result.append(public_call(checked))
+        _session_stats(owner)
+        return result
+    course = workload == 'course'
+    model = load_model(previous.COURSE / 'model.orm.json' if course else previous.REPORTER / 'steps.orm.json')
+    owner = api.EvaluationSession(model) if incremental else None
+    checking = owner.check if owner else lambda p: api.check(model, p)
+    minting = owner.check_with_receipt if owner else lambda p: api.check_with_receipt(model, p)
+    walking = owner.transition if owner else lambda p, steps, **kwargs: api.transition(model, p, steps, **kwargs)
+    result, receipt = [], None
+    if course:
         for attempt in ('attempt-1', 'attempt-2', 'attempt-3'):
             population = load_population(previous.COURSE / 'state.pop.json', model=model)
             steps = previous._course_steps(f'{attempt}.steps.json')
             def walk(p=population, steps=steps):
-                if receipts:
-                    checked, receipt = api.check_with_receipt(model, p)
-                else:
-                    checked, receipt = api.check(model, p), None
+                checked, current = minting(p) if receipts else (checking(p), None)
                 if checked['exit_code'] not in (0, 2):
                     raise RuntimeError('course precheck unexpectedly refused')
-                return api.transition(model, p, steps, pre_receipt=receipt)
+                return walking(p, steps, pre_receipt=current)
             result.append(public_call(walk))
-        return result
-    model = load_model(previous.REPORTER / 'steps.orm.json')
-    result, receipt = [], None
-    for row in previous.reporter_calls():
-        population = load_population(previous.REPORTER / row['population'], model=model)
-        if row['call'] == 'check':
-            if receipts:
-                held = []
-                def checked(population=population, held=held):
-                    payload, minted = api.check_with_receipt(model, population)
-                    held.append(minted)
-                    return payload
-                result.append(public_call(checked))
-                receipt = held[0]
+    else:
+        for row in previous.reporter_calls():
+            population = load_population(previous.REPORTER / row['population'], model=model)
+            if row['call'] == 'check':
+                if receipts:
+                    held = []
+                    def checked(p=population, held=held):
+                        payload, minted = minting(p)
+                        held.append(minted)
+                        return payload
+                    result.append(public_call(checked))
+                    receipt = held[0]
+                else:
+                    result.append(public_call(lambda p=population: checking(p)))
             else:
-                result.append(public_call(lambda population=population: api.check(model, population)))
-        else:
-            steps = json.loads((previous.REPORTER / row['steps']).read_text())
-            result.append(public_call(lambda population=population, steps=steps, receipt=receipt: api.transition(model, population, steps, pre_receipt=receipt)))
+                steps = json.loads((previous.REPORTER / row['steps']).read_text())
+                result.append(public_call(lambda p=population, steps=steps, receipt=receipt:
+                                          walking(p, steps, pre_receipt=receipt)))
+    _session_stats(owner)
     return result
 
 
@@ -257,19 +343,24 @@ def schedule(repeat):
     return [('ABC', 'BCA', 'CAB')[i % 3] for i in range(repeat)]
 
 
-def measure_modes(workload: str, *, repeat: int) -> dict[str, Any]:
+def _measure_modes(workload: str, *, repeat: int, session_arm: bool) -> dict[str, Any]:
     samples = {arm: [] for arm in 'ABC'}
     evaluation = {arm: [] for arm in 'ABC'}
     preparation = {arm: [] for arm in 'ABC'}
+    def replay(arm):
+        if session_arm and arm == 'C':
+            return replay_full(workload, receipts=True, incremental=True)
+        return replay_full(workload, receipts=arm == 'B')
+
     for arm in 'ABC':
-        replay_full(workload, receipts=arm == 'B')
+        replay(arm)
     for order in schedule(repeat):
         for arm in order:
             public_times = []
             token = TIME_SINK.set(public_times)
             start = time.perf_counter()
             try:
-                replay_full(workload, receipts=arm == 'B')
+                replay(arm)
             finally:
                 TIME_SINK.reset(token)
             total = time.perf_counter() - start
@@ -282,6 +373,18 @@ def measure_modes(workload: str, *, repeat: int) -> dict[str, Any]:
             'range_s': {arm: max(rows) - min(rows) for arm, rows in samples.items()},
             'positionally_balanced': repeat % 3 == 0,
             'boundary': 'complete public replay including input loading; uninstrumented'}
+
+
+def measure_modes(workload: str, *, repeat: int) -> dict[str, Any]:
+    return _measure_modes(workload, repeat=repeat, session_arm=False)
+
+
+def measure_session_modes(workload: str, *, repeat: int) -> dict[str, Any]:
+    import tracemalloc
+
+    if sys.getprofile() is not None or tracemalloc.is_tracing():
+        raise ValueError('timing must be uninstrumented')
+    return _measure_modes(workload, repeat=repeat, session_arm=True)
 
 
 def extra_controls():

@@ -6,7 +6,8 @@ returns ordinary dictionaries; your application decides how to display a
 finding and what action to take.
 
 The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
-`verbalize`, `diff`, `witness`, and `replay`. Code generation, experiment
+`verbalize`, `diff`, `witness`, and `replay`. The opt-in `EvaluationSession`
+class reuses eligible work between calls. Code generation, experiment
 orchestration, and model evolution have CLI and skill workflows described in
 the [task guides](../advanced.md).
 
@@ -353,3 +354,67 @@ The first failing guard wins, in this order:
 Receipts stay in one process and cannot be serialized. There is no CLI option.
 Only default check options are supported; compiled operations, admission,
 anchors and references are outside this feature.
+
+
+## Reusing evaluation work across snapshots
+
+`EvaluationSession(model, *, max_rows=100000, max_bytes=33554432)` takes a loaded
+`Model`. Load every population with that same model. `session.check(population)`
+and `session.transition(pre, steps, post=None)` return the ordinary API payloads;
+`session.check_with_receipt(population)` returns the ordinary payload/receipt pair.
+The normal stateless functions, CLI, batch and experiment defaults remain fresh.
+
+The session rechecks current validation markers, model content including operations,
+ordered facts, rosters, coverage and supported options. A no-op can reuse eligible
+extension components and constraint findings. A change recomputes the dirty
+component from current inputs, including whole recursive components; it preserves
+current witnesses, lineage, unavailable/possible states, branch evidence and report
+ordering. Admission and every required root/intermediate/post check still run.
+Snapshot comparison remains proportional to input size. This is component reuse,
+not a promise of work proportional only to added rows.
+
+Reference, anchored, witness/observer, compiled/admission and unknown dependency
+modes select fresh work as applicable. Custom family hooks with unclassified
+external dependencies also run fresh. Unsupported keys or resource bounds never
+substitute an empty relation for unavailable data. `check` accepts the normal
+semantic keywords; `transition` accepts `unredacted`, `references` and `pre_receipt`.
+Results are detached from stored findings. A receipt's mutable public report also
+cannot change the private snapshot later consumed by a transition.
+
+A session retains one committed generation, up to the configured projected bytes
+and retained fact/witness rows. Oversized/unmeasurable units run fresh. The byte
+projection bounds cache content, not Python RSS or caller-owned inputs. A completed
+violation can publish valid units; errors/indeterminate checks discard staged cache
+work. Exceptions/cancellation before publication preserve committed cache and
+feedback sequence. One active call per session is permitted; overlapping calls
+raise `ValueError`. Independent sessions may interleave. `reset()` clears retained
+work; `close()` releases it and rejects future work. Sessions cannot be serialized.
+
+`stats()` is diagnostic and stays outside reports/feedback. `lookups` counts each owned unit lookup once. `hits`, `misses` and
+`bypasses` are overlapping event counters: a computed miss may also bypass storage
+because of a bound. Their sum is not a lookup denominator; use `bypasses/lookups`
+for that fraction. A zero denominator means no rate was measured. `session_calls`/`session_fresh_calls` count
+completed or attempted facade evaluations under ownership; `extension_context_calls`
+and `extension_context_fallbacks` count context requests/refusals; `constraint_calls`
+and `constraint_fallbacks` count finding routes/fresh eligibility refusals. These
+are different denominators:0 unit bypasses does not establish whole-call eligibility.
+`entries`, `rows`, `bytes` describe retained content; `generation` counts published
+cache generations. Reset preserves lifetime diagnostic counters and feedback numbering.
+
+Use `observe(population, replacements)` and
+`check_with_feedback(population, *, attempt)` for a host loop. The
+[offline two-attempt example](../agents/dev-session.md#a-host-loop-in-one-python-process)
+explains whole-relation replacement, bounded counts, explicit availability/overflow,
+strict feedback versioning and retry order. This wire is separate from persistent
+experiment sessions and never serializes cache handles.
+
+
+Measured on the frozen public reporter replay (13 calls), receipts executed 4,878
+rule bodies and sessions with receipts executed 179, with matching reports and
+ordered logical calculation results. In the final three-round interleaving on a
+shared macOS/Python3.11.15 host, medians were 5.83 s with receipts and 6.79 s with
+sessions plus receipts. The session was slower on this fixture despite less rule
+work. Course/localized controls were also slower. These are workload-specific
+observations, not a reason to change existing defaults or a prediction for the
+unsupplied 547-program workload. Maintainer evidence records ranges, cold/no-op/
+dirty cases, bounds and source identities in the incremental-evaluation milestone.

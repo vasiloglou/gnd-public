@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-20",
+  "artifacts": [
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "65717161c436cf93a53c2ac01a67b14aa3e1f86e39a43becd2148baca7232e4c"
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "sha256": "1d76b4bedc7a65bccde5cb9cb8067da64b98d428746a39091f7941764f099a82"
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "sha256": "3324dad80252e5f160eefc78f8f5104b74aa3e52ee268ce10c0c68dafc97d471"
+    },
+    {
+      "path": "src/gnd/incremental_state.py",
+      "sha256": "f4e65694956200529a323d5bf2b29e1143c42aa4c707c77008f4b326b8677aa2"
+    },
+    {
+      "path": "src/gnd/extension_preparation.py",
+      "sha256": "1dade95600f2069ab02ecca70c6e94f4e76bccff55be02db11e06e51b2c3d68e"
+    },
+    {
+      "path": "src/gnd/model_index.py",
+      "sha256": "a342040b95d33182da92ff265be5be4e1d9ef4d1d2b98ca887abf20c7a5b06a8"
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "sha256": "a9b8a443849afa001b88246ee7279406ed4c7c5407e7a38d8c755af87a11cc73"
+    },
+    {
+      "path": "src/gnd/evaluation_feedback.py",
+      "sha256": "ca688c5f90f23d1e10e82eb7f44cbba27c2c30bb8330697566eb82d0671727e5"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "3268546b7f7051d6ae38c1560ec2e8e50de37544ed7b33e799784bdbc81204f4"
+    },
+    {
+      "path": "tools/run_public_acceptance.py",
+      "sha256": "c00de330095a8707b0c5a3192ad66b0dde65e0e281b0a1fb9c7a478743ec8923"
+    },
+    {
+      "path": "tools/measure_incremental_evaluation.py",
+      "sha256": "438fbdceee519257251a2a351f08a559b3740a34296d9269fca00654deb8fb61"
+    },
+    {
+      "path": "tools/measure_evaluation_sessions.py",
+      "sha256": "8d8099e0dda44454420f04236e630d13be08118373051e89cc46e3735f385f13"
+    },
+    {
+      "path": "src/gnd/skills/gnd-dev-session/SKILL.md",
+      "sha256": "92d633e7d12107ce7f0e3249aadf081596af9986ce3c540b55422977ae6355ab"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "f77c8506d6d43f011a3675c4063b16346c484293c77df6847ad52d786e98c0b5"
+    },
+    {
+      "path": "tests/test_incremental_baseline.py",
+      "sha256": "821a0ce6965c045f3cfb0462038121b95378d3f1b82ae51e2b5967489d214e1b"
+    },
+    {
+      "path": "tests/test_incremental_baseline_review.py",
+      "sha256": "5a5d90098583ccacec153fd635dbb4e42f7a2edb6eac7ccb08af0916fc0edb4b"
+    },
+    {
+      "path": "tests/test_incremental_extensions.py",
+      "sha256": "8b26e5fbb6da1dc16fa7484a739ebbb9d00e7ab69599a144b51388ef54371020"
+    },
+    {
+      "path": "tests/test_incremental_extensions_review.py",
+      "sha256": "edab96a25709c703442115ec296778ee159623c3ccf82808162a8d34090caa11"
+    },
+    {
+      "path": "tests/test_incremental_observations.py",
+      "sha256": "a3a2acb8b6e9f4268ebff3d2a873260b6bd6784b9fb20160afd3af8749cc464d"
+    },
+    {
+      "path": "tests/test_incremental_prepared_policy.py",
+      "sha256": "182975a8abe743582af9e016efcf7bf4f5f3fd746d64fc4f584df1713530bd01"
+    },
+    {
+      "path": "tests/test_incremental_session_measurement.py",
+      "sha256": "b10fd6b00d7e1acfb94a8d74832a2084e3fd441c26e7e08a1ba03e1e1da0786d"
+    },
+    {
+      "path": "tests/test_incremental_session_replay.py",
+      "sha256": "ad341d7c38873455f34834571b9b5ec9fe5667926605dc5a7e980f2aa0ad96c6"
+    },
+    {
+      "path": "tests/test_incremental_sessions.py",
+      "sha256": "cfae071678140836ad392540adb1dcd16fe461d192c551c7783a41bbfb05d648"
+    },
+    {
+      "path": "tests/test_incremental_state.py",
+      "sha256": "009ccde0371d0c60a425e61dffb46f082cde62ba253afdaf836dff334f063aea"
+    },
+    {
+      "path": "tests/test_incremental_state_review.py",
+      "sha256": "1f6f0c74d3eda0b442a710eea1b06efe76de9f1b4068520e25f6c9a97978c2aa"
+    },
+    {
+      "path": "docs/reference/python-api.md",
+      "sha256": "5af3a04ec8e4835380ecfef21080ab1b7a5451b63061aab4e91b9765e0bf1e91"
+    },
+    {
+      "path": "docs/reference/capabilities.md",
+      "sha256": "a1f8d0e7c4dd24bf1a130f03bfe3294f15700f3cdc92d586079534ed4a128ed2"
+    },
+    {
+      "path": "docs/guides/data-and-transitions.md",
+      "sha256": "829d1eaa8510632c20e2ba880499910e75bec6f0adcc38f6ac6a55854af758e6"
+    },
+    {
+      "path": "docs/agents/dev-session.md",
+      "sha256": "8bfb4ee4d2bc99aa414df76f7c2cb80aef7bc351ae2155e1ac11ff0c5be2362f"
+    },
+    {
+      "path": "docs/release-notes.md",
+      "sha256": "0de1b5f27962919ed8d332e22745d028d5c1329357bd9d97b8d27af2123d3871"
+    }
+  ]
+}

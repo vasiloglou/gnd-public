@@ -1006,6 +1006,9 @@ class EvaluationSession:
         fresh = fresh or bool(self._model.reference_populations)
         binding = (object(),) if fresh else options
         with self._state.transaction(self._model, options=binding, sequence=attempt):
+            self._state.note("session_calls")
+            if fresh:
+                self._state.note("session_fresh_calls")
             payload = function()
             result = payload[0] if isinstance(payload, tuple) else payload
             if result.get("exit_code") not in (0, 1, 2):

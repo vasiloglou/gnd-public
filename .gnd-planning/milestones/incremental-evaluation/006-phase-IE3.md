@@ -83,7 +83,11 @@ model binding, ownership/cancellation and resource limits remain. Export asserti
 include the new surface; serialization is refused. No-op executes zero derivation
 bodies/evaluators; localized independent constraint executes no right evaluator.
 Complete typed reporter replay compares all13 payloads, exits, branch sets and
-extension metadata/lineage/unavailable/logical-work projections. Actual bodies
+extension metadata/lineage/unavailable/logical-work projections.
+**Correction, 2026-10-20:** that historical test compared sets of complete
+envelopes; it did not establish ordered request multiplicity. IE5 /008 supplies
+the stronger outermost-request ordered proof and its deletion/duplication/permutation
+negative controls. The historical gate output remains unchanged. Actual bodies
 are strictly below frozen4878 full-with-receipts denominator, all13 exits2.
 The integrated test supplies the threshold proof; no elapsed-time gain asserted.
 

@@ -304,15 +304,15 @@ second_walk = session.transition(observed, steps)
 session.close()
 ```
 
-The separate closed feedback kind `evaluation-session-feedback`, version1, gives
+The separate closed feedback kind `evaluation-session-feedback`, version 1, gives
 asserted and computed counts with availability/overflow status. It contains no
 cell values, witnesses, messages or cache handles; declared fact identifiers are
-included. At most128 rows,256 characters per identifier and16KiB of canonical JSON
+included. At most 128 rows, 256 characters per identifier and 16 KiB of canonical JSON
 are emitted; omissions are explicit. Count overflow is null with status overflow,
-not an exact saturated count. Unavailable differs from available empty0. Valid
+not an exact saturated count. Unavailable differs from available empty 0. Valid
 indeterminate checks may supply unavailable counts while discarding cache staging.
 
-Feedback attempts must be consecutive, starting at1. A returned error feedback
+Feedback attempts must be consecutive, starting at 1. A returned error feedback
 consumes its attempt; invalid observations, rejected attempts and construction
 failures do not. `reset()` clears cached work and preserves lifetime numbering.
 Returned populations/feedback are detached. Closing releases retained state.
@@ -321,6 +321,6 @@ This host loop has a separate wire from persistent `gnd exp` sessions: contracts
 old feedback versions and retained attempt artifacts keep their existing formats.
 Use the persistent workflow above when retained experiment evidence is needed.
 
-On the packaged fixture above the checks exit0, the first walk exits0 and the
-walk after observation exits1. The new observation changes the constraints the
+On the packaged fixture above the checks exit 0, the first walk exits 0 and the
+walk after observation exits 1. The new observation changes the constraints the
 next plan must satisfy; successful observation admission does not approve a plan.

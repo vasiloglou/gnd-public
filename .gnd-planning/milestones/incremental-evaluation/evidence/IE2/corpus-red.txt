@@ -1,0 +1,135 @@
+FF.FFF.                                                                  [100%]
+=================================== FAILURES ===================================
+_______________ test_component_noop_and_independent_work[False] ________________
+
+exact = False
+
+    @pytest.mark.parametrize('exact', [False, True])
+    def test_component_noop_and_independent_work(exact):
+        m, p = next(tool.localized_inputs())
+        relations = ext.base_relations(m, p)
+        calculate = ext._evaluate_stratified_extensions if exact else ext._python_extension_calculator
+        kwargs = {'exact': True} if exact else {}
+        state = ReuseState(m)
+        with capture_branches() as expected_branches:
+            expected = calculate(m, relations, **kwargs)
+        for attempt in range(2):
+            with state.transaction(m), tool.count_work() as work, capture_branches() as branches:
+                actual = calculate(m, relations, **kwargs)
+            assert envelope(actual) == envelope(expected)
+            assert branches == expected_branches
+            if attempt:
+>               assert work['derivation_body_evaluations'] == 0
+E               assert 2 == 0
+
+tests/test_incremental_extensions.py:31: AssertionError
+________________ test_component_noop_and_independent_work[True] ________________
+
+exact = True
+
+    @pytest.mark.parametrize('exact', [False, True])
+    def test_component_noop_and_independent_work(exact):
+        m, p = next(tool.localized_inputs())
+        relations = ext.base_relations(m, p)
+        calculate = ext._evaluate_stratified_extensions if exact else ext._python_extension_calculator
+        kwargs = {'exact': True} if exact else {}
+        state = ReuseState(m)
+        with capture_branches() as expected_branches:
+            expected = calculate(m, relations, **kwargs)
+        for attempt in range(2):
+            with state.transaction(m), tool.count_work() as work, capture_branches() as branches:
+                actual = calculate(m, relations, **kwargs)
+            assert envelope(actual) == envelope(expected)
+            assert branches == expected_branches
+            if attempt:
+>               assert work['derivation_body_evaluations'] == 0
+E               assert 2 == 0
+
+tests/test_incremental_extensions.py:31: AssertionError
+___________________ test_exact_recursive_deletion_and_tamper ___________________
+
+    def test_exact_recursive_deletion_and_tamper():
+        from gnd.model import load_model
+        from gnd.population import load_population
+        root = tool.ROOT / 'tests/fixtures/derivation-evaluation/cases/recursive'
+        # Use the repository's bounded recursive acceptance fixture.
+        root = tool.ROOT / 'tests/fixtures/v70-phase4'
+        m = load_model(root / 'recursive.orm.yaml')
+        p = load_population(root / 'recursive.pop.json', model=m)
+        relations = ext.base_relations(m, p)
+        state = ReuseState(m)
+        for modified in [relations, relations, dict(relations, edge=replace(relations['edge'], rows=(), row_lineage=()))]:
+            fresh = ext._evaluate_stratified_extensions(m, modified, exact=True)
+            with state.transaction(m):
+                actual = ext._evaluate_stratified_extensions(m, modified, exact=True)
+            assert envelope(actual) == envelope(fresh)
+            actual.extensions.clear()
+>       assert state.stats()['hits'] > 0
+E       assert 0 > 0
+
+tests/test_incremental_extensions.py:71: AssertionError
+_ test_exact_unavailability_and_aggregate_dirty_inputs[v62-phase3/models/exact-terms.orm.yaml-v62-phase3/populations/term-input.pop.yaml] _
+
+model_name = 'v62-phase3/models/exact-terms.orm.yaml'
+population_name = 'v62-phase3/populations/term-input.pop.yaml'
+
+    @pytest.mark.parametrize(('model_name', 'population_name'), [
+        ('v62-phase3/models/exact-terms.orm.yaml', 'v62-phase3/populations/term-input.pop.yaml'),
+        ('v62-phase4/models/aggregates.orm.yaml', 'v62-phase4/populations/aggregate-input.pop.yaml'),
+    ])
+    def test_exact_unavailability_and_aggregate_dirty_inputs(model_name, population_name):
+        from gnd.model import load_model
+        from gnd.population import load_population
+        m = load_model(tool.ROOT / 'tests/fixtures' / model_name)
+        p = load_population(tool.ROOT / 'tests/fixtures' / population_name, model=m)
+        relations = ext.base_relations(m, p)
+        state = ReuseState(m)
+        base = next(name for name in relations if name not in {
+            str(row['id']) for row in m.fact_types if isinstance(row.get('derivation_rule'), dict)
+        })
+        empty = dict(relations, **{base: replace(relations[base], rows=(), row_lineage=())})
+        for current in [relations, relations, empty, relations]:
+            fresh = ext._exact_extension_calculator(m, current)
+            with state.transaction(m), capture_branches() as branches:
+                actual = ext._exact_extension_calculator(m, current)
+            assert envelope(actual) == envelope(fresh)
+>       assert state.stats()['hits'] > 0
+E       assert 0 > 0
+
+tests/test_incremental_extensions.py:94: AssertionError
+_ test_exact_unavailability_and_aggregate_dirty_inputs[v62-phase4/models/aggregates.orm.yaml-v62-phase4/populations/aggregate-input.pop.yaml] _
+
+model_name = 'v62-phase4/models/aggregates.orm.yaml'
+population_name = 'v62-phase4/populations/aggregate-input.pop.yaml'
+
+    @pytest.mark.parametrize(('model_name', 'population_name'), [
+        ('v62-phase3/models/exact-terms.orm.yaml', 'v62-phase3/populations/term-input.pop.yaml'),
+        ('v62-phase4/models/aggregates.orm.yaml', 'v62-phase4/populations/aggregate-input.pop.yaml'),
+    ])
+    def test_exact_unavailability_and_aggregate_dirty_inputs(model_name, population_name):
+        from gnd.model import load_model
+        from gnd.population import load_population
+        m = load_model(tool.ROOT / 'tests/fixtures' / model_name)
+        p = load_population(tool.ROOT / 'tests/fixtures' / population_name, model=m)
+        relations = ext.base_relations(m, p)
+        state = ReuseState(m)
+        base = next(name for name in relations if name not in {
+            str(row['id']) for row in m.fact_types if isinstance(row.get('derivation_rule'), dict)
+        })
+        empty = dict(relations, **{base: replace(relations[base], rows=(), row_lineage=())})
+        for current in [relations, relations, empty, relations]:
+            fresh = ext._exact_extension_calculator(m, current)
+            with state.transaction(m), capture_branches() as branches:
+                actual = ext._exact_extension_calculator(m, current)
+            assert envelope(actual) == envelope(fresh)
+>       assert state.stats()['hits'] > 0
+E       assert 0 > 0
+
+tests/test_incremental_extensions.py:94: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_extensions.py::test_component_noop_and_independent_work[False]
+FAILED tests/test_incremental_extensions.py::test_component_noop_and_independent_work[True]
+FAILED tests/test_incremental_extensions.py::test_exact_recursive_deletion_and_tamper
+FAILED tests/test_incremental_extensions.py::test_exact_unavailability_and_aggregate_dirty_inputs[v62-phase3/models/exact-terms.orm.yaml-v62-phase3/populations/term-input.pop.yaml]
+FAILED tests/test_incremental_extensions.py::test_exact_unavailability_and_aggregate_dirty_inputs[v62-phase4/models/aggregates.orm.yaml-v62-phase4/populations/aggregate-input.pop.yaml]
+5 failed, 2 passed in 0.21s

@@ -1,0 +1,26 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "authorization": "owner named milestone auto delegation in 002",
+  "scope": "IE2 only",
+  "instrument": "corpus-first; required CLI diff reader with at most one confirmation",
+  "budget": "one prior generation plus staging; 100000 rows/32 MiB; original fallback on unknowns",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE2-spec.md",
+      "sha256": "5bf21ee7f469d06e44c38d98a401972c66a2e47f878455ccac5f3fe87236b4b8"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/extension-stories.json",
+      "sha256": "640f64c6c962a5fc7c745522a52e1c8c409c93a11969da953eba17832dea99a2"
+    },
+    {
+      "path": "tests/fixtures/incremental_evaluation/extension-answers.json",
+      "sha256": "8fb272eaa53e6b1dbcb53ed4540ba6211cf75510e30be86be82b7c1074057332"
+    },
+    {
+      "path": "tests/test_incremental_extensions.py",
+      "sha256": "ba3a5695932ac5fb8a395b7a22352830b68bc3bdc09219c78a0871c33e1bc0ef"
+    }
+  ]
+}

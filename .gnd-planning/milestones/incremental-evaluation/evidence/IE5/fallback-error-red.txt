@@ -1,0 +1,53 @@
+Machine/user paths sanitized only.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_fallback_evaluator_failure_is_not_retried ________________
+
+tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<USER>/pytest-4126/test_fallback_evaluator_failur0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c94e850>
+
+    def test_fallback_evaluator_failure_is_not_retried(tmp_path, monkeypatch):
+        from dataclasses import replace
+    
+        import test_public_branch_runtime as corpus
+    
+        from gnd import api
+        from gnd.constraint_families import FAMILIES
+        from tests.test_incremental_sessions import same_payload
+    
+        m, p = corpus._build('P2-039', tmp_path)
+        calls = []
+    
+        def evaluator(constraint, snapshot):
+            calls.append(1)
+            if len(calls) == 1:
+                raise RuntimeError('first evaluator failure')
+            return 1, []
+    
+        monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+        expected = api.check(m, p)
+        assert expected['exit_code'] == 70 and len(calls) == 1
+        calls.clear()
+        actual = api.EvaluationSession(m).check(p)
+>       same_payload(actual, expected)
+
+tests/test_incremental_prepared_policy.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actual = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'accepted', ...}
+expected = {'schema_version': 7, 'tool': 'gnd', 'command': 'check', 'outcome': 'internal_error', ...}
+
+    def same_payload(actual, expected):
+        actual_key, expected_key = fingerprint(actual), fingerprint(expected)
+        assert actual_key is not None and expected_key is not None
+>       assert actual_key == expected_key
+E       AssertionError: assert ('dict', ((('... True)), ...)) == ('dict', ((('...False)), ...))
+E         
+E         At index 1 diff: ((('str', 'schema_version'), ('int', 7)), (('str', 'tool'), ('str', 'gnd')), (('str', 'command'), ('str', 'check')), (('str', 'outcome'), ('str', 'accepted')), (('str', 'exit_code'), ('int', 0)), (('str', 'acceptance_ready'), ('bool', True)), (('str', 'model'), ('NoneType', None)), (('str', 'model_digest'), ('str', 'sha256:221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd')), (('str', 'population'), ('NoneType', None)), (('str', 'counts'), ('dict', ((('str', 'pass'), ('int', 14)), (('str', 'fail'), ('int', 0)), (('str', 'warning'), ('int'...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_incremental_sessions.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_incremental_prepared_policy.py::test_fallback_evaluator_failure_is_not_retried
+1 failed, 8 deselected in 0.23s

@@ -31,3 +31,21 @@ def test_complete_calculation_key_rejects_typed_metadata_mutation():
     changed = dict(original.extensions)
     changed['left_copy'] = replace(relation, roles=tuple(reversed(relation.roles)) + ('wrong',))
     assert key != tool.complete_calculation_key(replace(original, extensions=changed))
+
+
+def test_mode_comparison_rejects_corrupted_semantic_surfaces():
+    from copy import deepcopy
+
+    import pytest
+    from measure_evaluation_sessions import compare_modes
+
+    row = {'payload': 'typed-payload', 'exit': 2, 'branches': ['registered'],
+           'calculations': ['typed-complete-envelope']}
+    modes = {mode: {'calls': [deepcopy(row)]} for mode in 'ABC'}
+    compare_modes(modes)
+    for key, value in [('payload', 'wrong'), ('exit', 1), ('branches', []),
+                       ('calculations', ['wrong'])]:
+        corrupted = deepcopy(modes)
+        corrupted['C']['calls'][0][key] = value
+        with pytest.raises(ValueError):
+            compare_modes(corrupted)

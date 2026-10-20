@@ -83,6 +83,7 @@ def test_whole_call_fallback_diagnostic_is_not_unit_bypass_rate():
 
     m, p = next(tool.localized_inputs())
     owner = api.EvaluationSession(m)
+    p.facts['left'].append({'item': 'lost-marker'})
     actual = owner.check(p, references=object())
     assert actual['exit_code'] not in (0, 1, 2)
     stats = owner.stats()
@@ -129,3 +130,30 @@ def test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh(tmp_
     same_payload(owner.check(p), api.check(m, p))
     monkeypatch.setitem(globals(), '_test_hook_state', 0)
     same_payload(owner.check(p), api.check(m, p))
+
+
+def test_fallback_evaluator_failure_is_not_retried(tmp_path, monkeypatch):
+    from dataclasses import replace
+
+    import test_public_branch_runtime as corpus
+
+    from gnd import api
+    from gnd.constraint_families import FAMILIES
+    from tests.test_incremental_sessions import same_payload
+
+    m, p = corpus._build('P2-039', tmp_path)
+    calls = []
+
+    def evaluator(constraint, snapshot):
+        calls.append(1)
+        if len(calls) == 1:
+            raise RuntimeError('first evaluator failure')
+        return 1, []
+
+    monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+    expected = api.check(m, p)
+    assert expected['exit_code'] == 70 and len(calls) == 1
+    calls.clear()
+    actual = api.EvaluationSession(m).check(p)
+    same_payload(actual, expected)
+    assert len(calls) == 1

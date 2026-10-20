@@ -144,3 +144,24 @@ freeze balanced ABC/BCA/CAB mode routing, complete typed metadata and full fallb
 event accounting before runtime. Approved instrumentation work extends existing
 measurement orchestration, preserving old default arms/history; new C mode is
 explicitly selected by a separate session measurement entry point.
+
+## Error-boundary preparation amendment (2026-10-20)
+
+The global-hook fresh path exposed a second actual falsifier: a hook throwing on
+its first call and succeeding on its second produced normal full exit70 but session
+accepted exit0. The optional reuse setup catch accidentally included invocation of
+the fresh evaluator. The retained RED regression proves this. Setup refusal must
+leave its try/catch BEFORE calling the original evaluator, so evaluator errors are
+never retried or swallowed. Use one private setup-refusal signal; no new public
+exception or service-body change. Existing full fallback owns all errors/branches.
+The initial whole-call diagnostic fixture also had a false premise: references on
+a non-reference model are ignored by the ordinary API, so that alone does not force
+admission failure. Add actual lost-marker rejection before claiming the0unit-lookup
+control. Corrected diagnostic regression passes; metadata states its exact reason.
+
+Measurement guard: capture source/fixture identities BEFORE work, compare at end,
+refuse evidence if files changed. An early exploratory run begun before this repair
+is not final-source acceptance and must not be relabeled. Final measurements rerun
+on stable reviewed bytes. Complete A/B public parity and B/C same-route calculation
+parity are distinct claims; unreceipted A legitimately executes extra pre-state
+calculations. The normal receipt authority contract remains separately tested.

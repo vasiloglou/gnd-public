@@ -54,9 +54,8 @@ def test_observation_busy_closed_and_noop_ownership():
     assert fingerprint(observed.model_dump()) == fingerprint(p.model_dump())
     observed.facts['left'].clear()
     assert p.facts['left']
-    with owner._state.transaction(m):
-        with pytest.raises(ValueError, match='active|busy'):
-            owner.observe(p, {})
+    with owner._state.transaction(m), pytest.raises(ValueError, match='active|busy'):
+        owner.observe(p, {})
     owner.close()
     with pytest.raises(ValueError, match='closed'):
         owner.observe(p, {'unknown': 'bad'})
@@ -121,3 +120,95 @@ def test_feedback_count_overflow_and_empty_are_distinct(monkeypatch):
     rows = {row['fact_type']: row for row in result['rows']}
     assert rows['left_copy']['computed_count'] == 0
     assert rows['left_copy']['computed_status'] == 'available'
+
+
+def test_asserted_overflow_is_explicit(monkeypatch):
+    from gnd import evaluation_feedback as feedback
+
+    m, p = next(tool.localized_inputs())
+    monkeypatch.setattr(feedback, 'MAX_COUNT', 1)
+    result = feedback.build_feedback(m, p, api.check(m, p), attempt=1)
+    row = next(row for row in result['rows'] if row['fact_type'] == 'left')
+    assert row['asserted_count'] is None
+    assert row['asserted_status'] == 'overflow'
+
+
+def test_failed_feedback_construction_keeps_attempt_and_generation(monkeypatch):
+    from gnd import evaluation_feedback as feedback
+
+    m, p = next(tool.localized_inputs())
+    owner = api.EvaluationSession(m)
+    owner.check(p)
+    generation = owner.stats()['generation']
+    original = feedback.build_feedback
+
+    def fail(*args, **kwargs):
+        raise RuntimeError('injected feedback construction failure')
+
+    with monkeypatch.context() as patch:
+        patch.setattr(feedback, 'build_feedback', fail)
+        with pytest.raises(RuntimeError):
+            owner.check_with_feedback(p, attempt=1)
+    assert owner.stats()['generation'] == generation
+    payload, result = owner.check_with_feedback(p, attempt=1)
+    assert result == original(m, p, payload, attempt=1)
+
+
+def test_error_feedback_not_evaluated_and_old_reader_refuses():
+    from gnd.exp.session_eval import AttemptFeedback
+
+    m, p = next(tool.localized_inputs())
+    p.facts['left'].append({'item': 'invalid marker'})
+    owner = api.EvaluationSession(m)
+    payload, feedback = owner.check_with_feedback(p, attempt=1)
+    assert payload['exit_code'] not in (0, 1, 2)
+    assert owner.stats()['generation'] == 0
+    assert all(row['computed_status'] == 'not-evaluated' for row in feedback['rows'])
+    assert all(row['asserted_count'] is None for row in feedback['rows'])
+    with pytest.raises(ValueError):
+        AttemptFeedback.model_validate(feedback)
+
+
+def test_multibyte_metadata_truncation_and_closed_byte_reader():
+    from copy import deepcopy
+
+    from gnd.evaluation_feedback import SessionFeedback, build_feedback
+    from gnd.model import Model
+    from gnd.population import load_population_bytes
+
+    original, _ = next(tool.localized_inputs())
+    doc = original.model_dump()
+    base = deepcopy(doc['fact_types'][0])
+    names = ['計' * 230 + str(i) for i in range(200)]
+    doc['fact_types'] = [{**deepcopy(base), 'id': name} for name in names]
+    m = Model.model_validate(doc)
+    data = json.loads((tool.FIXTURE / 'initial.pop.json').read_text())
+    data['population']['covers'] = names
+    data['facts'] = {name: [] for name in names}
+    p = load_population_bytes(wire(data), model=m, source='fixture:bounded-feedback.json')
+    result = build_feedback(m, p, {'exit_code': 0, 'counts': {}}, attempt=1)
+    assert 0 < len(result['rows']) < 128
+    assert result['omitted_entries'] + len(result['rows']) == 200
+    assert result['truncated']
+    assert len(wire(result)) + 1 <= 16384
+    oversized = {**result, 'rows': [result['rows'][0]] * 128}
+    with pytest.raises(ValueError, match='byte limit'):
+        SessionFeedback.model_validate_json(wire(oversized))
+
+
+def test_current_unavailable_counts_are_not_empty():
+    from gnd.evaluation_feedback import build_feedback
+    from gnd.extensions import structured_extension_view
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    root = tool.ROOT / 'tests/fixtures/v62-phase3'
+    m = load_model(root / 'models/exact-terms.orm.yaml')
+    p = load_population(root / 'populations/term-input.pop.yaml', model=m)
+    view = structured_extension_view(m, p)
+    assert view.unavailable
+    result = build_feedback(m, p, api.check(m, p), attempt=1)
+    rows = {row['fact_type']: row for row in result['rows']}
+    for name in view.unavailable:
+        assert rows[name]['computed_status'] == 'unavailable'
+        assert rows[name]['computed_count'] is None

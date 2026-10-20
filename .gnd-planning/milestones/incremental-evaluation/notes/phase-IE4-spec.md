@@ -30,7 +30,7 @@ next check computes ordinary current-content invalidation.
 D4b: feedback is a separate closed strict wire, kind evaluation-session-feedback,
 schema_version1. Fields: attempt (strict integer1..1000000), operation check,
 exit_code (existing check codes0/1/2/3/4/70), verdict_counts (fixed pass/fail/warning/unchecked/vacuous keys),
-rows of fact_type (<=256 characters), asserted_count (0..2147483647 or null),
+rows of fact_type (<=256 characters), asserted_count (0..2147483647 or null), asserted_status available/not-evaluated/overflow,
 computed_count (same), computed_status available/unavailable/not-evaluated/overflow,
 omitted_entries and truncated. Counts never include values, witnesses, paths,
 messages, handles or Python object identities. Derived counts come from existing
@@ -112,3 +112,16 @@ byte cap remain separate checks. ~180–260 helper lines, ~40 facade lines and
 200–350 direct test lines, plus narrow docs/skill metadata. No runtime begun.
 
 Exact focused compatibility selection: tests/test_public_session_wire_guards.py, tests/test_public_session_version_relabel.py, tests/test_exp_session_evidence_compat.py, tests/test_exp_feedback_derivation.py, tests/test_rf8_sessions.py, tests/test_public_retained_session_results.py, tests/test_packaged_skills.py. All are local credential-free controls.
+
+## Corpus-driven amendment (2026-10-20)
+
+Expanded corpus observed two failures before repair: asserted overflow lacked its
+explicit status; a valid but indeterminate exact-term check reported all computed
+counts not-evaluated instead of preserving actual unavailable state. Add explicit
+asserted_status. Valid checks with exits0/1/2/4 may calculate diagnostic structured
+counts; exit4 still discards cache candidates under the unchanged session policy.
+Input/error exits3/70, references and unsupported calculations remain not-evaluated.
+This adds no acceptance or truth claim and does not alter the check report. Full
+feedback construction failure must leave generation/attempt unchanged. Byte-bound
+reader rejects oversized encoded input before parsing; semantic model validators
+also enforce shape/coherence and canonical output bound. No wire was published.

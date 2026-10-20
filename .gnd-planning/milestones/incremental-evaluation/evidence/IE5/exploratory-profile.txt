@@ -1,0 +1,38 @@
+Machine/user paths sanitized only.
+full 0.221156 2
+cold 1.129449 2
+warm 0.592596 2
+         4400471 function calls (3539947 primitive calls) in 1.517 seconds
+
+   Ordered by: cumulative time
+   List reduced from 664 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    1.555    1.555 api.py:1022(check)
+        1    0.000    0.000    1.555    1.555 api.py:1004(_call)
+        1    0.000    0.000    1.541    1.541 api.py:1027(run)
+        1    0.000    0.000    1.541    1.541 api.py:638(check)
+      2/1    0.000    0.000    1.541    1.541 model_index.py:54(run_scoped)
+        1    0.000    0.000    1.541    1.541 checking_service.py:555(_run_check)
+        1    0.000    0.000    1.515    1.515 checking_service.py:137(_run_check_raw)
+        1    0.000    0.000    1.436    1.436 _core.py:2054(check)
+        1    0.001    0.001    1.436    1.436 _core.py:1778(_check_dispatch)
+        3    0.000    0.000    1.277    0.426 extensions.py:1806(_exact_extension_calculator)
+        3    0.000    0.000    1.276    0.425 extensions.py:1414(prepared)
+        3    0.004    0.001    1.276    0.425 extensions.py:1086(_incremental_components)
+      195    0.007    0.000    1.236    0.006 extensions.py:1072(_reuse_extension_unit)
+      195    0.008    0.000    1.227    0.006 incremental_state.py:307(reuse)
+      195    0.000    0.000    1.016    0.005 incremental_state.py:138(_policy)
+288405/195    0.280    0.000    1.016    0.005 incremental_state.py:142(walk)
+386880/1755    0.083    0.000    1.015    0.001 incremental_state.py:155(<genexpr>)
+        1    0.000    0.000    1.007    1.007 _core.py:331(check_legacy)
+        1    0.000    0.000    0.564    0.564 correspondence.py:1189(correspond_snapshot)
+        1    0.002    0.002    0.559    0.559 semantic_adapter.py:796(adapt_snapshot_observed)
+        1    0.001    0.001    0.495    0.495 applicability.py:13(applicable_scope_ids)
+        1    0.000    0.000    0.433    0.433 extensions.py:2966(effective_view)
+        1    0.000    0.000    0.433    0.433 extensions.py:2647(_evaluate_derivations_dispatch)
+    99647    0.092    0.000    0.411    0.000 incremental_state.py:53(_measure)
+    99841    0.113    0.000    0.336    0.000 extension_preparation.py:95(fingerprint)
+
+
+{'hits': 520, 'misses': 65, 'bypasses': 0, 'generation': 3, 'entries': 65, 'rows': 995, 'bytes': 11893231}

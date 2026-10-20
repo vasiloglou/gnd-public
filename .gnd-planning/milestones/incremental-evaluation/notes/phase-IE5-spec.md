@@ -1,0 +1,146 @@
+# IE5 — Integrated acceptance, performance and shipped surfaces
+
+Delegated approval (auto=true), 2026-10-20. IE4 accepted in007 / cff2efb.
+Implementation begins after this exact spec/corpus gate is committed.
+Scope approved plan IE5-C1..C3, completion4/6/7, IE-O1/O3/O4/O9/O10/O12–O18,
+all IE-R1..R10 and prior phase boundaries. Owner auto delegation applies.
+
+## Acceptance and implementation sweep
+
+Reuse the existing frozen reporter/course/localized fixtures and normal API
+orchestration. Complete typed payload/exit/ordered witness/origin/extension
+availability/possibility/logical-work and raw branch parity precedes counted work.
+Reporter baseline full-with-receipts remains4878 executed bodies,13 calls exits2;
+incremental+receipts must be strictly lower. Independent left-change has0 right
+bodies/evaluators; no-op0 overall. Existing IE2/IE3 complete calculation oracle
+supplies metadata coverage; move/share projection only if it avoids duplication
+without weakening Bool/int, row/role/codec/lineage/unavailable evidence.
+
+Build a bounded measurement tool using existing driver inputs, context/profiler
+counter owners and canonical JSON. Modes A fresh full, B fresh with receipts,
+C explicit EvaluationSession with receipts. Uninstrumented serial schedule ABC,
+BCA,CAB balances positions, one interpreter/environment, no parallel timing.
+Separate setup/loading and evaluation when available. Separate cold/no-op/dirty
+localized probes and Python allocation peak measurements; retained state projection
+is not RSS. Timings inform; no factor promise or threshold beyond counted gates.
+Record fixture/source/configuration/environment identities, exact counts, measured
+bounds and fallback diagnostics. Long bounded history cannot grow retained state
+with call count. Preserve old IE0 source-bound evidence as historical.
+
+Profile contested bookkeeping overhead before optimizing. Any key optimization
+must retain live helper/configuration/model/options checks, capability ownership,
+bounds, rollback and conservative unsupported fallback. Candidate: prepare a
+normalized policy once per original calculator context, bind it to current state
+transaction capability and reuse only within that context. No process-global
+memo/history, object-identity-only acceptance, second dependency/serializer walk,
+or cache changes solely to improve the benchmark. Add actual RED controls for
+stale/reconfigured/expired/foreign prepared policy before implementation.
+If measurements show no elapsed-time win, report that honestly: counted work and
+semantic parity are the approved gates.
+
+Whole-mode fresh fallback diagnostics live outside semantic reports/feedback.
+Distinguish call eligibility refusals from unit hits/misses/bypasses, label exact
+denominators, and do not interpret0 observed unit bypasses as whole-mode eligibility.
+Use a bounded fixed reason vocabulary, no facts/paths/handles. Exceeding capacity
+computes fresh under existing limits; preserve default API/CLI/exp behavior.
+
+## Focused gates / surface closure
+
+Direct: all incremental state/extension/session/observation/replay regressions and
+new measurement/prepared-key controls; current TP3 receipts and public signatures.
+Compatibility: current public CLI/batch/API controls, wire/version/feedback/profile
+controls selected in IE4; source/layer/query RF1/RF4/RF6/RF7/RF9 selected by actual
+changed definitions. Exact source-successor inventory and authenticated query
+successors only when changed, no blanket waiver, zero layer allowance.
+
+Bounded build/install: build one wheel into a temporary artifact directory, record
+wheel SHA256 and install into a fresh temporary environment with local/offline
+available dependencies. Record exact interpreter and resolved gnd module path;
+run only new opt-in public names/signatures and docs host-loop smoke from outside
+the checkout. Never accept source shadowing as installed proof. Build a wheel,
+not a production publish, complete historical/native lane or certification.
+
+Docs at docs/reference/python-api.md, docs/reference/capabilities.md,
+docs/guides/data-and-transitions.md, docs/agents/dev-session.md and
+ docs/release-notes.md explain eligibility, validation/mutation, receipt integrity,
+lifetime/reset/concurrency, observations/attempt order, limits/fallback counters
+and measured costs. Include runnable packaged-course example and mechanism
+Mermaid diagram showing dirty closure/SCC replacement and unchanged reuse.
+Measured file/link skill census covers actually changed packaged scope; source
+owned development skill twins remain unchanged. No manual discovery links.
+
+One authorized independent CLI xhigh diff reader plus at most one bounded
+confirmation. Reproduce findings RED before fixing, refactor review and full
+criterion audit; no third review. Four owner-selected local close readers remain
+a separate final gate. Broad historical/native/provider lanes remain explicitly
+unselected cadence. No paid panel, release, merge or certification.
+
+## Boundaries and residual ownership
+
+New547 workload absent: downstream acceptance stays reporter-owned; no date or
+cross-machine extrapolation. No serialized cache or row-delta recursion promise.
+Full snapshot admission remains O(population). Retained-size projection differs
+from RSS; unmeasurable inputs are fresh. Persistent sessions keep their old wires.
+Prior source-based assurance is not recertified by tests or installation. Close
+must reconcile all eighteen prior residual rows and new findings with named owners.
+
+## Corpus / budget
+
+Before new runtime key/diagnostic predicates: direct tests observed RED, exact spec
+hash and corpus committed. Measurement-only changes may use explicit stories and
+negative controls as IE0; freeze balanced schedule/parity/error discrimination.
+Tool ~180–300lines; optional bounded policy optimization ~40–80lines only after
+profile/reproductions, fixed diagnostics ~20–50lines; docs proportional. Record
+measured deltas rather than claiming plan estimates as actuals.
+
+## Profile-driven proposed key contract
+
+Exploratory same-interpreter reporter check measured full0.221156s,
+cold1.129449s and warm0.592596s (single observations, not a speedup estimate).
+Warm cProfile:4,400,471 calls,1.517s instrumented;195 _policy calls consume1.016s
+of1.555s cumulative public time. Actual195 unit lookups repeat the same bounded
+policy normalization. Retained65 entries/995rows/11,893,231 projected bytes.
+These are preparation observations on IE4 bytes, not final acceptance.
+
+Prepare a private normalized policy once per original extension-calculation
+context, using the existing bounded _policy walk. Retain a bounded live-function
+code guard collected by that SAME walk, checked at every reuse. Bind the prepared
+record to the exact active owner capability; expired/foreign/unsupported prepared
+keys must compute fresh. Store only the ordinary normalized immutable signature
+in entries, never the authority wrapper. No global lifetime or second serializer.
+Guard code changes between preparation and a unit lookup. Model/operations/options
+and dedicated current configuration keys remain their existing boundary checks;
+this does not authorize concurrent edits during an evaluation. Entry retained
+accounting remains conservative and unchanged. Initial optimization touches state
+and extension context only; avoid extra constraint refactor without measurements.
+
+Diagnostics: record bounded reason buckets at actual whole-call/extension/constraint
+fallback seams; unknown reasons refuse diagnostic classification, not evaluation.
+Clearly state call/lookup/event denominators. Diagnostic counters cannot change
+report/feedback payloads or establish an unsupported mode eligible.
+
+A new negative-control preparation also reproduced stale acceptance for an
+unknown callable family override reading an unclassified mutable global. Defaults
+and closures cannot prove arbitrary external-hook purity. IE5 adds conservative
+fresh eligibility for registry hooks resolved outside trusted GND defining homes,
+in both callable and string forms; do not inspect/traverse arbitrary function
+globals or treat a module-name hint as a security attestation. This is ordinary
+runtime eligibility, not a malicious Python-code sandbox. Built-in families keep
+the one existing dispatch and bounded configuration keys. Add direct global-state
+regression and retain the RED output; IE5's independent diff review includes this
+narrow correction to IE3 eligibility. Final closure must disclose the refuted
+premise; IE3's historical gate does not establish this unknown-hook case.
+
+Prepared-policy mutable leaf guards are captured by the SAME bounded normalization
+walk. Their combined central fingerprint is checked at each unit lookup, alongside
+live function-code guards. Changes, refused keys or expired/foreign capability
+compute fresh, never use an old normalized key. No caller-supplied prepared hint
+can suppress admission. Unclassified callable-hook lookup uses actual trusted
+namespace identity, not a claimed module-name string; both routes have RED cases.
+
+Exact new corpus: tests/test_incremental_prepared_policy.py (8RED cases) and
+ tests/test_incremental_session_measurement.py (2RED cases). Negative controls
+freeze balanced ABC/BCA/CAB mode routing, complete typed metadata and full fallback
+event accounting before runtime. Approved instrumentation work extends existing
+measurement orchestration, preserving old default arms/history; new C mode is
+explicitly selected by a separate session measurement entry point.

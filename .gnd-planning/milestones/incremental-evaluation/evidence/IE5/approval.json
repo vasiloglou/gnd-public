@@ -1,0 +1,30 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "authorization": "002 named owner execution delegation and explicit CLI phase-review selection",
+  "scope": "IE5 integrated measurement, bounded policy normalization/diagnostics, unknown-hook conservative fallback, docs and bounded installed public surface",
+  "decisions": [
+    "counted/parity gates unchanged;4878 denominator frozen",
+    "timing informational balancedserialABC/BCA/CAB; shared host not isolated",
+    "same bounded policy walk, live code/mutable configuration guards and exact transaction capability",
+    "unknown hook global dependencies fresh; no arbitrary global traversal",
+    "separate explicit session measurement; baseline default arms preserved",
+    "wheel/install smoke only; no native/production publish/certification/merge"
+  ],
+  "budget": "same cache and wire bounds; one independent CLI reader plus at most one confirmation; no third review",
+  "implementability": "existing profiler measured dominant195 repeated policy walks; central bounded policy/fingerprint/input machinery inspected;10new tests observed RED before runtime",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE5-spec.md",
+      "sha256": "4236547c2ec8f38d0ec3efb39fb3577368321c9f8366220a4dd4bbaf46123aab"
+    },
+    {
+      "path": "tests/test_incremental_prepared_policy.py",
+      "sha256": "03dd421b4ab12f3aff0f37c89ace3f9357749190464b87ec2d0cd99f781b3831"
+    },
+    {
+      "path": "tests/test_incremental_session_measurement.py",
+      "sha256": "bc3d38f96be14dd7e4400e8ad6b4bee951f9c9aa354e09ae727ba19d4a7201f6"
+    }
+  ]
+}

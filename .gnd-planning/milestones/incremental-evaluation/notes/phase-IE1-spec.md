@@ -235,3 +235,31 @@ Implementability: fresh independent scope can seed nested API lookups once;
 reverse dependency traversal uses existing graph extraction; trusted gnd dataclasses
 and builtin containers suffice for retained component/finding outputs. All
 other outputs may safely miss. Zero default evaluators are skipped in IE1.
+
+## Implementation findings / corpus correction (a1)
+
+The dependency parser's document shape requires a list of fact types; passing
+a tuple yielded an empty graph. The live C1–C4 corpus caught it and the graph
+projection now uses the required list, without copying or rewriting the parser.
+
+C6 initially tried assigning `m.operations=[]` after construction, but Model's
+outer fields are frozen. That fixture premise was invalid, not an invalidation
+defect. Delegated amendment (auto=true), 2026-10-19: construct the model with an
+operations list before entering the outer scope, then mutate that nested list.
+This is the actual CR-01 operations-only case; expected outcome stays unchanged.
+The initial RED and subsequent fixture/runtime failures are retained as outcomes,
+not claimed passing corpus evidence. No Model immutability rule is relaxed.
+
+Entry accounting includes a conservative 1,024-byte per-entry metadata allowance
+for the record and both index slots, in addition to measured owned key/signature/
+value/branch graphs. Global function/code/type objects are borrowed 8-byte handles,
+never traversed into globals. This is a cache accounting bound, not process RSS.
+Unmeasurable/unsupported metadata safely bypasses reuse and cannot change a
+completed evaluator result. Exact cap-edge behavior is tested on this accounting.
+
+
+### Review repairs (2026-10-20, existing auto delegation)
+
+Five independent-review reproductions were observed RED before repairs. Transaction authority now uses a unique live capability scoped to its thread and task; copied expired contexts cannot enter later generations, and expired independent query scopes drop their snapshots. Options and backing container storage are charged to the same byte bound as entries; close releases bindings. Shared policy tuple DAGs refuse reuse before expansion or hashing. Dependency classifications must be complete before diagnostic invalidation selection. These tighten the approved bounds without activating runtime skipping. The retained CLI review and RED evidence identify the exact findings and limitations.
+
+Confirmation repairs (2026-10-20): measure the detached retained clone, charge changed bindings together with committed entries before yielding, and refuse opaque/nonmapping derivation rules. Source walkers iterate dictionary children lazily rather than allocate an unbounded flattened tuple. Three confirmation regressions observed RED then green. Round budget exhausted: three of three confirmation findings concern first-repair bytes (ratio 1.0); no third review under convergence rule. Actual direct gates, not a fabricated reviewer approval, support disposition.

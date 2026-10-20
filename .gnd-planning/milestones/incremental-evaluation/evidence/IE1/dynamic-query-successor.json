@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json",
+  "predecessor_sha256": "8f85d477419ca212656ee520b424fabea456c8b894bcc975fc865aae772fb5ca",
+  "reason": "IE1 bounded reuse state syntax: cache lookups and typed dataclass clone/accounting; no new raw model query allowance. Direct state corpus and live syntax inventory control these sites.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/incremental_state.py",
+      "<module>",
+      "ContextVar[tuple | None]",
+      1
+    ],
+    [
+      "src/gnd/incremental_state.py",
+      "_children",
+      "getattr(value, f.name)",
+      1
+    ],
+    [
+      "src/gnd/incremental_state.py",
+      "affected_heads",
+      "reverse.get(pending.pop(), ())",
+      1
+    ],
+    [
+      "src/gnd/incremental_state.py",
+      "clone",
+      "getattr(item, f.name)",
+      1
+    ],
+    [
+      "src/gnd/incremental_state.py",
+      "clone",
+      "memo[id(item)]",
+      1
+    ],
+    [
+      "src/gnd/incremental_state.py",
+      "reuse",
+      "self._candidate.get(key, self._prior.get(key))",
+      1
+    ],
+    [
+      "src/gnd/incremental_state.py",
+      "reuse",
+      "self._prior.get(key)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6178,
+  "result_occurrences": 7748
+}

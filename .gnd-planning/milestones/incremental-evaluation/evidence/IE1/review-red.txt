@@ -1,0 +1,68 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______________ test_expired_context_cannot_join_later_transaction ______________
+
+    def test_expired_context_cannot_join_later_transaction():
+        m = model()
+        state = ReuseState(m)
+        with state.transaction(m):
+            saved = copy_context()
+>       with pytest.raises(ReuseRefused, match='not-active'):
+E       Failed: DID NOT RAISE ReuseRefused
+
+tests/test_incremental_state_review.py:18: Failed
+_________ test_options_cannot_escape_budget_and_close_releases_binding _________
+
+    def test_options_cannot_escape_budget_and_close_releases_binding():
+        m = model()
+        state = ReuseState(m, max_bytes=64)
+        with state.transaction(m, options=('x' * 100_000,)):
+            pass
+>       assert state._binding is None
+E       AssertionError: assert ('ee12265c2c9d49edf7c29ee2b3fbb16a7776b643e00a74a6142bc1bfceea68db', ('tuple', (('str', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'),))) is None
+E        +  where ('ee12265c2c9d49edf7c29ee2b3fbb16a7776b643e00a74a6142bc1bfceea68db', ('tuple', (('str', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'),))) = <gnd.incremental_state.ReuseState object at 0x107e13c10>._binding
+
+tests/test_incremental_state_review.py:30: AssertionError
+_______________ test_proxy_accounts_for_owned_backing_dictionary _______________
+
+    def test_proxy_accounts_for_owned_backing_dictionary():
+        value = MappingProxyType({i: i for i in range(10_000)})
+        shallow = sys.getsizeof(value) + sum(sys.getsizeof(i) for i in value)
+        cap = shallow + sys.getsizeof(dict(value)) // 2
+>       assert state_module._measure(value, cap) is None
+E       assert 280040 is None
+E        +  where 280040 = <function _measure at 0x107c2c5e0>(mappingproxy({0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10, 11: 11, 12: 12, 13: 13, 14: 14, 15: ...990: 9990, 9991: 9991, 9992: 9992, 9993: 9993, 9994: 9994, 9995: 9995, 9996: 9996, 9997: 9997, 9998: 9998, 9999: 9999}), 427536)
+E        +    where <function _measure at 0x107c2c5e0> = state_module._measure
+
+tests/test_incremental_state_review.py:39: AssertionError
+_________________ test_shared_policy_has_cumulative_work_bound _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107e05750>
+
+    def test_shared_policy_has_cumulative_work_bound(monkeypatch):
+        monkeypatch.setattr(state_module, 'MAX_NODES', 1000)
+        value = (0,)
+        for _ in range(3):
+            value = (value,) * 30
+>       with pytest.raises(state_module._Unsupported):
+E       Failed: DID NOT RAISE _Unsupported
+
+tests/test_incremental_state_review.py:47: Failed
+____________ test_malformed_dependency_body_refuses_clean_selection ____________
+
+    def test_malformed_dependency_body_refuses_clean_selection():
+        m = model()
+        doc = m.model_dump()
+        doc['fact_types'][2]['derivation_rule']['body'] = {'fact_type': 'left'}
+        malformed = type(m).model_validate(doc)
+>       with pytest.raises(ReuseRefused, match='incomplete-dependencies'):
+E       Failed: DID NOT RAISE ReuseRefused
+
+tests/test_incremental_state_review.py:56: Failed
+=========================== short test summary info ============================
+FAILED tests/test_incremental_state_review.py::test_expired_context_cannot_join_later_transaction
+FAILED tests/test_incremental_state_review.py::test_options_cannot_escape_budget_and_close_releases_binding
+FAILED tests/test_incremental_state_review.py::test_proxy_accounts_for_owned_backing_dictionary
+FAILED tests/test_incremental_state_review.py::test_shared_policy_has_cumulative_work_bound
+FAILED tests/test_incremental_state_review.py::test_malformed_dependency_body_refuses_clean_selection
+5 failed in 0.12s

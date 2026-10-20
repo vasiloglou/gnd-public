@@ -56,7 +56,10 @@ def query_policy(predecessor):
 
 
 #: Later authenticated dynamic-query deltas, outside the PyRel application phases.
-DYNAMIC_SUCCESSORS = [ROOT / '.gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json']
+DYNAMIC_SUCCESSORS = [
+    ROOT / '.gnd-planning/maintenance/2026-10-17-main-ci-repair/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE1/dynamic-query-successor.json',
+]
 
 
 def dynamic_rows(rows, predecessor):

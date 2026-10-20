@@ -38,6 +38,17 @@ _SCOPE: ContextVar[dict[int, tuple[Model, ModelIndex]] | None] = ContextVar(
 _SCOPE_LIMIT = 8
 
 
+class _IndependentScope(dict):
+    live = True
+
+    def get(self, key, default=None):
+        return super().get(key, default) if self.live else default
+
+    def __setitem__(self, key, value):
+        if self.live:
+            super().__setitem__(key, value)
+
+
 def scoped(function):
     """Run ``function`` inside an index scope: the decorator public entry points use."""
     @wraps(function)
@@ -57,6 +68,27 @@ def index_scope() -> Iterator[None]:
     try:
         yield
     finally:
+        _SCOPE.reset(token)
+
+
+@contextmanager
+def independent_index_scope(model: Model) -> Iterator[ModelIndex | None]:
+    """Own a fresh call scope even under a caller-held outer index scope.
+
+    A cache-key failure yields None; the public evaluator still owns validation
+    and error mapping. Nested ordinary entry points join this seeded scope.
+    """
+    scope = _IndependentScope()
+    token = _SCOPE.set(scope)
+    try:
+        try:
+            index = ModelIndex.for_model(model)
+        except Exception:  # noqa: BLE001 -- reuse must not replace public admission/errors
+            index = None
+        yield index
+    finally:
+        scope.live = False
+        scope.clear()
         _SCOPE.reset(token)
 
 

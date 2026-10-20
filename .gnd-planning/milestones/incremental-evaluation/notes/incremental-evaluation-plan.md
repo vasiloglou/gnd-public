@@ -436,3 +436,73 @@ merge is inferred. Historical TP3 records remain unchanged;006's in-place reason
 correction is explicitly disclosed and owned by009, not silently treated as
 original record bytes. See notes/close-question-sweep.md for all18 inherited rows,
 IE-Q1..Q10 and D1–D9 dispositions. No successor execution is selected.
+
+
+## IE6 reopening amendment, 2026-10-20 (proposed for delegated gate)
+
+The owner explicitly asked to add a phase and implement Astra's performance
+recommendations in this named milestone. This reopens incremental-evaluation
+under the existing002 auto delegation and review selections; it does not reopen
+TP0–TP3 or rewrite009's historical close. Earlier completion/status annotations
+remain historical. IE-Q1 is now assigned to IE6 for the bounded work below.
+The effective DAG adds **IE5 → IE6 → renewed close** (seven implementation phases).
+The existing topic branch and PR33 remain the contribution home.
+
+### IE6 — Reduce policy accounting and cache lookup overhead
+
+Source: owner-requested Astra performance review of d0ffd9a; retained review
+summary evidence/IE6/astra-performance-review.md. Instrumented profiles identify
+repeated full-policy size walks, fingerprint allocation, signature hashing and
+per-constraint policy construction. Diagnostic timings overlap and predict no
+wall gain. A process-only builtin fast path improved a three-sample course median
+by3.28%;37 focused tests passed, not shipped or general acceptance.
+
+- **IE6-C1:** preserve full payload/exit/branch and ordered complete-calculation
+  parity, frozen reporter denominator4878 and strict lower session body count.
+  Existing current-content/marker/options/ownership/rollback/caps remain binding.
+- **IE6-C2:** remove repeated traversal/hashing of normalized immutable policy
+  descriptions using bounded verified metadata; keep exact equality, live code
+  and mutable configuration checks on every reuse boundary. Charge all retained
+  policy content conservatively and measure actual private clones. No identity-only
+  admission, digest-only equality, weakened resource limits or fallback semantics.
+- **IE6-C3:** reduce ordinary builtin accounting overhead; investigate per-constraint
+  and extension setup only when measured and live mutation controls remain intact.
+  Structural visit counters must discriminate pre-fix from optimized behavior.
+- **IE6-C4:** fresh serialized current-byte measurements on reporter/course/localized
+  and same-host balanced pre-IE6/session versus final/session runs. Gate correctness
+  and deterministic bookkeeping reduction; elapsed improvements are measured and
+  reported without claiming universal speedup. Do not change D7 after results.
+- **IE6-C5:** focused state/prepared-policy/extension/session/observation/receipt/
+  correspondence and RF layer/query/source controls, bounded fresh wheel smoke,
+  updated performance docs, one independent adversarial diff review, refactoring
+  disposition and011 phase record. Renewed close uses four local independent readers.
+
+Inherited residuals: projected cache footprint is not RSS; full admission,
+adaptation, projection and compatibility evidence remain fresh; unknown external,
+reference/guarded/anchored/opaque cases stay conservative; new547 input remains
+absent/reporter-owned; no delivery date, broad/native/provider acceptance,
+certification, default activation, publication or merge. New artifact hashes and
+selected tests supersede only affected current-byte claims, never historical gates.
+
+Amendment obligations: IE-R1..R10 and§§5–7 remain effective. IE6 owns runtime
+incremental_state.py and optionally correspondence.py/extensions.py, their direct
+controls, exact source-scan successors, docs/release notes and installed candidate.
+No packaged skill, feedback wire, public signature or layer assignment change is
+planned. A new runtime home would require explicit map/source-scan closure first.
+§9 IE6 row: frozen complete parity, lower bookkeeping visits and bounded accounting;
+focused direct/affected tests plus selected installation/docs; broad lanes remain
+explicit-owner cadence. §10 IE-Q1: bounded optimization now selected, any remaining
+costs retain framework-maintainer ownership. The public workload/date question and
+all other009 carryovers remain unchanged.
+
+Implementability: immutable normalized keys can have verified bounded size/hash
+metadata while mutable configuration still receives live checks; conservative
+accounting may overcount shared storage but cannot undercount it. Product data
+and unit outputs remain detached. Baseline source can be archived without importing
+or modifying it, and timed in separate serial processes against the same fixtures
+and interpreter. There is no mandatory wall-time factor promised before measurement.
+
+Review budget: one initial four-reader amendment review, at most one confirmation
+of reproduced blocking issues, using the existing convergence rule by reference.
+Phase review uses the previously authorized read-only Codex CLI; renewed close
+uses the selected four local reviewers. Optional phase-spec panel omitted.

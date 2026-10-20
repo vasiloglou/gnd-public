@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-20",
+  "ruling": "delegated approval (auto=true)",
+  "authorization": "002 named milestone auto plus current owner request to add a phase and implement it; explicit CLI phase-review transfer remains effective",
+  "scope": "IE6 reopening amendment and concrete spec, before implementation",
+  "instrument": "prose with pre-code deterministic RED tests; existing validation predicates unchanged; four local independent amendment readers",
+  "decisions": {
+    "D6.1": "conservative metadata, no relaxed quotas",
+    "D6.2": "prose exception for behavior-preserving optimization; tests first",
+    "D6.3": "parity/work hard gates, measured elapsed no promised factor",
+    "D6.4": "four readers/CLI, bounded review, no paid or broad lanes",
+    "D6.5": "same PR33, no merge"
+  },
+  "subjects": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/incremental-evaluation-plan.md",
+      "sha256": "cd8ee3c10dee17d516b7670c125dbdb6993ce9dfbfd6db556e64be57e95ea29c"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE6-spec.md",
+      "sha256": "12f4fab0afa2306bb3798cb478eeab74f77ce8e1ddd1c962de4682dfb6eb2209"
+    },
+    {
+      "path": "tests/test_incremental_performance.py",
+      "sha256": "08ad74e1a550e50ae7514dc71a7c15e1a6f829fd79b846d23e2c0a4647ad05e2"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/plan-correctness.md",
+      "sha256": "18a9319a7de83ed7868b7fefe63b07df180714c297ff6ae134138b9174f8ccf8"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/plan-measurement.md",
+      "sha256": "5cf81e59e12cdb05712a1aa38182df93f4acf9fbc97f0fb70ea80f7eaf077280"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/plan-protocol.md",
+      "sha256": "e2e3c49705fc3ff788a4be948835162b50195a683150ed81046f443580e14951"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/plan-structure.md",
+      "sha256": "6b2a9a38d341fba6bfb0904da450fe51f093f23d8fbd353196d2719b937b6ae4"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/corpus-red.txt",
+      "sha256": "af04998a7ab7f56f0ad7dff6483c39d22377daf2a43dc78a9eea64cec92eaa6f"
+    },
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/evidence/IE6/astra-performance-review.md",
+      "sha256": "bb136b4358987d4f1dccd82394cc408d3e11817dfa8cceb35067c70432e9f815"
+    }
+  ]
+}

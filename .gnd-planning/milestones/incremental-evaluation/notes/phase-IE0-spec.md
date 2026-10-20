@@ -333,3 +333,27 @@ inputs and current dirty paths. Previous exploratory evidence is invalidated
 and must be regenerated serially on final tool/test bytes. The first reader is
 retained; one bounded confirmation checks reproduced blocking repairs on stable
 bytes, with no speculative third round. No paid panel or broad suite selected.
+
+## Refuted premise / delegated baseline amendment (a2), 2026-10-19
+
+The strict final comparison refused course A/B branch parity. Course B explicitly
+minted a public check receipt; A/C previously began at transition, which runs
+only an internal root check. B therefore emitted seven additional public
+check/assurance branch IDs, while payloads and semantic-envelope values matched.
+This is an unmatched experiment, not evidence of a production receipt defect.
+The refused run is retained under evidence/IE0/refuted-course-comparison/.
+
+Delegated approval (auto=true) under the same owner invocation: give A/C the
+same explicit public precheck, followed by a transition without reuse. B mints
+that precheck receipt and passes it to the transition. Each arm now has six
+public API calls grouped into three complete course walk results. Count actual
+public check/mint/transition calls by code event, rather than interpreting the
+three walk-result count as an API-call count. Localized has six checks; reporter
+remains exactly 13 API calls. Course checker totals become fresh measured
+values; no course total had been a counted performance target. Reporter target
+and synthetic zero-work target are unchanged. This amendment precedes all IE1
+optimization. Do not filter unexpected branch IDs to manufacture parity.
+
+New live driver-spy test was observed red before this fix. Direct counter and
+semantic regression gates, followed by serial full evidence regeneration, are
+required. No third reviewer round is selected; new bytes have no new opinion.

@@ -125,3 +125,24 @@ This adds no acceptance or truth claim and does not alter the check report. Full
 feedback construction failure must leave generation/attempt unchanged. Byte-bound
 reader rejects oversized encoded input before parsing; semantic model validators
 also enforce shape/coherence and canonical output bound. No wire was published.
+
+## Independent-review repair contract (2026-10-20)
+
+Three findings reproduced in five RED variants: a cancellation immediately after
+feedback computation consumed an unreturned attempt; defaulted discriminators
+invented missing tags; duplicate version keys collapsed before strict validation.
+Require explicit kind/version/operation and use existing input_policy.loads for
+finite/depth/duplicate-key policy before schema parsing, under the16KiB byte cap.
+
+Publish cache entries, binding/size, generation and bounded lifetime attempt
+sequence through ONE private committed record/reference in ReuseState. Validate
+the optional next sequence under the existing owner lock. A completed feedback
+error may publish only the new sequence while retaining old cache generation;
+exceptions before that publication point publish neither. Remove the separate
+facade counter. Reset/close replace the committed cache record while preserving
+lifetime generation/sequence. Keep private compatibility read properties for the
+existing bookkeeping fields. Sequence is one bounded control-plane integer, not
+retained cache content/history. The state home imports no API/exp modules.
+This also removes the prior multi-assignment cache publication window. Add the
+existing state isolation/caps/rollback regressions to IE4's final gate and bounded
+confirmation scope. No third review. No other milestone scope changes.

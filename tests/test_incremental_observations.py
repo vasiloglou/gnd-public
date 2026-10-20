@@ -212,3 +212,102 @@ def test_current_unavailable_counts_are_not_empty():
     for name in view.unavailable:
         assert rows[name]['computed_status'] == 'unavailable'
         assert rows[name]['computed_count'] is None
+
+
+def test_noop_observation_reuses_all_work():
+    m, p = next(tool.localized_inputs())
+    owner = api.EvaluationSession(m)
+    with tool.count_work() as counts:
+        owner.check_with_feedback(p, attempt=1)
+        observed = owner.observe(p, {'left': list(p.facts['left'])})
+        before = dict(counts)
+        owner.check_with_feedback(observed, attempt=2)
+        assert counts['derivation_body_evaluations'] == before['derivation_body_evaluations']
+        assert counts['constraint_evaluations'] == before['constraint_evaluations']
+
+
+def test_two_attempt_public_course_host_loop_matches_full():
+    from gnd.branches import capture_branches
+    from gnd.evaluation_feedback import build_feedback
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    m = load_model(tool.previous.COURSE / 'model.orm.json')
+    pre = load_population(tool.previous.COURSE / 'state.pop.json', model=m)
+    owner = api.EvaluationSession(m)
+    steps = tool.previous._course_steps('attempt-3.steps.json')
+    old_bytes = None
+    for attempt in (1, 2):
+        with capture_branches() as expected_branches:
+            expected = api.check(m, pre)
+            expected_feedback = build_feedback(m, pre, expected, attempt=attempt)
+        with capture_branches() as actual_branches:
+            payload, feedback = owner.check_with_feedback(pre, attempt=attempt)
+        same_payload(payload, expected)
+        assert feedback == expected_feedback
+        assert actual_branches == expected_branches
+        with capture_branches() as expected_branches:
+            expected = api.transition(m, pre, steps)
+        with capture_branches() as actual_branches:
+            actual = owner.transition(pre, steps)
+        same_payload(actual, expected)
+        assert actual_branches == expected_branches
+        if attempt == 1:
+            old_bytes = wire(feedback)
+            first = feedback
+            pre = owner.observe(pre, {'passed': [*pre.facts['passed'],
+                                                {'student': 'maya', 'course': 'STAT210'}]})
+    assert wire(first) == old_bytes
+
+
+@pytest.mark.parametrize('tag', ['kind', 'schema_version', 'operation'])
+def test_feedback_reader_requires_explicit_discriminators(tag):
+    from gnd.evaluation_feedback import SessionFeedback
+
+    m, p = next(tool.localized_inputs())
+    _, feedback = api.EvaluationSession(m).check_with_feedback(p, attempt=1)
+    feedback.pop(tag)
+    with pytest.raises(ValueError):
+        SessionFeedback.model_validate_json(wire(feedback))
+
+
+def test_feedback_reader_rejects_duplicate_version_before_collapse():
+    from gnd.evaluation_feedback import SessionFeedback
+
+    m, p = next(tool.localized_inputs())
+    _, feedback = api.EvaluationSession(m).check_with_feedback(p, attempt=1)
+    encoded = wire(feedback).replace(b'"schema_version":1',
+                                    b'"schema_version":2,"schema_version":1')
+    with pytest.raises(ValueError, match='duplicate'):
+        SessionFeedback.model_validate_json(encoded)
+
+
+def test_cancellation_after_feedback_computation_does_not_consume_attempt():
+    import inspect
+    import sys
+
+    m, p = next(tool.localized_inputs())
+    owner = api.EvaluationSession(m)
+    owner.check(p)
+    generation = owner.stats()['generation']
+    lines, start = inspect.getsourcelines(api.EvaluationSession._call)
+    target = start + next(i for i, line in enumerate(lines) if 'return payload' in line)
+    armed = True
+
+    def cancel(frame, event, arg):
+        nonlocal armed
+        if armed and event == 'line' and frame.f_code is api.EvaluationSession._call.__code__ and frame.f_lineno == target:
+            armed = False
+            raise KeyboardInterrupt('injected before transaction publication')
+        return cancel
+
+    previous = sys.gettrace()
+    try:
+        sys.settrace(cancel)
+        with pytest.raises(KeyboardInterrupt):
+            owner.check_with_feedback(p, attempt=1)
+    finally:
+        sys.settrace(previous)
+    assert not armed
+    assert owner.stats()['generation'] == generation
+    assert owner.check_with_feedback(p, attempt=1)[1]['attempt'] == 1

@@ -1,0 +1,18 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "authorization": "002 named owner milestone auto delegation",
+  "scope": "IE4 reproduced review repair including atomic cache/sequence publication",
+  "instrument": "one initial CLI reader and at most one bounded confirmation",
+  "budget": "same limits; one bounded control-plane sequence integer; no persistent history",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE4-spec.md",
+      "sha256": "aca956efd586905dd6c12d6ac26ac1afa15231c18b9e83e99044bf89f5181603"
+    },
+    {
+      "path": "tests/test_incremental_observations.py",
+      "sha256": "ba6c3b160bca867fa2174a3caec1f0a02b3cf0648bc8eb8eba887098252989eb"
+    }
+  ]
+}

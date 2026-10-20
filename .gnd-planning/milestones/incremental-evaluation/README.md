@@ -1,5 +1,18 @@
 # Incremental evaluation
 
+Current result, 2026-10-20: seven phases IE0–IE6 are locally accepted with
+carryovers under the named auto delegation. The owner-requested performance
+follow-up is recorded in [010](010-IE6-reopening-gate.md),
+[011](011-phase-IE6.md) and the renewed [012 close](012-milestone-close.md).
+The final balanced comparison observes session median reductions of about
+6% / 17% / 6% against pre-IE6 sessions on reporter/course/localized controls;
+full evaluation with receipts remains faster. These are small shared-host samples.
+[Successor question sweep](notes/IE6-close-question-sweep.md) retains the
+framework performance and reporter-owned downstream carryovers. Four fresh
+close opinions and exact delegated acceptance are in evidence/IE6-close.
+PR33 remains the review vehicle; merge/publication/certification require separate
+owner authority. The six-phase account below describes historical close009.
+
 Plan approved, 2026-10-19. Owner subsequently delegated milestone execution
 with `auto=true` ([delegation](002-execution-delegation.md)).
 

@@ -165,3 +165,37 @@ is not final-source acceptance and must not be relabeled. Final measurements rer
 on stable reviewed bytes. Complete A/B public parity and B/C same-route calculation
 parity are distinct claims; unreceipted A legitimately executes extra pre-state
 calculations. The normal receipt authority contract remains separately tested.
+
+## Independent-review measurement repair contract (2026-10-20)
+
+Three measurement findings reproduced in four RED variants; an additional actual
+observer-boundary RED demonstrates full nested/cached results did not emit exactly
+one logical result per calculator request. Observe OUTERMOST original calculator
+entry/return boundaries, including the decorated stratified request wrapper, and
+suppress nested algorithm/component callbacks. Preserve the complete ORDERED result
+sequence and multiplicity, never sorted sets. Add delete/duplicate/permutation
+negatives; do not compare implementation-internal callback counts as semantics.
+Replace IE3's old unique-envelope comparison claim: that prior test established a
+set of complete envelopes, not ordered/multiple request coverage. Final IE5 proof
+supersedes only this diagnostic claim, preserving all historical outputs.
+
+Frozen comparator must require workload identity and exact census/exits for EVERY
+mode: reporter13calls/all2, course3outer attempt walks/[1,1,0], localized6calls/all1.
+Equal errors and missing calls cannot satisfy parity. A/B public semantics remain
+distinct from B/C ordered logical calculation traces. Fixture baselines unchanged.
+
+Add explicit lookups counter once per valid owned ReuseState.reuse invocation.
+Hits/misses/bypasses are overlapping events: post-computation refusal can increment
+misses AND bypasses. Their sum is not a lookup denominator. Report bypass/lookup and
+session/context/constraint ratios only with explicit same-event denominators;
+zero-denominator rates are null. No diagnostic enters report or feedback.
+
+Balanced timing refuses active profiling/tracemalloc. Add separate uninstrumented
+preloaded localized cold/no-op/insert/delete/replace/reorder case timings, in balanced
+ABC/BCA/CAB arms, plus per-call actual work deltas in the separate profiled replay.
+The original aggregate replay timings remain separately labeled. Bounded source
+and fixture stability checks must reject runs whose source changes mid-measurement.
+Current pending exploratory output becomes invalid when these repairs change bytes;
+rerun final evidence rather than rewriting its source identity. Rebuild installed
+candidate for the new diagnostic runtime bytes. Same one-reader/one-confirmation
+budget and bounds; no third review. No production publication or release authority.

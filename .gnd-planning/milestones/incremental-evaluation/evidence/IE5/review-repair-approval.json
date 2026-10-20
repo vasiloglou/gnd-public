@@ -1,0 +1,22 @@
+{
+  "approval": "delegated approval (auto=true)",
+  "date": "2026-10-20",
+  "scope": "IE5 reproduced ordered observer, frozen workload and explicit lookup denominator repairs; separate case timings",
+  "authorization": "002 owner named auto execution delegation",
+  "instrument": "same one independent reader and at most one confirmation; no third review",
+  "budget": "same bounded fixtures/cache/repeats/installation; no native/provider/merge/publication",
+  "artifacts": [
+    {
+      "path": ".gnd-planning/milestones/incremental-evaluation/notes/phase-IE5-spec.md",
+      "sha256": "ece9b45555ef88c033ca89bb1dc78c36bb6ab6c785374dc7d69bfa65150cc196"
+    },
+    {
+      "path": "tests/test_incremental_prepared_policy.py",
+      "sha256": "182975a8abe743582af9e016efcf7bf4f5f3fd746d64fc4f584df1713530bd01"
+    },
+    {
+      "path": "tests/test_incremental_session_measurement.py",
+      "sha256": "0e37e08b72c7886c11d1402d6be8bb848ac1f06ab5b871ede6fbe1608370a630"
+    }
+  ]
+}

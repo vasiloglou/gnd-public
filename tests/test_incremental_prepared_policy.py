@@ -157,3 +157,14 @@ def test_fallback_evaluator_failure_is_not_retried(tmp_path, monkeypatch):
     actual = api.EvaluationSession(m).check(p)
     same_payload(actual, expected)
     assert len(calls) == 1
+
+
+def test_lookup_denominator_counts_once_even_when_miss_also_bypasses():
+    m, _ = next(tool.localized_inputs())
+    owner = ReuseState(m, max_rows=0)
+    with owner.transaction(m):
+        assert owner.reuse('unit', 'cap', (), lambda: 7, rows=1) == 7
+    stats = owner.stats()
+    assert stats['misses'] == stats['bypasses'] == 1
+    assert stats['lookups'] == 1
+    assert stats['hits'] + stats['misses'] + stats['bypasses'] > stats['lookups']

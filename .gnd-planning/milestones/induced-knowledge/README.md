@@ -1,10 +1,10 @@
 # Induced knowledge
 
 Planning opened, 2026-10-23, from [issue #34](https://github.com/vasiloglou/gnd-public/issues/34).
-Draft plan r2 and IK1 spec r2. No owner approval, no implementation.
+Draft plan r3 and IK1 spec r3 (owner-directed repairs after review; r3 bytes carry no review opinion). No owner approval, no implementation.
 
-- [Canonical plan (r2)](notes/induced-knowledge-plan.md)
-- [IK1 draft spec (r2)](notes/phase-IK1-spec.md)
+- [Canonical plan (r3)](notes/induced-knowledge-plan.md)
+- [IK1 draft spec (r3)](notes/phase-IK1-spec.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md):
   three request-changes, one approve-with-fixes, 12 reproduced blocking findings.
 - [Plan review round 2 (confirmation) disposition](notes/plan-review-r2-disposition.md):
@@ -14,8 +14,7 @@ Draft plan r2 and IK1 spec r2. No owner approval, no implementation.
 
 Review instrument: four local reviewer agents, owner-selected (D7, 2026-10-23).
 The owner accepted the round-1 repairs and the proposed D8–D13 answers on
-2026-10-23. D12's specific reading awaits owner confirmation (round-2
-disposition, C3-F2).
+2026-10-23. D12's reading was owner-confirmed after round 2, and the owner directed repairs P-1..P-9 as r3 with no further review round.
 
 Six phases:
 - IK1 object-type descriptions → IK2 induced provenance and admission → IK4
@@ -31,7 +30,7 @@ Request 2 (role-scoped value verbalization) is proposed in
 is its fallback owner.
 
 Pending:
-- owner direction on the round-2 text repairs P-1..P-9;
-- the D12 confirmation;
 - D1–D6;
-- plan approval.
+- plan approval;
+- then explicit selection of `process-phase IK1 induced-knowledge`, at whose
+  gate base commit B is named.

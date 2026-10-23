@@ -127,3 +127,37 @@ needs to confirm that reading, or choose "always v2". Until then D12 is
   direction.
 - D1–D6 remain open.
 - No implementation, phase activation, merge or certification is authorized.
+
+## Owner direction and r3 (appended 2026-10-23)
+
+On 2026-10-23 the owner did two things:
+- **Confirmed D12** as "`gnd-diff/2` only when annotations are present". That
+  resolves C3-F2: D12 is now owner-confirmed, no longer a coordinator selection.
+- **Directed repairs P-1..P-9** to be applied as plan r3 and IK1 spec r3, with
+  no further review round, and pushed to PR 36.
+
+The r3 artifacts:
+
+| Artifact | SHA-256 |
+|---|---|
+| Plan r3 | `e0c15f8efab530a1d10f8d9aa3622bb8420f623d6315512f4d8da330beacc003` |
+| IK1 spec r3 | `8114bf6cf29f8f1dd201751460c0486d63dafd3e6318478185c4273d8b4e3299` |
+
+Changes are tagged `(p2)`. **r3 bytes carry no review opinion.** No reader has
+seen them, and the stop rule closed plan review.
+
+Where each repair landed:
+
+| Repair | Where applied |
+|---|---|
+| P-1 | IK1 base commit B named at the IK1 gate after PR #35's disposition. Plan predicate 1, IK-R3, IK1-C4, §9; spec §6 baseline capture, IK1-D4. |
+| P-2 | IK5 body-rewriting mapping, positive-atom fragment, refusals by name, and vacuous = not covered. Plan §2 Request 5, IK5-C2, IK5-C3. |
+| P-3 | Confirmation only as a `proposed`→`confirmed` status change. Discover/import output may not carry `reviewed_in`. The `imported` wording is withdrawn. Plan predicate 2, §2 Request 6, IK2-C2, D9. |
+| P-4 | `neutralize_text` (escape without cap), one escape walk, and a hostile 512-character test. Plan §2 Request 1, sweep; spec §§4, 6, T3, T13. |
+| P-5 | Closed `properties`, an `enum` version, and `if`/`then`/`else`; no `oneOf`. Spec §6 Diff, T10; plan sweep. |
+| P-6 | r1 D1–D6 costs restored. Untagged r2 rewordings tagged. The "untagged = unchanged" claim corrected. |
+| P-7 | Budget has one home (round-1 disposition), with the round-2 widening recorded. Acceptance cites `642cade`. |
+| P-8 | Seven-row command, artefact and normalization table. T12 remapped to C3. C5's reference clause is review-only. |
+| P-9 | Class-cell denominators in IK3-C3; candidate redundancy and `[1,1]` wording in IK4-C5; the vocabulary-digest identity consequence and its docs (`constraint-reference.md:47`, `representation-format.md:272`); the shim docstring. |
+
+The round-2 [manifest](../evidence/plan-review-r2/manifest.json) digests this disposition as committed in `73a76ad`, before this appended section; it is left unchanged as the record of that round.

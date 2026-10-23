@@ -153,8 +153,10 @@ Review history:
 - The owner accepted its repairs and D8–D13.
 - Round 2 confirmed r2, and review stopped by the declared convergence rule.
   See the [round-2 disposition](milestones/induced-knowledge/notes/plan-review-r2-disposition.md).
+- The owner confirmed D12 and directed the text repairs as r3, with no further
+  review round.
 
 No plan approval or implementation.
 
-**Next:** owner direction on the r3 text repairs and the D12 confirmation, then
-D1–D6 and plan approval.
+**Next:** owner rulings on D1–D6 and plan approval, then explicit selection of
+`process-phase IK1 induced-knowledge`.

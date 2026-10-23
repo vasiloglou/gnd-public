@@ -1,6 +1,6 @@
 # Induced knowledge
 
-r2 (p1), 2026-10-23. **Draft; awaiting confirmation round and owner approval.**
+r3 (p2), 2026-10-23. **Draft; awaiting owner approval. Plan review closed by its stop rule.**
 Milestone: `induced-knowledge`. `auto=false`.
 Inspection baseline: `a22ccde` (main, after PR #33). The request-2 fix is
 proposed separately in [PR #35](https://github.com/vasiloglou/gnd-public/pull/35),
@@ -10,11 +10,21 @@ Review status (p1): r1 (SHA-256 `26fa9163…1814`) received four reader opinions
 — three request-changes, one approve-with-fixes, 12 reproduced blocking findings;
 see [round-1 disposition](plan-review-r1-disposition.md). The owner accepted the
 disposition's proposed repairs and its proposed answers for D8–D13 on 2026-10-23
-(o). This r2 applies them. **Its bytes carry no review opinion** until the
-declared confirmation round reports. No plan or spec approval exists.
+(o); the accepted disposition is commit `642cade` (p2). r2 (SHA-256 `d1a40a89…7c85`)
+applied them and received the single declared confirmation round: three
+approve-with-fixes, one request-changes; 10 of 12 round-1 blockers resolved;
+self-inflicted ratio 0.95, so review stopped
+([round-2 disposition](plan-review-r2-disposition.md), commit `73a76ad`) (p2).
+The owner then confirmed D12's reading and directed repairs P-1..P-9 as r3
+with no further review round, 2026-10-23 (o). **r3 bytes carry no review
+opinion.** No plan or spec approval exists.
 
 Change tags: `(p1)` marks text added or changed in r2 in response to round 1;
-`(o)` marks an owner ruling. Untagged text is unchanged from r1.
+`(p2)` marks text added or changed in r3 in response to round 2; `(o)` marks an
+owner ruling. The r1→r2 tags were incomplete (C3-F3): r2 also reworded D1–D6,
+IK-R8 and IK-O9–O12 without tags; r3 tags those sites `(p2)` and restores the
+r1 D1–D6 cost readings. The retained snapshots under `evidence/` are the
+authoritative record of each revision's bytes.
 
 ## Goal, status and completion predicates
 
@@ -37,13 +47,16 @@ Completion requires (p1, rewritten):
    docstrings. `gnd diff` reports description changes and exits as it does today
    for otherwise-identical models. `gnd evolve preview` lists them on an
    `annotation` surface. For every named fixture without descriptions, the
-   SHA-256 of each rendered output equals the value pinned at `a22ccde`. The
+   SHA-256 of each rendered output equals the value captured at IK1's base
+   commit, named at the IK1 spec gate after PR #35's disposition (p2). The
    outputs covered are verbalization, vocabulary, extraction projection,
    codegen tree, conformance payload, diff JSON and evolve preview.
 2. **IK2:** source kind `induced` with a required `provenance.induction` block
    validates.
    - New induced constraints are admitted only as `proposed`/`deontic`.
-   - An induced constraint becomes `confirmed` only with a `reviewed_in` record.
+   - An induced constraint becomes `confirmed` only by a status change of an
+     existing `proposed` induced constraint carrying `reviewed_in`; discover and
+     import output never carry `reviewed_in` (p2).
    - `provenance.induction` is refused under any other source.
    - `gnd coverage` lists induced elements.
    - Coverage reports without induced elements equal their committed goldens.
@@ -89,12 +102,12 @@ No delivery date is committed.
 |---|---|
 | IK-R1 | Induction proposes; review admits. No phase adds a path from observed or learned evidence to `status: confirmed` or `modality: alethic` without an explicit, recorded owner review (`reviewed_in`) through evolve. **Every artifact an inducer can emit is gated by D-12; induced rules are emitted as gated constraints only, never as ungated `derivation_rule` (p1, D8).** |
 | IK-R2 | Evidence is exact and reproducible. Support, counterexamples and coverage are computed by GND from named inputs whose digests are recorded, using per-family definitions fixed in the phase spec (p1). A learner's or host's own numbers are claims to check, never inputs to trust. |
-| IK-R3 | Additive compatibility. Existing models, populations, sidecars, measurement reports, diff output and every rendered output without the new fields stay valid and byte-identical, proven by SHA-256 values pinned at `a22ccde` for named fixtures (p1). A model version bump needs D1. A wire-format version change (diff, measurement, coverage) is a decision in the owning phase spec (p1). |
+| IK-R3 | Additive compatibility. Existing models, populations, sidecars, measurement reports, diff output and every rendered output without the new fields stay valid and byte-identical, proven by SHA-256 values captured at each phase's named base commit for named fixtures (p1, p2). A model version bump needs D1. A wire-format version change (diff, measurement, coverage) is a decision in the owning phase spec (p1). |
 | IK-R4 | One schema home. Edit `src/gnd/skills/gnd-orm-core/references/*.schema.json` and keep the vendored copy byte-identical (`tests/test_schema_sync.py`). Embedded schema copies without a sync test (e.g. `report.schema.json` `$defs.diff_reference_report`) change in the same phase as their source (p1). Normative prose lives in the gnd-orm-core references; docs cite it. |
 | IK-R5 | Free text is untrusted. Descriptions, labels and learned clause text pass through the existing neutralizers (`verbalize._neutralize`, `codegen.docstrings` delimiter rule) and never execute. |
 | IK-R6 | Inputs are capped before reading, and loaders are total over arbitrary JSON (standing rule 1). Discovery evaluates the whole closed-world population, never one fact type in isolation (p1). The honest memory bound is one population of at most 10 MiB in memory, plus bounded derived indexes. Each new work path ships a deterministic work-counter test against a ceiling fixed in its spec (standing rule 2). |
 | IK-R7 | Layer homes follow `tools/gnd_layers.json`; new modules are assigned before use; allowance count stays zero; ModelIndex is the shared query path; family hooks register in `constraint_families.FAMILIES`. New command groups also update the closed `lanes` list, `RF5_COMMAND_GROUPS` (`tools/gnd_arch.py`) and `gnd_entrypoints.json`, with `*.service` lane modules. New model reads stay within the RF6 query ceiling or amend it explicitly (p1). |
-| IK-R8 | No external solver is a runtime dependency. ILP tools are optional, invoked only by explicit command with bounded execution through `gnd.process.run_bounded_process`, and absent tools give a named refusal. |
+| IK-R8 (p2: reworded in r2) | No external solver is a runtime dependency. ILP tools are optional, invoked only by explicit command with bounded execution through `gnd.process.run_bounded_process`, and absent tools give a named refusal. |
 | IK-R9 | All six process-phase standing rules bind every spec by name. |
 | IK-R10 | Privacy. Fixtures are synthetic or anonymized; downstream applications are not named in public text, issues, PRs or fixtures. |
 | IK-R11 (p1) | Induction evidence never persists host data. `provenance.induction` and discovery counterexamples carry example ids that are opaque or relative to a declared manifest, plus SHA-256 digests of values; they never carry host filesystem paths or raw population values. Each loader enforces this, with a hostile-input test. |
@@ -136,10 +149,10 @@ these capabilities exist, so it does not settle scope.
 | IK-O6 | ILP export of background, examples, modes (req 5) | requested | IK5-C1 |
 | IK-O7 | ILP import with faithful re-evaluation (req 5) | requested | IK5-C2..C4 |
 | IK-O8 | Induced provenance: source kind, inducer identity, example ids, support, confidence, counterexamples, evidence digests; accepted by evolve preview, shown by coverage (req 6) | requested; "confidence" kept only where defined (p1) | IK2-C1..C4 |
-| IK-O9 | A `gold` source kind "alongside GR-12" (req 6) | **not found** in this repository | D3 |
-| IK-O10 | D-12 refuses every new source other than llm-inferred/user-supplied, including `sample` | inspected conflict | D2; IK2-C2 |
-| IK-O11 | Measure keys labels by positional refs | inspected risk | IK3-C1; D5 |
-| IK-O12 | Rendered-output digests in committed fixtures | inspected risk | IK1-C4 |
+| IK-O9 (p2: reworded in r2) | A `gold` source kind "alongside GR-12" (req 6) | **not found** in this repository | D3 |
+| IK-O10 (p2: reworded in r2) | D-12 refuses every new source other than llm-inferred/user-supplied, including `sample` | inspected conflict | D2; IK2-C2 |
+| IK-O11 (p2: reworded in r2) | Measure keys labels by positional refs | inspected risk | IK3-C1; D5 |
+| IK-O12 (p2: reworded in r2) | Rendered-output digests in committed fixtures | inspected risk | IK1-C4 |
 | IK-O13 | Four-reviewer plan/close bar and explicit instrument | inherited protocol | D7 (o); plan and close gates |
 | IK-O14 | Anonymity of downstream reporter | owner rule | IK-R10; every diff review; D13 (p1) |
 | IK-O15 (p1) | D-12 does not see derivation rules; derivation `fail` is alethic | reviewed defect class (R1-F1) | IK-R1; D8; IK5-C2 |
@@ -153,8 +166,10 @@ these capabilities exist, so it does not settle scope.
 
 **Request 1 (IK1)** (p1, revised).
 - **Field:** `object_types[].description` is an optional string of 1–512
-  characters. 512 matches `MAX_RENDERED_VALUE_CHARS`, so rendering never
-  truncates it (IK1-D1 revised). There is no version bump.
+  characters (IK1-D1 revised). There is no version bump. Descriptions are
+  rendered escaped but **uncapped**: `_neutralize` escapes before its 512 cap,
+  so escapable characters would otherwise truncate a valid description (C2-F1);
+  rendered length is bounded by 512 × the worst-case escape width (p2).
 - **Model verbalization:** appends the neutralized text to the object type's
   sentence.
 - **Extraction:** the constraint-blind extraction vocabulary
@@ -163,7 +178,10 @@ these capabilities exist, so it does not settle scope.
 - **Codegen:** adds it to the docstrings of tools whose roles use the type.
 - **Vocabulary digest (D11):** `anchors.vocabulary_digest` excludes
   `description`, so a description-only change keeps the vocabulary identity. No
-  existing digest changes, because no current model carries the key.
+  existing digest changes, because no current model carries the key. As a
+  consequence, the vocabulary digest no longer identifies the rendered
+  vocabulary text: an extraction sidecar stays bound when only a description
+  changes. This is intended and pinned by a test (p2, C1-F5).
 - **Diff (D12):** `gnd diff` emits an `annotations` list only when some
   description differs, and then labels its output `schema_version: "gnd-diff/2"`.
   Otherwise the output stays byte-identical `gnd-diff/1`. These change in the same
@@ -197,8 +215,11 @@ these capabilities exist, so it does not settle scope.
 - **Gate (p1, D9):** `_enforce_d12` admits `induced` in exactly two cases, and
   refuses `provenance.induction` under every other source:
   - as `proposed`/`deontic`;
-  - as `confirmed` only with `provenance.reviewed_in`, following the `imported`
-    precedent.
+  - as `confirmed` only as a status change of an existing `proposed` induced
+    constraint, with `provenance.reviewed_in`; a new constraint arriving already
+    `confirmed` is refused, and discover/import output carrying `reviewed_in` is
+    refused (p2, C1-F3). (r2's "`imported` precedent" wording is withdrawn: D-12
+    refuses `imported` outright.)
 - **Coverage:** gains a provenance view of induced elements.
 
 **Request 3 (IK3)** (p1, revised). `gnd measure MODEL --labels MANIFEST`. The
@@ -258,15 +279,22 @@ works as follows:
   --reported-coverage FILE`:
   - accepts only the declared clause-to-`guarded` fragment, and refuses anything
     else by construct name;
-  - maps each learned "wrong" clause to a deontic `guarded` constraint whose
-    antecedent is the clause body and whose consequent is the negated head (the
-    polarity mapping), per the fragment table fixed in the IK5 spec;
-  - the fragment table states, per construct, how GND's semantics differ from
-    the learner's: negation as failure, non-empty aggregate groups, aggregate
-    deduplication, ground absence, closed-world rosters, boolean typing, vacuity;
+  - maps each learned clause `wrong(X) :- B1, …, Bn` by **body rewriting**
+    (p2, C1-F1): one designated body literal moves into the consequent, negated;
+    the remaining literals form the antecedent. A comparison literal becomes a
+    `comparison` consequent with the negated operator (`V > 10` → `V <= 10`); a
+    positive atom becomes an `absence` consequent, which must be ground per
+    representation-format.md. The head `wrong(X)` is a host label and never
+    becomes a fact type;
+  - the fragment is restricted to clauses whose bodies are conjunctions of
+    positive atoms and comparisons over declared fact types; negation as
+    failure, aggregates, disjunction and non-ground absence are refused by
+    construct name (p2). The fragment table states, per accepted construct, how
+    GND's semantics differ from the learner's (closed-world rosters, boolean
+    typing, vacuity);
   - re-evaluates the result on the same examples and compares the **set** of
-    covered example ids with the learner-reported set, with vacuous verdicts
-    counted explicitly;
+    covered example ids with the learner-reported set; a vacuous verdict counts
+    as **not covered** and is reported separately (p2, C1-F2);
   - refuses on any difference.
 - **Strength of the check:** coverage agreement is necessary, not sufficient;
   the fragment table carries the semantic argument.
@@ -307,13 +335,13 @@ Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
 - **IK1-C1:** the schema accepts an optional `description` of 1–512 characters, and both copies stay identical. `gnd validate` exits 0 for 1 and 512 characters, and exits 3 for empty, non-string and 513-character values (p1).
 - **IK1-C2:** model verbalization, the extraction vocabulary and codegen docstrings render the neutralized description with no truncation. The projection schema and allowlist are unchanged (p1).
 - **IK1-C3:** `anchors.vocabulary_digest` ignores `description` (D11). `gnd diff` of two models differing only in a description exits as for identical models. It emits `annotations` under `gnd-diff/2`, and both diff schemas validate the result (D12) (p1).
-- **IK1-C4:** for the named fixtures without descriptions, the SHA-256 of each output equals the value pinned at `a22ccde`. The outputs are verbalization, vocabulary, extraction projection, codegen tree, conformance payload, diff JSON and evolve preview (p1).
-- **IK1-C5 (p1):** evolve preview lists a description-only change on the `annotation` surface, which validates in `BlastRadiusEntry`. `representation-format.md`, `evolution-contract.md`, `diff.reference.md` and the gnd-extract skill references are updated.
+- **IK1-C4:** for the named fixtures without descriptions, the SHA-256 of each output equals the value captured at IK1's base commit (named at the IK1 spec gate after PR #35's disposition), using the exact commands listed in the IK1 spec (p2). The outputs are verbalization, vocabulary, extraction projection, codegen tree, conformance payload, diff JSON and evolve preview (p1).
+- **IK1-C5 (p1):** evolve preview lists a description-only change on the `annotation` surface, which validates in `BlastRadiusEntry`. `representation-format.md` (field and vocabulary-digest composition, line 272), `constraint-reference.md` (vocabulary-digest composition, line 47), `evolution-contract.md`, `diff.reference.md` and the gnd-extract skill references are updated; reference updates are review-checked, not test-checked (p2).
 
 ### IK2 — Induced provenance and admission
 
 - **IK2-C1:** the new source kind and its required induction block validate, with hostile-input cases including absolute paths and raw values, both refused (IK-R11) (p1). The D-03 table is updated in one home.
-- **IK2-C2 (p1):** evolve preview admits induced constraints as `proposed`/`deontic`, and as `confirmed` only with `reviewed_in`. It refuses every other combination, and `provenance.induction` under other sources, each with a named reason. Existing D-12 outcomes are pinned unchanged.
+- **IK2-C2 (p1, p2):** evolve preview admits new induced constraints only as `proposed`/`deontic`, and a `proposed`→`confirmed` status change only with `reviewed_in`; a new constraint already `confirmed`, and any discover/import output carrying `reviewed_in`, is refused. It refuses every other combination, and `provenance.induction` under other sources, each with a named reason. Existing D-12 outcomes are pinned unchanged.
 - **IK2-C3 (p1):** coverage lists induced elements with inducer, support and evidence digests. `tests/test_public_coverage_goldens.py` goldens stay byte-identical.
 - **IK2-C4 (p1):** the counterexample cap and block size bounds are fixed in the IK2 spec, with a loader test at each boundary.
 
@@ -321,7 +349,7 @@ Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
 
 - **IK3-C1:** a capped, digest-bound label manifest loader, total over arbitrary JSON. Refs are id-keyed or positional, and unknown refs are refused. The manifest cap is fixed in the spec (p1).
 - **IK3-C2 (p1):** `expected-state` mode yields reports identical to an equivalent synth-sidecar measurement of the same populations and expectations.
-- **IK3-C3 (p1):** `class` mode's agreement cells are exact on a control. A deontic rule fires on every negative-class population and on no positive one, giving numerators equal to denominators in `fired_on_negative`/`silent_on_positive`. A deliberately wrong rule moves those counts.
+- **IK3-C3 (p1):** `class` mode's agreement cells are exact on a control. A deontic rule fires on every negative-class population and on no positive one, giving numerators equal to denominators in `fired_on_negative`/`silent_on_positive`. A deliberately wrong rule moves those counts. Each cell's denominator is the number of populations of that class whose verdict for the rule is decided (`pass`, `warning` or `fail`); `vacuous` and `unchecked` populations are excluded from those denominators and reported with their own counts (p2).
 - **IK3-C4 (p1):** synth-sidecar reports are byte-identical to committed goldens. A deterministic work counter over manifest size stays within the spec's ceiling.
 
 ### IK4 — Constraint discovery
@@ -330,19 +358,19 @@ Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
 - **IK4-C2:** the output is a valid evolve proposal that IK2's gate admits and `evolve preview` renders.
 - **IK4-C3 (p1):** support numerators and denominators per family match an independent brute-force oracle on small fixtures. Counterexamples are opaque ids (IK-R11).
 - **IK4-C4 (p1):** whole-population evaluation within the 10 MiB cap. A deterministic work counter stays at or below the spec's ceiling on a fixed near-cap fixture, and the set-comparison pair cap is enforced with a named refusal.
-- **IK4-C5 (p1):** suppression counts per catalogue rule equal the expected counts on a fixture exercising every catalogue row, including a declared alethic constraint suppressing its deontic twin.
+- **IK4-C5 (p1, p2):** suppression counts per catalogue rule equal the expected counts on a fixture exercising every catalogue row, including a declared alethic constraint suppressing its deontic twin. The IK4 spec also fixes, under IK-R12, a candidate-vs-candidate redundancy rule (e.g. equality emitted instead of its two subsets; uniqueness instead of frequency `[1,1]`) and states that "min 1 alone" means a frequency whose only bound is `min: 1` (C1-F4).
 
 ### IK5 — ILP bridge
 
 - **IK5-C1 (p1):** export for the D4 target equals a committed golden digest across two runs with different `PYTHONHASHSEED`. Modes are derived from fact-type roles; examples come from IK3 manifests.
-- **IK5-C2 (p1):** import emits only `guarded` constraints. Every construct outside the fragment table is refused by name, with one test per refused construct.
-- **IK5-C3 (p1):** re-evaluation compares sets of covered example ids. A fixture with equal counts but different sets refuses, and a matching fixture is admitted as a proposal.
+- **IK5-C2 (p1, p2):** import emits only `guarded` constraints by body rewriting. Every construct outside the fragment (NAF, aggregates, disjunction, non-ground absence) is refused by name, with one test per refused construct; a fixture clause maps to a schema-valid guarded constraint.
+- **IK5-C3 (p1, p2):** re-evaluation compares sets of covered example ids, vacuous = not covered. A fixture with equal counts but different sets refuses, a fixture whose only difference is a vacuous example refuses, and a matching fixture is admitted as a proposal.
 - **IK5-C4 (p1):** recorded learner fixtures bind the exported-bytes digest and the learner name and version, and a mismatched binding refuses. A live learner run, when installed, is evidence only, never a required lane.
 
 ### IK6 — End-to-end example, docs, integration
 
 - **IK6-C1 (p1):** a public anonymized walk exits 0 at every step: labels → measure → discover and learn → evolve preview. Its outputs match committed goldens.
-- **IK6-C2 (p1):** docs, gnd-orm-core references and affected packaged skills are updated: gnd-extract, gnd-model-evolve, gnd-codegen, gnd-orm-core. The skill-surface census is a table listing each skill file, whether it changed and why, and is checked by the existing skill sync tests.
+- **IK6-C2 (p1):** docs, gnd-orm-core references and affected packaged skills are updated: gnd-extract, gnd-model-evolve, gnd-codegen, gnd-orm-core. The skill-surface census is a committed table listing each packaged skill file, whether it changed and why; a new test asserts every packaged skill file appears in it exactly once (p2). Twin identity remains checked by the existing skill sync tests.
 - **IK6-C3 (p1):** these controls pass:
   - API and CLI pins;
   - the RF5 entry-point test (`test_rf5_commands.py`);
@@ -423,11 +451,8 @@ Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
 **Plan review (p1):**
 - **Instrument:** four local reviewer agents (D7 (o)).
 - **Round 1:** complete.
-- **Declared budget:** this r2 plus **at most one** confirmation round by the same
-  four lenses. The round is restricted to whether the reproduced round-1 blocking
-  findings are resolved, and to defects introduced by r2.
-- **Stop rule:** as in `.codex/skills/process-phase/references/review-convergence.md`.
-  Questions remaining after that move into phase specs.
+- **Declared budget** (one home: the [round-1 disposition](plan-review-r1-disposition.md) §Convergence budget) (p2): r2 plus at most one confirmation round. The round as run also reported r2-introduced defects; that widening is recorded in the round-2 disposition (C3-F4).
+- **Round 2:** complete; stop rule met (ratio 0.95). No further plan review round. Remaining questions move into phase specs (p2).
 
 **Close review:** uses the same instrument.
 
@@ -438,7 +463,7 @@ certification are separate owner acts.
 
 | Phase | Falsifiable result | Consumers |
 |---|---|---|
-| IK1 | boundary validation exits; renders in three surfaces; diff v2 only with annotations; digests pinned at `a22ccde` unchanged (p1) | `test_schema_sync.py`, `test_model_verbalization.py`, `test_extract_vocabulary.py`, codegen/conformance tests, diff and report schema tests, evolve tests, RF1 mutation table (p1) |
+| IK1 | boundary validation exits; renders in three surfaces; diff v2 only with annotations; digests captured at IK1's base commit unchanged (p1, p2) | `test_schema_sync.py`, `test_model_verbalization.py`, `test_extract_vocabulary.py`, codegen/conformance tests, diff and report schema tests, evolve tests, RF1 mutation table (p1) |
 | IK2 | induced admitted only as specified; old D-12 outcomes pinned; coverage goldens unchanged (p1) | evolve tests, `test_public_coverage_goldens.py`, schema tests |
 | IK3 | expected-state parity with synth path; class cells exact; synth goldens unchanged (p1) | measure tests, measurement schema tests |
 | IK4 | per-ref pass + support > 0; oracle support; suppression counts; work ceiling (p1) | new discover tests; evolve preview; RF5/lanes/RF6 controls |
@@ -457,7 +482,8 @@ Exact commands are unresolved until each spec inventories changed definitions.
 | Projection allowlist excludes `description` (p1) | render in the constraint-blind vocabulary; projection unchanged |
 | Vocabulary digest covers whole object types (p1) | D11: exclude `description`; no existing digest changes |
 | Diff schema closed at `gnd-diff/1` (p1) | D12: `gnd-diff/2` only when annotations present; embedded copy, reference and RF1 anchor changed together; redaction pass-through pinned, branch unedited |
-| `_neutralize` truncates at 512 (p1) | cap description at 512 |
+| `_neutralize` escapes before its 512 cap (p1, p2) | cap description at 512 and render escaped but uncapped |
+| Diff schema shape vs existing test indexing `properties` (p2) | closed top-level `properties` with optional `annotations` plus `if`/`then` on `schema_version`; no top-level `oneOf` |
 | Closed surface `Literal` (p1) | add `annotation` member and contract row in IK1 |
 | Measure truth table needs ground truth (p1) | two label modes; class mode uses a new agreement scorer (D10) |
 | Closed lanes and RF5 policy (p1) | IK4 adds `discover` lane and command group; IK5 fixes its import home |
@@ -469,20 +495,20 @@ Exact commands are unresolved until each spec inventories changed definitions.
 
 | ID | Decision / answer | Status |
 |---|---|---|
-| D1 | Additive optional fields without a model version bump | proposed/open; rule before IK1 |
-| D2 | Extend D-12 to admit `induced` (proposed/deontic; confirmed only per D9); leave `sample` refused | proposed/open; rule before IK2 |
-| D3 | Spell the source `induced`; do not add `gold` unless the reporter supplies its definition | proposed/open; rule before IK2 |
-| D4 | First ILP target: Popper (Prolog) proposed; second target is a follow-up | proposed/open; rule before IK5 |
-| D5 | Label manifest keys constraints by `id`, positional refs as fallback | proposed/open; rule before IK3 |
-| D6 | Discovery bounds: value domains ≤ 20 distinct values; set-comparison pairs between roles of the same object type, pair cap fixed in IK4 spec under IK-R12 | proposed/open; rule before IK4 |
+| D1 | Additive optional fields without a model version bump. Cost: a bump would force migration of every model | proposed/open; rule before IK1 |
+| D2 (p2: D9 clause added in r2) | Extend D-12 to admit `induced` (proposed/deontic; confirmed only per D9); leave `sample` refused. Cost: admitting `sample` too widens the gate | proposed/open; rule before IK2 |
+| D3 | Spell the source `induced`; do not add `gold` (no GR-12 here) unless the reporter supplies its definition. Cost: adding `gold` blind invents semantics | proposed/open; rule before IK2 |
+| D4 | First ILP target: Popper (Prolog) or ILASP (ASP) — proposed Popper for its plain Prolog modes and Datalog fit; second target is a follow-up. Cost: two targets double IK5 | proposed/open; rule before IK5 |
+| D5 | Label manifest keys constraints by `id`, positional refs as fallback. Cost: id-less constraints stay positional | proposed/open; rule before IK3 |
+| D6 (p2: reworded in r2) | Discovery bounds: value domains ≤ 20 distinct values; set-comparison pairs between roles of the same object type, pair cap fixed in IK4 spec under IK-R12. Cost: fewer candidates vs runaway cost | proposed/open; rule before IK4 |
 | D7 | Plan and close review instrument: four local reviewer agents | **owner-selected 2026-10-23 (o)**; instrument only, no artifact approval |
 | D8 (p1) | IK5 emits `guarded` constraints only, never `derivation_rule` | **owner-accepted 2026-10-23 (o)** |
-| D9 (p1) | `induced`+`confirmed` requires `provenance.reviewed_in`; `provenance.induction` refused under other sources | **owner-accepted 2026-10-23 (o)** |
+| D9 (p1, p2) | `induced`+`confirmed` only as a `proposed`→`confirmed` status change with `provenance.reviewed_in`; `provenance.induction` refused under other sources; discover/import output never carries `reviewed_in` | **owner-accepted 2026-10-23 (o)**; P-3 refinement directed by the owner 2026-10-23 (o) |
 | D10 (p1) | IK3 class labels use a second, agreement scorer with fixed cells; expected-state labels reuse the truth table | **owner-accepted 2026-10-23 (o)** |
 | D11 (p1) | `anchors.vocabulary_digest` excludes `description` | **owner-accepted 2026-10-23 (o)** |
-| D12 (p1) | `gnd diff` emits `annotations` and `gnd-diff/2` only when a description differs; otherwise unchanged `gnd-diff/1` | **owner-accepted 2026-10-23 (o)** |
+| D12 (p1, p2) | `gnd diff` emits `annotations` and `gnd-diff/2` only when a description differs; otherwise unchanged `gnd-diff/1` | **owner-confirmed 2026-10-23 (o)**: the owner explicitly confirmed this reading after round 2 (C3-F2). r2's earlier "owner-accepted" label recorded a coordinator selection |
 | D13 (p1) | The source issue's naming of a downstream application is the owner's to edit; GND text never repeats it | **owner-accepted 2026-10-23 (o)** |
 
-Next action (p1): run the declared confirmation round over these r2 bytes.
-Then the owner rules on D1–D6 and plan approval, and explicitly selects
-`process-phase IK1 induced-knowledge`.
+Next action (p2): owner rulings on D1–D6 and plan approval; then the owner
+explicitly selects `process-phase IK1 induced-knowledge`, at whose gate IK1's
+base commit and PR #35's disposition are named.

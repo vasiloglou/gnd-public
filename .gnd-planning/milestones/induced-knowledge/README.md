@@ -1,25 +1,37 @@
 # Induced knowledge
 
 Planning opened, 2026-10-23, from [issue #34](https://github.com/vasiloglou/gnd-public/issues/34).
-Draft plan r1; no owner approval, no implementation.
+Draft plan r2 and IK1 spec r2. No owner approval, no implementation.
 
-Plan review round 1, 2026-10-23, with the owner-selected instrument (D7: four
-local reviewer agents): three request-changes, one approve-with-fixes, 12
-reproduced blocking findings. See the [disposition](notes/plan-review-r1-disposition.md).
-Plan bytes are unchanged; r2 awaits owner rulings on the proposed repairs and
-new decisions D8–D13.
+- [Canonical plan (r2)](notes/induced-knowledge-plan.md)
+- [IK1 draft spec (r2)](notes/phase-IK1-spec.md)
+- [Plan review round 1 disposition](notes/plan-review-r1-disposition.md):
+  three request-changes, one approve-with-fixes, 12 reproduced blocking findings.
+- [Plan review round 2 (confirmation) disposition](notes/plan-review-r2-disposition.md):
+  - three approve-with-fixes, one request-changes;
+  - 10 of 12 round-1 blockers resolved;
+  - self-inflicted ratio 0.95, so review stopped by the declared rule.
 
-- [Canonical plan](notes/induced-knowledge-plan.md)
-- [IK1 draft spec](notes/phase-IK1-spec.md)
+Review instrument: four local reviewer agents, owner-selected (D7, 2026-10-23).
+The owner accepted the round-1 repairs and the proposed D8–D13 answers on
+2026-10-23. D12's specific reading awaits owner confirmation (round-2
+disposition, C3-F2).
 
-Six phases: IK1 object-type descriptions · IK2 induced provenance and admission →
-IK3 measure over host-labelled populations → IK4 constraint discovery → IK5 ILP
-bridge → IK6 end-to-end example and docs. Close is separate.
+Six phases:
+- IK1 object-type descriptions → IK2 induced provenance and admission → IK4
+  constraint discovery;
+- IK3 measure over host-labelled populations → IK5 ILP bridge (which also needs
+  IK2);
+- IK6 end-to-end example and docs.
 
-Request 2 (role-scoped value verbalization) was fixed in
-[PR #35](https://github.com/vasiloglou/gnd-public/pull/35) and is not a phase here.
+Close is separate.
 
-Pending owner decisions: D1–D6 in plan §10 and D8–D13 in the round-1
-disposition. D7 (review instrument) is owner-selected.
+Request 2 (role-scoped value verbalization) is proposed in
+[PR #35](https://github.com/vasiloglou/gnd-public/pull/35), which is open; IK1
+is its fallback owner.
 
-Next action: owner rulings, then plan r2 and at most one confirmation round.
+Pending:
+- owner direction on the round-2 text repairs P-1..P-9;
+- the D12 confirmation;
+- D1–D6;
+- plan approval.

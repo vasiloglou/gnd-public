@@ -282,6 +282,20 @@ Pattern (open below):
 Pattern (multi-range):
 > *{ObjectType} must be in one of the ranges: {range-1}, {range-2}, ….*
 
+### Role value (value constraint with `role_ref`)
+
+A value constraint scoped by `role_ref` restricts only the values playing that
+role, so its sentence names the role rather than the whole object type.
+
+Pattern:
+> *{ObjectType} playing role {fact_type}:{role} must take one of: {v1}, {v2}, …, {vn}.*
+
+Example:
+> *Text playing role building_has_type:type must take one of: ACADEMIC, RESIDENT, SERVICE.*
+
+Checker verdict messages use the same scope: *Each text value playing the 'type' role
+in 'building_has_type' must be one of ['ACADEMIC', 'RESIDENT', 'SERVICE']*.
+
 ### Subset
 
 Pattern:

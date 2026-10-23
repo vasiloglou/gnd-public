@@ -141,9 +141,23 @@ def mandatory_message(
     return f"{head} — violated: {missing} plays no such fact."
 
 
-def value_enum_message(object_type_id: str, allowed: list[Any], offending: list[Any]) -> str:
+def _value_subject(object_type_id: str, role_ref: tuple | None) -> str:
+    """Name the values a value constraint restricts: the whole type, or one role."""
+    if role_ref is None:
+        return f"Each {object_type_id} value"
+    fact_type_id, role_name = role_ref
+    return f"Each {object_type_id} value playing the {_quote(role_name)} role in {_quote(fact_type_id)}"
+
+
+def value_enum_message(
+    object_type_id: str,
+    allowed: list[Any],
+    offending: list[Any],
+    *,
+    role_ref: tuple | None = None,
+) -> str:
     allowed_rendered = ", ".join(_quote(v) for v in allowed)
-    head = f"Each {object_type_id} value must be one of [{allowed_rendered}]"
+    head = f"{_value_subject(object_type_id, role_ref)} must be one of [{allowed_rendered}]"
     if not offending:
         return f"{head} — satisfied."
     values = ", ".join(_quote(v) for v in offending)
@@ -155,8 +169,10 @@ def value_range_message(
     minimum: Any,
     maximum: Any,
     offending: list[Any],
+    *,
+    role_ref: tuple | None = None,
 ) -> str:
-    head = f"Each {object_type_id} value must be between {_quote(minimum)} and {_quote(maximum)}"
+    head = f"{_value_subject(object_type_id, role_ref)} must be between {_quote(minimum)} and {_quote(maximum)}"
     if not offending:
         return f"{head} — satisfied."
     values = ", ".join(_quote(v) for v in offending)
@@ -360,11 +376,13 @@ def value_ranges_message(
     object_type_id: str,
     ranges: list[dict],
     offending: list[Any],
+    *,
+    role_ref: tuple | None = None,
 ) -> str:
     rendered = " or ".join(
         f"between {_quote(bounds.get('min'))} and {_quote(bounds.get('max'))}" for bounds in ranges
     )
-    head = f"Each {object_type_id} value must be {rendered}"
+    head = f"{_value_subject(object_type_id, role_ref)} must be {rendered}"
     if not offending:
         return f"{head} — satisfied."
     values = ", ".join(_quote(v) for v in offending)

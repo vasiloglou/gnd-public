@@ -289,9 +289,11 @@ def _constraint_cnl(item: dict[str, Any], host: str) -> str:
         refs = ", ".join(_role_ref(ref) for ref in item.get("role_refs", []))
         return f"Each subject must play at least one of the roles {refs}."
     if family == "value":
-        subject = item.get("object_type") or _role_ref(item.get("role_ref"))
-        if "values" in item:
-            return f"{subject} must take one of: {', '.join(map(str, item['values']))}."
+        subject = item.get("object_type") or "Each value"
+        if item.get("role_ref") is not None:
+            subject = f"{subject} playing role {_role_ref(item['role_ref'])}"
+        if "allowed" in item:
+            return f"{subject} must take one of: {', '.join(map(str, item['allowed']))}."
         ranges = item.get("ranges") or ([item["range"]] if "range" in item else [])
         return f"{subject} must lie in the declared range set {_canonical(ranges)}."
     if family == "frequency":

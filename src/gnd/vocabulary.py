@@ -6,13 +6,7 @@ from typing import Any
 
 from gnd.refscheme import reference_identity
 from gnd.universe import resolve_primitive
-from gnd.verbalize import (
-    DESCRIPTION_CORE_KEYS,
-    DESCRIPTION_LABELS,
-    _neutralize,
-    line_text,
-    neutralize_text,
-)
+from gnd.verbalize import _neutralize, description_lines, line_text
 
 __all__ = ["reading_text", "render_verbalization"]
 
@@ -123,13 +117,7 @@ def render_verbalization(model: Any) -> str:
     for object_type in model.object_types:
         lines.append(_object_type_sentence(object_type, by_id, model))
         # Description core keys in full; extras are never rendered (IK1).
-        description = object_type.get("description")
-        if isinstance(description, dict):
-            for key in DESCRIPTION_CORE_KEYS:
-                if key in description:
-                    lines.append(
-                        f"  {DESCRIPTION_LABELS[key]}: '{neutralize_text(description[key])}'"
-                    )
+        lines.extend(f"  {label}: '{text}'" for label, text in description_lines(object_type.get("description")))
     lines.append("")
     lines.append("=== Fact Types ===")
     for fact_type in model.fact_types:

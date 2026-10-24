@@ -132,7 +132,8 @@ sentence, in the order `summary`, `row`, `source`, `notes`:
 
 The constraint-blind rendering seed emits the same keys as indented lines after
 the object type's sentence (`  Description: '...'`). Both forms escape the text
-like every other model string and never truncate it. Extras are never rendered.
+with the neutralizer used for population values (quotes, backslashes and line
+breaks become escape sequences) and never truncate it. Extras are never rendered.
 
 ## Fact types
 

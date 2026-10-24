@@ -9,6 +9,7 @@ prompt-injection echo into future agent feedback).
 from __future__ import annotations
 
 import math
+from collections.abc import Mapping
 from typing import Any
 
 #: C0/C1 control characters and the two Unicode separator codepoints rendered
@@ -52,6 +53,21 @@ def neutralize_text(value: Any) -> str:
     """
     rendered = str(value).replace("\\", "\\\\").replace("'", "\\'")
     return rendered.translate(_CONTROL_ESCAPES)
+
+
+def description_lines(description: Any) -> list[tuple[str, str]]:
+    """``(label, escaped text)`` for each present core key, in render order.
+
+    The one walk every prose renderer of an object-type description uses, so
+    order, labels and escaping cannot drift apart; extras are never returned.
+    """
+    if not isinstance(description, Mapping):
+        return []
+    return [
+        (DESCRIPTION_LABELS[key], neutralize_text(description[key]))
+        for key in DESCRIPTION_CORE_KEYS
+        if key in description
+    ]
 
 
 def _neutralize(value: Any) -> str:

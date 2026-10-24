@@ -38,6 +38,7 @@ RETAINED_EXTERNAL_REFERENCES = {
 # Review snapshots preserve the exact original text, including relative links.
 # Validate those links from their original document home, never exempt them.
 IE_HOME = Path('.gnd-planning/milestones/incremental-evaluation')
+IK_HOME = Path('.gnd-planning/milestones/induced-knowledge')
 RETAINED_DOCUMENT_ORIGINS = {
     IE_HOME / 'evidence/plan-review-r1/incremental-evaluation-plan.md': (
         IE_HOME / 'notes/incremental-evaluation-plan.md',
@@ -48,6 +49,18 @@ RETAINED_DOCUMENT_ORIGINS = {
     IE_HOME / 'evidence/plan-approval/incremental-evaluation-plan.md': (
         IE_HOME / 'notes/incremental-evaluation-plan.md',
         'b7503db4af6ab7ab5916e0c0fa8a6f7bbcbe6aab5464e9fdd99422fe53e160b1'),
+    IK_HOME / 'evidence/plan-review-r1/induced-knowledge-plan.md': (
+        IK_HOME / 'notes/induced-knowledge-plan.md',
+        '26fa91632e5ee637b1949ad4e8dd6ba25daac57180280328e3d04c1e050a1814'),
+    IK_HOME / 'evidence/plan-review-r1/phase-IK1-spec.md': (
+        IK_HOME / 'notes/phase-IK1-spec.md',
+        'f79d6375630e8706a9a3fe88af7669b3f0a81fcbb446ec0e1d55d4df22b8cec0'),
+    IK_HOME / 'evidence/plan-review-r2/induced-knowledge-plan.md': (
+        IK_HOME / 'notes/induced-knowledge-plan.md',
+        'd1a40a89eecad01e7e4dc72e969beb4c548297c1967df0d268c6776c18207c85'),
+    IK_HOME / 'evidence/plan-review-r2/phase-IK1-spec.md': (
+        IK_HOME / 'notes/phase-IK1-spec.md',
+        '4f4cb8b580c680e5523d6cf1f4a4752abe3d76099a19c713620c51e8e5d3cac1'),
 }
 
 

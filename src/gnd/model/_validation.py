@@ -41,6 +41,7 @@ from typing import Any, Literal
 
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
+from ruamel.yaml.scalarbool import ScalarBoolean
 
 # Message wording for the layer-2 rules lives with every other CNL template
 # (gnd.verbalize imports nothing from gnd, so this cannot cycle).
@@ -192,6 +193,23 @@ def _derivation_rule_hint(error: Any, doc: Any = None) -> str | None:
 
 
 _OBJECT_TYPE_DESCRIPTION_PATH = re.compile(r"\$\.object_types\[\d+\]\.description(?:[.\[]|$)")
+_LONE_SURROGATE = re.compile("[\ud800-\udfff]")
+
+
+def _description_value_without_json_form(value: Any) -> str | None:
+    """Why a description value cannot be carried unchanged as JSON (IK1-D6).
+
+    The schema's JSON types cannot refuse these: NaN and infinity are numbers,
+    a lone surrogate is a string, and an anchored YAML boolean loads as an
+    ``int`` subclass that would serialize as ``1``.
+    """
+    if isinstance(value, float) and not math.isfinite(value):
+        return f"{value!r} is a non-finite number, which has no JSON form"
+    if isinstance(value, str) and _LONE_SURROGATE.search(value):
+        return "string contains a lone surrogate, which has no UTF-8 JSON form"
+    if isinstance(value, ScalarBoolean):
+        return "anchored YAML boolean would not be carried unchanged; remove the anchor"
+    return None
 
 
 def _layer1_structural(doc: Any) -> list[ValidationIssue]:
@@ -219,18 +237,10 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
                 message="integer literal exceeds the in-process diagnostic limit",
                 rule_id="jsonschema:type",
             )]
-        elif (
-            isinstance(value, float)
-            and not math.isfinite(value)
-            and _OBJECT_TYPE_DESCRIPTION_PATH.match(path)
+        elif _OBJECT_TYPE_DESCRIPTION_PATH.match(path) and (
+            reason := _description_value_without_json_form(value)
         ):
-            # IK1-D6: a description is carried as JSON, and NaN or infinity
-            # has no JSON form; the schema's number type cannot refuse it.
-            return [ValidationIssue(
-                path=path,
-                message=f"{value!r} is a non-finite number, which has no JSON form",
-                rule_id="jsonschema:type",
-            )]
+            return [ValidationIssue(path=path, message=reason, rule_id="jsonschema:type")]
     validator = Draft202012Validator(_load_meta_schema())
     issues = []
     for error in sorted(validator.iter_errors(doc), key=lambda e: e.json_path):

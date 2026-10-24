@@ -137,14 +137,38 @@ def test_t2_refused_descriptions_exit_3(
         "description: {summary: s, n: .nan}",
         "description: {summary: s, deep: [.inf]}",
         "description: {summary: s, n: -.inf}",
+        'description: {summary: "a\\uD800b"}',
+        'description: {summary: s, deep: ["\\uDFFF"]}',
+        "description: {summary: s, flag: &f true}",
     ],
-    ids=["timestamp", "nested-date", "nan", "nested-inf", "negative-inf"],
+    ids=["timestamp", "nested-date", "nan", "nested-inf", "negative-inf",
+         "lone-surrogate", "nested-lone-surrogate", "anchored-boolean"],
 )
 def test_t2_ik1_d6_values_without_a_json_form_exit_3(
     tmp_path: Path, capsys: pytest.CaptureFixture[str], line: str
 ) -> None:
     # IK1-D6 (owner, 2026-10-24): exit 3, as for any typed field at B.
     assert _validate_exit(_write_yaml_description(tmp_path, line), capsys) == 3
+
+
+@pytest.mark.parametrize(
+    ("line", "expected"),
+    [
+        ("description: {summary: s, n: 0x10}", 16),
+        ("description: {summary: s, n: &a 5}", 5),
+        ("description: {summary: s, f: true}", True),
+    ],
+    ids=["hex-integer", "anchored-integer", "plain-boolean"],
+)
+def test_t2_ik1_d6_screen_keeps_yaml_scalars_with_a_json_form(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], line: str, expected: Any
+) -> None:
+    from gnd.model import load_model
+
+    path = _write_yaml_description(tmp_path, line)
+    assert _validate_exit(path, capsys) == 0
+    value = next(v for k, v in load_model(path).object_types[0]["description"].items() if k != "summary")
+    assert value == expected and json.dumps(value) == json.dumps(expected)
 
 
 def test_t2_non_finite_numbers_outside_descriptions_are_unchanged(
@@ -202,6 +226,31 @@ def test_t3_core_keys_render_in_full(tmp_path: Path, text: str) -> None:
     assert f" — {escaped}" in docstrings
     for rendered in (sentence, vocabulary, docstrings):
         assert "more characters)" not in rendered
+
+
+DISTINCT = {"summary": "S-mark", "row": "R-mark", "source": "SRC-mark", "notes": "N-mark"}
+
+
+def test_t3_core_keys_render_in_one_fixed_order(tmp_path: Path) -> None:
+    # Review R4: one DESCRIPTION_CORE_KEYS order for every renderer.
+    shuffled = {key: DISTINCT[key] for key in ("notes", "source", "row", "summary")}
+    verbalization, vocabulary, _ = _renders(_write_model(tmp_path, shuffled))
+    assert _borrower_sentence(verbalization).endswith(
+        " Description: 'S-mark'. Row: 'R-mark'. Source: 'SRC-mark'. Notes: 'N-mark'."
+    )
+    lines = vocabulary.splitlines()
+    first = lines.index("  Description: 'S-mark'")
+    assert lines[first : first + 4] == [
+        "  Description: 'S-mark'", "  Row: 'R-mark'", "  Source: 'SRC-mark'", "  Notes: 'N-mark'"
+    ]
+
+
+def test_t4_docstrings_render_summary_only(tmp_path: Path) -> None:
+    # Review R5: the other core keys stay out of code.
+    _, _, docstrings = _renders(_write_model(tmp_path, DISTINCT))
+    assert " — S-mark" in docstrings
+    for mark in ("R-mark", "SRC-mark", "N-mark"):
+        assert mark not in docstrings
 
 
 def test_t4_codegen_docstring_carries_summary_inside_delimiter(tmp_path: Path) -> None:
@@ -339,6 +388,29 @@ def test_t8_description_only_diff_is_v2_with_one_annotation(tmp_path: Path, befo
     assert {key: value for key, value in payload.items() if key not in {"schema_version", "annotations", "model_a_digest", "model_b_digest"}} == {
         key: value for key, value in identical.items() if key not in {"schema_version", "model_a_digest", "model_b_digest"}
     }
+
+
+def test_t8_annotations_survive_active_applied_redaction(tmp_path: Path) -> None:
+    # Review R6: the library fixture declares no redaction, so an active policy
+    # is needed for the applied-mode pass-through to be exercised.
+    def write(description: Any, name: str) -> Path:
+        document = _library_document()
+        document["fact_types"][0]["redact"] = True
+        if description is not None:
+            document["object_types"][0]["description"] = description
+        path = tmp_path / name
+        path.write_text(json.dumps(document, ensure_ascii=False), encoding="utf-8")
+        return path
+
+    before, after = {"summary": "old", "x": [1]}, {"summary": "new", "x": [2]}
+    left, right = write(before, "left.orm.yaml"), write(after, "right.orm.yaml")
+    for extra in ((), ("--unredacted",)):
+        process = subprocess.run(
+            [sys.executable, "-m", "gnd", "diff", "--format", "json", *extra, str(left), str(right)],
+            cwd=REPO_ROOT, capture_output=True, text=True, check=False,
+        )
+        payload = json.loads(process.stdout)
+        assert payload["annotations"] == [{"object_type": "borrower", "before": before, "after": after}]
 
 
 def test_t8_diff_schema_refuses_mismatched_version_and_annotations() -> None:

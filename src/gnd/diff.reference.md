@@ -1,4 +1,4 @@
-# Differential report contract (`gnd-diff/1`)
+# Differential report contract (`gnd-diff/1`, `gnd-diff/2`)
 
 `diff.schema.json` is the closed output shape. This file defines the meaning of its
 rows. A diff compares two validated models only when their vocabulary projections

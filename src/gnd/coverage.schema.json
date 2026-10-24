@@ -71,10 +71,11 @@
     },
     "induced": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "$ref": "#/$defs/induced_row"
       },
-      "description": "IK2-C3: one row per `source: induced` constraint, in element order: inducer, method, manifest digest, support counts and digest-bound evidence. Example ids, counterexample ids and confidence are not copied."
+      "description": "IK2-C3: one row per `source: induced` constraint, in element order: inducer, method, manifest digest, support counts and digest-bound evidence. Example ids, counterexample ids and confidence are not copied. Never empty: a model with no induced constraint emits no key (IK2-D8)."
     }
   },
   "$defs": {

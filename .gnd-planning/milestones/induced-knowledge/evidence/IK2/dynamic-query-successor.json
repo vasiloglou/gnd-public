@@ -5,6 +5,18 @@
   "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): induced provenance admission (the D-12 status-change index), the coverage induced view and its shared constraint-address walk add type-annotation and induction-key subscripts. Syntax census only; no model-query exception widening.",
   "removed": [
     [
+      "src/gnd/evolve/service.py",
+      "_constraints",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_constraints",
+      "list[dict[str, Any]]",
+      2
+    ],
+    [
       "src/gnd/exp/session_eval.py",
       "VerifierVerdict",
       "Literal['explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported']",
@@ -122,20 +134,32 @@
     ],
     [
       "src/gnd/evolve/service.py",
-      "_enforce_d12",
-      "Counter[str]",
-      1
+      "_constraints",
+      "list[Any]",
+      2
     ],
     [
       "src/gnd/evolve/service.py",
       "_enforce_d12",
-      "before_items[rendered]",
+      "Counter[tuple[str | None, str]]",
       1
     ],
     [
       "src/gnd/evolve/service.py",
       "_enforce_d12",
       "claimable[predecessor]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "leftover[rendered]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "tuple[str | None, str]",
       1
     ],
     [
@@ -157,6 +181,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 6235,
-  "result_occurrences": 7822
+  "result_distinct_rows": 6236,
+  "result_occurrences": 7821
 }

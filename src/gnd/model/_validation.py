@@ -198,14 +198,41 @@ def _derivation_rule_hint(error: Any, doc: Any = None) -> str | None:
 
 
 _OBJECT_TYPE_DESCRIPTION_PATH = re.compile(r"\$\.object_types\[\d+\]\.description(?:[.\[]|$)")
-#: Subtrees whose values must have a JSON form: object-type descriptions
-#: (IK1-D6) and induction blocks (IK2), whose schema bounds NaN would satisfy.
-_JSON_FORM_SCREENED_PATHS = (
-    _OBJECT_TYPE_DESCRIPTION_PATH,
-    re.compile(
-        r"\$\.(?:fact_types\[\d+\]\.)?constraints\[\d+\]\.provenance\.induction(?:[.\[]|$)"
-    ),
+#: An induction block under a constraint; group 1 is the constraint's path.
+_INDUCTION_PATH = re.compile(
+    r"(\$\.(?:fact_types\[\d+\]\.)?constraints\[\d+\])\.provenance\.induction(?:[.\[]|$)"
 )
+
+
+def _induced_constraint_paths(doc: Any) -> frozenset[str]:
+    """Layer-1 paths of every ``source: induced`` constraint, total over any input.
+
+    The IK2 screen applies only under these: an ``induction`` key under any
+    other source is not an induction block, and IK2-D3 keeps ``gnd validate``
+    unchanged for it (review R2)."""
+    paths: set[str] = set()
+    if not isinstance(doc, dict):
+        return frozenset()
+    hosts: list[tuple[str, Any]] = [("$", doc)]
+    fact_types = doc.get("fact_types")
+    if isinstance(fact_types, list):
+        hosts.extend((f"$.fact_types[{index}]", item) for index, item in enumerate(fact_types))
+    for prefix, host in hosts:
+        constraints = host.get("constraints") if isinstance(host, dict) else None
+        if isinstance(constraints, list):
+            for index, constraint in enumerate(constraints):
+                if isinstance(constraint, dict) and constraint.get("source") == "induced":
+                    paths.add(f"{prefix}.constraints[{index}]")
+    return frozenset(paths)
+
+
+def _json_form_screened(path: str, induced: frozenset[str]) -> bool:
+    """Whether a value must have a JSON form: object-type descriptions (IK1-D6)
+    and induced constraints' induction blocks (IK2), whose bounds NaN satisfies."""
+    if _OBJECT_TYPE_DESCRIPTION_PATH.match(path):
+        return True
+    match = _INDUCTION_PATH.match(path)
+    return match is not None and match.group(1) in induced
 _LONE_SURROGATE = re.compile("[\ud800-\udfff]")
 
 
@@ -234,6 +261,7 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
     # stringify an integer of more than 4300 decimal digits, so screen hostile
     # in-process JSON before asking it to render a diagnostic.
     pending = [("$", doc)]
+    induced = _induced_constraint_paths(doc)
     while pending:
         path, value = pending.pop()
         if isinstance(value, dict):
@@ -254,7 +282,7 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
                 message="integer literal exceeds the in-process diagnostic limit",
                 rule_id="jsonschema:type",
             )]
-        elif any(pattern.match(path) for pattern in _JSON_FORM_SCREENED_PATHS) and (
+        elif _json_form_screened(path, induced) and (
             reason := _value_without_json_form(value)
         ):
             return [ValidationIssue(path=path, message=reason, rule_id="jsonschema:type")]

@@ -91,9 +91,10 @@ def _rule_induced_provenance(doc: dict[str, Any]) -> list[ValidationIssue]:
             continue
         numerator = support.get("numerator")
         denominator = support.get("denominator")
-        if not (
-            type(numerator) is int and type(denominator) is int
-        ):
+        if not (type(numerator) is int and type(denominator) is int):
+            # JSON Schema counts 10.0 as an integer; support counts are exact
+            # integers, and a float would also skip every check below (R1).
+            issue(f"{base}.support", "support numerator and denominator must be exact integers")
             continue
         if numerator > denominator:
             issue(f"{base}.support", f"support numerator {numerator} exceeds denominator {denominator}")

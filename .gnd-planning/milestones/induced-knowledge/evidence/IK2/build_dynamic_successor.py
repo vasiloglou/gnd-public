@@ -15,8 +15,8 @@ from pathlib import Path
 ROOT = Path.cwd()
 sys.path.insert(0, str(ROOT / "tests"))
 
-from support.pyrel_application_successors import DYNAMIC_SUCCESSORS  # noqa: E402
-from test_rf6_query_policy import dynamic_reads, sources, successor_dynamic_rows  # noqa: E402
+from support.pyrel_application_successors import DYNAMIC_SUCCESSORS
+from test_rf6_query_policy import dynamic_reads, sources, successor_dynamic_rows
 
 OUT = ROOT / ".gnd-planning/milestones/induced-knowledge/evidence/IK2/dynamic-query-successor.json"
 PREDECESSOR = ROOT / ".gnd-planning/milestones/induced-knowledge/evidence/IK1/dynamic-query-successor.json"

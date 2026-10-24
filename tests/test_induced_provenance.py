@@ -492,3 +492,173 @@ def test_t13_rai_import_default_modality_follows_the_d03_row() -> None:
     assert _default_modality(_induced("confirmed", reviewed_in=REVIEW), "/c") == "alethic"
     with pytest.raises(RaiImportError, match="induced/confirmed requires reviewed_in"):
         _default_modality(_induced("confirmed"), "/c")
+
+
+# ---- adversarial-review regressions (notes/phase-IK2-agent-review.md) -------
+# Successor cases beside the approved corpus: they add inputs, never change an
+# approved answer.
+
+
+def _validate(tmp_path: Path, document: dict[str, Any], *, yaml_text: str | None = None) -> str:
+    path = tmp_path / ("model.orm.yaml" if yaml_text is not None else "model.orm.json")
+    path.write_text(yaml_text if yaml_text is not None else json.dumps(document), encoding="utf-8")
+    result = run_main(["validate", str(path)])
+    return f"{result.returncode} " + (result.stdout + result.stderr).decode("utf-8")
+
+
+@pytest.mark.parametrize(
+    "support",
+    [{"numerator": 10.0, "denominator": 1.0}, {"numerator": 2.0, "denominator": 3}],
+    ids=["both-float", "numerator-float"],
+)
+def test_r1_float_support_counts_are_refused(tmp_path: Path, support: dict) -> None:
+    document = _evolution_before()
+    constraint = _induced()
+    constraint["provenance"]["induction"]["support"] = support
+    constraint["provenance"]["induction"]["examples"] = [f"case-{i}" for i in range(10)]
+    document["fact_types"][0]["constraints"].append(constraint)
+    outcome = _validate(tmp_path, document)
+    assert outcome.startswith("3 ") and "[semantic:induced-provenance]" in outcome, outcome
+
+
+def test_r2_induction_key_under_another_source_validates_as_at_base(tmp_path: Path) -> None:
+    # IK2-D3: validate is unchanged for every source but induced, so a model
+    # valid at B (an llm-inferred provenance carrying an `induction` key with a
+    # NaN) stays valid; only the evolve gate refuses such a block.
+    document = _evolution_before()
+    document["fact_types"][0]["constraints"].append({
+        "type": "uniqueness", "roles": ["title"], "source": "llm-inferred",
+        "status": "proposed", "modality": "deontic", "rationale": "r",
+        "provenance": {"rationale_world_fact": "w", "induction": {"conf": "__NAN__"}},
+    })
+    text = json.dumps(document).replace('"__NAN__"', ".nan")
+    assert _validate(tmp_path, document, yaml_text=text).startswith("0 ")
+
+
+def _two_title_facts() -> dict[str, Any]:
+    document = _evolution_before()
+    second = copy.deepcopy(document["fact_types"][0])
+    second.update(id="work_item_has_alt_title", reading="{WorkItem} has alt {Title}", constraints=[])
+    document["fact_types"].append(second)
+    return document
+
+
+@pytest.mark.parametrize("target", ["other-fact-type", "top-level"])
+def test_r3_confirmation_cannot_move_the_rule(target: str) -> None:
+    before = _two_title_facts()
+    candidate = copy.deepcopy(before)
+    before["fact_types"][0]["constraints"].append(_induced())
+    confirmed = _induced("confirmed", "alethic", reviewed_in=REVIEW)
+    if target == "top-level":
+        candidate["constraints"].append(confirmed)
+    else:
+        candidate["fact_types"][1]["constraints"].append(confirmed)
+    assert _gate_outcome(before, candidate) == EXPECTED["reasons"]["R-I3"]
+
+
+def test_r3_confirmation_in_place_is_still_admitted() -> None:
+    before = _two_title_facts()
+    candidate = copy.deepcopy(before)
+    before["fact_types"][0]["constraints"].append(_induced())
+    candidate["fact_types"][0]["constraints"].append(
+        _induced("confirmed", "alethic", reviewed_in=REVIEW)
+    )
+    assert _gate_outcome(before, candidate) == "admitted"
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("inducer.name", "gnd-discover\n"),
+        ("inducer.version", "0.1.0\n"),
+        ("method", "gnd-discover\n"),
+        ("counterexamples", ["case-1\n"]),
+    ],
+)
+def test_r5_trailing_newline_in_every_patterned_field_is_refused(
+    tmp_path: Path, field: str, value: Any
+) -> None:
+    document = _evolution_before()
+    constraint = _induced()
+    induction = constraint["provenance"]["induction"]
+    if field.startswith("inducer."):
+        induction["inducer"][field.split(".")[1]] = value
+    else:
+        induction[field] = value
+    document["fact_types"][0]["constraints"].append(constraint)
+    outcome = _validate(tmp_path, document)
+    assert outcome.startswith("3 ") and "[semantic:induced-provenance]" in outcome, outcome
+
+
+def test_r5_raw_counterexample_value_is_refused(tmp_path: Path) -> None:
+    document = _evolution_before()
+    constraint = _induced()
+    constraint["provenance"]["induction"]["counterexamples"] = ["Jane Doe"]
+    document["fact_types"][0]["constraints"].append(constraint)
+    assert _validate(tmp_path, document).startswith("3 ")
+
+
+def test_r5_top_level_induction_nan_is_screened(tmp_path: Path) -> None:
+    document = _evolution_before()
+    constraint = _induced()
+    constraint["provenance"]["induction"]["confidence"] = {"value": "__NAN__", "formula": "f"}
+    document["fact_types"][0]["constraints"].append(constraint)
+    text = json.dumps(document).replace('"__NAN__"', ".nan")
+    # The same block at the top level, where constraints[0] is the host path.
+    top = json.loads(json.dumps(document).replace('"__NAN__"', "0.5"))
+    top["constraints"] = [top["fact_types"][0]["constraints"].pop()]
+    top_text = json.dumps(top).replace('"value": 0.5', '"value": .nan')
+    for yaml_text in (text, top_text):
+        outcome = _validate(tmp_path, document, yaml_text=yaml_text)
+        assert outcome.startswith("3 ") and "provenance.induction.confidence.value" in outcome
+
+
+def test_r5_reconfirming_a_confirmed_rule_is_refused() -> None:
+    before = _evolution_before()
+    candidate = copy.deepcopy(before)
+    before["fact_types"][0]["constraints"].append(
+        _induced("confirmed", "alethic", reviewed_in=REVIEW)
+    )
+    candidate["fact_types"][0]["constraints"].append(
+        _induced("confirmed", "alethic", reviewed_in=REVIEW + ".2")
+    )
+    assert _gate_outcome(before, candidate) == EXPECTED["reasons"]["R-I3"]
+
+
+def _top_level_induced() -> dict[str, Any]:
+    constraint = _induced()
+    del constraint["roles"]
+    constraint.update(
+        scope="external",
+        role_refs=[
+            {"fact_type": "work_item_has_title", "role": "title"},
+            {"fact_type": "work_item_has_alt_title", "role": "title"},
+        ],
+    )
+    return constraint
+
+
+def test_r5_coverage_rows_carry_status_address_and_location(tmp_path: Path) -> None:
+    document = _two_title_facts()
+    named = _induced("confirmed", "alethic", reviewed_in=REVIEW)
+    named["id"] = "ik_title"
+    document["fact_types"][0]["constraints"].append(named)
+    document["constraints"].append(_top_level_induced())
+    payload, _ = _coverage(tmp_path, document)
+    assert [(row["address"], row["status"], row["modality"]) for row in payload["induced"]] == [
+        ("constraint:ik_title", "confirmed", "alethic"),
+        ("constraints[0]", "proposed", "deontic"),
+    ]
+
+
+def test_r5_schema_v1_session_verdict_accepts_induced() -> None:
+    from gnd.exp.session_eval import _VerifierVerdictV1
+
+    assert "induced" in str(_VerifierVerdictV1.model_fields["source"].annotation)
+
+
+def test_r5_coverage_schema_refuses_an_empty_induced_list(tmp_path: Path) -> None:
+    document = _evolution_before()
+    document["fact_types"][0]["constraints"].append(_induced())
+    payload, _ = _coverage(tmp_path, document)
+    assert list(_coverage_validator().iter_errors({**payload, "induced": []}))

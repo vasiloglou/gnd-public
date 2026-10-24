@@ -207,7 +207,7 @@
       "name": "_layer1_structural",
       "home": "gnd.model._validation",
       "before": "ba78b16641f5e8df5ec40dc251e6e07c5c85ab37d2cbb7ae9260ec6c99056780",
-      "after": "27697947a6a30a94d3555d8734ef22d9e75950c260e6857ef678ab5106b5a918",
+      "after": "0a9265dab6e7aa4012a964f041e3efc76dc734f8c0331751b1b1b6fd9a9e8fe5",
       "reason": "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses description values with no faithful JSON form (NaN, infinity, lone surrogates, anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint provenance.induction blocks through one tuple of screened paths; every other path unchanged."
     },
     {

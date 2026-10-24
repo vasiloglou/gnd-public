@@ -201,11 +201,23 @@ def _parse_model_text(text: str) -> dict[str, Any]:
     return dict(parsed)
 
 
-def _constraints(document: dict[str, Any]) -> list[dict[str, Any]]:
-    result: list[dict[str, Any]] = []
+def _constraints(document: dict[str, Any], *, hosted: bool = False) -> list[Any]:
+    """Every constraint, fact-type lists first and then the top level.
+
+    With ``hosted=True`` each is paired with its host: the fact-type id, or
+    ``None`` for a top-level constraint (a non-string id by its ``repr``)."""
+    result: list[Any] = []
     for fact_type in document.get("fact_types") or []:
-        result.extend(dict(item) for item in fact_type.get("constraints") or [])
-    result.extend(dict(item) for item in document.get("constraints") or [])
+        host = fact_type.get("id")
+        key = host if isinstance(host, str) else repr(host)
+        result.extend(
+            (key, dict(item)) if hosted else dict(item)
+            for item in fact_type.get("constraints") or []
+        )
+    result.extend(
+        (None, dict(item)) if hosted else dict(item)
+        for item in document.get("constraints") or []
+    )
     return result
 
 
@@ -234,23 +246,32 @@ def _without_review(constraint: dict[str, Any]) -> dict[str, Any]:
 
 
 def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
-    before_rendered = [(canonical_json_text(item), item) for item in _constraints(before)]
-    before_items = dict(before_rendered)
-    before_counts = Counter(rendered for rendered, _ in before_rendered)
-    candidates = [(canonical_json_text(item), item) for item in _constraints(candidate)]
+    before_hosted = [
+        (host, canonical_json_text(item), item) for host, item in _constraints(before, hosted=True)
+    ]
+    before_counts = Counter(rendered for _, rendered, _ in before_hosted)
+    candidates = [
+        (host, canonical_json_text(item), item) for host, item in _constraints(candidate, hosted=True)
+    ]
     # IK2: the proposed induced constraints a reviewed status change may claim
     # are those left over once every unchanged candidate copy has consumed its
     # exact match, so two candidates can never confirm one predecessor and an
-    # unchanged copy can never be confirmed a second time. Computed up front so
-    # the single in-order pass below keeps every pre-IK2 refusal order.
-    claimable: Counter[str] = Counter()
-    leftover = before_counts - Counter(rendered for rendered, _ in candidates)
-    for rendered, count in leftover.items():
-        item = before_items[rendered]
-        if item.get("source") == "induced" and item.get("status") == "proposed":
-            claimable[canonical_json_text(_without_review(item))] += count
+    # unchanged copy can never be confirmed a second time. A claim is keyed by
+    # the predecessor's host, so confirmation cannot also move the rule to
+    # another fact type or the top level (review R3). Computed up front so the
+    # single in-order pass below keeps every pre-IK2 refusal order.
+    leftover = before_counts - Counter(rendered for _, rendered, _ in candidates)
+    claimable: Counter[tuple[str | None, str]] = Counter()
+    for host, rendered, item in before_hosted:
+        if (
+            leftover[rendered]
+            and item.get("source") == "induced"
+            and item.get("status") == "proposed"
+        ):
+            leftover[rendered] -= 1
+            claimable[(host, canonical_json_text(_without_review(item)))] += 1
 
-    for rendered, constraint in candidates:
+    for host, rendered, constraint in candidates:
         if _contains_audit_key(constraint.get("provenance", {})):
             raise EvolutionError(
                 "operation audit actor/origin/time fields cannot enter constraint provenance"
@@ -276,7 +297,7 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
                 continue
             if status == "confirmed":
                 reviewed_in = provenance.get("reviewed_in")
-                predecessor = canonical_json_text(_without_review(constraint))
+                predecessor = (host, canonical_json_text(_without_review(constraint)))
                 if isinstance(reviewed_in, str) and reviewed_in.strip() and claimable[predecessor]:
                     claimable[predecessor] -= 1
                     continue

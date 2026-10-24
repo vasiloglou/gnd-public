@@ -16,17 +16,21 @@ HOME = ROOT / "src/gnd/model/_validation.py"
 ROWS = {
     "_layer1_structural": (
         None,  # IK1's row keeps its original `before`
-        "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses "
-        "description values with no faithful JSON form (NaN, infinity, lone surrogates, "
-        "anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint "
-        "provenance.induction blocks through one tuple of screened paths; every other path "
-        "unchanged.",
+        (
+            "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses "
+            "description values with no faithful JSON form (NaN, infinity, lone surrogates, "
+            "anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint "
+            "provenance.induction blocks through one tuple of screened paths; every other path "
+            "unchanged."
+        ),
     ),
     "_rule_modality_policy": (
         "bd83f28b3fb7bfe2e679853f9c4a789097f987031e199709b540356557bd5a46",
-        "Owner-approved induced-knowledge IK2 (2026-10-24): the D-03 modality-policy warning "
-        "also covers an unconfirmed induced constraint claiming alethic, with its own message; "
-        "the llm-inferred/common-sense message is byte-identical.",
+        (
+            "Owner-approved induced-knowledge IK2 (2026-10-24): the D-03 modality-policy warning "
+            "also covers an unconfirmed induced constraint claiming alethic, with its own "
+            "message; the llm-inferred/common-sense message is byte-identical."
+        ),
     ),
 }
 

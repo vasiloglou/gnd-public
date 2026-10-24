@@ -669,3 +669,19 @@ Recorded as found. F1 and F2 are the corpus-authoring findings in §14.
   for all candidates before any D-12 branch. That changes which refusal a
   multi-defect proposal reports first. The final gate keeps the single in-order
   pass, with claimable predecessors computed up front, and T7 pins both orders.
+
+## 17. Owner ruling on the review fixes (2026-10-24)
+
+**Ruling (o).** After the record (`0f0a55c`), the owner replied "ok I approve
+the fixes" on 2026-10-24. This approves the fixes in `6259bc0`:
+- R1: float support counts refused;
+- R2: the screen scoped to induced constraints;
+- R3: a reviewed status change is claimed per host fact type;
+- R5: tests added and `minItems: 1` on `induced`.
+
+It rules **IK2-Q4**: a confirmation must stay on its host. This replaces §6's
+"matching is location-insensitive" for the status-change path (F6); exact
+matching of unchanged constraints is unchanged.
+
+The ruling does not decide **IK2-Q1** (archived induced proposals), which stays
+open.

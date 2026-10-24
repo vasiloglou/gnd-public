@@ -45,9 +45,9 @@ Records:
   gate 2309 passed; one local reviewer, no blocking findings; IK1-Q1 (extras
   nesting cap) awaits an owner ruling.
 - [003 phase IK2](003-phase-IK2.md): induced provenance and admission shipped;
-  focused gate 4003 passed; one local reviewer, R1 (blocking) fixed; IK2-Q1
-  (archived induced proposals) and IK2-Q4 (confirm in place) await owner
-  rulings.
+  focused gate 4003 passed; one local reviewer, R1 (blocking) fixed; the owner
+  approved the review fixes (IK2-Q4 ruled); IK2-Q1 (archived induced
+  proposals) awaits a ruling.
 
 Next: IK3 (measure over host-labelled populations) or IK4 (constraint
 discovery), each needing its own spec and owner gate.

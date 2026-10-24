@@ -96,7 +96,7 @@ evidence:
   - path: .gnd-planning/milestones/induced-knowledge/evidence/IK2/final-gate.txt
     sha256: 3e9ba8fcd7347e3b659aa6134c904b23f59b05187092329112886a01c4de65c3
   - path: .gnd-planning/milestones/induced-knowledge/notes/phase-IK2-spec.md
-    sha256: e5f3f6b3372833222d9c0e384be3fb8a72239eafe0dba1c1e9618908d7bb9c76
+    sha256: e9ad6deda6feea9daca0d14cd7e1d76b1636ccb28ff1c41bbaafc530228a3fc6
   - path: .gnd-planning/milestones/induced-knowledge/notes/phase-IK2-agent-review.md
     sha256: 620398d2ce9b5d8347fe2501c3c8b26f6b12b3c5180f87ca0ab682fe24e2d054
   - path: .gnd-planning/milestones/induced-knowledge/notes/induced-knowledge-plan.md
@@ -284,7 +284,7 @@ The reviewer confirmed, among other claims:
 | IK2-Q1 | Validate induced entries in `rejected_proposals` (review R4), which would change validation for models valid at B | owner ruling; before IK4 emits proposals |
 | IK2-Q2 | Make `rai_import._default_modality` read the D-03 table from its one home instead of copying it | milestone close sweep |
 | IK2-Q3 | Replace `_evolve_service_exit`'s message-substring mapping with typed refusals | milestone close sweep, or the refactoring milestone that owns RF5 |
-| IK2-Q4 | Confirm F6: a reviewed status change must stay on its host (narrows spec §6 "location-insensitive") | owner ruling at this record |
+| IK2-Q4 | Confirm F6: a reviewed status change must stay on its host (narrows spec §6 "location-insensitive") | **owner-ruled 2026-10-24 (o)**: fixes approved, so confirmation stays on its host (spec §17) |
 | IK2-Q5 | Trailing-newline acceptance in the pre-existing `orm-meta` `pattern`s (S1) | milestone close sweep |
 | IK1-Q1 | Nesting cap for description extras (carried, still open) | owner ruling under IK-R12; before IK6 |
 

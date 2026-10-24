@@ -38,4 +38,10 @@ Close is separate.
 Request 2 (role-scoped value verbalization) shipped in
 [PR #35](https://github.com/vasiloglou/gnd-public/pull/35), merged as `1d6eee0`.
 
-In progress: IK1 implementation (`process-phase IK1 induced-knowledge`, auto=false).
+Records:
+- [001 plan gate](001-plan-gate.md): plan r4 and IK1 spec r4 approved 2026-10-24.
+- [002 phase IK1](002-phase-IK1.md): object-type descriptions shipped; focused
+  gate 2309 passed; one local reviewer, no blocking findings; IK1-Q1 (extras
+  nesting cap) awaits an owner ruling.
+
+Next: IK2 needs its own spec and owner gate.

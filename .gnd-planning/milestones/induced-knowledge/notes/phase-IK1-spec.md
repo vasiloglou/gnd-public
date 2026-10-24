@@ -432,3 +432,32 @@ Recorded as found, 2026-10-24.
   before the mutation. The restored file has the IK1 additions and one
   `"schema_version": "gnd-diff/1",` anchor. T8, T10 and T12 pass on it. The
   mutation itself made its expected-red test fail, so the anchor is still killed.
+- **IK1-F5, review R1/R2 under IK1-D6.** The adversarial review reproduced two
+  more description values that validated but were not carried faithfully as
+  JSON:
+  - a lone surrogate, which crashed `gnd diff` (internal error) and
+    `gnd codegen`;
+  - an anchored YAML boolean, which ruamel loads as an `int` subclass and which
+    was serialized as `1`.
+
+  Both fall under the owner's D6 ruling (exit 3 for a value with no JSON form)
+  and D14 (extras are carried unchanged). The layer-1 screen now refuses both
+  inside descriptions through one predicate,
+  `_description_value_without_json_form`. Hex and anchored integers still
+  validate, and a test pins that. Each new T2 case was red before the fix.
+- **IK1-F6, refactoring-era inventories.** Two RF guards count source shapes,
+  so IK1 registers its successors there:
+  - The `gnd.model._layer1_structural` definition-body pin gets an RF6b row in
+    `compiled-snapshot-obligations/evidence/CI/source-successors.json`, the home
+    PR #35 used.
+  - The dynamic-candidate census gets a new chained delta,
+    `evidence/IK1/dynamic-query-successor.json` (7 added, 1 removed; type
+    annotations and description-key subscripts only), appended to
+    `DYNAMIC_SUCCESSORS`.
+
+  An intermediate edit wrongly changed the head file of that chain. The edit
+  was restored from `HEAD` before any commit.
+- **IK1-F7, deferred to the owner.** Review R3: extras have no declared nesting
+  bound. Refusal depends on Python's recursion limit (about depth 243 on
+  Python 3.14), and evolve proposals cap JSON depth at 64. A new numeric bound
+  needs an owner-recorded amendment under IK-R12, so none was added (IK1-Q1).

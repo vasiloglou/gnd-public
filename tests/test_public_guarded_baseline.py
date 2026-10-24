@@ -42,6 +42,15 @@ PHASE3_REWIRED_REPORT_SHA256 = {
     "ring_fail.check.json": "2ac4018d81f33cc688d0ec899eba2e0659d6a2bfc501c37ae7acc0a39ca1dffb",
 }
 
+# Issue #34 request 2: role-scoped value constraint messages now name their role,
+# so the two setfam reports move again. Each entry pins the complete new wire
+# bytes at the projection version its predecessor pin used; the predecessor
+# fixture and the Phase 3 digest above stay unchanged for historical comparison.
+ROLE_SCOPED_VALUE_REPORT_SHA256 = {
+    "setfam_pass.check.json": (3, "37e341e82b09be3ba07fed91a69ad5c8b2de37853fe616833a21dd19ab710ab7"),
+    "setfam_fail.check.json": (5, "5569f1a1b3728a557abfa72a5d5ab0138b16b1bda5113377e72ad6caec1da887"),
+}
+
 def _run_cli(*args: str, text: bool = True) -> subprocess.CompletedProcess[Any]:
     return subprocess.run(
         [sys.executable, "-m", "gnd", *args],
@@ -119,6 +128,11 @@ def test_zero_guarded_reports_match_immutable_baseline(
 ) -> None:
     result = _run_cli(*args, text=False)
     payload = json.loads(result.stdout)
+    if golden_name in ROLE_SCOPED_VALUE_REPORT_SHA256:
+        version, digest = ROLE_SCOPED_VALUE_REPORT_SHA256[golden_name]
+        wire = (json.dumps(legacy_report_projection(payload, version)) + "\n").encode()
+        assert hashlib.sha256(wire).hexdigest() == digest
+        return
     if golden_name in PHASE3_REWIRED_REPORT_SHA256:
         # These two broad reports deliberately move when Phase 3 makes the v6
         # semantic providers authoritative. Pin the complete new wire bytes;

@@ -587,6 +587,63 @@ def test_role_scoped_value_is_vacuous_when_only_another_role_of_its_type_is_popu
     assert band(report) == 2
 
 
+def _role_scoped_value_model(constraint: dict) -> Model:
+    return Model(
+        version=1,
+        object_types=[{"id": "code", "kind": "value", "primitive": "Integer"}],
+        fact_types=[
+            {
+                "id": "a",
+                "reading": "{code} appears in a",
+                "roles": [{"object_type": "code", "role_name": "code"}],
+            },
+            {
+                "id": "b",
+                "reading": "{code} appears in b",
+                "roles": [{"object_type": "code", "role_name": "code"}],
+            },
+        ],
+        constraints=[
+            {
+                "type": "value",
+                "object_type": "code",
+                "role_ref": {"fact_type": "a", "role": "code"},
+                "modality": "alethic",
+                **constraint,
+            }
+        ],
+    )
+
+
+@pytest.mark.parametrize(
+    ("constraint", "head"),
+    [
+        ({"allowed": [1]}, "must be one of ['1']"),
+        ({"range": {"min": 1, "max": 5}}, "must be between '1' and '5'"),
+        ({"ranges": [{"min": 1, "max": 5}]}, "must be between '1' and '5'"),
+    ],
+)
+def test_role_scoped_value_message_names_its_role(constraint, head):
+    """Issue 34 request 2: a role-scoped value message must not read as if it
+    restricted every value of the object type."""
+    model = _role_scoped_value_model(constraint)
+    population = make_population(
+        model,
+        model="m.orm.yaml",
+        source="fixture",
+        covers=["a", "b"],
+        facts={"a": [{"code": 9}], "b": [{"code": 8}]},
+    )
+
+    verdict = check(model, population).verdicts[0]
+    assert verdict.verdict == "fail"
+    assert verdict.message.startswith(
+        f"Each code value playing the 'code' role in 'a' {head}"
+    ), verdict.message
+    assert "'9'" in verdict.message
+    assert "'8'" not in verdict.message
+
+
 # --- D-17: the split blessing test ---
 #
 # This was ONE test named `test_uniqueness_skips_facts_missing_covered_role`,

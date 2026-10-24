@@ -1,0 +1,11 @@
+{
+  "before": {
+    "sha256": "65013abe75d63243bac8a40df81ecf5561c15ea0e0c15bdb547fc3c20cd8dfc0",
+    "size_bytes": 64025
+  },
+  "after": {
+    "sha256": "ff918ed0095eecde56e580e2961d6614c6bd348e8afecc7047ad26df3453d180",
+    "size_bytes": 64085
+  },
+  "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts and counts unchanged"
+}

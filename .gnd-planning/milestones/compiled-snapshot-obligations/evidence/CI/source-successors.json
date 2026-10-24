@@ -191,6 +191,15 @@
       "before": "ab86d401e35dd1601486670ac7d1f8facc9751e6d75e9441b1dd81f52d34e4d5",
       "after": "3e20b7995cf4bf68ec7a77ee9b8d9444160d69711768e0a4b8c75b20fa889f3a",
       "reason": "Approved transition-check-performance TP1 per-call ModelIndex scope decorator and TP2 non-copying fact-type reads; results unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "_family_message_value",
+      "home": "gnd.checker._core",
+      "before": "2d49fd85a61c75df0d6d8aa5d83f6e135e13e5fa8838915bf3aa166e79cd43f1",
+      "after": "bdeb4dadccd8e72041f35c145bcee60cbb4087966ac42a08a8b3d23cbcda1f51",
+      "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts unchanged, messages without role_ref unchanged."
     }
   ]
 }

@@ -1,0 +1,4396 @@
+{
+ "version": 1,
+ "spec": ".gnd-planning/milestones/induced-knowledge/notes/phase-IK2-spec.md (r1)",
+ "bases": {
+  "evolution": "tests/fixtures/phase4_reference/evolution.json#evolution-safe-additive/before_model",
+  "v2_operations": "tests/fixtures/models/v2_operations.orm.yaml"
+ },
+ "host": "constraints are appended to fact_types[0].constraints of the base",
+ "loader": [
+  {
+   "id": "L01",
+   "base": "evolution",
+   "story": "minimal induced block, proposed and deontic",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L02",
+   "base": "evolution",
+   "story": "maximal block: examples, counterexamples, two evidence items, confidence",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "case-0001",
+       "case-0002"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [
+       "case-0003"
+      ],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "labels/manifest.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+       }
+      ],
+      "confidence": {
+       "value": 0.67,
+       "formula": "numerator / denominator"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "L03",
+   "base": "evolution",
+   "story": "confirmed and alethic, with the review record named",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "confirmed",
+    "modality": "alethic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     },
+     "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+    }
+   }
+  },
+  {
+   "id": "L04",
+   "base": "evolution",
+   "story": "proposed but claiming alethic modality",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "alethic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L05",
+   "base": "evolution",
+   "story": "provenance present but without an induction block",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {}
+   }
+  },
+  {
+   "id": "L06",
+   "base": "evolution",
+   "story": "induction block with an unknown key",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "notes": "host notes"
+     }
+    }
+   }
+  },
+  {
+   "id": "L07",
+   "base": "evolution",
+   "story": "an extra provenance key next to induction",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     },
+     "host_path": "x"
+    }
+   }
+  },
+  {
+   "id": "L08",
+   "base": "evolution",
+   "story": "induced source with no provenance at all",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic"
+   }
+  },
+  {
+   "id": "L09",
+   "base": "evolution",
+   "story": "evidence ref is an absolute POSIX path",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "/home/user/x.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L10",
+   "base": "evolution",
+   "story": "evidence ref is a Windows path",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "C:\\data\\x.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L11",
+   "base": "evolution",
+   "story": "evidence ref climbs out of the manifest directory",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "../x.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L12",
+   "base": "evolution",
+   "story": "evidence ref has a parent segment in the middle",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "a/../b.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L13",
+   "base": "evolution",
+   "story": "evidence ref segment starts with a dot",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": ".hidden",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L14",
+   "base": "evolution",
+   "story": "evidence ref contains a space",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "a b.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L15",
+   "base": "evolution",
+   "story": "evidence ref ends in a newline",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "a\n",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L16",
+   "base": "evolution",
+   "story": "example id is a raw two-word value",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "Jane Doe"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L17",
+   "base": "evolution",
+   "story": "example id contains a path separator",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "a/b"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L18",
+   "base": "evolution",
+   "story": "example id is empty",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       ""
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L19",
+   "base": "evolution",
+   "story": "example id ends in a newline",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "a\n"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L20",
+   "base": "evolution",
+   "story": "manifest digest in upper case",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L21",
+   "base": "evolution",
+   "story": "manifest digest one character short",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L22",
+   "base": "evolution",
+   "story": "evidence digest followed by a newline",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "p.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L23",
+   "base": "evolution",
+   "story": "support numerator larger than its denominator",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 4,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L24",
+   "base": "evolution",
+   "story": "more listed examples than the support numerator",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "case-0000",
+       "case-0001",
+       "case-0002"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L25",
+   "base": "evolution",
+   "story": "more counterexamples than the support gap allows",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [
+       "neg-0000",
+       "neg-0001"
+      ],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L26",
+   "base": "evolution",
+   "story": "one id listed as both an example and a counterexample",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "case-0001"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [
+       "case-0001"
+      ],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L27",
+   "base": "evolution",
+   "story": "confirmed without a review record",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "confirmed",
+    "modality": "alethic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L28",
+   "base": "evolution",
+   "story": "confirmed with a whitespace-only review record",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "confirmed",
+    "modality": "alethic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     },
+     "reviewed_in": "  "
+    }
+   }
+  },
+  {
+   "id": "L29",
+   "base": "evolution",
+   "story": "the same example id listed twice",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "case-0001",
+       "case-0001"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L30",
+   "base": "evolution",
+   "story": "YAML: confidence value is .nan",
+   "constraint_yaml": "{type: uniqueness, roles: [title], source: induced, status: proposed, modality: deontic, provenance: {induction: {inducer: {name: gnd-discover, version: 0.1.0}, method: gnd-discover, manifest_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, examples: [], support: {numerator: 2, denominator: 3}, counterexamples: [], evidence: [{ref: populations/p1.json, sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}], confidence: {value: .nan, formula: f}}}}"
+  },
+  {
+   "id": "L31",
+   "base": "evolution",
+   "story": "YAML: confidence value is .inf",
+   "constraint_yaml": "{type: uniqueness, roles: [title], source: induced, status: proposed, modality: deontic, provenance: {induction: {inducer: {name: gnd-discover, version: 0.1.0}, method: gnd-discover, manifest_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, examples: [], support: {numerator: 2, denominator: 3}, counterexamples: [], evidence: [{ref: populations/p1.json, sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}], confidence: {value: .inf, formula: f}}}}"
+  },
+  {
+   "id": "L32",
+   "base": "evolution",
+   "story": "YAML: support numerator is an anchored true",
+   "constraint_yaml": "{type: uniqueness, roles: [title], source: induced, status: proposed, modality: deontic, provenance: {induction: {inducer: {name: gnd-discover, version: 0.1.0}, method: gnd-discover, manifest_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, examples: [], support: {numerator: &n true, denominator: 3}, counterexamples: [], evidence: [{ref: populations/p1.json, sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}]}}}"
+  },
+  {
+   "id": "L33",
+   "base": "evolution",
+   "story": "YAML: inducer version is an unquoted date",
+   "constraint_yaml": "{type: uniqueness, roles: [title], source: induced, status: proposed, modality: deontic, provenance: {induction: {inducer: {name: gnd-discover, version: 2024-01-01}, method: gnd-discover, manifest_sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, examples: [], support: {numerator: 2, denominator: 3}, counterexamples: [], evidence: [{ref: populations/p1.json, sha256: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb}]}}}"
+  },
+  {
+   "id": "L34",
+   "base": "v2_operations",
+   "story": "induced source on an operation",
+   "set": [
+    [
+     "/operations/0/source",
+     "induced"
+    ],
+    [
+     "/operations/0/status",
+     "proposed"
+    ],
+    [
+     "/operations/0/provenance",
+     {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "id": "L35",
+   "base": "v2_operations",
+   "story": "induced source on an operation precondition",
+   "set": [
+    [
+     "/operations/0/preconditions/0/source",
+     "induced"
+    ],
+    [
+     "/operations/0/preconditions/0/status",
+     "proposed"
+    ],
+    [
+     "/operations/0/preconditions/0/modality",
+     "deontic"
+    ],
+    [
+     "/operations/0/preconditions/0/provenance",
+     {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "id": "L36",
+   "base": "v2_operations",
+   "story": "induced source on an operation dynamic rule",
+   "set": [
+    [
+     "/operations/0/dynamic_rules/0/source",
+     "induced"
+    ],
+    [
+     "/operations/0/dynamic_rules/0/status",
+     "proposed"
+    ],
+    [
+     "/operations/0/dynamic_rules/0/provenance",
+     {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    ]
+   ]
+  },
+  {
+   "id": "L37",
+   "base": "evolution",
+   "story": "an induction block under source explicit",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "explicit",
+    "status": "confirmed",
+    "modality": "alethic",
+    "provenance": {
+     "user_quote": "Each title has one item.",
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "L38",
+   "base": "evolution",
+   "story": "confidence without its formula",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 0.5
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B01",
+   "base": "evolution",
+   "story": "inducer name of 1 character",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "g",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B02",
+   "base": "evolution",
+   "story": "inducer name of 64 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B03",
+   "base": "evolution",
+   "story": "inducer name of 65 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B04",
+   "base": "evolution",
+   "story": "empty inducer name",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B05",
+   "base": "evolution",
+   "story": "inducer version of 64 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B06",
+   "base": "evolution",
+   "story": "inducer version of 65 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "11111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B07",
+   "base": "evolution",
+   "story": "method of 64 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B08",
+   "base": "evolution",
+   "story": "method of 65 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B09",
+   "base": "evolution",
+   "story": "empty method",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B10",
+   "base": "evolution",
+   "story": "example id of 64 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B11",
+   "base": "evolution",
+   "story": "example id of 65 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      ],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B12",
+   "base": "evolution",
+   "story": "256 examples",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "case-0000",
+       "case-0001",
+       "case-0002",
+       "case-0003",
+       "case-0004",
+       "case-0005",
+       "case-0006",
+       "case-0007",
+       "case-0008",
+       "case-0009",
+       "case-0010",
+       "case-0011",
+       "case-0012",
+       "case-0013",
+       "case-0014",
+       "case-0015",
+       "case-0016",
+       "case-0017",
+       "case-0018",
+       "case-0019",
+       "case-0020",
+       "case-0021",
+       "case-0022",
+       "case-0023",
+       "case-0024",
+       "case-0025",
+       "case-0026",
+       "case-0027",
+       "case-0028",
+       "case-0029",
+       "case-0030",
+       "case-0031",
+       "case-0032",
+       "case-0033",
+       "case-0034",
+       "case-0035",
+       "case-0036",
+       "case-0037",
+       "case-0038",
+       "case-0039",
+       "case-0040",
+       "case-0041",
+       "case-0042",
+       "case-0043",
+       "case-0044",
+       "case-0045",
+       "case-0046",
+       "case-0047",
+       "case-0048",
+       "case-0049",
+       "case-0050",
+       "case-0051",
+       "case-0052",
+       "case-0053",
+       "case-0054",
+       "case-0055",
+       "case-0056",
+       "case-0057",
+       "case-0058",
+       "case-0059",
+       "case-0060",
+       "case-0061",
+       "case-0062",
+       "case-0063",
+       "case-0064",
+       "case-0065",
+       "case-0066",
+       "case-0067",
+       "case-0068",
+       "case-0069",
+       "case-0070",
+       "case-0071",
+       "case-0072",
+       "case-0073",
+       "case-0074",
+       "case-0075",
+       "case-0076",
+       "case-0077",
+       "case-0078",
+       "case-0079",
+       "case-0080",
+       "case-0081",
+       "case-0082",
+       "case-0083",
+       "case-0084",
+       "case-0085",
+       "case-0086",
+       "case-0087",
+       "case-0088",
+       "case-0089",
+       "case-0090",
+       "case-0091",
+       "case-0092",
+       "case-0093",
+       "case-0094",
+       "case-0095",
+       "case-0096",
+       "case-0097",
+       "case-0098",
+       "case-0099",
+       "case-0100",
+       "case-0101",
+       "case-0102",
+       "case-0103",
+       "case-0104",
+       "case-0105",
+       "case-0106",
+       "case-0107",
+       "case-0108",
+       "case-0109",
+       "case-0110",
+       "case-0111",
+       "case-0112",
+       "case-0113",
+       "case-0114",
+       "case-0115",
+       "case-0116",
+       "case-0117",
+       "case-0118",
+       "case-0119",
+       "case-0120",
+       "case-0121",
+       "case-0122",
+       "case-0123",
+       "case-0124",
+       "case-0125",
+       "case-0126",
+       "case-0127",
+       "case-0128",
+       "case-0129",
+       "case-0130",
+       "case-0131",
+       "case-0132",
+       "case-0133",
+       "case-0134",
+       "case-0135",
+       "case-0136",
+       "case-0137",
+       "case-0138",
+       "case-0139",
+       "case-0140",
+       "case-0141",
+       "case-0142",
+       "case-0143",
+       "case-0144",
+       "case-0145",
+       "case-0146",
+       "case-0147",
+       "case-0148",
+       "case-0149",
+       "case-0150",
+       "case-0151",
+       "case-0152",
+       "case-0153",
+       "case-0154",
+       "case-0155",
+       "case-0156",
+       "case-0157",
+       "case-0158",
+       "case-0159",
+       "case-0160",
+       "case-0161",
+       "case-0162",
+       "case-0163",
+       "case-0164",
+       "case-0165",
+       "case-0166",
+       "case-0167",
+       "case-0168",
+       "case-0169",
+       "case-0170",
+       "case-0171",
+       "case-0172",
+       "case-0173",
+       "case-0174",
+       "case-0175",
+       "case-0176",
+       "case-0177",
+       "case-0178",
+       "case-0179",
+       "case-0180",
+       "case-0181",
+       "case-0182",
+       "case-0183",
+       "case-0184",
+       "case-0185",
+       "case-0186",
+       "case-0187",
+       "case-0188",
+       "case-0189",
+       "case-0190",
+       "case-0191",
+       "case-0192",
+       "case-0193",
+       "case-0194",
+       "case-0195",
+       "case-0196",
+       "case-0197",
+       "case-0198",
+       "case-0199",
+       "case-0200",
+       "case-0201",
+       "case-0202",
+       "case-0203",
+       "case-0204",
+       "case-0205",
+       "case-0206",
+       "case-0207",
+       "case-0208",
+       "case-0209",
+       "case-0210",
+       "case-0211",
+       "case-0212",
+       "case-0213",
+       "case-0214",
+       "case-0215",
+       "case-0216",
+       "case-0217",
+       "case-0218",
+       "case-0219",
+       "case-0220",
+       "case-0221",
+       "case-0222",
+       "case-0223",
+       "case-0224",
+       "case-0225",
+       "case-0226",
+       "case-0227",
+       "case-0228",
+       "case-0229",
+       "case-0230",
+       "case-0231",
+       "case-0232",
+       "case-0233",
+       "case-0234",
+       "case-0235",
+       "case-0236",
+       "case-0237",
+       "case-0238",
+       "case-0239",
+       "case-0240",
+       "case-0241",
+       "case-0242",
+       "case-0243",
+       "case-0244",
+       "case-0245",
+       "case-0246",
+       "case-0247",
+       "case-0248",
+       "case-0249",
+       "case-0250",
+       "case-0251",
+       "case-0252",
+       "case-0253",
+       "case-0254",
+       "case-0255"
+      ],
+      "support": {
+       "numerator": 300,
+       "denominator": 400
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B13",
+   "base": "evolution",
+   "story": "257 examples",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [
+       "case-0000",
+       "case-0001",
+       "case-0002",
+       "case-0003",
+       "case-0004",
+       "case-0005",
+       "case-0006",
+       "case-0007",
+       "case-0008",
+       "case-0009",
+       "case-0010",
+       "case-0011",
+       "case-0012",
+       "case-0013",
+       "case-0014",
+       "case-0015",
+       "case-0016",
+       "case-0017",
+       "case-0018",
+       "case-0019",
+       "case-0020",
+       "case-0021",
+       "case-0022",
+       "case-0023",
+       "case-0024",
+       "case-0025",
+       "case-0026",
+       "case-0027",
+       "case-0028",
+       "case-0029",
+       "case-0030",
+       "case-0031",
+       "case-0032",
+       "case-0033",
+       "case-0034",
+       "case-0035",
+       "case-0036",
+       "case-0037",
+       "case-0038",
+       "case-0039",
+       "case-0040",
+       "case-0041",
+       "case-0042",
+       "case-0043",
+       "case-0044",
+       "case-0045",
+       "case-0046",
+       "case-0047",
+       "case-0048",
+       "case-0049",
+       "case-0050",
+       "case-0051",
+       "case-0052",
+       "case-0053",
+       "case-0054",
+       "case-0055",
+       "case-0056",
+       "case-0057",
+       "case-0058",
+       "case-0059",
+       "case-0060",
+       "case-0061",
+       "case-0062",
+       "case-0063",
+       "case-0064",
+       "case-0065",
+       "case-0066",
+       "case-0067",
+       "case-0068",
+       "case-0069",
+       "case-0070",
+       "case-0071",
+       "case-0072",
+       "case-0073",
+       "case-0074",
+       "case-0075",
+       "case-0076",
+       "case-0077",
+       "case-0078",
+       "case-0079",
+       "case-0080",
+       "case-0081",
+       "case-0082",
+       "case-0083",
+       "case-0084",
+       "case-0085",
+       "case-0086",
+       "case-0087",
+       "case-0088",
+       "case-0089",
+       "case-0090",
+       "case-0091",
+       "case-0092",
+       "case-0093",
+       "case-0094",
+       "case-0095",
+       "case-0096",
+       "case-0097",
+       "case-0098",
+       "case-0099",
+       "case-0100",
+       "case-0101",
+       "case-0102",
+       "case-0103",
+       "case-0104",
+       "case-0105",
+       "case-0106",
+       "case-0107",
+       "case-0108",
+       "case-0109",
+       "case-0110",
+       "case-0111",
+       "case-0112",
+       "case-0113",
+       "case-0114",
+       "case-0115",
+       "case-0116",
+       "case-0117",
+       "case-0118",
+       "case-0119",
+       "case-0120",
+       "case-0121",
+       "case-0122",
+       "case-0123",
+       "case-0124",
+       "case-0125",
+       "case-0126",
+       "case-0127",
+       "case-0128",
+       "case-0129",
+       "case-0130",
+       "case-0131",
+       "case-0132",
+       "case-0133",
+       "case-0134",
+       "case-0135",
+       "case-0136",
+       "case-0137",
+       "case-0138",
+       "case-0139",
+       "case-0140",
+       "case-0141",
+       "case-0142",
+       "case-0143",
+       "case-0144",
+       "case-0145",
+       "case-0146",
+       "case-0147",
+       "case-0148",
+       "case-0149",
+       "case-0150",
+       "case-0151",
+       "case-0152",
+       "case-0153",
+       "case-0154",
+       "case-0155",
+       "case-0156",
+       "case-0157",
+       "case-0158",
+       "case-0159",
+       "case-0160",
+       "case-0161",
+       "case-0162",
+       "case-0163",
+       "case-0164",
+       "case-0165",
+       "case-0166",
+       "case-0167",
+       "case-0168",
+       "case-0169",
+       "case-0170",
+       "case-0171",
+       "case-0172",
+       "case-0173",
+       "case-0174",
+       "case-0175",
+       "case-0176",
+       "case-0177",
+       "case-0178",
+       "case-0179",
+       "case-0180",
+       "case-0181",
+       "case-0182",
+       "case-0183",
+       "case-0184",
+       "case-0185",
+       "case-0186",
+       "case-0187",
+       "case-0188",
+       "case-0189",
+       "case-0190",
+       "case-0191",
+       "case-0192",
+       "case-0193",
+       "case-0194",
+       "case-0195",
+       "case-0196",
+       "case-0197",
+       "case-0198",
+       "case-0199",
+       "case-0200",
+       "case-0201",
+       "case-0202",
+       "case-0203",
+       "case-0204",
+       "case-0205",
+       "case-0206",
+       "case-0207",
+       "case-0208",
+       "case-0209",
+       "case-0210",
+       "case-0211",
+       "case-0212",
+       "case-0213",
+       "case-0214",
+       "case-0215",
+       "case-0216",
+       "case-0217",
+       "case-0218",
+       "case-0219",
+       "case-0220",
+       "case-0221",
+       "case-0222",
+       "case-0223",
+       "case-0224",
+       "case-0225",
+       "case-0226",
+       "case-0227",
+       "case-0228",
+       "case-0229",
+       "case-0230",
+       "case-0231",
+       "case-0232",
+       "case-0233",
+       "case-0234",
+       "case-0235",
+       "case-0236",
+       "case-0237",
+       "case-0238",
+       "case-0239",
+       "case-0240",
+       "case-0241",
+       "case-0242",
+       "case-0243",
+       "case-0244",
+       "case-0245",
+       "case-0246",
+       "case-0247",
+       "case-0248",
+       "case-0249",
+       "case-0250",
+       "case-0251",
+       "case-0252",
+       "case-0253",
+       "case-0254",
+       "case-0255",
+       "case-0256"
+      ],
+      "support": {
+       "numerator": 300,
+       "denominator": 400
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B14",
+   "base": "evolution",
+   "story": "32 counterexamples",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 40
+      },
+      "counterexamples": [
+       "neg-0000",
+       "neg-0001",
+       "neg-0002",
+       "neg-0003",
+       "neg-0004",
+       "neg-0005",
+       "neg-0006",
+       "neg-0007",
+       "neg-0008",
+       "neg-0009",
+       "neg-0010",
+       "neg-0011",
+       "neg-0012",
+       "neg-0013",
+       "neg-0014",
+       "neg-0015",
+       "neg-0016",
+       "neg-0017",
+       "neg-0018",
+       "neg-0019",
+       "neg-0020",
+       "neg-0021",
+       "neg-0022",
+       "neg-0023",
+       "neg-0024",
+       "neg-0025",
+       "neg-0026",
+       "neg-0027",
+       "neg-0028",
+       "neg-0029",
+       "neg-0030",
+       "neg-0031"
+      ],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B15",
+   "base": "evolution",
+   "story": "33 counterexamples",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 40
+      },
+      "counterexamples": [
+       "neg-0000",
+       "neg-0001",
+       "neg-0002",
+       "neg-0003",
+       "neg-0004",
+       "neg-0005",
+       "neg-0006",
+       "neg-0007",
+       "neg-0008",
+       "neg-0009",
+       "neg-0010",
+       "neg-0011",
+       "neg-0012",
+       "neg-0013",
+       "neg-0014",
+       "neg-0015",
+       "neg-0016",
+       "neg-0017",
+       "neg-0018",
+       "neg-0019",
+       "neg-0020",
+       "neg-0021",
+       "neg-0022",
+       "neg-0023",
+       "neg-0024",
+       "neg-0025",
+       "neg-0026",
+       "neg-0027",
+       "neg-0028",
+       "neg-0029",
+       "neg-0030",
+       "neg-0031",
+       "neg-0032"
+      ],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B16",
+   "base": "evolution",
+   "story": "no evidence items",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": []
+     }
+    }
+   }
+  },
+  {
+   "id": "B17",
+   "base": "evolution",
+   "story": "32 evidence items",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "p/0.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/2.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/3.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/4.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/5.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/6.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/7.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/8.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/9.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/10.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/11.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/12.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/13.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/14.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/15.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/16.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/17.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/18.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/19.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/20.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/21.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/22.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/23.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/24.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/25.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/26.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/27.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/28.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/29.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/30.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/31.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B18",
+   "base": "evolution",
+   "story": "33 evidence items",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "p/0.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/2.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/3.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/4.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/5.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/6.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/7.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/8.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/9.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/10.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/11.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/12.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/13.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/14.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/15.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/16.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/17.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/18.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/19.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/20.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/21.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/22.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/23.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/24.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/25.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/26.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/27.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/28.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/29.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/30.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/31.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       },
+       {
+        "ref": "p/32.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B19",
+   "base": "evolution",
+   "story": "evidence ref of 256 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B20",
+   "base": "evolution",
+   "story": "evidence ref of 257 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B21",
+   "base": "evolution",
+   "story": "negative support numerator",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": -1,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B22",
+   "base": "evolution",
+   "story": "numerator and denominator at 2^53 - 1",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 9007199254740991,
+       "denominator": 9007199254740991
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B23",
+   "base": "evolution",
+   "story": "numerator at 2^53",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 9007199254740992,
+       "denominator": 9007199254740991
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B24",
+   "base": "evolution",
+   "story": "denominator of 0",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 0,
+       "denominator": 0
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B25",
+   "base": "evolution",
+   "story": "denominator at 2^53",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 9007199254740992
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "B26",
+   "base": "evolution",
+   "story": "confidence value 0",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 0,
+       "formula": "f"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B27",
+   "base": "evolution",
+   "story": "confidence value 1",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 1,
+       "formula": "f"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B28",
+   "base": "evolution",
+   "story": "confidence value -0.01",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": -0.01,
+       "formula": "f"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B29",
+   "base": "evolution",
+   "story": "confidence value 1.01",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 1.01,
+       "formula": "f"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B30",
+   "base": "evolution",
+   "story": "empty confidence formula",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 0.5,
+       "formula": ""
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B31",
+   "base": "evolution",
+   "story": "confidence formula of 256 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 0.5,
+       "formula": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B32",
+   "base": "evolution",
+   "story": "confidence formula of 257 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "proposed",
+    "modality": "deontic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ],
+      "confidence": {
+       "value": 0.5,
+       "formula": "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "B33",
+   "base": "evolution",
+   "story": "review record of 256 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "confirmed",
+    "modality": "alethic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     },
+     "reviewed_in": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+    }
+   }
+  },
+  {
+   "id": "B34",
+   "base": "evolution",
+   "story": "review record of 257 characters",
+   "constraint": {
+    "type": "uniqueness",
+    "roles": [
+     "title"
+    ],
+    "source": "induced",
+    "status": "confirmed",
+    "modality": "alethic",
+    "provenance": {
+     "induction": {
+      "inducer": {
+       "name": "gnd-discover",
+       "version": "0.1.0"
+      },
+      "method": "gnd-discover",
+      "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "examples": [],
+      "support": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "counterexamples": [],
+      "evidence": [
+       {
+        "ref": "populations/p1.json",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+       }
+      ]
+     },
+     "reviewed_in": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+    }
+   }
+  }
+ ],
+ "admission": [
+  {
+   "id": "A01",
+   "story": "a new induced rule, proposed and advisory",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A02",
+   "story": "a new induced rule claiming alethic modality",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A03",
+   "story": "a new induced rule arriving already confirmed",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A04",
+   "story": "a new proposed induced rule that already names a review record",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A05",
+   "story": "an existing proposed induced rule confirmed by review, kept advisory",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A06",
+   "story": "an existing proposed induced rule confirmed by review and made alethic",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A07",
+   "story": "confirmation that also edits the rule's rationale",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     },
+     "rationale": "Edited while confirming."
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A08",
+   "story": "an induction block under a new llm-inferred rule",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "llm-inferred",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "Titles name one item.",
+     "provenance": {
+      "rationale_world_fact": "Titles name one item.",
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A09",
+   "story": "an induction block under a new user-supplied rule",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "user-supplied",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_note": "Owner rule.",
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A10",
+   "story": "an already confirmed induced rule left unchanged",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": false
+  },
+  {
+   "id": "A11",
+   "story": "two confirmations claiming the same single proposed predecessor",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    },
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": false
+  },
+  {
+   "id": "A12",
+   "story": "the proposed predecessor kept unchanged next to a confirmed copy",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": false
+  },
+  {
+   "id": "A13",
+   "story": "confirmation with a whitespace-only review record",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": "  "
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A14",
+   "story": "a confirmed induced rule whose evidence changes, returned to proposed",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [
+        "case-0009"
+       ],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A15",
+   "story": "a confirmed induced rule whose evidence changes, still confirmed",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [
+        "case-0009"
+       ],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A16",
+   "story": "confirmation whose predecessor was llm-inferred, not induced",
+   "before": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "llm-inferred",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "Titles name one item.",
+     "provenance": {
+      "rationale_world_fact": "Titles name one item."
+     }
+    }
+   ],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "induced",
+     "status": "confirmed",
+     "modality": "deontic",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "gnd-discover",
+        "version": "0.1.0"
+       },
+       "method": "gnd-discover",
+       "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "examples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 3
+       },
+       "counterexamples": [],
+       "evidence": [
+        {
+         "ref": "populations/p1.json",
+         "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+       ]
+      },
+      "reviewed_in": ".gnd-planning/milestones/demo/003-review.md"
+     }
+    }
+   ],
+   "preview": true
+  },
+  {
+   "id": "A17",
+   "story": "a hostile induction value (a string) under source explicit",
+   "before": [],
+   "candidate": [
+    {
+     "type": "uniqueness",
+     "roles": [
+      "title"
+     ],
+     "source": "explicit",
+     "status": "confirmed",
+     "modality": "alethic",
+     "provenance": {
+      "user_quote": "q",
+      "induction": "not a block"
+     }
+    }
+   ],
+   "preview": false
+  }
+ ]
+}

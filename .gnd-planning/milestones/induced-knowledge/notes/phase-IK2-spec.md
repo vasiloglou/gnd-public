@@ -512,3 +512,84 @@ written. Run at B with the repository's `jsonschema` and `ruamel.yaml`:
 existing `pattern`s in `orm-meta.schema.json`, for example the `^[0-9a-f]{64}$`
 digest. That is pre-existing and out of scope for IK2, and is proposed as an
 open question for the milestone close sweep.
+
+## 13. Owner gate record (2026-10-24)
+
+**Approval (o).** The owner was asked in chat: "Do you approve IK2 spec r1 with
+all proposed rulings D1–D11, or do you want to change any of them first?" The
+owner replied "ok" on 2026-10-24. The approved bytes are spec r1 as committed in
+`328061e`, before this section was added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `notes/phase-IK2-spec.md` (r1) | `e6c399709f0e9d4687306cfa04f84fa7017904be0f0ea45fa17cf074c5e312b8` |
+
+**Rulings (o), each as proposed in §7:**
+
+| ID | Ruling |
+|---|---|
+| IK2-D1 | corpus-first for T2–T4; prose for coverage |
+| IK2-D2 | `induced` is allowed on constraints only |
+| IK2-D3 | `provenance.induction` under another source is refused at the gate only |
+| IK2-D4 | confirmation may also set `modality: alethic`; `strip` includes `modality` |
+| IK2-D5 | token id grammar, with the single-token residual recorded |
+| IK2-D6 | the §6 bounds table; no separate block byte cap |
+| IK2-D7 | optional `confidence {value, formula}`, never used by GND |
+| IK2-D8 | coverage versions 5 and 6 |
+| IK2-D9 | `rai_import._default_modality` gains `induced`, matching the D-03 table |
+| IK2-D10 | separate branch `claude/ik2-induced-provenance` from B = `ebb1f04`, stacked on PR #36 |
+| IK2-D11 | `method` is a free token |
+
+**Next under IK2-D1.** Before any implementation file, two artifacts are
+committed red:
+- the loader and admission corpus under `tests/fixtures/induced_knowledge/ik2-corpus/`;
+- T5's D-12 baseline, captured at B.
+
+The owner approves the corpus by reading its README. Implementation starts after
+that approval.
+
+## 14. Approval corpus, committed red (2026-10-24)
+
+Under IK2-D1 the corpus and the D-12 baseline are committed before any
+implementation file. **The corpus awaits owner approval.**
+
+| Artifact | SHA-256 |
+|---|---|
+| `tests/fixtures/induced_knowledge/ik2-corpus/README.md` (stories only) | `114cf1fe0e18a3b32ea6fab5f10973d0e8766424e2840ffa24c1e594d7da6013` |
+| `tests/fixtures/induced_knowledge/ik2-corpus/cases.json` | `a348d696bdcfb4165b5ffb71017ce1e69872bbd658f91a813fd21288b5c524c1` |
+| `tests/fixtures/induced_knowledge/ik2-corpus/expected.json` (answer key) | `a44a1b77845e63797ffa053d7e4b8b968a39683a7de3e8f0bbf1d99833447061` |
+| `tests/fixtures/induced_knowledge/ik2-d12-baseline.json` (T5, captured at B) | `6a8ad5a14db88097fa62e94240695888354fa18c4a4b03f91b3cd33932e4066a` |
+| `tests/test_induced_provenance.py` (harness) | `c0bfdb76a029aaf62d47596fd7ec82aff2e02a7d3428ed2df0a8d26e8f4b94f3` |
+| `evidence/IK2/build_ik2_corpus.py` | `1f85d391b81d05e2e93397867f21fc3e229e1b961d8e43f2a12c5f4dc3e7aca6` |
+| `evidence/IK2/capture_ik2_d12_baseline.py` | `be57524aaf9563e38decf78e240574b9731921ab1a1467811eae87f3b2afb5ea` |
+| `evidence/IK2/corpus-red.txt` | `5b32e726cf804fe37a2ca90f8b5f51baab425b214badc68430753503559972a1` |
+
+**Contents:**
+- 38 loader cases (L01–L38);
+- 34 bounds cases (B01–B34), covering every row of the §6 bounds table;
+- 17 admission cases (A01–A17), 13 of them also run through `gnd evolve preview`.
+
+**Red run:** 100 failed, 4 passed. The four passes hold at B by design:
+- L37 and A10 pin behaviour IK2 must not change;
+- the answer-key coverage check;
+- T5, which by definition equals the table captured at B.
+
+**Every failure is for the intended reason:**
+- `source: induced` is not in the enum at B;
+- or the gate gives today's message instead of R-I1–R-I4;
+- or a preview exits 0 where 3 is expected (A08, A09, where B's gate admits an
+  induction block under `llm-inferred`/`user-supplied`).
+
+**Capture note.** The baseline records commit `328061e`. Its `src/` and `tests/`
+are byte-identical to B = `ebb1f04` (`git diff ebb1f04 328061e -- src tests` is
+empty), and two runs were byte-identical.
+
+**Harness findings while authoring (not answer changes):**
+- **F1:** a fact-type modify is not breaking, so `preview` refuses an accepted
+  blast-radius digest (exit 11). The harness calls `preview` once.
+- **F2:** an exit code alone could pass for the wrong reason, because at B every
+  induced model fails validation with exit 3. Each preview answer therefore also
+  names the refusal text it must carry: the gate reason, or
+  `semantic:induced-confirmed-reviewed` for A13.
+- **Stories:** two stories gave away their answer and were reworded before
+  commit (L04, L37).

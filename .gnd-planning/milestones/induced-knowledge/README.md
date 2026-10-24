@@ -1,7 +1,7 @@
 # Induced knowledge
 
 Planning opened, 2026-10-23, from [issue #34](https://github.com/vasiloglou/gnd-public/issues/34).
-Draft plan r4 and IK1 spec r4: r3's owner-directed repairs plus the owner's 2026-10-24 rulings on D1–D6 and D14. r3 and r4 bytes carry no review opinion. No owner approval, no implementation.
+Plan r4 and IK1 spec r4 **approved by the owner 2026-10-24** (bytes bound in the IK1 spec §12). r3 and r4 bytes carry no review opinion. IK1 base commit B = `1d6eee0`; IK1-D6 ruled exit 3 with a schema amendment.
 
 - [Canonical plan (r4)](notes/induced-knowledge-plan.md)
 - [IK1 draft spec (r4)](notes/phase-IK1-spec.md)
@@ -35,11 +35,7 @@ Six phases:
 
 Close is separate.
 
-Request 2 (role-scoped value verbalization) is proposed in
-[PR #35](https://github.com/vasiloglou/gnd-public/pull/35), which is open; IK1
-is its fallback owner.
+Request 2 (role-scoped value verbalization) shipped in
+[PR #35](https://github.com/vasiloglou/gnd-public/pull/35), merged as `1d6eee0`.
 
-Pending:
-- plan approval;
-- then explicit selection of `process-phase IK1 induced-knowledge`, at whose
-  gate base commit B is named.
+In progress: IK1 implementation (`process-phase IK1 induced-knowledge`, auto=false).

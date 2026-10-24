@@ -1,0 +1,93 @@
+{
+  "base_commit": "1d6eee0",
+  "base_commit_note": "main after PR #35 merged (IK1-D4)",
+  "capture": ".gnd-planning/milestones/induced-knowledge/evidence/IK1/capture_ik1_baseline.py",
+  "env": {
+    "PYTHONHASHSEED": "0",
+    "SOURCE_DATE_EPOCH": "0"
+  },
+  "exits": {
+    "evolve_preview": 0,
+    "full_vocabulary": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "keywords": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "library": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    },
+    "v2_worked_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+    }
+  },
+  "normalization": {
+    "<T>": "the resolved (realpath) temporary directory; macOS /var is a symlink and evolve preview refuses symlinked workspaces",
+    "<V>": "gnd_version value in row 5"
+  },
+  "rows_legend": {
+    "1": "model verbalization",
+    "2": "extraction vocabulary",
+    "3": "extraction projection",
+    "4": "codegen .gnd-codegen.json",
+    "5": "conformance payload",
+    "6": "diff F F"
+  },
+  "schema": "gnd-ik1-baseline/1",
+  "sha256": {
+    "evolve_preview": "bc31fc6e31aa00b5ef2d58c013855486331521207be0e145f6871495851b65a9",
+    "full_vocabulary": {
+      "1": "c5d8d8ef8504cd916686f415e25d4ebe0e8ab2a0b6c87423d8d2d4d3efe99f34",
+      "2": "cf65777bc9a4386f9b22ee6073822774dd7df7050dbff657944597b68052cdfd",
+      "3": "ed4fc014deea101f9972d8c8ef396ca6220008cfd0404e570dfeeab1bb6b1b1b",
+      "4": "8ed64954a293d4fb45a7a1d078d8a5a4a13ab422719e105c184a9a464c0ccb48",
+      "5": "d71acfa587ee6e774d45c50c27d052a90f4daba70034362d5380771333bfd1e5",
+      "6": "47dc138fccf6aa908af3bf4216381f5e2e21fe0b1d08c895f1df4fdc9bc5a321"
+    },
+    "keywords": {
+      "1": "0c3cc5550cb95f5a9948c501149a16d83f176908f610543eba5acd784765021d",
+      "2": "075cd2c02582bfd9fa3366cf41bd3c8ab366f7183d4cb1d38e941c2da09e35a0",
+      "3": "a7ebc8574ebe564401f1c090d38f109f474b7c5291e3a9f61f0cd1625e59d6e6",
+      "4": "435a2598b7eef1cda14b86b00de358823651353d43fcebe29fd5d51753d921ff",
+      "5": "ef78fa1978c9d7bf4ad9d3d1cd85e7d4a24a60240c5dccb60167d737188806fb",
+      "6": "a2021b7dae98bf75196151514b267d88f46a1c537c651f79b0e1126e4d9d941f"
+    },
+    "library": {
+      "1": "36d234a446da10cc5512a26a573e9e793ce31060d6fb928bb5f44b4782ac1e9d",
+      "2": "4cf9874be0b7ae0edf6aee5b9e2dc9d89ccff3bde111510b704bcce17ee420ea",
+      "3": "b82393b429ab2dc2da257cb778cf00a646c6a4f714fa32f381c90de7568df52d",
+      "4": "23742a1b1ba5b5a94839c557c4af4e087c88a4a09a2886c619e6f14bf2ef870f",
+      "5": "10c609d1d3cb210c4c4cb6b41a5c944f42605a9e459165ae9a5c2a7aa8e0a70b",
+      "6": "4f2bcbee4bd18a984a239a414d79ac9d41e9395e85d0c29a4f48568ed213155d"
+    },
+    "v2_worked_example": {
+      "1": "21d7c49cca1f0c7dfb1e9db6b325efef4c0ff635a86c31174ffc61a4248e3656",
+      "2": "5647a751a4817a4093d8018421697cc88724660635445abbc799a94c8a633230",
+      "3": "c2237ef5ff80aa899d599c810ae3460fc62cd14c68d9c7080d27322733b6fc68",
+      "4": "96050610cc72e572761655d1d134c5f077aa12de7d07eb2632b45064b32292ca",
+      "5": "f24a203aba945059900ca941661e080f6d542d37e3c563e080e40ea75d3aa8f8",
+      "6": "9e40e87bdee70bc19165610747ae11da7bb9e502e09df0a1f12398ac68cbd583"
+    }
+  },
+  "stability": "two runs at B byte-identical"
+}

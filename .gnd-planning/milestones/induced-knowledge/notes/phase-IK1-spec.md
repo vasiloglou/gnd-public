@@ -2,9 +2,8 @@
 
 ## 1. Status
 
-**r4 (o), awaiting plan approval and the IK1 owner gate.** Not implementable
-until both have happened. D1 (no version bump) was ruled by the owner on
-2026-10-24 (o).
+**r4 (o), approved by the owner 2026-10-24 (o); see §12.** Plan r4 was approved
+in the same act. D1 (no version bump) was ruled by the owner on 2026-10-24 (o).
 
 ## 2. Provenance
 
@@ -332,3 +331,76 @@ This prose. The change is additive, and its one conditional wire version (D12)
 and the description schema (D14) are given as literal schema text above, so a
 fixture corpus first is not proposed. T7's baseline file is committed at base
 commit B before any code (IK-R12).
+
+## 12. Owner gate record (2026-10-24)
+
+**Approval (o).** In chat on 2026-10-24 the owner replied "approved" and then
+confirmed that it covers r4 as on the branch, not r3. Approved bytes:
+
+| Artifact | SHA-256 |
+|---|---|
+| plan r4 `notes/induced-knowledge-plan.md` | `8afbdcbd4a7757053c8775cc4faaade1225534664ccd7cdb6ad22ae5b54cd51a` |
+| IK1 spec r4, this file before §12 and the §1 status line | `3076680b3f1486c4ae2dd0256c0718fa065ff3bce8c80611150843ad9fa403ce` |
+
+The approval carries no review opinion. Plan bytes are not edited after approval.
+
+**Instrument (o).** This prose (§11). No spec review panel.
+
+**Decision rulings (o), 2026-10-24.** The owner accepted the proposed readings
+with the approval:
+
+| ID | Ruling |
+|---|---|
+| IK1-D1 | `L` = 4,096 |
+| IK1-D2 | settled by D12 |
+| IK1-D3 | object types only |
+| IK1-D4 | base commit **B = `1d6eee0`**, the merge of PR #35 into `main`. Request 2 shipped in #35, so IK1 has no request-2 fallback work |
+| IK1-D5 | recorded as stated: a misspelled optional core key is an extra |
+| IK1-D6 | **exit 3**, chosen by the owner from the two readings below |
+
+**IK1-D6 finding and amendment (o).** At B, the model loader parses YAML with
+ruamel `typ="safe"`, so an unquoted timestamp becomes a `TimeStamp` object. Every
+schema location at B has a JSON type, so such a value always exits 3. For
+example, `name: 2026-10-24T10:00:00Z` on an object type fails with
+`is not of type 'string' [jsonschema:type]`. r4's literal
+`"additionalProperties": true` has no type, so a timestamp extra would pass
+validation and then reach JSON serialization (`canonical=`) uncaught. That would
+break standing rule 1.
+
+The owner ruled exit 3. §6 is amended as follows (o):
+
+```json
+"additionalProperties": {"$ref": "#/$defs/description_extra"}
+```
+
+with, in `$defs`:
+
+```json
+"description_extra": {
+  "type": ["string", "number", "boolean", "null", "array", "object"],
+  "items": {"$ref": "#/$defs/description_extra"},
+  "additionalProperties": {"$ref": "#/$defs/description_extra"}
+}
+```
+
+T2 adds an unquoted-timestamp extra, at top level and nested, each expecting
+exit 3. Whether non-finite floats (`.nan`, `.inf`) are refused is recorded at
+implementation as a finding, not assumed.
+
+**Base-commit capture.** The capture ran at B in a clean detached worktree with
+`PYTHONHASHSEED=0 SOURCE_DATE_EPOCH=0`. It ran twice and both runs were
+byte-identical. All 25 commands exited 0.
+
+The values are in `tests/fixtures/induced_knowledge/ik1-baseline.json`. The
+capture script is
+`evidence/IK1/capture_ik1_baseline.py`.
+
+**Normalization finding (IK-R12).** `<T>` is the **resolved** temporary
+directory. On macOS, `/var` is a symlink to `/private/var`, and evolve preview
+refuses a workspace whose path crosses a symlink: exit 74,
+`workspace crosses symlink /var`. This is a declared normalization of row 7's
+temporary path, not a dropped row.
+
+## 13. Implementation findings
+
+(Recorded as found.)

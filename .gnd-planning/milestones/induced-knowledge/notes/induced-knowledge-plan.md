@@ -1,6 +1,6 @@
 # Induced knowledge
 
-r3 (p2), 2026-10-23. **Draft; awaiting owner approval. Plan review closed by its stop rule.**
+r4 (o), 2026-10-24. **Draft; awaiting owner approval. Plan review closed by its stop rule.**
 Milestone: `induced-knowledge`. `auto=false`.
 Inspection baseline: `a22ccde` (main, after PR #33). The request-2 fix is
 proposed separately in [PR #35](https://github.com/vasiloglou/gnd-public/pull/35),
@@ -16,12 +16,15 @@ approve-with-fixes, one request-changes; 10 of 12 round-1 blockers resolved;
 self-inflicted ratio 0.95, so review stopped
 ([round-2 disposition](plan-review-r2-disposition.md), commit `73a76ad`) (p2).
 The owner then confirmed D12's reading and directed repairs P-1..P-9 as r3
-with no further review round, 2026-10-23 (o). **r3 bytes carry no review
+with no further review round, 2026-10-23 (o). On 2026-10-24 the owner ruled
+D1–D6 and replaced the string description with a JSON object (D14); r4 records
+those rulings and nothing else (r4). **r3 and r4 bytes carry no review
 opinion.** No plan or spec approval exists.
 
 Change tags: `(p1)` marks text added or changed in r2 in response to round 1;
-`(p2)` marks text added or changed in r3 in response to round 2; `(o)` marks an
-owner ruling. The r1→r2 tags were incomplete (C3-F3): r2 also reworded D1–D6,
+`(p2)` marks text added or changed in r3 in response to round 2; `(r4)` marks
+text changed in r4 to record the 2026-10-24 rulings; `(o)` marks an owner
+ruling. The r1→r2 tags were incomplete (C3-F3): r2 also reworded D1–D6,
 IK-R8 and IK-O9–O12 without tags; r3 tags those sites `(p2)` and restores the
 r1 D1–D6 cost readings. The retained snapshots under `evidence/` are the
 authoritative record of each revision's bytes.
@@ -42,9 +45,10 @@ claimed here.
 
 Completion requires (p1, rewritten):
 
-1. **IK1:** an optional object-type `description` validates and renders in model
-   verbalization, the constraint-blind extraction vocabulary and generated tool
-   docstrings. `gnd diff` reports description changes and exits as it does today
+1. **IK1:** an optional object-type `description` JSON object (D14) validates.
+   Its fixed core keys render in model verbalization, the constraint-blind
+   extraction vocabulary and generated tool docstrings; its extra keys are
+   carried unchanged and never rendered as prose (r4). `gnd diff` reports description changes and exits as it does today
    for otherwise-identical models. `gnd evolve preview` lists them on an
    `annotation` surface. For every named fixture without descriptions, the
    SHA-256 of each rendered output equals the value captured at IK1's base
@@ -74,9 +78,10 @@ Completion requires (p1, rewritten):
    - The output is an evolve proposal that IK2's gate admits.
    - A deterministic work counter stays at or below the ceiling fixed in the IK4
      spec on the fixed near-cap fixture.
-5. **IK5:** export for the D4 target writes background, examples and modes,
+5. **IK5:** a tool-neutral bridge (D4). One GND export format writes background,
+   examples and modes, and the first learner adapter (Popper) renders it,
    reproducible as one committed golden digest across two runs with different
-   `PYTHONHASHSEED`.
+   `PYTHONHASHSEED` (r4).
    - Import accepts only clauses in the declared clause-to-`guarded` fragment and
      emits `guarded` constraints, never `derivation_rule` (D8).
    - Import refuses with a named non-zero exit when the set of example ids that
@@ -165,17 +170,23 @@ these capabilities exist, so it does not settle scope.
 ## 2. Contract proposal and product behavior
 
 **Request 1 (IK1)** (p1, revised).
-- **Field:** `object_types[].description` is an optional string of 1–512
-  characters (IK1-D1 revised). There is no version bump. Descriptions are
-  rendered escaped but **uncapped**: `_neutralize` escapes before its 512 cap,
-  so escapable characters would otherwise truncate a valid description (C2-F1);
-  rendered length is bounded by 512 × the worst-case escape width (p2).
-- **Model verbalization:** appends the neutralized text to the object type's
-  sentence.
+- **Field (D14 (o), r4):** `object_types[].description` is an optional JSON
+  object with a fixed core plus extras. The core keys are `summary` (what one
+  instance is; required when `description` is present), `row` (what one fact
+  or record about it means), `source` (where the knowledge came from) and
+  `notes`; each is a non-empty string whose length cap the IK1 spec fixes under
+  IK-R12. Any other key is an extra: any JSON value, carried unchanged by the
+  model, diff and evolve, and never interpreted or rendered as prose. The r3
+  512-character string and its rationale are withdrawn. There is no version
+  bump (D1 (o)). Core strings are rendered escaped but **uncapped** (C2-F1, p2).
+- **Model verbalization:** appends the neutralized core keys, in fixed order,
+  to the object type's sentence. Extras appear only in the existing
+  `canonical=` machine field, which already carries every key.
 - **Extraction:** the constraint-blind extraction vocabulary
-  (`gnd.vocabulary.render_verbalization`) renders it. The shape-only projection
-  schema and its keyword allowlist are unchanged.
-- **Codegen:** adds it to the docstrings of tools whose roles use the type.
+  (`gnd.vocabulary.render_verbalization`) renders the core keys. The shape-only
+  projection schema and its keyword allowlist are unchanged.
+- **Codegen:** adds `summary` to the docstrings of tools whose roles use the
+  type.
 - **Vocabulary digest (D11):** `anchors.vocabulary_digest` excludes
   `description`, so a description-only change keeps the vocabulary identity. No
   existing digest changes, because no current model carries the key. As a
@@ -196,8 +207,9 @@ these capabilities exist, so it does not settle scope.
   that member.
 
 **Request 6 (IK2)**.
-- **Source kind:** `induced`, with a required `provenance.induction` block (D3
-  still decides `gold`).
+- **Source kind:** `induced`, with a required `provenance.induction` block. No
+  `gold` source kind; a gold-answer origin is recorded as the block's `method`
+  (D3 (o), r4).
 - **Block shape (p1):**
 
   ```
@@ -242,8 +254,9 @@ exactly one label mode:
     `pass`.
   - The host never supplies GND's own `no-subjects` evidence.
 
-Constraints are named by `id` (D5), with positional refs accepted for
-compatibility. Only class mode adds a report version. Reports built from synth
+Constraints are named by `id` (D5 (o)); positional refs are accepted only for
+constraints without an `id`, and a ref naming an unknown `id` is refused with a
+named error (r4). Only class mode adds a report version. Reports built from synth
 sidecars stay byte-identical.
 
 **Request 4 (IK4)** (p1, revised). `gnd discover MODEL POPULATION [--families …]`
@@ -251,6 +264,11 @@ works as follows:
 - **Input:** reads one capped population and builds the same closed-world
   universe as `gnd check`.
 - **Candidates:** proposes candidates of the seven families.
+- **Bounds (D6 (o), r4):** value candidates only for roles with at most 20
+  distinct values; set-comparison pairs only between roles played by the same
+  object type, up to a pair cap fixed in the IK4 spec. These are defaults: a
+  run may override each by flag, and the report states the bounds used and
+  counts every role and pair skipped by a bound.
 - **Admission test:** runs `gnd check`'s evaluator on the model plus candidates
   and keeps a candidate only if its verdict is `pass` and its support is
   greater than 0. Vacuous candidates are never emitted.
@@ -272,9 +290,16 @@ works as follows:
   `source: induced, status: proposed, modality: deontic` (the r1 `sample` option
   is withdrawn).
 
-**Request 5 (IK5)** (p1, revised).
-- **Export:** `gnd export ilp --target <D4> MODEL --labels MANIFEST` writes
-  background facts, examples and mode declarations derived from fact-type roles.
+**Request 5 (IK5)** (p1, revised; D4 (o), r4).
+- **Tool-neutral bridge:** GND owns one learner-independent export format
+  (background facts, examples, mode declarations derived from fact-type roles)
+  and one import contract (below). Each learner connects through its own small
+  adapter that translates to and from that format. The first adapter is
+  Popper; further adapters (for example an LLM proposer, a neural rule learner
+  or integer-programming rule sets) are later work on the same bridge and are
+  not in this milestone.
+- **Export:** `gnd export ilp --target <adapter> MODEL --labels MANIFEST`
+  writes the neutral form through the named adapter.
 - **Import:** `gnd import ilp-rules MODEL CLAUSES --labels MANIFEST
   --reported-coverage FILE`:
   - accepts only the declared clause-to-`guarded` fragment, and refuses anything
@@ -330,10 +355,10 @@ Six implementation phases; close is a separate gate.
 
 ### IK1 — Object-type descriptions
 
-Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
+Draft spec r4: [phase-IK1-spec.md](phase-IK1-spec.md) (p1, r4).
 
-- **IK1-C1:** the schema accepts an optional `description` of 1–512 characters, and both copies stay identical. `gnd validate` exits 0 for 1 and 512 characters, and exits 3 for empty, non-string and 513-character values (p1).
-- **IK1-C2:** model verbalization, the extraction vocabulary and codegen docstrings render the neutralized description with no truncation. The projection schema and allowlist are unchanged (p1).
+- **IK1-C1 (r4):** the schema accepts an optional `description` object with core keys `summary` (required), `row`, `source`, `notes` and any extra keys, and both copies stay identical. `gnd validate` exits 0 for a minimal and a maximal core plus extras, and exits 3 for a string, an empty object, a missing `summary`, a non-string or empty core value and a core value over its cap.
+- **IK1-C2 (r4):** model verbalization, the extraction vocabulary and codegen docstrings render the neutralized core keys with no truncation; extras appear in none of their prose. The projection schema and allowlist are unchanged (p1).
 - **IK1-C3:** `anchors.vocabulary_digest` ignores `description` (D11). `gnd diff` of two models differing only in a description exits as for identical models. It emits `annotations` under `gnd-diff/2`, and both diff schemas validate the result (D12) (p1).
 - **IK1-C4:** for the named fixtures without descriptions, the SHA-256 of each output equals the value captured at IK1's base commit (named at the IK1 spec gate after PR #35's disposition), using the exact commands listed in the IK1 spec (p2). The outputs are verbalization, vocabulary, extraction projection, codegen tree, conformance payload, diff JSON and evolve preview (p1).
 - **IK1-C5 (p1):** evolve preview lists a description-only change on the `annotation` surface, which validates in `BlastRadiusEntry`. `representation-format.md` (field and vocabulary-digest composition, line 272), `constraint-reference.md` (vocabulary-digest composition, line 47), `evolution-contract.md`, `diff.reference.md` and the gnd-extract skill references are updated; reference updates are review-checked, not test-checked (p2).
@@ -357,12 +382,12 @@ Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
 - **IK4-C1 (p1):** every family has a positive case and a counterexample case. For every emitted constraint ref, the `gnd check` report verdict is `pass` and support is greater than 0. A seeded wrong discoverer that emits a violated deontic candidate fails this test.
 - **IK4-C2:** the output is a valid evolve proposal that IK2's gate admits and `evolve preview` renders.
 - **IK4-C3 (p1):** support numerators and denominators per family match an independent brute-force oracle on small fixtures. Counterexamples are opaque ids (IK-R11).
-- **IK4-C4 (p1):** whole-population evaluation within the 10 MiB cap. A deterministic work counter stays at or below the spec's ceiling on a fixed near-cap fixture, and the set-comparison pair cap is enforced with a named refusal.
+- **IK4-C4 (p1, r4):** whole-population evaluation within the 10 MiB cap. A deterministic work counter stays at or below the spec's ceiling on a fixed near-cap fixture at the default bounds. The value-domain and pair bounds are enforced, overridable per run by flag, and the report states the bounds used and counts every skipped role and pair (D6).
 - **IK4-C5 (p1, p2):** suppression counts per catalogue rule equal the expected counts on a fixture exercising every catalogue row, including a declared alethic constraint suppressing its deontic twin. The IK4 spec also fixes, under IK-R12, a candidate-vs-candidate redundancy rule (e.g. equality emitted instead of its two subsets; uniqueness instead of frequency `[1,1]`) and states that "min 1 alone" means a frequency whose only bound is `min: 1` (C1-F4).
 
 ### IK5 — ILP bridge
 
-- **IK5-C1 (p1):** export for the D4 target equals a committed golden digest across two runs with different `PYTHONHASHSEED`. Modes are derived from fact-type roles; examples come from IK3 manifests.
+- **IK5-C1 (p1, r4):** the neutral export form and its Popper rendering each equal a committed golden digest across two runs with different `PYTHONHASHSEED`. Modes are derived from fact-type roles; examples come from IK3 manifests. The import contract (C2–C4) is stated against the neutral form, not against Popper.
 - **IK5-C2 (p1, p2):** import emits only `guarded` constraints by body rewriting. Every construct outside the fragment (NAF, aggregates, disjunction, non-ground absence) is refused by name, with one test per refused construct; a fixture clause maps to a schema-valid guarded constraint.
 - **IK5-C3 (p1, p2):** re-evaluation compares sets of covered example ids, vacuous = not covered. A fixture with equal counts but different sets refuses, a fixture whose only difference is a vacuous example refuses, and a matching fixture is admitted as a proposal.
 - **IK5-C4 (p1):** recorded learner fixtures bind the exported-bytes digest and the learner name and version, and a mismatched binding refuses. A live learner run, when installed, is evidence only, never a required lane.
@@ -384,7 +409,7 @@ Draft spec r2: [phase-IK1-spec.md](phase-IK1-spec.md) (p1).
 | Item | Disposition |
 |---|---|
 | Request 2 | proposed in PR #35 (open); IK1 fallback owner if unmerged at IK1's spec gate (p1) |
-| GR-12 / `gold` | not present in this repository; D3 |
+| GR-12 / `gold` | not present in this repository; not added (D3 (o), r4) |
 | 1,880 host constraints (p1) | IK-O18: no import obligation |
 | "Without it" fallbacks (p1) | IK-O19: remain valid, not migrated |
 | Model-level thesaurus (issue "Not requested") | out of scope |
@@ -482,7 +507,7 @@ Exact commands are unresolved until each spec inventories changed definitions.
 | Projection allowlist excludes `description` (p1) | render in the constraint-blind vocabulary; projection unchanged |
 | Vocabulary digest covers whole object types (p1) | D11: exclude `description`; no existing digest changes |
 | Diff schema closed at `gnd-diff/1` (p1) | D12: `gnd-diff/2` only when annotations present; embedded copy, reference and RF1 anchor changed together; redaction pass-through pinned, branch unedited |
-| `_neutralize` escapes before its 512 cap (p1, p2) | cap description at 512 and render escaped but uncapped |
+| `_neutralize` escapes before its 512 cap (p1, p2, r4) | render core description strings escaped but uncapped; their input cap is fixed in the IK1 spec (D14) |
 | Diff schema shape vs existing test indexing `properties` (p2) | closed top-level `properties` with optional `annotations` plus `if`/`then` on `schema_version`; no top-level `oneOf` |
 | Closed surface `Literal` (p1) | add `annotation` member and contract row in IK1 |
 | Measure truth table needs ground truth (p1) | two label modes; class mode uses a new agreement scorer (D10) |
@@ -495,12 +520,12 @@ Exact commands are unresolved until each spec inventories changed definitions.
 
 | ID | Decision / answer | Status |
 |---|---|---|
-| D1 | Additive optional fields without a model version bump. Cost: a bump would force migration of every model | proposed/open; rule before IK1 |
-| D2 (p2: D9 clause added in r2) | Extend D-12 to admit `induced` (proposed/deontic; confirmed only per D9); leave `sample` refused. Cost: admitting `sample` too widens the gate | proposed/open; rule before IK2 |
-| D3 | Spell the source `induced`; do not add `gold` (no GR-12 here) unless the reporter supplies its definition. Cost: adding `gold` blind invents semantics | proposed/open; rule before IK2 |
-| D4 | First ILP target: Popper (Prolog) or ILASP (ASP) — proposed Popper for its plain Prolog modes and Datalog fit; second target is a follow-up. Cost: two targets double IK5 | proposed/open; rule before IK5 |
-| D5 | Label manifest keys constraints by `id`, positional refs as fallback. Cost: id-less constraints stay positional | proposed/open; rule before IK3 |
-| D6 (p2: reworded in r2) | Discovery bounds: value domains ≤ 20 distinct values; set-comparison pairs between roles of the same object type, pair cap fixed in IK4 spec under IK-R12. Cost: fewer candidates vs runaway cost | proposed/open; rule before IK4 |
+| D1 | Additive optional fields without a model version bump. Cost: a bump would force migration of every model | **owner-ruled 2026-10-24 (o)**: no bump |
+| D2 (p2: D9 clause added in r2) | Extend D-12 to admit `induced` (proposed/deontic; confirmed only per D9); leave `sample` refused. Cost: admitting `sample` too widens the gate | **owner-ruled 2026-10-24 (o)**: induced rules enter as proposed and advisory (deontic) |
+| D3 | Spell the source `induced`; do not add `gold` (no GR-12 here). Cost: adding `gold` blind invents semantics | **owner-ruled 2026-10-24 (o)**: `induced` only; a gold-answer origin is recorded in `provenance.induction.method` (r4) |
+| D4 (r4) | IK5 is a tool-neutral bridge: one GND export format and one import/re-check contract, with a small adapter per learner. First adapter: Popper (MIT licence, noise-tolerant learning, Datalog-shaped rules). Other families surveyed for later adapters: ILASP, integer-programming Boolean rule sets, AMIE-style exact miners, neural rule learners, LLM proposers. Cost: the neutral format is one extra layer over a single-tool exporter | **owner-ruled 2026-10-24 (o)**: tool-neutral bridge; Popper first |
+| D5 | Label manifest keys constraints by `id`, positional refs as fallback for constraints without an `id`; unknown ids refused. Cost: id-less constraints stay positional | **owner-ruled 2026-10-24 (o)** |
+| D6 (p2: reworded in r2; r4) | Discovery bounds: value domains ≤ 20 distinct values; set-comparison pairs between roles of the same object type, pair cap fixed in IK4 spec under IK-R12. Defaults are overridable per run; the report states the bounds used and counts every skip. Cost: fewer candidates vs runaway cost | **owner-ruled 2026-10-24 (o)** |
 | D7 | Plan and close review instrument: four local reviewer agents | **owner-selected 2026-10-23 (o)**; instrument only, no artifact approval |
 | D8 (p1) | IK5 emits `guarded` constraints only, never `derivation_rule` | **owner-accepted 2026-10-23 (o)** |
 | D9 (p1, p2) | `induced`+`confirmed` only as a `proposed`→`confirmed` status change with `provenance.reviewed_in`; `provenance.induction` refused under other sources; discover/import output never carries `reviewed_in` | **owner-accepted 2026-10-23 (o)**; P-3 refinement directed by the owner 2026-10-23 (o) |
@@ -508,7 +533,8 @@ Exact commands are unresolved until each spec inventories changed definitions.
 | D11 (p1) | `anchors.vocabulary_digest` excludes `description` | **owner-accepted 2026-10-23 (o)** |
 | D12 (p1, p2) | `gnd diff` emits `annotations` and `gnd-diff/2` only when a description differs; otherwise unchanged `gnd-diff/1` | **owner-confirmed 2026-10-23 (o)**: the owner explicitly confirmed this reading after round 2 (C3-F2). r2's earlier "owner-accepted" label recorded a coordinator selection |
 | D13 (p1) | The source issue's naming of a downstream application is the owner's to edit; GND text never repeats it | **owner-accepted 2026-10-23 (o)** |
+| D14 (r4) | Object-type `description` is a JSON object: fixed core keys `summary` (required), `row`, `source`, `notes` that GND validates and renders, plus extra keys carried unchanged and never rendered as prose. Replaces r3's 512-character string, whose cap had no remaining basis | **owner-ruled 2026-10-24 (o)**: fixed core plus extras |
 
-Next action (p2): owner rulings on D1–D6 and plan approval; then the owner
-explicitly selects `process-phase IK1 induced-knowledge`, at whose gate IK1's
-base commit and PR #35's disposition are named.
+Next action (r4): plan approval; then the owner explicitly selects
+`process-phase IK1 induced-knowledge`, at whose gate IK1's base commit and
+PR #35's disposition are named.

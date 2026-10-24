@@ -155,8 +155,10 @@ Review history:
   See the [round-2 disposition](milestones/induced-knowledge/notes/plan-review-r2-disposition.md).
 - The owner confirmed D12 and directed the text repairs as r3, with no further
   review round.
+- On 2026-10-24 the owner ruled D1–D6 and D14 (the description becomes a JSON
+  object with fixed core keys plus extras); r4 records them, unreviewed.
 
 No plan approval or implementation.
 
-**Next:** owner rulings on D1–D6 and plan approval, then explicit selection of
+**Next:** plan approval, then explicit selection of
 `process-phase IK1 induced-knowledge`.

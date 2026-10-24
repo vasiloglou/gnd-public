@@ -191,6 +191,9 @@ def _derivation_rule_hint(error: Any, doc: Any = None) -> str | None:
     return site or None
 
 
+_OBJECT_TYPE_DESCRIPTION_PATH = re.compile(r"\$\.object_types\[\d+\]\.description(?:[.\[]|$)")
+
+
 def _layer1_structural(doc: Any) -> list[ValidationIssue]:
     # jsonschema formats invalid instances in errors. CPython refuses to
     # stringify an integer of more than 4300 decimal digits, so screen hostile
@@ -214,6 +217,18 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
             return [ValidationIssue(
                 path=path,
                 message="integer literal exceeds the in-process diagnostic limit",
+                rule_id="jsonschema:type",
+            )]
+        elif (
+            isinstance(value, float)
+            and not math.isfinite(value)
+            and _OBJECT_TYPE_DESCRIPTION_PATH.match(path)
+        ):
+            # IK1-D6: a description is carried as JSON, and NaN or infinity
+            # has no JSON form; the schema's number type cannot refuse it.
+            return [ValidationIssue(
+                path=path,
+                message=f"{value!r} is a non-finite number, which has no JSON form",
                 rule_id="jsonschema:type",
             )]
     validator = Draft202012Validator(_load_meta_schema())

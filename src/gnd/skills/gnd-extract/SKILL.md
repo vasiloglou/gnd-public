@@ -58,7 +58,7 @@ That writes four files named after the model's stem:
 | File | What it gives you |
 |---|---|
 | `<stem>.projection.schema.json` | the closed, **shape-only** JSON Schema your population must satisfy — role names and arity, nothing about uniqueness, mandatory roles, value ranges or frequencies |
-| `<stem>.verbalization.txt` | the constraint-blind fact vocabulary in controlled natural language: object types, reference schemes, fact-type readings, primitive shapes |
+| `<stem>.verbalization.txt` | the constraint-blind fact vocabulary in controlled natural language: object types, reference schemes, object-type description core keys (never extras), fact-type readings, primitive shapes |
 | `<stem>.applicable.json` | which fact types have reference values that can be rendered and matched at all, with a mechanism for each that cannot |
 | `<stem>.artifacts.json` | sha256 digests of the three files above, the model path and digest, and the `header_template` you copy verbatim in step 4 |
 

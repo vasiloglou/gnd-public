@@ -33,6 +33,26 @@ _CONTROL_ESCAPES[0x0D] = "\\r"
 #: bounded separately by ``report.MAX_POPULATION_ISSUES`` (WR-01).
 MAX_RENDERED_VALUE_CHARS = 512
 
+# Render order and labels of an object-type description's core keys, read by
+# every renderer of descriptions (IK1). Any other key is an extra and is never prose.
+DESCRIPTION_CORE_KEYS = ("summary", "row", "source", "notes")
+DESCRIPTION_LABELS = {
+    "summary": "Description",
+    "row": "Row",
+    "source": "Source",
+    "notes": "Notes",
+}
+
+
+def neutralize_text(value: Any) -> str:
+    """Escape untrusted text exactly as _neutralize does, without the length cap.
+
+    Steps 1 and 2 of :func:`_neutralize`. Object-type descriptions are rendered
+    in full, so they use this form; their length is bounded by the schema.
+    """
+    rendered = str(value).replace("\\", "\\\\").replace("'", "\\'")
+    return rendered.translate(_CONTROL_ESCAPES)
+
 
 def _neutralize(value: Any) -> str:
     """Render untrusted data so it can neither escape a quote nor forge a line.
@@ -52,8 +72,7 @@ def _neutralize(value: Any) -> str:
     3. The result is capped at :data:`MAX_RENDERED_VALUE_CHARS` with the
        elision stated, so one hostile key cannot produce one enormous message.
     """
-    rendered = str(value).replace("\\", "\\\\").replace("'", "\\'")
-    rendered = rendered.translate(_CONTROL_ESCAPES)
+    rendered = neutralize_text(value)
     if len(rendered) > MAX_RENDERED_VALUE_CHARS:
         elided = len(rendered) - MAX_RENDERED_VALUE_CHARS
         rendered = f"{rendered[:MAX_RENDERED_VALUE_CHARS]}… (+{elided} more characters)"

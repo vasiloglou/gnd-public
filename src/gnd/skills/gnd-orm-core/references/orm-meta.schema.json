@@ -228,6 +228,30 @@
         },
         "provenance": {
           "type": "object"
+        },
+        "description": {
+          "type": "object",
+          "required": [
+            "summary"
+          ],
+          "properties": {
+            "summary": {
+              "$ref": "#/$defs/description_text"
+            },
+            "row": {
+              "$ref": "#/$defs/description_text"
+            },
+            "source": {
+              "$ref": "#/$defs/description_text"
+            },
+            "notes": {
+              "$ref": "#/$defs/description_text"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/description_extra"
+          },
+          "description": "Optional explanation of what one instance of this object type is. Core keys are rendered, never interpreted; any other key is an extra, carried unchanged and never rendered as prose. See representation-format.md."
         }
       },
       "allOf": [
@@ -303,6 +327,27 @@
           }
         }
       ]
+    },
+    "description_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "description_extra": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "null",
+        "array",
+        "object"
+      ],
+      "items": {
+        "$ref": "#/$defs/description_extra"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/description_extra"
+      }
     },
     "reference": {
       "type": "object",

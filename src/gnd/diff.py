@@ -257,6 +257,33 @@ def compare_population(model_a: Model, model_b: Model, population_bytes: bytes, 
             "b_to_a": b_to_a, "derivations": derivations}
 
 
+DIFF_SCHEMA_V2 = "gnd-diff/2"
+
+
+def _plain_json(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return {str(key): _plain_json(child) for key, child in value.items()}
+    if isinstance(value, list):
+        return [_plain_json(child) for child in value]
+    return value
+
+
+def description_annotations(model_a: Model, model_b: Model) -> list[dict[str, Any]]:
+    """One entry per object type whose description differs, extras included (D12).
+
+    Callers have already checked vocabulary identity, which ignores descriptions
+    but covers every other object-type key, so both models list the same object
+    types in the same order.
+    """
+    annotations = []
+    for left, right in zip(model_a.object_types, model_b.object_types, strict=True):
+        before = _plain_json(left.get("description"))
+        after = _plain_json(right.get("description"))
+        if canonical_json_bytes(before) != canonical_json_bytes(after):
+            annotations.append({"object_type": str(right.get("id")), "before": before, "after": after})
+    return annotations
+
+
 def _structured(model: Model) -> bool:
     return any(fact.get("derivation_rule") for fact in model.fact_types)
 
@@ -339,7 +366,7 @@ def diff_models(
                             rows.append(row)
     from gnd.references import reference_model_digest
 
-    return {
+    payload = {
         "schema_version": "gnd-diff/1",
         "command": "diff",
         "model_a_digest": reference_model_digest(model_a)
@@ -355,3 +382,10 @@ def diff_models(
         "populations": rows,
         "not_derivable": not_derivable,
     }
+    # Version 2 only when a description differs, so every other diff keeps its
+    # version-1 bytes (D12).
+    annotations = description_annotations(model_a, model_b)
+    if annotations:
+        payload["schema_version"] = DIFF_SCHEMA_V2
+        payload["annotations"] = annotations
+    return payload

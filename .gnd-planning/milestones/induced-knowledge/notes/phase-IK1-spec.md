@@ -403,4 +403,32 @@ temporary path, not a dropped row.
 
 ## 13. Implementation findings
 
-(Recorded as found.)
+Recorded as found, 2026-10-24.
+
+- **IK1-F1, non-finite numbers.** With the §12 schema amendment, a YAML
+  timestamp or date in an extra, top-level or nested, exits 3. `.nan`, `.inf`
+  and `-.inf` still validated, because the JSON Schema `number` type accepts
+  them. Reproduced: `render_model_verbalization` then raised a serialization
+  error, because `_canonical` uses `allow_nan=False`, which breaks standing
+  rule 1. NaN and infinity have no JSON form, so the owner's D6 ruling (exit 3)
+  covers them. Fixed in the existing layer-1 screening walk
+  (`model/_validation.py::_layer1_structural`), scoped by path to
+  `$.object_types[i].description`, with rule id `jsonschema:type` like the
+  neighbouring integer screen. Outside descriptions, B's behaviour is unchanged
+  and pinned by a test. Tests: T2 `nan`, `nested-inf`, `negative-inf`.
+- **IK1-F2, reference site.** `representation-format.md` line 272 is the
+  `depends_on` digest-exclusion sentence. The sidecar-composition paragraph
+  appears only in `constraint-reference.md:47`. The `description` exclusion is
+  stated in the new `description` field bullet and in `constraint-reference.md:47`,
+  which now cites `representation-format.md`. That follows the spec's one-home
+  intent, not its line number.
+- **IK1-F3, pre-existing doc drift (deferred).** The `BlastRadiusEntry` surface
+  list in `evolution-contract.md` already omitted the `operation` surface that
+  `evolve/models.py` declares. IK1 adds only `annotation`; the `operation` gap is
+  an open question for milestone close.
+- **IK1-F4, operator error, recovered.** To check T12's kill, the RF1 mutation
+  was applied to `diff.py` and reverted with `git checkout`, which also discarded
+  the uncommitted IK1 `diff.py` edits. They were restored from a copy taken just
+  before the mutation. The restored file has the IK1 additions and one
+  `"schema_version": "gnd-diff/1",` anchor. T8, T10 and T12 pass on it. The
+  mutation itself made its expected-red test fail, so the anchor is still killed.

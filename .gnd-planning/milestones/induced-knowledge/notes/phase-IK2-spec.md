@@ -685,3 +685,16 @@ matching of unchanged constraints is unchanged.
 
 The ruling does not decide **IK2-Q1** (archived induced proposals), which stays
 open.
+
+## 18. Owner ruling on IK2-Q1 (2026-10-24)
+
+**Ruling (o).** Asked about archived induced proposals in `rejected_proposals`
+(review R4), the owner wrote: "just ask for a review and approval the user and
+record it that is all". Offered three readings, the owner selected **"Ruling on
+IK2-Q1: no checks"**:
+- rejected learned rules get no extra automatic validation;
+- the owner's review and recorded approval is the safeguard.
+
+**Consequence.** No code change, and `rejected_proposals` stays schema-light. A
+rejected induced proposal may still carry host paths or raw values; the owner
+reviewing it is the control. IK2-Q1 is closed.

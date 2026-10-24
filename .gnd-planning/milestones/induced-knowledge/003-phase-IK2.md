@@ -96,7 +96,7 @@ evidence:
   - path: .gnd-planning/milestones/induced-knowledge/evidence/IK2/final-gate.txt
     sha256: 3e9ba8fcd7347e3b659aa6134c904b23f59b05187092329112886a01c4de65c3
   - path: .gnd-planning/milestones/induced-knowledge/notes/phase-IK2-spec.md
-    sha256: e9ad6deda6feea9daca0d14cd7e1d76b1636ccb28ff1c41bbaafc530228a3fc6
+    sha256: 748a09ae5889d71f44b55ddf961771daee8779b6ffe0a99dca1def6dda3e7e5a
   - path: .gnd-planning/milestones/induced-knowledge/notes/phase-IK2-agent-review.md
     sha256: 620398d2ce9b5d8347fe2501c3c8b26f6b12b3c5180f87ca0ab682fe24e2d054
   - path: .gnd-planning/milestones/induced-knowledge/notes/induced-knowledge-plan.md
@@ -270,8 +270,8 @@ The reviewer confirmed, among other claims:
   ids (IK2-D5 residual).
 - **Whether real learner output fits the block is untested** (§15 residual,
   carried to IK5).
-- **Archived induced proposals in `rejected_proposals` are unchecked** (R4,
-  IK2-Q1).
+- **Archived induced proposals in `rejected_proposals` are unchecked**, by
+  owner ruling (R4, IK2-Q1, spec §18). Owner review is the control.
 - **The trailing-newline pattern gap** in the five pre-existing `orm-meta`
   patterns is untouched (S1, IK2-Q5).
 - **`gnd discover`, ILP import and automatic confirmation are out of scope**
@@ -281,7 +281,7 @@ The reviewer confirmed, among other claims:
 
 | ID | Question | Target |
 |---|---|---|
-| IK2-Q1 | Validate induced entries in `rejected_proposals` (review R4), which would change validation for models valid at B | owner ruling; before IK4 emits proposals |
+| IK2-Q1 | Validate induced entries in `rejected_proposals` (review R4), which would change validation for models valid at B | **owner-ruled 2026-10-24 (o)**: no automatic checks; the owner's review and recorded approval is the safeguard (spec §18). Closed |
 | IK2-Q2 | Make `rai_import._default_modality` read the D-03 table from its one home instead of copying it | milestone close sweep |
 | IK2-Q3 | Replace `_evolve_service_exit`'s message-substring mapping with typed refusals | milestone close sweep, or the refactoring milestone that owns RF5 |
 | IK2-Q4 | Confirm F6: a reviewed status change must stay on its host (narrows spec §6 "location-insensitive") | **owner-ruled 2026-10-24 (o)**: fixes approved, so confirmation stays on its host (spec §17) |

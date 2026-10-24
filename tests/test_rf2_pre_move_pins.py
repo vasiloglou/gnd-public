@@ -34,6 +34,10 @@ def pin(name, value):
             assert successor['before'] == expected and successor['reason']
             from support.pyrel_application_successors import rendered_bytes
             expected = rendered_bytes(successor['after'], EVIDENCE / 'pyrel-successor.json')
+        if name == 'measure_output_bytes':
+            successor = json.loads((ANSWERS.parent / 'measure-successor.json').read_text())
+            assert successor['before'] == expected and successor['reason']
+            expected = successor['after']
         assert value == expected
 
 

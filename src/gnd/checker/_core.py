@@ -2149,17 +2149,19 @@ def _family_message_uniqueness(constraint, fact_type, finding, witness, model, p
 def _family_message_value(constraint, fact_type, finding, witness, model, population, family, verdict, scope_id, violated):
     subject = str(constraint.get("object_type"))
     offending = witness if violated else []
+    ref = constraint.get("role_ref")
+    role_ref = (str(ref.get("fact_type")), str(ref.get("role"))) if isinstance(ref, dict) else None
     if constraint.get("allowed") is not None:
         return verbalize.value_enum_message(
-            subject, list(constraint.get("allowed") or []), offending
+            subject, list(constraint.get("allowed") or []), offending, role_ref=role_ref
         )
     if constraint.get("ranges") is not None:
         return verbalize.value_ranges_message(
-            subject, list(constraint.get("ranges") or []), offending
+            subject, list(constraint.get("ranges") or []), offending, role_ref=role_ref
         )
     bounds = constraint.get("range") or {}
     return verbalize.value_range_message(
-        subject, bounds.get("min"), bounds.get("max"), offending
+        subject, bounds.get("min"), bounds.get("max"), offending, role_ref=role_ref
     )
 
 

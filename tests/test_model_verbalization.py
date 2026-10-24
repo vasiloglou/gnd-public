@@ -119,6 +119,39 @@ def test_full_vocabulary_coverage_is_derived_from_the_loaded_model() -> None:
     assert rendered_canonical == expected_canonical
 
 
+def test_value_constraints_render_allowed_values_and_role_scope() -> None:
+    """Issue 34 request 2: enum values come from the schema's ``allowed`` key, and a
+    role-scoped constraint names its role instead of the whole object type."""
+    from gnd.model import Model
+    from gnd.model_verbalization import render_model_verbalization
+
+    def value(**fields: Any) -> dict[str, Any]:
+        return {"type": "value", "object_type": "code", "modality": "alethic", **fields}
+
+    model = Model(
+        version=1,
+        object_types=[{"id": "code", "kind": "value", "primitive": "String"}],
+        fact_types=[
+            {
+                "id": "a",
+                "reading": "{code} appears in a",
+                "roles": [{"object_type": "code", "role_name": "code"}],
+            }
+        ],
+        constraints=[
+            value(allowed=["A", "B"]),
+            value(allowed=["A"], role_ref={"fact_type": "a", "role": "code"}),
+            value(range={"min": "A", "max": "M"}, role_ref={"fact_type": "a", "role": "code"}),
+        ],
+    )
+    rendered = render_model_verbalization(model)
+
+    assert "code must take one of: A, B." in rendered
+    assert "code playing role a:code must take one of: A." in rendered
+    assert "code playing role a:code must lie in the declared range set" in rendered
+    assert "range set []" not in rendered
+
+
 def test_constraint_lifecycle_and_archived_proposals_are_not_conflated() -> None:
     from gnd.model_verbalization import render_model_verbalization
 

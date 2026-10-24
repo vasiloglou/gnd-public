@@ -1,0 +1,52 @@
+{
+  "review_round": 2,
+  "kind": "confirmation",
+  "instrument": "four owner-selected fresh-context local reviewer agents",
+  "source_head": "b554f3f",
+  "runtime_execution": false,
+  "owner_artifact_approval": false,
+  "stop_rule": {
+    "r2_introduced": 18,
+    "new_findings": 19,
+    "self_inflicted_ratio": 0.95,
+    "stopped": true
+  },
+  "artifacts": [
+    {
+      "path": "evidence/plan-review-r2/induced-knowledge-plan.md",
+      "sha256": "d1a40a89eecad01e7e4dc72e969beb4c548297c1967df0d268c6776c18207c85"
+    },
+    {
+      "path": "evidence/plan-review-r2/phase-IK1-spec.md",
+      "sha256": "4f4cb8b580c680e5523d6cf1f4a4752abe3d76099a19c713620c51e8e5d3cac1"
+    },
+    {
+      "path": "notes/induced-knowledge-plan.md",
+      "sha256": "d1a40a89eecad01e7e4dc72e969beb4c548297c1967df0d268c6776c18207c85"
+    },
+    {
+      "path": "notes/phase-IK1-spec.md",
+      "sha256": "4f4cb8b580c680e5523d6cf1f4a4752abe3d76099a19c713620c51e8e5d3cac1"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-1.md",
+      "sha256": "b732828d41c36028ec4be6448ed502f6823fe4956a9f59b9db117890f3af9b10"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-2.md",
+      "sha256": "adfc7bbf12e5d5d3d4300becc727510b508b4c402cec6c42f12f57b0618934ce"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-3.md",
+      "sha256": "1092b841d2f156b549f33d0ff307cf1cbd0e288b0d5eb4c9bd453add30f9ded4"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-4.md",
+      "sha256": "4eeebc73596484bfc7ee564c024efd7e58edfe8aae1b3f752479976694af33ad"
+    },
+    {
+      "path": "notes/plan-review-r2-disposition.md",
+      "sha256": "386abac49217723268dc29974b3dbf0158b79d8c2308dd8022298ca6e99cf606"
+    }
+  ]
+}

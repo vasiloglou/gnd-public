@@ -219,14 +219,42 @@ def _contains_audit_key(value: Any) -> bool:
     return False
 
 
+def _without_review(constraint: dict[str, Any]) -> dict[str, Any]:
+    """A constraint as a reviewed status change may not alter it (IK2-D4).
+
+    Confirmation may set ``status``, ``modality`` and ``provenance.reviewed_in``;
+    everything else must equal the proposed predecessor."""
+    stripped = {key: value for key, value in constraint.items() if key not in {"status", "modality"}}
+    provenance = stripped.get("provenance")
+    if isinstance(provenance, dict):
+        stripped["provenance"] = {
+            key: value for key, value in provenance.items() if key != "reviewed_in"
+        }
+    return stripped
+
+
 def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
-    before_counts = Counter(canonical_json_text(item) for item in _constraints(before))
-    for constraint in _constraints(candidate):
+    before_rendered = [(canonical_json_text(item), item) for item in _constraints(before)]
+    before_items = dict(before_rendered)
+    before_counts = Counter(rendered for rendered, _ in before_rendered)
+    candidates = [(canonical_json_text(item), item) for item in _constraints(candidate)]
+    # IK2: the proposed induced constraints a reviewed status change may claim
+    # are those left over once every unchanged candidate copy has consumed its
+    # exact match, so two candidates can never confirm one predecessor and an
+    # unchanged copy can never be confirmed a second time. Computed up front so
+    # the single in-order pass below keeps every pre-IK2 refusal order.
+    claimable: Counter[str] = Counter()
+    leftover = before_counts - Counter(rendered for rendered, _ in candidates)
+    for rendered, count in leftover.items():
+        item = before_items[rendered]
+        if item.get("source") == "induced" and item.get("status") == "proposed":
+            claimable[canonical_json_text(_without_review(item))] += count
+
+    for rendered, constraint in candidates:
         if _contains_audit_key(constraint.get("provenance", {})):
             raise EvolutionError(
                 "operation audit actor/origin/time fields cannot enter constraint provenance"
             )
-        rendered = canonical_json_text(constraint)
         if before_counts[rendered]:
             before_counts[rendered] -= 1
             continue
@@ -234,6 +262,29 @@ def _enforce_d12(before: dict[str, Any], candidate: dict[str, Any]) -> None:
         source = constraint.get("source")
         status = constraint.get("status")
         modality = constraint.get("modality")
+        provenance = constraint.get("provenance")
+        if not isinstance(provenance, dict):
+            provenance = {}
+        if source != "induced" and "induction" in provenance:
+            raise EvolutionError("provenance.induction is allowed only under source induced (D-12)")
+        if source == "induced":
+            if (status, modality) == ("proposed", "deontic"):
+                if "reviewed_in" in provenance:
+                    raise EvolutionError(
+                        "new induced constraints cannot carry provenance.reviewed_in (D-12)"
+                    )
+                continue
+            if status == "confirmed":
+                reviewed_in = provenance.get("reviewed_in")
+                predecessor = canonical_json_text(_without_review(constraint))
+                if isinstance(reviewed_in, str) and reviewed_in.strip() and claimable[predecessor]:
+                    claimable[predecessor] -= 1
+                    continue
+                raise EvolutionError(
+                    "induced constraints become confirmed only as a reviewed status change "
+                    "of an existing proposed induced constraint (D-12)"
+                )
+            raise EvolutionError("new induced constraints must be proposed/deontic (D-12)")
         if source == "llm-inferred":
             if (status, modality) != ("proposed", "deontic"):
                 raise EvolutionError(

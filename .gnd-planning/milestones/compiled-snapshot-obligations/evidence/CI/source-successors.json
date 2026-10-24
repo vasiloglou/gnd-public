@@ -207,8 +207,32 @@
       "name": "_layer1_structural",
       "home": "gnd.model._validation",
       "before": "ba78b16641f5e8df5ec40dc251e6e07c5c85ab37d2cbb7ae9260ec6c99056780",
-      "after": "3d8b7c6033fca4242b881f5785cc61c5aa9507dd98b5288feec520901624528f",
-      "reason": "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses description values with no faithful JSON form (NaN, infinity, lone surrogates, anchored YAML booleans); every other path unchanged."
+      "after": "27697947a6a30a94d3555d8734ef22d9e75950c260e6857ef678ab5106b5a918",
+      "reason": "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses description values with no faithful JSON form (NaN, infinity, lone surrogates, anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint provenance.induction blocks through one tuple of screened paths; every other path unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "_rule_modality_policy",
+      "home": "gnd.model._validation",
+      "before": "bd83f28b3fb7bfe2e679853f9c4a789097f987031e199709b540356557bd5a46",
+      "after": "3959af3337c6c8f96bfbdc757b28df9bd89d858fe03e2f492e117c518a1a942e",
+      "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): the D-03 modality-policy warning also covers an unconfirmed induced constraint claiming alethic, with its own message; the llm-inferred/common-sense message is byte-identical."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_service_exit",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "632b08f7565caaad2aa26d100ba03b733369abb11d7a28a1ce575ee7147f5f69",
+        "algorithm_sha256": "5a0ae02c3e8deccd71c10e6bc0f33553761b6fb5ef3d1751b67e9b48c48f4fe4"
+      },
+      "after": {
+        "raw_sha256": "adcea5320dec1cb045b148a209e8f154f4f2dd120e61a23e9d46bda5c33b9366",
+        "algorithm_sha256": "1377b454d264f3bafd462b56cbbe7a2b5bc8345f89d481e0321c221da6fac3db"
+      },
+      "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): three D-12 refusal markers for induced provenance (spec R-I1..R-I4) map to exit 3 beside the existing D-12 markers; every other branch unchanged."
     }
   ]
 }

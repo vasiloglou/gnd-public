@@ -733,14 +733,15 @@
       ]
     },
     "source_kind": {
-      "description": "The six provenance sources. `imported` (v2) records a claim carried in from another framework's artifact under a verbatim anchor; see provenance-and-modality.md for the required block and the D-03 default-modality row.",
+      "description": "The seven provenance sources. `imported` (v2) records a claim carried in from another framework's artifact under a verbatim anchor; `induced` (IK2) records a constraint proposed from labelled examples under a required `provenance.induction` block, allowed on constraints only; see provenance-and-modality.md for the required blocks and the D-03 default-modality rows.",
       "enum": [
         "explicit",
         "sample",
         "common-sense",
         "llm-inferred",
         "user-supplied",
-        "imported"
+        "imported",
+        "induced"
       ]
     },
     "provenance_policy": {
@@ -952,6 +953,71 @@
                     "minLength": 1
                   }
                 }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "induced"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          },
+          "then": {
+            "required": [
+              "provenance"
+            ],
+            "properties": {
+              "provenance": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "induction"
+                ],
+                "properties": {
+                  "induction": {
+                    "$ref": "#/$defs/induction"
+                  },
+                  "reviewed_in": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source": {
+                "const": "induced"
+              },
+              "status": {
+                "const": "confirmed"
+              }
+            },
+            "required": [
+              "source",
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "provenance"
+            ],
+            "properties": {
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "reviewed_in"
+                ]
               }
             }
           }
@@ -2402,6 +2468,18 @@
       "allOf": [
         {
           "$ref": "#/$defs/provenance_policy"
+        },
+        {
+          "not": {
+            "properties": {
+              "source": {
+                "const": "induced"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          }
         }
       ],
       "unevaluatedProperties": false
@@ -2515,6 +2593,18 @@
       "allOf": [
         {
           "$ref": "#/$defs/provenance_policy"
+        },
+        {
+          "not": {
+            "properties": {
+              "source": {
+                "const": "induced"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          }
         }
       ],
       "unevaluatedProperties": false
@@ -2616,9 +2706,153 @@
       "allOf": [
         {
           "$ref": "#/$defs/provenance_policy"
+        },
+        {
+          "not": {
+            "properties": {
+              "source": {
+                "const": "induced"
+              }
+            },
+            "required": [
+              "source"
+            ]
+          }
         }
       ],
       "unevaluatedProperties": false
+    },
+    "induction_token": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,63}$"
+    },
+    "induction_example_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:#-]{0,63}$"
+    },
+    "induction_ref": {
+      "type": "string",
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$"
+    },
+    "sha256_hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "induction": {
+      "description": "The IK2 record of how an induced constraint was proposed: the inducer, the manifest it read, bounded opaque example ids, support counts and digest-bound evidence. Ids are opaque or manifest-relative and never host paths or raw values (IK-R11); every bound is fixed by the IK2 spec (IK-R12). The block is a recorded claim: the loader checks its shape and arithmetic, not its truth.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inducer",
+        "method",
+        "manifest_sha256",
+        "examples",
+        "support",
+        "counterexamples",
+        "evidence"
+      ],
+      "properties": {
+        "inducer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "version"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/induction_token"
+            },
+            "version": {
+              "$ref": "#/$defs/induction_token"
+            }
+          }
+        },
+        "method": {
+          "$ref": "#/$defs/induction_token"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        },
+        "examples": {
+          "type": "array",
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/induction_example_id"
+          }
+        },
+        "support": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "numerator",
+            "denominator"
+          ],
+          "properties": {
+            "numerator": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "denominator": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          }
+        },
+        "counterexamples": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/induction_example_id"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref",
+              "sha256"
+            ],
+            "properties": {
+              "ref": {
+                "$ref": "#/$defs/induction_ref"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256_hex"
+              }
+            }
+          }
+        },
+        "confidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "value",
+            "formula"
+          ],
+          "properties": {
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "formula": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        }
+      }
     }
   }
 }

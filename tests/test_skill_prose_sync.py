@@ -12,7 +12,7 @@ from gnd.review.adapters import reviewer_policies
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AGENTS_MD = REPO_ROOT / 'AGENTS.md'
-PROVENANCE_SOURCES = ('explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported')
+PROVENANCE_SOURCES = ('explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported', 'induced')
 AUTHORING_ENTRY_POINTS = ('gnd-model-from-text/SKILL.md', 'gnd-model-from-code/SKILL.md')
 PROVENANCE_REFERENCE = 'gnd-orm-core/references/provenance-and-modality.md'
 PANEL_SKILL = 'gnd-review-panel/SKILL.md'
@@ -35,10 +35,10 @@ def test_agents_md_claims_no_fixed_skill_count() -> None:
     for count_word in ('twelve', 'thirteen', 'fourteen', 'fifteen'):
         assert count_word not in text, f"AGENTS.md spells out the inventory count {count_word!r} again. The packaged tree is the count's one home; prose that repeats it drifts the moment a skill is added or removed."
 
-def test_the_normative_reference_carries_all_six_sources() -> None:
+def test_the_normative_reference_carries_all_seven_sources() -> None:
     text = _packaged_text(PROVENANCE_REFERENCE)
     absent = [token for token in PROVENANCE_SOURCES if not _present(text, token)]
-    assert not absent, f'{PROVENANCE_REFERENCE} no longer names {absent} — it is the one normative home of the closed six-source taxonomy, and a source it omits has no home at all.'
+    assert not absent, f'{PROVENANCE_REFERENCE} no longer names {absent} — it is the one normative home of the closed seven-source taxonomy, and a source it omits has no home at all.'
 
 def test_each_authoring_entry_point_states_its_imported_policy() -> None:
     for rel in AUTHORING_ENTRY_POINTS:

@@ -183,7 +183,9 @@ def _preview_outcome(
     try:
         service.preview(proposal)
     except EvolutionError as error:
-        return _evolve_service_exit(error), str(error)
+        # A validation refusal's text names no rule id; the cause's issues do.
+        rule_ids = [issue.rule_id for issue in getattr(error.__cause__, "issues", ())]
+        return _evolve_service_exit(error), " ".join([str(error), *rule_ids])
     return 0, ""
 
 
@@ -225,3 +227,268 @@ def test_t5_d12_outcomes_equal_the_base_commit_table() -> None:
     rows["unknown-source"] = capture.outcome(before, capture.with_constraint(before, unknown))
     assert len(baseline["rows"]) == 27
     assert rows == baseline["rows"]
+
+
+# ---- implementation tests (spec section 8, T6-T13) --------------------------
+
+MINIMAL_INDUCTION = CASES["loader"][0]["constraint"]["provenance"]["induction"]
+REVIEW = ".gnd-planning/milestones/demo/003-review.md"
+
+
+def _induced(status: str = "proposed", modality: str = "deontic", **provenance: Any) -> dict:
+    return {
+        "type": "uniqueness",
+        "roles": ["title"],
+        "source": "induced",
+        "status": status,
+        "modality": modality,
+        "provenance": {"induction": copy.deepcopy(MINIMAL_INDUCTION), **provenance},
+    }
+
+
+@pytest.mark.parametrize("reason", sorted(EXPECTED["reasons"]))
+def test_t6_every_named_refusal_maps_to_exit_3(reason: str) -> None:
+    from gnd.evolve import EvolutionError
+    from gnd.evolve.cli_service import _evolve_service_exit
+
+    assert _evolve_service_exit(EvolutionError(EXPECTED["reasons"][reason])) == 3
+
+
+def test_t7_audit_refusal_precedes_the_induction_refusal() -> None:
+    before = _evolution_before()
+    candidate = copy.deepcopy(before)
+    smuggled = {
+        "type": "uniqueness",
+        "roles": ["title"],
+        "source": "explicit",
+        "status": "confirmed",
+        "modality": "alethic",
+        "provenance": {"user_quote": "q", "induction": {}, "actor_id": "owner:fixture"},
+    }
+    candidate["fact_types"][0]["constraints"].append(smuggled)
+    assert _gate_outcome(before, candidate) == (
+        "operation audit actor/origin/time fields cannot enter constraint provenance"
+    )
+
+
+def test_t7_refusals_keep_candidate_order() -> None:
+    # The first defective constraint in candidate order is reported, as before
+    # IK2: an older-branch refusal ahead of an induced one wins, and vice versa.
+    before = _evolution_before()
+    explicit = {
+        "type": "uniqueness",
+        "roles": ["title"],
+        "source": "explicit",
+        "status": "confirmed",
+        "modality": "alethic",
+        "provenance": {"user_quote": "q"},
+    }
+    induced_alethic = _induced("proposed", "alethic")
+    for first, second, expected in (
+        (explicit, induced_alethic, "new or changed constraints must be"),
+        (induced_alethic, explicit, "new induced constraints must be proposed/deontic"),
+    ):
+        candidate = copy.deepcopy(before)
+        candidate["fact_types"][0]["constraints"].extend([first, second])
+        assert _gate_outcome(before, candidate).startswith(expected)
+
+
+@pytest.mark.parametrize(
+    "provenance",
+    [[], "text", 7, None, {"induction": []}, {"induction": "x"}, {"induction": None}],
+    ids=["list", "str", "int", "null", "induction-list", "induction-str", "induction-null"],
+)
+@pytest.mark.parametrize("source", ["induced", "explicit", "llm-inferred"])
+def test_t8_gate_is_total_over_hostile_provenance(source: str, provenance: Any) -> None:
+    before = _evolution_before()
+    for status in ("proposed", "confirmed", None):
+        candidate = copy.deepcopy(before)
+        constraint: dict[str, Any] = {"type": "uniqueness", "roles": ["title"], "source": source}
+        if status is not None:
+            constraint["status"] = status
+        constraint["provenance"] = provenance
+        candidate["fact_types"][0]["constraints"].append(constraint)
+        _gate_outcome(before, candidate)  # raises nothing but EvolutionError
+
+
+def test_t9_status_change_matching_is_linear(monkeypatch: pytest.MonkeyPatch) -> None:
+    from gnd.evolve import service
+
+    count = 2000
+    before = _evolution_before()
+    candidate = copy.deepcopy(before)
+    for index in range(count):
+        induction = copy.deepcopy(MINIMAL_INDUCTION)
+        induction["examples"] = [f"case-{index:05d}"]
+        proposed = _induced()
+        proposed["provenance"]["induction"] = induction
+        confirmed = _induced("confirmed", "alethic", reviewed_in=REVIEW)
+        confirmed["provenance"]["induction"] = copy.deepcopy(induction)
+        before["fact_types"][0]["constraints"].append(proposed)
+        candidate["fact_types"][0]["constraints"].append(confirmed)
+    calls = 0
+    real = service.canonical_json_text
+
+    def counted(value: Any) -> str:
+        nonlocal calls
+        calls += 1
+        return real(value)
+
+    monkeypatch.setattr(service, "canonical_json_text", counted)
+    assert _gate_outcome(before, candidate) == "admitted"
+    total = len(service._constraints(before)) + len(service._constraints(candidate))
+    assert calls <= 2 * total
+
+
+def test_t10_modality_policy_messages() -> None:
+    from gnd.model._validation import _rule_modality_policy
+
+    document = _evolution_before()
+    rules = document["fact_types"][0]["constraints"]
+    rules.append(_induced("proposed", "alethic"))
+    for source in ("llm-inferred", "common-sense"):
+        rules.append(
+            {"type": "frequency", "roles": ["title"], "source": source, "status": "proposed",
+             "modality": "alethic"}
+        )
+    messages = [issue.message for issue in _rule_modality_policy(document)]
+    # The llm-inferred/common-sense sentences are byte-identical to base commit B.
+    tail = "unconfirmed llm-inferred/common-sense constraints default to deontic until user-confirmed (D-03)"
+    assert messages == [
+        (
+            "unconfirmed induced uniqueness constraint carries modality 'alethic' — induced "
+            "constraints default to deontic until reviewed (D-03)"
+        ),
+        f"unconfirmed llm-inferred frequency constraint carries modality 'alethic' — {tail}",
+        f"unconfirmed common-sense frequency constraint carries modality 'alethic' — {tail}",
+    ]
+
+
+def _coverage(tmp_path: Path, document: dict[str, Any]) -> tuple[dict[str, Any], str]:
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    model = tmp_path / "model.orm.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    payload = run_main(["coverage", str(model), "--format", "json"], capture_stderr=False)
+    text = run_main(["coverage", str(model)], capture_stderr=False)
+    assert payload.returncode == 0 and text.returncode == 0
+    return json.loads(payload.stdout), text.stdout.decode("utf-8")
+
+
+def _coverage_validator() -> Any:
+    from jsonschema import Draft202012Validator
+
+    schema = json.loads((REPO_ROOT / "src/gnd/coverage.schema.json").read_text(encoding="utf-8"))
+    return Draft202012Validator(schema)
+
+
+EXPECTED_INDUCED_ROW = {
+    "address": "fact_types[work_item_has_title].constraints[1]",
+    "status": "proposed",
+    "modality": "deontic",
+    "inducer": {"name": "gnd-discover", "version": "0.1.0"},
+    "method": "gnd-discover",
+    "manifest_sha256": "a" * 64,
+    "support": {"numerator": 2, "denominator": 3},
+    "evidence": [{"ref": "populations/p1.json", "sha256": "b" * 64}],
+}
+
+
+def test_t11_coverage_lists_induced_constraints_under_v5(tmp_path: Path) -> None:
+    document = _evolution_before()
+    document["fact_types"][0]["constraints"].append(_induced())
+    payload, text = _coverage(tmp_path, document)
+    assert payload["schema_version"] == 5
+    assert payload["induced"] == [EXPECTED_INDUCED_ROW]
+    assert list(_coverage_validator().iter_errors(payload)) == []
+    assert "\nINDUCED\n" in text
+    assert (
+        "  fact_types[work_item_has_title].constraints[1] proposed/deontic inducer=gnd-discover@0.1.0 "
+        "method=gnd-discover support=2/3 manifest=" + "a" * 64
+    ) in text
+    assert f"    evidence populations/p1.json {'b' * 64}" in text
+
+
+def test_t11_coverage_without_induced_keeps_v3_and_no_section(tmp_path: Path) -> None:
+    payload, text = _coverage(tmp_path, _evolution_before())
+    assert payload["schema_version"] == 3
+    assert "induced" not in payload
+    assert "INDUCED" not in text
+    assert list(_coverage_validator().iter_errors(payload)) == []
+
+
+def test_t11_coverage_with_derivation_and_induced_is_v6(tmp_path: Path) -> None:
+    corpus = REPO_ROOT / "tests" / "fixtures" / "phase3-consumers"
+    document = YAML(typ="safe").load((corpus / "eligibility.orm.yaml").read_text(encoding="utf-8"))
+    host = next(item for item in document["fact_types"] if "derivation_rule" not in item)
+    constraint = _induced()
+    constraint["roles"] = [host["roles"][0]["role_name"]]
+    host.setdefault("constraints", []).append(constraint)
+    payload, _ = _coverage(tmp_path, document)
+    assert payload["schema_version"] == 6
+    assert "derivation" in payload["census"]
+    assert len(payload["induced"]) == 1
+    assert list(_coverage_validator().iter_errors(payload)) == []
+
+
+def test_t11_coverage_schema_refuses_induced_on_v3_and_its_absence_on_v5(tmp_path: Path) -> None:
+    validator = _coverage_validator()
+    plain, _ = _coverage(tmp_path / "plain", _evolution_before())
+    document = _evolution_before()
+    document["fact_types"][0]["constraints"].append(_induced())
+    induced, _ = _coverage(tmp_path / "induced", document)
+    with_key = {**plain, "induced": induced["induced"]}
+    without_key = {key: value for key, value in induced.items() if key != "induced"}
+    assert list(validator.iter_errors(with_key))
+    assert list(validator.iter_errors(without_key))
+
+
+def test_t12_verbalization_carries_the_induction_block(tmp_path: Path) -> None:
+    from gnd.model_verbalization import render_model_verbalization
+
+    document = _evolution_before()
+    document["fact_types"][0]["constraints"].append(_induced())
+    model = tmp_path / "model.orm.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    text = render_model_verbalization(str(model))
+    assert "[from induced, proposed; modality=deontic]" in text
+    assert '"manifest_sha256":"' + "a" * 64 + '"' in text
+
+
+def test_t12_session_verdicts_accept_the_induced_source() -> None:
+    from gnd.exp.session_eval import VerifierVerdict
+
+    fields = VerifierVerdict.model_fields
+    assert "induced" in str(fields["source"].annotation)
+
+
+def test_t12_check_report_over_an_induced_model_validates(tmp_path: Path) -> None:
+    from jsonschema import Draft202012Validator
+
+    from gnd.report import load_report_schema
+
+    document = _evolution_before()
+    document["fact_types"][0]["constraints"].append(_induced())
+    model = tmp_path / "model.orm.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    population = tmp_path / "population.yaml"
+    population.write_text(
+        "population:\n  model: model.orm.json\n  source: fixture\n"
+        "  covers: [work_item_has_title]\ninstances: {}\nfacts:\n  work_item_has_title: []\n",
+        encoding="utf-8",
+    )
+    result = run_main(["check", str(model), str(population), "--format", "json"],
+                      capture_stderr=False)
+    report = json.loads(result.stdout)
+    sources = {verdict["source"] for verdict in report["verdicts"]}
+    assert "induced" in sources
+    assert list(Draft202012Validator(load_report_schema()).iter_errors(report)) == []
+
+
+def test_t13_rai_import_default_modality_follows_the_d03_row() -> None:
+    from gnd.rai_import import RaiImportError, _default_modality
+
+    proposed = _induced()
+    assert _default_modality(proposed, "/c") == "deontic"
+    assert _default_modality(_induced("confirmed", reviewed_in=REVIEW), "/c") == "alethic"
+    with pytest.raises(RaiImportError, match="induced/confirmed requires reviewed_in"):
+        _default_modality(_induced("confirmed"), "/c")

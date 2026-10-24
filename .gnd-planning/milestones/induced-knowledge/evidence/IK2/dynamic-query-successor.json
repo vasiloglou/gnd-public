@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/IK1/dynamic-query-successor.json",
+  "predecessor_sha256": "e371da7d26d2c78caccb2fdb4786dfe0e1c81f212572ed1c0191eb00c17c9e9e",
+  "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): induced provenance admission (the D-12 status-change index), the coverage induced view and its shared constraint-address walk add type-annotation and induction-key subscripts. Syntax census only; no model-query exception widening.",
+  "removed": [
+    [
+      "src/gnd/exp/session_eval.py",
+      "VerifierVerdict",
+      "Literal['explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported']",
+      1
+    ],
+    [
+      "src/gnd/exp/session_eval.py",
+      "_VerifierVerdictV1",
+      "Literal['explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported']",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/coverage.py",
+      "CoverageResult",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "CoverageResult",
+      "tuple[dict[str, Any], ...]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_constraint_address",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_constraint_address",
+      "tuple[str, Addressing]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_fact_type_constraints",
+      "Iterator[tuple[str, str, Addressing, dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_fact_type_constraints",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_fact_type_constraints",
+      "tuple[str, str, Addressing, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_global_constraints",
+      "Iterator[tuple[str, str, Addressing, dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_global_constraints",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_global_constraints",
+      "tuple[str, str, Addressing, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_induced_rows",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_induced_rows",
+      "tuple[dict[str, Any], ...]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_located",
+      "Iterator[tuple[str, str, Addressing, dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_located",
+      "Sequence[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_located",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_located",
+      "tuple[str, str, Addressing, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "build_payload",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "Counter[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "before_items[rendered]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_d12",
+      "claimable[predecessor]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_without_review",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/exp/session_eval.py",
+      "VerifierVerdict",
+      "Literal['explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported', 'induced']",
+      1
+    ],
+    [
+      "src/gnd/exp/session_eval.py",
+      "_VerifierVerdictV1",
+      "Literal['explicit', 'sample', 'common-sense', 'llm-inferred', 'user-supplied', 'imported', 'induced']",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6235,
+  "result_occurrences": 7822
+}

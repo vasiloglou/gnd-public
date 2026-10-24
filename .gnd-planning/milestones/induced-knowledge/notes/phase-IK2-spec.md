@@ -593,3 +593,25 @@ empty), and two runs were byte-identical.
   `semantic:induced-confirmed-reviewed` for A13.
 - **Stories:** two stories gave away their answer and were reworded before
   commit (L04, L37).
+
+## 15. Corpus approval (2026-10-24)
+
+**Approval (o).** The owner was asked: "Do you approve the corpus as committed so
+I can start implementing, or do you want to change any answers first?"
+
+Before answering, the owner asked whether IK2 is a generic framework or will be
+tested against a real inductive learner. The answer given:
+- IK2 is learner-agnostic;
+- a real learner enters only in IK5, through recorded Popper fixtures, with a
+  live run as optional evidence;
+- the block's fit to real Popper output is the author's reading, not a tested
+  fact.
+
+An optional scratch Popper check was offered. The owner replied "ok approved",
+choosing the corpus as it is, without that check.
+
+The approved corpus is commit `ef39b1a`, with the digests in §14.
+
+**Residual carried forward.** Whether the induction block can represent real
+learner output without loss is untested. A shortfall found in IK5 needs an owner
+amendment to this phase's schema.

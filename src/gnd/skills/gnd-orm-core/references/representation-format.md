@@ -1424,6 +1424,8 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
 | `semantic:derivation-effect-on-semiderived` | error | operation effects may not assert or retract a structured `semiderived` fact type; authored surplus survives but is not operation-owned state |
 | `semantic:derivation-dynamic-dependency-incomplete` | error | a dynamic extension's transitive positive-or-negated asserted dependency closure must be complete before selective refresh is admitted |
 | `semantic:anchored-invalid` | error | an inline anchor selects a declared role, and each role recogniser fits that role's resolved primitive |
+| `semantic:induced-provenance` | error | an `induced` claim's induction block is consistent: support numerator ≤ denominator, listed examples ≤ numerator, counterexamples ≤ denominator − numerator, no id in both lists, and no whitespace in a token, id, ref or digest |
+| `semantic:induced-confirmed-reviewed` | error | an `induced` claim with `status: confirmed` names a non-blank `reviewed_in` |
 
 Errors abort the load with a pointed message naming the offending element; warnings ride on the loaded model and are printed by `gnd validate` (exit 0 when only warnings exist).
 

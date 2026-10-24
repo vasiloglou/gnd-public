@@ -111,6 +111,8 @@ def test_actual_predecessor_validation_and_checker_patches_have_effect(monkeypat
 def split_homes():
     return {ROOT / 'src/gnd' / name for name in (
         'model/__init__.py', 'model/_validation.py', 'model/_operations.py',
+        # IK2 (2026-10-24): induced-provenance rules, split out at the size ceiling.
+        'model/_induction.py',
         'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py')}
 
 

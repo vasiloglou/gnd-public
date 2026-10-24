@@ -91,11 +91,13 @@ established, retain an `AmbiguousProposal` with concrete evidence, rationale,
 and immutable proposal identity. No modeled or proposed claim may be
 evidence-free.
 
-This workflow emits five of the closed taxonomy's six sources: `explicit`,
+This workflow emits five of the closed taxonomy's seven sources: `explicit`,
 `sample`, `common-sense`, `llm-inferred`, and `user-supplied` — the normative
 taxonomy, provenance shapes, and modality policy live in
 [`../gnd-orm-core/references/provenance-and-modality.md`](../gnd-orm-core/references/provenance-and-modality.md).
-The sixth source, `imported`, is **forbidden in recovery**: it carries a claim
+The source `induced` is not emitted here either: it records a rule proposed
+from labelled examples under an induction block, which a static code pass does
+not produce. The source `imported` is **forbidden in recovery**: it carries a claim
 in verbatim from another framework's artifact behind a migration-time anchor
 check, while recovery's evidence is this repository's own files — an
 `imported` block here would assert a check that never ran. Static samples

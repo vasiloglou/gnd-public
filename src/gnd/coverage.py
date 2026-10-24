@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import stat
 from collections import defaultdict
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from functools import lru_cache
 from importlib.resources import files
@@ -30,6 +31,7 @@ from gnd.artifacts import canonical_report_text as canonical_payload  # noqa: F4
 from gnd.conformance.report import CONFORMANCE_SCHEMA_VERSION
 from gnd.exp.spec import EXPERIMENT_DIR_PATTERN, SpecError, read_spec
 from gnd.model import Model, structured_derivation_ids
+from gnd.model_index import ModelIndex
 from gnd.report import (
     BASE_PAYLOAD_SCHEMA_VERSION,
     DERIVATION_PAYLOAD_SCHEMA_VERSION,
@@ -131,6 +133,8 @@ class CoverageResult:
     unstable_addresses: tuple[dict[str, str], ...]
     covers_exemptions: tuple[dict[str, str], ...]
     unbound_sources: tuple[SourceBindingGap, ...] = ()
+    #: IK2: one row per ``source: induced`` constraint, in element order.
+    induced: tuple[dict[str, Any], ...] = ()
 
 
 def _census(rows: Sequence[ElementRow], element_class: ElementClass) -> dict[str, int]:
@@ -165,6 +169,7 @@ def build_payload(result: CoverageResult, *, gnd_version: str) -> dict[str, Any]
     """Serialize a result into the closed coverage output contract."""
 
     census_classes = _census_classes(result.elements)
+    has_derivation = "derivation" in census_classes
     # /3, /4 (v5.1 Phase 3, D-P3.2): the same derivation-class discriminator
     # that separated 1 from 2, on the output that now discloses which of its
     # check/verify sources never named a model. Versions 1 and 2 stay frozen
@@ -172,8 +177,16 @@ def build_payload(result: CoverageResult, *, gnd_version: str) -> dict[str, Any]
     # an old census's silence for "there were no gaps". Byte identity of newly
     # emitted output and visible disclosure cannot both hold, and the later
     # ruling wins (IF-P3-2, OQ-V51-P3-PLAN-COVERAGE-1).
-    return {
-        "schema_version": 4 if "derivation" in census_classes else 3,
+    # /5, /6 (IK2-D8): the same no-optional-key rule on a second axis. A model
+    # with an induced constraint selects the successor of /3 or /4 that adds
+    # the required `induced` list; every other model keeps /3 or /4 byte for
+    # byte.
+    if result.induced:
+        schema_version = 6 if has_derivation else 5
+    else:
+        schema_version = 4 if has_derivation else 3
+    payload: dict[str, Any] = {
+        "schema_version": schema_version,
         "tool": "gnd",
         "command": "coverage",
         "gnd_version": gnd_version,
@@ -223,6 +236,9 @@ def build_payload(result: CoverageResult, *, gnd_version: str) -> dict[str, Any]
         "unstable_addresses": [dict(row) for row in result.unstable_addresses],
         "covers_exemptions": [dict(row) for row in result.covers_exemptions],
     }
+    if result.induced:
+        payload["induced"] = [copy.deepcopy(row) for row in result.induced]
+    return payload
 
 
 
@@ -283,6 +299,20 @@ def render_coverage(payload: Mapping[str, Any]) -> str:
                     item["quote"], ensure_ascii=False, sort_keys=True, allow_nan=False
                 )
                 lines.append(f"    evidence {item['source']} {item['path']} {quote}")
+        lines.append("")
+
+    if "induced" in payload:
+        lines.append("INDUCED")
+        for row in payload["induced"]:
+            lines.append(
+                f"  {row['address']} {row['status']}/{row['modality']} "
+                f"inducer={row['inducer']['name']}@{row['inducer']['version']} "
+                f"method={row['method']} "
+                f"support={row['support']['numerator']}/{row['support']['denominator']} "
+                f"manifest={row['manifest_sha256']}"
+            )
+            for item in row["evidence"]:
+                lines.append(f"    evidence {item['ref']} {item['sha256']}")
         lines.append("")
 
     loud_sections = (
@@ -681,25 +711,80 @@ def _element_universe(
             elements.append(
                 (derivation_address(fact_type_id), "derivation", "declared-id")
             )
-        for index, constraint in enumerate(fact_type.get("constraints") or []):
-            positional = positional_constraint_ref(fact_type_id, index)
-            declared_id = constraint.get("id")
-            address = (
-                constraint_address(str(declared_id)) if declared_id is not None else positional
-            )
+        for positional, address, addressing, _ in _fact_type_constraints(fact_type):
             positional_to_address[positional] = address
-            elements.append(
-                (address, "constraint", "declared-id" if declared_id is not None else "positional")
-            )
-    for index, constraint in enumerate(model.constraints):
-        positional = positional_constraint_ref(None, index)
-        declared_id = constraint.get("id")
-        address = constraint_address(str(declared_id)) if declared_id is not None else positional
+            elements.append((address, "constraint", addressing))
+    for positional, address, addressing, _ in _global_constraints(model):
         positional_to_address[positional] = address
-        elements.append(
-            (address, "constraint", "declared-id" if declared_id is not None else "positional")
-        )
+        elements.append((address, "constraint", addressing))
     return elements, positional_to_address
+
+
+def _located(
+    constraints: Sequence[dict[str, Any]], fact_type_id: str | None
+) -> Iterator[tuple[str, str, Addressing, dict[str, Any]]]:
+    """``(positional ref, address, addressing, constraint)`` for one list.
+
+    The one home of constraint addressing for the census and the induced view."""
+    for index, constraint in enumerate(constraints):
+        positional = positional_constraint_ref(fact_type_id, index)
+        address, addressing = _constraint_address(positional, constraint)
+        yield positional, address, addressing, constraint
+
+
+def _constraint_address(positional: str, constraint: dict[str, Any]) -> tuple[str, Addressing]:
+    """A constraint's census address: its declared id, else its positional ref."""
+    declared_id = constraint.get("id")
+    if declared_id is None:
+        return positional, "positional"
+    return constraint_address(str(declared_id)), "declared-id"
+
+
+def _fact_type_constraints(
+    fact_type: dict[str, Any],
+) -> Iterator[tuple[str, str, Addressing, dict[str, Any]]]:
+    return _located(fact_type.get("constraints") or [], str(fact_type["id"]))
+
+
+def _global_constraints(model: Model) -> Iterator[tuple[str, str, Addressing, dict[str, Any]]]:
+    return _located(model.constraints, None)
+
+
+def _induced_rows(model: Model) -> tuple[dict[str, Any], ...]:
+    """IK2-C3: the provenance view of every ``source: induced`` constraint.
+
+    Addresses come from ``_constraint_address``, as the census's do. Example ids, counterexample
+    ids and ``confidence`` are deliberately not copied: coverage shows who
+    induced a rule, how strongly it was supported and what evidence it is
+    bound to, not the host's example list."""
+    rows = []
+    for positional, constraint, _ in ModelIndex.for_model(model).iter_constraints():
+        if constraint.get("source") != "induced":
+            continue
+        address, _ = _constraint_address(positional, constraint)
+        induction = constraint["provenance"]["induction"]
+        rows.append(
+            {
+                "address": address,
+                "status": constraint["status"],
+                "modality": constraint["modality"],
+                "inducer": {
+                    "name": induction["inducer"]["name"],
+                    "version": induction["inducer"]["version"],
+                },
+                "method": induction["method"],
+                "manifest_sha256": induction["manifest_sha256"],
+                "support": {
+                    "numerator": induction["support"]["numerator"],
+                    "denominator": induction["support"]["denominator"],
+                },
+                "evidence": [
+                    {"ref": item["ref"], "sha256": item["sha256"]}
+                    for item in induction["evidence"]
+                ],
+            }
+        )
+    return tuple(rows)
 
 
 def _claim_address(entry: Any) -> tuple[str, Addressing]:
@@ -1001,6 +1086,7 @@ def build_coverage(
         unstable_addresses=tuple(unstable),
         covers_exemptions=tuple(exemptions),
         unbound_sources=tuple(sorted(unbound, key=SourceBindingGap.order)),
+        induced=_induced_rows(model),
     )
 
 

@@ -1,0 +1,11 @@
+# IK2 final focused gate, 2026-10-24, working tree before the record commit
+command: uv run pytest -q -p no:randomly $(cat evidence/IK2/gate-files.txt)  # 90 files
+exit: 0
+summary: 4003 passed, 61 deselected, 1 warning in 386.80s (0:06:26)
+warning: PydanticSerializationUnexpectedValue in tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively; also present at B = ebb1f04 (1 passed, 1 warning), pre-existing
+
+lint: uv run ruff check <every changed .py file, incl. src/gnd/model/_induction.py and evidence/IK2/*.py>
+lint summary: All checks passed!
+
+earlier run on a35d8fe (before the RF5 successor row): 1 failed, 3986 passed, 61 deselected
+  failed: tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_service_exit]

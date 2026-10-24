@@ -5,7 +5,7 @@ Plan r4 and IK1 spec r4 **approved by the owner 2026-10-24** (bytes bound in the
 
 - [Canonical plan (r4)](notes/induced-knowledge-plan.md)
 - [IK1 draft spec (r4)](notes/phase-IK1-spec.md)
-- [IK2 draft spec (r1)](notes/phase-IK2-spec.md): awaiting owner review
+- [IK2 spec (r1)](notes/phase-IK2-spec.md): approved 2026-10-24, with its approval corpus
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md):
   three request-changes, one approve-with-fixes, 12 reproduced blocking findings.
 - [Plan review round 2 (confirmation) disposition](notes/plan-review-r2-disposition.md):
@@ -44,5 +44,10 @@ Records:
 - [002 phase IK1](002-phase-IK1.md): object-type descriptions shipped; focused
   gate 2309 passed; one local reviewer, no blocking findings; IK1-Q1 (extras
   nesting cap) awaits an owner ruling.
+- [003 phase IK2](003-phase-IK2.md): induced provenance and admission shipped;
+  focused gate 4003 passed; one local reviewer, R1 (blocking) fixed; IK2-Q1
+  (archived induced proposals) and IK2-Q4 (confirm in place) await owner
+  rulings.
 
-Next: the owner gate for the IK2 spec r1 (decisions IK2-D1..D11).
+Next: IK3 (measure over host-labelled populations) or IK4 (constraint
+discovery), each needing its own spec and owner gate.

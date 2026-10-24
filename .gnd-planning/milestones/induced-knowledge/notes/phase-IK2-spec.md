@@ -615,3 +615,57 @@ The approved corpus is commit `ef39b1a`, with the digests in §14.
 **Residual carried forward.** Whether the induction block can represent real
 learner output without loss is untested. A shortfall found in IK5 needs an owner
 amendment to this phase's schema.
+
+## 16. Implementation findings
+
+Recorded as found. F1 and F2 are the corpus-authoring findings in §14.
+
+- **F3 — spec text versus an approved answer (whitespace scope).** §6 check 5
+  said "no string anywhere in the block contains a whitespace character". That
+  refuses approved case L02, whose `confidence.formula` is
+  `numerator / denominator`. Under the rule that the approved corpus's meanings
+  stay stable, the corpus wins. The check now covers the pattern-governed fields
+  (tokens, ids, refs, digests), the only place the S1 trailing-newline gap
+  exists; the free-text formula is excluded. Review R5 then added a test for
+  every one of those fields.
+- **F4 — refuted premise: "no new module".** The IK2 rules took
+  `gnd/model/_validation.py` to 5,078 lines, past the pinned 5,000-line RF6
+  package-size ceiling (`tests/test_rf6_packages.py`). Trimming lines to get
+  under it would defeat the ceiling's purpose. The rules moved to a new home,
+  `gnd.model._induction`:
+  - registered in `tools/gnd_layers.json` and in the closed `split_homes` list;
+  - re-exported by `gnd.model` with `__module__ = 'gnd.model'`, like every rule;
+  - importing `_iter_provenance_bearing` per call to avoid an import cycle.
+  
+  `_validation.py` is now 4,986 lines.
+- **F5 — stale sentence in §6.** "Under IK2-D4 = keep-deontic, modality is not
+  stripped" describes the rejected reading. IK2-D4 was ruled yes (§13), and the
+  code strips `modality`.
+- **F6 — §6 "matching is location-insensitive", tightened (review R3).** For the
+  reviewed status change, a location-insensitive match let one proposal confirm
+  an induced rule and move it to another fact type or the top level. A
+  confirmed alethic rule could then appear where nothing was ever induced. The
+  claimable predecessor is now keyed by its host fact type (top level =
+  `None`). The exact-match rule for unchanged constraints is unchanged, so every
+  pre-IK2 outcome and the corpus answers stand (A05, A06 confirm in place).
+  **Owner attention:** this narrows an approved spec sentence for safety. It is
+  not an answer change; a ruling is requested in IK2-Q4.
+- **F7 — §5 over-states the `..` refusal (review R6).** The approved grammars
+  refuse a `..` *segment* (`../x`, `a/../b`) and any dot-leading segment, but
+  accept `..` inside a segment (`a..b`). The grammar stands as approved; the
+  provenance reference states the rule as "no dot-leading segment".
+- **F8 — RF guards needed registration, as in IK1:**
+  - an RF6b successor for `_rule_modality_policy`, and IK1's `_layer1_structural`
+    row re-pointed at the current body with its original `before` kept;
+  - an RF5 successor for `_evolve_service_exit` (its body carries the message
+    markers);
+  - a chained dynamic-candidate delta (`evidence/IK2/dynamic-query-successor.json`);
+  - coverage's induced view reads constraints through `ModelIndex.iter_constraints`
+    and the gate's host walk is a keyword on the existing `_constraints` reader,
+    so the RF6 static query census is unchanged.
+  
+  The scripts that produced each are in `evidence/IK2/`.
+- **F9 — refusal order.** A first rewrite of `_enforce_d12` checked audit keys
+  for all candidates before any D-12 branch. That changes which refusal a
+  multi-defect proposal reports first. The final gate keeps the single in-order
+  pass, with claimable predecessors computed up front, and T7 pins both orders.

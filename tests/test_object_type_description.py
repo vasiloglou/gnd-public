@@ -650,8 +650,6 @@ def _nested_description(levels: int, *, container: str = "dict") -> dict[str, An
 def _validate_yaml(tmp_path: Path, document: dict[str, Any]) -> tuple[int, str]:
     import io
 
-    from gnd.cli import main
-
     stream = io.StringIO()
     yaml = YAML(typ="safe")
     yaml.default_flow_style = False

@@ -6,7 +6,7 @@ Plan r4 and IK1 spec r4 **approved by the owner 2026-10-24** (bytes bound in the
 - [Canonical plan (r4)](notes/induced-knowledge-plan.md)
 - [IK1 draft spec (r4)](notes/phase-IK1-spec.md)
 - [IK2 spec (r1)](notes/phase-IK2-spec.md): approved 2026-10-24, with its approval corpus
-- [IK4 draft spec (r1)](notes/phase-IK4-spec.md): awaiting owner review
+- [IK4 spec (r1)](notes/phase-IK4-spec.md): approved 2026-10-24, with its approval corpus
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md):
   three request-changes, one approve-with-fixes, 12 reproduced blocking findings.
 - [Plan review round 2 (confirmation) disposition](notes/plan-review-r2-disposition.md):
@@ -56,4 +56,9 @@ Records:
   refuses; that test was missing from IK2's gate. Repaired with a registration
   hook; gate in `evidence/IK2-repair/` (4366 passed, every `test_rf*.py`).
 
-Next: the owner gate for the IK4 spec r1 (decisions IK4-D1..D14).
+- [005 phase IK4](005-phase-IK4.md): `gnd discover` shipped, with indexed
+  equality, exclusion and frequency checker paths (owner rulings); one local
+  reviewer, seven blocking findings fixed; open IK4-Q1..Q5.
+
+Next: IK3 (measure over host-labelled populations), then IK5 (ILP bridge), each
+needing its own spec and owner gate.

@@ -1,0 +1,9 @@
+# IK4 final focused gate, 2026-10-25, working tree before the record commit
+command: uv run pytest -q -p no:randomly $(cat evidence/IK4/gate-files.txt)  # 166 files
+exit: 1
+summary: 1 failed, 6640 passed, 234 deselected, 1 warning in 571.72s (0:09:31)
+failed: tests/test_incremental_performance.py::test_prepared_policy_rechecks_live_hashability -- also fails on main (3b65d15), pre-existing, IK4-Q5
+warning: the exp-session Pydantic serializer warning recorded in IK2, pre-existing
+
+lint: uv run ruff check <every changed .py file>
+lint summary: All checks passed!

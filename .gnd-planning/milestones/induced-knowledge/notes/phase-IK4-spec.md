@@ -505,3 +505,133 @@ attention.
 **Red run:** 18 failed, 3 passed (`evidence/IK4/corpus-red.txt`). The three passes are
 the answer-key check, plus E1 and E6, whose exit 64 matches today's
 unknown-command error.
+
+## 15. Corpus approval (2026-10-24)
+
+**Approval (o).** The owner replied: "Approved: the IK4 corpus as committed in
+3e1ef3e, including findings C-F1 to C-F10. Start implementation."
+- The corpus readings C-F1 to C-F10 are part of the approved answers.
+- C-F1 sets usage errors to exit 64 rather than §5's 3.
+- C-F7 and C-F8 (trivial mandatory on single-role value types; value lists on
+  entity roles) are kept as written.
+
+## 16. Implementation findings and owner rulings (2026-10-24 to 25)
+
+- **F1 — YAML event cap.** GND caps a YAML population at 1,000,000 parse events.
+  A near-10-MiB YAML file of small rows exceeds it, so the approved N1 recipe
+  could not load as YAML. The recipe names no format, so the harness generates
+  N1 as JSON (about 89% of the cap, same row counts). This is not an answer
+  change. The discover contract page tells users to write large populations as
+  JSON.
+- **F2 — the checker was quadratic for equality, exclusion and frequency.**
+  `semantic_spec` is the checker's normative reference interpreter. Its
+  set-family and frequency paths rescan rows for every row, so N1 at the
+  approved bounds was infeasible: 390 s at 1/20 scale, hours at full scale.
+  Subset alone already had a production fast path.
+  - **Owner rulings (o):**
+    - "Add checker fast paths" for equality and exclusion;
+    - then, when frequency proved to have the same problem, "Yes, include
+      frequency".
+  - **Implemented** in `src/gnd/semantic_rows.py` and registered as
+    `production=` in `constraint_families.FAMILIES`:
+    `indexed_equality_verdict`, `indexed_exclusion_verdict` and
+    `indexed_frequency_verdict`. Each keeps the specification's applicability,
+    validity, canonical rows, witness order and pass-only vacuity; only
+    membership and counting use typed hashing.
+  - **Tested:** `tests/test_ik4_indexed_set_families.py` checks oracle parity
+    over 80 random snapshots, single and joined, internal and external
+    frequency, refused shapes and typed identities. It also confirms that a
+    public check never reaches the pure providers. The verdict mix covers
+    pass, fail, warning with multi-row witnesses, and vacuous.
+  - **Measured at full near-cap size:** about 38 s profiled, and 15 s for the
+    test.
+  - **Guards updated:** the M3 guard "only subset has a production path" now
+    pins the four counting families. Three incremental-session tests that swap
+    the pure frequency evaluator now disable the fast path, so they still
+    exercise what they replace.
+- **F3 — roster ids.** `ot<k>#<i>` numbers a roster member by first-appearance
+  order in the checker's closed-world roster (`gnd.universe`).
+- **F4 — discovery's own violation count is a guard.** If the checker passes a
+  candidate that discovery counted violations for, that is an internal defect
+  (exit 70), never a silent emission (T4).
+- **F5 — zero-support candidates.** A candidate whose subject count is 0 is
+  counted under `rejected.vacuous` without entering the check run, because the
+  IK2 induction block needs `denominator >= 1`.
+- **F6 — one replay home.** The proposal's candidate model is built with
+  evolve's own `_apply_declared_operations`, so `gnd evolve preview` recomputes
+  exactly what discovery wrote.
+- **F7 — entry-point rule.** A command handler may import only its bound
+  service, so `gnd.commands.discover` reads `FAMILIES` through
+  `gnd.discover.service`.
+- **F8 — RF1 goldens.** Only goldens the new command changes were replaced:
+  the top-level help and exit-probe files and the doctor, install and uninstall
+  exit probes, each per Python minor, plus two new `gnd discover` files. The
+  CLI tree was patched, not recaptured, so the compiled-snapshot successor
+  mechanism keeps working. A merged recapture under the local interpreters also
+  differed in unrelated helper and `gnd check` goldens (environment and
+  successor artifacts); those changes were not applied.
+- **F9 — docs row.** The docs test appends `--help` after a typed argument, so
+  the CLI index row uses a concrete `--requested-at` value.
+- **F10 — pre-existing red.**
+  `tests/test_incremental_performance.py::test_prepared_policy_rechecks_live_hashability`
+  fails on `main` (`3b65d15`) and on this branch alike. It is unrelated to IK4.
+
+## 17. Review rulings and findings (2026-10-25)
+
+**Owner rulings (o)** on the single-reviewer review of `a6947a4`, each as
+recommended:
+- **R5, redaction.** "Skip and count": discovery never suggests a value rule for
+  a role the model marks `redact: true`; such roles are counted in
+  `skipped.redacted_value_roles`. IK4-D6 (raw values in value candidates)
+  stands for unredacted roles.
+- **R11, work ceiling.** "Correct it". §6's `W ≤ R × (14 + 4) + 2 × P × R_max`
+  is replaced by:
+
+  ```
+  W ≤ Σ_ft n_ft · (K_ft + 3·a_ft)  +  Σ_roles |roster(ot_role)|  +  2 · P · R_max
+  ```
+
+  - `K_ft` is the uniqueness key candidates: 2^a − 2 up to arity 4, otherwise
+    a + a(a−1)/2.
+  - `a_ft` is the arity, `P` the pairs compared, and `R_max` the largest scanned
+    fact type.
+
+  The report states the computed bound as `work.ceiling`, and exceeding it is
+  exit 70. The approved N1 answer (≤ 74,531,600) is unaffected; measured work is
+  3.3 M.
+- **R12, superkeys.** "Suppress them": a declared `frequency` with `max: 1`
+  feeds the `superkey` row as a declared key does.
+
+**Findings from fixing the review:**
+- **F11 — identities.** Discovery now compares cells by the checker's typed
+  identity (`canonical_scalar` with the role's resolved primitive). Opaque or
+  unrepresentable cells never enter a value domain.
+- **F12 — two evolve limits that predate IK4.** `gnd evolve preview` cannot
+  preview:
+  - a model that declares reference populations, because it validates a temp
+    copy without the reference files;
+  - a model holding a YAML-only value such as an unquoted date, because it
+    serializes the model as JSON.
+
+  Discovery handles both: it binds references as `gnd check` does, and writes
+  such a candidate as block YAML. But such a proposal cannot be previewed until
+  evolve is fixed (open questions IK4-Q2, IK4-Q3).
+- **F13 — IK2 latent bug, now fixed.** IK2's exact-integer check refused
+  ruamel's round-trip `ScalarInt`, which is how `0`, `1_000` and hex load. So a
+  YAML model whose induction support count is 0 was refused. The check now
+  accepts any non-bool `int`; anchored booleans are still refused at layer 1.
+- **F14 — derived rosters.** Mandatory candidates are skipped on object types a
+  derived or semiderived fact type plays, and counted. The checker's roster
+  excludes derived claims, which a population roster cannot tell apart. The
+  `semiderived` skip, for fact types and for rosters, is wider than §6's
+  "derived fact types" and is recorded here as intended.
+- **F15 — inputs read once.** Each input is read once through a capped reader,
+  then loaded from those bytes. The digest therefore covers exactly the loaded
+  population.
+- **F16 — size budget.** Survivors are kept in emission order while the
+  proposal stays under the 10 MiB caps. The rest are counted in
+  `skipped.over_budget`.
+- **F17 — pre-existing checker defect, carried.** A mandatory candidate whose
+  witness has no admissible origin can make `gnd check` raise. That is the
+  same at `3b65d15`. Discovery now maps any checker exception to exit 70
+  without echoing data (IK4-Q4).

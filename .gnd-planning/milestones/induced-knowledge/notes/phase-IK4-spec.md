@@ -440,3 +440,68 @@ Proposed in IK4-D1: corpus-first.
 - **H4, no ADD-constraint proposal fixture.** No proposal adding a constraint
   to a fact type exists anywhere. T6 is the first, so replay order matters:
   candidates are appended in operation order.
+
+## 13. Owner gate record (2026-10-24)
+
+**Approval (o).** The owner was asked: "Approve IK4 spec r1 with all proposed
+rulings?" After a business-terms explanation of IK4, the owner replied
+"approved" on 2026-10-24. The approved bytes are spec r1 as committed in
+`ef5b36f`, before this section was added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `notes/phase-IK4-spec.md` (r1) | `0d3b01c0bfc9c0263abcf9fc2c04095d2965e4fb28d447214f5aa5868d6d81ad` |
+
+**Rulings (o).** IK4-D1 to D14 are ruled as proposed in §7:
+- **D1:** corpus-first.
+- **D2:** the support table.
+- **D3:** a near-miss is `1 ≤ v ≤ min(32, ⌊0.05 d⌋)`.
+- **D4:** uniqueness keys are enumerated in full up to arity 4, and only sizes
+  1–2 above that.
+- **D5:** single-role set pairs in different fact types, with a pair cap of 256.
+- **D6:** value candidates emit raw values, with owner review as the control.
+- **D7:** the work-ceiling formula, with its numeric value fixed in the corpus.
+- **D8:** ids are `ft<k>#<i>` and `ot<k>#<i>`.
+- **D9:** the population digest serves as both manifest and evidence.
+- **D10:** `--actor` and `--requested-at` are required.
+- **D11:** fact types an existing operation references are skipped.
+- **D12:** zero candidates gives exit 0, with a report and no proposal.
+- **D13:** no public Python API.
+- **D14:** this branch works from `main`. The base commit is
+  B = `3b65d15`, the PR #38 merge that carries the IK1-Q1 cap and the IK2
+  cycle repair.
+
+**Next under IK4-D1.** The approval corpus, including T7's numeric ceiling, is
+committed red before any implementation file. The owner approves it by reading
+its README and answer key.
+
+## 14. Approval corpus, committed red (2026-10-24)
+
+Under IK4-D1 the corpus is committed before any implementation file. **It
+awaits owner approval.** It has 12 discovery cases, 7 refusals and 1 work-bound
+case. The answers are hand-written from this spec, and the existing `gnd check`
+was used only to confirm the pass/fail verdicts the spec defers to. Ten corpus
+findings (C-F1..C-F10) are listed in the corpus README. C-F1 changes the spec's
+usage-error exit from 3 to GND's 64, and C-F7 and C-F8 flag noise for owner
+attention.
+
+| Artifact | SHA-256 |
+|---|---|
+| `ik4-corpus/README.md` | `ae8843df7f2e9c79edbb50d77d859d8fd6ed962dfc4f44808f1f006e9a466aed` |
+| `ik4-corpus/cases.json` | `3e3b44fcffbfaf82426c77b7151d6e9c99f60356e6dc453c70301f3b47ce6dbf` |
+| `ik4-corpus/expected.json` | `b45d54e4b33a168e7e18ae8a973ef8d48f236f19bd216f0b7b3b2a75f4ac58c7` |
+| `ik4-corpus/staff.orm.yaml` | `dff13fcd754701169fc21973e1905ab939e61e923c5ba1629fe5b67b76d69a4f` |
+| `ik4-corpus/staff.population.yaml` | `70e9122d72e3326995430aad73046ba34bed920d0a79505735b4d514b24459df` |
+| `ik4-corpus/staff-declared.orm.yaml` | `9e628a7290eb14de7c5646fb0da99ca98623cb349653817476dcee3aefa2ac6a` |
+| `ik4-corpus/staff-declared.population.yaml` | `9dc81f414a71d07852c603b4d5a7efa80838bcd15f262bbe4db0c569a5d39b44` |
+| `ik4-corpus/near-miss-2.population.yaml` | `d4ad0314af20a00e566eb1d24779995d9c56fcbf24f4f92e6ad3a6e2b8a3a627` |
+| `ik4-corpus/near-miss-3.population.yaml` | `8dcce15d1bcd6351721357d8dd96b2dc5fe191993a4e916c6a981026563201e6` |
+| `ik4-corpus/empty.population.yaml` | `0a3ee460a8a7ed0d3ab3a1b6aef13966cc81c3d4c24fcff1623e29848bc9b434` |
+| `ik4-corpus/other-model.population.yaml` | `4a2c995df6c14ce78ccff40a6a4e365c7d494fd9b17bd93fed2213d3f9231cc5` |
+| `ik4-corpus/bad name.population.yaml` | `cbdfaf625b3e16be8ede7bcddb919505826d5ed1c0c64d61f2b0ab9630cfefda` |
+| `tests/test_discover.py` | `9d4c2c939c92b18aa70c138f7c8737bec35765cab2f81bf87a000982071a7773` |
+| `.gnd-planning/milestones/induced-knowledge/evidence/IK4/corpus-red.txt` | `b83e116595b8f2f538b1309d22fd4d1dd70cdf313f075f533d4a48e9b27d5328` |
+
+**Red run:** 18 failed, 3 passed (`evidence/IK4/corpus-red.txt`). The three passes are
+the answer-key check, plus E1 and E6, whose exit 64 matches today's
+unknown-command error.

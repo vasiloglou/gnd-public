@@ -1,0 +1,54 @@
+# IK4 approval corpus: near-miss population, 3 people in two teams.
+population:
+  model: staff.orm.yaml
+  source: fixture
+  covers: [person_in_team, person_has_grade, team_led_by, person_has_skill]
+instances: {}
+facts:
+  person_in_team:
+    - { person: 1, team: "A" }
+    - { person: 2, team: "A" }
+    - { person: 3, team: "A" }
+    - { person: 4, team: "A" }
+    - { person: 5, team: "A" }
+    - { person: 6, team: "A" }
+    - { person: 7, team: "A" }
+    - { person: 8, team: "A" }
+    - { person: 9, team: "A" }
+    - { person: 10, team: "A" }
+    - { person: 11, team: "A" }
+    - { person: 12, team: "A" }
+    - { person: 13, team: "A" }
+    - { person: 14, team: "A" }
+    - { person: 15, team: "A" }
+    - { person: 16, team: "A" }
+    - { person: 17, team: "A" }
+    - { person: 18, team: "A" }
+    - { person: 19, team: "A" }
+    - { person: 20, team: "A" }
+    - { person: 21, team: "A" }
+    - { person: 22, team: "A" }
+    - { person: 23, team: "A" }
+    - { person: 24, team: "A" }
+    - { person: 25, team: "A" }
+    - { person: 26, team: "A" }
+    - { person: 27, team: "A" }
+    - { person: 28, team: "A" }
+    - { person: 29, team: "A" }
+    - { person: 30, team: "A" }
+    - { person: 31, team: "A" }
+    - { person: 32, team: "A" }
+    - { person: 33, team: "A" }
+    - { person: 34, team: "A" }
+    - { person: 35, team: "A" }
+    - { person: 36, team: "A" }
+    - { person: 37, team: "A" }
+    - { person: 38, team: "A" }
+    - { person: 39, team: "A" }
+    - { person: 40, team: "A" }
+    - { person: 7, team: "B" }
+    - { person: 19, team: "B" }
+    - { person: 25, team: "B" }
+  person_has_grade: []
+  team_led_by: []
+  person_has_skill: []

@@ -43,6 +43,8 @@ from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 from ruamel.yaml.scalarbool import ScalarBoolean
 
+import gnd.model._induction as _induction_home
+
 # Message wording for the layer-2 rules lives with every other CNL template
 # (gnd.verbalize imports nothing from gnd, so this cannot cycle).
 from gnd import verbalize
@@ -2039,6 +2041,8 @@ def _iter_provenance_bearing(doc: dict[str, Any]):
         for kind, index, obligation in _iter_operation_obligations(operation):
             yield f"{path}.{kind}[{index}]", obligation
 
+
+_induction_home._provenance_walk = _iter_provenance_bearing
 
 def _provenance_bearing_label(element: dict[str, Any]) -> str:
     """How to name a provenance-bearing element in a message.

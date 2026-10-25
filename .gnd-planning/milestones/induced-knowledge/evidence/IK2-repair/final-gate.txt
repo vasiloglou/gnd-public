@@ -1,0 +1,5 @@
+# IK2 import-cycle repair gate, 2026-10-24
+command: uv run pytest -q -p no:randomly $(cat evidence/IK2-repair/gate-files.txt)  # 108 files: IK2's 90 plus every tests/test_rf*.py and test_gnd_arch.py
+exit: 0
+summary: 4366 passed, 61 deselected, 1 warning in 445.76s (0:07:25)
+before the repair: tests/test_rf8_structure.py::test_graph_and_each_dirty_direction FAILED -- assert not [['gnd.model._induction', 'gnd.model._validation']]

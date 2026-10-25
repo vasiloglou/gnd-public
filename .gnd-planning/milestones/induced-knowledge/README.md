@@ -50,6 +50,10 @@ Records:
   checks on archived induced proposals; owner review is the control).
 - [004 amendment IK1-Q1](004-amendment-IK1-Q1.md): description nesting capped at 64
   levels (owner ruling 2026-10-24); IK1-Q1 closed.
+- IK2 repair (2026-10-24): IK2 left a runtime import cycle between
+  `gnd.model._induction` and `_validation` that `tests/test_rf8_structure.py`
+  refuses; that test was missing from IK2's gate. Repaired with a registration
+  hook; gate in `evidence/IK2-repair/` (4366 passed, every `test_rf*.py`).
 
 Next: IK3 (measure over host-labelled populations) or IK4 (constraint
 discovery), each needing its own spec and owner gate.

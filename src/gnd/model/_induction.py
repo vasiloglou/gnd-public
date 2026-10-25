@@ -3,13 +3,14 @@
 A separate home inside the ``gnd.model`` package so ``_validation`` stays under
 its RF6 size ceiling. The rules are registered, in order, at the end of
 ``gnd.model._validation._SEMANTIC_RULES`` and re-exported by ``gnd.model``.
-``_iter_provenance_bearing`` is imported per call: ``_validation`` imports this
-module, so a module-level import back would be circular.
+``_validation`` registers its ``_iter_provenance_bearing`` here at import
+time, so this module never imports ``_validation`` back.
 """
 
 from __future__ import annotations
 
 import re
+from collections.abc import Callable, Iterator
 from typing import Any
 
 from gnd.errors import ValidationIssue
@@ -37,10 +38,17 @@ def _induced_constraint_paths(doc: Any) -> frozenset[str]:
     return frozenset(paths)
 
 
-def _iter_provenance_bearing(doc: dict[str, Any]):
-    from gnd.model._validation import _iter_provenance_bearing as walk
+#: The shared provenance walk, registered by ``gnd.model._validation`` once
+#: it is defined. This home never imports ``_validation``: even a per-call
+#: import is a runtime edge, and the two would form the cycle the RF8 graph
+#: check forbids.
+_provenance_walk: Callable[[dict[str, Any]], Iterator[tuple[str, dict[str, Any]]]] | None = None
 
-    return walk(doc)
+
+def _iter_provenance_bearing(doc: dict[str, Any]):
+    if _provenance_walk is None:
+        raise RuntimeError("gnd.model._validation has not registered the provenance walk")
+    return _provenance_walk(doc)
 
 
 _WHITESPACE = re.compile(r"\s")

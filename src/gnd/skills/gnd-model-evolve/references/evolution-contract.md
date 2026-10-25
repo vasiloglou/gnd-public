@@ -314,7 +314,10 @@ Evolution enforces it at preview, apply, and finalize:
 - unchanged constraints retain complete canonical metadata;
 - a new semantic interpretation is `llm-inferred`, `proposed`, `deontic`;
 - a new owner rule is `user-supplied`, `confirmed`, with modality assigned by policy;
-- a sixth source is invalid;
+- a new induced rule is `induced`, `proposed`, `deontic`, without `reviewed_in`, and becomes
+  `confirmed` only as a reviewed status change; `provenance.induction` under any other source is
+  refused (the rules and their four named refusals are stated once in the reference above);
+- any other source is invalid;
 - actor, origin, and time remain in operation audit, not constraint provenance.
 
 The D-13 record retains proposal id/digest, preview and intent digests, old/new model digests,

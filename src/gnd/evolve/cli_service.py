@@ -318,6 +318,10 @@ def _evolve_service_exit(error: Exception) -> int:
         "new llm-inferred constraints",
         "owner-approved user-supplied constraints",
         "new or changed constraints",
+        # IK2 D-12 refusals for induced provenance (spec R-I1..R-I4).
+        "provenance.induction",
+        "new induced constraints",
+        "induced constraints become confirmed",
         "fact_types[",
         "evolution proposal exceeds ",
     )

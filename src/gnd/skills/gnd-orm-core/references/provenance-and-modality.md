@@ -6,9 +6,9 @@ Cross-references:
 - Where these fields sit in the YAML → [representation-format.md](representation-format.md) (normative machine spec: [orm-meta.schema.json](orm-meta.schema.json))
 - How the checker maps modality to verdicts per constraint family → [constraint-reference.md](constraint-reference.md)
 
-## The six-source taxonomy
+## The seven-source taxonomy
 
-Every constraint carries a `source` recording *where the claim came from*. There are exactly six values:
+Every constraint carries a `source` recording *where the claim came from*. There are exactly seven values:
 
 | `source` | Meaning | Typical origin |
 |---|---|---|
@@ -18,6 +18,7 @@ Every constraint carries a `source` recording *where the claim came from*. There
 | `llm-inferred` | Proposed by the LLM from world knowledge | The bounded LLM tier of constraint inference |
 | `user-supplied` | The user added the rule deliberately during review | A review-step addition |
 | `imported` | Carried in verbatim from another framework's artifact | A migration from a prior planning framework's requirements document |
+| `induced` | Proposed from labelled examples by an inducer, under a recorded induction block | `gnd discover`, an ILP learner, or a host's gold-answer labels |
 
 **Everything in this document applies to ORM+ v2 operations too.** An operation, each of its preconditions, and each of its dynamic rules carry `source`, `status` and `provenance` under exactly these rules — the meta-schema references one `$defs/provenance_policy` from all of them rather than keeping a second copy. Modality is the one asymmetry, and it is stated in [Frames are never defaulted](#frames-are-never-defaulted) below.
 
@@ -89,6 +90,38 @@ The `anchor` is the load-bearing field: it must appear **verbatim** in the artif
 
 `reviewed_in` names the record in which an owner accepted the import. It is required exactly when `status: confirmed`, enforced twice: the meta-schema requires the field, and `semantic:imported-confirmed-reviewed` (error) additionally rejects a present-but-blank one. The reason is the D-03 table below — confirmation is what flips an imported claim from advisory to hard-fail, and an unreviewed import may not present itself as confirmed.
 
+**`induced`** — `provenance` block REQUIRED and **closed**: it holds exactly `induction` and, once confirmed, `reviewed_in`. **Constraints only** — an operation, precondition or dynamic rule may not carry `source: induced` (the D-12 evolve gate reads constraints only, so an induced operation would bypass review).
+
+```yaml
+provenance:
+  induction:
+    inducer: {name: gnd-discover, version: 0.4.0}    # who proposed it
+    method: gnd-discover                              # free token; a gold-answer origin is `gold-answer`
+    manifest_sha256: 3f0c…                            # the label manifest it read
+    examples: [case-0001, case-0002]                  # opaque or manifest-relative ids of supporting examples
+    support: {numerator: 41, denominator: 42}
+    counterexamples: [case-0017]
+    evidence:
+      - {ref: populations/p1.json, sha256: 9a1e…}     # manifest-relative ref, digest of its bytes
+    confidence: {value: 0.97, formula: "numerator / denominator"}   # optional; only for methods that define it
+  reviewed_in: .gnd-planning/milestones/demo/003-review.md          # REQUIRED once confirmed
+```
+
+Bounds (fixed by the IK2 spec; changed only by owner amendment):
+
+| Field | Bound |
+|---|---|
+| `inducer.name`, `inducer.version`, `method` | 1–64 characters, `^[A-Za-z0-9][A-Za-z0-9._+-]{0,63}$` |
+| each example and counterexample id | 1–64 characters, `^[A-Za-z0-9][A-Za-z0-9._:#-]{0,63}$` |
+| `examples` | at most 256, unique, and no more than `support.numerator` |
+| `counterexamples` | at most 32, unique, no more than `denominator − numerator`, and disjoint from `examples` |
+| `support` | integers, `0 ≤ numerator ≤ denominator`, `1 ≤ denominator ≤ 2^53 − 1` |
+| `evidence` | 1–32 items; `ref` manifest-relative, at most 256 characters, no leading `/`, no `\`, `:`, whitespace or dot-leading segment; `sha256` 64 lowercase hex |
+| `confidence` | optional `{value, formula}`; `value` finite in `[0, 1]`, `formula` 1–256 characters |
+| `reviewed_in` | 1–256 characters, not whitespace-only |
+
+**Induction evidence never persists host data.** Ids are opaque or manifest-relative and digests stand in for values; a host path or raw value is refused by the grammars above. One residual is stated rather than hidden: a raw value that is itself a single token (`alice`, `42`) cannot be told apart from an opaque id. **The block is a recorded claim.** The loader checks its shape, bounds and arithmetic (`semantic:induced-provenance`), not its truth — a model file carries no population to recompute it from. Commands that write induction blocks compute what they write and say so.
+
 GND ships no command that re-verifies an anchor against artifact bytes; the `verify_migration.py` script bundled with the adoption skill does that at migration time. Nothing re-checks it afterwards, so an `imported` provenance block is a record of a check that was made, not a check that is continuously made.
 
 ### Source ↔ status consistency
@@ -97,6 +130,7 @@ GND ships no command that re-verifies an anchor against artifact bytes; the `ver
 
 - `explicit` and `user-supplied` constraints are `confirmed` — the user's own words are not proposals.
 - `imported` constraints may be either. An import starts `proposed` (and therefore deontic); an owner review moves it to `confirmed`, which requires `reviewed_in`.
+- `induced` constraints may be either. They start `proposed` and deontic; an owner review moves them to `confirmed`, which requires a non-blank `reviewed_in` (`semantic:induced-confirmed-reviewed`).
 - `common-sense` and `llm-inferred` constraints start `proposed`; they become `confirmed` only when the user accepts them, or move to `rejected_proposals` when the user rejects them.
 - `sample` constraints stay `proposed` until user confirmation.
 
@@ -154,11 +188,13 @@ The modality field is always *written explicitly* by whoever emits the YAML. Wha
 | `common-sense` | **deontic** | **alethic** |
 | `llm-inferred` | **deontic** | **alethic** |
 | `imported` | **deontic** | **alethic** (and `reviewed_in` is then required) |
+| `induced` | **deontic** | **alethic** (and `reviewed_in` is then required) |
 
 Reading the table:
 
 - **`explicit` / `user-supplied` → alethic.** The user said it; the domain enforces it. Hard-fail by default.
 - **`imported` → deontic until confirmed.** Another framework's document said it; that is evidence about what someone once wrote, not a decision that it gates this model. Confirmation — recorded in `reviewed_in` — is what makes it a hard rule here.
+- **`induced` → deontic until confirmed.** Labelled examples supported the rule; that is evidence, not a decision. Confirmation — recorded in `reviewed_in` — may make it alethic.
 - **`llm-inferred` / `common-sense` (and `sample`) → deontic until confirmed.** Inferred and library-matched constraints are advisory — feedback-only — while unconfirmed. **Confirmation flips the default**: when the user confirms the constraint at review, the authoring skill rewrites it as `alethic`.
 - **The author may override the default in either direction, with a recorded rationale.** A user may confirm a common-sense constraint but keep it deontic ("true in general, but we have exceptions") or demand alethic on a proposed constraint; either way the skill records why in `rationale` (or `user_note`).
 
@@ -167,8 +203,30 @@ Reading the table:
 Two mechanical guards keep the policy honest:
 
 1. **The meta-schema requires `modality` on every active constraint.** An omitted modality is a validation error (exit 3), not a silent default. This is a deliberate GND divergence from the source spec, which defaulted omitted modality to alethic — exactly the failure D-03 exists to prevent, where an unreviewed `llm-inferred` guess silently becomes a hard-fail gate.
-2. **The semantic validator warns on policy violations.** Rule `semantic:modality-policy` (severity: warning) fires when an **unconfirmed** (`status: proposed`) `llm-inferred` or `common-sense` constraint carries `modality: alethic`. The model still loads — the policy is advisory at load time — but the warning is printed by `gnd validate` and rides on the loaded model's warnings channel, so no consumer can miss it.
+2. **The semantic validator warns on policy violations.** Rule `semantic:modality-policy` (severity: warning) fires when an **unconfirmed** (`status: proposed`) `llm-inferred`, `common-sense` or `induced` constraint carries `modality: alethic`. The model still loads — the policy is advisory at load time — but the warning is printed by `gnd validate` and rides on the loaded model's warnings channel, so no consumer can miss it.
 3. **The semantic validator warns on permanent indeterminacy.** Rule `semantic:textual-alethic` (severity: warning) fires when a `textual` constraint carries `modality: alethic` — see [Permanent indeterminacy (D-20)](#permanent-indeterminacy-alethic-constraints-in-a-never-checkable-family-d-20) above. Same channel, same never-an-error posture.
+
+## Evolve admission (D-12)
+
+`gnd evolve` (preview, apply and finalize) admits a constraint that is new or changed relative to the current model only under these rules; an unchanged constraint keeps its complete canonical metadata. This is the one home of the lifecycle; the gnd-model-evolve evolution contract cites it.
+
+- A new `llm-inferred` constraint is `proposed` and `deontic`.
+- A new `user-supplied` constraint is `confirmed`, with modality assigned by the D-03 table.
+- A new `induced` constraint is `proposed` and `deontic` and carries no `reviewed_in`. Output from discovery or an ILP import is always new, so it can never arrive already reviewed.
+- An `induced` constraint becomes `confirmed` only as a **reviewed status change**: the candidate equals an existing `proposed` `induced` constraint except for `status`, `modality` and an added non-blank `provenance.reviewed_in`. Each proposed predecessor can be confirmed once. Any other change to a confirmed induced constraint returns it to `proposed`.
+- `provenance.induction` is refused under every source other than `induced`.
+- Every other source is refused; operation audit actor, origin and time never enter constraint provenance.
+
+The named refusals, all exit 3:
+
+| Refusal | When |
+|---|---|
+| `provenance.induction is allowed only under source induced (D-12)` | an induction block under another source |
+| `new induced constraints cannot carry provenance.reviewed_in (D-12)` | a new proposed induced constraint names a review |
+| `induced constraints become confirmed only as a reviewed status change of an existing proposed induced constraint (D-12)` | a confirmed induced constraint with no claimable predecessor or no review record |
+| `new induced constraints must be proposed/deontic (D-12)` | any other status/modality on a new induced constraint |
+
+An owner may still rewrite an induced rule as `user-supplied`/`confirmed` without its induction block; that drops the marker, and the reviewed status change is the path that keeps it.
 
 ## Worked examples
 

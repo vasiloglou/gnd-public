@@ -71,6 +71,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE4/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE5/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/induced-knowledge/evidence/IK1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/induced-knowledge/evidence/IK2/dynamic-query-successor.json',
 ]
 
 

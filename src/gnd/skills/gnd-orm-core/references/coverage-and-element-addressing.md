@@ -142,6 +142,22 @@ model's, is a different matter entirely: it is not a gap to disclose but a
 contradiction to refuse, with `coverage:model-digest-mismatch`. Indexing it
 would silently answer a question about one model with evidence about another.
 
+## Induced elements
+
+When the model declares a constraint with `source: induced`, the output carries
+a required `induced` list: one row per induced constraint, in element order, at
+the same address the census uses. Each row names the constraint's status and
+modality, the inducer (`name` and `version`), the `method`, the manifest digest,
+the support numerator and denominator, and each evidence `ref` with its
+`sha256`. Example ids, counterexample ids and `confidence` are not copied; they
+stay in the model. The text view prints the same rows in an `INDUCED` section.
+
+The list selects the output version on a second axis, beside the derivation
+class: `schema_version` 5 is 3 plus `induced`, and 6 is 4 plus `induced`.
+Versions 1–4 forbid the key, so a model with no induced constraint emits exactly
+what it emitted before. The list repeats what the model's induction blocks
+claim; coverage does not recompute support.
+
 ## The model digest, and what it can be verified with
 
 Every payload carries `model.digest`, so a committed census is bound to the

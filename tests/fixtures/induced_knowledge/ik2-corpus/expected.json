@@ -1,0 +1,386 @@
+{
+ "version": 1,
+ "reasons": {
+  "R-I1": "provenance.induction is allowed only under source induced (D-12)",
+  "R-I2": "new induced constraints cannot carry provenance.reviewed_in (D-12)",
+  "R-I3": "induced constraints become confirmed only as a reviewed status change of an existing proposed induced constraint (D-12)",
+  "R-I4": "new induced constraints must be proposed/deontic (D-12)"
+ },
+ "loader": {
+  "L01": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "L02": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "L03": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "L04": {
+   "exit": 0,
+   "rule_id": "semantic:modality-policy"
+  },
+  "L05": {
+   "exit": 3,
+   "rule_id": "jsonschema:required"
+  },
+  "L06": {
+   "exit": 3,
+   "rule_id": "jsonschema:additionalProperties"
+  },
+  "L07": {
+   "exit": 3,
+   "rule_id": "jsonschema:additionalProperties"
+  },
+  "L08": {
+   "exit": 3,
+   "rule_id": "jsonschema:required"
+  },
+  "L09": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L10": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L11": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L12": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L13": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L14": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L15": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L16": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L17": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L18": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L19": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L20": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L21": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "L22": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L23": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L24": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L25": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L26": {
+   "exit": 3,
+   "rule_id": "semantic:induced-provenance"
+  },
+  "L27": {
+   "exit": 3,
+   "rule_id": "jsonschema:required"
+  },
+  "L28": {
+   "exit": 3,
+   "rule_id": "semantic:induced-confirmed-reviewed"
+  },
+  "L29": {
+   "exit": 3,
+   "rule_id": "jsonschema:uniqueItems"
+  },
+  "L30": {
+   "exit": 3,
+   "rule_id": "jsonschema:type"
+  },
+  "L31": {
+   "exit": 3,
+   "rule_id": "jsonschema:type"
+  },
+  "L32": {
+   "exit": 3,
+   "rule_id": "jsonschema:type"
+  },
+  "L33": {
+   "exit": 3,
+   "rule_id": "jsonschema:type"
+  },
+  "L34": {
+   "exit": 3,
+   "rule_id": "jsonschema:not"
+  },
+  "L35": {
+   "exit": 3,
+   "rule_id": "jsonschema:not"
+  },
+  "L36": {
+   "exit": 3,
+   "rule_id": "jsonschema:not"
+  },
+  "L37": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "L38": {
+   "exit": 3,
+   "rule_id": "jsonschema:required"
+  },
+  "B01": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B02": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B03": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "B04": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "B05": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B06": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "B07": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B08": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "B09": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "B10": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B11": {
+   "exit": 3,
+   "rule_id": "jsonschema:pattern"
+  },
+  "B12": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B13": {
+   "exit": 3,
+   "rule_id": "jsonschema:maxItems"
+  },
+  "B14": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B15": {
+   "exit": 3,
+   "rule_id": "jsonschema:maxItems"
+  },
+  "B16": {
+   "exit": 3,
+   "rule_id": "jsonschema:minItems"
+  },
+  "B17": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B18": {
+   "exit": 3,
+   "rule_id": "jsonschema:maxItems"
+  },
+  "B19": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B20": {
+   "exit": 3,
+   "rule_id": "jsonschema:maxLength"
+  },
+  "B21": {
+   "exit": 3,
+   "rule_id": "jsonschema:minimum"
+  },
+  "B22": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B23": {
+   "exit": 3,
+   "rule_id": "jsonschema:maximum"
+  },
+  "B24": {
+   "exit": 3,
+   "rule_id": "jsonschema:minimum"
+  },
+  "B25": {
+   "exit": 3,
+   "rule_id": "jsonschema:maximum"
+  },
+  "B26": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B27": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B28": {
+   "exit": 3,
+   "rule_id": "jsonschema:minimum"
+  },
+  "B29": {
+   "exit": 3,
+   "rule_id": "jsonschema:maximum"
+  },
+  "B30": {
+   "exit": 3,
+   "rule_id": "jsonschema:minLength"
+  },
+  "B31": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B32": {
+   "exit": 3,
+   "rule_id": "jsonschema:maxLength"
+  },
+  "B33": {
+   "exit": 0,
+   "rule_id": null
+  },
+  "B34": {
+   "exit": 3,
+   "rule_id": "jsonschema:maxLength"
+  }
+ },
+ "admission": {
+  "A01": {
+   "gate": "admitted",
+   "preview_exit": 0,
+   "preview_reason": null
+  },
+  "A02": {
+   "gate": "R-I4",
+   "preview_exit": 3,
+   "preview_reason": "R-I4"
+  },
+  "A03": {
+   "gate": "R-I3",
+   "preview_exit": 3,
+   "preview_reason": "R-I3"
+  },
+  "A04": {
+   "gate": "R-I2",
+   "preview_exit": 3,
+   "preview_reason": "R-I2"
+  },
+  "A05": {
+   "gate": "admitted",
+   "preview_exit": 0,
+   "preview_reason": null
+  },
+  "A06": {
+   "gate": "admitted",
+   "preview_exit": 0,
+   "preview_reason": null
+  },
+  "A07": {
+   "gate": "R-I3",
+   "preview_exit": 3,
+   "preview_reason": "R-I3"
+  },
+  "A08": {
+   "gate": "R-I1",
+   "preview_exit": 3,
+   "preview_reason": "R-I1"
+  },
+  "A09": {
+   "gate": "R-I1",
+   "preview_exit": 3,
+   "preview_reason": "R-I1"
+  },
+  "A10": {
+   "gate": "admitted",
+   "preview_exit": null,
+   "preview_reason": null
+  },
+  "A11": {
+   "gate": "R-I3",
+   "preview_exit": null,
+   "preview_reason": null
+  },
+  "A12": {
+   "gate": "R-I3",
+   "preview_exit": null,
+   "preview_reason": null
+  },
+  "A13": {
+   "gate": "R-I3",
+   "preview_exit": 3,
+   "preview_reason": "semantic:induced-confirmed-reviewed"
+  },
+  "A14": {
+   "gate": "admitted",
+   "preview_exit": 0,
+   "preview_reason": null
+  },
+  "A15": {
+   "gate": "R-I3",
+   "preview_exit": 3,
+   "preview_reason": "R-I3"
+  },
+  "A16": {
+   "gate": "R-I3",
+   "preview_exit": 3,
+   "preview_reason": "R-I3"
+  },
+  "A17": {
+   "gate": "R-I1",
+   "preview_exit": null,
+   "preview_reason": null
+  }
+ }
+}

@@ -176,6 +176,8 @@ class VerifierVerdict(BaseModel):
         # backward compatible in the direction that matters — every document
         # that validated before still validates.
         "imported",
+        # IK2's seventh source, carried verbatim for the same reason.
+        "induced",
     ]
     status: Literal["proposed", "confirmed"]
     verdict: Literal["pass", "fail", "warning", "unchecked", "vacuous"]
@@ -635,6 +637,8 @@ class _VerifierVerdictV1(BaseModel):
         # backward compatible in the direction that matters — every document
         # that validated before still validates.
         "imported",
+        # IK2's seventh source, carried verbatim for the same reason.
+        "induced",
     ]
     status: Literal["proposed", "confirmed"]
     verdict: Literal["pass", "fail", "warning", "unchecked", "vacuous"]

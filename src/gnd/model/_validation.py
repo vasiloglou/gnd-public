@@ -57,6 +57,11 @@ from gnd.errors import (
     ValidationIssue,
     issues_from_validation_error,  # historical compatibility export
 )
+from gnd.model._induction import (
+    _induction_strings,
+    _rule_induced_confirmed_reviewed,
+    _rule_induced_provenance,
+)
 from gnd.terms import (
     DEFAULT_LIMITS,
     FLOAT_FUNCTION_ARITY,
@@ -193,11 +198,46 @@ def _derivation_rule_hint(error: Any, doc: Any = None) -> str | None:
 
 
 _OBJECT_TYPE_DESCRIPTION_PATH = re.compile(r"\$\.object_types\[\d+\]\.description(?:[.\[]|$)")
+#: An induction block under a constraint; group 1 is the constraint's path.
+_INDUCTION_PATH = re.compile(
+    r"(\$\.(?:fact_types\[\d+\]\.)?constraints\[\d+\])\.provenance\.induction(?:[.\[]|$)"
+)
+
+
+def _induced_constraint_paths(doc: Any) -> frozenset[str]:
+    """Layer-1 paths of every ``source: induced`` constraint, total over any input.
+
+    The IK2 screen applies only under these: an ``induction`` key under any
+    other source is not an induction block, and IK2-D3 keeps ``gnd validate``
+    unchanged for it (review R2)."""
+    paths: set[str] = set()
+    if not isinstance(doc, dict):
+        return frozenset()
+    hosts: list[tuple[str, Any]] = [("$", doc)]
+    fact_types = doc.get("fact_types")
+    if isinstance(fact_types, list):
+        hosts.extend((f"$.fact_types[{index}]", item) for index, item in enumerate(fact_types))
+    for prefix, host in hosts:
+        constraints = host.get("constraints") if isinstance(host, dict) else None
+        if isinstance(constraints, list):
+            for index, constraint in enumerate(constraints):
+                if isinstance(constraint, dict) and constraint.get("source") == "induced":
+                    paths.add(f"{prefix}.constraints[{index}]")
+    return frozenset(paths)
+
+
+def _json_form_screened(path: str, induced: frozenset[str]) -> bool:
+    """Whether a value must have a JSON form: object-type descriptions (IK1-D6)
+    and induced constraints' induction blocks (IK2), whose bounds NaN satisfies."""
+    if _OBJECT_TYPE_DESCRIPTION_PATH.match(path):
+        return True
+    match = _INDUCTION_PATH.match(path)
+    return match is not None and match.group(1) in induced
 _LONE_SURROGATE = re.compile("[\ud800-\udfff]")
 
 
-def _description_value_without_json_form(value: Any) -> str | None:
-    """Why a description value cannot be carried unchanged as JSON (IK1-D6).
+def _value_without_json_form(value: Any) -> str | None:
+    """Why a screened value cannot be carried unchanged as JSON (IK1-D6, IK2).
 
     The schema's JSON types cannot refuse these: NaN and infinity are numbers,
     a lone surrogate is a string, and an anchored YAML boolean loads as an
@@ -212,11 +252,16 @@ def _description_value_without_json_form(value: Any) -> str | None:
     return None
 
 
+#: IK1's name, kept as an identity alias after IK2 widened the screen.
+_description_value_without_json_form = _value_without_json_form
+
+
 def _layer1_structural(doc: Any) -> list[ValidationIssue]:
     # jsonschema formats invalid instances in errors. CPython refuses to
     # stringify an integer of more than 4300 decimal digits, so screen hostile
     # in-process JSON before asking it to render a diagnostic.
     pending = [("$", doc)]
+    induced = _induced_constraint_paths(doc)
     while pending:
         path, value = pending.pop()
         if isinstance(value, dict):
@@ -237,8 +282,8 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
                 message="integer literal exceeds the in-process diagnostic limit",
                 rule_id="jsonschema:type",
             )]
-        elif _OBJECT_TYPE_DESCRIPTION_PATH.match(path) and (
-            reason := _description_value_without_json_form(value)
+        elif _json_form_screened(path, induced) and (
+            reason := _value_without_json_form(value)
         ):
             return [ValidationIssue(path=path, message=reason, rule_id="jsonschema:type")]
     validator = Draft202012Validator(_load_meta_schema())
@@ -1338,11 +1383,30 @@ def _rule_textual_alethic(doc: dict[str, Any]) -> list[ValidationIssue]:
 
 
 def _rule_modality_policy(doc: dict[str, Any]) -> list[ValidationIssue]:
-    """D-03 over-modeling defense, made structural: an UNCONFIRMED llm-inferred or
-    common-sense constraint claiming alethic modality gets a WARNING."""
+    """D-03 over-modeling defense, made structural: an UNCONFIRMED llm-inferred,
+    common-sense or induced constraint claiming alethic modality gets a WARNING."""
     issues: list[ValidationIssue] = []
     for path, constraint in _iter_constraints(doc):
         if (
+            constraint.get("source") == "induced"
+            and constraint.get("status") == "proposed"
+            and constraint.get("modality") == "alethic"
+        ):
+            # IK2: its own sentence, so the llm-inferred/common-sense message
+            # below stays byte-identical for every model that already gets it.
+            issues.append(
+                ValidationIssue(
+                    path=path,
+                    message=(
+                        f"unconfirmed induced {constraint.get('type')} constraint carries "
+                        f"modality 'alethic' — induced constraints default to deontic until "
+                        f"reviewed (D-03)"
+                    ),
+                    rule_id="semantic:modality-policy",
+                    severity="warning",
+                )
+            )
+        elif (
             constraint.get("source") in ("llm-inferred", "common-sense")
             and constraint.get("status") == "proposed"
             and constraint.get("modality") == "alethic"
@@ -4707,6 +4771,10 @@ _SEMANTIC_RULES = (
     _rule_derivation_effect_on_semiderived,
     _rule_derivation_dynamic_dependency_incomplete,
     _rule_anchored_role_and_recogniser,
+    # --- IK2 induced provenance. Appended after every earlier block, never
+    # interleaved, so no existing model's issue order changes.
+    _rule_induced_provenance,
+    _rule_induced_confirmed_reviewed,
 )
 
 
@@ -4807,6 +4875,9 @@ _iter_provenance_bearing.__module__ = 'gnd.model'
 _provenance_bearing_label.__module__ = 'gnd.model'
 _rule_imported_provenance.__module__ = 'gnd.model'
 _rule_imported_confirmed_reviewed.__module__ = 'gnd.model'
+_induction_strings.__module__ = 'gnd.model'
+_rule_induced_provenance.__module__ = 'gnd.model'
+_rule_induced_confirmed_reviewed.__module__ = 'gnd.model'
 _internal_uniqueness_keys.__module__ = 'gnd.model'
 dynamic_subject_is_functional.__module__ = 'gnd.model'
 _rule_op_dynamic_functional.__module__ = 'gnd.model'

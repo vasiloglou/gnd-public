@@ -165,16 +165,22 @@ def _default_modality(constraint: Mapping[str, Any], pointer: str) -> str:
     status = constraint.get("status")
     if (source, status) in {("explicit", "confirmed"), ("user-supplied", "confirmed")}:
         return "alethic"
-    if source in {"sample", "common-sense", "llm-inferred", "imported"}:
+    if source in {"sample", "common-sense", "llm-inferred", "imported", "induced"}:
         if status == "proposed":
             return "deontic"
         if status == "confirmed":
-            if source == "imported" and not isinstance(constraint.get("provenance"), Mapping):
+            # imported and induced (IK2-D9) share the D-03 confirmed row:
+            # alethic only once a review record is named.
+            if source in {"imported", "induced"} and not isinstance(
+                constraint.get("provenance"), Mapping
+            ):
                 raise _refuse(
-                    "modality", pointer, "imported/confirmed requires reviewed provenance"
+                    "modality", pointer, f"{source}/confirmed requires reviewed provenance"
                 )
-            if source == "imported" and not constraint["provenance"].get("reviewed_in"):
-                raise _refuse("modality", pointer, "imported/confirmed requires reviewed_in")
+            if source in {"imported", "induced"} and not constraint["provenance"].get(
+                "reviewed_in"
+            ):
+                raise _refuse("modality", pointer, f"{source}/confirmed requires reviewed_in")
             return "alethic"
     raise _refuse(
         "modality",

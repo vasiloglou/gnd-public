@@ -47,7 +47,7 @@ window mechanism 2 exists to make visible. Use the commands.
   proposal or resuming finalization. It defines the closed fields, stable locators, commands,
   evidence leaves, exits, and path boundaries.
 - Read [`../gnd-orm-core/references/provenance-and-modality.md`](../gnd-orm-core/references/provenance-and-modality.md)
-  before adding or changing any constraint. It is the normative six-source D-12 policy.
+  before adding or changing any constraint. It is the normative seven-source taxonomy and D-12 admission lifecycle.
 - Read [`../gnd-orm-core/SKILL.md`](../gnd-orm-core/SKILL.md) for ORM-YAML or population syntax.
   Do not duplicate or guess the schema here.
 - Read [`../gnd-conformance/references/conformance-contract.md`](../gnd-conformance/references/conformance-contract.md)
@@ -275,7 +275,9 @@ and it must be named rather than left for the next reader to discover.
 - Keep a new interpretation `llm-inferred` + `proposed` + `deontic` until owner review.
 - Record a new owner rule as `user-supplied` + `confirmed`; assign modality using the normative
   policy and record any override rationale.
-- Reject any source outside the six-source taxonomy.
+- Keep a new `induced` constraint `proposed` + `deontic` with no `reviewed_in`; confirm it only as a
+  reviewed status change of the existing proposed constraint.
+- Reject any source outside the seven-source taxonomy.
 - Keep `EvolutionOperationAudit` separate from constraint provenance.
 - Retain complete operations, rationale, audit, validation, CAS, blast radius, conformance,
   affected-code, exit, drift, finalization-state, and record identities in the final D-13 record.

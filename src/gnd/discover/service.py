@@ -36,7 +36,15 @@ from gnd.evolve.service import (
     _operations_reference_set,
     _parse_model_text,
 )
-from gnd.exits import EXIT_ILL_FORMED, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_OK, EXIT_USAGE
+from gnd.exits import (
+    EXIT_COLLISION,
+    EXIT_ILL_FORMED,
+    EXIT_INTERNAL,
+    EXIT_IO,
+    EXIT_NO_INPUT,
+    EXIT_OK,
+    EXIT_USAGE,
+)
 from gnd.model import MAX_MODEL_BYTES, load_model_bytes
 from gnd.model_index import ModelIndex
 from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
@@ -331,6 +339,14 @@ def _cmd_discover(
         if not path.is_file():
             _stderr(f"input {path} does not exist")
             return EXIT_NO_INPUT
+    if out_path.is_symlink():
+        _stderr(f"refusing to write through symbolic link {out_path}")
+        return EXIT_IO
+    if out_path.exists():
+        # Owner ruling IK4-Q1 (2026-10-25): an existing proposal is never
+        # overwritten or left beside a newer report; the run refuses first.
+        _stderr(f"--out {out_path} already exists; nothing was written")
+        return EXIT_COLLISION
     try:
         result = discover(
             model_path, population_path,

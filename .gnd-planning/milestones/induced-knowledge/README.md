@@ -58,7 +58,8 @@ Records:
 
 - [005 phase IK4](005-phase-IK4.md): `gnd discover` shipped, with indexed
   equality, exclusion and frequency checker paths (owner rulings); one local
-  reviewer, seven blocking findings fixed; open IK4-Q1..Q5.
+  reviewer, seven blocking findings fixed; IK4-Q1..Q5 ruled 2026-10-25
+  (Q1 implemented as exit 11; Q2 before IK6; Q3/Q4 at close).
 
 Next: IK3 (measure over host-labelled populations), then IK5 (ILP bridge), each
 needing its own spec and owner gate.

@@ -34,17 +34,17 @@ evidence:
   - path: .gnd-planning/milestones/induced-knowledge/notes/phase-IK4-agent-review.md
     sha256: 9b7ecb01cbb35f2dca57f7db565db1dcde31db01bfbd7c094fc7c73f55ee3389
   - path: .gnd-planning/milestones/induced-knowledge/notes/phase-IK4-spec.md
-    sha256: 5cb1baad72bb88fda40f8ca549159c06c825c2e515144e07af5998452d30f8a7
+    sha256: 675a625f647be3c210273684db97f2aeb3d7e83779763404bb7a055a4abe3edb
   - path: docs/reference/capabilities.md
     sha256: 0b316155067cc2340d8e0c7392317d2cce20fe9e5ea571e2944ee390f7787f66
   - path: docs/reference/cli.md
     sha256: 9c3deb4f8590d5a1660e8d2b1be272f4c2a7ed87f2f3858178c8b1c35e6d24e5
   - path: docs/reference/discover.md
-    sha256: 057effcd7a4a0d6e21b2607fff5873f016641615eef73876c4b07d510ff6b681
+    sha256: ef2bee12900699f5fe2d47a3026bc1eed54b01d9cca6ff0811cc6fcf0fe4894e
   - path: src/gnd/cli.py
     sha256: 5fd5555e6709a8dba5d3d3e8bbd589c51c3219f448640d3718cfcd20d04e5b6b
   - path: src/gnd/commands/discover.py
-    sha256: c3ef8d57d98b345849a4a67f3debc7bffc3795f731a38691117aa471fdc7b22c
+    sha256: d1ca521240aba18517b2fe84cd69bbae77fa9b50dad8ac3f159fb22872694ce1
   - path: src/gnd/constraint_families.py
     sha256: 28772968671b6298fa2a24cb047551239547ddcb52637f5d150ba443e2651196
   - path: src/gnd/discover.schema.json
@@ -56,7 +56,7 @@ evidence:
   - path: src/gnd/discover/output.py
     sha256: 942c02e18fcd9a82f824b3bce4c224cc6c0b0efdc7278696031718f2273a97b8
   - path: src/gnd/discover/service.py
-    sha256: b20df2966f4ba4eee7e40cb21e9810211c33581f40d2948cb88450a0935e3cb5
+    sha256: 6cd5999f2af3840a1bb0e443beefec4c55760153a583aff68b62720cd9b33b2a
   - path: src/gnd/discover/support.py
     sha256: 5cc2df401d1620a3b31992796697fef8a88e79a9ba385335ed8273fd384f1756
   - path: src/gnd/model/_induction.py
@@ -68,9 +68,9 @@ evidence:
   - path: src/gnd/skills/gnd-solve/SKILL.md
     sha256: a45530b0b60233dc90b6850c9eaa9e5903eefbdc89e87ac4465bc83dad5ba1b7
   - path: tests/fixtures/rf1-pins/goldens.sha256
-    sha256: 1a54379212955b8095c3975cca3fc2142888331c0ebfdcb460a3f38f9366669e
+    sha256: decf43ce9c6001a578b20683354830b12381f088014263a9a08e02ed262f418b
   - path: tests/fixtures/rf1-pins/goldens/cli/tree.json
-    sha256: 8575b75e9983cab43d613dfb71a249b0f18c1256f404c647faff8a562bb76709
+    sha256: 0cb07e1b394189e44b61358d5d219e962f0760fdb014f36100b7c6547f4f301c
   - path: tests/support/pyrel_application_successors.py
     sha256: d7911acbd74f4bc16fc9c2541495648979151d4594db9b1f3b45f83c635eb411
   - path: tests/support/rf5_sources.py
@@ -78,7 +78,7 @@ evidence:
   - path: tests/support/runtime_schema_inventory.py
     sha256: 304743fe2b0a663f50f1e91e6050590cc5e1df3ab2e35d0bcdff5e0ac438e596
   - path: tests/test_discover.py
-    sha256: 779ca52197cb4bc4f785be2ae26762b8eccfe79566840ccd5a7c298be7d87491
+    sha256: 6e8bea131ab4f2ad96e7c52ebcddba01b3a38ce50b7c44db4d2203dec956a738
   - path: tests/test_ik4_indexed_set_families.py
     sha256: 4ab891494334bc9dab8102112f22842de5d08fcb3d81ac5da8415c7bd9f16b33
   - path: tests/test_incremental_prepared_policy.py
@@ -94,7 +94,7 @@ evidence:
   - path: tests/test_rf1_cli_pins.py
     sha256: 505cd6370f6aa2b00596bc406301f70bd59e7b3516957a4ee0e1f2ba5712852d
   - path: tests/test_rf1_pin_harness.py
-    sha256: ce992c42e349c984ba33fb09242c12937ccc2c327c9dc20a82b73bafc86b82b9
+    sha256: 134110076e43db13d988332adc7af2628e6d5883cd85e644e312b2ef274fdc9e
   - path: tests/test_rf5_commands.py
     sha256: 78ba583ec43f996c2011f702fe4c93bf333e6721033d796443334e62c363e8b5
   - path: tools/gnd_arch.py
@@ -259,8 +259,8 @@ reviewer.**
 - **One population** of at most 10 MiB in memory. YAML is also capped at
   1,000,000 parse events, so a large population should be JSON (F1).
 - **Two evolve limits** stop some proposals from being previewed (F12).
-- **A stale `--out`** is left untouched when nothing is emitted. This is
-  documented, not refused (IK4-Q1).
+- **An existing `--out`** is refused at exit 11 before any write (IK4-Q1, owner
+  ruling, spec §18).
 - **Pre-existing red:** `tests/test_incremental_performance.py::test_prepared_policy_rechecks_live_hashability`
   fails on `main` too (IK4-Q5).
 
@@ -268,11 +268,11 @@ reviewer.**
 
 | ID | Question | Target |
 |---|---|---|
-| IK4-Q1 | Refuse or remove an existing `--out` when nothing is emitted (review R9 remainder) | owner ruling; IK6 |
-| IK4-Q2 | Let `gnd evolve preview` handle reference-bearing models | evolve follow-up, before IK6's walk |
-| IK4-Q3 | Let `gnd evolve preview` handle YAML-only model values such as dates | evolve follow-up |
-| IK4-Q4 | Checker witness "has no admissible origin" for mandatory rules over computed rosters (pre-existing at `3b65d15`) | checker follow-up |
-| IK4-Q5 | `test_prepared_policy_rechecks_live_hashability` fails on `main` | separate maintenance |
+| IK4-Q1 | Refuse or remove an existing `--out` when nothing is emitted (review R9 remainder) | **owner-ruled 2026-10-25 (o)**: refused at exit 11 before anything is written (spec §18). Closed |
+| IK4-Q2 | Let `gnd evolve preview` handle reference-bearing models | **owner-ruled (o)**: schedule before IK6's walk |
+| IK4-Q3 | Let `gnd evolve preview` handle YAML-only model values such as dates | **owner-ruled (o)**: milestone close |
+| IK4-Q4 | Checker witness "has no admissible origin" for mandatory rules over computed rosters (pre-existing at `3b65d15`) | **owner-ruled (o)**: milestone close |
+| IK4-Q5 | `test_prepared_policy_rechecks_live_hashability` fails on `main` | **owner-ruled (o)**: separate maintenance |
 
 ## Refuted premises
 

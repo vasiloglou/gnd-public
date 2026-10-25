@@ -60,8 +60,9 @@ def _register_discover(subparsers):
             "discovery report and, when anything is emitted, a `gnd evolve` "
             "proposal of induced, proposed, deontic constraints: admission stays a "
             "reviewed act. Exits 0 on success (also with nothing emitted), 3 on an "
-            "invalid model or population, 64 on a usage error, 66 on a missing "
-            "input, 70 on an internal defect, 74 on a refused output path."
+            "invalid model or population, 11 when --out already exists (nothing "
+            "written), 64 on a usage error, 66 on a missing input, 70 on an "
+            "internal defect, 74 on a refused output path."
         ),
     )
     discover_parser.add_argument("model", help="path to the model file")

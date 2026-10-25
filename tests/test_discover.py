@@ -678,3 +678,12 @@ constraints: []
     report = json.loads(report_path.read_text())
     assert [r["constraint"]["roles"] for r in report["emitted"]] == [["a"]]
     assert report["suppressed"]["redundant-superkey"] == 2  # {a,b} and {a,c}
+
+
+def test_q1_an_existing_out_is_refused_before_anything_is_written(tmp_path: Path) -> None:
+    # Owner ruling IK4-Q1 (2026-10-25): exit 11, nothing written, no stale pair.
+    case = next(c for c in CASES["cases"] if c["id"] == "K13")
+    argv, _, out, report = _prepare(tmp_path, case)
+    out.write_text("old proposal\n", encoding="utf-8")
+    assert run_main(argv).returncode == 11
+    assert out.read_text() == "old proposal\n" and not report.exists()

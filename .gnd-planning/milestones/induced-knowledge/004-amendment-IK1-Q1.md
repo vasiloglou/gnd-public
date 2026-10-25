@@ -51,3 +51,7 @@ on", 2026-10-24); see IK1 spec §14 for the ruling text and its arithmetic.
   first: exit 3, unnamed.
 - **Review.** No adversarial review ran over this small change. It is covered by
   the boundary tests above.
+
+**Owner ruling, 2026-10-25 (o).** Offered the choice of closing the 60–64-level
+evolve window with a cap of about 59, the owner chose "go with your rec":
+leave the cap at 64 and keep the window as a recorded residual (IK4 spec §18).

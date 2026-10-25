@@ -635,3 +635,19 @@ recommended:
   witness has no admissible origin can make `gnd check` raise. That is the
   same at `3b65d15`. Discovery now maps any checker exception to exit 70
   without echoing data (IK4-Q4).
+
+## 18. Owner rulings on the open questions (2026-10-25)
+
+After a business-terms summary of the decisions left open, the owner replied
+"go with your rec" on 2026-10-25. The recommendation was:
+- **IK4-Q1:** refuse an existing `--out`. Implemented: discovery exits 11 (an
+  existing file blocked the write; nothing was destroyed) before writing
+  anything. A symbolic link at `--out` is still exit 74.
+- **IK4-Q2** (evolve preview of reference-bearing models): schedule before
+  IK6's end-to-end walk.
+- **IK4-Q3** (evolve preview of YAML-only values) and **IK4-Q4** (the
+  pre-existing checker witness defect): defer to the milestone close.
+- **IK4-Q5** (the pre-existing hashability test): separate maintenance.
+- **IK4:** push and open its PR, without merging.
+- **IK1-Q1 residual:** leave the description nesting cap at 64. The 60–64-level
+  evolve window stays a recorded residual.

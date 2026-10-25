@@ -103,6 +103,7 @@ silently:
 | Exit | Meaning |
 |---|---|
 | 0 | done, including when nothing was emitted (report only) |
+| 11 | `--out` already exists; nothing was written |
 | 3 | invalid model or population: over 10 MiB, written for another model, or a file name that cannot be an evidence ref |
 | 64 | usage error |
 | 66 | a missing input file |
@@ -118,8 +119,8 @@ silently:
 **Paths and output files:**
 - `--out`, `--report`, MODEL and POPULATION must be four different paths
   (exit 64).
-- When nothing is emitted, an existing file at `--out` is left untouched, and
-  the report's `proposal` is `null`.
+- An existing file at `--out` is refused (exit 11) before anything is written,
+  so an old proposal can never sit beside a newer report.
 
 ## Limits
 

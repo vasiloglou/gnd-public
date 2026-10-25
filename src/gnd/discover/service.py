@@ -29,18 +29,25 @@ from gnd.discover.candidates import (
     generate,
     redundancy,
 )
-from gnd.discover.support import PopulationView, Work
+from gnd.discover.support import PopulationView, Work, work_ceiling
 from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
-from gnd.evolve.service import _operations_reference_set, _parse_model_text
-from gnd.exits import EXIT_ILL_FORMED, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_OK
-from gnd.model import load_model, load_model_bytes
+from gnd.evolve.service import (
+    MAX_EVOLUTION_PROPOSAL_BYTES,
+    _operations_reference_set,
+    _parse_model_text,
+)
+from gnd.exits import EXIT_ILL_FORMED, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_OK, EXIT_USAGE
+from gnd.model import MAX_MODEL_BYTES, load_model_bytes
 from gnd.model_index import ModelIndex
-from gnd.population import load_population, load_population_bytes
+from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
+from gnd.redaction import RedactionPolicy
+from gnd.references import ReferenceInputError
 
 #: The IK2 induction-ref grammar the population's basename must satisfy.
 _REF = re.compile(r"[A-Za-z0-9_][A-Za-z0-9._-]*")
 MAX_EVIDENCE_REF = 256
 NEAR_MISS_MAX = 32  # IK4-D3, with the 5% rule below
+BUDGET_MARGIN = 256 * 1024  # proposal envelope, audit and JSON escaping headroom
 
 
 class DiscoveryDefect(Exception):
@@ -102,6 +109,58 @@ def _refs(candidates: list[Candidate], base: dict[str | None, int]) -> list[str]
     return refs
 
 
+def _read_capped(path: Path, cap: int, error: type[Exception], label: str) -> bytes:
+    """Read one input once, never more than ``cap + 1`` bytes (review R10)."""
+    with path.open("rb") as handle:
+        data = handle.read(cap + 1)
+    if len(data) > cap:
+        raise error(f"{label} file '{path}' exceeds the {cap}-byte input cap")
+    return data
+
+
+def _bind_references(model: Any, population: Any, root: Path) -> tuple[Any, Any]:
+    """Bind declared reference populations as loading the model by path does (R3).
+
+    A model loaded from bytes is unbound; its reference files resolve against
+    the model's own directory. Returns the combined population and the context
+    the check run needs."""
+    if not model.reference_populations:
+        return population, None
+    from gnd.model import bind_references
+    from gnd.references import bind_population
+
+    context = bind_references(model, root=root)
+    model._references = context
+    return bind_population(model, population, references=context).combined, context
+
+
+def _derived_object_types(view: PopulationView) -> frozenset[str]:
+    played = set()
+    for fact_type in ModelIndex.for_model(view.model).iter_fact_types_shared():
+        if fact_type.get("derivation") in ("derived", "semiderived"):
+            played.update(role.object_type for role in view.roles.get(str(fact_type.get("id")), []))
+    return frozenset(played)
+
+
+def _within_budget(
+    survivors: list[tuple[Candidate, dict[str, Any]]], base: int
+) -> tuple[list[tuple[Candidate, dict[str, Any]]], int]:
+    """Keep candidates, in emission order, while the proposal stays under its caps.
+
+    The proposal carries the candidate model as text and every constraint again
+    in its operation, so a constraint costs about three times its JSON size and
+    the model about twice its own (review R6)."""
+    budget = min(MAX_MODEL_BYTES, MAX_EVOLUTION_PROPOSAL_BYTES) - BUDGET_MARGIN - 2 * base
+    kept, used = [], 0
+    for candidate, constraint in survivors:
+        cost = 3 * len(output.candidate_text(constraint).encode("utf-8"))
+        if used + cost > budget:
+            continue
+        used += cost
+        kept.append((candidate, constraint))
+    return kept, len(survivors) - len(kept)
+
+
 def discover(
     model_path: Path,
     population_path: Path,
@@ -111,21 +170,27 @@ def discover(
     max_pairs: int,
 ) -> dict[str, Any]:
     """Run discovery; return the report fields plus private build inputs."""
-    model_bytes = model_path.read_bytes()
-    population_bytes = population_path.read_bytes()
-    model = load_model(model_path)
-    population = load_population(population_path, model=model)
+    model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, ModelLoadError, "model")
+    population_bytes = _read_capped(
+        population_path, MAX_POPULATION_BYTES, PopulationLoadError, "population"
+    )
+    model = load_model_bytes(model_bytes, source=model_path)
+    population = load_population_bytes(population_bytes, source=population_path, model=model)
     basename = population_path.name
     if len(basename) > MAX_EVIDENCE_REF or _REF.fullmatch(basename) is None:
         raise PopulationLoadError(
             f"population file name {basename!r} is not a valid induction evidence ref"
         )
+    population, _ = _bind_references(model, population, model_path.parent)
     document = _parse_model_text(model_bytes.decode("utf-8"))
     work = Work()
     view = PopulationView(model, population, work)
     eligible, skipped_fact_types = _eligible(view, document)
     generated = generate(
-        view, families=families, fact_types=eligible, max_values=max_values, max_pairs=max_pairs
+        view, families=families, fact_types=eligible, max_values=max_values,
+        max_pairs=max_pairs,
+        redacted=RedactionPolicy.from_model(model).effective_roles,
+        derived_object_types=_derived_object_types(view),
     )
     catalogue = Catalogue(view, model)
     suppressed = dict.fromkeys(CATALOGUE + REDUNDANCY, 0)
@@ -145,23 +210,34 @@ def discover(
 
     version = resolve_version()
     digest = hashlib.sha256(population_bytes).hexdigest()
+    envelopes = [
+        (c, output.induced(c, version=version, digest=digest, ref=basename)) for c in survivors
+    ]
+    envelopes, over_budget = _within_budget(
+        envelopes, len(output.candidate_text(document).encode("utf-8"))
+    )
+    survivors = [c for c, _ in envelopes]
     emitted: list[Candidate] = []
     near_misses: list[dict[str, Any]] = []
     if survivors:
-        envelopes = [
-            (c, output.induced(c, version=version, digest=digest, ref=basename)) for c in survivors
-        ]
         checked = output.candidate_document(document, output.operations(envelopes))
         try:
             checked_model = load_model_bytes(
                 output.candidate_text(checked).encode("utf-8"), source=model_path
             )
         except (ModelLoadError, ModelValidationError) as error:
-            raise DiscoveryDefect(f"a generated candidate failed validation: {error}") from error
-        checked_population = load_population_bytes(
-            population_bytes, source=population_path, model=checked_model
+            # Never echo the candidate: it may carry population values (R2).
+            rules = sorted({i.rule_id for i in getattr(error, "issues", ())})
+            raise DiscoveryDefect(f"a generated candidate failed validation {rules}") from error
+        checked_population, references = _bind_references(
+            checked_model,
+            load_population_bytes(population_bytes, source=population_path, model=checked_model),
+            model_path.parent,
         )
-        report = check(checked_model, checked_population)
+        try:
+            report = check(checked_model, checked_population, references=references)
+        except Exception as error:
+            raise DiscoveryDefect(f"the check run failed ({type(error).__name__})") from error
         verdicts = {v.constraint_ref: v.verdict for v in report.verdicts}
         for candidate, ref in zip(survivors, _refs(survivors, _base_counts(model)), strict=True):
             verdict = verdicts.get(ref)
@@ -172,7 +248,7 @@ def discover(
                 emitted.append(candidate)
                 continue
             if verdict not in rejected:
-                raise DiscoveryDefect(f"{ref} has no check verdict ({verdict!r})")
+                raise DiscoveryDefect(f"{ref} has no check verdict")
             rejected[verdict] += 1
             if verdict in ("fail", "warning") and near_miss(subjects.violations, subjects.count):
                 near_misses.append({
@@ -188,6 +264,9 @@ def discover(
         suppressed[rule] += count
     final = [(c, output.induced(c, version=version, digest=digest, ref=basename)) for c in emitted]
     refs = _refs(emitted, _base_counts(model))
+    ceiling = work_ceiling(view, eligible, generated.pairs_compared)
+    if sum(work.counts.values()) > ceiling:
+        raise DiscoveryDefect("discovery work exceeded its stated ceiling")
     return {
         "model_bytes": model_bytes,
         "document": document,
@@ -208,8 +287,12 @@ def discover(
             "skipped": {
                 "fact_types": skipped_fact_types,
                 "value_roles": generated.skipped_value_roles,
+                "redacted_value_roles": generated.skipped_redacted_value_roles,
+                "unrepresentable_value_roles": generated.skipped_unrepresentable_value_roles,
+                "derived_mandatory_roles": generated.skipped_derived_mandatory_roles,
                 "pairs": generated.skipped_pairs,
                 "key_subsets": generated.skipped_key_subsets,
+                "over_budget": over_budget,
             },
             "rejected": rejected,
             "suppressed": suppressed,
@@ -219,7 +302,7 @@ def discover(
                 for ref, (c, constraint) in zip(refs, final, strict=True)
             ],
             "near_misses": near_misses,
-            "work": work.report(),
+            "work": work.report(ceiling),
         },
     }
 
@@ -238,6 +321,12 @@ def _cmd_discover(
     output_format: str,
 ) -> int:
     model_path, population_path = Path(model), Path(population)
+    out_path, report_path = Path(out), Path(report)
+    resolved = [p.resolve() for p in (out_path, report_path, model_path, population_path)]
+    if len(set(resolved)) != len(resolved):
+        # --out, --report and the two inputs must be four different files (R9).
+        _stderr("--out, --report, MODEL and POPULATION must be four different paths")
+        return EXIT_USAGE
     for path in (model_path, population_path):
         if not path.is_file():
             _stderr(f"input {path} does not exist")
@@ -247,7 +336,7 @@ def _cmd_discover(
             model_path, population_path,
             families=families, max_values=max_values, max_pairs=max_pairs,
         )
-    except (ModelLoadError, ModelValidationError, PopulationLoadError) as error:
+    except (ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError) as error:
         _stderr(str(error))
         return EXIT_ILL_FORMED
     except DiscoveryDefect as error:
@@ -257,7 +346,6 @@ def _cmd_discover(
         _stderr(f"could not read input: {error}")
         return EXIT_IO
     fields = result["fields"]
-    out_path, report_path = Path(out), Path(report)
     try:
         if result["final"]:
             ops = output.operations(result["final"])

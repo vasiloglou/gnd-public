@@ -109,6 +109,18 @@
     ],
     [
       "src/gnd/discover/candidates.py",
+      "_allowed",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "_allowed",
+      "frozenset[Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
       "_bound",
       "dict[str, Any]",
       1
@@ -158,7 +170,19 @@
     [
       "src/gnd/discover/candidates.py",
       "generate",
-      "ids[:256]",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "frozenset[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "ids[:EXAMPLES_MAX]",
       2
     ],
     [
@@ -195,6 +219,12 @@
       "src/gnd/discover/candidates.py",
       "generate",
       "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "tuple[str, str]",
       1
     ],
     [
@@ -337,8 +367,26 @@
     ],
     [
       "src/gnd/discover/service.py",
+      "_bind_references",
+      "tuple[Any, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
       "_cmd_discover",
       "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_derived_object_types",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_derived_object_types",
+      "view.roles.get(str(fact_type.get('id')), [])",
       1
     ],
     [
@@ -373,6 +421,12 @@
     ],
     [
       "src/gnd/discover/service.py",
+      "_read_capped",
+      "type[Exception]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
       "_refs",
       "dict[str | None, int]",
       1
@@ -399,6 +453,30 @@
       "src/gnd/discover/service.py",
       "_subjects",
       "view.roles[candidate.host]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_within_budget",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_within_budget",
+      "list[tuple[Candidate, dict[str, Any]]]",
+      2
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_within_budget",
+      "tuple[Candidate, dict[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_within_budget",
+      "tuple[list[tuple[Candidate, dict[str, Any]]], int]",
       1
     ],
     [
@@ -433,6 +511,12 @@
     ],
     [
       "src/gnd/discover/support.py",
+      "<module>",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
       "Subjects",
       "tuple[str, ...]",
       2
@@ -446,25 +530,25 @@
     [
       "src/gnd/discover/support.py",
       "__init__",
+      "dict[str, list[Identity]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "__init__",
       "dict[str, list[Role]]",
       1
     ],
     [
       "src/gnd/discover/support.py",
       "__init__",
-      "dict[str, list[str]]",
+      "list[Identity]",
       1
     ],
     [
       "src/gnd/discover/support.py",
       "__init__",
       "list[Role]",
-      1
-    ],
-    [
-      "src/gnd/discover/support.py",
-      "__init__",
-      "list[str]",
       1
     ],
     [
@@ -488,7 +572,7 @@
     [
       "src/gnd/discover/support.py",
       "_subjects",
-      "satisfying[:256]",
+      "satisfying[:EXAMPLES_MAX]",
       1
     ],
     [
@@ -500,37 +584,37 @@
     [
       "src/gnd/discover/support.py",
       "_subjects",
-      "violating[:32]",
+      "violating[:COUNTEREXAMPLES_MAX]",
       1
     ],
     [
       "src/gnd/discover/support.py",
       "column",
-      "list[tuple[int, Any]]",
+      "list[tuple[int, Any, Identity | None]]",
       1
     ],
     [
       "src/gnd/discover/support.py",
       "column",
       "row[role.name]",
-      1
+      2
     ],
     [
       "src/gnd/discover/support.py",
       "column",
-      "tuple[int, Any]",
+      "tuple[int, Any, Identity | None]",
       1
     ],
     [
       "src/gnd/discover/support.py",
       "equality_subjects",
-      "dict[str, str]",
+      "dict[Identity, str]",
       2
     ],
     [
       "src/gnd/discover/support.py",
       "exclusion_subjects",
-      "dict[str, str]",
+      "dict[Identity, str]",
       2
     ],
     [
@@ -542,19 +626,19 @@
     [
       "src/gnd/discover/support.py",
       "groups",
-      "Counter[str]",
+      "Counter[Identity]",
       2
     ],
     [
       "src/gnd/discover/support.py",
       "groups",
-      "dict[str, int]",
+      "dict[Identity, int]",
       2
     ],
     [
       "src/gnd/discover/support.py",
       "groups",
-      "tuple[Counter[str], dict[str, int]]",
+      "tuple[Counter[Identity], dict[Identity, int]]",
       1
     ],
     [
@@ -578,7 +662,7 @@
     [
       "src/gnd/discover/support.py",
       "roster",
-      "list[str]",
+      "list[Identity]",
       1
     ],
     [
@@ -608,19 +692,25 @@
     [
       "src/gnd/discover/support.py",
       "side",
-      "dict[str, str]",
+      "dict[Identity, str]",
       2
     ],
     [
       "src/gnd/discover/support.py",
       "subset_subjects",
-      "dict[str, str]",
+      "dict[Identity, str]",
       2
     ],
     [
       "src/gnd/discover/support.py",
       "uniqueness",
-      "Counter[tuple[str, ...]]",
+      "Counter[tuple[Identity | None, ...]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "by_name[name]",
       1
     ],
     [
@@ -632,7 +722,7 @@
     [
       "src/gnd/discover/support.py",
       "uniqueness",
-      "dict[tuple[str, ...], int]",
+      "dict[tuple[Identity | None, ...], int]",
       1
     ],
     [
@@ -644,13 +734,25 @@
     [
       "src/gnd/discover/support.py",
       "uniqueness",
+      "self.roles[fact_type]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "tuple[Identity | None, ...]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
       "tuple[str, ...]",
-      3
+      1
     ],
     [
       "src/gnd/discover/support.py",
       "value_domain",
-      "dict[str, Any]",
+      "dict[Identity, Any]",
       1
     ],
     [
@@ -668,8 +770,20 @@
     [
       "src/gnd/discover/support.py",
       "value_domain",
-      "tuple[list[Any], list[int]]",
+      "tuple[list[Any], list[int], bool]",
       1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "work_ceiling",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "work_ceiling",
+      "view.roles[ft]",
+      2
     ],
     [
       "src/gnd/semantic_rows.py",
@@ -816,6 +930,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 6371,
-  "result_occurrences": 7995
+  "result_distinct_rows": 6390,
+  "result_occurrences": 8018
 }

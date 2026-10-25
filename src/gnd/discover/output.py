@@ -9,10 +9,13 @@ carries is exactly what ``gnd evolve preview`` will recompute.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+from ruamel.yaml import YAML
 
 from gnd.discover.candidates import Candidate
 from gnd.evolve.models import (
@@ -76,8 +79,23 @@ def candidate_document(before: dict[str, Any], ops: tuple[EvolutionOperation, ..
 
 
 def candidate_text(document: dict[str, Any]) -> str:
-    """JSON is a YAML subset; the shipped proposal fixtures carry the same form."""
-    return json.dumps(document, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n"
+    """JSON is a YAML subset; the shipped proposal fixtures carry the same form.
+
+    A valid YAML model may hold values JSON cannot spell, such as an unquoted
+    date; such a document is written as block YAML instead, which evolve parses
+    back to the same values its replay produces (review R7)."""
+    try:
+        return json.dumps(document, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n"
+    except TypeError:
+        stream = io.StringIO()
+        yaml = YAML(typ="safe")
+        yaml.default_flow_style = False
+        yaml.width = 4096
+        # No anchors: an aliased node would load as an anchored scalar subclass,
+        # which the model loader rightly refuses for exact integers.
+        yaml.representer.ignore_aliases = lambda *_: True
+        yaml.dump(document, stream)
+        return stream.getvalue()
 
 
 def proposal(

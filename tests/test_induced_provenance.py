@@ -662,3 +662,15 @@ def test_r5_coverage_schema_refuses_an_empty_induced_list(tmp_path: Path) -> Non
     document["fact_types"][0]["constraints"].append(_induced())
     payload, _ = _coverage(tmp_path, document)
     assert list(_coverage_validator().iter_errors({**payload, "induced": []}))
+
+
+@pytest.mark.parametrize("numerator", ["0", "1_0", "0x0"], ids=["zero", "underscore", "hex"])
+def test_r1_followup_yaml_integer_forms_are_exact_integers(tmp_path: Path, numerator: str) -> None:
+    # IK4 review: ruamel's round-trip loader reads `0`, `1_0` and hex as
+    # ScalarInt, an int subclass; R1's fix refused them as non-integers.
+    document = _evolution_before()
+    constraint = _induced()
+    constraint["provenance"]["induction"]["support"] = {"numerator": "__N__", "denominator": 10}
+    document["fact_types"][0]["constraints"].append(constraint)
+    text = json.dumps(document).replace('"__N__"', numerator)
+    assert _validate(tmp_path, document, yaml_text=text).startswith("0 ")

@@ -76,14 +76,27 @@ counterexample ids and are never suggested.
 ## Outputs
 
 - **`--report`:** always written. Format `gnd-discover/1`, schema
-  `src/gnd/discover.schema.json`. It states the bounds used, the fact types,
-  value roles, pairs and key subsets skipped, rejections by verdict,
-  suppressions by rule, emitted suggestions, near-misses and the work counter.
+  `src/gnd/discover.schema.json`. It states:
+  - the bounds used;
+  - every skip by reason;
+  - rejections by verdict and suppressions by rule;
+  - emitted suggestions and near-misses;
+  - the work counter, beside its computed ceiling. Exceeding the ceiling is an
+    internal defect.
 - **`--out`:** written only when something is emitted. A schema-3 evolve
   proposal of ADD constraint operations; preview it with `gnd evolve preview`.
 
-**What is skipped.** Fact types that an existing operation references (evolve
-would refuse additions there) and derived fact types are skipped and listed.
+**What is skipped.** Everything skipped is counted in the report, never dropped
+silently:
+- **Fact types** that an existing operation references (evolve would refuse
+  additions there), and derived or semiderived fact types.
+- **Value rules on roles the model marks `redact: true`.** Their `allowed` list
+  would carry the values the model hides.
+- **Value rules on columns holding opaque or unrepresentable cells.**
+- **Mandatory rules on object types a derived fact type plays.** Their checker
+  roster excludes derived claims.
+- **Candidates past the size budget.** The proposal must stay under the 10 MiB
+  model and proposal caps.
 
 ## Exits
 
@@ -96,8 +109,26 @@ would refuse additions there) and derived fact types are skipped and listed.
 | 70 | internal defect |
 | 74 | an output path is a symbolic link, or a write failed |
 
+**How values and references are read:**
+- **Values are compared by `gnd check`'s typed identity**, so `1` and `1.0` in a
+  Number role are one value, exactly as the checker sees them.
+- **Reference populations** a model declares are bound as `gnd check` binds
+  them, and the scan covers the combined facts.
+
+**Paths and output files:**
+- `--out`, `--report`, MODEL and POPULATION must be four different paths
+  (exit 64).
+- When nothing is emitted, an existing file at `--out` is left untouched, and
+  the report's `proposal` is `null`.
+
 ## Limits
 
+- **`gnd evolve preview` limits that predate discovery:**
+  - it cannot preview a model that declares reference populations;
+  - it cannot preview a model holding a YAML-only value such as an unquoted
+    date (written as block YAML in the proposal).
+
+  `gnd discover` handles both, but such a proposal waits on evolve.
 - **One population** of at most 10 MiB, in memory. A YAML population is also
   capped at 1,000,000 parse events, so a large population should be JSON.
 - **Single-role sequences only**: no external uniqueness or frequency, and no

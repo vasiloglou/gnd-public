@@ -314,8 +314,8 @@ def test_t10_validation_order_is_pinned_in_source() -> None:
     from gnd.discover import service
 
     source = inspect.getsource(service.discover)
-    steps = ["load_model(", "load_population(", "generate(", "catalogue.rule(", "check(",
-             "redundancy("]
+    steps = ["load_model_bytes(", "load_population_bytes(", "generate(", "catalogue.rule(",
+             "check(", "redundancy("]
     positions = [source.index(step) for step in steps]
     assert positions == sorted(positions)
 
@@ -331,3 +331,350 @@ def test_t11_report_validates_against_its_schema(tmp_path: Path, case_id: str) -
     assert list(Draft202012Validator(schema).iter_errors(report)) == []
     broken = {**report, "unexpected": 1}
     assert list(Draft202012Validator(schema).iter_errors(broken))
+
+
+# ---- adversarial-review regressions (notes/phase-IK4-agent-review.md) -------
+# Successor cases beside the approved corpus: new inputs, no changed answers.
+
+AMOUNT_MODEL = """version: 1
+model_id: r1
+source: {kind: fixture}
+object_types:
+  - {id: amount, name: Amount, kind: value, primitive: Number}
+  - {id: tag, name: Tag, kind: value, primitive: String}
+fact_types:
+  - id: a_tagged
+    reading: "{Amount} is tagged {Tag}"
+    roles:
+      - {object_type: amount, role_name: amount}
+      - {object_type: tag, role_name: tag}
+  - id: a_flagged
+    reading: "{Amount} is flagged {Tag}"
+    roles:
+      - {object_type: amount, role_name: amount}
+      - {object_type: tag, role_name: tag}
+constraints: []
+"""
+
+
+def _discover(tmp_path: Path, model: str, population: str, *extra: str,
+              model_name: str = "m.orm.yaml") -> tuple[int, str, Path, Path]:
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    (tmp_path / model_name).write_text(model, encoding="utf-8")
+    (tmp_path / "p.population.yaml").write_text(population, encoding="utf-8")
+    out, report = tmp_path / "proposal.json", tmp_path / "report.json"
+    result = run_main([
+        "discover", str(tmp_path / model_name), str(tmp_path / "p.population.yaml"),
+        *CASES["common_argv"], *extra, "--out", str(out), "--report", str(report),
+    ])
+    text = (result.stdout + result.stderr).decode("utf-8", errors="replace")
+    return result.returncode, text, out, report
+
+
+def _amount_population(cells: list[tuple[str, Any]], *, header: str = "") -> str:
+    rows = {"a_tagged": [], "a_flagged": []}
+    for fact_type, amount in cells:
+        rows[fact_type].append(amount)
+    lines = [header + "population: {model: m.orm.yaml, source: fixture, covers: [a_tagged, a_flagged]}",
+             "instances: {}", "facts:"]
+    for fact_type, amounts in rows.items():
+        lines.append(f"  {fact_type}:")
+        for i, amount in enumerate(amounts):
+            lines.append(f"    - {{amount: {amount}, tag: {'xy'[i % 2]}}}")
+    return "\n".join(lines) + "\n"
+
+
+def test_r1_typed_identity_matches_the_checker(tmp_path: Path) -> None:
+    # 1 and 1.0 are one Number value to `gnd check`, so to discovery too.
+    population = _amount_population(
+        [("a_tagged", "1"), ("a_tagged", "2"), ("a_flagged", "1.0"), ("a_flagged", "2")]
+    )
+    code, text, _, report_path = _discover(tmp_path, AMOUNT_MODEL, population)
+    assert code == 0, text
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    families = {row["family"] for row in report["emitted"]}
+    # The two amount columns are one set, so the equality is emitted and
+    # absorbs both subsets (redundancy rule 1).
+    assert "equality" in families
+    assert report["suppressed"]["redundant-subset"] >= 2
+    one_column = _amount_population(
+        [("a_tagged", "1"), ("a_tagged", "1.0"), ("a_flagged", "2"), ("a_flagged", "3")]
+    )
+    code, text, _, report_path = _discover(tmp_path / "b", AMOUNT_MODEL, one_column,
+                                           "--families", "value,uniqueness")
+    assert code == 0, text
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    allowed = [row["constraint"]["allowed"] for row in report["emitted"]
+               if row["family"] == "value" and row["ref"].startswith("fact_types[a_tagged]")
+               and row["constraint"]["object_type"] == "amount"]
+    assert allowed == [[1]]
+    assert not any(row["family"] == "uniqueness" and row["constraint"]["roles"] == ["amount"]
+                   and row["ref"].startswith("fact_types[a_tagged]") for row in report["emitted"])
+
+
+def test_r2_opaque_cells_skip_value_candidates_and_never_leak(tmp_path: Path) -> None:
+    population = _amount_population(
+        [("a_tagged", '{"$opaque": "SECRET-OPAQUE-CANARY"}'), ("a_tagged", "2"), ("a_flagged", "2")],
+        header="format_version: 2\n",
+    )
+    code, text, out, report_path = _discover(tmp_path, AMOUNT_MODEL, population)
+    assert code == 0, text
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["skipped"]["unrepresentable_value_roles"] >= 1
+    written = text + report_path.read_text() + (out.read_text() if out.exists() else "")
+    assert "SECRET-OPAQUE-CANARY" not in written
+
+
+def test_r2_repository_opaque_fixture_exits_0_without_canaries(tmp_path: Path) -> None:
+    base = REPO_ROOT / "tests/fixtures/v70-phase5"
+    for name in ("private.orm.yaml", "private.pop.json"):
+        shutil.copyfile(base / name, tmp_path / name)
+    out, report = tmp_path / "proposal.json", tmp_path / "report.json"
+    result = run_main(["discover", str(tmp_path / "private.orm.yaml"), str(tmp_path / "private.pop.json"),
+                       *CASES["common_argv"], "--out", str(out), "--report", str(report)])
+    written = (result.stdout + result.stderr).decode() + report.read_text()
+    written += out.read_text() if out.exists() else ""
+    assert result.returncode == 0, written
+    assert "SECRET-ROLE-CANARY" not in written and "SECRET-OPAQUE-CANARY" not in written
+
+
+def test_r3_reference_bearing_models_bind_their_references(tmp_path: Path) -> None:
+    shutil.copytree(REPO_ROOT / "src/gnd/examples/dispatch", tmp_path / "dispatch")
+    root = tmp_path / "dispatch"
+    out, report = tmp_path / "proposal.json", tmp_path / "report.json"
+    result = run_main(["discover", str(root / "model.orm.json"), str(root / "seed.pop.json"),
+                       *CASES["common_argv"], "--out", str(out), "--report", str(report)])
+    assert result.returncode == 0, (result.stdout + result.stderr).decode()
+    if out.exists():
+        _assert_emitted_pass_bound(root / "model.orm.json", root / "seed.pop.json", out, report)
+
+
+def _assert_emitted_pass_bound(model: Path, population: Path, out: Path, report: Path) -> None:
+    from gnd.discover import service
+
+    rows = json.loads(report.read_text(encoding="utf-8"))["emitted"]
+    proposal = json.loads(out.read_text(encoding="utf-8"))
+    from gnd.checker import check
+    from gnd.model import load_model_bytes
+    from gnd.population import load_population_bytes
+
+    candidate = load_model_bytes(proposal["candidate_model"]["text"].encode(), source=model)
+    bound, references = service._bind_references(
+        candidate, load_population_bytes(population.read_bytes(), source=population,
+                                         model=candidate), model.parent)
+    verdicts = {v.constraint_ref: v.verdict for v in check(candidate, bound,
+                                                           references=references).verdicts}
+    assert all(verdicts[row["ref"]] == "pass" for row in rows)
+
+
+@pytest.mark.parametrize(("model", "population"), [
+    ("v62-phase1/models/static.orm.yaml", "v62-phase1/populations/pre-clean.pop.yaml"),
+    ("v62-phase5/models/floats.orm.yaml", "v62-phase5/populations/float-clean.pop.yaml"),
+])
+def test_r4_derived_rosters_never_crash(tmp_path: Path, model: str, population: str) -> None:
+    base = REPO_ROOT / "tests/fixtures"
+    out, report = tmp_path / "proposal.json", tmp_path / "report.json"
+    result = run_main(["discover", str(base / model), str(base / population),
+                       *CASES["common_argv"], "--out", str(out), "--report", str(report)])
+    assert result.returncode == 0, (result.stdout + result.stderr).decode()[-400:]
+    assert json.loads(report.read_text())["skipped"]["derived_mandatory_roles"] >= 1
+
+
+def test_r5_redacted_roles_never_emit_their_values(tmp_path: Path) -> None:
+    base = REPO_ROOT / "tests/fixtures/v62-phase1"
+    out, report = tmp_path / "proposal.json", tmp_path / "report.json"
+    result = run_main(["discover", str(base / "models/static.orm.yaml"),
+                       str(base / "populations/pre-clean.pop.yaml"), *CASES["common_argv"],
+                       "--families", "value", "--out", str(out), "--report", str(report)])
+    written = (result.stdout + result.stderr).decode() + report.read_text()
+    written += out.read_text() if out.exists() else ""
+    assert result.returncode == 0
+    assert "SECRET-ITEM-314159" not in written
+    assert json.loads(report.read_text())["skipped"]["redacted_value_roles"] >= 1
+
+
+def test_r6_candidates_past_the_size_budget_are_skipped_and_counted(tmp_path: Path) -> None:
+    tags = [("a_tagged", "1") for _ in range(20)] + [("a_flagged", "1")]
+    population = _amount_population(tags)
+    big = "\\\\" * 150_000
+    population = population.replace("tag: x", f'tag: "x{big}"').replace("tag: y", f'tag: "y{big}"')
+    population = "\n".join(
+        line.replace(f'"x{big}"', f'"x{i}{big}"') for i, line in enumerate(population.splitlines())
+    ) + "\n"
+    code, text, _, report_path = _discover(tmp_path, AMOUNT_MODEL, population, "--families", "value")
+    assert code == 0, text[-400:]
+    assert json.loads(report_path.read_text())["skipped"]["over_budget"] >= 1
+
+
+def test_r7_yaml_only_model_values_round_trip(tmp_path: Path) -> None:
+    # `gnd evolve preview` itself cannot preview a model holding a YAML date
+    # (pre-existing, IK4 finding F12); discovery's candidate must still equal
+    # evolve's replay of its operations, which is what preview would compare.
+    from gnd.evolve import EvolutionProposal
+    from gnd.evolve.service import _apply_declared_operations, _parse_model_text
+
+    model = (CORPUS / "staff.orm.yaml").read_text().replace(
+        "source:\n  kind: fixture", "source:\n  kind: fixture\n  created: 2024-01-01")
+    code, text, out, _ = _discover(tmp_path, model, (CORPUS / "staff.population.yaml").read_text(),
+                                   "--families", "uniqueness", model_name="staff.orm.yaml")
+    assert code == 0, text
+    proposal = EvolutionProposal.model_validate(json.loads(out.read_text()))
+    replayed = _apply_declared_operations(_parse_model_text(model), proposal.operations)
+    assert replayed == _parse_model_text(proposal.candidate_model.text)
+
+
+@pytest.mark.parametrize("actor", ["", "   "])
+def test_r8_blank_actor_is_a_usage_error(tmp_path: Path, actor: str) -> None:
+    case = next(c for c in CASES["cases"] if c["id"] == "K01")
+    argv, *_ = _prepare(tmp_path, case)
+    argv[argv.index("--actor") + 1] = actor
+    assert run_main(argv).returncode == 64
+
+
+@pytest.mark.parametrize("target", ["report", "model", "population"])
+def test_r9_outputs_must_not_alias_each_other_or_an_input(tmp_path: Path, target: str) -> None:
+    case = next(c for c in CASES["cases"] if c["id"] == "K01")
+    argv, model, _, report = _prepare(tmp_path, case)
+    before = model.read_bytes()
+    aliased = {"report": report, "model": model, "population": Path(argv[2])}[target]
+    argv[argv.index("--out") + 1] = str(aliased)
+    assert run_main(argv).returncode == 64
+    assert model.read_bytes() == before
+
+
+def test_r10_inputs_are_read_once_through_the_cap(tmp_path: Path, monkeypatch) -> None:
+    from gnd.discover import service
+
+    reads: list[Path] = []
+    real = Path.read_bytes
+
+    def counted(self: Path) -> bytes:
+        reads.append(self)
+        return real(self)
+
+    monkeypatch.setattr(Path, "read_bytes", counted)
+    case = next(c for c in CASES["cases"] if c["id"] == "K01")
+    argv, *_ = _prepare(tmp_path, case)
+    reads.clear()
+    assert run_main(argv).returncode == 0
+    assert not [p for p in reads if p.name in ("staff.orm.yaml", "staff.population.yaml")]
+    assert service._read_capped  # the one capped reader
+
+
+@pytest.mark.parametrize("shape", ["wide-fact-type", "large-roster"])
+def test_r11_work_never_exceeds_the_stated_ceiling(tmp_path: Path, shape: str) -> None:
+    if shape == "wide-fact-type":
+        model = """version: 1
+source: {kind: fixture}
+object_types:
+  - {id: v, name: V, kind: value, primitive: Integer}
+fact_types:
+  - id: w
+    reading: "{V} {V} {V} {V}"
+    roles:
+      - {object_type: v, role_name: a}
+      - {object_type: v, role_name: b}
+      - {object_type: v, role_name: c}
+      - {object_type: v, role_name: d}
+constraints: []
+"""
+        rows = "".join(f"    - {{a: {i}, b: {i % 7}, c: {i % 3}, d: {i % 11}}}\n" for i in range(1000))
+        population = ("population: {model: m.orm.yaml, source: fixture, covers: [w]}\n"
+                      "instances: {}\nfacts:\n  w:\n" + rows)
+        extra = ("--max-pairs", "0")
+    else:
+        model = (CORPUS / "staff.orm.yaml").read_text()
+        people = ", ".join(str(i) for i in range(30_000))
+        population = (CORPUS / "staff.population.yaml").read_text().replace(
+            "person: [1, 2, 3, 4, 5, 6]", f"person: [{people}]")
+        extra = ()
+    code, text, _, report_path = _discover(tmp_path, model, population, *extra)
+    assert code == 0, text[-400:]
+    work = json.loads(report_path.read_text())["work"]
+    assert 0 < work["total"] <= work["ceiling"]
+
+
+def test_r12_superkeys_of_a_declared_frequency_max_1_are_suppressed(tmp_path: Path) -> None:
+    model = """version: 1
+source: {kind: fixture}
+object_types:
+  - {id: v, name: V, kind: value, primitive: Integer}
+fact_types:
+  - id: t
+    reading: "{V} {V} {V}"
+    roles:
+      - {object_type: v, role_name: a}
+      - {object_type: v, role_name: b}
+      - {object_type: v, role_name: c}
+    constraints:
+      - {type: frequency, scope: internal, roles: [a], bound: {max: 1}, source: explicit,
+         status: confirmed, modality: alethic, provenance: {user_quote: q}}
+constraints: []
+"""
+    rows = "".join(f"    - {{a: {i}, b: {i % 2}, c: {i % 3}}}\n" for i in range(6))
+    population = ("population: {model: m.orm.yaml, source: fixture, covers: [t]}\n"
+                  "instances: {}\nfacts:\n  t:\n" + rows)
+    code, text, _, report_path = _discover(tmp_path, model, population, "--families", "uniqueness")
+    assert code == 0, text
+    report = json.loads(report_path.read_text())
+    keys = [row["constraint"]["roles"] for row in report["emitted"]]
+    assert ["a", "b"] not in keys and ["a", "c"] not in keys
+    assert report["suppressed"]["superkey"] == 2
+
+
+# ---- R13: branches the corpus could not fail ------------------------------
+
+def test_r13_work_counts_are_exact(tmp_path: Path) -> None:
+    # Uniqueness: two key candidates per binary fact type, each scanning its rows:
+    # 2 x (6 + 5 + 2 + 4) = 34. Mandatory: per role, rows plus the roster:
+    # (6+6)+(6+2) + (5+6)+(5+3) + (2+2)+(2+6) + (4+6)+(4+3) = 68.
+    for case_id, counter, expected in (("K01", "uniqueness", 34), ("K02", "mandatory", 68)):
+        (tmp_path / case_id).mkdir()
+        *_, report_path, code = _run(tmp_path / case_id, case_id)
+        assert code == 0
+        assert json.loads(report_path.read_text())["work"][counter] == expected
+
+
+def test_r13_examples_are_capped_at_256(tmp_path: Path) -> None:
+    rows = "".join(f"    - {{amount: {i}, tag: t{i}}}\n" for i in range(300))
+    population = ("population: {model: m.orm.yaml, source: fixture, covers: [a_tagged, a_flagged]}\n"
+                  "instances: {}\nfacts:\n  a_tagged:\n" + rows + "  a_flagged: []\n")
+    code, text, _, report_path = _discover(tmp_path, AMOUNT_MODEL, population, "--families", "uniqueness")
+    assert code == 0, text
+    row = next(r for r in json.loads(report_path.read_text())["emitted"]
+               if r["constraint"]["roles"] == ["amount"])
+    examples = row["constraint"]["provenance"]["induction"]["examples"]
+    assert row["support"]["denominator"] == 300 and len(examples) == 256
+
+
+def test_r13_exclusion_needs_both_sides(tmp_path: Path) -> None:
+    population = ("population: {model: m.orm.yaml, source: fixture, covers: [a_tagged, a_flagged]}\n"
+                  "instances: {}\nfacts:\n  a_tagged:\n    - {amount: 1, tag: x}\n  a_flagged: []\n")
+    code, text, _, report_path = _discover(tmp_path, AMOUNT_MODEL, population, "--families", "exclusion")
+    assert code == 0, text
+    report = json.loads(report_path.read_text())
+    assert report["emitted"] == [] and report["rejected"]["vacuous"] == 2
+
+
+def test_r13_only_minimal_keys_are_emitted(tmp_path: Path) -> None:
+    model = """version: 1
+source: {kind: fixture}
+object_types:
+  - {id: v, name: V, kind: value, primitive: Integer}
+fact_types:
+  - id: t
+    reading: "{V} {V} {V}"
+    roles:
+      - {object_type: v, role_name: a}
+      - {object_type: v, role_name: b}
+      - {object_type: v, role_name: c}
+constraints: []
+"""
+    rows = "".join(f"    - {{a: {i}, b: {i % 2}, c: 0}}\n" for i in range(6))
+    population = ("population: {model: m.orm.yaml, source: fixture, covers: [t]}\n"
+                  "instances: {}\nfacts:\n  t:\n" + rows)
+    code, text, _, report_path = _discover(tmp_path, model, population, "--families", "uniqueness")
+    assert code == 0, text
+    report = json.loads(report_path.read_text())
+    assert [r["constraint"]["roles"] for r in report["emitted"]] == [["a"]]
+    assert report["suppressed"]["redundant-superkey"] == 2  # {a,b} and {a,c}

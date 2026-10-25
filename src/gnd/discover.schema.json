@@ -86,8 +86,12 @@
       "required": [
         "fact_types",
         "value_roles",
+        "redacted_value_roles",
+        "unrepresentable_value_roles",
+        "derived_mandatory_roles",
         "pairs",
-        "key_subsets"
+        "key_subsets",
+        "over_budget"
       ],
       "properties": {
         "fact_types": {
@@ -125,6 +129,22 @@
           }
         },
         "key_subsets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted_value_roles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unrepresentable_value_roles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "derived_mandatory_roles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "over_budget": {
           "type": "integer",
           "minimum": 0
         }
@@ -352,7 +372,8 @@
         "value",
         "frequency",
         "sets",
-        "total"
+        "total",
+        "ceiling"
       ],
       "properties": {
         "uniqueness": {
@@ -376,6 +397,10 @@
           "minimum": 0
         },
         "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ceiling": {
           "type": "integer",
           "minimum": 0
         }

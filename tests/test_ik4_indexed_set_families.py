@@ -84,6 +84,7 @@ def _population(rng: random.Random) -> dict[str, Any]:
 
 
 def _snapshot(tmp_path: Path, model: dict[str, Any], population: dict[str, Any]):
+    tmp_path.mkdir(parents=True, exist_ok=True)
     (tmp_path / "m.orm.json").write_text(json.dumps(model))
     (tmp_path / "p.population.json").write_text(json.dumps(population))
     loaded = load_model(tmp_path / "m.orm.json")
@@ -150,3 +151,21 @@ def test_production_hooks_are_registered_for_the_four_counting_families() -> Non
     for family in ("subset", "equality", "exclusion", "frequency"):
         assert FAMILIES[family].production == f"indexed_{family}_verdict"
         assert callable(resolve_hook(FAMILIES[family].production, vars(semantic_rows)))
+
+
+@pytest.mark.parametrize("family", ["equality", "exclusion", "frequency"])
+def test_typed_number_identities_match_the_specification(tmp_path: Path, family: str) -> None:
+    # Number cells mixing 1, 1.0 and 2.5: one typed identity for 1 and 1.0.
+    model = _model(False)
+    model["object_types"][0]["primitive"] = "Number"
+    rng = random.Random(11)
+    for seed in range(20):
+        numbers = [v for v in POOL if isinstance(v, (int, float)) and not isinstance(v, bool)]
+        population = {"population": {"model": "m.orm.json", "source": "fixture",
+                                     "covers": ["f0", "f1", "f2"]},
+                      "instances": {},
+                      "facts": {f"f{i}": [{"item": rng.choice(numbers + [2.5]), "tag": "p"}
+                                          for _ in range(rng.randint(0, 5))] for i in range(3)}}
+        _, snapshot = _snapshot(tmp_path / str(seed), model, population)
+        for constraint in (c for c in snapshot.constraints if c.family == family):
+            assert INDEXED[family](constraint, snapshot) == semantic_spec.verdict_of(constraint, snapshot)

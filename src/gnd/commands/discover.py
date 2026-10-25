@@ -32,6 +32,12 @@ def _at_least(minimum: int):
     return parse
 
 
+def _actor(text: str) -> str:
+    if not text.strip():
+        raise argparse.ArgumentTypeError("--actor must name who requests the proposal")
+    return text
+
+
 def _requested_at(text: str) -> datetime:
     try:
         value = datetime.fromisoformat(text)
@@ -63,7 +69,8 @@ def _register_discover(subparsers):
     discover_parser.add_argument("--out", required=True, help="write the evolve proposal here")
     discover_parser.add_argument("--report", required=True, help="write the discovery report here")
     discover_parser.add_argument(
-        "--actor", required=True, help="who requests the proposal (its audit actor_id)"
+        "--actor", required=True, type=_actor,
+        help="who requests the proposal (its audit actor_id)",
     )
     discover_parser.add_argument(
         "--requested-at", required=True, type=_requested_at,

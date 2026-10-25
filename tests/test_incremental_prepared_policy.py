@@ -122,6 +122,9 @@ def test_unknown_registry_hook_with_unclassified_global_dependency_is_fresh(tmp_
     def evaluator(constraint, snapshot):
         return _test_hook_state, []  # noqa: F821 -- installed global is the unclassified dependency
 
+    # IK4 gave frequency a production fast path; disable it so both routes still
+    # reach the pure evaluator this test replaces.
+    monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], production=None))
     if route == 'callable':
         monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
     else:
@@ -150,7 +153,11 @@ def test_fallback_evaluator_failure_is_not_retried(tmp_path, monkeypatch):
             raise RuntimeError('first evaluator failure')
         return 1, []
 
-    monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+    # IK4 gave frequency a production fast path; disable it so this test still
+    # exercises the pure evaluator it replaces.
+    monkeypatch.setitem(
+        FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator, production=None)
+    )
     expected = api.check(m, p)
     assert expected['exit_code'] == 70 and len(calls) == 1
     calls.clear()

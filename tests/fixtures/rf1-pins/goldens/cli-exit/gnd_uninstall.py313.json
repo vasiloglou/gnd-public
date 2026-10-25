@@ -6,7 +6,7 @@
  },
  "unknown_flag": {
   "exit": 64,
-  "stderr": "usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --rf1-unknown-flag\n",
+  "stderr": "usage: gnd [-h] [--version]\n           {witness,replay,witness-view,import,validate,diff,coverage,check,verbalize,verify,synth,measure,discover,extract,export,codegen,conformance,recovery,evolve,doccheck,fidelity,review,exp,solve,install,doctor,uninstall,judgments} ...\ngnd: error: unrecognized arguments: --rf1-unknown-flag\n",
   "stdout": ""
  }
 }

@@ -169,6 +169,7 @@ from gnd.codegen.service import (
 from gnd.commands import checking as _group_checking
 from gnd.commands import codegen as _group_codegen
 from gnd.commands import conformance as _group_conformance
+from gnd.commands import discover as _group_discover
 from gnd.commands import doccheck as _group_doccheck
 from gnd.commands import evolve as _group_evolve
 from gnd.commands import exp as _group_exp
@@ -647,6 +648,7 @@ def main(argv: list[str] | None = None) -> int:
     _group_verify.add_parsers(subparsers, command='verify')
     _group_synth.add_parsers(subparsers, command='synth')
     _group_measure.add_parsers(subparsers, command='measure')
+    _group_discover.add_parsers(subparsers, command='discover')
     _group_extract.add_parsers(subparsers, command='extract')
     _group_export.add_parsers(subparsers, command='export')
     _group_codegen.add_parsers(subparsers, command='codegen')

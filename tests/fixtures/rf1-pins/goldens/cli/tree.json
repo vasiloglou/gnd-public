@@ -45,6 +45,7 @@
     "verify",
     "synth",
     "measure",
+    "discover",
     "extract",
     "export",
     "codegen",
@@ -4984,6 +4985,182 @@
    "listed_help": "view a witness with default value redaction",
    "parser_class": "gnd.cli._BandSafeParser",
    "prog": "gnd witness-view",
+   "subcommands": {}
+  },
+  "discover": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "population",
+     "help": "path to the population file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "write the evolve proposal here",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "report",
+     "help": "write the discovery report here",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--report"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "actor",
+     "help": "who requests the proposal (its audit actor_id)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--actor"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "requested_at",
+     "help": "when, as ISO-8601 with a UTC offset (the audit time; keeps output reproducible)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--requested-at"
+     ],
+     "required": true,
+     "type": "gnd.commands.discover._requested_at"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": "('uniqueness', 'mandatory', 'value', 'frequency', 'subset', 'equality', 'exclusion')",
+     "dest": "families",
+     "help": "comma-separated subset of the seven families (default: all)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--families"
+     ],
+     "required": false,
+     "type": "gnd.commands.discover._families"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": 20,
+     "dest": "max_values",
+     "help": "largest distinct-value count for a value candidate (default 20)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--max-values"
+     ],
+     "required": false,
+     "type": "gnd.commands.discover._at_least.<locals>.parse"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": 256,
+     "dest": "max_pairs",
+     "help": "most unordered role pairs compared for subset/equality/exclusion (default 256)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--max-pairs"
+     ],
+     "required": false,
+     "type": "gnd.commands.discover._at_least.<locals>.parse"
+    },
+    {
+     "choices": [
+      "text",
+      "json"
+     ],
+     "class": "_StoreAction",
+     "const": null,
+     "default": "text",
+     "dest": "format",
+     "help": "output rendering: human-readable text (default) or one JSON payload",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--format"
+     ],
+     "required": false,
+     "type": null
+    }
+   ],
+   "description": "Propose candidate constraints of seven families (uniqueness, mandatory, value, frequency, subset, equality, exclusion) that hold in one population. A candidate is kept only when `gnd check` passes it with support > 0 and the model neither declares nor entails it. Writes a discovery report and, when anything is emitted, a `gnd evolve` proposal of induced, proposed, deontic constraints: admission stays a reviewed act. Exits 0 on success (also with nothing emitted), 3 on an invalid model or population, 64 on a usage error, 66 on a missing input, 70 on an internal defect, 74 on a refused output path.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "propose induced constraints observed in one population (IK4)",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd discover",
    "subcommands": {}
   }
  }

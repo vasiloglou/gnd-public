@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/discover.schema.json",
+  "title": "GND discovery report",
+  "description": "The gnd-discover/1 report written by `gnd discover` (IK4). Every key is always present, possibly empty or zero, so a reader can tell 'nothing found' from 'not looked at'. It states the bounds used and counts every skipped role, pair and key subset, every candidate rejected by its check verdict, and every candidate suppressed by a catalogue or redundancy rule. Emitted candidates are induced, proposed, deontic constraints whose `gnd check` verdict was pass with support > 0; near-misses are reported, never emitted. Support is computed by discovery from the population; it is a recorded claim in the evolve proposal, not a checker output.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tool",
+    "command",
+    "gnd_version",
+    "model",
+    "population",
+    "bounds",
+    "skipped",
+    "rejected",
+    "suppressed",
+    "emitted",
+    "near_misses",
+    "work",
+    "proposal"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "gnd-discover/1"
+    },
+    "tool": {
+      "const": "gnd"
+    },
+    "command": {
+      "const": "discover"
+    },
+    "gnd_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model": {
+      "$ref": "#/$defs/input"
+    },
+    "population": {
+      "$ref": "#/$defs/input"
+    },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "families",
+        "max_values",
+        "max_pairs",
+        "max_key_arity"
+      ],
+      "properties": {
+        "families": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "uniqueness",
+              "mandatory",
+              "value",
+              "frequency",
+              "subset",
+              "equality",
+              "exclusion"
+            ]
+          }
+        },
+        "max_values": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_pairs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_key_arity": {
+          "const": 4
+        }
+      }
+    },
+    "skipped": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_types",
+        "value_roles",
+        "pairs",
+        "key_subsets"
+      ],
+      "properties": {
+        "fact_types": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fact_type",
+              "reason"
+            ],
+            "properties": {
+              "fact_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "enum": [
+                  "derived",
+                  "referenced-by-operation"
+                ]
+              }
+            }
+          }
+        },
+        "value_roles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pairs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "key_subsets": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "rejected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vacuous",
+        "unchecked",
+        "fail",
+        "warning"
+      ],
+      "properties": {
+        "vacuous": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unchecked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fail": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warning": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "suppressed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "declared",
+        "equality-implies-subset",
+        "frequency-max-1-is-uniqueness",
+        "unscoped-value-implies-scoped",
+        "reference-scheme-implies-uniqueness",
+        "spanning-uniqueness",
+        "superkey",
+        "redundant-subset",
+        "redundant-frequency",
+        "redundant-superkey"
+      ],
+      "properties": {
+        "declared": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "equality-implies-subset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frequency-max-1-is-uniqueness": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unscoped-value-implies-scoped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reference-scheme-implies-uniqueness": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "spanning-uniqueness": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "superkey": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redundant-subset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redundant-frequency": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redundant-superkey": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "emitted": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ref",
+          "family",
+          "constraint",
+          "support"
+        ],
+        "properties": {
+          "ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "family": {
+            "enum": [
+              "uniqueness",
+              "mandatory",
+              "value",
+              "frequency",
+              "subset",
+              "equality",
+              "exclusion"
+            ]
+          },
+          "constraint": {
+            "type": "object",
+            "required": [
+              "type",
+              "source",
+              "status",
+              "modality",
+              "provenance"
+            ],
+            "properties": {
+              "source": {
+                "const": "induced"
+              },
+              "status": {
+                "const": "proposed"
+              },
+              "modality": {
+                "const": "deontic"
+              }
+            }
+          },
+          "support": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "numerator",
+              "denominator"
+            ],
+            "properties": {
+              "numerator": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "denominator": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "near_misses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "family",
+          "host",
+          "constraint",
+          "violations",
+          "subjects",
+          "counterexamples"
+        ],
+        "properties": {
+          "family": {
+            "enum": [
+              "uniqueness",
+              "mandatory",
+              "value",
+              "frequency",
+              "subset",
+              "equality",
+              "exclusion"
+            ]
+          },
+          "host": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "constraint": {
+            "type": "object",
+            "required": [
+              "type"
+            ]
+          },
+          "violations": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 32
+          },
+          "subjects": {
+            "type": "integer",
+            "minimum": 20
+          },
+          "counterexamples": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 32,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "uniqueness",
+        "mandatory",
+        "value",
+        "frequency",
+        "sets",
+        "total"
+      ],
+      "properties": {
+        "uniqueness": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mandatory": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frequency": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sets": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "proposal": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "$defs": {
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,821 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/IK2/dynamic-query-successor.json",
+  "predecessor_sha256": "98f2530ad6320a8b95c7a7e2daa674fd1346d04d0b1be7603f2e3216777f7671",
+  "reason": "Owner-approved induced-knowledge IK4 (2026-10-24): the gnd discover lane (candidates, support, output, service), its command handler, and the indexed equality, exclusion and frequency checker paths add type-annotation and population-cell subscripts. Syntax census only; no model-query exception widening.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/commands/discover.py",
+      "_families",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "Candidate",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "Generated",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "Generated",
+      "list[Candidate]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "frozenset[str]",
+      3
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "frozenset[tuple[tuple[str, str], ...]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "list[tuple[Any, frozenset[str]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "list[tuple[str | None, frozenset[str]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "objects.get(entity.object_type)",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "set[frozenset[tuple[tuple[str, str], ...]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "set[tuple[Any, ...]]",
+      2
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "set[tuple[str | None, frozenset[str]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "tuple[Any, ...]",
+      2
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "tuple[Any, frozenset[str]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "tuple[str | None, frozenset[str]]",
+      2
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "__init__",
+      "tuple[tuple[str, str], ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "_bound",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "_bound",
+      "tuple[Any, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "_ref",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "_seq",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "_seq",
+      "tuple[tuple[str, str], ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "canonical_key",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "canonical_key",
+      "tuple[Any, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "ids[:256]",
+      2
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "list[Candidate]",
+      4
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "list[tuple[Role, Role]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "skipped_pairs.get(object_type, 0)",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "tuple[Role, Role]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "generate",
+      "view.roles[ft]",
+      5
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "key",
+      "tuple[Any, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "dict[str | None, list[frozenset[str]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "keys.get(c.host, [])",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "list[Candidate]",
+      3
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "list[frozenset[str]]",
+      1
+    ],
+    [
+      "src/gnd/discover/candidates.py",
+      "redundancy",
+      "tuple[list[Candidate], dict[str, int]]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "candidate_document",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "candidate_document",
+      "tuple[EvolutionOperation, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "candidate_text",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "induced",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "operations",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "operations",
+      "list[tuple[Candidate, dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "operations",
+      "tuple[Candidate, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "operations",
+      "tuple[EvolutionOperation, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "proposal",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "proposal",
+      "digest[:16]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "proposal",
+      "tuple[EvolutionOperation, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "render_text",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_base_counts",
+      "counts.get(host, 0)",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_base_counts",
+      "dict[str | None, int]",
+      2
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_cmd_discover",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_eligible",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_eligible",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_eligible",
+      "list[dict[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_eligible",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_eligible",
+      "tuple[list[str], list[dict[str, str]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_refs",
+      "dict[str | None, int]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_refs",
+      "list[Candidate]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_refs",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_refs",
+      "seen.get(candidate.host, 0)",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "_subjects",
+      "view.roles[candidate.host]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "discover",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "discover",
+      "list[Candidate]",
+      2
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "discover",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "discover",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/service.py",
+      "discover",
+      "verdicts.get(ref)",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "Subjects",
+      "tuple[str, ...]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "Work",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "__init__",
+      "dict[str, list[Role]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "__init__",
+      "dict[str, list[str]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "__init__",
+      "list[Role]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "__init__",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "__init__",
+      "self.position[ft]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "_sorted_values",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "_subjects",
+      "list[tuple[str, bool]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "_subjects",
+      "satisfying[:256]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "_subjects",
+      "tuple[str, bool]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "_subjects",
+      "violating[:32]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "column",
+      "list[tuple[int, Any]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "column",
+      "row[role.name]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "column",
+      "tuple[int, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "equality_subjects",
+      "dict[str, str]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "exclusion_subjects",
+      "dict[str, str]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "fact_id",
+      "self.position[fact_type]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "groups",
+      "Counter[str]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "groups",
+      "dict[str, int]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "groups",
+      "tuple[Counter[str], dict[str, int]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "mandatory",
+      "self.object_position[role.object_type]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "order",
+      "tuple[int, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "report",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "roster",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "roster",
+      "self._rosters[object_type]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "rows",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "rows",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "rows",
+      "self.population.facts.get(fact_type)",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "side",
+      "dict[str, str]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "subset_subjects",
+      "dict[str, str]",
+      2
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "Counter[tuple[str, ...]]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "counts[key]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "dict[tuple[str, ...], int]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "row[name]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "uniqueness",
+      "tuple[str, ...]",
+      3
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "value_domain",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "value_domain",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "value_domain",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/discover/support.py",
+      "value_domain",
+      "tuple[list[Any], list[int]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_indexed_set_rows",
+      "tuple[Scalar, ...]",
+      3
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_indexed_set_rows",
+      "tuple[str, str | None, tuple[tuple[Scalar, ...], ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_indexed_set_rows",
+      "tuple[tuple[Scalar, ...], ...]",
+      3
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_indexed_set_rows",
+      "tuple[tuple[tuple[Scalar, ...], ...], tuple[tuple[Scalar, ...], ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_row_key",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_row_key",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_row_key",
+      "tuple[tuple[str, str], ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_set_family_close",
+      "tuple[Scalar, ...]",
+      4
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_set_family_close",
+      "tuple[str, str | None, tuple[tuple[Scalar, ...], ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "_set_family_close",
+      "tuple[tuple[Scalar, ...], ...]",
+      4
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_equality_verdict",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_equality_verdict",
+      "tuple[str, str | None, tuple[tuple[Scalar, ...], ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_equality_verdict",
+      "tuple[tuple[Scalar, ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_exclusion_verdict",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_exclusion_verdict",
+      "tuple[str, str | None, tuple[tuple[Scalar, ...], ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_exclusion_verdict",
+      "tuple[tuple[Scalar, ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "counts.get(identity, 0)",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "counts[_row_key(group)]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "dict[tuple[tuple[str, str], ...], int]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "tuple[str, str | None, tuple[tuple[Scalar, ...], ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "tuple[tuple[Scalar, ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_rows.py",
+      "indexed_frequency_verdict",
+      "tuple[tuple[str, str], ...]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6371,
+  "result_occurrences": 7995
+}

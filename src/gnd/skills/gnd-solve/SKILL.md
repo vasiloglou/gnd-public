@@ -138,7 +138,9 @@ must change. Owner:
 staged transaction, obtain acceptance, then apply it through that skill. It
 emits separate proposal, blast-radius, model-CAS, conformance-envelope, and
 immutable change-record claims. After an accepted evolution, deliberately
-return to Station 2 or 3.
+return to Station 2 or 3. A proposal may also come from `gnd discover`, which
+suggests induced, advisory constraints observed in one population; review it
+here like any other.
 
 Entry commands: `uv run gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json`; after acceptance, `uv run gnd evolve apply model.orm.yaml proposal.json --preview preview.json --workspace . --records records --format json`.
 

@@ -4,6 +4,7 @@
     "gnd.commands.checking",
     "gnd.commands.codegen",
     "gnd.commands.conformance",
+    "gnd.commands.discover",
     "gnd.commands.doccheck",
     "gnd.commands.evolve",
     "gnd.commands.exp",
@@ -23,6 +24,7 @@
   "service_targets": [
     "gnd.codegen.service",
     "gnd.conformance.cli_service",
+    "gnd.discover.service",
     "gnd.evolve.cli_service",
     "gnd.exp.cli_service",
     "gnd.export.verification_service",
@@ -289,6 +291,9 @@
     ],
     "gnd.commands.conformance": [
       "gnd.conformance.cli_service"
+    ],
+    "gnd.commands.discover": [
+      "gnd.discover.service"
     ],
     "gnd.commands.doccheck": [
       "gnd.fidelity.doccheck_service"

@@ -51,10 +51,13 @@ def test_typed_identity_order_and_first_representative(values):
         assert any(row is original for original in rows)
 
 
-def test_production_hook_registered_only_for_subset():
+def test_production_hook_registered_only_for_the_counting_families():
+    # IK4 owner rulings 2026-10-24: equality, exclusion and frequency gained
+    # production paths with oracle parity (tests/test_ik4_indexed_set_families.py).
     assert FAMILIES["subset"].production == "indexed_subset_verdict"
     assert callable(resolve_hook(FAMILIES["subset"].production, vars(semantic_rows)))
-    assert all(entry.production is None for name, entry in FAMILIES.items() if name != "subset")
+    set_families = {"subset", "equality", "exclusion", "frequency"}
+    assert all(entry.production is None for name, entry in FAMILIES.items() if name not in set_families)
 
 
 @pytest.mark.parametrize("changes", [

@@ -28,6 +28,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Generate a Python project | `codegen` plus explicitly selected skill | Developer writes extension behavior; temporal models refused | [Generated projects](../guides/generated-projects.md) |
 | Detect model/project drift | `conformance`; static architecture checks | Does not execute the app or verify all extension behavior | [Generated projects](../guides/generated-projects.md) |
 | Change an existing model | Staged `evolve preview/apply/finalize` | Explicit reviewed changes; no automatic regeneration | [Evolution](../guides/evolution-and-recovery.md) |
+| Discover rules in data | `discover` over one population | Proposes induced, advisory rules only; admission is a reviewed evolve step; single-role families, stated bounds | [Discovery](discover.md) |
 | Recover a model from code | Bounded `recovery inventory/verify` and authoring skill | One-time static selected roots; no continuous synchronization | [Recovery](../guides/evolution-and-recovery.md) |
 | Compare compatible models | `diff`; `api.diff` | Same vocabulary; bounded entailment catalogue and concrete populations; no temporal models | [Python API](python-api.md) |
 | Exercise rule behavior | `synth`, `measure` | Optional synth dependency; generation is narrower than checking | [Synthetic data](../guides/synthetic-data.md) |

@@ -115,7 +115,7 @@ def test_all_parser_paths_receive_command_handlers(monkeypatch):
     from test_rf1_cli_pins import _root, _walk
     parsers = {}
     _walk(_root(monkeypatch), ('gnd',), parsers)
-    assert len(parsers) == 52
+    assert len(parsers) == 53  # IK4 adds `gnd discover`
     for path in parsers:
         if path != 'gnd':
             assert callable(parsers[' '.join(path.split()[:2])].get_default('handler')), path
@@ -131,7 +131,7 @@ def test_entrypoint_rule_covers_all_groups_and_rejects_forbidden_imports():
     metrics = arch.measure(ROOT, ROOT / 'tools/gnd_layers.json')
     policy = json.loads((ROOT / 'tools/gnd_entrypoints.json').read_text())
     result = arch.entrypoint_rule(metrics, policy)
-    assert len(result['scope']) == 19
+    assert len(result['scope']) == 20  # IK4 adds gnd.commands.discover
     assert result['violations'] == []
     for source, target in [('gnd.commands.verify', 'gnd.cli'), ('gnd.commands.verify', 'gnd.checker')]:
         altered = copy.deepcopy(metrics)

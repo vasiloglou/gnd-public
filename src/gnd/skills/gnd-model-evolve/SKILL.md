@@ -277,6 +277,8 @@ and it must be named rather than left for the next reader to discover.
   policy and record any override rationale.
 - Keep a new `induced` constraint `proposed` + `deontic` with no `reviewed_in`; confirm it only as a
   reviewed status change of the existing proposed constraint.
+- A `gnd discover` proposal adds only such induced constraints, with population-bound support;
+  preview it like any other proposal and confirm each rule separately.
 - Reject any source outside the seven-source taxonomy.
 - Keep `EvolutionOperationAudit` separate from constraint provenance.
 - Retain complete operations, rationale, audit, validation, CAS, blast radius, conformance,

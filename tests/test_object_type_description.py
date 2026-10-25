@@ -19,6 +19,7 @@ from typing import Any
 import pytest
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
+from support.cli_runner import run_main
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MODELS = REPO_ROOT / "tests" / "fixtures" / "models"
@@ -625,3 +626,68 @@ def test_t7_evolve_preview_equals_the_base_commit(tmp_path: Path) -> None:
     assert code == 0
     data = Path(paths["preview"]).read_bytes().replace(str(temp).encode(), b"<T>")
     assert _sha(data) == baseline["sha256"]["evolve_preview"]
+
+
+# ---- IK1-Q1: owner amendment, 2026-10-24 -------------------------------------
+# Containers nest at most 64 levels inside a description; the description
+# object itself is level 1. JSON input already stops at whole-document depth 64
+# (input_policy.MAX_DEPTH), so the boundary is exercised through block YAML,
+# which reached Python's recursion limit (about 243 levels) before this cap.
+
+
+def _nested(levels: int, *, container: str = "dict") -> Any:
+    inner: Any = "leaf"
+    for _ in range(levels):
+        inner = {"x": inner} if container == "dict" else [inner]
+    return inner
+
+
+def _nested_description(levels: int, *, container: str = "dict") -> dict[str, Any]:
+    """A description whose deepest container sits at ``levels``."""
+    return {"summary": "Deep.", "extra": _nested(levels - 1, container=container)}
+
+
+def _validate_yaml(tmp_path: Path, document: dict[str, Any]) -> tuple[int, str]:
+    import io
+
+    stream = io.StringIO()
+    yaml = YAML(typ="safe")
+    yaml.default_flow_style = False
+    yaml.dump(document, stream)
+    path = tmp_path / "model.orm.yaml"
+    path.write_text(stream.getvalue(), encoding="utf-8")
+    result = run_main(["validate", str(path)])
+    return result.returncode, (result.stdout + result.stderr).decode("utf-8")
+
+
+def _described(description: Any) -> dict[str, Any]:
+    document = _library_document()
+    document["object_types"][0]["description"] = description
+    return document
+
+
+@pytest.mark.parametrize("container", ["dict", "list"])
+def test_q1_description_at_64_levels_is_accepted(tmp_path: Path, container: str) -> None:
+    code, out = _validate_yaml(tmp_path, _described(_nested_description(64, container=container)))
+    assert code == 0, out
+
+
+@pytest.mark.parametrize("container", ["dict", "list"])
+def test_q1_description_at_65_levels_is_refused(tmp_path: Path, container: str) -> None:
+    code, out = _validate_yaml(tmp_path, _described(_nested_description(65, container=container)))
+    assert code == 3 and "[jsonschema:maxDepth]" in out, out
+
+
+def test_q1_depth_below_the_loader_limit_is_the_named_refusal(tmp_path: Path) -> None:
+    # 200 levels was accepted before the cap (refusal began near 243, as a
+    # caught RecursionError). Past roughly 240 levels the YAML loader itself
+    # still refuses first, unnamed, at exit 3 -- recorded as a residual.
+    code, out = _validate_yaml(tmp_path, _described(_nested_description(200)))
+    assert code == 3 and "[jsonschema:maxDepth]" in out and "recursion" not in out, out
+
+
+def test_q1_depth_cap_applies_only_inside_descriptions(tmp_path: Path) -> None:
+    document = _library_document()
+    document["object_types"][0]["provenance"] = {"deep": _nested(70)}
+    code, out = _validate_yaml(tmp_path, document)
+    assert code == 0, out

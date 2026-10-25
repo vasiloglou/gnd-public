@@ -461,3 +461,30 @@ Recorded as found, 2026-10-24.
   bound. Refusal depends on Python's recursion limit (about depth 243 on
   Python 3.14), and evolve proposals cap JSON depth at 64. A new numeric bound
   needs an owner-recorded amendment under IK-R12, so none was added (IK1-Q1).
+
+## 14. Owner amendment: IK1-Q1 description nesting cap (2026-10-24)
+
+**Ruling (o).** The recommendation offered to the owner was: "Rule IK1-Q1 with a
+nesting limit of 64. It's the last open decision, it's small, and 64 matches
+the limit evolve already enforces". The owner replied "ok go on" on 2026-10-24.
+Under IK-R12 this is a new numeric bound, fixed by owner amendment.
+
+**Arithmetic:**
+- The description object is level 1, and each nested object or array adds 1.
+- A container at level 65 or deeper is refused at layer 1, exit 3, rule
+  `jsonschema:maxDepth`.
+- The cap is checked in the existing iterative layer-1 walk, so it applies
+  before `jsonschema`'s recursive descent. Before the cap, YAML refusal began
+  near 243 levels as a caught `RecursionError`.
+
+**Correction to the recommendation.** "64 matches the limit evolve already
+enforces" was imprecise. `input_policy.MAX_DEPTH = 64` counts a whole JSON
+document. An evolve proposal carries an object type in an operation's `after`,
+so a description starts about five levels down. A description at roughly levels
+60–64 therefore validates but cannot pass through an evolve proposal. A cap of
+about 59 would close that window; changing the number needs a new owner ruling.
+Two related limits:
+- JSON model files already stop at whole-document depth 64, about 60 levels of
+  description.
+- Past roughly 240 levels, the YAML loader still refuses first, at exit 3,
+  without the named rule.

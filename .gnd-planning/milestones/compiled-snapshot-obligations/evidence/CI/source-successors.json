@@ -207,8 +207,8 @@
       "name": "_layer1_structural",
       "home": "gnd.model._validation",
       "before": "ba78b16641f5e8df5ec40dc251e6e07c5c85ab37d2cbb7ae9260ec6c99056780",
-      "after": "0a9265dab6e7aa4012a964f041e3efc76dc734f8c0331751b1b1b6fd9a9e8fe5",
-      "reason": "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses description values with no faithful JSON form (NaN, infinity, lone surrogates, anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint provenance.induction blocks through one tuple of screened paths; every other path unchanged."
+      "after": "6019f7c80dd2f18ccf70ca76b8e28cf454b9938a52b2d5a5efd1c30d869a846f",
+      "reason": "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses description values with no faithful JSON form (NaN, infinity, lone surrogates, anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint provenance.induction blocks of induced constraints; the IK1-Q1 owner amendment (2026-10-24) caps description nesting at 64 levels (jsonschema:maxDepth); every other path unchanged."
     },
     {
       "kind": "RF6b",

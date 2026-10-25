@@ -133,3 +133,32 @@ The [successor sweep](milestones/incremental-evaluation/notes/IE6-close-question
 preserves all prior questions and names remaining framework/reporter owners.
 [PR33](https://github.com/vasiloglou/gnd-public/pull/33) contains all seven phases;
 no merge, publication or certification is authorized by this local close.
+
+## induced-knowledge — planning, 2026-10-23
+
+Planning for [issue #34](https://github.com/vasiloglou/gnd-public/issues/34):
+let a host with real labelled populations turn them into reviewed model
+knowledge ([plan](milestones/induced-knowledge/notes/induced-knowledge-plan.md)).
+
+Six phases: IK1 object-type descriptions, IK2 induced provenance and admission,
+IK3 measure over host-labelled populations, IK4 constraint discovery, IK5 an ILP
+bridge, IK6 an end-to-end example and docs.
+
+Request 2 is proposed separately in
+[PR35](https://github.com/vasiloglou/gnd-public/pull/35) (open).
+
+Review history:
+- The owner selected four local reviewer agents (D7).
+- Round 1 reviewed r1.
+- The owner accepted its repairs and D8–D13.
+- Round 2 confirmed r2, and review stopped by the declared convergence rule.
+  See the [round-2 disposition](milestones/induced-knowledge/notes/plan-review-r2-disposition.md).
+- The owner confirmed D12 and directed the text repairs as r3, with no further
+  review round.
+- On 2026-10-24 the owner ruled D1–D6 and D14 (the description becomes a JSON
+  object with fixed core keys plus extras); r4 records them, unreviewed.
+
+No plan approval or implementation.
+
+**Next:** plan approval, then explicit selection of
+`process-phase IK1 induced-knowledge`.

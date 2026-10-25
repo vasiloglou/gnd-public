@@ -311,6 +311,8 @@ def _surface_index(
             )
         if "provenance" in object_type:
             add(f"{reference}.provenance", "provenance", object_type["provenance"])
+        if "description" in object_type:
+            add(f"{reference}.description", "annotation", object_type["description"])
 
     for fact_type in document.get("fact_types") or []:
         identifier = str(fact_type["id"])

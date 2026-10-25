@@ -1,0 +1,64 @@
+# IK1 final focused gate, 2026-10-24, working tree before the record commit
+command: uv run pytest -q -p no:randomly <the 56 files listed below>
+files:
+tests/test_object_type_description.py
+tests/test_schema_sync.py
+tests/test_model_verbalization.py
+tests/test_extract_vocabulary.py
+tests/test_extract_projection.py
+tests/test_codegen_emit.py
+tests/test_codegen_identifiers.py
+tests/test_codegen_manifest.py
+tests/test_conformance_payload.py
+tests/test_conformance_drift.py
+tests/test_conformance_structural.py
+tests/test_model_evolution.py
+tests/test_model_validation.py
+tests/test_rf1_semantic_pins.py
+tests/test_rf1_pin_harness.py
+tests/test_rf1_layering.py
+tests/test_rf1_helper_pins.py
+tests/test_rf1_cli_pins.py
+tests/test_report_json.py
+tests/test_checker_families.py
+tests/test_public_api.py
+tests/test_packaged_skills.py
+tests/test_v62_phase6_verbalization.py
+tests/test_public_redaction_reports.py
+tests/test_gnd_arch.py
+tests/test_public_built_inventory.py
+tests/test_rf6_index.py
+tests/test_rf6_moves.py
+tests/test_rf6_packages.py
+tests/test_rf6_query_policy.py
+tests/test_rf6_registry.py
+tests/test_rf5_commands.py
+tests/test_rf5_handler_pins.py
+tests/test_v70_phase1_surfaces.py
+tests/test_v71_phase1_successors.py
+tests/test_v71_phase4_successors.py
+tests/test_v70_phase3_successors.py
+tests/test_compiled_snapshot_obligations.py
+tests/test_model_v2.py
+tests/test_model_guarded.py
+tests/test_derivation_rule.py
+tests/test_fidelity_payload.py
+tests/test_recovery_report.py
+tests/test_review_report.py
+tests/test_verify_cli.py
+tests/test_verification_fixes.py
+tests/test_public_binding_prose.py
+tests/test_v62_phase3_surface.py
+tests/test_codegen_architecture.py
+tests/test_codegen_derivation.py
+tests/test_conformance_derivation.py
+tests/test_public_distribution.py
+tests/test_public_distribution_runtime.py
+tests/test_rf1_session_pins.py
+tests/test_rf1_agent_cli_pins.py
+tests/test_incremental_baseline.py
+exit: 0
+summary: 2309 passed, 55 deselected in 404.89s (0:06:44)
+
+lint: uv run ruff check <changed src and test .py files>
+lint summary: All checks passed!

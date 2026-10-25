@@ -122,6 +122,19 @@ Examples:
 Append to any object type's verbalization when `independent: true`:
 > *(Independent — instances may exist without playing any elementary fact roles.)*
 
+### Description
+
+When an object type carries a `description` (see representation-format.md), the
+review verbalization appends each present core key to the object type's
+sentence, in the order `summary`, `row`, `source`, `notes`:
+
+> Borrower is identified by CardNumber. Description: 'A person holding a library card.'. Row: 'One loan of one copy.'.
+
+The constraint-blind rendering seed emits the same keys as indented lines after
+the object type's sentence (`  Description: '...'`). Both forms escape the text
+with the neutralizer used for population values (quotes, backslashes and line
+breaks become escape sequences) and never truncate it. Extras are never rendered.
+
 ## Fact types
 
 ### Binary fact type

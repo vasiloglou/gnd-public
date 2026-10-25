@@ -2,7 +2,8 @@
 
 ``render_verbalization`` is constraint-blind BY CONSTRUCTION, not by review:
 the builder reads ONLY ``object_types[]`` (id, name, kind, ``reference``,
-``subtype_of``, ``inherits_reference``), ``fact_types[]`` (id, ``reading``,
+``subtype_of``, ``inherits_reference``, and the ``description`` core keys --
+never its extras), ``fact_types[]`` (id, ``reading``,
 ``roles``), primitive shapes via ``popvalidate.resolve_primitive``, and —
 solely for the external-mode identification phrase — the composite identity
 :func:`gnd.extract.refscheme.reference_identity` derives from top-level

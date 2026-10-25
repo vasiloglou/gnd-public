@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["schema_version", "command", "model_a_digest", "model_b_digest", "vocabulary_digest", "seed", "assurance", "entailment", "populations", "not_derivable"],
   "properties": {
-    "schema_version": {"const": "gnd-diff/1"},
+    "schema_version": {"enum": ["gnd-diff/1", "gnd-diff/2"]},
     "command": {"const": "diff"},
     "model_a_digest": {"$ref": "#/$defs/modelDigest"},
     "model_b_digest": {"$ref": "#/$defs/modelDigest"},
@@ -15,10 +15,23 @@
     "assurance": {"const": "none"},
     "entailment": {"type": "array", "items": {"$ref": "#/$defs/entailment"}},
     "populations": {"type": "array", "items": {"$ref": "#/$defs/population"}},
-    "not_derivable": {"type": "array", "items": {"$ref": "#/$defs/notDerivable"}}
+    "not_derivable": {"type": "array", "items": {"$ref": "#/$defs/notDerivable"}},
+    "annotations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/annotation"}}
   },
+  "if": {"properties": {"schema_version": {"const": "gnd-diff/2"}}},
+  "then": {"required": ["annotations"]},
+  "else": {"not": {"required": ["annotations"]}},
   "$defs": {
     "modelDigest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "annotation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["object_type", "before", "after"],
+      "properties": {
+        "object_type": {"type": "string"},
+        "before": {"type": ["object", "null"]},
+        "after": {"type": ["object", "null"]}
+      }
+    },
     "side": {"enum": ["a", "b"]},
     "entailment": {
       "type": "object", "additionalProperties": false,

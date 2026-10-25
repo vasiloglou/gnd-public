@@ -1,4 +1,4 @@
-# Differential report contract (`gnd-diff/1`)
+# Differential report contract (`gnd-diff/1`, `gnd-diff/2`)
 
 `diff.schema.json` is the closed output shape. This file defines the meaning of its
 rows. A diff compares two validated models only when their vocabulary projections
@@ -46,3 +46,16 @@ membership, direction, verdict, band or the literal `assurance: none`.
 Invalid models, vocabularies and population documents are refusals rather than
 gap evidence. Reports are observations over listed populations and syntactic
 rules, not certification or recertification of either model.
+
+## Description annotations (`gnd-diff/2`)
+
+Object-type descriptions are excluded from the vocabulary digest, so two models
+that differ only in a description are compared. Such a diff exits as it would
+for identical models. When at least one object type's `description` differs
+under canonical JSON equality, extras included, the report uses
+`schema_version: "gnd-diff/2"` and adds `annotations`. That is one entry per such
+object type, in model order, with `object_type` and the whole `before` and
+`after` objects, `null` where absent. Annotations carry no population data, and
+redaction passes them through unchanged. A report without annotations is
+byte-identical to `gnd-diff/1`. The schema requires `annotations`, with at least
+one entry, exactly when the version is `gnd-diff/2`.

@@ -21,7 +21,7 @@ from gnd.model import analyze_declared_aggregate, iter_derivation_clauses, load_
 from gnd.refscheme import reference_identity
 from gnd.terms import term_variables
 from gnd.universe import resolve_primitive
-from gnd.verbalize import line_text
+from gnd.verbalize import description_lines, line_text
 from gnd.vocabulary import reading_text
 
 __all__ = ["VerbalizationError", "render_model_verbalization"]
@@ -98,6 +98,9 @@ def _object_type_cnl(
         sentence += f" Derivation rule: {item['derivation_rule']}"
     if item.get("independent") is True:
         sentence += " Independent instances may exist without playing a fact role."
+    # Core keys only; extras are carried by ``canonical=`` and never prose (IK1).
+    for label, text in description_lines(item.get("description")):
+        sentence += f" {label}: '{text}'."
     return sentence
 
 

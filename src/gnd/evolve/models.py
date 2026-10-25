@@ -648,6 +648,9 @@ class BlastRadiusEntry(_ClosedFrozenModel):
         # would otherwise appear in the radius only as a change to the whole
         # `model` entry, which names nothing a reviewer can act on.
         "operation",
+        # IK1. An object-type description: rendered, never interpreted, so a
+        # change to it is reviewable apart from the object type's semantics.
+        "annotation",
     ]
     reference: NonEmptyString
     change: Literal["added", "modified", "deleted", "affected"]

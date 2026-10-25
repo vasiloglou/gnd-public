@@ -200,6 +200,15 @@
       "before": "2d49fd85a61c75df0d6d8aa5d83f6e135e13e5fa8838915bf3aa166e79cd43f1",
       "after": "bdeb4dadccd8e72041f35c145bcee60cbb4087966ac42a08a8b3d23cbcda1f51",
       "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts unchanged, messages without role_ref unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "_layer1_structural",
+      "home": "gnd.model._validation",
+      "before": "ba78b16641f5e8df5ec40dc251e6e07c5c85ab37d2cbb7ae9260ec6c99056780",
+      "after": "3d8b7c6033fca4242b881f5785cc61c5aa9507dd98b5288feec520901624528f",
+      "reason": "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses description values with no faithful JSON form (NaN, infinity, lone surrogates, anchored YAML booleans); every other path unchanged."
     }
   ]
 }

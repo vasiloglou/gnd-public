@@ -193,7 +193,13 @@ def _canonical(value: Any) -> bytes:
 def vocabulary_digest(model: Any) -> str:
     facts = model.fact_types if hasattr(model, "fact_types") else model["fact_types"]
     objects = model.object_types if hasattr(model, "object_types") else model["object_types"]
-    projection = {"object_types": objects, "fact_types": [
+    # The description is excluded, extras included (D11): an extraction sidecar
+    # stays bound when only a description changes, so this digest does not
+    # identify the rendered vocabulary text.
+    projection = {"object_types": [
+        {key: value for key, value in item.items() if key != "description"}
+        for item in objects
+    ], "fact_types": [
         {key: value for key, value in fact.items() if key not in {"derivation_rule", "constraints", "sample_population", "depends_on"}}
         for fact in facts
     ]}

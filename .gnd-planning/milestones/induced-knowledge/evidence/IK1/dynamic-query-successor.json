@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/incremental-evaluation/evidence/IE5/dynamic-query-successor.json",
+  "predecessor_sha256": "f1987551652fb572b2dd3e23778e894d2838d20de89e4b8d4d60373c04b3686a",
+  "reason": "Owner-approved induced-knowledge IK1 (2026-10-24): object-type description rendering (one shared description_lines walk), diff annotations and the annotation evolve surface add type-annotation and description-key subscripts. Syntax census only; no model-query exception widening.",
+  "removed": [
+    [
+      "src/gnd/evolve/models.py",
+      "BlastRadiusEntry",
+      "Literal['model', 'object-type', 'fact-type', 'reading', 'role', 'constraint', 'identifier-reference', 'population', 'provenance', 'verbalization', 'supplied-artifact', 'operation']",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/diff.py",
+      "description_annotations",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/diff.py",
+      "description_annotations",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "BlastRadiusEntry",
+      "Literal['model', 'object-type', 'fact-type', 'reading', 'role', 'constraint', 'identifier-reference', 'population', 'provenance', 'verbalization', 'supplied-artifact', 'operation', 'annotation']",
+      1
+    ],
+    [
+      "src/gnd/verbalize.py",
+      "description_lines",
+      "DESCRIPTION_LABELS[key]",
+      1
+    ],
+    [
+      "src/gnd/verbalize.py",
+      "description_lines",
+      "description[key]",
+      1
+    ],
+    [
+      "src/gnd/verbalize.py",
+      "description_lines",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/verbalize.py",
+      "description_lines",
+      "tuple[str, str]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6215,
+  "result_occurrences": 7798
+}

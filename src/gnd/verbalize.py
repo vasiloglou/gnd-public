@@ -9,6 +9,7 @@ prompt-injection echo into future agent feedback).
 from __future__ import annotations
 
 import math
+from collections.abc import Mapping
 from typing import Any
 
 #: C0/C1 control characters and the two Unicode separator codepoints rendered
@@ -33,6 +34,41 @@ _CONTROL_ESCAPES[0x0D] = "\\r"
 #: bounded separately by ``report.MAX_POPULATION_ISSUES`` (WR-01).
 MAX_RENDERED_VALUE_CHARS = 512
 
+# Render order and labels of an object-type description's core keys, read by
+# every renderer of descriptions (IK1). Any other key is an extra and is never prose.
+DESCRIPTION_CORE_KEYS = ("summary", "row", "source", "notes")
+DESCRIPTION_LABELS = {
+    "summary": "Description",
+    "row": "Row",
+    "source": "Source",
+    "notes": "Notes",
+}
+
+
+def neutralize_text(value: Any) -> str:
+    """Escape untrusted text exactly as _neutralize does, without the length cap.
+
+    Steps 1 and 2 of :func:`_neutralize`. Object-type descriptions are rendered
+    in full, so they use this form; their length is bounded by the schema.
+    """
+    rendered = str(value).replace("\\", "\\\\").replace("'", "\\'")
+    return rendered.translate(_CONTROL_ESCAPES)
+
+
+def description_lines(description: Any) -> list[tuple[str, str]]:
+    """``(label, escaped text)`` for each present core key, in render order.
+
+    The one walk every prose renderer of an object-type description uses, so
+    order, labels and escaping cannot drift apart; extras are never returned.
+    """
+    if not isinstance(description, Mapping):
+        return []
+    return [
+        (DESCRIPTION_LABELS[key], neutralize_text(description[key]))
+        for key in DESCRIPTION_CORE_KEYS
+        if key in description
+    ]
+
 
 def _neutralize(value: Any) -> str:
     """Render untrusted data so it can neither escape a quote nor forge a line.
@@ -52,8 +88,7 @@ def _neutralize(value: Any) -> str:
     3. The result is capped at :data:`MAX_RENDERED_VALUE_CHARS` with the
        elision stated, so one hostile key cannot produce one enormous message.
     """
-    rendered = str(value).replace("\\", "\\\\").replace("'", "\\'")
-    rendered = rendered.translate(_CONTROL_ESCAPES)
+    rendered = neutralize_text(value)
     if len(rendered) > MAX_RENDERED_VALUE_CHARS:
         elided = len(rendered) - MAX_RENDERED_VALUE_CHARS
         rendered = f"{rendered[:MAX_RENDERED_VALUE_CHARS]}… (+{elided} more characters)"

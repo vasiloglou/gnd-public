@@ -188,8 +188,8 @@ operations, enforces D-12, renders the complete verbalization, and builds the re
 Each unique stable `reference` appears once with:
 
 - `surface`: `model`, `object-type`, `fact-type`, `reading`, `role`, `constraint`,
-  `identifier-reference`, `population`, `provenance`, `verbalization`, or
-  `supplied-artifact`;
+  `identifier-reference`, `population`, `provenance`, `verbalization`,
+  `annotation`, or `supplied-artifact`;
 - `change`: `added`, `modified`, `deleted`, or `affected`;
 - sorted `operation_ids` that reach the surface;
 - exact before and after canonical SHA-256 identities allowed by that change.
@@ -197,6 +197,11 @@ Each unique stable `reference` appears once with:
 The deterministic index covers object and value types, facts, readings, ordered roles,
 constraints, identifier schemes and references, embedded sample populations, provenance,
 whole-model verbalization, and every explicitly supplied affected artifact.
+
+An object type's `description` is indexed as `object_types[<id>].description` on surface
+`annotation`, only when the key is present. A change to any of its keys, extras included,
+is one change on that surface. A description is rendered and never interpreted, so an
+`annotation` entry names a reviewable wording change apart from the object type's semantics.
 
 ### BlastRadiusReport
 

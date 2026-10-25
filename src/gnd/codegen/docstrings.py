@@ -41,7 +41,7 @@ from typing import Any
 
 from gnd.extract.vocabulary import reading_text
 from gnd.popvalidate import resolve_primitive
-from gnd.verbalize import _neutralize
+from gnd.verbalize import _neutralize, neutralize_text
 
 __all__ = ["DOCSTRING_DELIMITER", "tool_docstring"]
 
@@ -60,6 +60,24 @@ def _display_name(model: Any, object_type_id: Any) -> str:
         if str(entry.get("id")) == oid:
             return _neutralize(entry.get("name") or oid)
     return _neutralize(oid)
+
+
+def _summary_suffix(model: Any, object_type_id: Any) -> str:
+    """`` — <summary>`` for an object type whose description has one, else empty.
+
+    Only ``summary`` is rendered, so a docstring keeps one line per role; the
+    other core keys and every extra stay out of code (IK1). The summary is
+    escaped by ``neutralize_text`` and never truncated -- it escapes ``'``
+    exactly as ``_neutralize`` does, so the delimiter rule above still holds.
+    """
+    oid = str(object_type_id)
+    for entry in model.object_types:
+        if str(entry.get("id")) == oid:
+            description = entry.get("description")
+            if isinstance(description, dict) and "summary" in description:
+                return f" — {neutralize_text(description['summary'])}"
+            return ""
+    return ""
 
 
 def tool_docstring(model: Any, fact_type: dict[str, Any]) -> str:
@@ -105,6 +123,6 @@ def tool_docstring(model: Any, fact_type: dict[str, Any]) -> str:
         suffix = f" ({_neutralize(primitive)})" if primitive is not None else ""
         lines.append(
             f"  - {_neutralize(role.get('role_name'))}: "
-            f"{_display_name(model, oid)}{suffix}"
+            f"{_display_name(model, oid)}{suffix}{_summary_suffix(model, oid)}"
         )
     return "\n".join(lines)

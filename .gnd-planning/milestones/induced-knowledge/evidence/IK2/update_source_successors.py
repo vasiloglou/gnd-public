@@ -20,8 +20,9 @@ ROWS = {
             "Owner-approved induced-knowledge IK1-D6 (2026-10-24): the layer-1 screen refuses "
             "description values with no faithful JSON form (NaN, infinity, lone surrogates, "
             "anchored YAML booleans); IK2 (2026-10-24) applies the same screen to constraint "
-            "provenance.induction blocks through one tuple of screened paths; every other path "
-            "unchanged."
+            "provenance.induction blocks of induced constraints; the IK1-Q1 owner amendment "
+            "(2026-10-24) caps description nesting at 64 levels (jsonschema:maxDepth); every "
+            "other path unchanged."
         ),
     ),
     "_rule_modality_policy": (

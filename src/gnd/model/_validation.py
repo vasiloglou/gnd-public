@@ -58,6 +58,7 @@ from gnd.errors import (
     issues_from_validation_error,  # historical compatibility export
 )
 from gnd.model._induction import (
+    _induced_constraint_paths,
     _induction_strings,
     _rule_induced_confirmed_reviewed,
     _rule_induced_provenance,
@@ -198,32 +199,14 @@ def _derivation_rule_hint(error: Any, doc: Any = None) -> str | None:
 
 
 _OBJECT_TYPE_DESCRIPTION_PATH = re.compile(r"\$\.object_types\[\d+\]\.description(?:[.\[]|$)")
+_OBJECT_TYPE_DESCRIPTION_ROOT = re.compile(r"\$\.object_types\[\d+\]\.description")
+#: IK1-Q1 (owner amendment 2026-10-24): containers nest at most 64 levels
+#: inside a description, the description object itself being level 1.
+_DESCRIPTION_MAX_DEPTH = 64
 #: An induction block under a constraint; group 1 is the constraint's path.
 _INDUCTION_PATH = re.compile(
     r"(\$\.(?:fact_types\[\d+\]\.)?constraints\[\d+\])\.provenance\.induction(?:[.\[]|$)"
 )
-
-
-def _induced_constraint_paths(doc: Any) -> frozenset[str]:
-    """Layer-1 paths of every ``source: induced`` constraint, total over any input.
-
-    The IK2 screen applies only under these: an ``induction`` key under any
-    other source is not an induction block, and IK2-D3 keeps ``gnd validate``
-    unchanged for it (review R2)."""
-    paths: set[str] = set()
-    if not isinstance(doc, dict):
-        return frozenset()
-    hosts: list[tuple[str, Any]] = [("$", doc)]
-    fact_types = doc.get("fact_types")
-    if isinstance(fact_types, list):
-        hosts.extend((f"$.fact_types[{index}]", item) for index, item in enumerate(fact_types))
-    for prefix, host in hosts:
-        constraints = host.get("constraints") if isinstance(host, dict) else None
-        if isinstance(constraints, list):
-            for index, constraint in enumerate(constraints):
-                if isinstance(constraint, dict) and constraint.get("source") == "induced":
-                    paths.add(f"{prefix}.constraints[{index}]")
-    return frozenset(paths)
 
 
 def _json_form_screened(path: str, induced: frozenset[str]) -> bool:
@@ -260,10 +243,21 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
     # jsonschema formats invalid instances in errors. CPython refuses to
     # stringify an integer of more than 4300 decimal digits, so screen hostile
     # in-process JSON before asking it to render a diagnostic.
-    pending = [("$", doc)]
+    pending: list[tuple[str, Any, int | None]] = [("$", doc, None)]
     induced = _induced_constraint_paths(doc)
     while pending:
-        path, value = pending.pop()
+        path, value, level = pending.pop()
+        if isinstance(value, (dict, list)):
+            # `level` counts containers inside a description; None elsewhere.
+            if level is None and _OBJECT_TYPE_DESCRIPTION_ROOT.fullmatch(path):
+                level = 1
+            if level is not None and level > _DESCRIPTION_MAX_DEPTH:
+                return [ValidationIssue(
+                    path=path,
+                    message=f"description nests deeper than {_DESCRIPTION_MAX_DEPTH} levels",
+                    rule_id="jsonschema:maxDepth",
+                )]
+            level = None if level is None else level + 1
         if isinstance(value, dict):
             for key, child in value.items():
                 if not isinstance(key, str):
@@ -273,9 +267,11 @@ def _layer1_structural(doc: Any) -> list[ValidationIssue]:
                         message=f"object key {_safe_key(key)!r} is not a JSON string",
                         rule_id="jsonschema:oneOf" if derivation else "jsonschema:propertyNames",
                     )]
-                pending.append((f"{path}.{key}", child))
+                pending.append((f"{path}.{key}", child, level))
         elif isinstance(value, list):
-            pending.extend((f"{path}[{index}]", child) for index, child in enumerate(value))
+            pending.extend(
+                (f"{path}[{index}]", child, level) for index, child in enumerate(value)
+            )
         elif type(value) is int and value.bit_length() > 14_000:
             return [ValidationIssue(
                 path=path,

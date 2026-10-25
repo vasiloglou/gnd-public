@@ -48,6 +48,8 @@ Records:
   focused gate 4003 passed; one local reviewer, R1 (blocking) fixed; the owner
   approved the review fixes (IK2-Q4 ruled) and ruled IK2-Q1 (no automatic
   checks on archived induced proposals; owner review is the control).
+- [004 amendment IK1-Q1](004-amendment-IK1-Q1.md): description nesting capped at 64
+  levels (owner ruling 2026-10-24); IK1-Q1 closed.
 
 Next: IK3 (measure over host-labelled populations) or IK4 (constraint
 discovery), each needing its own spec and owner gate.

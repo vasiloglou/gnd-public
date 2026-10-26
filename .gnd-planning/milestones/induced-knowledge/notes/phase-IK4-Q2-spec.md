@@ -158,3 +158,22 @@ first and committed before the fix.
 | Binding helper exists | `gnd.model.bind_references(model, root=)` uses a retained no-follow descriptor, and discover already calls it (`discover/service.py::_bind_references`). |
 | Can a candidate change its references? | No evolve operation kind targets `reference_populations`, and preview refuses a candidate that differs from the replay of its operations. So a candidate's declarations equal the current model's. T3 still covers a reference that disappears. |
 | Exit mapping | `EvolutionError` messages with "validation failed" already map to exit 3 (`evolve/cli_service.py:308`). |
+
+## 13. Owner gate record (2026-10-26)
+
+**Approval (o).** The owner was asked "Approve the IK4-Q2 spec r1 with its four
+proposed rulings?" and replied "Approve IK4-Q2 spec r1 with all four proposed
+rulings." on 2026-10-26. The approved bytes are spec r1 as committed in
+`39ca1da`, before this section was added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `notes/phase-IK4-Q2-spec.md` (r1) | `3e5ce557539a76c18c888975bc8e17ee91adc3027753f7fa1e837b8305906301` |
+
+**Rulings (o).**
+- **D1:** this prose and the §8 test list are the instrument.
+- **D2:** references resolve from the workspace model's directory.
+- **D3:** IK5's `references` refusal stays.
+- **D4:** branch `claude/ik4-q2-evolve-references` from B = `8f89af4`.
+
+**Next.** The tests are committed red before the fix.

@@ -177,3 +177,61 @@ rulings." on 2026-10-26. The approved bytes are spec r1 as committed in
 - **D4:** branch `claude/ik4-q2-evolve-references` from B = `8f89af4`.
 
 **Next.** The tests are committed red before the fix.
+
+## 14. Implementation findings (2026-10-26)
+
+- **I-F1 — the binder's own refusals.** `bind_references` signals a missing
+  or linked reference file with `ArtifactError`, not `ReferenceInputError`.
+  The path loader `load_model` wraps every binding failure as
+  `ReferenceInputError`, and the new loader does the same, for parity.
+- **I-F2 — evolve already names two of these exits (needs a ruling).** Once the
+  binding failure reaches evolve's existing message-to-exit mapping:
+  - a **missing** reference file is **exit 66** (missing input);
+  - a **linked** reference file is **exit 74** (refused path);
+  - a reference whose bytes no longer match the model's digest is **exit 3**.
+
+  These are the exits evolve already gives a missing or linked *model* file.
+  The approved T3 (missing) and T4 expect 3.
+
+  **Proposed:** accept 66 and 74, the existing conventions, and keep 3 for the
+  digest mismatch. Two approved expectations change, so the ruling is the
+  owner's. Forcing 3 would mean special-casing the message so it misses
+  evolve's markers.
+- **Status at this point:** 6 of 8 tests pass (T1, T2, T3 changed, T5, T6, T7).
+  The two that do not are exactly the I-F2 cases, which now exit 66 and 74,
+  not 70.
+
+## 15. Owner ruling on I-F2 (2026-10-26)
+
+**Ruling (o).** The owner replied "Accept I-F2: a missing reference file is exit
+66 and a linked one is exit 74; keep 3 for a digest mismatch. Update T3 and T4
+and finish IK4-Q2." on 2026-10-26.
+
+**Changed expectations.** The approved answers are retained here; the new ones
+replace them in `tests/test_evolve_references.py`.
+
+| Case | Approved r1 | Ruled |
+|---|---|---|
+| T3 (missing) | 3 | 66 |
+| T3 (changed) | 3 | 3, unchanged |
+| T4 (linked) | 3 | 74, and no preview is written |
+
+§5's "the command exits 3" and §3's "named refusal (3)" now read: a named
+refusal at evolve's existing exit for its class, never 70. The contract
+sentence of §6 states all three exits.
+
+## 16. Review findings (2026-10-26)
+
+One local reviewer; disposition in
+[phase-IK4-Q2-agent-review.md](phase-IK4-Q2-agent-review.md).
+
+- **R1, refuted premise of §5.** Loading at the workspace path would have
+  changed reference-free outcomes for `.json`-named models, because the parser
+  is chosen by suffix. The loader keeps B's parse, so §5's "unchanged" holds.
+  The open question is IK4-Q2-Q1.
+- **R2, fixed.** §12's "a candidate's declarations equal the current model's"
+  is now enforced before the candidate is bound, not only after.
+- **R3, fixed with tests.** §8's branch walk claimed T2 covers every load site;
+  a mutant showed it did not.
+- **§6 parameter name.** The code calls `reference_root`'s source
+  `model_path` and takes the parent itself. Same meaning.

@@ -1,0 +1,14 @@
+# Review regressions on the pre-fix working tree (service.py as reviewed)
+uv run pytest -q -p no:randomly tests/test_evolve_references.py
+E       AssertionError: EVOLUTION PREVIEW REFUSED (3): current model validation failed: model JSON input refused
+E        +  where 3 = RunResult(argv=('evolve', 'preview', '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasil...de=3, stdout=b'', stderr=b'EVOLUTION PREVIEW REFUSED (3): current model validation failed: model JSON input refused\n').returncode
+E       AssertionError: EVOLUTION PREVIEW REFUSED (66): candidate model validation failed: artifact references/other.pop.json could not be inspected: [Errno 2] No such file or directory: 'other.pop.json'
+FAILED tests/test_evolve_references.py::test_r1_a_json_named_reference_free_model_previews_as_at_b
+FAILED tests/test_evolve_references.py::test_r2_a_candidate_that_changes_its_references_is_refused_before_binding
+2 failed, 10 passed in 1.83s
+
+# R3 tests against the reviewer's mutant (only the current-model loads bind)
+PYTHONPATH=<scratch mutant>/src uv run pytest -q -p no:randomly -p no:cacheprovider tests/test_evolve_references.py -k r3
+FAILED tests/test_evolve_references.py::test_r3_every_load_site_binds - Asser...
+FAILED tests/test_evolve_references.py::test_r3_finalize_binds_the_staged_models
+2 failed, 10 deselected in 0.60s

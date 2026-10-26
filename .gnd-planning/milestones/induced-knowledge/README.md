@@ -74,4 +74,10 @@ Records:
   17 of its mutants killed by new tests. No learner ran (D13 (a)). IK5-Q1 (the
   bounds disagree) awaits an owner ruling.
 
-Next: IK6, after the owner rules on IK4-Q2 and IK5-Q1.
+- [009 phase IK4-Q2](009-phase-IK4-Q2.md): `gnd evolve` works on models with
+  reference populations (missing reference 66, linked 74, digest mismatch 3,
+  owner ruling 2026-10-26). Focused gate 3162 passed. One local reviewer, no
+  blocking findings; three fixed with regressions. IK4-Q2-Q1 and Q2 are open.
+  Record 008 (IK5-Q1) is on its own branch, PR #42.
+
+Next: IK6.

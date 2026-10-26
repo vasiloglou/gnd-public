@@ -80,8 +80,10 @@ def test_t2_apply_and_finalize_publish_the_candidate(tmp_path):
     assert (work / "model.orm.yaml").read_text(encoding="utf-8") == candidate
 
 
-@pytest.mark.parametrize("damage", ["missing", "changed"])
-def test_t3_an_unbindable_reference_is_a_named_refusal(tmp_path, damage):
+# Owner ruling I-F2 (2026-10-26): a missing reference file is evolve's
+# missing-input exit 66; a digest mismatch stays 3 (spec §15).
+@pytest.mark.parametrize(("damage", "exit_code"), [("missing", 66), ("changed", 3)])
+def test_t3_an_unbindable_reference_is_a_named_refusal(tmp_path, damage, exit_code):
     work = _workspace(tmp_path)
     proposal = _proposal(work)
     reference = work / REFERENCE
@@ -90,7 +92,7 @@ def test_t3_an_unbindable_reference_is_a_named_refusal(tmp_path, damage):
     else:
         reference.write_bytes(reference.read_bytes() + b"\n")
     result = _preview(work, proposal)
-    assert result.returncode == 3, _text(result)
+    assert result.returncode == exit_code, _text(result)
     assert not (work / "preview.json").exists()
 
 
@@ -103,7 +105,9 @@ def test_t4_a_linked_reference_is_refused_not_followed(tmp_path):
     reference.unlink()
     reference.symlink_to(outside)
     result = _preview(work, proposal)
-    assert result.returncode == 3, _text(result)
+    # Owner ruling I-F2: a linked reference is evolve's refused-path exit 74.
+    assert result.returncode == 74, _text(result)
+    assert not (work / "preview.json").exists()
 
 
 def test_t5_a_discover_proposal_on_the_model_previews(tmp_path):
@@ -139,6 +143,95 @@ def test_t6_reference_free_previews_are_unchanged(tmp_path):
     observed = (work / "preview.json").read_bytes().replace(str(work).encode(), b"<WS>")
     golden = REPO_ROOT / "tests" / "fixtures" / "induced_knowledge" / "ik4-q2-preview-at-b.json"
     assert hashlib.sha256(observed).hexdigest() == hashlib.sha256(golden.read_bytes()).hexdigest()
+
+
+def test_r1_a_json_named_reference_free_model_previews_as_at_b(tmp_path):
+    """Review R1: the loader parses as B did whatever the model file is named;
+    a .json-named copy of T6's model previews to the same golden bytes."""
+    corpus = REPO_ROOT / "tests" / "fixtures" / "induced_knowledge" / "ik5-corpus"
+    work = tmp_path / "ws"
+    shutil.copytree(corpus, work)
+    (work / "records").mkdir()
+    proposal = work / "i1.proposal.json"
+    imported = run_main([
+        "import", "ilp-rules", str(work / "orders.orm.yaml"), str(work / "i1.clauses.json"),
+        "--labels", str(work / "m.labels.json"), "--reported-coverage", str(work / "i1.run.json"),
+        "--target", "neutral", "--out", str(proposal),
+        "--requested-at", "2026-10-26T00:00:00+00:00"])
+    assert imported.returncode == 0, _text(imported)
+    shutil.copyfile(work / "orders.orm.yaml", work / "orders.json")
+    result = run_main(["evolve", "preview", str(work / "orders.json"), str(proposal),
+                       "--workspace", str(work), "--records", str(work / "records"),
+                       "--out", str(work / "preview.json"), "--format", "json"])
+    assert result.returncode == 0, _text(result)
+    golden = REPO_ROOT / "tests" / "fixtures" / "induced_knowledge" / "ik4-q2-preview-at-b.json"
+    assert (work / "preview.json").read_bytes() == golden.read_bytes()
+
+
+def test_r2_a_candidate_that_changes_its_references_is_refused_before_binding(tmp_path):
+    """Review R2: a candidate whose reference declarations differ from the
+    current model's is a malformed proposal (3), refused before any of its
+    declared files is read."""
+    work = _workspace(tmp_path)
+    proposal = _proposal(work)
+    data = json.loads(proposal.read_text())
+    text = data["candidate_model"]["text"].replace(
+        "references/catalog.pop.json", "references/other.pop.json")
+    assert text != data["candidate_model"]["text"]
+    data["candidate_model"]["text"] = text
+    data["candidate_model"]["sha256"] = hashlib.sha256(text.encode()).hexdigest()
+    from gnd.discover import output
+    proposal.write_bytes(output.canonical_bytes(data))
+    result = _preview(work, proposal)
+    assert result.returncode == 3, _text(result)
+    assert "reference populations" in _text(result)
+
+
+def test_r3_every_load_site_binds(tmp_path, monkeypatch):
+    """Review R3: preview binds twice (current, candidate). Apply first rebuilds
+    the accepted preview (two more), then binds current, candidate and staged,
+    and its chained finalize binds the staged before and candidate: nine."""
+    import gnd.model
+
+    calls = []
+    real = gnd.model.bind_references
+
+    def counting(model, *, root):
+        calls.append(root)
+        return real(model, root=root)
+
+    monkeypatch.setattr(gnd.model, "bind_references", counting)
+    work = _workspace(tmp_path)
+    proposal = _proposal(work)
+    assert _preview(work, proposal).returncode == 0
+    assert len(calls) == 2
+    assert _apply(work, proposal).returncode == 0
+    assert len(calls) == 9
+    assert set(calls) == {work}
+
+
+def test_r3_finalize_binds_the_staged_models(tmp_path):
+    """Review R3: finalize refuses (66) while a reference is missing, and
+    completes once it is restored."""
+    work = _workspace(tmp_path)
+    proposal = _proposal(work)
+    assert _preview(work, proposal).returncode == 0
+    assert _apply(work, proposal).returncode == 0
+    (pending,) = sorted((work / "records").rglob("pending.json"))
+    reference = work / REFERENCE
+    kept = reference.read_bytes()
+    reference.unlink()
+
+    def finalize():
+        return run_main(["evolve", "finalize", str(work / "model.orm.yaml"), str(pending),
+                         "--workspace", str(work), "--records", str(work / "records"),
+                         "--format", "json"])
+
+    missing = finalize()
+    assert missing.returncode == 66, _text(missing)
+    reference.write_bytes(kept)
+    restored = finalize()
+    assert restored.returncode == 0, _text(restored)
 
 
 def test_t7_a_reference_changed_after_preview_refuses_apply(tmp_path):

@@ -31,10 +31,13 @@ _TOKEN = re.compile(
     r"|(?P<op>=:=|=\\=|\\=|>=|=<|>|<|=)"
     r"|(?P<punct>[(),.;])"
     r"|(?P<var>[A-Z_][A-Za-z0-9_]*)|(?P<name>[a-z][A-Za-z0-9_]*)"
-    r"|(?P<int>-?[0-9]+)|(?P<quoted>'(?:[^'\\\n]|\\.)*')"
+    r"|(?P<int>-?[0-9]+)|(?P<quoted>'(?:[^'\\\n]|\\x[0-9a-fA-F]{1,6}\\|\\.)*')"
 )
 _ESCAPES = {"\\": "\\", "'": "'", "n": "\n", "t": "\t"}
 MAX_DEPTH = 4
+#: Longer than the clause schema's integer bound (2^53 - 1) and far below
+#: Python's int-string conversion limit, so conversion never raises.
+MAX_INT_DIGITS = 32
 
 
 def quote(text: str) -> str:
@@ -179,7 +182,8 @@ class _Parser:
                 return [{"not": inner[0] if len(inner) == 1 else {"or": [inner]}}]
             if name in AGGREGATES:
                 self.deep(depth + 1)
-                return [{"aggregate": {"name": name, "args": self.arguments(goals=True)}}]
+                return [{"aggregate": {"name": name,
+                                       "args": self.arguments(goals=True, depth=depth + 1)}}]
             return [{"atom": {"predicate": name, "args": self.arguments(goals=False)}}]
         left = self.term()
         token = self.peek()
@@ -188,18 +192,18 @@ class _Parser:
         operator = _OPERATORS[self.take("op")]
         return [{"compare": {"operator": operator, "left": left, "right": self.term()}}]
 
-    def arguments(self, *, goals: bool) -> list[Any]:
+    def arguments(self, *, goals: bool, depth: int = 0) -> list[Any]:
         self.take("punct", "(")
-        args = [self.argument(goals)]
+        args = [self.argument(goals, depth)]
         while self.at("punct", ","):
             self.take("punct", ",")
-            args.append(self.argument(goals))
+            args.append(self.argument(goals, depth))
         self.take("punct", ")")
         return args
 
-    def argument(self, goals: bool) -> Any:
+    def argument(self, goals: bool, depth: int) -> Any:
         if goals and self.at("name") and self.tokens[self.index + 1][:2] == ("punct", "("):
-            return self.literal(MAX_DEPTH - 1)[0]
+            return self.literal(depth)[0]
         return self.term()
 
     def term(self) -> dict[str, Any]:
@@ -210,6 +214,8 @@ class _Parser:
         if kind == "name":
             return {"const": value}
         if kind == "int":
+            if len(value.lstrip("-")) > MAX_INT_DIGITS:
+                self._fail(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
             return {"const": int(value)}
         if kind == "quoted":
             return {"const": _unquote(value, line, column)}

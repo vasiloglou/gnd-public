@@ -373,6 +373,18 @@
     ],
     [
       "src/gnd/export/ilp_rewrite.py",
+      "_anonymous",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "_anonymous",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
       "_vars",
       "dict[str, Any]",
       1
@@ -471,7 +483,7 @@
       "src/gnd/export/ilp_rewrite.py",
       "rewrite",
       "designated['args'][1:]",
-      1
+      2
     ],
     [
       "src/gnd/export/ilp_rewrite.py",
@@ -591,6 +603,36 @@
       "src/gnd/export/ilp_service.py",
       "_cmd_import_ilp_rules",
       "classes[i]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "dict[int, dict[str, list[str]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "dict[str, list[str]]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "indexes_by_report[id(population.report)]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "indexes_by_report[id(population.report)].get(ref, [])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "list[str]",
       2
     ],
     [
@@ -744,6 +786,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 6566,
-  "result_occurrences": 8226
+  "result_distinct_rows": 6573,
+  "result_occurrences": 8236
 }

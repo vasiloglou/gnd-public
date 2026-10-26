@@ -465,3 +465,176 @@ def test_c_f1_a_fail_verdict_is_exit_70(tmp_path, monkeypatch):
     result = _import(work, work / "i1.clauses.json", work / "i1.run.json", out)
     assert result.returncode == 70, result.stderr
     assert not out.exists()
+
+
+# ---------------------------------------------------------------------------
+# Review regressions (notes/phase-IK5-agent-review.md, R1-R8). Each fails on
+# the pre-fix source at abc872a unless marked as coverage.
+# ---------------------------------------------------------------------------
+
+
+def _popper_import(tmp_path: Path, text: str | bytes):
+    work = _work(tmp_path)
+    clauses = work / "review.popper.pl"
+    clauses.write_bytes(text if isinstance(text, bytes) else text.encode())
+    out = tmp_path / "review.json"
+    return _import(work, clauses, _bound_run(work, clauses, [[]], "popper"), out, "popper"), out
+
+
+def test_r1_nested_aggregates_are_bounded(tmp_path):
+    goal = "count(" * 300 + "f_order_flagged(A,B)" + ")" * 300
+    result, out = _popper_import(tmp_path, f"wrong(A):- f_order_amount(A,B,C),{goal}.\n")
+    assert result.returncode == 3, result.stderr
+    assert b"unparsable" in result.stderr and not out.exists()
+
+
+def test_r2_a_huge_integer_is_unparsable(tmp_path):
+    result, out = _popper_import(tmp_path, f"wrong(A):- f_order_amount(A,B,C),C > {'1' * 4301}.\n")
+    assert result.returncode == 3, result.stderr
+    assert b"unparsable" in result.stderr and not out.exists()
+
+
+@pytest.mark.parametrize("value", ["\ud800", "\u0085x", "x\u007f", "a b", "tab\there"])
+def test_r3_r4_constants_yaml_would_not_keep_are_refused(tmp_path, value):
+    """R3: a lone surrogate was a traceback; R4: NEL and friends were admitted
+    although evolve's YAML reader then saw a different constant."""
+    work = _work(tmp_path)
+    clause = {"head": HEAD, "body": [
+        {"atom": {"predicate": "f_order_by", "args": [{"var": "A"}, {"var": "B"}, {"var": "C"}]}},
+        {"atom": {"predicate": "f_customer_blocked", "args": [{"var": "A"}, {"const": value}]}}]}
+    clauses = work / "r4.clauses.json"
+    clauses.write_text(json.dumps(_clause_doc(clause)), encoding="utf-8")
+    out = tmp_path / "r4.json"
+    result = _import(work, clauses, _bound_run(work, clauses, [[]]), out)
+    assert result.returncode == 3, result.stderr
+    assert b"constant-spelling" in result.stderr and not out.exists()
+
+
+def test_r6_the_export_reports_its_work(tmp_path):
+    work = _work(tmp_path)
+    result = _export(work / CASES["model"], work / "m.labels.json", tmp_path / "out")
+    assert result.returncode == 0
+    assert b"work 27 (ceiling 1000006)" in result.stdout  # 6 populations + 21 facts
+
+
+def test_r6_import_counts_one_read_per_population_and_clause(tmp_path):
+    """Coverage: the arithmetic form also gave 18; the read is now counted."""
+    result, _out = _run(tmp_path, BY_ID["I1"])
+    work = json.loads(result.stdout)["work"]
+    assert (work["checks"], work["verdicts"], work["ceiling"]) == (6, 18, 24)
+
+
+def test_r7_quoted_atoms_round_trip(tmp_path):
+    from gnd.export.ilp_popper import parse_program, quote
+
+    for value in ["it's", "back\\slash", "c\u0001'\\x", "line\nbreak", "é ü"]:
+        parsed = parse_program(f"wrong(A):- f_order_by(A,B,{quote(value)}).\n")
+        assert parsed["clauses"][0]["body"][0]["atom"]["args"][2] == {"const": value}
+    assert quote("a'b\\c") == "'a\\'b\\\\c'"
+
+
+def test_r8_an_anonymous_variable_is_never_ground(tmp_path):
+    result, out = _popper_import(tmp_path, "wrong(A):- f_order_amount(A,B,C),f_order_by(A,B,_).\n")
+    assert result.returncode == 3, result.stderr
+    assert b"non-ground-absence" in result.stderr and not out.exists()
+
+
+# R5: the rewrite's semantics, pinned operator by operator (mutation coverage).
+
+def _rewrite_one(text: str, neutral: dict | None = None, columns: dict | None = None) -> dict:
+    from gnd.export import ilp
+    from gnd.export.ilp_popper import parse_program
+    from gnd.export.ilp_rewrite import rewrite
+    from gnd.model import load_model
+
+    if neutral is None:
+        shape, columns = ilp.schema(load_model(CORPUS / CASES["model"]), frozenset())
+        neutral = shape
+    return rewrite(parse_program(text)["clauses"][0], 0, neutral, columns)
+
+
+@pytest.mark.parametrize(("literal", "operator", "left", "right"), [
+    ("C > 100", "<=", "$v_c", 100), ("C < 100", ">=", "$v_c", 100),
+    ("C >= 100", "<", "$v_c", 100), ("C =< 100", ">", "$v_c", 100),
+    ("C = 100", "!=", "$v_c", 100), ("C =:= 100", "!=", "$v_c", 100),
+    ("C \\= 100", "=", "$v_c", 100), ("C =\\= 100", "=", "$v_c", 100),
+    ("100 < C", ">=", 100, "$v_c"), ("C > -5", "<=", "$v_c", -5),
+    ("gt_t_amount(C,100)", "<=", "$v_c", 100), ("lt_t_amount(100,C)", ">=", 100, "$v_c"),
+    ("ge_t_amount(C,7)", "<", "$v_c", 7), ("le_t_amount(C,7)", ">", "$v_c", 7),
+])
+def test_r5_every_operator_is_negated_exactly(literal, operator, left, right):
+    core = _rewrite_one(f"wrong(A):- f_order_amount(A,B,C),{literal}.\n")
+    assert core["consequent"] == {"comparison": {"operator": operator, "left": left, "right": right}}
+
+
+def test_r5_variable_spelling_is_injective():
+    from gnd.export.ilp_rewrite import variable
+
+    spellings = {name: variable(name) for name in ("B", "Ab", "AB", "A_b", "_G1", "Bc", "BC")}
+    assert spellings["B"] == "$v_b" and spellings["Ab"] == "$v_a_b" and spellings["AB"] == "$v_ab"
+    assert len(set(spellings.values())) == len(spellings)
+    core = _rewrite_one("wrong(A):- f_order_amount(A,Bc,BC),gt_t_amount(BC,1).\n")
+    assert core["antecedent"][0]["bind"] == {"order": "$v_b_c", "amount": "$v_bc"}
+
+
+def test_r5_each_anonymous_variable_is_fresh():
+    core = _rewrite_one("wrong(A):- f_order_amount(A,B,C),f_order_by(A,B,_),f_order_by(A,B,_),"
+                        "gt_t_amount(C,1).\n")
+    customers = [item["bind"]["customer"] for item in core["antecedent"][1:]]
+    assert customers == ["$anon1", "$anon2"]
+
+
+@pytest.mark.parametrize(("text", "refusal"), [
+    ("wrong(A):- f_order_amount(A,B,C),gt_t_amount(A,1).\n", "example-variable"),
+    ("wrong(A):- f_order_amount(A,B,C),gt_t_amount(C).\n", "arity"),
+])
+def test_r5_comparison_refusals(text, refusal):
+    from gnd.export.ilp import IlpError
+
+    with pytest.raises(IlpError, match=refusal):
+        _rewrite_one(text)
+
+
+def test_r5_the_last_qualifying_atom_is_designated():
+    core = _rewrite_one("wrong(A):- f_order_by(A,B,C),f_order_flagged(A,B),f_customer_blocked(A,C).\n")
+    assert core["consequent"] == {"absence": {"fact_type": "customer_blocked",
+                                              "bind": {"customer": "$v_c"}}}
+    assert [item["fact_type"] for item in core["antecedent"]] == ["order_by", "order_flagged"]
+
+
+def test_r5_boolean_atoms_become_booleans_at_boolean_roles():
+    from gnd.export.ilp import Column
+
+    neutral = {"comparisons": [], "types": [
+        {"name": "t_order", "object_type": "order", "primitive": None},
+        {"name": "t_flag", "object_type": "flag", "primitive": "boolean"},
+        {"name": "t_note", "object_type": "note", "primitive": "string"}]}
+    columns = {
+        "f_order_note": Column("order_note", ("order", "note"), ("ex", "t_order", "t_note")),
+        "f_order_paid": Column("order_paid", ("order", "paid"), ("ex", "t_order", "t_flag")),
+    }
+    core = _rewrite_one("wrong(A):- f_order_note(A,B,true),f_order_paid(A,B,true).\n",
+                        neutral, columns)
+    assert core["antecedent"][0]["bind"]["note"] == "true"
+    assert core["consequent"]["absence"]["bind"]["paid"] is True
+
+
+def test_r5_facts_are_sorted_by_their_canonical_values(tmp_path):
+    work = _work(tmp_path)
+    text = (work / "pops" / "n1.yaml").read_text()
+    shuffled = text.replace("    - { order: 1, amount: 50 }\n    - { order: 2, amount: 150 }\n",
+                            "    - { order: 2, amount: 150 }\n    - { order: 1, amount: 50 }\n")
+    assert shuffled != text
+    (work / "pops" / "shuffled.yaml").write_text(shuffled)
+    manifest = _manifest_for(work, work / CASES["model"], [("n1", "shuffled.yaml", "negative")])
+    out = tmp_path / "out"
+    assert _export(work / CASES["model"], manifest, out, "neutral").returncode == 0
+    facts = json.loads((out / "neutral.json").read_text())["facts"]
+    assert [f["values"] for f in facts if f["predicate"] == "f_order_amount"] == [[1, 50], [2, 150]]
+
+
+def test_r7_prolog_escapes_are_read():
+    from gnd.export.ilp_popper import parse_program
+
+    parsed = parse_program("wrong(A):- f_order_by(A,B,'a\\nb\\tc\\\\d\\'e\\x41\\').\n")
+    assert parsed["clauses"][0]["body"][0]["atom"]["args"][2] == {"const": "a\nb\tc\\d'eA"}

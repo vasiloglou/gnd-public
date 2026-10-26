@@ -1,0 +1,4 @@
+$ uv run pytest -q -p no:randomly <IK5 file list; evidence/IK5/gate-files.txt>
+4473 passed, 105 deselected in 585.85s (0:09:45)
+$ uv run ruff check <changed .py files>
+All checks passed!

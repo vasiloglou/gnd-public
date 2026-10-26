@@ -198,6 +198,7 @@ def _cmd_export_ilp(model: str, labels: str, *, target: str, out: str) -> int:
     print(f"EXPORTED {len(prepared.neutral['examples'])} examples and "
           f"{len(prepared.neutral['facts'])} facts to {out_path} ({target})")
     print(f"export_sha256 {prepared.digest}")
+    print(f"work {work['total']} (ceiling {work['ceiling']})")
     return EXIT_OK
 
 
@@ -244,11 +245,16 @@ def _load_candidate(prepared: _Prepared, constraints: list[dict[str, Any]], mode
 
 def _validated(prepared: _Prepared, constraint: dict[str, Any], index: int, model_path: Path) -> None:
     """Check 10: the model plus this one constraint validates."""
+    from pydantic import ValidationError
+
     try:
         _load_candidate(prepared, [constraint], model_path)
     except (ModelLoadError, ModelValidationError) as error:
         codes = sorted({issue.rule_id for issue in getattr(error, "issues", ())})
         raise IlpError(EXIT_ILL_FORMED, f"clause {index}: invalid-guarded: {codes}") from None
+    except ValidationError as error:
+        raise IlpError(EXIT_ILL_FORMED, f"clause {index}: invalid-guarded: "
+                       f"{error.error_count()} operation errors") from None
 
 
 def coverage(verdicts: list[dict[str, str]], ids: list[str]) -> dict[str, list[str]]:
@@ -344,15 +350,24 @@ def _cmd_import_ilp_rules(
     classes = {entry["id"]: entry["class"] for entry in prepared.manifest.document["populations"]}
     known = set(ids)
     rows, constraints = [], []
+    verdict_reads = 0
     try:
+        indexes_by_report: dict[int, dict[str, list[str]]] = {}
+        for population in populations:
+            if id(population.report) not in indexes_by_report:
+                table: dict[str, list[str]] = {}
+                for verdict in population.report.verdicts:
+                    table.setdefault(verdict.constraint_ref, []).append(verdict.verdict)
+                indexes_by_report[id(population.report)] = table
         for index, core in enumerate(cores):
             ref = f"constraints[{base + index}]"
             verdicts = []
             for population in populations:
-                found = [v for v in population.report.verdicts if v.constraint_ref == ref]
+                found = indexes_by_report[id(population.report)].get(ref, [])
+                verdict_reads += 1
                 if len(found) != 1:
                     raise RuntimeError(f"{ref} has no single verdict in {population.id!r}")
-                verdicts.append({"ref": ref, "verdict": found[0].verdict})
+                verdicts.append({"ref": ref, "verdict": found[0]})
             seen = coverage(verdicts, ids)
             claimed = reported[index]
             unknown = [i for i in claimed if i not in known]
@@ -414,7 +429,6 @@ def _cmd_import_ilp_rules(
     except RuntimeError as error:
         _stderr(f"internal: {error}")
         return EXIT_INTERNAL
-    verdict_reads = len(populations) * len(cores)
     work = {"export": prepared.work.report()["total"], "checks": checks, "verdicts": verdict_reads,
             "total": checks + verdict_reads, "ceiling": len(populations) * (1 + len(cores))}
     if work["total"] > work["ceiling"]:

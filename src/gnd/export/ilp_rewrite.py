@@ -56,6 +56,11 @@ def _vars(terms: list[dict[str, Any]]) -> set[str]:
     return {term["var"] for term in terms if "var" in term and term["var"] != "_"}
 
 
+def _anonymous(terms: list[dict[str, Any]]) -> bool:
+    """An anonymous ``_`` is a fresh variable no other literal can bind."""
+    return any(term.get("var") == "_" for term in terms)
+
+
 def rewrite(
     clause: dict[str, Any], index: int, neutral: dict[str, Any], columns: dict[str, Column]
 ) -> dict[str, Any]:
@@ -143,7 +148,8 @@ def rewrite(
     if not compares:
         for position in range(len(atoms) - 1, -1, -1):
             others = set().union(*(_vars(a["args"][1:]) for i, a in enumerate(atoms) if i != position))
-            if _vars(atoms[position]["args"][1:]) <= others:
+            candidate = atoms[position]["args"][1:]
+            if not _anonymous(candidate) and _vars(candidate) <= others:
                 designated = atoms[position]
                 break
         if designated is None:
@@ -167,9 +173,10 @@ def rewrite(
     # 8. the consequent is ground
     bound = set().union(*(_vars(atom["args"][1:]) for atom in antecedent))
     if compares:
-        if not _vars([compares[0][0]["left"], compares[0][0]["right"]]) <= bound:
+        operands = [compares[0][0]["left"], compares[0][0]["right"]]
+        if _anonymous(operands) or not _vars(operands) <= bound:
             raise _refuse("unbound-comparison", index, "a comparison variable is not bound")
-    elif not _vars(designated["args"][1:]) <= bound:  # type: ignore[index]
+    elif _anonymous(designated["args"][1:]) or not _vars(designated["args"][1:]) <= bound:  # type: ignore[index]
         raise _refuse("non-ground-absence", index, "the absence has an unbound variable")
 
     # 9. constants guarded would read as variables, then the rewrite itself
@@ -183,6 +190,12 @@ def rewrite(
             if value.startswith("$"):
                 raise _refuse("constant-spelling", index,
                               f"the constant {value!r} would read as a variable")
+            if not all(character == " " or character.isprintable() for character in value):
+                # A control, line-separator, surrogate or other non-printable
+                # character does not survive the proposal's YAML round trip
+                # (review R4), so the constraint evolve reads would differ.
+                raise _refuse("constant-spelling", index,
+                              f"the constant {value!r} holds a character YAML does not keep")
             if primitives.get(type_name) == "boolean" and value in ("true", "false"):
                 return value == "true"
         return value

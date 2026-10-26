@@ -1,0 +1,60 @@
+{
+ "schema_version": "gnd-labels/1",
+ "model_sha256": "00fdeab3cb764decdf87c95619b4c315f8dbee8be2170ceea7722a91b6d27440",
+ "mode": "class",
+ "populations": [
+  {
+   "id": "north",
+   "path": "batches/north.yaml",
+   "sha256": "1b7328e037dd6dedeb3dbc5a4d0e75d2792e5219b13e708d6b8c816a59e53e52",
+   "class": "positive"
+  },
+  {
+   "id": "south",
+   "path": "batches/south.yaml",
+   "sha256": "25cd05cdf97f989e5a371646f606ca69dde78116fdce9f68f5e694e914fcbfc9",
+   "class": "positive"
+  },
+  {
+   "id": "east",
+   "path": "batches/east.yaml",
+   "sha256": "4befe932606bdce35f80e05b721f8a0a77b4e65f32b4d1f51d7451c102349912",
+   "class": "positive"
+  },
+  {
+   "id": "west",
+   "path": "batches/west.yaml",
+   "sha256": "e766cfe9003dd5cff0ea548ef6bcc0da61f3da06bf08a0b141494e1d23816491",
+   "class": "positive"
+  },
+  {
+   "id": "harbor",
+   "path": "batches/harbor.yaml",
+   "sha256": "836acbfcf635f9b5d64ea43add970c262383f43be7d1720f6d3d83ed2f50fa05",
+   "class": "negative"
+  },
+  {
+   "id": "market",
+   "path": "batches/market.yaml",
+   "sha256": "e4854c27f9c38822a4605b61a50fbfacf610a74384cf46f5702bd1613044d2a7",
+   "class": "negative"
+  },
+  {
+   "id": "airport",
+   "path": "batches/airport.yaml",
+   "sha256": "977829243798c40a2a4c1ac89ce7cf0ef055db52f10d73689814bb8aa52ea270",
+   "class": "negative"
+  },
+  {
+   "id": "station",
+   "path": "batches/station.yaml",
+   "sha256": "8e90e191be91b58e0fe2be4988e35145589894592b43326a9c0a1ae9aeda5e03",
+   "class": "negative"
+  }
+ ],
+ "rules": {
+  "id:g_refund_limit": {
+   "fires_on": "negative"
+  }
+ }
+}

@@ -1,0 +1,22 @@
+# The market store's refunds for one week. The auditors marked this batch flagged.
+format_version: 2
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers: [refund_by, refund_amount, refund_channel]
+instances:
+  refund: [601, 602, 603]
+  customer: ["c-nia", "c-oli", "c-pia"]
+facts:
+  refund_by:
+    - { refund: 601, customer: "c-nia" }
+    - { refund: 602, customer: "c-oli" }
+    - { refund: 603, customer: "c-pia" }
+  refund_amount:
+    - { refund: 601, amount: 750 }
+    - { refund: 602, amount: 140 }
+    - { refund: 603, amount: 55 }
+  refund_channel:
+    - { refund: 601, channel: "card" }
+    - { refund: 602, channel: "card" }
+    - { refund: 603, channel: "cash" }

@@ -1,0 +1,68 @@
+# A shop's refunds. Synthetic data for the "Learn rules from labelled data"
+# tutorial: each batch under batches/ is one store's refunds for a week.
+version: 1
+model_id: refunds
+source:
+  kind: fixture
+object_types:
+  - id: refund
+    name: Refund
+    kind: entity
+    reference: { mode: popular, value_type: refund_no }
+    description:
+      summary: "One refund paid back to a customer."
+  - id: refund_no
+    name: RefundNo
+    kind: value
+    primitive: Integer
+  - id: customer
+    name: Customer
+    kind: entity
+    reference: { mode: popular, value_type: customer_code }
+  - id: customer_code
+    name: CustomerCode
+    kind: value
+    primitive: String
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+  - id: channel
+    name: Channel
+    kind: value
+    primitive: String
+fact_types:
+  - id: refund_by
+    reading: "{Refund} is requested by {Customer}"
+    roles:
+      - { object_type: refund, role_name: refund }
+      - { object_type: customer, role_name: customer }
+    constraints:
+      - id: u_refund_customer
+        type: uniqueness
+        roles: [refund]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each refund is requested by one customer." }
+  - id: refund_amount
+    reading: "{Refund} is for {Amount}"
+    roles:
+      - { object_type: refund, role_name: refund }
+      - { object_type: amount, role_name: amount }
+  - id: refund_channel
+    reading: "{Refund} is paid by {Channel}"
+    roles:
+      - { object_type: refund, role_name: refund }
+      - { object_type: channel, role_name: channel }
+constraints:
+  - id: g_refund_limit
+    type: guarded
+    antecedent:
+      - { fact_type: refund_amount, bind: { refund: "$r", amount: "$a" } }
+    consequent:
+      comparison: { left: "$a", operator: "<=", right: 1000 }
+    source: explicit
+    status: confirmed
+    modality: deontic
+    provenance: { user_quote: "A refund should not be more than 1000." }

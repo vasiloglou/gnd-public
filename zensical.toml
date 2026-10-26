@@ -15,6 +15,7 @@ nav = [
   { "Tutorials" = [
     { "Build a course planner" = "tutorials/course-planner.md" },
     { "Refill prescriptions on a schedule" = "tutorials/clinic-refills.md" },
+    { "Learn rules from labelled data" = "tutorials/learn-rules.md" },
     { "PyRel + GND: rules to a checked app" = "pyrel-apps.md" },
     { "Build BookRec" = [{ "1. Model the problem" = "bookrec/01-model.md" }, { "2. Facts and rules" = "bookrec/02-facts.md" }, { "3. Generate a project" = "bookrec/03-project.md" }, { "4. Build the application" = "bookrec/04-application.md" }, { "5. Diagnose and repair" = "bookrec/05-repair.md" }, { "6. Evolve the rules" = "bookrec/06-evolution.md" }, { "7. Run on PyRel, put an agent in the loop" = "bookrec/07-native.md" }] },
     { "Expense approvals" = [{ "1. Model the workflow" = "expense/01-model.md" }, { "2. Build and check" = "expense/02-application.md" }, { "3. Add currencies" = "expense/03-evolution.md" }, { "4. Run on PyRel, put an agent in the loop" = "expense/04-native.md" }] }

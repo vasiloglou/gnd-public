@@ -1,0 +1,19 @@
+# The airport store's refunds for one week. The auditors marked this batch flagged.
+format_version: 2
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers: [refund_by, refund_amount, refund_channel]
+instances:
+  refund: [701, 702]
+  customer: ["c-quin", "c-rae"]
+facts:
+  refund_by:
+    - { refund: 701, customer: "c-quin" }
+    - { refund: 702, customer: "c-rae" }
+  refund_amount:
+    - { refund: 701, amount: 1500 }
+    - { refund: 702, amount: 260 }
+  refund_channel:
+    - { refund: 701, channel: "card" }
+    - { refund: 702, channel: "voucher" }

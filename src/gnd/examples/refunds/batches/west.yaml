@@ -1,0 +1,22 @@
+# The west store's refunds for one week. The auditors marked this batch clean.
+format_version: 2
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers: [refund_by, refund_amount, refund_channel]
+instances:
+  refund: [401, 402, 403]
+  customer: ["c-ivo", "c-jo", "c-kim"]
+facts:
+  refund_by:
+    - { refund: 401, customer: "c-ivo" }
+    - { refund: 402, customer: "c-jo" }
+    - { refund: 403, customer: "c-kim" }
+  refund_amount:
+    - { refund: 401, amount: 450 }
+    - { refund: 402, amount: 35 }
+    - { refund: 403, amount: 180 }
+  refund_channel:
+    - { refund: 401, channel: "card" }
+    - { refund: 402, channel: "card" }
+    - { refund: 403, channel: "voucher" }

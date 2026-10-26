@@ -1,0 +1,19 @@
+# The harbor store's refunds for one week. The auditors marked this batch flagged.
+format_version: 2
+population:
+  model: model.orm.yaml
+  source: fixture
+  covers: [refund_by, refund_amount, refund_channel]
+instances:
+  refund: [501, 502]
+  customer: ["c-lea", "c-max"]
+facts:
+  refund_by:
+    - { refund: 501, customer: "c-lea" }
+    - { refund: 502, customer: "c-max" }
+  refund_amount:
+    - { refund: 501, amount: 1200 }
+    - { refund: 502, amount: 80 }
+  refund_channel:
+    - { refund: 501, channel: "cash" }
+    - { refund: 502, channel: "card" }

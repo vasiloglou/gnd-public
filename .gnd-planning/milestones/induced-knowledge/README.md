@@ -7,6 +7,7 @@ Plan r4 and IK1 spec r4 **approved by the owner 2026-10-24** (bytes bound in the
 - [IK1 draft spec (r4)](notes/phase-IK1-spec.md)
 - [IK2 spec (r1)](notes/phase-IK2-spec.md): approved 2026-10-24, with its approval corpus
 - [IK4 spec (r1)](notes/phase-IK4-spec.md): approved 2026-10-24, with its approval corpus
+- [IK3 draft spec (r1)](notes/phase-IK3-spec.md): awaiting owner review
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md):
   three request-changes, one approve-with-fixes, 12 reproduced blocking findings.
 - [Plan review round 2 (confirmation) disposition](notes/plan-review-r2-disposition.md):
@@ -61,5 +62,4 @@ Records:
   reviewer, seven blocking findings fixed; IK4-Q1..Q5 ruled 2026-10-25
   (Q1 implemented as exit 11; Q2 before IK6; Q3/Q4 at close).
 
-Next: IK3 (measure over host-labelled populations), then IK5 (ILP bridge), each
-needing its own spec and owner gate.
+Next: the owner gate for the IK3 spec r1 (decisions IK3-D1..D7), then IK5.

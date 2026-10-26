@@ -394,7 +394,9 @@
               "applicability_matrix"
             ]
           },
-          "checker_defects": {"items": {"required": ["sidecar", "seed"]}}
+          "checker_defects": {
+            "items": {"required": ["sidecar", "seed"], "not": {"required": ["population_id"]}}
+          }
         }
       }
     },
@@ -422,7 +424,10 @@
         "properties": {
           "labels": {"properties": {"mode": {"const": "expected-state"}}},
           "checker_defects": {
-            "items": {"not": {"anyOf": [{"required": ["sidecar"]}, {"required": ["seed"]}]}}
+            "items": {
+              "required": ["population_id"],
+              "not": {"anyOf": [{"required": ["sidecar"]}, {"required": ["seed"]}]}
+            }
           }
         }
       }
@@ -829,6 +834,10 @@
         },
         "population": {
           "type": "string"
+        },
+        "population_id": {
+          "type": "string",
+          "description": "IK3 schema 4: the manifest id of the labelled population; one path may appear under several ids."
         },
         "sidecar": {
           "type": "string"

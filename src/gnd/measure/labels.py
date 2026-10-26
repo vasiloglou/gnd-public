@@ -23,7 +23,10 @@ were digested are the bytes that are checked.
 
 from __future__ import annotations
 
+import errno
 import hashlib
+import os
+import stat
 from dataclasses import dataclass, field
 from importlib.resources import files
 from pathlib import Path
@@ -160,12 +163,31 @@ def read_label_manifest(path: Path) -> LabelManifest:
     if path.is_symlink():
         raise LabelError(EXIT_IO, f"refusing label manifest {path}: it is a symbolic link")
     try:
-        with path.open("rb") as handle:
-            data = handle.read(MANIFEST_CAP + 1)
+        # Non-blocking and no-follow, so a FIFO or a swapped-in link cannot hang
+        # or redirect the read (IK3 review R1).
+        descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK | getattr(os, "O_NOFOLLOW", 0))
     except FileNotFoundError:
         raise LabelError(EXIT_NO_INPUT, f"label manifest {path} does not exist") from None
     except OSError as error:
-        raise LabelError(EXIT_NO_INPUT, f"could not read label manifest {path}: {error}") from None
+        if error.errno == errno.ELOOP:
+            raise LabelError(EXIT_IO, f"refusing label manifest {path}: it is a symbolic link") from None
+        raise LabelError(EXIT_ILL_FORMED, f"could not read label manifest {path}: {error}") from None
+    try:
+        if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+            raise LabelError(EXIT_ILL_FORMED, f"label manifest {path} is not a regular file")
+        chunks: list[bytes] = []
+        remaining = MANIFEST_CAP + 1
+        while remaining > 0:
+            chunk = os.read(descriptor, remaining)
+            if not chunk:
+                break
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        data = b"".join(chunks)
+    except OSError as error:
+        raise LabelError(EXIT_ILL_FORMED, f"could not read label manifest {path}: {error}") from None
+    finally:
+        os.close(descriptor)
     if len(data) > MANIFEST_CAP:
         raise LabelError(
             EXIT_ILL_FORMED, f"label manifest {path} exceeds the {MANIFEST_CAP}-byte cap"
@@ -256,34 +278,54 @@ def bind_manifest(manifest: LabelManifest, model: Any, model_sha256: str) -> Bou
 
 
 def _population_bytes(root: Path, relative: str) -> tuple[Path, bytes]:
-    from gnd.population import MAX_POPULATION_BYTES
+    """Read one population beneath the manifest's directory, never through a link.
 
-    candidate = root / relative
-    if candidate.is_symlink():
-        raise LabelError(EXIT_IO, f"refusing population {relative!r}: it is a symbolic link")
-    try:
-        resolved = candidate.resolve(strict=False)
-        resolved.relative_to(root.resolve())
-    except (OSError, ValueError):
+    Each component is inspected without following links first, so a symbolic
+    link anywhere on the path is a named refusal (74) and a FIFO or directory is
+    refused before any open (IK3 review R1, R2). The read itself goes through
+    the no-follow, regular-only descriptor reader, so a link swapped in after
+    the inspection is refused too (3)."""
+    from gnd.artifacts import ArtifactError
+    from gnd.population import MAX_POPULATION_BYTES
+    from gnd.safefs import read_regular_bounded
+
+    current = root
+    parts = relative.split("/")
+    for position, part in enumerate(parts):
+        current = current / part
+        try:
+            info = os.lstat(current)
+        except FileNotFoundError:
+            raise LabelError(EXIT_ILL_FORMED, f"population {relative!r} does not exist") from None
+        except OSError as error:
+            raise LabelError(EXIT_ILL_FORMED, f"could not read population {relative!r}: {error}") from None
+        if stat.S_ISLNK(info.st_mode):
+            raise LabelError(EXIT_IO, f"refusing population {relative!r}: it passes through a symbolic link")
+        leaf = position == len(parts) - 1
+        if not leaf and not stat.S_ISDIR(info.st_mode):
+            raise LabelError(EXIT_ILL_FORMED, f"population {relative!r} does not exist")
+    if not stat.S_ISREG(info.st_mode):
+        raise LabelError(EXIT_ILL_FORMED, f"population {relative!r} is not a regular file")
+    if info.st_size > MAX_POPULATION_BYTES:
         raise LabelError(
-            EXIT_ILL_FORMED, f"population path {relative!r} escapes the manifest's directory"
-        ) from None
+            EXIT_GENERATOR, f"population {relative!r} exceeds the {MAX_POPULATION_BYTES}-byte cap"
+        )
     try:
-        with candidate.open("rb") as handle:
-            data = handle.read(MAX_POPULATION_BYTES + 1)
-    except FileNotFoundError:
-        raise LabelError(EXIT_ILL_FORMED, f"population {relative!r} does not exist") from None
-    except OSError as error:
-        raise LabelError(EXIT_ILL_FORMED, f"could not read population {relative!r}: {error}") from None
-    return candidate, data
+        data, _snapshot = read_regular_bounded(root, relative, max_bytes=MAX_POPULATION_BYTES)
+    except (ArtifactError, OSError) as error:
+        raise LabelError(
+            EXIT_ILL_FORMED, f"population {relative!r} could not be read safely: {error}"
+        ) from None
+    return current, data
 
 
 def score_populations(bound: BoundManifest, model: Any) -> tuple[list[LabelledPopulation], int]:
     """Load and check every population, in manifest order; returns them and the
-    number of populations checked. Identical bytes at one path are checked once:
-    the checker is deterministic over (model, bytes)."""
+    number of checker runs. Identical bytes at one path are checked once (the
+    checker is deterministic over (model, bytes)), so the count is the work
+    actually done, not the manifest's length (IK3 review R5)."""
     from gnd.checker import check
-    from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
+    from gnd.population import load_population_bytes
 
     root = bound.manifest.path.parent
     reports: dict[tuple[str, str], CheckReport] = {}
@@ -294,11 +336,6 @@ def score_populations(bound: BoundManifest, model: Any) -> tuple[list[LabelledPo
         key = (relative, population["sha256"])
         if key not in reports:
             candidate, data = _population_bytes(root, relative)
-            if len(data) > MAX_POPULATION_BYTES:
-                raise LabelError(
-                    EXIT_GENERATOR,
-                    f"population {relative!r} exceeds the {MAX_POPULATION_BYTES}-byte cap",
-                )
             digest = hashlib.sha256(data).hexdigest()
             if digest != population["sha256"]:
                 raise LabelError(
@@ -313,7 +350,7 @@ def score_populations(bound: BoundManifest, model: Any) -> tuple[list[LabelledPo
                     EXIT_GENERATOR, f"population {relative!r} failed to load: {error}"
                 ) from None
             reports[key] = check(model, loaded)
-        checked += 1
+            checked += 1
         scored.append(
             LabelledPopulation(
                 id=population["id"],

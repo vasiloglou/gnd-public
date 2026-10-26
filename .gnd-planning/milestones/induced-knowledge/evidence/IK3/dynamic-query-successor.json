@@ -261,6 +261,12 @@
     [
       "src/gnd/measure/labels.py",
       "read_label_manifest",
+      "list[bytes]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "read_label_manifest",
       "set[str]",
       1
     ],
@@ -416,11 +422,11 @@
     ],
     [
       "src/gnd/measure/report.py",
-      "build_labelled_report",
-      "mp.expectations[ref]",
+      "expectation",
+      "population.expectations[ref]",
       1
     ]
   ],
-  "result_distinct_rows": 6442,
-  "result_occurrences": 8077
+  "result_distinct_rows": 6443,
+  "result_occurrences": 8078
 }

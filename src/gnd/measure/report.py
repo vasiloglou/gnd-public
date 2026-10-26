@@ -38,7 +38,7 @@ from gnd import verbalize
 from gnd.address import positional_constraint_ref
 from gnd.checker import CheckReport
 from gnd.measure.score import Observation, score_run
-from gnd.measure.truth import expectation_for, resolve_constraint_ref
+from gnd.measure.truth import ExpectationMissingError, expectation_for, resolve_constraint_ref
 from gnd.model import Model
 from gnd.model_identity import stable_model_identifier
 from gnd.synth.provenance import Sidecar
@@ -476,7 +476,16 @@ def build_labelled_report(
     if mode == "class":
         payload["rules"] = list(rules or [])
         return payload
-    scored = _score_rows(model, populations, lambda mp, ref: mp.expectations[ref])
+    def expectation(population: Any, ref: str) -> Any:
+        if ref not in population.expectations:
+            # The checker emitted a ref the binding never saw: refuse, as the
+            # synth path does for a sidecar without it (IK3 review R3).
+            raise ExpectationMissingError(
+                f"population {population.id!r} carries no label for checker ref {ref!r}"
+            )
+        return population.expectations[ref]
+
+    scored = _score_rows(model, populations, expectation)
     payload["per_constraint"] = scored.per_constraint
     payload["checker_defects"] = scored.checker_defects
     payload["coverage_summary"] = {
@@ -706,9 +715,11 @@ def _defects_for(
                 "observed_verdict": observed,
                 "seed": mp.sidecar.seed if mp.sidecar is not None else None,
             }
-            # IK3 C-F1: a host-labelled population has neither field.
+            # IK3 C-F1: a host-labelled population has neither field, but it
+            # has its manifest id, which one path may carry several of (R4).
             if mp.sidecar is None:
                 del row["sidecar"], row["seed"]
+                row["population_id"] = mp.id
             return row
 
         if _is_wrong_attribution(mp, outcome, expected):

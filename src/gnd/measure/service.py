@@ -511,9 +511,9 @@ def _measure_labels(
 
     constraint_count = len(bound.table.positional)
     if manifest.mode == "class":
-        label_rows = checked * len(bound.rules)
+        label_rows = len(populations) * len(bound.rules)
     else:
-        label_rows = checked * constraint_count
+        label_rows = len(populations) * constraint_count
     work = {
         "populations": checked,
         "label_rows": label_rows,

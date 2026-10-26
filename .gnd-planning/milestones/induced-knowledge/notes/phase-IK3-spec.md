@@ -310,3 +310,40 @@ corpus is `tests/fixtures/induced_knowledge/ik3-corpus/` and
 - **C-F6:** class-mode `rules[]` rows carry the checker's positional ref.
 
 Implementation begins on this approval.
+
+## 15. Implementation findings (2026-10-25)
+
+Recorded as found, including those that refute this spec.
+
+- **I-F1 -- a mutually exclusive argparse group is not portable across
+  Python minors.** Python 3.12 renders its usage line differently from 3.13
+  and 3.14, so the measure CLI goldens would need interpreter-keyed variants
+  that cannot be captured here. Exactly one of `--populations` and `--labels`
+  is enforced in the handler instead (still exit 64).
+- **I-F2 -- spec §3's IK-R11 row is wrong as worded (refuted premise).** It
+  says the report repeats only population ids and digests, but v4
+  `per_constraint[].evidence` is the synth row's verbatim verdict excerpt,
+  which carries population facts. IK3-C2 parity requires that shape. IK-R11
+  governs induction evidence that persists into a model; measurement output is
+  governed by the model's redaction policy, which applies to v4 and v5 exactly
+  as to v3 (review R6). The row should read: "population ids and digests in
+  the `labels` block; evidence follows the model's redaction policy".
+- **I-F3 -- `_cmd_measure` is RF5-pinned.** Its body and parameters are
+  pinned by `test_rf5_commands.py` and `test_measure_negative_control.py`, so
+  `--labels` routes from the command handler to `_measure_labels` and
+  `_cmd_measure` is unchanged.
+- **I-F4 -- redaction forced every measure payload to schema 3.**
+  `redaction._select_successor` now keeps 4 and 5, and v4/v5 always carry the
+  `redaction` metadata, as v3 does. Exit 66 is registered for both measure
+  emitters.
+- **I-F5 -- a missing model is 66 in labels mode only.** The spec's exit table
+  says 66 for a missing manifest or model. The synth path's missing model stays
+  3 (its existing contract); `--labels`, a new surface, uses 66.
+- **C-F7 -- the approved X1 harness could not pass (for owner ratification).**
+  It used each synth population's path as its manifest `id`, which the approved
+  id grammar refuses (`/`). The harness now uses `p<index>`. The expected
+  answer (`per_constraint` equal to the committed synth report, minus the two
+  C-F2 fields) is unchanged. Found by review R7.
+- **R4 -- v4 defect rows add `population_id`.** One path may appear under
+  several ids, so a defect names its labelling. The approved E2 answer is
+  unchanged: the harness compares the approved keys.

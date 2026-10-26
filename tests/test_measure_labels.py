@@ -332,3 +332,125 @@ def test_t7_text_rendering_for_both_modes(tmp_path: Path) -> None:
         argv = [a for a in _prepare(tmp_path / case_id, case) if a not in ("--format", "json")]
         result = run_main(argv)
         assert marker in result.stdout.decode("utf-8")
+
+
+# ---- review regressions (notes/phase-IK3-agent-review.md) --------------------
+
+
+def _e1(tmp_path: Path) -> tuple[list[str], Path, dict[str, Any]]:
+    case = next(c for c in CASES["cases"] if c["id"] == "E1")
+    argv = _prepare(tmp_path, case)
+    manifest = Path(argv[argv.index("--labels") + 1])
+    return argv, manifest, json.loads(manifest.read_text(encoding="utf-8"))
+
+
+def _cli(argv: list[str]) -> subprocess.CompletedProcess[bytes]:
+    """A subprocess with a timeout, so a reader that blocks fails instead of hanging."""
+    return subprocess.run([sys.executable, "-m", "gnd", *argv], cwd=REPO_ROOT,
+                          capture_output=True, timeout=60, check=False)
+
+
+def test_r1_a_fifo_manifest_is_refused_not_awaited(tmp_path: Path) -> None:
+    argv, manifest, _document = _e1(tmp_path)
+    fifo = manifest.with_name("fifo.labels.json")
+    os.mkfifo(fifo)
+    argv[argv.index("--labels") + 1] = str(fifo)
+    result = _cli(argv)
+    assert result.returncode == 3 and b"not a regular file" in result.stdout
+
+
+def test_r1_a_fifo_population_is_refused_not_awaited(tmp_path: Path) -> None:
+    argv, manifest, document = _e1(tmp_path)
+    os.mkfifo(manifest.parent / "pops" / "fifo.yaml")
+    document["populations"][0]["path"] = "pops/fifo.yaml"
+    manifest.write_text(json.dumps(document), encoding="utf-8")
+    result = _cli(argv)
+    assert result.returncode == 3 and b"not a regular file" in result.stdout
+
+
+def test_r2_a_symlinked_directory_on_the_path_is_refused(tmp_path: Path) -> None:
+    argv, manifest, document = _e1(tmp_path)
+    (manifest.parent / "popslink").symlink_to(manifest.parent / "pops")
+    document["populations"][0]["path"] = "popslink/ok.yaml"
+    manifest.write_text(json.dumps(document), encoding="utf-8")
+    result = run_main(argv)
+    assert result.returncode == 74, result.stdout
+    assert "symbolic link" in json.loads(result.stdout)["error"]
+
+
+def test_r2_a_link_swapped_in_after_inspection_is_refused(tmp_path: Path, monkeypatch) -> None:
+    from gnd.measure import labels
+
+    argv, manifest, _document = _e1(tmp_path)
+    outside = tmp_path / "outside.yaml"
+    outside.write_bytes((manifest.parent / "pops" / "ok.yaml").read_bytes())
+    import stat
+
+    real = labels.os.lstat
+    swapped = []
+
+    def lstat_then_swap(path, *args, **kwargs):
+        info = real(path, *args, **kwargs)
+        if not swapped and str(path).endswith("pops/ok.yaml") and stat.S_ISREG(info.st_mode):
+            swapped.append(path)
+            os.unlink(path)
+            os.symlink(outside, path)
+        return info
+
+    monkeypatch.setattr(labels.os, "lstat", lstat_then_swap)
+    result = run_main(argv)
+    assert result.returncode == 3, result.stdout
+    assert "could not be read safely" in json.loads(result.stdout)["error"]
+
+
+def test_r3_a_checker_ref_without_a_label_is_exit_3(tmp_path: Path, monkeypatch) -> None:
+    from gnd import checker
+
+    argv, _manifest, _document = _e1(tmp_path)
+    original = checker.check
+
+    def extra(model, population, **kwargs):
+        report = original(model, population, **kwargs)
+        ghost = report.verdicts[0].model_copy(update={"constraint_ref": "constraints[7]"})
+        return report.model_copy(update={"verdicts": [*report.verdicts, ghost]})
+
+    monkeypatch.setattr(checker, "check", extra)
+    result = run_main(argv)
+    assert result.returncode == 3, result.stdout
+    assert "constraints[7]" in json.loads(result.stdout)["error"]
+
+
+def test_r4_defect_rows_name_the_manifest_id(tmp_path: Path) -> None:
+    argv, manifest, document = _e1(tmp_path)
+    twin = json.loads(json.dumps(document["populations"][0]))
+    twin["id"] = "labeller-B"
+    twin["expectations"]["id:u_person_team"] = {"ground_truth": "violated", "expected_verdict": "fail"}
+    document["populations"].append(twin)
+    manifest.write_text(json.dumps(document), encoding="utf-8")
+    result = run_main(argv)
+    assert result.returncode == 6
+    report = json.loads(result.stdout)
+    assert [d["population_id"] for d in report["checker_defects"]] == ["labeller-B"]
+    assert not list(_schema_validator().iter_errors(report))
+
+
+def test_r5_work_counts_checker_runs_not_manifest_rows(tmp_path: Path) -> None:
+    case = next(c for c in CASES["cases"] if c["id"] == "N1")
+    report = json.loads(run_main(_prepare(tmp_path, case)).stdout)
+    work = report["labels"]["work"]
+    assert work["populations"] == 1
+    assert work["label_rows"] == 8000 * 3
+    assert work["total"] < work["ceiling"] == 8000 * 4
+
+
+def test_r10_an_over_cap_population_is_exit_5(tmp_path: Path) -> None:
+    from gnd.population import MAX_POPULATION_BYTES
+
+    argv, manifest, document = _e1(tmp_path)
+    big = manifest.parent / "pops" / "big.yaml"
+    big.write_bytes(b"#" * (MAX_POPULATION_BYTES + 1))
+    document["populations"][0]["path"] = "pops/big.yaml"
+    document["populations"][0]["sha256"] = _sha(big)
+    manifest.write_text(json.dumps(document), encoding="utf-8")
+    result = run_main(argv)
+    assert result.returncode == 5 and "byte cap" in json.loads(result.stdout)["error"]

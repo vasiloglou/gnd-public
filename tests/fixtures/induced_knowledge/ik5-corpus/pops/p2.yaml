@@ -1,0 +1,17 @@
+# IK5 approval corpus: positive -- one order exactly at the limit (100) from a blocked customer
+format_version: 2
+population:
+  model: orders.orm.yaml
+  source: fixture
+  covers: [order_by, order_amount, order_flagged, customer_blocked]
+instances:
+  order: [7]
+  customer: ["c3"]
+facts:
+  order_by:
+    - { order: 7, customer: "c3" }
+  order_amount:
+    - { order: 7, amount: 100 }
+  order_flagged: []
+  customer_blocked:
+    - { customer: "c3" }

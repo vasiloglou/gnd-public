@@ -1,0 +1,20 @@
+# IK5 approval corpus: negative -- order 3 is large (200) and order 4 is flagged
+format_version: 2
+population:
+  model: orders.orm.yaml
+  source: fixture
+  covers: [order_by, order_amount, order_flagged, customer_blocked]
+instances:
+  order: [3, 4]
+  customer: ["c1", "c3"]
+facts:
+  order_by:
+    - { order: 3, customer: "c1" }
+    - { order: 4, customer: "c3" }
+  order_amount:
+    - { order: 3, amount: 200 }
+    - { order: 4, amount: 20 }
+  order_flagged:
+    - { order: 4 }
+  customer_blocked:
+    - { customer: "c3" }

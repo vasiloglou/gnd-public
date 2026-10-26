@@ -49,6 +49,8 @@ automatic side effects of validation. See [evolution and recovery](../guides/evo
 | `gnd synth MODEL --out CORPUS --class all --seed 17` | Supported labeled synthetic populations and provenance |
 | `gnd measure MODEL --populations CORPUS --format json` | Per-constraint false-pass, false-fail and undecided rates |
 | `gnd measure MODEL --labels MANIFEST --format json` | The same rates over populations you labelled yourself, or class-mode agreement counts ([contract](measure-labels.md)) |
+| `gnd export ilp MODEL --labels MANIFEST --target popper --out DIR` | Background facts, examples and modes for an ILP learner, from a class-mode label manifest ([contract](ilp-bridge.md)) |
+| `gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target popper --out PROPOSAL` | Learned clauses as induced, advisory guarded constraints, admitted only when GND's coverage equals the learner's ([contract](ilp-bridge.md)) |
 | `gnd extract MODEL --out ARTIFACTS` | Offline schema/vocabulary bundle for a separate extraction workflow |
 | `gnd verify MODEL POPULATION --artifacts ARTIFACTS --format json` | Bound extraction-handoff validation followed by checking |
 | `gnd verify MODEL POPULATION --no-extraction --format json` | Explicitly check directly authored, unextracted facts |

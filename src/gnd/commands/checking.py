@@ -418,7 +418,66 @@ def _register_import(subparsers):
         help="source repository commit required when provenance must be synthesized",
     )
 
-    return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser}
+    ilp_import_parser = import_subparsers.add_parser(
+        "ilp-rules",
+        help="admit learned ILP clauses as induced guarded constraints (IK5)",
+        description=(
+            "Rewrite each learned clause wrong(X) :- B1, ..., Bn in the declared fragment "
+            "into one guarded constraint (source induced, status proposed, modality "
+            "deontic), re-run the checker over the manifest's populations, and write an "
+            "evolve proposal only if, for every clause, the set of example ids GND covers "
+            "equals the set the run record reports. Admission is all-or-nothing. Exits 0 "
+            "when the proposal is written, 3 on any refusal (a construct outside the "
+            "fragment, a binding or coverage mismatch, invalid input), 5 when a population "
+            "fails to load, 11 when --out exists, 64 on a usage error, 66 on a missing "
+            "input, 70 on an internal defect, 74 on a refused path."
+        ),
+    )
+    ilp_import_parser.add_argument("model", help="path to the model file")
+    ilp_import_parser.add_argument(
+        "clauses", help="learned clauses: Popper's printed program, or gnd-ilp-clauses/1 JSON"
+    )
+    ilp_import_parser.add_argument("--labels", required=True, help="the class-mode label manifest")
+    ilp_import_parser.add_argument(
+        "--reported-coverage", required=True, help="the learner run record (gnd-ilp-run/1)"
+    )
+    ilp_import_parser.add_argument(
+        "--target", required=True, choices=("popper", "neutral"), help="the adapter CLAUSES is in"
+    )
+    ilp_import_parser.add_argument("--out", required=True, help="write the evolve proposal here")
+    ilp_import_parser.add_argument(
+        "--actor", type=_ilp_actor, default="gnd import ilp-rules",
+        help="who requests the proposal (its audit actor_id)",
+    )
+    ilp_import_parser.add_argument(
+        "--requested-at", type=_ilp_requested_at, default=None,
+        help="the audit time, ISO-8601 with a UTC offset (default: now); fix it for reproducible output",
+    )
+    _add_format_argument(ilp_import_parser)
+
+    return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser,
+            'ilp_import_parser': ilp_import_parser}
+
+
+def _ilp_actor(text: str) -> str:
+    import argparse
+
+    if not text.strip():
+        raise argparse.ArgumentTypeError("--actor must name who requests the proposal")
+    return text
+
+
+def _ilp_requested_at(text: str):
+    import argparse
+    from datetime import datetime
+
+    try:
+        value = datetime.fromisoformat(text)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(f"{text!r} is not an ISO-8601 time") from error
+    if value.tzinfo is None or value.utcoffset() is None:
+        raise argparse.ArgumentTypeError("--requested-at needs a UTC offset")
+    return value
 
 
 def _register_validate(subparsers):
@@ -596,6 +655,15 @@ def handle(args, parsers) -> int:
     if args.command == "diff":
         return _cmd_diff(
             args.model_a, args.model_b, args.populations, args.format, args.unredacted, args.seed
+        )
+
+    if args.command == "import" and args.import_command == "ilp-rules":
+        from gnd.export.ilp_service import _cmd_import_ilp_rules
+
+        return _cmd_import_ilp_rules(
+            args.model, args.clauses, args.labels, args.reported_coverage,
+            target=args.target, out=args.out, actor=args.actor,
+            requested_at=args.requested_at, output_format=args.format,
         )
 
     if args.command == "import":

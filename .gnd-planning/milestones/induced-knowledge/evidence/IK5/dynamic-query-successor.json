@@ -1,0 +1,791 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/IK3/dynamic-query-successor.json",
+  "predecessor_sha256": "c37d893dc6fb2f69160308341d66241355a47703d4741715cb5e1385b7c44ac4",
+  "reason": "Owner-approved induced-knowledge IK5 (2026-10-26): the ILP bridge adds the neutral export, the Popper adapter, the clause rewriter and the bridge service, which add type-annotation and payload subscripts over the bridge's own JSON documents; the shared population reader and the generalized proposal builder move existing ones. Model reads go through ModelIndex. Syntax census only; no model-query exception widening.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/discover/output.py",
+      "add_operations",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "add_operations",
+      "list[tuple[str | None, dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "add_operations",
+      "tuple[EvolutionOperation, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/output.py",
+      "add_operations",
+      "tuple[str | None, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "Column",
+      "tuple[str, ...]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "_compact",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "_primitive",
+      "_PRIMITIVES[primitive]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "_primitive",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "dict[str, Column]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "entries[position]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "fact[:3]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "frozenset[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "list[tuple[int, str, str, list[Any]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "population.facts.get(column.fact_type, [])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "row[role]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "tuple[dict[str, Any], dict[str, Column], Work]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "tuple[int, str, str, list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "build_neutral",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "export_digest",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "export_tree",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "export_tree",
+      "dict[str, bytes]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "report",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "dict[str, Column]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "dict[str, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "frozenset[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "object_types.get(object_type, {})",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "role_types.get(fact_id, {})",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "tuple[dict[str, Any], dict[str, Column]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "schema",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp.py",
+      "write_tree",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "__init__",
+      "list[tuple[str, str, int, int]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "__init__",
+      "text[position]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "__init__",
+      "tuple[str, str, int, int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_unquote",
+      "_ESCAPES[following]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_unquote",
+      "body[position + 1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_unquote",
+      "body[position + 1]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_unquote",
+      "body[position]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_unquote",
+      "token[1:-1]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "argument",
+      "self.tokens[self.index + 1]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "argument",
+      "self.tokens[self.index + 1][:2]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "arguments",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "clause",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "clause",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "conjunction",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "disjunction",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "literal",
+      "_OPERATORS[self.take('op')]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "literal",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "literal",
+      "self.tokens[self.index + 1]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "literal",
+      "self.tokens[self.index + 1][:2]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "parse_program",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "peek",
+      "self.tokens[self.index]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "peek",
+      "tuple[str, str, int, int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "program",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "render",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "render",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "render",
+      "prolog[row['operator']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "term",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "_anonymous",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "_anonymous",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "_vars",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "_vars",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "_vars",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "item",
+      "atom['args'][1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "item",
+      "column.types[1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "item",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "item",
+      "predicates[atom['predicate']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "NEGATE[compare['operator']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "_KINDS[kind]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "a['args'][1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "antecedent[frontier.pop()]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "antecedent[frontier.pop()]['args'][1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "atom['args'][1:]",
+      4
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "atoms[position]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "atoms[position]['args'][1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "comparisons[atom['predicate']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "designated['args'][1:]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "dict[str, Any]",
+      6
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "dict[str, Column]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "dict[str, set[str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "list[tuple[dict[str, Any], str | None]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "predicates[atom['predicate']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "predicates[atom['predicate']].types[1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "predicates[name]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "primitives.get(name)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "role_type.get(name, set())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "rewrite",
+      "tuple[dict[str, Any], str | None]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "scalar",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "scalar",
+      "primitives.get(type_name)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_Prepared",
+      "dict[str, Any]",
+      3
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_Prepared",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "LEARNER[target]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "[i for i in claimed if i not in set(seen['covered'])][:32]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "[i for i in seen['covered'] if i not in set(claimed)][:32]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "classes[i]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "dict[int, dict[str, list[str]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "dict[str, list[str]]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "indexes_by_report[id(population.report)]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "indexes_by_report[id(population.report)].get(ref, [])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "list[str]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "negatives[:INDUCTION_EXAMPLES]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "positives[:INDUCTION_COUNTEREXAMPLES]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "prepared.manifest.sha256[:8]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "reported[index]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "seen['unchecked'][:32]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "seen['vacuous'][:32]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_ilp_rules",
+      "unknown[:32]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_envelope",
+      "dict[str, Any]",
+      3
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_load_candidate",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_load_candidate",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_placeholder",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_placeholder",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_prepare",
+      "cache[key]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_prepare",
+      "dict[tuple[str, str], Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_prepare",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_read_clauses",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_read_clauses",
+      "tuple[bytes, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_validated",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "coverage",
+      "dict[str, list[str]]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "coverage",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "coverage",
+      "list[dict[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "coverage",
+      "list[str]",
+      3
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "coverage",
+      "out[verdict['verdict']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "entry",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "read_population",
+      "dict[str, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6573,
+  "result_occurrences": 8236
+}

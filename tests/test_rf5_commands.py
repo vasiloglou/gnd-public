@@ -115,7 +115,7 @@ def test_all_parser_paths_receive_command_handlers(monkeypatch):
     from test_rf1_cli_pins import _root, _walk
     parsers = {}
     _walk(_root(monkeypatch), ('gnd',), parsers)
-    assert len(parsers) == 53  # IK4 adds `gnd discover`
+    assert len(parsers) == 55  # IK5 adds `gnd export ilp` and `gnd import ilp-rules`
     for path in parsers:
         if path != 'gnd':
             assert callable(parsers[' '.join(path.split()[:2])].get_default('handler')), path

@@ -27,6 +27,7 @@
     "gnd.discover.service",
     "gnd.evolve.cli_service",
     "gnd.exp.cli_service",
+    "gnd.export.ilp_service",
     "gnd.export.verification_service",
     "gnd.extract.service",
     "gnd.fidelity.doccheck_service",
@@ -285,7 +286,9 @@
       "gnd.synth.corpus_service",
       "gnd.synth.service"
     ],
-    "gnd.commands.checking": [],
+    "gnd.commands.checking": [
+      "gnd.export.ilp_service"
+    ],
     "gnd.commands.codegen": [
       "gnd.codegen.service"
     ],
@@ -304,7 +307,9 @@
     "gnd.commands.exp": [
       "gnd.exp.cli_service"
     ],
-    "gnd.commands.export": [],
+    "gnd.commands.export": [
+      "gnd.export.ilp_service"
+    ],
     "gnd.commands.extract": [
       "gnd.extract.service"
     ],

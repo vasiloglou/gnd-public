@@ -88,7 +88,29 @@ def _register_export(subparsers):
              "requirements locally through their violation queries",
     )
 
-    return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser}
+    ilp_parser = export_targets.add_parser(
+        "ilp",
+        help="export background facts, examples and modes for an ILP learner (IK5)",
+        description=(
+            "Write the learner-neutral ILP form (gnd-ilp/1) of MODEL and a class-mode "
+            "label manifest, plus the named adapter's rendering, into a new directory. "
+            "Examples are the manifest's populations; the learned predicate wrong/1 "
+            "covers the negative class. Prints the export digest, the SHA-256 of "
+            "export.json. Exits 0 on success, 3 on an invalid manifest, model or "
+            "population or a value the export cannot render, 5 when a population fails "
+            "to load, 11 when --out exists, 64 on a usage error, 66 on a missing input, "
+            "74 on a refused path."
+        ),
+    )
+    ilp_parser.add_argument("model", help="path to the model file")
+    ilp_parser.add_argument("--labels", required=True, help="class-mode label manifest (gnd-labels/1)")
+    ilp_parser.add_argument(
+        "--target", required=True, choices=("popper", "neutral"),
+        help="learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl) or neutral",
+    )
+    ilp_parser.add_argument("--out", required=True, help="new directory for the export")
+
+    return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
 
 
 def add_parsers(subparsers, *, command: str | None = None):
@@ -104,6 +126,10 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 def handle(args, parsers) -> int:
     if args.command == "export":
+        if args.export_target == "ilp":
+            from gnd.export.ilp_service import _cmd_export_ilp
+
+            return _cmd_export_ilp(args.model, args.labels, target=args.target, out=args.out)
         if args.export_target.startswith("lean"):
             from gnd.export.lean_cli import dispatch as lean_dispatch
 

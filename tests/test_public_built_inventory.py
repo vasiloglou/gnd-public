@@ -259,6 +259,10 @@ VENDORED_SCHEMAS = (
     "gnd/batch-report.schema.json",
     "gnd/discover.schema.json",
     "gnd/labels.schema.json",
+    "gnd/ilp.schema.json",
+    "gnd/ilp-clauses.schema.json",
+    "gnd/ilp-run.schema.json",
+    "gnd/ilp-import.schema.json",
 )
 
 

@@ -1,0 +1,18 @@
+# IK5 approval corpus: positive -- two ordinary orders (30 and 90)
+format_version: 2
+population:
+  model: orders.orm.yaml
+  source: fixture
+  covers: [order_by, order_amount, order_flagged, customer_blocked]
+instances:
+  order: [5, 6]
+  customer: ["c1", "c2"]
+facts:
+  order_by:
+    - { order: 5, customer: "c1" }
+    - { order: 6, customer: "c2" }
+  order_amount:
+    - { order: 5, amount: 30 }
+    - { order: 6, amount: 90 }
+  order_flagged: []
+  customer_blocked: []

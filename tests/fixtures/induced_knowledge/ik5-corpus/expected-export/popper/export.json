@@ -1,0 +1,27 @@
+{
+  "adapter_version": "1",
+  "files": [
+    {
+      "bytes": 4871,
+      "path": "neutral.json",
+      "sha256": "07d74a893a14da2bd1260dd0a751f7a54367957c523cf94f847737ef2815f4d7"
+    },
+    {
+      "bytes": 650,
+      "path": "popper/bias.pl",
+      "sha256": "1ae030c3ebf5aa8d1f6f50f400152c5f4db3058b4a6979a730aeb7563c3c6069"
+    },
+    {
+      "bytes": 672,
+      "path": "popper/bk.pl",
+      "sha256": "8858f48fd24d43f1fe1fc9ab959daf96d6d2b80a8a4f624cb3a4a1907a7f60e4"
+    },
+    {
+      "bytes": 108,
+      "path": "popper/exs.pl",
+      "sha256": "a3f3049803cc3ead5e1b75c20aa0db98ab406c068c7830b3db2b1175ed9e1235"
+    }
+  ],
+  "schema_version": "gnd-ilp-export/1",
+  "target": "popper"
+}

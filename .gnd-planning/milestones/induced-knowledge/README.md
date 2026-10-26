@@ -8,6 +8,7 @@ Plan r4 and IK1 spec r4 **approved by the owner 2026-10-24** (bytes bound in the
 - [IK2 spec (r1)](notes/phase-IK2-spec.md): approved 2026-10-24, with its approval corpus
 - [IK4 spec (r1)](notes/phase-IK4-spec.md): approved 2026-10-24, with its approval corpus
 - [IK3 spec (r1)](notes/phase-IK3-spec.md): approved 2026-10-25, with its approval corpus
+- [IK5 spec (r1)](notes/phase-IK5-spec.md): approved 2026-10-26, with its approval corpus
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md):
   three request-changes, one approve-with-fixes, 12 reproduced blocking findings.
 - [Plan review round 2 (confirmation) disposition](notes/plan-review-r2-disposition.md):
@@ -67,4 +68,10 @@ Records:
   findings, five hardening and completeness fixes; C-F7 ratified by the
   owner 2026-10-26.
 
-Next: IK5.
+- [007 phase IK5](007-phase-IK5.md): the ILP bridge shipped (`gnd export ilp`,
+  `gnd import ilp-rules`, Popper adapter). Focused gate 4473 passed. One local
+  reviewer: three blocking tracebacks and one hardening defect fixed, and all
+  17 of its mutants killed by new tests. No learner ran (D13 (a)). IK5-Q1 (the
+  bounds disagree) awaits an owner ruling.
+
+Next: IK6, after the owner rules on IK4-Q2 and IK5-Q1.

@@ -1893,7 +1893,8 @@
       "lean",
       "lean-verify",
       "lean-compile",
-      "pyrel"
+      "pyrel",
+      "ilp"
      ],
      "class": "_SubParsersAction",
      "const": null,
@@ -1914,6 +1915,94 @@
    "parser_class": "gnd.cli._BandSafeParser",
    "prog": "gnd export",
    "subcommands": {
+    "ilp": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "path to the model file",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "labels",
+       "help": "class-mode label manifest (gnd-labels/1)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--labels"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "popper",
+        "neutral"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "target",
+       "help": "learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl) or neutral",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--target"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "new directory for the export",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      }
+     ],
+     "description": "Write the learner-neutral ILP form (gnd-ilp/1) of MODEL and a class-mode label manifest, plus the named adapter's rendering, into a new directory. Examples are the manifest's populations; the learned predicate wrong/1 covers the negative class. Prints the export digest, the SHA-256 of export.json. Exits 0 on success, 3 on an invalid manifest, model or population or a value the export cannot render, 5 when a population fails to load, 11 when --out exists, 64 on a usage error, 66 on a missing input, 74 on a refused path.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "export background facts, examples and modes for an ILP learner (IK5)",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd export ilp",
+     "subcommands": {}
+    },
     "lean": {
      "actions": [
       {
@@ -2833,7 +2922,8 @@
     },
     {
      "choices": [
-      "rai-orm"
+      "rai-orm",
+      "ilp-rules"
      ],
      "class": "_SubParsersAction",
      "const": null,
@@ -2854,6 +2944,170 @@
    "parser_class": "gnd.cli._BandSafeParser",
    "prog": "gnd import",
    "subcommands": {
+    "ilp-rules": {
+     "actions": [
+      {
+       "choices": null,
+       "class": "_HelpAction",
+       "const": null,
+       "default": "==SUPPRESS==",
+       "dest": "help",
+       "help": "show this help message and exit",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "-h",
+        "--help"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "model",
+       "help": "path to the model file",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "clauses",
+       "help": "learned clauses: Popper's printed program, or gnd-ilp-clauses/1 JSON",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "labels",
+       "help": "the class-mode label manifest",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--labels"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "reported_coverage",
+       "help": "the learner run record (gnd-ilp-run/1)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--reported-coverage"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "popper",
+        "neutral"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "target",
+       "help": "the adapter CLAUSES is in",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--target"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "out",
+       "help": "write the evolve proposal here",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--out"
+       ],
+       "required": true,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": "gnd import ilp-rules",
+       "dest": "actor",
+       "help": "who requests the proposal (its audit actor_id)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--actor"
+       ],
+       "required": false,
+       "type": "gnd.commands.checking._ilp_actor"
+      },
+      {
+       "choices": null,
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "requested_at",
+       "help": "the audit time, ISO-8601 with a UTC offset (default: now); fix it for reproducible output",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--requested-at"
+       ],
+       "required": false,
+       "type": "gnd.commands.checking._ilp_requested_at"
+      },
+      {
+       "choices": [
+        "text",
+        "json"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": "text",
+       "dest": "format",
+       "help": "output rendering: human-readable text (default) or one JSON payload",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--format"
+       ],
+       "required": false,
+       "type": null
+      }
+     ],
+     "description": "Rewrite each learned clause wrong(X) :- B1, ..., Bn in the declared fragment into one guarded constraint (source induced, status proposed, modality deontic), re-run the checker over the manifest's populations, and write an evolve proposal only if, for every clause, the set of example ids GND covers equals the set the run record reports. Admission is all-or-nothing. Exits 0 when the proposal is written, 3 on any refusal (a construct outside the fragment, a binding or coverage mismatch, invalid input), 5 when a population fails to load, 11 when --out exists, 64 on a usage error, 66 on a missing input, 70 on an internal defect, 74 on a refused path.",
+     "epilog": null,
+     "formatter_class": "argparse.HelpFormatter",
+     "listed_help": "admit learned ILP clauses as induced guarded constraints (IK5)",
+     "parser_class": "gnd.cli._BandSafeParser",
+     "prog": "gnd import ilp-rules",
+     "subcommands": {}
+    },
     "rai-orm": {
      "actions": [
       {

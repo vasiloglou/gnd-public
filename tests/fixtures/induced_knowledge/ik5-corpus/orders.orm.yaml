@@ -1,0 +1,56 @@
+# IK5 approval corpus: a small orders model for the ILP bridge. Synthetic (IK-R10).
+# The one declared rule exists so a class-mode manifest can name a rule (IK3
+# requires one); IK5 binds it and otherwise ignores it.
+version: 1
+model_id: ik5-orders
+source:
+  kind: fixture
+object_types:
+  - id: order
+    name: Order
+    kind: entity
+    reference: { mode: popular, value_type: order_id }
+  - id: order_id
+    name: OrderId
+    kind: value
+    primitive: Integer
+  - id: customer
+    name: Customer
+    kind: entity
+    reference: { mode: popular, value_type: customer_code }
+  - id: customer_code
+    name: CustomerCode
+    kind: value
+    primitive: String
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: order_by
+    reading: "{Order} is placed by {Customer}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: customer, role_name: customer }
+    constraints:
+      - id: u_order_customer
+        type: uniqueness
+        roles: [order]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each order is placed by one customer." }
+  - id: order_amount
+    reading: "{Order} has {Amount}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: amount, role_name: amount }
+  - id: order_flagged
+    reading: "{Order} is flagged"
+    roles:
+      - { object_type: order, role_name: order }
+  - id: customer_blocked
+    reading: "{Customer} is blocked"
+    roles:
+      - { object_type: customer, role_name: customer }
+constraints: []

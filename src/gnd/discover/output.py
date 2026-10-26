@@ -56,16 +56,26 @@ def induced(candidate: Candidate, *, version: str, digest: str, ref: str) -> dic
 
 
 def operations(constraints: list[tuple[Candidate, dict[str, Any]]]) -> tuple[EvolutionOperation, ...]:
+    return add_operations([(candidate.host, constraint) for candidate, constraint in constraints])
+
+
+def add_operations(
+    constraints: list[tuple[str | None, dict[str, Any]]], *, prefix: str = "discover"
+) -> tuple[EvolutionOperation, ...]:
+    """One ADD operation per (host fact type or None for the top level, constraint).
+
+    Shared by ``gnd discover`` and ``gnd import ilp-rules`` (IK5), so both
+    proposals go through one builder and evolve's one replay."""
     result = []
-    for number, (candidate, constraint) in enumerate(constraints):
+    for number, (host, constraint) in enumerate(constraints):
         locator = (
-            ConstraintLocator(host="fact_type", host_id=candidate.host, family=candidate.core["type"])
-            if candidate.host is not None
-            else ConstraintLocator(host="model", family=candidate.core["type"])
+            ConstraintLocator(host="fact_type", host_id=host, family=constraint["type"])
+            if host is not None
+            else ConstraintLocator(host="model", family=constraint["type"])
         )
         result.append(
             EvolutionOperation(
-                operation_id=f"discover-{number:04d}",
+                operation_id=f"{prefix}-{number:04d}",
                 kind=EvolutionOperationKind.ADD,
                 locator=locator,
                 after=constraint,
@@ -105,18 +115,23 @@ def proposal(
     ops: tuple[EvolutionOperation, ...],
     actor: str,
     requested_at: datetime,
-    population_name: str,
+    population_name: str = "",
+    origin: str = "gnd discover",
+    prefix: str = "discover",
+    rationale: str | None = None,
 ) -> EvolutionProposal:
     text = candidate_text(document)
     digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    if rationale is None:
+        rationale = f"gnd discover: {len(ops)} candidate constraints observed in {population_name}"
     return EvolutionProposal(
-        proposal_id=f"discover-{digest[:16]}",
+        proposal_id=f"{prefix}-{digest[:16]}",
         expected_model_sha256=hashlib.sha256(model_bytes).hexdigest(),
         candidate_model=CommittedText.from_text(text, media_type="application/yaml"),
         operations=ops,
-        rationale=f"gnd discover: {len(ops)} candidate constraints observed in {population_name}",
+        rationale=rationale,
         audit=EvolutionOperationAudit(
-            actor_id=actor, origin="gnd discover", requested_at=requested_at
+            actor_id=actor, origin=origin, requested_at=requested_at
         ),
     )
 

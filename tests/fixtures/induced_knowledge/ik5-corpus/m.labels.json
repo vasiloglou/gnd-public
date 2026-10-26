@@ -1,0 +1,48 @@
+{
+ "schema_version": "gnd-labels/1",
+ "model_sha256": "021be3e93b75081199ba62bb5097375b45814c6b1492b50332a747af4239de59",
+ "mode": "class",
+ "populations": [
+  {
+   "id": "n1",
+   "path": "pops/n1.yaml",
+   "sha256": "3d7b0cebd073b1ab73a5478982831c0832adc317aef5e6c4c9ab9bcd60c07f13",
+   "class": "negative"
+  },
+  {
+   "id": "n2",
+   "path": "pops/n2.yaml",
+   "sha256": "e9bc83676fc06dfa14e49df075fb00d9509fa0ea6186597b94db205b25c4c149",
+   "class": "negative"
+  },
+  {
+   "id": "n3",
+   "path": "pops/n3.yaml",
+   "sha256": "1fc85eab606ebc7df250cfc96947d919dc4b2c70420c39e6b6b18426e7917054",
+   "class": "negative"
+  },
+  {
+   "id": "p1",
+   "path": "pops/p1.yaml",
+   "sha256": "8a051f34b27684932c1050590395eefb962fae6227d4b5a6452709f504a24b5e",
+   "class": "positive"
+  },
+  {
+   "id": "p2",
+   "path": "pops/p2.yaml",
+   "sha256": "15c602bcf8b27060700ca23aaf42e89ed366c4877bfccc89bd3a69b64c8cab17",
+   "class": "positive"
+  },
+  {
+   "id": "v1",
+   "path": "pops/v1.yaml",
+   "sha256": "47f664bac23b2930c41c1123075986e145df4c93d237c7cc823b80a52afb3dea",
+   "class": "positive"
+  }
+ ],
+ "rules": {
+  "id:u_order_customer": {
+   "fires_on": "negative"
+  }
+ }
+}

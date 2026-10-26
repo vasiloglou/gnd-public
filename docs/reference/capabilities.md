@@ -33,6 +33,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Compare compatible models | `diff`; `api.diff` | Same vocabulary; bounded entailment catalogue and concrete populations; no temporal models | [Python API](python-api.md) |
 | Exercise rule behavior | `synth`, `measure` | Optional synth dependency; generation is narrower than checking | [Synthetic data](../guides/synthetic-data.md) |
 | Measure rules on your own labels | `measure --labels` | Host-labelled populations; expected-state rates or class agreement counts; labels are your claim, not checked truth | [Measuring host labels](measure-labels.md) |
+| Learn rules with an ILP learner | `export ilp`, `import ilp-rules` | GND runs no learner; learned clauses in a declared fragment become induced, advisory guarded constraints only when GND's coverage of the labelled examples equals the learner's; Popper adapter untested against a real Popper | [ILP bridge](ilp-bridge.md) |
 | Extract and check document facts | Offline extraction bundle, agent skill, `verify`, source anchors | Agent performs extraction; checking is distinct from fidelity | [Documents](../guides/documents.md) |
 | Render evaluation documents | Agent rendering skill, `doccheck`, `fidelity` | Bound manifests and distractors; fidelity remains a separate measured claim | [Documents](../guides/documents.md) |
 | Run a bounded agent experiment | `exp` commands and selected adapter/policy | Requires authored contract; live adapter prerequisites are separate | [Experiments](../guides/experiments.md) |

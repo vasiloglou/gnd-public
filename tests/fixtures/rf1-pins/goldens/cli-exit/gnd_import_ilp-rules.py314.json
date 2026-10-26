@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd import ilp-rules [-h] --labels LABELS\n                            --reported-coverage REPORTED_COVERAGE\n                            --target {popper,neutral} --out OUT\n                            [--actor ACTOR] [--requested-at REQUESTED_AT]\n                            [--format {text,json}]\n                            model clauses\n\nRewrite each learned clause wrong(X) :- B1, ..., Bn in the declared fragment\ninto one guarded constraint (source induced, status proposed, modality\ndeontic), re-run the checker over the manifest's populations, and write an\nevolve proposal only if, for every clause, the set of example ids GND covers\nequals the set the run record reports. Admission is all-or-nothing. Exits 0\nwhen the proposal is written, 3 on any refusal (a construct outside the\nfragment, a binding or coverage mismatch, invalid input), 5 when a population\nfails to load, 11 when --out exists, 64 on a usage error, 66 on a missing\ninput, 70 on an internal defect, 74 on a refused path.\n\npositional arguments:\n  model                 path to the model file\n  clauses               learned clauses: Popper's printed program, or gnd-ilp-\n                        clauses/1 JSON\n\noptions:\n  -h, --help            show this help message and exit\n  --labels LABELS       the class-mode label manifest\n  --reported-coverage REPORTED_COVERAGE\n                        the learner run record (gnd-ilp-run/1)\n  --target {popper,neutral}\n                        the adapter CLAUSES is in\n  --out OUT             write the evolve proposal here\n  --actor ACTOR         who requests the proposal (its audit actor_id)\n  --requested-at REQUESTED_AT\n                        the audit time, ISO-8601 with a UTC offset (default:\n                        now); fix it for reproducible output\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd import ilp-rules [-h] --labels LABELS\n                            --reported-coverage REPORTED_COVERAGE\n                            --target {popper,neutral} --out OUT\n                            [--actor ACTOR] [--requested-at REQUESTED_AT]\n                            [--format {text,json}]\n                            model clauses\ngnd import ilp-rules: error: the following arguments are required: model, clauses, --labels, --reported-coverage, --target, --out\n",
+  "stdout": ""
+ }
+}

@@ -590,3 +590,76 @@ open.
 **Red check:** `uv run pytest -q -p no:randomly tests/test_ilp_bridge.py` gives
 41 failed and 2 passed by design. The two that pass check the answer key itself:
 every case has an answer, and I1 and I2 agree on their rules.
+
+## 15. Corpus approval (2026-10-26)
+
+**Approval (o).** The owner was asked "Approve the IK5 corpus as committed, with
+C-F1 to C-F6 as proposed?" and replied "Approve the IK5 corpus as committed in
+d0cb831, with C-F1 to C-F6 as proposed. Go ahead and implement." on
+2026-10-26. The approved corpus is `tests/fixtures/induced_knowledge/ik5-corpus/`
+and `tests/test_ilp_bridge.py` as committed in `d0cb831`, red at 41 failed and
+2 passed by design.
+
+**Findings ruled as proposed (o):**
+- **C-F1:** `unchecked` and `fail` stay as defensive branches, each with a unit
+  test.
+- **C-F2:** `gnd export ilp --target neutral` writes `neutral.json` and
+  `export.json` only.
+- **C-F3:** `aggregate.args` items are terms or literals.
+- **C-F4:** the names the corpus fixes.
+- **C-F5:** the learner identity `popper 0.0.0+authored`.
+- **C-F6:** the rule-B designation.
+
+## 16. Implementation findings (2026-10-26)
+
+Recorded as found. No approved corpus answer changed: all 43 corpus tests
+pass, and the implementation tests are separately identified successors in the
+same file.
+
+- **I-F1 — the audit time is a flag.** r1 named only an optional `--actor`.
+  `--requested-at` is added beside it (ISO-8601 with a UTC offset; the default
+  is now). Without it, two imports cannot be byte-identical (T12), as in IK4's
+  discover.
+- **I-F2 — the name bound is 59 characters, not r1's 62.** The model schema
+  already restricts fact type ids to `^[a-z][a-z0-9_]*$`. So the `name`
+  refusal fires only on length. It is set so that `ge_t_<id>` still fits the
+  64-character schema name.
+- **I-F3 — role reads go through `ModelIndex`.** RF6 refuses a literal
+  `roles` read outside the model package. Model roles come from
+  `ModelIndex.role_object_types()`. The rewriter takes the export's own column
+  table, not the neutral dicts, so no RF6 exception is widened.
+- **I-F4 — comparison predicates are converted after parsing.** The parser runs
+  before the export exists (§4 rule 3), so it cannot know which names are
+  comparisons. It keeps `gt_t_amount(C,100)` as an atom, and the fragment step
+  turns any exported comparison predicate into a comparison, whichever form
+  wrote it.
+- **I-F5 — boolean constants round-trip.** The rendering spells booleans as the
+  atoms `true` and `false`. At a boolean-typed role, the rewriter maps them back
+  to booleans; otherwise a learned constant would never match.
+- **I-F6 — two export refusals r1 did not name.**
+  - `primitive`: a value type other than Integer, String or Boolean. Decimal,
+    Date and the rest have no faithful rendering in this fragment.
+  - `references`: a model with declared reference populations. Their facts are
+    not in the manifest's populations, and evolve cannot preview such models
+    (IK4-Q2).
+- **I-F7 — the RF1 goldens across Python versions.**
+  - The new `gnd import ilp-rules` help, and the changed `gnd export` help,
+    wrap differently before 3.13, so both carry 3.11-, 3.13- and 3.14-keyed
+    goldens.
+  - The 3.11 keys are the 3.12 capture, because 3.11 is not installed. They
+    differ from the old 3.11 golden only by the `ilp` addition.
+  - 3.12, 3.13 and 3.14 were captured; the tree is identical on all three.
+- **I-F8 — refactors made for one walk.**
+  - IK3's per-population read became `labels.read_population`, shared by
+    `score_populations` and the export.
+  - IK4's proposal builder gained `add_operations` and keyword `origin`,
+    `prefix` and `rationale` on `proposal`.
+  - IK3's 76 and IK4's 65 tests pass unchanged.
+- **I-F9 — check 10 validates with a placeholder induction block.** Support is
+  not known until re-evaluation, so the single-constraint validation uses a
+  block that validates (support 0/1, no examples). The final constraints carry
+  the computed block, and the candidate model is validated again with all of
+  them.
+- **I-F10 — the near-cap import uses 7,500 examples, not 10,000.** The 1 MiB
+  manifest holds about 7,500 class-mode entries in compact JSON (IK3's C-F3).
+  T9 runs P = 7,500 and K = 32 and checks the work against P × (1 + K).

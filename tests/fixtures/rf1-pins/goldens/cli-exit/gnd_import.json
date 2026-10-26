@@ -2,11 +2,11 @@
  "help": {
   "exit": 0,
   "stderr": "",
-  "stdout": "usage: gnd import [-h] {rai-orm} ...\n\npositional arguments:\n  {rai-orm}\n    rai-orm   import the bounded rai-orm-from-schema dialect\n\noptions:\n  -h, --help  show this help message and exit\n"
+  "stdout": "usage: gnd import [-h] {rai-orm,ilp-rules} ...\n\npositional arguments:\n  {rai-orm,ilp-rules}\n    rai-orm            import the bounded rai-orm-from-schema dialect\n    ilp-rules          admit learned ILP clauses as induced guarded\n                       constraints (IK5)\n\noptions:\n  -h, --help           show this help message and exit\n"
  },
  "unknown_flag": {
   "exit": 64,
-  "stderr": "usage: gnd import [-h] {rai-orm} ...\ngnd import: error: the following arguments are required: import_command\n",
+  "stderr": "usage: gnd import [-h] {rai-orm,ilp-rules} ...\ngnd import: error: the following arguments are required: import_command\n",
   "stdout": ""
  }
 }

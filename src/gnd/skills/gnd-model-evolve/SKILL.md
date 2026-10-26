@@ -279,6 +279,8 @@ and it must be named rather than left for the next reader to discover.
   reviewed status change of the existing proposed constraint.
 - A `gnd discover` proposal adds only such induced constraints, with population-bound support;
   preview it like any other proposal and confirm each rule separately.
+- A `gnd import ilp-rules` proposal adds only induced, advisory guarded constraints whose coverage
+  GND re-checked against the labels; review it the same way.
 - Reject any source outside the seven-source taxonomy.
 - Keep `EvolutionOperationAudit` separate from constraint provenance.
 - Retain complete operations, rationale, audit, validation, CAS, blast radius, conformance,

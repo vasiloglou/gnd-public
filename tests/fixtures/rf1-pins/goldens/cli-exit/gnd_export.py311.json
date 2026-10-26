@@ -2,11 +2,11 @@
  "help": {
   "exit": 0,
   "stderr": "",
-  "stdout": "usage: gnd export [-h]\n                  {souffle,souffle-verify,souffle-run,souffle-witness,lean,lean-verify,lean-compile,pyrel}\n                  ...\n\npositional arguments:\n  {souffle,souffle-verify,souffle-run,souffle-witness,lean,lean-verify,lean-compile,pyrel}\n    souffle             bounded standalone Souffle derivation claim\n    souffle-verify      bounded standalone Souffle derivation claim\n    souffle-run         bounded standalone Souffle derivation claim\n    souffle-witness     bounded standalone Souffle derivation claim\n    lean                finite Lean definitions; explicit unproved obligations\n    lean-verify         finite Lean definitions; explicit unproved obligations\n    lean-compile        finite Lean definitions; explicit unproved obligations\n    pyrel               export a standalone PyRel program\n\noptions:\n  -h, --help            show this help message and exit\n"
+  "stdout": "usage: gnd export [-h]\n                  {souffle,souffle-verify,souffle-run,souffle-witness,lean,lean-verify,lean-compile,pyrel,ilp}\n                  ...\n\npositional arguments:\n  {souffle,souffle-verify,souffle-run,souffle-witness,lean,lean-verify,lean-compile,pyrel,ilp}\n    souffle             bounded standalone Souffle derivation claim\n    souffle-verify      bounded standalone Souffle derivation claim\n    souffle-run         bounded standalone Souffle derivation claim\n    souffle-witness     bounded standalone Souffle derivation claim\n    lean                finite Lean definitions; explicit unproved obligations\n    lean-verify         finite Lean definitions; explicit unproved obligations\n    lean-compile        finite Lean definitions; explicit unproved obligations\n    pyrel               export a standalone PyRel program\n    ilp                 export background facts, examples and modes for an ILP\n                        learner (IK5)\n\noptions:\n  -h, --help            show this help message and exit\n"
  },
  "unknown_flag": {
   "exit": 64,
-  "stderr": "usage: gnd export [-h]\n                  {souffle,souffle-verify,souffle-run,souffle-witness,lean,lean-verify,lean-compile,pyrel}\n                  ...\ngnd export: error: the following arguments are required: export_target\n",
+  "stderr": "usage: gnd export [-h]\n                  {souffle,souffle-verify,souffle-run,souffle-witness,lean,lean-verify,lean-compile,pyrel,ilp}\n                  ...\ngnd export: error: the following arguments are required: export_target\n",
   "stdout": ""
  }
 }

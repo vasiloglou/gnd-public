@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/ilp.schema.json",
+  "title": "GND ILP export: the neutral form (gnd-ilp/1) and its export index (gnd-ilp-export/1)",
+  "description": "IK5. The learner-neutral export of a model and a class-mode label manifest, and the index whose SHA-256 is the export digest. Contract: docs/reference/ilp-bridge.md.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/neutral"
+    },
+    {
+      "$ref": "#/$defs/export"
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "example_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:#-]{0,63}$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,63}$"
+    },
+    "neutral": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "model_sha256",
+        "manifest_sha256",
+        "target",
+        "types",
+        "predicates",
+        "comparisons",
+        "examples",
+        "facts",
+        "skipped"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "gnd-ilp/1"
+        },
+        "model_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "predicate",
+            "arity",
+            "covers_class"
+          ],
+          "properties": {
+            "predicate": {
+              "const": "wrong"
+            },
+            "arity": {
+              "const": 1
+            },
+            "covers_class": {
+              "const": "negative"
+            }
+          }
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "object_type",
+              "primitive"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/name"
+              },
+              "object_type": {
+                "type": "string"
+              },
+              "primitive": {
+                "enum": [
+                  "integer",
+                  "string",
+                  "boolean",
+                  null
+                ]
+              }
+            }
+          }
+        },
+        "predicates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "fact_type",
+              "roles",
+              "types"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/name"
+              },
+              "fact_type": {
+                "type": "string"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "types": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "comparisons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "operator",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/name"
+              },
+              "operator": {
+                "enum": [
+                  ">=",
+                  ">",
+                  "<=",
+                  "<"
+                ]
+              },
+              "type": {
+                "$ref": "#/$defs/name"
+              }
+            }
+          }
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "class",
+              "label"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/example_id"
+              },
+              "class": {
+                "enum": [
+                  "negative",
+                  "positive"
+                ]
+              },
+              "label": {
+                "enum": [
+                  "pos",
+                  "neg"
+                ]
+              }
+            }
+          }
+        },
+        "facts": {
+          "type": "array",
+          "maxItems": 1000000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "example",
+              "predicate",
+              "values"
+            ],
+            "properties": {
+              "example": {
+                "$ref": "#/$defs/example_id"
+              },
+              "predicate": {
+                "$ref": "#/$defs/name"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "string",
+                    "integer",
+                    "boolean"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "skipped": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "derived_fact_types"
+          ],
+          "properties": {
+            "derived_fact_types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "export": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "target",
+        "adapter_version",
+        "files"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "gnd-ilp-export/1"
+        },
+        "target": {
+          "enum": [
+            "popper",
+            "neutral"
+          ]
+        },
+        "adapter_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256",
+              "bytes"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

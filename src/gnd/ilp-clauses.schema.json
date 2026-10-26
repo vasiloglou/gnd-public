@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/ilp-clauses.schema.json",
+  "title": "GND ILP learned clauses (gnd-ilp-clauses/1)",
+  "description": "IK5. Learned clauses in the neutral form. Negation, disjunction and aggregates are representable so that the import refuses them by name (spec §6). Contract: docs/reference/ilp-bridge.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "clauses"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "gnd-ilp-clauses/1"
+    },
+    "clauses": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "$ref": "#/$defs/clause"
+      }
+    }
+  },
+  "$defs": {
+    "term": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "var"
+          ],
+          "properties": {
+            "var": {
+              "type": "string",
+              "pattern": "^[A-Z_][A-Za-z0-9_]{0,63}$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "const"
+          ],
+          "properties": {
+            "const": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "maxLength": 256
+                },
+                {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "atom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "predicate",
+        "args"
+      ],
+      "properties": {
+        "predicate": {
+          "type": "string",
+          "pattern": "^[a-z][A-Za-z0-9_]{0,63}$"
+        },
+        "args": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/term"
+          }
+        }
+      }
+    },
+    "body": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/$defs/literal"
+      }
+    },
+    "literal": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "atom"
+          ],
+          "properties": {
+            "atom": {
+              "$ref": "#/$defs/atom"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "compare"
+          ],
+          "properties": {
+            "compare": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "operator",
+                "left",
+                "right"
+              ],
+              "properties": {
+                "operator": {
+                  "enum": [
+                    "<",
+                    "<=",
+                    "=",
+                    ">=",
+                    ">",
+                    "!="
+                  ]
+                },
+                "left": {
+                  "$ref": "#/$defs/term"
+                },
+                "right": {
+                  "$ref": "#/$defs/term"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "not"
+          ],
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/literal"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "or"
+          ],
+          "properties": {
+            "or": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 16,
+              "items": {
+                "$ref": "#/$defs/body"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aggregate"
+          ],
+          "properties": {
+            "aggregate": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "args"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-z][A-Za-z0-9_]{0,63}$"
+                },
+                "args": {
+                  "type": "array",
+                  "maxItems": 16,
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/$defs/term"
+                      },
+                      {
+                        "$ref": "#/$defs/literal"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "clause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "head",
+        "body"
+      ],
+      "properties": {
+        "head": {
+          "$ref": "#/$defs/atom"
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        }
+      }
+    }
+  }
+}

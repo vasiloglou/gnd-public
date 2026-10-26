@@ -48,6 +48,7 @@ __all__ = [
     "RefTable",
     "bind_manifest",
     "read_label_manifest",
+    "read_population",
     "score_populations",
 ]
 
@@ -319,15 +320,33 @@ def _population_bytes(root: Path, relative: str) -> tuple[Path, bytes]:
     return current, data
 
 
+def read_population(manifest: LabelManifest, entry: dict[str, Any], model: Any) -> Any:
+    """One manifest population, resolved, digest-checked and loaded against
+    ``model`` from the bytes that were digested. The one population reader for
+    ``gnd measure --labels`` and the ILP bridge (IK5)."""
+    from gnd.population import load_population_bytes
+
+    relative = entry["path"]
+    candidate, data = _population_bytes(manifest.path.parent, relative)
+    digest = hashlib.sha256(data).hexdigest()
+    if digest != entry["sha256"]:
+        raise LabelError(
+            EXIT_ILL_FORMED,
+            f"population {relative!r} has sha256 {digest}, not the manifest's {entry['sha256']}",
+        )
+    try:
+        return load_population_bytes(data, source=candidate, model=model)
+    except Exception as error:  # noqa: BLE001 -- a load failure is exit 5, as on the synth path
+        raise LabelError(EXIT_GENERATOR, f"population {relative!r} failed to load: {error}") from None
+
+
 def score_populations(bound: BoundManifest, model: Any) -> tuple[list[LabelledPopulation], int]:
     """Load and check every population, in manifest order; returns them and the
     number of checker runs. Identical bytes at one path are checked once (the
     checker is deterministic over (model, bytes)), so the count is the work
     actually done, not the manifest's length (IK3 review R5)."""
     from gnd.checker import check
-    from gnd.population import load_population_bytes
 
-    root = bound.manifest.path.parent
     reports: dict[tuple[str, str], CheckReport] = {}
     scored: list[LabelledPopulation] = []
     checked = 0
@@ -335,21 +354,7 @@ def score_populations(bound: BoundManifest, model: Any) -> tuple[list[LabelledPo
         relative = population["path"]
         key = (relative, population["sha256"])
         if key not in reports:
-            candidate, data = _population_bytes(root, relative)
-            digest = hashlib.sha256(data).hexdigest()
-            if digest != population["sha256"]:
-                raise LabelError(
-                    EXIT_ILL_FORMED,
-                    f"population {relative!r} has sha256 {digest}, not the manifest's "
-                    f"{population['sha256']}",
-                )
-            try:
-                loaded = load_population_bytes(data, source=candidate, model=model)
-            except Exception as error:  # noqa: BLE001 -- a load failure is exit 5, as on the synth path
-                raise LabelError(
-                    EXIT_GENERATOR, f"population {relative!r} failed to load: {error}"
-                ) from None
-            reports[key] = check(model, loaded)
+            reports[key] = check(model, read_population(bound.manifest, population, model))
             checked += 1
         scored.append(
             LabelledPopulation(

@@ -1,0 +1,48 @@
+{
+ "schema_version": "gnd-ilp-clauses/1",
+ "clauses": [
+  {
+   "head": {
+    "predicate": "wrong",
+    "args": [
+     {
+      "var": "A"
+     }
+    ]
+   },
+   "body": [
+    {
+     "atom": {
+      "predicate": "f_order_amount",
+      "args": [
+       {
+        "var": "A"
+       },
+       {
+        "var": "B"
+       },
+       {
+        "var": "C"
+       }
+      ]
+     }
+    },
+    {
+     "not": {
+      "atom": {
+       "predicate": "f_order_flagged",
+       "args": [
+        {
+         "var": "A"
+        },
+        {
+         "var": "B"
+        }
+       ]
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+# IK5 approval corpus: negative -- a small order (10) that is flagged
+format_version: 2
+population:
+  model: orders.orm.yaml
+  source: fixture
+  covers: [order_by, order_amount, order_flagged, customer_blocked]
+instances:
+  order: [8]
+  customer: ["c2"]
+facts:
+  order_by:
+    - { order: 8, customer: "c2" }
+  order_amount:
+    - { order: 8, amount: 10 }
+  order_flagged:
+    - { order: 8 }
+  customer_blocked: []

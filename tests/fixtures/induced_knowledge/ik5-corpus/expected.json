@@ -1,0 +1,558 @@
+{
+ "version": 1,
+ "note": "Hand-written from spec r1. Constraints are the exact guarded constraints the proposal adds, in clause order; refusals name the spec's construct or binding reason and, for fragment refusals, the clause index.",
+ "export_sha256": {
+  "popper": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c",
+  "neutral": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+ },
+ "cases": {
+  "X1": {
+   "exit": 0,
+   "export_sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c",
+   "tree": "expected-export/popper"
+  },
+  "X2": {
+   "exit": 0,
+   "export_sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61",
+   "tree": "expected-export/neutral"
+  },
+  "XE1": {
+   "exit": 3,
+   "refusal": "expected-state"
+  },
+  "XE2": {
+   "exit": 3,
+   "refusal": "opaque"
+  },
+  "XE3": {
+   "exit": 11
+  },
+  "XE4": {
+   "exit": 66
+  },
+  "XE5": {
+   "exit": 74
+  },
+  "I1": {
+   "exit": 0,
+   "constraints": [
+    {
+     "type": "guarded",
+     "antecedent": [
+      {
+       "fact_type": "order_amount",
+       "bind": {
+        "order": "$v_b",
+        "amount": "$v_c"
+       }
+      }
+     ],
+     "consequent": {
+      "comparison": {
+       "operator": "<=",
+       "left": "$v_c",
+       "right": 100
+      }
+     },
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 0",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "popper",
+        "version": "0.0.0+authored"
+       },
+       "method": "ilp-neutral",
+       "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+       "examples": [
+        "n1",
+        "n2"
+       ],
+       "counterexamples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 2
+       },
+       "evidence": [
+        {
+         "ref": "ilp/export.json",
+         "sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+        },
+        {
+         "ref": "ilp/clauses",
+         "sha256": "52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8"
+        },
+        {
+         "ref": "ilp/run",
+         "sha256": "cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "type": "guarded",
+     "antecedent": [
+      {
+       "fact_type": "order_amount",
+       "bind": {
+        "order": "$v_b",
+        "amount": "$v_c"
+       }
+      }
+     ],
+     "consequent": {
+      "absence": {
+       "fact_type": "order_flagged",
+       "bind": {
+        "order": "$v_b"
+       }
+      }
+     },
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 1",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "popper",
+        "version": "0.0.0+authored"
+       },
+       "method": "ilp-neutral",
+       "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+       "examples": [
+        "n2",
+        "n3"
+       ],
+       "counterexamples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 2
+       },
+       "evidence": [
+        {
+         "ref": "ilp/export.json",
+         "sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+        },
+        {
+         "ref": "ilp/clauses",
+         "sha256": "52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8"
+        },
+        {
+         "ref": "ilp/run",
+         "sha256": "cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "type": "guarded",
+     "antecedent": [
+      {
+       "fact_type": "order_amount",
+       "bind": {
+        "order": "$v_b",
+        "amount": "$v_c"
+       }
+      }
+     ],
+     "consequent": {
+      "comparison": {
+       "operator": "<=",
+       "left": "$v_c",
+       "right": 80
+      }
+     },
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 2",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "popper",
+        "version": "0.0.0+authored"
+       },
+       "method": "ilp-neutral",
+       "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+       "examples": [
+        "n1",
+        "n2"
+       ],
+       "counterexamples": [
+        "p1",
+        "p2"
+       ],
+       "support": {
+        "numerator": 2,
+        "denominator": 4
+       },
+       "evidence": [
+        {
+         "ref": "ilp/export.json",
+         "sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+        },
+        {
+         "ref": "ilp/clauses",
+         "sha256": "52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8"
+        },
+        {
+         "ref": "ilp/run",
+         "sha256": "cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "vacuous": {
+    "0": [
+     "v1"
+    ],
+    "1": [
+     "v1"
+    ],
+    "2": [
+     "v1"
+    ]
+   }
+  },
+  "I2": {
+   "exit": 0,
+   "constraints": [
+    {
+     "type": "guarded",
+     "antecedent": [
+      {
+       "fact_type": "order_amount",
+       "bind": {
+        "order": "$v_b",
+        "amount": "$v_c"
+       }
+      }
+     ],
+     "consequent": {
+      "comparison": {
+       "operator": "<=",
+       "left": "$v_c",
+       "right": 100
+      }
+     },
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 0",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "popper",
+        "version": "0.0.0+authored"
+       },
+       "method": "ilp-popper",
+       "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+       "examples": [
+        "n1",
+        "n2"
+       ],
+       "counterexamples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 2
+       },
+       "evidence": [
+        {
+         "ref": "ilp/export.json",
+         "sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c"
+        },
+        {
+         "ref": "ilp/clauses",
+         "sha256": "4424e3c3a10ec0ece8d6dc4aba7bb3967f1802d20d0591f1dea8faf408eb4003"
+        },
+        {
+         "ref": "ilp/run",
+         "sha256": "552b328c902b7ce46847720466cdf8dfef8938b60f08eb1615dc4a2c2e9df0e4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "type": "guarded",
+     "antecedent": [
+      {
+       "fact_type": "order_amount",
+       "bind": {
+        "order": "$v_b",
+        "amount": "$v_c"
+       }
+      }
+     ],
+     "consequent": {
+      "absence": {
+       "fact_type": "order_flagged",
+       "bind": {
+        "order": "$v_b"
+       }
+      }
+     },
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 1",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "popper",
+        "version": "0.0.0+authored"
+       },
+       "method": "ilp-popper",
+       "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+       "examples": [
+        "n2",
+        "n3"
+       ],
+       "counterexamples": [],
+       "support": {
+        "numerator": 2,
+        "denominator": 2
+       },
+       "evidence": [
+        {
+         "ref": "ilp/export.json",
+         "sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c"
+        },
+        {
+         "ref": "ilp/clauses",
+         "sha256": "4424e3c3a10ec0ece8d6dc4aba7bb3967f1802d20d0591f1dea8faf408eb4003"
+        },
+        {
+         "ref": "ilp/run",
+         "sha256": "552b328c902b7ce46847720466cdf8dfef8938b60f08eb1615dc4a2c2e9df0e4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "type": "guarded",
+     "antecedent": [
+      {
+       "fact_type": "order_amount",
+       "bind": {
+        "order": "$v_b",
+        "amount": "$v_c"
+       }
+      }
+     ],
+     "consequent": {
+      "comparison": {
+       "operator": "<=",
+       "left": "$v_c",
+       "right": 80
+      }
+     },
+     "source": "induced",
+     "status": "proposed",
+     "modality": "deontic",
+     "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 2",
+     "provenance": {
+      "induction": {
+       "inducer": {
+        "name": "popper",
+        "version": "0.0.0+authored"
+       },
+       "method": "ilp-popper",
+       "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+       "examples": [
+        "n1",
+        "n2"
+       ],
+       "counterexamples": [
+        "p1",
+        "p2"
+       ],
+       "support": {
+        "numerator": 2,
+        "denominator": 4
+       },
+       "evidence": [
+        {
+         "ref": "ilp/export.json",
+         "sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c"
+        },
+        {
+         "ref": "ilp/clauses",
+         "sha256": "4424e3c3a10ec0ece8d6dc4aba7bb3967f1802d20d0591f1dea8faf408eb4003"
+        },
+        {
+         "ref": "ilp/run",
+         "sha256": "552b328c902b7ce46847720466cdf8dfef8938b60f08eb1615dc4a2c2e9df0e4"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "vacuous": {
+    "0": [
+     "v1"
+    ],
+    "1": [
+     "v1"
+    ],
+    "2": [
+     "v1"
+    ]
+   }
+  },
+  "I3": {
+   "exit": 0
+  },
+  "I4": {
+   "exit": 11
+  },
+  "M1": {
+   "exit": 3,
+   "refusal": "coverage-mismatch",
+   "clause": 0
+  },
+  "M2": {
+   "exit": 3,
+   "refusal": "coverage-mismatch",
+   "clause": 0
+  },
+  "M3": {
+   "exit": 3,
+   "refusal": "unknown-example",
+   "clause": 0
+  },
+  "M4": {
+   "exit": 3,
+   "refusal": "covers-nothing",
+   "clause": 0
+  },
+  "B1": {
+   "exit": 3,
+   "refusal": "export-mismatch"
+  },
+  "B2": {
+   "exit": 3,
+   "refusal": "clauses-mismatch"
+  },
+  "B3": {
+   "exit": 3,
+   "refusal": "learner-mismatch"
+  },
+  "B4": {
+   "exit": 3,
+   "refusal": "coverage-shape"
+  },
+  "B5": {
+   "exit": 3,
+   "refusal": "coverage-shape"
+  },
+  "F01": {
+   "exit": 3,
+   "refusal": "head-shape",
+   "clause": 0
+  },
+  "F02": {
+   "exit": 3,
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  "F04": {
+   "exit": 3,
+   "refusal": "disjunction",
+   "clause": 0
+  },
+  "F06": {
+   "exit": 3,
+   "refusal": "aggregate",
+   "clause": 0
+  },
+  "F08": {
+   "exit": 3,
+   "refusal": "unknown-predicate",
+   "clause": 0
+  },
+  "F09": {
+   "exit": 3,
+   "refusal": "arity",
+   "clause": 0
+  },
+  "F10": {
+   "exit": 3,
+   "refusal": "recursion",
+   "clause": 0
+  },
+  "F11": {
+   "exit": 3,
+   "refusal": "example-variable",
+   "clause": 0
+  },
+  "F12": {
+   "exit": 3,
+   "refusal": "multiple-comparisons",
+   "clause": 0
+  },
+  "F13": {
+   "exit": 3,
+   "refusal": "comparison-type",
+   "clause": 0
+  },
+  "F14": {
+   "exit": 3,
+   "refusal": "non-ground-absence",
+   "clause": 0
+  },
+  "F15": {
+   "exit": 3,
+   "refusal": "empty-antecedent",
+   "clause": 0
+  },
+  "F16": {
+   "exit": 3,
+   "refusal": "disconnected-body",
+   "clause": 0
+  },
+  "F17": {
+   "exit": 3,
+   "refusal": "unbound-comparison",
+   "clause": 0
+  },
+  "F18": {
+   "exit": 3,
+   "refusal": "constant-spelling",
+   "clause": 0
+  },
+  "F19": {
+   "exit": 3,
+   "refusal": "invalid-guarded",
+   "clause": 0
+  },
+  "F20": {
+   "exit": 3,
+   "refusal": "unparsable"
+  },
+  "F03": {
+   "exit": 3,
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  "F05": {
+   "exit": 3,
+   "refusal": "disjunction",
+   "clause": 0
+  },
+  "F07": {
+   "exit": 3,
+   "refusal": "aggregate",
+   "clause": 0
+  }
+ }
+}

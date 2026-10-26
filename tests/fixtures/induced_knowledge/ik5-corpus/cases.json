@@ -1,0 +1,350 @@
+{
+ "version": 1,
+ "model": "orders.orm.yaml",
+ "cases": [
+  {
+   "id": "X1",
+   "story": "the Popper export of six labelled populations",
+   "command": "export",
+   "target": "popper",
+   "manifest": "m.labels.json"
+  },
+  {
+   "id": "X2",
+   "story": "the neutral export alone (finding C-F2)",
+   "command": "export",
+   "target": "neutral",
+   "manifest": "m.labels.json"
+  },
+  {
+   "id": "XE1",
+   "story": "an expected-state manifest carries no classes to learn from",
+   "command": "export",
+   "target": "popper",
+   "manifest": "es.labels.json"
+  },
+  {
+   "id": "XE2",
+   "story": "a population with a hidden amount cannot be rendered",
+   "command": "export",
+   "target": "popper",
+   "manifest": "opaque.labels.json"
+  },
+  {
+   "id": "XE3",
+   "story": "the output directory already exists",
+   "command": "export",
+   "target": "popper",
+   "manifest": "m.labels.json"
+  },
+  {
+   "id": "XE4",
+   "story": "the manifest is missing",
+   "command": "export",
+   "target": "popper",
+   "manifest": "absent.labels.json"
+  },
+  {
+   "id": "XE5",
+   "story": "a population path is a symbolic link",
+   "command": "export",
+   "target": "popper",
+   "manifest": "link.labels.json"
+  },
+  {
+   "id": "I1",
+   "story": "three learned clauses in the neutral form; every reported set matches",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "i1.clauses.json",
+   "run": "i1.run.json"
+  },
+  {
+   "id": "I2",
+   "story": "the same three clauses as Popper prints them",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "i2.popper.pl",
+   "run": "i2.run.json"
+  },
+  {
+   "id": "I3",
+   "story": "gnd evolve preview of I1's proposal",
+   "command": "preview",
+   "from": "I1"
+  },
+  {
+   "id": "I4",
+   "story": "the proposal path already exists",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "i1.clauses.json",
+   "run": "i1.run.json",
+   "out_exists": true
+  },
+  {
+   "id": "B1",
+   "story": "the run record names a different export",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "b1.clauses.json",
+   "run": "b1.run.json"
+  },
+  {
+   "id": "B2",
+   "story": "the run record names different clause bytes",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "b2.clauses.json",
+   "run": "b2.run.json"
+  },
+  {
+   "id": "B3",
+   "story": "a Popper import whose run record names another learner",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "b3.popper.pl",
+   "run": "b3.run.json"
+  },
+  {
+   "id": "B4",
+   "story": "the run record leaves clause 1 out",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "b4.clauses.json",
+   "run": "b4.run.json"
+  },
+  {
+   "id": "B5",
+   "story": "the run record lists clause 0 twice",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "b5.clauses.json",
+   "run": "b5.run.json"
+  },
+  {
+   "id": "F01",
+   "story": "a head with two arguments",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f01.popper.pl",
+   "run": "f01.run.json"
+  },
+  {
+   "id": "F02",
+   "story": "a negated atom, as Popper would print it",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f02.popper.pl",
+   "run": "f02.run.json"
+  },
+  {
+   "id": "F03",
+   "story": "a not literal in the neutral form",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "f03.clauses.json",
+   "run": "f03.run.json"
+  },
+  {
+   "id": "F04",
+   "story": "a disjunction inside the body",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f04.popper.pl",
+   "run": "f04.run.json"
+  },
+  {
+   "id": "F05",
+   "story": "an or literal in the neutral form",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "f05.clauses.json",
+   "run": "f05.run.json"
+  },
+  {
+   "id": "F06",
+   "story": "a count over another relation",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f06.popper.pl",
+   "run": "f06.run.json"
+  },
+  {
+   "id": "F07",
+   "story": "an aggregate literal in the neutral form",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "f07.clauses.json",
+   "run": "f07.run.json"
+  },
+  {
+   "id": "F08",
+   "story": "a predicate the export never declared",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f08.popper.pl",
+   "run": "f08.run.json"
+  },
+  {
+   "id": "F09",
+   "story": "the amount relation with one role missing",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f09.popper.pl",
+   "run": "f09.run.json"
+  },
+  {
+   "id": "F10",
+   "story": "the head predicate used in its own body",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f10.popper.pl",
+   "run": "f10.run.json"
+  },
+  {
+   "id": "F11",
+   "story": "an atom whose first argument is not the example",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f11.popper.pl",
+   "run": "f11.run.json"
+  },
+  {
+   "id": "F12",
+   "story": "two comparisons, which a guarded antecedent cannot hold",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f12.popper.pl",
+   "run": "f12.run.json"
+  },
+  {
+   "id": "F13",
+   "story": "a comparison over customer codes, which are not integers",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f13.popper.pl",
+   "run": "f13.run.json"
+  },
+  {
+   "id": "F14",
+   "story": "two atoms sharing no variable, so neither can be the absence",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f14.popper.pl",
+   "run": "f14.run.json"
+  },
+  {
+   "id": "F15",
+   "story": "one ground atom and nothing else",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f15.popper.pl",
+   "run": "f15.run.json"
+  },
+  {
+   "id": "F16",
+   "story": "a comparison over an antecedent of two unjoined atoms",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f16.popper.pl",
+   "run": "f16.run.json"
+  },
+  {
+   "id": "F17",
+   "story": "a comparison over a variable no atom binds",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f17.popper.pl",
+   "run": "f17.run.json"
+  },
+  {
+   "id": "F18",
+   "story": "a constant that guarded would read as a variable",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f18.popper.pl",
+   "run": "f18.run.json"
+  },
+  {
+   "id": "F19",
+   "story": "an amount compared with a string, refused by the validator",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f19.popper.pl",
+   "run": "f19.run.json"
+  },
+  {
+   "id": "F20",
+   "story": "a missing comma between two literals",
+   "command": "import",
+   "target": "popper",
+   "manifest": "m.labels.json",
+   "clauses": "f20.popper.pl",
+   "run": "f20.run.json"
+  },
+  {
+   "id": "M1",
+   "story": "rule A reported as covering n1 and n3: the same count, a different set",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "m1.clauses.json",
+   "run": "m1.run.json"
+  },
+  {
+   "id": "M2",
+   "story": "rule A reported as also covering v1, where GND finds it vacuous",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "m2.clauses.json",
+   "run": "m2.run.json"
+  },
+  {
+   "id": "M3",
+   "story": "rule A reported as covering an example the manifest does not list",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "m3.clauses.json",
+   "run": "m3.run.json"
+  },
+  {
+   "id": "M4",
+   "story": "a rule that covers nothing at all, reported as covering nothing",
+   "command": "import",
+   "target": "neutral",
+   "manifest": "m.labels.json",
+   "clauses": "m4.clauses.json",
+   "run": "m4.run.json"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+# IK5 approval corpus: positive -- no orders at all, so every rule over amounts is vacuous
+format_version: 2
+population:
+  model: orders.orm.yaml
+  source: fixture
+  covers: [order_by, order_amount, order_flagged, customer_blocked]
+instances:
+  customer: ["c1"]
+facts:
+  order_by: []
+  order_amount: []
+  order_flagged: []
+  customer_blocked:
+    - { customer: "c1" }

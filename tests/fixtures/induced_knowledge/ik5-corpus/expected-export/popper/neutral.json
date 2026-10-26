@@ -1,0 +1,299 @@
+{
+  "comparisons": [
+    {
+      "name": "ge_t_amount",
+      "operator": ">=",
+      "type": "t_amount"
+    },
+    {
+      "name": "gt_t_amount",
+      "operator": ">",
+      "type": "t_amount"
+    },
+    {
+      "name": "le_t_amount",
+      "operator": "<=",
+      "type": "t_amount"
+    },
+    {
+      "name": "lt_t_amount",
+      "operator": "<",
+      "type": "t_amount"
+    }
+  ],
+  "examples": [
+    {
+      "class": "negative",
+      "id": "n1",
+      "label": "pos"
+    },
+    {
+      "class": "negative",
+      "id": "n2",
+      "label": "pos"
+    },
+    {
+      "class": "negative",
+      "id": "n3",
+      "label": "pos"
+    },
+    {
+      "class": "positive",
+      "id": "p1",
+      "label": "neg"
+    },
+    {
+      "class": "positive",
+      "id": "p2",
+      "label": "neg"
+    },
+    {
+      "class": "positive",
+      "id": "v1",
+      "label": "neg"
+    }
+  ],
+  "facts": [
+    {
+      "example": "n1",
+      "predicate": "f_order_amount",
+      "values": [
+        1,
+        50
+      ]
+    },
+    {
+      "example": "n1",
+      "predicate": "f_order_amount",
+      "values": [
+        2,
+        150
+      ]
+    },
+    {
+      "example": "n1",
+      "predicate": "f_order_by",
+      "values": [
+        1,
+        "c1"
+      ]
+    },
+    {
+      "example": "n1",
+      "predicate": "f_order_by",
+      "values": [
+        2,
+        "c2"
+      ]
+    },
+    {
+      "example": "n2",
+      "predicate": "f_customer_blocked",
+      "values": [
+        "c3"
+      ]
+    },
+    {
+      "example": "n2",
+      "predicate": "f_order_amount",
+      "values": [
+        3,
+        200
+      ]
+    },
+    {
+      "example": "n2",
+      "predicate": "f_order_amount",
+      "values": [
+        4,
+        20
+      ]
+    },
+    {
+      "example": "n2",
+      "predicate": "f_order_by",
+      "values": [
+        3,
+        "c1"
+      ]
+    },
+    {
+      "example": "n2",
+      "predicate": "f_order_by",
+      "values": [
+        4,
+        "c3"
+      ]
+    },
+    {
+      "example": "n2",
+      "predicate": "f_order_flagged",
+      "values": [
+        4
+      ]
+    },
+    {
+      "example": "n3",
+      "predicate": "f_order_amount",
+      "values": [
+        8,
+        10
+      ]
+    },
+    {
+      "example": "n3",
+      "predicate": "f_order_by",
+      "values": [
+        8,
+        "c2"
+      ]
+    },
+    {
+      "example": "n3",
+      "predicate": "f_order_flagged",
+      "values": [
+        8
+      ]
+    },
+    {
+      "example": "p1",
+      "predicate": "f_order_amount",
+      "values": [
+        5,
+        30
+      ]
+    },
+    {
+      "example": "p1",
+      "predicate": "f_order_amount",
+      "values": [
+        6,
+        90
+      ]
+    },
+    {
+      "example": "p1",
+      "predicate": "f_order_by",
+      "values": [
+        5,
+        "c1"
+      ]
+    },
+    {
+      "example": "p1",
+      "predicate": "f_order_by",
+      "values": [
+        6,
+        "c2"
+      ]
+    },
+    {
+      "example": "p2",
+      "predicate": "f_customer_blocked",
+      "values": [
+        "c3"
+      ]
+    },
+    {
+      "example": "p2",
+      "predicate": "f_order_amount",
+      "values": [
+        7,
+        100
+      ]
+    },
+    {
+      "example": "p2",
+      "predicate": "f_order_by",
+      "values": [
+        7,
+        "c3"
+      ]
+    },
+    {
+      "example": "v1",
+      "predicate": "f_customer_blocked",
+      "values": [
+        "c1"
+      ]
+    }
+  ],
+  "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+  "model_sha256": "021be3e93b75081199ba62bb5097375b45814c6b1492b50332a747af4239de59",
+  "predicates": [
+    {
+      "fact_type": "customer_blocked",
+      "name": "f_customer_blocked",
+      "roles": [
+        "customer"
+      ],
+      "types": [
+        "ex",
+        "t_customer"
+      ]
+    },
+    {
+      "fact_type": "order_amount",
+      "name": "f_order_amount",
+      "roles": [
+        "order",
+        "amount"
+      ],
+      "types": [
+        "ex",
+        "t_order",
+        "t_amount"
+      ]
+    },
+    {
+      "fact_type": "order_by",
+      "name": "f_order_by",
+      "roles": [
+        "order",
+        "customer"
+      ],
+      "types": [
+        "ex",
+        "t_order",
+        "t_customer"
+      ]
+    },
+    {
+      "fact_type": "order_flagged",
+      "name": "f_order_flagged",
+      "roles": [
+        "order"
+      ],
+      "types": [
+        "ex",
+        "t_order"
+      ]
+    }
+  ],
+  "schema_version": "gnd-ilp/1",
+  "skipped": {
+    "derived_fact_types": []
+  },
+  "target": {
+    "arity": 1,
+    "covers_class": "negative",
+    "predicate": "wrong"
+  },
+  "types": [
+    {
+      "name": "t_amount",
+      "object_type": "amount",
+      "primitive": "integer"
+    },
+    {
+      "name": "t_customer",
+      "object_type": "customer",
+      "primitive": null
+    },
+    {
+      "name": "t_order",
+      "object_type": "order",
+      "primitive": null
+    }
+  ]
+}

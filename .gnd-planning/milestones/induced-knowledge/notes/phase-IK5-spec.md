@@ -507,3 +507,86 @@ Proposed in IK5-D1: corpus-first, under
 | `--out` refusal before work | As IK4-Q1 ruled: exit 11 before anything is written. |
 | String constants in binds | `$defs.bindings` values are plain scalars, and a string beginning with `$` is a variable. A learned constant `'$x'` would silently become a variable, which widens the rule, so check 9 refuses it (`constant-spelling`). Found by this sweep. |
 | Anchors named in §6 | Checked at B: `canonical_scalar` (`semantic_adapter.py:114`), `_apply_declared_operations` (`evolve/service.py:813`), `bind_manifest` (`measure/labels.py:229`), `run_bounded_process` (`process.py:385`), the `$defs.guarded`, `atom`, `comparison_operator` and `induction` schemas, and both skill pin sites. |
+
+## 13. Owner gate record (2026-10-26)
+
+**Approval (o).** The owner was asked "Approve IK5 spec r1 with the proposed
+rulings?" and replied "Approve IK5 spec r1 with every proposed ruling, and D13
+option (a): hand-authored Popper fixtures, no install." on 2026-10-26. The
+approved bytes are spec r1 as committed in `326d6ad`, before this section was
+added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `notes/phase-IK5-spec.md` (r1) | `39a15d8dba0469e1fac03d8698b689f5284e99fd23d66dc82b9a311cf25a1121` |
+
+**Rulings (o).** IK5-D1 to D15 are ruled as proposed in §7:
+- **D1:** corpus-first.
+- **D2:** one example is one manifest population.
+- **D3:** `wrong` covers the `negative` class, fixed.
+- **D4:** both commands live in the `export` lane.
+- **D5:** import takes `--target popper|neutral`.
+- **D6:** coverage is compared per clause.
+- **D7:** `unchecked` is not covered and is listed separately.
+- **D8:** `coverage-mismatch` is exit 3 with a named reason.
+- **D9:** all-or-nothing admission.
+- **D10:** precision-shaped support.
+- **D11:** redacted roles and opaque cells refuse the export.
+- **D12:** no GND command runs a learner; an optional evidence script only.
+- **D13:** option (a). Recorded fixtures are hand-authored in Popper's printed
+  syntax and labelled as such; nothing is installed. Whether a real Popper
+  accepts the rendering, and whether real Popper output fits the IK2 block,
+  stay open in the record's boundary.
+- **D14:** the §6 bounds.
+- **D15:** branch `claude/ik5-ilp-bridge` from B = `1bcb899`.
+
+**Next under IK5-D1.** The corpus is committed red before any implementation
+file, and the owner approves it by reading.
+
+## 14. Corpus findings (2026-10-26, awaiting the owner)
+
+Found while authoring the corpus, before any implementation file. C-F2 and
+C-F3 amend spec r1 and need an owner ruling; the others fix details r1 left
+open.
+
+- **C-F1 — two verdict branches the commands cannot reach.**
+  - **`unchecked`:** the export refuses opaque cells, comparisons are
+    integer-only and always ordered, and disconnected bodies are refused. So no
+    corpus input can make a learned constraint `unchecked`.
+  - **`fail` → 70:** every learned constraint is deontic, so `fail` cannot
+    arise either.
+
+  **Proposed:** keep both branches as defensive code. Each gets an
+  implementation unit test that feeds the re-evaluation step a crafted checker
+  result, so each has a case that fails it. They are not corpus cases.
+- **C-F2 — the neutral import needs an export to bind.** With
+  `--target neutral`, the import must recompute an export digest E, but r1's
+  export has only the `popper` target. **Proposed:** `gnd export ilp
+  --target neutral` writes `neutral.json` and `export.json` only, and E binds
+  that tree (case X2). This adds one export target.
+- **C-F3 — aggregate arguments are goals, not terms.** Popper-style aggregates
+  (`aggregate_all(count, f(…), N)`) take a goal as an argument, which r1's term
+  shape cannot hold. **Proposed:** `aggregate.args` items are terms or
+  literals (cases F06, F07). The schema changes only inside a construct that is
+  always refused.
+- **C-F4 — names the corpus fixes.**
+  - **Export refusals:** `expected-state` (XE1) and `opaque` (XE2).
+  - **Refusal messages:** a fragment refusal names `clause <k>`.
+  - **Export stdout:** includes E.
+  - **The import report:** has `clauses[k].vacuous`.
+  - **The neutral `primitive` spelling:** `integer` and `string` for the
+    model's `Integer` and `String`.
+  - **`export.json`:** `adapter_version` is the string `"1"`.
+- **C-F5 — the hand-authored learner identity.** Recorded fixtures name the
+  learner `popper 0.0.0+authored`, a token in IK2's grammar that says no run
+  produced them (IK5-D13 (a)).
+- **C-F6 — the rule-B designation is pinned.** For
+  `wrong(A):- f_order_amount(A,B,C), f_order_flagged(A,B)`, check 6 designates
+  the flagged atom, which is the last atom whose variables all occur
+  elsewhere. That gives an `absence` consequent over the amount antecedent.
+  Rule C (support 2 of 4, counterexamples p1 and p2) is the case that tells
+  precision-shaped support apart from a count of covered examples.
+
+**Red check:** `uv run pytest -q -p no:randomly tests/test_ilp_bridge.py` gives
+41 failed and 2 passed by design. The two that pass check the answer key itself:
+every case has an answer, and I1 and I2 agree on their rules.

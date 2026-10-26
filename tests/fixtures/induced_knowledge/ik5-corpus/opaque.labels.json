@@ -1,0 +1,24 @@
+{
+ "schema_version": "gnd-labels/1",
+ "model_sha256": "021be3e93b75081199ba62bb5097375b45814c6b1492b50332a747af4239de59",
+ "mode": "class",
+ "populations": [
+  {
+   "id": "n1",
+   "path": "pops/n1.yaml",
+   "sha256": "3d7b0cebd073b1ab73a5478982831c0832adc317aef5e6c4c9ab9bcd60c07f13",
+   "class": "negative"
+  },
+  {
+   "id": "opaque",
+   "path": "pops/opaque.yaml",
+   "sha256": "868ae5d428efc81c0d3dd605969b8e850f4b396f684a180c1e855eed5c5ed448",
+   "class": "negative"
+  }
+ ],
+ "rules": {
+  "id:u_order_customer": {
+   "fires_on": "negative"
+  }
+ }
+}

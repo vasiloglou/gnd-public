@@ -1,0 +1,16 @@
+# IK5 approval corpus: negative -- one amount is hidden, so the export cannot render it
+format_version: 2
+population:
+  model: orders.orm.yaml
+  source: fixture
+  covers: [order_by, order_amount, order_flagged, customer_blocked]
+instances:
+  order: [9]
+  customer: ["c1"]
+facts:
+  order_by:
+    - { order: 9, customer: "c1" }
+  order_amount:
+    - { order: 9, amount: { "$opaque": "a-hidden" } }
+  order_flagged: []
+  customer_blocked: []

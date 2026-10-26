@@ -1,0 +1,15 @@
+{
+ "schema_version": "gnd-ilp-run/1",
+ "learner": {
+  "name": "popper",
+  "version": "0.0.0+authored"
+ },
+ "export_sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61",
+ "clauses_sha256": "8d3ca0aa3ad2fd47cc1fb441de0fcc77103ab5453789553c3ddf94294d827f88",
+ "coverage": [
+  {
+   "clause": 0,
+   "covered": []
+  }
+ ]
+}

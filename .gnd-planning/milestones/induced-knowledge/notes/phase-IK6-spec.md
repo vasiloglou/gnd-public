@@ -304,3 +304,28 @@ an exit.
 | Determinism | Discover and import take `--requested-at`; discover takes `--actor`. Previews of these proposals carry no path (IK4-Q2 T6 golden). Measure and discover reports: whether they contain paths is checked at implementation; the runner normalizes `<run>`. |
 | Census countable | `git ls-files src/gnd/skills` gives 65 files at B. |
 | Wheel payload cap | `check_installed_docs.py` asserts a payload under 12 MiB. The example adds well under 100 KiB; the current payload is measured at implementation. |
+
+## 13. Owner gate record (2026-10-26)
+
+**Approval (o).** The owner was asked "Approve IK6 spec r1 with its nine
+proposed rulings?" and replied "Approve IK6 spec r1 with all nine proposed
+rulings." on 2026-10-26. The approved bytes are spec r1 as committed in
+`b8ba51c`, before this section was added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `notes/phase-IK6-spec.md` (r1) | `aa0cdab49086f013eb854bcf8805f946533e3f4cbeca10404b2c3d1d642a905c` |
+
+**Rulings (o).**
+- **D1:** prose plus checkpoint C1: the example and the runnable page first,
+  shown with real output before the rest.
+- **D2:** a new `refunds` example.
+- **D3:** a stand-in learner script; a real Popper run stays IK5-Q5.
+- **D4:** page output blocks plus file-digest goldens, run twice.
+- **D5:** the census in the milestone directory, and the §6 skill edits.
+- **D6:** IK1-Q2 goes to milestone close.
+- **D7:** IK5-Q5 stays open.
+- **D8:** a release-notes entry, one guide pointer, and three reference links.
+- **D9:** branch `claude/ik6-end-to-end` from B = `705ad94`.
+
+**Next.** Build the example and the page, and stop at checkpoint C1.

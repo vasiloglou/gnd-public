@@ -489,7 +489,7 @@ def emitter_specs() -> tuple[EmitterSpec, ...]:
             "cli",
             "json",
             ("stdout", "stderr", "written-output"),
-            (0, 3, 5, 6, 64, 70, 74),
+            (0, 3, 5, 6, 64, 66, 70, 74),
         ),
         (
             "cli-measure-text",
@@ -497,7 +497,7 @@ def emitter_specs() -> tuple[EmitterSpec, ...]:
             "cli",
             "text",
             ("stdout", "stderr", "written-output"),
-            (0, 3, 5, 6, 64, 70, 74),
+            (0, 3, 5, 6, 64, 66, 70, 74),
         ),
         (
             "session-feedback-json",
@@ -748,7 +748,9 @@ def _select_successor(kind: OutputKind, payload: dict[str, Any]) -> None:
     elif kind == "batch":
         payload["schema_version"] = 2
     elif kind == "measure":
-        payload["schema_version"] = 3
+        # IK3: the labelled variants (4, 5) are already redaction-aware.
+        if payload.get("schema_version") not in (4, 5):
+            payload["schema_version"] = 3
     elif kind in {"session-feedback", "session-attempt"}:
         payload["schema_version"] = 6
     elif kind == "session-result":
@@ -799,7 +801,7 @@ def project_output(
                     row["excerpt_candidates"] = {}
             return payload
         if not policy.active:
-            if kind == "measure" and payload.get("schema_version") == 3:
+            if kind == "measure" and payload.get("schema_version") in (3, 4, 5):
                 payload["redaction"] = policy.metadata(mode)
             return payload
         if case_id is not None:

@@ -9,25 +9,16 @@
     "tool",
     "command",
     "gnd_version",
-    "generator_version",
     "model",
     "model_id",
     "model_digest",
-    "pool_source",
     "population_count",
-    "seeds",
-    "pools",
-    "manifest",
-    "corpus",
-    "per_constraint",
-    "coverage_summary",
-    "checker_defects",
     "lanes"
   ],
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "enum": [1, 2, 3]
+      "enum": [1, 2, 3, 4, 5]
     },
     "tool": {
       "const": "gnd"
@@ -148,24 +139,7 @@
         "population_count",
         "observation_count",
         "decided_observations",
-        "wrong_attribution",
-        "isolating_cases",
-        "set_attributed_cases",
-        "applicable_cells",
-        "covered_applicable_cells",
-        "not_applicable_cells",
-        "missing_cells",
-        "boundary_cases_derived",
-        "boundary_not_derivable",
-        "case_kinds",
-        "families_in_model",
-        "families_covered",
-        "case_kinds_present",
-        "band4_reason_codes",
-        "band4_reason_codes_exercised",
-        "operators_exercised",
-        "coverage_fraction",
-        "applicability_matrix"
+        "wrong_attribution"
       ],
       "additionalProperties": false,
       "description": "Counts and COVERAGE FRACTIONS — never an accuracy score (D-01). wrong_attribution is D-21's run-level pin (required 0 on a sound checker); isolating_cases / set_attributed_cases split the violating class so shared per-constraint credit is visible (D-05'). The applicability_matrix is the C5 answer to \"all five case kinds per family\", which is semantically impossible: each (family, case_kind) cell is covered, not-applicable WITH A REASON, or missing, and coverage_fraction = covered_applicable_cells / applicable_cells with not-applicable cells OUT of the denominator, so an unmeasurable family reads as unmeasurable rather than as covered.",
@@ -373,9 +347,100 @@
         }
       }
     },
-    "redaction": {"$ref": "#/$defs/redaction"}
+    "redaction": {"$ref": "#/$defs/redaction"},
+    "labels": {"$ref": "#/$defs/labels"},
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "description": "IK3 class mode (schema 5): one row per declared rule, six agreement counts each with its numerator and denominator. No aggregate, accuracy or F1 (D-01).",
+      "items": {"$ref": "#/$defs/agreement_row"}
+    }
   },
   "allOf": [
+    {
+      "if": {"properties": {"schema_version": {"enum": [1, 2, 3]}}, "required": ["schema_version"]},
+      "then": {
+        "required": [
+          "generator_version",
+          "pool_source",
+          "seeds",
+          "pools",
+          "manifest",
+          "corpus",
+          "per_constraint",
+          "coverage_summary",
+          "checker_defects"
+        ],
+        "not": {"anyOf": [{"required": ["labels"]}, {"required": ["rules"]}]},
+        "properties": {
+          "coverage_summary": {
+            "required": [
+              "isolating_cases",
+              "set_attributed_cases",
+              "applicable_cells",
+              "covered_applicable_cells",
+              "not_applicable_cells",
+              "missing_cells",
+              "boundary_cases_derived",
+              "boundary_not_derivable",
+              "case_kinds",
+              "families_in_model",
+              "families_covered",
+              "case_kinds_present",
+              "band4_reason_codes",
+              "band4_reason_codes_exercised",
+              "operators_exercised",
+              "coverage_fraction",
+              "applicability_matrix"
+            ]
+          },
+          "checker_defects": {"items": {"required": ["sidecar", "seed"]}}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"schema_version": {"enum": [4, 5]}}, "required": ["schema_version"]},
+      "then": {
+        "required": ["labels", "redaction"],
+        "not": {
+          "anyOf": [
+            {"required": ["generator_version"]},
+            {"required": ["pool_source"]},
+            {"required": ["seeds"]},
+            {"required": ["pools"]},
+            {"required": ["manifest"]},
+            {"required": ["corpus"]}
+          ]
+        }
+      }
+    },
+    {
+      "if": {"properties": {"schema_version": {"const": 4}}, "required": ["schema_version"]},
+      "then": {
+        "required": ["per_constraint", "coverage_summary", "checker_defects"],
+        "not": {"required": ["rules"]},
+        "properties": {
+          "labels": {"properties": {"mode": {"const": "expected-state"}}},
+          "checker_defects": {
+            "items": {"not": {"anyOf": [{"required": ["sidecar"]}, {"required": ["seed"]}]}}
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"schema_version": {"const": 5}}, "required": ["schema_version"]},
+      "then": {
+        "required": ["rules"],
+        "not": {
+          "anyOf": [
+            {"required": ["per_constraint"]},
+            {"required": ["coverage_summary"]},
+            {"required": ["checker_defects"]}
+          ]
+        },
+        "properties": {"labels": {"properties": {"mode": {"const": "class"}}}}
+      }
+    },
     {
       "if": {"properties": {"schema_version": {"enum": [1, 2]}}, "required": ["schema_version"]},
       "then": {"not": {"required": ["redaction"]}}
@@ -650,6 +715,92 @@
         }
       }
     },
+    "labels": {
+      "type": "object",
+      "description": "IK3: the host label manifest this payload was scored from, in place of the synth-only header (seeds, pools, generator version, sidecars).",
+      "required": ["manifest", "model_sha256", "mode", "population_count", "corpus", "work"],
+      "additionalProperties": false,
+      "properties": {
+        "manifest": {
+          "type": "object",
+          "required": ["path", "sha256"],
+          "additionalProperties": false,
+          "properties": {"path": {"type": "string"}, "sha256": {"type": "string"}}
+        },
+        "model_sha256": {"type": "string"},
+        "mode": {"enum": ["expected-state", "class"]},
+        "population_count": {"type": "integer", "minimum": 1},
+        "corpus": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "path", "sha256"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "path": {"type": "string"},
+              "sha256": {"type": "string"},
+              "class": {"enum": ["positive", "negative"]}
+            }
+          }
+        },
+        "work": {
+          "type": "object",
+          "required": ["populations", "label_rows", "total", "ceiling"],
+          "additionalProperties": false,
+          "description": "One unit per population checked plus one per label row scored; total <= ceiling = P x (1 + C).",
+          "properties": {
+            "populations": {"type": "integer", "minimum": 0},
+            "label_rows": {"type": "integer", "minimum": 0},
+            "total": {"type": "integer", "minimum": 0},
+            "ceiling": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "fraction": {
+      "type": "object",
+      "required": ["numerator", "denominator"],
+      "additionalProperties": false,
+      "properties": {
+        "numerator": {"type": "integer", "minimum": 0},
+        "denominator": {"type": "integer", "minimum": 0}
+      }
+    },
+    "agreement_row": {
+      "type": "object",
+      "required": ["ref", "constraint_type", "modality", "source", "status", "fires_on", "cells"],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {"type": "string"},
+        "constraint_type": {"type": "string"},
+        "modality": {"type": "string"},
+        "source": {"type": ["string", "null"]},
+        "status": {"type": ["string", "null"]},
+        "fires_on": {"enum": ["positive", "negative"]},
+        "cells": {
+          "type": "object",
+          "required": [
+            "fired_on_negative",
+            "fired_on_positive",
+            "silent_on_negative",
+            "silent_on_positive",
+            "vacuous",
+            "unchecked"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "fired_on_negative": {"$ref": "#/$defs/fraction"},
+            "fired_on_positive": {"$ref": "#/$defs/fraction"},
+            "silent_on_negative": {"$ref": "#/$defs/fraction"},
+            "silent_on_positive": {"$ref": "#/$defs/fraction"},
+            "vacuous": {"$ref": "#/$defs/fraction"},
+            "unchecked": {"$ref": "#/$defs/fraction"}
+          }
+        }
+      }
+    },
     "defect": {
       "type": "object",
       "required": [
@@ -657,10 +808,8 @@
         "constraint_ref",
         "modality",
         "population",
-        "sidecar",
         "expected_verdict",
-        "observed_verdict",
-        "seed"
+        "observed_verdict"
       ],
       "additionalProperties": false,
       "properties": {

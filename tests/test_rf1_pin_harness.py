@@ -26,7 +26,7 @@ from support.rf1_pins import (
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = PINS_ROOT / "goldens.sha256"
 # The manifest's own digest: changing any golden edits this line too (SM1).
-MANIFEST_SHA256 = "decf43ce9c6001a578b20683354830b12381f088014263a9a08e02ed262f418b"  # IK4 adds `gnd discover` to the CLI goldens
+MANIFEST_SHA256 = "2211f46be3292cef8fecbcb1a4822b5c09aeeb411e89392448f0abd717396c0f"  # IK3 adds `gnd measure --labels` to the CLI goldens
 
 _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
 tool = importlib.util.module_from_spec(_SPEC)

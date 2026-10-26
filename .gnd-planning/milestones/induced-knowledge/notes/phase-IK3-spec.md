@@ -286,3 +286,27 @@ spec r1 as committed in `afb24d0`, before this section was added:
 
 **Next under IK3-D1.** The corpus is committed red before any implementation
 file, and the owner approves it by reading.
+
+## 14. Corpus approval (2026-10-25)
+
+**Approval (o).** The owner was asked "Do you approve the corpus as committed,
+with C-F1 to C-F6 as proposed?" and replied "yes" on 2026-10-25. The approved
+corpus is `tests/fixtures/induced_knowledge/ik3-corpus/` and
+`tests/test_measure_labels.py` as committed in `9dd59af`, red at 30 failed and
+3 passed by design.
+
+**Findings ruled as proposed (o):**
+- **C-F1:** v4 defect rows omit `sidecar` and `seed`.
+- **C-F2:** labels mode reports `wrong_attribution: 0` and
+  `set_attributed_evidence: false`; T3 parity ignores those two fields. This
+  narrows T3's "byte for byte".
+- **C-F3:** `maxItems: 10000` stays in the schema as defence in depth and is
+  tested against the schema directly; the 1 MiB cap is the effective bound.
+  N1 uses 8,000 entries and stands in for T7's 10,000.
+- **C-F4:** exit 6 needs an alethic mislabel; the corpus's uniqueness rule is
+  alethic.
+- **C-F5:** the misleading `role-unresolved` message on an opaque population
+  predates IK3 and is carried as an open question for a checker follow-up.
+- **C-F6:** class-mode `rules[]` rows carry the checker's positional ref.
+
+Implementation begins on this approval.

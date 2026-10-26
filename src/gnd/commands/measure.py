@@ -33,10 +33,23 @@ def _register_measure(subparsers):
             "manifest.yaml"
         ),
     )
+    # Exactly one of --populations / --labels, enforced in handle(): an argparse
+    # mutually exclusive group renders its usage differently across Python minors.
     measure_parser.add_argument(
         "--populations",
-        required=True,
+        default=None,
         help="output root of a `gnd synth` run (the directory holding index.json)",
+    )
+    measure_parser.add_argument(
+        "--labels",
+        default=None,
+        metavar="MANIFEST",
+        help=(
+            "IK3: a gnd-labels/1 manifest of host-labelled populations, instead of "
+            "--populations. Expected-state mode emits report schema 4 (exit 6 on a "
+            "checker defect); class mode emits schema 5 agreement cells (exit 0). "
+            "See docs/reference/measure-labels.md"
+        ),
     )
     measure_parser.add_argument(
         "--out", default=None, help="write the JSON payload to this path (default: stdout)"
@@ -60,6 +73,14 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 def handle(args, parsers) -> int:
     if args.command == "measure":
+        if (args.labels is None) == (args.populations is None):
+            parsers["measure_parser"].error("exactly one of --populations or --labels is required")
+        if args.labels is not None and args.promote is not None:
+            parsers["measure_parser"].error("--promote needs --populations: host labels have no sidecars")
+        if args.labels is not None:
+            return _handler_measure_service._measure_labels(
+                args.model, args.labels, args.format, args.out, unredacted=args.unredacted
+            )
         return _handler_measure_service._cmd_measure(
             args.model,
             args.populations,

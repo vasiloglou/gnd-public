@@ -3320,7 +3320,22 @@
      "option_strings": [
       "--populations"
      ],
-     "required": true,
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "labels",
+     "help": "IK3: a gnd-labels/1 manifest of host-labelled populations, instead of --populations. Expected-state mode emits report schema 4 (exit 6 on a checker defect); class mode emits schema 5 agreement cells (exit 0). See docs/reference/measure-labels.md",
+     "metavar": "MANIFEST",
+     "nargs": null,
+     "option_strings": [
+      "--labels"
+     ],
+     "required": false,
      "type": null
     },
     {

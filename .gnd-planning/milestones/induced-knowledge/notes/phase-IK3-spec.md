@@ -347,3 +347,10 @@ Recorded as found, including those that refute this spec.
 - **R4 -- v4 defect rows add `population_id`.** One path may appear under
   several ids, so a defect names its labelling. The approved E2 answer is
   unchanged: the harness compares the approved keys.
+
+## 16. C-F7 ratification (2026-10-26)
+
+**Ruling (o).** The owner was asked "Do you ratify C-F7 so I can push
+claude/ik3-measure and open a PR?" and replied "yes" on 2026-10-26. The X1
+harness fix (population ids `p<index>`, expected answer unchanged) stands as
+committed in `a906620`.

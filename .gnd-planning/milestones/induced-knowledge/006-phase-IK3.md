@@ -179,7 +179,7 @@ The report is kept verbatim, with its disposition, in
 | IK3-Q3 | A constraint-free model cannot be measured in expected-state mode (`minProperties: 1`) (R9) | owner ruling; milestone close |
 | IK3-Q4 | The "model changed while it was read" branch has no failing case (R10) | milestone close |
 | IK3-Q5 | Merge the two measure `fail()` closures (refactoring review) | after RF5 shim retirement |
-| C-F7 | Ratify the X1 harness fix (expected answer unchanged) | owner, now |
+| C-F7 | Ratify the X1 harness fix (expected answer unchanged) | **ratified by the owner 2026-10-26** (spec §16) |
 
 ## Refuted premises
 

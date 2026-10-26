@@ -64,7 +64,7 @@ Records:
 
 - [006 phase IK3](006-phase-IK3.md): `gnd measure --labels` shipped (report
   schemas 4 and 5); focused gate 4360 passed; one local reviewer, no blocking
-  findings, five hardening and completeness fixes; C-F7 awaits owner
-  ratification.
+  findings, five hardening and completeness fixes; C-F7 ratified by the
+  owner 2026-10-26.
 
-Next: owner ratification of C-F7, then IK5.
+Next: IK5.

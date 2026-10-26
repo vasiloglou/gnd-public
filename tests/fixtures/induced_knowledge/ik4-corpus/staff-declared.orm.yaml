@@ -1,0 +1,108 @@
+# IK4 approval corpus: staff.orm.yaml plus two fact types and declared
+# constraints exercising every suppression-catalogue row (case K09).
+version: 1
+model_id: ik4-staff-declared
+source:
+  kind: fixture
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+  - id: grade
+    name: Grade
+    kind: value
+    primitive: String
+  - id: skill
+    name: Skill
+    kind: value
+    primitive: String
+fact_types:
+  - id: person_in_team
+    reading: "{Person} is in {Team}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: team, role_name: team }
+    constraints:
+      # declared ALETHIC: suppresses discovery's deontic twin (row `declared`)
+      - type: uniqueness
+        roles: [person]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each person is in one team." }
+  - id: person_has_grade
+    reading: "{Person} has {Grade}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: grade, role_name: grade }
+    constraints:
+      # unscoped value on Grade: entails the role-scoped candidate [g1, g2, g3]
+      - type: value
+        object_type: grade
+        allowed: ["g1", "g2", "g3"]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Grades are g1 to g3." }
+  - id: team_led_by
+    reading: "{Team} is led by {Person}"
+    roles:
+      - { object_type: team, role_name: team }
+      - { object_type: person, role_name: leader }
+    constraints:
+      # frequency max 1 on team: entails the uniqueness candidate on team
+      - type: frequency
+        scope: internal
+        roles: [team]
+        bound: { max: 1 }
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A team has at most one leader." }
+  - id: person_has_skill
+    reading: "{Person} has {Skill}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: skill, role_name: skill }
+  # binary fact type typed Person and Person's reference value type
+  - id: person_has_number
+    reading: "{Person} has number {PersonId}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: person_id, role_name: number }
+  # ternary, with a declared uniqueness on one role (superkey row)
+  - id: person_rates_skill
+    reading: "{Person} rates {Skill} at {Grade}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: skill, role_name: skill }
+      - { object_type: grade, role_name: grade }
+    constraints:
+      - type: uniqueness
+        roles: [person]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A person gives one rating." }
+constraints:
+  # equality between the two Team roles: entails both subsets
+  - type: equality
+    role_seq_a: [{ fact_type: team_led_by, role: team }]
+    role_seq_b: [{ fact_type: person_in_team, role: team }]
+    source: explicit
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "Exactly the teams with members have leaders." }

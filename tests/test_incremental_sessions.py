@@ -262,7 +262,11 @@ def test_callable_family_default_change_invalidates(tmp_path, monkeypatch):
     def evaluator(constraint, snapshot, state=1):
         return state, []
 
-    monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator))
+    # IK4 gave frequency a production fast path; disable it so the replaced
+    # evaluator is what checking actually calls.
+    monkeypatch.setitem(
+        FAMILIES, 'frequency', replace(FAMILIES['frequency'], evaluator=evaluator, production=None)
+    )
     owner = session(m)
     same_payload(owner.check(p), api.check(m, p))
     evaluator.__defaults__ = (0,)
@@ -314,15 +318,21 @@ def test_real_bound_reference_context(tmp_path):
 
 
 def test_string_resolved_family_default_change_invalidates(tmp_path, monkeypatch):
+    from dataclasses import replace
+
     import test_public_branch_runtime as corpus
 
     from gnd import semantic_spec
+    from gnd.constraint_families import FAMILIES
 
     m, p = corpus._build('P2-039', tmp_path)
 
     def evaluator(constraint, snapshot, state=1):
         return state, []
 
+    # IK4 gave frequency a production fast path; disable it so the patched pure
+    # evaluator is what checking actually calls.
+    monkeypatch.setitem(FAMILIES, 'frequency', replace(FAMILIES['frequency'], production=None))
     monkeypatch.setattr(semantic_spec, '_family_result_frequency', evaluator)
     owner = session(m)
     same_payload(owner.check(p), api.check(m, p))

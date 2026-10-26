@@ -34,6 +34,7 @@ does not add trace fields.
 | `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW` | Immutable proposal preview for review |
 | `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR` | Model publication and linked-project rechecks |
 | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR` | Completion of an interrupted published evolution |
+| `gnd discover MODEL POPULATION --out PROPOSAL --report REPORT --actor ID --requested-at 2026-10-24T12:00:00+00:00` | Candidate constraints observed in one population, as a reviewable evolve proposal plus a report ([contract](discover.md)) |
 | `gnd recovery inventory ROOT --source SRC --tests TESTS --out INVENTORY` | Bounded static census of explicitly selected roots |
 | `gnd recovery verify ROOT REPORT` | Recheck a recovered-model bundle and source evidence |
 | `gnd import rai-orm RAI_MODEL --out DIR` | Import of the supported RAI ORM input profile and evidence |

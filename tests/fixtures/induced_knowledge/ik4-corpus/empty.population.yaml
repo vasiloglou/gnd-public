@@ -1,0 +1,11 @@
+# IK4 approval corpus: no instances and no facts (case K13).
+population:
+  model: staff.orm.yaml
+  source: fixture
+  covers: [person_in_team, person_has_grade, team_led_by, person_has_skill]
+instances: {}
+facts:
+  person_in_team: []
+  person_has_grade: []
+  team_led_by: []
+  person_has_skill: []

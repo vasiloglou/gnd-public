@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "spec": ".gnd-planning/milestones/induced-knowledge/notes/phase-IK4-spec.md (r1)",
+  "common_argv": ["--actor", "owner:fixture", "--requested-at", "2026-10-24T12:00:00+00:00",
+                  "--format", "json"],
+  "outputs": "every run adds --out <tmp>/proposal.json --report <tmp>/report.json",
+  "cases": [
+    {"id": "K01", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "uniqueness"]},
+    {"id": "K02", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "mandatory"]},
+    {"id": "K03", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "value"]},
+    {"id": "K04", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "value", "--max-values", "2"]},
+    {"id": "K05", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "frequency"]},
+    {"id": "K06", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "subset,equality,exclusion"]},
+    {"id": "K07", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--families", "subset,equality,exclusion", "--max-pairs", "1"]},
+    {"id": "K08", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": []},
+    {"id": "K09", "model": "staff-declared.orm.yaml", "population": "staff-declared.population.yaml", "argv": ["--families", "uniqueness,mandatory,value,subset,equality"]},
+    {"id": "K10", "model": "staff.orm.yaml", "population": "near-miss-2.population.yaml", "argv": ["--families", "uniqueness"]},
+    {"id": "K11", "model": "staff.orm.yaml", "population": "near-miss-3.population.yaml", "argv": ["--families", "uniqueness"]},
+    {"id": "K13", "model": "staff.orm.yaml", "population": "empty.population.yaml", "argv": []},
+    {"id": "E1", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": ["--bogus"]},
+    {"id": "E2", "model": "staff.orm.yaml", "population": "missing.population.yaml", "argv": []},
+    {"id": "E3", "model": "staff.orm.yaml", "population": "other-model.population.yaml", "argv": []},
+    {"id": "E4", "model": "staff.orm.yaml", "population": "GENERATED:over-cap", "argv": []},
+    {"id": "E5", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": [], "out_is_symlink": true},
+    {"id": "E6", "model": "staff.orm.yaml", "population": "staff.population.yaml", "argv": [], "omit": ["--actor"]},
+    {"id": "E7", "model": "staff.orm.yaml", "population": "bad name.population.yaml", "argv": []},
+    {"id": "N1", "model": "staff.orm.yaml", "population": "GENERATED:near-cap", "argv": []}
+  ],
+  "generated": {
+    "over-cap": "staff.population.yaml's header plus 400,000 person_in_team rows {person: i, team: \"A\"}, i = 0..399999; about 14.3 MB, over the 10 MiB cap",
+    "near-cap": {
+      "persons": 68000,
+      "teams": 200,
+      "person_in_team": "{person: i, team: \"T\" + str(i % 200)} for i in 0..67999",
+      "person_has_grade": "{person: i, grade: \"g\" + str(i % 5)} for i in 0..67999",
+      "team_led_by": "{team: \"T\" + str(t), leader: t} for t in 0..199",
+      "person_has_skill": "{person: i, skill: \"s\" + str((i + j) % 50)} for i in 0..67999, j in 0..1",
+      "instances": "none; rosters come from the facts",
+      "covers": "all four fact types"
+    }
+  }
+}

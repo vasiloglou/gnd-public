@@ -26,6 +26,7 @@
   "lanes": [
     "codegen",
     "conformance",
+    "discover",
     "evolve",
     "exp",
     "export",
@@ -209,6 +210,9 @@
     "gnd.commands.conformance": {
       "layer": "entry"
     },
+    "gnd.commands.discover": {
+      "layer": "entry"
+    },
     "gnd.commands.doccheck": {
       "layer": "entry"
     },
@@ -304,6 +308,26 @@
     },
     "gnd.diff": {
       "layer": "entry"
+    },
+    "gnd.discover": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
+    "gnd.discover.candidates": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
+    "gnd.discover.output": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
+    "gnd.discover.service": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
+    "gnd.discover.support": {
+      "lane": "discover",
+      "layer": "lanes"
     },
     "gnd.documents": {
       "layer": "model"

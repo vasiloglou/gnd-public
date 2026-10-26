@@ -18,7 +18,7 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 52
+EXPECTED_PARSERS = 53  # IK4 adds `gnd discover`
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
@@ -189,7 +189,7 @@ def test_cli_exit_map():
 
 
 def test_cli_coverage(tree):
-    """T-CLI-COV: the pinned path set is the discovered set and has 52 members."""
+    """T-CLI-COV: the pinned path set is the discovered set and has 53 members."""
     _structure, parsers, helps = tree
     assert len(parsers) == EXPECTED_PARSERS
     assert sorted(parsers) == PATHS == sorted(helps)

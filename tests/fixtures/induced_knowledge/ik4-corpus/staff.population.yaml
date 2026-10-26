@@ -1,0 +1,30 @@
+# IK4 approval corpus: the base population for staff.orm.yaml.
+population:
+  model: staff.orm.yaml
+  source: fixture
+  covers: [person_in_team, person_has_grade, team_led_by, person_has_skill]
+instances:
+  person: [1, 2, 3, 4, 5, 6]
+  team: ["A", "B"]
+facts:
+  person_in_team:
+    - { person: 1, team: "A" }
+    - { person: 2, team: "A" }
+    - { person: 3, team: "A" }
+    - { person: 4, team: "B" }
+    - { person: 5, team: "B" }
+    - { person: 6, team: "B" }
+  person_has_grade:
+    - { person: 1, grade: "g1" }
+    - { person: 2, grade: "g1" }
+    - { person: 3, grade: "g2" }
+    - { person: 4, grade: "g2" }
+    - { person: 5, grade: "g3" }
+  team_led_by:
+    - { team: "A", leader: 1 }
+    - { team: "B", leader: 4 }
+  person_has_skill:
+    - { person: 1, skill: "s1" }
+    - { person: 1, skill: "s2" }
+    - { person: 2, skill: "s1" }
+    - { person: 4, skill: "s3" }

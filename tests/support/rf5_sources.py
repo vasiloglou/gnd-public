@@ -16,7 +16,7 @@ def cli_source_paths():
     modules.update("gnd.commands." + name for name in (
         "checking", "verify", "synth", "measure", "extract", "export", "codegen",
         "conformance", "recovery", "evolve", "doccheck", "fidelity", "review", "exp",
-        "solve", "lifecycle", "judgments", "witness",
+        "solve", "lifecycle", "judgments", "witness", "discover",
     ))
     modules.update('gnd.commands.' + p.stem for p in (REPO_ROOT / 'src/gnd/commands').glob('*.py'))
     paths = [REPO_ROOT / 'src/gnd/cli.py'] + [REPO_ROOT / 'src' / Path(*module.split('.')).with_suffix('.py') for module in sorted(modules)]

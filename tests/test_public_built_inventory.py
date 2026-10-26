@@ -257,6 +257,7 @@ VENDORED_SCHEMAS = (
     "gnd/coverage.schema.json",
     "gnd/rai-alias.schema.json",
     "gnd/batch-report.schema.json",
+    "gnd/discover.schema.json",
 )
 
 

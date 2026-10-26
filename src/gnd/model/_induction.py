@@ -79,6 +79,12 @@ def _induction_strings(induction: dict[str, Any], base: str):
                     yield f"{base}.evidence[{index}].{key}", item.get(key)
 
 
+def _exact_int(value: Any) -> bool:
+    """An integer, including ruamel's round-trip ``ScalarInt`` (``0``, ``1_000``,
+    hex), but never a bool; anchored YAML booleans are refused at layer 1."""
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
 def _rule_induced_provenance(doc: dict[str, Any]) -> list[ValidationIssue]:
     """IK2: an ``induced`` claim's induction block is internally consistent.
 
@@ -121,7 +127,7 @@ def _rule_induced_provenance(doc: dict[str, Any]) -> list[ValidationIssue]:
             continue
         numerator = support.get("numerator")
         denominator = support.get("denominator")
-        if not (type(numerator) is int and type(denominator) is int):
+        if not (_exact_int(numerator) and _exact_int(denominator)):
             # JSON Schema counts 10.0 as an integer; support counts are exact
             # integers, and a float would also skip every check below (R1).
             issue(f"{base}.support", "support numerator and denominator must be exact integers")

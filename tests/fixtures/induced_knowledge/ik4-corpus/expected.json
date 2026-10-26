@@ -1,0 +1,1409 @@
+{
+ "version": 1,
+ "note": "Hand-authored from spec r1 sections 6 and 8. emitted entries list each constraint without its induced envelope (source, status, modality, provenance), in emission order. suppressed lists only non-zero counts; every other count must be zero. examples are asserted only where given.",
+ "cases": {
+  "K01": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "uniqueness",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     },
+     "support": 6,
+     "examples": [
+      "ft0#0",
+      "ft0#1",
+      "ft0#2",
+      "ft0#3",
+      "ft0#4",
+      "ft0#5"
+     ]
+    },
+    {
+     "family": "uniqueness",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     },
+     "support": 5,
+     "examples": [
+      "ft1#0",
+      "ft1#1",
+      "ft1#2",
+      "ft1#3",
+      "ft1#4"
+     ]
+    },
+    {
+     "family": "uniqueness",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "team"
+      ]
+     },
+     "support": 2,
+     "examples": [
+      "ft2#0",
+      "ft2#1"
+     ]
+    },
+    {
+     "family": "uniqueness",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "leader"
+      ]
+     },
+     "support": 2,
+     "examples": [
+      "ft2#0",
+      "ft2#1"
+     ]
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 4
+   },
+   "suppressed": {
+    "spanning-uniqueness": 4
+   },
+   "near_misses": [],
+   "proposal": true
+  },
+  "K02": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "mandatory",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "mandatory",
+      "role": "person"
+     },
+     "support": 6
+    },
+    {
+     "family": "mandatory",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "mandatory",
+      "role": "team"
+     },
+     "support": 2
+    },
+    {
+     "family": "mandatory",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "mandatory",
+      "role": "grade"
+     },
+     "support": 3
+    },
+    {
+     "family": "mandatory",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "mandatory",
+      "role": "team"
+     },
+     "support": 2
+    },
+    {
+     "family": "mandatory",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "mandatory",
+      "role": "skill"
+     },
+     "support": 3
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 3
+   },
+   "suppressed": {},
+   "near_misses": [],
+   "proposal": true
+  },
+  "K03": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "value",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "person_in_team",
+       "role": "person"
+      },
+      "allowed": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6
+      ]
+     },
+     "support": 6
+    },
+    {
+     "family": "value",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "value",
+      "object_type": "team",
+      "role_ref": {
+       "fact_type": "person_in_team",
+       "role": "team"
+      },
+      "allowed": [
+       "A",
+       "B"
+      ]
+     },
+     "support": 6
+    },
+    {
+     "family": "value",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "person_has_grade",
+       "role": "person"
+      },
+      "allowed": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     "support": 5
+    },
+    {
+     "family": "value",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "value",
+      "object_type": "grade",
+      "role_ref": {
+       "fact_type": "person_has_grade",
+       "role": "grade"
+      },
+      "allowed": [
+       "g1",
+       "g2",
+       "g3"
+      ]
+     },
+     "support": 5
+    },
+    {
+     "family": "value",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "value",
+      "object_type": "team",
+      "role_ref": {
+       "fact_type": "team_led_by",
+       "role": "team"
+      },
+      "allowed": [
+       "A",
+       "B"
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "value",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "team_led_by",
+       "role": "leader"
+      },
+      "allowed": [
+       1,
+       4
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "value",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "person_has_skill",
+       "role": "person"
+      },
+      "allowed": [
+       1,
+       2,
+       4
+      ]
+     },
+     "support": 4
+    },
+    {
+     "family": "value",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "value",
+      "object_type": "skill",
+      "role_ref": {
+       "fact_type": "person_has_skill",
+       "role": "skill"
+      },
+      "allowed": [
+       "s1",
+       "s2",
+       "s3"
+      ]
+     },
+     "support": 4
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 0
+   },
+   "suppressed": {},
+   "near_misses": [],
+   "proposal": true
+  },
+  "K04": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "value",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "value",
+      "object_type": "team",
+      "role_ref": {
+       "fact_type": "person_in_team",
+       "role": "team"
+      },
+      "allowed": [
+       "A",
+       "B"
+      ]
+     },
+     "support": 6
+    },
+    {
+     "family": "value",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "value",
+      "object_type": "team",
+      "role_ref": {
+       "fact_type": "team_led_by",
+       "role": "team"
+      },
+      "allowed": [
+       "A",
+       "B"
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "value",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "team_led_by",
+       "role": "leader"
+      },
+      "allowed": [
+       1,
+       4
+      ]
+     },
+     "support": 2
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 0
+   },
+   "suppressed": {},
+   "skipped": {
+    "value_roles": 5
+   },
+   "bounds": {
+    "max_values": 2
+   },
+   "near_misses": [],
+   "proposal": true
+  },
+  "K05": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "frequency",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "team"
+      ],
+      "bound": {
+       "min": 3,
+       "max": 3
+      }
+     },
+     "support": 2
+    },
+    {
+     "family": "frequency",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "grade"
+      ],
+      "bound": {
+       "max": 2
+      }
+     },
+     "support": 3
+    },
+    {
+     "family": "frequency",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "person"
+      ],
+      "bound": {
+       "max": 2
+      }
+     },
+     "support": 3
+    },
+    {
+     "family": "frequency",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "skill"
+      ],
+      "bound": {
+       "max": 2
+      }
+     },
+     "support": 3
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 0
+   },
+   "suppressed": {
+    "redundant-frequency": 4
+   },
+   "near_misses": [],
+   "proposal": true
+  },
+  "K06": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 5
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "team_led_by",
+        "role": "leader"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_skill",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 3
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "team_led_by",
+        "role": "leader"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_skill",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 3
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "team_led_by",
+        "role": "leader"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_skill",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "equality",
+     "host": null,
+     "constraint": {
+      "type": "equality",
+      "role_seq_a": [
+       {
+        "fact_type": "person_in_team",
+        "role": "team"
+       }
+      ],
+      "role_seq_b": [
+       {
+        "fact_type": "team_led_by",
+        "role": "team"
+       }
+      ]
+     },
+     "support": 2
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 19
+   },
+   "suppressed": {
+    "redundant-subset": 2
+   },
+   "near_misses": [],
+   "proposal": true
+  },
+  "K07": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 5
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 3
+   },
+   "suppressed": {},
+   "skipped": {
+    "pairs": 6
+   },
+   "bounds": {
+    "max_pairs": 1
+   },
+   "near_misses": [],
+   "proposal": true
+  },
+  "K08": {
+   "exit": 0,
+   "emitted": [
+    {
+     "family": "uniqueness",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     },
+     "support": 6,
+     "examples": [
+      "ft0#0",
+      "ft0#1",
+      "ft0#2",
+      "ft0#3",
+      "ft0#4",
+      "ft0#5"
+     ]
+    },
+    {
+     "family": "uniqueness",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     },
+     "support": 5,
+     "examples": [
+      "ft1#0",
+      "ft1#1",
+      "ft1#2",
+      "ft1#3",
+      "ft1#4"
+     ]
+    },
+    {
+     "family": "uniqueness",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "team"
+      ]
+     },
+     "support": 2,
+     "examples": [
+      "ft2#0",
+      "ft2#1"
+     ]
+    },
+    {
+     "family": "uniqueness",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "leader"
+      ]
+     },
+     "support": 2,
+     "examples": [
+      "ft2#0",
+      "ft2#1"
+     ]
+    },
+    {
+     "family": "mandatory",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "mandatory",
+      "role": "person"
+     },
+     "support": 6
+    },
+    {
+     "family": "mandatory",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "mandatory",
+      "role": "team"
+     },
+     "support": 2
+    },
+    {
+     "family": "mandatory",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "mandatory",
+      "role": "grade"
+     },
+     "support": 3
+    },
+    {
+     "family": "mandatory",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "mandatory",
+      "role": "team"
+     },
+     "support": 2
+    },
+    {
+     "family": "mandatory",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "mandatory",
+      "role": "skill"
+     },
+     "support": 3
+    },
+    {
+     "family": "value",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "person_in_team",
+       "role": "person"
+      },
+      "allowed": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6
+      ]
+     },
+     "support": 6
+    },
+    {
+     "family": "value",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "value",
+      "object_type": "team",
+      "role_ref": {
+       "fact_type": "person_in_team",
+       "role": "team"
+      },
+      "allowed": [
+       "A",
+       "B"
+      ]
+     },
+     "support": 6
+    },
+    {
+     "family": "value",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "person_has_grade",
+       "role": "person"
+      },
+      "allowed": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ]
+     },
+     "support": 5
+    },
+    {
+     "family": "value",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "value",
+      "object_type": "grade",
+      "role_ref": {
+       "fact_type": "person_has_grade",
+       "role": "grade"
+      },
+      "allowed": [
+       "g1",
+       "g2",
+       "g3"
+      ]
+     },
+     "support": 5
+    },
+    {
+     "family": "value",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "value",
+      "object_type": "team",
+      "role_ref": {
+       "fact_type": "team_led_by",
+       "role": "team"
+      },
+      "allowed": [
+       "A",
+       "B"
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "value",
+     "host": "team_led_by",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "team_led_by",
+       "role": "leader"
+      },
+      "allowed": [
+       1,
+       4
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "value",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "value",
+      "object_type": "person",
+      "role_ref": {
+       "fact_type": "person_has_skill",
+       "role": "person"
+      },
+      "allowed": [
+       1,
+       2,
+       4
+      ]
+     },
+     "support": 4
+    },
+    {
+     "family": "value",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "value",
+      "object_type": "skill",
+      "role_ref": {
+       "fact_type": "person_has_skill",
+       "role": "skill"
+      },
+      "allowed": [
+       "s1",
+       "s2",
+       "s3"
+      ]
+     },
+     "support": 4
+    },
+    {
+     "family": "frequency",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "team"
+      ],
+      "bound": {
+       "min": 3,
+       "max": 3
+      }
+     },
+     "support": 2
+    },
+    {
+     "family": "frequency",
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "grade"
+      ],
+      "bound": {
+       "max": 2
+      }
+     },
+     "support": 3
+    },
+    {
+     "family": "frequency",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "person"
+      ],
+      "bound": {
+       "max": 2
+      }
+     },
+     "support": 3
+    },
+    {
+     "family": "frequency",
+     "host": "person_has_skill",
+     "constraint": {
+      "type": "frequency",
+      "scope": "internal",
+      "roles": [
+       "skill"
+      ],
+      "bound": {
+       "max": 2
+      }
+     },
+     "support": 3
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 5
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "team_led_by",
+        "role": "leader"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_skill",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 3
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "team_led_by",
+        "role": "leader"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_skill",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_grade",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 3
+    },
+    {
+     "family": "subset",
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "team_led_by",
+        "role": "leader"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_skill",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 2
+    },
+    {
+     "family": "equality",
+     "host": null,
+     "constraint": {
+      "type": "equality",
+      "role_seq_a": [
+       {
+        "fact_type": "person_in_team",
+        "role": "team"
+       }
+      ],
+      "role_seq_b": [
+       {
+        "fact_type": "team_led_by",
+        "role": "team"
+       }
+      ]
+     },
+     "support": 2
+    }
+   ],
+   "rejected": {
+    "vacuous": 0,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 26
+   },
+   "suppressed": {
+    "spanning-uniqueness": 4,
+    "redundant-frequency": 4,
+    "redundant-subset": 2
+   },
+   "near_misses": [],
+   "proposal": true,
+   "bounds": {
+    "families": [
+     "uniqueness",
+     "mandatory",
+     "value",
+     "frequency",
+     "subset",
+     "equality",
+     "exclusion"
+    ],
+    "max_values": 20,
+    "max_pairs": 256,
+    "max_key_arity": 4
+   },
+   "preview_exit": 0,
+   "deterministic": true
+  },
+  "K09": {
+   "exit": 0,
+   "suppressed": {
+    "declared": 3,
+    "equality-implies-subset": 2,
+    "frequency-max-1-is-uniqueness": 1,
+    "unscoped-value-implies-scoped": 1,
+    "reference-scheme-implies-uniqueness": 3,
+    "spanning-uniqueness": 6,
+    "superkey": 2,
+    "redundant-subset": 2
+   },
+   "absent": [
+    {
+     "host": "person_in_team",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     }
+    },
+    {
+     "host": "team_led_by",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "team"
+      ]
+     }
+    },
+    {
+     "host": "person_has_grade",
+     "constraint": {
+      "type": "value",
+      "object_type": "grade",
+      "role_ref": {
+       "fact_type": "person_has_grade",
+       "role": "grade"
+      },
+      "allowed": [
+       "g1",
+       "g2",
+       "g3"
+      ]
+     }
+    },
+    {
+     "host": "person_has_number",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     }
+    },
+    {
+     "host": "person_has_number",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "number"
+      ]
+     }
+    },
+    {
+     "host": "person_has_number",
+     "constraint": {
+      "type": "mandatory",
+      "role": "person"
+     }
+    },
+    {
+     "host": "person_rates_skill",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     }
+    },
+    {
+     "host": "person_rates_skill",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person",
+       "skill"
+      ]
+     }
+    },
+    {
+     "host": "person_rates_skill",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person",
+       "grade"
+      ]
+     }
+    },
+    {
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_has_number",
+        "role": "person"
+       }
+      ]
+     }
+    },
+    {
+     "host": null,
+     "constraint": {
+      "type": "subset",
+      "subset_role_seq": [
+       {
+        "fact_type": "person_has_number",
+        "role": "person"
+       }
+      ],
+      "superset_role_seq": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ]
+     }
+    }
+   ],
+   "present": [
+    {
+     "family": "uniqueness",
+     "host": "person_rates_skill",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "skill",
+       "grade"
+      ]
+     },
+     "support": 3
+    },
+    {
+     "family": "equality",
+     "host": null,
+     "constraint": {
+      "type": "equality",
+      "role_seq_a": [
+       {
+        "fact_type": "person_in_team",
+        "role": "person"
+       }
+      ],
+      "role_seq_b": [
+       {
+        "fact_type": "person_has_number",
+        "role": "person"
+       }
+      ]
+     },
+     "support": 6
+    },
+    {
+     "family": "mandatory",
+     "host": "person_has_number",
+     "constraint": {
+      "type": "mandatory",
+      "role": "number"
+     },
+     "support": 6
+    }
+   ],
+   "proposal": true
+  },
+  "K10": {
+   "exit": 0,
+   "emitted": [],
+   "rejected": {
+    "vacuous": 6,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 2
+   },
+   "suppressed": {
+    "spanning-uniqueness": 4
+   },
+   "near_misses": [
+    {
+     "family": "uniqueness",
+     "host": "person_in_team",
+     "constraint": {
+      "type": "uniqueness",
+      "roles": [
+       "person"
+      ]
+     },
+     "violations": 2,
+     "subjects": 40,
+     "counterexamples": [
+      "ft0#6",
+      "ft0#18"
+     ]
+    }
+   ],
+   "proposal": false
+  },
+  "K11": {
+   "exit": 0,
+   "emitted": [],
+   "rejected": {
+    "vacuous": 6,
+    "unchecked": 0,
+    "fail": 0,
+    "warning": 2
+   },
+   "suppressed": {
+    "spanning-uniqueness": 4
+   },
+   "near_misses": [],
+   "proposal": false
+  },
+  "K13": {
+   "exit": 0,
+   "emitted": [],
+   "near_misses": [],
+   "proposal": false
+  },
+  "E1": {
+   "exit": 64
+  },
+  "E2": {
+   "exit": 66
+  },
+  "E3": {
+   "exit": 3
+  },
+  "E4": {
+   "exit": 3
+  },
+  "E5": {
+   "exit": 74
+  },
+  "E6": {
+   "exit": 64
+  },
+  "E7": {
+   "exit": 3
+  },
+  "N1": {
+   "exit": 0,
+   "work_ceiling": 74531600,
+   "ceiling_arithmetic": "R = 4 x 68000 + 200 = 272200; R_max = 136000 (person_has_skill); P = 256; W <= 18 R + 2 P R_max = 4899600 + 69632000 = 74531600",
+   "population_bytes_max": 10485760,
+   "proposal": true
+  }
+ }
+}

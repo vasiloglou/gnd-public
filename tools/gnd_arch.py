@@ -802,7 +802,7 @@ def measure(root: Path, layers_path: Path) -> dict:
 RF5_COMMAND_GROUPS = frozenset({
     "checking", "verify", "synth", "measure", "extract", "export", "codegen",
     "conformance", "recovery", "evolve", "doccheck", "fidelity", "review", "exp",
-    "solve", "lifecycle", "judgments", "witness",
+    "solve", "lifecycle", "judgments", "witness", "discover",
 })
 
 

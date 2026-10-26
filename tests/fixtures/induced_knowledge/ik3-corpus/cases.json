@@ -1,0 +1,216 @@
+{
+ "version": 1,
+ "model": "labels.orm.yaml",
+ "command": "gnd measure labels.orm.yaml --labels <manifest> --format json",
+ "cases": [
+  {
+   "id": "E1",
+   "story": "three populations, every rule labelled to match what a correct checker says",
+   "manifest": "e1.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E2",
+   "story": "the duplicate-team population is mislabelled as satisfying the alethic uniqueness rule",
+   "manifest": "e2.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E3",
+   "story": "labels that expect no subjects and an unevaluable cell",
+   "manifest": "e3.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E4",
+   "story": "a label whose expected verdict contradicts its own ground truth",
+   "manifest": "e4.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E5",
+   "story": "one population leaves the frequency rule unlabelled",
+   "manifest": "e5.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E6",
+   "story": "a positional ref names a rule that has an id",
+   "manifest": "e6.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E7",
+   "story": "an id that no rule carries",
+   "manifest": "e7.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E8",
+   "story": "the manifest was written for a different model",
+   "manifest": "e8.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E9",
+   "story": "a population whose bytes do not match the manifest's digest",
+   "manifest": "e9.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E10",
+   "story": "a population path that climbs out of the manifest's directory",
+   "manifest": "e10.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E11",
+   "story": "a population that fails to load",
+   "manifest": "e11.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E12",
+   "story": "a population path that is a symbolic link (made by the harness)",
+   "manifest": "e12.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E13",
+   "story": "both --labels and --populations",
+   "manifest": "e13.labels.json",
+   "argv": [
+    "--populations",
+    "."
+   ]
+  },
+  {
+   "id": "E14",
+   "story": "neither --labels nor --populations",
+   "manifest": null,
+   "argv": [
+    "NO-SOURCE"
+   ]
+  },
+  {
+   "id": "E15",
+   "story": "the manifest file does not exist",
+   "manifest": null,
+   "argv": [
+    "MISSING"
+   ]
+  },
+  {
+   "id": "E16",
+   "story": "a manifest that is not JSON: a NaN and a duplicate key",
+   "manifest": "e16.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E17",
+   "story": "a manifest over the 1 MiB cap (made by the harness)",
+   "manifest": null,
+   "argv": [
+    "OVER-CAP"
+   ]
+  },
+  {
+   "id": "E18",
+   "story": "a manifest nested deeper than 64 levels",
+   "manifest": "e18.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E19",
+   "story": "a manifest with a field the schema does not know",
+   "manifest": "e19.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E20",
+   "story": "an absolute population path",
+   "manifest": "e20.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E21",
+   "story": "a positional ref past the end of its fact type's constraints",
+   "manifest": "e21.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E22",
+   "story": "a reason longer than 256 characters",
+   "manifest": "e22.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E23",
+   "story": "an expected-state manifest whose population carries a class",
+   "manifest": "e23.labels.json",
+   "argv": []
+  },
+  {
+   "id": "E24",
+   "story": "a manifest with no populations",
+   "manifest": "e24.labels.json",
+   "argv": []
+  },
+  {
+   "id": "C1",
+   "story": "five populations, three rules that should each fire on the negative class",
+   "manifest": "c1.labels.json",
+   "argv": []
+  },
+  {
+   "id": "C2",
+   "story": "the control: a rule that fires exactly on the negative population, and a wrong rule",
+   "manifest": "c2.labels.json",
+   "argv": []
+  },
+  {
+   "id": "C3",
+   "story": "a class-mode rule that names an unknown id",
+   "manifest": "c3.labels.json",
+   "argv": []
+  },
+  {
+   "id": "C4",
+   "story": "a class manifest with no rules",
+   "manifest": "c4.labels.json",
+   "argv": []
+  },
+  {
+   "id": "C5",
+   "story": "a class manifest with 1,025 rules, one over the bound (made by the harness)",
+   "manifest": null,
+   "argv": [
+    "RULES-OVER"
+   ]
+  },
+  {
+   "id": "N1",
+   "story": "near-cap: 8,000 class-mode entries under 1 MiB, alternating classes (made by the harness)",
+   "manifest": null,
+   "argv": [
+    "NEAR-CAP"
+   ]
+  },
+  {
+   "id": "X1",
+   "story": "parity: the committed movie/faker synth corpus, its sidecar labels converted to a manifest",
+   "manifest": null,
+   "argv": [
+    "PARITY"
+   ]
+  },
+  {
+   "id": "D1",
+   "story": "determinism: C1 run twice gives byte-identical reports",
+   "manifest": null,
+   "argv": [
+    "DETERMINISM"
+   ]
+  }
+ ]
+}

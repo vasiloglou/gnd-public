@@ -263,3 +263,26 @@ Proposed in IK3-D1: corpus-first, under
 | census `n == population_count` | Holds only if every constraint is labelled in every population (IK3-D4). |
 | positional refs | The checker emits positional refs; `id:` refs map through `ModelIndex.iter_constraints`. |
 | expected-state reuses `classify` | `ExpectedState{ground_truth, expected_verdict, reason}` is the existing sidecar type, reused unchanged. |
+
+## 13. Owner gate record (2026-10-25)
+
+**Approval (o).** The owner was asked "Approve IK3 spec r1 with all seven
+proposed rulings?" and replied "approved" on 2026-10-25. The approved bytes are
+spec r1 as committed in `afb24d0`, before this section was added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `notes/phase-IK3-spec.md` (r1) | `8abeb37cb10f926a959588396ab2ce9c3cb7b84a3284a7a89408cfc42d181299` |
+
+**Rulings (o).** IK3-D1 to D7 are ruled as proposed in §7:
+- **D1:** corpus-first.
+- **D2:** report v4 for expected-state and v5 for class. This accepts the
+  refuted premise in plan §2.
+- **D3:** `--labels` on `gnd measure`.
+- **D4:** expected-state must label every constraint in every population.
+- **D5:** the §6 bounds.
+- **D6:** class mode exits 0 on disagreement.
+- **D7:** branch `claude/ik3-measure` from B = `e8e7158`.
+
+**Next under IK3-D1.** The corpus is committed red before any implementation
+file, and the owner approves it by reading.

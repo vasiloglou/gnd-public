@@ -73,5 +73,9 @@ Records:
   reviewer: three blocking tracebacks and one hardening defect fixed, and all
   17 of its mutants killed by new tests. No learner ran (D13 (a)). IK5-Q1 (the
   bounds disagree) awaits an owner ruling.
+- [008 amendment IK5-Q1](008-amendment-IK5-Q1.md): the export facts bound is
+  500,000 (owner ruling 2026-10-26), so it and the 64 MiB file cap each refuse
+  at their real values. IK5-Q1 closed.
 
-Next: IK6, after the owner rules on IK4-Q2 and IK5-Q1.
+Next: IK4-Q2 (evolve preview of reference-bearing models) as its own phase,
+then IK6.

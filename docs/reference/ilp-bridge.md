@@ -74,7 +74,8 @@ are byte-identical.
   values;
 - `primitive`: a value type other than Integer, String or Boolean;
 - `name`: an id longer than the export's name bound;
-- `too-large`: more than 1,000,000 facts, or a file over 64 MiB;
+- `too-large`: more than 500,000 facts, or a file over 64 MiB, whichever comes
+  first (wide facts reach the file cap sooner);
 - `references`: a model with declared reference populations.
 
 ## Import
@@ -181,11 +182,11 @@ Each constraint is top-level `guarded`, with `source: induced`,
 
 | Item | Bound |
 |---|---|
-| exported facts | at most 1,000,000 |
+| exported facts | at most 500,000 |
 | each written file | at most 64 MiB |
 | CLAUSES | at most 1 MiB; 1 to 32 clauses; 1 to 16 body literals; `not`/`or`/`aggregate` nesting at most 4 |
 | run record | at most 32 MiB |
-| work | export: populations + facts, at most populations + 1,000,000; import: checker runs + verdict reads, at most P × (1 + K) |
+| work | export: populations + facts, at most populations + 500,000; import: checker runs + verdict reads, at most P × (1 + K) |
 
 ## Exits
 

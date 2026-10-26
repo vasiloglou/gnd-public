@@ -39,8 +39,10 @@ NEUTRAL_SCHEMA_VERSION = "gnd-ilp/1"
 EXPORT_SCHEMA_VERSION = "gnd-ilp-export/1"
 ADAPTER_VERSION = "1"
 COVERS_CLASS = "negative"
-#: IK5-D14: bounds fixed before results.
-MAX_FACTS = 1_000_000
+#: IK5-D14: bounds fixed before results. The facts bound is 500,000 by owner
+#: amendment IK5-Q1 (2026-10-26): at the smallest entry, 97 bytes, 500,000 facts
+#: fit the file cap, so both bounds can refuse (r1 said 1,000,000, unreachable).
+MAX_FACTS = 500_000
 MAX_FILE_BYTES = 64 * 1024 * 1024
 _NAME = re.compile(r"[a-z][a-z0-9_]{0,58}")
 _PRIMITIVES = {"Integer": "integer", "String": "string", "Boolean": "boolean"}

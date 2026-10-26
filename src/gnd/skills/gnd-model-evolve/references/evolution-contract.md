@@ -183,6 +183,13 @@ digest; and `preview_sha256` over every field except itself.
 `preview` performs no publication. It validates the current and candidate models, replays declared
 operations, enforces D-12, renders the complete verbalization, and builds the report.
 
+Preview, apply and finalize bind a model's declared reference populations from the workspace
+model's own directory, as `gnd validate` does. A missing reference file or directory exits `66`.
+A reference that is a link, a directory or another special entry, or is unreadable, exits `74`. A
+declaration or file the binder refuses, such as a digest mismatch, an escaping path or an oversized
+file, exits `3`. So does a candidate whose reference declarations differ from the current model's,
+which is refused before any of its files is read.
+
 ### BlastRadiusEntry
 
 Each unique stable `reference` appears once with:

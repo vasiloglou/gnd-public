@@ -1,0 +1,376 @@
+{
+  "accepted_blast_radius_sha256": null,
+  "affected_references": [
+    "model.constraints[guarded:new:0]"
+  ],
+  "before_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "021be3e93b75081199ba62bb5097375b45814c6b1492b50332a747af4239de59",
+    "text": "# IK5 approval corpus: a small orders model for the ILP bridge. Synthetic (IK-R10).\n# The one declared rule exists so a class-mode manifest can name a rule (IK3\n# requires one); IK5 binds it and otherwise ignores it.\nversion: 1\nmodel_id: ik5-orders\nsource:\n  kind: fixture\nobject_types:\n  - id: order\n    name: Order\n    kind: entity\n    reference: { mode: popular, value_type: order_id }\n  - id: order_id\n    name: OrderId\n    kind: value\n    primitive: Integer\n  - id: customer\n    name: Customer\n    kind: entity\n    reference: { mode: popular, value_type: customer_code }\n  - id: customer_code\n    name: CustomerCode\n    kind: value\n    primitive: String\n  - id: amount\n    name: Amount\n    kind: value\n    primitive: Integer\nfact_types:\n  - id: order_by\n    reading: \"{Order} is placed by {Customer}\"\n    roles:\n      - { object_type: order, role_name: order }\n      - { object_type: customer, role_name: customer }\n    constraints:\n      - id: u_order_customer\n        type: uniqueness\n        roles: [order]\n        source: explicit\n        status: confirmed\n        modality: alethic\n        provenance: { user_quote: \"Each order is placed by one customer.\" }\n  - id: order_amount\n    reading: \"{Order} has {Amount}\"\n    roles:\n      - { object_type: order, role_name: order }\n      - { object_type: amount, role_name: amount }\n  - id: order_flagged\n    reading: \"{Order} is flagged\"\n    roles:\n      - { object_type: order, role_name: order }\n  - id: customer_blocked\n    reading: \"{Customer} is blocked\"\n    roles:\n      - { object_type: customer, role_name: customer }\nconstraints: []\n"
+  },
+  "blast_radius": {
+    "before_model_sha256": "021be3e93b75081199ba62bb5097375b45814c6b1492b50332a747af4239de59",
+    "candidate_model_sha256": "3c364776e371a356d66f2b980cddab38555ff6b028ea0a73bb4b9a2d10478c3d",
+    "entries": [
+      {
+        "after_sha256": "ab1defa0f351544710248a8ba707c917bb73ed0d203bf4879a798f73d97bc739",
+        "before_sha256": "b7ce2d02cc92855751fa0f98149b613ace470e3f2e029c7f94c298c07a3f438b",
+        "change": "modified",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model",
+        "surface": "model"
+      },
+      {
+        "after_sha256": "2ec6d258c879d23135c0a9fb6c8d7fb1c54b160e08695275660bc910a74ddfcf",
+        "before_sha256": null,
+        "change": "added",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.constraints[guarded:2ec6d258c879d23135c0a9fb6c8d7fb1c54b160e08695275660bc910a74ddfcf:0]",
+        "surface": "constraint"
+      },
+      {
+        "after_sha256": "05469a41fe414f60ac6ac0172e616fd0bb47ae98862824e8b8a230acc1e9a128",
+        "before_sha256": null,
+        "change": "added",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.constraints[guarded:2ec6d258c879d23135c0a9fb6c8d7fb1c54b160e08695275660bc910a74ddfcf:0].provenance",
+        "surface": "provenance"
+      },
+      {
+        "after_sha256": "68489de5a3051f31300d2fcdc3f0e67ea1bae05b81de5efb5b4e3ef407e4a68f",
+        "before_sha256": null,
+        "change": "added",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.constraints[guarded:68489de5a3051f31300d2fcdc3f0e67ea1bae05b81de5efb5b4e3ef407e4a68f:0]",
+        "surface": "constraint"
+      },
+      {
+        "after_sha256": "fe57f1f0320cdc72b6cabb3780ecf650b629f84a00e009d7dc12d56419de1298",
+        "before_sha256": null,
+        "change": "added",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.constraints[guarded:68489de5a3051f31300d2fcdc3f0e67ea1bae05b81de5efb5b4e3ef407e4a68f:0].provenance",
+        "surface": "provenance"
+      },
+      {
+        "after_sha256": "74b7686b4365eeeaa3c4efbe17d61daeb159e3eae6066e806a06eaac3ae8d3cb",
+        "before_sha256": null,
+        "change": "added",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.constraints[guarded:74b7686b4365eeeaa3c4efbe17d61daeb159e3eae6066e806a06eaac3ae8d3cb:0]",
+        "surface": "constraint"
+      },
+      {
+        "after_sha256": "36b54cb191d8ab9ada127d9c3b79b39e449bb114c5f9a77d3b69680c2e737d1d",
+        "before_sha256": null,
+        "change": "added",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.constraints[guarded:74b7686b4365eeeaa3c4efbe17d61daeb159e3eae6066e806a06eaac3ae8d3cb:0].provenance",
+        "surface": "provenance"
+      },
+      {
+        "after_sha256": "8917765bc1f311349c016e8de6a6196d0bfeaf2c30d3802435ef3c73f12639a4",
+        "before_sha256": "618a0be3475d9fad76b3d9f05160db468b249aa6fb46ac231bce77dc3d9c68e2",
+        "change": "modified",
+        "operation_ids": [
+          "ilp-0000",
+          "ilp-0001",
+          "ilp-0002"
+        ],
+        "reference": "model.verbalization",
+        "surface": "verbalization"
+      }
+    ],
+    "proposal_sha256": "de465bf82a31a63812eb373e9d06ea52c7f8fe8b9bddae1b295f4b12c7bf369c",
+    "report_sha256": "8b00b7ac907833c141dc38abe9d5d253da27558fe4fa7251f995d8197e5b2940",
+    "schema_version": 1
+  },
+  "breaking": false,
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "3c364776e371a356d66f2b980cddab38555ff6b028ea0a73bb4b9a2d10478c3d",
+    "text": "{\"version\":1,\"model_id\":\"ik5-orders\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"order\",\"name\":\"Order\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"order_id\"}},{\"id\":\"order_id\",\"name\":\"OrderId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_code\"}},{\"id\":\"customer_code\",\"name\":\"CustomerCode\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"amount\",\"name\":\"Amount\",\"kind\":\"value\",\"primitive\":\"Integer\"}],\"fact_types\":[{\"id\":\"order_by\",\"reading\":\"{Order} is placed by {Customer}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"constraints\":[{\"id\":\"u_order_customer\",\"type\":\"uniqueness\",\"roles\":[\"order\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each order is placed by one customer.\"}}]},{\"id\":\"order_amount\",\"reading\":\"{Order} has {Amount}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"amount\",\"role_name\":\"amount\"}]},{\"id\":\"order_flagged\",\"reading\":\"{Order} is flagged\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"}]},{\"id\":\"customer_blocked\",\"reading\":\"{Customer} is blocked\",\"roles\":[{\"object_type\":\"customer\",\"role_name\":\"customer\"}]}],\"constraints\":[{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"order_amount\",\"bind\":{\"order\":\"$v_b\",\"amount\":\"$v_c\"}}],\"consequent\":{\"comparison\":{\"operator\":\"<=\",\"left\":\"$v_c\",\"right\":100}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 0\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"method\":\"ilp-neutral\",\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"examples\":[\"n1\",\"n2\"],\"support\":{\"numerator\":2,\"denominator\":2},\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}]}}},{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"order_amount\",\"bind\":{\"order\":\"$v_b\",\"amount\":\"$v_c\"}}],\"consequent\":{\"absence\":{\"fact_type\":\"order_flagged\",\"bind\":{\"order\":\"$v_b\"}}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 1\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"method\":\"ilp-neutral\",\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"examples\":[\"n2\",\"n3\"],\"support\":{\"numerator\":2,\"denominator\":2},\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}]}}},{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"order_amount\",\"bind\":{\"order\":\"$v_b\",\"amount\":\"$v_c\"}}],\"consequent\":{\"comparison\":{\"operator\":\"<=\",\"left\":\"$v_c\",\"right\":80}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 2\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"method\":\"ilp-neutral\",\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"examples\":[\"n1\",\"n2\"],\"support\":{\"numerator\":2,\"denominator\":4},\"counterexamples\":[\"p1\",\"p2\"],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}]}}}]}\n"
+  },
+  "preview_sha256": "728d99f0401742332fd292a3572374fbf18fbffde9de56b7e23841df64161479",
+  "proposal": {
+    "artifacts": [],
+    "audit": {
+      "actor_id": "gnd import ilp-rules",
+      "origin": "gnd import ilp-rules",
+      "requested_at": "2026-10-26T00:00:00Z"
+    },
+    "candidate_model": {
+      "encoding": "utf-8",
+      "media_type": "application/yaml",
+      "sha256": "3c364776e371a356d66f2b980cddab38555ff6b028ea0a73bb4b9a2d10478c3d",
+      "text": "{\"version\":1,\"model_id\":\"ik5-orders\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"order\",\"name\":\"Order\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"order_id\"}},{\"id\":\"order_id\",\"name\":\"OrderId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_code\"}},{\"id\":\"customer_code\",\"name\":\"CustomerCode\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"amount\",\"name\":\"Amount\",\"kind\":\"value\",\"primitive\":\"Integer\"}],\"fact_types\":[{\"id\":\"order_by\",\"reading\":\"{Order} is placed by {Customer}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"constraints\":[{\"id\":\"u_order_customer\",\"type\":\"uniqueness\",\"roles\":[\"order\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each order is placed by one customer.\"}}]},{\"id\":\"order_amount\",\"reading\":\"{Order} has {Amount}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"amount\",\"role_name\":\"amount\"}]},{\"id\":\"order_flagged\",\"reading\":\"{Order} is flagged\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"}]},{\"id\":\"customer_blocked\",\"reading\":\"{Customer} is blocked\",\"roles\":[{\"object_type\":\"customer\",\"role_name\":\"customer\"}]}],\"constraints\":[{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"order_amount\",\"bind\":{\"order\":\"$v_b\",\"amount\":\"$v_c\"}}],\"consequent\":{\"comparison\":{\"operator\":\"<=\",\"left\":\"$v_c\",\"right\":100}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 0\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"method\":\"ilp-neutral\",\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"examples\":[\"n1\",\"n2\"],\"support\":{\"numerator\":2,\"denominator\":2},\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}]}}},{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"order_amount\",\"bind\":{\"order\":\"$v_b\",\"amount\":\"$v_c\"}}],\"consequent\":{\"absence\":{\"fact_type\":\"order_flagged\",\"bind\":{\"order\":\"$v_b\"}}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 1\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"method\":\"ilp-neutral\",\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"examples\":[\"n2\",\"n3\"],\"support\":{\"numerator\":2,\"denominator\":2},\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}]}}},{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"order_amount\",\"bind\":{\"order\":\"$v_b\",\"amount\":\"$v_c\"}}],\"consequent\":{\"comparison\":{\"operator\":\"<=\",\"left\":\"$v_c\",\"right\":80}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 2\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"method\":\"ilp-neutral\",\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"examples\":[\"n1\",\"n2\"],\"support\":{\"numerator\":2,\"denominator\":4},\"counterexamples\":[\"p1\",\"p2\"],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}]}}}]}\n"
+    },
+    "expected_model_sha256": "021be3e93b75081199ba62bb5097375b45814c6b1492b50332a747af4239de59",
+    "linked_projects": [],
+    "operations": [
+      {
+        "after": {
+          "antecedent": [
+            {
+              "bind": {
+                "amount": "$v_c",
+                "order": "$v_b"
+              },
+              "fact_type": "order_amount"
+            }
+          ],
+          "consequent": {
+            "comparison": {
+              "left": "$v_c",
+              "operator": "<=",
+              "right": 100
+            }
+          },
+          "modality": "deontic",
+          "provenance": {
+            "induction": {
+              "counterexamples": [],
+              "evidence": [
+                {
+                  "ref": "ilp/export.json",
+                  "sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+                },
+                {
+                  "ref": "ilp/clauses",
+                  "sha256": "52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8"
+                },
+                {
+                  "ref": "ilp/run",
+                  "sha256": "cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6"
+                }
+              ],
+              "examples": [
+                "n1",
+                "n2"
+              ],
+              "inducer": {
+                "name": "popper",
+                "version": "0.0.0+authored"
+              },
+              "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+              "method": "ilp-neutral",
+              "support": {
+                "denominator": 2,
+                "numerator": 2
+              }
+            }
+          },
+          "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 0",
+          "source": "induced",
+          "status": "proposed",
+          "type": "guarded"
+        },
+        "after_sha256": "68489de5a3051f31300d2fcdc3f0e67ea1bae05b81de5efb5b4e3ef407e4a68f",
+        "before": null,
+        "before_sha256": null,
+        "kind": "add",
+        "locator": {
+          "canonical_before_sha256": null,
+          "duplicate_occurrence": 0,
+          "family": "guarded",
+          "host": "model",
+          "host_id": null,
+          "locator_kind": "constraint"
+        },
+        "operation_id": "ilp-0000"
+      },
+      {
+        "after": {
+          "antecedent": [
+            {
+              "bind": {
+                "amount": "$v_c",
+                "order": "$v_b"
+              },
+              "fact_type": "order_amount"
+            }
+          ],
+          "consequent": {
+            "absence": {
+              "bind": {
+                "order": "$v_b"
+              },
+              "fact_type": "order_flagged"
+            }
+          },
+          "modality": "deontic",
+          "provenance": {
+            "induction": {
+              "counterexamples": [],
+              "evidence": [
+                {
+                  "ref": "ilp/export.json",
+                  "sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+                },
+                {
+                  "ref": "ilp/clauses",
+                  "sha256": "52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8"
+                },
+                {
+                  "ref": "ilp/run",
+                  "sha256": "cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6"
+                }
+              ],
+              "examples": [
+                "n2",
+                "n3"
+              ],
+              "inducer": {
+                "name": "popper",
+                "version": "0.0.0+authored"
+              },
+              "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+              "method": "ilp-neutral",
+              "support": {
+                "denominator": 2,
+                "numerator": 2
+              }
+            }
+          },
+          "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 1",
+          "source": "induced",
+          "status": "proposed",
+          "type": "guarded"
+        },
+        "after_sha256": "74b7686b4365eeeaa3c4efbe17d61daeb159e3eae6066e806a06eaac3ae8d3cb",
+        "before": null,
+        "before_sha256": null,
+        "kind": "add",
+        "locator": {
+          "canonical_before_sha256": null,
+          "duplicate_occurrence": 0,
+          "family": "guarded",
+          "host": "model",
+          "host_id": null,
+          "locator_kind": "constraint"
+        },
+        "operation_id": "ilp-0001"
+      },
+      {
+        "after": {
+          "antecedent": [
+            {
+              "bind": {
+                "amount": "$v_c",
+                "order": "$v_b"
+              },
+              "fact_type": "order_amount"
+            }
+          ],
+          "consequent": {
+            "comparison": {
+              "left": "$v_c",
+              "operator": "<=",
+              "right": 80
+            }
+          },
+          "modality": "deontic",
+          "provenance": {
+            "induction": {
+              "counterexamples": [
+                "p1",
+                "p2"
+              ],
+              "evidence": [
+                {
+                  "ref": "ilp/export.json",
+                  "sha256": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
+                },
+                {
+                  "ref": "ilp/clauses",
+                  "sha256": "52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8"
+                },
+                {
+                  "ref": "ilp/run",
+                  "sha256": "cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6"
+                }
+              ],
+              "examples": [
+                "n1",
+                "n2"
+              ],
+              "inducer": {
+                "name": "popper",
+                "version": "0.0.0+authored"
+              },
+              "manifest_sha256": "dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5",
+              "method": "ilp-neutral",
+              "support": {
+                "denominator": 4,
+                "numerator": 2
+              }
+            }
+          },
+          "rationale": "learned by popper 0.0.0+authored from manifest dbec4c36, clause 2",
+          "source": "induced",
+          "status": "proposed",
+          "type": "guarded"
+        },
+        "after_sha256": "2ec6d258c879d23135c0a9fb6c8d7fb1c54b160e08695275660bc910a74ddfcf",
+        "before": null,
+        "before_sha256": null,
+        "kind": "add",
+        "locator": {
+          "canonical_before_sha256": null,
+          "duplicate_occurrence": 0,
+          "family": "guarded",
+          "host": "model",
+          "host_id": null,
+          "locator_kind": "constraint"
+        },
+        "operation_id": "ilp-0002"
+      }
+    ],
+    "proposal_id": "ilp-3c364776e371a356",
+    "rationale": "gnd import ilp-rules: 3 learned clauses from popper 0.0.0+authored",
+    "schema_version": 3
+  },
+  "proposal_sha256": "de465bf82a31a63812eb373e9d06ea52c7f8fe8b9bddae1b295f4b12c7bf369c",
+  "schema_version": 3,
+  "validation": {
+    "model_sha256": "3c364776e371a356d66f2b980cddab38555ff6b028ea0a73bb4b9a2d10478c3d",
+    "valid": true,
+    "warnings": []
+  },
+  "verbalization": {
+    "encoding": "utf-8",
+    "media_type": "text/plain",
+    "sha256": "d94eecaecdd66cbbb44b02941cbc440947c7b31289f49c9d24250b0c1804a48f",
+    "text": "=== Header ===\nComplete deterministic ORM review; version=1 model_id=\"ik5-orders\" source={\"kind\":\"fixture\"}\n\n=== Object Types ===\n[object-type:amount] Amount is a value of type Integer. canonical={\"id\":\"amount\",\"kind\":\"value\",\"name\":\"Amount\",\"primitive\":\"Integer\"}\n[object-type:customer] Customer is identified by CustomerCode. reference={\"mode\":\"popular\",\"value_type\":\"customer_code\"} canonical={\"id\":\"customer\",\"kind\":\"entity\",\"name\":\"Customer\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_code\"}}\n[object-type:customer_code] CustomerCode is a value of type String. canonical={\"id\":\"customer_code\",\"kind\":\"value\",\"name\":\"CustomerCode\",\"primitive\":\"String\"}\n[object-type:order] Order is identified by OrderId. reference={\"mode\":\"popular\",\"value_type\":\"order_id\"} canonical={\"id\":\"order\",\"kind\":\"entity\",\"name\":\"Order\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"order_id\"}}\n[object-type:order_id] OrderId is a value of type Integer. canonical={\"id\":\"order_id\",\"kind\":\"value\",\"name\":\"OrderId\",\"primitive\":\"Integer\"}\n\n=== Fact Types ===\n[fact-type:customer_blocked] Customer is blocked. reading=\"{Customer} is blocked\" canonical={\"id\":\"customer_blocked\",\"reading\":\"{Customer} is blocked\"}\n[role:customer_blocked:customer] customer is played by Customer. canonical={\"object_type\":\"customer\",\"role_name\":\"customer\"}\n[fact-type:order_amount] Order has Amount. reading=\"{Order} has {Amount}\" canonical={\"id\":\"order_amount\",\"reading\":\"{Order} has {Amount}\"}\n[role:order_amount:order] order is played by Order. canonical={\"object_type\":\"order\",\"role_name\":\"order\"}\n[role:order_amount:amount] amount is played by Amount. canonical={\"object_type\":\"amount\",\"role_name\":\"amount\"}\n[fact-type:order_by] Order is placed by Customer. reading=\"{Order} is placed by {Customer}\" canonical={\"id\":\"order_by\",\"reading\":\"{Order} is placed by {Customer}\"}\n[role:order_by:order] order is played by Order. canonical={\"object_type\":\"order\",\"role_name\":\"order\"}\n[role:order_by:customer] customer is played by Customer. canonical={\"object_type\":\"customer\",\"role_name\":\"customer\"}\n[constraint:fact_types[order_by]:uniqueness:8796282a6961ec33dc794c9fc06deda190da34752625fec94ed228f81ebab9aa:0] [from explicit, confirmed; modality=alethic] Each combination of order occurs at most once. source=explicit status=confirmed modality=alethic provenance={\"user_quote\":\"Each order is placed by one customer.\"} canonical={\"id\":\"u_order_customer\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each order is placed by one customer.\"},\"roles\":[\"order\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"type\":\"uniqueness\"}\n[fact-type:order_flagged] Order is flagged. reading=\"{Order} is flagged\" canonical={\"id\":\"order_flagged\",\"reading\":\"{Order} is flagged\"}\n[role:order_flagged:order] order is played by Order. canonical={\"object_type\":\"order\",\"role_name\":\"order\"}\n\n=== Top-level Constraints ===\n[constraint:model:guarded:2ec6d258c879d23135c0a9fb6c8d7fb1c54b160e08695275660bc910a74ddfcf:0] [from induced, proposed; modality=deontic] If order_amount(order = $v_b, amount = $v_c), then $v_c is at most 80. source=induced status=proposed modality=deontic rationale=\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 2\" provenance={\"induction\":{\"counterexamples\":[\"p1\",\"p2\"],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}],\"examples\":[\"n1\",\"n2\"],\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"method\":\"ilp-neutral\",\"support\":{\"denominator\":4,\"numerator\":2}}} canonical={\"antecedent\":[{\"bind\":{\"amount\":\"$v_c\",\"order\":\"$v_b\"},\"fact_type\":\"order_amount\"}],\"consequent\":{\"comparison\":{\"left\":\"$v_c\",\"operator\":\"<=\",\"right\":80}},\"modality\":\"deontic\",\"provenance\":{\"induction\":{\"counterexamples\":[\"p1\",\"p2\"],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}],\"examples\":[\"n1\",\"n2\"],\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"method\":\"ilp-neutral\",\"support\":{\"denominator\":4,\"numerator\":2}}},\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 2\",\"source\":\"induced\",\"status\":\"proposed\",\"type\":\"guarded\"}\n[constraint:model:guarded:68489de5a3051f31300d2fcdc3f0e67ea1bae05b81de5efb5b4e3ef407e4a68f:0] [from induced, proposed; modality=deontic] If order_amount(order = $v_b, amount = $v_c), then $v_c is at most 100. source=induced status=proposed modality=deontic rationale=\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 0\" provenance={\"induction\":{\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}],\"examples\":[\"n1\",\"n2\"],\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"method\":\"ilp-neutral\",\"support\":{\"denominator\":2,\"numerator\":2}}} canonical={\"antecedent\":[{\"bind\":{\"amount\":\"$v_c\",\"order\":\"$v_b\"},\"fact_type\":\"order_amount\"}],\"consequent\":{\"comparison\":{\"left\":\"$v_c\",\"operator\":\"<=\",\"right\":100}},\"modality\":\"deontic\",\"provenance\":{\"induction\":{\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}],\"examples\":[\"n1\",\"n2\"],\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"method\":\"ilp-neutral\",\"support\":{\"denominator\":2,\"numerator\":2}}},\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 0\",\"source\":\"induced\",\"status\":\"proposed\",\"type\":\"guarded\"}\n[constraint:model:guarded:74b7686b4365eeeaa3c4efbe17d61daeb159e3eae6066e806a06eaac3ae8d3cb:0] [from induced, proposed; modality=deontic] If order_amount(order = $v_b, amount = $v_c), then no order_flagged(order = $v_b) fact holds. source=induced status=proposed modality=deontic rationale=\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 1\" provenance={\"induction\":{\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}],\"examples\":[\"n2\",\"n3\"],\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"method\":\"ilp-neutral\",\"support\":{\"denominator\":2,\"numerator\":2}}} canonical={\"antecedent\":[{\"bind\":{\"amount\":\"$v_c\",\"order\":\"$v_b\"},\"fact_type\":\"order_amount\"}],\"consequent\":{\"absence\":{\"bind\":{\"order\":\"$v_b\"},\"fact_type\":\"order_flagged\"}},\"modality\":\"deontic\",\"provenance\":{\"induction\":{\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8\"},{\"ref\":\"ilp/run\",\"sha256\":\"cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6\"}],\"examples\":[\"n2\",\"n3\"],\"inducer\":{\"name\":\"popper\",\"version\":\"0.0.0+authored\"},\"manifest_sha256\":\"dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5\",\"method\":\"ilp-neutral\",\"support\":{\"denominator\":2,\"numerator\":2}}},\"rationale\":\"learned by popper 0.0.0+authored from manifest dbec4c36, clause 1\",\"source\":\"induced\",\"status\":\"proposed\",\"type\":\"guarded\"}\n"
+  }
+}

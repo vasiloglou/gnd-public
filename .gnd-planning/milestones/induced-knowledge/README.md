@@ -77,5 +77,9 @@ Records:
   500,000 (owner ruling 2026-10-26), so it and the 64 MiB file cap each refuse
   at their real values. IK5-Q1 closed.
 
-Next: IK4-Q2 (evolve preview of reference-bearing models) as its own phase,
-then IK6.
+- [009 phase IK4-Q2](009-phase-IK4-Q2.md): `gnd evolve` works on models with
+  reference populations (missing reference 66, linked 74, digest mismatch 3,
+  owner ruling 2026-10-26). Focused gate 3162 passed. One local reviewer, no
+  blocking findings; three fixed with regressions. IK4-Q2-Q1 and Q2 are open.
+
+Next: IK6.

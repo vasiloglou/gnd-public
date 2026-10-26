@@ -514,7 +514,7 @@ def test_r6_the_export_reports_its_work(tmp_path):
     work = _work(tmp_path)
     result = _export(work / CASES["model"], work / "m.labels.json", tmp_path / "out")
     assert result.returncode == 0
-    assert b"work 27 (ceiling 1000006)" in result.stdout  # 6 populations + 21 facts
+    assert b"work 27 (ceiling 500006)" in result.stdout  # 6 populations + 21 facts
 
 
 def test_r6_import_counts_one_read_per_population_and_clause(tmp_path):
@@ -638,3 +638,40 @@ def test_r7_prolog_escapes_are_read():
 
     parsed = parse_program("wrong(A):- f_order_by(A,B,'a\\nb\\tc\\\\d\\'e\\x41\\').\n")
     assert parsed["clauses"][0]["body"][0]["atom"]["args"][2] == {"const": "a\nb\tc\\d'eA"}
+
+
+# Amendment IK5-Q1 (owner ruling 2026-10-26): both export bounds can refuse
+# with their real values, no monkeypatch.
+
+def _hundred_fact_population(work: Path) -> str:
+    orders = list(range(1, 51))
+    rows = "".join(f"    - {{ order: {o}, amount: {o} }}\n" for o in orders)
+    owners = "".join(f"    - {{ order: {o}, customer: \"c1\" }}\n" for o in orders)
+    text = ("format_version: 2\npopulation:\n  model: orders.orm.yaml\n  source: fixture\n"
+            "  covers: [order_by, order_amount, order_flagged, customer_blocked]\n"
+            f"instances:\n  order: {orders}\n  customer: [\"c1\"]\nfacts:\n"
+            f"  order_by:\n{owners}  order_amount:\n{rows}"
+            "  order_flagged: []\n  customer_blocked: []\n")
+    (work / "pops" / "hundred.yaml").write_text(text)
+    return "hundred.yaml"
+
+
+@pytest.mark.parametrize(("copies", "cause"), [
+    (5001, b"exceeds 500000 facts"),      # 500,100 facts: the facts bound refuses
+    (4800, b"would exceed 67108864 bytes"),  # 480,000 wide facts: under it, but neutral.json is too big
+])
+def test_q1_each_export_bound_refuses_at_its_real_value(tmp_path, copies, cause):
+    from gnd.export import ilp
+
+    assert ilp.MAX_FACTS == 500_000 and ilp.MAX_FILE_BYTES == 64 * 1024 * 1024
+    work = _work(tmp_path)
+    name = _hundred_fact_population(work)
+    manifest = _manifest_for(work, work / CASES["model"],
+                             [(f"x{i:039d}" if copies == 4800 else f"x{i}", name, "negative")
+                              for i in range(copies)])
+    assert manifest.stat().st_size <= 1024 * 1024
+    out = tmp_path / "out"
+    result = _export(work / CASES["model"], manifest, out, "neutral")
+    assert result.returncode == 3, result.stderr
+    assert b"too-large" in result.stderr and cause in result.stderr, result.stderr
+    assert not out.exists()

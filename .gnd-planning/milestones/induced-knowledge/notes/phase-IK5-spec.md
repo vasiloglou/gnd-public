@@ -663,3 +663,31 @@ same file.
 - **I-F10 — the near-cap import uses 7,500 examples, not 10,000.** The 1 MiB
   manifest holds about 7,500 class-mode entries in compact JSON (IK3's C-F3).
   T9 runs P = 7,500 and K = 32 and checks the work against P × (1 + K).
+
+## 17. Owner amendment IK5-Q1 (2026-10-26)
+
+**Ruling (o).** The owner was told that the IK5-D14 facts bound (1,000,000)
+cannot be reached under the 64 MiB per-file cap. The recommendation was to lower
+the facts bound to 500,000 and keep the cap. The owner replied "I agree" on
+2026-10-26.
+
+**Arithmetic (IK-R12).**
+- The smallest `neutral.json` fact entry is 97 bytes, at indent 2 (review R6).
+- So r1's 1,000,000 facts need at least 92.5 MiB, over the 64 MiB cap, and the
+  cap always refused first.
+- 500,000 × 97 bytes is 48.5 MB, under 64 MiB, so narrow facts now reach the
+  facts bound first.
+- Wide facts still reach the file cap first, so both bounds can refuse.
+- An ordinary entry is about 130 bytes. 480,000 such facts (64 MB) export, and
+  480,000 facts with 40-character example ids pass the cap.
+
+**What changed:**
+- the §6 bound "exported facts ≤ 1,000,000" becomes **≤ 500,000** (this section
+  amends it; §6 is not rewritten);
+- `ilp.MAX_FACTS`;
+- the neutral schema's `facts.maxItems`;
+- the contract page;
+- the export work ceiling, which becomes P + 500,000.
+
+The file cap, the formats, the corpus answers and every export digest are
+unchanged.

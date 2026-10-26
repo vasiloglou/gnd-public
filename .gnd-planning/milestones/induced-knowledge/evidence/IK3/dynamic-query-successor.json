@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/IK4/dynamic-query-successor.json",
+  "predecessor_sha256": "136ae23c98147a7142cf75a29a456be0e877161728dcc32fc0a5e6d9294be0ac",
+  "reason": "Owner-approved induced-knowledge IK3 (2026-10-25): gnd measure --labels adds the labels and agreement modules, the labelled report builder and the shared per-constraint row helper, which add type-annotation and payload subscripts. Model reads go through ModelIndex. Syntax census only; no model-query exception widening.",
+  "removed": [
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "contributions[ref]",
+      4
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "dict[str, list[Observation]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "dict[str, list[tuple[MeasuredPopulation, str, str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "list[Observation]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "list[dict[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "list[tuple[MeasuredPopulation, str, str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "scores[ref]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "tuple[MeasuredPopulation, str, str, Any]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/measure/agreement.py",
+      "_fraction",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "cells[key]",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "constraints[ref]",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "counts[f'decided_{label}']",
+      2
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "counts[f'{kind}_{label}']",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "dict[str, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/agreement.py",
+      "agreement_rows",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "BoundManifest",
+      "dict[str, ExpectedState]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "BoundManifest",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "BoundManifest",
+      "tuple[dict[str, ExpectedState], ...]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "LabelManifest",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "LabelledPopulation",
+      "dict[str, ExpectedState]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "RefTable",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "RefTable",
+      "dict[str, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "RefTable",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "RefTable",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "RefTable",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "_population_bytes",
+      "tuple[Path, bytes]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "_strings",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "_strings",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "_strings",
+      "population[key]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "_strings",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "bind_manifest",
+      "dict[str, ExpectedState]",
+      2
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "bind_manifest",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "bind_manifest",
+      "list[dict[str, ExpectedState]]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "bind_manifest",
+      "table.constraints[positional]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "for_model",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "for_model",
+      "dict[str, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "for_model",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "for_model",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "read_label_manifest",
+      "list[bytes]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "read_label_manifest",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "resolve",
+      "ref[3:]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "resolve",
+      "self.by_id[identifier]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "resolve",
+      "self.constraints[ref]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "score_populations",
+      "bound.expectations[index]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "score_populations",
+      "dict[tuple[str, str], CheckReport]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "score_populations",
+      "list[LabelledPopulation]",
+      2
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "score_populations",
+      "reports[key]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "score_populations",
+      "tuple[list[LabelledPopulation], int]",
+      1
+    ],
+    [
+      "src/gnd/measure/labels.py",
+      "score_populations",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_ScoredRows",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_ScoredRows",
+      "list[dict[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "contributions[ref]",
+      4
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "dict[str, list[Observation]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "dict[str, list[tuple[MeasuredPopulation, str, str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "list[Observation]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "list[dict[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "list[tuple[MeasuredPopulation, str, str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "scores[ref]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "_score_rows",
+      "tuple[MeasuredPopulation, str, str, Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_labelled_report",
+      "dict[str, Any]",
+      3
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_labelled_report",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_labelled_report",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_labelled_report",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "expectation",
+      "population.expectations[ref]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6443,
+  "result_occurrences": 8078
+}

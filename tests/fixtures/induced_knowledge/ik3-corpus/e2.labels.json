@@ -1,0 +1,64 @@
+{
+ "schema_version": "gnd-labels/1",
+ "model_sha256": "8e41b840d9f734f885ab0e49254c1db0d7c88b5096b60db2d14b9722fe9e7230",
+ "mode": "expected-state",
+ "populations": [
+  {
+   "id": "ok",
+   "path": "pops/ok.yaml",
+   "sha256": "137ea528e4b52135e058b26f224c34fcd2521ad58c5b7d6144287447b8c1da64",
+   "expectations": {
+    "id:u_person_team": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "id:m_person_grade": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    }
+   }
+  },
+  {
+   "id": "dup",
+   "path": "pops/dup.yaml",
+   "sha256": "aff8fcdd87808fc59eaa2de1e8c99c0ae99c7ba9ca54740097a79644345a12ee",
+   "expectations": {
+    "id:u_person_team": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "id:m_person_grade": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    }
+   }
+  },
+  {
+   "id": "nograde",
+   "path": "pops/nograde.yaml",
+   "sha256": "49b294c77982b3e8578c5853c44481b65beeeb1275ac61ce10ed43a8b5b352c9",
+   "expectations": {
+    "id:u_person_team": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "id:m_person_grade": {
+     "ground_truth": "violated",
+     "expected_verdict": "warning"
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    }
+   }
+  }
+ ]
+}

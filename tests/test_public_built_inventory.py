@@ -258,6 +258,7 @@ VENDORED_SCHEMAS = (
     "gnd/rai-alias.schema.json",
     "gnd/batch-report.schema.json",
     "gnd/discover.schema.json",
+    "gnd/labels.schema.json",
 )
 
 

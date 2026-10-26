@@ -1,0 +1,20 @@
+# IK3 approval corpus: no skills are listed, so the frequency rule has no subjects
+population:
+  model: labels.orm.yaml
+  source: fixture
+  covers: [person_in_team, person_has_grade, team_led_by, person_has_skill]
+instances:
+  person: [1, 2, 3]
+  team: ["A", "B"]
+facts:
+  person_in_team:
+    - { person: 1, team: "A" }
+    - { person: 2, team: "A" }
+    - { person: 3, team: "B" }
+  person_has_grade:
+    - { person: 1, grade: "g1" }
+    - { person: 2, grade: "g2" }
+    - { person: 3, grade: "g1" }
+  team_led_by:
+    - { team: "A", leader: 1 }
+  person_has_skill: []

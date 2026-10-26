@@ -1,0 +1,26 @@
+{
+ "schema_version": "gnd-labels/1",
+ "model_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+ "mode": "expected-state",
+ "populations": [
+  {
+   "id": "ok",
+   "path": "pops/ok.yaml",
+   "sha256": "137ea528e4b52135e058b26f224c34fcd2521ad58c5b7d6144287447b8c1da64",
+   "expectations": {
+    "id:u_person_team": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "id:m_person_grade": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    }
+   }
+  }
+ ]
+}

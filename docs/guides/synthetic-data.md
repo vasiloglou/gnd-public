@@ -42,6 +42,11 @@ An admitted value pool can be supplied with `--pool`; otherwise the generator
 builds and records a Faker pool. Keep the index, population files, and
 provenance sidecars together.
 
+If you already have real populations and know what each should show, you can
+skip generation and measure against your own labels with
+`gnd measure model.orm.yaml --labels labels.json`. See
+[Measuring host labels](../reference/measure-labels.md).
+
 Start with one seed and inspect the facts. Are the relations populated? Does
 the interesting join actually happen? Does the violating example isolate the
 intended rule? Increase the sample count only after the baseline is useful.

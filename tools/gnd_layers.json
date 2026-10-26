@@ -572,7 +572,15 @@
       "lane": "measure",
       "layer": "lanes"
     },
+    "gnd.measure.agreement": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
     "gnd.measure.coverage": {
+      "lane": "measure",
+      "layer": "lanes"
+    },
+    "gnd.measure.labels": {
       "lane": "measure",
       "layer": "lanes"
     },

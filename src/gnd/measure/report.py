@@ -38,7 +38,7 @@ from gnd import verbalize
 from gnd.address import positional_constraint_ref
 from gnd.checker import CheckReport
 from gnd.measure.score import Observation, score_run
-from gnd.measure.truth import expectation_for, resolve_constraint_ref
+from gnd.measure.truth import ExpectationMissingError, expectation_for, resolve_constraint_ref
 from gnd.model import Model
 from gnd.model_identity import stable_model_identifier
 from gnd.synth.provenance import Sidecar
@@ -47,6 +47,7 @@ __all__ = [
     "MEASUREMENT_SCHEMA_VERSION",
     "MeasuredPopulation",
     "MixedCorpusError",
+    "build_labelled_report",
     "build_measurement_report",
     "load_measurement_schema",
     "render_measurement",
@@ -232,85 +233,14 @@ def build_measurement_report(
         )
     (pool_source,) = pool_sources
 
-    # Collect observations per constraint ref, plus the per-population outcome so
-    # the evidence excerpt can prefer an error-counting cell.
-    from gnd.measure.score import classify
-
-    observations_by_ref: dict[str, list[Observation]] = {}
-    contributions: dict[str, list[tuple[MeasuredPopulation, str, str, Any]]] = {}
-    ordered_pops = sorted(populations, key=lambda mp: mp.population_path)
-    for mp in ordered_pops:
-        for verdict in mp.report.verdicts:
-            ref = verdict.constraint_ref
-            expected = expectation_for(mp.sidecar, ref)
-            observation = Observation(expected, verdict.verdict, verdict.modality)
-            outcome = classify(expected, verdict.verdict, verdict.modality)
-            observations_by_ref.setdefault(ref, []).append(observation)
-            contributions.setdefault(ref, []).append((mp, outcome, verdict.verdict, expected))
-
-    _assert_every_declared_constraint_was_scored(model, observations_by_ref)
-
-    # F-4: the census half of the same reconciliation. The check above is
-    # set-based and sees a constraint that vanishes from EVERY population; this
-    # sees one that vanishes from SOME, which leaves the row's rates intact over
-    # half the evidence.
-    scores = score_run(observations_by_ref, population_count=len(ordered_pops))
-
-    per_constraint: list[dict[str, Any]] = []
-    checker_defects: list[dict[str, Any]] = []
-    decided_observations = 0
-    total_observations = 0
-    total_wrong_attribution = 0
-    for ref in sorted(scores):
-        score = scores[ref]
-        constraint = resolve_constraint_ref(model, ref)
-        # modality/type come from the constraint the ref names (D-12 join).
-        modality = str(constraint.get("modality") or "")
-        constraint_type = str(constraint.get("type") or "")
-        evidence = _select_evidence(ref, contributions[ref])
-        wrong_attribution = _wrong_attribution_count(ref, contributions[ref])
-        total_wrong_attribution += wrong_attribution
-        # Shared credit stays VISIBLE: a row whose evidence includes any
-        # set-attributed violating case (isolating == False, this ref in the
-        # predicted set) is marked, so a reader can see when per-constraint
-        # credit is shared rather than clean (D-05').
-        set_attributed_evidence = any(
-            mp.sidecar.class_ == "violating"
-            and mp.sidecar.isolating is False
-            and ref in (mp.sidecar.violates or [])
-            for mp, _outcome, _observed, _expected in contributions[ref]
-        )
-        total_observations += score.n
-        decided_observations += score.decided
-        per_constraint.append(
-            {
-                "constraint_ref": ref,
-                "constraint_type": constraint_type,
-                "modality": modality,
-                "source": constraint.get("source"),
-                "status": constraint.get("status"),
-                "n": score.n,
-                "decided": score.decided,
-                "coverage": score.coverage,
-                "cells": dict(score.cells),
-                "false_pass": score.cells["false_pass"],
-                "expected_nonpass": score.expected_nonpass,
-                "false_pass_rate": score.false_pass_rate,
-                "false_fail": score.cells["false_fail"],
-                "satisfied": score.satisfied,
-                "false_fail_rate": score.false_fail_rate,
-                "undecided_rate": score.undecided_rate,
-                "selective_false_pass": score.selective_false_pass,
-                "selective_false_fail": score.selective_false_fail,
-                "ground_truth_states_seen": score.ground_truth_states_seen,
-                "wrong_attribution": wrong_attribution,
-                "set_attributed_evidence": set_attributed_evidence,
-                "evidence": evidence,
-            }
-        )
-        checker_defects.extend(_defects_for(ref, modality, contributions[ref]))
-
-    checker_defects.sort(key=lambda d: (d["constraint_ref"], d["population"], d["kind"]))
+    scored = _score_rows(
+        model, populations, lambda mp, ref: expectation_for(mp.sidecar, ref)
+    )
+    per_constraint = scored.per_constraint
+    checker_defects = scored.checker_defects
+    total_observations = scored.observations
+    decided_observations = scored.decided
+    total_wrong_attribution = scored.wrong_attribution
 
     violating_sidecars = [mp for mp in populations if mp.sidecar.class_ == "violating"]
     isolating_cases = sum(1 for mp in violating_sidecars if mp.sidecar.isolating is True)
@@ -392,6 +322,181 @@ def build_measurement_report(
         "checker_defects": checker_defects,
         "lanes": {"deterministic": "run", "llm": "not-applicable-phase-2"},
     }
+
+
+@dataclass(frozen=True)
+class _ScoredRows:
+    per_constraint: list[dict[str, Any]]
+    checker_defects: list[dict[str, Any]]
+    observations: int
+    decided: int
+    wrong_attribution: int
+
+
+def _score_rows(
+    model: Model, populations: list[Any], expectation_of: Any
+) -> _ScoredRows:
+    """The per-constraint rows and checker defects, shared by the synth path and
+    IK3's expected-state labels path. ``expectation_of(population, ref)`` returns
+    the :class:`ExpectedState` for one observation; a population whose
+    ``sidecar`` is ``None`` (a host label) contributes no synth-only view."""
+    # Collect observations per constraint ref, plus the per-population outcome so
+    # the evidence excerpt can prefer an error-counting cell.
+    from gnd.measure.score import classify
+
+    observations_by_ref: dict[str, list[Observation]] = {}
+    contributions: dict[str, list[tuple[MeasuredPopulation, str, str, Any]]] = {}
+    ordered_pops = sorted(populations, key=lambda mp: mp.population_path)
+    for mp in ordered_pops:
+        for verdict in mp.report.verdicts:
+            ref = verdict.constraint_ref
+            expected = expectation_of(mp, ref)
+            observation = Observation(expected, verdict.verdict, verdict.modality)
+            outcome = classify(expected, verdict.verdict, verdict.modality)
+            observations_by_ref.setdefault(ref, []).append(observation)
+            contributions.setdefault(ref, []).append((mp, outcome, verdict.verdict, expected))
+
+    _assert_every_declared_constraint_was_scored(model, observations_by_ref)
+
+    # F-4: the census half of the same reconciliation. The check above is
+    # set-based and sees a constraint that vanishes from EVERY population; this
+    # sees one that vanishes from SOME, which leaves the row's rates intact over
+    # half the evidence.
+    scores = score_run(observations_by_ref, population_count=len(ordered_pops))
+
+    per_constraint: list[dict[str, Any]] = []
+    checker_defects: list[dict[str, Any]] = []
+    decided_observations = 0
+    total_observations = 0
+    total_wrong_attribution = 0
+    for ref in sorted(scores):
+        score = scores[ref]
+        constraint = resolve_constraint_ref(model, ref)
+        # modality/type come from the constraint the ref names (D-12 join).
+        modality = str(constraint.get("modality") or "")
+        constraint_type = str(constraint.get("type") or "")
+        evidence = _select_evidence(ref, contributions[ref])
+        wrong_attribution = _wrong_attribution_count(ref, contributions[ref])
+        total_wrong_attribution += wrong_attribution
+        # Shared credit stays VISIBLE: a row whose evidence includes any
+        # set-attributed violating case (isolating == False, this ref in the
+        # predicted set) is marked, so a reader can see when per-constraint
+        # credit is shared rather than clean (D-05').
+        set_attributed_evidence = any(
+            mp.sidecar is not None
+            and mp.sidecar.class_ == "violating"
+            and mp.sidecar.isolating is False
+            and ref in (mp.sidecar.violates or [])
+            for mp, _outcome, _observed, _expected in contributions[ref]
+        )
+        total_observations += score.n
+        decided_observations += score.decided
+        per_constraint.append(
+            {
+                "constraint_ref": ref,
+                "constraint_type": constraint_type,
+                "modality": modality,
+                "source": constraint.get("source"),
+                "status": constraint.get("status"),
+                "n": score.n,
+                "decided": score.decided,
+                "coverage": score.coverage,
+                "cells": dict(score.cells),
+                "false_pass": score.cells["false_pass"],
+                "expected_nonpass": score.expected_nonpass,
+                "false_pass_rate": score.false_pass_rate,
+                "false_fail": score.cells["false_fail"],
+                "satisfied": score.satisfied,
+                "false_fail_rate": score.false_fail_rate,
+                "undecided_rate": score.undecided_rate,
+                "selective_false_pass": score.selective_false_pass,
+                "selective_false_fail": score.selective_false_fail,
+                "ground_truth_states_seen": score.ground_truth_states_seen,
+                "wrong_attribution": wrong_attribution,
+                "set_attributed_evidence": set_attributed_evidence,
+                "evidence": evidence,
+            }
+        )
+        checker_defects.extend(_defects_for(ref, modality, contributions[ref]))
+
+    checker_defects.sort(key=lambda d: (d["constraint_ref"], d["population"], d["kind"]))
+
+    return _ScoredRows(
+        per_constraint, checker_defects, total_observations, decided_observations,
+        total_wrong_attribution,
+    )
+
+
+def build_labelled_report(
+    model: Model,
+    model_path: str,
+    *,
+    manifest_path: str,
+    manifest_sha256: str,
+    model_sha256: str,
+    mode: str,
+    populations: list[Any],
+    work: dict[str, int],
+    gnd_version: str,
+    model_digest: str,
+    rules: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """The IK3 labelled payload: schema 4 (expected-state) or 5 (class).
+
+    Expected-state rows and defects come from :func:`_score_rows`, the synth
+    path's own builder, so the two agree row for row (IK3-C2). The synth-only
+    header (seeds, pools, generator version, sidecars) is replaced by the
+    ``labels`` block (IK3-D2)."""
+    corpus = []
+    for population in populations:
+        entry = {"id": population.id, "path": population.population_path,
+                 "sha256": population.population_sha256}
+        if population.class_ is not None:
+            entry["class"] = population.class_
+        corpus.append(entry)
+    payload: dict[str, Any] = {
+        "schema_version": 4 if mode == "expected-state" else 5,
+        "tool": "gnd",
+        "command": "measure",
+        "gnd_version": gnd_version,
+        "model": stable_model_identifier(model_path),
+        "model_id": str(model.model_id) if model.model_id else None,
+        "model_digest": model_digest,
+        "population_count": len(populations),
+        "labels": {
+            "manifest": {"path": manifest_path, "sha256": manifest_sha256},
+            "model_sha256": model_sha256,
+            "mode": mode,
+            "population_count": len(populations),
+            "corpus": corpus,
+            "work": dict(work),
+        },
+        "lanes": {"deterministic": "run", "llm": "not-applicable-phase-2"},
+    }
+    if mode == "class":
+        payload["rules"] = list(rules or [])
+        return payload
+    def expectation(population: Any, ref: str) -> Any:
+        if ref not in population.expectations:
+            # The checker emitted a ref the binding never saw: refuse, as the
+            # synth path does for a sidecar without it (IK3 review R3).
+            raise ExpectationMissingError(
+                f"population {population.id!r} carries no label for checker ref {ref!r}"
+            )
+        return population.expectations[ref]
+
+    scored = _score_rows(model, populations, expectation)
+    payload["per_constraint"] = scored.per_constraint
+    payload["checker_defects"] = scored.checker_defects
+    payload["coverage_summary"] = {
+        "constraint_count": len(scored.per_constraint),
+        "population_count": len(populations),
+        "observation_count": scored.observations,
+        "decided_observations": scored.decided,
+        "wrong_attribution": scored.wrong_attribution,
+    }
+    return payload
+
 
 
 def _coverage_matrix_summary(
@@ -551,7 +656,8 @@ def _is_wrong_attribution(mp: MeasuredPopulation, outcome: str, expected: Any) -
     after a checker change, and the negative control. Do not delete it as dead.
     """
     return (
-        mp.sidecar.class_ == "violating"
+        mp.sidecar is not None
+        and mp.sidecar.class_ == "violating"
         and outcome == "false_fail"
         and expected is not None
         and expected.ground_truth == "satisfied"
@@ -595,10 +701,11 @@ def _defects_for(
     }
     out: list[dict[str, Any]] = []
     for mp, outcome, observed, expected in contributions:
-        expected = expected if expected is not None else mp.sidecar.expectations.get(ref)
+        if expected is None and mp.sidecar is not None:
+            expected = mp.sidecar.expectations.get(ref)
 
         def record(kind: str, mp=mp, observed=observed, expected=expected) -> dict[str, Any]:
-            return {
+            row = {
                 "kind": kind,
                 "constraint_ref": ref,
                 "modality": modality,
@@ -606,8 +713,14 @@ def _defects_for(
                 "sidecar": mp.sidecar_path,
                 "expected_verdict": expected.expected_verdict if expected else None,
                 "observed_verdict": observed,
-                "seed": mp.sidecar.seed,
+                "seed": mp.sidecar.seed if mp.sidecar is not None else None,
             }
+            # IK3 C-F1: a host-labelled population has neither field, but it
+            # has its manifest id, which one path may carry several of (R4).
+            if mp.sidecar is None:
+                del row["sidecar"], row["seed"]
+                row["population_id"] = mp.id
+            return row
 
         if _is_wrong_attribution(mp, outcome, expected):
             out.append(record("wrong_attribution"))
@@ -643,11 +756,32 @@ def render_measurement(payload: dict[str, Any]) -> str:
         if header is None:
             raise ValueError("measurement successor lacks redaction metadata")
         lines.append(header)
+    source = (
+        f"labels={payload['labels']['mode']}" if "labels" in payload
+        else f"pool={verbalize.path_segment(payload['pool_source'])}"
+    )
     lines.append(
         f"MEASUREMENT {verbalize.path_segment(payload['model'])} "
-        f"[pool={verbalize.path_segment(payload['pool_source'])}] "
+        f"[{source}] "
         f"populations={payload['population_count']}"
     )
+    if "rules" in payload:
+        work = payload["labels"]["work"]
+        lines.append(f"WORK {work['total']} (ceiling {work['ceiling']})")
+        for row in payload["rules"]:
+            lines.append(
+                f"  {verbalize.path_segment(row['ref'])} "
+                f"[{verbalize.path_segment(row['constraint_type'])}/"
+                f"{verbalize.path_segment(row['modality'])}] fires_on={row['fires_on']}"
+            )
+            lines.append(
+                "      "
+                + " ".join(
+                    f"{key}={cell['numerator']}/{cell['denominator']}"
+                    for key, cell in row["cells"].items()
+                )
+            )
+        return "\n".join(lines)
     # COVERAGE BEFORE RATES: a rate over six families is not the same object as a
     # rate over fourteen, so the reader sees the denominator of the measurement
     # before any of its numbers.
@@ -735,17 +869,18 @@ def render_measurement(payload: dict[str, Any]) -> str:
             lines.append(
                 "      evidence=" + json.dumps(row["evidence"], ensure_ascii=False, allow_nan=False)
             )
-    lines.append(
-        f"VIOLATING CASES: isolating={summary['isolating_cases']} "
-        f"set-attributed={summary['set_attributed_cases']} "
-        f"wrong_attribution={summary['wrong_attribution']}"
-    )
+    if "isolating_cases" in summary:
+        lines.append(
+            f"VIOLATING CASES: isolating={summary['isolating_cases']} "
+            f"set-attributed={summary['set_attributed_cases']} "
+            f"wrong_attribution={summary['wrong_attribution']}"
+        )
     defects = payload["checker_defects"]
     lines.append(f"CHECKER DEFECTS: {len(defects)}")
     for defect in defects:
         lines.append(
             f"  [{defect['kind']}] {verbalize.path_segment(defect['constraint_ref'])} "
-            f"expected={defect['expected_verdict']} observed={defect['observed_verdict']} "
-            f"seed={defect['seed']}"
+            f"expected={defect['expected_verdict']} observed={defect['observed_verdict']}"
+            + (f" seed={defect['seed']}" if "seed" in defect else f" population={verbalize.path_segment(defect['population'])}")
         )
     return "\n".join(lines)

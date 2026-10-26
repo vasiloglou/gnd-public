@@ -1,0 +1,26 @@
+{
+ "schema_version": "gnd-labels/1",
+ "model_sha256": "8e41b840d9f734f885ab0e49254c1db0d7c88b5096b60db2d14b9722fe9e7230",
+ "mode": "expected-state",
+ "populations": [
+  {
+   "id": "broken",
+   "path": "pops/broken.yaml",
+   "sha256": "bdbe68e6940a9655cca127c742eb8dd4bfac8a86c552e1bafb1246121a56c586",
+   "expectations": {
+    "id:u_person_team": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "id:m_person_grade": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "ground_truth": "satisfied",
+     "expected_verdict": "pass"
+    }
+   }
+  }
+ ]
+}

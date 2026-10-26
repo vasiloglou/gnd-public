@@ -9,7 +9,14 @@ from gnd import payloads as report_module
 from gnd import resolve_version
 from gnd.checker import band as checker_band
 from gnd.checker import check
-from gnd.exits import EXIT_CHECKER_DEFECT, EXIT_GENERATOR, EXIT_INTERNAL, EXIT_IO, EXIT_USAGE
+from gnd.exits import (
+    EXIT_CHECKER_DEFECT,
+    EXIT_GENERATOR,
+    EXIT_INTERNAL,
+    EXIT_IO,
+    EXIT_NO_INPUT,
+    EXIT_USAGE,
+)
 from gnd.model import load_model
 from gnd.population import load_population
 from gnd.synth.corpus_service import (
@@ -427,6 +434,144 @@ def _cmd_measure(
         return EXIT_CHECKER_DEFECT
     return 0
 
+def _measure_labels(
+    model_path: str,
+    labels_path: str,
+    output_format: str,
+    out: str | None,
+    *,
+    unredacted: bool = False,
+) -> int:
+    """IK3: measure the checker over host-labelled populations (``--labels``).
+
+    Validation order (spec §4 rule 3): the manifest is read and schema-checked,
+    then the model is loaded, then the manifest is bound to it (model digest,
+    every ref resolved, every expectation consistent), and only then is each
+    population resolved, digest-checked, loaded and checked, in manifest order.
+    Expected-state mode emits schema 4 and exits 6 on a checker defect, exactly
+    as the synth path; class mode emits schema 5 and exits 0 on disagreement
+    (IK3-D6). Like the synth path, nothing here is timestamped.
+    """
+    from gnd import redaction as _redaction
+    from gnd.measure import agreement as _agreement
+    from gnd.measure import labels as _labels
+    from gnd.measure import report as measure_report
+    from gnd.measure.score import CellLookupError, PartitionError
+    from gnd.measure.truth import ConstraintRefError, ExpectationMissingError
+    from gnd.safefs import file_sha256
+    from gnd.synth import provenance as _prov
+
+    policy = None
+
+    def fail(code: int, message: str) -> int:
+        payload = {"command": "measure", "exit_code": code, "error": message}
+        if policy is not None and policy.active:
+            payload["error"] = message if unredacted else _redaction.INSTANCE_DETAIL
+            payload = _redaction.project_output(
+                "measure",
+                payload,
+                policy=policy,
+                mode="unredacted" if unredacted else "applied",
+                emitter_id=f"cli-measure-{output_format}",
+            )
+        if output_format == "json":
+            report_module.emit(payload)
+        else:
+            if policy is not None and policy.active:
+                print(_redaction.render_text_header(payload))
+            print(f"ERROR: {payload['error']}")
+        return code
+
+    try:
+        manifest = _labels.read_label_manifest(Path(labels_path))
+    except _labels.LabelError as error:
+        return fail(error.code, str(error))
+
+    model_file = Path(model_path)
+    if not model_file.exists():
+        return fail(EXIT_NO_INPUT, f"model {model_path} does not exist")
+    try:
+        before = file_sha256(model_file)
+        model = load_model(model_path)
+        from gnd.terms import require_non_temporal
+
+        require_non_temporal(model, "measure")
+        after = file_sha256(model_file)
+    except Exception as error:  # noqa: BLE001 -- the synth path's refusal contract
+        return fail(3, f"{model_path}: {error}")
+    if before != after:
+        return fail(3, f"model {model_path} changed while it was being read")
+    policy = _redaction.RedactionPolicy.from_model(model)
+
+    try:
+        bound = _labels.bind_manifest(manifest, model, before)
+        populations, checked = _labels.score_populations(bound, model)
+    except _labels.LabelError as error:
+        return fail(error.code, str(error))
+
+    constraint_count = len(bound.table.positional)
+    if manifest.mode == "class":
+        label_rows = len(populations) * len(bound.rules)
+    else:
+        label_rows = len(populations) * constraint_count
+    work = {
+        "populations": checked,
+        "label_rows": label_rows,
+        "total": checked + label_rows,
+        "ceiling": len(populations) * (1 + constraint_count),
+    }
+    try:
+        rules = (
+            _agreement.agreement_rows(bound.rules, bound.table.constraints, populations)
+            if manifest.mode == "class"
+            else None
+        )
+        if work["total"] > work["ceiling"]:
+            raise PartitionError(f"work {work['total']} exceeds its ceiling {work['ceiling']}")
+        payload = measure_report.build_labelled_report(
+            model,
+            measure_report.stable_model_identifier(model_path),
+            manifest_path=manifest.path.name,
+            manifest_sha256=manifest.sha256,
+            model_sha256=before,
+            mode=manifest.mode,
+            populations=populations,
+            work=work,
+            gnd_version=resolve_version(),
+            model_digest=_prov.validated_model_sha256(model),
+            rules=rules,
+        )
+    except (ExpectationMissingError, ConstraintRefError) as error:
+        return fail(3, f"label/model inconsistency: {error}")
+    except (CellLookupError, PartitionError) as error:
+        return fail(EXIT_INTERNAL, f"measurement accounting failed: {error}")
+
+    semantic_payload = payload
+    payload = _redaction.project_output(
+        "measure",
+        semantic_payload,
+        policy=policy,
+        mode="unredacted" if unredacted else "applied",
+        emitter_id=f"cli-measure-{output_format}",
+    )
+    rendered = measure_report._canonical(payload)
+    if out is not None:
+        try:
+            Path(out).write_text(rendered + "\n", encoding="utf-8")
+        except OSError as error:
+            return fail(EXIT_IO, f"could not write {out}: {error}")
+    if output_format == "json":
+        if out is None:
+            print(rendered)
+    else:
+        print(measure_report.render_measurement(payload))
+        if out is not None:
+            print(f"  (json written to {out})")
+    if semantic_payload.get("checker_defects"):
+        return EXIT_CHECKER_DEFECT
+    return 0
+
+
 def _promote_defects(
     *,
     model: Any,
@@ -492,4 +637,5 @@ def _promote_defects(
     return None
 
 _cmd_measure.__module__ = "gnd.cli"
+_measure_labels.__module__ = "gnd.cli"
 _promote_defects.__module__ = "gnd.cli"

@@ -1,0 +1,446 @@
+{
+ "version": 1,
+ "note": "Hand-written from spec r1. cells keys are the checker's positional refs; defect rows omit the synth-only sidecar and seed fields (C-F2).",
+ "cases": {
+  "E1": {
+   "exit": 0,
+   "schema_version": 4,
+   "cells": {
+    "fact_types[person_in_team].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    },
+    "fact_types[person_has_grade].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    }
+   },
+   "defects": []
+  },
+  "E2": {
+   "exit": 6,
+   "schema_version": 4,
+   "cells": {
+    "fact_types[person_in_team].constraints[0]": {
+     "correct": 2,
+     "false_pass": 0,
+     "false_fail": 1,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    },
+    "fact_types[person_has_grade].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    }
+   },
+   "defects": [
+    {
+     "kind": "false-fail",
+     "constraint_ref": "fact_types[person_in_team].constraints[0]",
+     "modality": "alethic",
+     "population": "pops/dup.yaml",
+     "expected_verdict": "pass",
+     "observed_verdict": "fail"
+    }
+   ]
+  },
+  "E3": {
+   "exit": 0,
+   "schema_version": 4,
+   "cells": {
+    "fact_types[person_in_team].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    },
+    "fact_types[person_has_grade].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "correct": 3,
+     "false_pass": 0,
+     "false_fail": 0,
+     "undecided": 0,
+     "masked_by_vacuity": 0,
+     "tool_defect": 0
+    }
+   },
+   "defects": []
+  },
+  "E4": {
+   "exit": 3
+  },
+  "E5": {
+   "exit": 3
+  },
+  "E6": {
+   "exit": 3
+  },
+  "E7": {
+   "exit": 3
+  },
+  "E8": {
+   "exit": 3
+  },
+  "E9": {
+   "exit": 3
+  },
+  "E10": {
+   "exit": 3
+  },
+  "E11": {
+   "exit": 5
+  },
+  "E12": {
+   "exit": 74
+  },
+  "E13": {
+   "exit": 64
+  },
+  "E14": {
+   "exit": 64
+  },
+  "E15": {
+   "exit": 66
+  },
+  "E16": {
+   "exit": 3
+  },
+  "E17": {
+   "exit": 3
+  },
+  "E18": {
+   "exit": 3
+  },
+  "E19": {
+   "exit": 3
+  },
+  "E20": {
+   "exit": 3
+  },
+  "E21": {
+   "exit": 3
+  },
+  "E22": {
+   "exit": 3
+  },
+  "E23": {
+   "exit": 3
+  },
+  "E24": {
+   "exit": 3
+  },
+  "C1": {
+   "exit": 0,
+   "schema_version": 5,
+   "rules": {
+    "fact_types[person_in_team].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 1,
+       "denominator": 3
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 2
+      },
+      "silent_on_negative": {
+       "numerator": 2,
+       "denominator": 3
+      },
+      "silent_on_positive": {
+       "numerator": 2,
+       "denominator": 2
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 5
+      },
+      "unchecked": {
+       "numerator": 0,
+       "denominator": 5
+      }
+     }
+    },
+    "fact_types[person_has_grade].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 1,
+       "denominator": 2
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 2
+      },
+      "silent_on_negative": {
+       "numerator": 1,
+       "denominator": 2
+      },
+      "silent_on_positive": {
+       "numerator": 2,
+       "denominator": 2
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 5
+      },
+      "unchecked": {
+       "numerator": 1,
+       "denominator": 5
+      }
+     }
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 0,
+       "denominator": 2
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 1
+      },
+      "silent_on_negative": {
+       "numerator": 2,
+       "denominator": 2
+      },
+      "silent_on_positive": {
+       "numerator": 1,
+       "denominator": 1
+      },
+      "vacuous": {
+       "numerator": 1,
+       "denominator": 5
+      },
+      "unchecked": {
+       "numerator": 1,
+       "denominator": 5
+      }
+     }
+    }
+   }
+  },
+  "C2": {
+   "exit": 0,
+   "schema_version": 5,
+   "rules": {
+    "fact_types[person_in_team].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 1,
+       "denominator": 1
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 1
+      },
+      "silent_on_negative": {
+       "numerator": 0,
+       "denominator": 1
+      },
+      "silent_on_positive": {
+       "numerator": 1,
+       "denominator": 1
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 2
+      },
+      "unchecked": {
+       "numerator": 0,
+       "denominator": 2
+      }
+     }
+    },
+    "fact_types[person_has_grade].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 0,
+       "denominator": 1
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 1
+      },
+      "silent_on_negative": {
+       "numerator": 1,
+       "denominator": 1
+      },
+      "silent_on_positive": {
+       "numerator": 1,
+       "denominator": 1
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 2
+      },
+      "unchecked": {
+       "numerator": 0,
+       "denominator": 2
+      }
+     }
+    }
+   }
+  },
+  "C3": {
+   "exit": 3
+  },
+  "C4": {
+   "exit": 3
+  },
+  "C5": {
+   "exit": 3
+  },
+  "N1": {
+   "exit": 0,
+   "schema_version": 5,
+   "manifest_bytes_max": 1048576,
+   "work_ceiling": 32000,
+   "ceiling_arithmetic": "P x (1 + C) = 8000 x (1 + 3) = 32000",
+   "rules": {
+    "fact_types[person_in_team].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 0,
+       "denominator": 4000
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 4000
+      },
+      "silent_on_negative": {
+       "numerator": 4000,
+       "denominator": 4000
+      },
+      "silent_on_positive": {
+       "numerator": 4000,
+       "denominator": 4000
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 8000
+      },
+      "unchecked": {
+       "numerator": 0,
+       "denominator": 8000
+      }
+     }
+    },
+    "fact_types[person_has_grade].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 0,
+       "denominator": 4000
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 4000
+      },
+      "silent_on_negative": {
+       "numerator": 4000,
+       "denominator": 4000
+      },
+      "silent_on_positive": {
+       "numerator": 4000,
+       "denominator": 4000
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 8000
+      },
+      "unchecked": {
+       "numerator": 0,
+       "denominator": 8000
+      }
+     }
+    },
+    "fact_types[person_has_skill].constraints[0]": {
+     "fires_on": "negative",
+     "cells": {
+      "fired_on_negative": {
+       "numerator": 0,
+       "denominator": 4000
+      },
+      "fired_on_positive": {
+       "numerator": 0,
+       "denominator": 4000
+      },
+      "silent_on_negative": {
+       "numerator": 4000,
+       "denominator": 4000
+      },
+      "silent_on_positive": {
+       "numerator": 4000,
+       "denominator": 4000
+      },
+      "vacuous": {
+       "numerator": 0,
+       "denominator": 8000
+      },
+      "unchecked": {
+       "numerator": 0,
+       "denominator": 8000
+      }
+     }
+    }
+   }
+  },
+  "X1": {
+   "exit": 0,
+   "schema_version": 4,
+   "per_constraint_equals": "tests/fixtures/public-launch-phase-3/measurement/measurements/movie.faker.json",
+   "ignored_row_fields": [
+    "wrong_attribution",
+    "set_attributed_evidence"
+   ]
+  },
+  "D1": {
+   "exit": 0,
+   "deterministic_over": "C1"
+  }
+ }
+}

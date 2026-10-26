@@ -1,0 +1,7 @@
+# IK3 approval corpus: names a fact type the model lacks, so it fails to load.
+population:
+  model: labels.orm.yaml
+  source: fixture
+instances: {}
+facts:
+  no_such_fact_type: []

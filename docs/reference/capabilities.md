@@ -32,6 +32,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Recover a model from code | Bounded `recovery inventory/verify` and authoring skill | One-time static selected roots; no continuous synchronization | [Recovery](../guides/evolution-and-recovery.md) |
 | Compare compatible models | `diff`; `api.diff` | Same vocabulary; bounded entailment catalogue and concrete populations; no temporal models | [Python API](python-api.md) |
 | Exercise rule behavior | `synth`, `measure` | Optional synth dependency; generation is narrower than checking | [Synthetic data](../guides/synthetic-data.md) |
+| Measure rules on your own labels | `measure --labels` | Host-labelled populations; expected-state rates or class agreement counts; labels are your claim, not checked truth | [Measuring host labels](measure-labels.md) |
 | Extract and check document facts | Offline extraction bundle, agent skill, `verify`, source anchors | Agent performs extraction; checking is distinct from fidelity | [Documents](../guides/documents.md) |
 | Render evaluation documents | Agent rendering skill, `doccheck`, `fidelity` | Bound manifests and distractors; fidelity remains a separate measured claim | [Documents](../guides/documents.md) |
 | Run a bounded agent experiment | `exp` commands and selected adapter/policy | Requires authored contract; live adapter prerequisites are separate | [Experiments](../guides/experiments.md) |

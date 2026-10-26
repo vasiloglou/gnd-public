@@ -1,0 +1,79 @@
+# IK3 approval corpus: three rules to measure (uniqueness alethic, the others
+# deontic). Synthetic (IK-R10).
+# Two carry an `id`; the frequency rule has none, so it is named positionally.
+version: 1
+model_id: ik3-staff
+source:
+  kind: fixture
+object_types:
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_id }
+  - id: person_id
+    name: PersonId
+    kind: value
+    primitive: Integer
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+  - id: grade
+    name: Grade
+    kind: value
+    primitive: String
+  - id: skill
+    name: Skill
+    kind: value
+    primitive: String
+fact_types:
+  - id: person_in_team
+    reading: "{Person} is in {Team}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: team, role_name: team }
+    constraints:
+      - id: u_person_team
+        type: uniqueness
+        roles: [person]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each person should be in one team." }
+  - id: person_has_grade
+    reading: "{Person} has {Grade}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: grade, role_name: grade }
+    constraints:
+      - id: m_person_grade
+        type: mandatory
+        role: person
+        source: explicit
+        status: confirmed
+        modality: deontic
+        provenance: { user_quote: "Every person should have a grade." }
+  - id: team_led_by
+    reading: "{Team} is led by {Person}"
+    roles:
+      - { object_type: team, role_name: team }
+      - { object_type: person, role_name: leader }
+  - id: person_has_skill
+    reading: "{Person} has {Skill}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: skill, role_name: skill }
+    constraints:
+      - type: frequency
+        scope: internal
+        roles: [person]
+        bound: { max: 2 }
+        source: explicit
+        status: confirmed
+        modality: deontic
+        provenance: { user_quote: "A person lists at most two skills." }
+constraints: []

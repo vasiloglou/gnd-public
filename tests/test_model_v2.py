@@ -337,7 +337,7 @@ def test_the_current_model_is_validated_before_it_is_traversed() -> None:
     parsed = source.index('before_document = _parse_model_text(before_text)')
     gated = source.index('_enforce_operations_gate(before_document, proposal)')
     assert validated < parsed < gated, 'the current model must be validated before it is parsed or traversed'
-    assert gated < source.index('self._validated_candidate(proposal.candidate_model)')
+    assert gated < source.index('self._validated_candidate(\n            proposal.candidate_model,')
 
 def test_an_alias_bearing_current_model_is_refused(tmp_path) -> None:
     from gnd.evolve import (

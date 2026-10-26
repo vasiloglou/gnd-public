@@ -1,0 +1,8 @@
+FAILED tests/test_evolve_references.py::test_t1_preview_of_a_reference_bearing_model
+FAILED tests/test_evolve_references.py::test_t2_apply_and_finalize_publish_the_candidate
+FAILED tests/test_evolve_references.py::test_t3_an_unbindable_reference_is_a_named_refusal[missing]
+FAILED tests/test_evolve_references.py::test_t3_an_unbindable_reference_is_a_named_refusal[changed]
+FAILED tests/test_evolve_references.py::test_t4_a_linked_reference_is_refused_not_followed
+FAILED tests/test_evolve_references.py::test_t5_a_discover_proposal_on_the_model_previews
+FAILED tests/test_evolve_references.py::test_t7_a_reference_changed_after_preview_refuses_apply
+7 failed, 1 passed in 0.75s

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import stat
-import tempfile
 from collections import Counter
 from copy import deepcopy
 from pathlib import Path
@@ -25,7 +24,7 @@ from gnd.artifacts import (
 )
 from gnd.conformance.report import canonical as canonical_conformance
 from gnd.conformance.service import run_conformance
-from gnd.model import ModelLoadError, ModelValidationError, load_model
+from gnd.model import ModelLoadError, ModelValidationError
 from gnd.model_verbalization import render_model_verbalization
 from gnd.safefs import (
     InstallError,
@@ -178,15 +177,43 @@ def _leaf_identity(anchor: Path, relative: str, *, label: str) -> LeafIdentity:
     return LeafIdentity(kind="file", sha256=sha256_hex(data))
 
 
-def _load_model_bytes(data: bytes, *, label: str) -> Any:
-    """Load a model from bytes already admitted through a trusted descriptor."""
+def _load_model_bytes(
+    data: bytes, *, label: str, model_path: Path, declared_references: Any = None
+) -> Any:
+    """Load model bytes, already admitted through a trusted descriptor, as if they
+    sat at the workspace model's path ``model_path``.
 
+    The bytes run the loader's guards and both validation layers. When the model
+    declares reference populations, they are bound from the model's own
+    directory through the no-follow ``bind_references``, exactly as ``gnd
+    validate`` and ``gnd check`` bind them (IK4-Q2). Every load or binding
+    refusal is a named EvolutionError, never an internal defect.
+
+    ``declared_references``, when given, are the current model's declarations: a
+    candidate that differs is refused before any of its files is read."""
+    from gnd.model import bind_references, load_model_bytes
+    from gnd.references import ReferenceInputError
+
+    # The bytes are parsed as they were before IK4-Q2, when they sat in a
+    # temporary model.orm.yaml: a .json name does not select the strict JSON
+    # parser here (review R1; IK4-Q2-Q1 holds the question for the owner).
+    source = model_path.with_suffix(".yaml") if model_path.suffix == ".json" else model_path
     try:
-        with tempfile.TemporaryDirectory(prefix="gnd-evolution-read-") as directory:
-            model_path = Path(directory) / "model.orm.yaml"
-            model_path.write_bytes(data)
-            return load_model(model_path)
-    except (OSError, ModelLoadError, ModelValidationError) as error:
+        model = load_model_bytes(data, source=source)
+        if declared_references is not None and model.reference_populations != declared_references:
+            raise EvolutionError(
+                "declared operations do not equal the canonical candidate model: "
+                "its reference populations differ from the current model's"
+            )
+        if model.reference_populations:
+            try:
+                model._references = bind_references(model, root=model_path.parent)
+            except Exception as error:
+                # load_model wraps every binding failure (a missing file, a link,
+                # a digest mismatch) as ReferenceInputError; evolve does the same.
+                raise ReferenceInputError(str(error), model=model) from error
+        return model
+    except (OSError, ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise EvolutionError(f"{label} validation failed: {error}") from error
 
 
@@ -1142,16 +1169,22 @@ class EvolutionService:
             ) from error
         return destination
 
-    def _validated_candidate(self, candidate: CommittedText) -> tuple[Any, ValidationEvidence]:
+    @property
+    def _model_path(self) -> Path:
+        """The workspace model's path; evolve binds references from its directory."""
+        return self.allowed_project_root / self._model_relative
+
+    def _validated_candidate(
+        self, candidate: CommittedText, *, declared_references: Any
+    ) -> tuple[Any, ValidationEvidence]:
         if candidate.media_type not in {"application/yaml", "application/x-yaml"}:
             raise EvolutionError("candidate model media type must be application/yaml")
-        try:
-            with tempfile.TemporaryDirectory(prefix="gnd-evolution-preview-") as directory:
-                candidate_path = Path(directory) / "candidate.orm.yaml"
-                candidate_path.write_bytes(candidate.text.encode(candidate.encoding))
-                model = load_model(candidate_path)
-        except (OSError, ModelLoadError, ModelValidationError) as error:
-            raise EvolutionError(f"candidate model validation failed: {error}") from error
+        model = _load_model_bytes(
+            candidate.text.encode(candidate.encoding),
+            label="candidate model",
+            model_path=self._model_path,
+            declared_references=declared_references,
+        )
         warnings = tuple(
             ValidationFinding(
                 path=item.path,
@@ -1216,6 +1249,7 @@ class EvolutionService:
         before_loaded_model = _load_model_bytes(
             before_bytes,
             label="current model",
+            model_path=self._model_path,
         )
         before_document = _parse_model_text(before_text)
 
@@ -1230,7 +1264,10 @@ class EvolutionService:
         # same gate.
         _enforce_operations_gate(before_document, proposal)
 
-        candidate_model, validation = self._validated_candidate(proposal.candidate_model)
+        candidate_model, validation = self._validated_candidate(
+            proposal.candidate_model,
+            declared_references=before_loaded_model.reference_populations,
+        )
         candidate_document = _parse_model_text(proposal.candidate_model.text)
         declared_document = _apply_declared_operations(before_document, proposal.operations)
         if declared_document != candidate_document:
@@ -1544,8 +1581,12 @@ class EvolutionService:
         before_loaded_model = _load_model_bytes(
             live_bytes,
             label="current model at apply",
+            model_path=self._model_path,
         )
-        candidate_loaded_model, validation = self._validated_candidate(preview.candidate_model)
+        candidate_loaded_model, validation = self._validated_candidate(
+            preview.candidate_model,
+            declared_references=before_loaded_model.reference_populations,
+        )
         candidate_verbalization = render_model_verbalization(candidate_loaded_model)
         recomputed_blast_radius = _build_blast_radius(
             proposal,
@@ -1659,6 +1700,7 @@ class EvolutionService:
         staged = _load_model_bytes(
             staged_candidate_bytes,
             label="staged candidate model",
+            model_path=self._model_path,
         )
         if sha256_hex(staged_candidate_bytes) != preview.candidate_model.sha256:
             raise EvolutionError("staged candidate digest changed before publication")
@@ -1839,10 +1881,12 @@ class EvolutionService:
         before_loaded = _load_model_bytes(
             before_bytes,
             label="staged before model at finalize",
+            model_path=self._model_path,
         )
         candidate_loaded = _load_model_bytes(
             candidate_bytes,
             label="staged candidate model at finalize",
+            model_path=self._model_path,
         )
         try:
             before_text = before_bytes.decode("utf-8")

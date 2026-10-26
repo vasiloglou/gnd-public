@@ -1,6 +1,10 @@
 """A stand-in rule learner for the refunds tutorial. It is not a GND command and not Popper.
 
-Usage: python stand_in_learner.py EXPORT_DIR OUT_DIR
+Usage: python stand_in_learner.py EXPORT_DIR OUT_DIR [--also-claim BATCH]
+
+--also-claim plays a faulty learner: it adds BATCH to what the first rule is
+claimed to cover, so the tutorial can show GND refusing a claim it cannot
+reproduce.
 
 It reads the learner-neutral export that `gnd export ilp --target neutral` wrote
 to EXPORT_DIR/neutral.json, and searches a small, fixed space of rules for
@@ -76,6 +80,7 @@ def candidates(rows, integer, predicates):
 
 def main() -> None:
     export, out = Path(sys.argv[1]), Path(sys.argv[2])
+    extra = sys.argv[4] if sys.argv[3:4] == ["--also-claim"] else None
     neutral, rows, integer, predicates = load(export)
     flagged = [e["id"] for e in neutral["examples"] if e["label"] == "pos"]
     clean = [e["id"] for e in neutral["examples"] if e["label"] == "neg"]
@@ -100,13 +105,16 @@ def main() -> None:
     clauses = {"schema_version": "gnd-ilp-clauses/1", "clauses": [k[1] for k in program]}
     clauses_path.write_text(json.dumps(clauses, indent=1) + "\n", encoding="utf-8")
     examples = [e["id"] for e in neutral["examples"]]
+    coverage = [{"clause": k, "covered": [e for e in examples if covers(e) or (k == 0 and e == extra)]}
+                for k, (_, _, covers, _) in enumerate(program)]
+    if extra:
+        print(f"deliberate mistake: also claiming that rule 0 covers {extra}")
     run = {
         "schema_version": "gnd-ilp-run/1",
         "learner": {"name": NAME, "version": VERSION},
         "export_sha256": hashlib.sha256((export / "export.json").read_bytes()).hexdigest(),
         "clauses_sha256": hashlib.sha256(clauses_path.read_bytes()).hexdigest(),
-        "coverage": [{"clause": k, "covered": [e for e in examples if covers(e)]}
-                     for k, (_, _, covers, _) in enumerate(program)],
+        "coverage": coverage,
     }
     (out / "learned.run.json").write_text(json.dumps(run, indent=1) + "\n", encoding="utf-8")
 

@@ -33,6 +33,7 @@ def batch_text(store: str, label: str, refunds: list) -> str:
         "format_version: 2",
         "population:",
         "  model: model.orm.yaml",
+        "  model_id: refunds",
         "  source: fixture",
         "  covers: [refund_by, refund_amount, refund_channel]",
         "instances:",

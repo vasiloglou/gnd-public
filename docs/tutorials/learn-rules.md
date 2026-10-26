@@ -1,35 +1,59 @@
-# Learn rules from labelled data
+# Find the rule your auditors are really using
 
-A shop has a written rule: a refund should not be more than 1000. Auditors
-checked one week of refunds from each of its eight stores, and marked each
-store's batch **clean** or **flagged**. This page asks what the labels say about the rule,
-and whether a better rule is hiding in them. You will:
+A shop's refund policy says one thing: **a refund should not be more than
+1000**. Its auditors read one week of refunds from each of the shop's eight
+stores and flagged four of those weeks. The written rule explains only two of
+the four. So the auditors are applying a rule nobody wrote down.
 
-1. score the written rule against the auditors' labels;
-2. ask GND which constraints one clean batch suggests;
-3. export the labelled batches for a rule learner, run one, and bring its rule
-   back, with GND checking every claim the learner makes;
-4. preview both sets of proposals as a model change.
-
-Nothing on this page changes the model. Every rule found here arrives as
-**proposed** and **advisory**, and admitting it is your reviewed step in
-`gnd evolve`.
+On this page you'll find that rule from the auditors' labels, let GND check
+every claim made about it, and add it to the model as an advisory rule. All the
+data is synthetic.
 
 !!! info "Files on GitHub"
 
-    - [`refunds/model.orm.yaml`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/model.orm.yaml): the model and its written rule
-    - [`refunds/batches/`](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/refunds/batches): the eight batches (synthetic data)
-    - [`refunds/labels.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/labels.json): the auditors' labels
-    - [`refunds/stand_in_learner.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/stand_in_learner.py): the example's stand-in learner (not a GND command)
+    - [`refunds/model.orm.yaml`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/model.orm.yaml): the model and the written rule
+    - [`refunds/batches/`](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/refunds/batches): one week of refunds from each store
+    - [`refunds/labels.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/labels.json): the auditors' verdicts
+    - [`refunds/stand_in_learner.py`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/refunds/stand_in_learner.py): the example's stand-in rule learner (not a GND command)
     - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/learn-rules.md)
 
-## Before you start
+## What you'll do
 
-Set GND up first as the [course planner's "Before you start"](course-planner.md#what-youll-build)
-shows: this page needs a GND newer than the 0.1.0 release, installed from a
-checkout, and `python` must be that environment's Python. Work in an empty
-folder. The first command copies the example into it from the installed
-package and checks the model.
+| Who | Does what |
+|---|---|
+| The auditors | mark each store's week **clean** or **flagged** |
+| GND | scores the written rule against those verdicts, and suggests rules from a clean week |
+| A rule learner | looks for a rule that separates flagged weeks from clean ones |
+| GND | re-checks the learner's rule on every week before it believes it |
+| You | read the suggestions and decide which become part of the model |
+
+Nothing becomes a rule because a program found it. GND writes every suggestion
+as a **proposal**, and only you can accept one.
+
+## The data
+
+Here are the eight weeks. Each number is one refund.
+
+| Store | Refunds that week | The auditors said |
+|---|---|---|
+| north | 40, 120, 75 | clean |
+| south | 500, 60, 230 | clean |
+| east | 310, 90 | clean |
+| west | 450, 35, 180 | clean |
+| harbor | **1200**, 80 | flagged |
+| market | **750**, 140, 55 | flagged |
+| airport | **1500**, 260 | flagged |
+| station | **640**, 95 | flagged |
+
+Look at the bold numbers. Every flagged week has a refund above 500, and no
+clean week does. With eight weeks a person can spot that; with eight hundred,
+or with patterns that span customers and payment methods, nobody can. That
+search is what a rule learner is for. This page lets one find the pattern and
+then shows how GND checks it.
+
+**Before you start.** Set GND up as the [course planner's "Before you
+start"](course-planner.md#what-youll-build) shows. In an empty folder, copy the
+example and check the model:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
@@ -41,120 +65,52 @@ gnd validate model.orm.yaml
 OK: model.orm.yaml is a valid GND ORM model
 ```
 
-The model has refunds, the customer who asked for each, its amount and how it
-was paid. The written rule is a `guarded` constraint: for every refund amount,
-the amount is at most 1000. It is **deontic**: a broken one is a warning, not
-an error.
+The model knows refunds, the customer who asked for each, its amount and how it
+was paid. It holds the written rule with the policy's own words as its source.
+The rule is **advisory**: breaking it gives a warning, not an error.
+`labels.json` holds the auditors' verdicts, each tied to the exact bytes of the
+week it judged, so a verdict can't silently drift onto changed data.
 
-`labels.json` lists the eight batches, each bound by its SHA-256 so the labels
-cannot silently point at changed data. It marks each batch `positive` (the
-auditors' clean) or `negative` (flagged), and says the written rule should fire
-on the flagged ones. [Measuring host labels](../reference/measure-labels.md)
-defines the format.
+## 1. How good is the written rule?
 
-## 1. Score the rule you have
+**You ask** GND to score the rule against the auditors' verdicts:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd measure model.orm.yaml --labels labels.json
+gnd measure model.orm.yaml --labels labels.json | grep fired_on
 ```
 
 ```text
-REDACTION applied:
-MEASUREMENT model.orm.yaml [labels=class] populations=8
-WORK 16 (ceiling 24)
-  constraints[0] [guarded/deontic] fires_on=negative
       fired_on_negative=2/4 fired_on_positive=0/4 silent_on_negative=2/4 silent_on_positive=4/4 vacuous=0/8 unchecked=0/8
 ```
 
-The first line says redaction is on; this model redacts nothing. Each cell is
-a count over batches, with its denominator:
+GND counts weeks. In its words "negative" is a flagged week and "positive" a
+clean one, so `fired_on_negative=2/4` means the rule fired on two of the four
+flagged weeks. **GND says**, in business terms:
 
-- `fired_on_negative=2/4`: the rule fired on only two of the four flagged
-  batches;
-- `silent_on_positive=4/4`: it stayed quiet on every clean batch;
-- `silent_on_negative=2/4`: two flagged batches got past it.
+| | Flagged weeks | Clean weeks |
+|---|---|---|
+| The rule fired | 2 of 4 (harbor, airport) | 0 of 4 |
+| The rule stayed quiet | 2 of 4 (market, station) | 4 of 4 |
 
-The written rule never accuses a clean batch, but it misses half the flagged
-ones. The auditors are seeing something the rule does not say.
+The written rule never accuses a clean store, which is good. But it lets half
+the flagged weeks through: market's 750 and station's 640 are under 1000.
 
-## 2. Discover what one clean batch suggests
+## 2. Ask a rule learner what the auditors see
 
-<!-- gnd-run expect=0 output=stdout -->
-```sh
-gnd discover model.orm.yaml batches/south.yaml --families uniqueness,mandatory --out discovered.json --report discover-report.json --actor reader --requested-at 2026-10-26T00:00:00+00:00
-```
+GND packs the labelled weeks into files a rule learner can read. A learner
+such as [Popper](https://github.com/logic-and-learning-lab/Popper) can use them
+directly. This page uses a small stand-in instead, so it runs anywhere with
+nothing to install. `stand_in_learner.py` is the example's own program, not part
+of GND. It tries 40 simple rules of the form "a week is wrong when it has a
+refund above (or below) some amount", and keeps the fewest that explain every
+flagged week without touching a clean one.
 
-```text
-GND DISCOVER
-MODEL model.orm.yaml
-POPULATION batches/south.yaml
-EMITTED 10
-  fact_types[refund_by].constraints[1] uniqueness support=3
-  fact_types[refund_amount].constraints[0] uniqueness support=3
-  fact_types[refund_amount].constraints[1] uniqueness support=3
-  fact_types[refund_channel].constraints[0] uniqueness support=3
-  fact_types[refund_by].constraints[2] mandatory support=3
-  fact_types[refund_by].constraints[3] mandatory support=3
-  fact_types[refund_amount].constraints[2] mandatory support=3
-  fact_types[refund_amount].constraints[3] mandatory support=3
-  fact_types[refund_channel].constraints[1] mandatory support=3
-  fact_types[refund_channel].constraints[2] mandatory support=2
-NEAR MISSES 0
-REJECTED vacuous=0 unchecked=0 fail=0 warning=1
-SUPPRESSED declared=1 spanning-uniqueness=3
-WORK total=50
-PROPOSAL discovered.json
-```
-
-`gnd discover` proposes constraints that hold in this batch. It keeps a
-candidate only when `gnd check` passes it with support above zero, and only
-when the model does not already declare or imply it. `SUPPRESSED declared=1`
-is the model's own uniqueness rule, found again and not proposed twice.
-
-Some of these hold only by accident. The first line says each customer asks
-for at most one refund, and the third says no two refunds have the same
-amount. Both are true of three refunds in one week and probably false in
-general. That is why discovery writes **proposals**, not
-rules: `discovered.json` is a `gnd evolve` proposal whose constraints are
-`induced`, `proposed` and `deontic`. The `--families` option keeps this page
-short; without it, discovery tries all seven families. [Discovering
-constraints](../reference/discover.md) has the details.
-
-## 3. Export the batches for a rule learner
-
-An inductive logic programming (ILP) learner looks for rules that separate the
-flagged batches from the clean ones. GND writes the batches in a form a learner
-can read:
+**You type**
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd export ilp model.orm.yaml --labels labels.json --target neutral --out ilp
-```
-
-```text
-EXPORTED 8 examples and 60 facts to ilp (neutral)
-export_sha256 2d36bb264d71feca2fd990452f1bb84d719e058c17120244bd82450a346c137f
-work 68 (ceiling 500008)
-```
-
-`ilp/neutral.json` holds one fact per refund row, tagged with its batch, plus
-which batches are flagged. `export_sha256` is the digest of `ilp/export.json`.
-Everything the learner later claims is bound to it. `--target popper` would
-also write files for the [Popper](https://github.com/logic-and-learning-lab/Popper)
-learner.
-
-## 4. Run a learner
-
-This page uses a stand-in instead of a real learner, so it runs anywhere with no
-install. `stand_in_learner.py` is the example's own program, not a GND command
-and not Popper. It tries 40 simple rules of the form "a batch is wrong when one
-of its refunds has an amount above (or below) some value". It keeps those that
-fit some flagged batch and no clean one, then picks the fewest that cover every
-flagged batch.
-
-<!-- gnd-run expect=0 output=stdout -->
-```sh
+gnd export ilp model.orm.yaml --labels labels.json --target neutral --out ilp > /dev/null
 python stand_in_learner.py ilp learned
 ```
 
@@ -163,11 +119,16 @@ searched 40 rules; 4 hold in some flagged batch and in no clean one
 learned: wrong(A) :- f_refund_amount(A,V0,V1), V1 > 500   covers harbor, market, airport, station
 ```
 
-It wrote `learned/learned.clauses.json`, the rule in GND's neutral clause form,
-and `learned/learned.run.json`, the batches the learner **claims** the rule
-covers.
+**The learner says:** a week is wrong when one of its refunds is over 500.
+That's the `learned:` line in the learner's notation, where `V1` is the refund
+amount. It claims the rule covers all four flagged weeks.
 
-## 5. Bring the rule back
+## 3. GND checks the learner's work
+
+A learner's report is only a claim. GND brings the rule back as a proposal, and
+first checks it on every week itself.
+
+**You type**
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
@@ -179,116 +140,162 @@ IMPORTED 1 learned clauses -> learned.proposal.json
   clause 0 constraints[1]: covers 4 (support 4/4), vacuous 0, unchecked 0
 ```
 
-GND does not take the learner's word for anything:
+**GND says** the claim holds. It ran the rule on all eight weeks: it covers
+exactly the four flagged ones (support 4/4), the same weeks the learner named.
 
-- it recomputes the export digest and checks that the run record names it;
-- it rewrites the learned clause as a guarded constraint;
-- it checks that constraint against every batch itself;
-- it compares the set of batches it covers with the set the learner reported.
+| Rule | Flagged weeks caught | Clean weeks accused |
+|---|---|---|
+| The written rule: at most 1000 | 2 of 4 | 0 of 4 |
+| The learned rule: at most 500 | **4 of 4** | 0 of 4 |
 
-Here the sets agree: the rule covers all four flagged batches (support 4/4)
-and no clean one. The rule the learner found is "a refund over 500 is wrong",
-so GND proposes "a refund amount is at most 500".
+GND writes the learned rule as "a refund amount is at most 500" in
+`learned.proposal.json`. Nothing in the model has changed yet.
 
-## 6. A claim GND does not reproduce
+## 4. A learner that overstates its rule
 
-Now suppose a learner over-claims: it says the rule also covers the clean
-`north` batch. This Python snippet writes that claim:
+Learners have bugs, and run reports get edited by hand. Here the stand-in plays
+a faulty learner: it also claims the rule covers the clean `north` week.
 
-<!-- gnd-run expect=0 -->
-```python
-import json
-run = json.load(open("learned/learned.run.json"))
-run["coverage"][0]["covered"].insert(0, "north")
-open("learned/overclaimed.run.json", "w").write(json.dumps(run, indent=1) + "\n")
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+python stand_in_learner.py ilp faulty --also-claim north
+```
+
+```text
+searched 40 rules; 4 hold in some flagged batch and in no clean one
+learned: wrong(A) :- f_refund_amount(A,V0,V1), V1 > 500   covers harbor, market, airport, station
+deliberate mistake: also claiming that rule 0 covers north
 ```
 
 <!-- gnd-run expect=3 output=stderr -->
 ```sh
-gnd import ilp-rules model.orm.yaml learned/learned.clauses.json --labels labels.json --reported-coverage learned/overclaimed.run.json --target neutral --out overclaimed.proposal.json --requested-at 2026-10-26T00:00:00+00:00
+gnd import ilp-rules model.orm.yaml faulty/learned.clauses.json --labels labels.json --reported-coverage faulty/learned.run.json --target neutral --out faulty.proposal.json --requested-at 2026-10-26T00:00:00+00:00
 ```
 
 ```text
 clause 0: coverage-mismatch: GND covers [] that the learner did not report, and the learner reports ['north'] that GND does not cover; vacuous [], unchecked []
 ```
 
-**What went wrong:** the learner's report and the data disagree. `north` holds
-no refund over 500, so the rule cannot cover it.
+**What went wrong:** the learner said the rule covers `north`. North's
+largest refund is 120, so a rule about refunds over 500 can't cover it.
 
-**How GND caught it:** GND checked the rule on `north` itself, found it holds
-there, and compared sets rather than counts. It refused with exit 3 and wrote
-nothing. A learner that miscounts, or a run record edited by hand, cannot get a
-rule into a proposal.
+**How GND caught it:** GND doesn't count, it compares. It ran the rule on every
+week, listed the weeks the rule really covers, and set that list beside the
+learner's. They differed by one week, `north`, so GND refused with exit 3 and
+wrote no proposal. A rule only reaches you with a claim GND has reproduced.
 
-## 7. Preview both proposals
+## 5. What does a clean week say on its own?
 
-`gnd evolve preview` shows what each proposal would change, without changing
-anything:
+The learner needs verdicts. GND can also suggest rules from a single clean week,
+with no verdicts at all. Here it reads south's week and looks for two kinds of
+rule: "each X has exactly one Y" and "every X has a Y".
 
-<!-- gnd-run expect=0 output=stdout -->
-```sh
-gnd evolve preview model.orm.yaml discovered.json --workspace . --records records --out discovered.preview.json
-```
-
-```text
-PREVIEW 9ed28afa3d064a8fd5613900cd349f220f75fda075bedd0e02d2c1f785cfdd43
-  proposal: b6110ad862402561bf0a4c70885b76162123b60c8277d9cff527e433b910665a
-  before: 00fdeab3cb764decdf87c95619b4c315f8dbee8be2170ceea7722a91b6d27440
-  candidate: c7abff3a0e8484a992cfaef15319b3aa07225c26a9bd8f109714d0399a41db58
-  blast-radius: 7b2135b64cf635808de686c46bc8f1fa230d6da982072ad4141a25fa4ebcf8f7
-  breaking: false
-  affected: fact_types[refund_amount].constraints[mandatory:new:0]
-  affected: fact_types[refund_amount].constraints[uniqueness:new:0]
-  affected: fact_types[refund_by].constraints[mandatory:new:0]
-  affected: fact_types[refund_by].constraints[uniqueness:new:0]
-  affected: fact_types[refund_channel].constraints[mandatory:new:0]
-  affected: fact_types[refund_channel].constraints[uniqueness:new:0]
-```
+**You type**
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd evolve preview model.orm.yaml learned.proposal.json --workspace . --records records --out learned.preview.json
+gnd discover model.orm.yaml batches/south.yaml --families uniqueness,mandatory --out discovered.json --report discover-report.json --actor reader --requested-at 2026-10-26T00:00:00+00:00 | grep -E "^(EMITTED|SUPPRESSED)"
 ```
 
 ```text
-PREVIEW ad84a556fbc06b88e10c18b4bdc908bf8bb15b58cf70ed05c7dcad260da66f56
-  proposal: 3355696729503356c40c04512cb588c0620ec6a2f5e486becb6d808ebd385c96
-  before: 00fdeab3cb764decdf87c95619b4c315f8dbee8be2170ceea7722a91b6d27440
-  candidate: 6bf5890e4ff072a3707e3511395e820fdb69d4423b6753ea55758a60c98f09da
-  blast-radius: 0c9c75cfb076dbab104ae7197d3e53fe9769a40b7e1b3a5a44df403de4e7cb3b
-  breaking: false
-  affected: model.constraints[guarded:new:0]
+EMITTED 10
+SUPPRESSED declared=1 spanning-uniqueness=3
 ```
 
-Each `affected:` line names a place where the proposal adds constraints:
-the ten discovered ones land in six places, the learned one in one.
-`breaking: false` means no existing element changes. The preview carries the candidate model's full
-verbalization. This Python snippet prints the learned rule from it:
+**GND says** ten rules held in that week. It left out four more: one is
+already in the model (each refund has one customer), and three are true of any
+list of facts, so they say nothing. Read in plain English, the ten fall into
+three groups:
+
+| Suggested rule | What to make of it |
+|---|---|
+| Each refund has one amount. Each refund is paid one way. | sensible: worth accepting |
+| Every refund has a customer, an amount and a payment method. | sensible: worth accepting |
+| Each customer asks for at most one refund. No two refunds have the same amount. | **accidents**: true of three refunds in one week, false in general |
+| Every customer, amount and payment method in the file belongs to some refund. | how the week's file is written, not a business rule |
+
+This is why discovery writes proposals, not rules. A small sample makes
+accidents look like laws, and only someone who knows the business can tell
+them apart. [Discovering constraints](../reference/discover.md) explains how
+GND finds them and the five other kinds of rule it can look for.
+
+## 6. Review and decide
+
+Before you accept anything, GND shows what each proposal would change:
 
 <!-- gnd-run expect=0 output=stdout -->
-```python
-import json
-text = json.load(open("learned.preview.json"))["verbalization"]["text"]
-print(next(line.split(" source=")[0] for line in text.splitlines() if "[from induced" in line))
+```sh
+gnd evolve preview model.orm.yaml discovered.json --workspace . --records records --out discovered.preview.json | grep breaking
+gnd evolve preview model.orm.yaml learned.proposal.json --workspace . --records records --out learned.preview.json | grep breaking
 ```
 
 ```text
-[constraint:model:guarded:75cc21ac8125e58fc46e8aec6e3f7333bc064c44ca8dc9dee6f834093173d6df:0] [from induced, proposed; modality=deontic] If refund_amount(refund = $v_v0, amount = $v_v1), then $v_v1 is at most 500.
+  breaking: false
+  breaking: false
 ```
 
-The rule is marked `induced` and `proposed`. Its provenance records which
-batches it covers, its support, the learner's name and version, and the
-digests of the export, the clauses and the run record. To admit it, you apply
-the proposal with `gnd evolve apply`. Confirming it later takes a recorded
-review ([Evolving a model](../guides/evolution-and-recovery.md)).
+**GND says** neither proposal changes or removes anything already in the
+model; each only adds rules. You decide to accept the learned rule and leave
+the discovered proposal for a closer look.
+
+**You type**
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd evolve apply model.orm.yaml learned.proposal.json --preview learned.preview.json --workspace . --records records > /dev/null
+grep -o "\[from induced.*" model.verbalization.txt | sed "s/ source=.*//"
+```
+
+```text
+[from induced, proposed; modality=deontic] If refund_amount(refund = $v_v0, amount = $v_v1), then $v_v1 is at most 500.
+```
+
+**GND says** the model now holds the rule, in its own words: if a refund has an
+amount, that amount is at most 500. It is marked **induced** (a program found
+it) and **proposed** (no one has confirmed it yet), and it is advisory. The
+model also records where it came from: the learner's name, the four weeks it
+covers, and the exact files the claim was checked against.
+
+Check the market week again, the one the written rule missed:
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd check model.orm.yaml batches/market.yaml | grep -A1 ADVISORY
+```
+
+```text
+ADVISORY (deontic)
+  [warning] constraints[1]: Guarded comparison consequent evaluated over bindings=3 — violated by bindings: {'$v_v0': '601', '$v_v1': '750'}.
+```
+
+`constraints[1]` is the new rule. Refund 601, for 750, now gets a warning. The written rule is still there, and
+still quiet about it. If a later review confirms the new rule, a refund over
+500 is something the shop warns about everywhere the model is used.
+
+With an assistant, you'd do this step by asking the `gnd-model-evolve` skill:
+
+```text
+/gnd:gnd-model-evolve Review learned.proposal.json and discovered.json with me. Preview both, explain each rule in plain English, and apply only the ones I accept.
+```
+
+## What you did
+
+| Step | What happened | Who checked it |
+|---|---|---|
+| 1 | the written rule caught 2 of the 4 flagged weeks | `gnd measure`, against the auditors' verdicts |
+| 2 | a learner found "a refund over 500 is wrong" | nobody yet: a learner's claim |
+| 3 | the rule covered exactly the four flagged weeks | `gnd import ilp-rules` re-ran it on every week |
+| 4 | an overstated claim was refused | the same import, comparing week by week |
+| 5 | one clean week suggested ten rules, two of them accidents | `gnd discover`; you sort them |
+| 6 | you accepted the learned rule; market's 750 now gets a warning | `gnd evolve`, then `gnd check` |
 
 ## What this does not establish
 
-- **That the learned rule is true.** It fits these eight batches. A rule that
-  fits the labelled examples can still be wrong on data nobody has labelled.
-  GND checks that the learner's claims are exact, not that the rule is right.
-- **That the discovered constraints are true.** Each held in one batch of three
-  refunds.
+- **That the learned rule is right.** It fits these eight weeks. A rule that
+  fits labelled examples can still be wrong on weeks nobody has labelled. GND
+  checks that claims about the rule are exact, not that the rule is wise.
+- **That the auditors were right.** GND measures a rule against their verdicts;
+  it can't tell you whether the verdicts were correct.
 - **Anything about a real learner.** The stand-in is not Popper. The [ILP
-  bridge](../reference/ilp-bridge.md) describes the contract a real learner
-  meets; this page has not run one.
+  bridge](../reference/ilp-bridge.md) describes what a real learner reads and
+  writes; this page has not run one.

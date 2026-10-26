@@ -1,4 +1,4 @@
-# A shop's refunds. Synthetic data for the "Learn rules from labelled data"
+# A shop's refunds. Synthetic data for the "Find the rule your auditors are really using"
 # tutorial: each batch under batches/ is one store's refunds for a week.
 version: 1
 model_id: refunds

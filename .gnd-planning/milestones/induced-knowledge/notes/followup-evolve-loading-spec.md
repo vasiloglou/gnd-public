@@ -424,3 +424,16 @@ recovery and verbalizer fixes); tests ~250.
 
 **Out of scope:** evolve's double parse; recovery's temporary-copy load and
 its reference binding; any exit renumbering.
+
+## r2.5 Owner rulings
+
+2026-10-27, the owner directly in this session: "Approve D6 to D8 as proposed
+(D6-A, D7-A, D8-A)." (o)
+
+| # | Ruling |
+|---|---|
+| D6 | **A**: D3-A is reversed. Every same-shape home adopts the behaviour-preserving `load_model_bytes_bound`; no exit changes (o) |
+| D7 | **A**: discover writes a YAML candidate for non-finite floats; evolve names it at 3 (o) |
+| D8 | **A**: recovery verify refuses YAML-only values by name at 3; the verbalizer raises `VerbalizationError` (o) |
+
+Approved bytes: r2 at `5622370`. No panel ran.

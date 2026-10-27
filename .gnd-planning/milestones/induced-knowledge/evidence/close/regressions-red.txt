@@ -17,3 +17,14 @@ FAILED tests/test_ik_close.py::test_ik6_r1_the_runner_normalizes_text_and_bytes
 # test_ik3_q4 is a test-only fix. Its removed-branch mutant (the 'changed while it was being read' check deleted from src/gnd/measure/service.py):
 FAILED tests/test_ik_close.py::test_ik3_q4_a_model_changed_while_it_is_read_is_refused
 1 failed, 4 deselected in 0.25s
+
+# CD4 (owner 2026-10-27): exclusion support mutant -- exclusion_subjects counts only side a
+# (src/gnd/discover/support.py; restored after the run)
+FAILED tests/test_ik_close.py::test_close_cd4_exclusion_is_emitted_with_oracle_support
+1 failed, 16 deselected in 0.25s
+65 passed in 24.69s
+
+# Census test against the pre-fix census row (evolution-contract.md without IK-close)
+FAILED tests/test_ik6_skill_census.py::test_t4_each_changed_cell_names_the_phases_git_records
+FAILED tests/test_ik6_skill_census.py::test_t4_a_wrong_phase_fails_by_name - ...
+2 failed, 7 passed in 0.73s

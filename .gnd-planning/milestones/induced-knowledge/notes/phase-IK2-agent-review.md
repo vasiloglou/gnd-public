@@ -31,7 +31,7 @@ level.
 
 **1. Verdict:** Not ready to certify. One blocking defect: float support counts skip the support-arithmetic check, which breaks C1. There are also three hardening defects and several declared branches that no test can fail. The gate's main paths, refusal order, CLI mapping, coverage versioning and v3/v4 byte identity all held under attack.
 
-I wrote nothing under the repo. All scratch files are in `/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-recent-commits-95fa1c/16650214-feb5-484f-a716-975b7f732cdd/scratchpad/ik2-review/` (called `$S` below): the extracted B tree in `$S/base`, the mutants in `$S/mut/<name>`, the probe scripts `$S/p1.py`–`$S/p7.py`, `$S/gate.py`, `$S/preview.py` and the mutant runner `$S/mutate.sh`. `tests/test_induced_provenance.py` passes at HEAD (141 tests).
+I wrote nothing under the repo. All scratch files are in `<scratch>/ik2-review/` (called `$S` below): the extracted B tree in `$S/base`, the mutants in `$S/mut/<name>`, the probe scripts `$S/p1.py`–`$S/p7.py`, `$S/gate.py`, `$S/preview.py` and the mutant runner `$S/mutate.sh`. `tests/test_induced_provenance.py` passes at HEAD (141 tests).
 
 ### 2. Findings
 

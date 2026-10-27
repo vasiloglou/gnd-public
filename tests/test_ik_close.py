@@ -304,3 +304,29 @@ def test_close_f4_no_downstream_name_in_the_milestone_public_text():
         if joined_hits(text, DOWNSTREAM_JOINED):
             leaked.append(name)
     assert leaked == []
+
+
+def test_close_cd4_exclusion_is_emitted_with_oracle_support(tmp_path):
+    """IK4-C1 and IK4-C3 for the exclusion family (close reader one, owner CD4):
+    a disjoint pair is emitted, it passes gnd check, and its support equals the
+    brute-force oracle's |a ∪ b|."""
+    import json
+
+    from ruamel.yaml import YAML
+    from test_discover import AMOUNT_MODEL, _amount_population, _assert_emitted_pass, _discover, _oracle_support
+
+    population = _amount_population([("a_tagged", "1"), ("a_tagged", "2"), ("a_flagged", "3"), ("a_flagged", "4")])
+    code, text, proposal, report_path = _discover(tmp_path, AMOUNT_MODEL, population, "--families", "exclusion")
+    assert code == 0, text
+    report = json.loads(report_path.read_text())
+    emitted = [row for row in report["emitted"] if row["family"] == "exclusion"]
+    assert emitted, report
+    raw_model = YAML(typ="safe").load(AMOUNT_MODEL)
+    raw_population = YAML(typ="safe").load(population)
+    for row in emitted:
+        assert row["support"]["denominator"] == _oracle_support(raw_population, raw_model, row), row
+    amounts = [row for row in emitted if {s["role"] for s in row["constraint"]["role_seq_a"]} == {"amount"}]
+    assert [row["support"]["denominator"] for row in amounts] == [4]
+    assert all(row["support"]["numerator"] > 0 for row in emitted)
+    _assert_emitted_pass(tmp_path / "m.orm.yaml", tmp_path / "p.population.yaml",
+                         json.loads(proposal.read_text()), [row["ref"] for row in emitted])

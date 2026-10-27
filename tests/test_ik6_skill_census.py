@@ -61,7 +61,7 @@ def git_phases(path: str) -> set[str]:
     subjects = subprocess.run(["git", "log", "--format=%s", f"{MILESTONE_FIRST}^..HEAD", "--", path], cwd=ROOT,
                               check=True, capture_output=True, text=True).stdout
     phases = {m for scope in re.findall(r"\(([^)]*)\)", subjects) for m in PHASE.findall(scope)}
-    dirty = subprocess.run(["git", "diff", "--quiet", "HEAD", "--", path], cwd=ROOT).returncode
+    dirty = subprocess.run(["git", "diff", "--quiet", "HEAD", "--", path], cwd=ROOT, check=False).returncode
     return phases | ({CURRENT} if dirty else set())
 
 

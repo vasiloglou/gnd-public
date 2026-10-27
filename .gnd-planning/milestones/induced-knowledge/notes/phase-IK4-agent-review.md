@@ -39,7 +39,7 @@ level.
 #### 1. Verdict
 **Not ready to merge.** The three checker fast paths match `semantic_spec.verdict_of` exactly; I found no divergence (C6 holds). But `gnd discover` crashes (exit 70 or exit 1) on several realistic inputs, including shipped examples and repository fixtures. It also writes values from roles marked `redact: true` into the proposal, the report and stdout.
 
-All scratch work is under `S=/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-recent-commits-95fa1c/16650214-feb5-484f-a716-975b7f732cdd/scratchpad/ik4-review`. Commands below run from the worktree. `ARGS` means `--actor a:b --requested-at 2026-10-24T12:00:00+00:00`. No repository file was modified.
+All scratch work is under `S=<scratch>/ik4-review`. Commands below run from the worktree. `ARGS` means `--actor a:b --requested-at 2026-10-24T12:00:00+00:00`. No repository file was modified.
 
 #### 2. Findings
 

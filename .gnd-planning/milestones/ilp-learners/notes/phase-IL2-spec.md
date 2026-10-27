@@ -530,3 +530,35 @@ clingo), the member list and each member's licence notice are recorded before
 the probe. If ILASP needs a `clingo` executable on `PATH`, a two-line
 scratch shim calls the IL1 venv's `python -m clingo`. The shim is recorded,
 and it adds no download.
+
+## 13. Owner gate record (2026-10-27)
+
+**The approved bytes.** The owner ruled in the session on 2026-10-27 over
+spec r1, SHA-256 `fcf647b387f3a7fc22f9eb5da760008ab528a07ecf9c88d3581d9be885ffd7f6`
+(commit `26c9a94`), which is sections 1–12.
+
+**The owner's words (o):** "IL2-D1: ILASP 4.4.1. I rule that this use is
+non-commercial research, so its terms are accepted. Approve the IL2-D2
+download and the other IL2 decisions as proposed."
+
+| ID | Ruling |
+|---|---|
+| IL2-D1 | **(a) ILASP 4.4.1 only**, target `ilasp`. The owner rules that this use is non-commercial research, so ILASP's terms are accepted under IL-R5. FastLAS is not used |
+| IL2-D2 | **(a) approved:** the `ILASP-4.4.1-macOS-M1.tar.gz` release asset, 1,982,845 bytes, into a scratch prefix only. Its SHA-256 is computed and recorded at download, because upstream publishes none |
+| IL2-D3 | as proposed: a learner timeout of 540 s if the probe's `ILASP --help` lists one, otherwise the wall clock alone, recorded as a deviation |
+| IL2-D4 | as proposed: the toy-task format probe, before invocation 1 |
+| IL2-D5 | as proposed: `#maxv(4)`, recall 2 per predicate and 1 per comparison, the default `#max_penalty` |
+| IL2-D6 | as proposed: (a), the reader refuses `builtin-comparison` |
+| IL2-D7 | as proposed: re-target IL1-Q2's halves to IL5 and IL4 |
+| IL2-D8 | as proposed: the parser-only Popper canonical-name refusal, in IL2 |
+| IL2-D9 | as proposed: (a), positional ids `e<i>` |
+| IL2-D10 | as proposed: `claude/il2` from `main` at `65fd6df` |
+| IL2-D11 | as proposed: corpus-first for the reader, prose for the rendering, no spec panel |
+| IL2-Q1 | as proposed: carried to the ilp-learners close |
+
+**No other approval.** No further run, install or amendment is approved
+beyond these rulings.
+
+## 14. Implementation findings (recorded as found)
+
+None yet.

@@ -1,7 +1,7 @@
 """IL1 live run: one real Popper run over the IK6 refunds export (evidence only).
 
 Spec: .gnd-planning/milestones/ilp-learners/notes/phase-IL1-spec.md §6 "Live run",
-§12-§14. Not a GND command and not a test lane (IL-R2, IK5-D12 (o)).
+§12-§15 (invocation 2 is the IL1-A1 run (o)). Not a GND command and not a test lane (IL-R2, IK5-D12 (o)).
 
 Usage, from the repository root, after the approved scratch install (§12):
 
@@ -137,7 +137,8 @@ def main() -> int:
     exported = subprocess.run([sys.executable, "-m", "gnd", "export", "ilp", str(EXAMPLE / "model.orm.yaml"),
                                "--labels", str(EXAMPLE / "labels.json"), "--target", "popper",
                                "--out", str(work / "export")], capture_output=True, text=True, check=True)
-    digest = hashlib.sha256((work / "export" / "export.json").read_bytes()).hexdigest()
+    index = (work / "export" / "export.json").read_bytes()
+    digest = hashlib.sha256(index).hexdigest()
     neutral = json.loads((work / "export" / "neutral.json").read_text(encoding="utf-8"))
     ids = [example["id"] for example in neutral["examples"]]
 
@@ -158,6 +159,7 @@ def main() -> int:
         "termination": termination(result),
         "import": "none",
         "export_sha256": digest,
+        "adapter_version": json.loads(index)["adapter_version"],
         "export_stdout": clean(exported.stdout),
         "popper": {"commit": POPPER_COMMIT, "package_metadata_version": "5.0.0",
                    "learner": LEARNER, "timeout": POPPER_TIMEOUT,

@@ -46,12 +46,32 @@ The command creates `DIR`, which must not exist, and writes these files:
 | File | What it holds |
 |---|---|
 | `neutral.json` | the learner-neutral form, `gnd-ilp/1` |
-| `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, then the comparison definitions |
+| `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, grouped by predicate; then the threshold predicates |
 | `popper/exs.pl` | `pos(wrong('<id>')).` or `neg(wrong('<id>')).` per population, in manifest order |
-| `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate, `magic_value_type` for integer types, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
+| `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate and per threshold predicate, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
 | `export.json` | `gnd-ilp-export/1`: the target, the adapter version, and each other file's path, SHA-256 and size |
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
+
+**Threshold predicates (Popper adapter version 2).** Popper v5.0.1 has no way
+to supply a constant, so each comparison against an observed value is its own
+one-argument predicate, which fails rather than raises on an unbound argument:
+
+```prolog
+gt_t_amount__120(A) :- integer(A), A > 120.
+lt_t_amount__m5(A) :- integer(A), A < -5.
+```
+
+- **Operators:** `gt` and `lt`.
+- **Values:** the distinct observed values of each integer type. Above 32
+  values, 32 are taken at evenly spaced ranks, always including the minimum
+  and the maximum.
+- **Reading back:** the parser reads `gt_t_amount__120(V)` as the declared
+  comparison `gt_t_amount(V, 120)`; `ge` and `le` names are read too. A
+  negative value is spelled `m`, and the value follows the last `__`.
+
+The `popper` target's `export.json` says `"adapter_version": "2"`; the
+`neutral` target's says `"1"`.
 
 **Adapters.** Each `--target` is one entry of the bridge's learner registry
 (`gnd.export.ilp_learners`):

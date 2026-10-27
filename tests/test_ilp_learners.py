@@ -104,7 +104,7 @@ def test_t3_the_registry_is_what_the_service_consults(tmp_path, monkeypatch):
 
     monkeypatch.setitem(ilp_learners.LEARNERS, "fake", ilp_learners.Learner(
         target="fake", learner="fake", method="ilp-fake", exports=True, render=render,
-        parse=None, contract="labelled-clauses"))
+        parse=None, contract="labelled-clauses", adapter_version="1"))
     work = _work(tmp_path)
     model, labels = work / CASES["model"], work / "m.labels.json"
     prepared = ilp_service._prepare(model, labels, "fake")
@@ -409,21 +409,27 @@ def test_t11_the_stand_in_learner_proposes_a_join_that_imports(tmp_path):
 # T9: the live run of record replays from its committed bytes (IL-R9).
 # ---------------------------------------------------------------------------
 
-LIVE = MILESTONE / "evidence" / "IL1" / "live" / "invocation-1"
+LIVE_ROOT = MILESTONE / "evidence" / "IL1" / "live"
+#: Invocation 1 is the run of record; invocation 2 is the IL1-A1 run (o),
+#: reported beside it (A1-D4).
+INVOCATIONS = (1, 2)
 TERMINATIONS = {"rendering-rejected", "completed", "learner-timeout", "wall-clock-kill", "output-limit"}
 REQUIRED = {"invocation", "run_of_record", "termination", "import", "export_sha256", "popper",
             "limits", "import_args", "numbers", "reproducibility"}
 
 
-def test_t9_the_run_of_record_replays(tmp_path):
+@pytest.mark.parametrize("invocation", INVOCATIONS)
+def test_t9_each_recorded_run_replays(tmp_path, invocation):
     from gnd import input_policy
+    from gnd.export import ilp_popper
     from gnd.export.ilp_popper import extract_program
 
+    LIVE = LIVE_ROOT / f"invocation-{invocation}"
     data = (LIVE / "outcome.json").read_bytes()
     assert len(data) < 1024 * 1024
     outcome = input_policy.loads(data)
     assert REQUIRED <= set(outcome)
-    assert outcome["invocation"] == 1 and outcome["run_of_record"] is True
+    assert outcome["invocation"] == invocation and outcome["run_of_record"] is (invocation == 1)
     assert outcome["termination"] in TERMINATIONS
     assert outcome["import"] == "none" or outcome["import"] == "admitted" \
         or outcome["import"].startswith("refused:")
@@ -442,7 +448,13 @@ def test_t9_the_run_of_record_replays(tmp_path):
     result = run_main(["export", "ilp", str(example / "model.orm.yaml"), "--labels",
                        str(example / "labels.json"), "--target", "popper", "--out", str(export)])
     assert result.returncode == 0, result.stderr
-    assert hashlib.sha256((export / "export.json").read_bytes()).hexdigest() == outcome["export_sha256"]
+    digest = hashlib.sha256((export / "export.json").read_bytes()).hexdigest()
+    # Invocation 1 predates IL1-A1 and records no adapter version: its export
+    # was adapter 1's, which the current code no longer renders.
+    if outcome.get("adapter_version", "1") == ilp_popper.ADAPTER_VERSION:
+        assert digest == outcome["export_sha256"]
+    else:
+        assert digest != outcome["export_sha256"]
 
     program = extract_program((LIVE / "raw-stderr.txt").read_text(encoding="utf-8"))
     assert program == (LIVE / "program.pl").read_text(encoding="utf-8")
@@ -473,3 +485,108 @@ def test_t9_the_run_of_record_replays(tmp_path):
         assert (imports / "proposal.json").read_bytes() == (LIVE / "proposal.json").read_bytes()
     else:
         assert replayed.stderr.decode().strip() == (LIVE / "import-stderr.txt").read_text().strip()
+
+
+# ---------------------------------------------------------------------------
+# IL1-A1 (o): the adapter-2 Popper rendering. A1-T1 is test_ilp_bridge's D1
+# test over the regenerated X1 tree; A1-T6 is the IK5 corpus itself.
+# ---------------------------------------------------------------------------
+
+def test_a1_t3_threshold_selection_is_bounded_and_keeps_the_extremes():
+    from gnd.export.ilp_popper import MAX_THRESHOLDS, thresholds
+
+    assert thresholds(set(range(20))) == list(range(20))
+    assert thresholds(set()) == []
+    hundred = thresholds({value * 7 - 300 for value in range(100)})
+    assert len(hundred) == MAX_THRESHOLDS == len(set(hundred))
+    assert hundred[0] == -300 and hundred[-1] == 99 * 7 - 300 and hundred == sorted(hundred)
+    assert len(thresholds(set(range(33)))) == MAX_THRESHOLDS
+
+
+def test_a1_the_rendering_has_no_binary_comparison_and_no_magic_values():
+    from gnd.export.ilp_popper import render
+
+    shape, _columns, _closures = _orders_shape()
+    shape = dict(shape, facts=[{"example": "e1", "predicate": "f_order_amount", "values": [1, -5]},
+                               {"example": "e0", "predicate": "f_order_amount", "values": [2, 120]}],
+                 examples=[{"id": "e0", "class": "x", "label": "pos"},
+                           {"id": "e1", "class": "y", "label": "neg"}])
+    files = render(shape)
+    bk, bias = files["popper/bk.pl"].decode(), files["popper/bias.pl"].decode()
+    assert "magic_value_type" not in bias and ",2).\nbody_pred(gt" not in bias
+    assert "lt_t_amount__m5(A) :- integer(A), A < -5.\n" in bk
+    assert "body_pred(gt_t_amount__120,1).\ntype(gt_t_amount__120,(t_amount,)).\n" in bias
+    assert not re.search(r"^\w+\(A,B\)", bk, re.MULTILINE)
+    # grouped by predicate, then by example position (e0 before e1)
+    assert bk.index("f_order_amount('e0'") < bk.index("f_order_amount('e1'")
+
+
+def test_a1_t4_threshold_atoms_parse_as_their_comparison():
+    from gnd.export.ilp_popper import parse_program
+
+    body = parse_program("wrong(A):- f(A,B,C),gt_t_amount__120(C),lt_t_amount__m5(C),"
+                         "gt_t_a__b__7(C),ge_t_amount__0(C),gt_t_amount__3(C,D).")["clauses"][0]["body"]
+    atoms = [literal["atom"] for literal in body]
+    assert atoms[1] == {"predicate": "gt_t_amount", "args": [{"var": "C"}, {"const": 120}]}
+    assert atoms[2] == {"predicate": "lt_t_amount", "args": [{"var": "C"}, {"const": -5}]}
+    assert atoms[3] == {"predicate": "gt_t_a__b", "args": [{"var": "C"}, {"const": 7}]}
+    assert atoms[4] == {"predicate": "ge_t_amount", "args": [{"var": "C"}, {"const": 0}]}
+    assert atoms[5] == {"predicate": "gt_t_amount__3", "args": [{"var": "C"}, {"var": "D"}]}
+
+
+def test_a1_t4_a_two_argument_threshold_name_is_an_unknown_predicate():
+    from gnd.export.ilp import IlpError
+    from gnd.export.ilp_rewrite import rewrite
+
+    shape, columns, closures = _orders_shape()
+    with pytest.raises(IlpError, match=r"^clause 0: unknown-predicate: "):
+        rewrite(_clause("wrong(A):- f_order_amount(A,B,C),gt_t_amount__3(C,B)."), 0, shape,
+                columns, closures=closures)
+
+
+def test_a1_t4_an_over_long_threshold_value_is_unparsable():
+    from gnd.export.ilp import IlpError
+    from gnd.export.ilp_popper import MAX_INT_DIGITS, parse_program
+
+    with pytest.raises(IlpError, match=r"^unparsable: line 1, column \d+: an integer longer than"):
+        parse_program(f"wrong(A):- gt_t_amount__{'9' * (MAX_INT_DIGITS + 1)}(A).")
+
+
+def test_a1_t5_a_threshold_of_another_integer_type_is_type_confused():
+    from gnd.export.ilp import IlpError
+    from gnd.export.ilp_rewrite import rewrite
+
+    shape, columns, closures = _orders_shape(QUANTITY)
+    with pytest.raises(IlpError, match=r"^clause 0: type-confused-join: "):
+        rewrite(_clause("wrong(A):- f_order_amount(A,B,C),gt_t_quantity__5(C)."), 0, shape,
+                columns, closures=closures)
+    rewritten = rewrite(_clause("wrong(A):- f_order_amount(A,B,C),gt_t_amount__120(C)."), 0,
+                        shape, columns, closures=closures)
+    assert rewritten["consequent"] == {"comparison": {"operator": "<=", "left": "$v_c", "right": 120}}
+
+
+@pytest.mark.live
+def test_a1_t2_every_threshold_fails_on_an_unbound_argument(tmp_path):
+    """Live: GND_IL1_SWIPL names the scratch SWI-Prolog binary (IL1 §12)."""
+    import os
+
+    swipl = os.environ.get("GND_IL1_SWIPL")
+    if not swipl:
+        pytest.skip("GND_IL1_SWIPL is not set")
+    example = SRC / "examples" / "refunds"
+    export = tmp_path / "export"
+    result = run_main(["export", "ilp", str(example / "model.orm.yaml"), "--labels",
+                       str(example / "labels.json"), "--target", "popper", "--out", str(export)])
+    assert result.returncode == 0, result.stderr
+    bias = (export / "popper" / "bias.pl").read_text(encoding="utf-8")
+    names = re.findall(r"^body_pred\(((?:gt|lt)_\w+__m?\d+),1\)\.$", bias, re.MULTILINE)
+    assert names
+    calls = ",".join(f"(catch({name}(_), E, (print_message(error, E), halt(2))) -> halt(3) ; true)"
+                     for name in names)
+    (export / "popper" / "probe.pl").write_text(
+        f":- initialization(main, main).\n:- consult('bk.pl').\nmain :- {calls}, write({len(names)}).\n",
+        encoding="utf-8")
+    probe = subprocess.run([swipl, "-q", "probe.pl"], cwd=export / "popper", capture_output=True,
+                           text=True, timeout=60, check=False)
+    assert probe.returncode == 0 and probe.stdout == str(len(names)), probe.stderr
+

@@ -712,9 +712,10 @@ Invocation 1 is the run of record: `termination: rendering-rejected`,
 names the changed goldens and the `ADAPTER_VERSION` bump, and a second run
 needs an owner ruling.
 
-## 15. Amendment IL1-A1: a Popper v5.0.1 rendering (draft, awaiting the owner)
+## 15. Amendment IL1-A1: a Popper v5.0.1 rendering (approved 2026-10-27)
 
-**Status:** draft, 2026-10-27. Nothing in it is implemented.
+**Status:** approved by the owner 2026-10-27 (o); the ruling is recorded at
+the end of this section. Drafted 2026-10-27 before any code changed.
 - **Requested by the owner (o):** "Draft an IL1 amendment that fixes the
   Popper rendering for v5.0.1 (naming the changed goldens and the
   ADAPTER_VERSION bump) and asks for a second recorded run; stop for my
@@ -851,3 +852,88 @@ files move.
 | A1-D3 | Threshold bound | **32 per integer type, ranked selection above it:** the export keeps working on larger data. **Refuse above the bound:** simpler, but a real population can make the Popper export fail | 32, ranked selection |
 | A1-D4 | **The second recorded run** | Invocation 2, under the same §6 settings, limits and fixed import arguments, over the IK6 refunds export rendered by adapter 2. **It is reported beside invocation 1, which stays the run of record** (IL-R9). T9 replays both. If invocation 2 also fails, its outcome is recorded and IL1 closes with both | **asked: approve invocation 2** |
 | A1-D5 | If invocation 2 admits a program but GND's coverage differs from SWI's (`coverage-mismatch`) | the refusal is the recorded result, not a reason to rerun; a third run would need a new ruling | as stated |
+
+### Owner ruling (o), 2026-10-27
+
+The owner's words: "I approve amendment IL1-A1 as proposed: A1-D1 (a) replace
+in place with ADAPTER_VERSION 2, A1-D2 gt and lt, A1-D3 32 with ranked
+selection, A1-D4 approve invocation 2, A1-D5 as stated. Implement it and run
+invocation 2."
+
+| ID | Ruling (o) 2026-10-27 |
+|---|---|
+| A1-D1 | (a) replace `popper`'s rendering in place, `ADAPTER_VERSION` "2" |
+| A1-D2 | `gt` and `lt` |
+| A1-D3 | 32 per integer type, ranked selection above it |
+| A1-D4 | invocation 2 approved, reported beside invocation 1, the run of record |
+| A1-D5 | a `coverage-mismatch` is the recorded result; no third run without a new ruling |
+
+### Implementation findings (IL1-A1)
+
+**IL1-F8: the adapter version was shared by both targets.** `ADAPTER_VERSION`
+lived in `gnd.export.ilp` and was written into every `export.json`, so a bump
+to "2" would also have moved the neutral target's goldens, which this
+amendment's inventory says are unaffected. **Resolution, within the approved
+inventory:** the version is per target. Each registry entry carries
+`adapter_version`; `ilp_popper.ADAPTER_VERSION` is "2", the neutral target
+keeps `ilp.ADAPTER_VERSION` "1", and `export_tree` takes the entry's version.
+No neutral golden moved.
+
+**Parser note.** The threshold pattern accepts `t_[A-Za-z0-9_]+` rather than
+the draft's `t_[a-z0-9_]+`, so that any type name the renderer can write reads
+back; the renderer writes `t_<object type id>`.
+
+**What moved, measured:** exactly the inventory. `git diff` over the IK5
+corpus touches the X1 tree's `bk.pl`, `bias.pl` and `export.json`; in
+`expected.json` only digest lines (E for the Popper target, 0ee67d23… to
+218611fc…, and I2's run digest, 552b328c… to 8c12d082…); and the
+`export_sha256` field of the 19 listed run records. No exit or refusal
+changed (A1-T6). The IL1 RF6 census delta was recomputed over the current
+code (the phase is unmerged, so its own delta is extended, not chained).
+
+**Tests:** A1-T1 is `test_ilp_bridge.py::test_d1_export_is_the_same_under_two_hash_seeds`
+over the regenerated tree; A1-T2 (live, `GND_IL1_SWIPL`) passed against the
+scratch SWI 10.0.2 with all 40 refunds thresholds; A1-T3, A1-T4 (three tests),
+A1-T5 and a rendering-shape test are in `tests/test_ilp_learners.py`; A1-T6 is
+the IK5 corpus. T9 is parametrized over invocations 1 and 2; invocation 1's
+export digest is now asserted to differ from the current (adapter-2) export,
+since it records adapter 1.
+
+### Invocation 2 (A1-D4 (o)), 2026-10-27
+
+Run once with `run_popper.py --invocation 2`, the same §6 settings, limits and
+fixed import arguments, over the IK6 refunds export rendered by adapter 2.
+
+| Field | Value |
+|---|---|
+| termination | `completed` (exit 0, 1.2 s) |
+| import | `none` |
+| Popper's output | stdout `NO SOLUTION`; stderr logs hypothesis sizes 3, 4 and 5, then stops |
+| run of record | no; invocation 1 stays the run of record (IL-R9) |
+
+**What it settles:** adapter 2 is accepted by Popper v5.0.1. Invocation 1's
+crash (IL1-F7) does not recur; the search runs to completion.
+
+**IL1-F9: Popper found no program although one exists in its bias.** The
+clause `wrong(A) :- f_refund_amount(A,B,C), gt_t_amount__500(C).` is size 3,
+within `max_vars(6)`, `max_body(5)` and `max_clauses(4)`, and uses only
+declared predicates. Evaluated by SWI over the rendered `bk.pl` (not by GND,
+and not by Popper), it covers all four positives and none of the four
+negatives. So Popper v5.0.1's `NO SOLUTION` is not explained by the data or by
+the declared bias limits.
+
+**Its cause is not established.** No further Popper run was made to find it; a
+third run needs a new owner ruling (IL-R9, A1-D4). The result is recorded as
+it is, under the same discipline as A1-D5. Open question for the IL1 record:
+whether a Popper setting this adapter does not render (for example a
+`direction` declaration or a noise setting) is needed for v5.0.1 to find
+single-clause programs.
+
+**Evidence, `evidence/IL1/live/invocation-2/`:**
+
+| File | SHA-256 |
+|---|---|
+| `outcome.json` | `bdf91fbda32756bc1963b4df09f8f25559ef4fa041a8c1673a2926c82283a11f` |
+| `program.pl` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `raw-stderr.txt` | `36bc3d568d4e5a0ed070b60a68fcbbffbba138ca96cbbc73e9a99ba935d1ce28` |
+| `raw-stdout.txt` | `da7cfe20ba0b56e98734999b87ceaf7fb0caa8cbffcfdf1053d92d05adcbf755` |

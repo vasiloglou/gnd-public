@@ -159,10 +159,11 @@ def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
         model=model, model_sha256=hashlib.sha256(model_bytes).hexdigest(), manifest=manifest,
         populations=populations, redacted=RedactionPolicy.from_model(model).effective_roles,
     )
-    render = _learners.learner(target).render
-    rendering = render(neutral) if render is not None else {}
+    entry = _learners.learner(target)
+    rendering = entry.render(neutral) if entry.render is not None else {}
+    tree = _ilp.export_tree(neutral, target, rendering, adapter_version=entry.adapter_version)
     return _Prepared(manifest, model_bytes, model, _parse_model_text(model_bytes.decode("utf-8")),
-                     bound, neutral, _ilp.export_tree(neutral, target, rendering), columns, work,
+                     bound, neutral, tree, columns, work,
                      _ilp.type_closures(model))
 
 

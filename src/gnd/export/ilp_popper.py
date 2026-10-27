@@ -8,7 +8,12 @@ recursive-descent parser over a bounded input: anything outside its grammar is
 clause text is ever evaluated (IK-R5). Negation, disjunction and aggregates are
 *parsed*, so that the fragment checker refuses them by name.
 
-Whether a real Popper accepts this rendering is not established here (IK5-D13).
+The rendering is adapter version 2 (IL1-A1 (o)), for Popper v5.0.1, which has
+no magic values and so cannot bind a comparison's constant: each comparison
+against an observed value is its own unary *threshold* predicate,
+``gt_t_amount__120(A) :- integer(A), A > 120.``, which fails rather than raises
+on an unbound argument. ``parse_program`` maps a threshold atom back to the
+binary comparison atom the neutral form declares.
 """
 
 from __future__ import annotations
@@ -19,7 +24,18 @@ from typing import Any
 from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import IlpError
 
-__all__ = ["AGGREGATES", "SOLUTION_BANNER", "extract_program", "parse_program", "quote", "render"]
+__all__ = ["ADAPTER_VERSION", "AGGREGATES", "MAX_THRESHOLDS", "SOLUTION_BANNER", "extract_program",
+           "parse_program", "quote", "render", "thresholds"]
+
+#: ``export.json``'s ``adapter_version`` for the Popper target (IL1-A1 (o)).
+ADAPTER_VERSION = "2"
+#: Threshold values per integer type, fixed before results (IL1-A1-D3 (o)).
+MAX_THRESHOLDS = 32
+#: The comparison operators rendered as thresholds (IL1-A1-D2 (o)).
+_THRESHOLD_OPERATORS = (">", "<")
+#: A threshold atom: a comparison name, ``__`` and the value, negative as ``m``;
+#: the value follows the last ``__``. ``ge`` and ``le`` are read, not rendered.
+_THRESHOLD = re.compile(r"((?:gt|lt|ge|le)_t_[A-Za-z0-9_]+)__(m?)([0-9]+)")
 
 AGGREGATES = frozenset({"findall", "bagof", "setof", "aggregate_all", "count", "sum", "max", "min"})
 _OPERATORS = {">": ">", "<": "<", ">=": ">=", "=<": "<=", "=:=": "=", "=\\=": "!=", "=": "=",
@@ -71,23 +87,58 @@ def _term(value: Any) -> str:
     return quote(value)
 
 
+def thresholds(values: set[int]) -> list[int]:
+    """The rendered thresholds of one integer type, ascending (IL1-A1-D3 (o)).
+
+    Every distinct value up to :data:`MAX_THRESHOLDS`; above it, the values at
+    ranks ``round(i * (n - 1) / 31)``, rounding half up, for i = 0..31 -- so the
+    minimum and the maximum are always kept, and no rank repeats."""
+    ordered = sorted(values)
+    count = len(ordered)
+    if count <= MAX_THRESHOLDS:
+        return ordered
+    span = MAX_THRESHOLDS - 1
+    return [ordered[(2 * i * (count - 1) + span) // (2 * span)] for i in range(MAX_THRESHOLDS)]
+
+
+def _suffix(value: int) -> str:
+    return f"m{-value}" if value < 0 else str(value)
+
+
+def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, str, int]]:
+    """``(name, type, Prolog operator, value)`` per threshold predicate, in render order."""
+    observed: dict[str, set[int]] = {}
+    types = {row["name"]: row["types"][1:] for row in neutral["predicates"]}
+    for fact in neutral["facts"]:
+        for type_name, value in zip(types[fact["predicate"]], fact["values"], strict=True):
+            if isinstance(value, int) and not isinstance(value, bool):
+                observed.setdefault(type_name, set()).add(value)
+    rows = []
+    for row in neutral["comparisons"]:
+        if row["operator"] in _THRESHOLD_OPERATORS:
+            for value in thresholds(observed.get(row["type"], set())):
+                rows.append((f"{row['name']}__{_suffix(value)}", row["type"], row["operator"], value))
+    return rows
+
+
 def render(neutral: dict[str, Any]) -> dict[str, bytes]:
+    position = {example["id"]: index for index, example in enumerate(neutral["examples"])}
+    # Grouped by predicate, so each predicate's clauses are contiguous; the
+    # neutral order (example position, predicate, values) is stable within.
+    facts = sorted(neutral["facts"], key=lambda fact: (fact["predicate"], position[fact["example"]]))
     lines = [f"{fact['predicate']}({quote(fact['example'])},"
-             f"{','.join(_term(v) for v in fact['values'])}).\n" for fact in neutral["facts"]]
-    prolog = {">=": ">=", ">": ">", "<=": "=<", "<": "<"}
-    lines += [f"{row['name']}(A,B) :- A {prolog[row['operator']]} B.\n"
-              for row in neutral["comparisons"]]
+             f"{','.join(_term(v) for v in fact['values'])}).\n" for fact in facts]
+    rows = _threshold_rows(neutral)
+    lines += [f"{name}(A) :- integer(A), A {operator} {value}.\n" for name, _type, operator, value in rows]
     examples = [f"{example['label']}(wrong({quote(example['id'])})).\n"
                 for example in neutral["examples"]]
     bias = ["head_pred(wrong,1).\n", "type(wrong,(ex,)).\n"]
     for predicate in neutral["predicates"]:
         bias.append(f"body_pred({predicate['name']},{len(predicate['types'])}).\n")
         bias.append(f"type({predicate['name']},({','.join(predicate['types'])})).\n")
-    for row in neutral["comparisons"]:
-        bias.append(f"body_pred({row['name']},2).\n")
-        bias.append(f"type({row['name']},({row['type']},{row['type']})).\n")
-    bias += [f"magic_value_type({row['name']}).\n" for row in neutral["types"]
-             if row["primitive"] == "integer"]
+    for name, type_name, _operator, _value in rows:
+        bias.append(f"body_pred({name},1).\n")
+        bias.append(f"type({name},({type_name},)).\n")
     bias.append(_SETTINGS)
     return {"popper/bk.pl": "".join(lines).encode("utf-8"),
             "popper/exs.pl": "".join(examples).encode("utf-8"),
@@ -194,7 +245,8 @@ class _Parser:
                 self.deep(depth + 1)
                 return [{"aggregate": {"name": name,
                                        "args": self.arguments(goals=True, depth=depth + 1)}}]
-            return [{"atom": {"predicate": name, "args": self.arguments(goals=False)}}]
+            line, column = self.peek()[2:]
+            return [{"atom": _comparison(name, self.arguments(goals=False), line, column)}]
         left = self.term()
         token = self.peek()
         if token[0] != "op":
@@ -242,6 +294,18 @@ class _Parser:
             return {"const": _unquote(value, line, column)}
         self._fail(line, column, f"expected a term, found {value or 'end'!r}")
         raise AssertionError  # pragma: no cover
+
+
+def _comparison(name: str, args: list[Any], line: int, column: int) -> dict[str, Any]:
+    """An atom; a one-argument threshold atom becomes its binary comparison atom,
+    so the fragment checks see the declared comparison and its type (D13 (o))."""
+    match = _THRESHOLD.fullmatch(name)
+    if match is None or len(args) != 1:
+        return {"predicate": name, "args": args}
+    comparison, sign, digits = match.groups()
+    if len(digits) > MAX_INT_DIGITS:
+        _Parser._fail(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
+    return {"predicate": comparison, "args": [args[0], {"const": -int(digits) if sign else int(digits)}]}
 
 
 def _unquote(token: str, line: int, column: int) -> str:

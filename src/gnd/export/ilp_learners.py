@@ -14,7 +14,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-from gnd.export import ilp_popper
+from gnd.export import ilp, ilp_popper
 
 __all__ = ["EXPORT_TARGETS", "IMPORT_TARGETS", "LEARNERS", "Learner", "learner"]
 
@@ -37,14 +37,17 @@ class Learner:
     parse: Callable[[str], dict[str, Any]] | None
     #: ``labelled-clauses`` is what ``gnd import ilp-rules`` accepts.
     contract: str
+    #: ``export.json``'s ``adapter_version`` for this target.
+    adapter_version: str
 
 
 LEARNERS: dict[str, Learner] = {
     "popper": Learner(target="popper", learner="popper", method="ilp-popper", exports=True,
                       render=ilp_popper.render, parse=ilp_popper.parse_program,
-                      contract="labelled-clauses"),
+                      contract="labelled-clauses", adapter_version=ilp_popper.ADAPTER_VERSION),
     "neutral": Learner(target="neutral", learner=None, method="ilp-neutral", exports=True,
-                       render=None, parse=None, contract="labelled-clauses"),
+                       render=None, parse=None, contract="labelled-clauses",
+                       adapter_version=ilp.ADAPTER_VERSION),
 }
 EXPORT_TARGETS = tuple(target for target, entry in LEARNERS.items() if entry.exports)
 IMPORT_TARGETS = tuple(target for target, entry in LEARNERS.items()

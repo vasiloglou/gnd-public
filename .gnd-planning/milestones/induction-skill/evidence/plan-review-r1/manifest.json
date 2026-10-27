@@ -1,0 +1,18 @@
+{
+  "round": 1,
+  "date": "2026-10-27",
+  "instrument": "four local reviewer agents (D13, owner-selected 2026-10-27)",
+  "inspection_head": "3b3dc36",
+  "subjects": {
+    "notes/induction-skill-plan.md": "evidence/plan-review-r1/induction-skill-plan.md.snapshot",
+    "notes/phase-IS1-spec.md": "evidence/plan-review-r1/phase-IS1-spec.md.snapshot"
+  },
+  "sha256": {
+    "evidence/plan-review-r1/induction-skill-plan.md.snapshot": "526ab075473ab60cf2e8090fe7c0f177aa54e4a82b7fce83af1cb50d1919c411",
+    "evidence/plan-review-r1/phase-IS1-spec.md.snapshot": "0510b5275622f8b38aff8865500d40601c9ea4e3ce3b2e58ed2fcf5b9363515a",
+    "notes/plan-review-r1-reader-1.md": "55a8a3d8dd1a96083120cc46e2198aa9af6ad9c03d9fe158730df5ecf56ed7f7",
+    "notes/plan-review-r1-reader-2.md": "b565e19b4491cf9f9ac3112f73f50f1bfcc3845c6204f1637d26815422d0a238",
+    "notes/plan-review-r1-reader-3.md": "33a6cb15ab0fd700ffc18d1e99e56d5ad8b37199c61242af8b2662c6be114901",
+    "notes/plan-review-r1-reader-4.md": "1965c39a1440347e5b7314888bd29f80ffc3f63cbb1c3ae1ebdfd0c3db593133"
+  }
+}

@@ -1,12 +1,13 @@
 # Induction skill
 
-r1, 2026-10-27. **Draft; awaiting the owner's choice of review instrument and
-plan approval.** Milestone: `induction-skill`. `auto=false`.
+r1, 2026-10-27. **Draft; in plan review round 1 (four local reviewer agents, D13 (o));
+awaiting plan approval.** Milestone: `induction-skill`. `auto=false`.
 Inspection baseline: `077f46e` (main, after PR #47). This plan was authored with
 the repository's start-milestone skill. No review, approval or implementation is
 claimed here, and these bytes carry no review opinion.
 
-Change tags: `(o)` marks an owner ruling once one exists. r1 has none.
+Change tags: `(o)` marks an owner ruling. The only one in r1 is D13 (2026-10-27),
+recorded before round 1 so the readers see it.
 
 ## Goal, status and completion predicates
 
@@ -288,12 +289,12 @@ a PR, and owner acceptance recorded separately.
 approved-spec commit; implementation and focused verification; independent diff
 review; refactoring review; record.
 
-**Plan review:** the instrument is **not chosen** (D13). Selection is the
-owner's. Until then no plan review exists. Once one is chosen, the round budget
+**Plan review:** four local reviewer agents (D13 (o), 2026-10-27). The
+selection names the instrument only; it approves no bytes. Once one is chosen, the round budget
 and stop rule are declared in the first disposition before round two
 (review-convergence).
 
-**Close review:** the instrument the owner selects (D13).
+**Close review:** the same instrument (D13 (o)).
 
 **Contribution:** topic branch and PR per AGENTS.md. No push, PR or merge
 without the owner's explicit word.
@@ -337,12 +338,12 @@ IDs.
 | D10 | Behavioural evidence for the skill | structural pins in IS1 and recordings in IS2; or also an eval corpus like `gnd-model-from-text/evals`. The corpus costs a phase | pins plus recordings |
 | D11 | Recordings | which models and how many runs (precedent: Claude Code with Haiku, one recorded run per conversation, `course-model-evolve-haiku-run-1`); credentials from a trusted environment; paid. Without recordings the page must label its prompts as not recorded | owner selects |
 | D12 | Tutorial author | the owner asked for Fable to write business tutorial pages (2026-10-26). Confirm for this page | Fable writes it |
-| D13 | Plan and close review instrument | four local reviewer agents (IK precedent, D7 of that plan); `gnd-review-panel` (six seats, needs vendor credentials); `gnd-review-panel-light`; or another instrument the owner names. Fewer than four readers is below the bar and needs an explicit waiver | **ask the owner; not assumed** |
+| D13 | Plan and close review instrument | four local reviewer agents (IK precedent, D7 of that plan); `gnd-review-panel` (six seats, needs vendor credentials); `gnd-review-panel-light`; or another instrument the owner names. Fewer than four readers is below the bar and needs an explicit waiver | **owner-selected 2026-10-27 (o)**: "use four local reviewer agents for the plan and close review, as in the induced-knowledge milestone"; instrument only, no artifact approval |
 | D14 | Milestone and phase IDs | `induction-skill`, IS1, IS2, close | as proposed |
 | D15 | IS1 approval instrument | spec prose plus checkpoint C0. Corpus-first is the default only for serialized formats, exit contracts and validation predicates, and IS1 ships none | prose plus C0 |
 | D16 | Measure modes | the skill handles class and expected-state manifests; or class mode only, as the tutorial uses. Expected-state mode exits 6 on a checker defect, which the skill reports | both |
 
-**Next action:** the owner chooses the review instrument (D13) and rules or
-defers D1..D16. Then plan review, plan approval, and an explicit
+**Next action:** plan review round 1 with four local reviewer agents (D13 (o)); the owner rules or
+defers D1..D12 and D14..D16. Then plan approval, and an explicit
 `process-phase IS1 induction-skill` selection, at whose gate the IS1 base commit
 is named.

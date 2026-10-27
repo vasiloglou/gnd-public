@@ -112,11 +112,11 @@ ilp-rules). The learner line is not a `gnd` line.
 
 | File | Sentence (proposed) | Edge |
 |---|---|---|
-| `gnd-orm-core/SKILL.md` workflow index | `Score rules against host labels, discover rules, or round-trip a rule learner: [gnd-induce](../gnd-induce/SKILL.md). Routing only.` | → `../gnd-induce/SKILL.md` |
-| `gnd-export/SKILL.md`, the ILP paragraph | `To run the whole loop with a learner, use [gnd-induce](../gnd-induce/SKILL.md); its proposals are reviewed through gnd-model-evolve.` | → `../gnd-induce/SKILL.md` |
-| `gnd-dev-session/SKILL.md`, grounding | after the `--labels` sentence: `To act on those labels, see [gnd-induce](../gnd-induce/SKILL.md).` | → `../gnd-induce/SKILL.md` |
-| `gnd-solve/SKILL.md`, Station 6 | after "review either here like any other": `[gnd-induce](../gnd-induce/SKILL.md) produces both kinds of proposal.` No station number changes | → `../gnd-induce/SKILL.md` |
-| `gnd-model-evolve/SKILL.md`, provenance invariants | after the two induced bullets: `Both kinds of proposal come from [gnd-induce](../gnd-induce/SKILL.md), which never applies them.` | → `../gnd-induce/SKILL.md` |
+| `gnd-orm-core/SKILL.md` workflow index | `Score rules against host labels, discover rules, or round-trip a rule learner: gnd-induce, linked as ../gnd-induce/SKILL.md. Routing only.` | → `../gnd-induce/SKILL.md` |
+| `gnd-export/SKILL.md`, the ILP paragraph | `To run the whole loop with a learner, use gnd-induce, linked as ../gnd-induce/SKILL.md; its proposals are reviewed through gnd-model-evolve.` | → `../gnd-induce/SKILL.md` |
+| `gnd-dev-session/SKILL.md`, grounding | after the `--labels` sentence: `To act on those labels, see gnd-induce, linked as ../gnd-induce/SKILL.md.` | → `../gnd-induce/SKILL.md` |
+| `gnd-solve/SKILL.md`, Station 6 | after "review either here like any other": `gnd-induce, linked as ../gnd-induce/SKILL.md produces both kinds of proposal.` No station number changes | → `../gnd-induce/SKILL.md` |
+| `gnd-model-evolve/SKILL.md`, provenance invariants | after the two induced bullets: `Both kinds of proposal come from gnd-induce, linked as ../gnd-induce/SKILL.md, which never applies them.` | → `../gnd-induce/SKILL.md` |
 
 Edges out of the new skill: `../gnd-model-evolve/SKILL.md`,
 `../gnd-orm-core/SKILL.md`, `../gnd-orm-core/references/provenance-and-modality.md`,
@@ -160,7 +160,7 @@ linked by hand.
 
 ### 6.4 Docs
 
-- AGENTS.md skill table: one row, `| gnd-induce | [gnd-induce](src/gnd/skills/gnd-induce/SKILL.md) |`.
+- AGENTS.md skill table: one row, `| gnd-induce | gnd-induce, linked as src/gnd/skills/gnd-induce/SKILL.md |`.
 - `docs/agents/index.md` table: "Score rules against labels, discover rules,
   round-trip a learner | `gnd-induce` | evolve proposals, measure and discover
   reports | `gnd measure --labels`, `gnd discover`, `gnd export ilp`,

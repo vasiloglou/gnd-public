@@ -2,7 +2,7 @@
  "schema_version": 1,
  "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL1/dynamic-query-successor.json",
  "predecessor_sha256": "7ea8941e536f008d025486b260f5900788fccf637c9edf79ce8eab3ee1dc1128",
- "reason": "ilp-learners IL2 (spec r1, approved 2026-10-27): the ILASP adapter. The rows are the task renderer's neutral-form reads and annotations, the ASP hypothesis reader's token reads and annotations and the hypothesis extractor, all in gnd.export.ilp_asp; the Popper canonical threshold-name check (IL2-D8 (o)) adds no row. Syntax census only; no model-query exception widening.",
+ "reason": "ilp-learners IL2 (spec r1, approved 2026-10-27): the ILASP adapter. The rows are the task renderer's neutral-form reads and annotations, the ASP hypothesis reader's token reads and annotations and the hypothesis extractor, all in gnd.export.ilp_asp, with the step 4 review's comparison-shape check (IL2-F9); the Popper canonical threshold-name check (IL2-D8 (o)) adds no row. Syntax census only; no model-query exception widening.",
  "removed": [],
  "added": [
   [
@@ -93,6 +93,12 @@
    "src/gnd/export/ilp_asp.py",
    "_domains",
    "types[fact['predicate']]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_rendered_comparison",
+   "list[Any]",
    1
   ],
   [
@@ -212,6 +218,12 @@
   [
    "src/gnd/export/ilp_asp.py",
    "literal",
+   "self.peek()[2:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "literal",
    "self.peek()[:2]",
    1
   ],
@@ -318,6 +330,6 @@
    1
   ]
  ],
- "result_distinct_rows": 6634,
- "result_occurrences": 8305
+ "result_distinct_rows": 6636,
+ "result_occurrences": 8307
 }

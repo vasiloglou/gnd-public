@@ -297,7 +297,8 @@ def test_t9_each_recorded_run_replays(tmp_path, invocation):
     assert outcome["reproducibility"] == "single run, reproducibility not measured"
     process = outcome["ilasp"]["process"]
     if process is None:
-        # IL2-F6: the process result was lost; the record must say so and why.
+        # IL2-F6: invocation 1's process result was lost; the record must say so and why.
+        assert invocation == 1
         assert "IL2-F6" in outcome["process_record"] and outcome["termination"] == "completed"
     else:
         assert outcome["termination"] == (
@@ -332,7 +333,7 @@ def test_t9_each_recorded_run_replays(tmp_path, invocation):
     else:
         refusal = replayed.stderr.decode().strip()
         assert refusal == (live / "import-stderr.txt").read_text().strip()
-        assert outcome["import"] == "refused:" + refusal.split(": ")[1]
+        assert outcome["import"] == "refused:" + ilp_asp.refusal_name(refusal)
 
 
 # ---------------------------------------------------------------------------
@@ -359,3 +360,115 @@ def test_live_clingo_covers_what_gnd_covers(tmp_path):
         if "wrong" in atoms:
             covered.append(neutral["examples"][index]["id"])
     assert sorted(covered) == sorted(COVERED)
+
+
+# ---------------------------------------------------------------------------
+# Step 4 review successors (notes/phase-IL2-agent-review.md). Each R case is a
+# regression for one reproduced finding and failed against bf15642.
+# ---------------------------------------------------------------------------
+
+BANNER = "%%%%\n%% Total : 1s\n%%%%\n"
+
+
+@pytest.mark.parametrize(("log", "refusal"), [
+    (BANNER + ":- f_refund_by(V1,V2).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n",
+     "clause 0: asp-constraint"),
+    (BANNER + "wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n:- f_refund_by(V1,V2).\n",
+     "clause 1: asp-constraint"),
+    (BANNER + ":- f_refund_by(V1,V2).\n", "clause 0: asp-constraint"),
+    (BANNER + "p :- f_refund_by(V1,V2).\nwrong :- p.\n", "clause 0: head-shape"),
+], ids=["constraint-first", "constraint-after", "constraint-only", "other-head"])
+def test_r1_the_extractor_hands_every_learned_rule_to_the_reader(log, refusal):
+    from gnd.export.ilp_asp import extract_hypothesis
+
+    assert _refused(extract_hypothesis(log)).startswith(refusal + ": ")
+
+
+def test_r1_a_trailing_comment_stays_with_its_rule():
+    from gnd.export.ilp_asp import extract_hypothesis
+
+    text = extract_hypothesis(BANNER + "wrong :- f_refund_by(V1,V2). % penalty 1\n")
+    assert _parse(text)["clauses"][0]["body"][0]["atom"]["predicate"] == "f_refund_by"
+
+
+@pytest.mark.parametrize(("text", "detail"), [
+    ("wrong :- f_refund_channel(V1,_cash).\n", "an underscore-prefixed constant"),
+    ("wrong :- f_refund_amount(V1,V').\n", "a primed identifier"),
+    ("wrong :- f_refund_amount(V1',V2).\n", "a primed identifier"),
+    ("wrong :- f_refund_amount(V1,V2) %* *% , gt_t_amount(V2,500)\n.\n", "a block comment"),
+    ("wrong :- f_refund_amount(V1,V2), ge_t_amount(V2,500).\n", "a comparison the renderer never writes"),
+    ("wrong :- f_refund_amount(V1,V2), le_t_amount(V2,500).\n", "a comparison the renderer never writes"),
+    ("wrong :- f_refund_amount(V1,V2), gt_t_amount(500,V2).\n", "a comparison must be (variable, integer)"),
+    ("wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,V1).\n", "a comparison must be (variable, integer)"),
+    ("wrong :- f_refund_amount(V1,V2), gt_t_amount(V2).\n", "a comparison must be (variable, integer)"),
+    ("wrong :- f_refund_amount(V1,2147483648).\n", "outside clingo's 32-bit integer range"),
+    ("wrong :- f_refund_amount(V1,-2147483649).\n", "outside clingo's 32-bit integer range"),
+    ("wrong :- f_refund_amount(V1,0500).\n", "a leading zero"),
+], ids=["underscore-constant", "prime", "prime-2", "block-comment", "ge", "le", "swapped",
+        "two-variables", "unary", "int-over", "int-under", "leading-zero"])
+def test_r3_to_r10_the_reader_refuses_what_clingo_reads_differently(text, detail):
+    message = _refused(text)
+    assert message.startswith("unparsable: line ") and message.endswith(detail), message
+
+
+@pytest.mark.parametrize("text", [
+    "wrong :- f_refund_amount(V1,2147483647).\n",
+    "wrong :- f_refund_amount(V1,-2147483648).\n",
+    "wrong :- f_refund_amount(V1,0).\n",
+    "wrong :- f_refund_amount(V1,_V2).\n",
+], ids=["int-max", "int-min", "zero", "underscore-variable"])
+def test_r6_the_range_and_variable_boundaries_are_admitted(text):
+    assert _parse(text)["clauses"]
+
+
+def test_r7_the_script_and_the_replay_share_one_refusal_name():
+    from gnd.export.ilp_asp import refusal_name
+
+    assert refusal_name("clause 0: empty-antecedent: nothing is left") == "empty-antecedent"
+    assert refusal_name("unparsable: line 1, column 30: nesting deeper than 4") == "unparsable"
+    assert refusal_name("learner-mismatch: the run record names popper") == "learner-mismatch"
+
+
+RULE = "wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n"
+
+
+@pytest.mark.parametrize(("text", "detail"), [
+    (RULE * 33, "more than 32 rules"),
+    ("wrong :- " + ", ".join(["f_refund_amount(V1,V2)"] * 17) + ".\n", "more than 16 body literals"),
+    ("wrong :- f_refund_amount(V1,V2), " + "not " * 5 + "f_refund_by(V1,V3).\n", "nesting deeper than 4"),
+    ("wrong :- f_refund_amount(V1," + "1" * 33 + ").\n", "an integer longer than 32 digits"),
+], ids=["rules", "literals", "depth", "digits"])
+def test_r9_one_over_each_cap_names_the_cap(text, detail):
+    assert _refused(text).endswith(detail)
+
+
+@pytest.mark.parametrize("text", [
+    RULE * 32,
+    "wrong :- " + ", ".join(["f_refund_amount(V1,V2)"] * 16) + ".\n",
+    "wrong :- f_refund_amount(V1,V2), " + "not " * 4 + "f_refund_by(V1,V3).\n",
+], ids=["rules", "literals", "depth"])
+def test_r9_each_cap_is_admitted_at_its_bound(text):
+    assert _parse(text)["clauses"]
+
+
+def test_r9_a_hypothesis_over_1_mib_is_refused(tmp_path):
+    text = RULE + "%" + "x" * (1024 * 1024) + "\n"
+    result, out = _import(tmp_path, text, [COVERED])
+    assert result.returncode == 3 and b"1048576-byte cap" in result.stderr, result.stderr
+    assert not out.exists()
+
+
+def test_r8_the_constants_table_matches_the_reader():
+    doc = (REPO_ROOT / "docs" / "reference" / "ilp-bridge.md").read_text(encoding="utf-8")
+    section = doc.split("\n**Constants:**\n", 1)[1].strip("\n").split("\n\n", 1)[0]
+    rows = [line.strip("| ").split(" | ") for line in section.splitlines()[2:]]
+    kinds = {"an integer": int, "a string": str, "a boolean": bool}
+    read = {}
+    for spelling, reading in rows:
+        kind = kinds[next(k for k in kinds if reading.startswith(k))]
+        for term in re.findall(r"`([^`]+)`", spelling):
+            constants = _constants(_parse(f"wrong :- f_refund_channel(V1,{term}).\n"))
+            assert [type(c) for c in constants] == [kind], (term, reading)
+            read[term] = kind
+    assert set(read.values()) == {int, str, bool}
+    assert set(read) == {"40", "-3", '"a\\"b"', "web", "true", "false"}

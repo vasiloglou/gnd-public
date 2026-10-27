@@ -42,8 +42,14 @@ MAX_RULES = 32
 MAX_LITERALS = 16
 MAX_DEPTH = 4
 MAX_INT_DIGITS = 32
+#: clingo's integers are 32-bit; a wider one would mean something else to it.
+_INT_RANGE = range(-2**31, 2**31)
 #: A comparison atom is copied as is; every other body atom takes the example variable.
 _COMPARISON = re.compile(r"(?:gt|lt|ge|le)_t_[A-Za-z0-9_]+")
+#: The comparisons the task defines; ge and le are declared but never rendered.
+_RENDERED_COMPARISON = re.compile(r"(?:gt|lt)_t_[A-Za-z0-9_]+")
+#: clingo reads an identifier that starts with underscores and then a lowercase letter as a constant.
+_UNDERSCORE_CONSTANT = re.compile(r"_+[a-z]")
 _COMPARE_OPS = frozenset({"<", "<=", "=", "==", "!=", "<>", ">=", ">"})
 _ARITHMETIC = frozenset({"+", "-", "*", "/", "\\", "**", "&", "?", "^"})
 _AGGREGATES = frozenset({"count", "sum", "sum+", "min", "max"})
@@ -160,27 +166,30 @@ def split_task(task: str) -> tuple[str, list[str]]:
 # The hypothesis extractor and reader.
 # ---------------------------------------------------------------------------
 
-_RULE = re.compile(r"wrong\b.*\.")
-
-
 def extract_hypothesis(log: str) -> str:
     """The learned hypothesis in ILASP's output, one rule per line; ``""`` if none.
 
     ILASP 4.4.1 prints its ``%%`` timing block first and the hypothesis after
     it (the IL2-D4 probe, IL2-F5). The hypothesis is the first maximal run of
-    ``wrong ... .`` lines after the last line that starts with ``%%``;
-    ``UNSATISFIABLE`` anywhere means none, although ILASP still exits 0."""
+    non-blank lines after the last line that starts with ``%%``, whatever
+    their heads, so the reader refuses a learned constraint by name; a line
+    that is exactly ``UNSATISFIABLE`` means none, although ILASP still exits 0."""
     lines = [line.strip() for line in log.splitlines()]
     if "UNSATISFIABLE" in lines:
         return ""
     banners = [index for index, line in enumerate(lines) if line.startswith("%%")]
     program: list[str] = []
     for line in lines[banners[-1] + 1 if banners else 0:]:
-        if _RULE.fullmatch(line):
+        if line:
             program.append(line)
         elif program:
             break
     return "".join(f"{line}\n" for line in program)
+
+
+def refusal_name(message: str) -> str:
+    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...`` or ``<name>: ...``."""
+    return message.split(": ")[1] if message.startswith("clause ") else message.split(":")[0]
 
 
 def _unparsable(line: int, column: int, detail: str) -> IlpError:
@@ -199,6 +208,12 @@ class _Reader:
             kind, value = match.lastgroup, match.group()
             if kind == "open_string":
                 raise _unparsable(line, column, "an unterminated string")
+            if kind == "comment" and value.startswith("%*"):
+                raise _unparsable(line, column, "a block comment")
+            if kind in ("var", "name") and "'" in value:
+                raise _unparsable(line, column, "a primed identifier")
+            if kind == "var" and _UNDERSCORE_CONSTANT.match(value):
+                raise _unparsable(line, column, "an underscore-prefixed constant")
             if kind not in ("space", "comment"):
                 self.tokens.append((kind, value, line, column))
             newlines = value.count("\n")
@@ -292,9 +307,12 @@ class _Reader:
                 raise self.refuse("directive", f"{value} in a body")
             return self.aggregate(depth + 1)
         if kind == "name":
+            line, column = self.peek()[2:]
             name = self.take("name")
             args = self.arguments(depth) if self.at("op", "(") else []
             self.no_comparison()
+            if _COMPARISON.fullmatch(name):
+                _rendered_comparison(name, args, line, column)
             return {"atom": {"predicate": name, "args": args}}
         self.term(depth)
         self.no_comparison()
@@ -376,8 +394,22 @@ class _Reader:
         _kind, digits, line, column = self.peek()
         if len(digits) > MAX_INT_DIGITS:
             raise _unparsable(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
+        if len(digits) > 1 and digits[0] == "0":
+            raise _unparsable(line, column, "a leading zero")
         self.take("int")
-        return {"const": -int(digits) if negative else int(digits)}
+        value = -int(digits) if negative else int(digits)
+        if value not in _INT_RANGE:
+            raise _unparsable(line, column, "outside clingo's 32-bit integer range")
+        return {"const": value}
+
+
+def _rendered_comparison(name: str, args: list[Any], line: int, column: int) -> None:
+    """A comparison atom has the one shape the task defines: ``gt_t(var, threshold)``, or ``lt_t``."""
+    if not _RENDERED_COMPARISON.fullmatch(name):
+        raise _unparsable(line, column, "a comparison the renderer never writes")
+    if (len(args) != 2 or "var" not in args[0] or "const" not in args[1]
+            or type(args[1]["const"]) is not int):
+        raise _unparsable(line, column, "a comparison must be (variable, integer)")
 
 
 def _unquote(token: str, line: int, column: int) -> str:

@@ -34,7 +34,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from gnd.export.ilp_asp import extract_hypothesis, split_task
+from gnd.export.ilp_asp import extract_hypothesis, refusal_name, split_task
 from gnd.process import ProcessLimits, run_bounded_process
 
 REPO = Path(__file__).resolve().parents[5]
@@ -229,8 +229,7 @@ def main() -> int:
             shutil.copy(imports / "proposal.json", out / "proposal.json")
         else:
             refusal = clean(imported.stderr).strip()
-            name = refusal.split(": ")[1] if refusal.startswith("clause ") else refusal.split(":")[0]
-            outcome["import"] = f"refused:{name}"
+            outcome["import"] = f"refused:{refusal_name(refusal)}"
             (out / "import-stderr.txt").write_text(refusal + "\n", encoding="utf-8")
     (out / "outcome.json").write_text(json.dumps(outcome, indent=1, sort_keys=True) + "\n",
                                       encoding="utf-8")

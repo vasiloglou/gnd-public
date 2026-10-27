@@ -284,6 +284,20 @@ exit 3 and `clause K: <name>`:
 An exported string with a control character other than a newline has no ASP
 spelling, and the export refuses it as `unrepresentable`.
 
+**Read differently by clingo.** The reader refuses these with exit 3
+`unparsable` and a line and column, because clingo would read them otherwise:
+
+- an integer outside clingo's 32-bit range, or one with a leading zero;
+- an identifier that starts with underscores and then a lowercase letter
+  (`_cash`, a constant to clingo), or one with a prime (`V'`);
+- a block comment, `%* … *%`;
+- a `ge_` or `le_` comparison, which the task never defines, and a `gt_` or
+  `lt_` comparison whose arguments are not a variable and then an integer.
+
+The hypothesis is every non-blank line after ILASP's last `%%` line, whatever
+its head, so a learned constraint reaches the reader and is refused
+`asp-constraint`.
+
 ## Bounds
 
 | Item | Bound |

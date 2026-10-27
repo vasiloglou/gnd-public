@@ -756,3 +756,63 @@ recorded result) and continue IL2 with step 4, the adversarial diff review."
 - **IL2-F7 stays a recorded result.** No amendment IL2-A1 was drafted, the
   rendering and `adapter_version` 1 are unchanged, and there is no
   invocation 2.
+
+### Step 4: the adversarial review (2026-10-27)
+
+One local reviewer agent read `git diff 65fd6df bf15642`
+([review note](phase-IL2-agent-review.md); one reviewer is one reviewer).
+It reported 11 findings: 1 blocking, 6 hardening, 4 completeness. All 11
+reproduced.
+
+**IL2-F8 (blocking, fixed): the extractor hid learned constraints.**
+- **The defect:** the IL2-F5 extractor kept only `wrong … .` lines. A learned
+  constraint was dropped before the reader saw it, and `run_ilasp.py`'s clingo
+  coverage was computed over the same truncated text, so the cross-check
+  agreed and a partial hypothesis could be admitted. This refuted IL2-F5's
+  own claim that "a learned constraint is refused `asp-constraint`".
+- **The fix:** the hypothesis is every non-blank line after the last `%%`
+  line, whatever its head. Invocation 1 re-extracts to the same bytes, so
+  its record and T9 are unchanged.
+
+**IL2-F9 (hardening, fixed in the reader, IL-R9): constructs clingo reads
+differently** are refused `unparsable` with a line and column:
+- an underscore-prefixed constant (`_cash`) and a primed identifier;
+- a block comment `%* … *%`;
+- a `ge_`/`le_` comparison, and a `gt_`/`lt_` comparison that is not
+  (variable, integer);
+- an integer outside clingo's 32-bit range, or with a leading zero.
+
+`ilp_asp.refusal_name` is now the one refusal parse for `run_ilasp.py` and
+T9, and T9 accepts a null process only for invocation 1. T12's constants
+half and the cap cases were added. `adapter_version` stays 1, because the
+rendering is unchanged.
+
+**Boundary row (finding 5, not fixed):** a `gt_`/`lt_` constant that is not
+a rendered threshold has no ASP meaning, because `thr_t` does not hold for
+it. The reader cannot check it without the export. It is refused only when
+the run record's coverage comes from an independent evaluator, as
+`run_ilasp.py`'s does (`coverage-mismatch`).
+
+**New decisions, proposed and not ruled:**
+
+- **IL2-D13: how the reader reads a bare ASP constant.** The approved
+  constants table reads `web` as the string "web", and check 9 coerces a
+  quoted `"true"` to a boolean on a boolean role. clingo distinguishes both
+  pairs.
+  - **Proposed (a):** refuse a bare symbolic constant other than
+    `true`/`false` as `unparsable`, and refuse a quoted `"true"`/`"false"`
+    on a boolean role for `--target ilasp`.
+  - **(b):** keep the approved table, and record the gap as a boundary row
+    guarded by `coverage-mismatch`.
+  - **Why it is the owner's:** (a) changes an approved corpus answer (the
+    `web` row of T5).
+  - **Reachability:** neither case is reachable under the rendered bias,
+    which offers `const(…)` only for integer comparison types.
+- **IL2-D14: integers outside clingo's 32-bit range at export.** The export
+  writes them, and clingo silently wraps them, so the task means something
+  else.
+  - **Proposed (a):** refuse such an export as `unrepresentable`, the same
+    way as T5b. An in-range export's bytes would not change, so the
+    proposal is `adapter_version` 1 with no moved goldens.
+  - **(b):** keep the export, and record a boundary row.
+  - **Why it is the owner's:** it is a rendering change under IL-R9.

@@ -153,7 +153,7 @@ IK-R12 says bounds move only by owner ruling. IK5 records "No bound was moved af
 
 ### 7. Completeness: the skill census does not record the close's packaged-skill edit, and its test cannot see it
 
-**Claim.** `85880f5` edits `src/gnd/skills/gnd-model-evolve/references/evolution-contract.md` (IK1-Q5). The census row still reads "IK1, IK2, IK4-Q2" (skill-census.md:36). The census test passes: `uv run pytest -q tests/test_ik6_skill_census.py::test_t4_each_changed_cell_names_the_phases_git_records ...::test_t4_the_changed_cells_agree_with_git` gave `2 passed`. That is because its phase regex is `IK[1-6](?:-Q\d+)?` (tests/test_ik6_skill_census.py:11), and the commit scope "IK-close" never matches.
+**Claim.** `85880f5` edits `src/gnd/skills/gnd-model-evolve/references/evolution-contract.md` (IK1-Q5). The census row still reads "IK1, IK2, IK4-Q2" (skill-census.md:36). The census test passes: `uv run pytest -q tests/test_ik6_skill_census.py::test_t4_each_changed_cell_names_the_phases_git_records ...::test_t4_the_changed_cells_agree_with_git` gave `2 passed`. That is because its phase regex is `IK[1-6]` `(?:-Q\d+)?` (tests/test_ik6_skill_census.py:11), and the commit scope "IK-close" never matches.
 
 The census claims to record what the milestone changed in each file and why (010:75-77).
 

@@ -116,7 +116,7 @@ Close spec §3 row 5 says only "met; no learner ran", and §5b carries only the 
 **Reproduction.**
 - `git show 85880f5 --stat -- src/gnd/skills` gives `src/gnd/skills/gnd-model-evolve/references/evolution-contract.md | 2 +-`.
 - `skill-census.md:36` lists that file as changed in `IK1, IK2, IK4-Q2`.
-- `tests/test_ik6_skill_census.py:11`: `PHASE = re.compile(r"IK[1-6](?:-Q\d+)?")`. `git_phases` (`:58-64`) extracts phases from commit-subject scopes, and `fix(IK-close)` yields none.
+- `tests/test_ik6_skill_census.py:11`: `PHASE = re.compile(r"IK[1-6]` `(?:-Q\d+)?")`. `git_phases` (`:58-64`) extracts phases from commit-subject scopes, and `fix(IK-close)` yields none.
 - `uv run pytest -q tests/test_ik6_skill_census.py` gives `9 passed`.
 
 **Suggested disposition.** Add a `close` label to the census row and to the test's phase grammar, or state in the close record that the census describes IK1–IK6 only, and that the close's one skill edit (IK1-Q5) is recorded in close spec §9.

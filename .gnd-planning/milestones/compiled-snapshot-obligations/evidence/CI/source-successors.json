@@ -257,6 +257,40 @@
         "algorithm_sha256": "f57edba086a7891c88ad368f0a97888541c8c36db737e45cf253d33ec2b1f195"
       },
       "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): three D-12 refusal markers for induced provenance (spec R-I1..R-I4) map to exit 3 beside the existing D-12 markers; the evolve-loading follow-up (2026-10-27, spec D3-A, review H1) adds one marker so a YAML refusal of any model, current or staged, maps to exit 3 as a candidate's already did; every other branch unchanged."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "_witness_inputs",
+      "home": "gnd.witness.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "before": {
+        "raw_sha256": "2e45cd716af147b8a4b813af87ef2d7bd50446724bc193fffbf5bccd0da23657",
+        "algorithm_sha256": "23627cf91e5da37e20dc9bb17b7ce83182412d3cc30953be3eecf11a2ac85ad0",
+        "imports": [
+          "DEFAULT_LIMITS",
+          "Path",
+          "WitnessInputError",
+          "_parse_document_bytes",
+          "bind_references",
+          "load_model_bytes",
+          "load_population_bytes"
+        ]
+      },
+      "after": {
+        "raw_sha256": "739d5f382a00bbf848e8c1b44e9015f0e5f855f5738ff882f3110f2638df7d00",
+        "algorithm_sha256": "269afd420aea00e8c9fb09d8f8a1d7c6c789ee058b29225ca6be1035be27fe2e",
+        "imports": [
+          "DEFAULT_LIMITS",
+          "Path",
+          "WitnessInputError",
+          "_parse_document_bytes",
+          "bind_declared_references",
+          "load_model_bytes",
+          "load_population_bytes"
+        ]
+      },
+      "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor; the owner-approved evolve-loading follow-up (2026-10-27, spec D6-A) binds declared references through gnd.model.bind_declared_references, which returns None for a model that declares none and passes the binder's errors through unwrapped; every outcome is pinned unchanged by tests/test_evolve_loading.py H3."
     }
   ]
 }

@@ -194,7 +194,7 @@ def _load_model_document(
 
     ``declared_references``, when given, are the current model's declarations: a
     candidate that differs is refused before any of its files is read."""
-    from gnd.model import bind_references, load_model_bytes, parse_model_document
+    from gnd.model import bind_declared_references, load_model_bytes, parse_model_document
     from gnd.references import ReferenceInputError
 
     try:
@@ -204,15 +204,14 @@ def _load_model_document(
                 "declared operations do not equal the canonical candidate model: "
                 "its reference populations differ from the current model's"
             )
-        if model.reference_populations:
-            try:
-                model._references = bind_references(model, root=model_path.parent)
-            except ReferenceInputError:
-                raise
-            except Exception as error:
-                # load_model wraps every other binding failure (a missing file, a
-                # link) as ReferenceInputError; evolve does the same, once (R4).
-                raise ReferenceInputError(str(error), model=model) from error
+        try:
+            bind_declared_references(model, root=model_path.parent, attach=True)
+        except ReferenceInputError:
+            raise
+        except Exception as error:
+            # load_model wraps every other binding failure (a missing file, a
+            # link) as ReferenceInputError; evolve does the same, once (R4).
+            raise ReferenceInputError(str(error), model=model) from error
         document = parse_model_document(data, source=model_path)
     except YAMLError as error:
         raise _yaml_refusal(label, error) from None
@@ -246,90 +245,18 @@ def _yaml_refusal(label: str, error: YAMLError) -> EvolutionError:
     return EvolutionError(f"{label} is not valid YAML{where}")
 
 
-_CORE_TAGS = frozenset(
-    f"tag:yaml.org,2002:{name}" for name in ("str", "int", "float", "bool", "null", "map", "seq")
-)
-
-
 def _json_document(document: Any, *, label: str, refuse: bool = True) -> dict[str, Any]:
-    """The parsed document as plain Python, in one walk over every value.
+    """``gnd.model.json_document`` with evolve's refusal: every evolve evidence
+    digest is canonical JSON, so a value outside it is refused by name (spec 6.2)."""
+    from gnd.model import ModelValueError, json_document
 
-    Every evolve evidence digest is canonical JSON, so a loaded model must stay
-    inside the JSON data model. With ``refuse``, the first value outside it is
-    refused by path and kind (spec 6.2). Without it, such values are kept, as
-    the safe reader would give them, for callers that never digest them
-    (discover writes a dated candidate as block YAML)."""
-    import datetime
-    import math
-
-    from ruamel.yaml.comments import CommentedOrderedMap, CommentedSet, TaggedScalar
-
-    def outside(path: str, kind: str) -> EvolutionError:
-        return EvolutionError(
-            f"{label} validation failed: {path or 'the model'} holds a {kind}, "
+    try:
+        return json_document(document, refuse=refuse)
+    except ModelValueError as error:
+        raise EvolutionError(
+            f"{label} validation failed: {error.path} holds a {error.kind}, "
             "which evolve's JSON evidence cannot represent; quote it or remove it"
-        )
-
-    def walk(value: Any, path: str) -> Any:
-        tag = getattr(getattr(value, "tag", None), "value", None)
-        named = f"tag {tag}".replace("tag:yaml.org,2002:", "!!")
-        if isinstance(value, TaggedScalar):
-            if tag == "tag:yaml.org,2002:str" or not refuse:
-                return str(value.value)
-            raise outside(path, named)
-        # The round-trip reader keeps a scalar tag on a collection that the safe
-        # reader refused (``!!str {b: 1}``); only the collection's own tag passes.
-        own = "tag:yaml.org,2002:map" if isinstance(value, dict) else "tag:yaml.org,2002:seq"
-        if tag is not None and refuse and (tag not in _CORE_TAGS or (
-                isinstance(value, (dict, list)) and tag != own)):
-            raise outside(path, named)
-        if isinstance(value, CommentedOrderedMap) and refuse:
-            raise outside(path, "tag !!omap")
-        if isinstance(value, dict):
-            plain = {}
-            for key, item in value.items():
-                if not isinstance(key, str) and refuse:
-                    raise outside(path, "non-string key")
-                plain[key if not isinstance(key, str) else str(key)] = walk(
-                    item, f"{path}.{key}" if path else str(key)
-                )
-            return plain
-        if isinstance(value, list):
-            return [walk(item, f"{path}[{index}]") for index, item in enumerate(value)]
-        if isinstance(value, bool) or value is None:
-            return value
-        if isinstance(value, str):
-            return str(value)
-        if isinstance(value, int):
-            return int(value)
-        if isinstance(value, float):
-            if not math.isfinite(value) and refuse:
-                raise outside(path, "non-finite float")
-            return float(value)
-        if not refuse:
-            if isinstance(value, CommentedSet):
-                return set(value)
-            if isinstance(value, datetime.datetime):
-                # As the safe reader gives it: a plain datetime, keeping its zone,
-                # which discover's YAML writer can represent (review B1).
-                return datetime.datetime(
-                    value.year, value.month, value.day, value.hour, value.minute,
-                    value.second, value.microsecond, tzinfo=value.tzinfo,
-                )
-            return value
-        if isinstance(value, tuple):
-            raise outside(path, "tag !!pairs")
-        if isinstance(value, datetime.datetime):
-            raise outside(path, "timestamp")
-        if isinstance(value, datetime.date):
-            raise outside(path, "date")
-        if isinstance(value, bytes):
-            raise outside(path, "binary")
-        if isinstance(value, (set, CommentedSet)):
-            raise outside(path, "set")
-        raise outside(path, type(value).__name__)
-
-    return walk(document, "")
+        ) from None
 
 
 def _parse_model_text(text: str, label: str = "candidate model") -> dict[str, Any]:

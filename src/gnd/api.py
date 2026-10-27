@@ -915,12 +915,16 @@ def judgments(
         read_judgment_receipts,
         redact_policy,
     )
-    from gnd.model import ModelLoadError, ModelValidationError, load_model_bytes
+    from gnd.model import (
+        ModelLoadError,
+        ModelValidationError,
+        bind_declared_references,
+        load_model_bytes,
+    )
     from gnd.population import (  # noqa: F811 -- local compatibility binding
         PopulationLoadError,
         load_population_bytes,
     )
-    from gnd.references import bind_references
 
     result = {
         "schema_version": 15,
@@ -947,11 +951,7 @@ def judgments(
         mr, pr = read(model_path, 10 * 1024 * 1024), read(population_path, 10 * 1024 * 1024)
         model = load_model_bytes(mr, source=model_path)
         candidate = load_population_bytes(pr, source=population_path, model=model)
-        refs = (
-            bind_references(model, root=reference_root or Path(model_path).parent)
-            if model.reference_populations
-            else None
-        )
+        refs = bind_declared_references(model, root=reference_root or Path(model_path).parent)
         raw_mechanical = check(model, candidate, admission=True, references=refs, unredacted=True)
         result["mechanical_report"] = (
             raw_mechanical

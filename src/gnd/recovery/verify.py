@@ -498,6 +498,21 @@ def _verify_exact_census(
         )
 
 
+def _refuse_values_outside_json(model_bytes: bytes) -> None:
+    """The complete verbalization is canonical JSON; a valid model holding a value
+    outside it (a date, say) is refused by name, not by json.dumps (IKE-Q2)."""
+    from gnd.model import ModelValueError, json_document, parse_model_document
+
+    try:
+        json_document(parse_model_document(model_bytes, source="model.orm.yaml"), encodable=True)
+    except ModelValueError as error:
+        raise _VerificationFailure(
+            "invalid-model-value",
+            f"{error.path} holds a {error.kind}, which the recovery verbalization "
+            "cannot represent; quote it or remove it",
+        ) from None
+
+
 def verify_recovery_bundle(
     bundle_root: str | Path,
     *,
@@ -575,6 +590,7 @@ def verify_recovery_bundle(
             raise _VerificationFailure(
                 "invalid-model-origin", "recovered model source.kind must be codebase"
             )
+        _refuse_values_outside_json(model_bytes)
         expected_verbalization = render_model_verbalization(loaded).encode("utf-8")
         if verbalization_bytes != expected_verbalization:
             raise _VerificationFailure(

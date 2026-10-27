@@ -113,6 +113,8 @@ def split_homes():
         'model/__init__.py', 'model/_validation.py', 'model/_operations.py',
         # IK2 (2026-10-24): induced-provenance rules, split out at the size ceiling.
         'model/_induction.py',
+        # Evolve-loading follow-up r2 (2026-10-27): the shared JSON-value walk.
+        'model/_documents.py',
         'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py')}
 
 

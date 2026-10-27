@@ -449,8 +449,8 @@ def test_q2a_recovery_verify_names_a_dated_value(tmp_path):
                        "--verbalization", str(root / "model.verbalization.txt")])
     assert result.returncode == 3, _text(result)
     errors = json.loads(result.stdout)["errors"]
-    assert errors == ["invalid-model-value: source.created holds a date, which the recovery "
-                      "verbalization cannot represent; quote it or remove it"]
+    assert errors == [("invalid-model-value: source.created holds a date, which the recovery "
+                       "verbalization cannot represent; quote it or remove it")]
 
 
 def test_q2b_the_verbalizer_refuses_by_type(tmp_path):
@@ -486,11 +486,14 @@ def test_h4_the_shared_helper_raises_the_binders_own_errors(tmp_path, monkeypatc
     assert caught.value is probe
 
 
+# exp.session_replay._model is an RF8-frozen moved body with no successor
+# mechanism, so it keeps its own bind (spec finding F11); H3 still pins it.
 @pytest.mark.parametrize("home", ["discover", "lean", "souffle", "pyrel", "witness",
-                                  "judgments", "replay"])
+                                  "judgments"])
 def test_h2_every_home_binds_through_the_shared_helper(tmp_path, monkeypatch, home):
-    import gnd.model
     from support import reference_homes
+
+    import gnd.model
 
     real = gnd.model.bind_declared_references
     calls = []
@@ -518,3 +521,106 @@ def test_h3_every_homes_outcome_is_unchanged(tmp_path, monkeypatch, key):
     home, damage = key.split("/")
     work = reference_homes.workspace(tmp_path, None if damage == "intact" else damage)
     assert reference_homes.run(home, work, tmp_path, monkeypatch) == H3_BEFORE[key]
+
+
+# r2 review regressions (notes/followup-evolve-loading-agent-review.md, round 2).
+
+
+def _recovery_bundle(root: Path, source_lines: list[str]) -> Path:
+    """The recovery test bundle with its model's source replaced, the complete
+    verbalization re-rendered as the base did, and both digests rebound."""
+    import sys
+
+    import gnd.model_verbalization as verbalizer
+
+    sys.path.insert(0, str(REPO_ROOT / "tests"))
+    from test_recovery_adversarial import _write_bundle
+
+    _write_bundle(root)
+    document = json.loads((root / "model.orm.yaml").read_text())
+    lines = ["version: 1", f"model_id: {document['model_id']}", "source:", *source_lines,
+             f"object_types: {json.dumps(document['object_types'])}",
+             "fact_types: []", "constraints: []", "rejected_proposals: []", ""]
+    (root / "model.orm.yaml").write_text("\n".join(lines))
+    guard = getattr(verbalizer, "_refuse_values_outside_json", None)
+    if guard is not None:
+        verbalizer._refuse_values_outside_json = lambda loaded: None
+    try:
+        rendered = verbalizer.render_model_verbalization(root / "model.orm.yaml")
+    finally:
+        if guard is not None:
+            verbalizer._refuse_values_outside_json = guard
+    (root / "model.verbalization.txt").write_text(rendered)
+    report = json.loads((root / "model.recovery.json").read_text())
+    for out in report["outputs"]:
+        if out["path"] in ("model.orm.yaml", "model.verbalization.txt"):
+            out["sha256"] = hashlib.sha256((root / out["path"]).read_bytes()).hexdigest()
+    (root / "model.recovery.json").write_text(json.dumps(report, indent=2) + "\n")
+    return root
+
+
+def _recovery_verify(root: Path):
+    return run_main(["recovery", "verify", str(root), str(root / "model.recovery.json"),
+                     "--model", str(root / "model.orm.yaml"),
+                     "--verbalization", str(root / "model.verbalization.txt")])
+
+
+@pytest.mark.parametrize("line", ["  meta: !!omap [{a: 1}, {b: 2}]",
+                                  "  meta: !!pairs [{a: 1}, {a: 2}]",
+                                  "  meta: !foo {a: 1}"])
+def test_rv5_recovery_still_verifies_what_json_could_write(tmp_path, line):
+    """Review round 2, B1: these rendered and verified before r2; json.dumps
+    writes an ordered map, a list of pairs and a tagged mapping."""
+    root = _recovery_bundle(tmp_path / "bundle", ["  kind: codebase", line])
+    result = _recovery_verify(root)
+    assert result.returncode == 0, _text(result)
+
+
+def test_rv6_the_model_origin_refusal_keeps_its_precedence(tmp_path):
+    """Review round 2, H1: a non-codebase model is invalid-model-origin, as before."""
+    root = tmp_path / "bundle"
+    import sys
+
+    sys.path.insert(0, str(REPO_ROOT / "tests"))
+    from test_recovery_adversarial import _write_bundle
+
+    _write_bundle(root)
+    document = json.loads((root / "model.orm.yaml").read_text())
+    lines = ["version: 1", f"model_id: {document['model_id']}", "source:",
+             "  kind: text-conversation", "  created: 2024-01-01",
+             f"object_types: {json.dumps(document['object_types'])}",
+             "fact_types: []", "constraints: []", "rejected_proposals: []", ""]
+    (root / "model.orm.yaml").write_text("\n".join(lines))
+    report = json.loads((root / "model.recovery.json").read_text())
+    for out in report["outputs"]:
+        if out["path"] == "model.orm.yaml":
+            out["sha256"] = hashlib.sha256((root / "model.orm.yaml").read_bytes()).hexdigest()
+    (root / "model.recovery.json").write_text(json.dumps(report, indent=2) + "\n")
+    result = _recovery_verify(root)
+    assert result.returncode == 3, _text(result)
+    assert json.loads(result.stdout)["errors"][0].startswith("invalid-model-origin:")
+
+
+def test_rv7_the_verbalizer_names_an_explicit_str_tag(tmp_path):
+    """Review round 2, C1: a !!str-tagged scalar loads as a TaggedScalar that
+    json.dumps cannot write; the verbalizer refused it with TypeError."""
+    from gnd.model_verbalization import VerbalizationError, render_model_verbalization
+
+    model = tmp_path / "m.orm.yaml"
+    model.write_text("version: 1\nmodel_id: m\nsource:\n  kind: codebase\n  note: !!str 5\n"
+                     "object_types: []\nfact_types: []\n")
+    assert run_main(["validate", str(model)]).returncode == 0
+    with pytest.raises(VerbalizationError, match=r"source\.note holds a tag !!str"):
+        render_model_verbalization(model)
+
+
+@pytest.mark.parametrize("value", [float("inf"), float("-inf"), float("nan")])
+def test_rv8_the_candidate_writer_spells_non_finite_floats(value):
+    """Review round 2, C2: candidate_text serves discover and gnd import
+    ilp-rules alike; both now write a non-finite float as YAML."""
+    import math
+
+    from gnd.discover.output import candidate_text
+    from gnd.evolve.service import _parse_model_text
+    back = _parse_model_text(candidate_text({"x": value}))["x"]
+    assert math.isnan(back) if math.isnan(value) else back == value

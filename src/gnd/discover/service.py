@@ -134,11 +134,10 @@ def _bind_references(model: Any, population: Any, root: Path) -> tuple[Any, Any]
     the check run needs."""
     if not model.reference_populations:
         return population, None
-    from gnd.model import bind_references
+    from gnd.model import bind_declared_references
     from gnd.references import bind_population
 
-    context = bind_references(model, root=root)
-    model._references = context
+    context = bind_declared_references(model, root=root, attach=True)
     return bind_population(model, population, references=context).combined, context
 
 

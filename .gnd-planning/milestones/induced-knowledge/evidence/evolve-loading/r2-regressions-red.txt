@@ -1,0 +1,10 @@
+r2 review regressions against the reviewed r2 code: HEAD d594717 plus the reviewed working-tree r2 diff and the reviewed gnd/model/_documents.py, imported from a scratch copy via PYTHONPATH. RV8 pins D7's writer change, already applied when it was written; it passes by design.
+$ PYTHONPATH=<reviewed-src> uv run pytest -q -p no:randomly tests/test_evolve_loading.py -k "rv5 or rv6 or rv7 or rv8" -rfE
+=========================== short test summary info ============================
+FAILED tests/test_evolve_loading.py::test_rv5_recovery_still_verifies_what_json_could_write[  meta: !!omap [{a: 1}, {b: 2}]]
+FAILED tests/test_evolve_loading.py::test_rv5_recovery_still_verifies_what_json_could_write[  meta: !!pairs [{a: 1}, {a: 2}]]
+FAILED tests/test_evolve_loading.py::test_rv5_recovery_still_verifies_what_json_could_write[  meta: !foo {a: 1}]
+FAILED tests/test_evolve_loading.py::test_rv6_the_model_origin_refusal_keeps_its_precedence
+FAILED tests/test_evolve_loading.py::test_rv7_the_verbalizer_names_an_explicit_str_tag
+5 failed, 3 passed, 70 deselected in 0.59s
+exit 1

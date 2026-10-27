@@ -23,6 +23,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from gnd.model._documents import ModelValueError as ModelValueError
+from gnd.model._documents import json_document as json_document
 from gnd.model._induction import _induction_strings as _induction_strings
 from gnd.model._induction import (
     _rule_induced_confirmed_reviewed as _rule_induced_confirmed_reviewed,
@@ -585,6 +587,30 @@ def bind_references(model: Model, *, root: str | Path) -> BoundReferenceContext:
     validate_declarations(model)
     with retained_root(root) as descriptor:
         return _bind_at(model, descriptor)
+
+
+def bind_declared_references(
+    model: Model, *, root: str | Path, attach: bool = False
+) -> BoundReferenceContext | None:
+    """Bind a model's declared reference populations at ``root``, or return None
+    when it declares none. The binder's own exceptions pass through unwrapped,
+    so every caller keeps its refusal mapping (IK4-Q2-R1). ``attach`` also sets
+    the context on the model."""
+    if not model.reference_populations:
+        return None
+    context = bind_references(model, root=root)
+    if attach:
+        model._references = context
+    return context
+
+
+def load_model_bytes_bound(
+    data: bytes, *, source: str | Path, root: str | Path, attach: bool = False
+) -> tuple[Model, BoundReferenceContext | None]:
+    """``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither
+    step's exceptions are wrapped."""
+    model = load_model_bytes(data, source=source)
+    return model, bind_declared_references(model, root=root, attach=attach)
 
 
 def resolve_context(

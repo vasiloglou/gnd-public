@@ -2241,10 +2241,9 @@ def _bind_reference(loaded: Any, model_path: Path) -> dict[str, Any] | None:
     if not declared:
         return None
     from gnd.artifacts import ArtifactError
-    from gnd.model import ReferenceInputError
-    from gnd.references import bind_references
+    from gnd.model import ReferenceInputError, bind_declared_references
     try:
-        context = bind_references(loaded, root=model_path.parent)
+        context = bind_declared_references(loaded, root=model_path.parent)
     except (ReferenceInputError, ArtifactError, OSError, ValueError) as error:
         raise ExportInputError(f"reference population: {error}") from error
     facts: dict[str, list[dict[str, Any]]] = {}

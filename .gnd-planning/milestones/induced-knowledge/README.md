@@ -100,3 +100,10 @@ Records:
   as recorded in 012, 2026-10-27.
 
 **Milestone closed.** Next: the owner's merge decision on PR #45.
+
+- [014 follow-up: evolve loading](014-followup-evolve-loading.md): the close's
+  carried evolve-loading row. Spec approved 2026-10-27 (D1-A..D5-A); one
+  loader on the validator's parser, values outside JSON refused by name at 3,
+  strict JSON for `.json` models. One local reviewer: two blocking findings,
+  both fixed red-first. Gate 3164 passed. IK4-Q2-R1's cross-module half
+  re-carried.

@@ -240,6 +240,8 @@ proposed.
 
 2026-10-27, relayed verbatim by the session that started this one, after it
 recommended approving all five as proposed: "ok go on then with the recs". (o)
+Confirmed by the owner directly in this session, the same day: "Approve D1 to
+D5 as proposed." (o)
 
 | # | Ruling |
 |---|---|
@@ -250,3 +252,45 @@ recommended approving all five as proposed: "ok go on then with the recs". (o)
 | D5 | **A** -- record 014 and `evidence/evolve-loading/` under induced-knowledge (o) |
 
 The spec bytes approved are r1 at `acf3484`. No panel ran.
+
+## 13. Implementation findings, recorded as found
+
+- **F1 (refutes §2's last table row and §8 E2/E3b's base column).** A tagged
+  *current* model exits **70** on the base, not 3: the CLI's malformed markers
+  include "candidate model is not" but not "current model is not". The red run
+  shows it (`evidence/evolve-loading/tests-red.txt`). The fix's exit, 3, is
+  unchanged.
+- **F2.** ruamel's safe and round-trip readers give `!!pairs` as a list of
+  tuples, so the walk names the first entry: `source.x[0] holds a tag !!pairs`.
+  E2's case says so.
+- **F3.** E2 builds its candidate from the untouched model, so on the base most
+  kinds refuse at the replay ("declared operations do not equal", 3). They are
+  red by message, not exit.
+- **F4.** Apply now loads the current and candidate models before the declared
+  operations replay, so their documents come from the loads (H1). A preview
+  that would fail both a load and the replay now reports the load. Both exit 3.
+  Apply's operations gate still parses the preview text before any load, as
+  before.
+- **F5.** Three approved predecessor tests changed with the rulings:
+  `test_r1_…` (removed; J1 is its successor, D2-A); `test_ik4_q2_q2_…` in
+  `test_ik_close.py` (its tagged text now parses, so invalid YAML carries the
+  label case; D3-A/D4-A); `test_the_current_model_is_validated_…` in
+  `test_model_v2.py` (the source scan follows the one loader; its order
+  assertion holds).
+- **F6.** RF controls: `gnd.model.load_model_bytes`'s body digest changed (RF6b
+  successor, chained from the frozen RF7 row) and the RF6 dynamic-candidate
+  census gained five annotation rows and lost one (chained delta after the
+  close's). Scripts: `evidence/evolve-loading/update_definition_successor.py`
+  and `build_dynamic_successor.py`.
+- **F7 (review).** One reviewer found two blocking regressions (a zoned
+  timestamp crashed discover; the YAML guard made valid JSON exit 70) and
+  hardening gaps; all fixed with red-first regressions RV1..RV4
+  ([agent review](followup-evolve-loading-agent-review.md)). This adds one CLI
+  malformed marker ("is not valid YAML") and its RF5 successor.
+- **F8 (verification selection).** §8's `tests/test_*evolve*.py` glob missed
+  the evolution suites (`tests/test_*evolution*.py`), which the reviewer ran.
+  The final gate adds them.
+- **F9.** `_parse_model_text` now runs the YAML depth guard after the reader
+  builds the document, not before. The reader's own event and alias guards
+  still run first, as in `gnd validate`; a JSON document is not re-read as
+  YAML (RV2).

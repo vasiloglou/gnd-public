@@ -8,7 +8,7 @@ Reviewer: one general-purpose Claude subagent, read-only outside its scratch fol
 
 The PL18 pages render, run and pass their own tests. But several sentences a reader will take as fact are not supported by the recordings, one existing test now fails because of PL18, and the new tests would not catch a replay that swapped its source.
 
-Scratch work is in `/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/pl18-review/`. Running the docs build also rewrote the gitignored `site/`; that was the only write outside scratch. No recorder was run and no model was called.
+Scratch work is in `<scratch>/pl18-review/`. Running the docs build also rewrote the gitignored `site/`; that was the only write outside scratch. No recorder was run and no model was called.
 
 ## Blocking
 

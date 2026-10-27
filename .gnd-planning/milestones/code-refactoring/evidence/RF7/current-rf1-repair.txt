@@ -760,7 +760,7 @@ E   +  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 
 E     },
 E     "reader": {
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4466/test_session_unknown_version_00/EXP-703-constraint-acceptance/SPEC.md
+CREATED <tmp>/pytest-4466/test_session_unknown_version_00/EXP-703-constraint-acceptance/SPEC.md
   declares Q1: Did the public session meet its declared acceptance relation?
 _______________________ test_session_unknown_version[9] ________________________
 tests/test_rf1_session_pins.py:413: in test_session_unknown_version
@@ -778,7 +778,7 @@ E   +  "stdout": "ERROR at schema_version: Input should be 1, 2, or 3, or 4, or 
 E     },
 E     "reader": {
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4466/test_session_unknown_version_90/EXP-703-constraint-acceptance/SPEC.md
+CREATED <tmp>/pytest-4466/test_session_unknown_version_90/EXP-703-constraint-acceptance/SPEC.md
   declares Q1: Did the public session meet its declared acceptance relation?
 =========================== short test summary info ============================
 FAILED tests/test_rf1_helper_pins.py::test_helper[file_digest|gnd.synth.provenance:_sha256_file]

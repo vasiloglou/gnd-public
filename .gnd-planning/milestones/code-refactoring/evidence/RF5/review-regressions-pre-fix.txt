@@ -33,7 +33,7 @@ E       Failed: DID NOT RAISE ValueError
 tests/test_rf5_review_regressions.py:33: Failed
 _ test_measure_rejects_missing_group_even_without_the_old_marker[policy-present] _
 
-tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4407/test_measure_rejects_missing_g0')
+tmp_path = PosixPath('<tmp>/pytest-4407/test_measure_rejects_missing_g0')
 keep_policy = True
 
     @pytest.mark.parametrize('keep_policy', [True, False], ids=['policy-present', 'policy-absent'])
@@ -60,7 +60,7 @@ E       Failed: DID NOT RAISE ToolError
 tests/test_rf5_review_regressions.py:54: Failed
 _ test_measure_rejects_missing_group_even_without_the_old_marker[policy-absent] _
 
-tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4407/test_measure_rejects_missing_g1')
+tmp_path = PosixPath('<tmp>/pytest-4407/test_measure_rejects_missing_g1')
 keep_policy = False
 
     @pytest.mark.parametrize('keep_policy', [True, False], ids=['policy-present', 'policy-absent'])

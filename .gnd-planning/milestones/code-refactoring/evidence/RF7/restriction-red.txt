@@ -487,7 +487,7 @@ tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
     self._check_timeout(endtime, orig_timeout, stdout, stderr)
 ../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
     raise TimeoutExpired(
-E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.synth.provenance import _sha256_file as digest\ntry:\n    digest(Path('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4458/test_fifo_refused_with_deadlin0/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.synth.provenance import _sha256_file as digest\ntry:\n    digest(Path('<tmp>/pytest-4458/test_fifo_refused_with_deadlin0/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
 _________ test_fifo_refused_with_deadline[gnd.measure.promote:_digest] _________
 tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
     result = subprocess.run([sys.executable, '-c', code], env={**os.environ, 'PYTHONPATH': str(root / 'src')}, capture_output=True, text=True, timeout=2, check=False)
@@ -502,7 +502,7 @@ tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
     self._check_timeout(endtime, orig_timeout, stdout, stderr)
 ../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
     raise TimeoutExpired(
-E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.measure.promote import _digest as digest\ntry:\n    digest(Path('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4458/test_fifo_refused_with_deadlin1/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.measure.promote import _digest as digest\ntry:\n    digest(Path('<tmp>/pytest-4458/test_fifo_refused_with_deadlin1/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
 ____ test_fifo_refused_with_deadline[gnd.transition:population_file_digest] ____
 tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
     result = subprocess.run([sys.executable, '-c', code], env={**os.environ, 'PYTHONPATH': str(root / 'src')}, capture_output=True, text=True, timeout=2, check=False)
@@ -517,7 +517,7 @@ tests/test_rf7_consumers.py:88: in test_fifo_refused_with_deadline
     self._check_timeout(endtime, orig_timeout, stdout, stderr)
 ../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/subprocess.py:1267: in _check_timeout
     raise TimeoutExpired(
-E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.transition import population_file_digest as digest\ntry:\n    digest(Path('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4458/test_fifo_refused_with_deadlin2/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
+E   subprocess.TimeoutExpired: Command '['<worktree>/.venv/bin/python', '-c', "from pathlib import Path\nfrom gnd.transition import population_file_digest as digest\ntry:\n    digest(Path('<tmp>/pytest-4458/test_fifo_refused_with_deadlin2/fifo'))\nexcept (OSError, ValueError):\n    pass\nelse:\n    raise AssertionError('FIFO accepted')\n"]' timed out after 2 seconds
 _______________ test_population_datetime_strict_and_synth_agree ________________
 tests/test_rf7_consumers.py:106: in test_population_datetime_strict_and_synth_agree
     assert not _is_datetime(value)

@@ -5,7 +5,7 @@
 - HEAD: ea035df0a57acc508afd4cae7c18fa730afab668, plus the uncommitted PL12 working tree
 - `shasum -a 256 src/gnd/export/pyrel_rules.py`: `d9bc8ec7d3b248fde405301b421c13584faddfe6a848c81ec318004a9ebbdf3b`
 - `shasum -a 256 tests/test_pyrel_rules.py`: `fe0b9d1a391a56a40399b56e5245b39e6f5b5cdadfa334705c25103657d417a5`
-- Scratch (all probes, harness, mutants): `/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/pl12/` (called `$S` below)
+- Scratch (all probes, harness, mutants): `<scratch>/pl12/` (called `$S` below)
 - Harness: `$S/harness.py MODEL POP` renders the duckdb program, runs it with the pinned interpreter, and compares it with `gnd.api.check(..., unredacted=True)`. It uses the same normalisation as `tests/test_pyrel_rules.py::_gnd`, and it also maps `unchecked`.
 
 ## Verdict: REVISE

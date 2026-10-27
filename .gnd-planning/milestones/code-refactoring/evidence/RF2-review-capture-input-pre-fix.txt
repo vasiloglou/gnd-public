@@ -7,7 +7,7 @@ tests/test_rf2_instrument.py:100: in test_dual_capture_cannot_bypass_historical_
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 E   Failed: DID NOT RAISE AssertionError
 ---------------------------- Captured stdout setup -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4226/rf2-successor-controls0/EXP-401-session/SPEC.md
+CREATED <tmp>/pytest-4226/rf2-successor-controls0/EXP-401-session/SPEC.md
   declares Q1: Did the bounded session establish the contract?
 ______________ test_declared_json_input_whitespace_remains_bound _______________
 tests/test_rf2_instrument.py:106: in test_declared_json_input_whitespace_remains_bound

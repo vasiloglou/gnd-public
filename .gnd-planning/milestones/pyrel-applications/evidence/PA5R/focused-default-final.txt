@@ -55,7 +55,7 @@ tests/test_rf7_structure.py:39: AssertionError
 _________________ test_documented_learning_path[agent-session] _________________
 
 group = 'agent-session'
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-858/test_documented_learning_path_9')
+tmp_path = PosixPath('<tmp>/pytest-858/test_documented_learning_path_9')
 
     @pytest.mark.parametrize('group', ['quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision'])
     def test_documented_learning_path(group, tmp_path):
@@ -73,7 +73,7 @@ tools/run_tutorials.py:134: in run_pages
     for index, (language, expected, code, block_lane, stream, shown) in enumerate(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-page = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/docs/agents/dev-session.md')
+page = PosixPath('<repo>/docs/agents/dev-session.md')
 text = '# Drive an agent against the verifier\n\nA single `gnd check` tells you whether one answer is acceptable. A **develop...d`. Every claim\nit makes about the outcome comes from `result.json` and the exit codes, not from its\nown judgment.\n'
 
     def _parsed(page: Path, text: str | None = None):
@@ -91,13 +91,13 @@ text = '# Drive an agent against the verifier\n\nA single `gnd check` tells you 
                 raise AssertionError(f'{page}: missing or malformed output block')
             if not stream and shown is not None:
 >               raise AssertionError(f'{page}: text block follows a command without output=')
-E               AssertionError: /Users/nikolaosvasiloglou/github-repos/gnd-public/docs/agents/dev-session.md: text block follows a command without output=
+E               AssertionError: <repo>/docs/agents/dev-session.md: text block follows a command without output=
 
 tools/run_tutorials.py:35: AssertionError
 ________________ test_documented_learning_path[agent-recorded] _________________
 
 group = 'agent-recorded'
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-858/test_documented_learning_path_10')
+tmp_path = PosixPath('<tmp>/pytest-858/test_documented_learning_path_10')
 
     @pytest.mark.parametrize('group', ['quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision'])
     def test_documented_learning_path(group, tmp_path):
@@ -115,7 +115,7 @@ tools/run_tutorials.py:134: in run_pages
     for index, (language, expected, code, block_lane, stream, shown) in enumerate(
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-page = PosixPath('/Users/nikolaosvasiloglou/github-repos/gnd-public/docs/agents/recorded-sessions.md')
+page = PosixPath('<repo>/docs/agents/recorded-sessions.md')
 text = '# Recorded agent sessions\n\nThe [previous page](dev-session.md) ran the loop with a scripted stand-in. This page\nsh...sting any model with\nit. The point of the loop is that you do not have to trust the model: you read\n`result.json`.\n'
 
     def _parsed(page: Path, text: str | None = None):
@@ -133,7 +133,7 @@ text = '# Recorded agent sessions\n\nThe [previous page](dev-session.md) ran the
                 raise AssertionError(f'{page}: missing or malformed output block')
             if not stream and shown is not None:
 >               raise AssertionError(f'{page}: text block follows a command without output=')
-E               AssertionError: /Users/nikolaosvasiloglou/github-repos/gnd-public/docs/agents/recorded-sessions.md: text block follows a command without output=
+E               AssertionError: <repo>/docs/agents/recorded-sessions.md: text block follows a command without output=
 
 tools/run_tutorials.py:35: AssertionError
 =========================== short test summary info ============================

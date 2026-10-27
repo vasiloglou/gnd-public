@@ -41,7 +41,7 @@ exit mapping in `_reports.py` 160-180), `gnd.universe` roster handling, and
 script under the PyRel interpreter with `-I` and `gnd.api.check(..., unredacted=True)`
 on the same population and prints both. Authored 22 new populations under the
 session scratchpad (repo untouched). Harness and populations:
-`/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/{harness.py,gen_pops.py,pops/}`.
+`<scratch>/{harness.py,gen_pops.py,pops/}`.
 
 Baseline runs:
 

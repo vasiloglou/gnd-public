@@ -2,8 +2,8 @@
 Using CPython 3.13.12
 Creating virtual environment at: .venv
 Resolved 32 packages in 6ms
-   Building get-nick-done @ file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head
-      Built get-nick-done @ file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head
+   Building get-nick-done @ file://<scratch>/ci-head
+      Built get-nick-done @ file://<scratch>/ci-head
 Prepared 1 package in 11ms
 Installed 30 packages in 350ms
  + annotated-types==0.8.0
@@ -12,7 +12,7 @@ Installed 30 packages in 350ms
  + deepmerge==3.0.1
  + duckdb==1.5.5
  + faker==40.36.0
- + get-nick-done==0.1.0 (from file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head)
+ + get-nick-done==0.1.0 (from file://<scratch>/ci-head)
  + iniconfig==2.3.0
  + jinja2==3.1.6
  + jsonschema==4.26.0
@@ -49,24 +49,24 @@ release/get_nick_done-0.1.0.tar.gz: OK
 comparison/get_nick_done-0.1.0-py3-none-any.whl: OK
 === RESULT candidate-build exit=0 (1s)
 === STEP gnd-install
-claude/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.claude/skills
+claude/project -> <scratch>/ci-head/.claude/skills
   placed 16 file(s)
-codex/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.codex/skills
+codex/project -> <scratch>/ci-head/.codex/skills
   placed 16 file(s)
 === RESULT gnd-install exit=0 (1s)
 === STEP gnd-doctor
-executable directory: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.venv/bin (on PATH)
+executable directory: <scratch>/ci-head/.venv/bin (on PATH)
 checking both scopes regardless of the flags given (skill precedence is user level over project level)
-claude/global -> /Users/nikolaosvasiloglou/.claude/skills
+claude/global -> <home>/.claude/skills
   not installed
-codex/global -> /Users/nikolaosvasiloglou/.codex/skills
+codex/global -> <home>/.codex/skills
   not installed
-  note: /Users/nikolaosvasiloglou/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
-claude/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.claude/skills
+  note: <home>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+claude/project -> <scratch>/ci-head/.claude/skills
   installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-14T02:19:28Z): current=16
-codex/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.codex/skills
+codex/project -> <scratch>/ci-head/.codex/skills
   installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-14T02:19:28Z): current=16
-  note: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+  note: <scratch>/ci-head/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
 === RESULT gnd-doctor exit=0 (0s)
 === STEP collect
 
@@ -382,7 +382,7 @@ E
 E     ...Full output truncated (5 lines hidden), use '-vv' to show
 =============================== warnings summary ===============================
 tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
-  /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-head/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+  <scratch>/ci-head/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
     PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
     PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
     PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])

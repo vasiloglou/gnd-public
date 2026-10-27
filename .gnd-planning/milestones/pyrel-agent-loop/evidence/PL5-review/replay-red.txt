@@ -3,7 +3,7 @@ FF                                                                       [100%]
 =================================== FAILURES ===================================
 ____ test_recorded_replay_refuses_drift_under_optimized_python[transition] _____
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1167/test_recorded_replay_refuses_d0')
+tmp_path = PosixPath('<tmp>/pytest-1167/test_recorded_replay_refuses_d0')
 kind = 'transition'
 
     @pytest.mark.parametrize('kind', ['transition', 'population'])
@@ -43,7 +43,7 @@ E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-O'
 tests/test_pyrel_learning_path.py:246: AssertionError
 ____ test_recorded_replay_refuses_drift_under_optimized_python[population] _____
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1167/test_recorded_replay_refuses_d1')
+tmp_path = PosixPath('<tmp>/pytest-1167/test_recorded_replay_refuses_d1')
 kind = 'population'
 
     @pytest.mark.parametrize('kind', ['transition', 'population'])

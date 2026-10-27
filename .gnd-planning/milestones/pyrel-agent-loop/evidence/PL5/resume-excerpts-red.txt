@@ -3,7 +3,7 @@ FF..FFFF                                                                 [100%]
 =================================== FAILURES ===================================
 __________ test_recorded_excerpt_refuses_changed_bytes[task-bookrec] ___________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_0')
+tmp_path = PosixPath('<tmp>/pytest-1156/test_recorded_excerpt_refuses_0')
 domain = 'bookrec', artifact = 'task'
 
     @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
@@ -39,7 +39,7 @@ E        +  where 0 = CompletedProcess(args=['bash', '-c', 'cat bookrec-native/r
 tests/test_pyrel_learning_path.py:165: AssertionError
 __________ test_recorded_excerpt_refuses_changed_bytes[task-expense] ___________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_1')
+tmp_path = PosixPath('<tmp>/pytest-1156/test_recorded_excerpt_refuses_1')
 domain = 'expense', artifact = 'task'
 
     @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
@@ -75,7 +75,7 @@ E        +  where 0 = CompletedProcess(args=['bash', '-c', 'sed -n 1,4p expense-
 tests/test_pyrel_learning_path.py:165: AssertionError
 ________ test_recorded_excerpt_refuses_changed_bytes[candidate-bookrec] ________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_4')
+tmp_path = PosixPath('<tmp>/pytest-1156/test_recorded_excerpt_refuses_4')
 domain = 'bookrec', artifact = 'candidate'
 
     @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
@@ -111,7 +111,7 @@ E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c'
 tests/test_pyrel_learning_path.py:165: AssertionError
 ________ test_recorded_excerpt_refuses_changed_bytes[candidate-expense] ________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_5')
+tmp_path = PosixPath('<tmp>/pytest-1156/test_recorded_excerpt_refuses_5')
 domain = 'expense', artifact = 'candidate'
 
     @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
@@ -147,7 +147,7 @@ E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c'
 tests/test_pyrel_learning_path.py:165: AssertionError
 ________ test_recorded_excerpt_refuses_changed_bytes[feedback-bookrec] _________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_6')
+tmp_path = PosixPath('<tmp>/pytest-1156/test_recorded_excerpt_refuses_6')
 domain = 'bookrec', artifact = 'feedback'
 
     @pytest.mark.parametrize('domain', ['bookrec', 'expense'])
@@ -183,7 +183,7 @@ E        +  where 0 = CompletedProcess(args=['<checkout>/.venv/bin/python', '-c'
 tests/test_pyrel_learning_path.py:165: AssertionError
 ________ test_recorded_excerpt_refuses_changed_bytes[feedback-expense] _________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1156/test_recorded_excerpt_refuses_7')
+tmp_path = PosixPath('<tmp>/pytest-1156/test_recorded_excerpt_refuses_7')
 domain = 'expense', artifact = 'feedback'
 
     @pytest.mark.parametrize('domain', ['bookrec', 'expense'])

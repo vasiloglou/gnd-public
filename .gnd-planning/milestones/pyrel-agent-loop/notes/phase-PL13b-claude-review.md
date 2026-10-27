@@ -12,7 +12,7 @@ Reviewed bytes: `src/gnd/export/pyrel_rules.py` sha256
 REVISE. I found three blocking problems: two give wrong verdicts with no error, and one crashes on a common, supported join. Most other scenarios agree with GND.
 
 Setup for every repro:
-- Scratch directory S=/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/pl13b-review
+- Scratch directory S=<scratch>/pl13b-review
 - `$S/mk.py` builds models and populations. `$S/m_*.py` writes each scenario.
 - `$S/cmp.py MODEL POP...` renders the duckdb program into `$S/progs/`, runs it with `-I` under tutorials/runtimes/.venv/bin/python, and compares it with `gnd.api.check(..., unredacted=True)`. The comparison uses the suite's own `_assert_agrees`, `_as_verdicts` and `_ids` and prints AGREE or DISAGREE.
 - `$S/exact.py MODEL POP OUT` fills each covered derived head's claim with GND's computed rows. It loops on GND's own findings.

@@ -1269,7 +1269,7 @@
         "--out-dir",
         "/private/tmp/pyrel-applications-pa6-20261013-e/wheel"
       ],
-      "cwd": "/Users/nikolaosvasiloglou/github-repos/gnd-public",
+      "cwd": "<repo>",
       "exit": 0,
       "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderr_sha256": "f3b01f2f57f148be8dfdd2b029b48df2a683ea7956c3405a13b4e193903a043b"
@@ -1279,7 +1279,7 @@
         "uv",
         "venv",
         "--python",
-        "/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin/python",
+        "<repo>/.venv/bin/python",
         "/private/tmp/pyrel-applications-pa6-20261013-e/base"
       ],
       "cwd": "/private/tmp/pyrel-applications-pa6-20261013-e",

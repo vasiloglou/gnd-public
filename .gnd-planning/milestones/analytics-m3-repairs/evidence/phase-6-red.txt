@@ -3,7 +3,7 @@ FF                                                                       [100%]
 ______________ test_generated_transition_states_use_json[legacy] _______________
 
 case = 'legacy'
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-490/test_generated_transition_stat0')
+tmp_path = PosixPath('<tmp>/pytest-490/test_generated_transition_stat0')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c91f820>
 
     @pytest.mark.parametrize("case", ["legacy", "opaque"])
@@ -43,7 +43,7 @@ tests/test_m3_generated_json.py:49: AssertionError
 ______________ test_generated_transition_states_use_json[opaque] _______________
 
 case = 'opaque'
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-490/test_generated_transition_stat1')
+tmp_path = PosixPath('<tmp>/pytest-490/test_generated_transition_stat1')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c91f6f0>
 
     @pytest.mark.parametrize("case", ["legacy", "opaque"])

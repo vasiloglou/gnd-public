@@ -18,7 +18,7 @@ The two backends agree on every well-formed plan I wrote, and the `--emit-post` 
 - `tests/test_plan_apps.py` at the end: `55b44f0c…`. Default lane: 40 passed. The `pyrel_oracle` lane passed 10/10 on an earlier version of the test file.
 
 **Setup for the repros.**
-- `S=/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/pl16-review`
+- `S=<scratch>/pl16-review`
 - `$S/both.py EXAMPLE PLAN [STATE]` runs `core.check` on both backends and compares the exit codes, the (check, status) sets and the post-states.
 - The 70 hand-written plans are in `$S/plans/`; their results are in `$S/out/*.txt`.
 - `export GND_PYREL_PYTHON=$PWD/tutorials/runtimes/.venv/bin/python`

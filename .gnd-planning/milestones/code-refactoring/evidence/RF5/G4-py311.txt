@@ -12,7 +12,7 @@ Command: /private/tmp/rf2-py311/bin/python -m pytest -q tests/test_rf5_commands.
 _____________________ test_original_handler_bytes[doctor] ______________________
 
 case = {'id': 'doctor', 'argv': ['doctor', '--claude'], 'target': 'gnd.cli._cmd_doctor'}
-tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4371/test_original_handler_bytes_do1')
+tmp_path = PosixPath('<tmp>/pytest-4371/test_original_handler_bytes_do1')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e08a310>
 
     @pytest.mark.parametrize('case', CASES, ids=lambda case: case['id'])

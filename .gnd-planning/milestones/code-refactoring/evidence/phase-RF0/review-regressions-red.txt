@@ -10,8 +10,8 @@ E   TypeError: cannot use 'list' as a set element (unhashable type: 'list')
 <repo>/tools/gnd_arch.py:146: TypeError: cannot use 'list' as a set element (unhashable type: 'list')
 E   TypeError: cannot use 'list' as a set element (unhashable type: 'list')
 <repo>/tools/gnd_arch.py:148: TypeError: cannot use 'list' as a set element (unhashable type: 'list')
-E   FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-3580/test_r03_missing_out_parent_ex0/absent/out.json'
-/Users/nikolaosvasiloglou/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-3580/test_r03_missing_out_parent_ex0/absent/out.json'
+E   FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/pytest-3580/test_r03_missing_out_parent_ex0/absent/out.json'
+<home>/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/pathlib/__init__.py:771: FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/pytest-3580/test_r03_missing_out_parent_ex0/absent/out.json'
 E   AttributeError: module 'gnd_arch' has no attribute 'SOURCE_READ_CAP'
 <repo>/tests/test_gnd_arch.py:580: AttributeError: module 'gnd_arch' has no attribute 'SOURCE_READ_CAP'
 E   AssertionError: assert {('gnd.b', 't...'dynamic', 7)} == {('gnd.b', 'm...ype_only', 7)}

@@ -344,7 +344,7 @@ E           AttributeError: mappingproxy({'result': _TypedRelation(fact_type='re
 tests/test_public_derivation_evaluation_complete.py:564: AttributeError
 ___ test_inventory_and_verify_never_execute_repository_or_external_authority ___
 
-tmp_path = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4360/test_inventory_and_verify_neve0')
+tmp_path = PosixPath('<tmp>/pytest-4360/test_inventory_and_verify_neve0')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10eba1780>
 
     def test_inventory_and_verify_never_execute_repository_or_external_authority(

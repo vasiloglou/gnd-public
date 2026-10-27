@@ -6,9 +6,9 @@ _ test_fresh_cli_no_clobber_publication_preserves_a_raced_root[raced-empty-absen
 tests/test_codegen_force.py:783: in test_fresh_cli_no_clobber_publication_preserves_a_raced_root
     assert main(["codegen", str(FULL_VOCABULARY), "--out", str(out)]) == EXIT_COLLISION
 E   AssertionError: assert 0 == 11
-E    +  where 0 = main(['codegen', '<worktree>/tests/fix.../nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-4316/test_fresh_cli_no_clobber_publ0/project'])
+E    +  where 0 = main(['codegen', '<worktree>/tests/fix...<tmp>/pytest-4316/test_fresh_cli_no_clobber_publ0/project'])
 ----------------------------- Captured stdout call -----------------------------
-generated project for <worktree>/tests/fixtures/models/full_vocabulary.orm.yaml -> <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4316/test_fresh_cli_no_clobber_publ0/project
+generated project for <worktree>/tests/fixtures/models/full_vocabulary.orm.yaml -> <tmp>/pytest-4316/test_fresh_cli_no_clobber_publ0/project
   full_vocabulary/__init__.py [derived] created
   full_vocabulary/tools.py [derived] created
   artifacts/full_vocabulary.projection.schema.json [derived] created

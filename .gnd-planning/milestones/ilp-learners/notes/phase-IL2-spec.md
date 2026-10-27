@@ -624,3 +624,54 @@ beyond these rulings.
 | ID | Question | Readings and cost | Proposed |
 |---|---|---|---|
 | IL2-D12 | How to give ILASP the Python 3.10 it links against | **(a) A scratch Python 3.10 from python-build-standalone,** the same source uv uses: `https://github.com/astral-sh/python-build-standalone/releases/download/20260310/cpython-3.10.20+20260310-aarch64-apple-darwin-install_only_stripped.tar.gz`, 19,484,823 bytes, SHA-256 `83a95278567c1f5fea1e886684895c24f467e66f3e9ab3a20321402f54409d14` (from the release's `SHA256SUMS`). Licences: CPython PSF-2.0; the build scripts MPL-2.0. It is extracted into `<scratch>/py310/`. A scratch shim directory holds `Python.framework/Versions/3.10/Python` as a symlink to its `lib/libpython3.10.dylib`, and ILASP runs with `DYLD_FRAMEWORK_PATH=<scratch>/fw` and `PYTHONHOME=<scratch>/py310` in its explicit environment. No system path is touched. **Risk:** a non-framework build may differ from Homebrew's in ways ILASP notices; a load failure is recorded and stops again. **(b) ILASP's Ubuntu build in the podman VM,** which needs an Ubuntu image pinned by digest and the container's own Python 3.10; this costs more and adds a container. **(c) Stop IL2's live run,** recording IL2-C4 as not run, with the reason, as a refuted premise ("the macOS binary is self-contained") | (a) |
+
+### Owner ruling on IL2-D12 (o), 2026-10-27
+
+"IL2-D12 (a): approve the python-build-standalone CPython 3.10.20 download
+(19,484,823 bytes, SHA-256 83a95278…9d14) into scratch with the
+framework-path shim, then run the probe and invocation 1."
+
+**The download:**
+- **Checked:** it matched both the approved size and the SHA-256
+  `83a95278567c1f5fea1e886684895c24f467e66f3e9ab3a20321402f54409d14`.
+- **Its members:** every one sits under `python/`, a relative path.
+- **Where it went:** extracted to `<scratch>/py310/`.
+
+**The shim:** `<scratch>/fw/Python.framework/Versions/3.10/Python` is a
+symlink to `<scratch>/py310/lib/libpython3.10.dylib`. ILASP runs with
+`DYLD_FRAMEWORK_PATH=<scratch>/fw` and `PYTHONHOME=<scratch>/py310` in its
+explicit environment. With them, `ILASP --version` prints the version line
+`ILASP version 4.4.1 (release built on Nov 11 2024)`.
+
+**IL2-F5: what the IL2-D4 probe recorded, and the corrections it forces
+(written before invocation 1, as §6 requires).** The probe's files are in
+`evidence/IL2/probe/`: the two toy tasks, their stdout and `ilasp-help.txt`.
+
+- **The argv:**
+  - `--version=4` is the documented flag. `--version` alone and `--help` are
+    not options: ILASP prints its usage and exits 1.
+  - **The argv is unchanged:** `ILASP --version=4 task.las`.
+- **No learner timeout (IL2-D3 → (a)):** the help lists no timeout option.
+  The 600 s wall clock is the only limit, so `learner-timeout` is
+  unreachable. This is a deviation from IL-R9's learner-timeout clause, and
+  IL2-D3 (a) as ruled accepts it.
+- **Extraction is corrected.**
+  - **What the probe showed:** ILASP 4.4.1 prints its `%%` timing block
+    first and the hypothesis after it. §6's rule ("before the first line
+    starting with `%%`") would return `""` on every run.
+  - **The corrected rule:** the hypothesis is the first maximal run of
+    `wrong … .` lines **after the last line starting with `%%`**.
+    `UNSATISFIABLE` anywhere still means none.
+  - **Pinned:** `test_extract_reads_the_hypothesis_after_the_timing_block`
+    holds the correction to the probe's recorded output. Run over that
+    output, the pre-fix extractor returns `''`.
+- **UNSATISFIABLE still exits 0.** An unsatisfiable task is
+  `termination: completed` with `import: none`.
+- **The default search space includes constraints:** `-s` on the toy task
+  lists `:- p(V1).` and the bare fact `wrong.` beside `wrong :- p(V1).`. The
+  approved argv is kept unchanged, without `-nc`.
+  - **What can follow:** a learned constraint is refused `asp-constraint`,
+    and a learned `wrong.` is refused `empty-body`. Either is a recorded
+    outcome, not a defect (plan §2).
+  - **Changing the search space** would be a settings change, which needs an
+    owner-recorded amendment (IL-R9).

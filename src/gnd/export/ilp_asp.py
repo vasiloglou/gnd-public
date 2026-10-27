@@ -166,15 +166,16 @@ _RULE = re.compile(r"wrong\b.*\.")
 def extract_hypothesis(log: str) -> str:
     """The learned hypothesis in ILASP's output, one rule per line; ``""`` if none.
 
-    The hypothesis is the first maximal run of ``wrong ... .`` lines before the
-    first line that starts with ``%%``; ``UNSATISFIABLE`` anywhere means none."""
+    ILASP 4.4.1 prints its ``%%`` timing block first and the hypothesis after
+    it (the IL2-D4 probe, IL2-F5). The hypothesis is the first maximal run of
+    ``wrong ... .`` lines after the last line that starts with ``%%``;
+    ``UNSATISFIABLE`` anywhere means none, although ILASP still exits 0."""
     lines = [line.strip() for line in log.splitlines()]
     if "UNSATISFIABLE" in lines:
         return ""
+    banners = [index for index, line in enumerate(lines) if line.startswith("%%")]
     program: list[str] = []
-    for line in lines:
-        if line.startswith("%%"):
-            break
+    for line in lines[banners[-1] + 1 if banners else 0:]:
         if _RULE.fullmatch(line):
             program.append(line)
         elif program:

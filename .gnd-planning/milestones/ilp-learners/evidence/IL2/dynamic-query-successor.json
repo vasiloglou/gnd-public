@@ -176,6 +176,18 @@
   [
    "src/gnd/export/ilp_asp.py",
    "extract_hypothesis",
+   "banners[-1]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "extract_hypothesis",
+   "lines[banners[-1] + 1 if banners else 0:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "extract_hypothesis",
    "list[str]",
    1
   ],
@@ -306,6 +318,6 @@
    1
   ]
  ],
- "result_distinct_rows": 6632,
- "result_occurrences": 8303
+ "result_distinct_rows": 6634,
+ "result_occurrences": 8305
 }

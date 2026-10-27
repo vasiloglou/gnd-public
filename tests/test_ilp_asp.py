@@ -229,6 +229,28 @@ def test_t5b_a_control_character_is_unrepresentable(tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# The extractor, pinned to the IL2-D4 probe's recorded ILASP output (IL2-F5).
+# ---------------------------------------------------------------------------
+
+PROBE = REPO_ROOT / ".gnd-planning" / "milestones" / "ilp-learners" / "evidence" / "IL2" / "probe"
+
+
+def test_extract_reads_the_hypothesis_after_the_timing_block():
+    from gnd.export.ilp_asp import extract_hypothesis
+
+    assert extract_hypothesis((PROBE / "toy.stdout.txt").read_text()) == "wrong :- p(V1).\n"
+    assert extract_hypothesis((PROBE / "toy-unsat.stdout.txt").read_text()) == ""
+
+
+def test_extract_takes_one_run_after_the_last_banner():
+    from gnd.export.ilp_asp import extract_hypothesis
+
+    log = "wrong :- early(V1).\n%%%%\n%% Total : 1s\n%%%%\nwrong :- a(V1).\nwrong :- b(V1).\n\nwrong :- c(V1).\n"
+    assert extract_hypothesis(log) == "wrong :- a(V1).\nwrong :- b(V1).\n"
+    assert extract_hypothesis("") == ""
+
+
+# ---------------------------------------------------------------------------
 # T12: the reference section lists the reader's tables, and nothing else.
 # ---------------------------------------------------------------------------
 

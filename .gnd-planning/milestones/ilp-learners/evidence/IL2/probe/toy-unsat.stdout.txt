@@ -1,0 +1,13 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Pre-processing                          : 0.005s
+%% Hypothesis Space Generation             : 0.004s
+%% Conflict analysis                       : 0.001s
+%%   - Negative Examples                   : 0s
+%%   - Positive Examples                   : 0.001s
+%% Counterexample search                   : 0s
+%%   - CDOEs                               : 0s
+%%   - CDPIs                               : 0s
+%% Hypothesis Search                       : 0s
+%% Total                                   : 0.013s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+UNSATISFIABLE

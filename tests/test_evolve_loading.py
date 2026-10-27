@@ -511,16 +511,29 @@ def test_h2_every_home_binds_through_the_shared_helper(tmp_path, monkeypatch, ho
 H3_BEFORE = json.loads((REPO_ROOT / "tests" / "fixtures" / "induced_knowledge"
                         / "reference-homes-before-r2.json").read_text())["outcomes"]
 
+# IKE-Q3 (notes/followup-ike-q3-spec.md, rulings D1-A..D3-A): the two homes that
+# leaked an ArtifactError now refuse by name. The fixture keeps the before-r2
+# measurement; these four rows are the ruled outcomes.
+IKE_Q3_RULED = {
+    "discover/missing": ["return", 66, None],
+    "discover/linked": ["return", 74, None],
+    "judgments/missing": ["return", 3, {"message": "invalid bound judgment input",
+                                        "reason": "binding"}],
+    "judgments/linked": ["return", 3, {"message": "invalid bound judgment input",
+                                       "reason": "binding"}],
+}
+
 
 @pytest.mark.parametrize("key", sorted(H3_BEFORE))
 def test_h3_every_homes_outcome_is_unchanged(tmp_path, monkeypatch, key):
-    """D6-A: adopting the helper changes no home's outcome, including the two
-    homes that already leak an ArtifactError (carried, not fixed here)."""
+    """D6-A: adopting the helper changes no home's outcome, except the four
+    rows IKE-Q3 ruled (discover and judgments on a missing or linked reference)."""
     from support import reference_homes
 
     home, damage = key.split("/")
     work = reference_homes.workspace(tmp_path, None if damage == "intact" else damage)
-    assert reference_homes.run(home, work, tmp_path, monkeypatch) == H3_BEFORE[key]
+    expected = IKE_Q3_RULED.get(key, H3_BEFORE[key])
+    assert reference_homes.run(home, work, tmp_path, monkeypatch) == expected
 
 
 # r2 review regressions (notes/followup-evolve-loading-agent-review.md, round 2).

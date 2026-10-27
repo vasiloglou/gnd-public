@@ -1,0 +1,158 @@
+FFFFFFFFFFFFFFFFF.FFFFF                                                  [100%]
+=================================== FAILURES ===================================
+E   AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:exclusive-or:single-role:violated:alethic' has no admissible origin"}
+    assert 70 == 1
+<repo>/tests/test_carried_defects.py:112: AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:exclusive-or:single-role:violated:alethic' has no admissible origin"}
+E   AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:mandatory:inline:violated:alethic' has no admissible origin"}
+    assert 70 == 1
+<repo>/tests/test_carried_defects.py:112: AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:mandatory:inline:violated:alethic' has no admissible origin"}
+E   AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:mandatory-disjunctive:n-a:violated:alethic' has no admissible origin"}
+    assert 70 == 1
+<repo>/tests/test_carried_defects.py:112: AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:mandatory-disjunctive:n-a:violated:alethic' has no admissible origin"}
+E   AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:value:range:violated:alethic' has no admissible origin"}
+    assert 70 == 1
+<repo>/tests/test_carried_defects.py:112: AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:value:range:violated:alethic' has no admissible origin"}
+E   assert [] == [('constraint...plays none.")]
+      
+      Right contains one more item: ('constraints[0]', 'fail', [[4]], "Each count plays exactly one of (count_is_a.count); (count_is_b.count) — violated: '4' plays none.")
+      Use -v to get more diff
+<repo>/tests/test_carried_defects.py:127: assert [] == [('constraint...plays none.")]
+E   assert [] == [('fact_types... such fact.')]
+      
+      Right contains one more item: ('fact_types[count_is_a].constraints[0]', 'fail', [4], "Each count must play the 'count' role in 'count_is_a' — violated: '4' plays no such fact.")
+      Use -v to get more diff
+<repo>/tests/test_carried_defects.py:127: assert [] == [('fact_types... such fact.')]
+E   assert [] == [('constraint...ne of them.')]
+      
+      Right contains one more item: ('constraints[0]', 'fail', [4], "Each count plays at least one of the roles (count_is_a.count, count_is_b.count) — violated: '4' play none of them.")
+      Use -v to get more diff
+<repo>/tests/test_carried_defects.py:127: assert [] == [('constraint...ne of them.')]
+E   assert [] == [('constraint...t of range.')]
+      
+      Right contains one more item: ('constraints[0]', 'fail', [4], "Each count value must be between '5' and '10' — violated: '4' out of range.")
+      Use -v to get more diff
+<repo>/tests/test_carried_defects.py:127: assert [] == [('constraint...t of range.')]
+E   AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:value:range:violated:alethic' has no admissible origin"}
+    assert 70 == 1
+<repo>/tests/test_carried_defects.py:139: AssertionError: {'type': 'ValueError', 'message': "witness for 'snapshot:value:range:violated:alethic' has no admissible origin"}
+E   AssertionError: REDACTION applied: margin_sample.margin
+      {"schema_version": 9, "tool": "gnd", "command": "check", "outcome": "internal_error", "exit_code": 70, "acceptance_ready": false, "model": "<tmp>/pytest-5516/test_floats_mandatory_candidat0/cand.orm.yaml", "model_digest": "sha256:61fd9dd42ee7c37572427c3b26b93fb5524da451aa0230b4dfe935119355f132", "population": "<tmp>/pytest-5516/test_floats_mandatory_candidat0/float-clean.pop.yaml", "counts": {"pass": 0, "fail": 0, "warning": 0, "unchecked": 0, "vacuous": 0}, "verdicts": [], "derivations": [], "coverage": {}, "extraction": {}, "issues": [], "issues_total": 0, "issues_truncated": false, "warnings": [], "error": {"type": "ValueError", "message": "[REDACTED INSTANCE DETAIL]"}, "transition": {"evaluated": false, "model_digest": null, "operations_digest": null, "pre_digest": null, "pre_snapshot": null, "pre_snapshot_verdicts": null, "steps": null, "frame_grading": null, "frame_status": null, "frame_verdicts": null, "computed_post": null, "post_snapshot": null}, "assurance": {"schema_version": 1, "semantic_decision": null, "assurance_level": "none", "scope_digest": null, "semantics_digest": null, "production_roster_digest": null, "proof_digest": null, "toolchain_digest": null, "uncovered_applicable_scope_ids": [], "assumptions": []}, "post": null, "redaction": {"mode": "applied", "declarations": [{"case_id": null, "source": "role", "fact_type": "margin_sample", "roles": ["margin"]}]}}
+      
+    assert 70 == 0
+     +  where 70 = CompletedProcess(args=['<repo>/...eclarations": [{"case_id": null, "source": "role", "fact_type": "margin_sample", "roles": ["margin"]}]}}\n', stderr='').returncode
+<repo>/tests/test_carried_defects.py:157: AssertionError: REDACTION applied: margin_sample.margin
+E   AssertionError: assert ('unchecked',...e-unresolved') == ('unchecked', 'opaque-value')
+      
+      At index 1 diff: 'role-unresolved' != 'opaque-value'
+      Use -v to get more diff
+<repo>/tests/test_carried_defects.py:170: AssertionError: assert ('unchecked',...e-unresolved') == ('unchecked', 'opaque-value')
+E   AssertionError: {'constraint_ref': 'constraints[0]', 'constraint_type': 'mandatory-disjunctive', 'modality': 'deontic', 'source': 'explicit', ...}
+    assert ('unchecked',...pe-ambiguous') == ('unchecked', 'opaque-value')
+      
+      At index 1 diff: 'subject-type-ambiguous' != 'opaque-value'
+      Use -v to get more diff
+<repo>/tests/test_carried_defects.py:224: AssertionError: {'constraint_ref': 'constraints[0]', 'constraint_type': 'mandatory-disjunctive', 'modality': 'deontic', 'source': 'explicit', ...}
+E   subprocess.TimeoutExpired: Command '['<repo>/.venv/bin/python', '-m', 'gnd', 'check', '<repo>/tests/fixtures/pyrel-oracle/basics.orm.yaml', '<tmp>/pytest-5516/test_check_refuses_a_fifo_by_n0/input.fifo']' timed out after 30 seconds
+
+During handling of the above exception, another exception occurred:
+E   Failed: gnd check hung on a FIFO population
+<repo>/tests/test_carried_defects.py:251: Failed: gnd check hung on a FIFO population
+E   subprocess.TimeoutExpired: Command '['<repo>/.venv/bin/python', '-m', 'gnd', 'check', '--format', 'json', '<repo>/tests/fixtures/pyrel-oracle/basics.orm.yaml', '<tmp>/pytest-5516/test_check_refuses_a_fifo_by_n1/input.fifo']' timed out after 30 seconds
+
+During handling of the above exception, another exception occurred:
+E   Failed: gnd check hung on a FIFO population-json
+<repo>/tests/test_carried_defects.py:251: Failed: gnd check hung on a FIFO population-json
+E   subprocess.TimeoutExpired: Command '['<repo>/.venv/bin/python', '-m', 'gnd', 'check', '<repo>/tests/fixtures/v62-phase1/models/static.orm.yaml', '--pre', '<tmp>/pytest-5516/test_check_refuses_a_fifo_by_n2/input.fifo', '--steps', '<repo>/tests/fixtures/v62-phase1/walks/activate.steps.json', '--post', '<repo>/tests/fixtures/v62-phase1/populations/post-exact.pop.yaml']' timed out after 30 seconds
+
+During handling of the above exception, another exception occurred:
+E   Failed: gnd check hung on a FIFO --pre
+<repo>/tests/test_carried_defects.py:251: Failed: gnd check hung on a FIFO --pre
+E   subprocess.TimeoutExpired: Command '['<repo>/.venv/bin/python', '-m', 'gnd', 'check', '<repo>/tests/fixtures/v62-phase1/models/static.orm.yaml', '--pre', '<repo>/tests/fixtures/v62-phase1/populations/pre-clean.pop.yaml', '--steps', '<tmp>/pytest-5516/test_check_refuses_a_fifo_by_n3/input.fifo', '--post', '<repo>/tests/fixtures/v62-phase1/populations/post-exact.pop.yaml']' timed out after 30 seconds
+
+During handling of the above exception, another exception occurred:
+E   Failed: gnd check hung on a FIFO --steps
+<repo>/tests/test_carried_defects.py:251: Failed: gnd check hung on a FIFO --steps
+E   subprocess.TimeoutExpired: Command '['<repo>/.venv/bin/python', '-m', 'gnd', 'check', '<repo>/tests/fixtures/v62-phase1/models/static.orm.yaml', '--pre', '<repo>/tests/fixtures/v62-phase1/populations/pre-clean.pop.yaml', '--steps', '<repo>/tests/fixtures/v62-phase1/walks/activate.steps.json', '--post', '<tmp>/pytest-5516/test_check_refuses_a_fifo_by_n4/input.fifo']' timed out after 30 seconds
+
+During handling of the above exception, another exception occurred:
+E   Failed: gnd check hung on a FIFO --post
+<repo>/tests/test_carried_defects.py:251: Failed: gnd check hung on a FIFO --post
+E   AssertionError: export failed: 'id'
+      
+    assert 70 == 0
+     +  where 70 = CompletedProcess(args=['<repo>/...test-5516/test_rules_export_of_the_basic0/basics-duckdb.py'], returncode=70, stdout='', stderr="export failed: 'id'\n").returncode
+<repo>/tests/test_carried_defects.py:268: AssertionError: export failed: 'id'
+E   AssertionError: export failed: 'id'
+      
+    assert 70 == 0
+     +  where 70 = CompletedProcess(args=['<repo>/.../pytest-5516/test_rules_export_of_the_basic1/basics-lqp.py'], returncode=70, stdout='', stderr="export failed: 'id'\n").returncode
+<repo>/tests/test_carried_defects.py:268: AssertionError: export failed: 'id'
+E   AssertionError: export failed: 'id'
+      
+    assert 70 == 3
+     +  where 70 = CompletedProcess(args=['<repo>/...iloglou/pytest-5516/test_rules_export_refuses_a_de0/out.py'], returncode=70, stdout='', stderr="export failed: 'id'\n").returncode
+<repo>/tests/test_carried_defects.py:282: AssertionError: export failed: 'id'
+E   AssertionError: ("'''Person has Nick\
+        - injected: Root (String)
+      
+          Derived from fact type 'person_has_nick'. Roles, in declared...n declared order:
+          - person: Person (Integer) — A human.
+      - forged: Admin (String)
+          - nick: Nick (String)
+        ")
+    assert 'Person has N... (String)\n  ' == 'Person has N...String)\n    '
+      
+      - Person has Nick\n  - injected: Root (String)
+      + Person has Nick
+      + - injected: Root (String)
+        
+      -     Derived from fact type 'person_has_nick'. Roles, in declared order:
+      ? --...
+      
+      ...Full output truncated (9 lines hidden), use '-vv' to show
+<repo>/tests/test_carried_defects.py:329: AssertionError: ("'''Person has Nick\
+E   AssertionError: ("'''Derived tools for the ORM model forge\\\
+      DERIVED FILE.orm.yaml.
+      
+      One function per fact type, named by
+      gnd.cod...rify`.
+      
+      DERIVED FILE. Regenerate with `gnd codegen`; edits are lost, and the
+      codegen manifest digest detects them.')
+    assert 'Derived tool...detects them.' == 'Derived tool...detects them.'
+      
+      - Derived tools for the ORM model forge\\nDERIVED FILE.orm.yaml.
+      ?                                      -
+      + Derived tools for the ORM model forge\nDERIVED FILE.orm.yaml.
+        
+        One function per fact type, named by
+        gnd.codegen.identifiers.tool_symbol and taking the fact type's roles in...
+      
+      ...Full output truncated (7 lines hidden), use '-vv' to show
+<repo>/tests/test_carried_defects.py:329: AssertionError: ("'''Derived tools for the ORM model forge\\\
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_carried_defects.py::test_check_keeps_exit_3_for_a_directory_population
+FAILED tests/test_carried_defects.py::test_roster_witness_spelled_elsewhere_as_float_keeps_the_integer[exclusive-or]
+FAILED tests/test_carried_defects.py::test_roster_witness_spelled_elsewhere_as_float_keeps_the_integer[mandatory]
+FAILED tests/test_carried_defects.py::test_roster_witness_spelled_elsewhere_as_float_keeps_the_integer[mandatory-disjunctive]
+FAILED tests/test_carried_defects.py::test_roster_witness_spelled_elsewhere_as_float_keeps_the_integer[value]
+FAILED tests/test_carried_defects.py::test_roster_witness_matches_the_distinct_spelling_control[exclusive-or]
+FAILED tests/test_carried_defects.py::test_roster_witness_matches_the_distinct_spelling_control[mandatory]
+FAILED tests/test_carried_defects.py::test_roster_witness_matches_the_distinct_spelling_control[mandatory-disjunctive]
+FAILED tests/test_carried_defects.py::test_roster_witness_matches_the_distinct_spelling_control[value]
+FAILED tests/test_carried_defects.py::test_roster_witness_inside_one_float_type_takes_the_first_spelling
+FAILED tests/test_carried_defects.py::test_floats_mandatory_candidate_from_the_ik4_review_no_longer_raises
+FAILED tests/test_carried_defects.py::test_ik3_opaque_mandatory_is_reported_as_opaque_value
+FAILED tests/test_carried_defects.py::test_opaque_cell_in_disjunctive_and_exclusive_rosters_is_opaque_value
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[population]
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[population-json]
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[--pre]
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[--steps]
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[--post]
+FAILED tests/test_carried_defects.py::test_rules_export_of_the_basics_oracle_model_succeeds[duckdb]
+FAILED tests/test_carried_defects.py::test_rules_export_of_the_basics_oracle_model_succeeds[lqp]
+FAILED tests/test_carried_defects.py::test_rules_export_refuses_a_default_id_that_is_already_taken
+FAILED tests/test_carried_defects.py::test_generated_runtime_docstrings_equal_their_source_text[forge]
+FAILED tests/test_carried_defects.py::test_generated_runtime_docstrings_equal_their_source_text[forge\\nDERIVED FILE]
+22 failed, 1 passed in 158.54s (0:02:38)

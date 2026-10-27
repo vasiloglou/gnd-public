@@ -1,0 +1,14 @@
+# IKE-Q3 regressions on the base source (077f46e src), tests at the working tree
+$ uv run pytest tests/test_ike_q3.py tests/test_evolve_loading.py -k 'q1 or q2 or q3 or q4 or q5 or h3' -p no:randomly -q
+FAILED tests/test_ike_q3.py::test_q1_q2_discover_names_an_unbindable_reference[missing-66-could not be inspected]
+FAILED tests/test_ike_q3.py::test_q1_q2_discover_names_an_unbindable_reference[linked-74-is a symlink]
+FAILED tests/test_ike_q3.py::test_q3_discover_refuses_a_directory_at_the_reference_path
+FAILED tests/test_ike_q3.py::test_q4_the_judgments_api_returns_a_binding_refusal[missing]
+FAILED tests/test_ike_q3.py::test_q4_the_judgments_api_returns_a_binding_refusal[linked]
+FAILED tests/test_ike_q3.py::test_q5_judgments_check_exits_3[missing] - gnd.a...
+FAILED tests/test_ike_q3.py::test_q5_judgments_check_exits_3[linked] - gnd.ar...
+FAILED tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[discover/linked]
+FAILED tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[discover/missing]
+FAILED tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[judgments/linked]
+FAILED tests/test_evolve_loading.py::test_h3_every_homes_outcome_is_unchanged[judgments/missing]
+11 failed, 29 passed, 45 deselected in 2.33s

@@ -86,6 +86,7 @@ class ValueOrigin:
     admitted_value: bool | int | float | str | None
     derivation_fact_type: str | None
     dependency_paths: tuple[tuple[str | int, ...], ...]
+    object_type: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -96,6 +97,9 @@ class SnapshotObservation:
     applicable_scope_ids: tuple[str, ...]
     fact_occurrences: tuple[tuple[str, int], ...] = ()
     constraint_subjects: tuple[tuple[str, tuple[str, ...]], ...] = ()
+    # A role-less witness value takes its spelling from these object types
+    # (the rule's single subject type and its universe), never across typing.
+    constraint_subject_types: tuple[tuple[str, tuple[str, ...]], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -852,6 +856,7 @@ def adapt_snapshot_observed(
                         admitted_value=value,
                         derivation_fact_type=str(fact_type_id) if derived else None,
                         dependency_paths=dependency_paths if derived else (),
+                        object_type=str(role_rows[role_index].get("object_type")),
                     )
                 )
     for object_type_id, values in population.instances.items():
@@ -869,6 +874,7 @@ def adapt_snapshot_observed(
                     admitted_value=value,
                     derivation_fact_type=None,
                     dependency_paths=(),
+                    object_type=str(object_type_id),
                 )
             )
     # Value-comparison witnesses intentionally retain both operands.  A
@@ -951,8 +957,26 @@ def adapt_snapshot_observed(
                 (constraint.ref, constraint.scope_fact_types)
                 for constraint in snapshot.constraints
             ),
+            constraint_subject_types=_subject_types(snapshot, model),
         ),
     )
+
+
+def _subject_types(snapshot: SnapshotIR, model: Model) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    """Each rule with ONE subject object type, mapped to that type's universe types."""
+    result = []
+    for constraint in snapshot.constraints:
+        slots = [(constraint.fact_type, role) for role in constraint.roles]
+        slots += list(constraint.role_refs)
+        slots += [sequence[0] for sequence in constraint.sequences if len(sequence) == 1]
+        types = {universe.role_object_type(model, fact_type, role) for fact_type, role in slots if fact_type}
+        types.discard(None)
+        if constraint.object_type:
+            types.add(constraint.object_type)
+        if len(types) == 1:
+            (subject,) = types
+            result.append((constraint.ref, tuple(sorted(universe.universe_types(subject, model)))))
+    return tuple(result)
 
 
 def correspondence_scope(

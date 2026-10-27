@@ -64,6 +64,9 @@ class OriginSelection:
     index: OriginIndex
     used: set[int]
     cursors: dict[int, int] = field(default_factory=dict)
+    # Object types a role-less witness may take its spelling from (IK4-Q4).
+    scope: frozenset[str] = frozenset()
+    scoped: dict[int, tuple[list[int], int]] = field(default_factory=dict)
 
     def _take(self, bucket: _Bucket) -> PublicScalar:
         cursor = self.cursors.get(id(bucket), 0)
@@ -94,4 +97,34 @@ class OriginSelection:
             bucket.unambiguous = len(spellings) == 1
         if bucket.unambiguous:
             return True, self._take(bucket)
+        if role is None and self.scope:
+            return self._take_scoped(bucket)
         return False, None
+
+    def _take_scoped(self, bucket: _Bucket) -> tuple[bool, PublicScalar]:
+        """The first unused origin of the witness's subject types, in observation order.
+
+        Two spellings of one number (``4`` and ``4.0``) make the bucket
+        ambiguous. A roster witness is a value of its subject type, so only
+        that type's origins may spell it, and among them population order is
+        deterministic.
+        """
+        key = id(bucket)
+        if key not in self.scoped:
+            self.scoped[key] = (
+                [i for i in bucket.indices if self.index.values[i].object_type in self.scope],
+                0,
+            )
+        candidates, cursor = self.scoped[key]
+        if not candidates:
+            return False, None
+        # A cursor, as in _take, keeps a long witness linear in its bucket.
+        while cursor < len(candidates) and candidates[cursor] in self.used:
+            cursor += 1
+        if cursor == len(candidates):
+            self.scoped[key] = (candidates, cursor)
+            return True, self.index.values[candidates[0]].admitted_value
+        chosen = candidates[cursor]
+        self.used.add(chosen)
+        self.scoped[key] = (candidates, cursor + 1)
+        return True, self.index.values[chosen].admitted_value

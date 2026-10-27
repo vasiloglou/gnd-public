@@ -20,8 +20,8 @@
 - **IL1 spec r2** SHA-256:
   `4a06f58346ea3e147f57a485ee2f8c5189190938130c44c47b5022ed0cff5af8`.
 - **Inspection HEAD:** `63f7f1f`; the planning files are uncommitted.
-- **Retained snapshots:** the [plan](../evidence/plan-review-r2/ilp-learners-plan.md)
-  and the [IL1 spec](../evidence/plan-review-r2/phase-IL1-spec.md). The
+- **Retained snapshots:** the [plan](../evidence/plan-review-r2/ilp-learners-plan.md.snapshot)
+  and the [IL1 spec](../evidence/plan-review-r2/phase-IL1-spec.md.snapshot). The
   [manifest](../evidence/plan-review-r2/manifest.json) records snapshot and
   reader-note digests.
 

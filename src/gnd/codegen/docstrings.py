@@ -43,7 +43,7 @@ from gnd.extract.vocabulary import reading_text
 from gnd.popvalidate import resolve_primitive
 from gnd.verbalize import _neutralize, neutralize_text
 
-__all__ = ["DOCSTRING_DELIMITER", "tool_docstring"]
+__all__ = ["DOCSTRING_DELIMITER", "docstring_open", "tool_docstring"]
 
 #: The delimiter emitted tool docstrings are written with. Published as DATA
 #: because it is load-bearing security, not formatting: see the module
@@ -51,6 +51,27 @@ __all__ = ["DOCSTRING_DELIMITER", "tool_docstring"]
 #: what makes the shipped neutralizer a sufficient boundary. Changing it to
 #: ``\"\"\"`` reopens the injection this module exists to close.
 DOCSTRING_DELIMITER = "'''"
+
+
+def docstring_open(body: str) -> str:
+    """The opening of an emitted docstring whose neutralized body is ``body``.
+
+    Raw exactly when the body holds an escape other than ``\\\\`` and ``\\'``.
+    A non-raw literal would decode the neutralizer's ``\\n`` back into a
+    newline, so the runtime ``__doc__`` could carry a forged line that the
+    source text does not (IK1-Q4). The two escapes the neutralizer writes for a
+    backslash and a quote decode to those characters and cannot change a line,
+    so a reading such as "Employee's" keeps its bytes and its runtime text.
+    Inside the raw literal ``\\'`` stays two characters and cannot close it.
+    """
+    index = 0
+    while index < len(body):
+        if body[index] == "\\":
+            if body[index + 1:index + 2] not in ("\\", "'"):
+                return "r" + DOCSTRING_DELIMITER
+            index += 1
+        index += 1
+    return DOCSTRING_DELIMITER
 
 
 def _display_name(model: Any, object_type_id: Any) -> str:

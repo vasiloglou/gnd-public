@@ -4,11 +4,11 @@
   "inspection_head": "63f7f1f",
   "files": [
     {
-      "path": "evidence/plan-review-r2/ilp-learners-plan.md",
+      "path": "evidence/plan-review-r2/ilp-learners-plan.md.snapshot",
       "sha256": "e0668e30d4ee8c6e9e921e0cbad66d80338f94e5bcc9d69740ce318700ce3bb9"
     },
     {
-      "path": "evidence/plan-review-r2/phase-IL1-spec.md",
+      "path": "evidence/plan-review-r2/phase-IL1-spec.md.snapshot",
       "sha256": "4a06f58346ea3e147f57a485ee2f8c5189190938130c44c47b5022ed0cff5af8"
     },
     {

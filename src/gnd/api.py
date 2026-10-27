@@ -983,6 +983,7 @@ def judgments(
         ValueError,
         TypeError,
         OSError,
+        ArtifactError,  # an unbindable reference file (IKE-Q3 D2-A)
         ModelLoadError,
         ModelValidationError,
         PopulationLoadError,

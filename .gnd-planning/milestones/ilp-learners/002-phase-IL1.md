@@ -14,6 +14,13 @@ gate:
     test, the RF1 CLI goldens, RF5 commands, the layer map, the architecture
     test, the RF6 census, the built inventory and schema sync). The live lane
     ran separately under the scratch SWI and Popper venv: 3 passed. Ruff clean.
+post_merge:
+  note: >-
+    Merging main (cba51bc) brought the carried-defects RF6 successor in at the
+    same chain position. The IL1 delta was re-chained after it: same rows, new
+    predecessor and hash, totals 6582 distinct rows and 8250 occurrences. The
+    gate above was rerun on the merged tree with the same result, 673 passed,
+    19 deselected; final-gate.txt keeps the pre-merge output.
 slow_cadence:
   command: "uv run pytest -q"
   trigger: "explicit owner selection or separately configured CI"
@@ -32,7 +39,7 @@ evidence:
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL1/run_popper.py
     sha256: fc34cd834b1023c5849aa3ffc5bcb995a460590147325ad7d172b3dc421e89ef
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL1/dynamic-query-successor.json
-    sha256: fc55a1305cdefb3af3ccb613d058aba80af793858a911c1553ba0545348a2d13
+    sha256: 7ea8941e536f008d025486b260f5900788fccf637c9edf79ce8eab3ee1dc1128
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL1/live/requirements.in
     sha256: f545374d976299ff98de698171b6826d27bfa2eb9cfaecfe24474914511a6afa
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL1/live/requirements.lock

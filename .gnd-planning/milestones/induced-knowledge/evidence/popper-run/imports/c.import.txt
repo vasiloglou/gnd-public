@@ -1,0 +1,4 @@
+$ gnd import ilp-rules model.orm.yaml <scratch>/imports/c.clauses.pl --labels labels.json --reported-coverage <scratch>/imports/c.run.json --target popper --out <scratch>/imports/c.proposal.json --requested-at 2026-10-27T00:00:00+00:00
+IMPORTED 1 learned clauses -> <scratch>/imports-final/c.proposal.json
+  clause 0 constraints[1]: covers 4 (support 4/4), vacuous 0, unchecked 0
+exit=0

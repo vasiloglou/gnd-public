@@ -1,0 +1,4 @@
+# IKE-Q3 focused gate on the final bytes (163 files: .gnd-planning/milestones/induced-knowledge/evidence/ike-q3/gate-files.txt)
+$ uv run pytest -q -p no:randomly $(cat .gnd-planning/milestones/induced-knowledge/evidence/ike-q3/gate-files.txt)
+5962 passed, 351 deselected in 1239.49s (0:20:39)
+exit=0

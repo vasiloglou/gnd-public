@@ -937,3 +937,129 @@ single-clause programs.
 | `program.pl` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
 | `raw-stderr.txt` | `36bc3d568d4e5a0ed070b60a68fcbbffbba138ca96cbbc73e9a99ba935d1ce28` |
 | `raw-stdout.txt` | `da7cfe20ba0b56e98734999b87ceaf7fb0caa8cbffcfdf1053d92d05adcbf755` |
+
+## 16. Amendment IL1-A2: thresholds as ground facts (draft, awaiting the owner)
+
+**Status:** draft, 2026-10-27. Nothing in it is implemented.
+- **Requested by the owner (o):** "Draft amendment IL1-A2: render thresholds
+  as ground facts so Popper's clingo grounding sees them, naming the goldens
+  it moves, and ask for invocation 3. Stop for my approval before changing
+  code."
+- **Origin:** review finding 2 (`notes/phase-IL1-agent-review.md`), which
+  explains IL1-F9. A rendering change after a run is an owner amendment, and
+  a third run needs an owner ruling (IL-R9).
+- **No probe run:** no Popper invocation was made to design this. The design
+  is checked against Popper v5.0.1's installed source and the reviewer's
+  clingo probe (clingo only, not Popper).
+
+### Why adapter 2 found nothing: two mechanisms, both from source
+
+1. **Recall bans (`bkcons.get_bk_cons`, `deduce_recalls`).** Popper loads
+   `bk.pl` into clingo. Adapter 2's `bk.pl` grounds, so Popper sets
+   `datalog=True`. In clingo, `integer/1` has no facts, so every threshold
+   predicate has 0 ground atoms, and `deduce_recalls` emits
+   `:- body_literal(Rule,P,_,(_,)), #count{…} > 0.` for each one. That
+   forbids every threshold in every rule. The reviewer's probe over
+   invocation 2's own `bk.pl`: `f_refund_amount` 20 atoms,
+   `gt_t_amount__500` 0. Reproduced by the author.
+2. **Pointless relations (`tester.find_pointless_relations`).** For each pair
+   of unary predicates of the same type, Popper asks SWI
+   `(p(_V0), \+ q(_V0)) ; (q(_V0), \+ p(_V0))`. An adapter-2 threshold fails
+   on an unbound argument by design, so the query is false for every pair:
+   every pair looks equivalent, and all but one threshold per type are
+   dropped as pointless. **Found by the author reading the source; not run.**
+
+### The adapter-3 rendering (Popper files only)
+
+**Unchanged:** the neutral form, `neutral.json`, `exs.pl`, the clause form,
+the fragment checks, the parser and its threshold mapping (IL1-A1), the
+threshold names, the operators (`gt`, `lt`) and the 32-value selection.
+
+**`bk.pl`:** each threshold predicate is its **extension over the exported
+values**, as ground facts, with no rule body:
+
+```prolog
+gt_t_amount__500(640).
+gt_t_amount__500(750).
+gt_t_amount__500(1200).
+gt_t_amount__500(1500).
+```
+
+- **Facts:** for threshold `<op>_<type>__v`, one fact per distinct observed
+  value `w` of that type with `w > v` (`gt`) or `w < v` (`lt`), ascending.
+  The observed values are the same set the thresholds are selected from.
+- **Empty extensions are omitted:** `gt` at the maximum and `lt` at the
+  minimum have no facts, so they are not rendered in `bk.pl` or `bias.pl`.
+  Otherwise Popper would mark them missing (`current_predicate` fails) and
+  clingo would give them 0 atoms again. They hold for no exported example,
+  so nothing learnable is lost.
+- **Order:** fact predicates first, as in adapter 2, then each threshold's
+  facts, grouped by predicate in the adapter-2 order.
+- **Meaning:** over the exported values each fact set equals the comparison
+  it names. A learned `gt_t_amount__500(C)` still maps to `C > 500`, and the
+  import re-checks coverage over the population with GND's comparison, so the
+  import does not depend on the fact sets (IL-R5's re-check is unchanged).
+- **Unbound calls:** a threshold called unbound now enumerates its facts.
+  It never raises, and distinct thresholds are distinguishable, which is what
+  `find_pointless_relations` needs.
+
+**`bias.pl`:** as adapter 2, less the omitted empty thresholds.
+
+**`ADAPTER_VERSION`:** `ilp_popper.ADAPTER_VERSION` goes from "2" to "3".
+The neutral target stays "1" (IL1-F8).
+
+**Size:** at most 2 × 32 × n threshold facts for a type with n distinct
+values. The refunds export: 20 values, 19 `gt` and 19 `lt` thresholds,
+190 + 190 = 380 facts. The existing 64 MiB file cap refuses a larger
+rendering with `too-large` (A2-D3).
+
+### Goldens and fixtures this changes
+
+**No exit code and no refusal name changes.** The parser is untouched, and
+every IK5 Popper clause uses the binary form or the A1 threshold names.
+
+| File | What changes |
+|---|---|
+| `tests/fixtures/induced_knowledge/ik5-corpus/expected-export/popper/popper/bk.pl` | threshold rules become ground facts; `gt_t_amount__200` and `lt_t_amount__10` (empty extensions) are gone |
+| `…/expected-export/popper/popper/bias.pl` | the two empty thresholds' `body_pred`/`type` pairs are gone |
+| `…/expected-export/popper/export.json` | `adapter_version` "3"; the digests and sizes of `bk.pl` and `bias.pl` |
+| `…/ik5-corpus/expected.json` | `export_sha256.popper` (E moves again, from 218611fc…), and I2's `ilp/export.json` and `ilp/run` evidence digests |
+| the same 19 run records as IL1-A1: `b3`, `f01`, `f02`, `f04`, `f06`, `f08`–`f20`, `i2` `.run.json` | the `export_sha256` field only |
+
+**Approved tests whose expected answer changes:**
+- **A1-T2 (live):** "every threshold called unbound fails, never raises"
+  becomes "every threshold called unbound enumerates at least one value and
+  never raises".
+- **The A1 rendering-shape test** asserts the `integer(A), A < -5` rule form.
+  It becomes a ground-fact assertion.
+
+**Unaffected:** `neutral.json`, every neutral-target golden and case, the
+IK6 walk, the RF1 CLI goldens and the IL1 escape and join corpus. Invocations
+1 and 2 keep their recorded bytes; T9 already compares E only when the
+recorded adapter version is the current one.
+
+**The docs:** `docs/reference/ilp-bridge.md`'s threshold paragraph and Export
+table.
+
+### Tests the amendment adds
+
+| ID | Case | Expected |
+|---|---|---|
+| A2-T1 | the X1 Popper export under two `PYTHONHASHSEED` values | equals the regenerated golden tree (the D1 test) |
+| A2-T2 | the rendering over values {−5, 10, 120}: facts per threshold, rule bodies, empty extensions | `gt_t_amount__10(120).` only, `lt_t_amount__10(-5).` only, no `:-` in `bk.pl`, no `gt_…__120` or `lt_…__m5` |
+| A2-T3 | live, the scratch Popper venv's clingo (`GND_IL1_POPPER_PYTHON`): ground the refunds `bk.pl` as `get_bk_cons` does | grounding succeeds, and every threshold in `bias.pl` has at least one atom |
+| A2-T4 | live, the scratch SWI: the `find_pointless_relations` query over every pair of same-type thresholds in the refunds rendering | true for every pair, so none is pointless |
+| A2-T5 | the IK5 corpus | every exit and refusal unchanged; only the inventory above moved |
+
+A2-T3 and A2-T4 run Popper's checks in its own engines, not Popper. They are
+the pre-run evidence that both mechanisms are gone.
+
+### Decisions
+
+| ID | Question | Readings and cost | Proposed |
+|---|---|---|---|
+| A2-D1 | Where the fix lives | **(a) Replace adapter 2 in place,** `ADAPTER_VERSION` "3": one Popper rendering, and the inventory above moves again. **(b) Keep adapter 2 and add a flag:** no golden moves, but the default rendering stays known to find nothing | (a) |
+| A2-D2 | Empty extensions | **Omit them:** nothing learnable is lost, and Popper neither calls them missing nor bans them. **Keep them with no facts:** Popper marks them missing, and SWI raises on a call to an undefined predicate | omit |
+| A2-D3 | Size | **The existing 64 MiB cap and its `too-large` refusal:** reachable at roughly 35,000 distinct values of one integer type. **A separate fact bound:** another constant to fix before results | the existing cap |
+| A2-D4 | **The third recorded run** | Invocation 3, under the same §6 settings, limits and fixed import arguments, over the refunds export rendered by adapter 3. It is reported beside invocations 1 and 2; invocation 1 stays the run of record (IL-R9), and T9 replays all three. If Popper learns a program, the import result is recorded as it falls, including a refusal (A1-D5's rule). If it finds nothing again, the outcome is recorded and IL1 closes with all three | **asked: approve invocation 3** |
+| A2-D5 | Pre-run checks | **A2-T3 and A2-T4 must pass before invocation 3 is started:** a known-banned rendering does not spend the run. **Run regardless** | must pass first |

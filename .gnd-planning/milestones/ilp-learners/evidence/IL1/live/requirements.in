@@ -1,0 +1,13 @@
+# IL1 live Popper run (spec §12, IL1-D3 (o)): Popper v5.0.1's dependencies,
+# without pypblib (IL1-D9 (o)), plus the build tools for its Cython extension
+# and the two source distributions, installed with --no-build-isolation.
+clingo==5.8.2
+cffi==2.1.1
+bitarray==3.12.3
+python-sat==1.9.dev17
+ortools==9.15.6755
+cykhash==2.0.1
+janus-swi==1.5.3
+Cython==3.3.0
+setuptools
+wheel

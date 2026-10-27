@@ -294,3 +294,133 @@ The spec bytes approved are r1 at `acf3484`. No panel ran.
   builds the document, not before. The reader's own event and alias guards
   still run first, as in `gnd validate`; a JSON document is not re-read as
   YAML (RV2).
+
+---
+
+# Amendment r2 (2026-10-27) — three more rows
+
+**Status:** awaiting owner review. No code for r2 is written before the owner
+rules on D6..D8. The r1 work is committed and on PR #47 (pushed at the owner's
+direct "Yes, push the branch and open the PR against main.").
+
+**Authority.** The owner, relayed verbatim by the starting session: "We also
+need to fix the following: IK4-Q2-R1: the shared load-then-bind helper for the
+other modules goes to the refactoring milestone that owns RF5. * IKE-Q1: `gnd
+discover` still crashes on `.inf` in its output writer. * IKE-Q2: `gnd recovery
+verify` on a date-bearing model may hit the same crash; I haven't reproduced
+it." The starting session reads the first item as reversing D3-A, so the
+cross-module helper is wanted here. D6 asks the owner to confirm that reading.
+
+## r2.1 Reproductions on the branch (`b1814f4`, author's runs)
+
+| Row | Input | Observed |
+|---|---|---|
+| IKE-Q1 | staff model plus `source.x: .inf`, `.nan` or `-.inf`; `gnd discover … --families uniqueness` | `gnd validate` 0; discover **exit 1**, a traceback from `json.dumps(..., allow_nan=False)` in `discover.output.candidate_text`, "when serializing dict item 'source'". The writer falls back to YAML only on `TypeError`, not `ValueError` |
+| IKE-Q2 | the recovery test bundle (`tests/test_recovery_adversarial.py::_write_bundle`), its model replaced by YAML with `source.created: 2024-01-01` and the report's model digest rebound | `gnd validate` 0; `gnd recovery verify` **exit 3**, `"verification-error: Object of type date is not JSON serializable"`. Not a crash: verify catches `TypeError`. But the refusal is unnamed, and such a model can never verify, because `render_model_verbalization` itself raises `TypeError` (`_canonical`, `model_verbalization.py:34`), so no complete verbalization can be written |
+
+**The premise "the same crash" is half refuted:** it is the same `json.dumps`,
+but recovery reports it as 3, not 70.
+
+**IK4-Q2-R1 homes, measured.** Record 009 named five homes; the tree has more.
+Each loads model bytes with `load_model_bytes`, then calls `bind_references`
+at a root:
+
+| Home | Root | Binder errors, today |
+|---|---|---|
+| `evolve.service._load_model_document` | model dir | non-`ReferenceInputError` wrapped once as `ReferenceInputError`; then `EvolutionError` (66/74/3) |
+| `api.evaluate_judgments` (`gnd judgments`) | `reference_root` or model dir | caught broadly; outcome 3 "binding" |
+| `export.lean_io.export_lean` | `reference_root` or model dir | `lean.INPUT_ERRORS`; refused |
+| `export.souffle_io` | `reference_root` or model dir | its own refusal |
+| `export.pyrel_rules._bind_reference` | model dir; the model is loaded elsewhere | `ExportInputError("reference population: …")` |
+| `discover.service._bind_references` (twice) | model dir | raw; `_cmd_discover` maps by type (3, or 74 for `OSError`) |
+| `witness.service` | `reference_root` or model dir | raw to its caller |
+| `exp.session_replay._model` | experiment / `case.reference_root` | raw; sets `model._references` |
+| `exp.session_contract` | root / `case.reference_root` | `SessionContractError`; sets `model._references` |
+
+`recovery.verify` loads through a temporary-directory copy and `load_model`, the
+shape IK4-Q2 removed from evolve, so a reference-bearing recovered model cannot
+bind there. That is a different shape, noted and not proposed.
+
+## r2.2 Design
+
+### Shared home (`src/gnd/model/`, ~60 moved lines)
+
+- **`json_document(document, *, refuse=True) -> dict`** — evolve's
+  `_json_document` walk, moved verbatim to `gnd.model`. A refusal raises
+  `ModelValueError(ValueError)` carrying `path` and `kind`. Evolve wraps it as
+  today's message (`"{label} validation failed: {path} holds a {kind}, …"`), so
+  its outcomes are byte-identical. If `__init__.py`'s size ceiling binds, it
+  goes in a new `gnd.model._documents`, registered in `tools/gnd_layers.json`.
+- **`load_model_bytes_bound(data, *, source, root, attach=False) ->
+  tuple[Model, BoundReferenceContext | None]`** — `load_model_bytes`, then
+  `bind_references(model, root=root)` when the model declares references.
+  **It raises exactly what those two raise, unwrapped,** so each caller's
+  existing `except` and exit mapping stay as they are. `attach=True` sets
+  `model._references` for the homes that do so today.
+
+### D6 adoption (IK4-Q2-R1)
+
+Every same-shape home calls `load_model_bytes_bound`; its own wrapping is left
+in place. Evolve keeps its single-wrap rule around the call. `pyrel_rules`
+loads elsewhere, so it adopts only if the call can stay where its
+`ExportInputError` wrap is. Otherwise it is argued out in the record.
+**No home's exit changes.** A changed exit found during implementation goes back
+to the owner gate.
+
+The second half of the carried row, evolve's double parse, is **not** proposed.
+Removing it needs `load_model_bytes` split into parse and validate as public
+API. That would be a wider RF6 change than the helper.
+
+### D7 discover over non-finite floats (IKE-Q1)
+
+`candidate_text` falls back to block YAML on `ValueError` as well as
+`TypeError`. The YAML writer spells `.inf`, `-.inf` and `.nan`. Discover then
+exits 0, and evolve refuses the proposal by name at 3 (D1-A, "holds a
+non-finite float"), exactly as for dates. ~2 lines.
+
+### D8 recovery verify over YAML-only values (IKE-Q2)
+
+- After its strict load, `verify_recovery_bundle` parses the model bytes with
+  `parse_model_document` and runs `json_document`.
+- A refusal becomes `_VerificationFailure("invalid-model-value", "{path} holds a
+  {kind}, which the recovery verbalization cannot represent; quote it or remove
+  it")`. The CLI exit is 3, as for every verification failure.
+- **Totality:** `render_model_verbalization`'s `_canonical` turns its
+  `TypeError`/`ValueError` into `VerbalizationError("model holds a value the
+  verbalization cannot represent")`. A direct library call on such a model
+  then refuses by type instead of leaking `TypeError`. Its output for every
+  model it renders today is unchanged.
+
+## r2.3 Decisions (open)
+
+| # | Question | Readings and their cost |
+|---|---|---|
+| **D6** (IK4-Q2-R1; reverses D3-A) | Does the owner want the cross-module helper here? Which homes? | **A (proposed): yes, every same-shape home in r2.1's table** (eight beside evolve; pyrel as argued above), behaviour-preserving, each home's binder exits pinned before and after. Cost: about nine call sites and one characterization test per home, ~150 test lines. **B: only the four homes record 009 named** (api, lean, pyrel, discover). It leaves four identical copies. **C: unify the wrap rule** (every binder failure becomes `ReferenceInputError`, as `load_model` does). Exits change in discover (74 → 3 for `OSError`) and possibly others; each change is a compatibility ruling. **D: not here** (the r1 reading: the refactoring milestone). |
+| **D7** (IKE-Q1) | Discover over `.inf`/`.nan` | **A (proposed): discover exits 0 with a YAML candidate; evolve names it at 3.** Same as dates. **B: discover refuses by name at 3.** Discover would then refuse what it reads correctly, and dates would still differ. |
+| **D8** (IKE-Q2) | Recovery over YAML-only values | **A (proposed): refuse by name at 3** (`invalid-model-value`, path and kind), plus the verbalizer's totality fix. One rule with evolve's D1-A: evidence that is canonical JSON holds only JSON values. **B: give the verbalizer a spelling for each kind** (e.g. ISO dates), so such models verify. Verbalization bytes change only for models that fail today, but it adds normative spelling prose, and evolve would still refuse them. |
+
+## r2.4 Tests (added to `tests/test_evolve_loading.py`, red first)
+
+| ID | Case | Branch today | Expected |
+|---|---|---|---|
+| Q1a | discover on staff plus `.inf`, `-.inf`, `.nan` | 1 | 0; the candidate text holds the value |
+| Q1b | evolve preview of Q1a's proposal | — (no proposal) | 3, "source.x holds a non-finite float" |
+| Q2a | recovery verify on the dated bundle | 3, "Object of type date …" | 3, `invalid-model-value: source.created holds a date` |
+| Q2b | `render_model_verbalization` on the dated model | `TypeError` | `VerbalizationError` |
+| Q2c | the recovery suite's existing bundles | 0 | 0 (unchanged) |
+| H2 | each adopted home calls `load_model_bytes_bound` once per model load (monkeypatched counter, like H1) | fails | passes |
+| H3 | per home: a missing reference file, a digest mismatch and (where the home follows links) a linked file give the same outcome before and after, measured on `b1814f4` and pinned | passes (characterization) | passes, identical |
+| H4 | `load_model_bytes_bound` raises the binder's own exception objects unwrapped, and `attach` sets `_references` only when asked | fails (no helper) | passes |
+| E-all | r1's E1..RV4 after the walk moves | pass | pass, messages identical |
+
+**Gate:** r1's 56-file selection plus every `tests/test_*.py` naming an
+adopted home's module or command (`judgments`, `export_lean`, `souffle`,
+`pyrel`, `witness`, `session_replay`, `session_contract`, `recovery`), measured
+at execution. RF5/RF6 successors are registered for every pinned body that
+changes, as in r1.
+
+**Size estimate:** src ~120 lines changed (walk moved, helper, nine adoptions,
+recovery and verbalizer fixes); tests ~250.
+
+**Out of scope:** evolve's double parse; recovery's temporary-copy load and
+its reference binding; any exit renumbering.

@@ -41,6 +41,7 @@ from gnd.exits import (
     EXIT_OK,
 )
 from gnd.export import ilp as _ilp
+from gnd.export import ilp_learners as _learners
 from gnd.export.ilp import IlpError
 from gnd.export.ilp_rewrite import rewrite
 from gnd.measure import labels as _labels
@@ -53,7 +54,6 @@ RUN_CAP = 32 * 1024 * 1024
 MAX_DEPTH = 4
 INDUCTION_EXAMPLES = 256
 INDUCTION_COUNTEREXAMPLES = 32
-LEARNER = {"popper": "popper"}
 
 
 def _stderr(message: str) -> None:
@@ -121,6 +121,8 @@ class _Prepared:
     tree: dict[str, bytes]
     columns: dict[str, Any]
     work: Any
+    #: Each object type's ancestor closure, for the join check 9b (IL1, D12 (o)).
+    closures: dict[str, frozenset[str]]
     #: One entry per candidate model loaded by check 10 and the final checks,
     #: so the import's work counts them (IK5-Q6).
     reloads: list[int] = field(default_factory=list)
@@ -133,7 +135,6 @@ class _Prepared:
 def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
     """Manifest, model, binding and the export tree, in the export's order."""
     from gnd.evolve.service import _parse_model_text
-    from gnd.export.ilp_popper import render
     from gnd.model import MAX_MODEL_BYTES, load_model_bytes
     from gnd.redaction import RedactionPolicy
 
@@ -158,9 +159,11 @@ def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
         model=model, model_sha256=hashlib.sha256(model_bytes).hexdigest(), manifest=manifest,
         populations=populations, redacted=RedactionPolicy.from_model(model).effective_roles,
     )
-    rendering = render(neutral) if target == "popper" else {}
+    render = _learners.learner(target).render
+    rendering = render(neutral) if render is not None else {}
     return _Prepared(manifest, model_bytes, model, _parse_model_text(model_bytes.decode("utf-8")),
-                     bound, neutral, _ilp.export_tree(neutral, target, rendering), columns, work)
+                     bound, neutral, _ilp.export_tree(neutral, target, rendering), columns, work,
+                     _ilp.type_closures(model))
 
 
 def _refuse_out(out: Path) -> int | None:
@@ -206,15 +209,14 @@ def _cmd_export_ilp(model: str, labels: str, *, target: str, out: str) -> int:
 
 
 def _read_clauses(path: Path, target: str) -> tuple[bytes, dict[str, Any]]:
-    from gnd.export.ilp_popper import parse_program
-
     data = _read_capped(path, CLAUSES_CAP, "clauses")
-    if target == "popper":
+    parse = _learners.learner(target).parse
+    if parse is not None:
         try:
             text = data.decode("utf-8")
         except UnicodeDecodeError:
             raise IlpError(EXIT_ILL_FORMED, "unparsable: the program is not UTF-8") from None
-        document = parse_program(text)
+        document = parse(text)
     else:
         document = _json(data, f"clauses {path}")
     _validate(document, "ilp-clauses.schema.json", "gnd-ilp-clauses/1", f"clauses {path}")
@@ -316,22 +318,24 @@ def _cmd_import_ilp_rules(
             raise IlpError(EXIT_ILL_FORMED, f"export-mismatch: the run record binds export "
                            f"{record['export_sha256']}, not {prepared.digest}")
         learner = record["learner"]
-        if target in LEARNER and learner["name"] != LEARNER[target]:
+        entry = _learners.learner(target)
+        if entry.learner is not None and learner["name"] != entry.learner:
             raise IlpError(EXIT_ILL_FORMED, f"learner-mismatch: a {target} import needs a "
-                           f"{LEARNER[target]} run record, not {learner['name']!r}")
+                           f"{entry.learner} run record, not {learner['name']!r}")
         count = len(clause_doc["clauses"])
         indexes = [row["clause"] for row in record["coverage"]]
         if sorted(indexes) != list(range(count)):
             raise IlpError(EXIT_ILL_FORMED, f"coverage-shape: the run record must list each of "
                            f"the {count} clauses exactly once, not {indexes}")
         reported = {row["clause"]: row["covered"] for row in record["coverage"]}
-        method = f"ilp-{target}"
+        method = entry.method
         run_sha = hashlib.sha256(run_bytes).hexdigest()
         prefix = f"learned by {learner['name']} {learner['version']} from manifest " \
                  f"{prepared.manifest.sha256[:8]}, clause"
         cores = []
         for index, clause in enumerate(clause_doc["clauses"]):
-            core = rewrite(clause, index, prepared.neutral, prepared.columns)
+            core = rewrite(clause, index, prepared.neutral, prepared.columns,
+                           closures=prepared.closures)
             _validated(prepared, _envelope(core, _placeholder(learner, method, prepared),
                                            f"{prefix} {index}"), index, model_path)
             cores.append(core)

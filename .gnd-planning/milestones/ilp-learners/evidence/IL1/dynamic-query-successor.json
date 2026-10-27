@@ -1,0 +1,192 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/evolve-loading/dynamic-query-successor.json",
+ "predecessor_sha256": "2c58d5c0166576fd6a095eeb831ca0b5351465a1e761daf0ad60d68697e6f4f6",
+ "reason": "ilp-learners IL1 (spec r3, approved 2026-10-27): the learner registry, the ancestor-closure map read through ModelIndex, the type-confused join check 9b (D12 (o), D13 (o)) and SWI octal escapes in the Popper parser. The rows are the registry lookups, the closure map, the join check's site and closure reads, and the octal reader's remainder slice. Syntax census only; no model-query exception widening.",
+ "removed": [
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_ilp_rules",
+   "LEARNER[target]",
+   2
+  ]
+ ],
+ "added": [
+  [
+   "src/gnd/export/ilp.py",
+   "type_closures",
+   "dict[str, frozenset[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp.py",
+   "type_closures",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "<module>",
+   "dict[str, Learner]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "Callable[[dict[str, Any]], dict[str, bytes]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "Callable[[str], dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "dict[str, bytes]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "learner",
+   "LEARNERS[target]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_popper.py",
+   "_unquote",
+   "body[position + 1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "Mapping[str, frozenset[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "argument_types[atom['predicate']]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "argument_types[atom['predicate']][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "atom['args'][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "closures.get(first, frozenset({first}))",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "closures.get(second, frozenset({second}))",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "dict[str, Any]",
+   3
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "dict[str, set[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "list[tuple[dict[str, Any], str | None]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "object_type[declared]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "object_type[type_name]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "ordered[position + 1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "check_join_types",
+   "tuple[dict[str, Any], str | None]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "rewrite",
+   "Mapping[str, frozenset[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rewrite.py",
+   "rewrite",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_Prepared",
+   "dict[str, frozenset[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_Prepared",
+   "frozenset[str]",
+   1
+  ]
+ ],
+ "result_distinct_rows": 6539,
+ "result_occurrences": 8202
+}

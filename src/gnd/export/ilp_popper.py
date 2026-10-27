@@ -31,13 +31,17 @@ _TOKEN = re.compile(
     r"|(?P<op>=:=|=\\=|\\=|>=|=<|>|<|=)"
     r"|(?P<punct>[(),.;])"
     r"|(?P<var>[A-Z_][A-Za-z0-9_]*)|(?P<name>[a-z][A-Za-z0-9_]*)"
-    r"|(?P<int>-?[0-9]+)|(?P<quoted>'(?:[^'\\\n]|\\x[0-9a-fA-F]{1,6}\\|\\.)*')"
+    r"|(?P<int>-?[0-9]+)|(?P<quoted>'(?:[^'\\\n]|\\x[0-9a-fA-F]{1,6}\\|\\[0-7]+\\|\\.)*')"
 )
 _ESCAPES = {"\\": "\\", "'": "'", "n": "\n", "t": "\t"}
 MAX_DEPTH = 4
 #: Longer than the clause schema's integer bound (2^53 - 1) and far below
 #: Python's int-string conversion limit, so conversion never raises.
 MAX_INT_DIGITS = 32
+#: SWI writes a code point as a backslash, 1 to 7 octal digits and a backslash
+#: (IK5-Q2). The tokenizer takes any digit count, so a longer escape reaches
+#: :func:`_unquote` and is refused there with the octal message (IL1 spec §6).
+MAX_OCTAL_DIGITS = 7
 
 
 def quote(text: str) -> str:
@@ -247,6 +251,10 @@ def _unquote(token: str, line: int, column: int) -> str:
             out.append(_ESCAPES[following])
             position += 2
             continue
+        if following in "01234567":
+            out.append(_octal(body[position + 1:], line, column))
+            position = body.index("\\", position + 1) + 1
+            continue
         match = re.match(r"x([0-9a-fA-F]{1,6})\\", body[position + 1:])
         if match is None:
             raise IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
@@ -258,6 +266,24 @@ def _unquote(token: str, line: int, column: int) -> str:
         out.append(chr(code))
         position += 1 + match.end()
     return "".join(out)
+
+
+def _octal(rest: str, line: int, column: int) -> str:
+    """The character of an octal escape whose digits start ``rest``."""
+    def refuse(detail: str) -> IlpError:
+        return IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
+                        f"an octal escape {detail}")
+
+    match = re.match(r"([0-7]+)\\", rest)
+    if match is None:
+        raise refuse("without its closing backslash")
+    digits = match.group(1)
+    if len(digits) > MAX_OCTAL_DIGITS:
+        raise refuse(f"longer than {MAX_OCTAL_DIGITS} digits")
+    code = int(digits, 8)
+    if code > 0x10FFFF or 0xD800 <= code <= 0xDFFF:
+        raise refuse("outside Unicode scalar values")
+    return chr(code)
 
 
 def parse_program(text: str) -> dict[str, Any]:

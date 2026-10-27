@@ -53,6 +53,16 @@ The command creates `DIR`, which must not exist, and writes these files:
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
 
+**Adapters.** Each `--target` is one entry of the bridge's learner registry
+(`gnd.export.ilp_learners`):
+- its rendering, if any;
+- its parser, if any;
+- the learner name its run records must carry;
+- the `method` token written into each admitted rule's
+  `provenance.induction` (`ilp-<target>`).
+
+Today the entries are `popper` and `neutral`.
+
 **The export digest E** is the SHA-256 of `export.json`. The command prints it,
 and `sha256sum DIR/export.json` reproduces it. Two exports of the same inputs
 are byte-identical.
@@ -104,7 +114,9 @@ nothing. Admission is all-or-nothing.
      digest;
    - `export-mismatch`: its `export_sha256` is not E, which GND recomputes from
      MODEL, MANIFEST and `--target`;
-   - `learner-mismatch`: a Popper import's learner is not `popper`;
+   - `learner-mismatch`: the run record names a learner other than the
+     adapter's (`popper` for a Popper import). A neutral import accepts any
+     learner name; its rules carry `method: ilp-neutral`;
    - `coverage-shape`: `coverage` does not list every clause exactly once.
 2. **The fragment:** each clause is checked in the order of the table below.
 3. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
@@ -137,11 +149,24 @@ failing check refuses the clause with the name shown, as `clause <k>: <name>`.
 | 7 | the remaining atoms (the antecedent) are non-empty and joined by shared variables | `empty-antecedent`, `disconnected-body` |
 | 8 | every variable of the designated literal occurs in the antecedent | `non-ground-absence`, `unbound-comparison` |
 | 9 | no string constant starts with `$`, which a guarded bind reads as a variable | `constant-spelling` |
+| 9b | no variable joins object types that share no ancestor. A variable's sites are the atom positions it holds and the declared type of a comparison predicate it is an operand of (`gt_t_amount(C,100)` makes C an `amount`); every pair must share an ancestor, as `semantic:op-term-type-compat` requires. Each `_` is its own variable | `type-confused-join` |
 | 10 | the model plus the constraint validates | `invalid-guarded`, with the validator's rule ids |
 
 A comparison predicate the export declared, such as `gt_t_amount(C,100)`, counts
 as a comparison, whichever form wrote it. Popper text that is outside the
 parser's grammar is `unparsable`, with its line and column.
+
+**Quoted atoms in Popper text.** The parser reads the escapes SWI-Prolog
+writes:
+- `\\` and `\'`;
+- `\n` and `\t`;
+- a hexadecimal code point, `\x41\`;
+- an octal code point of 1 to 7 digits, `\101\`.
+
+An octal escape without its closing backslash, with more than 7 digits, or
+outside Unicode scalar values is `unparsable`, with a message naming the octal
+escape. SWI itself also reads an octal escape without its closing backslash;
+GND reads only what SWI writes.
 
 **The rewrite (body rewriting):**
 - X is dropped from every atom.

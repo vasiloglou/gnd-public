@@ -33,6 +33,7 @@ __all__ = [
     "build_neutral",
     "canonical_bytes",
     "export_tree",
+    "type_closures",
 ]
 
 NEUTRAL_SCHEMA_VERSION = "gnd-ilp/1"
@@ -152,6 +153,19 @@ def schema(model: Any, redacted: frozenset[tuple[str, str]]) -> tuple[dict[str, 
         "skipped": {"derived_fact_types": sorted(derived)},
     }
     return shape, columns
+
+
+def type_closures(model: Any) -> dict[str, frozenset[str]]:
+    """Each object type with its transitive supertypes, read through ModelIndex.
+
+    ``supertype_closure`` leaves the type itself out, so it is added: the result
+    is the ancestor closure that ``semantic:op-term-type-compat`` intersects. The
+    import's join check reads it (D12 (o), D13 (o)); it never reaches the wire."""
+    from gnd.model_index import ModelIndex
+
+    index = ModelIndex.for_model(model)
+    return {identifier: frozenset({identifier}) | index.supertype_closure(identifier)
+            for identifier in index.object_types_by_id()}
 
 
 def _value(value: Any, *, where: str) -> Any:

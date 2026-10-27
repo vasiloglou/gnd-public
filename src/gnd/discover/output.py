@@ -109,7 +109,8 @@ def candidate_text(document: dict[str, Any]) -> str:
     try:
         text = json.dumps(document, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
         return "".join(_kept(character) for character in text) + "\n"
-    except TypeError:
+    except (TypeError, ValueError):
+        # ValueError: a non-finite float, which YAML spells .inf or .nan (IKE-Q1).
         stream = io.StringIO()
         yaml = YAML(typ="safe")
         yaml.default_flow_style = False

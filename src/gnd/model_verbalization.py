@@ -479,10 +479,24 @@ def _coerce_model(model: Model | str | Path) -> Model:
     raise VerbalizationError("render_model_verbalization requires a validated Model or model path")
 
 
+def _refuse_values_outside_json(loaded: Model) -> None:
+    """The rendering is canonical JSON; a valid model may hold a value it cannot
+    spell, such as a date, which is refused by type and path (IKE-Q2)."""
+    from gnd.model import ModelValueError, json_document
+
+    try:
+        json_document(loaded.model_dump(exclude={"warnings"}), encodable=True)
+    except ModelValueError as error:
+        raise VerbalizationError(
+            f"{error.path} holds a {error.kind}, which the verbalization cannot represent"
+        ) from None
+
+
 def render_model_verbalization(model: Model | str | Path) -> str:
     """Render all model semantics in stable-id order with one final newline."""
 
     loaded = _coerce_model(model)
+    _refuse_values_outside_json(loaded)
     object_types = {
         str(item["id"]): item for item in loaded.object_types if item.get("id") is not None
     }

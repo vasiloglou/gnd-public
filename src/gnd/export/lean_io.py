@@ -4,8 +4,9 @@ import os
 from pathlib import Path
 
 from gnd import artifacts
-from gnd.model import load_model_bytes
-from gnd.references import bind_references
+from gnd import model as model_module
+from gnd.model import load_model_bytes  # noqa: F401 -- compatibility binding
+from gnd.references import bind_references  # noqa: F401 -- compatibility binding
 
 from . import lean
 from .lean_types import DEFAULT_LIMITS, LeanLimits, checked_limits, refused
@@ -35,11 +36,8 @@ def export_lean(
         # Parse both candidate documents before fragment classification/binding.
         lean.parse(mr, mf, limits)
         lean.parse(pr, pf, limits)
-        model = load_model_bytes(mr, source=model_path)
-        ctx = (
-            bind_references(model, root=reference_root or Path(model_path).parent)
-            if model.reference_populations
-            else None
+        _model, ctx = model_module.load_model_bytes_bound(
+            mr, source=model_path, root=reference_root or Path(model_path).parent
         )
         refs = tuple((o.id, b) for o, _, b in ctx._snapshots) if ctx else ()
         result = lean.render_lean(

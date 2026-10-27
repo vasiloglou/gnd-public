@@ -30,7 +30,9 @@ BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operation
                   "checker/__init__.py", "checker/_reports.py", "checker/_core.py", "model_verbalization.py",
                   # IK2 split its semantic rules into this module; the induced-knowledge
                   # close registers it (it reads no bind).
-                  "model/_induction.py")
+                  "model/_induction.py",
+                  # The evolve-loading follow-up's JSON-value walk (it reads no bind).
+                  "model/_documents.py")
 
 #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
 #: boundary two reviewers enforced against an earlier draft and

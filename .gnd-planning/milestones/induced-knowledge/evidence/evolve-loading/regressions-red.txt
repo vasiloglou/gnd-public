@@ -1,0 +1,12 @@
+review regressions against the reviewed code: HEAD f2507ca plus the reviewed working-tree diff, imported from a scratch copy via PYTHONPATH
+$ PYTHONPATH=<reviewed-src> uv run pytest -q -p no:randomly tests/test_evolve_loading.py -k rv -rfE
+=========================== short test summary info ============================
+FAILED tests/test_evolve_loading.py::test_rv1_discover_keeps_a_zoned_timestamp_as_the_safe_reader_did[2024-01-01T10:00:00+02:00]
+FAILED tests/test_evolve_loading.py::test_rv1_discover_keeps_a_zoned_timestamp_as_the_safe_reader_did[2024-01-01T10:00:00Z]
+FAILED tests/test_evolve_loading.py::test_rv2_a_json_document_is_not_put_through_the_yaml_scanner[staff.orm.yaml]
+FAILED tests/test_evolve_loading.py::test_rv2_a_json_document_is_not_put_through_the_yaml_scanner[staff.json]
+FAILED tests/test_evolve_loading.py::test_rv3_every_parse_refusal_lands_in_the_malformed_band
+FAILED tests/test_evolve_loading.py::test_rv4_a_core_scalar_tag_on_a_collection_is_named[x: !!str {b: 1}-tag !!str]
+FAILED tests/test_evolve_loading.py::test_rv4_a_core_scalar_tag_on_a_collection_is_named[x: !!str [1]-tag !!str]
+7 failed, 23 deselected in 0.40s
+exit 1

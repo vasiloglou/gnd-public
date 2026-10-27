@@ -190,6 +190,11 @@ declaration or file the binder refuses, such as a digest mismatch, an escaping p
 file, exits `3`. So does a candidate whose reference declarations differ from the current model's,
 which is refused before any of its files is read.
 
+Preview, apply and finalize parse every model as `gnd validate` does, including strict JSON for a
+`.json` model name. A model or candidate that holds a value JSON cannot represent (a date, a
+timestamp, binary, a set, a non-finite float, a non-core tag or a non-string key) exits `3`, and the
+refusal names the value's path.
+
 ### BlastRadiusEntry
 
 Each unique stable `reference` appears once with:

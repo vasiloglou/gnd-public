@@ -110,14 +110,10 @@ def export_souffle(model_path, population_path, *, reference_root=None, out=None
         )
         mf = "json" if Path(model_path).suffix == ".json" else "yaml"
         pf = "json" if Path(population_path).suffix == ".json" else "yaml"
-        from gnd.model import load_model_bytes
-        from gnd.references import bind_references
+        from gnd.model import load_model_bytes_bound
 
-        model = load_model_bytes(mr, source=model_path)
-        context = (
-            bind_references(model, root=reference_root or Path(model_path).parent)
-            if model.reference_populations
-            else None
+        _model, context = load_model_bytes_bound(
+            mr, source=model_path, root=reference_root or Path(model_path).parent
         )
         refs = tuple((o.id, b) for o, _, b in context._snapshots) if context else ()
         result = souffle.render_souffle(

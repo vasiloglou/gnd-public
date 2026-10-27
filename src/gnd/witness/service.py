@@ -12,9 +12,8 @@ def _witness_inputs(model_path, population_path, reference_root):
     """Load witness inputs without introducing a new checking claim."""
     from pathlib import Path
 
-    from gnd.model import load_model_bytes
+    from gnd.model import bind_declared_references, load_model_bytes
     from gnd.population import _parse_document_bytes, load_population_bytes
-    from gnd.references import bind_references
     from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError
 
     def read(path):
@@ -27,12 +26,8 @@ def _witness_inputs(model_path, population_path, reference_root):
     mr, pr = read(model_path), read(population_path)
     model = load_model_bytes(mr, source=model_path)
     candidate = load_population_bytes(pr, source=population_path, model=model)
-    context = (
-        bind_references(
-            model, root=reference_root if reference_root is not None else Path(model_path).parent
-        )
-        if model.reference_populations
-        else None
+    context = bind_declared_references(
+        model, root=reference_root if reference_root is not None else Path(model_path).parent
     )
     try:
         md = _rf7_input.loads(mr)

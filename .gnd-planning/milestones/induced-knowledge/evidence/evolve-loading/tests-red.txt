@@ -1,0 +1,26 @@
+base: 533c43a (src identical to main 63f7f1f)
+$ uv run pytest -q -p no:randomly tests/test_evolve_loading.py -rfE
+=========================== short test summary info ============================
+FAILED tests/test_evolve_loading.py::test_e1_a_discover_proposal_on_a_dated_model_is_a_named_refusal
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: 2024-01-01T10:00:00Z-timestamp]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: !!binary aGVsbG8=-binary]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: !!set {a, b}-set]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: .inf-non-finite float]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: .nan-non-finite float]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: !foo 3-tag !foo]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: !!omap [{a: 1}]-tag !!omap]
+FAILED tests/test_evolve_loading.py::test_e2_each_value_outside_json_is_named[x: !!pairs [{a: 1}]-tag !!pairs]
+FAILED tests/test_evolve_loading.py::test_e3b_the_close_rows_tagged_extra_is_named_not_invalid_yaml
+FAILED tests/test_evolve_loading.py::test_e4_a_candidate_alone_holding_a_date_is_named_before_replay
+FAILED tests/test_evolve_loading.py::test_j1_a_json_named_model_holding_yaml_is_refused
+FAILED tests/test_evolve_loading.py::test_j3_a_yaml_candidate_for_a_json_model_is_refused
+FAILED tests/test_evolve_loading.py::test_w1_a_binder_refusal_is_wrapped_once
+FAILED tests/test_evolve_loading.py::test_h1_every_load_goes_through_the_one_loader
+FAILED tests/test_evolve_loading.py::test_d5_discover_reads_a_tagged_model - ...
+FAILED tests/test_evolve_loading.py::test_p1_the_shared_parser_is_the_validators[# IK4 approval corpus: the base model. Synthetic and anonymized (IK-R10).\n# Declares no constraints, so every candidate is new.\nversion: 1\nmodel_id: ik4-staff\nsource:\n  kind: fixture\nobject_types:\n  - id: person\n    name: Person\n    kind: entity\n    reference: { mode: popular, value_type: person_id }\n  - id: person_id\n    name: PersonId\n    kind: value\n    primitive: Integer\n  - id: team\n    name: Team\n    kind: entity\n    reference: { mode: popular, value_type: team_code }\n  - id: team_code\n    name: TeamCode\n    kind: value\n    primitive: String\n  - id: grade\n    name: Grade\n    kind: value\n    primitive: String\n  - id: skill\n    name: Skill\n    kind: value\n    primitive: String\nfact_types:\n  - id: person_in_team\n    reading: "{Person} is in {Team}"\n    roles:\n      - { object_type: person, role_name: person }\n      - { object_type: team, role_name: team }\n  - id: person_has_grade\n    reading: "{Person} has {Grade}"\n    roles:\n      - { object_type: person, role_name: person }\n      - { object_type: grade, role_name: grade }\n  - id: team_led_by\n    reading: "{Team} is led by {Person}"\n    roles:\n      - { object_type: team, role_name: team }\n      - { object_type: person, role_name: leader }\n  - id: person_has_skill\n    reading: "{Person} has {Skill}"\n    roles:\n      - { object_type: person, role_name: person }\n      - { object_type: skill, role_name: skill }\nconstraints: []\n]
+FAILED tests/test_evolve_loading.py::test_p1_the_shared_parser_is_the_validators[{"version": 1, "model_id": "m", "object_types": [], "fact_types": []}]
+FAILED tests/test_evolve_loading.py::test_p1_the_shared_parser_is_the_validators[{version: 1, model_id: m, object_types: [], fact_types: []}\n]
+FAILED tests/test_evolve_loading.py::test_p1_the_shared_parser_keeps_the_loaders_refusals
+FAILED tests/test_evolve_loading.py::test_the_walk_names_a_non_string_key - I...
+21 failed, 2 passed in 1.30s
+exit 1

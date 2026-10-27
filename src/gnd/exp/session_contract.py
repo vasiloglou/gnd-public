@@ -1685,11 +1685,11 @@ def read_session_contract(
                     raise SessionContractError(
                         "session contracts do not support unbound reference populations"
                     )
-                from gnd.references import bind_references
+                from gnd.model import bind_declared_references
 
                 try:
-                    selected_model._references = bind_references(
-                        selected_model, root=root / case.reference_root
+                    bind_declared_references(
+                        selected_model, root=root / case.reference_root, attach=True
                     )
                 except Exception as error:
                     raise SessionContractError("session references could not be bound") from error

@@ -242,13 +242,14 @@ def test_ik6_r1_the_runner_normalizes_text_and_bytes(tmp_path):
 
 
 def test_ik4_q2_q2_parse_refusals_name_the_model_they_read():
-    """Close reader two: a tagged mapping in a description extra loads, but evolve's
-    safe parser refuses it, and a current model must not be called the candidate."""
+    """Close reader two: a current model must not be called the candidate. The
+    tagged extra it first used now parses (evolve-loading follow-up, D3-A/D4-A;
+    test_evolve_loading.py E3b names it), so invalid YAML carries the case."""
     import pytest
 
     from gnd.evolve.service import EvolutionError, _parse_model_text
 
-    text = "version: 1\nobject_types:\n  - {id: a, description: {summary: s, extra: !foo {a: 1}}}\n"
+    text = "version: 1\nobject_types:\n  - {id: a, description: [unclosed}\n"
     with pytest.raises(EvolutionError, match=r"^current model is not valid YAML at line 3, column \d+$"):
         _parse_model_text(text, label="current model")
     with pytest.raises(EvolutionError, match=r"^candidate model is not valid YAML at line 3"):

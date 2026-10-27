@@ -23,6 +23,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from gnd.model._documents import ModelValueError as ModelValueError
+from gnd.model._documents import json_document as json_document
 from gnd.model._induction import _induction_strings as _induction_strings
 from gnd.model._induction import (
     _rule_induced_confirmed_reviewed as _rule_induced_confirmed_reviewed,
@@ -277,8 +279,10 @@ from gnd import artifacts
 from gnd.values import reference_model_digest
 
 
-def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
-    """Validate one immutable bounded buffer; source is diagnostic metadata."""
+def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+    """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
+    JSON for a ``.json`` source, otherwise the alias/event guard and then the
+    round-trip YAML reader. The document is returned unvalidated."""
     from ruamel.yaml.events import AliasEvent
 
     if len(data) > MAX_MODEL_BYTES:
@@ -306,6 +310,12 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
             if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
                 raise ModelLoadError("model YAML alias/event guard refused input")
         doc = configure_comment_scanner(YAML(typ="rt")).load(text)
+    return doc
+
+
+def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+    """Validate one immutable bounded buffer; source is diagnostic metadata."""
+    doc = parse_model_document(data, source=source)
     issues = _layer1_structural(doc)
     if issues:
         raise ModelValidationError(issues)
@@ -577,6 +587,30 @@ def bind_references(model: Model, *, root: str | Path) -> BoundReferenceContext:
     validate_declarations(model)
     with retained_root(root) as descriptor:
         return _bind_at(model, descriptor)
+
+
+def bind_declared_references(
+    model: Model, *, root: str | Path, attach: bool = False
+) -> BoundReferenceContext | None:
+    """Bind a model's declared reference populations at ``root``, or return None
+    when it declares none. The binder's own exceptions pass through unwrapped,
+    so every caller keeps its refusal mapping (IK4-Q2-R1). ``attach`` also sets
+    the context on the model."""
+    if not model.reference_populations:
+        return None
+    context = bind_references(model, root=root)
+    if attach:
+        model._references = context
+    return context
+
+
+def load_model_bytes_bound(
+    data: bytes, *, source: str | Path, root: str | Path, attach: bool = False
+) -> tuple[Model, BoundReferenceContext | None]:
+    """``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither
+    step's exceptions are wrapped."""
+    model = load_model_bytes(data, source=source)
+    return model, bind_declared_references(model, root=root, attach=attach)
 
 
 def resolve_context(

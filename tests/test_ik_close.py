@@ -239,3 +239,68 @@ def test_ik6_r1_the_runner_normalizes_text_and_bytes(tmp_path):
     inside = f"{tmp_path}/a and {tmp_path.resolve()}/b"
     assert runner.without_run_dir(inside, tmp_path) == "<run>/a and <run>/b"
     assert runner.without_run_dir(inside.encode(), tmp_path) == b"<run>/a and <run>/b"
+
+
+def test_ik4_q2_q2_parse_refusals_name_the_model_they_read():
+    """Close reader two: a tagged mapping in a description extra loads, but evolve's
+    safe parser refuses it, and a current model must not be called the candidate."""
+    import pytest
+
+    from gnd.evolve.service import EvolutionError, _parse_model_text
+
+    text = "version: 1\nobject_types:\n  - {id: a, description: {summary: s, extra: !foo {a: 1}}}\n"
+    with pytest.raises(EvolutionError, match=r"^current model is not valid YAML at line 3, column \d+$"):
+        _parse_model_text(text, label="current model")
+    with pytest.raises(EvolutionError, match=r"^candidate model is not valid YAML at line 3"):
+        _parse_model_text(text)
+    with pytest.raises(EvolutionError, match=r"^current model is not a mapping$"):
+        _parse_model_text("- 1\n", label="current model")
+
+
+# SHA-256 of the two downstream application names with every separator removed
+# and lower-cased (close reader three, F4). This public repository never prints them.
+DOWNSTREAM_JOINED = {
+    7: "e9eb87c32c4f8d872eb8db64b994e56db871012bbec5d71736cffff54d51a020",
+    12: "b9f3e817dbf9539fc43523a639eee23030afc4fc1be1eae4b42962889bea2c3a",
+}
+
+
+def joined_hits(text: str, digests: dict[int, str]) -> bool:
+    """True when some window of ``text``, lower-cased with every non-alphanumeric
+    character removed, hashes to a digest of that window's length. This catches
+    any case, any separator (or none) and any affix."""
+    import hashlib
+
+    joined = re.sub(r"[^a-z0-9]", "", text.lower())
+    return any(
+        hashlib.sha256(joined[start:start + size].encode()).hexdigest() == digest
+        for size, digest in digests.items()
+        for start in range(len(joined) - size + 1)
+    )
+
+
+def test_close_f4_the_joined_check_catches_every_spelling():
+    import hashlib
+
+    placeholder = {7: hashlib.sha256(b"fooapps").hexdigest()}
+    for spelling in ["foo-apps", "Foo_Apps", "FooApps", "foo apps", "foo.apps", "xfoo-appsy", "FOO--APPS"]:
+        assert joined_hits(f"see {spelling} here", placeholder), spelling
+    assert not joined_hits("foo-app", placeholder)
+
+
+def test_close_f4_no_downstream_name_in_the_milestone_public_text():
+    import subprocess
+
+    roots = ["docs", "src/gnd/examples", "src/gnd/skills", ".gnd-planning/milestones/induced-knowledge",
+             "tests/fixtures/induced_knowledge", "README.md"]
+    listed = subprocess.run(["git", "ls-files", "--", *roots], cwd=ROOT, check=True,
+                            capture_output=True, text=True).stdout.split()
+    leaked = []
+    for name in listed:
+        try:
+            text = (ROOT / name).read_text(encoding="utf-8")
+        except (UnicodeDecodeError, FileNotFoundError):
+            continue
+        if joined_hits(text, DOWNSTREAM_JOINED):
+            leaked.append(name)
+    assert leaked == []

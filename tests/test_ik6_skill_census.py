@@ -8,7 +8,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CENSUS = ROOT / ".gnd-planning/milestones/induced-knowledge/skill-census.md"
-PHASE = re.compile(r"IK[1-6](?:-Q\d+)?")
+PHASE = re.compile(r"IK[1-6](?:-Q\d+)?|IK-close")
+CURRENT = "IK-close"  # the scope an uncommitted edit is credited to
 MILESTONE_FIRST = "6f070354b29042b46aaa48e5eafaa6ca75299cde"  # the first IK1 commit; its parent is the milestone base
 
 
@@ -56,12 +57,12 @@ def test_t4_the_changed_cells_agree_with_git():
 
 
 def git_phases(path: str) -> set[str]:
-    """The phases whose commit subjects since the milestone base name this file, plus IK6 for uncommitted edits."""
+    """The phases whose commit subjects since the milestone base name this file, plus CURRENT for uncommitted edits."""
     subjects = subprocess.run(["git", "log", "--format=%s", f"{MILESTONE_FIRST}^..HEAD", "--", path], cwd=ROOT,
                               check=True, capture_output=True, text=True).stdout
     phases = {m for scope in re.findall(r"\(([^)]*)\)", subjects) for m in PHASE.findall(scope)}
     dirty = subprocess.run(["git", "diff", "--quiet", "HEAD", "--", path], cwd=ROOT).returncode
-    return phases | ({"IK6"} if dirty else set())
+    return phases | ({CURRENT} if dirty else set())
 
 
 def phase_errors(rows: list[tuple[str, str]]) -> list[str]:

@@ -233,6 +233,21 @@
         "algorithm_sha256": "1377b454d264f3bafd462b56cbbe7a2b5bc8345f89d481e0321c221da6fac3db"
       },
       "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): three D-12 refusal markers for induced provenance (spec R-I1..R-I4) map to exit 3 beside the existing D-12 markers; every other branch unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_diff",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "f4e94e474f8ed1d7f6ef45ee4c7dba8b514b4b4984292aec637bc75135890c3d",
+        "algorithm_sha256": "969308c72abae19a24094c4647480d3bff7fa9616caeb2d45c49cd88f09da59a"
+      },
+      "after": {
+        "raw_sha256": "ce4c83ff46b160bcd5775012284d0531f8bd0e755f752cd6b1bf7a0b7a596b11",
+        "algorithm_sha256": "b449574d41a3170f806554129e0fbb9ab2a4758ef005b8049be008220753d114"
+      },
+      "reason": "Owner-approved induced-knowledge close (2026-10-27, close spec C-D1, IK1-Q2): the text format of gnd diff ends with one ANNOTATION block per description change, each side printed as ASCII-escaped canonical JSON; a diff without annotations prints the same text, and every other branch is unchanged."
     }
   ]
 }

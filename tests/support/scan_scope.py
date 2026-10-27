@@ -1,9 +1,11 @@
 """The one rule for which sources the RF6 query and RF7 parser scans read (IK6-R1).
 
-Packaged examples are standalone teaching scripts. They read no model through
-GND's modules, and ``tools/gnd_layers.json`` already excludes them from
-layering, so the scans exclude them by the same entry instead of listing each
-script.
+Packaged examples are standalone teaching code, not GND modules: the RF6 and
+RF7 inventories govern how GND's own modules read models and JSON, and an
+example that calls a public loader (``plan_apps/core.py`` calls ``load_model``)
+is a consumer of that API, not part of it. ``tools/gnd_layers.json`` already
+excludes them from layering, so the scans exclude them by the same entry
+instead of listing each script.
 """
 
 import json

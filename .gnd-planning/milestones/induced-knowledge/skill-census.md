@@ -33,7 +33,7 @@ of these alters the behaviour or format it documents.
 | src/gnd/skills/gnd-extract/SKILL.md | IK1 | the verbalization row names object-type description content |
 | src/gnd/skills/gnd-extract/references/extraction-contract.md | no | inspected at IK6: it never states the vocabulary text's contents, so IK1's description keys need no line here |
 | src/gnd/skills/gnd-model-evolve/SKILL.md | IK2, IK4, IK5 | the seven-source taxonomy and reviewed admission (IK2); reviewing `gnd discover` proposals (IK4) and `gnd import ilp-rules` proposals (IK5) |
-| src/gnd/skills/gnd-model-evolve/references/evolution-contract.md | IK1, IK2, IK4-Q2 | description changes in a proposal (IK1); induced status changes (IK2); reference binding and its exits (IK4-Q2) |
+| src/gnd/skills/gnd-model-evolve/references/evolution-contract.md | IK1, IK2, IK4-Q2, IK-close | description changes in a proposal (IK1); induced status changes (IK2); reference binding and its exits (IK4-Q2); the `operation` surface listed (IK-close, IK1-Q5) |
 | src/gnd/skills/gnd-model-from-code/SKILL.md | IK2 | recovery emits five of seven sources, and says why induced is not one |
 | src/gnd/skills/gnd-model-from-code/references/recovery-contract.md | no | the recovery bundle contract; recovery emits no induced constraint |
 | src/gnd/skills/gnd-model-from-text/SKILL.md | IK2 | the seven-source taxonomy reference |

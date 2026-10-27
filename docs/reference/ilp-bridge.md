@@ -46,12 +46,46 @@ The command creates `DIR`, which must not exist, and writes these files:
 | File | What it holds |
 |---|---|
 | `neutral.json` | the learner-neutral form, `gnd-ilp/1` |
-| `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, then the comparison definitions |
+| `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, grouped by predicate; then each threshold predicate's facts |
 | `popper/exs.pl` | `pos(wrong('<id>')).` or `neg(wrong('<id>')).` per population, in manifest order |
-| `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate, `magic_value_type` for integer types, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
+| `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate and per threshold predicate, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
 | `export.json` | `gnd-ilp-export/1`: the target, the adapter version, and each other file's path, SHA-256 and size |
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
+
+**Threshold predicates (Popper adapter version 3).** Popper v5.0.1 has no way
+to supply a constant, so each comparison against an observed value is its own
+one-argument predicate. It is written as ground facts: the observed values of
+its type that the comparison holds for. Popper analyses `bk.pl` in an ASP
+solver and calls predicates with unbound arguments, and both need facts:
+
+```prolog
+gt_t_amount__120(150).
+gt_t_amount__120(200).
+lt_t_amount__m5(-10).
+```
+
+- **Operators:** `gt` and `lt`.
+- **Values:** the distinct observed values of each integer type. Above 32
+  values, 32 are taken at evenly spaced ranks, always including the minimum
+  and the maximum. A threshold that holds for no observed value (`gt` at the
+  maximum, `lt` at the minimum) is not written.
+- **Reading back:** the parser reads `gt_t_amount__120(V)` as the declared
+  comparison `gt_t_amount(V, 120)`; `ge` and `le` names are read too. A
+  negative value is spelled `m`, and the value follows the last `__`.
+
+The `popper` target's `export.json` says `"adapter_version": "3"`; the
+`neutral` target's says `"1"`.
+
+**Adapters.** Each `--target` is one entry of the bridge's learner registry
+(`gnd.export.ilp_learners`):
+- its rendering, if any;
+- its parser, if any;
+- the learner name its run records must carry;
+- the `method` token written into each admitted rule's
+  `provenance.induction` (`ilp-<target>`).
+
+Today the entries are `popper` and `neutral`.
 
 **The export digest E** is the SHA-256 of `export.json`. The command prints it,
 and `sha256sum DIR/export.json` reproduces it. Two exports of the same inputs
@@ -104,7 +138,9 @@ nothing. Admission is all-or-nothing.
      digest;
    - `export-mismatch`: its `export_sha256` is not E, which GND recomputes from
      MODEL, MANIFEST and `--target`;
-   - `learner-mismatch`: a Popper import's learner is not `popper`;
+   - `learner-mismatch`: the run record names a learner other than the
+     adapter's (`popper` for a Popper import). A neutral import accepts any
+     learner name; its rules carry `method: ilp-neutral`;
    - `coverage-shape`: `coverage` does not list every clause exactly once.
 2. **The fragment:** each clause is checked in the order of the table below.
 3. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
@@ -137,11 +173,24 @@ failing check refuses the clause with the name shown, as `clause <k>: <name>`.
 | 7 | the remaining atoms (the antecedent) are non-empty and joined by shared variables | `empty-antecedent`, `disconnected-body` |
 | 8 | every variable of the designated literal occurs in the antecedent | `non-ground-absence`, `unbound-comparison` |
 | 9 | no string constant starts with `$`, which a guarded bind reads as a variable | `constant-spelling` |
+| 9b | no variable joins object types that share no ancestor. A variable's sites are the atom positions it holds and the declared type of a comparison predicate it is an operand of (`gt_t_amount(C,100)` makes C an `amount`); every pair must share an ancestor, as `semantic:op-term-type-compat` requires. Each `_` is its own variable | `type-confused-join` |
 | 10 | the model plus the constraint validates | `invalid-guarded`, with the validator's rule ids |
 
 A comparison predicate the export declared, such as `gt_t_amount(C,100)`, counts
 as a comparison, whichever form wrote it. Popper text that is outside the
 parser's grammar is `unparsable`, with its line and column.
+
+**Quoted atoms in Popper text.** The parser reads the escapes SWI-Prolog
+writes:
+- `\\` and `\'`;
+- `\n` and `\t`, and `\a`, `\b`, `\v`, `\f` and `\r`;
+- a hexadecimal code point, `\x41\`;
+- an octal code point of 1 to 7 digits, `\101\`.
+
+An octal escape without its closing backslash, with more than 7 digits, or
+outside Unicode scalar values is `unparsable`, with a message naming the octal
+escape. SWI itself also reads an octal escape without its closing backslash;
+GND reads only what SWI writes.
 
 **The rewrite (body rewriting):**
 - X is dropped from every atom.

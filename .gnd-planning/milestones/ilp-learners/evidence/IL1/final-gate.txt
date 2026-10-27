@@ -1,0 +1,9 @@
+$ uv run pytest -q -p no:randomly $(cat .gnd-planning/milestones/ilp-learners/evidence/IL1/gate-files.txt)
+673 passed, 19 deselected in 41.83s
+exit 0
+$ GND_IL1_SWIPL=<scratch>/SWI-Prolog.app/Contents/MacOS/swipl GND_IL1_POPPER_PYTHON=<scratch>/venv/bin/python uv run pytest -q -p no:randomly -m live tests/test_ilp_learners.py
+3 passed, 50 deselected in 0.45s
+exit 0
+$ uv run ruff check src/gnd/export tests/test_ilp_learners.py .gnd-planning/milestones/ilp-learners/evidence/IL1/run_popper.py
+All checks passed!
+exit 0

@@ -2,13 +2,13 @@
  "version": 1,
  "note": "Hand-written from spec r1. Constraints are the exact guarded constraints the proposal adds, in clause order; refusals name the spec's construct or binding reason and, for fragment refusals, the clause index.",
  "export_sha256": {
-  "popper": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c",
+  "popper": "eac4298752b7429af70cab7d8b8f21c648cb71dca0127d22471069dba63282b5",
   "neutral": "3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61"
  },
  "cases": {
   "X1": {
    "exit": 0,
-   "export_sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c",
+   "export_sha256": "eac4298752b7429af70cab7d8b8f21c648cb71dca0127d22471069dba63282b5",
    "tree": "expected-export/popper"
   },
   "X2": {
@@ -266,7 +266,7 @@
        "evidence": [
         {
          "ref": "ilp/export.json",
-         "sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c"
+         "sha256": "eac4298752b7429af70cab7d8b8f21c648cb71dca0127d22471069dba63282b5"
         },
         {
          "ref": "ilp/clauses",
@@ -274,7 +274,7 @@
         },
         {
          "ref": "ilp/run",
-         "sha256": "552b328c902b7ce46847720466cdf8dfef8938b60f08eb1615dc4a2c2e9df0e4"
+         "sha256": "d65ac118e00d07d21aea3b3fa71d57eef37cdd9cf8d13d54e15e0da3509edeb3"
         }
        ]
       }
@@ -323,7 +323,7 @@
        "evidence": [
         {
          "ref": "ilp/export.json",
-         "sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c"
+         "sha256": "eac4298752b7429af70cab7d8b8f21c648cb71dca0127d22471069dba63282b5"
         },
         {
          "ref": "ilp/clauses",
@@ -331,7 +331,7 @@
         },
         {
          "ref": "ilp/run",
-         "sha256": "552b328c902b7ce46847720466cdf8dfef8938b60f08eb1615dc4a2c2e9df0e4"
+         "sha256": "d65ac118e00d07d21aea3b3fa71d57eef37cdd9cf8d13d54e15e0da3509edeb3"
         }
        ]
       }
@@ -382,7 +382,7 @@
        "evidence": [
         {
          "ref": "ilp/export.json",
-         "sha256": "0ee67d238eaf0286e3e7ecae9baa1c8f331b24892124f9091fdfd6f10412788c"
+         "sha256": "eac4298752b7429af70cab7d8b8f21c648cb71dca0127d22471069dba63282b5"
         },
         {
          "ref": "ilp/clauses",
@@ -390,7 +390,7 @@
         },
         {
          "ref": "ilp/run",
-         "sha256": "552b328c902b7ce46847720466cdf8dfef8938b60f08eb1615dc4a2c2e9df0e4"
+         "sha256": "d65ac118e00d07d21aea3b3fa71d57eef37cdd9cf8d13d54e15e0da3509edeb3"
         }
        ]
       }

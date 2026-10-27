@@ -2,7 +2,8 @@
 
 The normative fragment table, its check order and its semantic-difference
 rows live in ``docs/reference/ilp-bridge.md``; this module implements checks 1
-to 9 in that order, and the import service runs check 10 (the model validator).
+to 9 and the join check 9b in that order, and the import service runs check 10
+(the model validator).
 The first failing check refuses the clause with its construct name. A clause
 that passes becomes one ``guarded`` constraint by **body rewriting**: the head
 variable is dropped, one designated body literal moves into the consequent,
@@ -12,12 +13,13 @@ clause text; it is data from the closed clause form.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import Column, IlpError
 
-__all__ = ["NEGATE", "REFUSALS", "rewrite", "variable"]
+__all__ = ["NEGATE", "REFUSALS", "check_join_types", "rewrite", "variable"]
 
 NEGATE = {">": "<=", "<=": ">", "<": ">=", ">=": "<", "=": "!=", "!=": "="}
 #: Every refusal name, in check order (check 10, ``invalid-guarded``, is the
@@ -26,7 +28,7 @@ REFUSALS = (
     "head-shape", "negation-as-failure", "disjunction", "aggregate", "unknown-predicate",
     "arity", "recursion", "example-variable", "multiple-comparisons", "comparison-type",
     "non-ground-absence", "empty-antecedent", "disconnected-body", "unbound-comparison",
-    "constant-spelling", "invalid-guarded",
+    "constant-spelling", "type-confused-join", "invalid-guarded",
 )
 _KINDS = {"not": "negation-as-failure", "or": "disjunction", "aggregate": "aggregate"}
 
@@ -61,12 +63,58 @@ def _anonymous(terms: list[dict[str, Any]]) -> bool:
     return any(term.get("var") == "_" for term in terms)
 
 
-def rewrite(
-    clause: dict[str, Any], index: int, neutral: dict[str, Any], columns: dict[str, Column]
-) -> dict[str, Any]:
-    """Checks 1 to 9 and the rewrite; returns ``{type, antecedent, consequent}``.
+def check_join_types(
+    atoms: list[dict[str, Any]],
+    compares: list[tuple[dict[str, Any], str | None]],
+    index: int,
+    neutral: dict[str, Any],
+    *,
+    closures: Mapping[str, frozenset[str]],
+) -> int:
+    """Check 9b, ``type-confused-join`` (D12 (o), D13 (o)); returns the pairs compared.
 
-    ``columns`` are the export's predicates (:func:`gnd.export.ilp.schema`)."""
+    A named variable's sites are the atom positions it occupies and the declared
+    type of a comparison predicate it is an operand of. Every pair of their
+    object types must have intersecting ancestor ``closures`` -- the predicate
+    of ``semantic:op-term-type-compat``. Each ``_`` is its own fresh variable,
+    so it has no join to check."""
+    object_type = {row["name"]: row["object_type"] for row in neutral["types"]}
+    argument_types = {row["name"]: row["types"] for row in neutral["predicates"]}
+    sites: dict[str, set[str]] = {}
+    for atom in atoms:
+        for term, type_name in zip(atom["args"][1:], argument_types[atom["predicate"]][1:],
+                                   strict=True):
+            if "var" in term and term["var"] != "_":
+                sites.setdefault(term["var"], set()).add(object_type[type_name])
+    for compare, declared in compares:
+        if declared is not None:
+            for name in _vars([compare["left"], compare["right"]]):
+                sites.setdefault(name, set()).add(object_type[declared])
+    pairs = 0
+    for name, found in sites.items():
+        ordered = sorted(found)
+        for position, first in enumerate(ordered):
+            for second in ordered[position + 1:]:
+                pairs += 1
+                if not closures.get(first, frozenset({first})) & closures.get(second, frozenset({second})):
+                    raise _refuse("type-confused-join", index,
+                                  f"variable {name} joins {first} and {second}")
+    return pairs
+
+
+def rewrite(
+    clause: dict[str, Any],
+    index: int,
+    neutral: dict[str, Any],
+    columns: dict[str, Column],
+    *,
+    closures: Mapping[str, frozenset[str]] | None = None,
+) -> dict[str, Any]:
+    """Checks 1 to 9, the join check 9b and the rewrite; returns ``{type, antecedent, consequent}``.
+
+    ``columns`` are the export's predicates (:func:`gnd.export.ilp.schema`).
+    ``closures`` (:func:`gnd.export.ilp.type_closures`) turns on check 9b; the
+    import always passes them, and without them the check is skipped."""
     predicates = columns
     comparisons = {row["name"]: row for row in neutral["comparisons"]}
     primitives = {row["name"]: row["primitive"] for row in neutral["types"]}
@@ -214,4 +262,8 @@ def rewrite(
                                      "right": scalar(compare["right"], None)}}
     else:
         consequent = {"absence": item(designated)}  # type: ignore[arg-type]
+
+    # 9b. no variable joins object types that share no ancestor
+    if closures is not None:
+        check_join_types(atoms, compares, index, neutral, closures=closures)
     return {"type": "guarded", "antecedent": body, "consequent": consequent}

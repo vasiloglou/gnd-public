@@ -33,10 +33,13 @@ __all__ = [
     "build_neutral",
     "canonical_bytes",
     "export_tree",
+    "type_closures",
 ]
 
 NEUTRAL_SCHEMA_VERSION = "gnd-ilp/1"
 EXPORT_SCHEMA_VERSION = "gnd-ilp-export/1"
+#: The neutral target's adapter version; an adapter with its own rendering
+#: declares its own in the learner registry (IL1-A1).
 ADAPTER_VERSION = "1"
 COVERS_CLASS = "negative"
 #: IK5-D14: bounds fixed before results. The facts bound is 500,000 by owner
@@ -154,6 +157,19 @@ def schema(model: Any, redacted: frozenset[tuple[str, str]]) -> tuple[dict[str, 
     return shape, columns
 
 
+def type_closures(model: Any) -> dict[str, frozenset[str]]:
+    """Each object type with its transitive supertypes, read through ModelIndex.
+
+    ``supertype_closure`` leaves the type itself out, so it is added: the result
+    is the ancestor closure that ``semantic:op-term-type-compat`` intersects. The
+    import's join check reads it (D12 (o), D13 (o)); it never reaches the wire."""
+    from gnd.model_index import ModelIndex
+
+    index = ModelIndex.for_model(model)
+    return {identifier: frozenset({identifier}) | index.supertype_closure(identifier)
+            for identifier in index.object_types_by_id()}
+
+
 def _value(value: Any, *, where: str) -> Any:
     if isinstance(value, dict) and set(value) == {"$opaque"}:
         raise _refuse("opaque", f"{where} holds an opaque value the export cannot render")
@@ -205,7 +221,10 @@ def build_neutral(
     return neutral, columns, Work(len(entries), len(facts))
 
 
-def export_tree(neutral: dict[str, Any], target: str, rendering: dict[str, bytes]) -> dict[str, bytes]:
+def export_tree(
+    neutral: dict[str, Any], target: str, rendering: dict[str, bytes], *,
+    adapter_version: str = ADAPTER_VERSION,
+) -> dict[str, bytes]:
     """Every file the export writes, keyed by its path, ``export.json`` last.
 
     ``rendering`` is the adapter's files (none for the ``neutral`` target). The
@@ -218,7 +237,7 @@ def export_tree(neutral: dict[str, Any], target: str, rendering: dict[str, bytes
     index = {
         "schema_version": EXPORT_SCHEMA_VERSION,
         "target": target,
-        "adapter_version": ADAPTER_VERSION,
+        "adapter_version": adapter_version,
         "files": [{"path": path, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
                   for path, data in sorted(files.items())],
     }

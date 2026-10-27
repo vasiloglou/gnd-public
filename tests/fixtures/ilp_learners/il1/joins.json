@@ -1,0 +1,96 @@
+{
+ "version": 1,
+ "note": "Clauses over the IK5 orders model (tests/fixtures/induced_knowledge/ik5-corpus/orders.orm.yaml). Expected exits are the import's.",
+ "cases": [
+  {
+   "id": "J1",
+   "target": "popper",
+   "story": "variable C is an amount in order_amount and an order in order_by: a type-confused join",
+   "program": "wrong(A):- f_order_amount(A,B,C),f_order_by(A,C,D),f_customer_blocked(A,D).",
+   "exit": 3,
+   "refusal": "type-confused-join",
+   "clause": 0
+  },
+  {
+   "id": "J2",
+   "target": "neutral",
+   "story": "the same clause in the neutral form",
+   "clauses": [
+    {
+     "head": {
+      "predicate": "wrong",
+      "args": [
+       {
+        "var": "A"
+       }
+      ]
+     },
+     "body": [
+      {
+       "atom": {
+        "predicate": "f_order_amount",
+        "args": [
+         {
+          "var": "A"
+         },
+         {
+          "var": "B"
+         },
+         {
+          "var": "C"
+         }
+        ]
+       }
+      },
+      {
+       "atom": {
+        "predicate": "f_order_by",
+        "args": [
+         {
+          "var": "A"
+         },
+         {
+          "var": "C"
+         },
+         {
+          "var": "D"
+         }
+        ]
+       }
+      },
+      {
+       "atom": {
+        "predicate": "f_customer_blocked",
+        "args": [
+         {
+          "var": "A"
+         },
+         {
+          "var": "D"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ],
+   "exit": 3,
+   "refusal": "type-confused-join",
+   "clause": 0
+  },
+  {
+   "id": "J3",
+   "target": "popper",
+   "story": "anonymous variables at an order and an amount position are each fresh, so the clause is not type-confused (it passes the join check; its later outcome is the import's ordinary one)",
+   "program": "wrong(A):- f_order_by(A,B,_),f_order_amount(A,_,C),f_order_amount(A,B,C),gt_t_amount(C,100).",
+   "not_refusal": "type-confused-join"
+  },
+  {
+   "id": "J4",
+   "target": "popper",
+   "story": "a compatible join: B is an order in both atoms (IK5 case I2's first clause shape)",
+   "program": "wrong(A):- f_order_amount(A,B,C),f_order_flagged(A,B).",
+   "not_refusal": "type-confused-join"
+  }
+ ]
+}

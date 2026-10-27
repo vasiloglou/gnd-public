@@ -1,0 +1,31 @@
+{
+  "round": 2,
+  "date": "2026-10-27",
+  "inspection_head": "63f7f1f",
+  "files": [
+    {
+      "path": "evidence/plan-review-r2/ilp-learners-plan.md",
+      "sha256": "e0668e30d4ee8c6e9e921e0cbad66d80338f94e5bcc9d69740ce318700ce3bb9"
+    },
+    {
+      "path": "evidence/plan-review-r2/phase-IL1-spec.md",
+      "sha256": "4a06f58346ea3e147f57a485ee2f8c5189190938130c44c47b5022ed0cff5af8"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-1.md",
+      "sha256": "49da9f87d3ad3d27683b8b0fb8190ce92a66ae4dc47b87efc004bf1b3a30176b"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-2.md",
+      "sha256": "4cf44d26a8cc16a365b31e2e65eb6151e9d6f22d25278481dc2bc53a0aea523d"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-3.md",
+      "sha256": "38f09b5819a000849a60252c9c0b4be7c895fdaa5a27430bf05f29816d623004"
+    },
+    {
+      "path": "notes/plan-review-r2-reader-4.md",
+      "sha256": "9b48a76628941c56dc79151116cdb3868b70582b60dd5e6c5cd65be8622694ba"
+    }
+  ]
+}

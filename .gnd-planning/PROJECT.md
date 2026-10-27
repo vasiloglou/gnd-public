@@ -134,7 +134,7 @@ preserves all prior questions and names remaining framework/reporter owners.
 [PR33](https://github.com/vasiloglou/gnd-public/pull/33) contains all seven phases;
 no merge, publication or certification is authorized by this local close.
 
-## induced-knowledge — planning, 2026-10-23
+## induced-knowledge — closed, 2026-10-27
 
 Planning for [issue #34](https://github.com/vasiloglou/gnd-public/issues/34):
 let a host with real labelled populations turn them into reviewed model
@@ -158,7 +158,16 @@ Review history:
 - On 2026-10-24 the owner ruled D1–D6 and D14 (the description becomes a JSON
   object with fixed core keys plus extras); r4 records them, unreviewed.
 
-No plan approval or implementation.
+**Closed and accepted, 2026-10-27.** The owner approved plan r4 on
+2026-10-24 ([001](milestones/induced-knowledge/001-plan-gate.md)). Phases IK1–IK6
+and IK4-Q2 shipped object-type descriptions, `induced` provenance, `gnd measure
+--labels`, `gnd discover`, the ILP bridge, evolve over reference populations
+and the refunds walk. Four local readers reviewed the close
+([012](milestones/induced-knowledge/012-milestone-close.md)), and the owner
+ruled CD1–CD5 ([011](milestones/induced-knowledge/011-owner-decisions-close.md))
+and accepted the close ([013](milestones/induced-knowledge/013-owner-acceptance.md),
+PR #45). The evolve-loading follow-up merged as PR #47
+([014](milestones/induced-knowledge/014-followup-evolve-loading.md)), and the
+host-path sanitization of older evidence as PR #46.
 
-**Next:** plan approval, then explicit selection of
-`process-phase IK1 induced-knowledge`.
+The carried rows and their targets are in records 012 and 014.

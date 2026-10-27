@@ -95,6 +95,8 @@ Records:
   ([notes/close-spec.md](notes/close-spec.md)) approved 2026-10-27; ten close
   fixes; four local close readers (`notes/close-reading-one..four.md`), no
   blocking finding left open; close gate 8551 passed; installed candidate passed
-  in both wheel origins. **Owner acceptance pending.**
+  in both wheel origins.
+- [013 owner acceptance](013-owner-acceptance.md): the owner accepted the close
+  as recorded in 012, 2026-10-27.
 
-Next: owner acceptance of the close, then the PR's merge decision.
+**Milestone closed.** Next: the owner's merge decision on PR #45.

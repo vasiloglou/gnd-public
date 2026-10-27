@@ -1,0 +1,88 @@
+{
+ "version": 1,
+ "refusal": "an octal escape",
+ "accept": [
+  {
+   "id": "E1",
+   "story": "SWI writes code point 1 as a closed octal escape",
+   "program": "wrong(A):- f(A,B,'\\001\\').",
+   "constants": [
+    "\u0001"
+   ]
+  },
+  {
+   "id": "E2",
+   "story": "octal 101 is the letter A",
+   "program": "wrong(A):- f(A,B,'\\101\\').",
+   "constants": [
+    "A"
+   ]
+  },
+  {
+   "id": "E3",
+   "story": "a one-digit octal escape",
+   "program": "wrong(A):- f(A,B,'\\7\\').",
+   "constants": [
+    "\u0007"
+   ]
+  },
+  {
+   "id": "E4",
+   "story": "the largest Unicode scalar, U+10FFFF, is octal 4177777",
+   "program": "wrong(A):- f(A,B,'\\4177777\\').",
+   "constants": [
+    "\udbff\udfff"
+   ]
+  },
+  {
+   "id": "E5",
+   "story": "token boundary: an octal escape then a second quoted atom on the same line yields two constants",
+   "program": "wrong(A):- f(A,B,'\\001\\'),g(A,B,'x').",
+   "constants": [
+    "\u0001",
+    "x"
+   ]
+  },
+  {
+   "id": "E6",
+   "story": "the octal reading wins over reading the closing backslash and quote as an escaped quote",
+   "program": "wrong(A):- f(A,B,'a\\1\\'),g(A,B,'b').",
+   "constants": [
+    "a\u0001",
+    "b"
+   ]
+  }
+ ],
+ "refuse": [
+  {
+   "id": "R1",
+   "story": "eight octal digits, alone on the line",
+   "program": "wrong(A):- f(A,B,'\\12345670\\').",
+   "line": 1
+  },
+  {
+   "id": "R2",
+   "story": "eight octal digits followed by another quoted atom on the same line",
+   "program": "wrong(A):- f(A,B,'\\12345670\\'),g(A,B,'x').",
+   "line": 1
+  },
+  {
+   "id": "R3",
+   "story": "an octal escape without its closing backslash; SWI reads it, but GND reads only what SWI writes (deliberate strictness)",
+   "program": "wrong(A):- f(A,B,'\\101').",
+   "line": 1
+  },
+  {
+   "id": "R4",
+   "story": "octal 4200000 is 0x110000, beyond Unicode",
+   "program": "wrong(A):- f(A,B,'\\4200000\\').",
+   "line": 1
+  },
+  {
+   "id": "R5",
+   "story": "octal 154000 is 0xD800, a surrogate",
+   "program": "\nwrong(A):- f(A,B,'\\154000\\').",
+   "line": 2
+  }
+ ]
+}

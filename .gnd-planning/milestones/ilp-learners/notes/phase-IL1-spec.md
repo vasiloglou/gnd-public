@@ -567,3 +567,46 @@ The owner answered the gate questions in the session on 2026-10-27 (o).
   approval and change no approved sentence.
 - **Order:** implementation begins only after PR #48 merges, on the new
   branch. No install happens before the evidence-script step of §6.
+
+## 14. Implementation findings (recorded as found)
+
+**Base commit B = `45c8603`** (the merge of PR #48), on branch
+`claude/il1-learner-registry` (IL1-D5 (o)).
+
+**IL1-F1 (2026-10-27): the neutral learner rule refutes the byte-identity
+premise.** Found while reading the IK5 corpus before writing the T5 cases.
+- **The spec's claim:** IL1-C2 and §6 "The learner check" refuse a
+  `--target neutral` run record whose `learner.name` is a registered learner's
+  (round 1, R1-F7). §5 and IK-R3 then claim every IK5 golden is unchanged
+  except type-confused clauses.
+- **What the corpus holds:** the approved IK5 corpus imports 13 cases through
+  `--target neutral`: I1, I4, B1, B2, B4, B5, F03, F05, F07 and M1–M4. 30 of
+  its 31 run records name `popper`.
+- **The consequence:** the rule would turn I1, the corpus's main admitted case,
+  from exit 0 into exit 3 `learner-mismatch`, along with every other
+  neutral import that reaches the learner check.
+- **The cost:** that changes approved expected answers of a closed milestone,
+  which returns them to the owner gate.
+- **Readings:**
+  - **(a) Leave the neutral learner check out of IL1.** `neutral` keeps IK5's
+    behaviour (any learner name). The `method` token, `ilp-neutral`, already
+    tells a neutral import apart. The case R1-F7 cared about, an LLM's
+    proposal, gets its own `llm` entry and learner check in IL5 (plan §2), so
+    an LLM import is never `ilp-neutral`. **Residual:** a neutral run record
+    can still name `popper` as its inducer. That stays as IK5 shipped it, and
+    is recorded as an accepted residual.
+  - **(b) Keep the rule and rename the learner in the 13 corpus run records**
+    (for example to `authored`). Each run record's bytes change, so every
+    affected proposal's evidence digest and the corpus goldens change too. A
+    closed milestone's approved fixtures are rewritten.
+- **Proposed:** (a). Until the owner rules, the T5d case is held, and
+  nothing else in IL1 depends on it.
+
+**IL1-F1 ruling (o), 2026-10-27.**
+- **The question as asked:** "How should IL1 handle it?"
+- **The owner's answer:** "Drop it from IL1".
+- **What applies:** reading (a). The neutral learner check is left out of IL1,
+  T5d is withdrawn, and `neutral`'s learner binding stays as IK5 shipped it.
+- **Accepted residual:** a neutral run record may name a registered learner as
+  its inducer; `method: ilp-neutral` marks the path.
+- **IL5** carries the LLM learner check on its own `llm` entry.

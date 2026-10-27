@@ -317,3 +317,54 @@ regressions first.
 ## Implementation findings
 
 Recorded as found, including any that refute this spec.
+
+- **I-F1 -- a redacted walk hides the refusal text (pre-existing policy).**
+  With `--pre` or `--post` on a model that redacts a role, the report replaces
+  every load error's message with `[REDACTED INSTANCE DETAIL]`. A directory is
+  treated the same way on `main`. The FIFO refusal therefore names its path
+  only for the plain population and `--steps`; the walk cases assert exit 3 and
+  the error type `PopulationLoadError`. Item 3's "naming the path" is narrowed
+  to the unredacted reports.
+- **I-F2 -- one row per occurrence.** An object-scope `value` rule reports one
+  witness row per occurrence, so the same-type case yields `[4.0, 4]`: each
+  row takes the next unused origin in population order (CD-1 as written). The
+  first draft of the test expected one row; the test was wrong, not the code.
+- **I-F3 -- RF6.** The first fix read `fact_types` directly in three places
+  and failed the exact query policy. They now go through the family cursors
+  (`mandatory_cursor`, `mandatory_disjunctive_cursor`), `universe.role_object_type`
+  and `ModelIndex`, so no query exception is added. The dynamic-syntax census
+  grows by 30 occurrences in 28 rows (annotations and positional index reads).
+  They are registered as a chained successor,
+  `dynamic-query-successor.json` in this folder, after the evolve-loading one.
+- **I-F4 -- docstring dedent.** Python 3.13 and later dedent docstrings when
+  compiling, so the runtime-equals-source test compares `inspect.cleandoc` of both.
+- **R1 (review, blocking) -- fixed.** The scoped spelling choice rebuilt its
+  candidate list on every call: 32,000 occurrences took 33.75 s. It now caches
+  each bucket's scoped candidates with a cursor, as `_take` does: 0.41 s.
+  Regression: 40,000 occurrences finish within 20 s.
+- **R2 (review, should-fix) -- CD-4's premise refuted; rule narrowed.** CD-4
+  said a docstring without a backslash keeps its bytes. But the neutralizer
+  writes `'` as `\'`, so "raw when the body holds a backslash" turned every
+  apostrophe into a raw literal. The runtime `__doc__` then showed `\'`.
+  Among the repository's models, `examples/plan_apps/access` moved. The rule is
+  now: raw when the body holds an escape other than `\\` and `\'`. Those two
+  decode to the character they escape and cannot change a line. This is
+  narrower than CD-4's literal wording, and it is flagged for the owner.
+  Regression: an apostrophe and a backslash keep `'''` and their runtime text.
+- **R3 (review, should-fix) -- fixed.** `basics` joined the `pyrel_oracle`
+  corpus in `tests/test_pyrel_rules.py`. The helper maps `constraints[i]` to
+  `constraints_<i>`. Because the programs read JSON, YAML populations are
+  converted in the test. Because they refuse repeated facts by design, exact
+  duplicate rows are dropped, on both sides. An internal frequency witness is
+  compared as one list, as `test_pyrel_rules_families.py` does. The lane ran
+  locally against the main checkout's runtime.
+- **R4 (review, minor) -- fixed.** The roster tests now include a case where
+  the foreign Float spelling comes first, so the type filter is what passes them.
+- **R5 (review, minor) -- recorded.** A piped population (`<(cat ...)`,
+  `/dev/stdin` from a pipe) is now refused with exit 3, as a piped model
+  already is. This is CD-5 as ruled. It is listed in the record as a behaviour
+  change.
+- **R6 (review, minor, not reproduced) -- accepted residual.** When one value
+  is spelled differently in `instances:` and in a fact, the per-occurrence rows
+  may take each other's spelling. The roster lists instances first, while
+  origins run facts first. The multiset of spellings is right; `main` exited 70.

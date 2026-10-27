@@ -157,6 +157,11 @@ def render(neutral: dict[str, Any]) -> dict[str, bytes]:
             "popper/bias.pl": "".join(bias).encode("utf-8")}
 
 
+def _unparsable(line: int, column: int, detail: str) -> IlpError:
+    """The parser's one refusal: ``unparsable`` with a line and column (IK-R5)."""
+    return IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: {detail}")
+
+
 class _Parser:
     def __init__(self, text: str) -> None:
         self.tokens: list[tuple[str, str, int, int]] = []
@@ -179,7 +184,7 @@ class _Parser:
 
     @staticmethod
     def _fail(line: int, column: int, detail: str) -> None:
-        raise IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: {detail}")
+        raise _unparsable(line, column, detail)
 
     def peek(self) -> tuple[str, str, int, int]:
         return self.tokens[self.index]
@@ -316,7 +321,7 @@ def _comparison(name: str, args: list[Any], line: int, column: int) -> dict[str,
         return {"predicate": name, "args": args}
     comparison, sign, digits = match.groups()
     if len(digits) > MAX_INT_DIGITS:
-        _Parser._fail(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
+        raise _unparsable(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
     return {"predicate": comparison, "args": [args[0], {"const": -int(digits) if sign else int(digits)}]}
 
 
@@ -331,8 +336,7 @@ def _unquote(token: str, line: int, column: int) -> str:
         if position + 1 == len(body):
             # The tokenizer read a final ``\\`` pair that an octal escape
             # before it consumed half of (IL1 review, finding 1).
-            raise IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
-                           "a backslash ends a quoted atom")
+            raise _unparsable(line, column, "a backslash ends a quoted atom")
         following = body[position + 1]
         if following in _ESCAPES:
             out.append(_ESCAPES[following])
@@ -344,12 +348,10 @@ def _unquote(token: str, line: int, column: int) -> str:
             continue
         match = re.match(r"x([0-9a-fA-F]{1,6})\\", body[position + 1:])
         if match is None:
-            raise IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
-                           "an unknown escape in a quoted atom")
+            raise _unparsable(line, column, "an unknown escape in a quoted atom")
         code = int(match.group(1), 16)
         if code > 0x10FFFF or 0xD800 <= code <= 0xDFFF:
-            raise IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
-                           "an escape outside Unicode scalar values")
+            raise _unparsable(line, column, "an escape outside Unicode scalar values")
         out.append(chr(code))
         position += 1 + match.end()
     return "".join(out)
@@ -358,8 +360,7 @@ def _unquote(token: str, line: int, column: int) -> str:
 def _octal(rest: str, line: int, column: int) -> str:
     """The character of an octal escape whose digits start ``rest``."""
     def refuse(detail: str) -> IlpError:
-        return IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
-                        f"an octal escape {detail}")
+        return _unparsable(line, column, f"an octal escape {detail}")
 
     match = re.match(r"([0-7]+)\\", rest)
     if match is None:

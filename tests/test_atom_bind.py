@@ -27,7 +27,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 #: separate production surface would force an assurance recertification without
 #: improving malformed-input handling.
 BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operations.py",
-                  "checker/__init__.py", "checker/_reports.py", "checker/_core.py", "model_verbalization.py")
+                  "checker/__init__.py", "checker/_reports.py", "checker/_core.py", "model_verbalization.py",
+                  # IK2 split its semantic rules into this module; the induced-knowledge
+                  # close registers it (it reads no bind).
+                  "model/_induction.py")
 
 #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
 #: boundary two reviewers enforced against an earlier draft and

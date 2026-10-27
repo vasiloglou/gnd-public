@@ -2,15 +2,15 @@
 
 ## 1. Status
 
-**Draft r1, 2026-10-27. Awaiting this phase's owner gate.** `auto=false`.
-- **Nothing exists yet.** Nothing is implemented, downloaded, installed or
-  run.
-- **Gate decisions:**
-  - **IL2-D1:** the learner, with its licence (IL-R5). This decision
-    stops for the owner's ruling, because ILASP's terms are not an OSI
-    licence (§7).
-  - **IL2-D2:** the download.
-  - **IL2-D3 and IL2-D4:** the timeout and the output-format probe.
+**Approved r1, 2026-10-27 (§13); implemented; invocation 1 recorded as is
+(§14).** `auto=false`. The adversarial diff review (step 4), the
+refactoring review (step 5) and the record (step 6) remain. The §1 text
+of r1 is kept below for provenance.
+
+> **Draft r1, 2026-10-27. Awaiting this phase's owner gate.** `auto=false`.
+> Nothing was implemented, downloaded, installed or run at r1. The gate
+> decisions were IL2-D1 (the learner and its licence, IL-R5), IL2-D2 (the
+> download), and IL2-D3 and IL2-D4 (the timeout and the output-format probe).
 
 ## 2. Provenance
 
@@ -745,3 +745,14 @@ record's questions).**
 owner-recorded amendment (IL-R9): a bias that requires each comparison
 variable to occur in a predicate atom, `adapter_version` 2, moved goldens and
 a second run. Nothing has been changed.
+
+### Owner ruling on invocation 1 (2026-10-27)
+
+**Owner mark, 2026-10-27:** "Record IL2 invocation 1 as is (IL2-F7 stays a
+recorded result) and continue IL2 with step 4, the adversarial diff review."
+
+- **Invocation 1 is IL2's run of record:** `completed`,
+  `refused:empty-antecedent`, with the IL2-F6 process-record note.
+- **IL2-F7 stays a recorded result.** No amendment IL2-A1 was drafted, the
+  rendering and `adapter_version` 1 are unchanged, and there is no
+  invocation 2.

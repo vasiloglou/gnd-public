@@ -1,0 +1,4 @@
+dyld[26036]: Library not loaded: /opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/Python
+  Referenced from: <8E0589EC-4626-3D49-806D-E0E1D2B2575D> <scratch>/ilasp/ILASP
+  Reason: tried: '/opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/Python' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/Python' (no such file), '/opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/Python' (no such file)
+exit 134

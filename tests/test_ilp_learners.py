@@ -70,9 +70,9 @@ def _choices(parser: argparse.ArgumentParser, dest: str) -> tuple[str, ...]:
 def test_t2_registry_cli_and_schema_enums_agree(monkeypatch):
     from gnd.export import ilp_learners
 
-    assert tuple(ilp_learners.LEARNERS) == ("popper", "neutral")
-    assert ilp_learners.EXPORT_TARGETS == ("popper", "neutral")
-    assert ilp_learners.IMPORT_TARGETS == ("popper", "neutral")
+    assert tuple(ilp_learners.LEARNERS) == ("popper", "neutral", "ilasp")
+    assert ilp_learners.EXPORT_TARGETS == ("popper", "neutral", "ilasp")
+    assert ilp_learners.IMPORT_TARGETS == ("popper", "neutral", "ilasp")
     root = _root_parser(monkeypatch)
     assert _choices(_subparser(root, "export", "ilp"), "target") == ilp_learners.EXPORT_TARGETS
     assert _choices(_subparser(root, "import", "ilp-rules"), "target") == ilp_learners.IMPORT_TARGETS
@@ -538,6 +538,20 @@ def test_a1_t4_threshold_atoms_parse_as_their_comparison():
     assert atoms[3] == {"predicate": "gt_t_a__b", "args": [{"var": "C"}, {"const": 7}]}
     assert atoms[4] == {"predicate": "ge_t_amount", "args": [{"var": "C"}, {"const": 0}]}
     assert atoms[5] == {"predicate": "gt_t_amount__3", "args": [{"var": "C"}, {"var": "D"}]}
+
+
+@pytest.mark.parametrize("name", ["gt_t_amount__0500", "gt_t_amount__m0", "lt_t_amount__m05",
+                                  "gt_t_amount__00"])
+def test_il2_t10_a_threshold_name_the_renderer_never_writes_is_unparsable(name):
+    """IL2-D8 (o), IL1-Q3: a leading zero, m0 or m with a leading zero."""
+    from gnd.export.ilp import IlpError
+    from gnd.export.ilp_popper import parse_program
+
+    with pytest.raises(IlpError) as raised:
+        parse_program(f"wrong(A):- f_order_amount(A,B,C),{name}(C).")
+    assert raised.value.code == 3
+    assert str(raised.value).startswith("unparsable: line 1, column "), raised.value
+    assert "threshold" in str(raised.value)
 
 
 def test_a1_t4_a_two_argument_threshold_name_is_an_unknown_predicate():

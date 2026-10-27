@@ -1,0 +1,46 @@
+Unknown option: "--help".
+
+ILASP version 4.4.1 (release built on Nov 11 2024)
+usage: ILASP [options] [file]
+
+General Options:
+    --search-space,        -s    : print the search space (generated from the mode bias).
+    --quiet,               -q    : only print the solution and no other information.
+    --version=[1|2|2i|3|4]       : choose the version of ILASP to run. Different versions
+                                     are suited to different tasks. For more details run
+                                     "ILASP --version-info".
+    --cache-path=[path]          : if the file exists, read cached data structures from a
+                                     previous run. This file will be overwritten with the
+                                     new data structures on exit. This allows ILASP2i/3/4
+                                     to be called on old tasks extended with new examples
+                                     without starting from scratch.
+                           -p    : print pylasp script that is used with the given
+                                     configuration.
+
+
+Bias Options:
+    --no-constraints,      -nc   : omit constraints from the search space.
+    --no-aggregates,       -na   : omit aggregates (choice rules) from the search space.
+    -ml=[integer]                : set the maximum number of literals which may occur in
+                                     the body of each rule of the hypothesis. By default,
+                                     this is 3.
+    --max-rule-length=[integer]  : set the maximum number of literals which may occur in
+                                     each rule of the hypothesis. By default, this is 5.
+    --max-wc-length=[integer]    : set the maximum number of literals which may occur in
+                                     each weak constraint in the hypothesis. By default,
+                                     this is 3.
+    --multi-wc             -mw   : allow multiple weak constraints at each priority level
+                                     (by default only one weak constraint is permitted at
+                                     each level).
+
+
+
+
+ILASP (Inductive Learning of Answer Set Programs) was implemented by Mark Law.
+For terms of use, please see http://www.ilasp.com/terms. For the ILASP manual
+please see http://doc.ilasp.com. The theory behind the algorithms in this
+implementation is detailed in various research papers, which are all available
+at http://www.ilasp.com.
+
+Please submit bug reports at https://github.com/marklaw/ILASP-releases/issues.
+For all other queries, please email mark@ilasp.com.

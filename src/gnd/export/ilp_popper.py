@@ -22,7 +22,7 @@ import re
 from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
-from gnd.export.ilp import IlpError
+from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
 
 __all__ = ["ADAPTER_VERSION", "AGGREGATES", "MAX_THRESHOLDS", "SOLUTION_BANNER", "extract_program",
            "parse_program", "quote", "render", "thresholds"]
@@ -35,7 +35,7 @@ MAX_THRESHOLDS = 32
 _THRESHOLD_OPERATORS = (">", "<")
 #: A threshold atom: a comparison name, ``__`` and the value, negative as ``m``;
 #: the value follows the last ``__``. ``ge`` and ``le`` are read, not rendered.
-_THRESHOLD = re.compile(r"((?:gt|lt|ge|le)_t_[A-Za-z0-9_]+)__(m?)([0-9]+)")
+_THRESHOLD = re.compile(rf"({COMPARISON_NAME})__(m?)([0-9]+)")
 
 AGGREGATES = frozenset({"findall", "bagof", "setof", "aggregate_all", "count", "sum", "max", "min"})
 _OPERATORS = {">": ">", "<": "<", ">=": ">=", "=<": "<=", "=:=": "=", "=\\=": "!=", "=": "=",
@@ -113,12 +113,7 @@ def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]
 
     The extension is the observed values of the type the comparison holds for,
     ascending; a threshold whose extension is empty is not rendered (IL1-A2-D2 (o))."""
-    observed: dict[str, set[int]] = {}
-    types = {row["name"]: row["types"][1:] for row in neutral["predicates"]}
-    for fact in neutral["facts"]:
-        for type_name, value in zip(types[fact["predicate"]], fact["values"], strict=True):
-            if isinstance(value, int) and not isinstance(value, bool):
-                observed.setdefault(type_name, set()).add(value)
+    observed = observed_integers(neutral)
     rows = []
     for row in neutral["comparisons"]:
         if row["operator"] in _THRESHOLD_OPERATORS:
@@ -320,6 +315,9 @@ def _comparison(name: str, args: list[Any], line: int, column: int) -> dict[str,
     if match is None or len(args) != 1:
         return {"predicate": name, "args": args}
     comparison, sign, digits = match.groups()
+    if (len(digits) > 1 and digits[0] == "0") or (sign and digits == "0"):
+        # The renderer writes neither a leading zero nor m0 (IL2-D8 (o), IL1-Q3).
+        raise _unparsable(line, column, f"a threshold name the renderer never writes: {name}")
     if len(digits) > MAX_INT_DIGITS:
         raise _unparsable(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
     return {"predicate": comparison, "args": [args[0], {"const": -int(digits) if sign else int(digits)}]}

@@ -1,0 +1,1 @@
+clause 0: empty-antecedent: nothing is left for the antecedent

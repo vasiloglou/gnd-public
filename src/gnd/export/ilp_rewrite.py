@@ -109,12 +109,15 @@ def rewrite(
     columns: dict[str, Column],
     *,
     closures: Mapping[str, frozenset[str]] | None = None,
+    boolean_strings: bool = True,
 ) -> dict[str, Any]:
     """Checks 1 to 9, the join check 9b and the rewrite; returns ``{type, antecedent, consequent}``.
 
     ``columns`` are the export's predicates (:func:`gnd.export.ilp.schema`).
     ``closures`` (:func:`gnd.export.ilp.type_closures`) turns on check 9b; the
-    import always passes them, and without them the check is skipped."""
+    import always passes them, and without them the check is skipped.
+    ``boolean_strings`` reads a ``"true"``/``"false"`` string on a boolean role
+    as the boolean; without it check 9 refuses that string (IL2-D13)."""
     predicates = columns
     comparisons = {row["name"]: row for row in neutral["comparisons"]}
     primitives = {row["name"]: row["primitive"] for row in neutral["types"]}
@@ -245,6 +248,9 @@ def rewrite(
                 raise _refuse("constant-spelling", index,
                               f"the constant {value!r} holds a character YAML does not keep")
             if primitives.get(type_name) == "boolean" and value in ("true", "false"):
+                if not boolean_strings:
+                    raise _refuse("constant-spelling", index,
+                                  f"the string {value!r} is not the boolean {value}")
                 return value == "true"
         return value
 

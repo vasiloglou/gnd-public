@@ -336,7 +336,7 @@ def _cmd_import_ilp_rules(
         cores = []
         for index, clause in enumerate(clause_doc["clauses"]):
             core = rewrite(clause, index, prepared.neutral, prepared.columns,
-                           closures=prepared.closures)
+                           closures=prepared.closures, boolean_strings=entry.boolean_strings)
             _validated(prepared, _envelope(core, _placeholder(learner, method, prepared),
                                            f"{prefix} {index}"), index, model_path)
             cores.append(core)

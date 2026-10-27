@@ -1,0 +1,428 @@
+{
+ "story": "IL2 corpus (spec phase-IL2-spec.md r1, IL2-D11 (o)): written before the ASP reader. 'accept' maps an ILASP hypothesis to gnd-ilp-clauses/1 (T3); 'constants' pins the constants table (T5); 'refuse' is one case per reader refusal (T4), as 'clause K: name'; 'checker' imports over the refunds example and is refused by the shared fragment checker (T4b, T8); 'unparsable' is the totality corpus (T6).",
+ "accept": [
+  {
+   "id": "a1-refunds-rule",
+   "story": "The rule Popper learned in IL1 invocation 3, as ILASP would print it. X is threaded as the example argument; the comparison atom is copied.",
+   "text": "wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n",
+   "clauses": [
+    {
+     "head": {
+      "predicate": "wrong",
+      "args": [
+       {
+        "var": "X"
+       }
+      ]
+     },
+     "body": [
+      {
+       "atom": {
+        "predicate": "f_refund_amount",
+        "args": [
+         {
+          "var": "X"
+         },
+         {
+          "var": "V1"
+         },
+         {
+          "var": "V2"
+         }
+        ]
+       }
+      },
+      {
+       "atom": {
+        "predicate": "gt_t_amount",
+        "args": [
+         {
+          "var": "V2"
+         },
+         {
+          "const": 500
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "a2-x-is-fresh",
+   "story": "The rule already uses X, so the example variable is X0.",
+   "text": "wrong :- f_refund_amount(X,V2), lt_t_amount(V2,60).\n",
+   "clauses": [
+    {
+     "head": {
+      "predicate": "wrong",
+      "args": [
+       {
+        "var": "X0"
+       }
+      ]
+     },
+     "body": [
+      {
+       "atom": {
+        "predicate": "f_refund_amount",
+        "args": [
+         {
+          "var": "X0"
+         },
+         {
+          "var": "X"
+         },
+         {
+          "var": "V2"
+         }
+        ]
+       }
+      },
+      {
+       "atom": {
+        "predicate": "lt_t_amount",
+        "args": [
+         {
+          "var": "V2"
+         },
+         {
+          "const": 60
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "a3-two-rules-and-comments",
+   "story": "Two rules, a % comment and blank lines; the order is kept.",
+   "text": "% learned\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n\nwrong :- f_refund_by(V1,V2), f_refund_channel(V1,V3).\n",
+   "clauses": [
+    {
+     "head": {
+      "predicate": "wrong",
+      "args": [
+       {
+        "var": "X"
+       }
+      ]
+     },
+     "body": [
+      {
+       "atom": {
+        "predicate": "f_refund_amount",
+        "args": [
+         {
+          "var": "X"
+         },
+         {
+          "var": "V1"
+         },
+         {
+          "var": "V2"
+         }
+        ]
+       }
+      },
+      {
+       "atom": {
+        "predicate": "gt_t_amount",
+        "args": [
+         {
+          "var": "V2"
+         },
+         {
+          "const": 500
+         }
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "head": {
+      "predicate": "wrong",
+      "args": [
+       {
+        "var": "X"
+       }
+      ]
+     },
+     "body": [
+      {
+       "atom": {
+        "predicate": "f_refund_by",
+        "args": [
+         {
+          "var": "X"
+         },
+         {
+          "var": "V1"
+         },
+         {
+          "var": "V2"
+         }
+        ]
+       }
+      },
+      {
+       "atom": {
+        "predicate": "f_refund_channel",
+        "args": [
+         {
+          "var": "X"
+         },
+         {
+          "var": "V1"
+         },
+         {
+          "var": "V3"
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "constants": [
+  {
+   "id": "k1-integer",
+   "text": "wrong :- f_refund_amount(V1,40).\n",
+   "constants": [
+    40
+   ]
+  },
+  {
+   "id": "k2-negative-integer",
+   "text": "wrong :- f_refund_amount(V1,-3).\n",
+   "constants": [
+    -3
+   ]
+  },
+  {
+   "id": "k3-quoted-string",
+   "text": "wrong :- f_refund_channel(V1,\"a\\\"b\\\\c\\nd\").\n",
+   "constants": [
+    "a\"b\\c\nd"
+   ]
+  },
+  {
+   "id": "k5-booleans",
+   "text": "wrong :- f_refund_channel(V1,true), f_refund_channel(V1,false).\n",
+   "constants": [
+    true,
+    false
+   ]
+  }
+ ],
+ "refuse": [
+  {
+   "id": "r1-constraint",
+   "text": ":- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "asp-constraint"
+  },
+  {
+   "id": "r2-choice-bounds",
+   "text": "0 { wrong } 1 :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "choice-rule"
+  },
+  {
+   "id": "r3-choice-bare",
+   "text": "{ wrong } :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "choice-rule"
+  },
+  {
+   "id": "r4-weak-constraint",
+   "text": ":~ f_refund_amount(V1,V2). [1@1]\n",
+   "clause": 0,
+   "refusal": "weak-constraint"
+  },
+  {
+   "id": "r5-classical-body",
+   "text": "wrong :- -f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "classical-negation"
+  },
+  {
+   "id": "r6-classical-head",
+   "text": "-wrong :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "classical-negation"
+  },
+  {
+   "id": "r7-arithmetic-plus",
+   "text": "wrong :- f_refund_amount(V1,V2+1).\n",
+   "clause": 0,
+   "refusal": "arithmetic-term"
+  },
+  {
+   "id": "r8-arithmetic-minus-var",
+   "text": "wrong :- f_refund_amount(V1,-V2).\n",
+   "clause": 0,
+   "refusal": "arithmetic-term"
+  },
+  {
+   "id": "r9-interval",
+   "text": "wrong :- f_refund_amount(1..3,V2).\n",
+   "clause": 0,
+   "refusal": "interval-or-pool"
+  },
+  {
+   "id": "r10-pool",
+   "text": "wrong :- f_refund_amount(1;2,V2).\n",
+   "clause": 0,
+   "refusal": "interval-or-pool"
+  },
+  {
+   "id": "r11-directive-show",
+   "text": "#show wrong/0.\n",
+   "clause": 0,
+   "refusal": "directive"
+  },
+  {
+   "id": "r12-directive-const",
+   "text": "#const k=1.\n",
+   "clause": 0,
+   "refusal": "directive"
+  },
+  {
+   "id": "r13-builtin-comparison",
+   "text": "wrong :- f_refund_amount(V1,V2), V2 > 500.\n",
+   "clause": 0,
+   "refusal": "builtin-comparison"
+  },
+  {
+   "id": "r14-empty-body",
+   "text": "wrong.\n",
+   "clause": 0,
+   "refusal": "empty-body"
+  },
+  {
+   "id": "r15-disjunction-bar",
+   "text": "wrong | p :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "disjunction"
+  },
+  {
+   "id": "r16-disjunction-semicolon",
+   "text": "wrong ; p :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "disjunction"
+  },
+  {
+   "id": "r17-head-with-argument",
+   "text": "wrong(V1) :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "head-shape"
+  },
+  {
+   "id": "r18-other-head",
+   "text": "p :- f_refund_amount(V1,V2).\n",
+   "clause": 0,
+   "refusal": "head-shape"
+  },
+  {
+   "id": "r19-second-rule",
+   "story": "The first rule is fine; the index names the second.",
+   "text": "wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n:- f_refund_by(V1,V2).\n",
+   "clause": 1,
+   "refusal": "asp-constraint"
+  }
+ ],
+ "checker": [
+  {
+   "id": "c1-not",
+   "text": "wrong :- f_refund_amount(V1,V2), not f_refund_by(V1,V3).\n",
+   "clause": 0,
+   "refusal": "negation-as-failure"
+  },
+  {
+   "id": "c2-aggregate",
+   "text": "wrong :- #count{V1: f_refund_amount(V1,V2)} > 2.\n",
+   "clause": 0,
+   "refusal": "aggregate"
+  },
+  {
+   "id": "c3-unknown-predicate",
+   "story": "A background helper is not an exported predicate.",
+   "text": "wrong :- f_refund_amount(V1,V2), dom_t_amount(V2).\n",
+   "clause": 0,
+   "refusal": "unknown-predicate"
+  },
+  {
+   "id": "c4-type-confused",
+   "story": "T8: V2 is an amount in f_refund_amount and a refund in f_refund_by. The third atom is designated, so check 6 passes and 9b names the join (IL2-F1: the r1 corpus's two-atom clause stopped at check 6).",
+   "text": "wrong :- f_refund_amount(V1,V2), f_refund_by(V2,V3), f_refund_channel(V1,V3).\n",
+   "clause": 0,
+   "refusal": "type-confused-join"
+  }
+ ],
+ "unparsable": [
+  {
+   "id": "u1-unterminated-string",
+   "text": "wrong :- f_refund_channel(V1,\"web).\n",
+   "line": 1
+  },
+  {
+   "id": "u2-unknown-escape",
+   "text": "wrong :- f_refund_channel(V1,\"w\\qb\").\n",
+   "line": 1
+  },
+  {
+   "id": "u3-unbalanced",
+   "text": "wrong :- f_refund_amount(V1,V2.\n",
+   "line": 1
+  },
+  {
+   "id": "u4-long-integer",
+   "text": "wrong :- f_refund_amount(V1,111111111111111111111111111111111).\n",
+   "line": 1
+  },
+  {
+   "id": "u5-deep-not",
+   "text": "wrong :- f_refund_amount(V1,V2), not not not not not f_refund_by(V1,V3).\n",
+   "line": 1
+  },
+  {
+   "id": "u6-missing-period",
+   "text": "wrong :- f_refund_amount(V1,V2)\nwrong :- f_refund_by(V1,V2).\n",
+   "line": 2
+  },
+  {
+   "id": "u7-stray-character",
+   "text": "wrong :- f_refund_amount(V1,V2) & f_refund_by(V1,V3).\n",
+   "line": 1
+  },
+  {
+   "id": "u8-33-rules",
+   "text": "wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\nwrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n",
+   "line": 33
+  },
+  {
+   "id": "u9-17-literals",
+   "text": "wrong :- f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2), f_refund_amount(V1,V2).\n",
+   "line": 1
+  },
+  {
+   "id": "k4-symbolic",
+   "text": "wrong :- f_refund_channel(V1,web).\n",
+   "line": 1,
+   "ruling": "IL2-D13 (a), owner, 2026-10-27: clingo reads web and \"web\" as different constants, so a bare symbolic constant is refused",
+   "prior": {
+    "section": "constants",
+    "constants": [
+     "web"
+    ]
+   }
+  }
+ ]
+}

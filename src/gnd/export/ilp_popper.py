@@ -8,11 +8,11 @@ recursive-descent parser over a bounded input: anything outside its grammar is
 clause text is ever evaluated (IK-R5). Negation, disjunction and aggregates are
 *parsed*, so that the fragment checker refuses them by name.
 
-The rendering is adapter version 2 (IL1-A1 (o)), for Popper v5.0.1, which has
-no magic values and so cannot bind a comparison's constant: each comparison
-against an observed value is its own unary *threshold* predicate,
-``gt_t_amount__120(A) :- integer(A), A > 120.``, which fails rather than raises
-on an unbound argument. ``parse_program`` maps a threshold atom back to the
+The rendering is adapter version 3 (IL1-A1 (o), IL1-A2 (o)), for Popper v5.0.1,
+which has no magic values and so cannot bind a comparison's constant: each
+comparison against an observed value is its own unary *threshold* predicate,
+written as its extension over the exported values, ``gt_t_amount__120(150).``
+and so on, so that Popper's clingo grounding and its unbound calls see it. ``parse_program`` maps a threshold atom back to the
 binary comparison atom the neutral form declares.
 """
 
@@ -28,7 +28,7 @@ __all__ = ["ADAPTER_VERSION", "AGGREGATES", "MAX_THRESHOLDS", "SOLUTION_BANNER",
            "parse_program", "quote", "render", "thresholds"]
 
 #: ``export.json``'s ``adapter_version`` for the Popper target (IL1-A1 (o)).
-ADAPTER_VERSION = "2"
+ADAPTER_VERSION = "3"
 #: Threshold values per integer type, fixed before results (IL1-A1-D3 (o)).
 MAX_THRESHOLDS = 32
 #: The comparison operators rendered as thresholds (IL1-A1-D2 (o)).
@@ -108,8 +108,11 @@ def _suffix(value: int) -> str:
     return f"m{-value}" if value < 0 else str(value)
 
 
-def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, str, int]]:
-    """``(name, type, Prolog operator, value)`` per threshold predicate, in render order."""
+def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]:
+    """``(name, type, extension)`` per rendered threshold predicate, in render order.
+
+    The extension is the observed values of the type the comparison holds for,
+    ascending; a threshold whose extension is empty is not rendered (IL1-A2-D2 (o))."""
     observed: dict[str, set[int]] = {}
     types = {row["name"]: row["types"][1:] for row in neutral["predicates"]}
     for fact in neutral["facts"]:
@@ -119,8 +122,11 @@ def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, str, int]]:
     rows = []
     for row in neutral["comparisons"]:
         if row["operator"] in _THRESHOLD_OPERATORS:
-            for value in thresholds(observed.get(row["type"], set())):
-                rows.append((f"{row['name']}__{_suffix(value)}", row["type"], row["operator"], value))
+            values = sorted(observed.get(row["type"], set()))
+            for value in thresholds(set(values)):
+                holds = [w for w in values if (w > value if row["operator"] == ">" else w < value)]
+                if holds:
+                    rows.append((f"{row['name']}__{_suffix(value)}", row["type"], holds))
     return rows
 
 
@@ -132,14 +138,17 @@ def render(neutral: dict[str, Any]) -> dict[str, bytes]:
     lines = [f"{fact['predicate']}({quote(fact['example'])},"
              f"{','.join(_term(v) for v in fact['values'])}).\n" for fact in facts]
     rows = _threshold_rows(neutral)
-    lines += [f"{name}(A) :- integer(A), A {operator} {value}.\n" for name, _type, operator, value in rows]
+    # Ground facts, not rules: Popper v5.0.1 grounds bk.pl in clingo and calls
+    # predicates unbound, and a rule-defined threshold has no atoms there
+    # (IL1-A2 (o), review finding 2).
+    lines += [f"{name}({value}).\n" for name, _type, holds in rows for value in holds]
     examples = [f"{example['label']}(wrong({quote(example['id'])})).\n"
                 for example in neutral["examples"]]
     bias = ["head_pred(wrong,1).\n", "type(wrong,(ex,)).\n"]
     for predicate in neutral["predicates"]:
         bias.append(f"body_pred({predicate['name']},{len(predicate['types'])}).\n")
         bias.append(f"type({predicate['name']},({','.join(predicate['types'])})).\n")
-    for name, type_name, _operator, _value in rows:
+    for name, type_name, _holds in rows:
         bias.append(f"body_pred({name},1).\n")
         bias.append(f"type({name},({type_name},)).\n")
     bias.append(_SETTINGS)

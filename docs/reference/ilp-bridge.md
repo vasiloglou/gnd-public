@@ -46,31 +46,35 @@ The command creates `DIR`, which must not exist, and writes these files:
 | File | What it holds |
 |---|---|
 | `neutral.json` | the learner-neutral form, `gnd-ilp/1` |
-| `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, grouped by predicate; then the threshold predicates |
+| `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, grouped by predicate; then each threshold predicate's facts |
 | `popper/exs.pl` | `pos(wrong('<id>')).` or `neg(wrong('<id>')).` per population, in manifest order |
 | `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate and per threshold predicate, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
 | `export.json` | `gnd-ilp-export/1`: the target, the adapter version, and each other file's path, SHA-256 and size |
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
 
-**Threshold predicates (Popper adapter version 2).** Popper v5.0.1 has no way
+**Threshold predicates (Popper adapter version 3).** Popper v5.0.1 has no way
 to supply a constant, so each comparison against an observed value is its own
-one-argument predicate, which fails rather than raises on an unbound argument:
+one-argument predicate. It is written as ground facts: the observed values of
+its type that the comparison holds for. Popper analyses `bk.pl` in an ASP
+solver and calls predicates with unbound arguments, and both need facts:
 
 ```prolog
-gt_t_amount__120(A) :- integer(A), A > 120.
-lt_t_amount__m5(A) :- integer(A), A < -5.
+gt_t_amount__120(150).
+gt_t_amount__120(200).
+lt_t_amount__m5(-10).
 ```
 
 - **Operators:** `gt` and `lt`.
 - **Values:** the distinct observed values of each integer type. Above 32
   values, 32 are taken at evenly spaced ranks, always including the minimum
-  and the maximum.
+  and the maximum. A threshold that holds for no observed value (`gt` at the
+  maximum, `lt` at the minimum) is not written.
 - **Reading back:** the parser reads `gt_t_amount__120(V)` as the declared
   comparison `gt_t_amount(V, 120)`; `ge` and `le` names are read too. A
   negative value is spelled `m`, and the value follows the last `__`.
 
-The `popper` target's `export.json` says `"adapter_version": "2"`; the
+The `popper` target's `export.json` says `"adapter_version": "3"`; the
 `neutral` target's says `"1"`.
 
 **Adapters.** Each `--target` is one entry of the bridge's learner registry

@@ -1,5 +1,5 @@
 {
-  "adapter_version": "2",
+  "adapter_version": "3",
   "files": [
     {
       "bytes": 4871,
@@ -7,14 +7,14 @@
       "sha256": "07d74a893a14da2bd1260dd0a751f7a54367957c523cf94f847737ef2815f4d7"
     },
     {
-      "bytes": 1414,
+      "bytes": 1282,
       "path": "popper/bias.pl",
-      "sha256": "8215aa3fd8889f3d742dd2767beb92377308f74473e6e55327edb74b36109ade"
+      "sha256": "0904fba00bd327a4b68fb714c629c3c27bcc2949f137c75bceda246e7bf98f53"
     },
     {
-      "bytes": 1246,
+      "bytes": 1780,
       "path": "popper/bk.pl",
-      "sha256": "72ae1a3c217475d823db3bd154e18ace1b6e40656c023cde0a602970f5682635"
+      "sha256": "e5e9e099ee3d270c5636c60283f614bb1896465b48beed4209a7889b744f6888"
     },
     {
       "bytes": 108,

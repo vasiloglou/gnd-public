@@ -22,10 +22,6 @@ body_pred(gt_t_amount__100,1).
 type(gt_t_amount__100,(t_amount,)).
 body_pred(gt_t_amount__150,1).
 type(gt_t_amount__150,(t_amount,)).
-body_pred(gt_t_amount__200,1).
-type(gt_t_amount__200,(t_amount,)).
-body_pred(lt_t_amount__10,1).
-type(lt_t_amount__10,(t_amount,)).
 body_pred(lt_t_amount__20,1).
 type(lt_t_amount__20,(t_amount,)).
 body_pred(lt_t_amount__30,1).

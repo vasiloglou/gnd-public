@@ -1,0 +1,20 @@
+{
+ "schema_version": "gnd-ilp-run/1",
+ "learner": {
+  "name": "popper",
+  "version": "5.0.1+578a4e2"
+ },
+ "export_sha256": "39788cf3c243b83715b448a42c99ba74b8315510be8954dd477dd6711e519493",
+ "clauses_sha256": "53988e12d988c61b8a0e876eeec59bb7192546d48b847716ace5828a3d8120e4",
+ "coverage": [
+  {
+   "clause": 0,
+   "covered": [
+    "harbor",
+    "market",
+    "airport",
+    "station"
+   ]
+  }
+ ]
+}

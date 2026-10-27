@@ -411,8 +411,8 @@ def test_t11_the_stand_in_learner_proposes_a_join_that_imports(tmp_path):
 
 LIVE_ROOT = MILESTONE / "evidence" / "IL1" / "live"
 #: Invocation 1 is the run of record; invocation 2 is the IL1-A1 run (o),
-#: reported beside it (A1-D4).
-INVOCATIONS = (1, 2)
+#: reported beside it (A1-D4), and invocation 3 the IL1-A2 run (A2-D4).
+INVOCATIONS = (1, 2, 3)
 TERMINATIONS = {"rendering-rejected", "completed", "learner-timeout", "wall-clock-kill", "output-limit"}
 REQUIRED = {"invocation", "run_of_record", "termination", "import", "export_sha256", "popper",
             "limits", "import_args", "numbers", "reproducibility"}
@@ -504,20 +504,25 @@ def test_a1_t3_threshold_selection_is_bounded_and_keeps_the_extremes():
     assert len(thresholds(set(range(33)))) == MAX_THRESHOLDS
 
 
-def test_a1_the_rendering_has_no_binary_comparison_and_no_magic_values():
+def test_a2_t2_thresholds_are_ground_facts_and_empty_ones_are_omitted():
+    """IL1-A2 (o): replaces the A1 rendering-shape test, whose rule form A2 retired."""
     from gnd.export.ilp_popper import render
 
     shape, _columns, _closures = _orders_shape()
     shape = dict(shape, facts=[{"example": "e1", "predicate": "f_order_amount", "values": [1, -5]},
+                               {"example": "e1", "predicate": "f_order_amount", "values": [3, 10]},
                                {"example": "e0", "predicate": "f_order_amount", "values": [2, 120]}],
                  examples=[{"id": "e0", "class": "x", "label": "pos"},
                            {"id": "e1", "class": "y", "label": "neg"}])
     files = render(shape)
     bk, bias = files["popper/bk.pl"].decode(), files["popper/bias.pl"].decode()
     assert "magic_value_type" not in bias and ",2).\nbody_pred(gt" not in bias
-    assert "lt_t_amount__m5(A) :- integer(A), A < -5.\n" in bk
-    assert "body_pred(gt_t_amount__120,1).\ntype(gt_t_amount__120,(t_amount,)).\n" in bias
-    assert not re.search(r"^\w+\(A,B\)", bk, re.MULTILINE)
+    assert ":-" not in bk
+    thresholds = [line for line in bk.splitlines() if line.startswith(("gt_", "lt_"))]
+    assert thresholds == ["gt_t_amount__m5(10).", "gt_t_amount__m5(120).", "gt_t_amount__10(120).",
+                          "lt_t_amount__10(-5).", "lt_t_amount__120(-5).", "lt_t_amount__120(10)."]
+    assert "body_pred(gt_t_amount__10,1).\ntype(gt_t_amount__10,(t_amount,)).\n" in bias
+    assert "gt_t_amount__120" not in bk + bias and "lt_t_amount__m5" not in bk + bias
     # grouped by predicate, then by example position (e0 before e1)
     assert bk.index("f_order_amount('e0'") < bk.index("f_order_amount('e1'")
 
@@ -567,13 +572,7 @@ def test_a1_t5_a_threshold_of_another_integer_type_is_type_confused():
 
 
 @pytest.mark.live
-def test_a1_t2_every_threshold_fails_on_an_unbound_argument(tmp_path):
-    """Live: GND_IL1_SWIPL names the scratch SWI-Prolog binary (IL1 §12)."""
-    import os
-
-    swipl = os.environ.get("GND_IL1_SWIPL")
-    if not swipl:
-        pytest.skip("GND_IL1_SWIPL is not set")
+def _refunds_thresholds(tmp_path: Path) -> tuple[Path, list[str]]:
     example = SRC / "examples" / "refunds"
     export = tmp_path / "export"
     result = run_main(["export", "ilp", str(example / "model.orm.yaml"), "--labels",
@@ -582,14 +581,73 @@ def test_a1_t2_every_threshold_fails_on_an_unbound_argument(tmp_path):
     bias = (export / "popper" / "bias.pl").read_text(encoding="utf-8")
     names = re.findall(r"^body_pred\(((?:gt|lt)_\w+__m?\d+),1\)\.$", bias, re.MULTILINE)
     assert names
-    calls = ",".join(f"(catch({name}(_), E, (print_message(error, E), halt(2))) -> halt(3) ; true)"
+    return export / "popper", names
+
+
+def _live(variable: str) -> str:
+    import os
+
+    value = os.environ.get(variable)
+    if not value:
+        pytest.skip(f"{variable} is not set")
+    return value
+
+
+@pytest.mark.live
+def test_a1_t2_every_threshold_enumerates_on_an_unbound_argument(tmp_path):
+    """Live: GND_IL1_SWIPL names the scratch SWI-Prolog binary (IL1 §12). IL1-A2 (o)
+    changed the answer: a ground-fact threshold enumerates rather than fails."""
+    swipl = _live("GND_IL1_SWIPL")
+    popper, names = _refunds_thresholds(tmp_path)
+    calls = ",".join(f"(catch({name}(_), E, (print_message(error, E), halt(2))) -> true ; halt(3))"
                      for name in names)
-    (export / "popper" / "probe.pl").write_text(
+    (popper / "probe.pl").write_text(
         f":- initialization(main, main).\n:- consult('bk.pl').\nmain :- {calls}, write({len(names)}).\n",
         encoding="utf-8")
-    probe = subprocess.run([swipl, "-q", "probe.pl"], cwd=export / "popper", capture_output=True,
+    probe = subprocess.run([swipl, "-q", "probe.pl"], cwd=popper, capture_output=True,
                            text=True, timeout=60, check=False)
     assert probe.returncode == 0 and probe.stdout == str(len(names)), probe.stderr
+
+
+@pytest.mark.live
+def test_a2_t3_clingo_grounds_every_threshold(tmp_path):
+    """Live: GND_IL1_POPPER_PYTHON names the scratch Popper venv's python. Grounds
+    bk.pl as Popper v5.0.1's bkcons.get_bk_cons does; a threshold with no atom
+    there is banned by deduce_recalls (review finding 2)."""
+    python = _live("GND_IL1_POPPER_PYTHON")
+    popper, names = _refunds_thresholds(tmp_path)
+    script = tmp_path / "ground.py"
+    script.write_text(
+        "import json, sys, clingo\n"
+        "control = clingo.Control(['-Wnone'], logger=lambda code, message: None)\n"
+        "control.add('base', [], open(sys.argv[1]).read())\n"
+        "control.ground([('base', [])])\n"
+        "print(json.dumps({name: sum(1 for _ in control.symbolic_atoms.by_signature(name, 1))"
+        " for name in sys.argv[2:]}))\n", encoding="utf-8")
+    grounded = subprocess.run([python, "-I", str(script), str(popper / "bk.pl"), *names],
+                              capture_output=True, text=True, timeout=60, check=False)
+    assert grounded.returncode == 0, grounded.stderr
+    counts = json.loads(grounded.stdout)
+    assert len(counts) == len(names) and min(counts.values()) >= 1, counts
+
+
+@pytest.mark.live
+def test_a2_t4_no_two_thresholds_are_pointless(tmp_path):
+    """Live: Popper v5.0.1's find_pointless_relations query, under the scratch SWI,
+    over every pair of same-type thresholds; true means the pair differs."""
+    swipl = _live("GND_IL1_SWIPL")
+    popper, names = _refunds_thresholds(tmp_path)
+    pairs = [(p, q) for i, p in enumerate(names) for q in names[i + 1:]]
+    # Each query runs under \\+ \\+, so no binding leaks to the next pair, as
+    # each of Popper's query_once calls is separate.
+    goals = ",".join(f"(\\+ \\+ (({p}(V), \\+ {q}(V)) ; ({q}(V), \\+ {p}(V))) -> true ; "
+                     f"(write({p}-{q}), halt(3)))" for p, q in pairs)
+    (popper / "pointless.pl").write_text(
+        f":- initialization(main, main).\n:- consult('bk.pl').\nmain :- {goals}, write({len(pairs)}).\n",
+        encoding="utf-8")
+    probe = subprocess.run([swipl, "-q", "pointless.pl"], cwd=popper, capture_output=True,
+                           text=True, timeout=60, check=False)
+    assert probe.returncode == 0 and probe.stdout == str(len(pairs)), probe.stdout + probe.stderr
 
 
 # ---------------------------------------------------------------------------

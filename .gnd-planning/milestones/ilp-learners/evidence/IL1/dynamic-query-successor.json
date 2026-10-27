@@ -2,7 +2,7 @@
  "schema_version": 1,
  "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/evolve-loading/dynamic-query-successor.json",
  "predecessor_sha256": "2c58d5c0166576fd6a095eeb831ca0b5351465a1e761daf0ad60d68697e6f4f6",
- "reason": "ilp-learners IL1 (spec r3, approved 2026-10-27): the learner registry, the ancestor-closure map read through ModelIndex, the type-confused join check 9b (D12 (o), D13 (o)) and SWI octal escapes in the Popper parser. The rows are the registry lookups, the closure map, the join check's site and closure reads, the octal reader's remainder slice, and (amendment IL1-A1 (o), 2026-10-27) the adapter-2 threshold rendering's neutral-form reads and the threshold parser's argument reads. Syntax census only; no model-query exception widening.",
+ "reason": "ilp-learners IL1 (spec r3, approved 2026-10-27): the learner registry, the ancestor-closure map read through ModelIndex, the type-confused join check 9b (D12 (o), D13 (o)) and SWI octal escapes in the Popper parser. The rows are the registry lookups, the closure map, the join check's site and closure reads, the octal reader's remainder slice, and (amendment IL1-A1 (o), 2026-10-27) the adapter-2 threshold rendering's neutral-form reads and the threshold parser's argument reads, and (amendment IL1-A2 (o), 2026-10-27) the ground-fact threshold extensions. Syntax census only; no model-query exception widening.",
  "removed": [
   [
    "src/gnd/export/ilp_popper.py",
@@ -93,7 +93,13 @@
   [
    "src/gnd/export/ilp_popper.py",
    "_threshold_rows",
-   "list[tuple[str, str, str, int]]",
+   "list[int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_popper.py",
+   "_threshold_rows",
+   "list[tuple[str, str, list[int]]]",
    1
   ],
   [
@@ -117,7 +123,7 @@
   [
    "src/gnd/export/ilp_popper.py",
    "_threshold_rows",
-   "tuple[str, str, str, int]",
+   "tuple[str, str, list[int]]",
    1
   ],
   [
@@ -301,6 +307,6 @@
    1
   ]
  ],
- "result_distinct_rows": 6556,
- "result_occurrences": 8219
+ "result_distinct_rows": 6557,
+ "result_occurrences": 8220
 }

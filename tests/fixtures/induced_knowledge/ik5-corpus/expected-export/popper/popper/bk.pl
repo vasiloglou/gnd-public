@@ -19,19 +19,59 @@ f_order_by('p1',6,'c2').
 f_order_by('p2',7,'c3').
 f_order_flagged('n2',4).
 f_order_flagged('n3',8).
-gt_t_amount__10(A) :- integer(A), A > 10.
-gt_t_amount__20(A) :- integer(A), A > 20.
-gt_t_amount__30(A) :- integer(A), A > 30.
-gt_t_amount__50(A) :- integer(A), A > 50.
-gt_t_amount__90(A) :- integer(A), A > 90.
-gt_t_amount__100(A) :- integer(A), A > 100.
-gt_t_amount__150(A) :- integer(A), A > 150.
-gt_t_amount__200(A) :- integer(A), A > 200.
-lt_t_amount__10(A) :- integer(A), A < 10.
-lt_t_amount__20(A) :- integer(A), A < 20.
-lt_t_amount__30(A) :- integer(A), A < 30.
-lt_t_amount__50(A) :- integer(A), A < 50.
-lt_t_amount__90(A) :- integer(A), A < 90.
-lt_t_amount__100(A) :- integer(A), A < 100.
-lt_t_amount__150(A) :- integer(A), A < 150.
-lt_t_amount__200(A) :- integer(A), A < 200.
+gt_t_amount__10(20).
+gt_t_amount__10(30).
+gt_t_amount__10(50).
+gt_t_amount__10(90).
+gt_t_amount__10(100).
+gt_t_amount__10(150).
+gt_t_amount__10(200).
+gt_t_amount__20(30).
+gt_t_amount__20(50).
+gt_t_amount__20(90).
+gt_t_amount__20(100).
+gt_t_amount__20(150).
+gt_t_amount__20(200).
+gt_t_amount__30(50).
+gt_t_amount__30(90).
+gt_t_amount__30(100).
+gt_t_amount__30(150).
+gt_t_amount__30(200).
+gt_t_amount__50(90).
+gt_t_amount__50(100).
+gt_t_amount__50(150).
+gt_t_amount__50(200).
+gt_t_amount__90(100).
+gt_t_amount__90(150).
+gt_t_amount__90(200).
+gt_t_amount__100(150).
+gt_t_amount__100(200).
+gt_t_amount__150(200).
+lt_t_amount__20(10).
+lt_t_amount__30(10).
+lt_t_amount__30(20).
+lt_t_amount__50(10).
+lt_t_amount__50(20).
+lt_t_amount__50(30).
+lt_t_amount__90(10).
+lt_t_amount__90(20).
+lt_t_amount__90(30).
+lt_t_amount__90(50).
+lt_t_amount__100(10).
+lt_t_amount__100(20).
+lt_t_amount__100(30).
+lt_t_amount__100(50).
+lt_t_amount__100(90).
+lt_t_amount__150(10).
+lt_t_amount__150(20).
+lt_t_amount__150(30).
+lt_t_amount__150(50).
+lt_t_amount__150(90).
+lt_t_amount__150(100).
+lt_t_amount__200(10).
+lt_t_amount__200(20).
+lt_t_amount__200(30).
+lt_t_amount__200(50).
+lt_t_amount__200(90).
+lt_t_amount__200(100).
+lt_t_amount__200(150).

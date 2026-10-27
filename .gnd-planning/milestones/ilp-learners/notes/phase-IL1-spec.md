@@ -938,9 +938,10 @@ single-clause programs.
 | `raw-stderr.txt` | `36bc3d568d4e5a0ed070b60a68fcbbffbba138ca96cbbc73e9a99ba935d1ce28` |
 | `raw-stdout.txt` | `da7cfe20ba0b56e98734999b87ceaf7fb0caa8cbffcfdf1053d92d05adcbf755` |
 
-## 16. Amendment IL1-A2: thresholds as ground facts (draft, awaiting the owner)
+## 16. Amendment IL1-A2: thresholds as ground facts (approved 2026-10-27)
 
-**Status:** draft, 2026-10-27. Nothing in it is implemented.
+**Status:** approved by the owner 2026-10-27 (o); the ruling is recorded at
+the end of this section. Drafted 2026-10-27 before any code changed.
 - **Requested by the owner (o):** "Draft amendment IL1-A2: render thresholds
   as ground facts so Popper's clingo grounding sees them, naming the goldens
   it moves, and ask for invocation 3. Stop for my approval before changing
@@ -1063,3 +1064,79 @@ the pre-run evidence that both mechanisms are gone.
 | A2-D3 | Size | **The existing 64 MiB cap and its `too-large` refusal:** reachable at roughly 35,000 distinct values of one integer type. **A separate fact bound:** another constant to fix before results | the existing cap |
 | A2-D4 | **The third recorded run** | Invocation 3, under the same §6 settings, limits and fixed import arguments, over the refunds export rendered by adapter 3. It is reported beside invocations 1 and 2; invocation 1 stays the run of record (IL-R9), and T9 replays all three. If Popper learns a program, the import result is recorded as it falls, including a refusal (A1-D5's rule). If it finds nothing again, the outcome is recorded and IL1 closes with all three | **asked: approve invocation 3** |
 | A2-D5 | Pre-run checks | **A2-T3 and A2-T4 must pass before invocation 3 is started:** a known-banned rendering does not spend the run. **Run regardless** | must pass first |
+
+### Owner ruling (o), 2026-10-27
+
+Asked "Approve IL1-A2 with its proposed answers, including invocation 3?", the
+owner answered: "appproved".
+
+| ID | Ruling (o) 2026-10-27 |
+|---|---|
+| A2-D1 | (a) replace adapter 2 in place, `ADAPTER_VERSION` "3" |
+| A2-D2 | omit empty extensions |
+| A2-D3 | the existing 64 MiB cap and its `too-large` refusal |
+| A2-D4 | invocation 3 approved, reported beside invocations 1 and 2; invocation 1 stays the run of record |
+| A2-D5 | A2-T3 and A2-T4 must pass before invocation 3 starts |
+
+### Implementation (IL1-A2)
+
+- **Code:** `ilp_popper._threshold_rows` returns each threshold's extension,
+  and `render` writes it as ground facts. `ADAPTER_VERSION` is "3".
+- **What moved, measured:** exactly the inventory. The X1 tree's `bk.pl`,
+  `bias.pl` and `export.json` (`gt_t_amount__200` and `lt_t_amount__10` are
+  gone); in `expected.json`, E for the Popper target (218611fc… to eac42987…)
+  and I2's run digest (8c12d082… to d65ac118…); the `export_sha256` of the
+  same 19 run records. No exit or refusal changed (A2-T5).
+- **Tests:** A2-T2 replaces the A1 rendering-shape test; A1-T2 now asserts
+  that every threshold enumerates on an unbound argument. A2-T3 (clingo) and
+  A2-T4 (the pointless-relation query) are live tests. All three pass under
+  the scratch SWI 10.0.2 and the scratch Popper venv's clingo, and A2-T3 and
+  A2-T4 were observed red against adapter 2's code, so they detect both
+  mechanisms. A2-D5's pre-run condition was met.
+- **A2-T4 authoring slip, caught:** its first version shared one Prolog
+  variable across every pair's query, so a binding leaked between pairs and
+  it failed falsely. Each query now runs under double negation, as Popper's
+  separate `query_once` calls do.
+- **Census:** the IL1 RF6 delta was recomputed again over the current code.
+- **Gate:** 672 passed, 19 deselected.
+
+### Invocation 3 (A2-D4 (o)), 2026-10-27
+
+Run once with `run_popper.py --invocation 3`, the same §6 settings, limits
+and fixed import arguments, over the refunds export rendered by adapter 3.
+
+| Field | Value |
+|---|---|
+| termination | `completed` (exit 0, 1.2 s) |
+| import | `admitted` (exit 0) |
+| the learned program | `wrong(V0):- f_refund_amount(V0,V1,V2),gt_t_amount__500(V2).` |
+| Popper's own score | Precision 1.00, Recall 1.00, TP 4, FN 0, TN 4, FP 0, size 3 |
+| SWI coverage (run.json) | clause 0 covers harbor, market, airport, station |
+| GND's import | covered 4, reported 4, support 4/4 |
+| the proposal | one guarded constraint: for each `refund_amount`, amount `<= 500`; induced, proposed, deontic, `method` `ilp-popper` |
+| run of record | no; invocation 1 stays the run of record (IL-R9) |
+
+**What it settles:**
+- A real Popper learns the refunds tutorial's rule ("no refund over 500")
+  from GND's export.
+- Three evaluators agree on its coverage: Popper's own score, SWI over
+  `bk.pl`, and GND's checker over the population.
+- The admitted constraint is the rule the example was built around.
+- **IL1-F9 is closed:** its cause was review finding 2 together with the
+  pointless-relation mechanism, and adapter 3 removes both.
+- T9 replays all three invocations, and invocation 3 is the first to exercise
+  the import replay branch (review finding 8).
+
+**Reproducibility:** single run, not measured.
+
+**Evidence, `evidence/IL1/live/invocation-3/`:**
+
+| File | SHA-256 |
+|---|---|
+| `import-report.json` | `442e96a368ed520fa04f4812d19061302a7739e29e4833f1001961600f64d131` |
+| `outcome.json` | `50c0ab02643c618c8ea46ae4c9e298c1fb58507bae76c5d32eeadaa1a066e406` |
+| `program.pl` | `53988e12d988c61b8a0e876eeec59bb7192546d48b847716ace5828a3d8120e4` |
+| `proposal.json` | `defbeaf0fd62103066cdb42fbf29b8b17b9b2ee9484ec01e72c982432704b02d` |
+| `raw-stderr.txt` | `4091d9d8b5edc1033ecfafdfe558910183891bc2e875a0a37ab6bef4c112a2c4` |
+| `raw-stdout.txt` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `run.json` | `c2816a3435454fecc53259032d7979a957f9251c1d0e98324c4ff059fac96373` |

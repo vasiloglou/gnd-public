@@ -407,3 +407,163 @@ Estimate (p2):
 
 Corpus-first for T4 and T5: escape cases and join clauses, with expected exits
 written before the code. Prose otherwise (IL1-D1).
+
+## 12. Owner gate preparation (2026-10-27, appended after approval)
+
+The owner approved r3 on 2026-10-27 (`001-plan-gate.md`), over the bytes before
+this section. The owner then selected the phase (o): "process-phase IL1
+ilp-learners". Sections 1–11 are unchanged. This section prepares the three
+decisions the approval left open: IL1-D3, IL1-D5 and IL1-D8.
+
+**How these facts were gathered:**
+- **Sources:** read-only metadata queries on 2026-10-27, to the PyPI JSON API,
+  the GitHub API and the SWI-Prolog download server.
+- **Nothing downloaded or installed:** nothing was downloaded beyond metadata,
+  and nothing was installed.
+- **Machine:** macOS 26.6.2 on arm64. No `swipl`, `clingo`, `popper`, conda or
+  micromamba is present. A uv-managed CPython 3.14.3 and the system C compiler
+  are present.
+
+### Base commit (IL1-D5)
+
+**`main` has moved** to `077f46e` (the evolve-loading follow-up, PRs #46 and
+#47) since the spec's inspection commit `63f7f1f`. `git diff 63f7f1f 077f46e`
+touches:
+- no ILP source, CLI or schema file;
+- no RF1 golden;
+- no entry-point file.
+
+**What did change:** `tests/test_ik_close.py` changed one docstring and one
+YAML case, unrelated to `parse_program` and `_load_candidate`. `tools/gnd_layers.json` gained
+`gnd.model._documents`. Every source citation in §2 still holds at `077f46e`.
+
+### Installs and downloads (IL1-D3)
+
+**Popper v5.0.1 constraints:**
+- **Python:** it requires Python ≥ 3.14 and builds a Cython extension.
+- **Prolog bridge:** it needs SWI-Prolog through `janus_swi`, which is
+  published only as a source distribution and builds against a local
+  `swipl`.
+- **No Homebrew:** conda-forge has `swi-prolog` for `linux-64` only. Without
+  Homebrew (D2 (o)), SWI-Prolog therefore comes from its upstream macOS disk
+  image.
+
+**Proposed scratch layout.** `<scratch>` is
+`<scratchpad>/il1-live/`, outside the repository. It has no profile or PATH
+edits; `PATH` is set per command only.
+
+**1. Download SWI-Prolog 10.0.2.**
+- **File:** `swipl-10.0.2-1.fat.dmg` from
+  `https://www.swi-prolog.org/download/stable/bin/`.
+- **Size and digest:** 34,301,763 bytes; SHA-256
+  `bf775f0b8d7880f4908dee513316013ef42a73793be392814fde2a0a8e9ddc5d`, from the
+  upstream `.sha256` file. It is verified after download.
+- **Into the scratch prefix:**
+  - attach the image read-only at a scratch mount point, with no Finder
+    window (`hdiutil attach -readonly -nobrowse -mountpoint`);
+  - copy `SWI-Prolog.app` into `<scratch>`;
+  - detach the image.
+- **Nothing goes to `/Applications`.**
+
+**2. Create the Python environment.** `uv venv --python 3.14
+<scratch>/venv`, using the uv-managed CPython already present.
+
+**3. Install Popper v5.0.1.**
+- **Pinned by commit:**
+  `git+https://github.com/logic-and-learning-lab/Popper@578a4e26a22006b9325fe819486242f7fafc3195`.
+  That is the commit tag `v5.0.1` points to; the tarball has no published
+  digest, so the commit is the integrity anchor.
+- **With `--no-deps`:** the dependencies come from step 4 (see the
+  `pypblib` row below).
+
+**4. Install the dependencies, hash-pinned.**
+- **The lock:** a lock generated with `uv pip compile --generate-hashes` from
+  the top-level pins below. The lock is committed as evidence before install,
+  and installed with `--require-hashes`.
+- **The build:** the two source distributions build with the system C
+  compiler, with `PATH` including `<scratch>/SWI-Prolog.app/Contents/MacOS`
+  for `janus_swi`.
+
+| Package | Pin | File (macOS arm64, CPython 3.14) | Bytes | SHA-256 |
+|---|---|---|---|---|
+| clingo | 5.8.2 | `clingo-5.8.2-cp314-cp314-macosx_11_0_arm64.whl` | 1,623,758 | `772569446f6538a3647656fc93b6a8c85d756df3c82100a58340e51fa8d0013c` |
+| bitarray | 3.12.3 | `bitarray-3.12.3-cp314-cp314-macosx_11_0_arm64.whl` | 182,582 | `b4901a544afd45993520babe2c2a61f87e4c0d98e5e6100e80eb7fd667fd92ff` |
+| python-sat | 1.9.dev17 (the only current release line on PyPI is a pre-release) | `python_sat-1.9.dev17-cp314-cp314-macosx_11_0_arm64.whl` | 2,410,387 | `b220d55d4b5e95993c80b6b9332bcc87127e7dc901abb674145a39540c1c7ead` |
+| ortools | 9.15.6755 | `ortools-9.15.6755-cp314-cp314-macosx_11_0_arm64.whl` | 21,923,649 | `1a0677270b0cd317a6b8dae42514264eaf5da5756c5bc7215eeea409424577df` |
+| cykhash | 2.0.1 | `cykhash-2.0.1.tar.gz` (sdist; builds locally) | 44,895 | `b4794bc9f549114d8cf1d856d9f64e08ff5f246bf043cf369fdb414e9ceb97f7` |
+| janus-swi | 1.5.3 | `janus_swi-1.5.3.tar.gz` (sdist; builds against the scratch SWI) | 90,117 | `2ce9867bb1e0cbab7737c8e2a7af3268f2241251e5b0eb955726c829ae995f8d` |
+| Cython (build only) | 3.3.0 | `cython-3.3.0-cp314-cp314-macosx_11_0_arm64.whl` | 3,186,700 | `0deedc2e9a5a664e1adfa4c2d310aa7b54903e1a647c274b6c9213f77a02d637` |
+| cffi (clingo) | 2.1.1 | `cffi-2.1.1-cp314-cp314-macosx_11_0_arm64.whl` | 184,962 | `661c298b4821edebead0c91edd2b00374d67ad7c5a1f7a91d4442633b79d6a72` |
+
+`ortools` brings further transitive packages (for example `numpy`,
+`protobuf`, `absl-py`). Their exact files and digests appear only in the
+committed lock, so approving this row approves that lock as generated.
+
+**The `pypblib` row.**
+- **What Popper declares:** Popper v5.0.1 declares `pypblib` as a dependency.
+- **Licence:** PyPI shows **no licence** for `pypblib` 0.0.4, and its homepage
+  (`arcadia.hardlog.udl.cat`) redirects.
+- **No usable build:** it ships no macOS wheel; its only source distribution
+  is from 2019.
+- **Not used by Popper:** a scan of every `popper/*.py` file at `v5.0.1` finds
+  no import of `pblib` or `pypblib`. Popper uses `pysat.card` and
+  `pysat.solvers`, which do not need it, and `python-sat` itself makes `pblib`
+  an optional extra.
+- **Proposed:** install Popper with `--no-deps` and leave `pypblib` out
+  (IL1-D9 below).
+
+### Licences (IL1-D8)
+
+Each licence was recorded on 2026-10-27, before any download (IL-R5).
+
+| Component | Licence | Source |
+|---|---|---|
+| Popper v5.0.1 | MIT | GitHub API, `repos/logic-and-learning-lab/Popper`, `license.spdx_id` |
+| SWI-Prolog 10.0.2 | BSD-2-Clause ("Simplified BSD") | `github.com/SWI-Prolog/swipl-devel` `LICENSE`. The app bundle may carry third-party library notices; they are read and recorded at install |
+| clingo 5.8.2 | MIT | PyPI metadata; `github.com/potassco/clingo` |
+| janus-swi 1.5.3 | BSD-2-Clause | PyPI metadata |
+| bitarray 3.12.3 | PSF-2.0 | PyPI metadata |
+| python-sat 1.9.dev17 | MIT | PyPI metadata |
+| ortools 9.15.6755 | Apache-2.0 | PyPI metadata |
+| cykhash 2.0.1 | MIT | PyPI metadata |
+| cffi 2.1.1 | MIT-0 | PyPI metadata |
+| Cython 3.3.0 (build only) | Apache-2.0 | PyPI metadata |
+| pypblib 0.0.4 | **none declared** | PyPI metadata; homepage redirects |
+
+**Assessment.**
+- **Permissive:** every component except `pypblib` carries a permissive OSI
+  licence.
+- **No click-through:** no component needs registration or a click-through.
+- **`pypblib`:** under IL-R5, its missing licence stops for the owner's
+  ruling.
+- **Not committed:** no binary or source of any component is committed.
+
+### New decision surfaced at the gate
+
+| ID | Question | Readings and cost | Proposed |
+|---|---|---|---|
+| IL1-D9 | `pypblib`, which Popper declares but never imports, and which has no declared licence | **(a) Leave it out:** install Popper with `--no-deps` plus the step 4 lock. The record says so. If a Popper code path needs it at run time, that is `termination: rendering-rejected` or a crash, recorded under IL-R9. **(b) Install it:** the owner accepts the unknown licence, and the 2019 sdist must build on Python 3.14, which is untested | (a) |
+
+### Instrument and panel
+
+- **IL1-D1** (corpus-first for T4 and T5) was approved with r3.
+- **No review panel** over the spec bytes is proposed. The plan review already
+  read r1 and r2, and the process-phase default omits a phase-spec panel.
+
+## 13. Owner gate record (2026-10-27)
+
+The owner answered the gate questions in the session on 2026-10-27 (o).
+
+| ID | Question as asked | Owner's answer | Ruling |
+|---|---|---|---|
+| IL1-D3, IL1-D8 | "approve the scratch installs and downloads in spec §12 (SWI-Prolog 10.0.2 disk image, Popper v5.0.1 at commit 578a4e26, and the hash-pinned Python lock), with the licences as recorded?" | "Approve as listed" | **The installs and downloads in §12 are approved, in a scratch prefix only.** The lock generated at install is covered as generated, and is committed before install. **The §12 licences are accepted** for the components installed. |
+| IL1-D9 | "Popper declares pypblib but never imports it, and pypblib has no declared licence. How should it be handled?" | "Leave it out" | **(a):** Popper is installed with `--no-deps` plus the lock, and `pypblib` is not installed. The live record states this. |
+| IL1-D5 | "where should IL1's implementation branch start?" | "After PR #48 merges" | **The IL1 branch is `claude/il1-learner-registry`,** created from `main` after PR #48 merges. Its base commit B is the resulting `main` head, recorded in the IL1 record. |
+
+**Panel:** none over the spec bytes (§12, proposed and not contested).
+
+**What this record leaves unchanged:**
+- **The approved r3 sections:** this section and §12 are appended after
+  approval and change no approved sentence.
+- **Order:** implementation begins only after PR #48 merges, on the new
+  branch. No install happens before the evidence-script step of §6.

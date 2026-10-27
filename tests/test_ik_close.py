@@ -313,7 +313,13 @@ def test_close_cd4_exclusion_is_emitted_with_oracle_support(tmp_path):
     import json
 
     from ruamel.yaml import YAML
-    from test_discover import AMOUNT_MODEL, _amount_population, _assert_emitted_pass, _discover, _oracle_support
+    from test_discover import (
+        AMOUNT_MODEL,
+        _amount_population,
+        _assert_emitted_pass,
+        _discover,
+        _oracle_support,
+    )
 
     population = _amount_population([("a_tagged", "1"), ("a_tagged", "2"), ("a_flagged", "3"), ("a_flagged", "4")])
     code, text, proposal, report_path = _discover(tmp_path, AMOUNT_MODEL, population, "--families", "exclusion")

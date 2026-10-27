@@ -367,7 +367,8 @@ def test_t9_work_counters_at_the_bounds(tmp_path):
                        "--format", "json"])
     assert result.returncode == 0, result.stderr
     report = json.loads(result.stdout)
-    assert 0 < report["work"]["total"] <= report["work"]["ceiling"] == count * 33
+    # IK5-Q6 (close): the ceiling adds the K + 2 candidate reloads.
+    assert 0 < report["work"]["total"] <= report["work"]["ceiling"] == count * 33 + 34
     assert all(len(row["vacuous"]) == 0 for row in report["clauses"])
     added = json.loads((tmp_path / "near.json").read_text())["operations"][0]["after"]
     induction = added["provenance"]["induction"]
@@ -521,7 +522,7 @@ def test_r6_import_counts_one_read_per_population_and_clause(tmp_path):
     """Coverage: the arithmetic form also gave 18; the read is now counted."""
     result, _out = _run(tmp_path, BY_ID["I1"])
     work = json.loads(result.stdout)["work"]
-    assert (work["checks"], work["verdicts"], work["ceiling"]) == (6, 18, 24)
+    assert (work["checks"], work["verdicts"], work["reloads"], work["ceiling"]) == (6, 18, 5, 29)
 
 
 def test_r7_quoted_atoms_round_trip(tmp_path):

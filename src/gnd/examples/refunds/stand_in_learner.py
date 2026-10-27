@@ -57,10 +57,10 @@ def candidates(rows, integer, predicates):
             if t not in integer:
                 continue
             seen = sorted({row[i] for (_, q), found in rows.items() if q == p for row in found})
-            for op in OPERATORS:
+            for op, compare in OPERATORS.items():
                 for bound in seen:
-                    def covers(example, p=p, i=i, op=op, bound=bound):
-                        return any(OPERATORS[op](row[i], bound) for row in rows.get((example, p), []))
+                    def covers(example, p=p, i=i, compare=compare, bound=bound):
+                        return any(compare(row[i], bound) for row in rows.get((example, p), []))
                     clause = {"head": head, "body": [atom(p, names), {"compare": {
                         "operator": op, "left": {"var": names[i]}, "right": {"const": bound}}}]}
                     yield f"wrong(A) :- {p}(A,{','.join(names)}), {names[i]} {op} {bound}", clause, covers

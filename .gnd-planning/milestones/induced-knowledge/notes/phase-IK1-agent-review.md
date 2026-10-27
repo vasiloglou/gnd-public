@@ -38,7 +38,7 @@ Every finding was reproduced before acceptance unless marked otherwise.
 
 I found no blocking findings. The code meets the C1–C5 claims for the inputs the spec names. Two hardening findings are pre-existing loader or renderer gaps that IK1 now carries into the new field; R3 is new with IK1's recursive extras schema. Five completeness findings are tests that pass against a wrong implementation, plus one gap in what the text output shows.
 
-Paths: `<repo>` is the worktree root and `<S>` is my scratch directory (`/private/tmp/claude-501/<session>/scratchpad/review`). Scripts used: `<S>/probe.py`, `<S>/mutate.py` and `<S>/evolve_probe.py`. Mutation runs used copies of `src/` under `<S>/mut/<name>/src`, run with `PYTHONPATH`. Base-commit runs used `git archive 1d6eee0 src` extracted to `<S>/base/src`. No repository file was modified.
+Paths: `<repo>` is the worktree root and `<S>` is my scratch directory (`<scratch>/review`). Scripts used: `<S>/probe.py`, `<S>/mutate.py` and `<S>/evolve_probe.py`. Mutation runs used copies of `src/` under `<S>/mut/<name>/src`, run with `PYTHONPATH`. Base-commit runs used `git archive 1d6eee0 src` extracted to `<S>/base/src`. No repository file was modified.
 
 #### Findings
 

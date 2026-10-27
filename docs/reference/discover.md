@@ -126,12 +126,10 @@ silently:
 
 ## Limits
 
-- **`gnd evolve preview` limits that predate discovery:**
-  - it cannot preview a model that declares reference populations;
-  - it cannot preview a model holding a YAML-only value such as an unquoted
-    date (written as block YAML in the proposal).
-
-  `gnd discover` handles both, but such a proposal waits on evolve.
+- **A `gnd evolve preview` limit that predates discovery:** it cannot preview
+  a model holding a YAML-only value such as an unquoted date (written as block
+  YAML in the proposal). `gnd discover` handles such a model, but its proposal
+  waits on evolve. Models that declare reference populations preview normally.
 - **One population** of at most 10 MiB, in memory. A YAML population is also
   capped at 1,000,000 parse events, so a large population should be JSON.
 - **Single-role sequences only**: no external uniqueness or frequency, and no

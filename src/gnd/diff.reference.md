@@ -59,3 +59,8 @@ object type, in model order, with `object_type` and the whole `before` and
 redaction passes them through unchanged. A report without annotations is
 byte-identical to `gnd-diff/1`. The schema requires `annotations`, with at least
 one entry, exactly when the version is `gnd-diff/2`.
+
+The text format ends with one block per annotation: `ANNOTATION <object type>
+description`, then `before` and `after` lines holding each object as compact,
+ASCII-escaped canonical JSON, so description text cannot start a line of its
+own. A diff without annotations prints the same text as before.

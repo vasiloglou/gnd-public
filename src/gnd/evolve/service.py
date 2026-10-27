@@ -11,6 +11,7 @@ from typing import Any
 
 from pydantic import ValidationError
 from ruamel.yaml import YAML
+from ruamel.yaml.error import YAMLError
 
 from gnd import input_policy as _rf7_input
 from gnd.artifacts import (
@@ -213,18 +214,29 @@ def _load_model_bytes(
                 # a digest mismatch) as ReferenceInputError; evolve does the same.
                 raise ReferenceInputError(str(error), model=model) from error
         return model
+    except YAMLError as error:
+        raise _yaml_refusal(label, error) from None
     except (OSError, ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise EvolutionError(f"{label} validation failed: {error}") from error
 
 
-def _parse_model_text(text: str) -> dict[str, Any]:
+def _yaml_refusal(label: str, error: YAMLError) -> EvolutionError:
+    """Malformed YAML is input, never an internal failure (IK4-Q2-Q2)."""
+    mark = getattr(error, "problem_mark", None)
+    where = f" at line {mark.line + 1}, column {mark.column + 1}" if mark else ""
+    return EvolutionError(f"{label} is not valid YAML{where}")
+
+
+def _parse_model_text(text: str, label: str = "candidate model") -> dict[str, Any]:
     try:
         _rf7_input.guard_yaml(text)
+        parsed = YAML(typ="safe").load(text)
     except ValueError as error:
         raise EvolutionError(str(error)) from error
-    parsed = YAML(typ="safe").load(text)
+    except YAMLError as error:
+        raise _yaml_refusal(label, error) from None
     if not isinstance(parsed, dict):
-        raise EvolutionError("candidate model is not a mapping")
+        raise EvolutionError(f"{label} is not a mapping")
     return dict(parsed)
 
 
@@ -1251,7 +1263,7 @@ class EvolutionService:
             label="current model",
             model_path=self._model_path,
         )
-        before_document = _parse_model_text(before_text)
+        before_document = _parse_model_text(before_text, label="current model")
 
         # Before the CANDIDATE is validated, deliberately. The gate reads only
         # the current model and the proposal's declared locators, so its answer
@@ -1528,7 +1540,7 @@ class EvolutionService:
         # `apply` accepts a preview document, and a hand-built one would
         # otherwise publish exactly the delta the gate exists to refuse.
         _enforce_operations_gate(
-            _parse_model_text(preview.before_model.text),
+            _parse_model_text(preview.before_model.text, label="current model"),
             proposal,
         )
         live_bytes = _regular_bytes(
@@ -1570,7 +1582,7 @@ class EvolutionService:
         if live_bytes != preview.before_model.text.encode("utf-8"):
             raise EvolutionError("live model bytes differ from the preview's committed bytes")
 
-        before_document = _parse_model_text(preview.before_model.text)
+        before_document = _parse_model_text(preview.before_model.text, label="current model")
         candidate_document = _parse_model_text(preview.candidate_model.text)
         declared_document = _apply_declared_operations(before_document, proposal.operations)
         if declared_document != candidate_document:
@@ -1893,7 +1905,7 @@ class EvolutionService:
             candidate_text = candidate_bytes.decode("utf-8")
         except UnicodeDecodeError as error:
             raise EvolutionError(f"staged model is not UTF-8: {error}") from error
-        before_document = _parse_model_text(before_text)
+        before_document = _parse_model_text(before_text, label="current model")
         candidate_document = _parse_model_text(candidate_text)
         if _apply_declared_operations(before_document, proposal.operations) != candidate_document:
             raise EvolutionError("declared operations changed before finalization")

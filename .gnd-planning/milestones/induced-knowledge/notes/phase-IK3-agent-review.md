@@ -46,7 +46,7 @@ All seven regressions (`test_r1_*` ×2, `test_r2_*` ×2, `test_r3_*`, `test_r4_*
 ```
 IK3 adversarial review: `git diff 9dd59af 572bc52` (branch claude/ik3-measure)
 
-I found no blocking defect in scoring, binding, class-mode cells or the synth path. The real problems are a hang on non-regular files, a symlink check that a race can get past, and an uncaught KeyError. One spec claim is false (IK-R11) and one approved test was edited after approval. I edited no tracked file. All scratch files are under /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-recent-commits-95fa1c/16650214-feb5-484f-a716-975b7f732cdd/scratchpad/review/ (called R/ below). The reproductions run from R/w, a copy of the ik3-corpus, using the R/g wrapper around the worktree's `.venv/bin/gnd`.
+I found no blocking defect in scoring, binding, class-mode cells or the synth path. The real problems are a hang on non-regular files, a symlink check that a race can get past, and an uncaught KeyError. One spec claim is false (IK-R11) and one approved test was edited after approval. I edited no tracked file. All scratch files are under <scratch>/review/ (called R/ below). The reproductions run from R/w, a copy of the ik3-corpus, using the R/g wrapper around the worktree's `.venv/bin/gnd`.
 
 ## Findings
 

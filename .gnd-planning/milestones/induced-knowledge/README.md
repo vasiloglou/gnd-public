@@ -88,4 +88,15 @@ Records:
   both wheel origins. One local reviewer, no blocking findings; nine fixed.
   IK6-Q1 (a skill for the induction loop) and IK6-R1 are open.
 
-Next: milestone close.
+- [011 owner decisions at the close](011-owner-decisions-close.md): CD1–CD5
+  approved 2026-10-27 (sanitized paths, the import ceiling ratified, close
+  targets superseded, an exclusion case, leftovers carried).
+- [012 milestone close](012-milestone-close.md): the close spec
+  ([notes/close-spec.md](notes/close-spec.md)) approved 2026-10-27; ten close
+  fixes; four local close readers (`notes/close-reading-one..four.md`), no
+  blocking finding left open; close gate 8551 passed; installed candidate passed
+  in both wheel origins.
+- [013 owner acceptance](013-owner-acceptance.md): the owner accepted the close
+  as recorded in 012, 2026-10-27.
+
+**Milestone closed.** Next: the owner's merge decision on PR #45.

@@ -196,7 +196,7 @@ Each unique stable `reference` appears once with:
 
 - `surface`: `model`, `object-type`, `fact-type`, `reading`, `role`, `constraint`,
   `identifier-reference`, `population`, `provenance`, `verbalization`,
-  `annotation`, or `supplied-artifact`;
+  `operation`, `annotation`, or `supplied-artifact`;
 - `change`: `added`, `modified`, `deleted`, or `affected`;
 - sorted `operation_ids` that reach the surface;
 - exact before and after canonical SHA-256 identities allowed by that change.

@@ -19,8 +19,9 @@ enters a model only as `proposed` and advisory, through `gnd evolve`.
 - `gnd evolve` binds a model's reference populations as `gnd validate` does.
 
 The tutorial [Find the rule your auditors are really using](tutorials/learn-rules.md)
-walks the loop on a synthetic refunds example. No learner ships with GND, and
-no real learner has been run in its tests.
+walks the loop on a synthetic refunds example. GND has no rule learner of its
+own: the example carries a small stand-in learner script, and no real learner
+has been run in its tests.
 
 ## Unreleased: opt-in incremental evaluation (2026-10-20)
 

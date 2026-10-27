@@ -15,7 +15,7 @@ was not retained in the repository.
 
 IK5 adversarial review: `git diff d0cb831 abc872a` on claude/ik5-ilp-bridge
 
-No tracked file was edited. All scratch work is under /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-recent-commits-95fa1c/16650214-feb5-484f-a716-975b7f732cdd/scratchpad/ik5-review/ (SCR below): the harness is SCR/h.py (incl. `oracle()`, a Prolog-semantics evaluator of a positive clause over neutral.json, used to compare GND's coverage with what a faithful learner computes), test scripts SCR/t1.py–t14.py, mutation runs SCR/mut.py, corpus copies under SCR/work/ and SCR/repro/w/.
+No tracked file was edited. All scratch work is under <scratch>/ik5-review/ (SCR below): the harness is SCR/h.py (incl. `oracle()`, a Prolog-semantics evaluator of a positive clause over neutral.json, used to compare GND's coverage with what a faithful learner computes), test scripts SCR/t1.py–t14.py, mutation runs SCR/mut.py, corpus copies under SCR/work/ and SCR/repro/w/.
 
 Bottom line: meaning preservation of the rewrite held on everything I tried (no admitted clause whose constraint differs from the learned clause through the rewrite itself). The real problems are three tracebacks on hostile input, one admitted proposal that `gnd evolve preview` then refuses, and tests that do not pin the rewrite's operator semantics.
 

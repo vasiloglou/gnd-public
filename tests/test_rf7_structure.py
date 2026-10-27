@@ -6,12 +6,14 @@ import json
 from pathlib import Path
 
 import pytest
+from support.scan_scope import module_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def parser_sources():
-    return {p.relative_to(ROOT).as_posix(): p.read_text() for p in (ROOT / 'src/gnd').rglob('*.py')}
+    # Packaged examples are exempt by one shared rule (IK6-R1).
+    return module_sources()
 
 
 def assert_routing(sources):
@@ -20,30 +22,11 @@ def assert_routing(sources):
     assert expected <= set(sources)
     for path, source in sources.items():
         if path in {
-            'src/gnd/examples/expense/extension.py',
-            'src/gnd/examples/expense/project/cli/expense_cli.py',
-            'src/gnd/examples/expense/rules_in_pyrel.py',
-            'src/gnd/examples/bookrec/rules_in_pyrel.py',
-            'src/gnd/examples/bookrec/stand_in_agent.py',
-            'src/gnd/examples/expense/stand_in_agent.py',
-            'src/gnd/examples/expense/prepare_currency.py',
-            'src/gnd/examples/expense/prepare_meal_cap.py',
-            'src/gnd/examples/release_governance/prepare_facts.py',
-            'src/gnd/examples/release_governance/pyrel_queries.py',
-            'src/gnd/examples/approvals/stand_in_agent.py',
-            'src/gnd/examples/plan_apps/core.py',
-            'src/gnd/examples/plan_apps/course/stand_in_bot.py',
-            'src/gnd/examples/plan_apps/access/stand_in_bot.py',
-            'src/gnd/examples/plan_apps/clinic/stand_in_bot.py',
-            'src/gnd/examples/plan_apps/lease/stand_in_bot.py',
-            'src/gnd/examples/plan_apps/trip/stand_in_bot.py',
-            'src/gnd/examples/bookrec/extension/bookrec/cli.py',
-            'src/gnd/examples/refunds/stand_in_learner.py',
             'src/gnd/skills/gnd-adopt/scripts/verify_migration.py',
             'src/gnd/skills/gnd-model-from-text/scripts/validate_model.py',
             'src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py',
         }:
-            continue  # Standalone skill/example executables, outside GND module readers.
+            continue  # Standalone skill executables, outside GND module readers.
         tree = ast.parse(source)
         for node in ast.walk(tree):
             if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)

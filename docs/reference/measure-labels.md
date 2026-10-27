@@ -36,7 +36,9 @@ A JSON file of at most 1 MiB, validated by the packaged closed schema
 ```
 
 - **Modes.** In `expected-state` mode, each population says, for **every** rule in
-  the model, what is true and which verdict a correct checker should give. In
+  the model, what is true and which verdict a correct checker should give. A
+  population's `expectations` cannot be empty, so a model with no rules has
+  nothing to measure in this mode, and its manifest is refused. In
   `class` mode, each population carries `"class": "positive"` or `"negative"`,
   and a top-level `rules` object says which class each rule should fire on:
   `"rules": {"id:u_person_team": {"fires_on": "negative"}}`.

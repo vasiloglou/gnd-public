@@ -1,0 +1,179 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/evolve-loading/dynamic-query-successor.json",
+ "predecessor_sha256": "2c58d5c0166576fd6a095eeb831ca0b5351465a1e761daf0ad60d68697e6f4f6",
+ "reason": "Carried-defects maintenance (2026-10-27): roster-witness origin scope, opaque-cell reason, non-blocking population and steps reads, rules-export default ids, raw docstring prefix. Syntax census only (annotations and positional index reads); the exact query policy is unchanged and no model-query exception is added.",
+ "added": [
+  [
+   "src/gnd/codegen/docstrings.py",
+   "docstring_open",
+   "body[index + 1:index + 2]",
+   1
+  ],
+  [
+   "src/gnd/codegen/docstrings.py",
+   "docstring_open",
+   "body[index]",
+   1
+  ],
+  [
+   "src/gnd/correspondence.py",
+   "project_finding",
+   "dict(observation.constraint_subject_types).get(finding.constraint_id, ())",
+   1
+  ],
+  [
+   "src/gnd/correspondence.py",
+   "project_finding",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/export/pyrel_rules.py",
+   "_with_constraint_ids",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "SnapshotObservation",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "SnapshotObservation",
+   "tuple[str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "SnapshotObservation",
+   "tuple[tuple[str, tuple[str, ...]], ...]",
+   1
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "_subject_types",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "_subject_types",
+   "tuple[str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "_subject_types",
+   "tuple[tuple[str, tuple[str, ...]], ...]",
+   1
+  ],
+  [
+   "src/gnd/semantic_adapter.py",
+   "adapt_snapshot_observed",
+   "role_rows[role_index]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "OriginSelection",
+   "dict[int, tuple[list[int], int]]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "OriginSelection",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "OriginSelection",
+   "list[int]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "OriginSelection",
+   "tuple[list[int], int]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "_take_scoped",
+   "candidates[cursor]",
+   2
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "_take_scoped",
+   "self.index.values[candidates[0]]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "_take_scoped",
+   "self.index.values[chosen]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "_take_scoped",
+   "self.index.values[i]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "_take_scoped",
+   "self.scoped[key]",
+   1
+  ],
+  [
+   "src/gnd/semantic_origins.py",
+   "_take_scoped",
+   "tuple[bool, PublicScalar]",
+   1
+  ],
+  [
+   "src/gnd/semantic_spec.py",
+   "subject_slots_opaque",
+   "list[tuple[int, int]]",
+   1
+  ],
+  [
+   "src/gnd/semantic_spec.py",
+   "subject_slots_opaque",
+   "row[role_position]",
+   1
+  ],
+  [
+   "src/gnd/semantic_spec.py",
+   "subject_slots_opaque",
+   "snapshot.relations[relation_position]",
+   1
+  ],
+  [
+   "src/gnd/semantic_spec.py",
+   "subject_slots_opaque",
+   "snapshot.rosters[roster_position]",
+   1
+  ],
+  [
+   "src/gnd/semantic_spec.py",
+   "subject_slots_opaque",
+   "tuple[int, int]",
+   1
+  ],
+  [
+   "src/gnd/universe.py",
+   "_universe_types",
+   "set[str]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 6537,
+ "result_occurrences": 8202
+}

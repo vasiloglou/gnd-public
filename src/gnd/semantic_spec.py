@@ -7,6 +7,8 @@ executable specification candidates; they are not production correspondence
 or production-branch coverage claims.
 """
 
+from dataclasses import replace
+
 from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.semantic_ir import IRConstraint, IRFactType, Scalar, SnapshotIR
 
@@ -2349,11 +2351,55 @@ def join_refusal_of(constraint: IRConstraint, snapshot: SnapshotIR) -> str:
     return ""
 
 
+def subject_slots_opaque(constraint: IRConstraint, snapshot: SnapshotIR) -> bool:
+    """True when a resolved single-subject rule is stopped only by an opaque cell.
+
+    Covers ``mandatory``, ``mandatory-disjunctive`` and single-role
+    ``exclusive-or``: the family's own cursor resolves one subject roster, and
+    that roster or a role column holds an opaque cell. The adapter admits such
+    a rule on purpose; without this its family's structural fallback reason
+    would be reported (IK3-Q1).
+    """
+    if constraint.refused != "":
+        return False
+    columns: list[tuple[int, int]] = []
+    roster_position = -1
+    if constraint.family == "mandatory":
+        cursor = mandatory_cursor(constraint, snapshot)
+        roster_position = cursor[3]
+        columns.append((cursor[2], cursor[1]))
+    elif constraint.family in ("mandatory-disjunctive", "exclusive-or"):
+        disjunctive = constraint
+        if constraint.family == "exclusive-or":
+            if constraint.variant != "single-role" or any(len(row) != 1 for row in constraint.sequences):
+                return False
+            # A single-role exclusive-or resolves its subject exactly as the
+            # disjunctive mandatory over the same role slots does.
+            disjunctive = replace(
+                constraint,
+                family="mandatory-disjunctive",
+                variant="n-a",
+                role_refs=tuple(row[0] for row in constraint.sequences),
+            )
+        _shared, roster_position, columns = mandatory_disjunctive_cursor(disjunctive, snapshot)
+    if roster_position < 0:
+        return False
+    if any(value is None for value in snapshot.rosters[roster_position].members):
+        return True
+    return any(
+        role_position < len(row) and row[role_position] is None
+        for relation_position, role_position in columns
+        for row in snapshot.relations[relation_position].rows
+    )
+
+
 def unchecked_reason_of(constraint: IRConstraint, snapshot: SnapshotIR) -> str:
     """Map an unevaluable IR constraint to the closed reason vocabulary."""
     join_reason = join_refusal_of(constraint, snapshot)
     if join_reason:
         return join_reason
+    if subject_slots_opaque(constraint, snapshot):
+        return "opaque-value"
     if constraint.refused == "unresolvable-role":
         return "role-unresolved"
     if constraint.refused == "unregistered-family" or constraint.refused == "malformed-constraint":

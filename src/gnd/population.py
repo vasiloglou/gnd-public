@@ -39,6 +39,7 @@ from __future__ import annotations
 import hashlib  # noqa: F401 -- compatibility export
 import io
 import json  # noqa: F401 -- historical compatibility binding
+import os
 from importlib.resources import files
 from pathlib import Path
 from typing import Any, Literal
@@ -540,15 +541,21 @@ def load_population(path: str | Path, *, model: Model | None = None) -> Populati
     header remains declarative metadata that this loader never opens (T-01-05);
     layer 2 reads it as opaque data and the model object comes from the caller.
     """
+    from gnd.safefs import NotRegularFileError, open_regular
+
     path = Path(path)
 
-    size = path.stat().st_size
-    if size > MAX_POPULATION_BYTES:
-        raise PopulationLoadError(
-            f"population file '{path}' is {size} bytes, exceeding the "
-            f"{MAX_POPULATION_BYTES}-byte cap for untrusted population input"
-        )
-
-    with path.open("rb") as stream:
+    # Non-blocking, so a FIFO is refused by name instead of hanging in open().
+    try:
+        descriptor = open_regular(path)
+    except NotRegularFileError:
+        raise PopulationLoadError(f"population file '{path}' is not a regular file") from None
+    with os.fdopen(descriptor, "rb") as stream:
+        size = os.fstat(stream.fileno()).st_size
+        if size > MAX_POPULATION_BYTES:
+            raise PopulationLoadError(
+                f"population file '{path}' is {size} bytes, exceeding the "
+                f"{MAX_POPULATION_BYTES}-byte cap for untrusted population input"
+            )
         data = stream.read(MAX_POPULATION_BYTES + 1)
     return load_population_bytes(data, source=path, model=model)

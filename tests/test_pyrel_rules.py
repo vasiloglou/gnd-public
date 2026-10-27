@@ -19,9 +19,11 @@ NATIVE = ROOT / 'tutorials/runtimes/.venv/bin/python'
 BOOKREC = Path(str(files('gnd').joinpath('examples', 'bookrec')))
 EXPENSE = Path(str(files('gnd').joinpath('examples', 'expense')))
 PROBES = ROOT / 'tests/fixtures/pyrel-rules'
+ORACLE = ROOT / 'tests/fixtures/pyrel-oracle'
 MODELS = {'bookrec': BOOKREC / 'model.orm.yaml', 'expense': EXPENSE / 'model.orm.json',
           'currency': EXPENSE / 'currency.orm.json', 'probe': PROBES / 'probe.orm.json',
-          'names': PROBES / 'names.orm.json', 'names2': PROBES / 'names2.orm.json'}
+          'names': PROBES / 'names.orm.json', 'names2': PROBES / 'names2.orm.json',
+          'basics': ORACLE / 'basics.orm.yaml'}
 CORPUS = [
     ('bookrec', BOOKREC / 'seed.population.json', 0),
     ('bookrec', BOOKREC / 'adult-for-minor.population.json', 1),
@@ -37,6 +39,9 @@ CORPUS = [
     # Review probes (notes/phase-PL12-claude-review.md): multi-role subset, uniqueness with two
     # non-key roles, literals in consequents, instances rosters through a reference value type,
     # a vacuous rule after a violation, and a fact list the input does not cover.
+    # Model-level rules without an id export as constraints_<i> (carried-defects item 4).
+    ('basics', ORACLE / 'population.basics_pass.yaml', 0),
+    ('basics', ORACLE / 'population.basics_fail.yaml', 1),
     ('probe', PROBES / 'p1.population.json', 1),
     ('probe', PROBES / 'p2.population.json', 1),
     ('probe', PROBES / 'p3.population.json', 1),
@@ -70,7 +75,7 @@ def _findings(stdout):
 
 def _gnd(name, population):
     doc = _parse_document(MODELS[name].read_text())
-    names = {f'constraints[{i}]': c['id'] for i, c in enumerate(doc['constraints'])}
+    names = {f'constraints[{i}]': c.get('id') or f'constraints_{i}' for i, c in enumerate(doc['constraints'])}
     for fact in doc['fact_types']:
         for i, c in enumerate(fact.get('constraints', [])):
             names[f'fact_types[{fact["id"]}].constraints[{i}]'] = c.get('id') or f'{fact["id"]}#{i}'
@@ -88,6 +93,9 @@ def _gnd(name, population):
             witnesses = [sorted(verdict['offending_facts'], key=lambda f: json.dumps(f, sort_keys=True))]
         elif verdict['constraint_type'] == 'mandatory':
             witnesses = [[w] for w in verdict['offending_facts']]
+        elif verdict['constraint_type'] == 'frequency':
+            # one line for the whole list, as tests/test_pyrel_rules_families.py compares it
+            witnesses = [verdict['offending_facts']]
         else:
             witnesses = verdict['offending_facts']
         for w in witnesses:
@@ -99,6 +107,16 @@ def _gnd(name, population):
 @pytest.mark.parametrize('name,population,expected', CORPUS, ids=[f'{n}-{p.name}' for n, p, _ in CORPUS])
 def test_duckdb_program_agrees_with_gnd(tmp_path, name, population, expected):
     program = _program(tmp_path, name, 'duckdb')
+    if population.suffix == '.yaml':
+        # The programs read JSON, and refuse repeated facts by design (see
+        # test_repeated_facts_are_refused_not_silently_merged), so both sides
+        # check the same JSON population with exact duplicate rows dropped.
+        document = _parse_document(population.read_text())
+        for fact_type, rows in document.get('facts', {}).items():
+            unique = {json.dumps(row, sort_keys=True): row for row in rows}
+            document['facts'][fact_type] = list(unique.values())
+        population = tmp_path / f'{population.stem}.json'
+        population.write_text(json.dumps(document))
     run = subprocess.run([str(NATIVE), '-I', str(program), str(population)], capture_output=True, text=True,
                          timeout=300, check=False)
     assert run.stderr == '', run.stderr

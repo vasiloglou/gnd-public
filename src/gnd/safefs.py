@@ -525,6 +525,27 @@ read_regular_bounded = _artifacts.read_regular_bounded
 read_regular_bounded_at = _artifacts.read_regular_bounded_at
 
 
+class NotRegularFileError(OSError):
+    """A caller path names a FIFO, socket, device or directory, not a regular file."""
+
+
+def open_regular(path: str | Path) -> int:
+    """Open a caller path for reading; never block waiting for a FIFO writer.
+
+    Returns a descriptor the caller owns. A non-regular leaf is closed and
+    refused with :class:`NotRegularFileError` before any read. Symbolic links
+    are followed, as a plain ``open`` follows them.
+    """
+    fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NONBLOCK', 0))
+    try:
+        if not stat.S_ISREG(os.fstat(fd).st_mode):
+            raise NotRegularFileError(f"{path} is not a regular file")
+    except BaseException:
+        os.close(fd)
+        raise
+    return fd
+
+
 def file_sha256(path: str | Path) -> str:
     """Stream a stable regular leaf; never block waiting for a FIFO writer."""
     fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NONBLOCK', 0))

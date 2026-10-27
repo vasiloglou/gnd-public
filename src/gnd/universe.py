@@ -297,6 +297,19 @@ def _denoting_types(covered: set[str], model: Model) -> set[str]:
     }
 
 
+def _universe_types(object_type_id: str, model: Model) -> set[str]:
+    """The object types whose rosters and roles feed ``object_type_id``'s universe.
+
+    Every transitive subtype, plus, for a value type, every entity type its
+    values denote. :func:`_instance_values_of` walks exactly these, and a
+    witness drawn from that universe takes its spelling from them too.
+    """
+    covered = _descendant_closure(object_type_id, model)
+    if _kind_of(object_type_id, model) == "value":
+        return covered | _denoting_types(covered, model)
+    return covered
+
+
 def _instance_values_of(object_type_id: str, model: Model, population: Population) -> list[Any]:
     """Closed-world instance values of an object type, DUPLICATES PRESERVED.
 
@@ -324,11 +337,7 @@ def _instance_values_of(object_type_id: str, model: Model, population: Populatio
     order, so the offending list is deterministic and unchanged for every object
     type that has neither subtypes nor entity types referencing it.
     """
-    covered = _descendant_closure(object_type_id, model)
-    if _kind_of(object_type_id, model) == "value":
-        collected = covered | _denoting_types(covered, model)
-    else:
-        collected = covered
+    collected = _universe_types(object_type_id, model)
     values: list[Any] = []
     for collected_id in [object_type_id, *sorted(collected - {object_type_id})]:
         values.extend(population.instances.get(collected_id, []))
@@ -377,6 +386,7 @@ is_implemented = _is_implemented
 kind_of = _kind_of
 role_object_type = _role_object_type
 scope_fact_types = _scope_fact_types
+universe_types = _universe_types
 
 from typing import TYPE_CHECKING
 

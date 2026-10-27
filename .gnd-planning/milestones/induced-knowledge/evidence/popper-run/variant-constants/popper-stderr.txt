@@ -1,0 +1,146 @@
+Warning: <scratch>/variant-const/bk.pl:10:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:13:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:16:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:19:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:21:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:23:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:25:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:28:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:31:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:34:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:36:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:38:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:40:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:43:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:46:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:49:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:51:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:53:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:55:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:57:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/variant-const/bk.pl:59:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/variant-const/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+0.3s Generating partial hypotheses of size: 2
+0.3s Generating partial hypotheses of size: 3
+0.3s ********************
+0.3s New best hypothesis:
+0.3s tp:1 fn:3 tn:4 fp:0 size:3
+0.3s wrong(V0):- c750(V1),f_refund_amount(V0,V2,V1).
+0.3s ********************
+0.3s ********************
+0.3s New best hypothesis:
+0.3s tp:2 fn:2 tn:4 fp:0 size:6
+0.3s wrong(V0):- c95(V1),f_refund_amount(V0,V2,V1).
+0.3s wrong(V0):- c750(V1),f_refund_amount(V0,V2,V1).
+0.3s ********************
+0.3s ********************
+0.3s New best hypothesis:
+0.3s tp:3 fn:1 tn:4 fp:0 size:9
+0.3s wrong(V0):- c95(V1),f_refund_amount(V0,V2,V1).
+0.3s wrong(V0):- c80(V1),f_refund_amount(V0,V2,V1).
+0.3s wrong(V0):- c750(V1),f_refund_amount(V0,V2,V1).
+0.3s ********************
+0.3s ********************
+0.3s New best hypothesis:
+0.3s tp:4 fn:0 tn:4 fp:0 size:12
+0.3s wrong(V0):- c95(V1),f_refund_amount(V0,V2,V1).
+0.3s wrong(V0):- c80(V1),f_refund_amount(V0,V2,V1).
+0.3s wrong(V0):- c750(V1),f_refund_amount(V0,V2,V1).
+0.3s wrong(V0):- f_refund_amount(V0,V2,V1),c260(V1).
+0.3s ********************
+0.4s Generating partial hypotheses of size: 4
+0.4s ********************
+0.4s New best hypothesis:
+0.4s tp:4 fn:0 tn:4 fp:0 size:4
+0.4s wrong(V0):- f_refund_amount(V0,V3,V1),c500(V2),gt_t_amount(V1,V2).
+0.4s ********************
+0.4s ********** SOLUTION **********
+0.4s Precision:1.00 Recall:1.00 TP:4 FN:0 TN:4 FP:0 Size:4
+0.4s wrong(V0):- f_refund_amount(V0,V3,V1),c500(V2),gt_t_amount(V1,V2).
+0.4s ******************************
+real 0.45
+user 0.38
+sys 0.06

@@ -1,0 +1,34 @@
+Popper install for the IK5-Q5 real run, 2026-10-27 (darwin arm64, macOS 26).
+Owner approval, quoted: "A real Popper run needs your yes to install Popper. -> yes".
+Everything below is outside the repository: nothing touched uv.lock or pyproject.toml.
+
+1. System prerequisites named by Popper's README (Homebrew, no sudo):
+   $ brew install swi-prolog coreutils
+   -> swi-prolog 10.0.2 ("SWI-Prolog version 10.0.2 for arm64-darwin"), coreutils 9.12_1
+   uv 0.10.10 was already present. clingo is not a Homebrew install: it is a Python
+   dependency of Popper (clingo==5.8.2 below).
+
+2. Popper source. The PyPI name "popper" (2020.9.1, getpopper) is an unrelated project,
+   and logic-and-learning-lab publishes no PyPI package, so the source is the GitHub tag:
+   $ git clone --depth 1 --branch v5.0.1 https://github.com/logic-and-learning-lab/Popper.git <scratch>/src/Popper
+   -> commit 578a4e26a22006b9325fe819486242f7fafc3195 (tag v5.0.1, published 2026-06-11)
+   The tag's pyproject.toml still says version = "5.0.0"; the run record names 5.0.1, the tag.
+   The tag ships no lockfile; requires-python >= 3.14.
+
+3. Isolated venv in the scratchpad:
+   $ uv venv --python 3.14 <scratch>/popper-venv            (CPython 3.14.3)
+   $ uv pip install --python <scratch>/popper-venv/bin/python <scratch>/src/Popper
+   The first attempt failed building janus-swi 1.5.3: every link on this host failed,
+   including a plain hello-world, with
+     ld: tapi error: malformed file
+     .../SDKs/MacOSX27.0.sdk/usr/lib/libSystem.B.tbd:4:20: error: unknown architecture
+   i.e. the default Command Line Tools SDK (27.0) is newer than its ld (ld-1267).
+   The install succeeded with that one build pointed at the installed 26.5 SDK
+   (an environment variable for the command only; no system setting changed):
+   $ SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk uv pip install --python <scratch>/popper-venv/bin/python <scratch>/src/Popper
+   Resolved set: popper-venv-freeze.txt.
+
+4. Invocation (bounded twice: Popper's own --timeout, and gtimeout around it):
+   $ cd <scratch>/run && gtimeout 360 <scratch>/popper-venv/bin/python -I <scratch>/src/Popper/popper.py ilp/popper --timeout 300
+   Popper v5.0.1 has no --version flag; it prints its program through its logger on
+   stderr, with elapsed-time prefixes, and prints only errors or NO SOLUTION on stdout.

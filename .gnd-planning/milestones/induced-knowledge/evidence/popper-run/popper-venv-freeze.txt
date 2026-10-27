@@ -1,0 +1,19 @@
+absl-py==2.5.1
+bitarray==3.12.3
+cffi==2.1.1
+clingo==5.8.2
+cykhash==2.0.1
+immutabledict==4.3.1
+janus-swi==1.5.3
+numpy==2.5.4
+ortools==9.15.6755
+pandas==3.1.0
+popper @ file://<scratch>/src/Popper
+protobuf==6.33.6
+pycparser==3.12
+pypblib==0.0.4
+python-dateutil==3.0.0
+python-sat==1.9.dev17
+six==1.17.0
+typing-extensions==4.16.0
+tzdata==2026.5

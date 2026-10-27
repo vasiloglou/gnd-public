@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Pre-processing                          : 0.004s
+%% Hypothesis Space Generation             : 93.645s
+%% Conflict analysis                       : 15.96s
+%%   - Negative Examples                   : 1.81s
+%%   - Positive Examples                   : 14.15s
+%% Counterexample search                   : 0.015s
+%%   - CDOEs                               : 0s
+%%   - CDPIs                               : 0.013s
+%% Hypothesis Search                       : 13.089s
+%% Total                                   : 123.685s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+wrong :- gt_t_amount(V1,500).
+

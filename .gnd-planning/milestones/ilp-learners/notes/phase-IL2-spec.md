@@ -675,3 +675,73 @@ explicit environment. With them, `ILASP --version` prints the version line
     outcome, not a defect (plan §2).
   - **Changing the search space** would be a settings change, which needs an
     owner-recorded amendment (IL-R9).
+
+### Invocation 1, the run of record (2026-10-27)
+
+**The run:**
+- **The command:** `ILASP --version=4 task.las` over the refunds export
+  (E = `1acb8010…8a5e`, adapter version 1), under the §6 limits.
+- **Time:** ILASP finished in 123.685 s by its own timing block. 93.6 s of
+  that was hypothesis-space generation.
+- **What it printed:** one rule,
+
+  ```
+  wrong :- gt_t_amount(V1,500).
+  ```
+
+**The outcome:**
+- `termination: completed`.
+- `import: refused:empty-antecedent`, exit 3:
+  `clause 0: empty-antecedent: nothing is left for the antecedent`.
+- clingo's independent coverage of the rule is harbor, market, airport and
+  station, the same four weeks as the rule Popper learned in IL1 invocation 3.
+
+**IL2-F6: the script crashed after the learner ran, and the process record
+was lost.**
+- **The defect:** `run_ilasp.py` passed ILASP's `PYTHONHOME` (Python 3.10)
+  into the clingo evaluator's environment, so the evaluator's Python 3.14
+  could not import `encodings`. The script stopped after writing the raw
+  output and `hypothesis.las`, but before `outcome.json`.
+  - **Lost:** the run's `run_bounded_process` result, so its exit status was
+    not observed.
+  - **Fix 1:** ILASP's Python variables are now set for ILASP only.
+  - **Fix 2:** `python -m clingo` exits 0 rather than clingo's 10/20/30, so
+    the evaluator reads clingo's JSON `Result` instead.
+- **How the run was completed:**
+  - **ILASP was not run again:** a second run needs an owner ruling
+    (IL-R9).
+  - **From the retained bytes:** invocation 1 was finished with
+    `--complete-retained`. It re-exports (same E), re-extracts the retained
+    hypothesis, has clingo evaluate it, and runs the fixed import.
+- **What `outcome.json` records:**
+  - `"process": null` and a `process_record` note naming IL2-F6.
+  - **The basis for `termination: completed`,** from the retained output:
+    - ILASP prints the closing `%% Total` block and the hypothesis only when
+      it finishes;
+    - 123.7 s is below the 600 s wall clock;
+    - 712 bytes of stdout and an empty stderr are far below the output
+      limits.
+  - **What is not claimed:** that the exit status was observed.
+- **The replay:** T9 accepts a null process only when the note names IL2-F6.
+
+**IL2-F7: the rendering lets a comparison stand alone (the answer to the
+record's questions).**
+1. **Does ILASP accept the rendering?** Yes.
+2. **Does the hypothesis parse and import?** It parses: the reader copies
+   the comparison atom and finds no other atom, so it threads no `X`.
+   - **The refusal:** the fragment checker refuses it as `empty-antecedent`,
+     because a guarded constraint needs an antecedent atom.
+   - **Why ILASP found this rule:** the background binds the comparison's
+     variable through `dom_t_amount(X) :- f_refund_amount(_, X)`. So ILASP
+     found that `gt_t_amount(V1,500)` alone is safe and cheaper (penalty 1)
+     than Popper's two-atom rule. This is a consequence of the IL2 rendering
+     design (§6, "Comparisons"), not of the reader.
+3. **Does clingo's coverage agree with GND's?** GND never computed coverage,
+   because the clause was refused before support. clingo's covered set
+   equals the set GND computed for Popper's equivalent rule in IL1
+   invocation 3.
+
+**What a fix would be.** IL2-F7 is a rendering result, so any fix is an
+owner-recorded amendment (IL-R9): a bias that requires each comparison
+variable to occur in a predicate atom, `adapter_version` 2, moved goldens and
+a second run. Nothing has been changed.

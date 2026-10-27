@@ -1,0 +1,63 @@
+{
+ "adapter_version": "1",
+ "export_sha256": "1acb801053b0491a86a393bcce88f482a7431ca62051c9bb6c13f3eab7228a5e",
+ "export_stdout": "EXPORTED 8 examples and 60 facts to <scratch>/work-1/export (ilasp)\nexport_sha256 1acb801053b0491a86a393bcce88f482a7431ca62051c9bb6c13f3eab7228a5e\nwork 68 (ceiling 500008)\n",
+ "ilasp": {
+  "archive_sha256": "7e9fd1ccbafa3241558c1f70a868b1c3e141de52dbdc76d26396b70f492cd75c",
+  "argv": [
+   "<scratch>/ilasp/ILASP",
+   "--version=4",
+   "task.las"
+  ],
+  "binary_sha256": "08320bd4c20136bcb8803d384e65faedb99371e0960287819ef3257f043406be",
+  "learner": {
+   "name": "ilasp",
+   "version": "4.4.1"
+  },
+  "licence": "non-commercial research and education; owner ruled this use non-commercial research (IL2-D1 (o))",
+  "process": null,
+  "python310_archive_sha256": "83a95278567c1f5fea1e886684895c24f467e66f3e9ab3a20321402f54409d14",
+  "timeout": null
+ },
+ "import": "refused:empty-antecedent",
+ "import_args": [
+  "import",
+  "ilp-rules",
+  "model.orm.yaml",
+  "hypothesis.las",
+  "--labels",
+  "labels.json",
+  "--reported-coverage",
+  "run.json",
+  "--target",
+  "ilasp",
+  "--out",
+  "proposal.json",
+  "--actor",
+  "ilp-live",
+  "--requested-at",
+  "2026-01-01T00:00:00Z",
+  "--format",
+  "json"
+ ],
+ "import_exit": 3,
+ "invocation": 1,
+ "limits": {
+  "stderr_limit_bytes": 4194304,
+  "stdin_limit_bytes": 0,
+  "stdout_limit_bytes": 16777216,
+  "terminate_grace_seconds": 10.0,
+  "timeout_seconds": 600.0,
+  "total_output_limit_bytes": 20971520
+ },
+ "numbers": {
+  "export_sha256": "computed by GND's export",
+  "ilasp_output": "printed by ILASP, kept verbatim in raw-stdout.txt",
+  "import report": "computed by GND's import",
+  "run.json coverage": "independent evaluation (clingo 5.8.2): background + context + rule, per example"
+ },
+ "process_record": "not recorded: the script crashed in its clingo step after ILASP exited and before outcome.json was written (IL2-F6). termination 'completed' rests on the retained output: the closing %% Total timing block and the hypothesis, which ILASP prints only when it finishes; 123.685 s is below the 600 s wall clock, and 712 bytes of stdout and an empty stderr are far below the output limits. The exit status was not observed.",
+ "reproducibility": "single run, reproducibility not measured",
+ "run_of_record": true,
+ "termination": "completed"
+}

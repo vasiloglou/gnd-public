@@ -268,6 +268,74 @@ CORPUS_REFUSALS = {case["refusal"] for case in CORPUS["refuse"]}
 
 
 # ---------------------------------------------------------------------------
+# T9: the recorded live run replays from its committed bytes (IL-R9).
+# ---------------------------------------------------------------------------
+
+LIVE_ROOT = REPO_ROOT / ".gnd-planning" / "milestones" / "ilp-learners" / "evidence" / "IL2" / "live"
+#: Invocation 1 is the run of record.
+INVOCATIONS = (1,)
+TERMINATIONS = {"rendering-rejected", "completed", "learner-timeout", "wall-clock-kill", "output-limit"}
+REQUIRED = {"invocation", "run_of_record", "termination", "import", "export_sha256", "adapter_version",
+            "ilasp", "limits", "import_args", "numbers", "reproducibility"}
+
+
+@pytest.mark.parametrize("invocation", INVOCATIONS)
+def test_t9_each_recorded_run_replays(tmp_path, invocation):
+    import shutil
+
+    from gnd import input_policy
+    from gnd.export import ilp_asp
+    from gnd.export.ilp_asp import extract_hypothesis
+
+    live = LIVE_ROOT / f"invocation-{invocation}"
+    data = (live / "outcome.json").read_bytes()
+    assert len(data) < 1024 * 1024
+    outcome = input_policy.loads(data)
+    assert REQUIRED <= set(outcome)
+    assert outcome["invocation"] == invocation and outcome["run_of_record"] is (invocation == 1)
+    assert outcome["termination"] in TERMINATIONS
+    assert outcome["reproducibility"] == "single run, reproducibility not measured"
+    process = outcome["ilasp"]["process"]
+    if process is None:
+        # IL2-F6: the process result was lost; the record must say so and why.
+        assert "IL2-F6" in outcome["process_record"] and outcome["termination"] == "completed"
+    else:
+        assert outcome["termination"] == (
+            "wall-clock-kill" if process["status"] == "timed-out"
+            else "output-limit" if process["stdout_truncated"] or process["stderr_truncated"]
+            else "rendering-rejected" if process["return_code"] != 0 else "completed")
+
+    export = _export(tmp_path)
+    digest = hashlib.sha256((export / "export.json").read_bytes()).hexdigest()
+    assert outcome["adapter_version"] == ilp_asp.ADAPTER_VERSION
+    assert digest == outcome["export_sha256"]
+
+    hypothesis = extract_hypothesis((live / "raw-stdout.txt").read_text(encoding="utf-8"))
+    assert hypothesis == (live / "hypothesis.las").read_text(encoding="utf-8")
+    if not hypothesis:
+        assert outcome["import"] == "none" and not (live / "run.json").exists()
+        return
+    imports = tmp_path / "import"
+    shutil.copytree(REFUNDS, imports, ignore=shutil.ignore_patterns("*.py", "README.md"))
+    for name in ("hypothesis.las", "run.json"):
+        shutil.copy(live / name, imports / name)
+    previous = os.getcwd()
+    os.chdir(imports)
+    try:
+        replayed = run_main(list(outcome["import_args"]))
+    finally:
+        os.chdir(previous)
+    assert replayed.returncode == outcome["import_exit"]
+    if replayed.returncode == 0:
+        assert outcome["import"] == "admitted"
+        assert (imports / "proposal.json").read_bytes() == (live / "proposal.json").read_bytes()
+    else:
+        refusal = replayed.stderr.decode().strip()
+        assert refusal == (live / "import-stderr.txt").read_text().strip()
+        assert outcome["import"] == "refused:" + refusal.split(": ")[1]
+
+
+# ---------------------------------------------------------------------------
 # T-live: clingo, an evaluator that is not GND, agrees with GND's coverage.
 # ---------------------------------------------------------------------------
 
@@ -286,7 +354,7 @@ def test_live_clingo_covers_what_gnd_covers(tmp_path):
         program = background + context + CORPUS["accept"][0]["text"]
         result = subprocess.run([python, "-m", "clingo", "--outf=2", "-"], input=program.encode(),
                                 capture_output=True, check=False)
-        assert result.returncode in (10, 30), result.stderr
+        assert result.returncode in (0, 10, 30), result.stderr  # python -m clingo exits 0
         atoms = json.loads(result.stdout)["Call"][0]["Witnesses"][0]["Value"]
         if "wrong" in atoms:
             covered.append(neutral["examples"][index]["id"])

@@ -56,6 +56,16 @@ IMPORT_ARGS = ("import", "ilp-rules", "model.orm.yaml", "hypothesis.las", "--lab
                "--reported-coverage", "run.json", "--target", "ilasp", "--out", "proposal.json",
                "--actor", "ilp-live", "--requested-at", "2026-01-01T00:00:00Z", "--format", "json")
 
+#: Invocation 1's process result was lost when the script's evaluator step
+#: crashed (IL2-F6). Its termination rests on the retained output instead.
+RETAINED_TERMINATION = "completed"
+PROCESS_LOST = ("not recorded: the script crashed in its clingo step after ILASP exited and before "
+                "outcome.json was written (IL2-F6). termination 'completed' rests on the retained "
+                "output: the closing %% Total timing block and the hypothesis, which ILASP prints "
+                "only when it finishes; 123.685 s is below the 600 s wall clock, and 712 bytes of "
+                "stdout and an empty stderr are far below the output limits. The exit status was "
+                "not observed.")
+
 SCRATCH_PATH = re.compile(r"(?:/private)?/tmp/claude-\d+/\S*?/scratchpad/il[12]-live")
 
 
@@ -75,14 +85,17 @@ class Sanitizer:
         return text.replace(self.user, "<user>")
 
 
-def environment(scratch: Path) -> dict[str, str]:
+def environment(scratch: Path, *, ilasp: bool) -> dict[str, str]:
     home, tmp = scratch / "home", scratch / "tmp"
     home.mkdir(exist_ok=True)
     tmp.mkdir(exist_ok=True)
-    return {"PATH": f"{scratch / 'ilasp'}:/usr/bin:/bin", "HOME": str(home), "USER": getpass.getuser(),
-            "TMPDIR": str(tmp), "LANG": "C.UTF-8",
-            # IL2-D12 (o): ILASP links a Python 3.10 framework; the shim supplies it.
-            "DYLD_FRAMEWORK_PATH": str(scratch / "fw"), "PYTHONHOME": str(scratch / "py310")}
+    env = {"PATH": f"{scratch / 'ilasp'}:/usr/bin:/bin", "HOME": str(home), "USER": getpass.getuser(),
+           "TMPDIR": str(tmp), "LANG": "C.UTF-8"}
+    if ilasp:
+        # IL2-D12 (o): ILASP links a Python 3.10 framework; the shim supplies it.
+        # Never for clingo's Python, which PYTHONHOME would break (IL2-F6).
+        env |= {"DYLD_FRAMEWORK_PATH": str(scratch / "fw"), "PYTHONHOME": str(scratch / "py310")}
+    return env
 
 
 def termination(result) -> str:
@@ -107,11 +120,13 @@ def clingo_coverage(scratch: Path, python: str, work: Path, task: str, hypothesi
             program = work / "cover.lp"
             program.write_text(background + context + rule + "\n", encoding="utf-8")
             result = asyncio.run(run_bounded_process((python, "-m", "clingo", "--outf=2", "cover.lp"),
-                                                     cwd=work, env=environment(scratch),
+                                                     cwd=work, env=environment(scratch, ilasp=False),
                                                      limits=CLINGO_LIMITS))
-            if result.return_code not in (10, 20, 30):
+            # python -m clingo exits 0; the clingo binary's codes are 10, 20 and 30.
+            report = json.loads(result.stdout) if result.return_code in (0, 10, 20, 30) else {}
+            if report.get("Result") not in ("SATISFIABLE", "UNSATISFIABLE"):
                 raise SystemExit(f"clingo failed for rule {index}: {result.stderr[-400:]!r}")
-            calls = json.loads(result.stdout)["Call"]
+            calls = report["Call"]
             witnesses = calls[0].get("Witnesses", []) if calls else []
             if witnesses and "wrong" in witnesses[0]["Value"]:
                 covered.append(ids[position])
@@ -124,11 +139,17 @@ def main() -> int:
     parser.add_argument("--scratch", required=True, type=Path)
     parser.add_argument("--clingo-python", required=True)
     parser.add_argument("--invocation", required=True, type=int)
+    parser.add_argument("--complete-retained", action="store_true",
+                        help="finish an invocation whose ILASP output is retained but whose "
+                             "post-processing failed; ILASP is not run again (IL2-F6)")
     args = parser.parse_args()
     scratch = args.scratch.resolve()
     clean = Sanitizer(scratch, Path(args.clingo_python).parents[2])
     out = OUT / f"invocation-{args.invocation}"
-    if out.exists():
+    if args.complete_retained:
+        if (out / "outcome.json").exists() or not (out / "raw-stdout.txt").exists():
+            raise SystemExit(f"{out}: nothing retained to complete, or already complete")
+    elif out.exists():
         raise SystemExit(f"{out} exists: every invocation is retained, never overwritten (IL-R9)")
     binary = scratch / "ilasp" / "ILASP"
     work = scratch / f"work-{args.invocation}"
@@ -145,19 +166,27 @@ def main() -> int:
     task = (work / "export" / "ilasp" / "task.las").read_text(encoding="utf-8")
 
     argv = (str(binary), *ARGS)
-    result = asyncio.run(run_bounded_process(argv, cwd=work / "export" / "ilasp",
-                                             env=environment(scratch), limits=LIMITS))
-    stdout, stderr = result.stdout.decode("utf-8", "replace"), result.stderr.decode("utf-8", "replace")
-    hypothesis = extract_hypothesis(stdout)
-
-    out.mkdir(parents=True)
-    (out / "raw-stdout.txt").write_text(clean(stdout), encoding="utf-8")
-    (out / "raw-stderr.txt").write_text(clean(stderr), encoding="utf-8")
-    (out / "hypothesis.las").write_text(hypothesis, encoding="utf-8")
+    if args.complete_retained:
+        # The learner already ran; its sanitized output is the record. Its
+        # process result was never written, so it is recorded as absent.
+        result = None
+        stdout = (out / "raw-stdout.txt").read_text(encoding="utf-8")
+        hypothesis = extract_hypothesis(stdout)
+        if hypothesis != (out / "hypothesis.las").read_text(encoding="utf-8"):
+            raise SystemExit("the retained hypothesis does not re-extract")
+    else:
+        result = asyncio.run(run_bounded_process(argv, cwd=work / "export" / "ilasp",
+                                                 env=environment(scratch, ilasp=True), limits=LIMITS))
+        stdout, stderr = result.stdout.decode("utf-8", "replace"), result.stderr.decode("utf-8", "replace")
+        hypothesis = extract_hypothesis(stdout)
+        out.mkdir(parents=True)
+        (out / "raw-stdout.txt").write_text(clean(stdout), encoding="utf-8")
+        (out / "raw-stderr.txt").write_text(clean(stderr), encoding="utf-8")
+        (out / "hypothesis.las").write_text(hypothesis, encoding="utf-8")
     outcome = {
         "invocation": args.invocation,
         "run_of_record": args.invocation == 1,
-        "termination": termination(result),
+        "termination": termination(result) if result else RETAINED_TERMINATION,
         "import": "none",
         "export_sha256": digest,
         "adapter_version": json.loads(index)["adapter_version"],
@@ -169,7 +198,7 @@ def main() -> int:
                              "non-commercial research (IL2-D1 (o))",
                   "timeout": None,
                   "argv": [clean(part) for part in argv],
-                  "process": json.loads(result.model_dump_json())},
+                  "process": json.loads(result.model_dump_json()) if result else None},
         "limits": json.loads(LIMITS.model_dump_json()),
         "import_args": list(IMPORT_ARGS),
         "numbers": {
@@ -180,6 +209,8 @@ def main() -> int:
         },
         "reproducibility": "single run, reproducibility not measured",
     }
+    if result is None:
+        outcome["process_record"] = PROCESS_LOST
     if hypothesis:
         run = {"schema_version": "gnd-ilp-run/1", "learner": LEARNER, "export_sha256": digest,
                "clauses_sha256": hashlib.sha256(hypothesis.encode("utf-8")).hexdigest(),

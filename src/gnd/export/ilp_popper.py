@@ -49,7 +49,10 @@ _TOKEN = re.compile(
     r"|(?P<var>[A-Z_][A-Za-z0-9_]*)|(?P<name>[a-z][A-Za-z0-9_]*)"
     r"|(?P<int>-?[0-9]+)|(?P<quoted>'(?:[^'\\\n]|\\x[0-9a-fA-F]{1,6}\\|\\[0-7]+\\|\\.)*')"
 )
-_ESCAPES = {"\\": "\\", "'": "'", "n": "\n", "t": "\t"}
+#: SWI-Prolog 10.0.2 writeq writes code points 7-13 as these letters and every
+#: other control as ``\xN\`` (IL1 spec §6; recorded in the IL1 review, finding 7).
+_ESCAPES = {"\\": "\\", "'": "'", "n": "\n", "t": "\t", "a": "\a", "b": "\b", "v": "\v",
+            "f": "\f", "r": "\r"}
 MAX_DEPTH = 4
 #: Longer than the clause schema's integer bound (2^53 - 1) and far below
 #: Python's int-string conversion limit, so conversion never raises.
@@ -62,7 +65,7 @@ MAX_OCTAL_DIGITS = 7
 #: scores line, one rule per line, then a closing rule of stars. Each line
 #: carries an elapsed-seconds prefix such as ``12.3s `` (IL1 spec §14, IL1-F4).
 SOLUTION_BANNER = "*" * 10 + " SOLUTION " + "*" * 10
-_ELAPSED = re.compile(r"\d+(?:\.\d+)?s ")
+_ELAPSED = re.compile(r"^\d+(?:\.\d+)?s ")
 _RULE = re.compile(r"wrong\(.*\.")
 
 
@@ -316,6 +319,11 @@ def _unquote(token: str, line: int, column: int) -> str:
             out.append(character)
             position += 1
             continue
+        if position + 1 == len(body):
+            # The tokenizer read a final ``\\`` pair that an octal escape
+            # before it consumed half of (IL1 review, finding 1).
+            raise IlpError(EXIT_ILL_FORMED, f"unparsable: line {line}, column {column}: "
+                           "a backslash ends a quoted atom")
         following = body[position + 1]
         if following in _ESCAPES:
             out.append(_ESCAPES[following])

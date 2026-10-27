@@ -440,7 +440,8 @@ def test_t9_each_recorded_run_replays(tmp_path, invocation):
         "wall-clock-kill" if process["status"] == "timed-out"
         else "output-limit" if process["stdout_truncated"] or process["stderr_truncated"]
         else "rendering-rejected" if process["return_code"] != 0
-        else outcome["termination"])
+        else "learner-timeout" if process["elapsed_seconds"] >= float(outcome["popper"]["timeout"])
+        else "completed")
     assert outcome["termination"] == expected_termination
 
     example = SRC / "examples" / "refunds"
@@ -589,4 +590,45 @@ def test_a1_t2_every_threshold_fails_on_an_unbound_argument(tmp_path):
     probe = subprocess.run([swipl, "-q", "probe.pl"], cwd=export / "popper", capture_output=True,
                            text=True, timeout=60, check=False)
     assert probe.returncode == 0 and probe.stdout == str(len(names)), probe.stderr
+
+
+# ---------------------------------------------------------------------------
+# IL1 adversarial review regressions (notes/phase-IL1-agent-review.md); each
+# was observed red against ed54e65.
+# ---------------------------------------------------------------------------
+
+def test_r1_an_octal_escape_before_a_final_backslash_pair_is_unparsable():
+    from gnd.export.ilp import IlpError
+    from gnd.export.ilp_popper import parse_program
+
+    with pytest.raises(IlpError, match=r"^unparsable: line 1, column \d+: a backslash ends"):
+        parse_program("wrong(A):- f_order_amount(A,B,C),f_customer_blocked(A,'\\1\\\\').")
+
+
+#: SWI-Prolog 10.0.2 writeq of 'x' followed by each control code point,
+#: recorded in the review (spec §6's gate record of the escape forms).
+SWI_WRITEQ = {0: "'x\\x0\\'", 7: "'x\\a'", 8: "'x\\b'", 9: "'x\\t'", 10: "'x\\n'",
+              11: "'x\\v'", 12: "'x\\f'", 13: "'x\\r'", 14: "'x\\xE\\'", 31: "'x\\x1F\\'",
+              127: "'x\\x7F\\'"}
+
+
+@pytest.mark.parametrize("code", sorted(SWI_WRITEQ))
+def test_r7_every_escape_swi_writes_parses(code):
+    from gnd.export.ilp_popper import parse_program
+
+    clause = parse_program(f"wrong(A):- f(A,{SWI_WRITEQ[code]}).")["clauses"][0]
+    assert clause["body"][0]["atom"]["args"][1] == {"const": "x" + chr(code)}
+
+
+def test_r4_extract_program_reads_the_last_solution_and_strips_only_the_prefix():
+    from gnd.export.ilp_popper import SOLUTION_BANNER, extract_program
+
+    stars = "*" * 30
+    log = (f"0.1s {SOLUTION_BANNER}\n0.1s wrong(A):- old(A).\n0.1s {stars}\n"
+           f"2.5s {SOLUTION_BANNER}\n2.5s Precision:1.00 Recall:1.00\n"
+           "2.5s wrong(A):- f(A,B,C),g(C).\n2.5s wrong(A):- f(A,B,'3s x').\n"
+           f"2.5s {stars}\n2.6s wrong(A):- late(A).\n")
+    assert extract_program(log) == "wrong(A):- f(A,B,C),g(C).\nwrong(A):- f(A,B,'3s x').\n"
+    assert extract_program(f"{SOLUTION_BANNER}\nwrong(A):- f(A,'3s x').\n") == "wrong(A):- f(A,'3s x').\n"
+    assert extract_program("1.1s Generating partial hypotheses of size: 3\n") == ""
 

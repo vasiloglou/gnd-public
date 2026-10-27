@@ -179,7 +179,7 @@ parser's grammar is `unparsable`, with its line and column.
 **Quoted atoms in Popper text.** The parser reads the escapes SWI-Prolog
 writes:
 - `\\` and `\'`;
-- `\n` and `\t`;
+- `\n` and `\t`, and `\a`, `\b`, `\v`, `\f` and `\r`;
 - a hexadecimal code point, `\x41\`;
 - an octal code point of 1 to 7 digits, `\101\`.
 

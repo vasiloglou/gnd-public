@@ -299,3 +299,21 @@ reported before it is changed.
   in the shared loaders. *Recommended.*
 - **CD-6:** the IK3 corpus README line stays as approved, and this record
   carries the correction. *Recommended.* Alternative: edit the README.
+
+## Owner gate record (2026-10-27)
+
+**Approval (o).** The owner was asked "Approve spec r1 with CD-1 to CD-6 as
+recommended?" and replied "Approve spec r1 with CD-1 to CD-6 as recommended."
+on 2026-10-27. The approved bytes are spec r1 as committed in `344f35a`, before
+this section was added:
+
+| Artifact | SHA-256 |
+|---|---|
+| `spec.md` (r1) | `8aea5a9ef984cf75bd2ee9293942bd58c9ea5c0c874a41fddc2e4309c6570a9b` |
+
+CD-1 to CD-6 are ruled as recommended. Implementation begins on this approval,
+regressions first.
+
+## Implementation findings
+
+Recorded as found, including any that refute this spec.

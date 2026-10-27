@@ -105,5 +105,7 @@ Records:
   carried evolve-loading row. Spec approved 2026-10-27 (D1-A..D5-A); one
   loader on the validator's parser, values outside JSON refused by name at 3,
   strict JSON for `.json` models. One local reviewer: two blocking findings,
-  both fixed red-first. Gate 3164 passed. IK4-Q2-R1's cross-module half
-  re-carried.
+  both fixed red-first. Gate 3164 passed. Amendment r2 (D6-A..D8-A): one
+  shared binding helper across eight homes with outcomes pinned, discover over
+  non-finite floats, recovery verify over YAML-only values; a second reviewer
+  round's blocking finding fixed red-first; gate 9656 passed.

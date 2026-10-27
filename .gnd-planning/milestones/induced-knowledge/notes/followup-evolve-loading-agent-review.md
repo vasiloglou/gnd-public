@@ -48,3 +48,42 @@ exit 70) and pass after the fix.
 | H1 kind names | cosmetic | **Fixed** with RV4's change: `tag:yaml.org,2002:` prints as `!!` |
 | ILP via the same path | — | Covered by the B1 fix (one function); the IK5 suite is in the gate. Not separately reproduced |
 | Double parse cost | — | Kept; recorded in the record's refactoring review |
+
+---
+
+# Round 2 — amendment r2's diff
+
+**Reviewer:** one local reviewer agent, 2026-10-27, over the r2 working-tree
+diff after `d594717` (the r2 red tests), given the spec and the code. **One
+reviewer is one reviewer.** It edited no repository file. To get "before"
+behaviour it ran the same code with the new guards replaced by no-ops.
+
+## Report (condensed by the author: reproduction script names trimmed)
+
+> **B1 — blocking: recovery verify and the verbalizer now refuse valid models that verified before.** `!!omap` and `!!pairs` values pass `gnd validate`, and the old `render_model_verbalization` rendered them, because `json.dumps` writes a tuple or ordered map as JSON. `verify.py`'s walk refuses both ("tag !!omap", "tag !!pairs"); the verbalizer guard refuses pairs (a list of tuples after `model_dump`) and passes omap, so the two guards disagree. This contradicts r2.2 and F13. Reproduced: omap and pairs bundles, old ok=True, new ok=False.
+>
+> **H1 — hardening: the new refusal now pre-empts `invalid-model-origin`.** A model with `source: {kind: text-conversation, created: 2024-01-01}` used to fail `invalid-model-origin` and now fails `invalid-model-value`. Exit 3 either way; the error code changes.
+>
+> **C1 — completeness: the verbalizer still leaks `TypeError` for an explicit `!!str` tag.** `provenance: {user_note: !!str 5}` loads as a ruamel `TaggedScalar`; the guard turns it into a string and passes it, and `_canonical` then raises `TypeError`. Not a regression.
+>
+> **C2 — completeness: `gnd import ilp-rules` changed outcome, untested and unrecorded.** It shares `candidate_text`. On the IK5 corpus with `source.x: .nan` (digests rebound): before, a traceback (exit 1); after, exit 0 with a YAML candidate. Consistent with D7 and with dates, but a second command whose exit moved.
+>
+> **Checked, no defect:**
+> - **Reference homes (D6):** every adopted site behaves as before. `gnd.references.bind_references` is the same object; `reference_root` defaults and check-then-bind order are kept; the exception tuples see the same types; `attach` is set only where it was (evolve, discover, session_contract); monkeypatches still take effect. A mutant dropping session_contract's `attach` failed an existing phase-4 branch test.
+> - **The verbalizer over 171 valid models:** 0 output or error differences; render time 0.03s before, 0.04s after.
+> - **Constructed values:** dates, sets, nan, inf and binary now give `VerbalizationError` instead of `TypeError`/`ValueError`. Core tags and big integers render as before.
+> - **Discover with `.nan`:** population values cannot be non-finite, so the reload shares the model's own nan.
+
+## Disposition
+
+Each finding was reproduced before it was believed (B1 and H1 with the
+reviewer's script; C1 and C2 by the regressions below). RV5..RV7 fail on the
+reviewed code (`evidence/evolve-loading/r2-regressions-red.txt`, 5 failed).
+RV8 pins D7's writer change, already applied, and passes by design.
+
+| Finding | Triage | Disposition |
+|---|---|---|
+| B1 | blocking (a base 0 became 3) | **Fixed.** `json_document(..., encodable=True)` refuses exactly what `json.dumps` cannot write: a tuple and an ordered map pass, and so does a tagged collection (author's extra case, `!foo {a: 1}`, also refused by the reviewed code). Recovery verify and the verbalizer both use it. Evolve keeps the strict mode. RV5: omap, pairs and a tagged mapping verify, 0 |
+| H1 | hardening | **Fixed.** The recovery refusal runs after the origin check. RV6 |
+| C1 | completeness (pre-existing `TypeError`) | **Fixed.** In encodable mode a tagged scalar of any tag is refused by name. RV7 |
+| C2 | completeness | **Recorded and pinned.** RV8 checks `candidate_text` round-trips `inf`, `-inf` and `nan` for both callers; record 014 names `gnd import ilp-rules` beside discover. No end-to-end ILP case was added |

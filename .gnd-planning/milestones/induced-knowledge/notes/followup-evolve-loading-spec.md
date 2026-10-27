@@ -437,3 +437,46 @@ its reference binding; any exit renumbering.
 | D8 | **A**: recovery verify refuses YAML-only values by name at 3; the verbalizer raises `VerbalizationError` (o) |
 
 Approved bytes: r2 at `5622370`. No panel ran.
+
+## r2.6 Implementation findings, recorded as found
+
+- **F10 (refines r2.2's "same-shape").** Five of the nine homes do other work
+  between the load and the bind: judgments, discover and witness load a
+  population; pyrel and session_contract load elsewhere or check first. Moving
+  their bind into `load_model_bytes_bound` would reorder refusal precedence,
+  which D6-A forbids. So the helper's bind half is public too, as
+  `bind_declared_references`, and those homes call it at their existing bind
+  point. Lean and souffle call `load_model_bytes_bound`. All share one binding
+  rule; no exit changes (H3).
+- **F11.** `exp.session_replay._model` is an RF8-frozen moved body
+  (`test_rf8_structure.py::test_unchanged_moved_bodies_and_shim_identity`
+  pins its AST digest with no successor mechanism). Adopting the helper there
+  would mean a new RF8 successor control, so it keeps its own bind. H3 still
+  pins its outcomes, and H2 excludes it.
+- **F12.** H3's base measurement found that two homes already leak a raw
+  `ArtifactError` on a missing or linked reference: `gnd discover` (a
+  traceback) and the `judgments` API (an exception, not a result). D6-A
+  forbids changing exits here, so H3 pins them as they are; carried as IKE-Q3.
+- **F13 (refutes r2.2's verbalizer design).** Wrapping `_canonical` broke
+  three RF1/RF2 pins on its body, and moving the render body into a helper
+  moved RF6-pinned query reads. Instead, `render_model_verbalization` first
+  runs the shared walk over `loaded.model_dump(exclude={"warnings"})` and
+  raises `VerbalizationError` naming path and kind. Measured before choosing:
+  the walk refuses none of the 246 valid model fixtures under
+  `tests/fixtures` and `src/gnd/examples`.
+- **F14.** RF controls: an RF4 body successor for `gnd.api:_witness_inputs`,
+  chained from the frozen RF9 row (`evidence/evolve-loading/update_rf4_successor.py`);
+  the new `gnd.model._documents` home is registered in `tools/gnd_layers.json`,
+  the RF6 package scope and the bind-consumer scan. Lean_io and session_replay
+  keep their module-level `load_model_bytes`/`bind_references` names as
+  compatibility bindings.
+- **F15 (verification selection).** The r2 gate is r1's 56 files plus every
+  test file naming a changed home's module or command: 235 files.
+- **F16 (review round 2).** The r2 guards first used evolve's strict walk,
+  which refuses some values `json.dumps` writes (an ordered map, a list of
+  pairs, a tagged collection), so recovery verify refused models that verified
+  before. This refutes r2.2's "unchanged for every model it renders today".
+  Repaired with the walk's `encodable` mode, which refuses exactly what
+  `json.dumps` cannot write (RV5..RV7). The recovery refusal now follows the
+  origin check (RV6). `gnd import ilp-rules` shares discover's writer and now
+  exits 0 on a non-finite float where it crashed (RV8; consistent with D7).

@@ -1,0 +1,18 @@
+r2 tests against the tree before any r2 fix: HEAD 82c95e3 plus evolve's value walk moved to gnd.model (behaviour-preserving; r1's 41 evolve tests pass). No home, discover writer, recovery or verbalizer code changed.
+$ uv run pytest -q -p no:randomly tests/test_evolve_loading.py -k "q1 or q2 or h2 or h3 or h4" -rfE
+=========================== short test summary info ============================
+FAILED tests/test_evolve_loading.py::test_q1_discover_writes_a_non_finite_float_and_evolve_names_it[.inf-.inf]
+FAILED tests/test_evolve_loading.py::test_q1_discover_writes_a_non_finite_float_and_evolve_names_it[-.inf--.inf]
+FAILED tests/test_evolve_loading.py::test_q1_discover_writes_a_non_finite_float_and_evolve_names_it[.nan-.nan]
+FAILED tests/test_evolve_loading.py::test_q2a_recovery_verify_names_a_dated_value
+FAILED tests/test_evolve_loading.py::test_q2b_the_verbalizer_refuses_by_type
+FAILED tests/test_evolve_loading.py::test_h4_the_shared_helper_raises_the_binders_own_errors
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[discover]
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[lean]
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[souffle]
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[pyrel]
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[witness]
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[judgments]
+FAILED tests/test_evolve_loading.py::test_h2_every_home_binds_through_the_shared_helper[replay]
+13 failed, 28 passed, 30 deselected in 1.52s
+exit 1

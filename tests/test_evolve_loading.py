@@ -400,3 +400,121 @@ def test_rv4_a_core_scalar_tag_on_a_collection_is_named(tmp_path, line, kind):
     document = parse_model_document(f"{line}\n".encode(), source="m.orm.yaml")
     with pytest.raises(EvolutionError, match=f"^m validation failed: x holds a {kind},"):
         _json_document(document, label="m")
+
+
+# Amendment r2 (spec r2.4; rulings D6-A, D7-A, D8-A).
+
+
+@pytest.mark.parametrize(("value", "spelled"), [(".inf", ".inf"), ("-.inf", "-.inf"), (".nan", ".nan")])
+def test_q1_discover_writes_a_non_finite_float_and_evolve_names_it(tmp_path, value, spelled):
+    """IKE-Q1: the base exits 1 (a traceback in the candidate writer)."""
+    work = _staff(tmp_path, _with_source(f"x: {value}"))
+    discovered = _discover(work)
+    assert discovered.returncode == 0, _text(discovered)
+    candidate = json.loads((work / "discovered.json").read_text())["candidate_model"]["text"]
+    assert f"x: {spelled}\n" in candidate
+    result = _preview(work, work / "discovered.json")
+    assert result.returncode == 3, _text(result)
+    assert "current model validation failed: source.x holds a non-finite float," in _text(result)
+
+
+def _dated_recovery_bundle(root: Path) -> Path:
+    import sys
+
+    sys.path.insert(0, str(REPO_ROOT / "tests"))
+    from test_recovery_adversarial import _write_bundle
+
+    _write_bundle(root)
+    text = (root / "model.orm.yaml").read_text()
+    document = json.loads(text)
+    lines = [f"version: {document['version']}", f"model_id: {document['model_id']}",
+             "source:", "  kind: codebase", "  created: 2024-01-01",
+             f"object_types: {json.dumps(document['object_types'])}",
+             "fact_types: []", "constraints: []", "rejected_proposals: []", ""]
+    (root / "model.orm.yaml").write_text("\n".join(lines))
+    report = json.loads((root / "model.recovery.json").read_text())
+    for out in report["outputs"]:
+        if out["path"] == "model.orm.yaml":
+            out["sha256"] = hashlib.sha256((root / "model.orm.yaml").read_bytes()).hexdigest()
+    (root / "model.recovery.json").write_text(json.dumps(report, indent=2) + "\n")
+    return root
+
+
+def test_q2a_recovery_verify_names_a_dated_value(tmp_path):
+    """IKE-Q2: the base exits 3 with the unnamed json.dumps message."""
+    root = _dated_recovery_bundle(tmp_path / "bundle")
+    assert run_main(["validate", str(root / "model.orm.yaml")]).returncode == 0
+    result = run_main(["recovery", "verify", str(root), str(root / "model.recovery.json"),
+                       "--model", str(root / "model.orm.yaml"),
+                       "--verbalization", str(root / "model.verbalization.txt")])
+    assert result.returncode == 3, _text(result)
+    errors = json.loads(result.stdout)["errors"]
+    assert errors == ["invalid-model-value: source.created holds a date, which the recovery "
+                      "verbalization cannot represent; quote it or remove it"]
+
+
+def test_q2b_the_verbalizer_refuses_by_type(tmp_path):
+    from gnd.model_verbalization import VerbalizationError, render_model_verbalization
+
+    root = _dated_recovery_bundle(tmp_path / "bundle")
+    with pytest.raises(VerbalizationError, match="cannot represent"):
+        render_model_verbalization(root / "model.orm.yaml")
+
+
+def test_h4_the_shared_helper_raises_the_binders_own_errors(tmp_path, monkeypatch):
+    import gnd.model
+
+    dispatch = REPO_ROOT / "tests" / "fixtures" / "reference-corpus" / "dispatch"
+    data = (dispatch / "model.orm.yaml").read_bytes()
+    model, context = gnd.model.load_model_bytes_bound(
+        data, source=dispatch / "model.orm.yaml", root=dispatch)
+    assert context is not None and model._references is None
+    attached, context = gnd.model.load_model_bytes_bound(
+        data, source=dispatch / "model.orm.yaml", root=dispatch, attach=True)
+    assert attached._references is context
+    staff, none = gnd.model.load_model_bytes_bound(
+        STAFF.encode(), source="staff.orm.yaml", root=tmp_path)
+    assert none is None and not staff.reference_populations
+    probe = OSError("probe")
+
+    def refusing(model, *, root):
+        raise probe
+
+    monkeypatch.setattr(gnd.model, "bind_references", refusing)
+    with pytest.raises(OSError) as caught:
+        gnd.model.load_model_bytes_bound(data, source=dispatch / "model.orm.yaml", root=dispatch)
+    assert caught.value is probe
+
+
+@pytest.mark.parametrize("home", ["discover", "lean", "souffle", "pyrel", "witness",
+                                  "judgments", "replay"])
+def test_h2_every_home_binds_through_the_shared_helper(tmp_path, monkeypatch, home):
+    import gnd.model
+    from support import reference_homes
+
+    real = gnd.model.bind_declared_references
+    calls = []
+
+    def counting(model, *, root, attach=False):
+        calls.append(root)
+        return real(model, root=root, attach=attach)
+
+    monkeypatch.setattr(gnd.model, "bind_declared_references", counting)
+    work = reference_homes.workspace(tmp_path, None)
+    reference_homes.run(home, work, tmp_path, monkeypatch)
+    assert calls, f"{home} bound its references without the shared helper"
+
+
+H3_BEFORE = json.loads((REPO_ROOT / "tests" / "fixtures" / "induced_knowledge"
+                        / "reference-homes-before-r2.json").read_text())["outcomes"]
+
+
+@pytest.mark.parametrize("key", sorted(H3_BEFORE))
+def test_h3_every_homes_outcome_is_unchanged(tmp_path, monkeypatch, key):
+    """D6-A: adopting the helper changes no home's outcome, including the two
+    homes that already leak an ArtifactError (carried, not fixed here)."""
+    from support import reference_homes
+
+    home, damage = key.split("/")
+    work = reference_homes.workspace(tmp_path, None if damage == "intact" else damage)
+    assert reference_homes.run(home, work, tmp_path, monkeypatch) == H3_BEFORE[key]

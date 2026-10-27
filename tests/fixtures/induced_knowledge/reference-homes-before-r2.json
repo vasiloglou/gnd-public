@@ -1,0 +1,149 @@
+{
+  "note": "Outcomes of each load-then-bind home over the dispatch reference fixture, measured before r2 changed any home (homes as at b1814f4). Evolve-loading follow-up spec r2.4 H3; tests/support/reference_homes.py reduces each to [kind, value, detail].",
+  "outcomes": {
+    "discover/changed": [
+      "return",
+      3,
+      null
+    ],
+    "discover/intact": [
+      "return",
+      0,
+      null
+    ],
+    "discover/linked": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json is a symlink"
+    ],
+    "discover/missing": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json could not be inspected: [Errno 2] No such file or directory: 'catalog.pop.json'"
+    ],
+    "judgments/changed": [
+      "return",
+      3,
+      {
+        "message": "invalid bound judgment input",
+        "reason": "binding"
+      }
+    ],
+    "judgments/intact": [
+      "return",
+      3,
+      {
+        "message": "invalid saved judgment input",
+        "reason": "shape"
+      }
+    ],
+    "judgments/linked": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json is a symlink"
+    ],
+    "judgments/missing": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json could not be inspected: [Errno 2] No such file or directory: 'catalog.pop.json'"
+    ],
+    "lean/changed": [
+      "return",
+      3,
+      "input-invalid"
+    ],
+    "lean/intact": [
+      "return",
+      2,
+      "fragment-unsupported"
+    ],
+    "lean/linked": [
+      "return",
+      3,
+      "input-invalid"
+    ],
+    "lean/missing": [
+      "return",
+      3,
+      "input-invalid"
+    ],
+    "pyrel/changed": [
+      "raise",
+      "ExportInputError",
+      "reference population: reference raw hash does not match declared sha256"
+    ],
+    "pyrel/intact": [
+      "raise",
+      "ExportInputError",
+      "dispatch_catalog_membership: consequent kind 'exists' is not supported"
+    ],
+    "pyrel/linked": [
+      "raise",
+      "ExportInputError",
+      "reference population: artifact references/catalog.pop.json is a symlink"
+    ],
+    "pyrel/missing": [
+      "raise",
+      "ExportInputError",
+      "reference population: artifact references/catalog.pop.json could not be inspected: [Errno 2] No such file or directory: 'catalog.pop.json'"
+    ],
+    "replay/changed": [
+      "raise",
+      "ReferenceInputError",
+      "reference raw hash does not match declared sha256"
+    ],
+    "replay/intact": [
+      "return",
+      "tuple"
+    ],
+    "replay/linked": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json is a symlink"
+    ],
+    "replay/missing": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json could not be inspected: [Errno 2] No such file or directory: 'catalog.pop.json'"
+    ],
+    "souffle/changed": [
+      "return",
+      3,
+      "input-invalid"
+    ],
+    "souffle/intact": [
+      "return",
+      2,
+      "fragment-unsupported"
+    ],
+    "souffle/linked": [
+      "return",
+      3,
+      "input-invalid"
+    ],
+    "souffle/missing": [
+      "return",
+      3,
+      "input-invalid"
+    ],
+    "witness/changed": [
+      "raise",
+      "ReferenceInputError",
+      "reference raw hash does not match declared sha256"
+    ],
+    "witness/intact": [
+      "return",
+      "tuple"
+    ],
+    "witness/linked": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json is a symlink"
+    ],
+    "witness/missing": [
+      "raise",
+      "ArtifactError",
+      "artifact references/catalog.pop.json could not be inspected: [Errno 2] No such file or directory: 'catalog.pop.json'"
+    ]
+  }
+}

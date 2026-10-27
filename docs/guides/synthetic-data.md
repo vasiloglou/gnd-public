@@ -46,6 +46,9 @@ If you already have real populations and know what each should show, you can
 skip generation and measure against your own labels with
 `gnd measure model.orm.yaml --labels labels.json`. See
 [Measuring host labels](../reference/measure-labels.md).
+[Find the rule your auditors are really using](../tutorials/learn-rules.md)
+walks the whole loop: score a rule against labels, learn a better one, and
+propose it as a model change.
 
 Start with one seed and inspect the facts. Are the relations populated? Does
 the interesting join actually happen? Does the violating example isolate the

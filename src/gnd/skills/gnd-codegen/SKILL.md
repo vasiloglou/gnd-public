@@ -57,7 +57,7 @@ The layout, and who owns each file:
 | Path | Ownership | What it is |
 |---|---|---|
 | `<package>/__init__.py` | derived | re-exports every emitted constructor tool |
-| `<package>/tools.py` | derived | one constructor per asserted or legacy-opaque fact type; none for a structured-derived fact type |
+| `<package>/tools.py` | derived | one constructor per asserted or legacy-opaque fact type; none for a structured-derived fact type. Each role line of a docstring carries its object type's description `summary`, when the model gives one |
 | `artifacts/<stem>.projection.schema.json` | derived | the shape-only schema a population must satisfy |
 | `artifacts/<stem>.verbalization.txt` | derived | the constraint-blind model rendering |
 | `artifacts/<stem>.applicable.json` | derived | which fact types are measurable |

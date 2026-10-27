@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/IK5/dynamic-query-successor.json",
+ "predecessor_sha256": "f23a2c5af224dc37f4838ff63bcd5963a306328f482362f9780205678cca424d",
+ "reason": "Owner-approved induced-knowledge IK6 (2026-10-26): the refunds example ships a standalone, standard-library stand-in learner (src/gnd/examples/refunds/stand_in_learner.py, not a GND module) whose subscripts read its own export rows and argv. It reads no model through GND. Syntax census only; no model-query exception widening.",
+ "removed": [],
+ "added": [
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "atom",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "candidates",
+   "names[i]",
+   2
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "candidates",
+   "names[j]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "candidates",
+   "row[i]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "covers",
+   "OPERATORS[op]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "covers",
+   "row[i]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "covers",
+   "row[j]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "covers",
+   "rows.get((example, p), [])",
+   2
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "covers",
+   "rows.get((example, q), [])",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "load",
+   "dict[tuple[str, str], list[list]]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "load",
+   "list[list]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "load",
+   "p['types'][1:]",
+   1
+  ],
+  [
+   "src/gnd/examples/refunds/stand_in_learner.py",
+   "load",
+   "tuple[str, str]",
+   1
+  ]
+ ],
+ "result_distinct_rows": 6586,
+ "result_occurrences": 8251
+}

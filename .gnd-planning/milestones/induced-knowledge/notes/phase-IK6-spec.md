@@ -329,3 +329,64 @@ rulings." on 2026-10-26. The approved bytes are spec r1 as committed in
 - **D9:** branch `claude/ik6-end-to-end` from B = `705ad94`.
 
 **Next.** Build the example and the page, and stop at checkpoint C1.
+
+## 14. Implementation findings and checkpoint C1 (2026-10-26)
+
+Recorded as found. Sections 1–13 are unchanged; where a finding departs from
+them, it says so here.
+
+**Checkpoint C1, three rounds.**
+- **r1** (`20cfe49`): the page as §6 describes it, every output filled from a
+  real run. Owner: "too low level, python technical"; it should read like the
+  BookRec and expense tutorials.
+- **r2** (`bd7ef70`): a business retelling with gnd commands, data and
+  before/after tables. Owner: "better, but still don't like it. I only want to
+  see claude skills not python code", with easier, more visual content for a
+  business reader, written by Fable.
+- **r3** (`8cab30c`): drafted by a Fable subagent, checked against real runs.
+  Owner: "C1 r3 looks good."
+
+**Findings.**
+- **F1, the page split (departs from §6 "The page").** The tutorial,
+  `docs/tutorials/learn-rules.md`, now shows no commands: requests to Claude
+  Code, the `gnd-model-evolve` skill for the model change, two figures and
+  tables that restate real output. The runnable walk moved verbatim to
+  `docs/how-to/learn-rules-commands.md`, and the `induced` runner group points
+  there. Rule 4 holds on the commands page: it is the one walk, and T2 runs it.
+  The title is "Find the rule your auditors are really using".
+- **F2, the walk gains two steps.** After the previews it applies the learned
+  proposal (`gnd evolve apply`, exit 0) and checks the market batch, which then
+  gets one advisory warning. The page shows the payoff, and the goldens pin the
+  applied model and its verbalization. §5's "nothing is admitted" no longer
+  holds for the walk's scratch copy: the learned rule is applied as `proposed`
+  and advisory; nothing is confirmed.
+- **F3, the over-claim (departs from §6 step 6).** Instead of a committed
+  `overclaimed.run.json`, `stand_in_learner.py --also-claim BATCH` plays the
+  faulty learner. A committed run record would bind the export digest and
+  clause digest, and would go stale with any model edit; the flag cannot.
+- **F4, the model (departs from §6 "Model").** Object types: refund, customer,
+  amount, channel; no manager or approver. The separating rule is a threshold,
+  "no refund over 500", which the stand-in finds in its comparison space.
+- **F5, batch headers.** Without `model_id`, `gnd check` printed a header
+  warning; the build script now writes `model_id: refunds`.
+- **F6, measure writes measure.json.** The commands page uses
+  `--out measure.json`, which also prints the text, so one command serves both
+  the output block and the golden.
+- **F7, the exit-code prose test.** `tests/test_tutorial_output_blocks.py`
+  forbids "exit 3" in tutorial and how-to prose; r1 and r2 would have failed it.
+  The tutorial says "refused"; the number appears only in a figure.
+- **F8, a skill gap (new open question IK6-Q1).** No packaged skill runs
+  `gnd measure --labels`, `gnd discover`, `gnd export ilp` or
+  `gnd import ilp-rules`. The tutorial shows them as plain requests and says so.
+  A skill for the loop is new scope.
+- **F9, the gnd-export edit carries no link.** A link to gnd-model-evolve added
+  an edge to the pinned skill routing graph (`test_packaged_skills.py`). The
+  edit names the review in plain words instead; the graph is unchanged.
+- **F10, extraction-contract.md is unchanged.** Inspected: it never states the
+  vocabulary text's contents, so IK1's keys need no line there.
+- **F11, the census git check.** Beyond §6, T4 also asserts that the changed
+  cells equal the files `git diff` reports against the milestone base.
+- **F12, RF controls for an example script.** The learner is a new `.py`
+  under `src/gnd`, so RF7's parser scan and RF6's dynamic-query census both
+  failed until it was registered as earlier example scripts are: RF7's
+  standalone list, and a counted IK6 successor entry. Deferred as IK6-R1.

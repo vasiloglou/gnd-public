@@ -1,0 +1,20 @@
+uv run pytest -q -p no:randomly tests/test_ik6_walk.py tests/test_ik6_skill_census.py tests/test_documentation_tutorials.py tests/test_tutorial_output_blocks.py tests/test_plan_app_docs.py tests/test_replays.py tests/test_release_docs.py tests/test_packaged_skills.py tests/test_skill_prose_sync.py tests/test_public_binding_prose.py tests/test_public_built_inventory.py tests/test_public_distribution_runtime.py tests/test_verification_fixes.py tests/test_public_api.py tests/test_gnd_arch.py tests/test_ilp_bridge.py tests/test_discover.py tests/test_measure_labels.py tests/test_evolve_references.py tests/test_rf1_agent_cli_pins.py tests/test_rf1_cli_pins.py tests/test_rf1_helper_pins.py tests/test_rf1_layering.py tests/test_rf1_pin_harness.py tests/test_rf1_semantic_pins.py tests/test_rf1_session_pins.py tests/test_rf2_digest_predicate.py tests/test_rf2_helpers.py tests/test_rf2_instrument.py tests/test_rf2_pre_move_pins.py tests/test_rf2_review_regressions.py tests/test_rf3_core.py tests/test_rf3_moves.py tests/test_rf3_review_regressions.py tests/test_rf4_peripheral.py tests/test_rf4_premove.py tests/test_rf4_review_regressions.py tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_rf5_review_regressions.py tests/test_rf6_index.py tests/test_rf6_moves.py tests/test_rf6_packages.py tests/test_rf6_query_policy.py tests/test_rf6_registry.py tests/test_rf7_consumers.py tests/test_rf7_input_policy.py tests/test_rf7_review_regressions.py tests/test_rf7_structure.py tests/test_rf8_sessions.py tests/test_rf8_structure.py tests/test_rf9_ci_repairs.py tests/test_rf9_repairs.py
+........................................................................ [ 69%]
+........................................................................ [ 72%]
+........................................................................ [ 74%]
+........................................................................ [ 77%]
+........................................................................ [ 79%]
+........................................................................ [ 81%]
+........................................................................ [ 84%]
+........................................................................ [ 86%]
+........................................................................ [ 89%]
+........................................................................ [ 91%]
+........................................................................ [ 93%]
+........................................................................ [ 96%]
+........................................................................ [ 98%]
+......................................                                   [100%]
+2990 passed, 36 deselected in 257.34s (0:04:17)
+pytest exit 0
+No issues found
+Build finished in 0.46s
+11416 local links/assets/anchors checked

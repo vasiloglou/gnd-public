@@ -1,0 +1,18 @@
+{
+ "files": {
+  "discover-report.json": "be84043451f7107e3c18786b56b6a0396055d65e6f5be79aae648a5e9e57a6ee",
+  "discovered.json": "49ab9ad1e615dea67bdb8b010ad9601fb11d7402ebc9dbe95e49964069414156",
+  "discovered.preview.json": "8b201466c97cb97ac074feca30bb37a3c304ffd0872b188dc96af52a75edeb42",
+  "ilp/export.json": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77",
+  "learned.preview.json": "d77e839cebf33cb212e1d363b8c5de5def772ec5032ed75273d2be016a1c5464",
+  "learned.proposal.json": "7e123a8028bf9c5c5f7ac5843c350bd51ce4a826e0c77cf59028db5d90e33602",
+  "learned/learned.clauses.json": "9871c945a651ef7a7c9f15d5d79955d20c3cae0d43883906f73a721164854cdb",
+  "learned/learned.run.json": "02ecb83e82d3737eadcb3f2dff2382f7198072f65a97233d891b7a14423a7d06",
+  "measure.json": "237721c4161fb1da2cdc408377f592bc1e76a209a082c76e974189f9593797a7",
+  "model.orm.yaml": "6e77ed5e045b0ef63c76a48e3484f24096517919e9b52808733282b4ba31d3a7",
+  "model.verbalization.txt": "e23c09953de225c1dedf8c0756b36017131e84e832cb07c585311fe11d413c7c"
+ },
+ "normalized": "run directory replaced by <run> before hashing",
+ "page": "docs/how-to/learn-rules-commands.md",
+ "schema": "ik6-walk-goldens/1"
+}

@@ -82,4 +82,10 @@ Records:
   owner ruling 2026-10-26). Focused gate 3162 passed. One local reviewer, no
   blocking findings; three fixed with regressions. IK4-Q2-Q1 and Q2 are open.
 
-Next: IK6.
+- [010 phase IK6](010-phase-IK6.md): the refunds example, a business-level
+  tutorial (checkpoint C1, approved at r3), its runnable commands page, goldens,
+  the 65-file skill census and three skill edits. Installed candidate passed in
+  both wheel origins. One local reviewer, no blocking findings; nine fixed.
+  IK6-Q1 (a skill for the induction loop) and IK6-R1 are open.
+
+Next: milestone close.

@@ -227,7 +227,9 @@ agent under test and your own improvisation:
 - **Constraint-coverage floors** are guesses until measured. When floors need
   grounding, `uv run gnd measure MODEL --populations corpus` reports observed
   per-constraint rates; set `min_facts` from what the corpus actually
-  exercises, not from intuition.
+  exercises, not from intuition. Against a host's own labelled populations,
+  `uv run gnd measure MODEL --labels MANIFEST` reports each rule's agreement
+  with those labels instead.
 - **Corpus to contract:** a selected corpus artifact enters a case either as
   a digest-bound input blob or, through `author-expectation`, as an expected
   output. The contract binds bytes, so a regenerated corpus is a new contract

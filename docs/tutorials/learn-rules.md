@@ -11,7 +11,7 @@ GND does the checking. All the data is synthetic.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="Eight weeks of refunds, two rules">
 
-![Each dot is one refund, placed by amount. The clean weeks north, south, east and west stay under 500. The flagged weeks harbor 1200, market 750, airport 1500 and station 640 each have a refund over 500. The written rule, over 1000, catches only harbor and airport. The learned rule, over 500, catches all four flagged weeks and no clean week.](../assets/applications/refunds-weeks.svg)
+![Each dot is one refund, placed by amount. The clean weeks north, south, east and west never go over 500. The flagged weeks harbor 1200, market 750, airport 1500 and station 640 each have a refund over 500. The written rule, over 1000, catches only harbor and airport. The learned rule, over 500, catches all four flagged weeks and no clean week.](../assets/applications/refunds-weeks.svg)
 </div>
 
 *Source: the shipped refunds example and the auditors' verdicts in
@@ -114,8 +114,9 @@ and tell me the rule it finds.
 can read, then runs the example's stand-in learner on them. A real learner such
 as [Popper](https://github.com/logic-and-learning-lab/Popper) reads the same
 files. The stand-in tries 40 simple rules of the form "a week is wrong when it
-has a refund above (or below) some amount" and keeps the fewest that explain
-every flagged week without touching a clean one.
+has a refund above (or below) some amount". From those that touch no clean
+week, it picks a small set, one rule at a time, until every flagged week is
+explained.
 
 **The learner says**
 

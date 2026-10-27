@@ -32,11 +32,12 @@ OK: model.orm.yaml is a valid GND ORM model
 
 `gnd measure` reads the auditors' verdicts in `labels.json` and counts, for
 each rule, the weeks it fired on. In its words "negative" is a flagged week and
-"positive" a clean one.
+"positive" a clean one. The full measurement is kept in `measure.json`;
+the line shown is the written rule's counts.
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
-gnd measure model.orm.yaml --labels labels.json | grep fired_on
+gnd measure model.orm.yaml --labels labels.json --out measure.json | grep fired_on
 ```
 
 ```text
@@ -53,8 +54,8 @@ A learner such as [Popper](https://github.com/logic-and-learning-lab/Popper)
 can use that export directly. The example ships a small stand-in learner
 instead, so the walk runs with nothing to install. It tries 40 simple rules of
 the form "a week is wrong when it has a refund above (or below) some amount"
-and keeps the fewest that explain every flagged week without touching a clean
-one.
+and, from those that touch no clean week, picks a small set greedily until
+every flagged week is explained.
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh

@@ -33,6 +33,11 @@ When the owner requests a development record, use the
 [milestone record contract](../gnd-orm-core/references/milestone-record-format.md).
 The driving agent owns that record and commit; GND never touches git.
 
+`gnd export ilp` is not a derivation export. It is the ILP bridge: it writes
+labelled populations for a rule learner, and `gnd import ilp-rules` brings the
+learner's rules back as an evolve proposal. See `gnd export ilp --help`;
+the proposal is reviewed like any other evolution proposal.
+
 For explicitly selected Lean definitions, run `gnd export lean MODEL POP
 --toolchain leanprover/lean4:v4.34.0` offline. Publish a raw create-once bundle
 only with `--raw --out NEW_DIR`, then run `gnd export lean-verify NEW_DIR --json`.

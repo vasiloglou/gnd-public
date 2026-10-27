@@ -10,7 +10,9 @@ advisory** model constraints. It has two halves:
 
 GND never runs a learner itself. The bridge is **tool-neutral**: one export form
 and one import contract, with a small adapter per learner. The first adapter is
-[Popper](https://github.com/logic-and-learning-lab/Popper).
+[Popper](https://github.com/logic-and-learning-lab/Popper). To see the bridge
+end to end, including a refused over-claim,
+[find the rule your auditors are really using](../tutorials/learn-rules.md).
 
 This page is the one home of the bridge's contract, including the fragment
 table. The four wire formats are the packaged closed schemas

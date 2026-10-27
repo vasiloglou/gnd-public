@@ -3,6 +3,25 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: induced knowledge (2026-10-26)
+
+GND can now propose rules from data, and never adopts one without review.
+Object types take an optional `description` that verbalization and generated
+docstrings carry. A seventh provenance source, `induced`, records a rule found
+from data, with its inducer, support and evidence digests; it
+enters a model only as `proposed` and advisory, through `gnd evolve`.
+
+- `gnd measure --labels` scores each rule against populations you labelled.
+- `gnd discover` suggests constraints that hold in one population.
+- `gnd export ilp` writes labelled populations for a rule learner, and
+  `gnd import ilp-rules` brings its rules back after re-checking every claimed
+  coverage itself; a claim it cannot reproduce is refused.
+- `gnd evolve` binds a model's reference populations as `gnd validate` does.
+
+The tutorial [Find the rule your auditors are really using](tutorials/learn-rules.md)
+walks the loop on a synthetic refunds example. No learner ships with GND, and
+no real learner has been run in its tests.
+
 ## Unreleased: opt-in incremental evaluation (2026-10-20)
 
 `api.EvaluationSession` reuses eligible extension components and constraint findings

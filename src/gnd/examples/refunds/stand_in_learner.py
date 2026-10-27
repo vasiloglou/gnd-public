@@ -25,9 +25,9 @@ it: GND re-evaluates every rule and refuses the import if the sets differ.
 Standard library only; the output depends only on the export's bytes.
 """
 
+import argparse
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 NAME, VERSION = "refunds-stand-in-learner", "1"
@@ -79,8 +79,14 @@ def candidates(rows, integer, predicates):
 
 
 def main() -> None:
-    export, out = Path(sys.argv[1]), Path(sys.argv[2])
-    extra = sys.argv[4] if sys.argv[3:4] == ["--also-claim"] else None
+    parser = argparse.ArgumentParser(prog="stand_in_learner.py", allow_abbrev=False,
+                                     description="The refunds tutorial's stand-in rule learner (not a GND command).")
+    parser.add_argument("export", type=Path, help="the directory gnd export ilp --target neutral wrote")
+    parser.add_argument("out", type=Path, help="where to write learned.clauses.json and learned.run.json")
+    parser.add_argument("--also-claim", metavar="BATCH",
+                        help="play a faulty learner: also claim that rule 0 covers BATCH, which it does not")
+    args = parser.parse_args()
+    export, out, extra = args.export, args.out, args.also_claim
     neutral, rows, integer, predicates = load(export)
     flagged = [e["id"] for e in neutral["examples"] if e["label"] == "pos"]
     clean = [e["id"] for e in neutral["examples"] if e["label"] == "neg"]
@@ -100,11 +106,16 @@ def main() -> None:
         uncovered -= set(best[3])
     for text, _, _, hits in program:
         print(f"learned: {text}   covers {', '.join(hits)}")
+    examples = [e["id"] for e in neutral["examples"]]
+    if extra is not None:
+        if extra not in examples:
+            parser.error(f"--also-claim: {extra!r} is not a batch in the export")
+        if not program or program[0][2](extra):
+            parser.error(f"--also-claim: rule 0 already covers {extra!r}, so the claim would not be false")
     out.mkdir(parents=True, exist_ok=True)
     clauses_path = out / "learned.clauses.json"
     clauses = {"schema_version": "gnd-ilp-clauses/1", "clauses": [k[1] for k in program]}
     clauses_path.write_text(json.dumps(clauses, indent=1) + "\n", encoding="utf-8")
-    examples = [e["id"] for e in neutral["examples"]]
     coverage = [{"clause": k, "covered": [e for e in examples if covers(e) or (k == 0 and e == extra)]}
                 for k, (_, _, covers, _) in enumerate(program)]
     if extra:

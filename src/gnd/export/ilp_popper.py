@@ -19,7 +19,7 @@ from typing import Any
 from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import IlpError
 
-__all__ = ["AGGREGATES", "parse_program", "quote", "render"]
+__all__ = ["AGGREGATES", "SOLUTION_BANNER", "extract_program", "parse_program", "quote", "render"]
 
 AGGREGATES = frozenset({"findall", "bagof", "setof", "aggregate_all", "count", "sum", "max", "min"})
 _OPERATORS = {">": ">", "<": "<", ">=": ">=", "=<": "<=", "=:=": "=", "=\\=": "!=", "=": "=",
@@ -42,6 +42,12 @@ MAX_INT_DIGITS = 32
 #: (IK5-Q2). The tokenizer takes any digit count, so a longer escape reaches
 #: :func:`_unquote` and is refused there with the octal message (IL1 spec §6).
 MAX_OCTAL_DIGITS = 7
+#: Popper v5.0.1 (commit 578a4e2) logs its solution to stderr: this banner, a
+#: scores line, one rule per line, then a closing rule of stars. Each line
+#: carries an elapsed-seconds prefix such as ``12.3s `` (IL1 spec §14, IL1-F4).
+SOLUTION_BANNER = "*" * 10 + " SOLUTION " + "*" * 10
+_ELAPSED = re.compile(r"\d+(?:\.\d+)?s ")
+_RULE = re.compile(r"wrong\(.*\.")
 
 
 def quote(text: str) -> str:
@@ -284,6 +290,25 @@ def _octal(rest: str, line: int, column: int) -> str:
     if code > 0x10FFFF or 0xD800 <= code <= 0xDFFF:
         raise refuse("outside Unicode scalar values")
     return chr(code)
+
+
+def extract_program(log: str) -> str:
+    """The learned program in Popper's log, one rule per line; ``""`` if none.
+
+    The program is the first maximal run of ``wrong(...).`` lines after the last
+    :data:`SOLUTION_BANNER`, each with its elapsed-seconds prefix removed. Linear
+    in the log; the log itself is bounded by the run's process limits."""
+    lines = [_ELAPSED.sub("", line, count=1).strip() for line in log.splitlines()]
+    banners = [index for index, line in enumerate(lines) if line == SOLUTION_BANNER]
+    if not banners:
+        return ""
+    program: list[str] = []
+    for line in lines[banners[-1] + 1:]:
+        if _RULE.fullmatch(line):
+            program.append(line)
+        elif program:
+            break
+    return "".join(f"{line}\n" for line in program)
 
 
 def parse_program(text: str) -> dict[str, Any]:

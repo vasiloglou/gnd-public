@@ -610,3 +610,104 @@ premise.** Found while reading the IK5 corpus before writing the T5 cases.
 - **Accepted residual:** a neutral run record may name a registered learner as
   its inducer; `method: ilp-neutral` marks the path.
 - **IL5** carries the LLM learner check on its own `llm` entry.
+
+**IL1-F2 (2026-10-27): SWI-Prolog bundles an LGPL component.**
+- **What was found:** the approved download verified exactly (34,301,763
+  bytes; SHA-256 `bf775f0b…dc5d`). SWI-Prolog's own `license.` report on the
+  installed copy says the binary "contains components covered by the GNU
+  Lesser Public License": `libgmp`, linked dynamically.
+- **Why it stopped:** that is OSI but not permissive, so it stopped under
+  IL-R5.
+- **Owner ruling (o), 2026-10-27:** "Accept for local use". It is used in the
+  scratch folder only; nothing is bundled, committed or redistributed.
+
+**IL1-F3 (2026-10-27): the host's default SDK does not link.**
+- **The failure:** building `janus-swi` (and any C extension) failed in the
+  linker with `tapi error: malformed file`. The default
+  `MacOSX27.0.sdk`'s `libSystem.tbd` names an `arm64e.x1` architecture that
+  the installed linker (ld-1267, Command Line Tools 26.6) does not know.
+- **The workaround:** the builds ran with `SDKROOT` set, for those commands
+  only, to the installed `MacOSX26.5.sdk`.
+- **Scope:** there is no system change and no new download; this stays within
+  IL1-D3 (o). It is a host fact, not a GND defect.
+
+**IL1-F4 (2026-10-27): Popper logs its solution to stderr.**
+- **The premise refuted:** §6's extraction rule assumed stdout.
+- **What Popper v5.0.1 does** (`popper/logger.py`, `popper/util.py`
+  `print_prog_score`): the solution block goes through a logging handler to
+  **stderr**, each line prefixed with elapsed seconds (`12.3s `), as the
+  banner, a scores line, the rules, then a closing rule of stars. Only
+  `NO SOLUTION` is printed to stdout.
+- **The adaptation:** `ilp_popper.extract_program` reads the log text, strips
+  the prefix, and takes the first maximal run of `wrong(...).` lines after the
+  last `********** SOLUTION **********`.
+- **What does not change:** no approved answer or golden.
+
+**IL1-F5 (2026-10-27): Popper's version metadata.**
+- **The mismatch:** at commit `578a4e2` (tag `v5.0.1`), Popper's
+  `pyproject.toml` still says version `5.0.0`, so the installed metadata
+  reports 5.0.0.
+- **What the run record says:** the learner version is `5.0.1+578a4e2`, after
+  the tag and commit.
+- **Other facts:** the package installs no console script, so the run uses
+  upstream `popper.py`'s entry code with `-c`. Popper v5.0.1's source has no
+  `magic` handling at all, although the IK5 rendering writes
+  `magic_value_type(...)`; the run of record settles what that means.
+
+**IL1-F6 (2026-10-27): a near-miss on privacy.**
+- **What happened:** the first commit of `requirements.lock` carried ten
+  `# via -r <absolute path>` comments with the host home path. The check after
+  committing caught it.
+- **The fix:** the lines were rewritten to `-r requirements.in`, and the commit
+  amended before any push. No copy exists on the remote.
+- **The control:** T8 would also have refused it at the gate.
+
+**IL1-F7 (2026-10-27): the run of record.**
+
+Invocation 1 is the run of record: `termination: rendering-rejected`,
+`import: none`. Its files are in
+`evidence/IL1/live/invocation-1/`.
+
+**What happened:**
+- **Load and search:** Popper v5.0.1 loaded the IK5 rendering of the IK6
+  refunds export (E as recorded) and began its search.
+- **The crash:** after 18.0 s it exited 1 with an uncaught
+  `janus_swi.janus.PrologError: </2: Arguments are not sufficiently
+  instantiated`. Its tester had called a rendered comparison predicate
+  (`lt_t_amount(A,B) :- A < B`) with an unbound argument.
+- **Stdout:** it held one line, `ERROR detecting pointless relations >/2: …`.
+- **No program:** none was printed, so nothing was imported or evaluated by
+  SWI.
+
+**The record's three questions:**
+1. **No: Popper v5.0.1 does not accept the IK5 rendering.**
+   - **Comparisons need constants:** the rendering expresses comparisons
+     against constants through `magic_value_type(t_…)`, and v5.0.1 has no
+     magic-value support (IL1-F5).
+   - **Nothing binds the constant:** the second argument of every comparison
+     is free, and Prolog arithmetic raises on it.
+   - **A warning too:** SWI also warns that `bk.pl`'s clauses are not
+     contiguous per predicate, because the export orders facts by example
+     first. This is a warning only.
+2. **No program,** so neither parse nor import was reached.
+3. **The IK2 residual is not tested** by this run.
+
+**The closed-list label.**
+- **The label:** the script maps any non-zero exit to `rendering-rejected`.
+- **Where the definition does not fit:** §6 defines that value as an exit
+  "before search, citing the input files". This run exited non-zero
+  **during** search.
+- **Why it is still the closest member:** the cause is the rendering, and no
+  other member of the closed list fits. The deviation is recorded here, not
+  hidden.
+
+**The evidence repair.**
+- **The leak:** the first sanitization missed scratch paths whose user
+  component `run_bounded_process` had already masked as `***`.
+- **The fix:** before any commit, the retained files were re-sanitized with
+  the script's new `SCRATCH_PATH` rule (only `raw-stderr.txt` changed), and
+  the script now applies that rule itself.
+
+**What IL-R9 says next:** a rendering fix is an owner-recorded amendment that
+names the changed goldens and the `ADAPTER_VERSION` bump, and a second run
+needs an owner ruling.

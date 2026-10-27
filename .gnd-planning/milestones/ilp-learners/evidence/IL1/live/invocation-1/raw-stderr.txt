@@ -1,0 +1,122 @@
+Warning: <scratch>/work-1/export/popper/bk.pl:10:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:13:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:16:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:19:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:21:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:23:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:25:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:28:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:31:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:34:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:36:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:38:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:40:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:43:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:46:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:49:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:51:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:53:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:55:
+Warning:    Clauses of f_refund_amount/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:1
+Warning:    Current predicate: f_refund_channel/3
+Warning:    Use :- discontiguous f_refund_amount/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:57:
+Warning:    Clauses of f_refund_by/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:4
+Warning:    Current predicate: f_refund_amount/3
+Warning:    Use :- discontiguous f_refund_by/3. to suppress this message
+Warning: <scratch>/work-1/export/popper/bk.pl:59:
+Warning:    Clauses of f_refund_channel/3 are not together in the source-file
+Warning:    Earlier definition at <scratch>/work-1/export/popper/bk.pl:7
+Warning:    Current predicate: f_refund_by/3
+Warning:    Use :- discontiguous f_refund_channel/3. to suppress this message
+17.9s Generating partial hypotheses of size: 2
+18.0s Generating partial hypotheses of size: 3
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+    prog, score = popper(settings)
+                  ~~~~~~^^^^^^^^^^
+  File "<scratch>/venv/lib/python3.14/site-packages/popper/loop.py", line 78, in popper
+    test_result = test_prog(prog, prog_size)
+  File "<scratch>/venv/lib/python3.14/site-packages/popper/tester.py", line 129, in test_prog
+    pos_covered = self._test_prog_pos(prog)
+  File "<scratch>/venv/lib/python3.14/site-packages/popper/tester.py", line 299, in _test_prog_pos
+    pos_covered = query_once('find_pos_covered(R, S)', {'R': f'{atom_str}:-{body_str}'})['S']
+                  ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<scratch>/venv/lib/python3.14/site-packages/janus_swi/janus.py", line 245, in query_once
+    return _swipl.call(query, inputs, keep)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+janus_swi.janus.PrologError: </2: Arguments are not sufficiently instantiated

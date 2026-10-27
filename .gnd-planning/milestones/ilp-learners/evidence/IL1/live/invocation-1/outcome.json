@@ -1,0 +1,106 @@
+{
+ "export_sha256": "dc0031e5f392d6a3c113304062a6bbf3f3d975a69bc93ac2cf9ebacf3a6bc015",
+ "export_stdout": "EXPORTED 8 examples and 60 facts to <scratch>/work-1/export (popper)\nexport_sha256 dc0031e5f392d6a3c113304062a6bbf3f3d975a69bc93ac2cf9ebacf3a6bc015\nwork 68 (ceiling 500008)\n",
+ "import": "none",
+ "import_args": [
+  "import",
+  "ilp-rules",
+  "model.orm.yaml",
+  "program.pl",
+  "--labels",
+  "labels.json",
+  "--reported-coverage",
+  "run.json",
+  "--target",
+  "popper",
+  "--out",
+  "proposal.json",
+  "--actor",
+  "ilp-live",
+  "--requested-at",
+  "2026-01-01T00:00:00Z",
+  "--format",
+  "json"
+ ],
+ "invocation": 1,
+ "limits": {
+  "stderr_limit_bytes": 4194304,
+  "stdin_limit_bytes": 0,
+  "stdout_limit_bytes": 16777216,
+  "terminate_grace_seconds": 10.0,
+  "timeout_seconds": 600.0,
+  "total_output_limit_bytes": 20971520
+ },
+ "numbers": {
+  "export_sha256": "computed by GND's export",
+  "import report": "computed by GND's import",
+  "popper_scores": "printed by Popper, kept verbatim in raw-stderr.txt",
+  "run.json coverage": "independent evaluation (SWI): each clause over bk.pl, per example"
+ },
+ "popper": {
+  "argv": [
+   "<scratch>/venv/bin/python",
+   "-c",
+   "<ENTRY>",
+   "popper",
+   "--timeout",
+   "540"
+  ],
+  "commit": "578a4e26a22006b9325fe819486242f7fafc3195",
+  "entry": "from popper.util import Settings, print_prog_score\nfrom popper.loop import popper\nsettings = Settings.from_args()\nprog, score = popper(settings)\nprint_prog_score(prog, score, settings, settings.noisy) if prog else print('NO SOLUTION')\n",
+  "learner": {
+   "name": "popper",
+   "version": "5.0.1+578a4e2"
+  },
+  "package_metadata_version": "5.0.0",
+  "process": {
+   "argv_count": 6,
+   "argv_sha256": "2b323ace0c1b76e24e88b2d41af5c2cc026c060e2740022c776c3cdce18fc05c",
+   "cwd": "<working-directory>",
+   "elapsed_seconds": 18.03222974995151,
+   "ended_monotonic": 1715800.523613166,
+   "environment": [
+    {
+     "name": "HOME",
+     "provenance": "supplied"
+    },
+    {
+     "name": "LANG",
+     "provenance": "supplied"
+    },
+    {
+     "name": "PATH",
+     "provenance": "supplied"
+    },
+    {
+     "name": "TMPDIR",
+     "provenance": "supplied"
+    },
+    {
+     "name": "USER",
+     "provenance": "supplied"
+    }
+   ],
+   "process_group_cleaned": true,
+   "return_code": 1,
+   "signal": null,
+   "spawn_error": null,
+   "spawned": true,
+   "started_monotonic": 1715782.491383416,
+   "status": "failed",
+   "stderr_observed_bytes": 15703,
+   "stderr_retained_bytes": 15013,
+   "stderr_truncated": false,
+   "stdout_observed_bytes": 85,
+   "stdout_retained_bytes": 85,
+   "stdout_truncated": false,
+   "termination": "exited",
+   "termination_steps": [],
+   "timed_out": false
+  },
+  "timeout": "540"
+ },
+ "reproducibility": "single run, reproducibility not measured",
+ "run_of_record": true,
+ "termination": "rendering-rejected"
+}

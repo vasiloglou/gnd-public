@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import getpass
+import hashlib
 import importlib.util
 import json
 import re
@@ -402,3 +403,73 @@ def test_t11_the_stand_in_learner_proposes_a_join_that_imports(tmp_path):
     out = tmp_path / "t11.json"
     imported = _import(work, clauses, run, out, "neutral")
     assert imported.returncode == 0, (text, imported.stderr)
+
+
+# ---------------------------------------------------------------------------
+# T9: the live run of record replays from its committed bytes (IL-R9).
+# ---------------------------------------------------------------------------
+
+LIVE = MILESTONE / "evidence" / "IL1" / "live" / "invocation-1"
+TERMINATIONS = {"rendering-rejected", "completed", "learner-timeout", "wall-clock-kill", "output-limit"}
+REQUIRED = {"invocation", "run_of_record", "termination", "import", "export_sha256", "popper",
+            "limits", "import_args", "numbers", "reproducibility"}
+
+
+def test_t9_the_run_of_record_replays(tmp_path):
+    from gnd import input_policy
+    from gnd.export.ilp_popper import extract_program
+
+    data = (LIVE / "outcome.json").read_bytes()
+    assert len(data) < 1024 * 1024
+    outcome = input_policy.loads(data)
+    assert REQUIRED <= set(outcome)
+    assert outcome["invocation"] == 1 and outcome["run_of_record"] is True
+    assert outcome["termination"] in TERMINATIONS
+    assert outcome["import"] == "none" or outcome["import"] == "admitted" \
+        or outcome["import"].startswith("refused:")
+    assert outcome["reproducibility"] == "single run, reproducibility not measured"
+
+    process = outcome["popper"]["process"]
+    expected_termination = (
+        "wall-clock-kill" if process["status"] == "timed-out"
+        else "output-limit" if process["stdout_truncated"] or process["stderr_truncated"]
+        else "rendering-rejected" if process["return_code"] != 0
+        else outcome["termination"])
+    assert outcome["termination"] == expected_termination
+
+    example = SRC / "examples" / "refunds"
+    export = tmp_path / "export"
+    result = run_main(["export", "ilp", str(example / "model.orm.yaml"), "--labels",
+                       str(example / "labels.json"), "--target", "popper", "--out", str(export)])
+    assert result.returncode == 0, result.stderr
+    assert hashlib.sha256((export / "export.json").read_bytes()).hexdigest() == outcome["export_sha256"]
+
+    program = extract_program((LIVE / "raw-stderr.txt").read_text(encoding="utf-8"))
+    assert program == (LIVE / "program.pl").read_text(encoding="utf-8")
+    if not program:
+        assert outcome["import"] == "none"
+        assert not (LIVE / "run.json").exists() and not (LIVE / "import-report.json").exists()
+        return
+    imports = tmp_path / "import"
+    shutil.copytree(example, imports, ignore=shutil.ignore_patterns("*.py", "README.md"))
+    for name in ("program.pl", "run.json"):
+        shutil.copy(LIVE / name, imports / name)
+    import os
+    previous = os.getcwd()
+    os.chdir(imports)
+    try:
+        replayed = run_main(list(outcome["import_args"]))
+    finally:
+        os.chdir(previous)
+    assert replayed.returncode == outcome["import_exit"]
+    if replayed.returncode == 0:
+        def normalized(report: dict[str, Any]) -> dict[str, Any]:
+            report = dict(report, proposal=None)
+            report["inputs"] = {k: dict(v, path=None) for k, v in report["inputs"].items()}
+            return report
+
+        recorded = json.loads((LIVE / "import-report.json").read_text(encoding="utf-8"))
+        assert normalized(json.loads(replayed.stdout)) == normalized(recorded)
+        assert (imports / "proposal.json").read_bytes() == (LIVE / "proposal.json").read_bytes()
+    else:
+        assert replayed.stderr.decode().strip() == (LIVE / "import-stderr.txt").read_text().strip()

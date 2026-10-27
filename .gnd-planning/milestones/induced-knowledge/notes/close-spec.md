@@ -142,3 +142,19 @@ Sizes are estimates and have not been measured.
 ## 7. Findings
 
 (none yet)
+
+## 8. Owner gate
+
+**Approved by the owner 2026-10-27 (o):** "Approve close spec r1 with C-D1 to
+C-D4 and C-G1 as proposed." The approved bytes are r1 as committed in `5283590`
+plus the IK4Q2-D3 row, SHA-256
+`be048c882f216dc8a59294e7d0c97a8136604297ce814bdbc06770ffe7350e2e`.
+Sections 7 and 8 are append-only after this point.
+
+- **C-D1:** fix all ten 5a rows at the close.
+- **C-D2:** carry the 5b rows to the targets listed.
+- **C-D3:** accept IK2-Q5 and IK3-Q3 as residuals, and add the IK3-Q3 sentence
+  to `measure-labels.md`.
+- **C-D4:** the readers run after the fixes.
+- **C-G1:** the close gate is the union of the phase gates plus the docs and
+  installed checks, plus one full default-lane suite.

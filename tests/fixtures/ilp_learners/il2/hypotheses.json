@@ -367,8 +367,8 @@
   },
   {
    "id": "c4-type-confused",
-   "story": "T8: V2 is an amount in f_refund_amount and a refund in f_refund_by.",
-   "text": "wrong :- f_refund_amount(V1,V2), f_refund_by(V2,V3).\n",
+   "story": "T8: V2 is an amount in f_refund_amount and a refund in f_refund_by. The third atom is designated, so check 6 passes and 9b names the join (IL2-F1: the r1 corpus's two-atom clause stopped at check 6).",
+   "text": "wrong :- f_refund_amount(V1,V2), f_refund_by(V2,V3), f_refund_channel(V1,V3).\n",
    "clause": 0,
    "refusal": "type-confused-join"
   }

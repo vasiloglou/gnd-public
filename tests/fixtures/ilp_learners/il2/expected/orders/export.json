@@ -1,0 +1,17 @@
+{
+  "adapter_version": "1",
+  "files": [
+    {
+      "bytes": 1484,
+      "path": "ilasp/task.las",
+      "sha256": "16f8a3d817025afa53dde1fe4141013d6eff5595716b82cb41e6e01ebc07c32e"
+    },
+    {
+      "bytes": 4871,
+      "path": "neutral.json",
+      "sha256": "07d74a893a14da2bd1260dd0a751f7a54367957c523cf94f847737ef2815f4d7"
+    }
+  ],
+  "schema_version": "gnd-ilp-export/1",
+  "target": "ilasp"
+}

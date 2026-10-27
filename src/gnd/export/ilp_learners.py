@@ -14,7 +14,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-from gnd.export import ilp, ilp_popper
+from gnd.export import ilp, ilp_asp, ilp_popper
 
 __all__ = ["EXPORT_TARGETS", "IMPORT_TARGETS", "LEARNERS", "Learner", "learner"]
 
@@ -48,6 +48,9 @@ LEARNERS: dict[str, Learner] = {
     "neutral": Learner(target="neutral", learner=None, method="ilp-neutral", exports=True,
                        render=None, parse=None, contract="labelled-clauses",
                        adapter_version=ilp.ADAPTER_VERSION),
+    "ilasp": Learner(target="ilasp", learner="ilasp", method="ilp-ilasp", exports=True,
+                     render=ilp_asp.render, parse=ilp_asp.parse_hypothesis,
+                     contract="labelled-clauses", adapter_version=ilp_asp.ADAPTER_VERSION),
 }
 EXPORT_TARGETS = tuple(target for target, entry in LEARNERS.items() if entry.exports)
 IMPORT_TARGETS = tuple(target for target, entry in LEARNERS.items()

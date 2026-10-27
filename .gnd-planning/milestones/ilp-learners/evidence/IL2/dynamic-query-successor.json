@@ -1,0 +1,311 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL1/dynamic-query-successor.json",
+ "predecessor_sha256": "7ea8941e536f008d025486b260f5900788fccf637c9edf79ce8eab3ee1dc1128",
+ "reason": "ilp-learners IL2 (spec r1, approved 2026-10-27): the ILASP adapter. The rows are the task renderer's neutral-form reads and annotations, the ASP hypothesis reader's token reads and annotations and the hypothesis extractor, all in gnd.export.ilp_asp; the Popper canonical threshold-name check (IL2-D8 (o)) adds no row. Syntax census only; no model-query exception widening.",
+ "removed": [],
+ "added": [
+  [
+   "src/gnd/export/ilp_asp.py",
+   "__init__",
+   "list[tuple[str, str, int, int]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "__init__",
+   "text[position]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "__init__",
+   "tuple[str, str, int, int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "dict[str, set[int]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "list[int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "list[tuple[str, list[str], list[int], list[dict[str, Any]]]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "observed[type_name]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "predicate['types'][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "row['types'][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "set[int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "tuple[str, list[str], list[int], list[dict[str, Any]]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_domains",
+   "types[fact['predicate']]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_thread",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_thread",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_threaded",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_unquote",
+   "_ESCAPES[following]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_unquote",
+   "body[position + 1]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_unquote",
+   "body[position]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_unquote",
+   "token[1:-1]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "_variables",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "aggregate",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "aggregate",
+   "list[Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "aggregate",
+   "self.take('hash')[1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "arguments",
+   "list[Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "context_fact",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "extract_hypothesis",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "hypothesis",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "integer",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "literal",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "literal",
+   "self.peek()[:2]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "literal",
+   "value[1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "parse_hypothesis",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "peek",
+   "self.tokens[min(self.index + ahead, len(self.tokens) - 1)]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "peek",
+   "tuple[str, str, int, int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "by_example.get(example['id'], [])",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "dict[str, bytes]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "dict[str, list[dict[str, Any]]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "render",
+   "predicate['types'][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "split_task",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "split_task",
+   "tuple[str, list[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "statement",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "statement",
+   "self.peek()[:2]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "term",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_asp.py",
+   "term",
+   "{'true': True, 'false': False}.get(value, value)",
+   1
+  ]
+ ],
+ "result_distinct_rows": 6632,
+ "result_occurrences": 8303
+}

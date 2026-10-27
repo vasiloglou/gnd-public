@@ -320,6 +320,9 @@ def _comparison(name: str, args: list[Any], line: int, column: int) -> dict[str,
     if match is None or len(args) != 1:
         return {"predicate": name, "args": args}
     comparison, sign, digits = match.groups()
+    if (len(digits) > 1 and digits[0] == "0") or (sign and digits == "0"):
+        # The renderer writes neither a leading zero nor m0 (IL2-D8 (o), IL1-Q3).
+        raise _unparsable(line, column, f"a threshold name the renderer never writes: {name}")
     if len(digits) > MAX_INT_DIGITS:
         raise _unparsable(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
     return {"predicate": comparison, "args": [args[0], {"const": -int(digits) if sign else int(digits)}]}

@@ -449,7 +449,7 @@ def _register_import(subparsers):
         "--reported-coverage", required=True, help="the learner run record (gnd-ilp-run/1)"
     )
     ilp_import_parser.add_argument(
-        "--target", required=True, choices=("popper", "neutral"), help="the adapter CLAUSES is in"
+        "--target", required=True, choices=("popper", "neutral", "ilasp"), help="the adapter CLAUSES is in"
     )
     ilp_import_parser.add_argument("--out", required=True, help="write the evolve proposal here")
     ilp_import_parser.add_argument(

@@ -30,7 +30,8 @@
     "target": {
       "enum": [
         "popper",
-        "neutral"
+        "neutral",
+        "ilasp"
       ]
     },
     "learner": {

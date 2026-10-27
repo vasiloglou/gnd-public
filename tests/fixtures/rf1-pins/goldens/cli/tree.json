@@ -1964,13 +1964,14 @@
       {
        "choices": [
         "popper",
-        "neutral"
+        "neutral",
+        "ilasp"
        ],
        "class": "_StoreAction",
        "const": null,
        "default": null,
        "dest": "target",
-       "help": "learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl) or neutral",
+       "help": "learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl), neutral, or ilasp (neutral form plus ilasp/task.las)",
        "metavar": null,
        "nargs": null,
        "option_strings": [
@@ -3021,7 +3022,8 @@
       {
        "choices": [
         "popper",
-        "neutral"
+        "neutral",
+        "ilasp"
        ],
        "class": "_StoreAction",
        "const": null,

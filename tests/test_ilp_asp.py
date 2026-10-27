@@ -186,13 +186,13 @@ def test_t1b_the_task_layout(tmp_path):
     from gnd.export.ilp_popper import thresholds
 
     task, neutral = _task(tmp_path)
-    head, _, examples = task.partition("#pos(")
+    head, examples = re.split(r"^#(?:pos|neg)\(", task, maxsplit=1, flags=re.MULTILINE)
     background = [line for line in head.splitlines() if line and not line.startswith("#")]
     assert background and all(re.match(r"(dom|thr|gt|lt)_t_\w+\(", line) for line in background)
     for predicate in neutral["predicates"]:
         arity = len(predicate["types"]) - 1
-        mode = re.search(rf"^#modeb\(2, {predicate['name']}\(([^)]*)\)\)\.$", task, re.MULTILINE)
-        assert mode and len(mode.group(1).split(",")) == arity
+        mode = re.search(rf"^#modeb\(2, {predicate['name']}\((.*)\)\)\.$", task, re.MULTILINE)
+        assert mode and mode.group(1).count("var(") == arity
     assert "#modeh(wrong).\n" in task and "#maxv(4).\n" in task
     amounts = {fact["values"][1] for fact in neutral["facts"] if fact["predicate"] == "f_refund_amount"}
     assert re.findall(r"^thr_t_amount\((-?\d+)\)\.$", task, re.MULTILINE) == \

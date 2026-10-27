@@ -254,7 +254,8 @@
         "target": {
           "enum": [
             "popper",
-            "neutral"
+            "neutral",
+            "ilasp"
           ]
         },
         "adapter_version": {

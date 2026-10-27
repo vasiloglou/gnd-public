@@ -561,4 +561,35 @@ beyond these rulings.
 
 ## 14. Implementation findings (recorded as found)
 
-None yet.
+**IL2-F1: a corpus case stopped before the check it was written for.**
+- **The case:** corpus case `c4-type-confused` (T8) was the two-atom clause
+  `wrong :- f_refund_amount(V1,V2), f_refund_by(V2,V3).`
+- **What happened:** the fragment checker refused it at check 6,
+  `non-ground-absence`, because neither atom has all its variables bound by
+  the other. It never reached 9b.
+- **The fix:** the case is now
+  `wrong :- f_refund_amount(V1,V2), f_refund_by(V2,V3), f_refund_channel(V1,V3).`
+  Its third atom is designated, so 9b names the join. This is the shape of
+  IL1's join case J1.
+- **Approval:** the corpus was written after the gate approved the
+  instrument (IL2-D11). The owner had not read its bytes, and the case's
+  meaning is unchanged: a type-confused join is refused by 9b.
+
+**IL2-F2: two defects in the T1b harness.**
+- **The split:** it split the task at the first `#pos(`, assuming the first
+  example is positive. The refunds example's first week is labelled `neg`.
+- **The mode regex:** its `[^)]*` stopped at the `)` of `var(t_refund)`.
+- **The fix:** test-only. The split now matches `#pos(` or `#neg(`, and the
+  regex counts `var(` occurrences.
+
+**IL2-F3: the spec under-counted the moved RF1 goldens.**
+- **The miss:** §6 listed 8 moved goldens. The CLI tree golden
+  `tests/fixtures/rf1-pins/goldens/cli/tree.json` also records both `target`
+  actions' choices and help, so **9 goldens move**.
+- **How the tree was edited:** only those two actions were patched, by
+  direct edit, as IK3 and IK5 edited the tree.
+  - **Recapturing the tree is wrong:** a capture also writes the
+    `--compiled-operations` successor, which `test_cli_tree` inserts at test
+    time over RF1's historical bytes.
+- **The other 8 files:** captured with `GND_RF1_CAPTURE` under Python 3.14,
+  3.13 and 3.11. The three captures of each shared file were byte-identical.

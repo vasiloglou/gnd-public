@@ -49,6 +49,7 @@ The command creates `DIR`, which must not exist, and writes these files:
 | `popper/bk.pl` | one background fact per population fact, with the example id as its first argument, grouped by predicate; then each threshold predicate's facts |
 | `popper/exs.pl` | `pos(wrong('<id>')).` or `neg(wrong('<id>')).` per population, in manifest order |
 | `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate and per threshold predicate, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
+| `ilasp/task.las` | with `--target ilasp`: one ILASP learning task (see [ILASP adapter](#ilasp-adapter)) |
 | `export.json` | `gnd-ilp-export/1`: the target, the adapter version, and each other file's path, SHA-256 and size |
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
@@ -228,6 +229,60 @@ Each constraint is top-level `guarded`, with `source: induced`,
 | an absent fact | closed world in `bk.pl` | closed world over the population | they agree on exported facts; derived facts are not exported and are refused at check 3 |
 | a comparison | Prolog arithmetic | typed comparison; an unordered pair gives `unchecked` | integers only (check 5) |
 | a constant | an atom or an integer | a typed literal, matched by identity | `'7'` (atom) and `7` (integer) differ on both sides |
+
+## ILASP adapter
+
+`--target ilasp` writes one ILASP learning task, `ilasp/task.las`, and
+`gnd import ilp-rules --target ilasp` reads the hypothesis ILASP prints. The
+run record's learner must be `ilasp`, and the method token is `ilp-ilasp`.
+
+**The task, in order:**
+
+- **Background:** the comparison definitions only. For each integer type with
+  observed values, one `dom_t(V)` rule per predicate argument of that type,
+  one `thr_t(c).` fact per threshold, and one rule per comparison:
+  `gt_t_amount(X, C) :- dom_t_amount(X), thr_t_amount(C), X > C.` The
+  thresholds are the Popper adapter's selection (at most 32), and the
+  operators are `gt` and `lt`.
+- **Constants:** `#constant(t, c).` per threshold.
+- **Mode bias:** `#modeh(wrong).`; `#modeb(2, p(var(t1), …))` per exported
+  predicate, without the example argument; `#modeb(1, gt_t(var(t), const(t)))`
+  per comparison; `#maxv(4).`
+- **Examples:** `#pos(e<i>, {wrong}, {}, {…}).` or `#neg(…)` per population,
+  where i is the 1-based position in `neutral.json`. The context holds that
+  population's facts without the example argument, grouped by predicate.
+
+**The reader** maps `wrong :- body.` to `wrong(X) :- body'`: every body atom
+except a comparison takes `X` as its first argument, where `X` is the first of
+`X`, `X0`, `X1`, … the rule does not use. `not` and aggregates are carried, so
+the fragment table refuses them by its own names. The reader refuses, with
+exit 3 and `clause K: <name>`:
+
+| Construct | Example | Refusal |
+|---|---|---|
+| a constraint | `:- p(V1).` | `asp-constraint` |
+| a choice rule | `{ wrong } :- p(V1).` | `choice-rule` |
+| a weak constraint | `:~ p(V1). [1@1]` | `weak-constraint` |
+| classical negation | `-p(V1)` | `classical-negation` |
+| an arithmetic term | `p(V1+1)`, `p(-V1)` | `arithmetic-term` |
+| an interval or a pool | `p(1..3)`, `p(1;2)` | `interval-or-pool` |
+| a directive | `#show wrong/0.` | `directive` |
+| an infix comparison | `V2 > 500` | `builtin-comparison` |
+| a rule without a body | `wrong.` | `empty-body` |
+| a disjunctive head | `wrong \| p :- …` | `disjunction` |
+| any head but bare `wrong` | `wrong(V1) :- …` | `head-shape` |
+
+**Constants:**
+
+| ASP term | Read as |
+|---|---|
+| `40`, `-3` | an integer |
+| `"a\"b"` | a string; the escapes are `\\`, `\"` and `\n` |
+| `web` | a string, the name itself |
+| `true`, `false` | a boolean |
+
+An exported string with a control character other than a newline has no ASP
+spelling, and the export refuses it as `unrepresentable`.
 
 ## Bounds
 

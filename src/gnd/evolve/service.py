@@ -11,6 +11,7 @@ from typing import Any
 
 from pydantic import ValidationError
 from ruamel.yaml import YAML
+from ruamel.yaml.error import YAMLError
 
 from gnd import input_policy as _rf7_input
 from gnd.artifacts import (
@@ -213,16 +214,27 @@ def _load_model_bytes(
                 # a digest mismatch) as ReferenceInputError; evolve does the same.
                 raise ReferenceInputError(str(error), model=model) from error
         return model
+    except YAMLError as error:
+        raise _yaml_refusal(label, error) from None
     except (OSError, ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise EvolutionError(f"{label} validation failed: {error}") from error
+
+
+def _yaml_refusal(label: str, error: YAMLError) -> EvolutionError:
+    """Malformed YAML is input, never an internal failure (IK4-Q2-Q2)."""
+    mark = getattr(error, "problem_mark", None)
+    where = f" at line {mark.line + 1}, column {mark.column + 1}" if mark else ""
+    return EvolutionError(f"{label} is not valid YAML{where}")
 
 
 def _parse_model_text(text: str) -> dict[str, Any]:
     try:
         _rf7_input.guard_yaml(text)
+        parsed = YAML(typ="safe").load(text)
     except ValueError as error:
         raise EvolutionError(str(error)) from error
-    parsed = YAML(typ="safe").load(text)
+    except YAMLError as error:
+        raise _yaml_refusal("candidate model", error) from None
     if not isinstance(parsed, dict):
         raise EvolutionError("candidate model is not a mapping")
     return dict(parsed)

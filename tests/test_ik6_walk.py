@@ -51,9 +51,7 @@ def walk_digests(cwd: Path) -> dict[str, str]:
     assert runner.run_pages(runner.groups(ROOT)["induced"], cwd, python) > 0
     digests = {}
     for name in WRITTEN:
-        text = (cwd / name).read_bytes()
-        for root in sorted({str(cwd), str(cwd.resolve())}, key=len, reverse=True):
-            text = text.replace(root.encode(), b"<run>")
+        text = runner.without_run_dir((cwd / name).read_bytes(), cwd)
         digests[name] = hashlib.sha256(text).hexdigest()
     return digests
 
@@ -160,13 +158,14 @@ def test_h3_a_bad_learner_argument_is_a_usage_error(tmp_path, argv):
                     "--labels", str(EXAMPLE / "labels.json"), "--target", "neutral", "--out", str(tmp_path / "ilp")],
                    check=True, capture_output=True)
     result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py"), str(tmp_path / "ilp"),
-                             str(tmp_path / "out"), *argv], capture_output=True, text=True)
+                             str(tmp_path / "out"), *argv], capture_output=True, text=True, check=False)
     assert result.returncode == 2 and "usage:" in result.stderr
     assert not (tmp_path / "out").exists()
 
 
 def test_h3_missing_arguments_are_a_usage_error():
-    result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py")], capture_output=True, text=True)
+    result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py")], capture_output=True, text=True,
+                            check=False)
     assert result.returncode == 2 and "usage:" in result.stderr
 
 

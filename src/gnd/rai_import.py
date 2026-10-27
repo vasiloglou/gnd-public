@@ -160,33 +160,38 @@ def _insert_before(mapping: MutableMapping[str, Any], before: str, key: str, val
         mapping[key] = value
 
 
+# The D-03 default modality table, (source, status) -> modality. Its one home is
+# gnd-orm-core's provenance-and-modality.md; tests/test_ik_close.py pins this
+# copy to that table row for row (IK2-Q2).
+D03_DEFAULTS: Mapping[tuple[str, str], str] = {
+    ("explicit", "confirmed"): "alethic",
+    ("user-supplied", "confirmed"): "alethic",
+    **{
+        (source, status): modality
+        for source in ("sample", "common-sense", "llm-inferred", "imported", "induced")
+        for status, modality in (("proposed", "deontic"), ("confirmed", "alethic"))
+    },
+}
+
+
 def _default_modality(constraint: Mapping[str, Any], pointer: str) -> str:
     source = constraint.get("source")
     status = constraint.get("status")
-    if (source, status) in {("explicit", "confirmed"), ("user-supplied", "confirmed")}:
-        return "alethic"
-    if source in {"sample", "common-sense", "llm-inferred", "imported", "induced"}:
-        if status == "proposed":
-            return "deontic"
-        if status == "confirmed":
-            # imported and induced (IK2-D9) share the D-03 confirmed row:
-            # alethic only once a review record is named.
-            if source in {"imported", "induced"} and not isinstance(
-                constraint.get("provenance"), Mapping
-            ):
-                raise _refuse(
-                    "modality", pointer, f"{source}/confirmed requires reviewed provenance"
-                )
-            if source in {"imported", "induced"} and not constraint["provenance"].get(
-                "reviewed_in"
-            ):
-                raise _refuse("modality", pointer, f"{source}/confirmed requires reviewed_in")
-            return "alethic"
-    raise _refuse(
-        "modality",
-        pointer,
-        f"no D-03 default exists for source/status {source!r}/{status!r}",
-    )
+    modality = D03_DEFAULTS.get((source, status))
+    if modality is None:
+        raise _refuse(
+            "modality",
+            pointer,
+            f"no D-03 default exists for source/status {source!r}/{status!r}",
+        )
+    # imported and induced (IK2-D9) share the D-03 confirmed row: alethic only
+    # once a review record is named.
+    if status == "confirmed" and source in {"imported", "induced"}:
+        if not isinstance(constraint.get("provenance"), Mapping):
+            raise _refuse("modality", pointer, f"{source}/confirmed requires reviewed provenance")
+        if not constraint["provenance"].get("reviewed_in"):
+            raise _refuse("modality", pointer, f"{source}/confirmed requires reviewed_in")
+    return modality
 
 
 def _rewrite_reference_node(

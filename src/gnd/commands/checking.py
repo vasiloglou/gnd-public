@@ -281,6 +281,13 @@ def _cmd_diff(
                     print(f"  {direction} {gap['target_ref']} {gap['verdict']} {gap['witness_sentence'] or ''}")
         for row in payload["not_derivable"]:
             print(f"NOT DERIVABLE {row['source']}: {row['reason']}")
+        # IK1-Q2: description changes, as escaped canonical JSON so untrusted
+        # text cannot forge a line (IK-R5).
+        for row in payload.get("annotations", ()):
+            print(f"ANNOTATION {row['object_type']} description")
+            for side in ("before", "after"):
+                value = json.dumps(row[side], ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+                print(f"  {side} {value}")
     return 0
 
 def _cmd_rai_import(

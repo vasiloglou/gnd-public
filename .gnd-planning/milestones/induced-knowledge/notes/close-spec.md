@@ -158,3 +158,59 @@ Sections 7 and 8 are append-only after this point.
 - **C-D4:** the readers run after the fixes.
 - **C-G1:** the close gate is the union of the phase gates plus the docs and
   installed checks, plus one full default-lane suite.
+
+## 9. Close-fix findings (appended after the gate, 2026-10-27)
+
+Every fix has a regression in `tests/test_ik_close.py`. Against base `b99dfec`,
+11 of those 13 tests fail (`evidence/close/regressions-red.txt`). The other two
+pass on the base by design:
+- the D-03 behaviour pin, which the IK2-Q2 refactor must keep;
+- IK3-Q4, which adds only a test. That test fails when the check it covers is
+  deleted from the source.
+
+- **F1, IK2-Q2: the "one home" is prose.** The D-03 table lives in
+  `provenance-and-modality.md`, and no code module holds it. Reading Markdown at
+  run time would be fragile. Instead, the fix makes `rai_import` table-driven
+  (`D03_DEFAULTS`), and a test parses the reference table and requires the two
+  to be equal, row for row (12 rows). Its refusal messages and their order are
+  unchanged.
+- **F2, IK5-Q6: the ceiling's arithmetic, stated under IK-R12.**
+  - Check 10 loads the candidate model once per clause, then twice for all K
+    clauses together: K + 2 loads, now counted in `work.reloads`.
+  - The import ceiling becomes P × (1 + K) + K + 2. Checks and verdict reads
+    stay within the approved P × (1 + K). Only the new term was added, and C-D1
+    ("count the reloads in the work counter") is the ruling it rests on.
+  - `ilp-import.schema.json` gains an optional `reloads`, so earlier reports
+    stay valid.
+  - Two IK5 review tests had their expected ceilings moved: T9 by + 34, and R6
+    from 24 to 29. Neither belongs to the approved IK5 corpus.
+- **F3, IK4-Q2-Q2: three parse sites, not one.** A malformed candidate reached
+  three readers:
+  - `input_policy.guard_yaml`;
+  - `gnd.model.load_model_bytes`, through evolve's `_load_model_bytes`;
+  - evolve's own YAML load.
+
+  Evolve's two wrappers now name the refusal: "<label> is not valid YAML at line
+  L, column C", exit 3. `gnd.model` still lets ruamel's error escape to its
+  other callers; `gnd validate` already maps that to 3.
+- **F4, IK5-Q4: both output branches.** The JSON branch escapes each character
+  YAML does not keep raw. The block-YAML branch, used only when a model holds a
+  YAML-only value such as a date, now writes ASCII-only, because ruamel's
+  emitter writes NEL raw and its reader then folds it. No committed golden
+  moved.
+- **F5, IK3-Q2.** Each path component's spelling is compared with its parent
+  directory's listing. A case-insensitive alias is refused as "does not exist"
+  (exit 3), the same result a case-sensitive file system gives.
+- **F6, IK6-R1: scope.** Only `src/gnd/examples/**` is exempt, as ruled. The
+  three standalone skill scripts stay listed in RF7. The rule's one home is
+  `tests/support/scan_scope.py`, which checks that the layer map excludes the
+  same glob.
+  - The close RF6 successor (`evidence/close/dynamic-query-successor.json`)
+    removes all 84 example rows (89 occurrences) and adds the six new
+    non-example rows.
+  - Rerunning its build script after the successor is registered recomputes the
+    delta against the file itself, as the script's docstring warns. That
+    happened once, and the delta was regenerated before any gate.
+- **F7, a lint gap left by IK6.** Two `subprocess.run` calls in
+  `tests/test_ik6_walk.py` lacked `check=` (PLW1510). They were already present
+  on `b99dfec`, and are fixed here.

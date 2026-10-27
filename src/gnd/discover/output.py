@@ -88,19 +88,35 @@ def candidate_document(before: dict[str, Any], ops: tuple[EvolutionOperation, ..
     return _apply_declared_operations(before, ops)
 
 
+def _kept(character: str) -> str:
+    """``character`` as YAML keeps it inside a double-quoted JSON string."""
+    if character == " " or character.isprintable():
+        return character
+    code = ord(character)
+    return f"\\u{code:04x}" if code < 0x10000 else f"\\U{code:08x}"
+
+
 def candidate_text(document: dict[str, Any]) -> str:
     """JSON is a YAML subset; the shipped proposal fixtures carry the same form.
 
     A valid YAML model may hold values JSON cannot spell, such as an unquoted
     date; such a document is written as block YAML instead, which evolve parses
-    back to the same values its replay produces (review R7)."""
+    back to the same values its replay produces (review R7).
+
+    A character YAML does not keep raw (a control, NEL, DEL, a line separator,
+    a byte-order mark) is written as an escape, so evolve reads the constant
+    discover checked (IK5-Q4)."""
     try:
-        return json.dumps(document, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n"
+        text = json.dumps(document, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
+        return "".join(_kept(character) for character in text) + "\n"
     except TypeError:
         stream = io.StringIO()
         yaml = YAML(typ="safe")
         yaml.default_flow_style = False
         yaml.width = 4096
+        # The emitter writes NEL and line separators raw, which its reader then
+        # folds; ASCII-only output escapes them (IK5-Q4).
+        yaml.allow_unicode = False
         # No anchors: an aliased node would load as an anchored scalar subclass,
         # which the model loader rightly refuses for exact integers.
         yaml.representer.ignore_aliases = lambda *_: True

@@ -302,6 +302,14 @@ def _population_bytes(root: Path, relative: str) -> tuple[Path, bytes]:
             raise LabelError(EXIT_ILL_FORMED, f"could not read population {relative!r}: {error}") from None
         if stat.S_ISLNK(info.st_mode):
             raise LabelError(EXIT_IO, f"refusing population {relative!r}: it passes through a symbolic link")
+        # A case-insensitive file system resolves an alias spelling; refuse it as
+        # a case-sensitive one does, so the result never depends on the host (IK3-Q2).
+        try:
+            spelled = part in os.listdir(current.parent)
+        except OSError as error:
+            raise LabelError(EXIT_ILL_FORMED, f"could not read population {relative!r}: {error}") from None
+        if not spelled:
+            raise LabelError(EXIT_ILL_FORMED, f"population {relative!r} does not exist")
         leaf = position == len(parts) - 1
         if not leaf and not stat.S_ISDIR(info.st_mode):
             raise LabelError(EXIT_ILL_FORMED, f"population {relative!r} does not exist")

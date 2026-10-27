@@ -1,0 +1,19 @@
+# Close regressions (tests/test_ik_close.py) run against base b99dfec's sources
+# command: uv run pytest -q -p no:randomly tests/test_ik_close.py   (in a detached worktree of b99dfec, test file copied in)
+FAILED tests/test_ik_close.py::test_ik2_q2_rai_import_reads_the_one_d03_table
+FAILED tests/test_ik_close.py::test_ik3_q2_a_population_path_must_match_the_on_disk_spelling
+FAILED tests/test_ik_close.py::test_ik5_q3_compound_aggregate_goals_parse_as_aggregates
+FAILED tests/test_ik_close.py::test_ik5_q3_compound_aggregate_goals_are_refused_by_name
+FAILED tests/test_ik_close.py::test_ik5_q4_candidate_text_round_trips_through_evolve_yaml
+FAILED tests/test_ik_close.py::test_ik5_q6_import_work_counts_candidate_reloads
+FAILED tests/test_ik_close.py::test_ik4_q2_q2_invalid_candidate_yaml_is_a_named_exit_3
+FAILED tests/test_ik_close.py::test_ik1_q2_text_diff_shows_description_annotations
+FAILED tests/test_ik_close.py::test_ik1_q5_contract_lists_every_blast_radius_surface
+FAILED tests/test_ik_close.py::test_ik6_r1_the_scans_exempt_examples_by_one_rule
+FAILED tests/test_ik_close.py::test_ik6_r1_the_runner_normalizes_text_and_bytes
+11 failed, 2 passed in 2.70s
+
+# Passing on base by design: test_ik2_q2_rai_import_default_follows_every_d03_row pins the D-03 behaviour the refactor keeps;
+# test_ik3_q4 is a test-only fix. Its removed-branch mutant (the 'changed while it was being read' check deleted from src/gnd/measure/service.py):
+FAILED tests/test_ik_close.py::test_ik3_q4_a_model_changed_while_it_is_read_is_refused
+1 failed, 4 deselected in 0.25s

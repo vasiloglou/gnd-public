@@ -228,6 +228,11 @@
           "type": "integer",
           "minimum": 0
         },
+        "reloads": {
+          "description": "IK5-Q6: candidate models loaded by check 10 and the final checks, K + 2 for K clauses. Optional, so reports written before it stay valid.",
+          "type": "integer",
+          "minimum": 0
+        },
         "total": {
           "type": "integer",
           "minimum": 0

@@ -202,9 +202,20 @@ class _Parser:
         return args
 
     def argument(self, goals: bool, depth: int) -> Any:
-        if goals and self.at("name") and self.tokens[self.index + 1][:2] == ("punct", "("):
-            return self.literal(depth)[0]
-        return self.term()
+        if not goals:
+            return self.term()
+        # An aggregate's goal may be an atom, a negation, a parenthesized
+        # conjunction or a comparison; each parses as a literal so the
+        # aggregate is refused by name, never as unparsable (IK5-Q3).
+        compound = self.at("naf") or self.at("punct", "(")
+        if compound or (self.at("name") and self.tokens[self.index + 1][:2] == ("punct", "(")):
+            inner = self.literal(depth)
+            return inner[0] if len(inner) == 1 else {"or": [inner]}
+        left = self.term()
+        if not self.at("op"):
+            return left
+        operator = _OPERATORS[self.take("op")]
+        return {"compare": {"operator": operator, "left": left, "right": self.term()}}
 
     def term(self) -> dict[str, Any]:
         kind, value, line, column = self.peek()

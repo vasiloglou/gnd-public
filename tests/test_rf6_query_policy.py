@@ -6,6 +6,7 @@ from collections import Counter
 from pathlib import Path
 
 import pytest
+from support.scan_scope import module_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / '.gnd-planning/milestones/code-refactoring/evidence/RF9-repair/query-allow-list.json'
@@ -46,7 +47,8 @@ def reads(sources, *, include_subscriptions=True, include_literal_getattr=True):
 
 
 def sources():
-    return {p.relative_to(ROOT).as_posix(): p.read_text() for p in (ROOT / 'src/gnd').rglob('*.py')}
+    # Packaged examples are exempt by one shared rule (IK6-R1).
+    return module_sources()
 
 
 def assert_policy(found, policy):

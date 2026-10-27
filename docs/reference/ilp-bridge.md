@@ -188,7 +188,7 @@ Each constraint is top-level `guarded`, with `source: induced`,
 | each written file | at most 64 MiB |
 | CLAUSES | at most 1 MiB; 1 to 32 clauses; 1 to 16 body literals; `not`/`or`/`aggregate` nesting at most 4 |
 | run record | at most 32 MiB |
-| work | export: populations + facts, at most populations + 500,000; import: checker runs + verdict reads, at most P × (1 + K) |
+| work | export: populations + facts, at most populations + 500,000; import: checker runs + verdict reads + candidate reloads, at most P × (1 + K) + K + 2 |
 
 ## Exits
 

@@ -22,7 +22,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from importlib.resources import files
 from pathlib import Path
@@ -121,6 +121,9 @@ class _Prepared:
     tree: dict[str, bytes]
     columns: dict[str, Any]
     work: Any
+    #: One entry per candidate model loaded by check 10 and the final checks,
+    #: so the import's work counts them (IK5-Q6).
+    reloads: list[int] = field(default_factory=list)
 
     @property
     def digest(self) -> str:
@@ -238,6 +241,7 @@ def _load_candidate(prepared: _Prepared, constraints: list[dict[str, Any]], mode
     from gnd.discover import output
     from gnd.model import load_model_bytes
 
+    prepared.reloads.append(len(constraints))
     ops = output.add_operations([(None, c) for c in constraints], prefix="ilp")
     document = output.candidate_document(prepared.document, ops)
     return load_model_bytes(output.candidate_text(document).encode("utf-8"), source=model_path)
@@ -429,8 +433,10 @@ def _cmd_import_ilp_rules(
     except RuntimeError as error:
         _stderr(f"internal: {error}")
         return EXIT_INTERNAL
+    reloads = len(prepared.reloads)
     work = {"export": prepared.work.report()["total"], "checks": checks, "verdicts": verdict_reads,
-            "total": checks + verdict_reads, "ceiling": len(populations) * (1 + len(cores))}
+            "reloads": reloads, "total": checks + verdict_reads + reloads,
+            "ceiling": len(populations) * (1 + len(cores)) + len(cores) + 2}
     if work["total"] > work["ceiling"]:
         _stderr(f"internal: import work {work['total']} exceeds its ceiling {work['ceiling']}")
         return EXIT_INTERNAL

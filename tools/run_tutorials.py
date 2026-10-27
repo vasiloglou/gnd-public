@@ -44,9 +44,18 @@ def parsed_outputs(page: Path):
     return [(stream, shown) for *_, stream, shown in _parsed(page)]
 
 
-def normalize_output(text: str, cwd: Path) -> list[str]:
+def without_run_dir(text, cwd: Path):
+    """Text or bytes with the run directory, as given or resolved, spelled <run>."""
     for root in sorted({str(cwd), str(cwd.resolve())}, key=len, reverse=True):
-        text = text.replace(root, '<run>')
+        if isinstance(text, bytes):
+            text = text.replace(root.encode(), b'<run>')
+        else:
+            text = text.replace(root, '<run>')
+    return text
+
+
+def normalize_output(text: str, cwd: Path) -> list[str]:
+    text = without_run_dir(text, cwd)
     text = re.sub(r'gnd-native-(?:application|checker)-[A-Za-z0-9_]+', '<tmp>', text)
     text = re.sub(r'\b\d+\.\d+s\b', '<time>', text)
     lines = [line.rstrip() for line in text.splitlines()]

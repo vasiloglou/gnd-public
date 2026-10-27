@@ -711,3 +711,143 @@ Invocation 1 is the run of record: `termination: rendering-rejected`,
 **What IL-R9 says next:** a rendering fix is an owner-recorded amendment that
 names the changed goldens and the `ADAPTER_VERSION` bump, and a second run
 needs an owner ruling.
+
+## 15. Amendment IL1-A1: a Popper v5.0.1 rendering (draft, awaiting the owner)
+
+**Status:** draft, 2026-10-27. Nothing in it is implemented.
+- **Requested by the owner (o):** "Draft an IL1 amendment that fixes the
+  Popper rendering for v5.0.1 (naming the changed goldens and the
+  ADAPTER_VERSION bump) and asks for a second recorded run; stop for my
+  approval before changing code."
+- **Origin:** IL1-F7 under IL-R9: a rendering fix after a run is an
+  owner-recorded amendment, and a second run needs an owner ruling.
+- **No probe run:** no Popper invocation was made to design this. The design
+  is checked against Popper v5.0.1's installed source only, so whether Popper
+  learns from it is what invocation 2 decides.
+
+### What v5.0.1 reads, and why invocation 1 failed
+
+Popper v5.0.1 reads only these bias directives (installed package,
+`popper/*.py` and `popper/lp/*.pl`):
+- `head_pred`;
+- `body_pred`;
+- `type`;
+- `direction`;
+- `max_vars`, `max_body`, `max_clauses`.
+
+**No constants:** it has no magic values and no other constant mechanism.
+
+**The failure:** the IK5 rendering offers binary comparisons
+(`gt_t_amount(A,B) :- A > B.`) and relies on `magic_value_type(t_amount)` to
+bind B to a constant. Under v5.0.1, B stays free, and Prolog arithmetic raises
+(IL1-F7).
+
+### The adapter-2 rendering (Popper files only)
+
+**Unchanged:** the neutral form `gnd-ilp/1`, `neutral.json`, `exs.pl`, the
+clause form, the fragment checks and every other adapter are unchanged
+(IL-R7).
+
+**`bk.pl`:**
+1. **Facts grouped by predicate:** the facts as today, but ordered by
+   (predicate name, example position, canonical values). Each predicate's
+   clauses are contiguous, which removes SWI's `discontiguous` warnings
+   (IL1-F7).
+2. **No binary definitions:** the binary comparison definitions are dropped.
+3. **Threshold predicates instead:** for each integer type `t_X` and each
+   selected threshold `v`, two unary predicates. Each one is **safe on an
+   unbound argument**: it fails rather than raising.
+
+   ```prolog
+   gt_t_amount__120(A) :- integer(A), A > 120.
+   lt_t_amount__120(A) :- integer(A), A < 120.
+   ```
+   - **Naming:** `<op>_<type>__<value>`, with a negative value spelled
+     `m<digits>` (`lt_t_amount__m5`).
+   - **Decoding:** the value is decoded after the **last** `__`, so a type name
+     that contains `__` still decodes uniquely.
+   - **Operators:** `gt` and `lt`, the stand-in learner's two operators.
+     Proposed; see A1-D2.
+
+**`bias.pl`:**
+- `head_pred(wrong,1).` and `type(wrong,(ex,)).`, as today;
+- one `body_pred`/`type` pair per fact predicate, as today;
+- one `body_pred(<name>,1).` and `type(<name>,(<type>,)).` per threshold
+  predicate;
+- **no** binary comparison and **no** `magic_value_type`;
+- `max_vars(6).`, `max_body(5).` and `max_clauses(4).`, as today.
+
+**Thresholds** (bound fixed before results, IK-R12):
+- **Source:** the distinct observed values of each integer type, across all
+  exported facts, in ascending order.
+- **Up to 32 values:** all are used.
+- **More than 32:** the 32 values at ranks `round(i·(n−1)/31)` for
+  i = 0..31, which always include the minimum and the maximum.
+- **Sizes:** at most 64 threshold predicates per integer type. The IK6
+  refunds export has one integer type with 20 distinct amounts, so 40
+  predicates. The IK5 orders export has one, `t_amount`.
+
+**`ADAPTER_VERSION`** goes from `"1"` to `"2"`, in `export.json`
+(`gnd-ilp-export/1`, a string field, so this is not a wire-version change).
+
+### The parser (Popper adapter only)
+
+- **The mapping:** `parse_program` maps an atom named
+  `^(gt|lt|ge|le)_(t_[a-z0-9_]+)__(m?[0-9]+)$` with exactly one argument to the
+  **binary comparison atom** the neutral form already declares, with the
+  decoded constant as its second argument.
+
+  ```text
+  gt_t_amount__120(V2)  ->  {"atom": {"predicate": "gt_t_amount", "args": [{"var": "V2"}, {"const": 120}]}}
+  ```
+- **Why a binary atom:** the rewriter already treats a declared comparison
+  predicate as a comparison with its **declared type**, so the D13
+  type-confused-join check applies unchanged.
+- **Accepted operators:** `ge` and `le` are accepted on input, so programs
+  from other renderings of the same names still read.
+- **Unchanged forms:** IK5's binary form (`gt_t_amount(C,100)`, case I2) reads
+  as today. An unknown predicate stays `unknown-predicate`.
+- **Bounds:** an over-long value follows the existing `MAX_INT_DIGITS` bound.
+
+### Goldens and fixtures this changes (all IK5 corpus, approved 2026-10-26)
+
+**No exit code and no refusal name changes.** Only digests and the two rendered
+files move.
+
+| File | What changes |
+|---|---|
+| `tests/fixtures/induced_knowledge/ik5-corpus/expected-export/popper/popper/bk.pl` | facts regrouped by predicate; threshold predicates replace the binary definitions |
+| `…/expected-export/popper/popper/bias.pl` | threshold `body_pred`/`type` pairs; no binary comparisons, no `magic_value_type` |
+| `…/expected-export/popper/export.json` | `adapter_version` `"2"`; the digests of `bk.pl` and `bias.pl` |
+| `…/ik5-corpus/expected.json` | `export_sha256.popper` (E for the Popper target); case I2's expected constraints, whose `provenance.induction.evidence` digests for `ilp/export.json` and `ilp/run` move with E and with `i2.run.json` |
+| 19 run records: `b3`, `f01`, `f02`, `f04`, `f06`, `f08`–`f20`, `i2` `.run.json` | the `export_sha256` field only (E for the Popper target) |
+
+**Unaffected:**
+- `neutral.json` and the neutral-target goldens;
+- every neutral-target case;
+- the IK6 walk and its goldens, which export with `--target neutral`;
+- the RF1 CLI goldens.
+
+**The docs:** `docs/reference/ilp-bridge.md`'s Export table describes
+`bk.pl` and `bias.pl` and is updated. No other page names `magic_value_type`.
+
+### Tests the amendment adds
+
+| ID | Case | Expected |
+|---|---|---|
+| A1-T1 | the X1 Popper export under two `PYTHONHASHSEED` values | equals the regenerated golden tree (existing D1 test) |
+| A1-T2 | every threshold predicate in the refunds rendering, called with an unbound argument under the scratch SWI, as a live check marked `live` | fails, never raises |
+| A1-T3 | the threshold selection on 20 values and on 100 values | 20 values give all 20; 100 values give 32, including the minimum and the maximum |
+| A1-T4 | `parse_program` on `gt_t_amount__120(V2)`, `lt_t_amount__m5(V2)`, `gt_t_a__b__7(V2)`, and a two-argument threshold name | maps to the binary atom with constant 120, −5 and 7; the two-argument form stays an ordinary atom, refused `unknown-predicate` |
+| A1-T5 | a Popper-syntax clause using a threshold of another integer type (the T5e model) | exit 3 `type-confused-join` |
+| A1-T6 | the IK5 corpus | every exit and refusal unchanged; only the inventory above moved |
+
+### Decisions
+
+| ID | Question | Readings and cost | Proposed |
+|---|---|---|---|
+| A1-D1 | Where the new rendering lives | **(a) Replace `popper`'s rendering in place,** with `ADAPTER_VERSION` "2": one Popper adapter, which works with the real learner; the inventory above moves. **(b) Add a target `popper5`** and keep the IK5 rendering: no golden moves, but the default `popper` target stays known-broken against the real learner | (a) |
+| A1-D2 | Threshold operators | **`gt`, `lt`:** half the bias of all four; strict thresholds cover both directions. **All four:** larger search space, slower search | `gt`, `lt` |
+| A1-D3 | Threshold bound | **32 per integer type, ranked selection above it:** the export keeps working on larger data. **Refuse above the bound:** simpler, but a real population can make the Popper export fail | 32, ranked selection |
+| A1-D4 | **The second recorded run** | Invocation 2, under the same §6 settings, limits and fixed import arguments, over the IK6 refunds export rendered by adapter 2. **It is reported beside invocation 1, which stays the run of record** (IL-R9). T9 replays both. If invocation 2 also fails, its outcome is recorded and IL1 closes with both | **asked: approve invocation 2** |
+| A1-D5 | If invocation 2 admits a program but GND's coverage differs from SWI's (`coverage-mismatch`) | the refusal is the recorded result, not a reason to rerun; a third run would need a new ruling | as stated |

@@ -1,0 +1,10 @@
+# Full default-lane suite (C-G1), HEAD bce65a8, 2026-10-27: uv run pytest -q -p no:randomly
+FAILED tests/test_atom_bind.py::test_no_raw_bind_access_remains_in_the_ruled_scope
+FAILED tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap
+FAILED tests/test_incremental_performance.py::test_prepared_policy_rechecks_live_hashability
+FAILED tests/test_model_v2.py::test_the_current_model_is_validated_before_it_is_traversed
+4 failed, 15781 passed, 783 deselected, 1 warning in 2115.40s (0:35:15)
+exit 1
+
+# Dispositions: test_development_scaffold and test_model_v2 fixed in 6b2b304; test_atom_bind (red on b99dfec since IK2) fixed in 5e25dbb; test_incremental_performance is IK4-Q5, red on main, separate maintenance.
+# The three fixed tests pass in the final close gate at 5e25dbb (final-gate.txt).

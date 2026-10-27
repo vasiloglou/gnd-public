@@ -52,9 +52,11 @@ as a **proposal**, and only you can accept one.
     - [`gnd-model-evolve`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-evolve/SKILL.md): the skill's instructions
     - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/learn-rules.md)
 
-**Before you start.** Install GND and the Claude Code plugin as the
-[plugin page](../marketplace-plugins.md) shows, then copy the `refunds`
-example into an empty folder. The
+**Before you start.** This page needs a GND newer than the 0.1.0 release on
+PyPI, so until the next release install it from a checkout of the repository,
+as the [course planner's "Before you start"](course-planner.md#what-youll-build)
+shows. Add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
+shows, then copy the `refunds` example into an empty folder. The
 [commands page](../how-to/learn-rules-commands.md) has the copy step and every
 command Claude Code runs below. No prompt on this page is a recording; the
 results are what GND printed when those commands ran.

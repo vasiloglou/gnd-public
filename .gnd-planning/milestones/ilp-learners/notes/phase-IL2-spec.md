@@ -593,3 +593,34 @@ beyond these rulings.
     time over RF1's historical bytes.
 - **The other 8 files:** captured with `GND_RF1_CAPTURE` under Python 3.14,
   3.13 and 3.11. The three captures of each shared file were byte-identical.
+
+**IL2-F4: the approved ILASP binary cannot start on this machine.**
+- **The download (IL2-D2 (o)):** done.
+  - The size, 1,982,845 bytes, matches the approved figure.
+  - Its SHA-256, computed at download, is
+    `7e9fd1ccbafa3241558c1f70a868b1c3e141de52dbdc76d26396b70f492cd75c`.
+  - It is recorded with the member list in `evidence/IL2/download.json`.
+- **The archive:**
+  - It holds `ILASP`, a Mach-O arm64 executable, and three example tasks.
+  - It also holds `ClingoLicense.txt`, which says clingo is statically linked
+    and is MIT-licensed. Those terms cover clingo only.
+- **The failure:**
+  - **The link:** `otool -L` shows ILASP dynamically linked against
+    `/opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/Python`.
+  - **The symbols:** ILASP imports 63 CPython C-API symbols, because it
+    embeds Python (PyLASP).
+  - **The machine:** it has no Python 3.10 framework.
+  - **The result:** the probe's first command, `ILASP --version` under the
+    bounded environment, ends with `dyld: Library not loaded`, exit 134
+    (`evidence/IL2/probe/ilasp-version.txt`).
+- **What has not happened:** no task was read, so this is neither the format
+  probe's output nor a run of record.
+- **What it blocks:** IL2-D4's probe and IL2-C4's live run. The gate approved
+  no further download, and `brew install python@3.10` is a system package
+  manager, which IL-R2 forbids.
+
+### New decision surfaced by IL2-F4
+
+| ID | Question | Readings and cost | Proposed |
+|---|---|---|---|
+| IL2-D12 | How to give ILASP the Python 3.10 it links against | **(a) A scratch Python 3.10 from python-build-standalone,** the same source uv uses: `https://github.com/astral-sh/python-build-standalone/releases/download/20260310/cpython-3.10.20+20260310-aarch64-apple-darwin-install_only_stripped.tar.gz`, 19,484,823 bytes, SHA-256 `83a95278567c1f5fea1e886684895c24f467e66f3e9ab3a20321402f54409d14` (from the release's `SHA256SUMS`). Licences: CPython PSF-2.0; the build scripts MPL-2.0. It is extracted into `<scratch>/py310/`. A scratch shim directory holds `Python.framework/Versions/3.10/Python` as a symlink to its `lib/libpython3.10.dylib`, and ILASP runs with `DYLD_FRAMEWORK_PATH=<scratch>/fw` and `PYTHONHOME=<scratch>/py310` in its explicit environment. No system path is touched. **Risk:** a non-framework build may differ from Homebrew's in ways ILASP notices; a load failure is recorded and stops again. **(b) ILASP's Ubuntu build in the podman VM,** which needs an Ubuntu image pinned by digest and the container's own Python 3.10; this costs more and adds a container. **(c) Stop IL2's live run,** recording IL2-C4 as not run, with the reason, as a refuted premise ("the macOS binary is self-contained") | (a) |

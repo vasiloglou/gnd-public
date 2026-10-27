@@ -1,0 +1,21 @@
+{
+ "approved": "IL2-D2 (o), 2026-10-27",
+ "url": "https://github.com/ilaspltd/ILASP-releases/releases/download/v4.4.1/ILASP-4.4.1-macOS-M1.tar.gz",
+ "bytes": 1982845,
+ "bytes_expected": 1982845,
+ "sha256": "7e9fd1ccbafa3241558c1f70a868b1c3e141de52dbdc76d26396b70f492cd75c",
+ "sha256_source": "computed at download; upstream publishes none",
+ "members": [
+  "./ClingoLicense.txt (1580 bytes)",
+  "./ILASP (6161832 bytes, Mach-O 64-bit executable arm64)",
+  "./examples/pets.las",
+  "./examples/sudoku.las",
+  "./examples/timetable.las"
+ ],
+ "licence_notices": {
+  "ILASP": "free to use for non-commercial research and education; owner ruled this use non-commercial research (IL2-D1 (o))",
+  "clingo (statically linked)": "MIT, per the bundled ClingoLicense.txt, which says its terms apply to clingo only"
+ },
+ "extracted_to": "<scratch>/ilasp/",
+ "committed": "nothing; no binary or source is committed (IL-R5)"
+}

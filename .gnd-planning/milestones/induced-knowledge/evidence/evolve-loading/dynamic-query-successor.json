@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/induced-knowledge/evidence/close/dynamic-query-successor.json",
+  "predecessor_sha256": "304db526bf83af3c2d3a2e80818e286699408d7ea348c6e4e2cf078e69e7e710",
+  "reason": "Owner-approved evolve-loading follow-up (2026-10-27, spec D1-A, D3-A): evolve's one loader returns a model and its document, and one value walk turns the parsed document into plain JSON values; the five new rows are type annotations of the loader, the walk and the candidate loader's widened return. Syntax census only; no model-query exception widening.",
+  "removed": [
+    [
+      "src/gnd/evolve/service.py",
+      "_validated_candidate",
+      "tuple[Any, ValidationEvidence]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/evolve/service.py",
+      "_json_document",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_load_model_document",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_load_model_document",
+      "tuple[Any, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_validated_candidate",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_validated_candidate",
+      "tuple[Any, dict[str, Any], ValidationEvidence]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6512,
+  "result_occurrences": 8172
+}

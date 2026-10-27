@@ -277,8 +277,10 @@ from gnd import artifacts
 from gnd.values import reference_model_digest
 
 
-def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
-    """Validate one immutable bounded buffer; source is diagnostic metadata."""
+def parse_model_document(data: bytes, *, source: str | Path) -> Any:
+    """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
+    JSON for a ``.json`` source, otherwise the alias/event guard and then the
+    round-trip YAML reader. The document is returned unvalidated."""
     from ruamel.yaml.events import AliasEvent
 
     if len(data) > MAX_MODEL_BYTES:
@@ -306,6 +308,12 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
             if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
                 raise ModelLoadError("model YAML alias/event guard refused input")
         doc = configure_comment_scanner(YAML(typ="rt")).load(text)
+    return doc
+
+
+def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
+    """Validate one immutable bounded buffer; source is diagnostic metadata."""
+    doc = parse_model_document(data, source=source)
     issues = _layer1_structural(doc)
     if issues:
         raise ModelValidationError(issues)

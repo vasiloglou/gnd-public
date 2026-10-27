@@ -308,6 +308,8 @@ def _evolve_service_exit(error: Exception) -> int:
         "validation failed",
         "not UTF-8",
         "candidate model is not",
+        # Any model's YAML refusal, current or staged, is input (review H1).
+        "is not valid YAML",
         "declared operations",
         "declared before value",
         "stable locator",

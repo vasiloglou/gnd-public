@@ -222,21 +222,6 @@
     {
       "kind": "RF5",
       "old": "gnd.cli",
-      "name": "_evolve_service_exit",
-      "home": "gnd.evolve.cli_service",
-      "before": {
-        "raw_sha256": "632b08f7565caaad2aa26d100ba03b733369abb11d7a28a1ce575ee7147f5f69",
-        "algorithm_sha256": "5a0ae02c3e8deccd71c10e6bc0f33553761b6fb5ef3d1751b67e9b48c48f4fe4"
-      },
-      "after": {
-        "raw_sha256": "adcea5320dec1cb045b148a209e8f154f4f2dd120e61a23e9d46bda5c33b9366",
-        "algorithm_sha256": "1377b454d264f3bafd462b56cbbe7a2b5bc8345f89d481e0321c221da6fac3db"
-      },
-      "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): three D-12 refusal markers for induced provenance (spec R-I1..R-I4) map to exit 3 beside the existing D-12 markers; every other branch unchanged."
-    },
-    {
-      "kind": "RF5",
-      "old": "gnd.cli",
       "name": "_cmd_diff",
       "home": "gnd.commands.checking",
       "before": {
@@ -248,6 +233,30 @@
         "algorithm_sha256": "b449574d41a3170f806554129e0fbb9ab2a4758ef005b8049be008220753d114"
       },
       "reason": "Owner-approved induced-knowledge close (2026-10-27, close spec C-D1, IK1-Q2): the text format of gnd diff ends with one ANNOTATION block per description change, each side printed as ASCII-escaped canonical JSON; a diff without annotations prints the same text, and every other branch is unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "load_model_bytes",
+      "home": "gnd.model",
+      "before": "5d38b640bf8836a7033c173547f4f59226945035fd7c922a9e91f9439351e72a",
+      "after": "4b51c50fd44d8f683997de0f03e256eec0953c3bed277ee2e198d0bcf422ad26",
+      "reason": "Owner-approved evolve-loading follow-up (2026-10-27, spec D3-A): the parse half of load_model_bytes (the input cap, strict JSON for a .json source, the alias/event guard and the round-trip reader) moves verbatim into parse_model_document, which evolve shares; load_model_bytes calls it and validates exactly as before."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_service_exit",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "632b08f7565caaad2aa26d100ba03b733369abb11d7a28a1ce575ee7147f5f69",
+        "algorithm_sha256": "5a0ae02c3e8deccd71c10e6bc0f33553761b6fb5ef3d1751b67e9b48c48f4fe4"
+      },
+      "after": {
+        "raw_sha256": "39e69d76f7d39389b33a7ea8d7229e094955fbffab5c323183740c04147276b7",
+        "algorithm_sha256": "f57edba086a7891c88ad368f0a97888541c8c36db737e45cf253d33ec2b1f195"
+      },
+      "reason": "Owner-approved induced-knowledge IK2 (2026-10-24): three D-12 refusal markers for induced provenance (spec R-I1..R-I4) map to exit 3 beside the existing D-12 markers; the evolve-loading follow-up (2026-10-27, spec D3-A, review H1) adds one marker so a YAML refusal of any model, current or staged, maps to exit 3 as a candidate's already did; every other branch unchanged."
     }
   ]
 }

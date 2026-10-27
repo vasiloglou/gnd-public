@@ -52,7 +52,8 @@ def _proposal(work: Path, *, model: str = "staff.orm.yaml", candidate_text: str 
 
     from gnd.discover import output
 
-    document = dict(YAML(typ="safe").load(document_text))
+    document = (json.loads(document_text) if document_text.startswith("{")
+                else dict(YAML(typ="safe").load(document_text)))
     constraint = {"type": "mandatory", "role": "person", "source": "user-supplied",
                   "status": "confirmed", "modality": "deontic", "rationale": "loading probe",
                   "provenance": {"user_quote": "Every person is on a team."}}
@@ -114,6 +115,7 @@ def test_e1_a_discover_proposal_on_a_dated_model_is_a_named_refusal(tmp_path):
     ("x: .nan", "non-finite float"),
     ("x: !foo 3", "tag !foo"),
     ("x: !!omap [{a: 1}]", "tag !!omap"),
+    # The reader gives !!pairs as a list of tuples: the first entry is named.
     ("x: !!pairs [{a: 1}]", "tag !!pairs"),
 ])
 def test_e2_each_value_outside_json_is_named(tmp_path, line, kind):
@@ -121,7 +123,8 @@ def test_e2_each_value_outside_json_is_named(tmp_path, line, kind):
     assert run_main(["validate", str(work / "staff.orm.yaml")]).returncode == 0
     result = _preview(work, _proposal(work))
     assert result.returncode == 3, _text(result)
-    assert f"current model validation failed: source.x holds a {kind}," in _text(result)
+    path = "source.x[0]" if kind == "tag !!pairs" else "source.x"
+    assert f"current model validation failed: {path} holds a {kind}," in _text(result)
 
 
 def test_e3_the_close_rows_tagged_extra_is_valid(tmp_path):
@@ -315,3 +318,85 @@ def test_the_walk_names_a_non_string_key():
 
     with pytest.raises(EvolutionError, match=r"^m validation failed: source holds a non-string key,"):
         _json_document({"source": {1: "a"}}, label="m")
+
+
+# Review regressions (notes/followup-evolve-loading-agent-review.md).
+
+
+@pytest.mark.parametrize("stamp", ["2024-01-01T10:00:00+02:00", "2024-01-01T10:00:00Z"])
+def test_rv1_discover_keeps_a_zoned_timestamp_as_the_safe_reader_did(tmp_path, stamp):
+    """Review B1: discover exited 0 on the base and crashed on the round-trip
+    TimeStamp; evolve then names the timestamp."""
+    from ruamel.yaml import YAML
+
+    from gnd.evolve.service import _parse_model_text
+
+    text = f"x: {stamp}\n"
+    kept = _parse_model_text(text)["x"]
+    expected = YAML(typ="safe").load(text)["x"]
+    assert (type(kept), kept, kept.tzinfo) == (type(expected), expected, expected.tzinfo)
+    work = _staff(tmp_path, _with_source(f"created: {stamp}"))
+    discovered = _discover(work)
+    assert discovered.returncode == 0, _text(discovered)
+    result = _preview(work, work / "discovered.json")
+    assert result.returncode == 3, _text(result)
+    assert "source.created holds a timestamp," in _text(result)
+
+
+def _long_key_description(tmp_path: Path, *, model: str) -> Path:
+    from ruamel.yaml import YAML
+
+    document = dict(YAML(typ="safe").load(STAFF))
+    document["object_types"][0]["description"] = {"summary": "s", "x" * 1100: 1}
+    work = tmp_path / "ws"
+    work.mkdir()
+    (work / "records").mkdir()
+    if model.endswith(".json"):
+        (work / model).write_text(json.dumps(document), encoding="utf-8")
+    else:
+        import io
+
+        stream = io.StringIO()
+        YAML().dump(document, stream)  # block style: the long key is an explicit "? " key
+        (work / model).write_text(stream.getvalue(), encoding="utf-8")
+    assert run_main(["validate", str(work / model)]).returncode == 0
+    return work
+
+
+@pytest.mark.parametrize("model", ["staff.orm.yaml", "staff.json"])
+def test_rv2_a_json_document_is_not_put_through_the_yaml_scanner(tmp_path, model):
+    """Review B2: a key over YAML's 1024-character implicit-key limit is valid
+    JSON; the YAML guard made its JSON candidate (or JSON model) exit 70."""
+    from ruamel.yaml import YAML
+
+    work = _long_key_description(tmp_path, model=model)
+    document = dict(YAML(typ="safe").load(STAFF))
+    document["object_types"][0]["description"] = {"summary": "s", "x" * 1100: 1}
+    result = _preview(work, _proposal(work, model=model, document_text=json.dumps(document)),
+                      model=model)
+    assert result.returncode == 0, _text(result)
+
+
+def test_rv3_every_parse_refusal_lands_in_the_malformed_band():
+    """Review H1: guard and YAML refusals carried no CLI marker and exited 70."""
+    from gnd.evolve.cli_service import _evolve_error_exit
+    from gnd.evolve.service import EvolutionError, _parse_model_text
+
+    deep = "x: " + "[" * 80 + "]" * 80 + "\n"
+    for text, label in [(deep, "current model"), ("a: [unclosed\n", "current model"),
+                        ("a: [unclosed\n", "staged candidate model at finalize")]:
+        with pytest.raises(EvolutionError) as caught:
+            _parse_model_text(text, label=label)
+        assert _evolve_error_exit(caught.value) == 3, str(caught.value)
+
+
+@pytest.mark.parametrize(("line", "kind"), [("x: !!str {b: 1}", "tag !!str"),
+                                            ("x: !!str [1]", "tag !!str")])
+def test_rv4_a_core_scalar_tag_on_a_collection_is_named(tmp_path, line, kind):
+    """Review H1: the safe reader refused these; the walk passed them as plain."""
+    from gnd.evolve.service import EvolutionError, _json_document
+    from gnd.model import parse_model_document
+
+    document = parse_model_document(f"{line}\n".encode(), source="m.orm.yaml")
+    with pytest.raises(EvolutionError, match=f"^m validation failed: x holds a {kind},"):
+        _json_document(document, label="m")

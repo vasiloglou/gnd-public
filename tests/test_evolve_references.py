@@ -145,27 +145,9 @@ def test_t6_reference_free_previews_are_unchanged(tmp_path):
     assert hashlib.sha256(observed).hexdigest() == hashlib.sha256(golden.read_bytes()).hexdigest()
 
 
-def test_r1_a_json_named_reference_free_model_previews_as_at_b(tmp_path):
-    """Review R1: the loader parses as B did whatever the model file is named;
-    a .json-named copy of T6's model previews to the same golden bytes."""
-    corpus = REPO_ROOT / "tests" / "fixtures" / "induced_knowledge" / "ik5-corpus"
-    work = tmp_path / "ws"
-    shutil.copytree(corpus, work)
-    (work / "records").mkdir()
-    proposal = work / "i1.proposal.json"
-    imported = run_main([
-        "import", "ilp-rules", str(work / "orders.orm.yaml"), str(work / "i1.clauses.json"),
-        "--labels", str(work / "m.labels.json"), "--reported-coverage", str(work / "i1.run.json"),
-        "--target", "neutral", "--out", str(proposal),
-        "--requested-at", "2026-10-26T00:00:00+00:00"])
-    assert imported.returncode == 0, _text(imported)
-    shutil.copyfile(work / "orders.orm.yaml", work / "orders.json")
-    result = run_main(["evolve", "preview", str(work / "orders.json"), str(proposal),
-                       "--workspace", str(work), "--records", str(work / "records"),
-                       "--out", str(work / "preview.json"), "--format", "json"])
-    assert result.returncode == 0, _text(result)
-    golden = REPO_ROOT / "tests" / "fixtures" / "induced_knowledge" / "ik4-q2-preview-at-b.json"
-    assert (work / "preview.json").read_bytes() == golden.read_bytes()
+# test_r1_a_json_named_reference_free_model_previews_as_at_b pinned B's YAML
+# parse of a .json-named model. The owner ruled strict JSON (evolve-loading
+# follow-up, D2-A, 2026-10-27); its successor is test_evolve_loading.py J1.
 
 
 def test_r2_a_candidate_that_changes_its_references_is_refused_before_binding(tmp_path):

@@ -368,3 +368,11 @@ Recorded as found, including any that refute this spec.
   is spelled differently in `instances:` and in a fact, the per-occurrence rows
   may take each other's spelling. The roster lists instances first, while
   origins run facts first. The multiset of spellings is right; `main` exited 70.
+
+## Owner confirmation of the R2 narrowing (2026-10-27)
+
+**Confirmation (o).** The owner was asked "Confirm narrowed CD-4, then push and
+open the PR?" and replied "I confirm the narrowed CD-4 rule. Push the branch and
+open the PR (do not merge)." on 2026-10-27. CD-4 now reads: a generated
+docstring is raw when its neutralized body holds an escape other than `\\` and
+`\'`. Merging needs a separate yes.

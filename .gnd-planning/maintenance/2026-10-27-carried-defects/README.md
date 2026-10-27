@@ -25,7 +25,7 @@ as recommended on 2026-10-27; the spec's gate record binds the r1 bytes. Its
   (review R5). A model path was already refused this way. The message for a
   directory changes from `[Errno 21] Is a directory` to "not a regular file";
   the exit stays 3.
-- **CD-4 narrowed (review R2), for the owner's confirmation.** CD-4 read "raw
+- **CD-4 narrowed (review R2), confirmed by the owner on 2026-10-27.** CD-4 read "raw
   when the docstring has a backslash". The neutralizer writes every `'` as `\'`,
   so that rule turned any apostrophe into a raw literal and showed `\'` at
   runtime. The implemented rule leaves `\\` and `\'` in a plain literal, where

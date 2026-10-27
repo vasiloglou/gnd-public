@@ -163,14 +163,19 @@ def read_steps_document(path: str | Path) -> dict[str, Any]:
     where an object belongs, wrong types at every level -- must produce a
     refusal rather than a TypeError from deep inside the evaluator.
     """
+    from gnd.safefs import NotRegularFileError, open_regular
+
     source = Path(path)
     try:
         # ONE byte past the cap, so the cap bounds what is READ rather than
         # reporting on what was already read. The reviewed version called
-        # read_bytes() first, which is not a cap -- an unbounded file or a FIFO
-        # is fully consumed before the check can fire.
-        with source.open("rb") as handle:
+        # read_bytes() first, which is not a cap. A blocking open() never
+        # returns on a FIFO without a writer, so the open is non-blocking and
+        # anything but a regular file is refused before the read.
+        with open(open_regular(source), "rb") as handle:
             raw = handle.read(MAX_STEPS_BYTES + 1)
+    except NotRegularFileError:
+        _refuse(str(source), f"steps file {source} is not a regular file", "transition:steps-shape")
     except OSError as error:
         _refuse(str(source), f"steps file could not be read: {error}", "transition:steps-shape")
     if len(raw) > MAX_STEPS_BYTES:

@@ -6,9 +6,13 @@ from __future__ import annotations
 
 import ast
 import importlib.util
+import inspect
+import json
 import os
+import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -71,13 +75,20 @@ fact_types:
 constraints: %(model_level)s
 """
 _RULE = "modality: alethic, source: explicit, status: confirmed, provenance: { user_quote: rule }"
+
+
+def _with_rule(flow: str) -> str:
+    """``flow`` with its ``%s`` slot filled by the shared rule metadata."""
+    return flow.replace("%s", _RULE)
+
+
 _ROSTER_RULES = {
-    "mandatory": ("[{ type: mandatory, role: count, %s }]" % _RULE, "[]"),
-    "mandatory-disjunctive": ("[]", "[{ type: mandatory-disjunctive, role_refs: [{ fact_type: count_is_a, "
-                                    "role: count }, { fact_type: count_is_b, role: count }], %s }]" % _RULE),
-    "exclusive-or": ("[]", "[{ type: exclusive-or, role_seqs: [[{ fact_type: count_is_a, role: count }], "
-                           "[{ fact_type: count_is_b, role: count }]], %s }]" % _RULE),
-    "value": ("[]", "[{ type: value, object_type: count, range: { min: 5, max: 10 }, %s }]" % _RULE),
+    "mandatory": (_with_rule("[{ type: mandatory, role: count, %s }]"), "[]"),
+    "mandatory-disjunctive": ("[]", _with_rule("[{ type: mandatory-disjunctive, role_refs: [{ fact_type: count_is_a, "
+                                               "role: count }, { fact_type: count_is_b, role: count }], %s }]")),
+    "exclusive-or": ("[]", _with_rule("[{ type: exclusive-or, role_seqs: [[{ fact_type: count_is_a, role: count }], "
+                                      "[{ fact_type: count_is_b, role: count }]], %s }]")),
+    "value": ("[]", _with_rule("[{ type: value, object_type: count, range: { min: 5, max: 10 }, %s }]")),
 }
 _CROSS_TYPE_POPULATION = """\
 population:
@@ -127,19 +138,50 @@ def test_roster_witness_matches_the_distinct_spelling_control(tmp_path, family):
     assert reports[0] == reports[1]
 
 
-def test_roster_witness_inside_one_float_type_takes_the_first_spelling(tmp_path):
+def test_roster_witness_inside_one_float_type_keeps_each_occurrence_spelling(tmp_path):
     model = tmp_path / "m.orm.yaml"
     model.write_text(_COUNTS_MODEL % {
         "inline": "[]",
-        "model_level": "[{ type: value, object_type: amount, range: { min: 5, max: 10 }, %s }]" % _RULE})
+        "model_level": _with_rule("[{ type: value, object_type: amount, range: { min: 5, max: 10 }, %s }]")})
     population = tmp_path / "p.pop.yaml"
     population.write_text(_CROSS_TYPE_POPULATION.replace(
         "    - { item: a, amount: %s }", "    - { item: a, amount: 4.0 }\n    - { item: b, amount: 4 }"))
     report = _verdicts(model, population)
     assert report["exit_code"] == 1, report["error"]
     (failed,) = [v for v in report["verdicts"] if v["verdict"] == "fail"]
-    assert failed["offending_facts"] == [4.0]
-    assert type(failed["offending_facts"][0]) is float
+    # One row per occurrence; each takes the next unused origin in population order.
+    assert [(value, type(value)) for value in failed["offending_facts"]] == [(4.0, float), (4, int)]
+
+
+@pytest.mark.parametrize("family", sorted(_ROSTER_RULES))
+def test_roster_witness_ignores_a_foreign_spelling_that_comes_first(tmp_path, family):
+    """The Float spelling precedes the Integer one, so only the type filter picks 4."""
+    model, population = _roster_case(tmp_path, family, "4.0")
+    text = population.read_text()
+    counts = "  item_has_count:\n    - { item: a, count: 4 }\n    - { item: b, count: 7 }\n"
+    costs = "  item_costs:\n    - { item: a, amount: 4.0 }\n"
+    assert counts + costs in text
+    population.write_text(text.replace(counts + costs, costs + counts))
+    report = _verdicts(model, population)
+    assert report["exit_code"] == 1, report["error"]
+    (failed,) = [v for v in report["verdicts"] if v["verdict"] == "fail"]
+    assert "4.0" not in str(failed["offending_facts"]), failed["offending_facts"]
+
+
+def test_many_spellings_of_one_value_stay_linear(tmp_path):
+    """Review R1: the scoped choice keeps a cursor, so 40,000 occurrences stay fast."""
+    model = tmp_path / "m.orm.yaml"
+    model.write_text(_COUNTS_MODEL % {
+        "inline": "[]",
+        "model_level": _with_rule("[{ type: value, object_type: amount, range: { min: 5, max: 10 }, %s }]")})
+    population = tmp_path / "p.pop.json"
+    population.write_text(json.dumps({
+        "population": {"model": "m.orm.yaml", "source": "fixture", "covers": ["item_costs"]},
+        "instances": {"amount": [4.0] * 40_000 + [4]}, "facts": {"item_costs": []}}))
+    started = time.monotonic()
+    run = _gnd("check", str(model), str(population), timeout=120)
+    assert run.returncode == 1, run.stdout[-2000:]
+    assert time.monotonic() - started < 20
 
 
 def test_floats_mandatory_candidate_from_the_ik4_review_no_longer_raises(tmp_path):
@@ -250,6 +292,11 @@ def test_check_refuses_a_fifo_by_name_instead_of_hanging(tmp_path, case):
     except subprocess.TimeoutExpired:
         pytest.fail(f"gnd check hung on a FIFO {case}")
     assert run.returncode == 3, run.stdout + run.stderr
+    if case in ("--pre", "--post"):
+        # The walk model redacts a role, so applied redaction hides every load
+        # error's message, as it does for a directory; the type still shows.
+        assert '"error": {"type": "PopulationLoadError", "message": "[REDACTED INSTANCE DETAIL]"}' in run.stdout
+        return
     assert "not a regular file" in run.stdout + run.stderr
     assert str(fifo) in run.stdout + run.stderr
 
@@ -326,10 +373,32 @@ def test_generated_runtime_docstrings_equal_their_source_text(tmp_path, stem):
         source_text = ast.get_source_segment(tools.read_text(), node.body[0].value)
         runtime = module.__doc__ if node is tree else getattr(module, node.name).__doc__
         body = source_text[source_text.index("'''") + 3:-3]
-        assert runtime == body, (source_text, runtime)
+        if not source_text.startswith("r'''"):
+            # A plain literal may hold only the neutralizer's \\ and \' escapes
+            # (review R2); they decode to one character and never change a line.
+            assert not re.search(r"\\[^\\']", body.replace("\\\\", "")), source_text
+            body = re.sub(r"\\([\\'])", r"\1", body)
+        # Python 3.13+ dedents docstrings when compiling, so compare cleaned text.
+        assert inspect.cleandoc(runtime) == inspect.cleandoc(body), (source_text, runtime)
     doc = module.person_has_nick.__doc__
     assert "\n  - injected" not in doc and "\n  - forged" not in doc
     role_lines = [line for line in doc.splitlines() if line.lstrip().startswith("- ")]
     assert [line.split(":")[0].strip() for line in role_lines] == ["- person", "- nick"]
     conformance = _gnd("conformance", str(model), str(tmp_path / "out"))
     assert conformance.returncode == 0, conformance.stdout + conformance.stderr
+
+
+def test_an_apostrophe_keeps_a_plain_docstring_and_its_runtime_text(tmp_path):
+    """Review R2: the neutralizer's quote and backslash escapes do not trigger a raw literal."""
+    model = tmp_path / "quote.orm.yaml"
+    model.write_text(_FORGE_MODEL.replace(
+        "{Person} has {Nick}\\n  - injected: Root (String)", "{Person} has {Nick} in Pat's list"
+    ).replace('"A human.\\n  - forged: Admin (String)"', '"A human\\\\s name."'))
+    run = _gnd("codegen", str(model), "--out", str(tmp_path / "out"))
+    assert run.returncode == 0, run.stdout + run.stderr
+    (tools,) = (tmp_path / "out").rglob("tools.py")
+    source = tools.read_text()
+    assert "r'''" not in source
+    doc = _import(tools).person_has_nick.__doc__
+    assert "Person has Nick in Pat's list" in doc
+    assert "A human\\s name." in doc

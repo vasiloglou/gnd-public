@@ -89,7 +89,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from gnd.architecture import ArchitectureContractError, parse_architecture_contract_bytes
-from gnd.codegen.docstrings import DOCSTRING_DELIMITER, tool_docstring
+from gnd.codegen.docstrings import DOCSTRING_DELIMITER, docstring_open, tool_docstring
 from gnd.codegen.identifiers import (
     module_name,
     smoke_discriminator,
@@ -381,10 +381,11 @@ def _docstring_lines(text: str) -> list[str]:
     literal ``\\n`` sequences and the whole docstring collapsed onto one line.
     """
     lines = text.split("\n")
+    opening = docstring_open(text)
     if len(lines) == 1:
-        return [f"    {DOCSTRING_DELIMITER}{lines[0]}{DOCSTRING_DELIMITER}"]
+        return [f"    {opening}{lines[0]}{DOCSTRING_DELIMITER}"]
     return [
-        f"    {DOCSTRING_DELIMITER}{lines[0]}",
+        f"    {opening}{lines[0]}",
         *(f"    {line}".rstrip() for line in lines[1:]),
         f"    {DOCSTRING_DELIMITER}",
     ]
@@ -430,10 +431,12 @@ def render_tools_module(model: Any, *, model_path: str, package: str) -> str:
     tools = symbol_table(fact_ids, kind="fact type", symbol=tool_symbol)
     delimiter = DOCSTRING_DELIMITER
     verifier = "`gnd check`." if structured else "`gnd verify`."
+    model_name = _neutralize(Path(model_path).name)
+    computed = [f"  - {_neutralize(fact_id)}" for fact_id in structured]
 
     lines: list[str] = [
         BANNER_LINE.format(source=_neutralize(Path(model_path).as_posix())),
-        (f"{delimiter}Derived tools for the ORM model {_neutralize(Path(model_path).name)}."),
+        (f"{docstring_open(model_name + ''.join(computed))}Derived tools for the ORM model {model_name}."),
         "",
         "One function per fact type, named by",
         "gnd.codegen.identifiers.tool_symbol and taking the fact type's roles in",
@@ -452,7 +455,7 @@ def render_tools_module(model: Any, *, model_path: str, package: str) -> str:
                 "`gnd check`; a document extraction omits these computed rows and",
                 "uses the filtered extraction header with `gnd verify`.",
                 "Computed, not constructed:",
-                *(f"  - {_neutralize(fact_id)}" for fact_id in structured),
+                *computed,
             ]
         )
     lines.extend(
@@ -500,11 +503,12 @@ def render_package_init(model: Any, *, model_path: str, package: str) -> str:
     delimiter = DOCSTRING_DELIMITER
     _, fact_ids = _constructor_fact_types(model)
     tools = symbol_table(fact_ids, kind="fact type", symbol=tool_symbol)
+    model_name = _neutralize(Path(model_path).name)
     lines = [
         BANNER_LINE.format(source=_neutralize(Path(model_path).as_posix())),
         (
-            f"{delimiter}The derived agent package for "
-            f"{_neutralize(Path(model_path).name)}.{delimiter}"
+            f"{docstring_open(model_name)}The derived agent package for "
+            f"{model_name}.{delimiter}"
         ),
         "",
         "from __future__ import annotations",

@@ -99,11 +99,37 @@ class Requirement:
     info: tuple[tuple[str, Any], ...] = ()      # family details the report needs (bounds, scope, ...)
 
 
+def _with_constraint_ids(doc: dict[str, Any]) -> dict[str, Any]:
+    """``doc`` with every id-less model-level rule named ``constraints_<i>``.
+
+    A rule's id becomes generated relation names (``<id>_allowed``), so the
+    default is an identifier that mirrors the checker's ``constraints[i]``.
+    Fact-level rules keep their ``<fact>#<i>`` default where they are lowered.
+    A default that a declared name already uses is refused, not merged.
+    """
+    rules = doc.get("constraints") or []
+    if all(isinstance(c, dict) and c.get("id") for c in rules):
+        return doc
+    index = ModelIndex(None, doc)
+    taken = set(index.role_object_types())
+    taken.update(str(c.get("id")) for _ref, c, _fact in index.iter_constraints() if isinstance(c, dict) and c.get("id"))
+    named = []
+    for index, c in enumerate(rules):
+        if isinstance(c, dict) and not c.get("id"):
+            default = f"constraints_{index}"
+            if default in taken:
+                raise ExportInputError(f"constraints[{index}] has no id and its default name {default!r} is "
+                                       "already used in the model; give the rule an id")
+            c = {**c, "id": default}
+        named.append(c)
+    return {**doc, "constraints": named}
+
+
 class _Model:
     """Model queries go through the read-only ModelIndex snapshot (RF6 query policy)."""
 
     def __init__(self, doc: dict[str, Any]):
-        self.doc = doc
+        self.doc = _with_constraint_ids(doc)
         self.index = ModelIndex(None, doc)
         self.objects = self.index.object_types_by_id()
         self._roles = self.index.role_object_types()
@@ -778,7 +804,7 @@ def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requi
                 found += _ring(model, c, fact_id)
             else:
                 raise ExportInputError(f"{c['id']}: family {c['type']!r} is a later phase of the rules programs")
-    for c in doc.get("constraints", []):
+    for c in model.doc.get("constraints", []):   # model.doc carries the default ids
         family = c.get("type")
         if family == "guarded":
             found += _guarded(model, c)

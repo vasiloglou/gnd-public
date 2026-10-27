@@ -1143,7 +1143,10 @@ def project_finding(
         coordinates.update(index.coordinates(finding.witness))
     rows: list[Any] = []
     used_origins: set[int] = set()
-    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins))
+    scope: frozenset[str] = frozenset()
+    if not finding.witness_keys:
+        scope = frozenset(dict(observation.constraint_subject_types).get(finding.constraint_id, ()))
+    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins, scope=scope))
     try:
         for row in finding.witness:
             projected: list[PublicScalar] = []

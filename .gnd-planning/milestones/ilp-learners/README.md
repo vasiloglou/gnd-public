@@ -21,6 +21,10 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   `empty-antecedent` (IL2-F7, recorded as is by the owner's ruling). The
   [adversarial review](notes/phase-IL2-agent-review.md) found 11 issues;
   IL2-D13 and IL2-D14 were ruled (a), and three refactors were executed.
+  Merged in PR #57.
+- **IL5 is at its owner gate:** [draft spec r1](notes/phase-IL5-spec.md),
+  on `claude/il5` from `426bd80`. The gate rules the plan's D8 (the live run)
+  as IL5-D8, plus IL5-D1 to IL5-D7 and the approval instrument IL5-D9.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -29,6 +33,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL2 spec (r1, approved)](notes/phase-IL2-spec.md)
 - [IL2 phase record](003-phase-IL2.md)
 - [IL2 adversarial review](notes/phase-IL2-agent-review.md)
+- [IL5 spec (draft r1)](notes/phase-IL5-spec.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -54,6 +59,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- plan D8 (the LLM run), at the IL5 gate.
+- plan D8 (the LLM run), at the IL5 gate, as IL5-D8.
 
-**Next action:** push `claude/il2` and open the IL2 pull request when the owner asks; then IL5, the LLM proposer.
+**Next action:** the owner's rulings at the IL5 gate (spec §7, §12).

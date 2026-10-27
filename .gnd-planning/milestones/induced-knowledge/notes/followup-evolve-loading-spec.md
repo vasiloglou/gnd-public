@@ -1,7 +1,6 @@
 # Follow-up spec — evolve loading (IK4-Q3, IK4-Q2-Q1, IK4-Q2-R1, R4, tags)
 
-**Status:** awaiting owner review (r1, 2026-10-27). No implementation file is
-touched before the owner rules on D1..D5.
+**Status:** owner-decided (2026-10-27): D1..D5 approved as proposed (§12).
 
 ## 1. Provenance
 
@@ -239,4 +238,15 @@ proposed.
 
 ## 12. Owner rulings
 
-(empty until step 2)
+2026-10-27, relayed verbatim by the session that started this one, after it
+recommended approving all five as proposed: "ok go on then with the recs". (o)
+
+| # | Ruling |
+|---|---|
+| D1 | **A** -- values outside the JSON data model are refused by name at 3 (o) |
+| D2 | **A** -- strict JSON for `.json`-named models; R1 inverts to J1 (o) |
+| D3 | **A** -- evolve-only loader sharing `gnd.model.parse_model_document`; the cross-module helper is re-carried (o) |
+| D4 | **A** -- discover's tag traceback is fixed here; its `.inf` traceback is carried (o) |
+| D5 | **A** -- record 014 and `evidence/evolve-loading/` under induced-knowledge (o) |
+
+The spec bytes approved are r1 at `acf3484`. No panel ran.

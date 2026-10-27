@@ -16,7 +16,11 @@ runs in the project's tests, and the output shown is the output of a real run.
 ## Before you start
 
 Set GND up as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
-shows. In an empty folder, copy the example and check the model:
+shows. In an empty folder, copy the example and check the model. Use a new
+empty folder for every run of this page: the commands refuse to overwrite
+their own outputs, so a second pass in the same folder stops at step 2 with
+exit 11 (`--out ilp already exists; nothing was written`), and later steps
+refuse the same way.
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
@@ -50,6 +54,8 @@ The written rule fired on 2 of the 4 flagged weeks and on no clean week.
 ## 2. Export the weeks and run a learner
 
 `gnd export ilp` writes the labelled weeks in a form a rule learner can read.
+ILP, inductive logic programming, is the family of learners that build logic
+rules from labelled examples.
 A learner such as [Popper](https://github.com/logic-and-learning-lab/Popper)
 can use that export directly. The example ships a small stand-in learner
 instead, so the walk runs with nothing to install. It tries 40 simple rules of
@@ -85,6 +91,11 @@ gnd import ilp-rules model.orm.yaml learned/learned.clauses.json --labels labels
 IMPORTED 1 learned clauses -> learned.proposal.json
   clause 0 constraints[1]: covers 4 (support 4/4), vacuous 0, unchecked 0
 ```
+
+A rule *covers* a week when it fires on it, so the rule covers 4 weeks.
+*Support* is the share of covered weeks that are flagged: 4 of the 4. The
+covered weeks are all flagged ones, so the rule fires on 0 of the 4 clean
+weeks. The rule becomes `constraints[1]` once it is applied in step 6.
 
 ## 4. Refuse an overstated claim
 
@@ -152,7 +163,9 @@ gnd evolve preview model.orm.yaml learned.proposal.json --workspace . --records 
   breaking: false
 ```
 
-Apply the learned proposal and read the new rule back in the model's own words:
+Apply the learned proposal and read the new rule back in the model's own words.
+`modality=deontic` marks it as advisory: breaking it gives a warning, not a
+failure.
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
@@ -177,7 +190,18 @@ ADVISORY (deontic)
   [warning] constraints[1]: Guarded comparison consequent evaluated over bindings=3 — violated by bindings: {'$v_v0': '601', '$v_v1': '750'}.
 ```
 
-`constraints[1]` is the new rule. With an assistant, step 6 is the
+`constraints[1]` is the new rule. `ADVISORY (deontic)` heads the warnings from
+advisory rules. The written rule is advisory too, and stays quiet here because
+750 is not over 1000.
+
+The apply changed the model, so step 1 cannot be repeated on it: `labels.json`
+records the digest of the model it was written for, and `gnd measure` now
+refuses it with exit 3 (`label manifest labels.json was written for model
+sha256 ..., not this model`). To score the new model, give the manifest the
+new model's digest, as [measuring host labels](../reference/measure-labels.md)
+describes.
+
+With an assistant, step 6 is the
 [gnd-model-evolve](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-evolve/SKILL.md)
 skill's work; the other steps are plain requests that Claude Code carries out
 with the commands above.

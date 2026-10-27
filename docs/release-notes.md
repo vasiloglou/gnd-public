@@ -7,7 +7,10 @@ changes requires a separate release decision.
 
 GND can now propose rules from data, and never adopts one without review.
 Object types take an optional `description` that verbalization and generated
-docstrings carry. A seventh provenance source, `induced`, records a rule found
+docstrings carry. A description is never checked, so it must not restate a
+constraint: state the rule as a constraint instead (see the
+[representation format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md)).
+A seventh provenance source, `induced`, records a rule found
 from data, with its inducer, support and evidence digests; it
 enters a model only as `proposed` and advisory, through `gnd evolve`.
 

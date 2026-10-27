@@ -66,7 +66,7 @@ of these alters the behaviour or format it documents.
 | src/gnd/skills/gnd-orm-core/references/population-format.md | no | population format; label manifests are documented in docs/reference/measure-labels.md |
 | src/gnd/skills/gnd-orm-core/references/population.schema.json | no | population schema; unchanged |
 | src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md | IK2 | the seven-source taxonomy and the induced provenance shape |
-| src/gnd/skills/gnd-orm-core/references/representation-format.md | IK1, IK2 | the description keys, limits and rendering (IK1); induced in the representation (IK2) |
+| src/gnd/skills/gnd-orm-core/references/representation-format.md | IK1, IK2, IK-close | the description keys, limits and rendering (IK1); induced in the representation (IK2); a description must not restate a constraint (IK-close, the IK1 boundary carried by the close) |
 | src/gnd/skills/gnd-orm-core/references/steps.schema.json | no | plan steps schema; unchanged |
 | src/gnd/skills/gnd-orm-core/references/verbalization-patterns.md | IK1 | the description sentence in the verbalization |
 | src/gnd/skills/gnd-render-doc/SKILL.md | no | renders documents from the constraint-blind verbalization; description lines flow through it without a workflow change |

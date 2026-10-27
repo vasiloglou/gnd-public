@@ -141,8 +141,8 @@ learner's word: it runs the rule on all eight weeks and compares what it finds
 with what the learner reported.
 
 **GND says** the claim holds. The rule covers exactly the four flagged weeks,
-support 4 of 4, and no clean week. GND writes the rule into a proposal in its
-own words: **a refund amount is at most 500**. Nothing in the model has
+support 4 of 4, and no clean week. GND writes the rule into a proposal. In plain
+English: **a refund amount is at most 500**. Nothing in the model has
 changed yet.
 
 | Rule | Flagged weeks caught | Clean weeks accused |
@@ -229,7 +229,7 @@ radius.
 already in the model changes or disappears. You accept the learned rule and
 leave the discovered proposal for a closer look.
 
-**You get** a model that holds the new rule, in its own words: *if a refund
+**You get** a model that holds the new rule. In plain English: *if a refund
 has an amount, that amount is at most 500*. The rule carries three labels:
 
 | Label | Meaning |
@@ -239,7 +239,8 @@ has an amount, that amount is at most 500*. The rule carries three labels:
 | **advisory** | breaking it gives a warning, not an error |
 
 The model also records where the rule came from: the learner's name, the four
-weeks it covers, and the exact files the claim was checked against.
+weeks it covers, and a fingerprint (digest) of each file the claim was
+checked against, so a later change to those files can be detected.
 
 **Check the market week again**, the one the written rule missed:
 

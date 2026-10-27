@@ -55,21 +55,41 @@ A suggestion is emitted only when all of these hold:
 | equality, exclusion | distinct values on either side |
 
 GND computes support from the population. It is recorded in each induction
-block with up to 256 example ids of the form `ft<k>#<i>`, which name a fact by
-the fact type's position in the model and the fact's index in the population.
+block with up to 256 example ids, in one of two forms:
+- `ft<k>#<i>` names a fact: fact type `k` in the model's order, fact `i` in
+  that fact type's list in the population. Every family except mandatory uses
+  it; `ft0#3` is the fourth fact of the model's first fact type.
+- `ot<k>#<i>` names a roster member, which a mandatory rule counts: object type
+  `k` in the model's order, member `i` in order of first appearance in the
+  population. `ot2#0` is the first instance seen of the model's third object
+  type.
 
-**Implied rules are counted, not suggested.** The suppression rules apply in
-this order, regardless of a declared constraint's modality:
-- an identical declared constraint;
-- equality implies both subsets;
-- a frequency of at most 1 is uniqueness;
-- an unscoped value domain implies its role-scoped form;
-- a reference scheme implies uniqueness and mandatory;
-- a key spanning all roles is trivially unique;
-- a superset of a declared key is a superkey.
+Both counts start at 0. The ids are opaque positions, not values, so they never
+carry what a redacted role holds.
 
-After the check, an emitted equality also absorbs its two subsets, and only
-minimal keys are kept.
+**Implied rules are counted, not suggested.** The text output prints the
+nonzero counts on one line, for example
+`SUPPRESSED declared=1 spanning-uniqueness=3`, and the report's `suppressed`
+object holds all ten keys. Against a declared constraint, the rules apply in
+this order, regardless of that constraint's modality:
+
+| Key | Suppressed candidate |
+|---|---|
+| `declared` | identical to a declared constraint |
+| `equality-implies-subset` | a subset that a declared equality implies |
+| `frequency-max-1-is-uniqueness` | a uniqueness that a declared frequency of at most 1 implies |
+| `unscoped-value-implies-scoped` | a role-scoped value domain that a declared unscoped one implies |
+| `reference-scheme-implies-uniqueness` | a uniqueness or mandatory that a reference scheme implies |
+| `spanning-uniqueness` | a key spanning all roles, which is trivially unique |
+| `superkey` | a superset of a declared key |
+
+Against other candidates:
+
+| Key | Suppressed candidate |
+|---|---|
+| `redundant-frequency` | a frequency whose largest group is 1, which is uniqueness; counted before the check |
+| `redundant-subset` | a subset absorbed by an emitted equality over the same two roles; counted after the check |
+| `redundant-superkey` | a key that contains another emitted key, so only minimal keys are kept; counted after the check |
 
 **Near-misses** are rules broken by at most 5% of their subjects, and by at most
 32, which needs at least 20 subjects. They are listed in the report with their

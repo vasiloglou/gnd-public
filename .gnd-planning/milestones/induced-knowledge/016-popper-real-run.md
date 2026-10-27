@@ -215,6 +215,28 @@ same spec as P1 to P3.
 | IK5-Q2 | Open; not exercised by this run. |
 | P1, P2, P3 | New; an ILP-bridge follow-up behind the owner's spec gate. |
 
+## Where P1 to P3 are owned (added 2026-10-27, after the run)
+
+The `ilp-learners` milestone owns IK5-Q5 in phase IL1. Its run of record,
+invocation 1 on branch `claude/il1-learner-registry`, ran the same export (same
+E) under its own gate and ended `rendering-rejected` with `import: none`. So no
+separate spec for P1 to P3 is opened from this record.
+- **P1 and P2:** IL1's draft amendment IL1-A1 (spec §15, awaiting the owner)
+  replaces the binary comparisons and `magic_value_type` with unary threshold
+  predicates, such as `gt_t_amount__500/1`. These are safe on an unbound
+  argument, and the parser maps them back to comparisons.
+  - A1 reports that no probe run was made.
+  - Run 3 here is the nearest probe: Popper learned the threshold rule once
+    each amount was a unary constant. It differs from A1's rendering, because
+    it declares directions and keeps the binary comparison with a separate
+    constant literal.
+  - A1's exact rendering has not been run.
+- **P3:** IL1's `extract_program` already reads Popper's stderr log and strips
+  the elapsed-seconds prefix. IL1 spec §6 and T9 still say "stdout".
+
+This record is independent evidence from before IL1's gate. It is not an IL1
+invocation and does not count under IL-R9.
+
 ## Boundary
 
 - Runs 2 and 3 and probe c are diagnostics on modified inputs. They are not

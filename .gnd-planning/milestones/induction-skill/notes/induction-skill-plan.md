@@ -1,22 +1,30 @@
 # Induction skill
 
-r2, 2026-10-27. **Draft; in plan review round 2 (the one declared confirmation
-round, four local reviewer agents, D13 (o)); awaiting plan approval.**
+r3, 2026-10-27. **Draft; plan review closed by its stop rule after round 2;
+awaiting plan approval.**
 Milestone: `induction-skill`. `auto=false`.
 Inspection baseline: `45c8603` (main, after PR #48, which carries the approved
 `ilp-learners` plan), merged into this branch as `3243a64`. This plan was
 authored with the repository's start-milestone skill. No approval or
-implementation is claimed here, and these r2 bytes carry no review opinion.
+implementation is claimed here. r2 was reviewed in round 2; these r3 bytes
+carry no review opinion.
 
 Change tags:
 - `(o)` marks a dated owner ruling;
 - `(p1)` marks a repair from plan review round 1, applied because the owner
   accepted the [round-1 disposition](plan-review-r1-disposition.md), quoted:
   "I accept the round-1 disposition's repairs A-L and its proposed answers for
-  D17-D20." (2026-10-27).
+  D17-D20." (2026-10-27). That disposition is committed at `db374d7`, SHA-256
+  `d4a7e8b0e60dcb938b5d6f1aba7acd037745304c85a88350ceef220c298e9e61`;
+- `(p2)` marks a repair from plan review round 2, applied because the owner
+  directed it, quoted: "Apply the round-2 disposition's themes M-S as r3 with no
+  further review round. Then I will decide on plan approval over r3."
+  (2026-10-27). That [disposition](plan-review-r2-disposition.md) is committed at
+  `a23cd34`, SHA-256
+  `7c39ab76fb626b9bc9eaafe6f145c8abc6f38432f288f4dd35e34c97294b17a1`.
 
-The round-1 subject (r1) is bound by SHA-256 in that disposition and its
-manifest.
+The round-1 subject (r1) and the round-2 subject (r2) are bound by SHA-256 in
+their dispositions and manifests.
 
 ## Goal, status and completion predicates
 
@@ -81,16 +89,16 @@ No delivery date is committed.
 | Rule | Statement |
 |---|---|
 | IS-R1 | **Induction proposes; review admits** (IK-R1). The skill never applies, confirms or edits a model. Every proposal it produces goes to `gnd-model-evolve`, and the skill says so at the handoff. |
-| IS-R2 | **GND's numbers, never a claim's** (IK-R2). The skill reports GND's numerators and denominators exactly as printed, never a blended score. A run record's covered sets come only from the learner's own output or from a non-GND evaluation the user selects, never from any `gnd` command's output (p1). After a refusal it never changes a claim and retries (D5). |
-| IS-R3 | **One home for normative prose** (standing rule 5). Exit meanings stay in each command's `--help` and in `docs/reference/{measure-labels,discover,ilp-bridge}.md`. Induced semantics stay in `gnd-orm-core/references/provenance-and-modality.md`. The skill cites them and states only its own reactions. |
+| IS-R2 | **GND's numbers, never a claim's** (IK-R2). The skill reports GND's numerators and denominators exactly as printed, never a blended score. A run record's covered sets come only from the learner's own output or from an evaluation the user selects, never from a GND verdict: the output of `gnd import`, `gnd check`, `gnd measure` or `gnd discover`, including refusal text. The export's files stay allowed as input to an evaluation (p1, p2). After a refusal it never changes a claim and retries (D5). |
+| IS-R3 | **One home for normative prose** (standing rule 5). Exit meanings stay in each command's `--help`, in `docs/reference/{measure-labels,discover,ilp-bridge}.md`, and, for `gnd check`, whose `--help` states no exit bands, in `docs/reference/cli.md` "Interpret exits in the command's context" and `gnd-orm-core/references/population-format.md` (p2). Induced semantics stay in `gnd-orm-core/references/provenance-and-modality.md`. The skill cites them and states only its own reactions. |
 | IS-R4 | **Learners are optional** (IK-R8). No learner becomes a dependency, is installed by the skill, or runs unless the user names it. An absent learner stops the learning step with a named reason (D4). No GND command that runs a learner is added (consistent with `ilp-learners` D3). |
-| IS-R5 | **Privacy** (IK-R10, IK-R11). The example and recordings are synthetic. Downstream applications are not named in public text, issues, PRs or fixtures. Recorded paths are redacted, as `tools/record_skill_sessions.py` already does. The audit actor is asked of the user and never derived from git or the environment; scripted recordings use a synthetic actor (p1). Host values may appear in chat read-back, never in a written or public artifact the skill authors; value-family candidates are flagged at handoff as carrying host data (p1). |
+| IS-R5 | **Privacy** (IK-R10, IK-R11). The example and recordings are synthetic. Downstream applications are not named in public text, issues, PRs or fixtures. Recorded paths are redacted, as `tools/record_skill_sessions.py` already does. The audit actor is asked of the user and never derived from git or the environment; scripted recordings use a synthetic actor (p1). Host values may appear in chat read-back, never in a written or public artifact the skill authors; value-family candidates are flagged as carrying host data at the read-back and again at the handoff (p1, p2). |
 | IS-R6 | **No fabricated replays** (owner feedback, stated in conversation; no repository record) (p1). A prompt shown as a recording is one. A prompt that is not recorded is labelled as not recorded. |
 | IS-R7 | **Tutorials show skills** (IK6 record 010, "It has no commands (owner, C1)"). The business page shows `/gnd:<skill>` prompts and visual results, never Python or `gnd` commands in its own prose or fences. Runnable blocks stay on the commands page. **Exception (p1):** a replay transcript shows the commands the agent ran, because that is what was recorded. |
 | IS-R8 | **Installer-owned links.** `.claude/skills/<name>` and `.codex/skills/<name>` are generated by `gnd install`, never by hand (AGENTS.md). |
 | IS-R9 | **Additive skill surface.** A sibling skill changes only by the edits the IS1 spec names. The six skills frozen by `tests/test_solve_successors.py` (`FROZEN_SKILLS`) are not edited, checked against the IS1 base commit (p1). |
 | IS-R10 | All six process-phase standing rules, and IS-R1..IS-R9 and IS-R11, bind every spec by name (p1). |
-| IS-R11 | **Host and learner artifacts stay theirs** (p1). The skill never writes or edits a learner's clauses or run record, and never writes, edits or re-binds a label manifest. The one stated exception: for a learner that prints counts rather than sets (Popper), the skill assembles the run record from the learner's printed program, the user's selected non-GND evaluation and the two digests, and says that it assembled it. |
+| IS-R11 | **Host and learner artifacts stay theirs** (p1). The skill never writes or edits a learner's clauses or run record, and never writes, edits or re-binds a label manifest. The one stated exception: for a learner that prints counts rather than sets (Popper), the skill saves the learner's printed program verbatim as CLAUSES and assembles the run record from that program, the user's selected evaluation and the two digests. `learner.version` is the learner's own reported version or is asked of the user, never invented. The handoff names each assembled run record, the evaluation that produced its sets, and that `inducer` names the learner because the program is the learner's (p2). These saved and assembled artifacts, kept in the user's working paths, are the one exception to IS-R5's rule on host values in written files; the example ids in a run record are part of it (p2). |
 
 ## 1. Scope, sources and authority
 
@@ -105,7 +113,10 @@ No delivery date is committed.
   #50 (IK-close docs gaps: edits `learn-rules.md`, `learn-rules-commands.md`,
   `discover.md`, `release-notes.md`, one `gnd-orm-core` reference and its
   `skill-census.md` row) and #51 (IK5-Q5, a first real Popper run recorded as
-  IK record 016, with findings P1..P3 on GND's Popper rendering);
+  IK record 016, with findings P1..P3 on GND's Popper rendering; it touches
+  neither the census nor a packaged skill);
+- (p2) open sibling PR #52 (IKE-Q3: edits `gnd discover`, its CLI help and exit
+  goldens, and `docs/reference/discover.md`, one of IS-R3's homes);
 - `src/gnd/skills/`: `gnd-model-evolve`, `gnd-dev-session`, `gnd-export`,
   `gnd-solve` and `gnd-orm-core`;
 - the pins: `tests/test_packaged_skills.py`, `tests/test_verification_fixes.py`,
@@ -150,7 +161,7 @@ record beyond IK6 C1 (p1). Neither is an approval of this plan.
 | IS-O13 | Checkpoints the owner can look at before work is complete (owner, stated in conversation) | owner rule | C0 (IS1); C1, C2 (IS2) |
 | IS-O14 | `docs/agents/index.md` skill table row | inspected surface | IS1 |
 | IS-O15 | A release-notes entry and the installed-candidate docs check (IK6 T7 precedent) | inherited surface | IS2 |
-| IS-O16 | Sibling work on discover exits (IKE-Q3), IK docs gaps (#50), the real Popper run (#51) and checker/export defects | inspected risk | §6 control |
+| IS-O16 | Sibling work on discover exits (IKE-Q3, #52) (p2), IK docs gaps (#50), the real Popper run (#51) and checker/export defects | inspected risk | §6 control |
 | IS-O17 | `gnd export` and `gnd import` are not in `GROUPED_COMMANDS`; a skill with fenced `gnd export ilp` or `gnd import ilp-rules` lines fails the help-option test without D9 | inspected gap | D9 (mandatory) (p1) |
 | IS-O18 | (p1) The approved `ilp-learners` milestone changes the import contract (IL1: `type-confused-join`, neutral `learner-mismatch`), adds `--target` values (IL2–IL5) and `gnd import mined-rules` (IL4), inspects `gnd-export` and `gnd-dev-session` per phase, and extends the skill census (IL6) | concurrent dependency | D17 (o); §6 |
 | IS-O19 | (p1) The recorder is hardcoded to the course example and the PL18 gate, allows no learner command, and keeps no learner output | inspected gap | IS2 |
@@ -185,23 +196,26 @@ runs (p1).
 
 **Reactions, not meanings** (IS-R3): exit 0 → report; exit 3 → report the named
 refusal verbatim and stop (a stale label manifest goes back to the user, IS-R11)
-(p1); exit 11 (discover, export, import) → pick a new output path; any other
-non-zero → report verbatim and stop. The meaning of each exit stays in `--help`.
+(p1); exit 11 (discover, export, import) → pick a new output path; for
+`gnd check`, exits 1, 2 and 4 are results (alethic failure, vacuous,
+indeterminate) reported verbatim, not refusals, and exit 3 is an input error,
+reported and stopped (p2); any other non-zero → report verbatim and stop. The
+meaning of each exit stays in its home (IS-R3), not in the skill.
 
 **Refusals** (each one sentence with one home in the skill; exact text in the
 IS1 spec):
 - never applies, confirms or edits the model, and never edits a proposal;
-- never writes or edits a learner's clauses or run record, with the Popper
-  assembly exception of IS-R11 (p1);
+- never writes or edits a learner's clauses or run record, except to save a
+  printed program verbatim and assemble a Popper run record (IS-R11) (p1, p2);
 - never writes, edits or re-binds a label manifest; labels come from the user
   (p1);
 - never installs a learner, and never runs one the user did not name;
-- takes covered sets only from the learner's output or the user's selected
-  non-GND evaluation, never from any `gnd` command's output (p1);
+- takes covered sets only from the learner's output or an evaluation the user
+  selects, never from a GND verdict (IS-R2) (p1, p2);
 - after a coverage refusal, never changes the claim and imports again;
 - never combines measure cells into one accuracy number;
 - never copies host values or paths into a written or public artifact it
-  authors (p1);
+  authors, apart from the learner artifacts of IS-R11 (p1, p2);
 - never touches git (the record contract's shared denial, pinned by
   `RECORD_ROUTES`, not one-home) (p1).
 
@@ -242,7 +256,8 @@ pinned by `test_t25`.
 **Prerequisites:**
 - IS1: plan approval. IS1 may land at any time relative to `ilp-learners`,
   because its edits to `gnd-export` and `gnd-dev-session` are route sentences
-  only; whichever lands second rebases (D17 (o)) (p1).
+  only; whichever lands second rebases (D17 (o)) (p1). IS1 rebases after #52 if
+  #52 merges first (p2). The D8 pin waits on no PR (p2).
 - IS2: IS1 merged; `ilp-learners` IL1 merged, so the recordings bind to IL1's
   import contract and name their commit (D17 (o)) (p1); #50 merged (it edits the
   same two pages); D11 and D12 ruled.
@@ -283,13 +298,23 @@ pinned by `test_t25`.
 
 ### IS2 -- Recorded runs and the tutorial rewrite (outline)
 
-- **IS2-C1 (p1), recording protocol.** Before any paid run:
+- **IS2-C1 (p1, p2), recording protocol.** Before any paid run:
   - the recorder gains an example parameter, an allowlist entry for exactly
-    `python stand_in_learner.py *`, a keep rule for that command's output, a
-    gate-record parameter (replacing the hardcoded PL18 check), per-example
-    sources and a per-skill `done` predicate (for example, "the named proposal
-    file exists" or "the faulty import exited 3"). Whether piped `gnd` commands
-    are allowed is stated;
+    `python stand_in_learner.py *`, a keep rule for that command's output, and
+    per-example sources. Whether piped `gnd` commands are allowed is stated;
+  - (p2) the recorder is keyed by conversation id, not by skill. Its `done`
+    predicate receives the workspace and the kept stream (for example, "the
+    named proposal file exists" or "the faulty import exited 3"). The id enters
+    the recording home path and the replay-name regex;
+  - (p2) each conversation is seeded with the commands-page state it needs (for
+    example, the blocks up to step N run in the workspace before the first
+    turn), and the seed's digests are recorded in the manifest;
+  - (p2) a gate-record parameter that checks the record's scope string against
+    the example being recorded, keeps the PL18 check for the course example,
+    and enforces the run bound the gate record declares;
+  - (p2) the recorder's leak gate runs `test_ik6_walk.py` T3's `ABSOLUTE`
+    patterns before keeping a recording; T3 reads decoded JSON strings rather
+    than raw jsonl; the commands page's copy ignores `skill-sessions`;
   - a unit test of `kept_stream` over a learner call and a `gnd` call passes;
   - a new IS-scoped gate record is written; credentials are Claude Code's own
     login with no environment import; user turns, a run bound and a cost
@@ -298,9 +323,13 @@ pinned by `test_t25`.
     `test_plan_app_docs.py` covers the refunds recording home, and the
     recorder's leak needles add `git config user.name`;
   - adversarial scripted turns cover the absent learner ("use popper"), exit
-    11 (an existing output) and "make the import pass" after exit 3. Any
-    declared branch left without a recorded turn (for example exit 6 in
-    expected-state mode) is named as a residual.
+    11 (an existing output) and "make the import pass" after exit 3. Each has a
+    pass/fail predicate in `results.json`: the named stop, a new path after
+    exit 11, no clause or claim edited after exit 3 (p2). One absence probe for
+    the learner is declared in the allowlist and the keep rule, and the user
+    turn gives the exact learner invocation (p2). Any declared branch left
+    without a recorded turn (for example exit 6 in expected-state mode) is
+    named as a residual.
 - **IS2-C2:** `tests/test_replays.py` is generalized to an example and skill
   map, red first (a refunds entry fails today, passes after). The refunds
   recordings are also covered by `test_ik6_walk.py` T3's scan.
@@ -309,14 +338,21 @@ pinned by `test_t25`.
   page is rewritten.
 - **IS2-C4:** the tutorial rewrite (author per D12). Every step is a skill
   prompt; "There is no skill for this step" is gone; the "What you did" table
-  names a skill on every row. `TUTORIAL_CLAIMS` gains a recording column; a
-  test checks that each commands-side string appears in its recording's kept
-  output (or that the page explains the divergence beside the replay), and that
-  each "You type" fence equals that replay's `said`. The 5/2/3 grouping row is
-  decided at the IS2 gate (p1).
-- **IS2-C5 (p1):** a page-structure test (`tests/test_learn_rules_page.py`): a
-  `/gnd:` prompt in each step, the old sentence gone, a skill on every summary
-  row. It fails on the current page.
+  names a skill on every row. `TUTORIAL_CLAIMS` gains a recording column with
+  a recording-side string of its own per pair (for example `breaking: false`
+  for each preview, not the commands page's joined pair) (p2); a test checks
+  that each recording-side string appears in its recording's kept output, or
+  that a testable divergence marker naming the pair stands beside the replay
+  (p2). Each "You type" fence equals the recorder's declared turn in
+  `results.json`, not only `replays.json`'s hand-entered `said` (p2). The step-6
+  "Before" column comes from a recorded pre-apply re-check or a stated
+  derivation from step 1 (p2). The 5/2/3 grouping row is decided at the IS2
+  gate (p1).
+- **IS2-C5 (p1, p2):** a page-structure test (`tests/test_learn_rules_page.py`):
+  a `/gnd:` prompt in each step; the old sentence gone, matched with whitespace
+  normalized (it is split across lines once); a skill on every summary row; the
+  step-6 re-check fence starts with `/gnd:gnd-induce`, and row 6 names both
+  skills. It fails on the current page.
 - **IS2-C6:** checkpoint C2, the rendered page, shown before the record.
 - **IS2-C7:** the commands page's closing paragraph names the skill. Its blocks
   and `induced` runner group are otherwise unchanged and exit as documented.
@@ -361,7 +397,7 @@ record, a PR, and owner acceptance recorded separately.
 | Exit tables drift between the skill and `--help` | IS-R3: the skill states reactions only |
 | Popper becomes a dependency | IS-R4; the frozen base-dependency test |
 | A closed milestone's test breaks | D8: the census and git reads at one pinned commit |
-| (p1) `ilp-learners` changes the import contract and the same two skill files | route sentences only in IS1; IS2 records after IL1 (D17 (o)); recordings name their commit; IL6's census edit lands on the pinned or later census, outside IS's pin |
+| (p1) `ilp-learners` changes the import contract and the same two skill files | route sentences only in IS1; IS2 records after IL1 (D17 (o)); recordings name their commit. IL6's "skill census" extension is a coordination note for IL6's gate, which owns its census check; this plan claims nothing about it (p2) |
 | Sibling sessions change discover exits and the same docs pages | IS1 edits no docs page those sessions own; IS2 rebases after #50 merges; the skill cites `--help` |
 | A recording shows a mistake with no explanation | IS-O6; each failure explained beside the replay |
 | The replay is mistaken for a benchmark | the page's scope note (precedent: `docs/agents/recorded-sessions.md`) |
@@ -385,7 +421,10 @@ approved-spec commit; implementation and focused verification; independent diff
 review; refactoring review; record.
 
 **Plan review:** four local reviewer agents (D13 (o), 2026-10-27). The
-selection names the instrument only; it approves no bytes (p1).
+selection names the instrument only; it approves no bytes (p1). Round 1 (r1)
+and round 2 (r2, the confirmation round) ran; the stop rule closed review after
+round 2 (self-inflicted 28 of 33). r3 applies the round-2 repairs with no
+further round, at the owner's direction (p2).
 
 **Round budget (p1), declared in these bytes:** r2 plus at most one
 confirmation round with the same four lenses. Stop when the self-inflicted
@@ -428,10 +467,10 @@ The IS1 spec §7 restates only the rows IS1 needs, citing these IDs.
 | D2 | One skill or two | one skill; or measure+discover and ILP as two skills. Two doubles the pins and splits one tutorial | one |
 | D3 (p1) | How the skill reaches the label-manifest format | vendor a read-only copy into `gnd-orm-core/references`, canonical at the runtime `src/gnd/labels.schema.json`, with its own byte-identity test and an index row; or rely on `gnd measure --help` and its exit-3 refusals | vendor, runtime canonical |
 | D4 | Running a learner | run only a learner the user names, never install one, stop with a named reason when it is absent; or never run learners, which turns tutorial step 2 back into a plain request | run only when named |
-| D5 | Where a run record's covered sets come from | only from the learner's own output or from a non-GND evaluation the user selects (for example Prolog over `bk.pl` and `exs.pl`); never from any `gnd` command's output (p1) | as stated |
+| D5 | Where a run record's covered sets come from | only from the learner's own output or from an evaluation the user selects (for example Prolog over the exported `bk.pl` and `exs.pl`); never from a GND verdict (IS-R2) (p1, p2) | as stated |
 | D6 | Records | the skill writes no record of its own and never touches git; the evidence enters the evolve record on apply | no record of its own |
 | D7 | `gnd-solve` | a route at Station 6 with no new number; or a new station, which moves numbers pinned by `test_t25` | route only |
-| D8 (p1) | The IK census test | pin its file list, its git reads **and `skill-census.md` itself** (`git show`) to one commit, a full 40-hex SHA named at the IS1 gate as the merge commit of the last IK-scoped change (after #50 and #51 land); or retire the test | pin, named at the IS1 gate |
+| D8 (p1, p2) | The IK census test | pin its file list, its git reads **and `skill-census.md` itself** (`git show`) to one commit: the IS1 base commit, a full 40-hex SHA reachable from main, named at the IS1 gate. No PR is waited on (#51 touches neither the census nor a skill). An IK census edit merged after the IS1 base (for example #50's) falls outside the pin, which moves only by an explicit later edit; or retire the test | pin to the IS1 base |
 | D9 (p1) | Guard coverage of `gnd export ilp`, `gnd import ilp-rules` | **mandatory**: add `export` and `import` to `GROUPED_COMMANDS`. Without it the help-option test fails on the new skill's fenced lines | mandatory |
 | D10 | Behavioural evidence for the skill | structural pins in IS1 and recordings in IS2, with uncovered branches named as residuals (p1); or also an eval corpus. The corpus costs a phase | pins plus recordings |
 | D11 (p1) | Recordings | which models and how many runs (precedent: Claude Code with Haiku, one run per conversation); Claude Code's own login, no environment import; the IS gate record with declared turns, a run bound and a cost ceiling; paid. Without recordings the page labels its prompts as not recorded | owner selects |
@@ -446,9 +485,9 @@ The IS1 spec §7 restates only the rows IS1 needs, citing these IDs.
 | D20 | The distribution lane in IS1 | — | **owner-accepted 2026-10-27 (o)**: `tests/test_public_built_inventory.py` runs once at the IS1 gate as an owner-selected lane, recorded separately from the ordinary gate |
 
 D17..D20 were accepted by the quoted ruling in the header. D1..D12 and
-D14..D16 remain proposed (D3, D8, D9 and D11 amended (p1)).
+D14..D16 remain proposed (D3, D8, D9 and D11 amended (p1); D5 and D8 amended
+(p2)).
 
-**Next action:** the round-2 confirmation review with four local reviewer
-agents; then the stop rule closes plan review. Then plan approval, and an
-explicit `process-phase IS1 induction-skill` selection, at whose gate the IS1
-base commit and the D8 pin commit are named.
+**Next action:** the owner decides plan approval over r3. Then an explicit
+`process-phase IS1 induction-skill` selection, at whose gate the IS1 base commit
+(which is also the D8 pin) is named.

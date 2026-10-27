@@ -1,0 +1,126 @@
+...............FFFFF.........F.........                                  [100%]
+=================================== FAILURES ===================================
+____________ test_h3_a_bad_learner_argument_is_a_usage_error[argv0] ____________
+
+tmp_path = PosixPath('<tmp>/test_h3_a_bad_learner_argument0')
+argv = ['--also-claim', 'nort']
+
+    @pytest.mark.parametrize("argv", [
+        ["--also-claim", "nort"],      # not a batch
+        ["--also-claim", "harbor"],    # already covered: the claim would not be false
+        ["--also-claim"],              # no value
+        ["--also_claim", "north"],     # misspelt flag
+    ])
+    def test_h3_a_bad_learner_argument_is_a_usage_error(tmp_path, argv):
+        subprocess.run([sys.executable, "-m", "gnd", "export", "ilp", str(EXAMPLE / "model.orm.yaml"),
+                        "--labels", str(EXAMPLE / "labels.json"), "--target", "neutral", "--out", str(tmp_path / "ilp")],
+                       check=True, capture_output=True)
+        result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py"), str(tmp_path / "ilp"),
+                                 str(tmp_path / "out"), *argv], capture_output=True, text=True)
+>       assert result.returncode == 2 and "usage:" in result.stderr
+E       AssertionError: assert (0 == 2)
+E        +  where 0 = CompletedProcess(args=['<repo>/.ven...500   covers harbor, market, airport, station\ndeliberate mistake: also claiming that rule 0 covers nort\n', stderr='').returncode
+
+tests/test_ik6_walk.py:164: AssertionError
+____________ test_h3_a_bad_learner_argument_is_a_usage_error[argv1] ____________
+
+tmp_path = PosixPath('<tmp>/test_h3_a_bad_learner_argument1')
+argv = ['--also-claim', 'harbor']
+
+    @pytest.mark.parametrize("argv", [
+        ["--also-claim", "nort"],      # not a batch
+        ["--also-claim", "harbor"],    # already covered: the claim would not be false
+        ["--also-claim"],              # no value
+        ["--also_claim", "north"],     # misspelt flag
+    ])
+    def test_h3_a_bad_learner_argument_is_a_usage_error(tmp_path, argv):
+        subprocess.run([sys.executable, "-m", "gnd", "export", "ilp", str(EXAMPLE / "model.orm.yaml"),
+                        "--labels", str(EXAMPLE / "labels.json"), "--target", "neutral", "--out", str(tmp_path / "ilp")],
+                       check=True, capture_output=True)
+        result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py"), str(tmp_path / "ilp"),
+                                 str(tmp_path / "out"), *argv], capture_output=True, text=True)
+>       assert result.returncode == 2 and "usage:" in result.stderr
+E       AssertionError: assert (0 == 2)
+E        +  where 0 = CompletedProcess(args=['<repo>/.ven...0   covers harbor, market, airport, station\ndeliberate mistake: also claiming that rule 0 covers harbor\n', stderr='').returncode
+
+tests/test_ik6_walk.py:164: AssertionError
+____________ test_h3_a_bad_learner_argument_is_a_usage_error[argv2] ____________
+
+tmp_path = PosixPath('<tmp>/test_h3_a_bad_learner_argument2')
+argv = ['--also-claim']
+
+    @pytest.mark.parametrize("argv", [
+        ["--also-claim", "nort"],      # not a batch
+        ["--also-claim", "harbor"],    # already covered: the claim would not be false
+        ["--also-claim"],              # no value
+        ["--also_claim", "north"],     # misspelt flag
+    ])
+    def test_h3_a_bad_learner_argument_is_a_usage_error(tmp_path, argv):
+        subprocess.run([sys.executable, "-m", "gnd", "export", "ilp", str(EXAMPLE / "model.orm.yaml"),
+                        "--labels", str(EXAMPLE / "labels.json"), "--target", "neutral", "--out", str(tmp_path / "ilp")],
+                       check=True, capture_output=True)
+        result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py"), str(tmp_path / "ilp"),
+                                 str(tmp_path / "out"), *argv], capture_output=True, text=True)
+>       assert result.returncode == 2 and "usage:" in result.stderr
+E       assert (1 == 2)
+E        +  where 1 = CompletedProcess(args=['<repo>/.ven...rgv[4] if sys.argv[3:4] == ["--also-claim"] else None\n            ~~~~~~~~^^^\nIndexError: list index out of range\n').returncode
+
+tests/test_ik6_walk.py:164: AssertionError
+____________ test_h3_a_bad_learner_argument_is_a_usage_error[argv3] ____________
+
+tmp_path = PosixPath('<tmp>/test_h3_a_bad_learner_argument3')
+argv = ['--also_claim', 'north']
+
+    @pytest.mark.parametrize("argv", [
+        ["--also-claim", "nort"],      # not a batch
+        ["--also-claim", "harbor"],    # already covered: the claim would not be false
+        ["--also-claim"],              # no value
+        ["--also_claim", "north"],     # misspelt flag
+    ])
+    def test_h3_a_bad_learner_argument_is_a_usage_error(tmp_path, argv):
+        subprocess.run([sys.executable, "-m", "gnd", "export", "ilp", str(EXAMPLE / "model.orm.yaml"),
+                        "--labels", str(EXAMPLE / "labels.json"), "--target", "neutral", "--out", str(tmp_path / "ilp")],
+                       check=True, capture_output=True)
+        result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py"), str(tmp_path / "ilp"),
+                                 str(tmp_path / "out"), *argv], capture_output=True, text=True)
+>       assert result.returncode == 2 and "usage:" in result.stderr
+E       AssertionError: assert (0 == 2)
+E        +  where 0 = CompletedProcess(args=['<repo>/.ven...n one\nlearned: wrong(A) :- f_refund_amount(A,V0,V1), V1 > 500   covers harbor, market, airport, station\n', stderr='').returncode
+
+tests/test_ik6_walk.py:164: AssertionError
+_________________ test_h3_missing_arguments_are_a_usage_error __________________
+
+    def test_h3_missing_arguments_are_a_usage_error():
+        result = subprocess.run([sys.executable, str(EXAMPLE / "stand_in_learner.py")], capture_output=True, text=True)
+>       assert result.returncode == 2 and "usage:" in result.stderr
+E       AssertionError: assert (1 == 2)
+E        +  where 1 = CompletedProcess(args=['<repo>/.ven...out = Path(sys.argv[1]), Path(sys.argv[2])\n                       ~~~~~~~~^^^\nIndexError: list index out of range\n').returncode
+
+tests/test_ik6_walk.py:170: AssertionError
+_________________ test_c2_south_is_never_over_500_not_under_it _________________
+
+    def test_c2_south_is_never_over_500_not_under_it():
+        for path in (PAGES[0], ROOT / "docs/assets/applications/refunds-weeks.svg"):
+            text = path.read_text(encoding="utf-8")
+>           assert "under 500" not in text and "never go over 500" in text, path.name
+E           AssertionError: learn-rules.md
+E           assert ('under 500' not in '# Find the ...t run one.\n'
+E             
+E             'under 500' is contained here:
+E             ?           ^
+E               west stay under 500. The flagged weeks harbor 1200, market 750, airport 1500 and station 640 each have a refund over 500. The written rule, over 1000, catches only harbor and airport. The learned rule, over 500, catches all four flagged weeks and no clean week.](../assets/applications/refunds-weeks.svg)
+E             ?           ^^^^^^^^^^
+E               </div>
+E               ...
+E             
+E             ...Full output truncated (266 lines hidden), use '-vv' to show)
+
+tests/test_ik6_walk.py:196: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ik6_walk.py::test_h3_a_bad_learner_argument_is_a_usage_error[argv0]
+FAILED tests/test_ik6_walk.py::test_h3_a_bad_learner_argument_is_a_usage_error[argv1]
+FAILED tests/test_ik6_walk.py::test_h3_a_bad_learner_argument_is_a_usage_error[argv2]
+FAILED tests/test_ik6_walk.py::test_h3_a_bad_learner_argument_is_a_usage_error[argv3]
+FAILED tests/test_ik6_walk.py::test_h3_missing_arguments_are_a_usage_error - ...
+FAILED tests/test_ik6_walk.py::test_c2_south_is_never_over_500_not_under_it
+6 failed, 33 passed in 9.71s

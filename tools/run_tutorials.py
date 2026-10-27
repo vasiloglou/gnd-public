@@ -195,6 +195,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'expense': sorted((root / 'docs/expense').glob('[0-9]*.md')),
         'api': [root / 'docs/reference/python-api.md'],
         'walkthrough': [root / 'docs/walkthrough.md'],
+        'induced': [root / 'docs/how-to/learn-rules-commands.md'],
         'agent-install': [root / 'docs/agents/install.md'],
         'agent-plans': [root / 'docs/agents/plans.md'],
         'agent-model': [root / 'docs/agents/model-from-text.md'],

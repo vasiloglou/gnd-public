@@ -15,11 +15,12 @@ nav = [
   { "Tutorials" = [
     { "Build a course planner" = "tutorials/course-planner.md" },
     { "Refill prescriptions on a schedule" = "tutorials/clinic-refills.md" },
+    { "Find the rule your auditors are really using" = "tutorials/learn-rules.md" },
     { "PyRel + GND: rules to a checked app" = "pyrel-apps.md" },
     { "Build BookRec" = [{ "1. Model the problem" = "bookrec/01-model.md" }, { "2. Facts and rules" = "bookrec/02-facts.md" }, { "3. Generate a project" = "bookrec/03-project.md" }, { "4. Build the application" = "bookrec/04-application.md" }, { "5. Diagnose and repair" = "bookrec/05-repair.md" }, { "6. Evolve the rules" = "bookrec/06-evolution.md" }, { "7. Run on PyRel, put an agent in the loop" = "bookrec/07-native.md" }] },
     { "Expense approvals" = [{ "1. Model the workflow" = "expense/01-model.md" }, { "2. Build and check" = "expense/02-application.md" }, { "3. Add currencies" = "expense/03-evolution.md" }, { "4. Run on PyRel, put an agent in the loop" = "expense/04-native.md" }] }
   ] },
-  { "How-to guides" = [{ "Stop a manager approving their report's access" = "how-to/access-requests.md" }, { "Keep a trip under budget" = "how-to/trip-budget.md" }, { "Schedule rent inside a lease" = "how-to/lease-schedule.md" }, { "Read the recorded model runs" = "how-to/model-runs.md" }] },
+  { "How-to guides" = [{ "Stop a manager approving their report's access" = "how-to/access-requests.md" }, { "Keep a trip under budget" = "how-to/trip-budget.md" }, { "Schedule rent inside a lease" = "how-to/lease-schedule.md" }, { "Read the recorded model runs" = "how-to/model-runs.md" }, { "The commands behind the auditors' rule" = "how-to/learn-rules-commands.md" }] },
   { "Explanation" = [{ "What PyRel is, and when you need it" = "explanation/what-is-pyrel.md" }, { "How a rule becomes a PyRel check" = "explanation/rules-as-pyrel.md" }] },
   { "Verify at scale" = [{ "Release governance across runtimes" = "runtimes/scenario.md" }, { "PyRel: approval audits" = "runtimes/pyrel.md" }, { "Soufflé: dependency impact" = "runtimes/souffle.md" }, { "Lean: policy proofs" = "runtimes/lean.md" }, { "Interpret the evidence" = "runtimes/decision.md" }] },
   { "Guides (CLI and Python)" = [{ "Models and constraints" = "guides/modeling.md" }, { "Data and transitions" = "guides/data-and-transitions.md" }, { "Synthetic data" = "guides/synthetic-data.md" }, { "Generated projects" = "guides/generated-projects.md" }, { "Evolution and recovery" = "guides/evolution-and-recovery.md" }, { "Documents and extraction" = "guides/documents.md" }, { "Experiment sessions" = "guides/experiments.md" }, { "Exports and witnesses" = "guides/exports.md" }] },

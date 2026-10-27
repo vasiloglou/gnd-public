@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 540" role="img" aria-labelledby="title desc"><title id="title">Eight weeks of refunds, two rules</title><desc id="desc">Each dot is one refund, placed by amount. Clean weeks north, south, east and west never go over 500. Flagged weeks harbor 1200, market 750, airport 1500 and station 640 all have a refund over 500. The written rule, over 1000, catches only harbor and airport. The learned rule, over 500, catches all four flagged weeks and no clean week.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:17px} .title{font-size:24px;font-weight:700} .small{font-size:15px;fill:#50657a} .strong{font-weight:700} .tick{font-size:14px;fill:#50657a} .rule{font-size:15px;font-weight:700}</style><rect width="860" height="540" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Eight weeks of refunds, two rules</text>
+<text x="24" y="66" class="small">Each dot is one refund. Green weeks were marked clean, orange weeks flagged.</text>
+<rect x="24" y="100" width="676" height="160" rx="12" fill="#e9f4ec" stroke="none"/>
+<rect x="24" y="280" width="676" height="160" rx="12" fill="#fff0e4" stroke="none"/>
+<text x="740" y="94" class="small" text-anchor="middle">written</text>
+<text x="810" y="94" class="small" text-anchor="middle">learned</text>
+<line x1="150" y1="100" x2="150" y2="445" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="325" y1="92" x2="325" y2="452" stroke="#0f766e" stroke-width="3"/>
+<line x1="500" y1="92" x2="500" y2="452" stroke="#50657a" stroke-width="3" stroke-dasharray="8 6"/>
+<text x="40" y="126" class="strong">north</text><circle cx="164" cy="120" r="7" fill="#2f8f5b"/><circle cx="192" cy="120" r="7" fill="#2f8f5b"/><circle cx="176" cy="120" r="7" fill="#2f8f5b"/><text x="740" y="126" text-anchor="middle">–</text><text x="810" y="126" text-anchor="middle">–</text>
+<text x="40" y="166" class="strong">south</text><circle cx="325" cy="160" r="7" fill="#2f8f5b"/><circle cx="171" cy="160" r="7" fill="#2f8f5b"/><circle cx="230" cy="160" r="7" fill="#2f8f5b"/><text x="740" y="166" text-anchor="middle">–</text><text x="810" y="166" text-anchor="middle">–</text>
+<text x="40" y="206" class="strong">east</text><circle cx="258" cy="200" r="7" fill="#2f8f5b"/><circle cx="181" cy="200" r="7" fill="#2f8f5b"/><text x="740" y="206" text-anchor="middle">–</text><text x="810" y="206" text-anchor="middle">–</text>
+<text x="40" y="246" class="strong">west</text><circle cx="307" cy="240" r="7" fill="#2f8f5b"/><circle cx="162" cy="240" r="7" fill="#2f8f5b"/><circle cx="213" cy="240" r="7" fill="#2f8f5b"/><text x="740" y="246" text-anchor="middle">–</text><text x="810" y="246" text-anchor="middle">–</text>
+<text x="40" y="306" class="strong">harbor</text><circle cx="570" cy="300" r="7" fill="#d9711c"/><circle cx="178" cy="300" r="7" fill="#d9711c"/><text x="590" y="306" class="small">1200</text><text x="740" y="306" text-anchor="middle" class="strong">✓</text><text x="810" y="306" text-anchor="middle" class="strong">✓</text>
+<text x="40" y="346" class="strong">market</text><circle cx="412" cy="340" r="7" fill="#d9711c"/><circle cx="199" cy="340" r="7" fill="#d9711c"/><circle cx="169" cy="340" r="7" fill="#d9711c"/><text x="432" y="346" class="small">750</text><text x="740" y="346" text-anchor="middle">–</text><text x="810" y="346" text-anchor="middle" class="strong">✓</text>
+<text x="40" y="386" class="strong">airport</text><circle cx="675" cy="380" r="7" fill="#d9711c"/><circle cx="241" cy="380" r="7" fill="#d9711c"/><text x="617" y="386" class="small">1500</text><text x="740" y="386" text-anchor="middle" class="strong">✓</text><text x="810" y="386" text-anchor="middle" class="strong">✓</text>
+<text x="40" y="426" class="strong">station</text><circle cx="374" cy="420" r="7" fill="#d9711c"/><circle cx="183" cy="420" r="7" fill="#d9711c"/><text x="394" y="426" class="small">640</text><text x="740" y="426" text-anchor="middle">–</text><text x="810" y="426" text-anchor="middle" class="strong">✓</text>
+<text x="150" y="472" class="tick" text-anchor="middle">0</text>
+<text x="325" y="472" class="tick" text-anchor="middle">500</text>
+<text x="500" y="472" class="tick" text-anchor="middle">1000</text>
+<text x="675" y="472" class="tick" text-anchor="middle">1500</text>
+<text x="325" y="496" class="rule" text-anchor="middle" fill="#0f766e">learned rule: over 500</text>
+<text x="500" y="518" class="rule" text-anchor="middle" fill="#50657a">written rule: over 1000</text>
+<text x="775" y="472" class="small" text-anchor="middle">✓ = caught</text>
+</svg>

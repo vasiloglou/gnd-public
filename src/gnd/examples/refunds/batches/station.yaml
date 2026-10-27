@@ -1,0 +1,20 @@
+# The station store's refunds for one week. The auditors marked this batch flagged.
+format_version: 2
+population:
+  model: model.orm.yaml
+  model_id: refunds
+  source: fixture
+  covers: [refund_by, refund_amount, refund_channel]
+instances:
+  refund: [801, 802]
+  customer: ["c-sam", "c-tia"]
+facts:
+  refund_by:
+    - { refund: 801, customer: "c-sam" }
+    - { refund: 802, customer: "c-tia" }
+  refund_amount:
+    - { refund: 801, amount: 640 }
+    - { refund: 802, amount: 95 }
+  refund_channel:
+    - { refund: 801, channel: "cash" }
+    - { refund: 802, channel: "card" }

@@ -38,6 +38,7 @@ def assert_routing(sources):
             'src/gnd/examples/plan_apps/lease/stand_in_bot.py',
             'src/gnd/examples/plan_apps/trip/stand_in_bot.py',
             'src/gnd/examples/bookrec/extension/bookrec/cli.py',
+            'src/gnd/examples/refunds/stand_in_learner.py',
             'src/gnd/skills/gnd-adopt/scripts/verify_migration.py',
             'src/gnd/skills/gnd-model-from-text/scripts/validate_model.py',
             'src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py',

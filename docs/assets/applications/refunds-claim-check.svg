@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc"><title id="title">GND accepts only a claim it can reproduce</title><desc id="desc">A faulty learner claims its rule covers north, harbor, market, airport and station. GND runs the rule on all eight weeks and covers harbor, market, airport and station; north's largest refund is 120, never over 500. One week differs, so the import is refused with exit 3 and no proposal is written.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:17px} .title{font-size:24px;font-weight:700} .small{font-size:15px;fill:#50657a} .strong{font-weight:700} .bad{fill:#b42318;font-weight:700} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="760" height="360" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">GND accepts only a claim it can reproduce</text>
+<rect x="24" y="70" width="300" height="176" rx="12" fill="#fff0e4"/>
+<text x="40" y="100" class="strong">The learner claimed</text>
+<text x="40" y="126" class="small">"a refund over 500 is wrong" covers</text>
+<text x="40" y="156" class="bad">north</text><text x="110" y="156" class="small">clean week, largest refund 120</text>
+<text x="40" y="184">harbor, market</text>
+<text x="40" y="212">airport, station</text>
+<path class="edge" d="M324 158L432 158"/>
+<text x="378" y="148" class="small" text-anchor="middle">GND re-runs</text>
+<text x="378" y="182" class="small" text-anchor="middle">the rule itself</text>
+<rect x="436" y="70" width="300" height="176" rx="12" fill="#e9f4ec"/>
+<text x="452" y="100" class="strong">GND found, on all 8 weeks</text>
+<text x="452" y="126" class="small">the rule really fires on</text>
+<text x="452" y="156" class="small">north: nothing over 500, not covered</text>
+<text x="452" y="184">harbor, market</text>
+<text x="452" y="212">airport, station</text>
+<path class="edge" d="M380 246L380 276"/>
+<rect x="24" y="282" width="712" height="60" rx="12" fill="#fff0e4"/>
+<text x="40" y="308" class="strong">The two lists differ by one week: REFUSED, exit 3</text>
+<text x="40" y="332" class="small">No proposal is written. A rule reaches you only with a claim GND has reproduced.</text>
+</svg>

@@ -57,7 +57,7 @@ def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, sam
             target = Path(argv[argv.index('--out-dir') + 1])
             target.mkdir()
             with zipfile.ZipFile(target / 'example.whl', 'w') as wheel:
-                for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps'):
+                for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds'):
                     info = zipfile.ZipInfo(f'gnd/examples/{domain}/README.md')
                     content = 'same' if same_bytes or target.name == 'release' else 'changed'
                     wheel.writestr(info, content)
@@ -91,7 +91,7 @@ def test_installed_origin_uses_path_components(tmp_path):
         installed_docs.check_origin(str(root / 'src/gnd/__init__.py'), venv, root)
 
 
-@pytest.mark.parametrize('group', ['quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision'])
+@pytest.mark.parametrize('group', ['quickstart', 'release', 'bookrec', 'expense', 'api', 'walkthrough', 'induced', 'agent-install', 'agent-plans', 'agent-model', 'agent-session', 'agent-recorded', 'runtime-pyrel', 'runtime-souffle', 'runtime-lean', 'runtime-decision'])
 def test_documented_learning_path(group, tmp_path):
     pages = runner.groups(ROOT)[group]
     assert pages

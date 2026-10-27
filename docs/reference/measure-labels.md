@@ -7,7 +7,9 @@ are good and which are bad. **The labels are your claim.** GND checks that they
 are well-formed and bound to the right model and files; it does not check that
 they are true.
 
-This page is the one home of the label manifest's contract.
+This page is the one home of the label manifest's contract. To see it end to
+end, [find the rule your auditors are really using](../tutorials/learn-rules.md)
+scores a written rule against an auditor's labels.
 
 ```
 gnd measure MODEL --labels MANIFEST [--out OUT] [--format text|json]

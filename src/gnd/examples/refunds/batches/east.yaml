@@ -1,0 +1,20 @@
+# The east store's refunds for one week. The auditors marked this batch clean.
+format_version: 2
+population:
+  model: model.orm.yaml
+  model_id: refunds
+  source: fixture
+  covers: [refund_by, refund_amount, refund_channel]
+instances:
+  refund: [301, 302]
+  customer: ["c-gus", "c-hana"]
+facts:
+  refund_by:
+    - { refund: 301, customer: "c-gus" }
+    - { refund: 302, customer: "c-hana" }
+  refund_amount:
+    - { refund: 301, amount: 310 }
+    - { refund: 302, amount: 90 }
+  refund_channel:
+    - { refund: 301, channel: "cash" }
+    - { refund: 302, channel: "card" }

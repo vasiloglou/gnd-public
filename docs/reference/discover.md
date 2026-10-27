@@ -7,7 +7,9 @@ proposal. Nothing reaches the model until you preview, review and apply that
 proposal, and nothing becomes a hard rule until a review is recorded. See
 [provenance and modality](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md).
 
-This page is the one home of the command's contract.
+This page is the one home of the command's contract. To see it end to end,
+[find the rule your auditors are really using](../tutorials/learn-rules.md)
+sorts one week's suggestions into sensible rules and accidents.
 
 ```
 gnd discover MODEL POPULATION --out PROPOSAL --report REPORT \

@@ -109,3 +109,8 @@ Records:
   shared binding helper across eight homes with outcomes pinned, discover over
   non-finite floats, recovery verify over YAML-only values; a second reviewer
   round's blocking finding fixed red-first; gate 9656 passed.
+- [015 follow-up: IKE-Q3](015-followup-ike-q3.md): 014's carried IKE-Q3.
+  Spec approved 2026-10-27 (D1-A..D3-A); discover names an unbindable
+  reference at 66 / 74, the judgments API returns outcome 3 "binding", H3's
+  four ruled rows overridden. One reviewer: no blocking finding. Gate 5962
+  passed.

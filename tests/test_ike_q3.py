@@ -7,6 +7,8 @@ reference corpus, damaged by tests/support/reference_homes.py.
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from support import reference_homes
 from support.cli_runner import run_main
@@ -65,6 +67,6 @@ def test_q5_judgments_check_exits_3(tmp_path, monkeypatch, damage):
     result = run_main([
         "judgments", "check", str(work / "model.orm.yaml"), str(work / "candidate.pop.json"),
         "--policy", str(tmp_path / "policy.json"), "--receipts", str(tmp_path / "receipts.json"),
-        "--trusted-root", str(tmp_path)])
+        "--trusted-root", str(tmp_path), "--format", "json"])
     assert result.returncode == 3, _text(result)
-    assert "Traceback" not in _text(result)
+    assert json.loads(result.stdout)["error"]["reason"] == "binding"

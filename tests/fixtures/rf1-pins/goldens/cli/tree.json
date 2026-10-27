@@ -829,7 +829,7 @@
      "type": null
     }
    ],
-   "description": "Propose candidate constraints of seven families (uniqueness, mandatory, value, frequency, subset, equality, exclusion) that hold in one population. A candidate is kept only when `gnd check` passes it with support > 0 and the model neither declares nor entails it. Writes a discovery report and, when anything is emitted, a `gnd evolve` proposal of induced, proposed, deontic constraints: admission stays a reviewed act. Exits 0 on success (also with nothing emitted), 3 on an invalid model or population, 11 when --out already exists (nothing written), 64 on a usage error, 66 on a missing input, 70 on an internal defect, 74 on a refused output path.",
+   "description": "Propose candidate constraints of seven families (uniqueness, mandatory, value, frequency, subset, equality, exclusion) that hold in one population. A candidate is kept only when `gnd check` passes it with support > 0 and the model neither declares nor entails it. Writes a discovery report and, when anything is emitted, a `gnd evolve` proposal of induced, proposed, deontic constraints: admission stays a reviewed act. Exits 0 on success (also with nothing emitted), 3 on an invalid model or population, 11 when --out already exists (nothing written), 64 on a usage error, 66 on a missing input or reference file, 70 on an internal defect, 74 on a refused output or reference path.",
    "epilog": null,
    "formatter_class": "argparse.HelpFormatter",
    "listed_help": "propose induced constraints observed in one population (IK4)",

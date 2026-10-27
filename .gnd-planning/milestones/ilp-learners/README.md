@@ -18,8 +18,9 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   on 2026-10-27, with ILASP 4.4.1 under its non-commercial terms. The adapter
   is implemented. Invocation 1, the run of record, completed and was refused
   `empty-antecedent` (IL2-F7, recorded as is by the owner's ruling). The
-  [adversarial review](notes/phase-IL2-agent-review.md) is done; the
-  refactoring review and the record remain.
+  [adversarial review](notes/phase-IL2-agent-review.md) is done, with
+  IL2-D13 and IL2-D14 ruled (a), and so is the refactoring review. The
+  record remains.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -52,8 +53,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- IL2-D13 and IL2-D14, from the IL2 review (the reading of bare ASP
-  constants, and integers outside clingo's range at export);
 - plan D8 (the LLM run), at the IL5 gate.
 
-**Next action:** IL2 step 5, the refactoring review, then the IL2 record.
+**Next action:** IL2 step 6, the phase record.

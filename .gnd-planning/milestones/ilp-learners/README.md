@@ -14,19 +14,20 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - **r3** applies the round-2 repairs and D13 at the owner's direction, with no
   further review round. **r3 bytes carry no review opinion.**
 - **IL1 is complete:** [phase record](002-phase-IL1.md), merged in PR #56.
-- **IL2 (in progress):** [spec r1](notes/phase-IL2-spec.md) was approved
+- **IL2 is complete:** [phase record](003-phase-IL2.md).
+  [Spec r1](notes/phase-IL2-spec.md) was approved
   on 2026-10-27, with ILASP 4.4.1 under its non-commercial terms. The adapter
   is implemented. Invocation 1, the run of record, completed and was refused
   `empty-antecedent` (IL2-F7, recorded as is by the owner's ruling). The
-  [adversarial review](notes/phase-IL2-agent-review.md) is done, with
-  IL2-D13 and IL2-D14 ruled (a), and so is the refactoring review. The
-  record remains.
+  [adversarial review](notes/phase-IL2-agent-review.md) found 11 issues;
+  IL2-D13 and IL2-D14 were ruled (a), and three refactors were executed.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
 - [IL1 spec (r3, approved)](notes/phase-IL1-spec.md)
 - [IL1 phase record](002-phase-IL1.md)
 - [IL2 spec (r1, approved)](notes/phase-IL2-spec.md)
+- [IL2 phase record](003-phase-IL2.md)
 - [IL2 adversarial review](notes/phase-IL2-agent-review.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
@@ -55,4 +56,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - plan D8 (the LLM run), at the IL5 gate.
 
-**Next action:** IL2 step 6, the phase record.
+**Next action:** push `claude/il2` and open the IL2 pull request when the owner asks; then IL5, the LLM proposer.

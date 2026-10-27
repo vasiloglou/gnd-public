@@ -18,7 +18,7 @@ import re
 from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
-from gnd.export.ilp import IlpError
+from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
 from gnd.export.ilp_popper import thresholds
 
 __all__ = ["ADAPTER_VERSION", "REFUSALS", "context_fact", "extract_hypothesis",
@@ -45,7 +45,7 @@ MAX_INT_DIGITS = 32
 #: clingo's integers are 32-bit; a wider one would mean something else to it.
 _INT_RANGE = range(-2**31, 2**31)
 #: A comparison atom is copied as is; every other body atom takes the example variable.
-_COMPARISON = re.compile(r"(?:gt|lt|ge|le)_t_[A-Za-z0-9_]+")
+_COMPARISON = re.compile(COMPARISON_NAME)
 #: The comparisons the task defines; ge and le are declared but never rendered.
 _RENDERED_COMPARISON = re.compile(r"(?:gt|lt)_t_[A-Za-z0-9_]+")
 #: clingo reads an identifier that starts with underscores and then a lowercase letter as a constant.
@@ -75,6 +75,9 @@ def _term(value: Any) -> str:
     if isinstance(value, bool):
         return "true" if value else "false"
     if isinstance(value, int):
+        if value not in _INT_RANGE:
+            raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {value} is outside clingo's "
+                           "32-bit integer range (IL2-D14)")
         return str(value)
     out = []
     for character in value:
@@ -97,12 +100,7 @@ def context_fact(fact: dict[str, Any]) -> str:
 
 def _domains(neutral: dict[str, Any]) -> list[tuple[str, list[str], list[int], list[dict[str, Any]]]]:
     """``(type, dom rules, thresholds, comparisons)`` per rendered integer type, by name."""
-    types = {row["name"]: row["types"][1:] for row in neutral["predicates"]}
-    observed: dict[str, set[int]] = {}
-    for fact in neutral["facts"]:
-        for type_name, value in zip(types[fact["predicate"]], fact["values"], strict=True):
-            if isinstance(value, int) and not isinstance(value, bool):
-                observed.setdefault(type_name, set()).add(value)
+    observed = observed_integers(neutral)
     rows = []
     for type_name in sorted(observed):
         comparisons = sorted((row for row in neutral["comparisons"]
@@ -185,11 +183,6 @@ def extract_hypothesis(log: str) -> str:
         elif program:
             break
     return "".join(f"{line}\n" for line in program)
-
-
-def refusal_name(message: str) -> str:
-    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...`` or ``<name>: ...``."""
-    return message.split(": ")[1] if message.startswith("clause ") else message.split(":")[0]
 
 
 def _unparsable(line: int, column: int, detail: str) -> IlpError:
@@ -376,7 +369,10 @@ class _Reader:
             self.take("name")
             if self.at("op", "("):
                 raise _unparsable(line, column, "a function term")
-            term = {"const": {"true": True, "false": False}.get(value, value)}
+            if value not in ("true", "false"):
+                # clingo reads web and "web" as different constants (IL2-D13).
+                raise _unparsable(line, column, "a bare symbolic constant")
+            term = {"const": value == "true"}
         elif kind == "string":
             self.take("string")
             term = {"const": _unquote(value, line, column)}

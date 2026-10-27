@@ -50,6 +50,8 @@ MAX_FILE_BYTES = 64 * 1024 * 1024
 _NAME = re.compile(r"[a-z][a-z0-9_]{0,58}")
 _PRIMITIVES = {"Integer": "integer", "String": "string", "Boolean": "boolean"}
 COMPARISONS = (("ge", ">="), ("gt", ">"), ("le", "<="), ("lt", "<"))
+#: The spelling of every comparison predicate name; the adapters' readers match it.
+COMPARISON_NAME = r"(?:gt|lt|ge|le)_t_[A-Za-z0-9_]+"
 
 
 class IlpError(Exception):
@@ -58,6 +60,22 @@ class IlpError(Exception):
     def __init__(self, code: int, message: str) -> None:
         super().__init__(message)
         self.code = code
+
+
+def refusal_name(message: str) -> str:
+    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...`` or ``<name>: ...``."""
+    return message.split(": ")[1] if message.startswith("clause ") else message.split(":")[0]
+
+
+def observed_integers(neutral: dict[str, Any]) -> dict[str, set[int]]:
+    """The integer values each type takes in the neutral form's facts; booleans are not integers."""
+    observed: dict[str, set[int]] = {}
+    types = {row["name"]: row["types"][1:] for row in neutral["predicates"]}
+    for fact in neutral["facts"]:
+        for type_name, value in zip(types[fact["predicate"]], fact["values"], strict=True):
+            if isinstance(value, int) and not isinstance(value, bool):
+                observed.setdefault(type_name, set()).add(value)
+    return observed
 
 
 def canonical_bytes(document: Any) -> bytes:

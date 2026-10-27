@@ -285,6 +285,7 @@ def test_t9_each_recorded_run_replays(tmp_path, invocation):
 
     from gnd import input_policy
     from gnd.export import ilp_asp
+    from gnd.export.ilp import refusal_name
     from gnd.export.ilp_asp import extract_hypothesis
 
     live = LIVE_ROOT / f"invocation-{invocation}"
@@ -333,7 +334,7 @@ def test_t9_each_recorded_run_replays(tmp_path, invocation):
     else:
         refusal = replayed.stderr.decode().strip()
         assert refusal == (live / "import-stderr.txt").read_text().strip()
-        assert outcome["import"] == "refused:" + ilp_asp.refusal_name(refusal)
+        assert outcome["import"] == "refused:" + refusal_name(refusal)
 
 
 # ---------------------------------------------------------------------------
@@ -422,7 +423,7 @@ def test_r6_the_range_and_variable_boundaries_are_admitted(text):
 
 
 def test_r7_the_script_and_the_replay_share_one_refusal_name():
-    from gnd.export.ilp_asp import refusal_name
+    from gnd.export.ilp import refusal_name
 
     assert refusal_name("clause 0: empty-antecedent: nothing is left") == "empty-antecedent"
     assert refusal_name("unparsable: line 1, column 30: nesting deeper than 4") == "unparsable"
@@ -471,4 +472,75 @@ def test_r8_the_constants_table_matches_the_reader():
             assert [type(c) for c in constants] == [kind], (term, reading)
             read[term] = kind
     assert set(read.values()) == {int, str, bool}
-    assert set(read) == {"40", "-3", '"a\\"b"', "web", "true", "false"}
+    assert set(read) == {"40", "-3", '"a\\"b"', "true", "false"}
+
+
+# ---------------------------------------------------------------------------
+# Owner rulings IL2-D13 (a) and IL2-D14 (a), 2026-10-27. Red before the code.
+# ---------------------------------------------------------------------------
+
+def test_d13_a_bare_symbolic_constant_is_refused():
+    assert _refused("wrong :- f_refund_channel(V1,web).\n").endswith("a bare symbolic constant")
+    assert _refused("wrong :- f_refund_channel(V1,cash), f_refund_by(V1,V2).\n").endswith(
+        "a bare symbolic constant")
+
+
+BOOLEAN_NEUTRAL = {"types": [{"name": "t_order", "object_type": "order", "primitive": None},
+                             {"name": "t_flag", "object_type": "flag", "primitive": "boolean"}],
+                   "comparisons": [], "predicates": []}
+
+
+def _boolean_rewrite(text: str, **options: Any) -> dict[str, Any]:
+    from gnd.export.ilp import Column
+    from gnd.export.ilp_rewrite import rewrite
+
+    columns = {"f_order_flag": Column("order_flag", ("order", "flag"), ("t_example", "t_order", "t_flag")),
+               "f_order_of": Column("order_of", ("order",), ("t_example", "t_order"))}
+    return rewrite(_parse(text)["clauses"][0], 0, BOOLEAN_NEUTRAL, columns, **options)
+
+
+def test_d13_a_quoted_boolean_is_refused_for_ilasp_and_coerced_otherwise():
+    from gnd.export.ilp import IlpError
+
+    quoted = 'wrong :- f_order_of(V1), f_order_flag(V1,"true").\n'
+    with pytest.raises(IlpError) as raised:
+        _boolean_rewrite(quoted, boolean_strings=False)
+    assert str(raised.value).startswith("clause 0: constant-spelling: ")
+    bare = 'wrong :- f_order_of(V1), f_order_flag(V1,true).\n'
+    assert _boolean_rewrite(bare, boolean_strings=False)["consequent"]["absence"]["bind"]["flag"] is True
+    assert _boolean_rewrite(quoted)["consequent"]["absence"]["bind"]["flag"] is True
+
+
+def test_d13_only_the_ilasp_entry_keeps_quoted_booleans_strings(tmp_path, monkeypatch):
+    from gnd.export import ilp_learners, ilp_service
+
+    assert {t: e.boolean_strings for t, e in ilp_learners.LEARNERS.items()} == \
+        {"popper": True, "neutral": True, "ilasp": False}
+    seen = []
+    original = ilp_service.rewrite
+
+    def spy(*args, **kwargs):
+        seen.append(kwargs.get("boolean_strings"))
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(ilp_service, "rewrite", spy)
+    result, _out = _import(tmp_path, CORPUS["accept"][0]["text"], [COVERED])
+    assert result.returncode == 0, result.stderr
+    assert seen == [False]
+
+
+@pytest.mark.parametrize("value", [2**31, -2**31 - 1])
+def test_d14_an_integer_clingo_cannot_hold_is_unrepresentable(value):
+    from gnd.export import ilp_asp
+    from gnd.export.ilp import IlpError
+
+    with pytest.raises(IlpError) as raised:
+        ilp_asp.context_fact({"example": "w", "predicate": "f_refund_amount", "values": [1, value]})
+    assert raised.value.code == 3 and str(raised.value).startswith("unrepresentable: ")
+
+
+def test_d14_the_range_bounds_render():
+    from gnd.export import ilp_asp
+
+    fact = {"example": "w", "predicate": "f_refund_amount", "values": [2**31 - 1, -2**31]}
+    assert ilp_asp.context_fact(fact) == "f_refund_amount(2147483647,-2147483648).\n"

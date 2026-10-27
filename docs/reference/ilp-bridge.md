@@ -278,16 +278,22 @@ exit 3 and `clause K: <name>`:
 |---|---|
 | `40`, `-3` | an integer |
 | `"a\"b"` | a string; the escapes are `\\`, `\"` and `\n` |
-| `web` | a string, the name itself |
 | `true`, `false` | a boolean |
 
-An exported string with a control character other than a newline has no ASP
-spelling, and the export refuses it as `unrepresentable`.
+Any other bare name, such as `web`, is refused `unparsable`: clingo reads
+`web` and `"web"` as different constants. On a boolean role a quoted
+`"true"` or `"false"` is refused `constant-spelling`, because the export
+writes booleans bare (IL2-D13).
+
+The export refuses as `unrepresentable` an exported string with a control
+character other than a newline, which has no ASP spelling, and an integer
+outside clingo's 32-bit range, which clingo would wrap (IL2-D14).
 
 **Read differently by clingo.** The reader refuses these with exit 3
 `unparsable` and a line and column, because clingo would read them otherwise:
 
 - an integer outside clingo's 32-bit range, or one with a leading zero;
+- a bare name other than `true` or `false` (above);
 - an identifier that starts with underscores and then a lowercase letter
   (`_cash`, a constant to clingo), or one with a prime (`V'`);
 - a block comment, `%* … *%`;

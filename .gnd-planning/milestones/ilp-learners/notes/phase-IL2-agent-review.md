@@ -12,8 +12,9 @@ clingo read-only.
 
 **Edited evidence.** The report is the agent's returned text, byte for byte,
 except that its scratch directory's absolute path is replaced by `<scratch>`
-and the worktree's by `<repo>` (IL-R10). The raw return was not retained in
-the repository.
+and the worktree's by `<repo>` (IL-R10). One quoted grep pattern, the home
+directory root, is replaced by `<home-root>`, because the milestone's privacy
+test refuses that string. The raw return was not retained in the repository.
 
 ## Report (as returned)
 
@@ -139,7 +140,7 @@ I refer to that directory as `$S` below. `CL` is the scratch clingo Python (`...
   - import-stderr.txt matches the outcome `refused:empty-antecedent` with exit 3;
   - the null process is accepted only with the IL2-F6 note and `completed`.
 - **run_ilasp.py:** `environment(ilasp=False)` now omits `PYTHONHOME` and `DYLD_FRAMEWORK_PATH` (IL2-F6 fix 1). The evaluator reads clingo's JSON `Result` and exits on anything other than SAT or UNSAT.
-- **No leaks:** no home path, user name or scratch path appears in the committed IL2 evidence (grepped for `/Users/`, `/private/tmp`, `claude-501`, `scratchpad` and the user name).
+- **No leaks:** no home path, user name or scratch path appears in the committed IL2 evidence (grepped for `<home-root>`, `/private/tmp`, `claude-501`, `scratchpad` and the user name).
 - **T9 can fail:** it fails on extraction drift, an import exit change, or a refusal-text change.
 
 ## Disposition (the author's, 2026-10-27)

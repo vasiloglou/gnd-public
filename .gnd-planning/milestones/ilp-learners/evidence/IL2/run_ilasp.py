@@ -34,7 +34,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from gnd.export.ilp_asp import extract_hypothesis, refusal_name, split_task
+from gnd.export.ilp import refusal_name
+from gnd.export.ilp_asp import extract_hypothesis, split_task
 from gnd.process import ProcessLimits, run_bounded_process
 
 REPO = Path(__file__).resolve().parents[5]

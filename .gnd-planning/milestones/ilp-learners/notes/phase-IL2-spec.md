@@ -816,3 +816,57 @@ the run record's coverage comes from an independent evaluator, as
     proposal is `adapter_version` 1 with no moved goldens.
   - **(b):** keep the export, and record a boundary row.
   - **Why it is the owner's:** it is a rendering change under IL-R9.
+
+### Owner ruling on IL2-D13 and IL2-D14 (2026-10-27)
+
+**Owner mark, 2026-10-27:** "IL2-D13 (a) and IL2-D14 (a): approve both as
+proposed. Implement them, then continue IL2 with step 5."
+
+- **IL2-D13 (a):**
+  - The reader refuses a bare symbolic constant other than `true`/`false` as
+    `unparsable`.
+  - For `--target ilasp`, check 9 refuses a quoted `"true"`/`"false"` on a
+    boolean role as `constant-spelling`, instead of coercing it. Popper and
+    neutral imports keep the coercion. The registry entry carries this as
+    `boolean_strings`.
+  - **The changed corpus answer:** T5 case `k4-symbolic`
+    (`f_refund_channel(V1,web)`) was approved as the string "web". It moves
+    to the `unparsable` cases, keeping its prior answer and this ruling in
+    the case.
+- **IL2-D14 (a):** the export refuses an integer outside [-2^31, 2^31-1] as
+  `unrepresentable`, and writes nothing. In-range exports are byte-identical,
+  so `adapter_version` stays 1 and no golden moves.
+
+**Implemented, 2026-10-27.** The new tests failed before the code: 7 failed
+and 1 passed, including T6 `k4-symbolic` and the T12 constants half. After
+the code, the gate is 766 passed, 20 deselected.
+
+### Step 5: the refactoring review (2026-10-27)
+
+**The question:** what did IL2 reveal about existing structure that should
+change? IL2 added a second learner adapter beside Popper, and three pieces
+of it answered a question the first adapter already answered.
+
+**Refactors EXECUTED.** All three are behavior-preserving. T1 (the task
+goldens under two hash seeds), IL1's T9 Popper replays and IL2's T9 replay
+are unchanged and green.
+
+1. **Collecting each type's observed integers** appeared twice:
+   `ilp_popper._threshold_rows` and `ilp_asp._domains` each built the same
+   per-type integer collection, with the same rule that booleans are not
+   integers. It is now `gnd.export.ilp.observed_integers`. The RF6 delta
+   records the moved rows: 4 removed from `ilp_popper`, IL2's own
+   `ilp_asp` rows dropped, and 7 occurrences added in `ilp`.
+2. **The comparison-name spelling** was written out as a regex in both
+   readers. It is now `gnd.export.ilp.COMPARISON_NAME`, beside
+   `COMPARISONS`, and `ilp_popper._THRESHOLD` and `ilp_asp._COMPARISON` are
+   built from it. The pattern text is unchanged.
+3. **`refusal_name`** is learner-agnostic, but the step 4 fix placed it in
+   the ILASP adapter. It now lives in `gnd.export.ilp`. It had no callers
+   outside this phase, so no alias is kept.
+
+**Seen and not changed:** IL1's `evidence/IL1/run_popper.py` keeps its own
+copy of the refusal parse. That script is retained evidence of IL1's runs,
+cited by digest in the IL1 record, so editing it would change recorded
+bytes. A later learner's run script imports `gnd.export.ilp.refusal_name`
+instead.

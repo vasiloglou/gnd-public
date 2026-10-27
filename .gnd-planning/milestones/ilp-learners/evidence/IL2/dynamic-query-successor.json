@@ -2,9 +2,64 @@
  "schema_version": 1,
  "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL1/dynamic-query-successor.json",
  "predecessor_sha256": "7ea8941e536f008d025486b260f5900788fccf637c9edf79ce8eab3ee1dc1128",
- "reason": "ilp-learners IL2 (spec r1, approved 2026-10-27): the ILASP adapter. The rows are the task renderer's neutral-form reads and annotations, the ASP hypothesis reader's token reads and annotations and the hypothesis extractor, all in gnd.export.ilp_asp, with the step 4 review's comparison-shape check (IL2-F9); the Popper canonical threshold-name check (IL2-D8 (o)) adds no row. Syntax census only; no model-query exception widening.",
- "removed": [],
+ "reason": "ilp-learners IL2 (spec r1, approved 2026-10-27): the ILASP adapter. The rows are the task renderer's neutral-form reads and annotations, the ASP hypothesis reader's token reads and annotations and the hypothesis extractor, all in gnd.export.ilp_asp, with the step 4 review's comparison-shape check (IL2-F9), less the constant lookup IL2-D13 (a) removed; the Popper canonical threshold-name check (IL2-D8 (o)) adds no row. The step 5 refactor moves the per-type integer collection of ilp_popper._threshold_rows and ilp_asp._domains into gnd.export.ilp.observed_integers. Syntax census only; no model-query exception widening.",
+ "removed": [
+  [
+   "src/gnd/export/ilp_popper.py",
+   "_threshold_rows",
+   "dict[str, set[int]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_popper.py",
+   "_threshold_rows",
+   "row['types'][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_popper.py",
+   "_threshold_rows",
+   "set[int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_popper.py",
+   "_threshold_rows",
+   "types[fact['predicate']]",
+   1
+  ]
+ ],
  "added": [
+  [
+   "src/gnd/export/ilp.py",
+   "observed_integers",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp.py",
+   "observed_integers",
+   "dict[str, set[int]]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp.py",
+   "observed_integers",
+   "row['types'][1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp.py",
+   "observed_integers",
+   "set[int]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp.py",
+   "observed_integers",
+   "types[fact['predicate']]",
+   1
+  ],
   [
    "src/gnd/export/ilp_asp.py",
    "__init__",
@@ -28,12 +83,6 @@
    "_domains",
    "dict[str, Any]",
    2
-  ],
-  [
-   "src/gnd/export/ilp_asp.py",
-   "_domains",
-   "dict[str, set[int]]",
-   1
   ],
   [
    "src/gnd/export/ilp_asp.py",
@@ -74,25 +123,7 @@
   [
    "src/gnd/export/ilp_asp.py",
    "_domains",
-   "row['types'][1:]",
-   1
-  ],
-  [
-   "src/gnd/export/ilp_asp.py",
-   "_domains",
-   "set[int]",
-   1
-  ],
-  [
-   "src/gnd/export/ilp_asp.py",
-   "_domains",
    "tuple[str, list[str], list[int], list[dict[str, Any]]]",
-   1
-  ],
-  [
-   "src/gnd/export/ilp_asp.py",
-   "_domains",
-   "types[fact['predicate']]",
    1
   ],
   [
@@ -322,14 +353,8 @@
    "term",
    "dict[str, Any]",
    1
-  ],
-  [
-   "src/gnd/export/ilp_asp.py",
-   "term",
-   "{'true': True, 'false': False}.get(value, value)",
-   1
   ]
  ],
- "result_distinct_rows": 6636,
- "result_occurrences": 8307
+ "result_distinct_rows": 6632,
+ "result_occurrences": 8305
 }

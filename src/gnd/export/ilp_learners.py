@@ -39,6 +39,9 @@ class Learner:
     contract: str
     #: ``export.json``'s ``adapter_version`` for this target.
     adapter_version: str
+    #: Whether check 9 reads a ``"true"``/``"false"`` string on a boolean role as
+    #: the boolean; ASP spells booleans bare, so ILASP's quoted ones are refused (IL2-D13).
+    boolean_strings: bool = True
 
 
 LEARNERS: dict[str, Learner] = {
@@ -50,7 +53,8 @@ LEARNERS: dict[str, Learner] = {
                        adapter_version=ilp.ADAPTER_VERSION),
     "ilasp": Learner(target="ilasp", learner="ilasp", method="ilp-ilasp", exports=True,
                      render=ilp_asp.render, parse=ilp_asp.parse_hypothesis,
-                     contract="labelled-clauses", adapter_version=ilp_asp.ADAPTER_VERSION),
+                     contract="labelled-clauses", adapter_version=ilp_asp.ADAPTER_VERSION,
+                     boolean_strings=False),
 }
 EXPORT_TARGETS = tuple(target for target, entry in LEARNERS.items() if entry.exports)
 IMPORT_TARGETS = tuple(target for target, entry in LEARNERS.items()

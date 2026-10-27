@@ -128,15 +128,17 @@ silently:
 | 11 | `--out` already exists; nothing was written |
 | 3 | invalid model or population: over 10 MiB, written for another model, or a file name that cannot be an evidence ref |
 | 64 | usage error |
-| 66 | a missing input file |
+| 66 | a missing input file, or a missing reference population file the model declares |
 | 70 | internal defect |
-| 74 | an output path is a symbolic link, or a write failed |
+| 74 | an output path is a symbolic link, or a write failed; or a declared reference population file (or its directory) is a symbolic link, not a regular file, unreadable or over its size cap |
 
 **How values and references are read:**
 - **Values are compared by `gnd check`'s typed identity**, so `1` and `1.0` in a
   Number role are one value, exactly as the checker sees them.
 - **Reference populations** a model declares are bound as `gnd check` binds
-  them, and the scan covers the combined facts.
+  them, and the scan covers the combined facts. A reference file whose digest
+  differs exits 3; one that is missing exits 66 and one that is linked exits 74,
+  as `gnd evolve` refuses them.
 
 **Paths and output files:**
 - `--out`, `--report`, MODEL and POPULATION must be four different paths

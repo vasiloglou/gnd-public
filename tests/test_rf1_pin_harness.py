@@ -26,7 +26,7 @@ from support.rf1_pins import (
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = PINS_ROOT / "goldens.sha256"
 # The manifest's own digest: changing any golden edits this line too (SM1).
-MANIFEST_SHA256 = "dab076b1da9d89ca86ad7ef3ea3a5e07720ca152eaf20f2b2c1a1e58b81387f0"  # IK5 adds `gnd export ilp` and `gnd import ilp-rules` to the CLI goldens
+MANIFEST_SHA256 = "9480bd67bcbbe7e25bf598125d1464512342ac287eaf0874a2c28605c3c1125c"  # IKE-Q3 names the reference exits in `gnd discover`'s help
 
 _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
 tool = importlib.util.module_from_spec(_SPEC)

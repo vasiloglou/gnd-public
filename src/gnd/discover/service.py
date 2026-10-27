@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from gnd import resolve_version
+from gnd.artifacts import ArtifactError
 from gnd.checker import check
 from gnd.discover import output
 from gnd.discover.candidates import (
@@ -354,6 +355,16 @@ def _cmd_discover(
     except (ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError) as error:
         _stderr(str(error))
         return EXIT_ILL_FORMED
+    except ArtifactError as error:
+        # The reference binder is discover's only artifact read, and it passes
+        # its own refusal through (IK4-Q2-R1). IKE-Q3 D1-A: evolve's exits, a
+        # missing file 66 and any other refused path 74, judged by the cause
+        # chain as evolve judges it.
+        _stderr(f"reference population: {error}")
+        cause: BaseException | None = error
+        while cause is not None and not isinstance(cause, FileNotFoundError):
+            cause = cause.__cause__
+        return EXIT_NO_INPUT if cause is not None else EXIT_IO
     except DiscoveryDefect as error:
         _stderr(f"internal: {error}")
         return EXIT_INTERNAL

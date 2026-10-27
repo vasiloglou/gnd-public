@@ -5,7 +5,7 @@
 - HEAD: `ab766a68b24a5b451ebb4bb9249354e7b091bd4f` plus uncommitted PL13a changes
 - `shasum -a 256 src/gnd/export/pyrel_rules.py`: `906bd212cdeadc1226735f39d55006e44a6af6f71cb683ae70856b830b9a6e8c`
 - Also read: `tests/test_pyrel_rules_families.py` (`c0407618…`), `expected.json` (`4f1e6b29…`)
-- Scratch (models, populations, harness): `/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/pl13a-review/`
+- Scratch (models, populations, harness): `<scratch>/pl13a-review/`
   - `cmp.py MODEL POP...` renders the DuckDB program, runs it with the pinned interpreter, and prints the non-pass verdicts from `gnd.api.check(..., unredacted=True)` next to the program's.
 - Baseline: `uv run pytest -q -m pyrel_oracle tests/test_pyrel_rules_families.py tests/test_pyrel_rules.py::test_acyclic_over_a_long_chain_finishes_in_time` gives 64 passed (67.6 s; the 501-edge chain took 8.4 s).
 

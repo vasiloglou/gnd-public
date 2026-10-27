@@ -13,7 +13,7 @@ the session.
 
 Reviewed `src/gnd/export/pyrel_rules.py` sha256 `65057861a9a103d9b621fc7d2f58b8a7cc36e46b0e319fb9b21c37369945028e`, checked at start and end, unchanged. I wrote nothing under src/, tests/ or docs/. `git status` now also shows ` M docs/runtimes/pyrel.md`, which I did not touch; something else running concurrently changed it.
 
-Scratch directory: `S=/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/fd814110-b392-4c16-8294-2db75ff438c9/scratchpad/pl14-review`. The harness `$S/h.py` + `$S/common.py` renders with `render()`, runs `tutorials/runtimes/.venv/bin/python -I`, and compares against `api.check(unredacted=True)` using the tests' own `_assert_agrees`. Every case is in `$S/cases/<name>/` (`model.orm.json`, `pop.json`, `rules.py`).
+Scratch directory: `S=<scratch>/pl14-review`. The harness `$S/h.py` + `$S/common.py` renders with `render()`, runs `tutorials/runtimes/.venv/bin/python -I`, and compares against `api.check(unredacted=True)` using the tests' own `_assert_agrees`. Every case is in `$S/cases/<name>/` (`model.orm.json`, `pop.json`, `rules.py`).
 
 ## Findings
 

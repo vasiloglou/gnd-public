@@ -1781,8 +1781,8 @@ src/gnd/synth/oracle/state.py:518: in expected_state
                                    ^^^^^^^^^^^^^^^^
 E   NameError: name '_xor_single_role' is not defined
 ----------------------------- Captured stdout call -----------------------------
-OK: wrote 1 conforming population(s) under <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4299/test_sidecar_swapped_next_to_a0/o/one
-  seed 1: <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4299/test_sidecar_swapped_next_to_a0/o/one/conforming/ring.orm.conforming.seed1.json (band 0, conforming)
+OK: wrote 1 conforming population(s) under <tmp>/pytest-4299/test_sidecar_swapped_next_to_a0/o/one
+  seed 1: <tmp>/pytest-4299/test_sidecar_swapped_next_to_a0/o/one/conforming/ring.orm.conforming.seed1.json (band 0, conforming)
   pool: conforming/pool.0dc765993743b91d.pool.json (0dc765993743b91d)
 _________________ test_sidecar_paths_are_relative_not_absolute _________________
 tests/test_synth_conforming.py:343: in test_sidecar_paths_are_relative_not_absolute

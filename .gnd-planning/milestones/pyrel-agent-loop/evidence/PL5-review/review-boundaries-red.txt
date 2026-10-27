@@ -3,7 +3,7 @@ FFFFFF                                                                   [100%]
 =================================== FAILURES ===================================
 __________________ test_reordered_excerpt_is_refused[bookrec] __________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1162/test_reordered_excerpt_is_refu0')
+tmp_path = PosixPath('<tmp>/pytest-1162/test_reordered_excerpt_is_refu0')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107cb0150>
 domain = 'bookrec'
 
@@ -31,7 +31,7 @@ E       Failed: DID NOT RAISE AssertionError
 tests/test_pyrel_learning_path.py:210: Failed
 __________________ test_reordered_excerpt_is_refused[expense] __________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1162/test_reordered_excerpt_is_refu1')
+tmp_path = PosixPath('<tmp>/pytest-1162/test_reordered_excerpt_is_refu1')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107ca0f10>
 domain = 'expense'
 
@@ -59,7 +59,7 @@ E       Failed: DID NOT RAISE AssertionError
 tests/test_pyrel_learning_path.py:210: Failed
 _ test_evolution_commands_preserve_failure_in_reader_shell[preview-docs/bookrec/07-native.md] _
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1162/test_evolution_commands_preser0')
+tmp_path = PosixPath('<tmp>/pytest-1162/test_evolution_commands_preser0')
 path = 'docs/bookrec/07-native.md', operation = 'preview'
 
     @pytest.mark.parametrize('path', CHAPTERS)
@@ -87,7 +87,7 @@ E        +  where 0 = CompletedProcess(args=['bash', '-c', 'gnd evolve preview b
 tests/test_pyrel_learning_path.py:229: AssertionError
 _ test_evolution_commands_preserve_failure_in_reader_shell[preview-docs/expense/04-native.md] _
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1162/test_evolution_commands_preser1')
+tmp_path = PosixPath('<tmp>/pytest-1162/test_evolution_commands_preser1')
 path = 'docs/expense/04-native.md', operation = 'preview'
 
     @pytest.mark.parametrize('path', CHAPTERS)
@@ -115,7 +115,7 @@ E        +  where 0 = CompletedProcess(args=['bash', '-c', 'gnd evolve preview e
 tests/test_pyrel_learning_path.py:229: AssertionError
 _ test_evolution_commands_preserve_failure_in_reader_shell[apply-docs/bookrec/07-native.md] _
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1162/test_evolution_commands_preser2')
+tmp_path = PosixPath('<tmp>/pytest-1162/test_evolution_commands_preser2')
 path = 'docs/bookrec/07-native.md', operation = 'apply'
 
     @pytest.mark.parametrize('path', CHAPTERS)
@@ -142,7 +142,7 @@ E        +  where 0 = CompletedProcess(args=['bash', '-c', 'gnd evolve apply boo
 tests/test_pyrel_learning_path.py:229: AssertionError
 _ test_evolution_commands_preserve_failure_in_reader_shell[apply-docs/expense/04-native.md] _
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1162/test_evolution_commands_preser3')
+tmp_path = PosixPath('<tmp>/pytest-1162/test_evolution_commands_preser3')
 path = 'docs/expense/04-native.md', operation = 'apply'
 
     @pytest.mark.parametrize('path', CHAPTERS)

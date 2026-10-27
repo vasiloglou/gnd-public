@@ -3,7 +3,7 @@
 set -euo pipefail
 F="$1"; mkdir -p "$F"; cd "$F"
 set -x
-git clone -q /Users/nikolaosvasiloglou/github-repos/gnd-public gnd-public
+git clone -q <repo> gnd-public
 git -C gnd-public log --oneline -1
 uv venv gnd-env --python 3.13
 uv pip install --python gnd-env/bin/python ./gnd-public

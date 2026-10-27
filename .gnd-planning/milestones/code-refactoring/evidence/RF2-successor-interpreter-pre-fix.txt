@@ -9,7 +9,7 @@ tests/support/rf2_session_pins.py:170: in assert_successor
            ^^^^^^^^^^^^^^^^^^
 E   AssertionError: RF2 successor changed: v1-fresh
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4222/test_session_fresh_1_0/EXP-401-session/SPEC.md
+CREATED <tmp>/pytest-4222/test_session_fresh_1_0/EXP-401-session/SPEC.md
   declares Q1: Did the bounded session establish the contract?
 =========================== short test summary info ============================
 FAILED tests/test_rf1_session_pins.py::test_session_fresh[1] - AssertionError...

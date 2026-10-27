@@ -90,10 +90,10 @@ runs, with each interpreter's bin explicitly prepended to PATH (the v3 fixture
 declares the literal `python` executable):
 
 ```
-env PATH=/Users/nikolaosvasiloglou/github-repos/gnd-public/.venv/bin:$PATH .venv/bin/python -m pytest -q tests/test_rf1_session_pins.py tests/test_rf2_instrument.py --tb=short
+env PATH=<repo>/.venv/bin:$PATH .venv/bin/python -m pytest -q tests/test_rf1_session_pins.py tests/test_rf2_instrument.py --tb=short
 43 passed in 32.61s
 
-env PATH=/private/tmp/gnd-pr19-ci/dev313/bin:$PATH PYTHONPATH=/Users/nikolaosvasiloglou/github-repos/gnd-public/src /private/tmp/gnd-pr19-ci/dev313/bin/python -m pytest -q tests/test_rf1_session_pins.py tests/test_rf2_instrument.py --tb=short
+env PATH=/private/tmp/gnd-pr19-ci/dev313/bin:$PATH PYTHONPATH=<repo>/src /private/tmp/gnd-pr19-ci/dev313/bin/python -m pytest -q tests/test_rf1_session_pins.py tests/test_rf2_instrument.py --tb=short
 43 passed in 33.53s
 ```
 

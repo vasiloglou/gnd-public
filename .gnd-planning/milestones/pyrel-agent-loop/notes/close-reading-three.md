@@ -4,7 +4,7 @@
 
 B1. A username is committed in the evolve recordings. The string `user:<user>` (redacted here) (the owner's handle) is the proposal `audit.actor_id` in
 `src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/turn-01.jsonl:107,167,214` and `run-2/turn-01.jsonl:99,105,168,261`.
-The leak search missed it because its needles are only `home.name` (`nikolaosvasiloglou`), path prefixes, key prefixes and temp-dir parts (`tools/record_skill_sessions.py:179-183`).
+The leak search missed it because its needles are only `home.name` (`<user>`), path prefixes, key prefixes and temp-dir parts (`tools/record_skill_sessions.py:179-183`).
 The README (`skill-sessions-evolve/README.md`, "What was kept") implies the redaction is complete. The handle is not in docs/ or the replay assets.
 Fix: redact it to `<user>` (the manifest records the change, as `rebound` does), add the git/email local part to the needles, and disclose the redaction.
 

@@ -4,7 +4,7 @@ FF                                                                       [100%]
 =================================== FAILURES ===================================
 _______ test_invalid_receipt_destination_refuses_before_execution[True] ________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-713/test_invalid_receipt_destinati0')
+tmp_path = PosixPath('<tmp>/pytest-of-<operator>/pytest-713/test_invalid_receipt_destinati0')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108897ad0>
 existing = True
 
@@ -24,7 +24,7 @@ tools/run_tutorials.py:156: in main
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-a = ([PosixPath('<checkout>/docs/bookrec/01-model.md'), PosixPath('/Users/nikolaosv...nd-docs-bookrec-dyic188_'), PosixPath('<checkout>/.venv/bin/python'), 'offline')
+a = ([PosixPath('<checkout>/docs/bookrec/01-model.md'), PosixPath('<home>...nd-docs-bookrec-dyic188_'), PosixPath('<checkout>/.venv/bin/python'), 'offline')
 k = {'receipts': []}
 
 >   monkeypatch.setattr(runner,'run_pages',lambda *a,**k:pytest.fail('executed before receipt validation'))
@@ -34,7 +34,7 @@ E   Failed: executed before receipt validation
 tests/test_pyrel_tutorial_experience.py:102: Failed
 _______ test_invalid_receipt_destination_refuses_before_execution[False] _______
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-<operator>/pytest-713/test_invalid_receipt_destinati1')
+tmp_path = PosixPath('<tmp>/pytest-of-<operator>/pytest-713/test_invalid_receipt_destinati1')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1088e9f90>
 existing = False
 
@@ -54,7 +54,7 @@ tools/run_tutorials.py:156: in main
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-a = ([PosixPath('<checkout>/docs/bookrec/01-model.md'), PosixPath('/Users/nikolaosv...nd-docs-bookrec-jbci_l05'), PosixPath('<checkout>/.venv/bin/python'), 'offline')
+a = ([PosixPath('<checkout>/docs/bookrec/01-model.md'), PosixPath('<home>...nd-docs-bookrec-jbci_l05'), PosixPath('<checkout>/.venv/bin/python'), 'offline')
 k = {'receipts': []}
 
 >   monkeypatch.setattr(runner,'run_pages',lambda *a,**k:pytest.fail('executed before receipt validation'))

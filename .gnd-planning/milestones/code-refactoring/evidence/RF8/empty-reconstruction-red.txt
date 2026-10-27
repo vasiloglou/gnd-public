@@ -8,7 +8,7 @@ tests/test_rf8_sessions.py:116: in test_empty_reconstruction_returns_state_and_p
            ^^^^^^^^^^^^^^^^^^^^^^^^
 E   AttributeError: 'NoneType' object has no attribute 'next_attempt_index'
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu0/EXP-401-session/SPEC.md
+CREATED <tmp>/pytest-4499/test_empty_reconstruction_retu0/EXP-401-session/SPEC.md
   declares Q1: Did the bounded session establish the contract?
 ________ test_empty_reconstruction_returns_state_and_public_identity[2] ________
 tests/test_rf8_sessions.py:116: in test_empty_reconstruction_returns_state_and_public_identity
@@ -16,7 +16,7 @@ tests/test_rf8_sessions.py:116: in test_empty_reconstruction_returns_state_and_p
            ^^^^^^^^^^^^^^^^^^^^^^^^
 E   AttributeError: 'NoneType' object has no attribute 'next_attempt_index'
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu1/EXP-703-constraint-acceptance/SPEC.md
+CREATED <tmp>/pytest-4499/test_empty_reconstruction_retu1/EXP-703-constraint-acceptance/SPEC.md
   declares Q1: Did the public session meet its declared acceptance relation?
 ________ test_empty_reconstruction_returns_state_and_public_identity[6] ________
 tests/test_rf8_sessions.py:116: in test_empty_reconstruction_returns_state_and_public_identity
@@ -24,7 +24,7 @@ tests/test_rf8_sessions.py:116: in test_empty_reconstruction_returns_state_and_p
            ^^^^^^^^^^^^^^^^^^^^^^^^
 E   AttributeError: 'NoneType' object has no attribute 'next_attempt_index'
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu2/EXP-910-rf1-v6/SPEC.md
+CREATED <tmp>/pytest-4499/test_empty_reconstruction_retu2/EXP-910-rf1-v6/SPEC.md
   declares Q1: Does the RF1 pinned session replay?
 ________ test_empty_reconstruction_returns_state_and_public_identity[8] ________
 src/gnd/artifacts.py:503: in _open_root
@@ -33,7 +33,7 @@ src/gnd/artifacts.py:503: in _open_root
 ../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/pathlib/__init__.py:661: in lstat
     return os.lstat(self)
            ^^^^^^^^^^^^^^
-E   FileNotFoundError: [Errno 2] No such file or directory: '<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/runs/empty/judgment-authority'
+E   FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/runs/empty/judgment-authority'
 
 The above exception was the direct cause of the following exception:
 tests/test_rf8_sessions.py:115: in test_empty_reconstruction_returns_state_and_public_identity
@@ -52,9 +52,9 @@ src/gnd/artifacts.py:910: in read_regular_bounded
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 src/gnd/artifacts.py:505: in _open_root
     raise ArtifactError(f"artifact root {root} could not be inspected: {error}") from error
-E   gnd.artifacts.ArtifactError: artifact root <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/runs/empty/judgment-authority could not be inspected: [Errno 2] No such file or directory: '<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/runs/empty/judgment-authority'
+E   gnd.artifacts.ArtifactError: artifact root <tmp>/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/runs/empty/judgment-authority could not be inspected: [Errno 2] No such file or directory: '<tmp>/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/runs/empty/judgment-authority'
 ----------------------------- Captured stdout call -----------------------------
-CREATED <temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/SPEC.md
+CREATED <tmp>/pytest-4499/test_empty_reconstruction_retu4/v8/experiment/EXP-715-corpus/SPEC.md
   declares Q1: Does the candidate meet mechanics and the saved policy?
 =========================== short test summary info ============================
 FAILED tests/test_rf8_sessions.py::test_empty_reconstruction_returns_state_and_public_identity[1]

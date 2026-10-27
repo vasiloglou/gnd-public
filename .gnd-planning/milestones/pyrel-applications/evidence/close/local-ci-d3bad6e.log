@@ -2,8 +2,8 @@
 Using CPython 3.13.12
 Creating virtual environment at: .venv
 Resolved 32 packages in 0.72ms
-   Building get-nick-done @ file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged
-      Built get-nick-done @ file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged
+   Building get-nick-done @ file://<scratch>/ci-merged
+      Built get-nick-done @ file://<scratch>/ci-merged
 Prepared 1 package in 3ms
 Installed 30 packages in 311ms
  + annotated-types==0.8.0
@@ -12,7 +12,7 @@ Installed 30 packages in 311ms
  + deepmerge==3.0.1
  + duckdb==1.5.5
  + faker==40.36.0
- + get-nick-done==0.1.0 (from file:///private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged)
+ + get-nick-done==0.1.0 (from file://<scratch>/ci-merged)
  + iniconfig==2.3.0
  + jinja2==3.1.6
  + jsonschema==4.26.0
@@ -49,24 +49,24 @@ release/get_nick_done-0.1.0.tar.gz: OK
 comparison/get_nick_done-0.1.0-py3-none-any.whl: OK
 === RESULT candidate-build exit=0 (1s)
 === STEP gnd-install
-claude/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/.claude/skills
+claude/project -> <scratch>/ci-merged/.claude/skills
   placed 16 file(s)
-codex/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/.codex/skills
+codex/project -> <scratch>/ci-merged/.codex/skills
   placed 16 file(s)
 === RESULT gnd-install exit=0 (1s)
 === STEP gnd-doctor
-executable directory: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/.venv/bin (on PATH)
+executable directory: <scratch>/ci-merged/.venv/bin (on PATH)
 checking both scopes regardless of the flags given (skill precedence is user level over project level)
-claude/global -> /Users/nikolaosvasiloglou/.claude/skills
+claude/global -> <home>/.claude/skills
   not installed
-codex/global -> /Users/nikolaosvasiloglou/.codex/skills
+codex/global -> <home>/.codex/skills
   not installed
-  note: /Users/nikolaosvasiloglou/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
-claude/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/.claude/skills
+  note: <home>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+claude/project -> <scratch>/ci-merged/.claude/skills
   installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-14T03:35:13Z): current=16
-codex/project -> /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/.codex/skills
+codex/project -> <scratch>/ci-merged/.codex/skills
   installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-14T03:35:13Z): current=16
-  note: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+  note: <scratch>/ci-merged/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
 === RESULT gnd-doctor exit=0 (0s)
 === STEP collect
 
@@ -316,11 +316,11 @@ tests/test_development_scaffold.py:117: in test_reference_closure_and_declared_b
     check_references(ROOT)
 tests/test_development_scaffold.py:50: in check_references
     assert (path.parent / href.split('#')[0]).exists(), (path, href)
-E   AssertionError: (PosixPath('/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/docs/pyrel-apps.md'), 'calculate, ...')
+E   AssertionError: (PosixPath('<scratch>/ci-merged/docs/pyrel-apps.md'), 'calculate, ...')
 E   assert False
 E    +  where False = exists()
-E    +    where exists = (PosixPath('/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/docs') / 'calculate, ...').exists
-E    +      where PosixPath('/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/docs') = PosixPath('/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/docs/pyrel-apps.md').parent
+E    +    where exists = (PosixPath('<scratch>/ci-merged/docs') / 'calculate, ...').exists
+E    +      where PosixPath('<scratch>/ci-merged/docs') = PosixPath('<scratch>/ci-merged/docs/pyrel-apps.md').parent
 ___________ test_connected_three_atom_join_meets_the_declared_bound ____________
 tests/test_guarded_corpus.py:173: in test_connected_three_atom_join_meets_the_declared_bound
     assert result.returncode == 0, result.stdout + result.stderr
@@ -329,13 +329,13 @@ E     Traceback (most recent call last):
 E       File "<string>", line 4, in <module>
 E         _guarded_timing_summary(_guarded_timing_samples())
 E         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E       File "/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/tests/test_guarded_corpus.py", line 159, in _guarded_timing_summary
+E       File "<scratch>/ci-merged/tests/test_guarded_corpus.py", line 159, in _guarded_timing_summary
 E         assert medians[1] <= summary['limit'], f'scaling regression: {summary}'
 E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 E     AssertionError: scaling regression: {'samples': [[0.13867674162611365, 0.1256231501698494, 0.12391056660562753, 0.10974639160558582, 0.11597949161659926, 0.12381520001217723, 0.11066692476160825, 0.10793195818550885, 0.1061740999808535], [0.2602064913837239, 0.2619846668327227, 0.2627607248025015, 0.2479612251976505, 0.27391945025883613, 0.25771739140618594, 0.22335973323788494, 0.22526298339944334, 0.2231786000309512]], 'medians': [0.11597949161659926, 0.25771739140618594], 'relative_mad': [0.06838342605644908, 0.03785606456476524], 'ratio': 2.222094508382039, 'limit': 0.2551548815565184}
 E     
 E   assert 1 == 0
-E    +  where 1 = CompletedProcess(args=['/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-9...ive_mad\': [0.06838342605644908, 0.03785606456476524], \'ratio\': 2.222094508382039, \'limit\': 0.2551548815565184}\n').returncode
+E    +  where 1 = CompletedProcess(args=['<scratch>...ive_mad\': [0.06838342605644908, 0.03785606456476524], \'ratio\': 2.222094508382039, \'limit\': 0.2551548815565184}\n').returncode
 ____________________ test_mutation_table_rows_of_their_own _____________________
 tests/test_rf1_pin_harness.py:147: in test_mutation_table_rows_of_their_own
     tool.validate_rows(ROOT, tool.DEFAULT_SOURCE, table["rows"])
@@ -406,7 +406,7 @@ E     - src/gnd/export/souffle_runtime.py
 E     + src/gnd/population_shape.py)
 =============================== warnings summary ===============================
 tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
-  /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public/6726fce8-912b-4293-91a4-10eb6369d27d/scratchpad/ci-merged/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
+  <scratch>/ci-merged/src/gnd/exp/session_eval.py:1291: UserWarning: Pydantic serializer warnings:
     PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
     PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
     PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
@@ -430,7 +430,7 @@ FAILED tests/test_rf7_structure.py::test_complete_routing_and_dirty_controls
 9 failed, 14593 passed, 501 deselected, 1 warning in 1836.54s (0:30:36)
 === RESULT regression-full exit=1 (1839s)
 === STEP installed
-..../private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-944/candidate-release0/base/lib/python3.13/site-packages/gnd/__init__.py
+....<tmp>/pytest-944/candidate-release0/base/lib/python3.13/site-packages/gnd/__init__.py
 
 ......................................................................... [  3%]
 ........................................................................ [  7%]
@@ -464,7 +464,7 @@ FAILED tests/test_rf7_structure.py::test_complete_routing_and_dirty_controls
 ...................                                                      [100%]
 91 passed in 2.73s
 
-./private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-944/candidate-comparison0/base/lib/python3.13/site-packages/gnd/__init__.py
+.<tmp>/pytest-944/candidate-comparison0/base/lib/python3.13/site-packages/gnd/__init__.py
 
 ......................................................................... [  3%]
 ........................................................................ [  7%]

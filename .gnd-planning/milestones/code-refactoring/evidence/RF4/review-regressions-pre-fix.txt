@@ -112,7 +112,7 @@ tests/test_rf4_review_regressions.py:40: in guarded_publish
 E   AssertionError: source mutant missed actual assurance home
 E   assert b'"""Internal v6 snapshot correspondence coverage and assurance decisions.\n\nThis module deliberately does not read f...t = _phase3_target\nresult_obligation = _result_obligation\nsorted_set = _sorted_set\nunique_sorted = _unique_sorted\n' != b'"""Internal v6 snapshot correspondence coverage and assurance decisions.\n\nThis module deliberately does not read f...t = _phase3_target\nresult_obligation = _result_obligation\nsorted_set = _sorted_set\nunique_sorted = _unique_sorted\n'
 E    +  where b'"""Internal v6 snapshot correspondence coverage and assurance decisions.\n\nThis module deliberately does not read f...t = _phase3_target\nresult_obligation = _result_obligation\nsorted_set = _sorted_set\nunique_sorted = _unique_sorted\n' = read_bytes()
-E    +    where read_bytes = PosixPath('<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4344/test_identity_stimulus_targets0/gnd/assurance/core.py').read_bytes
+E    +    where read_bytes = PosixPath('<tmp>/pytest-4344/test_identity_stimulus_targets0/gnd/assurance/core.py').read_bytes
 ___ test_identity_stimulus_targets_the_actual_assurance_home[missing-source] ___
 tests/test_rf4_review_regressions.py:54: in test_identity_stimulus_targets_the_actual_assurance_home
     legacy.test_dirty_release_is_rejected_at_its_identity_boundary(tmp_path, mutation)
@@ -120,7 +120,7 @@ tests/test_v6_phase6_release_reader.py:127: in test_dirty_release_is_rejected_at
     (package / "assurance.py").unlink()
 ../../../../../.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/pathlib/__init__.py:1042: in unlink
     os.unlink(self)
-E   FileNotFoundError: [Errno 2] No such file or directory: '<temporary-root>/pytest-of-nikolaosvasiloglou/pytest-4344/test_identity_stimulus_targets1/gnd/assurance.py'
+E   FileNotFoundError: [Errno 2] No such file or directory: '<tmp>/pytest-4344/test_identity_stimulus_targets1/gnd/assurance.py'
 ___ test_identity_stimulus_targets_the_actual_assurance_home[omitted-roster] ___
 tests/test_rf4_review_regressions.py:54: in test_identity_stimulus_targets_the_actual_assurance_home
     legacy.test_dirty_release_is_rejected_at_its_identity_boundary(tmp_path, mutation)

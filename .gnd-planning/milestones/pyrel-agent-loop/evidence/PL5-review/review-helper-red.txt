@@ -3,7 +3,7 @@ FFFFF                                                                    [100%]
 =================================== FAILURES ===================================
 ________________ test_meal_cap_links_project_and_observes_drift ________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1163/test_meal_cap_links_project_an0')
+tmp_path = PosixPath('<tmp>/pytest-1163/test_meal_cap_links_project_an0')
 
     def test_meal_cap_links_project_and_observes_drift(tmp_path):
         shutil.copytree(EXAMPLE, tmp_path / 'demo')
@@ -19,12 +19,12 @@ E       AssertionError: usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP 
 E         prepare_meal_cap.py: error: unrecognized arguments: --project project
 E         
 E       assert 2 == 0
-E        +  where 2 = CompletedProcess(args=['<checkout>/.venv/bin/python', '/Users/nikolaosvasiloglo...[-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project project\n').returncode
+E        +  where 2 = CompletedProcess(args=['<checkout>/.venv/bin/python', '<home>...[-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project project\n').returncode
 
 tests/test_meal_cap_proposal.py:29: AssertionError
 ___________________ test_meal_cap_refuses_non_reductions[-1] ___________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1163/test_meal_cap_refuses_non_redu0')
+tmp_path = PosixPath('<tmp>/pytest-1163/test_meal_cap_refuses_non_redu0')
 cap = -1
 
     @pytest.mark.parametrize('cap', [-1, 0, 75, 100])
@@ -34,12 +34,12 @@ cap = -1
         assert result.returncode == 2
 >       assert 'between 1 and' in result.stderr
 E       AssertionError: assert 'between 1 and' in 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n'
-E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '/Users/nikolaosvasiloglo... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
+E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '<home>... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
 
 tests/test_meal_cap_proposal.py:50: AssertionError
 ___________________ test_meal_cap_refuses_non_reductions[0] ____________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1163/test_meal_cap_refuses_non_redu1')
+tmp_path = PosixPath('<tmp>/pytest-1163/test_meal_cap_refuses_non_redu1')
 cap = 0
 
     @pytest.mark.parametrize('cap', [-1, 0, 75, 100])
@@ -49,12 +49,12 @@ cap = 0
         assert result.returncode == 2
 >       assert 'between 1 and' in result.stderr
 E       AssertionError: assert 'between 1 and' in 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n'
-E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '/Users/nikolaosvasiloglo... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
+E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '<home>... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
 
 tests/test_meal_cap_proposal.py:50: AssertionError
 ___________________ test_meal_cap_refuses_non_reductions[75] ___________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1163/test_meal_cap_refuses_non_redu2')
+tmp_path = PosixPath('<tmp>/pytest-1163/test_meal_cap_refuses_non_redu2')
 cap = 75
 
     @pytest.mark.parametrize('cap', [-1, 0, 75, 100])
@@ -64,12 +64,12 @@ cap = 75
         assert result.returncode == 2
 >       assert 'between 1 and' in result.stderr
 E       AssertionError: assert 'between 1 and' in 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n'
-E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '/Users/nikolaosvasiloglo... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
+E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '<home>... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
 
 tests/test_meal_cap_proposal.py:50: AssertionError
 __________________ test_meal_cap_refuses_non_reductions[100] ___________________
 
-tmp_path = PosixPath('/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-1163/test_meal_cap_refuses_non_redu3')
+tmp_path = PosixPath('<tmp>/pytest-1163/test_meal_cap_refuses_non_redu3')
 cap = 100
 
     @pytest.mark.parametrize('cap', [-1, 0, 75, 100])
@@ -79,7 +79,7 @@ cap = 100
         assert result.returncode == 2
 >       assert 'between 1 and' in result.stderr
 E       AssertionError: assert 'between 1 and' in 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n'
-E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '/Users/nikolaosvasiloglo... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
+E        +  where 'usage: prepare_meal_cap.py [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n' = CompletedProcess(args=['<checkout>/.venv/bin/python', '<home>... [-h] --model MODEL --cap CAP --output OUTPUT\nprepare_meal_cap.py: error: unrecognized arguments: --project unused\n').stderr
 
 tests/test_meal_cap_proposal.py:50: AssertionError
 =========================== short test summary info ============================

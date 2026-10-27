@@ -1,0 +1,3 @@
+EXPORTED 8 examples and 60 facts to <scratch>/ex3 (popper)
+export_sha256 dc0031e5f392d6a3c113304062a6bbf3f3d975a69bc93ac2cf9ebacf3a6bc015
+work 68 (ceiling 500008)

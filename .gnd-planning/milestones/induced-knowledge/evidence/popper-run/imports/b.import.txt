@@ -1,0 +1,3 @@
+$ gnd import ilp-rules model.orm.yaml <scratch>/imports/b.clauses.txt --labels labels.json --reported-coverage <scratch>/imports/b.run.json --target popper --out <scratch>/imports/b.proposal.json --requested-at 2026-10-27T00:00:00+00:00
+unparsable: line 1, column 6: unexpected '*'
+exit=3

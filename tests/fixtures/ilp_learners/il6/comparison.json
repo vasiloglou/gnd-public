@@ -1,0 +1,157 @@
+{
+  "labelled": [
+    {
+      "adapter": "popper",
+      "clauses_admitted": null,
+      "clauses_not_evaluated": null,
+      "clauses_proposed": null,
+      "first_refusal": null,
+      "import": "none",
+      "import_exit": null,
+      "input": "refunds",
+      "invocation": 1,
+      "learner": {
+        "name": "popper",
+        "version": "5.0.1+578a4e2"
+      },
+      "reproducibility": "single run, reproducibility not measured",
+      "run_of_record": true,
+      "termination": "rendering-rejected"
+    },
+    {
+      "adapter": "popper",
+      "clauses_admitted": null,
+      "clauses_not_evaluated": null,
+      "clauses_proposed": null,
+      "first_refusal": null,
+      "import": "none",
+      "import_exit": null,
+      "input": "refunds",
+      "invocation": 2,
+      "learner": {
+        "name": "popper",
+        "version": "5.0.1+578a4e2"
+      },
+      "reproducibility": "single run, reproducibility not measured",
+      "run_of_record": false,
+      "termination": "completed"
+    },
+    {
+      "adapter": "popper",
+      "clauses_admitted": 1,
+      "clauses_not_evaluated": 0,
+      "clauses_proposed": 1,
+      "first_refusal": null,
+      "import": "admitted",
+      "import_exit": 0,
+      "input": "refunds",
+      "invocation": 3,
+      "learner": {
+        "name": "popper",
+        "version": "5.0.1+578a4e2"
+      },
+      "reproducibility": "single run, reproducibility not measured",
+      "run_of_record": false,
+      "termination": "completed"
+    },
+    {
+      "adapter": "ilasp",
+      "clauses_admitted": 0,
+      "clauses_not_evaluated": 0,
+      "clauses_proposed": 1,
+      "first_refusal": {
+        "index": 0,
+        "name": "empty-antecedent"
+      },
+      "import": "refused:empty-antecedent",
+      "import_exit": 3,
+      "input": "refunds",
+      "invocation": 1,
+      "learner": {
+        "name": "ilasp",
+        "version": "4.4.1"
+      },
+      "reproducibility": "single run, reproducibility not measured",
+      "run_of_record": true,
+      "termination": "completed"
+    },
+    {
+      "adapter": "llm",
+      "clauses_admitted": 1,
+      "clauses_not_evaluated": 0,
+      "clauses_proposed": 1,
+      "first_refusal": null,
+      "import": "admitted",
+      "import_exit": 0,
+      "input": "refunds",
+      "invocation": 1,
+      "learner": {
+        "name": "claude",
+        "version": "unreported"
+      },
+      "reproducibility": "single run, not repeatable",
+      "run_of_record": true,
+      "termination": "completed"
+    },
+    {
+      "adapter": "rules",
+      "clauses_admitted": 1,
+      "clauses_not_evaluated": 0,
+      "clauses_proposed": 1,
+      "first_refusal": null,
+      "import": "admitted",
+      "import_exit": 0,
+      "input": "refunds",
+      "invocation": 1,
+      "learner": {
+        "name": "wittgenstein",
+        "version": "0.3.5"
+      },
+      "reproducibility": "single run, reproducibility not measured; repeated runs pick other thresholds (IL3-F5)",
+      "run_of_record": true,
+      "termination": "completed"
+    }
+  ],
+  "schema_version": "gnd-ilp-comparison/1",
+  "unlabelled": [
+    {
+      "adapter": "amie",
+      "first_refusal": {
+        "index": 0,
+        "name": "does-not-hold"
+      },
+      "import": "refused:does-not-hold",
+      "import_exit": 3,
+      "input": "staffing",
+      "invocation": 1,
+      "learner": {
+        "name": "amie",
+        "version": "4.0.0"
+      },
+      "reproducibility": "single run, reproducibility not measured",
+      "rules_admitted": 0,
+      "rules_hold": 2,
+      "rules_mined": 8,
+      "run_of_record": true,
+      "termination": "completed"
+    },
+    {
+      "adapter": "amie",
+      "first_refusal": null,
+      "import": "admitted",
+      "import_exit": 0,
+      "input": "staffing",
+      "invocation": 2,
+      "learner": {
+        "name": "amie",
+        "version": "4.0.0"
+      },
+      "reproducibility": "single run, reproducibility not measured",
+      "rules_admitted": 2,
+      "rules_hold": 2,
+      "rules_mined": 2,
+      "run_of_record": false,
+      "termination": "completed"
+    }
+  ]
+}

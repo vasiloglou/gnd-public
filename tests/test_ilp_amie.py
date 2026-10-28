@@ -472,8 +472,8 @@ def test_t13_the_reference_section_matches_the_code():
 # ---------------------------------------------------------------------------
 
 LIVE_ROOT = EVIDENCE / "live"
-#: Invocation 1 is the run of record.
-INVOCATIONS = (1,)
+#: Invocation 1 is the run of record; 2 was owner-ruled at IL6 (IL6-D6 (o)), outcome fixed first.
+INVOCATIONS = (1, 2)
 TERMINATIONS = {"rendering-rejected", "completed", "learner-timeout", "wall-clock-kill", "output-limit"}
 REQUIRED = {"invocation", "run_of_record", "termination", "import", "export_sha256", "population_sha256",
             "adapter_version", "learner", "jvm", "process", "limits", "argv", "import_args", "numbers",
@@ -506,7 +506,7 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
     stderr = (live / "raw-stderr.txt").read_text(encoding="utf-8")
     assert len(stderr.encode("utf-8")) == process["stderr_observed_bytes"]
     assert outcome["limits"] == script.LIMITS.model_dump()
-    assert outcome["argv"] == script.RECORDED_ARGV
+    assert outcome["argv"] == script.recorded_argv(invocation)
     assert outcome["import_args"] == list(script.IMPORT_ARGS)
     assert outcome["licence"] == script.LICENCE
     assert outcome["population_sha256"] == hashlib.sha256(POPULATION.read_bytes()).hexdigest()
@@ -566,7 +566,7 @@ def test_live_amie_mines_the_committed_rules(tmp_path):
     script = _script()
     live = LIVE_ROOT / "invocation-1"
     shutil.copy(live / "facts.tsv", tmp_path / "facts.tsv")
-    result = subprocess.run([*script.java_argv(Path(jar)), "facts.tsv"], cwd=tmp_path, check=True,
+    result = subprocess.run([*script.java_argv(Path(jar), 1), "facts.tsv"], cwd=tmp_path, check=True,
                             capture_output=True, text=True, timeout=600,
                             env=script.java_environment(tmp_path))
     committed = (live / "raw-stdout.txt").read_text(encoding="utf-8")

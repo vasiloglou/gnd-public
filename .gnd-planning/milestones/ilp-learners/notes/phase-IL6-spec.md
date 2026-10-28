@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-**Draft r1, 2026-10-28. Awaiting this phase's owner gate.** `auto=false`.
-Nothing has been implemented or run.
+**r1 approved, 2026-10-28** (§12). `auto=false`. Implementation follows
+corpus-first (IL6-D11).
 
 **Base:** `claude/il6`, branched from `main` at `860e651` (PR #61, IL4,
 merged). Every adapter phase is merged: IL1 to IL5 and IL4 are on `main`.
@@ -288,7 +288,27 @@ IL6-D11.
 
 ## 12. Owner gate record
 
-Empty until the owner rules.
+**Owner ruling, 2026-10-28:** "go on with your recs", given in reply to the
+draft r1 summary (SHA-256
+`b124055cf1c7b45e739321e1e9c8649437448cdd67989c6a59a4be8fb8d1222f`) that
+named each proposal. Every decision is ruled as proposed:
+
+| ID | Ruling |
+|---|---|
+| IL6-D1 | (a) (o) a new commands page, group `learners` |
+| IL6-D2 | (a) (o) outputs shipped in the packaged examples |
+| IL6-D3 | (a) (o) runs of record plus owner-ruled invocations, marked |
+| IL6-D4 | (a) (o) generated table, expected rows committed first |
+| IL6-D5 | (a) (o) report, don't measure |
+| IL6-D6 | (a) (o) AMIE invocation 2, outcome fixed in §6 before the run |
+| IL6-D7 | (a) (o) reference pages, CLI, capabilities, release notes |
+| IL6-D8 | (a) (o) an Artifact checkpoint before the docs sweep |
+| IL6-D9 | (a) (o) a milestone census and test; the two pin sites edited |
+| IL6-D10 | (o) as stated |
+| IL6-D11 | (o) corpus-first; no spec panel |
+
+The ruling authorizes exactly one learner run: AMIE invocation 2 under
+IL6-D6 (a).
 
 ## Implementability notes (author, before the gate)
 

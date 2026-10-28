@@ -64,4 +64,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** IL3 implementation, then its review and record.
+**Next action:** IL3 steps 4 to 6 (adversarial review, refactoring review, record).

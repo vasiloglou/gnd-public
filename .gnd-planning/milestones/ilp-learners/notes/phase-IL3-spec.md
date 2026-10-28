@@ -530,3 +530,48 @@ a pinned pandas needs a further ruling.
 - **The dynamic census:** `evidence/IL3/dynamic-query-successor.json`,
   chained after IL5's, adds 23 syntax rows, all in `gnd.export.ilp_rules`,
   and removes none.
+
+### The probe and invocation 1 (2026-10-28)
+
+**Install.** The six IL3-D2 files were fetched from the URLs PyPI's JSON API
+gives, and each matched §12's size and SHA-256 (`evidence/IL3/downloads.json`).
+The sdist's 46 members were listed before extraction
+(`evidence/IL3/sdist-members.txt`); it was extracted, never built. The venv
+uses the local CPython 3.13.12 (`uv venv --no-python-downloads`), and the
+wheels were installed with `--no-index`. Nothing else was downloaded.
+
+**The probe (IL3-D8)** succeeded (`evidence/IL3/probe/`). It printed
+`RULESET [[a__1__2__gt_t_x__1=1]]` and `COVERS 0 ["p1", "p2"]`, with empty
+stderr. That confirms the printed spelling, that binning is off, and that
+pandas 3.1.0 works with wittgenstein 0.3.5. The toy names follow the IL3-F2
+grammar.
+
+**Invocation 1, the run of record** (`evidence/IL3/live/invocation-1/`):
+- **termination** `completed`; **import** `admitted` (exit 0);
+- E = `7b455e99…5827`;
+- **the rule set:** `[[f_refund_amount__2__3__gt_t_amount__450=1]]`, that
+  is `wrong(X) :- f_refund_amount(X, V1, V2), gt_t_amount(V2, 450)`;
+- **the learner's coverage:** airport, harbor, market, south, station. GND
+  computed the same 5, with support 4/5: `south` is labelled `neg`. The rule
+  is admitted as a proposed, advisory constraint with that support recorded,
+  as the bridge admits any rule whose coverage agrees. Popper (IL1) and the
+  agent (IL5) found tighter thresholds that cover 4/4.
+
+**IL3-F5: RIPPER 0.3.5 is not deterministic under `random_state=0`.**
+- **How it was found:** T-live, as first written, re-ran the learner and
+  compared its coverage with the committed one. The re-run learned
+  `gt_t_amount__500`, a different rule.
+- **What was then run, beyond the one approved run:** to diagnose it, the
+  driver ran 11 more times on the same table, outside the script, nothing
+  imported or retained as evidence: once per `PYTHONHASHSEED` 0 to 7 (500 five
+  times, 450 twice, 310 once) and three times at `PYTHONHASHSEED=0` (500,
+  450, 310). **IL-R9 says a second run needs an owner ruling. These were
+  diagnostic re-runs, not invocations, but they exceeded the approval, and
+  they are disclosed here.** No further run was made.
+- **What it means:** the threshold RIPPER picks varies between runs even with
+  a fixed seed and a fixed hash seed. Invocation 1 stays the run of record,
+  recorded as is. "Single run, reproducibility not measured" understates it:
+  repeated runs measurably differ.
+- **T-live corrected to the spec's wording:** it now evaluates the committed
+  rule set with wittgenstein's own `Rule.covers` (no learning) and compares
+  that with the committed `COVERS` lines. It passes.

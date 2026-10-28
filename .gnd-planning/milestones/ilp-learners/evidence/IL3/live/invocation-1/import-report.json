@@ -1,0 +1,52 @@
+{
+  "clauses": [
+    {
+      "covered": 5,
+      "index": 0,
+      "ref": "constraints[1]",
+      "reported": 5,
+      "support": {
+        "denominator": 5,
+        "numerator": 4
+      },
+      "unchecked": [],
+      "vacuous": []
+    }
+  ],
+  "command": "import ilp-rules",
+  "export_sha256": "7b455e99b224d1c7ab41fd2bcfdd1eb10914e795f57d2dd8e5b1c0494a2e5827",
+  "inputs": {
+    "clauses": {
+      "path": "ruleset.txt",
+      "sha256": "1c63fedce2510e01db0cc6de0210ab74e5e1f23d1efaed5f9b0558bdeaac987e"
+    },
+    "manifest": {
+      "path": "labels.json",
+      "sha256": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa"
+    },
+    "model": {
+      "path": "model.orm.yaml",
+      "sha256": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0"
+    },
+    "run": {
+      "path": "run.json",
+      "sha256": "44c158518293123d681b70bf7a4d24c534d4828fb9bc031b688cd41147e2e308"
+    }
+  },
+  "learner": {
+    "name": "wittgenstein",
+    "version": "0.3.5"
+  },
+  "proposal": "proposal.json",
+  "schema_version": "gnd-ilp-import/1",
+  "target": "rules",
+  "tool": "gnd",
+  "work": {
+    "ceiling": 19,
+    "checks": 8,
+    "export": 68,
+    "reloads": 3,
+    "total": 19,
+    "verdicts": 8
+  }
+}

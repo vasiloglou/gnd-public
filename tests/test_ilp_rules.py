@@ -391,18 +391,36 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
 # T-live: the scratch learner reproduces the committed coverage.
 # ---------------------------------------------------------------------------
 
+_COVERS_OF = """\
+import json, sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+import pandas
+from wittgenstein.base import ruleset_fromstr
+table = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+frame = pandas.DataFrame([row["values"] for row in table["rows"]],
+                         columns=[column["name"] for column in table["columns"]],
+                         index=[row["example"] for row in table["rows"]])
+ruleset = ruleset_fromstr(Path(sys.argv[3]).read_text(encoding="utf-8"))
+for index, rule in enumerate(ruleset.rules):
+    for cond in rule.conds:
+        cond.val = int(cond.val)
+    print(f"COVERS {index} {json.dumps(sorted(rule.covers(frame).index.tolist()))}")
+"""
+
+
 @pytest.mark.live
-def test_live_the_learner_reproduces_its_coverage(tmp_path):
-    """Live: GND_IL3_PYTHON names the scratch venv's python, GND_IL3_LEARNER the sdist."""
+def test_live_the_learner_covers_what_it_reported(tmp_path):
+    """Live (spec T-live): wittgenstein's own Rule.covers over the committed rule set gives the
+    committed COVERS lines. It evaluates; it does not learn again (IL3-F5: RIPPER 0.3.5 is not
+    deterministic under random_state=0). GND_IL3_PYTHON names the scratch venv's python,
+    GND_IL3_LEARNER the extracted sdist."""
     python, learner = os.environ.get("GND_IL3_PYTHON"), os.environ.get("GND_IL3_LEARNER")
     if not (python and learner):
         pytest.skip("GND_IL3_PYTHON and GND_IL3_LEARNER are not set")
     export = _export(tmp_path)
-    result = subprocess.run([python, "-I", str(EVIDENCE / "learn_rules.py"), learner,
-                             str(export / "rules" / "features.json")],
-                            check=True, capture_output=True, text=True)
-    committed = (LIVE_ROOT / "invocation-1" / "raw-stdout.txt").read_text(encoding="utf-8")
+    live = LIVE_ROOT / "invocation-1"
+    result = subprocess.run([python, "-I", "-c", _COVERS_OF, learner, str(export / "rules" / "features.json"),
+                             str(live / "ruleset.txt")], check=True, capture_output=True, text=True)
     script = _script()
-    assert script.covers(result.stdout) == script.covers(committed)
-    from gnd.export import ilp_rules
-    assert ilp_rules.extract_ruleset(result.stdout) == ilp_rules.extract_ruleset(committed)
+    assert script.covers(result.stdout) == script.covers((live / "raw-stdout.txt").read_text(encoding="utf-8"))

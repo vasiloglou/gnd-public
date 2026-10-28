@@ -1,0 +1,16 @@
+tests/test_ilp_amie.py
+tests/test_ilp_rules.py
+tests/test_ilp_llm.py
+tests/test_ilp_asp.py
+tests/test_ilp_bridge.py
+tests/test_ilp_learners.py
+tests/test_ik6_walk.py
+tests/test_ik_close.py
+tests/test_rf1_cli_pins.py
+tests/test_rf1_pin_harness.py
+tests/test_rf5_commands.py
+tests/test_rf1_layering.py
+tests/test_gnd_arch.py
+tests/test_rf6_query_policy.py
+tests/test_public_built_inventory.py
+tests/test_schema_sync.py

@@ -1,0 +1,20 @@
+[
+ {
+  "file": "amie4.0.0.jar",
+  "url": "https://github.com/dig-team/AMIE/releases/download/v4.0.0/amie4.0.0.jar",
+  "bytes": 96104317,
+  "sha256": "bbf65ef5b54f896a7c6d05e3faeaf5b58262e3828e61ae6dc3f3c71c932b8485",
+  "checked": "size and SHA-256 equal spec \u00a712, before the probe and again by run_amie.py before every run",
+  "licence": "CC-BY-4.0 (AMIE), CC-BY-3.0 (Javatools inside the jar), accepted IL4-D3 (o)",
+  "downloaded": "2026-10-28, into the scratch prefix only; not committed"
+ },
+ {
+  "file": "OpenJDK 21.0.10 (Homebrew)",
+  "url": "none: already installed, not downloaded",
+  "bytes": null,
+  "sha256": null,
+  "checked": "java -version: openjdk version \"21.0.10\" 2026-01-20",
+  "licence": "GPL-2.0 with the Classpath Exception",
+  "downloaded": "no (IL4-D2 (o))"
+ }
+]

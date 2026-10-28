@@ -26,11 +26,16 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   `claude` completed and was admitted. IL5-Q1 and IL5-Q2 were ruled on
   2026-10-28: a cut-off run and a stray code fence each give no answer.
   Merged in PR #58.
-- **IL3 is complete:** [phase record](005-phase-IL3.md), on `claude/il3`,
-  not yet merged. Invocation 1 with wittgenstein's RIPPER completed and was
+- **IL3 is complete:** [phase record](005-phase-IL3.md). Merged in PR #60. Invocation 1 with wittgenstein's RIPPER completed and was
   admitted at support 4/5. The [adversarial review](notes/phase-IL3-agent-review.md)
   found 8 issues; 7 were fixed and IL3-Q1 is open for the owner. RIPPER is not
   deterministic under its seed (IL3-F5, IL3-Q3).
+- **IL4 is complete:** [phase record](006-phase-IL4.md), on `claude/il4`,
+  not yet merged. Invocation 1 with AMIE 4.0.0 on the synthetic staffing
+  fixture completed; AMIE printed 8 rules, two hold, so the all-or-nothing
+  import refused the set (`does-not-hold`), as predicted. The
+  [adversarial review](notes/phase-IL4-agent-review.md) found 7 issues; 4
+  were fixed, one accepted, and IL4-Q1 and IL4-Q2 are open for the owner.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -43,7 +48,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL5 spec (r1, approved)](notes/phase-IL5-spec.md)
 - [IL3 spec (r1, approved)](notes/phase-IL3-spec.md)
 - [IL3 phase record](005-phase-IL3.md)
-- [IL4 spec (r1, draft, awaiting the owner gate)](notes/phase-IL4-spec.md)
+- [IL4 spec (r1, approved)](notes/phase-IL4-spec.md)
+- [IL4 phase record](006-phase-IL4.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -71,4 +77,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** the owner reviews the IL3 pull request (#60) and rules on the IL4 spec (r1), IL4-D1 to IL4-D13.
+**Next action:** the owner reviews the IL4 pull request; then the IL6 spec (the walk and the comparison table) is drafted.

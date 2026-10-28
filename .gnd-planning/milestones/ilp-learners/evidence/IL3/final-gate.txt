@@ -1,0 +1,12 @@
+$ uv run pytest -q -p no:randomly $(cat .gnd-planning/milestones/ilp-learners/evidence/IL3/gate-files.txt)
+959 passed, 23 deselected in 170.28s (0:02:50)
+$ GND_IL3_PYTHON=<scratch>/venv/bin/python GND_IL3_LEARNER=<scratch>/wittgenstein-0.3.5 uv run pytest -q -p no:randomly -m live tests/test_ilp_rules.py
+1 passed, 78 deselected in 2.16s
+$ uv run ruff check src/gnd/export src/gnd/commands tests/test_ilp_rules.py .gnd-planning/milestones/ilp-learners/evidence/live_common.py .gnd-planning/milestones/ilp-learners/evidence/IL3
+All checks passed!
+$ <scratch>/venv311/bin/python -m pytest -q -p no:randomly tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py   # Python 3.11.15
+152 passed in 18.12s
+$ <scratch>/venv313/bin/python -m pytest -q -p no:randomly tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py   # Python 3.13.12
+152 passed in 24.60s
+$ uv run pytest -q -p no:randomly tests/test_rf1_pin_harness.py -k golden_manifest
+4 passed, 35 deselected in 0.26s

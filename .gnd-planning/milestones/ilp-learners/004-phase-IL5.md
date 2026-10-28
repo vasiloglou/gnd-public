@@ -234,7 +234,7 @@ suite.
 |---|---|---|---|
 | IL5-Q1 | Review 3: should a truncated run's answer still be imported? **Ruled 2026-10-28: no;** a cut-off run gives no answer (spec §12). | owner | closed |
 | IL5-Q2 | Review 6: should any other code-fence line outside the one json block make the answer `""`? **Ruled 2026-10-28: yes** (spec §12); no approved corpus answer changed. | owner | closed |
-| IL5-Q3 | `goldens.sha256` is stale for nine goldens moved by IL1, IL2 and IL5; `test_golden_manifest` fails at `426bd80` too. Refresh it through `tools/rf1_pins.py merge`, or record why the manifest is frozen. | owner | IL6 or close |
+| IL5-Q3 | `goldens.sha256` is stale for nine goldens moved by IL1, IL2 and IL5; `test_golden_manifest` fails at `426bd80` too. **Ruled 2026-10-28: refresh it.** Fresh captures under Python 3.11.15, 3.13.12 and 3.14.3 match eight of the nine goldens byte for byte; `cli/tree.json` differs only by the CS1 flag the test admits as a successor. Only the nine manifest lines and the pinned manifest digest moved. | owner | closed |
 | IL5-Q4 | A shared helper for live-run scripts (sanitizer, environment, outcome writer), used from IL3 on. | author | IL3 |
 | IL5-Q5 | Should the verbalization itself reserve structural lines for every prompt that embeds it? | owner | close |
 | IL5-Q6 | IL5-F7: read the agent's version before `gnd.agents` redacts it, or add the version to its result. That changes a shared module. | owner | close |

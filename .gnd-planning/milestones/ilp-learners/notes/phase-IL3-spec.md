@@ -2,8 +2,11 @@
 
 ## 1. Status
 
-**Draft r1, 2026-10-28. Awaiting this phase's owner gate.** `auto=false`.
-Nothing has been implemented, downloaded, installed or run. Upstream facts
+**Approved r1, 2026-10-28 (§13).** `auto=false`. The text below is r1 as
+approved; implementation findings go to §14.
+
+> **Draft r1, 2026-10-28. Awaiting this phase's owner gate.** Nothing had been
+> implemented, downloaded, installed or run at r1. Upstream facts
 come from read-only PyPI metadata and GitHub source pages (§12).
 
 **What the gate decides:**
@@ -449,6 +452,30 @@ click-through step exists. Nothing is committed.
 
 The probe (IL3-D8) confirms all three on the installed bytes.
 
-## 13. Owner gate record
+## 13. Owner gate record (2026-10-28)
 
-Empty until the owner rules.
+**The owner's words (o):** "Approve the IL3 spec r1 as proposed: IL3-D1 to
+IL3-D12, including (a) wittgenstein and (a) accepting numpy's CC0 part. Merge
+PR 59 first, then implement."
+
+**Bound bytes:** r1 as committed in `2a3d859`, SHA-256 `927a46ccde8599d9f2dc5f0a023f6ccb083e428cc64c700c2fd2c8f8b1fb0292`.
+
+| ID | Ruling |
+|---|---|
+| IL3-D1 | **(a): wittgenstein 0.3.5, RIPPER** |
+| IL3-D2 | as proposed: the six listed files, size and SHA-256 checked, into a scratch prefix only |
+| IL3-D3 | **(a): numpy's CC0-1.0 part is accepted** under IL-R5 |
+| IL3-D4 | as proposed: (a), Popper's threshold rows crossed with every integer argument position |
+| IL3-D5 | as proposed: `MAX_FEATURES` 4096, `MAX_CELLS` 4,000,000 |
+| IL3-D6 | as proposed: (a), self-describing column names |
+| IL3-D7 | as proposed: (a), wittgenstein's spelling plus the binarized spelling and a recognized rule-list line |
+| IL3-D8 | as proposed: the toy-table probe before invocation 1 |
+| IL3-D9 | as proposed: `random_state=0`, binning off, defaults otherwise; no learner timeout |
+| IL3-D10 | as proposed: (a), `evidence/live_common.py`, earlier scripts unchanged |
+| IL3-D11 | as proposed: corpus-first for the reader, prose plus golden for the table, no panel |
+| IL3-D12 | as proposed, and done: PR #59 merged at `e30eec8` and `main` merged into `claude/il3` before any golden moves |
+
+**No other approval.** One run of record; a second run, a settings change or
+a pinned pandas needs a further ruling.
+
+## 14. Implementation findings (recorded as found)

@@ -25,6 +25,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - **IL5 is approved:** [spec r1](notes/phase-IL5-spec.md) was approved on
   2026-10-27, on `claude/il5` from `426bd80`. D8 is ruled as IL5-D8 (a): one
   run with `claude`, after the provider's terms are recorded and confirmed.
+  Implemented (gate: 803 passed, T9 red until the run). The terms are
+  recorded and await the owner's confirmation.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -61,4 +63,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - the provider's terms for the IL5 run, recorded before it and confirmed by the owner.
 
-**Next action:** the IL5 corpus, committed red; then the implementation.
+**Next action:** the owner confirms the provider terms in [`evidence/IL5/provider-terms.md`](evidence/IL5/provider-terms.md); then invocation 1 of `evidence/IL5/run_llm.py`.

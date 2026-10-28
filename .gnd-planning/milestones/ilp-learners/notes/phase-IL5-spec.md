@@ -522,3 +522,18 @@ no IL2 answer.
 **The gate after implementation:** with `evidence/IL5/gate-files.txt`, 803
 passed, 22 deselected, and 1 failed: T9, which has no run of record until
 IL5-D8's run.
+
+**IL5-F5 (terms): the sign-in decides the terms.**
+- **The sign-in:** `claude auth status` reports a claude.ai sign-in on a Max
+  subscription, and no credential variable is set. Only the method and plan
+  fields were read.
+- **The terms:** Claude Code's legal page places Max users under Anthropic's
+  Consumer Terms.
+- **The record:** [`evidence/IL5/provider-terms.md`](../evidence/IL5/provider-terms.md)
+  paraphrases §3 and §4 of those terms, with URL and date, and lists four
+  points for the owner to confirm. One is whether §3's competing-product
+  clause applies, which is the owner's reading to make.
+- **The guard:** `run_llm.py` refuses to run without
+  `provider-terms-confirmed.json`, and that refusal was checked.
+- **The evaluator,** checked with no agent call: T-live passes with the IL1
+  scratch SWI at threshold 500 and off-threshold at 100 (2 passed).

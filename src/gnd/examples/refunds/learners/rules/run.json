@@ -1,0 +1,21 @@
+{
+ "clauses_sha256": "1c63fedce2510e01db0cc6de0210ab74e5e1f23d1efaed5f9b0558bdeaac987e",
+ "coverage": [
+  {
+   "clause": 0,
+   "covered": [
+    "airport",
+    "harbor",
+    "market",
+    "south",
+    "station"
+   ]
+  }
+ ],
+ "export_sha256": "7b455e99b224d1c7ab41fd2bcfdd1eb10914e795f57d2dd8e5b1c0494a2e5827",
+ "learner": {
+  "name": "wittgenstein",
+  "version": "0.3.5"
+ },
+ "schema_version": "gnd-ilp-run/1"
+}

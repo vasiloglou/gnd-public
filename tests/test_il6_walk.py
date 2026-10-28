@@ -130,12 +130,12 @@ def test_t3_a_shipped_output_equals_its_evidence(shipped):
 
 def test_t3_the_learner_directories_ship_nothing_else():
     found = {str(p.relative_to(EXAMPLES)) for d in ("refunds/learners", "staffing")
-             for p in (EXAMPLES / d).rglob("*") if p.is_file()}
-    assert found == set(SHIPPED)
+             for p in (EXAMPLES / d).rglob("*") if p.is_file() and "__pycache__" not in p.parts}
+    assert found == set(SHIPPED) | {"staffing/README.md"}
 
 
 def _public_texts():
-    paths = sorted(EXAMPLES / name for name in SHIPPED) + [PAGE]
+    paths = sorted(EXAMPLES / name for name in SHIPPED) + [EXAMPLES / "staffing/README.md", PAGE]
     return [(p, p.read_text(encoding="utf-8")) for p in paths]
 
 
@@ -183,7 +183,7 @@ def test_t4_the_table_names_every_row_once():
 
 
 @pytest.mark.parametrize("field, value", [
-    ("import_exit", 2), ("clauses_admitted", 5), ("termination", "completed"), ("first_refusal", None),
+    ("import_exit", 2), ("clauses_admitted", 5), ("termination", "learner-timeout"), ("first_refusal", None),
 ])
 def test_t4_a_changed_golden_row_fails(field, value):
     doc = _golden()

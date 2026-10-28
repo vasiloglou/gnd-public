@@ -20,6 +20,7 @@ the four flagged weeks.
 | `batches/*.yaml` | One week of refunds per store: north, south, east and west are clean; harbor, market, airport and station are flagged |
 | `labels.json` | The auditors' verdicts, a class-mode `gnd-labels/1` manifest binding the model and every batch by SHA-256 |
 | `stand_in_learner.py` | A small, deterministic, standard-library rule learner. It is the example's own program, not a GND command and not Popper |
+| `learners/<target>/` | Real learner outputs and run records for the ILP bridge's adapters (Popper, ILASP, a language model, RIPPER), replayed by "Compare the rule learners on real runs" |
 
 `stand_in_learner.py EXPORT_DIR OUT_DIR` reads the export written by
 `gnd export ilp --target neutral` and writes `learned.clauses.json` and

@@ -62,6 +62,8 @@ IMPORT_ARGS = ("import", "ilp-rules", "model.orm.yaml", "answer.json", "--labels
 #: SWI spellings of the neutral comparison operators (IL5-D6 (o)).
 SWI_OPERATORS = {">": ">", "<": "<", ">=": ">=", "<=": "=<"}
 _VERSION = re.compile(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,63}")
+_VARIABLE = re.compile(r"[A-Z][A-Za-z0-9_]{0,63}")
+_NAME = re.compile(r"[a-z]+(?:-[a-z]+)*")
 
 SCRATCH_PATH = re.compile(r"(?:/private)?/tmp/claude-\d+/\S*?/scratchpad/il[0-9]-live")
 
@@ -100,12 +102,27 @@ def termination(invocation: dict[str, Any]) -> str:
 
 
 def import_outcome(refusal: str) -> str:
-    """The clauses reader's refusals name the file ("clauses PATH ..."): unparsable (§6)."""
-    return "refused:unparsable" if refusal.startswith("clauses ") else f"refused:{refusal_name(refusal)}"
+    """The clauses reader's refusals name the file ("clauses PATH ...") or a cap: unparsable (§6)."""
+    name = "" if refusal.startswith("clauses ") else refusal_name(refusal)
+    return f"refused:{name}" if _NAME.fullmatch(name) else "refused:unparsable"
+
+
+def publishable_answer(answer: str, clean: Sanitizer) -> str:
+    """The answer, or "" when it holds a private string: answer.json is bound by digest (IL-R10)."""
+    return answer if clean(answer) == answer else ""
+
+
+def unevaluated_coverage(document: Any) -> list[dict[str, Any]]:
+    """Empty rows, one per clause where the shape allows, so GND's own refusal is the one recorded."""
+    clauses = document.get("clauses") if isinstance(document, dict) else None
+    count = len(clauses) if isinstance(clauses, list) and clauses else 1
+    return [{"clause": index, "covered": []} for index in range(count)]
 
 
 def _term(term: dict[str, Any]) -> str:
     if "var" in term:
+        if not isinstance(term["var"], str) or not _VARIABLE.fullmatch(term["var"]):
+            raise ValueError(f"not evaluated: variable {term['var']!r}")
         return term["var"]
     value = term["const"]
     if isinstance(value, bool):
@@ -119,6 +136,9 @@ def _literal(literal: dict[str, Any]) -> str:
     if "atom" in literal:
         atom = literal["atom"]
         return f"{atom['predicate']}({', '.join(_term(t) for t in atom['args'])})"
+    if "compare" in literal:
+        compare = literal["compare"]
+        return f"{_term(compare['left'])} {SWI_OPERATORS[compare['operator']]} {_term(compare['right'])}"
     if "not" in literal:
         return f"\\+ {_literal(literal['not'])}"
     raise ValueError(f"no Prolog spelling for {sorted(literal)}")
@@ -137,9 +157,25 @@ def comparison_program(neutral: dict[str, Any]) -> str:
                    for row in neutral["comparisons"])
 
 
+def _check(neutral: dict[str, Any], clause: dict[str, Any]) -> None:
+    """Only wrong/1 over the export's own predicates reaches SWI; the answer is untrusted (IL-R6)."""
+    known = {row["name"] for row in neutral["predicates"]} | {row["name"] for row in neutral["comparisons"]}
+    if clause["head"]["predicate"] != "wrong" or len(clause["head"]["args"]) != 1:
+        raise ValueError("not evaluated: the head is not wrong/1")
+    for literal in clause["body"]:
+        if "atom" in literal and literal["atom"]["predicate"] not in known:
+            raise ValueError(f"not evaluated: {literal['atom']['predicate']!r} is not in the export")
+        if "compare" in literal and literal["compare"]["operator"] not in SWI_OPERATORS:
+            raise ValueError("not evaluated: an unknown comparison operator")
+
+
 def swi_coverage(swipl: Path, popper: Path, neutral: dict[str, Any], document: dict[str, Any]
                  ) -> list[dict[str, Any]]:
     """Each clause's covered examples, by SWI over popper/bk.pl plus cmp.pl -- not GND."""
+    programs = []
+    for clause in document["clauses"]:
+        _check(neutral, clause)
+        programs.append(prolog_clause(clause))
     scratch = popper.parent
     work = popper / "swi"
     work.mkdir(exist_ok=True)
@@ -148,8 +184,8 @@ def swi_coverage(swipl: Path, popper: Path, neutral: dict[str, Any], document: d
     ids = [example["id"] for example in neutral["examples"]]
     listed = ",".join(quote(i) for i in ids)
     rows = []
-    for index, clause in enumerate(document["clauses"]):
-        (work / "clause.pl").write_text(prolog_clause(clause) + "\n", encoding="utf-8")
+    for index, program in enumerate(programs):
+        (work / "clause.pl").write_text(program + "\n", encoding="utf-8")
         (work / "cover.pl").write_text(
             ":- initialization(main, main).\n:- style_check(-singleton).\n"
             ":- consult('bk.pl').\n:- consult('cmp.pl').\n:- consult('clause.pl').\n"
@@ -158,7 +194,7 @@ def swi_coverage(swipl: Path, popper: Path, neutral: dict[str, Any], document: d
         result = asyncio.run(run_bounded_process((str(swipl), "-q", "cover.pl"), cwd=work,
                                                  env=swi_environment(scratch), limits=SWI_LIMITS))
         if result.return_code != 0:
-            raise SystemExit(f"SWI coverage failed for clause {index}: {result.stderr[-400:]!r}")
+            raise ValueError(f"not evaluated: SWI exited {result.return_code} on clause {index}")
         covered = sorted({int(line) for line in result.stdout.decode().split()})
         rows.append({"clause": index, "covered": [ids[i] for i in covered]})
     return rows
@@ -211,7 +247,8 @@ def main() -> int:
     written = sorted(clean(str(path.relative_to(agent_cwd))) for path in agent_cwd.rglob("*"))
     version = _VERSION.match(result.version.strip())
     learner = {"name": ADAPTER.value, "version": version.group(0) if version else "unreported"}
-    answer = extract_answer(stdout)
+    extracted = extract_answer(stdout)
+    answer = publishable_answer(extracted, clean)
     model = extract_model(stdout)
     (out / "run-meta.json").write_text(json.dumps({
         "model_reported": model, "model_note": "the agent's own model: line, unverified (IL5-D4 (o))",
@@ -245,16 +282,19 @@ def main() -> int:
         },
         "reproducibility": "single run, not repeatable",
     }
+    if extracted and not answer:
+        outcome["answer"] = "withheld: the block holds a private string (IL-R10)"
     if answer:
         (out / "answer.json").write_text(answer, encoding="utf-8")
         answer_sha = hashlib.sha256(answer.encode("utf-8")).hexdigest()
+        document = None
         try:
             document = json.loads(answer)
             coverage = swi_coverage(swipl, work / "popper", neutral, document)
             outcome["swi"] = "evaluated"
         except (ValueError, TypeError, KeyError, AttributeError) as error:
-            # Not clauses JSON: the import refuses at the clauses reader first.
-            coverage = [{"clause": 0, "covered": []}]
+            # Not evaluable here: GND's import still decides, from its own readers first.
+            coverage = unevaluated_coverage(document)
             outcome["swi"] = f"not evaluated: {type(error).__name__}"
         run = {"schema_version": "gnd-ilp-run/1", "learner": learner, "export_sha256": digest,
                "clauses_sha256": answer_sha, "coverage": coverage}

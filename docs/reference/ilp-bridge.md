@@ -333,9 +333,12 @@ section and a fixed trailer. The data section opens with the line
 | `-- Examples --` | one JSON line per example: id and label |
 | `-- Facts --` | one JSON line per fact: example, predicate, values |
 
-Model text reaches the prompt only through the verbalization's neutralizers,
-and fact values only as ASCII JSON, so no host string can add, end or forge a
-line of the prompt. That fixes the prompt's structure, not its meaning: a
+Fact values reach the prompt only as ASCII JSON, so they cannot start a line.
+Model text reaches it through the verbalization's neutralizers, which keep each
+name or reading on one line but leave its characters alone. So the prompt
+builder refuses `forged-line` when a verbalization line, trimmed, equals one of
+the prompt's own structural lines, starts with ```` ``` ````, or has the form
+`model: ID`. That fixes the prompt's structure, not its meaning: a
 sentence inside a value is still text the model reads. GND's re-check of every
 clause is the control.
 

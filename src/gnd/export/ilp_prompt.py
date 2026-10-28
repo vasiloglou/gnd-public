@@ -77,6 +77,9 @@ _FACT = ("example", "predicate", "values")
 
 _OPEN, _CLOSE = "```json", "```"
 _MODEL = re.compile(r"model: ([A-Za-z0-9][A-Za-z0-9._:+/-]{0,63})")
+#: The prompt's own structural lines, which no verbalization line may repeat.
+_STRUCTURE = frozenset({"=== DATA ===", "=== END DATA ===", "=== END OF PROMPT ===", "-- Model --",
+                        "-- Predicates --", "-- Comparisons --", "-- Examples --", "-- Facts --"})
 
 
 def _line(document: dict[str, Any]) -> str:
@@ -92,7 +95,14 @@ def _project(row: dict[str, Any], keys: tuple[str, ...]) -> dict[str, Any]:
 def _verbalization(model: Any) -> list[str]:
     """The verbalization from ``=== Object Types ===`` on; its header names another task."""
     lines = render_verbalization(model).split("\n")
-    return lines[lines.index("=== Object Types ==="):]
+    lines = lines[lines.index("=== Object Types ==="):]
+    for line in lines:
+        text = line.strip()
+        if text in _STRUCTURE or text.startswith("```") or _MODEL.fullmatch(text):
+            # Names and readings are whole lines here; the JSON lines cannot start this way.
+            raise IlpError(EXIT_ILL_FORMED, f"forged-line: the model's verbalization holds the "
+                           f"line {json.dumps(text)}, which the prompt reserves")
+    return lines
 
 
 def build_prompt(neutral: dict[str, Any], model: Any) -> str:

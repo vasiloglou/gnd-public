@@ -558,14 +558,14 @@
   },
   {
    "id": "i6-type-confused",
-   "story": "T8 (IL3-F1): position 1 is the refund id, but the column compares an amount; D13's check refuses it.",
+   "story": "T8 (IL3-F1): position 1 is the refund id, but the column compares an amount. The checker's comparison-type check meets the clash before 9b and refuses it.",
    "text": "[[f_refund_amount__1__3__gt_t_amount__500=1]]",
    "learner": "wittgenstein",
    "coverage": [
     []
    ],
    "exit": 3,
-   "refusal": "type-confused-join"
+   "refusal": "comparison-type"
   },
   {
    "id": "i7-all-or-nothing",

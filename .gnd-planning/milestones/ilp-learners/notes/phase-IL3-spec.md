@@ -487,6 +487,11 @@ a pinned pandas needs a further ruling.
   declared type as a join site. A column whose comparison type differs from
   the position's type (`f_refund_amount__1__3__gt_t_amount__500`: position 1
   is the refund id) is refused `type-confused-join`.
+- **Observed at implementation:** the checker meets that clash first in its
+  `comparison-type` check ("comparisons are over integer types only"), which
+  runs before 9b. So the refusal is named `comparison-type`, not
+  `type-confused-join`; the corpus case `i6` was corrected to that name before
+  any other code depended on it. The clash is refused either way.
 - **Consequence:** T8 becomes a refusal case in the corpus (`i6`), plus a
   property test that every clause the reader writes uses distinct fresh
   variables. No ruling is needed: the checker behaves as approved, and only
@@ -507,3 +512,21 @@ a pinned pandas needs a further ruling.
 - **The corpus:** every column name gained its arity. The arity case `i5`
   now claims arity 4 for a three-argument predicate, and one parse case
   (`u10`) was added. No expected meaning changed.
+
+**IL3-F3 (2026-10-28): no extra stdout line.**
+- r1 §6 asked `gnd export ilp --target rules` to print a `features … cells …`
+  line. Printing it would need the service to branch on the target, which
+  IL1-C1 forbids (`ilp_service.py` has no learner-name branch).
+- **Done instead:** the counter lives in `features.json`'s own `work` field
+  (`cells`, `ceiling`), which T2 and T3 check. The export's stdout is the
+  same three lines for every target.
+
+**IL3-F4 (2026-10-28): the RF6 census rows were not listed.**
+- r1's IK-R7 row named the layer map but not the RF6 query census, which IL2
+  and IL5 each extended with a successor delta.
+- **The direct-read policy** flagged a literal `predicate['roles']` read. The
+  role is now read through a module key (`_ROLES`), as IL5's prompt builder
+  projects the same neutral-form field, so no RF6 query exception widens.
+- **The dynamic census:** `evidence/IL3/dynamic-query-successor.json`,
+  chained after IL5's, adds 23 syntax rows, all in `gnd.export.ilp_rules`,
+  and removes none.

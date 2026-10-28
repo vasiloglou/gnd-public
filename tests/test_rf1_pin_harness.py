@@ -26,7 +26,7 @@ from support.rf1_pins import (
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = PINS_ROOT / "goldens.sha256"
 # The manifest's own digest: changing any golden edits this line too (SM1).
-MANIFEST_SHA256 = "8f17e4a95c68d95e7def49c2655cd809ef3d6b70c313a65d1ebfbcbb802c1fa9"  # IL5-Q3 rehashes nine goldens moved by IL1, IL2 and IL5
+MANIFEST_SHA256 = "f7d210f1109567e2a016274d178c83d95e24cf92a6ddb7d5ce122f5730f822ce"  # IL3 adds the rules target to the ILP choices
 
 _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
 tool = importlib.util.module_from_spec(_SPEC)

@@ -82,6 +82,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/ilp-learners/evidence/IL1/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/ilp-learners/evidence/IL2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/ilp-learners/evidence/IL5/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/ilp-learners/evidence/IL3/dynamic-query-successor.json',
 ]
 
 

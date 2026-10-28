@@ -105,7 +105,7 @@ def _register_export(subparsers):
     ilp_parser.add_argument("model", help="path to the model file")
     ilp_parser.add_argument("--labels", required=True, help="class-mode label manifest (gnd-labels/1)")
     ilp_parser.add_argument(
-        "--target", required=True, choices=("popper", "neutral", "ilasp"),
+        "--target", required=True, choices=("popper", "neutral", "ilasp", "rules"),
         help="learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl), neutral, "
              "or ilasp (neutral form plus ilasp/task.las)",
     )

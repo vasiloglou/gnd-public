@@ -50,6 +50,7 @@ The command creates `DIR`, which must not exist, and writes these files:
 | `popper/exs.pl` | `pos(wrong('<id>')).` or `neg(wrong('<id>')).` per population, in manifest order |
 | `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate and per threshold predicate, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
 | `ilasp/task.las` | with `--target ilasp`: one ILASP learning task (see [ILASP adapter](#ilasp-adapter)) |
+| `rules/features.json` | with `--target rules`: the feature table, `gnd-ilp-features/1` (see [Boolean rule sets](#boolean-rule-sets)) |
 | `export.json` | `gnd-ilp-export/1`: the target, the adapter version, and each other file's path, SHA-256 and size |
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
@@ -344,8 +345,64 @@ clause is the control.
 
 **The answer** is the text of the one block that opens with a line equal to
 ```` ```json ```` and closes with the next line equal to ```` ``` ````. No
-block, two blocks, or an unterminated block is no answer. The first line of
+block, two blocks, an unterminated block, or any other line starting with
+```` ``` ```` outside the block is no answer. The first line of
 the form `model: ID` is recorded as the agent's own claim, never verified.
+
+## Boolean rule sets
+
+`--target rules` serves propositional rule-set learners, which read a table
+rather than relational facts. The run of record uses wittgenstein's RIPPER.
+
+**The export** writes `rules/features.json`, `gnd-ilp-features/1`: one row per
+example and one 0/1 column per feature.
+- **A feature** is one integer argument position of an exported predicate,
+  crossed with one of the threshold comparisons the Popper adapter selects
+  (`gt_` and `lt_`, at up to 32 observed values). A cell is 1 when the example
+  has a fact of that predicate whose value at that position passes the
+  comparison.
+- **Only thresholded features are exported.** A feature without a comparison
+  would be a single atom, which the fragment table can only refuse.
+- **Each column states its meaning:** predicate, position, arity, role, type,
+  comparison, operator and threshold. Its name spells the same thing:
+  `<predicate>__<position>__<arity>__<comparison>__<threshold>`, for example
+  `f_refund_amount__2__3__gt_t_amount__500`, with the threshold written as
+  Popper writes it (`m` for minus). The arity counts the example argument.
+- **Bounds:** at most 4,096 features and 4,000,000 cells (rows × features).
+  Beyond them the export is refused `too-many-features` or `too-large`; an
+  export with no thresholded argument is refused `no-features`. The table's
+  `work` field records the cells and the ceiling.
+
+**The import** reads the learner's rule set as wittgenstein prints it, one
+line: `[[cond^cond] V [cond]]`, where a condition is a column name and a
+value. Each rule is read by the polarity table, in this order:
+
+| The rule | Spellings | Result |
+|---|---|---|
+| a rule list (`if … then … else …`) | a line starting with `if` | refused `ordered-rule-list` |
+| no condition | `[True]` | refused `empty-antecedent` |
+| a feature required false | `=0`, `=0.0`, `=False`, `<=0.5` | refused `negation-as-failure` |
+| two or more features | `[a=1^b=1]` | refused `propositional-conjunction` |
+| one feature required true | `=1`, `=1.0`, `=True`, `>0.5` | the feature's clause |
+
+A true feature becomes the clause its name spells, with a fresh variable at
+every position:
+
+```
+wrong(X) :- f_refund_amount(X, V1, V2), gt_t_amount(V2, 500).
+```
+
+The clauses then go through the fragment table and the coverage re-check like
+any other target's, so a name whose comparison the export never declared is
+refused there, and a comparison whose type differs from its position's is
+refused `comparison-type`. Admission is all-or-nothing: one refused rule
+refuses the set. Anything outside the grammar, an empty set `[]`, more than 32
+rules, more than 16 conditions in a rule, a name over 160 characters or a
+threshold over 32 digits is refused `unparsable`.
+
+The learner's own coverage of each rule, in rule order, is the run record's
+coverage. The learner is named `wittgenstein`; the method token is
+`ilp-rules`.
 
 ## Bounds
 

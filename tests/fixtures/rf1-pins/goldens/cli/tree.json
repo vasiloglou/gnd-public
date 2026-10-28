@@ -1965,7 +1965,8 @@
        "choices": [
         "popper",
         "neutral",
-        "ilasp"
+        "ilasp",
+        "rules"
        ],
        "class": "_StoreAction",
        "const": null,
@@ -3024,7 +3025,8 @@
         "popper",
         "neutral",
         "ilasp",
-        "llm"
+        "llm",
+        "rules"
        ],
        "class": "_StoreAction",
        "const": null,

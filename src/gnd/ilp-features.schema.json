@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/ilp-features.schema.json",
+  "title": "GND ILP feature table (gnd-ilp-features/1)",
+  "description": "ilp-learners IL3. The rules target's export: one row per example, one 0/1 column per feature. A feature is one integer argument position of an exported predicate with one threshold comparison; each column states that meaning, and its name spells the clause it stands for.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "columns",
+    "rows",
+    "work"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "gnd-ilp-features/1"
+    },
+    "columns": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "predicate",
+          "position",
+          "arity",
+          "role",
+          "type",
+          "comparison",
+          "operator",
+          "threshold"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*__[1-9][0-9]*__[1-9][0-9]*__(gt|lt)_t_[A-Za-z0-9_]+__m?(0|[1-9][0-9]*)$",
+            "maxLength": 160
+          },
+          "predicate": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "arity": {
+            "type": "integer",
+            "minimum": 2
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "pattern": "^t_[A-Za-z0-9_]+$"
+          },
+          "comparison": {
+            "type": "string",
+            "pattern": "^(gt|lt)_t_[A-Za-z0-9_]+$"
+          },
+          "operator": {
+            "enum": [
+              ">",
+              "<"
+            ]
+          },
+          "threshold": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "example",
+          "label",
+          "values"
+        ],
+        "properties": {
+          "example": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "enum": [
+              "pos",
+              "neg"
+            ]
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "enum": [
+                0,
+                1
+              ]
+            }
+          }
+        }
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cells",
+        "ceiling"
+      ],
+      "properties": {
+        "cells": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ceiling": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

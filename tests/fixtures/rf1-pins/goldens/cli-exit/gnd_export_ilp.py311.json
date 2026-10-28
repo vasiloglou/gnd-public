@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd export ilp [-h] --labels LABELS --target\n                      {popper,neutral,ilasp,rules} --out OUT\n                      model\n\nWrite the learner-neutral ILP form (gnd-ilp/1) of MODEL and a class-mode label\nmanifest, plus the named adapter's rendering, into a new directory. Examples\nare the manifest's populations; the learned predicate wrong/1 covers the\nnegative class. Prints the export digest, the SHA-256 of export.json. Exits 0\non success, 3 on an invalid manifest, model or population or a value the\nexport cannot render, 5 when a population fails to load, 11 when --out exists,\n64 on a usage error, 66 on a missing input, 74 on a refused path.\n\npositional arguments:\n  model                 path to the model file\n\noptions:\n  -h, --help            show this help message and exit\n  --labels LABELS       class-mode label manifest (gnd-labels/1)\n  --target {popper,neutral,ilasp,rules}\n                        learner adapter: popper (neutral form plus bk.pl,\n                        exs.pl, bias.pl), neutral, or ilasp (neutral form plus\n                        ilasp/task.las)\n  --out OUT             new directory for the export\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd export ilp [-h] --labels LABELS --target\n                      {popper,neutral,ilasp,rules} --out OUT\n                      model\ngnd export ilp: error: the following arguments are required: model, --labels, --target, --out\n",
+  "stdout": ""
+ }
+}

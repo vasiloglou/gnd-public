@@ -104,7 +104,7 @@ def test_t1b_the_table_validates_and_each_column_says_what_it_means(tmp_path, na
         assert column["threshold"] == (-int(digits) if sign else int(digits))
         assert column["operator"] == {"gt": ">", "lt": "<"}[comparison[:2]]
         assert column["type"] == predicates[predicate]["types"][int(position)]
-        assert column["role"] == predicates[predicate]["roles"][int(position)]
+        assert column["role"] == predicates[predicate]["roles"][int(position) - 1]
     assert all(len(row["values"]) == len(table["columns"]) for row in table["rows"])
     assert [row["example"] for row in table["rows"]] == [e["id"] for e in neutral["examples"]]
     assert [row["label"] for row in table["rows"]] == [e["label"] for e in neutral["examples"]]
@@ -299,18 +299,19 @@ def test_t10_the_extractor(case):
 # ---------------------------------------------------------------------------
 
 def test_t13_the_reference_section_matches_the_code():
-    from gnd.export import ilp_rules
+    from gnd.export import ilp_rewrite, ilp_rules
 
     doc = (REPO_ROOT / "docs" / "reference" / "ilp-bridge.md").read_text(encoding="utf-8")
     section = doc.split("\n## Boolean rule sets\n", 1)[1].split("\n## ", 1)[0]
-    for name in ilp_rules.REFUSALS:
+    for name in (*ilp_rules.EXPORT_REFUSALS, *ilp_rules.REFUSALS):
         assert f"`{name}`" in section, name
     for spelling in (*ilp_rules.TRUE_SPELLINGS, *ilp_rules.FALSE_SPELLINGS):
         assert f"`{spelling}`" in section, spelling
     for bound in ("MAX_FEATURES", "MAX_CELLS"):
         assert f"{getattr(ilp_rules, bound):,}" in section, bound
     documented = set(re.findall(r"refused `([a-z-]+)`", section))
-    assert documented <= set(ilp_rules.REFUSALS) | {"unparsable"}
+    assert documented <= {*ilp_rules.EXPORT_REFUSALS, *ilp_rules.REFUSALS, *ilp_rewrite.REFUSALS,
+                          "unparsable"}
 
 
 # ---------------------------------------------------------------------------

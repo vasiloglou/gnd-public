@@ -1,0 +1,149 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL5/dynamic-query-successor.json",
+ "predecessor_sha256": "c30801e409783b16c56447ddf7f173f49ea4785bc587ad8ecc7b12b28663ee74",
+ "reason": "ilp-learners IL3 (spec r1, approved 2026-10-28): Boolean rule sets. The rows are gnd.export.ilp_rules' feature-table renderer (the per-example value lookup, the neutral-form role projection and the threshold-row split), its column-name reader, clause builder and rule-set reader, and their annotations. Syntax census only; no model-query exception widening.",
+ "removed": [],
+ "added": [
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_clause",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_column",
+   "tuple[str, int, int, str, int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_columns",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_columns",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_columns",
+   "predicate['types'][position]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_columns",
+   "predicate[_ROLES]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_columns",
+   "predicate[_ROLES][position - 1]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "_columns",
+   "spelled[1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "condition",
+   "self.text[end]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "condition",
+   "tuple[str, bool]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "extract_ruleset",
+   "line.removesuffix('\\r')[len(_PREFIX):]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "parse_ruleset",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "render",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "render",
+   "dict[str, bytes]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "render",
+   "dict[tuple[str, str, int], list[int]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "render",
+   "list[int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "render",
+   "tuple[str, str, int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "render",
+   "values.get((example['id'], column['predicate'], column['position']), [])",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "rule",
+   "list[tuple[str, bool]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "rule",
+   "tuple[str, bool]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "ruleset",
+   "list[list[tuple[str, bool]] | None]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "ruleset",
+   "list[tuple[str, bool]]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_rules.py",
+   "ruleset",
+   "tuple[str, bool]",
+   2
+  ]
+ ],
+ "result_distinct_rows": 6666,
+ "result_occurrences": 8345
+}

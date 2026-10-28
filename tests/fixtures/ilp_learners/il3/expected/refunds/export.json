@@ -1,0 +1,17 @@
+{
+  "adapter_version": "1",
+  "files": [
+    {
+      "bytes": 10317,
+      "path": "neutral.json",
+      "sha256": "93a22e2b03b7c37b88f4ba5c7171a03870094b5a5f730d4aca979d5747a98820"
+    },
+    {
+      "bytes": 14714,
+      "path": "rules/features.json",
+      "sha256": "f96c151bfcb3c846f63e245f02aaf09d3fc57e7a85e316e59e9e022e031f72d3"
+    }
+  ],
+  "schema_version": "gnd-ilp-export/1",
+  "target": "rules"
+}

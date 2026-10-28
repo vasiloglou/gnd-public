@@ -95,7 +95,9 @@ def _register_export(subparsers):
             "Write the learner-neutral ILP form (gnd-ilp/1) of MODEL and a class-mode "
             "label manifest, plus the named adapter's rendering, into a new directory. "
             "Examples are the manifest's populations; the learned predicate wrong/1 "
-            "covers the negative class. Prints the export digest, the SHA-256 of "
+            "covers the negative class. The amie target instead takes one --population "
+            "and no labels, and writes its binary fact types as typed triples. Prints the "
+            "export digest, the SHA-256 of "
             "export.json. Exits 0 on success, 3 on an invalid manifest, model or "
             "population or a value the export cannot render, 5 when a population fails "
             "to load, 11 when --out exists, 64 on a usage error, 66 on a missing input, "
@@ -103,12 +105,17 @@ def _register_export(subparsers):
         ),
     )
     ilp_parser.add_argument("model", help="path to the model file")
-    ilp_parser.add_argument("--labels", required=True, help="class-mode label manifest (gnd-labels/1)")
     ilp_parser.add_argument(
-        "--target", required=True, choices=("popper", "neutral", "ilasp", "rules"),
+        "--labels", help="class-mode label manifest (gnd-labels/1); required by every target but amie"
+    )
+    ilp_parser.add_argument(
+        "--population", help="the one population to export; required by amie, refused by the others"
+    )
+    ilp_parser.add_argument(
+        "--target", required=True, choices=("popper", "neutral", "ilasp", "rules", "amie"),
         help="learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl), neutral, "
-             "ilasp (neutral form plus ilasp/task.las), or rules (neutral form plus "
-             "rules/features.json)",
+             "ilasp (neutral form plus ilasp/task.las), rules (neutral form plus "
+             "rules/features.json), or amie (amie/facts.tsv and amie/relations.json)",
     )
     ilp_parser.add_argument("--out", required=True, help="new directory for the export")
 
@@ -126,12 +133,34 @@ def add_parsers(subparsers, *, command: str | None = None):
     return parsers
 
 
+def _ilp_inputs(args) -> str | None:
+    """The post-parse check (IL4-C5): the target decides which input is required.
+
+    The missing-``--labels`` message is the one argparse printed when the flag
+    was ``required=True``, so the popper and neutral exits are unchanged."""
+    if args.target == "amie":
+        if args.labels is not None:
+            return "argument --labels: not allowed with --target amie"
+        if args.population is None:
+            return "the following arguments are required: --population"
+        return None
+    if args.population is not None:
+        return f"argument --population: not allowed with --target {args.target}"
+    if args.labels is None:
+        return "the following arguments are required: --labels"
+    return None
+
+
 def handle(args, parsers) -> int:
     if args.command == "export":
         if args.export_target == "ilp":
             from gnd.export.ilp_service import _cmd_export_ilp
 
-            return _cmd_export_ilp(args.model, args.labels, target=args.target, out=args.out)
+            usage = _ilp_inputs(args)
+            if usage is not None:
+                parsers["ilp_parser"].error(usage)
+            return _cmd_export_ilp(args.model, args.labels, target=args.target, out=args.out,
+                                   population=args.population)
         if args.export_target.startswith("lean"):
             from gnd.export.lean_cli import dispatch as lean_dispatch
 

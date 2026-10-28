@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd import mined-rules [-h] --population POPULATION --reported REPORTED\n                              --target {amie} --out OUT [--actor ACTOR]\n                              [--requested-at REQUESTED_AT]\n                              [--format {text,json}]\n                              model rules\n\nMap each printed rule B1, ..., Bn => r(x, y) of a rule miner into one guarded\nconstraint with an atom consequent (source induced, status proposed, modality\ndeontic), count its support over the population's distinct head pairs, and\nwrite an evolve proposal only if every rule's count equals the miner's and\nevery rule holds. Admission is all-or-nothing. Exits 0 when the proposal is\nwritten, 3 on any refusal (a shape outside the mapping, a binding or count\nmismatch, a rule that does not hold, invalid input), 5 when the population\nfails to load, 11 when --out exists, 64 on a usage error, 66 on a missing\ninput, 70 on an internal defect, 74 on a refused path.\n\npositional arguments:\n  model                 path to the model file\n  rules                 the miner's printed rule lines (amie)\n\noptions:\n  -h, --help            show this help message and exit\n  --population POPULATION\n                        the mined population\n  --reported REPORTED   the miner run record (gnd-mined-run/1)\n  --target {amie}       the miner RULES come from\n  --out OUT             write the evolve proposal here\n  --actor ACTOR         who requests the proposal (its audit actor_id)\n  --requested-at REQUESTED_AT\n                        the audit time, ISO-8601 with a UTC offset (default:\n                        now); fix it for reproducible output\n  --format {text,json}  output rendering: human-readable text (default) or one\n                        JSON payload\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd import mined-rules [-h] --population POPULATION --reported REPORTED\n                              --target {amie} --out OUT [--actor ACTOR]\n                              [--requested-at REQUESTED_AT]\n                              [--format {text,json}]\n                              model rules\ngnd import mined-rules: error: the following arguments are required: model, rules, --population, --reported, --target, --out\n",
+  "stdout": ""
+ }
+}

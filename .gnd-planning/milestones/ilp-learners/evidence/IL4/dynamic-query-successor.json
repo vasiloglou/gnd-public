@@ -1,0 +1,408 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL3/dynamic-query-successor.json",
+ "predecessor_sha256": "9a655d0c063743de4445a88b60f329e2331737c49d407610b423e95cc1e26f7b",
+ "reason": "ilp-learners IL4 (spec r1, approved 2026-10-28): the AMIE-style miner. The rows are gnd.export.ilp_amie's triple export (relation table, spelled fact pairs), its rule-line reader, its rule-to-guarded mapping and its head-pair counting join, and gnd.export.ilp_service's mined-rules import (run-record paths, per-rule rows, fact ids of satisfied head facts, checker verdicts). Syntax census only; no model-query exception widening.",
+ "removed": [
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "Callable[[dict[str, Any]], dict[str, bytes]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "Callable[[str], dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "dict[str, Any]",
+   2
+  ]
+ ],
+ "added": [
+  [
+   "src/gnd/export/ilp.py",
+   "index_tree",
+   "dict[str, bytes]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "Counts",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "Counts",
+   "tuple[tuple[str, str], ...]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "MinedRule",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "MinedRule",
+   "tuple[str, str, str]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "MinedRule",
+   "tuple[tuple[str, str, str], ...]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "Relation",
+   "tuple[str, str]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "_atoms",
+   "list[list[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "_atoms",
+   "list[str]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "_atoms",
+   "tokens[k:k + 3]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "atom",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "atom",
+   "obj[1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "atom",
+   "relations[relation]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "atom",
+   "subject[1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "Mapping[str, list[tuple[str, str]]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "b[head_object]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "b[head_subject]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "facts[head_relation]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "facts[relation]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "list[dict[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "list[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "count",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "mapped",
+   "Mapping[str, Relation]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "mapped",
+   "Mapping[str, frozenset[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "mapped",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "mapped",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "pairs",
+   "Mapping[str, Relation]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "pairs",
+   "dict[str, list[tuple[str, str]]]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "pairs",
+   "list[tuple[str, str]]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "pairs",
+   "population.facts.get(relation.fact_type)",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "pairs",
+   "row[role]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "pairs",
+   "tuple[str, str]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "parse_rules",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "parse_rules",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "parse_rules",
+   "text[:-1]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "parse_rules",
+   "tokens[:arrow]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "parse_rules",
+   "tokens[arrow + 1:]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "parse_rules",
+   "value[:40]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "dict[str, Relation]",
+   4
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "list[dict[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "object_types[column.types[1]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "object_types[column.types[2]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "relation_table",
+   "tuple[dict[str, Relation], dict[str, Relation], list[dict[str, str]]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "render",
+   "dict[str, bytes]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "render",
+   "facts[name]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "spell",
+   "_ESCAPES.get(character, character)",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "Callable[..., dict[str, bytes]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "Callable[[str], Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_Mined",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "dict[tuple[str, ...], int]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "examples[:INDUCTION_EXAMPLES]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "first[pair]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "inputs.digest[:8]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "inputs.population.facts.get(head.fact_type)",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "relations[mined_rule.head[1]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "row[role]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_cmd_import_mined_rules",
+   "verdicts.get(row['ref'])",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "_mined_tree",
+   "dict[str, bytes]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_service.py",
+   "ref",
+   "dict[str, str]",
+   1
+  ]
+ ],
+ "result_distinct_rows": 6726,
+ "result_occurrences": 8418
+}

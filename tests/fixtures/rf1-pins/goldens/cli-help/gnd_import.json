@@ -1,4 +1,4 @@
 {
- "help": "usage: gnd import [-h] {rai-orm,ilp-rules} ...\n\npositional arguments:\n  {rai-orm,ilp-rules}\n    rai-orm            import the bounded rai-orm-from-schema dialect\n    ilp-rules          admit learned ILP clauses as induced guarded\n                       constraints (IK5)\n\noptions:\n  -h, --help           show this help message and exit\n",
+ "help": "usage: gnd import [-h] {rai-orm,ilp-rules,mined-rules} ...\n\npositional arguments:\n  {rai-orm,ilp-rules,mined-rules}\n    rai-orm             import the bounded rai-orm-from-schema dialect\n    ilp-rules           admit learned ILP clauses as induced guarded\n                        constraints (IK5)\n    mined-rules         admit mined Horn rules that hold as induced guarded\n                        constraints (IL4)\n\noptions:\n  -h, --help            show this help message and exit\n",
  "path": "gnd import"
 }

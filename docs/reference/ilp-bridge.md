@@ -17,7 +17,8 @@ end to end, including a refused over-claim,
 This page is the one home of the bridge's contract, including the fragment
 table. The four wire formats are the packaged closed schemas
 `ilp.schema.json`, `ilp-clauses.schema.json`, `ilp-run.schema.json` and
-`ilp-import.schema.json`.
+`ilp-import.schema.json`. A rule miner, which needs no labels, has its own
+command and schema: see [AMIE-style miner](#amie-style-miner).
 
 ## The workflow
 
@@ -51,6 +52,7 @@ The command creates `DIR`, which must not exist, and writes these files:
 | `popper/bias.pl` | the modes: `head_pred(wrong,1)`, one `body_pred`/`type` pair per predicate and per threshold predicate, and fixed `max_vars(6)`, `max_body(5)` and `max_clauses(4)` |
 | `ilasp/task.las` | with `--target ilasp`: one ILASP learning task (see [ILASP adapter](#ilasp-adapter)) |
 | `rules/features.json` | with `--target rules`: the feature table, `gnd-ilp-features/1` (see [Boolean rule sets](#boolean-rule-sets)) |
+| `amie/facts.tsv`, `amie/relations.json` | with `--target amie`, instead of every file above but `export.json`: the typed triples of one population (see [AMIE-style miner](#amie-style-miner)) |
 | `export.json` | `gnd-ilp-export/1`: the target, the adapter version, and each other file's path, SHA-256 and size |
 
 With `--target neutral`, only `neutral.json` and `export.json` are written.
@@ -409,6 +411,93 @@ The learner's own coverage of each rule, in rule order, is the run record's
 coverage. The learner is named `wittgenstein`; the method token is
 `ilp-rules`.
 
+## AMIE-style miner
+
+`--target amie` serves rule miners such as
+[AMIE](https://github.com/dig-team/AMIE), which look for regularities in one
+population instead of learning a labelled target. The run of record uses
+AMIE 4.0.0.
+
+```
+gnd export ilp MODEL --population POP --target amie --out DIR
+#   ... run the miner on DIR/amie/facts.tsv, keep its rule lines ...
+gnd import mined-rules MODEL RULES --population POP --reported RUN \
+    --target amie --out PROPOSAL [--actor ID] [--requested-at TIME] [--format text|json]
+```
+
+**Which input.** `--target amie` takes `--population` and refuses `--labels`;
+every other target takes `--labels` and refuses `--population`. A wrong pair
+exits 64.
+
+**The export** writes, beside `export.json`:
+- `amie/facts.tsv`: one `subject TAB relation TAB object` line per distinct
+  fact, sorted. Each binary asserted fact type the population `covers` is one
+  relation, `f_<fact type id>`. Each value is spelled
+  `<object type id>:<value>`, so the miner cannot join a refund number with an
+  equal amount. A tab, newline or backslash in a string is written `\t`,
+  `\n` or `\\`; any other control character is refused `unrepresentable`.
+- `amie/relations.json`: the population's SHA-256, each relation's fact type,
+  roles, object types and fact count, and every skipped fact type with its
+  reason: `derived`, `arity` (not binary) or `not-covered`.
+
+A population that covers no binary asserted fact type is refused
+`no-relations`. There are no labels and no `neutral.json`.
+
+**The import** reads RULES as AMIE prints them: one line per rule, eight
+tab-separated fields: the rule, head coverage, standard confidence, PCA
+confidence, Support, body size, PCA body size and the functional variable. The
+rule is space-separated triples, `=>`, then one triple:
+`?a  f_works_in  ?b  ?b  f_team_site  ?c   => ?a  f_based_at  ?c`. Support and
+body size are counts; a body size of `-1` (AMIE computes it only with
+`-enstd`) means not reported. The other figures are kept verbatim and never
+compared. Anything else is refused `unparsable`: a line in another shape, an
+empty file, a blank or repeated line, a variable other than `?a` to `?z`, more
+than 256 rules, more than 4 atoms, a count over 18 digits, more than 1 MiB.
+
+**The run record** (`gnd-mined-run/1` in `mined-import.schema.json`) names the
+miner and binds RULES and the population by SHA-256. A different miner is
+refused `learner-mismatch`, other RULES `rules-mismatch`, another population
+`population-mismatch`.
+
+**The mapping.** A rule `B1, …, Bn => r(x, y)` becomes one `guarded`
+constraint whose antecedent is the body's atoms and whose consequent is the
+`atom` `r(x, y)`, each variable `?v` written `$v`. These shapes are refused,
+in this order:
+
+| The rule | Result |
+|---|---|
+| a head relation outside the population's `covers` | refused `open-world-head`: a missing head fact is not evidence |
+| a relation the export does not write (unknown, or outside `covers`) | refused `unknown-predicate` |
+| a constant (AMIE prints one only with `-const`) | refused `constant-atom` |
+| an atom whose two ends are one variable | refused `reflexive-atom` |
+| the head relation also in the body | refused `recursion` |
+| a head variable the body does not bind | refused `unbound-head` |
+| a variable joining roles of incompatible object types | refused `type-confused-join`, by the fragment table's join check |
+
+**The counting.** GND counts every rule itself, over distinct head pairs:
+- **the denominator** is the number of distinct `(x, y)` that some binding of
+  the body reaches;
+- **the numerator** is how many of those are facts of `r`;
+- **the confidence** is numerator over denominator, reported with formula
+  `std-confidence-head-pairs`.
+
+The body's join is bounded before it runs: if the product of its relations'
+sizes exceeds 1,000,000 rows the rule is refused `too-large`. Then, in this
+order: a denominator of 0 is refused `covers-nothing`; a numerator that
+differs from the miner's Support is refused `support-mismatch`; and a rule
+that does not hold on every head pair is refused `does-not-hold`, because only
+rules that hold are admitted. A body size that differs from the denominator is
+recorded in the report (`body_size_agrees`), not refused. Admission is
+all-or-nothing: one refused rule refuses the set.
+
+**The proposal** carries, for each rule, the IK2 envelope `gnd discover`
+writes: the inducer from the run record, method `ilp-amie`,
+`manifest_sha256` the population's SHA-256, `examples` the opaque fact ids of
+the satisfied head facts (the first 256), `support` the counts and no
+`counterexamples`; evidence is the population, RULES and the run record. The
+checker re-checks the candidate model before the proposal is written. The
+report is `gnd-mined-import/1`, with `command` `import mined-rules`.
+
 ## Bounds
 
 | Item | Bound |
@@ -416,7 +505,8 @@ coverage. The learner is named `wittgenstein`; the method token is
 | exported facts | at most 500,000 |
 | each written file | at most 64 MiB |
 | CLAUSES | at most 1 MiB; 1 to 32 clauses; 1 to 16 body literals; `not`/`or`/`aggregate` nesting at most 4 |
-| run record | at most 32 MiB |
+| run record | at most 32 MiB; a mined run record at most 64 KiB |
+| mined RULES | at most 1 MiB; 1 to 256 rules; 2 to 4 atoms; counts of at most 18 digits; a body join of at most 1,000,000 rows |
 | work | export: populations + facts, at most populations + 500,000; import: checker runs + verdict reads + candidate reloads, at most P × (1 + K) + K + 2 |
 
 ## Exits

@@ -1,0 +1,45 @@
+{
+  "population_sha256": "3f10fb892fb68107694e345e80759f363a687f6f0305819035a5903b8a60e3f7",
+  "relations": [
+    {
+      "fact_type": "refund_amount",
+      "facts": 3,
+      "name": "f_refund_amount",
+      "roles": [
+        "refund",
+        "amount"
+      ],
+      "types": [
+        "refund",
+        "amount"
+      ]
+    },
+    {
+      "fact_type": "refund_by",
+      "facts": 3,
+      "name": "f_refund_by",
+      "roles": [
+        "refund",
+        "customer"
+      ],
+      "types": [
+        "refund",
+        "customer"
+      ]
+    },
+    {
+      "fact_type": "refund_channel",
+      "facts": 3,
+      "name": "f_refund_channel",
+      "roles": [
+        "refund",
+        "channel"
+      ],
+      "types": [
+        "refund",
+        "channel"
+      ]
+    }
+  ],
+  "skipped": []
+}

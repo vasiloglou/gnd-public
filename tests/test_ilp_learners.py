@@ -70,12 +70,14 @@ def _choices(parser: argparse.ArgumentParser, dest: str) -> tuple[str, ...]:
 def test_t2_registry_cli_and_schema_enums_agree(monkeypatch):
     from gnd.export import ilp_learners
 
-    assert tuple(ilp_learners.LEARNERS) == ("popper", "neutral", "ilasp", "llm", "rules")
-    assert ilp_learners.EXPORT_TARGETS == ("popper", "neutral", "ilasp", "rules")
+    assert tuple(ilp_learners.LEARNERS) == ("popper", "neutral", "ilasp", "llm", "rules", "amie")
+    assert ilp_learners.EXPORT_TARGETS == ("popper", "neutral", "ilasp", "rules", "amie")
     assert ilp_learners.IMPORT_TARGETS == ("popper", "neutral", "ilasp", "llm", "rules")
+    assert ilp_learners.MINED_TARGETS == ("amie",)
     root = _root_parser(monkeypatch)
     assert _choices(_subparser(root, "export", "ilp"), "target") == ilp_learners.EXPORT_TARGETS
     assert _choices(_subparser(root, "import", "ilp-rules"), "target") == ilp_learners.IMPORT_TARGETS
+    assert _choices(_subparser(root, "import", "mined-rules"), "target") == ilp_learners.MINED_TARGETS
     export_enum = json.loads((SRC / "ilp.schema.json").read_text())
     import_enum = json.loads((SRC / "ilp-import.schema.json").read_text())
 

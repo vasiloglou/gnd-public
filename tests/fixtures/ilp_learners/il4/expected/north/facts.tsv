@@ -1,0 +1,9 @@
+refund:101	f_refund_amount	amount:40
+refund:101	f_refund_by	customer:c-anna
+refund:101	f_refund_channel	channel:card
+refund:102	f_refund_amount	amount:120
+refund:102	f_refund_by	customer:c-ben
+refund:102	f_refund_channel	channel:card
+refund:103	f_refund_amount	amount:75
+refund:103	f_refund_by	customer:c-cara
+refund:103	f_refund_channel	channel:cash

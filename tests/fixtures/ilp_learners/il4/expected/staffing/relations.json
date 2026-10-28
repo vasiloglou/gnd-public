@@ -1,0 +1,67 @@
+{
+  "population_sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a",
+  "relations": [
+    {
+      "fact_type": "based_at",
+      "facts": 20,
+      "name": "f_based_at",
+      "roles": [
+        "staff",
+        "site"
+      ],
+      "types": [
+        "staff",
+        "site"
+      ]
+    },
+    {
+      "fact_type": "parks_at",
+      "facts": 20,
+      "name": "f_parks_at",
+      "roles": [
+        "staff",
+        "site"
+      ],
+      "types": [
+        "staff",
+        "site"
+      ]
+    },
+    {
+      "fact_type": "team_site",
+      "facts": 5,
+      "name": "f_team_site",
+      "roles": [
+        "team",
+        "site"
+      ],
+      "types": [
+        "team",
+        "site"
+      ]
+    },
+    {
+      "fact_type": "works_in",
+      "facts": 20,
+      "name": "f_works_in",
+      "roles": [
+        "staff",
+        "team"
+      ],
+      "types": [
+        "staff",
+        "team"
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "fact_type": "is_contractor",
+      "reason": "arity"
+    },
+    {
+      "fact_type": "mentors",
+      "reason": "not-covered"
+    }
+  ]
+}

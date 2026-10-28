@@ -387,7 +387,56 @@ needs a further ruling.
 
 ## 14. Implementation findings (recorded as found)
 
-None yet.
+- **IL4-F1 (premises, both hold).** T6's premise: a guarded constraint with
+  an `atom` consequent over variables, built by `discover.output.proposal`,
+  passes the checker (`pass`) and `gnd evolve preview` (exit 0) over the
+  staffing fixture. The provenance premise: `PopulationView.fact_id` gives
+  `ft<k>#<index>`, the ids `gnd discover` writes. No ruling changes.
+- **IL4-F2 (spec gap: what `--reported` holds).** Neither the plan nor §6
+  defines the run record. Implemented as `gnd-mined-run/1` (a `$defs` entry of
+  `mined-import.schema.json`): the learner's name and version and the
+  SHA-256s of RULES and of the population, mirroring `ilp-rules`' run
+  record. Three input refusals follow, before the mapping:
+  `learner-mismatch`, `rules-mismatch`, `population-mismatch`, each tested
+  (T5). The learner's own figures stay in RULES, so the record carries no
+  coverage.
+- **IL4-F3 (spec text vs. a closed schema).** §6 puts `population_sha256`
+  and `skipped` in `export.json`, but `gnd-ilp-export/1` is closed and IL-R7
+  widens only its `target` enum. They live in `amie/relations.json`, which
+  `export.json` binds by digest. No wire change.
+- **IL4-F4 (the probe, IL4-D10, run on the toy TSV).** AMIE 4.0.0 has no `-h`:
+  it exits 1 and prints its usage. It has no timeout option, so
+  `learner-timeout` is unreachable (as IL2-Q4). Its rule lines have eight
+  tab-separated fields and the count column is `Support` (§6 said "positive
+  examples"). Without `-enstd` it computes neither standard confidence nor
+  body size and prints `-2.000000` and `-1`: under the ruled argv the
+  IL4-D8 body-size comparison is always "not reported". `-mins 1` switches
+  the pruning metric to support; the `-minis` default (100) changed nothing
+  on the toy, so the argv stands as ruled. AMIE runs 18 threads and prints
+  rules as found, so their order is not stable (T-live compares sets), and
+  it writes a `run-<timestamp>.csv` into its working directory.
+- **IL4-F5 (check order between two rows).** A head relation outside
+  `covers` is refused `open-world-head` before the `unknown-predicate` scan;
+  a body relation outside `covers` is `unknown-predicate` (the export does not
+  write it). Each has a case (m1, m3). Documented in `ilp-bridge.md`.
+- **IL4-F6 (the oracle found a defect).** T4's randomized oracle found that
+  `count` bound only the object of an atom whose two ends are one variable
+  (`?b q ?b` counted 2 head pairs, not 1). The import never reaches it, since
+  the mapping refuses `reflexive-atom` first; `count` is fixed so it is right
+  on its own, and T4 is its regression.
+- **IL4-F7 (moved RF1 goldens).** `gnd export ilp`'s help and exit goldens,
+  split per Python version in IL3, are again identical under 3.11, 3.13 and
+  3.14 (the new usage line wraps the same everywhere): the three files per lane
+  become one `gnd_export_ilp.json`. Also moved: `gnd import`'s help and exit,
+  `cli/tree.json`; new: `gnd import mined-rules`'s help and exit. Manifest
+  rebuilt; `MANIFEST_SHA256` updated.
+- **IL4-F8 (the expected result, stated before invocation 1).** The ruled
+  argv filters on PCA confidence at 0.1 and on nothing else, so AMIE will print
+  rules that do not hold on the fixture (for example `parks_at => based_at`,
+  19 of 20). With all-or-nothing admission, the expected outcome is
+  `termination: completed`, `import: refused:does-not-hold`. An admitted live
+  result would need `-enstd -minc 1` (filter on standard confidence 1), a
+  settings change that needs an owner ruling.
 
 ## Implementability notes (author, before the gate)
 

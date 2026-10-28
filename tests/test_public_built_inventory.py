@@ -262,6 +262,7 @@ VENDORED_SCHEMAS = (
     "gnd/ilp.schema.json",
     "gnd/ilp-clauses.schema.json",
     "gnd/ilp-features.schema.json",
+    "gnd/mined-import.schema.json",
     "gnd/ilp-run.schema.json",
     "gnd/ilp-import.schema.json",
 )

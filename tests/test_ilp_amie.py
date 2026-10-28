@@ -161,7 +161,7 @@ def test_t3_the_reader(case):
 
 
 def _line(rule: str = "?a  r  ?b   => ?a  s  ?b", support: str = "2") -> str:
-    return "\t".join([rule, "1.000000", "-2.000000", "1.000000", support, "-1", "2", "-1"])
+    return f"{rule}\t1.000000\t-2.000000\t1.000000\t{support}\t-1\t2\t-1"
 
 
 def _distinct(count: int) -> str:

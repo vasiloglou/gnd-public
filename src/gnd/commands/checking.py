@@ -463,8 +463,43 @@ def _register_import(subparsers):
     )
     _add_format_argument(ilp_import_parser)
 
+    mined_import_parser = import_subparsers.add_parser(
+        "mined-rules",
+        help="admit mined Horn rules that hold as induced guarded constraints (IL4)",
+        description=(
+            "Map each printed rule B1, ..., Bn => r(x, y) of a rule miner into one guarded "
+            "constraint with an atom consequent (source induced, status proposed, modality "
+            "deontic), count its support over the population's distinct head pairs, and write "
+            "an evolve proposal only if every rule's count equals the miner's and every rule "
+            "holds. Admission is all-or-nothing. Exits 0 when the proposal is written, 3 on any "
+            "refusal (a shape outside the mapping, a binding or count mismatch, a rule that does "
+            "not hold, invalid input), 5 when the population fails to load, 11 when --out "
+            "exists, 64 on a usage error, 66 on a missing input, 70 on an internal defect, 74 "
+            "on a refused path."
+        ),
+    )
+    mined_import_parser.add_argument("model", help="path to the model file")
+    mined_import_parser.add_argument("rules", help="the miner's printed rule lines (amie)")
+    mined_import_parser.add_argument("--population", required=True, help="the mined population")
+    mined_import_parser.add_argument(
+        "--reported", required=True, help="the miner run record (gnd-mined-run/1)"
+    )
+    mined_import_parser.add_argument(
+        "--target", required=True, choices=("amie",), help="the miner RULES come from"
+    )
+    mined_import_parser.add_argument("--out", required=True, help="write the evolve proposal here")
+    mined_import_parser.add_argument(
+        "--actor", type=_ilp_actor, default="gnd import mined-rules",
+        help="who requests the proposal (its audit actor_id)",
+    )
+    mined_import_parser.add_argument(
+        "--requested-at", type=_ilp_requested_at, default=None,
+        help="the audit time, ISO-8601 with a UTC offset (default: now); fix it for reproducible output",
+    )
+    _add_format_argument(mined_import_parser)
+
     return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser,
-            'ilp_import_parser': ilp_import_parser}
+            'ilp_import_parser': ilp_import_parser, 'mined_import_parser': mined_import_parser}
 
 
 def _ilp_actor(text: str) -> str:
@@ -663,6 +698,15 @@ def handle(args, parsers) -> int:
     if args.command == "diff":
         return _cmd_diff(
             args.model_a, args.model_b, args.populations, args.format, args.unredacted, args.seed
+        )
+
+    if args.command == "import" and args.import_command == "mined-rules":
+        from gnd.export.ilp_service import _cmd_import_mined_rules
+
+        return _cmd_import_mined_rules(
+            args.model, args.rules, args.population, args.reported,
+            target=args.target, out=args.out, actor=args.actor,
+            requested_at=args.requested_at, output_format=args.format,
         )
 
     if args.command == "import" and args.import_command == "ilp-rules":

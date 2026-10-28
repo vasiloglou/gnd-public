@@ -36,6 +36,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL5 phase record](004-phase-IL5.md)
 - [IL2 adversarial review](notes/phase-IL2-agent-review.md)
 - [IL5 spec (r1, approved)](notes/phase-IL5-spec.md)
+- [IL3 spec (r1, draft, awaiting the owner gate)](notes/phase-IL3-spec.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -63,4 +64,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** IL3 (rule sets), after PR #58 merges.
+**Next action:** the owner rules on the IL3 spec (r1), IL3-D1 to IL3-D12.

@@ -483,4 +483,42 @@ amendment is approved beyond these rulings.
 
 ## 13. Implementation findings (recorded as found)
 
-*(None yet.)*
+**Base:** `claude/il5` from `426bd80`. The corpus and the red harness are
+`ce2fb59`: 37 of the 38 default-lane cases failed there. The one that passed,
+T7's `gnd export ilp --target llm` exit 64, is argparse's refusal, which
+already held.
+
+**IL5-F1 (harness): T1b called `ilp_popper.thresholds` on the neutral form.**
+That function takes one type's value set. T1b now passes it
+`observed_integers(neutral)[type]`, the same input the builder uses. No
+corpus case or expected answer changed.
+
+**IL5-F2 (census): RF6 reads `row["roles"]` as a model query.**
+- **What happened:** the RF6 literal-subscription policy counts any
+  `x["roles"]` subscription. The builder's read of a neutral predicate row's
+  `roles` failed `test_exact_live_query_policy` as an unapproved model query.
+- **Why it is not one:** the neutral form is the export's JSON, not the model.
+- **The fix:** the builder projects each neutral row through a key tuple
+  (`_project`), which writes the same bytes; T1 and T1b are unchanged.
+- **The delta:** the IL5 successor delta records the builder's rows, with no
+  exception widened.
+
+**IL5-F3 (registry growth): an IL2 test pins `boolean_strings` per entry.**
+`test_d13_only_the_ilasp_entry_keeps_quoted_booleans_strings` lists every
+entry, so it gains `"llm": True`. This follows from the new entry and changes
+no IL2 answer.
+
+**IL5-F4 (goldens): how the 7 RF1 goldens were moved.**
+- **The edit:** the six `gnd import ilp-rules` help and exit goldens
+  (py311, py313, py314) and `cli/tree.json`'s import `choices` array gained
+  `llm` by a text edit.
+- **Why not by capture:** a local `GND_RF1_CAPTURE` capture also differed
+  from the committed goldens outside IL5's surface (for example `gnd check`'s
+  help), so captured files were not adopted.
+- **Verified:** `test_rf1_cli_pins.py` passes under Python 3.14. The py311 and
+  py313 goldens were not run locally. The wrapped usage line with
+  `{popper,neutral,ilasp,llm}` is 74 columns, under argparse's width.
+
+**The gate after implementation:** with `evidence/IL5/gate-files.txt`, 803
+passed, 22 deselected, and 1 failed: T9, which has no run of record until
+IL5-D8's run.

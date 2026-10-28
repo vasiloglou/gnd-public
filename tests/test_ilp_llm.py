@@ -89,6 +89,7 @@ def test_t1_the_prompt_is_golden_under_two_hash_seeds(tmp_path, name):
 
 def test_t1b_the_prompt_layout(tmp_path):
     from gnd.export import ilp_popper
+    from gnd.export.ilp import observed_integers
     from gnd.export.ilp_prompt import HEADER, TRAILER
 
     prompt = _prompt(REFUNDS / "model.orm.yaml", REFUNDS / "labels.json", tmp_path)
@@ -108,10 +109,10 @@ def test_t1b_the_prompt_layout(tmp_path):
     rows = {heading: [json.loads(line) for line in sections[heading]] for heading in HEADINGS[1:]}
     assert rows["-- Predicates --"] == [{"name": p["name"], "roles": p["roles"], "types": p["types"]}
                                          for p in neutral["predicates"]]
-    thresholds = ilp_popper.thresholds(neutral)
+    observed = observed_integers(neutral)
     assert rows["-- Comparisons --"] == [
         {"name": c["name"], "operator": c["operator"], "type": c["type"],
-         "thresholds": thresholds[c["type"]]} for c in neutral["comparisons"]]
+         "thresholds": ilp_popper.thresholds(observed[c["type"]])} for c in neutral["comparisons"]]
     assert rows["-- Examples --"] == [{"id": e["id"], "label": e["label"]} for e in neutral["examples"]]
     assert rows["-- Facts --"] == [{"example": f["example"], "predicate": f["predicate"],
                                     "values": f["values"]} for f in neutral["facts"]]
@@ -370,5 +371,5 @@ def test_live_swi_covers_what_gnd_covers(tmp_path, threshold):
     popper = _export(tmp_path / "p", "popper")
     neutral = json.loads((popper / "neutral.json").read_text(encoding="utf-8"))
     coverage = script.swi_coverage(Path(swipl), popper, neutral, document)
-    result, out = _import(tmp_path / "i", answer, [row["covered"] for row in coverage])
+    result, _ = _import(tmp_path / "i", answer, [row["covered"] for row in coverage])
     assert result.returncode == 0, result.stderr

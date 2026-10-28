@@ -159,6 +159,7 @@ def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
         model=model, model_sha256=hashlib.sha256(model_bytes).hexdigest(), manifest=manifest,
         populations=populations, redacted=RedactionPolicy.from_model(model).effective_roles,
     )
+    target = _learners.learner(target).binds or target
     entry = _learners.learner(target)
     rendering = entry.render(neutral) if entry.render is not None else {}
     tree = _ilp.export_tree(neutral, target, rendering, adapter_version=entry.adapter_version)
@@ -320,9 +321,10 @@ def _cmd_import_ilp_rules(
                            f"{record['export_sha256']}, not {prepared.digest}")
         learner = record["learner"]
         entry = _learners.learner(target)
-        if entry.learner is not None and learner["name"] != entry.learner:
+        names = (entry.learner,) if isinstance(entry.learner, str) else entry.learner
+        if names is not None and learner["name"] not in names:
             raise IlpError(EXIT_ILL_FORMED, f"learner-mismatch: a {target} import needs a "
-                           f"{entry.learner} run record, not {learner['name']!r}")
+                           f"{' or '.join(names)} run record, not {learner['name']!r}")
         count = len(clause_doc["clauses"])
         indexes = [row["clause"] for row in record["coverage"]]
         if sorted(indexes) != list(range(count)):

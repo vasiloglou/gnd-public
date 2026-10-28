@@ -1,0 +1,77 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL2/dynamic-query-successor.json",
+ "predecessor_sha256": "b0aeae579096eba04917818ea164c546e2bd583c82bc498b46bea8c1582acbf8",
+ "reason": "ilp-learners IL5 (spec r1, approved 2026-10-27): the LLM proposer. The rows are gnd.export.ilp_prompt's prompt builder (neutral-form reads, the verbalization slice and the per-type threshold lookup), its row projection and line helpers and the answer extractor, and the registry's tuple-valued learner annotation (IL5-D2). Syntax census only; no model-query exception widening.",
+ "removed": [],
+ "added": [
+  [
+   "src/gnd/export/ilp_learners.py",
+   "Learner",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_line",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_lines",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_project",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_project",
+   "row[key]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_project",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_verbalization",
+   "lines[lines.index('=== Object Types ==='):]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "_verbalization",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "build_prompt",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "build_prompt",
+   "observed.get(row['type'], set())",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_prompt.py",
+   "extract_answer",
+   "list[str]",
+   2
+  ]
+ ],
+ "result_distinct_rows": 6643,
+ "result_occurrences": 8318
+}

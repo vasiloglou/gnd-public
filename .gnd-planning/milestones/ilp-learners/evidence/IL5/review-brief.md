@@ -1,0 +1,27 @@
+You are the single adversarial reviewer for phase IL5 of the GND ilp-learners milestone, in the git worktree at
+<repo> (branch claude/il5).
+
+Review the phase diff: `git diff 426bd80 93216bc` (426bd80 is main after the IL2 merge; c9e16f7 is the draft spec; 7ca6fd9 the owner gate record; ce2fb59 the owner-approved IL5 corpus, committed red; 28f1c51 the implementation; c8243a7 the provider terms and the live-run script; 93216bc the owner's terms confirmation and invocation 1).
+The approved design is .gnd-planning/milestones/ilp-learners/notes/phase-IL5-spec.md: read it in full (§6 is the design with the HEADER and TRAILER, the decisions IL5-D1..D10 and their owner rulings in §12, the tests in §8-§9, the implementation's own findings IL5-F1..F7 in §13). The owner ruled that invocation 1 is the run of record and is retained as is; IL5-F7 (learner.version recorded as unreported because gnd.agents redacts the version) is a recorded finding, not one to report again, though you may report consequences of it the author missed.
+The IL5 corpus is tests/fixtures/ilp_learners/il5/ with tests/test_ilp_llm.py; the IL1, IL2 and IK5 tests are tests/test_ilp_learners.py, tests/test_ilp_asp.py and tests/test_ilp_bridge.py. The contract page is docs/reference/ilp-bridge.md ("## LLM proposer").
+
+What shipped:
+- src/gnd/export/ilp_prompt.py (new): build_prompt(neutral, model) = HEADER + a DATA section (the model verbalization from "=== Object Types ===", then one ASCII-only sorted-key JSON line per predicate, comparison with its thresholds, example and fact) + TRAILER, capped at 256 KiB. extract_answer returns the inner text of exactly one complete ```json block, else "". extract_model returns the first full-line "model: ID".
+- The registry entry llm in src/gnd/export/ilp_learners.py, with a new binds field ("neutral") and learner = ("claude", "codex"); src/gnd/export/ilp_service.py resolves the bound target before export binding and accepts a tuple of learner names; the CLI choices in src/gnd/commands/checking.py; the import schema enum; tools/gnd_layers.json.
+- Moved RF1 CLI goldens (help, exit, tree.json) and the RF6 successor delta evidence/IL5/dynamic-query-successor.json.
+- Evidence: .gnd-planning/milestones/ilp-learners/evidence/IL5/ (provider-terms.md, provider-terms-confirmed.json, run_llm.py, live/invocation-1/); T9 replays invocation 1.
+
+Hunt for real defects, especially:
+1. Prompt injection and framing (IL-R6): can any host string from the model or the export (names, verbalization text, string constants, example ids) forge a line equal to "=== END DATA ===", "=== END OF PROMPT ===", a ```json fence or a "model: " line inside the prompt? Check the verbalization's neutralizers as well as the JSON lines.
+2. Extraction: can extract_answer or extract_model be made to admit text the spec says gives no answer (two blocks, an unterminated block, a fence with trailing spaces or a language suffix, CRLF, a fence inside the JSON string, a model line inside the json block, a model line after the block)? Does the evidence script use exactly the same extractor the replay test uses (IL-R9's one-extractor rule)?
+3. Binding and admission: does the llm target bind the neutral export's digest so an answer can only be admitted against the export it was asked about? Can a run record claiming learner "popper", or a name outside ("claude","codex"), be admitted under --target llm? Can the binds indirection change behaviour for popper, neutral or ilasp? Is all-or-nothing admission (IL-R11) kept for a multi-clause answer with one bad clause?
+4. The termination mapping (IL5-D7) in run_llm.py: truncated, timed-out, failed and the rest; is the order the ruled one, and does a non-zero exit with a complete block get admitted when it should not?
+5. Determinism and the cap: byte identity under PYTHONHASHSEED, the 256 KiB boundary (exactly at, one over), non-ASCII in the verbalization.
+6. Surfaces and goldens: the CLI choices, schema enum, registry and docs agree; only the inventoried RF1 goldens moved, tree.json only in the import choices; the RF6 delta honest.
+7. The evidence: is outcome.json consistent with raw-stdout.txt, answer.json, run.json, import-report.json and proposal.json? Does the SWI coverage really come from an evaluator independent of GND (IL-R4)? Is any home path, user name, email or scratch path left in committed evidence? Does T9 test anything that could fail?
+8. Anything a test passes while the code is wrong: a declared branch (each termination value, each extraction refusal, each import refusal in the corpus) with no case that can fail it.
+
+Rules: reproduce each finding with a concrete command or script before reporting it, and include the reproduction. Do not edit any tracked file. Write any scratch files ONLY under
+<scratch>/il5-review/ (it exists), including any derived outputs (--out paths, temp corpora, copies of the source). Do not run the full test suite; targeted pytest runs are fine. Do not invoke claude, codex or any other agent CLI, and do not run run_llm.py (it would spend a new invocation). Do not download or install anything. You may use the existing scratch SWI-Prolog read-only: <scratch>/il1-live/SWI-Prolog.app/Contents/MacOS/swipl. Never execute or source a repository .env.
+
+Report: a numbered list of findings, each with severity (blocking / hardening / completeness), the file:line, the reproduction and its observed output, and the expected behaviour. Then list what you checked that held. If you find nothing in an area, say what you tried.

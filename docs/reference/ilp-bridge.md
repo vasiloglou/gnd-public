@@ -304,6 +304,49 @@ The hypothesis is every non-blank line after ILASP's last `%%` line, whatever
 its head, so a learned constraint reaches the reader and is refused
 `asp-constraint`.
 
+## LLM proposer
+
+`gnd import ilp-rules --target llm` reads clauses that a language model wrote
+as `gnd-ilp-clauses/1` JSON. No GND command calls a model: an evidence script
+builds the prompt with `gnd.export.ilp_prompt`, runs an agent through
+`gnd.agents`, and hands the import the answer and an independent run record.
+
+- **`exports` is false:** `gnd export ilp --target llm` exits 64. The entry's
+  `binds` is `neutral`, so the run record binds the export digest of
+  `gnd export ilp --target neutral` over the same inputs. A run record that
+  binds another target's export is refused `export-mismatch`.
+- **The learner** must be an agent adapter id, `claude` or `codex`. Any other
+  name is refused `learner-mismatch`. The method token is `ilp-llm`.
+- **The answer** is read as any other JSON clauses file and goes through the
+  same fragment table and coverage re-check. A malformed answer exits 3 at the
+  clauses reader; a wrong claimed coverage is refused `coverage-mismatch`.
+
+**The prompt (prompt version 1)** is a fixed instruction section, one data
+section and a fixed trailer. The data section opens with the line
+`=== DATA ===`, closes with the line `=== END DATA ===`, and holds, in order:
+
+| Heading line | Lines under it |
+|---|---|
+| `-- Model --` | the model's constraint-blind verbalization, from `=== Object Types ===` on, with object-type descriptions |
+| `-- Predicates --` | one JSON line per exported predicate: name, roles, types |
+| `-- Comparisons --` | one JSON line per comparison: name, operator, type and the thresholds the Popper adapter selects |
+| `-- Examples --` | one JSON line per example: id and label |
+| `-- Facts --` | one JSON line per fact: example, predicate, values |
+
+Fact values reach the prompt only as ASCII JSON, so they cannot start a line.
+Model text reaches it through the verbalization's neutralizers, which keep each
+name or reading on one line but leave its characters alone. So the prompt
+builder refuses `forged-line` when a verbalization line, trimmed, equals one of
+the prompt's own structural lines, starts with ```` ``` ````, or has the form
+`model: ID`. That fixes the prompt's structure, not its meaning: a
+sentence inside a value is still text the model reads. GND's re-check of every
+clause is the control.
+
+**The answer** is the text of the one block that opens with a line equal to
+```` ```json ```` and closes with the next line equal to ```` ``` ````. No
+block, two blocks, or an unterminated block is no answer. The first line of
+the form `model: ID` is recorded as the agent's own claim, never verified.
+
 ## Bounds
 
 | Item | Bound |

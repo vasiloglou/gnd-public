@@ -482,6 +482,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.ilp_prompt": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.ilp_rewrite": {
       "lane": "export",
       "layer": "lanes"

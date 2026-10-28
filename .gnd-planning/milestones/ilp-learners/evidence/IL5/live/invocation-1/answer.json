@@ -1,0 +1,1 @@
+{"schema_version": "gnd-ilp-clauses/1", "clauses": [{"head": {"predicate": "wrong", "args": [{"var": "X"}]}, "body": [{"atom": {"predicate": "f_refund_amount", "args": [{"var": "X"}, {"var": "R"}, {"var": "A"}]}}, {"atom": {"predicate": "ge_t_amount", "args": [{"var": "A"}, {"const": 640}]}}]}]}

@@ -1,0 +1,61 @@
+{
+ "adapter": "claude",
+ "argv": [
+  "claude",
+  "--print",
+  "--permission-mode",
+  "acceptEdits",
+  "--output-format",
+  "text",
+  "<prompt:sha256=e1d9746eece7b291859ac6af74e28daca517b782877e0fe26741bc8f227b8c73>"
+ ],
+ "cwd": "<candidate-root>",
+ "ended_monotonic": 1765647.378484666,
+ "environment": [
+  {
+   "name": "PATH",
+   "provenance": "inherited"
+  },
+  {
+   "name": "HOME",
+   "provenance": "inherited"
+  },
+  {
+   "name": "USER",
+   "provenance": "inherited"
+  },
+  {
+   "name": "LOGNAME",
+   "provenance": "inherited"
+  },
+  {
+   "name": "TMPDIR",
+   "provenance": "inherited"
+  },
+  {
+   "name": "NO_COLOR",
+   "provenance": "fixed"
+  },
+  {
+   "name": "PYTHONUNBUFFERED",
+   "provenance": "fixed"
+  }
+ ],
+ "executable": "claude",
+ "exit_code": 0,
+ "feedback_sha256": null,
+ "process_group_cleaned": true,
+ "prompt_sha256": "e1d9746eece7b291859ac6af74e28daca517b782877e0fe26741bc8f227b8c73",
+ "spawn_error": null,
+ "spawned": true,
+ "started_monotonic": 1765639.815642208,
+ "status": "succeeded",
+ "stderr_observed_bytes": 0,
+ "stderr_retained_bytes": 0,
+ "stderr_truncated": false,
+ "stdout_observed_bytes": 333,
+ "stdout_retained_bytes": 333,
+ "stdout_truncated": false,
+ "termination": "exited",
+ "version": "<version:sha256=355310e8a4d0311acc3fabf778e5d072d00bbbfeea01861bcf5ffb9998f9a366>"
+}

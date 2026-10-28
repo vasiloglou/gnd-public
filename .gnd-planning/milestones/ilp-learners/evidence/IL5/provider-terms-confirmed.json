@@ -1,0 +1,15 @@
+{
+  "confirmed_by": "owner",
+  "date": "2026-10-27",
+  "question": "Do you confirm the four points in provider-terms.md, so invocation 1 can run?",
+  "answer": "approved",
+  "covers": [
+    "1. the account: this machine's claude Max sign-in, under the Consumer Terms",
+    "2. the training notice under section 4",
+    "3. the section 3 reading: this evaluation use is not developing a competing product or model (the owner's reading)",
+    "4. the publication: the answer is committed as evidence"
+  ],
+  "terms_file": "provider-terms.md",
+  "terms_sha256": "dc5046680c0d895d83d3795cfe352e50346f658950062941b260c161c353dcc2",
+  "authorizes": "invocation 1 of run_llm.py with claude (IL5-D8 (a)); a further invocation needs a new owner ruling"
+}

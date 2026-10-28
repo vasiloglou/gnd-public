@@ -1,0 +1,94 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "ilp-live",
+    "origin": "gnd import ilp-rules",
+    "requested_at": "2026-01-01T00:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "4e60f7c772ac0470e370f261a261b17554f028d1a9ecd90ca56679da14d93119",
+    "text": "{\"version\":1,\"model_id\":\"refunds\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"refund\",\"name\":\"Refund\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"refund_no\"},\"description\":{\"summary\":\"One refund paid back to a customer.\"}},{\"id\":\"refund_no\",\"name\":\"RefundNo\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_code\"}},{\"id\":\"customer_code\",\"name\":\"CustomerCode\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"amount\",\"name\":\"Amount\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"channel\",\"name\":\"Channel\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"refund_by\",\"reading\":\"{Refund} is requested by {Customer}\",\"roles\":[{\"object_type\":\"refund\",\"role_name\":\"refund\"},{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"constraints\":[{\"id\":\"u_refund_customer\",\"type\":\"uniqueness\",\"roles\":[\"refund\"],\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"alethic\",\"provenance\":{\"user_quote\":\"Each refund is requested by one customer.\"}}]},{\"id\":\"refund_amount\",\"reading\":\"{Refund} is for {Amount}\",\"roles\":[{\"object_type\":\"refund\",\"role_name\":\"refund\"},{\"object_type\":\"amount\",\"role_name\":\"amount\"}]},{\"id\":\"refund_channel\",\"reading\":\"{Refund} is paid by {Channel}\",\"roles\":[{\"object_type\":\"refund\",\"role_name\":\"refund\"},{\"object_type\":\"channel\",\"role_name\":\"channel\"}]}],\"constraints\":[{\"id\":\"g_refund_limit\",\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"refund_amount\",\"bind\":{\"refund\":\"$r\",\"amount\":\"$a\"}}],\"consequent\":{\"comparison\":{\"left\":\"$a\",\"operator\":\"<=\",\"right\":1000}},\"source\":\"explicit\",\"status\":\"confirmed\",\"modality\":\"deontic\",\"provenance\":{\"user_quote\":\"A refund should not be more than 1000.\"}},{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"refund_amount\",\"bind\":{\"refund\":\"$v_r\",\"amount\":\"$v_a\"}}],\"consequent\":{\"comparison\":{\"operator\":\"<\",\"left\":\"$v_a\",\"right\":640}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"learned by claude unreported from manifest 888ee509, clause 0\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"claude\",\"version\":\"unreported\"},\"method\":\"ilp-llm\",\"manifest_sha256\":\"888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa\",\"examples\":[\"harbor\",\"market\",\"airport\",\"station\"],\"support\":{\"numerator\":4,\"denominator\":4},\"counterexamples\":[],\"evidence\":[{\"ref\":\"ilp/export.json\",\"sha256\":\"f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77\"},{\"ref\":\"ilp/clauses\",\"sha256\":\"98db66d2a20c0c5637172649b1d66ff4291967d916d74cb8f38e184f2a4a83a1\"},{\"ref\":\"ilp/run\",\"sha256\":\"6a9ca0f04263262957f75ea0a85666c35b11f1c98d2b8a1f52ae4c240015759e\"}]}}}]}\n"
+  },
+  "expected_model_sha256": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "antecedent": [
+          {
+            "bind": {
+              "amount": "$v_a",
+              "refund": "$v_r"
+            },
+            "fact_type": "refund_amount"
+          }
+        ],
+        "consequent": {
+          "comparison": {
+            "left": "$v_a",
+            "operator": "<",
+            "right": 640
+          }
+        },
+        "modality": "deontic",
+        "provenance": {
+          "induction": {
+            "counterexamples": [],
+            "evidence": [
+              {
+                "ref": "ilp/export.json",
+                "sha256": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77"
+              },
+              {
+                "ref": "ilp/clauses",
+                "sha256": "98db66d2a20c0c5637172649b1d66ff4291967d916d74cb8f38e184f2a4a83a1"
+              },
+              {
+                "ref": "ilp/run",
+                "sha256": "6a9ca0f04263262957f75ea0a85666c35b11f1c98d2b8a1f52ae4c240015759e"
+              }
+            ],
+            "examples": [
+              "harbor",
+              "market",
+              "airport",
+              "station"
+            ],
+            "inducer": {
+              "name": "claude",
+              "version": "unreported"
+            },
+            "manifest_sha256": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa",
+            "method": "ilp-llm",
+            "support": {
+              "denominator": 4,
+              "numerator": 4
+            }
+          }
+        },
+        "rationale": "learned by claude unreported from manifest 888ee509, clause 0",
+        "source": "induced",
+        "status": "proposed",
+        "type": "guarded"
+      },
+      "after_sha256": "927f98e5ee85f4c6f9588708bfb7956d1814111329a503cf78c6f48dfb88ad04",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "canonical_before_sha256": null,
+        "duplicate_occurrence": 0,
+        "family": "guarded",
+        "host": "model",
+        "host_id": null,
+        "locator_kind": "constraint"
+      },
+      "operation_id": "ilp-0000"
+    }
+  ],
+  "proposal_id": "ilp-4e60f7c772ac0470",
+  "rationale": "gnd import ilp-rules: 1 learned clauses from claude unreported",
+  "schema_version": 3
+}

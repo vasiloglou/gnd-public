@@ -14,7 +14,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-from gnd.export import ilp, ilp_asp, ilp_popper
+from gnd.export import ilp, ilp_asp, ilp_popper, ilp_prompt
 
 __all__ = ["EXPORT_TARGETS", "IMPORT_TARGETS", "LEARNERS", "Learner", "learner"]
 
@@ -25,8 +25,9 @@ class Learner:
 
     #: The ``--target`` spelling.
     target: str
-    #: The run record's required ``learner.name``; ``None`` accepts any name.
-    learner: str | None
+    #: The run record's required ``learner.name``, or any of a tuple of names
+    #: (IL5-D2); ``None`` accepts any name.
+    learner: str | tuple[str, ...] | None
     #: The IK2 ``method`` token written into ``provenance.induction``.
     method: str
     #: Whether ``gnd export ilp`` accepts this target.
@@ -42,6 +43,10 @@ class Learner:
     #: Whether check 9 reads a ``"true"``/``"false"`` string on a boolean role as
     #: the boolean; ASP spells booleans bare, so ILASP's quoted ones are refused (IL2-D13).
     boolean_strings: bool = True
+    #: The target whose export a run record binds; ``None`` is this entry's own.
+    #: A non-exporting entry binds another's, so the import never builds an
+    #: export no command can write (IL5-D1, IL1-Q2).
+    binds: str | None = None
 
 
 LEARNERS: dict[str, Learner] = {
@@ -55,6 +60,10 @@ LEARNERS: dict[str, Learner] = {
                      render=ilp_asp.render, parse=ilp_asp.parse_hypothesis,
                      contract="labelled-clauses", adapter_version=ilp_asp.ADAPTER_VERSION,
                      boolean_strings=False),
+    # The agent adapter ids of gnd.agents.AgentAdapterId, pinned by a test (IL5-D2).
+    "llm": Learner(target="llm", learner=("claude", "codex"), method="ilp-llm", exports=False,
+                   render=None, parse=None, contract="labelled-clauses",
+                   adapter_version=ilp_prompt.PROMPT_VERSION, binds="neutral"),
 }
 EXPORT_TARGETS = tuple(target for target, entry in LEARNERS.items() if entry.exports)
 IMPORT_TARGETS = tuple(target for target, entry in LEARNERS.items()

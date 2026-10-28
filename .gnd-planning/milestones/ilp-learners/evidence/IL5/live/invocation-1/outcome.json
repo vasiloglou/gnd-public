@@ -1,0 +1,122 @@
+{
+ "agent": {
+  "adapter": "claude",
+  "files_written_by_agent": [],
+  "invocation": {
+   "adapter": "claude",
+   "argv": [
+    "claude",
+    "--print",
+    "--permission-mode",
+    "acceptEdits",
+    "--output-format",
+    "text",
+    "<prompt:sha256=e1d9746eece7b291859ac6af74e28daca517b782877e0fe26741bc8f227b8c73>"
+   ],
+   "cwd": "<candidate-root>",
+   "ended_monotonic": 1765647.378484666,
+   "environment": [
+    {
+     "name": "PATH",
+     "provenance": "inherited"
+    },
+    {
+     "name": "HOME",
+     "provenance": "inherited"
+    },
+    {
+     "name": "USER",
+     "provenance": "inherited"
+    },
+    {
+     "name": "LOGNAME",
+     "provenance": "inherited"
+    },
+    {
+     "name": "TMPDIR",
+     "provenance": "inherited"
+    },
+    {
+     "name": "NO_COLOR",
+     "provenance": "fixed"
+    },
+    {
+     "name": "PYTHONUNBUFFERED",
+     "provenance": "fixed"
+    }
+   ],
+   "executable": "claude",
+   "exit_code": 0,
+   "feedback_sha256": null,
+   "process_group_cleaned": true,
+   "prompt_sha256": "e1d9746eece7b291859ac6af74e28daca517b782877e0fe26741bc8f227b8c73",
+   "spawn_error": null,
+   "spawned": true,
+   "started_monotonic": 1765639.815642208,
+   "status": "succeeded",
+   "stderr_observed_bytes": 0,
+   "stderr_retained_bytes": 0,
+   "stderr_truncated": false,
+   "stdout_observed_bytes": 333,
+   "stdout_retained_bytes": 333,
+   "stdout_truncated": false,
+   "termination": "exited",
+   "version": "<version:sha256=355310e8a4d0311acc3fabf778e5d072d00bbbfeea01861bcf5ffb9998f9a366>"
+  },
+  "learner": {
+   "name": "claude",
+   "version": "unreported"
+  },
+  "model_reported": "claude-opus-5-5"
+ },
+ "export_sha256": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77",
+ "export_stdout": {
+  "neutral": "EXPORTED 8 examples and 60 facts to <scratch>/il5-work-1/neutral (neutral)\nexport_sha256 f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77\nwork 68 (ceiling 500008)\n",
+  "popper": "EXPORTED 8 examples and 60 facts to <scratch>/il5-work-1/popper (popper)\nexport_sha256 39788cf3c243b83715b448a42c99ba74b8315510be8954dd477dd6711e519493\nwork 68 (ceiling 500008)\n"
+ },
+ "import": "admitted",
+ "import_args": [
+  "import",
+  "ilp-rules",
+  "model.orm.yaml",
+  "answer.json",
+  "--labels",
+  "labels.json",
+  "--reported-coverage",
+  "run.json",
+  "--target",
+  "llm",
+  "--out",
+  "proposal.json",
+  "--actor",
+  "ilp-live",
+  "--requested-at",
+  "2026-01-01T00:00:00Z",
+  "--format",
+  "json"
+ ],
+ "import_exit": 0,
+ "invocation": 1,
+ "limits": {
+  "note": "invoke_agent derives these; its version probe spends at most 5 s of the timeout",
+  "stderr_limit_bytes": 1048576,
+  "stdin_limit_bytes": 0,
+  "stdout_limit_bytes": 1048576,
+  "terminate_grace_seconds": 10.0,
+  "timeout_seconds": 600.0,
+  "total_output_limit_bytes": 2097152
+ },
+ "numbers": {
+  "agent_output": "printed by the agent, kept verbatim in raw-stdout.txt",
+  "export_sha256": "computed by GND's export",
+  "import report": "computed by GND's import",
+  "prompt": "built by gnd.export.ilp_prompt, kept in prompt.txt",
+  "run.json coverage": "independent evaluation (SWI-Prolog): popper/bk.pl + cmp.pl + clause, per example"
+ },
+ "prompt_sha256": "e1d9746eece7b291859ac6af74e28daca517b782877e0fe26741bc8f227b8c73",
+ "prompt_version": "1",
+ "reproducibility": "single run, not repeatable",
+ "run_of_record": true,
+ "swi": "evaluated",
+ "termination": "completed"
+}

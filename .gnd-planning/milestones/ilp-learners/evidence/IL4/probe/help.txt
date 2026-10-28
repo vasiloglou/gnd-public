@@ -1,0 +1,233 @@
+Unexpected exception: Unrecognized option: -h
+usage: AMIE [OPTIONS] <TSV FILES>
+ -auta,--avoid-unbound-type-atoms                 Avoid unbound type
+                                                  atoms, e.g., type(x, y),
+                                                  i.e., bind always 'y' to
+                                                  a type
+ -bexr,--body-excluded-relations <arg>            Do not use these
+                                                  relations as atoms in
+                                                  the body of rules.
+                                                  Example:
+                                                  <livesIn>,<bornIn>
+ -bias,--e-name <arg>                             Syntatic/semantic bias:
+                                                  oneVar|default|lazy|lazi
+                                                  t|[Path to a subclass of
+                                                  amie.mining.assistant.Mi
+                                                  ningAssistant] Default:
+                                                  default (defines support
+                                                  and confidence in terms
+                                                  of 2 head variables
+                                                  given an order, cf -vo)
+ -btr,--body-target-relations <arg>               Allow only these
+                                                  relations in the body.
+                                                  Provide a list of
+                                                  relation names separated
+                                                  by commas (incompatible
+                                                  with
+                                                  body-excluded-relations)
+                                                  . Example:
+                                                  <livesIn>,<bornIn>
+ -cache                                           Enables query caching.
+ -caos,--count-always-on-subject                  If a single variable
+                                                  bias is used (oneVar),
+                                                  force to count support
+                                                  always on the subject
+                                                  position.
+ -client                                          Enables client mode.
+ -compareToGT <arg>                               Compares mini-AMIE rule
+                                                  set to a list of rules
+                                                  (path as parameter).
+ -computeActualMetrics                            Applicable only to
+                                                  mini-AMIE: compute real
+                                                  support and PCA
+                                                  confidence for the mined
+                                                  rules. False by default
+ -const,--allow-constants                         Enable rules with
+                                                  constants. Default:
+                                                  false
+ -csize <arg>                                     Enables cache and set
+                                                  cache size ; default
+                                                  10000 queries
+ -d,--delimiter <arg>                             Separator in input files
+                                                  (default: TAB)
+ -deml,--do-not-exploit-max-length                Do not exploit max
+                                                  length for speedup
+                                                  (requested by the
+                                                  reviewers of AMIE+).
+                                                  False by default.
+ -dpr,--disable-perfect-rules                     Disable perfect rules.
+ -dqrw,--disable-query-rewriting                  Disable query rewriting
+                                                  and caching.
+ -enableVariableSwitch                            Enable AnyBurl-style
+                                                  variable switching
+                                                  within atoms in
+                                                  mini-AMIE.
+                                                  Ex. x <r1> a , b <r2> a
+                                                  , b <r3> y => x <rh> y
+ -enstd,--enable-std-conf                         Calculate standard
+                                                  confidence
+ -fconst,--only-constants                         Enforce constants in all
+                                                  atoms. Default: false
+ -full                                            It enables all
+                                                  enhancements: lossless
+                                                  heuristics and
+                                                  confidence approximation
+                                                  and upper bounds. It
+                                                  overrides any other
+                                                  configuration that is
+                                                  incompatible.
+ -hexr,--head-excluded-relations <arg>            Do not use these
+                                                  relations as atoms in
+                                                  the head of rules
+                                                  (incompatible with
+                                                  head-target-relations).
+                                                  Example:
+                                                  <livesIn>,<bornIn>
+ -htr,--head-target-relations <arg>               Mine only rules with
+                                                  these relations in the
+                                                  head. Provide a list of
+                                                  relation names separated
+                                                  by commas (incompatible
+                                                  with
+                                                  head-excluded-relations)
+                                                  . Example:
+                                                  <livesIn>,<bornIn>
+ -iexr,--instantiation-excluded-relations <arg>   Do not instantiate these
+                                                  relations. Should be
+                                                  used with -fconst or
+                                                  -const (incompatible
+                                                  with
+                                                  instantiation-target-rel
+                                                  ations). Example:
+                                                  <livesIn>,<bornIn>
+ -invalidateCache                                 Ignores previously saved
+                                                  cache.
+ -itr,--instantiation-target-relations <arg>      Allow only these
+                                                  relations to be
+                                                  instantiated. Should be
+                                                  used with -fconst or
+                                                  -const. Provide a list
+                                                  of relation names
+                                                  separated by commas
+                                                  (incompatible with
+                                                  instantiation-excluded-r
+                                                  elations). Example:
+                                                  <livesIn>,<bornIn>
+ -liveMetrics                                     Enable live metrics.
+ -maxad,--max-depth <arg>                         Maximum number of atoms
+                                                  in the antecedent and
+                                                  succedent of rules.
+                                                  Default: 3
+ -maxadc,--max-depth-constants <arg>              Maximum number of atoms
+                                                  in the antecedent and
+                                                  succedent of rules with
+                                                  constants (applicable to
+                                                  the anyburl rule
+                                                  biases). Default: 3
+ -minc,--min-std-confidence <arg>                 Minimum standard
+                                                  confidence threshold.
+                                                  This value is not used
+                                                  for pruning, only for
+                                                  filtering of the
+                                                  results. Default: 0.1
+ -minhc,--min-head-coverage <arg>                 Minimum head coverage.
+                                                  Default: 0.01
+ -mini                                            Runs mini-AMIE.
+ -minis,--min-initial-support <arg>               Minimum size of the
+                                                  relations to be
+                                                  considered as head
+                                                  relations. Default: 100
+                                                  (facts or entities
+                                                  depending on the bias)
+ -miniVerbose                                     Shows more information
+                                                  during the mining
+                                                  process.
+ -minpca,--min-pca-confidence <arg>               Minimum PCA confidence
+                                                  threshold. This value is
+                                                  not used for pruning,
+                                                  only for filtering of
+                                                  the results. Default:
+                                                  0.0
+ -mins,--min-support <arg>                        Minimum absolute
+                                                  support. Default: 100
+                                                  positive examples
+ -mlg,--multilingual                              Parse labels language as
+                                                  new facts
+ -nc,--n-threads <arg>                            Preferred number of
+                                                  cores. Round down to the
+                                                  actual number of cores
+                                                  in the system if a
+                                                  higher value is
+                                                  provided.
+ -noHeuristics                                    Disable functionality
+                                                  heuristic, should be
+                                                  used with the -full
+                                                  option
+ -noKbExistsDetection                             Prevent the KB to detect
+                                                  existential variable
+                                                  on-the-fly and to
+                                                  optimize the query
+ -noKbRewrite                                     Prevent the KB to
+                                                  rewrite query when
+                                                  counting pairs
+ -noSkyline                                       Disable Skyline pruning
+                                                  of results
+ -ofile,--output-file <arg>                       Output file to store the
+                                                  rules
+ -ofmt,--output-format <arg>                      Controls the rules'
+                                                  output format. Default:
+                                                  TSV, all fields, atoms
+                                                  as triples
+ -ompca,--ommit-pca-conf                          Do not calculate PCA
+                                                  confidence
+ -oout,--only-output                              If enabled, it activates
+                                                  only the output
+                                                  enhancements, that is,
+                                                  the confidence
+                                                  approximation and upper
+                                                  bounds. It overrides any
+                                                  other configuration that
+                                                  is incompatible.
+ -optimai,--adaptive-instantiations               Prune instantiated rules
+                                                  that decrease too much
+                                                  the support of their
+                                                  parent rule (ratio 0.2)
+ -optimcb,--optim-confidence-bounds               Enable the calculation
+                                                  of confidence upper
+                                                  bounds to prune rules.
+ -optimfh,--optim-func-heuristic                  Enable functionality
+                                                  heuristic to identify
+                                                  potential low confident
+                                                  rules for pruning.
+ -oute,--output-at-end                            Print the rules at the
+                                                  end and not while they
+                                                  are discovered. Default:
+                                                  false
+ -pm,--pruning-metric <arg>                       Metric used for pruning
+                                                  of intermediate queries:
+                                                  support|headcoverage.
+                                                  Default: headcoverage
+ -port <arg>                                      Enables server mode with
+                                                  default layer type
+                                                  (amie.data.KBWebSocketCl
+                                                  ient) and sets port
+                                                  (default is 9092)
+ -rl,--recursivity-limit                          Recursivity limit
+ -searchInfoOutputPath <arg>                      Sets the path to a CSV
+                                                  containing general
+                                                  information on the run
+                                                  (ex. search time, memory
+                                                  peak value). Default
+                                                  ./run-<TIMESTAMP>.csv
+ -server                                          Enables server mode.
+ -serverAddress <arg>                             Enables client mode and
+                                                  sets server address
+                                                  (default is
+                                                  localhost:9092)
+ -useDirectionalSelectivity                       Enable directional
+                                                  selectivity.
+ -verbose                                         Maximal verbosity
+ -vo,--variableOrder <arg>                        Define the order of the
+                                                  variable in counting
+                                                  query among: app, fun
+                                                  (default), ifun

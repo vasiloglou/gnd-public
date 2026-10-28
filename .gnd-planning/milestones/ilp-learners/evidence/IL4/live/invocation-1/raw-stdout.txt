@@ -1,0 +1,27 @@
+Assuming rdf:type as type relation
+Using Support as pruning metric with minimum threshold 1.0
+Using recursivity limit 3
+Lazy mining assistant that stops counting when the denominator gets too high
+No minimum threshold on standard confidence
+Filtering on PCA confidence with minimum threshold 0.1
+Constants in the arguments of relations are disabled
+Lossless (query refinement) heuristics enabled
+MRT calls: 0
+Using 18 threads
+Rule	Head Coverage	Standard Confidence	Pca Confidence	Support	Body Size	Pca Body Size	Functional Variable
+?a  f_based_at  ?b   => ?a  f_parks_at  ?b	0.950000	-19.000000	0.950000	19	-1	20	-1
+?a  f_parks_at  ?b   => ?a  f_based_at  ?b	0.950000	-19.000000	0.950000	19	-1	20	-1
+?f  f_team_site  ?b  ?a  f_works_in  ?f   => ?a  f_based_at  ?b	1.000000	-20.000000	1.000000	20	-1	20	-1
+?e  f_based_at  ?b  ?e  f_works_in  ?a   => ?a  f_team_site  ?b	1.000000	-5.000000	1.000000	5	-1	5	-1
+?f  f_team_site  ?b  ?a  f_works_in  ?f   => ?a  f_parks_at  ?b	0.950000	-19.000000	0.950000	19	-1	20	-1
+?a  f_based_at  ?f  ?b  f_team_site  ?f   => ?a  f_works_in  ?b	1.000000	-20.000000	0.555556	20	-1	36	-1
+?e  f_parks_at  ?b  ?e  f_works_in  ?a   => ?a  f_team_site  ?b	1.000000	-5.000000	0.833333	5	-1	6	-1
+?a  f_parks_at  ?f  ?b  f_team_site  ?f   => ?a  f_works_in  ?b	0.950000	-19.000000	0.542857	19	-1	35	-1
+Search space size: 50
+Mining done in 0.044 s
+Used memory (peak) -1 kilobytes
+8 rules mined.
+Created CSV run config output: ./run-2026-10-28T19:17:03.886732Z.csv
+Run configuration :
+Timestamp,MaxRuleSize,PruningMetric,MinSup,MinHC,NThreads,SearchRuntime,MemoryPeak_kB,SearchSpace
+2026-10-28T19:17:03.886732Z,3,Support,1.0,0.01,18,223,-1,50

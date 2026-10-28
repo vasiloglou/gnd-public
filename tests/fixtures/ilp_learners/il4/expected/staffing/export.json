@@ -1,0 +1,17 @@
+{
+  "adapter_version": "1",
+  "files": [
+    {
+      "bytes": 1987,
+      "path": "amie/facts.tsv",
+      "sha256": "fa9abba9fe0e7eb6b6e84e43bf8fab1a5d6b053a29987730322600ebf663b867"
+    },
+    {
+      "bytes": 1103,
+      "path": "amie/relations.json",
+      "sha256": "8b156b92f3f04d6301ceb668bb4003ac3328ea44bcbb2899b2330e44e762f236"
+    }
+  ],
+  "schema_version": "gnd-ilp-export/1",
+  "target": "amie"
+}

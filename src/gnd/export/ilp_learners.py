@@ -14,9 +14,9 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-from gnd.export import ilp, ilp_asp, ilp_popper, ilp_prompt, ilp_rules
+from gnd.export import ilp, ilp_amie, ilp_asp, ilp_popper, ilp_prompt, ilp_rules
 
-__all__ = ["EXPORT_TARGETS", "IMPORT_TARGETS", "LEARNERS", "Learner", "learner"]
+__all__ = ["EXPORT_TARGETS", "IMPORT_TARGETS", "LEARNERS", "MINED_TARGETS", "Learner", "learner"]
 
 
 @dataclass(frozen=True)
@@ -32,11 +32,14 @@ class Learner:
     method: str
     #: Whether ``gnd export ilp`` accepts this target.
     exports: bool
-    #: Neutral form to the adapter's files; ``None`` writes ``neutral.json`` only.
-    render: Callable[[dict[str, Any]], dict[str, bytes]] | None
+    #: Neutral form to the adapter's files; ``None`` writes ``neutral.json`` only. An
+    #: ``unlabelled-horn`` entry renders one population instead (IL4).
+    render: Callable[..., dict[str, bytes]] | None
     #: The learner's printed output to ``gnd-ilp-clauses/1``; ``None`` reads that JSON.
-    parse: Callable[[str], dict[str, Any]] | None
-    #: ``labelled-clauses`` is what ``gnd import ilp-rules`` accepts.
+    #: An ``unlabelled-horn`` entry reads to mined rules instead (IL4).
+    parse: Callable[[str], Any] | None
+    #: ``labelled-clauses`` is what ``gnd import ilp-rules`` accepts;
+    #: ``unlabelled-horn`` what ``gnd import mined-rules`` accepts (IL4).
     contract: str
     #: ``export.json``'s ``adapter_version`` for this target.
     adapter_version: str
@@ -67,10 +70,15 @@ LEARNERS: dict[str, Learner] = {
     "rules": Learner(target="rules", learner="wittgenstein", method="ilp-rules", exports=True,
                      render=ilp_rules.render, parse=ilp_rules.parse_ruleset,
                      contract="labelled-clauses", adapter_version=ilp_rules.ADAPTER_VERSION),
+    "amie": Learner(target="amie", learner="amie", method="ilp-amie", exports=True,
+                    render=ilp_amie.render, parse=ilp_amie.parse_rules,
+                    contract="unlabelled-horn", adapter_version=ilp_amie.ADAPTER_VERSION),
 }
 EXPORT_TARGETS = tuple(target for target, entry in LEARNERS.items() if entry.exports)
 IMPORT_TARGETS = tuple(target for target, entry in LEARNERS.items()
                        if entry.contract == "labelled-clauses")
+MINED_TARGETS = tuple(target for target, entry in LEARNERS.items()
+                      if entry.contract == "unlabelled-horn")
 
 
 def learner(target: str) -> Learner:

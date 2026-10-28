@@ -1,0 +1,7 @@
+Using the default schema relations
+Loading files... 
+  Starting toy.tsv
+  Finished toy.tsv, still running: 0
+Loaded 4 facts in 0 s using 2 MB
+Starting the mining phase... 
+  Ended the mining phase... Total time 0.154 s

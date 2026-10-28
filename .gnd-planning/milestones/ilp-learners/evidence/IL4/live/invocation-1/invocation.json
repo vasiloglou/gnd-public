@@ -1,0 +1,49 @@
+{
+ "argv_count": 9,
+ "argv_sha256": "4765f5ba3cf151afce37758ad8a14b9331fcbe25ed63ccc67fc9bb90ed5783ff",
+ "cwd": "<working-directory>",
+ "elapsed_seconds": 0.36569545790553093,
+ "ended_monotonic": 1821662.340944333,
+ "environment": [
+  {
+   "name": "HOME",
+   "provenance": "supplied"
+  },
+  {
+   "name": "JAVA_HOME",
+   "provenance": "supplied"
+  },
+  {
+   "name": "LANG",
+   "provenance": "supplied"
+  },
+  {
+   "name": "PATH",
+   "provenance": "supplied"
+  },
+  {
+   "name": "TMPDIR",
+   "provenance": "supplied"
+  },
+  {
+   "name": "USER",
+   "provenance": "supplied"
+  }
+ ],
+ "process_group_cleaned": true,
+ "return_code": 0,
+ "signal": null,
+ "spawn_error": null,
+ "spawned": true,
+ "started_monotonic": 1821661.975248875,
+ "status": "succeeded",
+ "stderr_observed_bytes": 224,
+ "stderr_retained_bytes": 224,
+ "stderr_truncated": false,
+ "stdout_observed_bytes": 1663,
+ "stdout_retained_bytes": 1663,
+ "stdout_truncated": false,
+ "termination": "exited",
+ "termination_steps": [],
+ "timed_out": false
+}

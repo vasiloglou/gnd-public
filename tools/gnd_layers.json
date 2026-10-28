@@ -470,6 +470,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.ilp_amie": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.ilp_asp": {
       "lane": "export",
       "layer": "lanes"

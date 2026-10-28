@@ -515,7 +515,7 @@ def test_d13_only_the_ilasp_entry_keeps_quoted_booleans_strings(tmp_path, monkey
     from gnd.export import ilp_learners, ilp_service
 
     assert {t: e.boolean_strings for t, e in ilp_learners.LEARNERS.items()} == \
-        {"popper": True, "neutral": True, "ilasp": False, "llm": True, "rules": True}
+        {"popper": True, "neutral": True, "ilasp": False, "llm": True, "rules": True, "amie": True}
     seen = []
     original = ilp_service.rewrite
 

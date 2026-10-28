@@ -1,0 +1,28 @@
+You are the single adversarial reviewer for phase IL4 of the GND ilp-learners milestone, in the git worktree at
+<repo> (branch claude/il4).
+
+Review the phase diff: `git diff 70266b5 f6ded68` (70266b5 is main after PR #60; 374e225 the draft spec; 641f4cf the owner gate record; 29e850b the corpus and the tests, committed red; 2417498 the implementation; d7e159a the live-run script, the probe and invocation 1; f6ded68 the run's per-rule counts).
+The approved design is .gnd-planning/milestones/ilp-learners/notes/phase-IL4-spec.md: read it in full (§6 the design, §7 the decisions, §13 the owner rulings, §14 the implementation findings IL4-F1..F10 and the run). Invocation 1 is the run of record and is retained as is; IL4-F9 (the outcome field re-derived from retained stderr) and IL4-F10 (AMIE's variable naming) are recorded findings, not ones to report again, though you may report consequences the author missed.
+The corpus is tests/fixtures/ilp_learners/il4/ with tests/test_ilp_amie.py. The contract page is docs/reference/ilp-bridge.md ("## AMIE-style miner").
+
+What shipped:
+- src/gnd/export/ilp_amie.py (new): spell / relation_table / pairs / render (the typed triple export: amie/facts.tsv, amie/relations.json); parse_rules (AMIE 4.0.0's rule lines, closed and capped); extract_rules; mapped (rule to guarded constraint with an atom consequent, refusals in MAPPING_REFUSALS order, the shared check_join_types last); count (distinct head pairs, MAX_JOIN_ROWS bound).
+- src/gnd/export/ilp_service.py: _export_mined, _mined_inputs, _cmd_import_mined_rules (run record gnd-mined-run/1, counting, holds-only admission, the checker cross-check, the proposal via discover.output); src/gnd/export/ilp.py: index_tree split from export_tree, refusal_name reads "rule K:".
+- src/gnd/commands/export.py (--labels no longer required, --population, the post-parse _ilp_inputs check), src/gnd/commands/checking.py (gnd import mined-rules); src/gnd/mined-import.schema.json (new); the amie registry entry and MINED_TARGETS; the export target enum; the layer map; the inventories; the RF6 census delta evidence/IL4/dynamic-query-successor.json.
+- Moved RF1 CLI goldens (gnd export ilp help/exit back to one file per lane, gnd import, gnd import mined-rules new, cli/tree.json), goldens.sha256, MANIFEST_SHA256.
+- Evidence: evidence/live_common.py (run_import gained source/ignore), evidence/IL4/ (run_amie.py, probe/, live/invocation-1/).
+
+Hunt for real defects, especially:
+1. The reader's totality and grammar: can parse_rules raise anything but IlpError, loop, or accept text outside the grammar (tabs or spaces inside a rule, unicode, a figure with a leading plus, an empty token, a relation spelled like a variable, a duplicate detected or missed)? Do the caps hold at exactly the bound and one over?
+2. The mapping: is every row reachable in the stated order and refused by its name? Can a rule with a constant, a reflexive atom, recursion, an unbound head, an uncovered head or body, or a type-confused join slip through or be refused by the wrong name? Is the guarded constraint it builds the rule's meaning (role order, variable spelling)?
+3. The counting: is the numerator/denominator exactly the spec's definition over distinct head pairs? Does the too-large bound hold before the join, and is it a real bound on work (bindings can grow beyond the product?) Does the checker cross-check ever disagree with the count (subtypes, value identity, a string and an integer that spell alike, escaped characters)?
+4. The export: is every fact of every covered binary asserted fact type written once, typed, escaped, sorted, byte-identical under two hash seeds? Is anything private, unescapable or ambiguous written? Do relations.json's skipped reasons cover every other fact type?
+5. Binding and admission: can a rule set be admitted against another population, model, or learner, or partially (IL-R11)? Is anything written on a refusal? Are the provenance examples real fact ids of satisfied head facts, at most 256?
+6. The CLI: does every combination of --target, --labels and --population give the stated exit and message, and is the popper/neutral missing-labels stderr byte-identical to before? Surfaces and goldens: registry, choices, enums, schema inventories, docs agree; only the listed RF1 goldens moved, and the manifest matches; the RF6 delta is honest.
+7. The evidence: is outcome.json consistent with raw-stdout.txt, rules.txt, reported.json, import-stderr.txt, facts.tsv? Is the outcome mapping the ruled one? Any home path, user name, email or scratch path left in committed evidence? Does T9 test anything that could fail? Does T-live's canonical form compare what it claims?
+8. Anything a test passes while the code is wrong: a declared branch with no case that can fail it.
+
+Rules: reproduce each finding with a concrete command or script before reporting it, and include the reproduction. Do not edit any tracked file. Write any scratch files ONLY under
+<scratch>/il4-review/ (it exists), including any derived outputs (--out paths, temp corpora, copies of the source). Do not run the full test suite; targeted pytest runs are fine. Do not run run_amie.py, do not run java or AMIE in any way, and do not run the live-marked test (another run needs an owner ruling). Do not invoke any agent CLI. Do not download or install anything. Never execute or source a repository .env.
+
+Report: a numbered list of findings, each with severity (blocking / hardening / completeness), the file:line, the reproduction and its observed output, and the expected behaviour. Then list what you checked that held. If you find nothing in an area, say what you tried.

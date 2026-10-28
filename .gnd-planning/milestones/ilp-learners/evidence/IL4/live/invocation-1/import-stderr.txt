@@ -1,0 +1,1 @@
+rule 0: does-not-hold: 19 of 20 head pairs hold; only rules that hold are admitted (D11 (o))

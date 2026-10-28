@@ -63,8 +63,11 @@ class IlpError(Exception):
 
 
 def refusal_name(message: str) -> str:
-    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...`` or ``<name>: ...``."""
-    return message.split(": ")[1] if message.startswith("clause ") else message.split(":")[0]
+    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...``,
+    ``rule K: <name>: ...`` (``gnd import mined-rules``, IL4-F9) or ``<name>: ...``."""
+    if message.startswith(("clause ", "rule ")):
+        return message.split(": ")[1]
+    return message.split(":")[0]
 
 
 def observed_integers(neutral: dict[str, Any]) -> dict[str, set[int]]:
@@ -248,7 +251,13 @@ def export_tree(
     ``rendering`` is the adapter's files (none for the ``neutral`` target). The
     export digest E is the SHA-256 of ``export.json``, which lists every other
     file's digest (spec §6), so ``sha256sum DIR/export.json`` reproduces it."""
-    files = {"neutral.json": canonical_bytes(neutral), **rendering}
+    return index_tree({"neutral.json": canonical_bytes(neutral), **rendering}, target,
+                      adapter_version=adapter_version)
+
+
+def index_tree(files: dict[str, bytes], target: str, *, adapter_version: str) -> dict[str, bytes]:
+    """``files`` plus the ``export.json`` that indexes them, ``export.json`` last."""
+    files = dict(files)
     for path, data in files.items():
         if len(data) > MAX_FILE_BYTES:
             raise _refuse("too-large", f"{path} would exceed {MAX_FILE_BYTES} bytes")

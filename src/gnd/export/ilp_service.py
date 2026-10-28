@@ -34,6 +34,7 @@ from gnd import input_policy as _rf7_input
 from gnd.errors import ModelLoadError, ModelValidationError
 from gnd.exits import (
     EXIT_COLLISION,
+    EXIT_GENERATOR,
     EXIT_ILL_FORMED,
     EXIT_INTERNAL,
     EXIT_IO,
@@ -41,12 +42,13 @@ from gnd.exits import (
     EXIT_OK,
 )
 from gnd.export import ilp as _ilp
+from gnd.export import ilp_amie as _amie
 from gnd.export import ilp_learners as _learners
 from gnd.export.ilp import IlpError
 from gnd.export.ilp_rewrite import rewrite
 from gnd.measure import labels as _labels
 
-__all__ = ["_cmd_export_ilp", "_cmd_import_ilp_rules"]
+__all__ = ["_cmd_export_ilp", "_cmd_import_ilp_rules", "_cmd_import_mined_rules"]
 
 #: IK5-D14: bounds fixed before results.
 CLAUSES_CAP = 1024 * 1024
@@ -178,7 +180,8 @@ def _refuse_out(out: Path) -> int | None:
     return None
 
 
-def _cmd_export_ilp(model: str, labels: str, *, target: str, out: str) -> int:
+def _cmd_export_ilp(model: str, labels: str | None, *, target: str, out: str,
+                    population: str | None = None) -> int:
     """``gnd export ilp``: write the neutral form and the named adapter's rendering."""
     model_path, out_path = Path(model), Path(out)
     if not model_path.is_file():
@@ -187,6 +190,10 @@ def _cmd_export_ilp(model: str, labels: str, *, target: str, out: str) -> int:
     refused = _refuse_out(out_path)
     if refused is not None:
         return refused
+    if _learners.learner(target).contract == "unlabelled-horn":
+        assert population is not None  # the post-parse check (IL4-C5)
+        return _export_mined(model_path, Path(population), target, out_path)
+    assert labels is not None
     try:
         prepared = _prepare(model_path, Path(labels), target)
         _ilp.write_tree(out_path, prepared.tree)
@@ -479,3 +486,259 @@ def _cmd_import_ilp_rules(
         sys.stdout.write("\n".join(lines) + "\n")
     return EXIT_OK
 
+
+
+# ---------------------------------------------------------------------------
+# The unlabelled-horn contract: gnd export ilp --target amie and
+# gnd import mined-rules (ilp-learners IL4).
+# ---------------------------------------------------------------------------
+
+#: The run record's cap; it is a few hundred bytes.
+MINED_RUN_CAP = 64 * 1024
+#: The import's own refusals of its inputs, before the mapping (spec §6).
+MINED_INPUT_REFUSALS = ("learner-mismatch", "rules-mismatch", "population-mismatch")
+
+
+@dataclass(frozen=True)
+class _Mined:
+    model_bytes: bytes
+    model: Any
+    document: dict[str, Any]
+    population_bytes: bytes
+    population: Any
+    digest: str
+
+
+def _mined_inputs(model_path: Path, population_path: Path) -> _Mined:
+    """The model and one population, loaded from the bytes that are digested."""
+    from gnd.evolve.service import _parse_model_text
+    from gnd.model import MAX_MODEL_BYTES, load_model_bytes
+    from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
+
+    model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, "model")
+    model = load_model_bytes(model_bytes, source=model_path)
+    if model.reference_populations:
+        raise IlpError(EXIT_ILL_FORMED, "references: models with declared reference "
+                       "populations are not exported (IK5 boundary)")
+    population_bytes = _read_capped(population_path, MAX_POPULATION_BYTES, "population")
+    try:
+        population = load_population_bytes(population_bytes, source=population_path, model=model)
+    except Exception as error:  # noqa: BLE001 -- a load failure is exit 5, as on the labels path
+        raise IlpError(EXIT_GENERATOR, f"population {population_path} failed to load: {error}") from None
+    return _Mined(model_bytes, model, _parse_model_text(model_bytes.decode("utf-8")),
+                  population_bytes, population, hashlib.sha256(population_bytes).hexdigest())
+
+
+def _mined_tree(inputs: _Mined, target: str) -> dict[str, bytes]:
+    entry = _learners.learner(target)
+    rendering = _amie.render(inputs.model, inputs.population, inputs.digest)
+    return _ilp.index_tree(rendering, target, adapter_version=entry.adapter_version)
+
+
+def _export_mined(model_path: Path, population_path: Path, target: str, out_path: Path) -> int:
+    if not population_path.is_file():
+        _stderr(f"population {population_path} does not exist")
+        return EXIT_NO_INPUT
+    try:
+        inputs = _mined_inputs(model_path, population_path)
+        tree = _mined_tree(inputs, target)
+        _ilp.write_tree(out_path, tree)
+    except IlpError as error:
+        _stderr(str(error))
+        return error.code
+    except (ModelLoadError, ModelValidationError) as error:
+        _stderr(f"invalid model: {error}")
+        return EXIT_ILL_FORMED
+    except OSError as error:
+        _stderr(f"could not write the export: {error}")
+        return EXIT_IO
+    index = _rf7_input.loads(tree["amie/relations.json"])
+    facts = tree["amie/facts.tsv"].count(b"\n")
+    print(f"EXPORTED {facts} facts in {len(index['relations'])} relations to {out_path} ({target}); "
+          f"skipped {len(index['skipped'])} fact types")
+    print(f"export_sha256 {_ilp.export_digest(tree)}")
+    return EXIT_OK
+
+
+def _cmd_import_mined_rules(
+    model: str,
+    rules: str,
+    population: str,
+    reported: str,
+    *,
+    target: str,
+    out: str,
+    actor: str,
+    requested_at: datetime | None,
+    output_format: str,
+) -> int:
+    """``gnd import mined-rules``: admit mined Horn rules that hold as guarded constraints.
+
+    Order (spec §4 rule 3): the rules read, the run record read and bindings,
+    the model and population, each rule's mapping in MAPPING_REFUSALS order,
+    each rule's counts in COUNT_REFUSALS order, candidate validation, the
+    checker, the proposal write. Any refusal refuses the whole set (IL-R11)."""
+    from gnd.checker import check
+    from gnd.discover import output
+    from gnd.discover.support import PopulationView, Work
+    from gnd.evolve.service import MAX_EVOLUTION_PROPOSAL_BYTES
+
+    paths = {"model": Path(model), "rules": Path(rules), "population": Path(population),
+             "run record": Path(reported)}
+    for label, path in paths.items():
+        if not path.is_file():
+            _stderr(f"{label} {path} does not exist")
+            return EXIT_NO_INPUT
+    out_path = Path(out)
+    refused = _refuse_out(out_path)
+    if refused is not None:
+        return refused
+    try:
+        rule_bytes = _read_capped(paths["rules"], _amie.MAX_TEXT, "rules")
+        try:
+            text = rule_bytes.decode("utf-8")
+        except UnicodeDecodeError:
+            raise IlpError(EXIT_ILL_FORMED, "unparsable: the rules are not UTF-8") from None
+        parsed = _learners.learner(target).parse(text)
+        run_bytes = _read_capped(paths["run record"], MINED_RUN_CAP, "run record")
+        record = _json(run_bytes, f"run record {paths['run record']}")
+        _validate(record, "mined-import.schema.json", "gnd-mined-run/1",
+                  f"run record {paths['run record']}")
+        entry = _learners.learner(target)
+        learner = record["learner"]
+        if learner["name"] != entry.learner:
+            raise IlpError(EXIT_ILL_FORMED, f"learner-mismatch: a {target} import needs a "
+                           f"{entry.learner} run record, not {learner['name']!r}")
+        rules_sha = hashlib.sha256(rule_bytes).hexdigest()
+        if record["rules_sha256"] != rules_sha:
+            raise IlpError(EXIT_ILL_FORMED, f"rules-mismatch: the run record binds rules "
+                           f"{record['rules_sha256']}, not {rules_sha}")
+        inputs = _mined_inputs(paths["model"], paths["population"])
+        if record["population_sha256"] != inputs.digest:
+            raise IlpError(EXIT_ILL_FORMED, f"population-mismatch: the run record binds population "
+                           f"{record['population_sha256']}, not {inputs.digest}")
+        from gnd.redaction import RedactionPolicy
+
+        relations, uncovered, _skipped = _amie.relation_table(inputs.model, list(inputs.population.covers))
+        shape, _columns = _ilp.schema(inputs.model, RedactionPolicy.from_model(inputs.model).effective_roles)
+        closures = _ilp.type_closures(inputs.model)
+        mined = [_amie.mapped(rule, index, relations, uncovered, shape, closures)
+                 for index, rule in enumerate(parsed)]
+        facts = _amie.pairs(relations, inputs.population)
+        counts = []
+        for index, (rule, mined_rule) in enumerate(zip(parsed, mined, strict=True)):
+            counted = _amie.count(mined_rule, facts, index, limit=_amie.MAX_JOIN_ROWS)
+            if counted.denominator == 0:
+                raise IlpError(EXIT_ILL_FORMED, f"rule {index}: covers-nothing: no binding satisfies "
+                               "the body, so the rule has no support")
+            if rule["support"] != counted.numerator:
+                raise IlpError(EXIT_ILL_FORMED, f"rule {index}: support-mismatch: {learner['name']} "
+                               f"reports Support {rule['support']}, GND counts {counted.numerator} "
+                               f"of {counted.denominator} head pairs")
+            counts.append(counted)
+        for index, counted in enumerate(counts):
+            if counted.numerator != counted.denominator:
+                raise IlpError(EXIT_ILL_FORMED, f"rule {index}: does-not-hold: {counted.numerator} of "
+                               f"{counted.denominator} head pairs hold; only rules that hold are "
+                               "admitted (D11 (o))")
+        view = PopulationView(inputs.model, inputs.population, Work())
+        basename = paths["population"].name
+        evidence = [{"ref": basename, "sha256": inputs.digest},
+                    {"ref": "mined/rules", "sha256": rules_sha},
+                    {"ref": "mined/run", "sha256": hashlib.sha256(run_bytes).hexdigest()}]
+        prefix = (f"mined by {learner['name']} {learner['version']} from population "
+                  f"{inputs.digest[:8]}, rule")
+        constraints, rows = [], []
+        base = len(inputs.document.get("constraints") or [])
+        for index, (rule, mined_rule, counted) in enumerate(zip(parsed, mined, counts, strict=True)):
+            head = relations[mined_rule.head[1]]
+            spelled = [tuple(_amie.spell(object_type, row[role], where=head.fact_type)
+                             for role, object_type in zip(head.roles, head.types, strict=True))
+                       for row in inputs.population.facts.get(head.fact_type) or []]
+            first: dict[tuple[str, ...], int] = {}
+            for row_index, pair in enumerate(spelled):
+                first.setdefault(pair, row_index)
+            # Each satisfied pair is a head fact, so it has a first row (IK-R11: opaque ids).
+            examples = [view.fact_id(head.fact_type, first[pair]) for pair in counted.satisfied]
+            support = {"numerator": counted.numerator, "denominator": counted.denominator}
+            induction = {"inducer": dict(learner), "method": entry.method,
+                         "manifest_sha256": inputs.digest,
+                         "examples": examples[:INDUCTION_EXAMPLES], "support": support,
+                         "counterexamples": [], "evidence": evidence}
+            constraints.append(_envelope(mined_rule.core, induction, f"{prefix} {index}"))
+            agrees = None if rule["body_size"] is None else rule["body_size"] == counted.denominator
+            rows.append({"index": index, "ref": f"constraints[{base + index}]",
+                         "support": support,
+                         "confidence": {"formula": _amie.FORMULA,
+                                        "value": counted.numerator / counted.denominator},
+                         "reported": {"support": rule["support"], "body_size": rule["body_size"],
+                                      **rule["figures"]},
+                         "body_size_agrees": agrees})
+        ops = output.add_operations([(None, c) for c in constraints], prefix="mined")
+        document = output.candidate_document(inputs.document, ops)
+        from gnd.model import load_model_bytes
+
+        candidate = load_model_bytes(output.candidate_text(document).encode("utf-8"),
+                                     source=paths["model"])
+        from gnd.population import load_population_bytes
+
+        report = check(candidate, load_population_bytes(inputs.population_bytes,
+                                                        source=paths["population"], model=candidate))
+        verdicts = {v.constraint_ref: v.verdict for v in report.verdicts}
+        for row in rows:
+            if verdicts.get(row["ref"]) != "pass":
+                raise RuntimeError(f"{row['ref']} holds by GND's count but the checker says "
+                                   f"{verdicts.get(row['ref'])!r}")
+        built = output.proposal(
+            model_bytes=inputs.model_bytes, document=document, ops=ops, actor=actor,
+            requested_at=requested_at or datetime.now(UTC), origin="gnd import mined-rules",
+            prefix="mined",
+            rationale=f"gnd import mined-rules: {len(ops)} mined rules from "
+                      f"{learner['name']} {learner['version']} that hold on {basename}",
+        )
+        data = output.canonical_bytes(built.model_dump(mode="json"))
+        if len(data) > MAX_EVOLUTION_PROPOSAL_BYTES:
+            raise IlpError(EXIT_ILL_FORMED, f"too-large: the proposal would exceed "
+                           f"{MAX_EVOLUTION_PROPOSAL_BYTES} bytes")
+    except IlpError as error:
+        _stderr(str(error))
+        return error.code
+    except (ModelLoadError, ModelValidationError) as error:
+        _stderr(f"invalid model: {error}")
+        return EXIT_ILL_FORMED
+    except RuntimeError as error:
+        _stderr(f"internal: {error}")
+        return EXIT_INTERNAL
+    except OSError as error:
+        _stderr(f"could not read input: {error}")
+        return EXIT_IO
+    try:
+        with out_path.open("xb") as handle:
+            handle.write(data)
+    except FileExistsError:
+        _stderr(f"--out {out_path} already exists; nothing was written")
+        return EXIT_COLLISION
+    except OSError as error:
+        _stderr(f"could not write the proposal: {error}")
+        return EXIT_IO
+
+    def ref(path: Path, digest: str) -> dict[str, str]:
+        return {"path": str(path), "sha256": digest}
+
+    result = {
+        "schema_version": "gnd-mined-import/1", "tool": "gnd", "command": "import mined-rules",
+        "target": target, "learner": dict(learner), "population_sha256": inputs.digest,
+        "inputs": {"model": ref(paths["model"], hashlib.sha256(inputs.model_bytes).hexdigest()),
+                   "population": ref(paths["population"], inputs.digest),
+                   "rules": ref(paths["rules"], rules_sha),
+                   "run": ref(paths["run record"], hashlib.sha256(run_bytes).hexdigest())},
+        "rules": rows, "proposal": str(out_path),
+    }
+    if output_format == "json":
+        sys.stdout.write(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    else:
+        lines = [f"IMPORTED {len(rows)} mined rules -> {out_path}"]
+        lines += [f"  rule {row['index']} {row['ref']}: holds on {row['support']['numerator']} of "
+                  f"{row['support']['denominator']} head pairs" for row in rows]
+        sys.stdout.write("\n".join(lines) + "\n")
+    return EXIT_OK

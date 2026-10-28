@@ -110,6 +110,36 @@
   ],
   [
    "src/gnd/export/ilp_amie.py",
+   "canonical",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "canonical",
+   "list[list[str]]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "canonical",
+   "list[str]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "canonical",
+   "tuple[str, str, str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "canonical",
+   "tuple[tuple[str, str, str], ...]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
    "count",
    "Mapping[str, list[tuple[str, str]]]",
    1
@@ -177,6 +207,12 @@
   [
    "src/gnd/export/ilp_amie.py",
    "mapped",
+   "body[atom]",
+   2
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "mapped",
    "dict[str, Any]",
    2
   ],
@@ -184,6 +220,12 @@
    "src/gnd/export/ilp_amie.py",
    "mapped",
    "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/export/ilp_amie.py",
+   "name",
+   "dict[str, str]",
    1
   ],
   [
@@ -403,6 +445,6 @@
    1
   ]
  ],
- "result_distinct_rows": 6726,
- "result_occurrences": 8418
+ "result_distinct_rows": 6733,
+ "result_occurrences": 8427
 }

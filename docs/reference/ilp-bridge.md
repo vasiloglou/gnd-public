@@ -435,7 +435,8 @@ exits 64.
   relation, `f_<fact type id>`. Each value is spelled
   `<object type id>:<value>`, so the miner cannot join a refund number with an
   equal amount. A tab, newline or backslash in a string is written `\t`,
-  `\n` or `\\`; any other control character is refused `unrepresentable`.
+  `\n` or `\\`; any other character that is not printable (a control
+  character, a non-breaking or zero-width space) is refused `unrepresentable`.
 - `amie/relations.json`: the population's SHA-256, each relation's fact type,
   roles, object types and fact count, and every skipped fact type with its
   reason: `derived`, `arity` (not binary) or `not-covered`.
@@ -451,13 +452,18 @@ rule is space-separated triples, `=>`, then one triple:
 body size are counts; a body size of `-1` (AMIE computes it only with
 `-enstd`) means not reported. The other figures are kept verbatim and never
 compared. Anything else is refused `unparsable`: a line in another shape, an
-empty file, a blank or repeated line, a variable other than `?a` to `?z`, more
+empty file, a blank line, a rule printed twice (up to variable renaming and
+body order), a variable other than `?a` to `?z`, more
 than 256 rules, more than 4 atoms, a count over 18 digits, more than 1 MiB.
 
 **The run record** (`gnd-mined-run/1` in `mined-import.schema.json`) names the
 miner and binds RULES and the population by SHA-256. A different miner is
 refused `learner-mismatch`, other RULES `rules-mismatch`, another population
-`population-mismatch`.
+`population-mismatch`. The record does not bind the model: the rules are read
+under whichever model is given, and since GND recounts every rule over that
+model and population, a different model can change the refusal's name or
+the rule's meaning, never admit a rule that does not hold there. The
+proposal binds the model it was built against.
 
 **The mapping.** A rule `B1, …, Bn => r(x, y)` becomes one `guarded`
 constraint whose antecedent is the body's atoms and whose consequent is the
@@ -472,6 +478,7 @@ in this order:
 | an atom whose two ends are one variable | refused `reflexive-atom` |
 | the head relation also in the body | refused `recursion` |
 | a head variable the body does not bind | refused `unbound-head` |
+| body atoms that fall into parts sharing no variable | refused `disconnected-body`: the checker evaluates a connected antecedent only |
 | a variable joining roles of incompatible object types | refused `type-confused-join`, by the fragment table's join check |
 
 **The counting.** GND counts every rule itself, over distinct head pairs:

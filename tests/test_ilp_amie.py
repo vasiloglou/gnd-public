@@ -517,7 +517,11 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
 
     stdout = (live / "raw-stdout.txt").read_text(encoding="utf-8")
     assert len(stdout.encode("utf-8")) == process["stdout_observed_bytes"]
-    assert outcome["learner"] == script.learner(stdout)
+    # Review 7: AMIE prints no version, so the learner is the verified asset's (IL4-D2 (o)),
+    # and the run record the import read names the same one.
+    assert outcome["learner"] == script.LEARNER == script.learner(stdout)
+    if (live / "reported.json").exists():
+        assert json.loads((live / "reported.json").read_text(encoding="utf-8"))["learner"] == script.LEARNER
     rules = script.read_rules(stdout, outcome["termination"])
     if not rules:
         assert outcome["import"] == "none" and not (live / "rules.txt").exists()
@@ -576,14 +580,8 @@ def _canonical(stdout: str) -> list[tuple[Any, ...]]:
 
     out = []
     for rule in ilp_amie.parse_rules(ilp_amie.extract_rules(stdout)):
-        forms = []
-        for body in itertools.permutations(rule["body"]):
-            names: dict[str, str] = {}
-            atoms = [*body, rule["head"]]
-            renamed = tuple((names.setdefault(s, f"?{len(names)}"), r, names.setdefault(o, f"?{len(names)}"))
-                            for s, r, o in atoms)
-            forms.append(renamed)
-        out.append((min(forms), rule["support"], rule["body_size"], tuple(sorted(rule["figures"].items()))))
+        out.append((ilp_amie.canonical(rule["body"], rule["head"]), rule["support"], rule["body_size"],
+                    tuple(sorted(rule["figures"].items()))))
     return out
 
 
@@ -602,3 +600,51 @@ def test_f9_the_refusal_name_reads_a_rule_prefix(message, name):
 
     assert refusal_name(message) == name
     assert _script().import_outcome(message) == f"refused:{name}"
+
+
+# ---------------------------------------------------------------------------
+# Step 4 regressions (notes/phase-IL4-agent-review.md), each red before its fix.
+# ---------------------------------------------------------------------------
+
+GOOD = "?a  f_works_in  ?b  ?b  f_team_site  ?c   => ?a  f_based_at  ?c"
+
+
+def test_r1_a_disconnected_body_is_refused_by_name(tmp_path):
+    """Review 1: a holding rule whose body falls apart reached the exit-70 checker disagreement."""
+    rule = "?a  f_works_in  ?f  ?f  f_team_site  ?b  ?x  f_parks_at  ?y   => ?a  f_based_at  ?b"
+    result, out = _import(tmp_path, [_line(rule, "20")])
+    assert result.returncode == 3 and not out.exists(), result.stderr
+    assert result.stderr.decode().startswith("rule 0: disconnected-body:")
+
+
+def test_r1_a_connected_body_with_a_lone_variable_is_still_admitted(tmp_path):
+    rule = "?a  f_works_in  ?b  ?b  f_team_site  ?c  ?a  f_parks_at  ?y   => ?a  f_based_at  ?c"
+    result, _ = _import(tmp_path, [_line(rule, "20")])
+    assert result.returncode == 0, result.stderr
+
+
+@pytest.mark.parametrize("second", [
+    pytest.param("?c  f_works_in  ?d  ?d  f_team_site  ?e   => ?c  f_based_at  ?e", id="renamed"),
+    pytest.param("?b  f_team_site  ?c  ?a  f_works_in  ?b   => ?a  f_based_at  ?c", id="permuted"),
+])
+def test_r3_a_rule_printed_twice_up_to_renaming_is_refused(second):
+    from gnd.export import ilp_amie
+    from gnd.export.ilp import IlpError
+
+    with pytest.raises(IlpError, match="^unparsable: line 2: the rule is printed twice"):
+        ilp_amie.parse_rules(_line(GOOD, "20") + "\n" + _line(second, "20") + "\n")
+
+
+@pytest.mark.parametrize("value", ["a b", "a​b", "a\x07b"])
+def test_r5_the_refusal_names_what_it_refuses(value):
+    from gnd.export import ilp_amie
+    from gnd.export.ilp import IlpError
+
+    with pytest.raises(IlpError, match="^unrepresentable: x holds a non-printable character"):
+        ilp_amie.spell("t", value, where="x")
+
+
+def test_r7_a_body_size_that_agrees_is_recorded_true(tmp_path):
+    result, _ = _import(tmp_path, [f"{GOOD}\t1.000000\t1.000000\t1.000000\t20\t20\t20\t-1"])
+    assert result.returncode == 0, result.stderr
+    assert [row["body_size_agrees"] for row in json.loads(result.stdout)["rules"]] == [True]

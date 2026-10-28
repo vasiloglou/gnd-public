@@ -31,7 +31,7 @@ from gnd.export.ilp import IlpError
 __all__ = [
     "ADAPTER_VERSION", "COUNT_REFUSALS", "EXPORT_REFUSALS", "FORMULA", "MAPPING_REFUSALS",
     "MAX_ATOMS", "MAX_DIGITS", "MAX_JOIN_ROWS", "MAX_RULES", "MAX_TEXT", "Counts", "MinedRule",
-    "count", "extract_rules", "mapped", "parse_rules", "relation_table", "render", "spell",
+    "canonical", "count", "extract_rules", "mapped", "parse_rules", "relation_table", "render", "spell",
 ]
 
 ADAPTER_VERSION = "1"
@@ -46,7 +46,7 @@ EXPORT_REFUSALS = ("no-relations", "unrepresentable")
 #: The mapping's refusals in check order; ``type-confused-join`` is the shared
 #: join check (``ilp_rewrite.check_join_types``), called last.
 MAPPING_REFUSALS = ("open-world-head", "unknown-predicate", "constant-atom", "reflexive-atom",
-                    "recursion", "unbound-head", "type-confused-join")
+                    "recursion", "unbound-head", "disconnected-body", "type-confused-join")
 #: The counting's and admission's refusals in check order (D11 (o): holds only).
 COUNT_REFUSALS = ("too-large", "covers-nothing", "support-mismatch", "does-not-hold")
 
@@ -71,7 +71,7 @@ def spell(object_type: str, value: Any, *, where: str) -> str:
     else:
         text = "".join(_ESCAPES.get(character, character) for character in value)
         if any(not character.isprintable() for character in text):
-            raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {where} holds a control character "
+            raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {where} holds a non-printable character "
                            "the triple export cannot spell")
     return f"{object_type}:{text}"
 
@@ -214,7 +214,7 @@ def parse_rules(text: str) -> list[dict[str, Any]]:
                                      ("functional variable", functional, _FUNCTIONAL)):
             if not value.isascii() or pattern.fullmatch(value) is None:
                 raise _refuse(f"line {number}: {name} {value[:40]!r} is not in AMIE's spelling")
-        key = (tuple(map(tuple, body)), tuple(head[0]))
+        key = canonical(body, head[0])
         if key in seen:
             raise _refuse(f"line {number}: the rule is printed twice")
         seen.add(key)
@@ -234,6 +234,22 @@ def extract_rules(stdout: str) -> str:
     ``""`` (import ``none``)."""
     lines = [line for line in stdout.split("\n") if line.startswith("?")]
     return "".join(f"{line}\n" for line in lines)
+
+
+def canonical(body: list[list[str]], head: list[str]) -> tuple[tuple[str, str, str], ...]:
+    """A rule up to variable renaming and body order: the least renaming over every
+    body order, variables numbered by first appearance (review 3, IL4-F10)."""
+    from itertools import permutations
+
+    forms = []
+    for order in permutations(body):
+        names: dict[str, str] = {}
+
+        def name(term: str, names: dict[str, str] = names) -> str:
+            return names.setdefault(term, f"?{len(names)}") if term.startswith("?") else term
+
+        forms.append(tuple((name(s), r, name(o)) for s, r, o in [*order, head]))
+    return min(forms)
 
 
 # -- mapping -----------------------------------------------------------------
@@ -279,6 +295,17 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
     for term in (head[0], head[2]):
         if term not in bound:
             raise _mapping("unbound-head", index, f"head variable {term} is not in the body")
+    # The checker evaluates a connected antecedent only (review 1): join the body's
+    # atoms through shared variables and require one component.
+    reached, frontier = set(), [0]
+    while frontier:
+        atom = frontier.pop()
+        if atom not in reached:
+            reached.add(atom)
+            terms = {body[atom][0], body[atom][2]}
+            frontier += [k for k, (s, _r, o) in enumerate(body) if k not in reached and terms & {s, o}]
+    if len(reached) != len(body):
+        raise _mapping("disconnected-body", index, "the body's atoms share no variable across parts")
     joins = [{"predicate": relation, "args": [{"var": "_"}, {"var": subject}, {"var": obj}]}
              for subject, relation, obj in atoms]
     try:

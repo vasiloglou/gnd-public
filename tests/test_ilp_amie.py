@@ -635,7 +635,7 @@ def test_r3_a_rule_printed_twice_up_to_renaming_is_refused(second):
         ilp_amie.parse_rules(_line(GOOD, "20") + "\n" + _line(second, "20") + "\n")
 
 
-@pytest.mark.parametrize("value", ["a b", "a​b", "a\x07b"])
+@pytest.mark.parametrize("value", ["a b", "a\u200bb", "a\x07b"])
 def test_r5_the_refusal_names_what_it_refuses(value):
     from gnd.export import ilp_amie
     from gnd.export.ilp import IlpError

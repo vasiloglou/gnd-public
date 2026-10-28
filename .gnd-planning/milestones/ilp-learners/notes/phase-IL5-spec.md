@@ -353,12 +353,13 @@ whose targets do not change.
 - **`termination`** (IL5-D7):
   - `completed` when the status is `succeeded`;
   - `wall-clock-kill` when the status is `timed-out`;
-  - `output-limit` when either stream is truncated;
+  - `output-limit` when either stream is truncated, checked first;
   - `rendering-rejected` for a `failed` status (a non-zero exit or a spawn
     failure);
   - `learner-timeout` is unreachable.
 - **`import`:**
-  - `none` when `extract_answer` returns `""`;
+  - `none` when `extract_answer` returns `""`, **or when the termination is
+    `output-limit`:** the answer is not read (IL5-Q1 (o), 2026-10-28);
   - `refused:unparsable` when the block is not JSON or not schema-valid;
   - `refused:<name>` for any other refusal, by `ilp.refusal_name`;
   - `admitted` otherwise.
@@ -480,6 +481,17 @@ first."
 
 **No other approval.** No second run, no change to `gnd.agents`, and no
 amendment is approved beyond these rulings.
+
+**Owner rulings IL5-Q1 (o) and IL5-Q2 (o), 2026-10-28.** The owner read both questions in business
+terms and answered "ok go with them" to the author's lean:
+
+| ID | Ruling |
+|---|---|
+| IL5-Q1 | **A cut-off run gives no answer.** When the termination is `output-limit`, the answer is not read, whatever block survived the cut; `import` is `none` and the outcome says `answer: not read`. Truncation keeps its place first in the termination order. A timed-out or failed run is read as before |
+| IL5-Q2 | **A stray fence makes no answer.** Outside the one ```` ```json ```` block, any line that starts with three backticks after leading spaces makes the answer `""`. This extends IL5-D3 (a); no approved corpus answer changes (e6 and e7 were already `""`). The successor cases live in `tests/test_ilp_llm.py` |
+
+Neither ruling touches invocation 1: its output was complete and held one
+block, and T9 replays it under the new rules.
 
 ## 13. Implementation findings (recorded as found)
 

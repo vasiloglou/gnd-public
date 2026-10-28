@@ -101,6 +101,11 @@ def termination(invocation: dict[str, Any]) -> str:
     return "completed"
 
 
+def read_answer(stdout: str, ended: str) -> str:
+    """The extracted answer, or "" for a cut-off run: what follows the cut is unknown (IL5-Q1 (o))."""
+    return "" if ended == "output-limit" else extract_answer(stdout)
+
+
 def import_outcome(refusal: str) -> str:
     """The clauses reader's refusals name the file ("clauses PATH ...") or a cap: unparsable (§6)."""
     name = "" if refusal.startswith("clauses ") else refusal_name(refusal)
@@ -247,7 +252,8 @@ def main() -> int:
     written = sorted(clean(str(path.relative_to(agent_cwd))) for path in agent_cwd.rglob("*"))
     version = _VERSION.match(result.version.strip())
     learner = {"name": ADAPTER.value, "version": version.group(0) if version else "unreported"}
-    extracted = extract_answer(stdout)
+    ended = termination(invocation)
+    extracted = read_answer(stdout, ended)
     answer = publishable_answer(extracted, clean)
     model = extract_model(stdout)
     (out / "run-meta.json").write_text(json.dumps({
@@ -259,7 +265,7 @@ def main() -> int:
     outcome = {
         "invocation": args.invocation,
         "run_of_record": args.invocation == 1,
-        "termination": termination(invocation),
+        "termination": ended,
         "import": "none",
         "export_sha256": digest,
         "export_stdout": {target: clean(done.stdout) for target, done in exports.items()},
@@ -282,6 +288,8 @@ def main() -> int:
         },
         "reproducibility": "single run, not repeatable",
     }
+    if ended == "output-limit":
+        outcome["answer"] = "not read: the output was cut off (IL5-Q1 (o))"
     if extracted and not answer:
         outcome["answer"] = "withheld: the block holds a private string (IL-R10)"
     if answer:

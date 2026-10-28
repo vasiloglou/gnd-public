@@ -319,7 +319,7 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
     assert process["prompt_sha256"] == outcome["prompt_sha256"]
 
     stdout = (live / "raw-stdout.txt").read_text(encoding="utf-8")
-    answer = ilp_prompt.extract_answer(stdout)
+    answer = script.read_answer(stdout, outcome["termination"])
     assert outcome["agent"]["model_reported"] == ilp_prompt.extract_model(stdout)
     if not answer:
         assert outcome["import"] == "none" and not (live / "answer.json").exists()
@@ -495,3 +495,37 @@ _PROCESS = {"status": "succeeded", "stdout_truncated": False, "stderr_truncated"
 def test_r8_the_termination_mapping(change, expected):
     """Review 8: each branch of IL5-D7's mapping, as the script orders it."""
     assert _script().termination({**_PROCESS, **change}) == expected
+
+
+# ---------------------------------------------------------------------------
+# Owner rulings IL5-Q1 (o) and IL5-Q2 (o), 2026-10-28
+
+_BLOCK = "```json\n{\"a\": 1}\n```\n"
+
+
+@pytest.mark.parametrize("stray", ["```JSON\n{\"b\": 2}\n```\n", "```jsonc\n{}\n```\n", "```json \n{}\n```\n",
+                                   "```\n", "  ```text\n", "```python\nx = 1\n```\n"])
+@pytest.mark.parametrize("before", [True, False])
+def test_q2_a_stray_fence_makes_no_answer(stray, before):
+    """IL5-Q2 (o): any fence line outside the one json block makes the answer ambiguous."""
+    from gnd.export.ilp_prompt import extract_answer
+    stdout = "model: m-1\n" + (stray + _BLOCK if before else _BLOCK + stray)
+    assert extract_answer(stdout) == ""
+
+
+def test_q2_the_one_block_alone_still_reads():
+    from gnd.export.ilp_prompt import extract_answer
+    assert extract_answer("model: m-1\nprose\n" + _BLOCK + "more prose\n") == '{"a": 1}'
+
+
+@pytest.mark.parametrize(("change", "expected"), [
+    ({}, '{"a": 1}'),
+    ({"stdout_truncated": True}, ""),
+    ({"stderr_truncated": True}, ""),
+    ({"status": "timed-out"}, '{"a": 1}'),
+    ({"status": "failed"}, '{"a": 1}'),
+])
+def test_q1_a_cut_off_run_gives_no_answer(change, expected):
+    """IL5-Q1 (o): an output-limit run is read as no answer, whatever survived the cut."""
+    script = _script()
+    assert script.read_answer("model: m-1\n" + _BLOCK, script.termination({**_PROCESS, **change})) == expected

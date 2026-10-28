@@ -7,7 +7,7 @@ date: 2026-10-28
 gate:
   command: "uv run pytest -q -p no:randomly <the IL5 file list, evidence/IL5/gate-files.txt>"
   exit: 0
-  output: "824 passed, 22 deselected in 47.27s"
+  output: "842 passed, 22 deselected in 56.18s"
   note: >-
     The literal gate of spec §8: the direct IL5 tests (tests/test_ilp_llm.py)
     and the plan §9 impact closure (the IL1, IL2 and IK5 bridge tests, the IK6
@@ -22,17 +22,17 @@ slow_cadence:
   reason: "outside IL5's impact closure; the reduced v6.3 selection was run"
 evidence:
   - path: .gnd-planning/milestones/ilp-learners/notes/phase-IL5-spec.md
-    sha256: 3c1f09da9f982fcb5704182336fc00b6470e8871cbbc8582201347e3ec9637e2
+    sha256: 4c1897edd36c4a186b100cf12edd47f3c2dc486f978c366550d12fc8911964bf
   - path: .gnd-planning/milestones/ilp-learners/notes/phase-IL5-agent-review.md
-    sha256: f3d5da7e6f4c593bf1024464a19465f2961921277b804224dc603579886705d5
+    sha256: ffa2f7e4180b998be246ac7bd035f175423de341b4e7162f71f9df1131f79d20
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL5/gate-files.txt
     sha256: 86e4052fa6b6e1934171a5afa04ab3a3d5f3a36341b4c8959b489f5076f08746
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL5/final-gate.txt
-    sha256: 8d75487c26b5690b336c3ffa3a315a651e54cbd100b7ac2822b58f2e70bb4dcc
+    sha256: b4604c9883492bc41092aa17afd9e5a5310f79511ed2344fe9673f4385f791b7
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL5/review-brief.md
     sha256: 5508c5d53c289e6cad061ff6caaccc858a5bbcf86b1fe9913c1bd1e58fbd541b
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL5/run_llm.py
-    sha256: 2ed91658825b920f3eaa9dcb5a7f93ae9ce3a31cf6ab3ed4f86c04e944983cb9
+    sha256: 996ccff9d26d99d9149ec8c52ace873cebc328ab5fabf5e7da009b79ac365466
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL5/dynamic-query-successor.json
     sha256: c30801e409783b16c56447ddf7f173f49ea4785bc587ad8ecc7b12b28663ee74
   - path: .gnd-planning/milestones/ilp-learners/evidence/IL5/provider-terms.md
@@ -68,7 +68,8 @@ evidence:
 - the owner's confirmation of the provider terms, "approved", for invocation 1
   (`evidence/IL5/provider-terms-confirmed.json`);
 - one reviewer's adversarial read, whose findings were reproduced, and six of
-  eight fixed. Two wait for owner rulings (IL5-Q1, IL5-Q2).
+  eight fixed at first. The other two were fixed after the owner's rulings
+  IL5-Q1 (o) and IL5-Q2 (o) of 2026-10-28.
 
 ## What shipped
 
@@ -160,7 +161,9 @@ were reproduced:
 - 6 are fixed, each with a regression test run red first. Before the fixes, 12
   tests failed and 8 passed; the 8 that passed pin branches that were already
   right.
-- 2 wait for the owner: IL5-Q1 and IL5-Q2.
+- 2 waited for the owner, and were fixed after the rulings IL5-Q1 (o) and
+  IL5-Q2 (o) of 2026-10-28. Their 18 tests (`test_q1_*`, `test_q2_*`) ran red
+  first: 17 failed and 1 control passed.
 
 The reviewer did not invoke an agent, run the run script, or run the full
 suite.
@@ -229,8 +232,8 @@ suite.
 
 | Id | Question | Owner | Target |
 |---|---|---|---|
-| IL5-Q1 | Review 3: §6 lists the termination values without an order, and the script checks truncation first. Should a truncated (or timed-out) run's answer still be imported? Today it is, if exactly one block survives. | owner | before any further IL5 invocation |
-| IL5-Q2 | Review 6: should any other code-fence line outside the one json block make the answer `""`? IL5-D3 (o) as ruled ignores them. Changing it changes approved corpus answers. | owner | before any further IL5 invocation |
+| IL5-Q1 | Review 3: should a truncated run's answer still be imported? **Ruled 2026-10-28: no;** a cut-off run gives no answer (spec §12). | owner | closed |
+| IL5-Q2 | Review 6: should any other code-fence line outside the one json block make the answer `""`? **Ruled 2026-10-28: yes** (spec §12); no approved corpus answer changed. | owner | closed |
 | IL5-Q3 | `goldens.sha256` is stale for nine goldens moved by IL1, IL2 and IL5; `test_golden_manifest` fails at `426bd80` too. Refresh it through `tools/rf1_pins.py merge`, or record why the manifest is frozen. | owner | IL6 or close |
 | IL5-Q4 | A shared helper for live-run scripts (sanitizer, environment, outcome writer), used from IL3 on. | author | IL3 |
 | IL5-Q5 | Should the verbalization itself reserve structural lines for every prompt that embeds it? | owner | close |

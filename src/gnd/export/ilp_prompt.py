@@ -132,13 +132,18 @@ def _lines(stdout: str) -> list[str]:
 
 
 def extract_answer(stdout: str) -> str:
-    """The text of the one complete ```json block in ``stdout``, else ``""`` (IL5-D3 (o))."""
+    """The text of the one complete ```json block in ``stdout``, else ``""`` (IL5-D3 (o)).
+
+    Any other fence line outside that block makes the answer ambiguous (IL5-Q2 (o)).
+    """
     blocks: list[str] = []
     inner: list[str] | None = None
     for line in _lines(stdout):
         if inner is None:
             if line == _OPEN:
                 inner = []
+            elif line.lstrip().startswith(_CLOSE):
+                return ""
         elif line == _CLOSE:
             blocks.append("\n".join(inner))
             inner = None

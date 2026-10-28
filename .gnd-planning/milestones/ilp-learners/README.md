@@ -24,8 +24,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   Merged in PR #57.
 - **IL5 is complete:** [phase record](004-phase-IL5.md), on `claude/il5`
   from `426bd80`, not yet merged. Invocation 1 with `claude` completed and was
-  admitted. Open for the owner: IL5-Q1 (importing a truncated run's answer)
-  and IL5-Q2 (stray code fences), both before any further invocation.
+  admitted. IL5-Q1 and IL5-Q2 were ruled on 2026-10-28: a cut-off run and a
+  stray code fence each give no answer. In PR #58.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -63,4 +63,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** the owner reviews IL5 for a pull request; then IL3 (rule sets).
+**Next action:** IL3 (rule sets), after PR #58 merges.

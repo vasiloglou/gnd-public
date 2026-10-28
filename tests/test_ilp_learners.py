@@ -70,9 +70,9 @@ def _choices(parser: argparse.ArgumentParser, dest: str) -> tuple[str, ...]:
 def test_t2_registry_cli_and_schema_enums_agree(monkeypatch):
     from gnd.export import ilp_learners
 
-    assert tuple(ilp_learners.LEARNERS) == ("popper", "neutral", "ilasp", "llm")
-    assert ilp_learners.EXPORT_TARGETS == ("popper", "neutral", "ilasp")
-    assert ilp_learners.IMPORT_TARGETS == ("popper", "neutral", "ilasp", "llm")
+    assert tuple(ilp_learners.LEARNERS) == ("popper", "neutral", "ilasp", "llm", "rules")
+    assert ilp_learners.EXPORT_TARGETS == ("popper", "neutral", "ilasp", "rules")
+    assert ilp_learners.IMPORT_TARGETS == ("popper", "neutral", "ilasp", "llm", "rules")
     root = _root_parser(monkeypatch)
     assert _choices(_subparser(root, "export", "ilp"), "target") == ilp_learners.EXPORT_TARGETS
     assert _choices(_subparser(root, "import", "ilp-rules"), "target") == ilp_learners.IMPORT_TARGETS
@@ -313,7 +313,8 @@ def test_t5c_the_join_check_is_bounded_on_the_largest_clauses():
 # T7: no learner is a dependency (IL-R1).
 # ---------------------------------------------------------------------------
 
-LEARNER_NAMES = ("popper", "ilasp", "fastlas", "clingo", "swipl", "amie", "imodels", "corels")
+LEARNER_NAMES = ("popper", "ilasp", "fastlas", "clingo", "swipl", "amie", "imodels", "corels",
+                 "wittgenstein", "pandas", "numpy")
 
 
 def _named(requirements: list[str]) -> list[str]:

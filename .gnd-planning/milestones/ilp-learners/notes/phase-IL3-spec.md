@@ -479,3 +479,31 @@ PR 59 first, then implement."
 a pinned pandas needs a further ruling.
 
 ## 14. Implementation findings (recorded as found)
+
+**IL3-F1 (2026-10-28, while writing the corpus): 9b can fire for `rules`.**
+- r1 said the reader writes fresh variables only, so the `type-confused-join`
+  check (9b) "cannot fire" (§4 IL-R3, T8).
+- That holds for joins between atoms, but D13 also counts a comparison's
+  declared type as a join site. A column whose comparison type differs from
+  the position's type (`f_refund_amount__1__3__gt_t_amount__500`: position 1
+  is the refund id) is refused `type-confused-join`.
+- **Consequence:** T8 becomes a refusal case in the corpus (`i6`), plus a
+  property test that every clause the reader writes uses distinct fresh
+  variables. No ruling is needed: the checker behaves as approved, and only
+  the spec's description of it was wrong.
+
+**IL3-F2 (2026-10-28): a column name could not rebuild its clause.**
+- Under IL3-D6 (a), the name says the position but not the predicate's
+  arity. The reader must write the whole atom (`p(X, V1, …, Vn)`), and the
+  text-only `parse` signature gives it no export to ask.
+- On refunds this never showed, because the amount is the last argument. A
+  feature at any other position would have been refused `arity`.
+- **Owner ruling (o), 2026-10-28:** "Arity in the name". Column names become
+  `<predicate>__<position>__<arity>__<comparison>__<threshold>`, for example
+  `f_refund_amount__2__3__gt_t_amount__500`, where the arity counts the
+  example argument (the predicate's full arity). The schema's column gains
+  `arity`. The reader refuses a position that is not below the arity, as
+  `unparsable`.
+- **The corpus:** every column name gained its arity. The arity case `i5`
+  now claims arity 4 for a three-argument predicate, and one parse case
+  (`u10`) was added. No expected meaning changed.

@@ -1,0 +1,12 @@
+{
+ "cli_version": "<version:sha256=355310e8a4d0311acc3fabf778e5d072d00bbbfeea01861bcf5ffb9998f9a366>",
+ "files_note": "listed and discarded, never imported",
+ "files_written_by_agent": [],
+ "learner": {
+  "name": "claude",
+  "version": "unreported"
+ },
+ "model_note": "the agent's own model: line, unverified (IL5-D4 (o))",
+ "model_reported": "claude-opus-5-5",
+ "reproducibility": "single run, not repeatable"
+}

@@ -537,3 +537,32 @@ IL5-D8's run.
   `provider-terms-confirmed.json`, and that refusal was checked.
 - **The evaluator,** checked with no agent call: T-live passes with the IL1
   scratch SWI at threshold 500 and off-threshold at 100 (2 passed).
+
+**IL5-F6 (run): invocation 1 is the run of record.**
+- **The confirmation:** the owner answered "approved" to the four points on
+  2026-10-27. [`evidence/IL5/provider-terms-confirmed.json`](../evidence/IL5/provider-terms-confirmed.json)
+  quotes that answer and binds `provider-terms.md` by its SHA-256
+  (`dc5046680c0d895d83d3795cfe352e50346f658950062941b260c161c353dcc2`), which
+  is left unedited so the binding holds.
+- **The outcome:** `termination` completed, `import` admitted. The agent
+  reported `model: claude-opus-5-5` (unverified, IL5-D4) and proposed one
+  clause: `wrong(X) :- f_refund_amount(X, R, A), ge_t_amount(A, 640)`.
+- **The coverage:** SWI-Prolog covers harbor, market, airport and station;
+  GND's import agrees (support 4 of 4). The agent wrote no files.
+- **The evidence:** [`evidence/IL5/live/invocation-1/`](../evidence/IL5/live/invocation-1/).
+  T9 replays it and passes.
+
+**IL5-F7 (refutes part of IL5-D4): the CLI version arrives redacted.**
+- **What D4 said:** `learner.version` is the CLI version's first token
+  (`2.1.300`).
+- **What happened:** `gnd.agents` returns the version already redacted to
+  `<version:sha256=...>`, so the script's version match failed and the run
+  records `learner.version` as `unreported`.
+- **What still binds it:** the recorded hash
+  `355310e8a4d0311acc3fabf778e5d072d00bbbfeea01861bcf5ffb9998f9a366` equals
+  the SHA-256 of `2.1.300 (Claude Code)` plus a newline, the output of
+  `claude --version` on this machine, checked after the run.
+- **What is not done:** invocation 1 is retained as it is (IL-R9), and
+  rerunning needs a new owner ruling. Reading the version before redaction
+  would mean changing `gnd.agents` or probing the CLI separately; that is an
+  open question for the record, not a change made here.

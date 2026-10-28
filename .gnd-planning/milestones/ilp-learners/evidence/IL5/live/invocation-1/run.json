@@ -1,0 +1,20 @@
+{
+ "schema_version": "gnd-ilp-run/1",
+ "learner": {
+  "name": "claude",
+  "version": "unreported"
+ },
+ "export_sha256": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77",
+ "clauses_sha256": "98db66d2a20c0c5637172649b1d66ff4291967d916d74cb8f38e184f2a4a83a1",
+ "coverage": [
+  {
+   "clause": 0,
+   "covered": [
+    "harbor",
+    "market",
+    "airport",
+    "station"
+   ]
+  }
+ ]
+}

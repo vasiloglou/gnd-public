@@ -1,0 +1,52 @@
+{
+  "clauses": [
+    {
+      "covered": 4,
+      "index": 0,
+      "ref": "constraints[1]",
+      "reported": 4,
+      "support": {
+        "denominator": 4,
+        "numerator": 4
+      },
+      "unchecked": [],
+      "vacuous": []
+    }
+  ],
+  "command": "import ilp-rules",
+  "export_sha256": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77",
+  "inputs": {
+    "clauses": {
+      "path": "answer.json",
+      "sha256": "98db66d2a20c0c5637172649b1d66ff4291967d916d74cb8f38e184f2a4a83a1"
+    },
+    "manifest": {
+      "path": "labels.json",
+      "sha256": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa"
+    },
+    "model": {
+      "path": "model.orm.yaml",
+      "sha256": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0"
+    },
+    "run": {
+      "path": "run.json",
+      "sha256": "6a9ca0f04263262957f75ea0a85666c35b11f1c98d2b8a1f52ae4c240015759e"
+    }
+  },
+  "learner": {
+    "name": "claude",
+    "version": "unreported"
+  },
+  "proposal": "proposal.json",
+  "schema_version": "gnd-ilp-import/1",
+  "target": "llm",
+  "tool": "gnd",
+  "work": {
+    "ceiling": 19,
+    "checks": 8,
+    "export": 68,
+    "reloads": 3,
+    "total": 19,
+    "verdicts": 8
+  }
+}

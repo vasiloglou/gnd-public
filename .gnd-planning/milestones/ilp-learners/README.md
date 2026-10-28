@@ -61,6 +61,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- the provider's terms for the IL5 run, recorded before it and confirmed by the owner.
+- none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** the owner confirms the provider terms in [`evidence/IL5/provider-terms.md`](evidence/IL5/provider-terms.md); then invocation 1 of `evidence/IL5/run_llm.py`.
+**Next action:** IL5 steps 4 to 6 -- the adversarial review of the diff, the refactoring review, and the record `004-phase-IL5.md`.

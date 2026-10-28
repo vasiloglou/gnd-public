@@ -552,9 +552,10 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
 
 @pytest.mark.live
 def test_live_amie_mines_the_committed_rules(tmp_path):
-    """Live (spec T-live): AMIE over the committed facts.tsv prints the committed rule lines,
-    compared as a set (AMIE prints them in its threads' order). GND_IL4_JAR names the
-    scratch jar."""
+    """Live (spec T-live): AMIE over the committed facts.tsv prints the committed rules with
+    the same figures. AMIE prints them in its threads' order and names variables run to run
+    (IL4-F10: ?e in one run, ?f in the next), so rules compare up to renaming and body
+    order. GND_IL4_JAR names the scratch jar."""
     jar = os.environ.get("GND_IL4_JAR")
     if not jar:
         pytest.skip("GND_IL4_JAR is not set")
@@ -564,11 +565,40 @@ def test_live_amie_mines_the_committed_rules(tmp_path):
     result = subprocess.run([*script.java_argv(Path(jar)), "facts.tsv"], cwd=tmp_path, check=True,
                             capture_output=True, text=True, timeout=600,
                             env=script.java_environment(tmp_path))
-    mined = sorted(ilp_amie_lines(result.stdout))
-    assert mined == sorted(ilp_amie_lines((live / "raw-stdout.txt").read_text(encoding="utf-8")))
+    committed = (live / "raw-stdout.txt").read_text(encoding="utf-8")
+    assert sorted(_canonical(result.stdout)) == sorted(_canonical(committed))
+    assert len(_canonical(committed)) == len((live / "rules.txt").read_text(encoding="utf-8").splitlines())
 
 
-def ilp_amie_lines(stdout: str) -> list[str]:
+def _canonical(stdout: str) -> list[tuple[Any, ...]]:
+    """Each printed rule up to variable renaming and body order, with its figures."""
     from gnd.export import ilp_amie
 
-    return ilp_amie.extract_rules(stdout).splitlines()
+    out = []
+    for rule in ilp_amie.parse_rules(ilp_amie.extract_rules(stdout)):
+        forms = []
+        for body in itertools.permutations(rule["body"]):
+            names: dict[str, str] = {}
+            atoms = [*body, rule["head"]]
+            renamed = tuple((names.setdefault(s, f"?{len(names)}"), r, names.setdefault(o, f"?{len(names)}"))
+                            for s, r, o in atoms)
+            forms.append(renamed)
+        out.append((min(forms), rule["support"], rule["body_size"], tuple(sorted(rule["figures"].items()))))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# IL4-F9: a mined-rules refusal is named by the shared outcome mapping.
+# ---------------------------------------------------------------------------
+
+@pytest.mark.parametrize(("message", "name"), [
+    ("rule 0: does-not-hold: 19 of 20 head pairs hold", "does-not-hold"),
+    ("rule 12: type-confused-join: variable ?b joins team and site", "type-confused-join"),
+    ("clause 1: recursion: the head predicate is in the body", "recursion"),
+    ("learner-mismatch: a amie import needs a amie run record", "learner-mismatch"),
+])
+def test_f9_the_refusal_name_reads_a_rule_prefix(message, name):
+    from gnd.export.ilp import refusal_name
+
+    assert refusal_name(message) == name
+    assert _script().import_outcome(message) == f"refused:{name}"

@@ -1,0 +1,116 @@
+{
+ "adapter_version": "1",
+ "argv": [
+  "/opt/homebrew/bin/java",
+  "-Xmx2G",
+  "-jar",
+  "<scratch>/amie4.0.0.jar",
+  "-maxad",
+  "3",
+  "-mins",
+  "1",
+  "amie/facts.tsv"
+ ],
+ "export_sha256": "d7756509f96fd4b9e4449b53a004fb77d5f1a831378a958c5e1122958ca435f3",
+ "export_stdout": "EXPORTED 65 facts in 4 relations to <scratch>/il4-work-1/export (amie); skipped 2 fact types\nexport_sha256 d7756509f96fd4b9e4449b53a004fb77d5f1a831378a958c5e1122958ca435f3\n",
+ "import": "refused:does-not-hold",
+ "import_args": [
+  "import",
+  "mined-rules",
+  "model.orm.yaml",
+  "rules.txt",
+  "--population",
+  "population.yaml",
+  "--reported",
+  "reported.json",
+  "--target",
+  "amie",
+  "--out",
+  "proposal.json",
+  "--actor",
+  "ilp-live",
+  "--requested-at",
+  "2026-01-01T00:00:00Z",
+  "--format",
+  "json"
+ ],
+ "import_exit": 3,
+ "import_rederived": "IL4-F9: the script first recorded 'refused:unparsable'; the shared refusal_name did not read the 'rule K:' prefix. Re-derived from the retained import-stderr.txt with the fixed mapping; AMIE and the import were not run again.",
+ "invocation": 1,
+ "jar_sha256": "bbf65ef5b54f896a7c6d05e3faeaf5b58262e3828e61ae6dc3f3c71c932b8485",
+ "jvm": "openjdk version \"21.0.10\" 2026-01-20",
+ "learner": {
+  "name": "amie",
+  "version": "4.0.0"
+ },
+ "licence": "AMIE CC-BY-4.0 and its Javatools CC-BY-3.0, accepted (IL4-D3 (o)); attribution: AMIE by the DIG team, Telecom Paris (github.com/dig-team/AMIE); OpenJDK GPL-2.0 with the Classpath Exception, installed, used read only",
+ "limits": {
+  "stderr_limit_bytes": 4194304,
+  "stdin_limit_bytes": 0,
+  "stdout_limit_bytes": 16777216,
+  "terminate_grace_seconds": 10.0,
+  "timeout_seconds": 600.0,
+  "total_output_limit_bytes": 20971520
+ },
+ "numbers": {
+  "Support per rule": "printed by AMIE in each rule line (the learner's claim, IL-R4)",
+  "export_sha256": "computed by GND's export",
+  "import report": "computed by GND's import",
+  "rules.txt": "printed by AMIE, kept verbatim in raw-stdout.txt"
+ },
+ "population_sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a",
+ "process": {
+  "argv_count": 9,
+  "argv_sha256": "4765f5ba3cf151afce37758ad8a14b9331fcbe25ed63ccc67fc9bb90ed5783ff",
+  "cwd": "<working-directory>",
+  "elapsed_seconds": 0.36569545790553093,
+  "ended_monotonic": 1821662.340944333,
+  "environment": [
+   {
+    "name": "HOME",
+    "provenance": "supplied"
+   },
+   {
+    "name": "JAVA_HOME",
+    "provenance": "supplied"
+   },
+   {
+    "name": "LANG",
+    "provenance": "supplied"
+   },
+   {
+    "name": "PATH",
+    "provenance": "supplied"
+   },
+   {
+    "name": "TMPDIR",
+    "provenance": "supplied"
+   },
+   {
+    "name": "USER",
+    "provenance": "supplied"
+   }
+  ],
+  "process_group_cleaned": true,
+  "return_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "spawned": true,
+  "started_monotonic": 1821661.975248875,
+  "status": "succeeded",
+  "stderr_observed_bytes": 224,
+  "stderr_retained_bytes": 224,
+  "stderr_truncated": false,
+  "stdout_observed_bytes": 1663,
+  "stdout_retained_bytes": 1663,
+  "stdout_truncated": false,
+  "termination": "exited",
+  "termination_steps": [],
+  "timed_out": false
+ },
+ "reproducibility": "single run, reproducibility not measured",
+ "run_of_record": true,
+ "seeds": "none: AMIE takes no seed",
+ "termination": "completed",
+ "threads": "AMIE's default, all cores (its stdout names the count)"
+}

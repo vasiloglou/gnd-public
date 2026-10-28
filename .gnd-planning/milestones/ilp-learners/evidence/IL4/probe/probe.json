@@ -1,0 +1,17 @@
+{
+ "argv": [
+  "/opt/homebrew/bin/java",
+  "-Xmx2G",
+  "-jar",
+  "<scratch>/amie4.0.0.jar",
+  "-maxad",
+  "3",
+  "-mins",
+  "1",
+  "toy.tsv"
+ ],
+ "help_exit": 1,
+ "jvm": "openjdk version \"21.0.10\" 2026-01-20",
+ "rules": "?a  r  ?b   => ?a  s  ?b\t1.000000\t-2.000000\t1.000000\t2\t-1\t2\t-1\n?a  s  ?b   => ?a  r  ?b\t1.000000\t-2.000000\t1.000000\t2\t-1\t2\t-1\n",
+ "status": "succeeded"
+}

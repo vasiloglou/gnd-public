@@ -449,3 +449,31 @@ Two premises rest on the harvest, not on a run:
 
 Both are checked first at implementation. A failure is recorded as a finding
 and, if it changes a ruling, returns to the owner.
+- **The probe (IL4-D10).** Run by hand three times on the toy TSV before the
+  script existed (the usage text, `-mins 1`, and `-mins 1 -minis 1`), then
+  once by `run_amie.py --probe` to record `evidence/IL4/probe/`. Toy input
+  only; not the fixture.
+- **Invocation 1 (the run of record), as predicted by IL4-F8:**
+  `termination: completed`, `import: refused:does-not-hold`. AMIE printed 8
+  rules in 0.044 s on 18 threads. Three hold on the fixture: the planted rule
+  (`works_in, team_site => based_at`, 20 of 20) and
+  `works_in, based_at => team_site` (5 of 5), and one more,
+  `based_at, team_site => works_in` (20 of 20 by Support, 36 PCA body pairs).
+  Five do not: `based_at => parks_at` and its converse, and the near-miss
+  (19 of 20 each), plus two through `parks_at`. The import refused the set at
+  rule 0 (`based_at => parks_at`, 19 of 20). All-or-nothing worked as ruled.
+  Every Support AMIE printed equals GND's numerator for the rules the import
+  reached before refusing.
+- **IL4-F9 (the outcome mapping misread a named refusal).** The script first
+  wrote `import: refused:unparsable`: the shared `gnd.export.ilp.refusal_name`
+  read `clause K: <name>:` and `<name>:` but not this phase's
+  `rule K: <name>:`. T9 caught the mismatch. Fixed in `refusal_name`, with a
+  red-first regression (`test_f9_…`); `outcome.json`'s `import` field was
+  re-derived from the retained `import-stderr.txt` and carries an
+  `import_rederived` note. AMIE and the import were not run again.
+- **IL4-F10 (AMIE names variables run to run).** T-live's first run mined the
+  same 8 rules with the same figures, but one rule's join variable was `?e`
+  where invocation 1 printed `?f`. Under the spec's non-determinism clause,
+  T-live compares rules up to variable renaming and body order, figures
+  exact. While diagnosing it T-live ran 5 times (each one AMIE run over the
+  committed `facts.tsv`, not an invocation of record); the last passed.

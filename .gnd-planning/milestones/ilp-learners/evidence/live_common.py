@@ -93,10 +93,13 @@ def write_json(path: Path, document: Any) -> None:
 
 
 def run_import(work: Path, out: Path, files: tuple[str, ...], args: tuple[str, ...],
-               clean: Sanitizer) -> tuple[int, str]:
-    """The fixed-argument import from a fixed directory (IL-R9); retains its result in ``out``."""
+               clean: Sanitizer, *, source: Path = EXAMPLE, ignore: tuple[str, ...] = ()) -> tuple[int, str]:
+    """The fixed-argument import from a fixed directory (IL-R9); retains its result in ``out``.
+
+    The directory is a copy of ``source`` (the refunds example unless a phase
+    names its own fixture, as IL4 does) without ``ignore``'s patterns."""
     imports = work / "import"
-    shutil.copytree(EXAMPLE, imports, ignore=shutil.ignore_patterns("*.py", "README.md"))
+    shutil.copytree(source, imports, ignore=shutil.ignore_patterns("*.py", "README.md", *ignore))
     for name in files:
         shutil.copy(out / name, imports / name)
     imported = subprocess.run([sys.executable, "-m", "gnd", *args], cwd=imports,

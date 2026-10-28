@@ -63,8 +63,11 @@ class IlpError(Exception):
 
 
 def refusal_name(message: str) -> str:
-    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...`` or ``<name>: ...``."""
-    return message.split(": ")[1] if message.startswith("clause ") else message.split(":")[0]
+    """The refusal name in an import's exit-3 message: ``clause K: <name>: ...``,
+    ``rule K: <name>: ...`` (``gnd import mined-rules``, IL4-F9) or ``<name>: ...``."""
+    if message.startswith(("clause ", "rule ")):
+        return message.split(": ")[1]
+    return message.split(":")[0]
 
 
 def observed_integers(neutral: dict[str, Any]) -> dict[str, set[int]]:

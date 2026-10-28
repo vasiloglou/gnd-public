@@ -1,0 +1,8 @@
+?a  f_based_at  ?b   => ?a  f_parks_at  ?b	0.950000	-19.000000	0.950000	19	-1	20	-1
+?a  f_parks_at  ?b   => ?a  f_based_at  ?b	0.950000	-19.000000	0.950000	19	-1	20	-1
+?f  f_team_site  ?b  ?a  f_works_in  ?f   => ?a  f_based_at  ?b	1.000000	-20.000000	1.000000	20	-1	20	-1
+?e  f_based_at  ?b  ?e  f_works_in  ?a   => ?a  f_team_site  ?b	1.000000	-5.000000	1.000000	5	-1	5	-1
+?f  f_team_site  ?b  ?a  f_works_in  ?f   => ?a  f_parks_at  ?b	0.950000	-19.000000	0.950000	19	-1	20	-1
+?a  f_based_at  ?f  ?b  f_team_site  ?f   => ?a  f_works_in  ?b	1.000000	-20.000000	0.555556	20	-1	36	-1
+?e  f_parks_at  ?b  ?e  f_works_in  ?a   => ?a  f_team_site  ?b	1.000000	-5.000000	0.833333	5	-1	6	-1
+?a  f_parks_at  ?f  ?b  f_team_site  ?f   => ?a  f_works_in  ?b	0.950000	-19.000000	0.542857	19	-1	35	-1

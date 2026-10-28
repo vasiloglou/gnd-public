@@ -2,9 +2,8 @@
 
 ## 1. Status
 
-**Draft r1, 2026-10-28. Awaiting this phase's owner gate.** `auto=false`.
-Nothing has been implemented, downloaded, installed or run. Upstream facts
-come from read-only GitHub metadata and pages (§12).
+**r1, approved by the owner 2026-10-28 (§13).** `auto=false`. Upstream
+facts come from read-only GitHub metadata and pages (§12).
 
 **Base:** drafted on `claude/il4`, branched from `claude/il3` at `732dd1f`
 (PR #60, not yet merged). IL4 shares the registry, the CLI choices, the
@@ -358,9 +357,37 @@ IL4-D12.
 
 No registration or click-through step exists. Nothing is committed.
 
-## 13. Owner gate record
+## 13. Owner gate record (2026-10-28)
 
-Empty until the owner rules.
+**The owner's words (o):** "go with your recs", answering "Merge PR 60 and
+approve IL4-D1 to IL4-D13 as proposed?" after the recommendation of (a)
+AMIE 4.0.0, (a) accepting its CC-BY licences and (a) the synthetic fixture.
+
+**Bound bytes:** r1 as committed in `374e225` (rebased from `302f36d`),
+SHA-256 `e1dcb42f4a81a8f28eb8c128fa79b6dc83f607f12303fad6a57a7e5f94470648`.
+
+| ID | Ruling |
+|---|---|
+| IL4-D1 | **(a): AMIE 4.0.0** |
+| IL4-D2 | as proposed: the jar only, size and SHA-256 checked, into a scratch prefix; the installed OpenJDK used read-only |
+| IL4-D3 | **(a): CC-BY-4.0 (AMIE) and CC-BY-3.0 (Javatools) accepted** under IL-R5; nothing committed; both attributed |
+| IL4-D4 | **(a): the synthetic fixture** is the run's input; IL6's AMIE row uses it, a plan repair at close |
+| IL4-D5 | as proposed: (a), `<object type id>:<value>` |
+| IL4-D6 | as proposed: (a), `gnd-mined-import/1` |
+| IL4-D7 | as proposed: 256 rules, 4 atoms, `MAX_JOIN_ROWS` 1,000,000 |
+| IL4-D8 | as proposed: (a), body-size disagreement recorded, not refused |
+| IL4-D9 | as proposed: (a), IL1-Q1 re-targeted to close |
+| IL4-D10 | as proposed: the toy-TSV probe before invocation 1 |
+| IL4-D11 | as proposed: `-maxad 3`, no `-const`, `-mins 1`, defaults otherwise |
+| IL4-D12 | as proposed: corpus-first for the reader and the mapping, golden for the export, an oracle for the counts, no panel |
+| IL4-D13 | as proposed, and done: PR #60 merged at `70266b5`; `claude/il4` rebased onto it |
+
+**No other approval.** One run of record; a second run or a settings change
+needs a further ruling.
+
+## 14. Implementation findings (recorded as found)
+
+None yet.
 
 ## Implementability notes (author, before the gate)
 

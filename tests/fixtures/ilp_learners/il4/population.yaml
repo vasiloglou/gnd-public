@@ -1,0 +1,90 @@
+# IL4's staffing population (IL4-D4 (o)). Planted: works_in + team_site gives
+# based_at for all 20 staff; parks_at agrees except s07, who parks at east.
+# mentors is left out of covers, so the export skips it as not covered.
+format_version: 2
+population:
+  model: model.orm.yaml
+  model_id: staffing
+  source: fixture
+  covers: [works_in, team_site, based_at, parks_at, is_contractor]
+instances:
+  staff: ["s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14", "s15", "s16", "s17", "s18", "s19", "s20"]
+  team: ["t1", "t2", "t3", "t4", "t5"]
+  site: ["north", "east", "west"]
+facts:
+  works_in:
+    - { staff: "s01", team: "t1" }
+    - { staff: "s02", team: "t2" }
+    - { staff: "s03", team: "t3" }
+    - { staff: "s04", team: "t4" }
+    - { staff: "s05", team: "t5" }
+    - { staff: "s06", team: "t1" }
+    - { staff: "s07", team: "t2" }
+    - { staff: "s08", team: "t3" }
+    - { staff: "s09", team: "t4" }
+    - { staff: "s10", team: "t5" }
+    - { staff: "s11", team: "t1" }
+    - { staff: "s12", team: "t2" }
+    - { staff: "s13", team: "t3" }
+    - { staff: "s14", team: "t4" }
+    - { staff: "s15", team: "t5" }
+    - { staff: "s16", team: "t1" }
+    - { staff: "s17", team: "t2" }
+    - { staff: "s18", team: "t3" }
+    - { staff: "s19", team: "t4" }
+    - { staff: "s20", team: "t5" }
+  team_site:
+    - { team: "t1", site: "north" }
+    - { team: "t2", site: "north" }
+    - { team: "t3", site: "east" }
+    - { team: "t4", site: "west" }
+    - { team: "t5", site: "west" }
+  based_at:
+    - { staff: "s01", site: "north" }
+    - { staff: "s02", site: "north" }
+    - { staff: "s03", site: "east" }
+    - { staff: "s04", site: "west" }
+    - { staff: "s05", site: "west" }
+    - { staff: "s06", site: "north" }
+    - { staff: "s07", site: "north" }
+    - { staff: "s08", site: "east" }
+    - { staff: "s09", site: "west" }
+    - { staff: "s10", site: "west" }
+    - { staff: "s11", site: "north" }
+    - { staff: "s12", site: "north" }
+    - { staff: "s13", site: "east" }
+    - { staff: "s14", site: "west" }
+    - { staff: "s15", site: "west" }
+    - { staff: "s16", site: "north" }
+    - { staff: "s17", site: "north" }
+    - { staff: "s18", site: "east" }
+    - { staff: "s19", site: "west" }
+    - { staff: "s20", site: "west" }
+  parks_at:
+    - { staff: "s01", site: "north" }
+    - { staff: "s02", site: "north" }
+    - { staff: "s03", site: "east" }
+    - { staff: "s04", site: "west" }
+    - { staff: "s05", site: "west" }
+    - { staff: "s06", site: "north" }
+    - { staff: "s07", site: "east" }
+    - { staff: "s08", site: "east" }
+    - { staff: "s09", site: "west" }
+    - { staff: "s10", site: "west" }
+    - { staff: "s11", site: "north" }
+    - { staff: "s12", site: "north" }
+    - { staff: "s13", site: "east" }
+    - { staff: "s14", site: "west" }
+    - { staff: "s15", site: "west" }
+    - { staff: "s16", site: "north" }
+    - { staff: "s17", site: "north" }
+    - { staff: "s18", site: "east" }
+    - { staff: "s19", site: "west" }
+    - { staff: "s20", site: "west" }
+  is_contractor:
+    - { staff: "s03" }
+    - { staff: "s11" }
+    - { staff: "s18" }
+  mentors:
+    - { mentor: "s01", mentee: "s06" }
+    - { mentor: "s02", mentee: "s07" }

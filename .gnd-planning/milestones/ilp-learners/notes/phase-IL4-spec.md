@@ -455,15 +455,24 @@ and, if it changes a ruling, returns to the owner.
   only; not the fixture.
 - **Invocation 1 (the run of record), as predicted by IL4-F8:**
   `termination: completed`, `import: refused:does-not-hold`. AMIE printed 8
-  rules in 0.044 s on 18 threads. Three hold on the fixture: the planted rule
-  (`works_in, team_site => based_at`, 20 of 20) and
-  `works_in, based_at => team_site` (5 of 5), and one more,
-  `based_at, team_site => works_in` (20 of 20 by Support, 36 PCA body pairs).
-  Five do not: `based_at => parks_at` and its converse, and the near-miss
-  (19 of 20 each), plus two through `parks_at`. The import refused the set at
-  rule 0 (`based_at => parks_at`, 19 of 20). All-or-nothing worked as ruled.
-  Every Support AMIE printed equals GND's numerator for the rules the import
-  reached before refusing.
+  rules in 0.044 s on 18 threads. GND's counts (numerator/denominator), each
+  numerator equal to AMIE's Support, so no `support-mismatch`:
+
+  | # | Rule | GND |
+  |---|---|---|
+  | 0 | `based_at => parks_at` | 19/20 |
+  | 1 | `parks_at => based_at` | 19/20 |
+  | 2 | `works_in, team_site => based_at` (the planted rule) | 20/20, holds |
+  | 3 | `based_at, works_in => team_site` | 5/5, holds |
+  | 4 | `works_in, team_site => parks_at` (the near-miss) | 19/20 |
+  | 5 | `based_at, team_site => works_in` | 20/36 |
+  | 6 | `parks_at, works_in => team_site` | 5/6 |
+  | 7 | `parks_at, team_site => works_in` | 19/35 |
+
+  Two hold; the import refused the set at rule 0, the first that does not
+  (all-or-nothing, as ruled). Rules 5 and 7 show why GND's own count
+  matters: their PCA confidence (0.56, 0.54) would pass AMIE's 0.1 filter,
+  but they fail on most head pairs.
 - **IL4-F9 (the outcome mapping misread a named refusal).** The script first
   wrote `import: refused:unparsable`: the shared `gnd.export.ilp.refusal_name`
   read `clause K: <name>:` and `<name>:` but not this phase's

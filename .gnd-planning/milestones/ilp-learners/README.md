@@ -22,11 +22,10 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   [adversarial review](notes/phase-IL2-agent-review.md) found 11 issues;
   IL2-D13 and IL2-D14 were ruled (a), and three refactors were executed.
   Merged in PR #57.
-- **IL5 is approved:** [spec r1](notes/phase-IL5-spec.md) was approved on
-  2026-10-27, on `claude/il5` from `426bd80`. D8 is ruled as IL5-D8 (a): one
-  run with `claude`, after the provider's terms are recorded and confirmed.
-  Implemented (gate: 803 passed, T9 red until the run). The terms are
-  recorded and await the owner's confirmation.
+- **IL5 is complete:** [phase record](004-phase-IL5.md), on `claude/il5`
+  from `426bd80`, not yet merged. Invocation 1 with `claude` completed and was
+  admitted. Open for the owner: IL5-Q1 (importing a truncated run's answer)
+  and IL5-Q2 (stray code fences), both before any further invocation.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -34,6 +33,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL1 phase record](002-phase-IL1.md)
 - [IL2 spec (r1, approved)](notes/phase-IL2-spec.md)
 - [IL2 phase record](003-phase-IL2.md)
+- [IL5 phase record](004-phase-IL5.md)
 - [IL2 adversarial review](notes/phase-IL2-agent-review.md)
 - [IL5 spec (r1, approved)](notes/phase-IL5-spec.md)
 - [Plan gate record](001-plan-gate.md)
@@ -63,4 +63,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** IL5 steps 4 to 6 -- the adversarial review of the diff, the refactoring review, and the record `004-phase-IL5.md`.
+**Next action:** the owner reviews IL5 for a pull request; then IL3 (rule sets).

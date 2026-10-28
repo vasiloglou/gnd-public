@@ -1,0 +1,44 @@
+[
+ {
+  "file": "wittgenstein-0.3.5.tar.gz",
+  "url": "https://files.pythonhosted.org/packages/c9/95/663f06524e016761f506b39c91dd55a3e14480a67ee5ffcbfae0aaf2d682/wittgenstein-0.3.5.tar.gz",
+  "bytes": 78270,
+  "sha256": "6191655b7374925403a58a732cdd250c95cd3b2bb3a05f37d024cd24626c3c7e",
+  "checked": "size and SHA-256 equal spec \u00a712"
+ },
+ {
+  "file": "numpy-2.5.4-cp313-cp313-macosx_14_0_arm64.whl",
+  "url": "https://files.pythonhosted.org/packages/e2/84/6a3d75b3ba3dfe84ac0053450753d1e6d250a8bf80f66474cc46d1fb643f/numpy-2.5.4-cp313-cp313-macosx_14_0_arm64.whl",
+  "bytes": 5445803,
+  "sha256": "6d6a71b9d9a97c03633aa12565ef2825ffa036cc1d99cfd50dacf0f128af4fe2",
+  "checked": "size and SHA-256 equal spec \u00a712"
+ },
+ {
+  "file": "pandas-3.1.0-cp313-cp313-macosx_11_0_arm64.whl",
+  "url": "https://files.pythonhosted.org/packages/9b/f2/b327e814327b7e7e61b5c5cceafd5c0c20f0d38e94f99ebf2dd6c1cec85b/pandas-3.1.0-cp313-cp313-macosx_11_0_arm64.whl",
+  "bytes": 11182834,
+  "sha256": "c1e084760f3b275eed5863407d025b933d25f3247515fcc84bf664405e8bb3d2",
+  "checked": "size and SHA-256 equal spec \u00a712"
+ },
+ {
+  "file": "python_dateutil-3.0.0-py2.py3-none-any.whl",
+  "url": "https://files.pythonhosted.org/packages/5a/17/cebee01d1c0c1441174cf0456ddc91b280d79acb65340c05e41d77866ee8/python_dateutil-3.0.0-py2.py3-none-any.whl",
+  "bytes": 94659,
+  "sha256": "3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd",
+  "checked": "size and SHA-256 equal spec \u00a712"
+ },
+ {
+  "file": "six-1.17.0-py2.py3-none-any.whl",
+  "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+  "bytes": 11050,
+  "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+  "checked": "size and SHA-256 equal spec \u00a712"
+ },
+ {
+  "file": "tzdata-2026.6-py2.py3-none-any.whl",
+  "url": "https://files.pythonhosted.org/packages/0a/66/9a06c2227fedfd4919f0eaaa8b94377d9730882a7e4f95823c9a331ab5e1/tzdata-2026.6-py2.py3-none-any.whl",
+  "bytes": 348210,
+  "sha256": "0a10eec6e13ef16b627fabed9a5f2ba61a62b1c67f327305f4e7e412a70b4aec",
+  "checked": "size and SHA-256 equal spec \u00a712"
+ }
+]

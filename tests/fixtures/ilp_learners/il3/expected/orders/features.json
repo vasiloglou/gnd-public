@@ -1,0 +1,285 @@
+{
+  "columns": [
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__10",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 10,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__20",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 20,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__30",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 30,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__50",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 50,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__90",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 90,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__100",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 100,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "gt_t_amount",
+      "name": "f_order_amount__2__3__gt_t_amount__150",
+      "operator": ">",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 150,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__20",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 20,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__30",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 30,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__50",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 50,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__90",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 90,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__100",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 100,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__150",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 150,
+      "type": "t_amount"
+    },
+    {
+      "arity": 3,
+      "comparison": "lt_t_amount",
+      "name": "f_order_amount__2__3__lt_t_amount__200",
+      "operator": "<",
+      "position": 2,
+      "predicate": "f_order_amount",
+      "role": "amount",
+      "threshold": 200,
+      "type": "t_amount"
+    }
+  ],
+  "rows": [
+    {
+      "example": "n1",
+      "label": "pos",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "example": "n2",
+      "label": "pos",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "example": "n3",
+      "label": "pos",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "example": "p1",
+      "label": "neg",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "example": "p2",
+      "label": "neg",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "example": "v1",
+      "label": "neg",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "schema_version": "gnd-ilp-features/1",
+  "work": {
+    "ceiling": 4000000,
+    "cells": 84
+  }
+}

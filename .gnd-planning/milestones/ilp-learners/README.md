@@ -22,10 +22,15 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   [adversarial review](notes/phase-IL2-agent-review.md) found 11 issues;
   IL2-D13 and IL2-D14 were ruled (a), and three refactors were executed.
   Merged in PR #57.
-- **IL5 is complete:** [phase record](004-phase-IL5.md), on `claude/il5`
-  from `426bd80`, not yet merged. Invocation 1 with `claude` completed and was
-  admitted. IL5-Q1 and IL5-Q2 were ruled on 2026-10-28: a cut-off run and a
-  stray code fence each give no answer. In PR #58.
+- **IL5 is complete:** [phase record](004-phase-IL5.md). Invocation 1 with
+  `claude` completed and was admitted. IL5-Q1 and IL5-Q2 were ruled on
+  2026-10-28: a cut-off run and a stray code fence each give no answer.
+  Merged in PR #58.
+- **IL3 is complete:** [phase record](005-phase-IL3.md), on `claude/il3`,
+  not yet merged. Invocation 1 with wittgenstein's RIPPER completed and was
+  admitted at support 4/5. The [adversarial review](notes/phase-IL3-agent-review.md)
+  found 8 issues; 7 were fixed and IL3-Q1 is open for the owner. RIPPER is not
+  deterministic under its seed (IL3-F5, IL3-Q3).
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -36,6 +41,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL5 phase record](004-phase-IL5.md)
 - [IL2 adversarial review](notes/phase-IL2-agent-review.md)
 - [IL5 spec (r1, approved)](notes/phase-IL5-spec.md)
+- [IL3 spec (r1, approved)](notes/phase-IL3-spec.md)
+- [IL3 phase record](005-phase-IL3.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -63,4 +70,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** IL3 (rule sets), after PR #58 merges.
+**Next action:** the owner reviews the IL3 pull request; then IL4 (AMIE-style miner).

@@ -1,0 +1,45 @@
+{
+ "argv_count": 5,
+ "argv_sha256": "e234aa1213e24ce5634d13edc3f4bffc6fb2b379eea86ff299111035041ab7e1",
+ "cwd": "<working-directory>",
+ "elapsed_seconds": 1.356815499952063,
+ "ended_monotonic": 1811776.737629125,
+ "environment": [
+  {
+   "name": "HOME",
+   "provenance": "supplied"
+  },
+  {
+   "name": "LANG",
+   "provenance": "supplied"
+  },
+  {
+   "name": "PATH",
+   "provenance": "supplied"
+  },
+  {
+   "name": "TMPDIR",
+   "provenance": "supplied"
+  },
+  {
+   "name": "USER",
+   "provenance": "supplied"
+  }
+ ],
+ "process_group_cleaned": true,
+ "return_code": 0,
+ "signal": null,
+ "spawn_error": null,
+ "spawned": true,
+ "started_monotonic": 1811775.380813625,
+ "status": "succeeded",
+ "stderr_observed_bytes": 0,
+ "stderr_retained_bytes": 0,
+ "stderr_truncated": false,
+ "stdout_observed_bytes": 82,
+ "stdout_retained_bytes": 82,
+ "stdout_truncated": false,
+ "termination": "exited",
+ "termination_steps": [],
+ "timed_out": false
+}

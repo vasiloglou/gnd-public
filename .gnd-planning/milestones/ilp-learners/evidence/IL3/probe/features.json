@@ -1,0 +1,45 @@
+{
+ "columns": [
+  {
+   "name": "a__1__2__gt_t_x__1"
+  },
+  {
+   "name": "b__1__2__gt_t_x__1"
+  }
+ ],
+ "rows": [
+  {
+   "example": "p1",
+   "label": "pos",
+   "values": [
+    1,
+    0
+   ]
+  },
+  {
+   "example": "p2",
+   "label": "pos",
+   "values": [
+    1,
+    1
+   ]
+  },
+  {
+   "example": "n1",
+   "label": "neg",
+   "values": [
+    0,
+    1
+   ]
+  },
+  {
+   "example": "n2",
+   "label": "neg",
+   "values": [
+    0,
+    0
+   ]
+  }
+ ],
+ "schema_version": "gnd-ilp-features/1"
+}

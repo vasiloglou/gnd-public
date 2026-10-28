@@ -32,7 +32,8 @@
         "popper",
         "neutral",
         "ilasp",
-        "llm"
+        "llm",
+        "rules"
       ]
     },
     "learner": {

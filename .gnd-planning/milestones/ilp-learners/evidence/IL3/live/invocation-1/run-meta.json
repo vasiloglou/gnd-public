@@ -1,0 +1,9 @@
+{
+ "learner": {
+  "name": "wittgenstein",
+  "version": "0.3.5"
+ },
+ "python": "CPython 3.13.12 (scratch venv)",
+ "reproducibility": "single run, reproducibility not measured",
+ "settings": "RIPPER(random_state=0, n_discretize_bins=None)"
+}

@@ -1,0 +1,21 @@
+{
+ "argv": [
+  "<scratch>/venv/bin/python",
+  "-I",
+  "<repo>/.gnd-planning/milestones/ilp-learners/evidence/IL3/learn_rules.py",
+  "<scratch>/wittgenstein-0.3.5",
+  "features.json"
+ ],
+ "covers": [
+  [
+   "p1",
+   "p2"
+  ]
+ ],
+ "learner": {
+  "name": "wittgenstein",
+  "version": "0.3.5"
+ },
+ "ruleset": "[[a__1__2__gt_t_x__1=1]]",
+ "status": "succeeded"
+}

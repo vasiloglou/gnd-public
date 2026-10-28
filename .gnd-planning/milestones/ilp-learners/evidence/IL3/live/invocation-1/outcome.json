@@ -1,0 +1,105 @@
+{
+ "adapter_version": "1",
+ "argv": [
+  "<scratch>/venv/bin/python",
+  "-I",
+  "<repo>/.gnd-planning/milestones/ilp-learners/evidence/IL3/learn_rules.py",
+  "<scratch>/wittgenstein-0.3.5",
+  "rules/features.json"
+ ],
+ "export_sha256": "7b455e99b224d1c7ab41fd2bcfdd1eb10914e795f57d2dd8e5b1c0494a2e5827",
+ "export_stdout": "EXPORTED 8 examples and 60 facts to <scratch>/il3-work-1/export (rules)\nexport_sha256 7b455e99b224d1c7ab41fd2bcfdd1eb10914e795f57d2dd8e5b1c0494a2e5827\nwork 68 (ceiling 500008)\n",
+ "import": "admitted",
+ "import_args": [
+  "import",
+  "ilp-rules",
+  "model.orm.yaml",
+  "ruleset.txt",
+  "--labels",
+  "labels.json",
+  "--reported-coverage",
+  "run.json",
+  "--target",
+  "rules",
+  "--out",
+  "proposal.json",
+  "--actor",
+  "ilp-live",
+  "--requested-at",
+  "2026-01-01T00:00:00Z",
+  "--format",
+  "json"
+ ],
+ "import_exit": 0,
+ "invocation": 1,
+ "learner": {
+  "name": "wittgenstein",
+  "version": "0.3.5"
+ },
+ "licence": "wittgenstein MIT; numpy's CC0-1.0 part accepted (IL3-D3 (o))",
+ "limits": {
+  "stderr_limit_bytes": 4194304,
+  "stdin_limit_bytes": 0,
+  "stdout_limit_bytes": 16777216,
+  "terminate_grace_seconds": 10.0,
+  "timeout_seconds": 600.0,
+  "total_output_limit_bytes": 20971520
+ },
+ "numbers": {
+  "export_sha256": "computed by GND's export",
+  "import report": "computed by GND's import",
+  "ruleset": "printed by the learner, kept verbatim in raw-stdout.txt",
+  "run.json coverage": "learner predict (wittgenstein Rule.covers), per rule"
+ },
+ "process": {
+  "argv_count": 5,
+  "argv_sha256": "dfcadedee3449f096bdea2031e72b5e26ae798cb17d7c4b73efe385429baa9ed",
+  "cwd": "<working-directory>",
+  "elapsed_seconds": 0.4598710418213159,
+  "ended_monotonic": 1811789.652181208,
+  "environment": [
+   {
+    "name": "HOME",
+    "provenance": "supplied"
+   },
+   {
+    "name": "LANG",
+    "provenance": "supplied"
+   },
+   {
+    "name": "PATH",
+    "provenance": "supplied"
+   },
+   {
+    "name": "TMPDIR",
+    "provenance": "supplied"
+   },
+   {
+    "name": "USER",
+    "provenance": "supplied"
+   }
+  ],
+  "process_group_cleaned": true,
+  "return_code": 0,
+  "signal": null,
+  "spawn_error": null,
+  "spawned": true,
+  "started_monotonic": 1811789.192310166,
+  "status": "succeeded",
+  "stderr_observed_bytes": 0,
+  "stderr_retained_bytes": 0,
+  "stderr_truncated": false,
+  "stdout_observed_bytes": 142,
+  "stdout_retained_bytes": 142,
+  "stdout_truncated": false,
+  "termination": "exited",
+  "termination_steps": [],
+  "timed_out": false
+ },
+ "reproducibility": "single run, reproducibility not measured",
+ "run_of_record": true,
+ "seeds": {
+  "random_state": 0
+ },
+ "termination": "completed"
+}

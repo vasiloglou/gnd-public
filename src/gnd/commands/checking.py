@@ -442,14 +442,15 @@ def _register_import(subparsers):
     )
     ilp_import_parser.add_argument("model", help="path to the model file")
     ilp_import_parser.add_argument(
-        "clauses", help="learned clauses: Popper's printed program, or gnd-ilp-clauses/1 JSON"
+        "clauses", help="learned clauses: Popper's printed program, an ILASP hypothesis, a printed "
+                   "rule set (rules), or gnd-ilp-clauses/1 JSON"
     )
     ilp_import_parser.add_argument("--labels", required=True, help="the class-mode label manifest")
     ilp_import_parser.add_argument(
         "--reported-coverage", required=True, help="the learner run record (gnd-ilp-run/1)"
     )
     ilp_import_parser.add_argument(
-        "--target", required=True, choices=("popper", "neutral", "ilasp", "llm"), help="the adapter CLAUSES is in"
+        "--target", required=True, choices=("popper", "neutral", "ilasp", "llm", "rules"), help="the adapter CLAUSES is in"
     )
     ilp_import_parser.add_argument("--out", required=True, help="write the evolve proposal here")
     ilp_import_parser.add_argument(

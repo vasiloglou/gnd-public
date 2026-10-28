@@ -1,0 +1,620 @@
+{
+ "story": "IL3 corpus (spec phase-IL3-spec.md r1, approved 2026-10-28, IL3-D11): written before ilp_rules exists. 'parse' pins parse_ruleset's polarity table and grammar (T4, T7); 'import' runs a rule set through gnd import ilp-rules --target rules over the refunds example (T5, T5b, T5c, T6, T8); 'extract' pins extract_ruleset (T10). A refusal's clause is the rule index its message names, or null. Column names carry the predicate's arity (IL3-F2, owner ruling 2026-10-28).",
+ "parse": [
+  {
+   "id": "p1-equals-one",
+   "story": "wittgenstein's spelling of a true binary column: the feature's clause, with a fresh variable at every position.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1]]",
+   "clauses": {
+    "schema_version": "gnd-ilp-clauses/1",
+    "clauses": [
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_refund_amount",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          },
+          {
+           "var": "V2"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "gt_t_amount",
+         "args": [
+          {
+           "var": "V2"
+          },
+          {
+           "const": 500
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "p2-equals-one-float",
+   "story": "The same column read back as a float.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1.0]]",
+   "clauses": {
+    "schema_version": "gnd-ilp-clauses/1",
+    "clauses": [
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_refund_amount",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          },
+          {
+           "var": "V2"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "gt_t_amount",
+         "args": [
+          {
+           "var": "V2"
+          },
+          {
+           "const": 500
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "p3-equals-true",
+   "story": "The same column as a boolean.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=True]]",
+   "clauses": {
+    "schema_version": "gnd-ilp-clauses/1",
+    "clauses": [
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_refund_amount",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          },
+          {
+           "var": "V2"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "gt_t_amount",
+         "args": [
+          {
+           "var": "V2"
+          },
+          {
+           "const": 500
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "p4-binarized-true",
+   "story": "The binarized spelling some rule learners print for a true column.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500>0.5]]",
+   "clauses": {
+    "schema_version": "gnd-ilp-clauses/1",
+    "clauses": [
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_refund_amount",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          },
+          {
+           "var": "V2"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "gt_t_amount",
+         "args": [
+          {
+           "var": "V2"
+          },
+          {
+           "const": 500
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "p5-two-rules",
+   "story": "Two single-feature rules: two clauses, in rule order.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1] V [f_refund_amount__2__3__lt_t_amount__40=1]]",
+   "clauses": {
+    "schema_version": "gnd-ilp-clauses/1",
+    "clauses": [
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_refund_amount",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          },
+          {
+           "var": "V2"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "gt_t_amount",
+         "args": [
+          {
+           "var": "V2"
+          },
+          {
+           "const": 500
+          }
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_refund_amount",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          },
+          {
+           "var": "V2"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "lt_t_amount",
+         "args": [
+          {
+           "var": "V2"
+          },
+          {
+           "const": 40
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "p6-negative-threshold",
+   "story": "A negative threshold is spelled with m, as Popper spells it; position 1 gives one fresh variable.",
+   "text": "[[f_score__1__2__gt_t_points__m5=1]]",
+   "clauses": {
+    "schema_version": "gnd-ilp-clauses/1",
+    "clauses": [
+     {
+      "head": {
+       "predicate": "wrong",
+       "args": [
+        {
+         "var": "X"
+        }
+       ]
+      },
+      "body": [
+       {
+        "atom": {
+         "predicate": "f_score",
+         "args": [
+          {
+           "var": "X"
+          },
+          {
+           "var": "V1"
+          }
+         ]
+        }
+       },
+       {
+        "atom": {
+         "predicate": "gt_t_points",
+         "args": [
+          {
+           "var": "V1"
+          },
+          {
+           "const": -5
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "n1-equals-zero",
+   "story": "A false column is a negated feature.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=0]]",
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  {
+   "id": "n2-equals-zero-float",
+   "story": "The same, as a float.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=0.0]]",
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  {
+   "id": "n3-equals-false",
+   "story": "The same, as a boolean.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=False]]",
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  {
+   "id": "n4-binarized-false",
+   "story": "The binarized spelling of a false column.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500<=0.5]]",
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  {
+   "id": "c1-conjunction",
+   "story": "Two true columns in one rule: a propositional conjunction GND's fragment cannot carry.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1^f_refund_amount__2__3__lt_t_amount__640=1]]",
+   "refusal": "propositional-conjunction",
+   "clause": 0
+  },
+  {
+   "id": "c2-mixed",
+   "story": "A true and a false column: the polarity table's order meets the false column first.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1^f_refund_amount__2__3__lt_t_amount__640=0]]",
+   "refusal": "negation-as-failure",
+   "clause": 0
+  },
+  {
+   "id": "e1-empty-rule",
+   "story": "wittgenstein prints a rule with no condition as [True]: it would cover everything.",
+   "text": "[[True]]",
+   "refusal": "empty-antecedent",
+   "clause": 0
+  },
+  {
+   "id": "o1-rule-list",
+   "story": "A rule-list spelling is recognized only to be refused.",
+   "text": "if f_refund_amount__2__3__gt_t_amount__500=1 then pos else neg",
+   "refusal": "ordered-rule-list",
+   "clause": null
+  },
+  {
+   "id": "o2-rule-list-upper",
+   "story": "The same, upper case.",
+   "text": "IF f_refund_amount__2__3__gt_t_amount__500=1 THEN pos ELSE neg",
+   "refusal": "ordered-rule-list",
+   "clause": null
+  },
+  {
+   "id": "r1-second-rule-refused",
+   "story": "One refused rule refuses the whole set; the message names rule 1.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1] V [f_refund_amount__2__3__gt_t_amount__500=0]]",
+   "refusal": "negation-as-failure",
+   "clause": 1
+  },
+  {
+   "id": "u1-empty-set",
+   "story": "An empty rule set is not an import: the extractor turns it into no answer, and the reader refuses it.",
+   "text": "[]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u2-not-a-column",
+   "story": "A name outside the column grammar.",
+   "text": "[[amount=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u3-leading-zero",
+   "story": "A threshold the renderer never writes.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__0500=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u4-minus-zero",
+   "story": "m0 is never written.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__m0=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u5-position-zero",
+   "story": "Position 0 is the example argument, never a feature.",
+   "text": "[[f_refund_amount__0__3__gt_t_amount__500=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u6-ge-comparison",
+   "story": "The renderer writes gt and lt columns only.",
+   "text": "[[f_refund_amount__2__3__ge_t_amount__500=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u10-position-not-below-arity",
+   "story": "The position must be below the arity (IL3-F2 (o)).",
+   "text": "[[f_refund_amount__3__3__gt_t_amount__500=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u7-other-value",
+   "story": "A value other than the binary spellings.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=2]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u8-space-in-rule",
+   "story": "wittgenstein strips spaces inside a rule; a space there is not its spelling.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1 ^ f_refund_amount__2__3__gt_t_amount__500=1]]",
+   "refusal": "unparsable",
+   "clause": null
+  },
+  {
+   "id": "u9-unbalanced",
+   "story": "A missing closing bracket.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1]",
+   "refusal": "unparsable",
+   "clause": null
+  }
+ ],
+ "import": [
+  {
+   "id": "i1-admitted",
+   "story": "T5: the refunds rule a > 500 as a one-feature rule set, with the learner's coverage. Admitted with method ilp-rules.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1]]",
+   "learner": "wittgenstein",
+   "coverage": [
+    [
+     "harbor",
+     "market",
+     "airport",
+     "station"
+    ]
+   ],
+   "exit": 0,
+   "refusal": null
+  },
+  {
+   "id": "i2-coverage-mismatch",
+   "story": "T6: the learner claims the rule covers one population fewer than GND computes.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1]]",
+   "learner": "wittgenstein",
+   "coverage": [
+    [
+     "harbor",
+     "market",
+     "airport"
+    ]
+   ],
+   "exit": 3,
+   "refusal": "coverage-mismatch"
+  },
+  {
+   "id": "i3-learner-mismatch",
+   "story": "A run record from another registered learner.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1]]",
+   "learner": "popper",
+   "coverage": [
+    [
+     "harbor",
+     "market",
+     "airport",
+     "station"
+    ]
+   ],
+   "exit": 3,
+   "refusal": "learner-mismatch"
+  },
+  {
+   "id": "i4-unknown-comparison",
+   "story": "T5b: a well-formed name whose comparison the export does not declare reads as an unknown predicate.",
+   "text": "[[f_refund_amount__2__3__gt_t_nosuch__5=1]]",
+   "learner": "wittgenstein",
+   "coverage": [
+    []
+   ],
+   "exit": 3,
+   "refusal": "unknown-predicate"
+  },
+  {
+   "id": "i5-arity",
+   "story": "T5b: a name that claims arity 4 for a 3-argument predicate; the checker refuses the atom (IL3-F2 (o)).",
+   "text": "[[f_refund_amount__2__4__gt_t_amount__500=1]]",
+   "learner": "wittgenstein",
+   "coverage": [
+    []
+   ],
+   "exit": 3,
+   "refusal": "arity"
+  },
+  {
+   "id": "i6-type-confused",
+   "story": "T8 (IL3-F1): position 1 is the refund id, but the column compares an amount. The checker's comparison-type check meets the clash before 9b and refuses it.",
+   "text": "[[f_refund_amount__1__3__gt_t_amount__500=1]]",
+   "learner": "wittgenstein",
+   "coverage": [
+    []
+   ],
+   "exit": 3,
+   "refusal": "comparison-type"
+  },
+  {
+   "id": "i7-all-or-nothing",
+   "story": "T5c: one good rule and one negated rule; nothing is admitted.",
+   "text": "[[f_refund_amount__2__3__gt_t_amount__500=1] V [f_refund_amount__2__3__gt_t_amount__500=0]]",
+   "learner": "wittgenstein",
+   "coverage": [
+    [
+     "harbor",
+     "market",
+     "airport",
+     "station"
+    ],
+    []
+   ],
+   "exit": 3,
+   "refusal": "negation-as-failure"
+  }
+ ],
+ "extract": [
+  {
+   "id": "x1-one-line",
+   "stdout": "learner wittgenstein 0.3.5\nRULESET [[f_refund_amount__2__3__gt_t_amount__500=1]]\nCOVERS 0 []\n",
+   "ruleset": "[[f_refund_amount__2__3__gt_t_amount__500=1]]"
+  },
+  {
+   "id": "x2-none",
+   "stdout": "learner wittgenstein 0.3.5\n",
+   "ruleset": ""
+  },
+  {
+   "id": "x3-two-lines",
+   "stdout": "RULESET [[f_refund_amount__2__3__gt_t_amount__500=1]]\nRULESET [[f_refund_amount__2__3__gt_t_amount__500=1]]\n",
+   "ruleset": ""
+  },
+  {
+   "id": "x4-empty-set",
+   "stdout": "RULESET []\n",
+   "ruleset": ""
+  },
+  {
+   "id": "x5-indented",
+   "stdout": " RULESET [[f_refund_amount__2__3__gt_t_amount__500=1]]\n",
+   "ruleset": ""
+  },
+  {
+   "id": "x6-crlf",
+   "stdout": "RULESET [[f_refund_amount__2__3__gt_t_amount__500=1]]\r\n",
+   "ruleset": "[[f_refund_amount__2__3__gt_t_amount__500=1]]"
+  }
+ ]
+}

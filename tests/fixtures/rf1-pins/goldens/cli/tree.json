@@ -1965,13 +1965,14 @@
        "choices": [
         "popper",
         "neutral",
-        "ilasp"
+        "ilasp",
+        "rules"
        ],
        "class": "_StoreAction",
        "const": null,
        "default": null,
        "dest": "target",
-       "help": "learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl), neutral, or ilasp (neutral form plus ilasp/task.las)",
+       "help": "learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl), neutral, ilasp (neutral form plus ilasp/task.las), or rules (neutral form plus rules/features.json)",
        "metavar": null,
        "nargs": null,
        "option_strings": [
@@ -2982,7 +2983,7 @@
        "const": null,
        "default": null,
        "dest": "clauses",
-       "help": "learned clauses: Popper's printed program, or gnd-ilp-clauses/1 JSON",
+       "help": "learned clauses: Popper's printed program, an ILASP hypothesis, a printed rule set (rules), or gnd-ilp-clauses/1 JSON",
        "metavar": null,
        "nargs": null,
        "option_strings": [],
@@ -3024,7 +3025,8 @@
         "popper",
         "neutral",
         "ilasp",
-        "llm"
+        "llm",
+        "rules"
        ],
        "class": "_StoreAction",
        "const": null,

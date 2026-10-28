@@ -1,0 +1,3 @@
+learner wittgenstein 0.3.5
+RULESET [[f_refund_amount__2__3__gt_t_amount__450=1]]
+COVERS 0 ["airport", "harbor", "market", "south", "station"]

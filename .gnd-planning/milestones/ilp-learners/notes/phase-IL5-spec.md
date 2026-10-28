@@ -2,12 +2,15 @@
 
 ## 1. Status
 
-**Draft r1, 2026-10-27. Awaiting this phase's owner gate.** `auto=false`.
-Nothing is implemented, and no agent or provider has been called. The gate
-decides:
-- the plan's D8, which is the live run itself (IL5-D8);
-- the design decisions IL5-D1 to IL5-D7;
-- the approval instrument (IL5-D9).
+**Approved r1, 2026-10-27 (§12).** `auto=false`. The §1 text of r1 is kept
+below for provenance.
+
+> **Draft r1, 2026-10-27. Awaiting this phase's owner gate.** `auto=false`.
+> Nothing is implemented, and no agent or provider has been called. The gate
+> decides:
+> - the plan's D8, which is the live run itself (IL5-D8);
+> - the design decisions IL5-D1 to IL5-D7;
+> - the approval instrument (IL5-D9).
 
 ## 2. Provenance
 
@@ -452,6 +455,32 @@ The estimate:
 IL5-D9: corpus-first for the extractor and the answers; prose for the prompt;
 no panel.
 
-## 12. Owner gate record
+## 12. Owner gate record (2026-10-27)
 
-*(Empty until the owner rules.)*
+**The approved bytes.** The owner ruled in the session on 2026-10-27 over
+spec r1, SHA-256 `816a0417ea3b4490fc03083b3540824a771f67107e68fb6838c634fafe1f483a`
+(commit `c9e16f7`), which is sections 1–12.
+
+**The owner's words (o):** "IL5 gate: approve IL5-D1 to D7, D9 and D10 as
+proposed, and IL5-D8 (a): one run with claude, recording the provider terms
+first."
+
+| ID | Ruling |
+|---|---|
+| IL5-D1 | as proposed: (a), `llm` binds the `neutral` export through `binds` |
+| IL5-D2 | as proposed: (a), any `AgentAdapterId`, pinned by a test |
+| IL5-D3 | as proposed: (a), exactly one complete json block, else none |
+| IL5-D4 | as proposed: (a), the self-reported `model:` line; `learner.version` is the CLI version's first token |
+| IL5-D5 | as proposed: at most 4 clauses, 1–4 body literals, one comparison at a listed threshold |
+| IL5-D6 | as proposed: (a), an arithmetic `cmp.pl` |
+| IL5-D7 | as proposed: the termination mapping of §6 |
+| IL5-D8 | **(a): one run with `claude`,** on the terms of §7. The plan's D8 is ruled. The provider's terms on output are recorded first, and the run waits for the owner's confirmation of them |
+| IL5-D9 | as proposed: corpus-first for the extractor and the answers, prose for the prompt, no panel |
+| IL5-D10 | as proposed: `claude/il5` from `main` at `426bd80` |
+
+**No other approval.** No second run, no change to `gnd.agents`, and no
+amendment is approved beyond these rulings.
+
+## 13. Implementation findings (recorded as found)
+
+*(None yet.)*

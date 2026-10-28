@@ -43,6 +43,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL5 spec (r1, approved)](notes/phase-IL5-spec.md)
 - [IL3 spec (r1, approved)](notes/phase-IL3-spec.md)
 - [IL3 phase record](005-phase-IL3.md)
+- [IL4 spec (r1, draft, awaiting the owner gate)](notes/phase-IL4-spec.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -70,4 +71,4 @@ comparison walk and docs. Close is separate.
 **Open at gates:**
 - none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
 
-**Next action:** the owner reviews the IL3 pull request; then IL4 (AMIE-style miner).
+**Next action:** the owner reviews the IL3 pull request (#60) and rules on the IL4 spec (r1), IL4-D1 to IL4-D13.

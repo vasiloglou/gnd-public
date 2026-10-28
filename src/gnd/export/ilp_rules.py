@@ -31,12 +31,14 @@ MAX_CELLS = 4_000_000
 MAX_RULES = 32
 MAX_CONDITIONS = 16
 MAX_NAME = 160
+#: An atom's argument cap in ilp-clauses.schema.json; bounds the clause a name builds (review 1).
+MAX_ARITY = 64
 MAX_DIGITS = 32
 #: The condition spellings the reader reads as a true or a false feature (IL3-D7).
 TRUE_SPELLINGS = ("=1", "=1.0", "=True", ">0.5")
 FALSE_SPELLINGS = ("=0", "=0.0", "=False", "<=0.5")
 #: The export's refusals.
-EXPORT_REFUSALS = ("no-features", "too-many-features", "too-large")
+EXPORT_REFUSALS = ("no-features", "too-many-features", "too-large", "column-name")
 #: The reader's own refusals, in the order it applies them; ``unparsable`` aside.
 REFUSALS = ("ordered-rule-list", "empty-antecedent", "negation-as-failure", "propositional-conjunction")
 
@@ -69,8 +71,11 @@ def _columns(neutral: dict[str, Any]) -> list[dict[str, Any]]:
                 comparison, _, spelled = row_name.rpartition("__")
                 threshold = -int(spelled[1:]) if spelled.startswith("m") else int(spelled)
                 name = f"{predicate['name']}__{position}__{arity}__{row_name}"
-                if _column(name) != (predicate["name"], position, arity, comparison, threshold):
-                    raise _refuse("name", f"column {name!r} does not read back as itself")
+                if len(name) > MAX_NAME or _column(name) != (
+                        predicate["name"], position, arity, comparison, threshold):
+                    # A name the reader would refuse or misread is never written (reviews 2, 3).
+                    raise _refuse("column-name", f"column {name!r} is over {MAX_NAME} characters, "
+                                  "has a threshold over the digit cap, or does not read back as itself")
                 columns.append({"name": name, "predicate": predicate["name"], "position": position,
                                 "arity": arity, "role": predicate[_ROLES][position - 1],
                                 "type": type_name, "comparison": comparison,
@@ -117,7 +122,7 @@ def _column(name: str) -> tuple[str, int, int, str, int] | None:
     predicate, position, arity, comparison, sign, digits = match.groups()
     if len(digits) > MAX_DIGITS or (len(digits) > 1 and digits[0] == "0") or (sign and digits == "0"):
         return None
-    if int(position) >= int(arity):
+    if len(arity) > 2 or int(arity) > MAX_ARITY or int(position) >= int(arity):
         return None
     return predicate, int(position), int(arity), comparison, -int(digits) if sign else int(digits)
 

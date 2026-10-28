@@ -107,7 +107,8 @@ def _register_export(subparsers):
     ilp_parser.add_argument(
         "--target", required=True, choices=("popper", "neutral", "ilasp", "rules"),
         help="learner adapter: popper (neutral form plus bk.pl, exs.pl, bias.pl), neutral, "
-             "or ilasp (neutral form plus ilasp/task.las)",
+             "ilasp (neutral form plus ilasp/task.las), or rules (neutral form plus "
+             "rules/features.json)",
     )
     ilp_parser.add_argument("--out", required=True, help="new directory for the export")
 

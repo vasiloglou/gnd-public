@@ -442,7 +442,8 @@ def _register_import(subparsers):
     )
     ilp_import_parser.add_argument("model", help="path to the model file")
     ilp_import_parser.add_argument(
-        "clauses", help="learned clauses: Popper's printed program, or gnd-ilp-clauses/1 JSON"
+        "clauses", help="learned clauses: Popper's printed program, an ILASP hypothesis, a printed "
+                   "rule set (rules), or gnd-ilp-clauses/1 JSON"
     )
     ilp_import_parser.add_argument("--labels", required=True, help="the class-mode label manifest")
     ilp_import_parser.add_argument(

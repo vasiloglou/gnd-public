@@ -370,16 +370,20 @@ example and one 0/1 column per feature.
   Popper writes it (`m` for minus). The arity counts the example argument.
 - **Bounds:** at most 4,096 features and 4,000,000 cells (rows × features).
   Beyond them the export is refused `too-many-features` or `too-large`; an
-  export with no thresholded argument is refused `no-features`. The table's
+  export with no thresholded argument is refused `no-features`. A column
+  whose name would exceed 160 characters, carry a threshold over 32 digits,
+  or not read back as the same feature (an id that itself looks like a column
+  name) is refused `column-name`, so the export never writes a name the
+  import cannot read. The table's
   `work` field records the cells and the ceiling.
 
 **The import** reads the learner's rule set as wittgenstein prints it, one
-line: `[[cond^cond] V [cond]]`, where a condition is a column name and a
+line with no trailing newline: `[[cond^cond] V [cond]]`, where a condition is a column name and a
 value. Each rule is read by the polarity table, in this order:
 
 | The rule | Spellings | Result |
 |---|---|---|
-| a rule list (`if … then … else …`) | a line starting with `if` | refused `ordered-rule-list` |
+| a rule list (`if … then … else …`) | a line starting with `if`, in any case, after any leading spaces | refused `ordered-rule-list` |
 | no condition | `[True]` | refused `empty-antecedent` |
 | a feature required false | `=0`, `=0.0`, `=False`, `<=0.5` | refused `negation-as-failure` |
 | two or more features | `[a=1^b=1]` | refused `propositional-conjunction` |
@@ -397,8 +401,9 @@ any other target's, so a name whose comparison the export never declared is
 refused there, and a comparison whose type differs from its position's is
 refused `comparison-type`. Admission is all-or-nothing: one refused rule
 refuses the set. Anything outside the grammar, an empty set `[]`, more than 32
-rules, more than 16 conditions in a rule, a name over 160 characters or a
-threshold over 32 digits is refused `unparsable`.
+rules, more than 16 conditions in a rule, a name over 160 characters, an
+arity over 64 (an atom's argument cap) or a threshold over 32 digits is
+refused `unparsable`.
 
 The learner's own coverage of each rule, in rule order, is the run record's
 coverage. The learner is named `wittgenstein`; the method token is

@@ -62,10 +62,16 @@ PROBE = {"schema_version": "gnd-ilp-features/1",
                   {"example": "p2", "label": "pos", "values": [1, 1]},
                   {"example": "n1", "label": "neg", "values": [0, 1]},
                   {"example": "n2", "label": "neg", "values": [0, 0]}]}
+#: The argv and the licence line as outcome.json records them, placeholders substituted.
+RECORDED_ARGV = ["<scratch>/venv/bin/python", "-I",
+                 "<repo>/.gnd-planning/milestones/ilp-learners/evidence/IL3/learn_rules.py",
+                 "<scratch>/wittgenstein-0.3.5", "rules/features.json"]
+LICENCE = "wittgenstein MIT; numpy's CC0-1.0 part accepted (IL3-D3 (o))"
 _LEARNER = re.compile(r"learner wittgenstein ([A-Za-z0-9][A-Za-z0-9._+-]{0,63})")
 _COVERS = re.compile(r"COVERS (0|[1-9][0-9]{0,2}) (\[.*\])")
 
-__all__ = ["covers", "import_outcome", "read_ruleset", "termination"]
+__all__ = ["IMPORT_ARGS", "LICENCE", "LIMITS", "RECORDED_ARGV", "covers", "import_outcome", "learner",
+           "read_ruleset", "termination"]
 
 
 def read_ruleset(stdout: str, ended: str) -> str:
@@ -170,7 +176,7 @@ def main() -> int:
         "argv": [clean(a) for a in argv],
         "limits": LIMITS.model_dump(),
         "import_args": list(IMPORT_ARGS),
-        "licence": "wittgenstein MIT; numpy's CC0-1.0 part accepted (IL3-D3 (o))",
+        "licence": LICENCE,
         "numbers": {
             "export_sha256": "computed by GND's export",
             "ruleset": "printed by the learner, kept verbatim in raw-stdout.txt",

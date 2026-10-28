@@ -4,7 +4,8 @@ IL1's, IL2's and IL5's scripts each carry their own copy of these; their bytes a
 bound by digest in their records, so they are left as they are. From IL3 on, a
 live-run script imports this module: the sanitizer (IL-R10), the bounded
 environment (IL-R2), the export step that records E, the termination and import
-mappings (IL-R9, IL5-Q1 (o)), and the fixed-argument import.
+mappings (IL-R9, IL5-Q1 (o)), and the fixed-argument import. A process status or an
+import exit that no ruling names stops the script instead of becoming an outcome.
 """
 
 from __future__ import annotations
@@ -66,15 +67,25 @@ def termination(process: dict[str, Any]) -> str:
         return "output-limit"
     if process["status"] == "timed-out":
         return "wall-clock-kill"
-    if process["status"] != "succeeded":
+    if process["status"] == "failed":
         return "rendering-rejected"
-    return "completed"
+    if process["status"] == "succeeded":
+        return "completed"
+    # spawn-failed and cleanup-failed have no ruled value; the raw files stay written (review 4).
+    raise SystemExit(f"unruled process status {process['status']!r}: not recorded as an outcome")
 
 
 def import_outcome(refusal: str) -> str:
     """``refused:<name>``; a file-level or capped refusal is ``refused:unparsable``."""
     name = "" if refusal.startswith("clauses ") else refusal_name(refusal)
     return f"refused:{name}" if _NAME.fullmatch(name) else "refused:unparsable"
+
+
+def refusal_for_exit(code: int, refusal: str) -> str:
+    """Exit 3 is a named refusal; any other non-zero exit is not an outcome (review 4)."""
+    if code != 3:
+        raise SystemExit(f"the import exited {code}, not a refusal (exit {code}): {refusal}")
+    return import_outcome(refusal)
 
 
 def write_json(path: Path, document: Any) -> None:
@@ -96,4 +107,4 @@ def run_import(work: Path, out: Path, files: tuple[str, ...], args: tuple[str, .
         return 0, "admitted"
     refusal = clean(imported.stderr).strip()
     (out / "import-stderr.txt").write_text(refusal + "\n", encoding="utf-8")
-    return imported.returncode, import_outcome(refusal)
+    return imported.returncode, refusal_for_exit(imported.returncode, refusal)

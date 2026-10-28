@@ -353,12 +353,19 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
     assert len(stderr.encode("utf-8")) == process["stderr_observed_bytes"]
     meta = json.loads((live / "run-meta.json").read_text(encoding="utf-8"))
     assert meta["learner"] == outcome["learner"]
+    # Review 6: the recorded settings are the script's own constants.
+    assert outcome["limits"] == script.LIMITS.model_dump()
+    assert outcome["argv"] == script.RECORDED_ARGV
+    assert outcome["import_args"] == list(script.IMPORT_ARGS)
+    assert outcome["licence"] == script.LICENCE
 
     export = _export(tmp_path)
     digest = hashlib.sha256((export / "export.json").read_bytes()).hexdigest()
     assert digest == outcome["export_sha256"]
 
     stdout = (live / "raw-stdout.txt").read_text(encoding="utf-8")
+    assert len(stdout.encode("utf-8")) == process["stdout_observed_bytes"]
+    assert outcome["learner"] == script.learner(stdout)
     ruleset = script.read_ruleset(stdout, outcome["termination"])
     if not ruleset:
         assert outcome["import"] == "none" and not (live / "ruleset.txt").exists()
@@ -424,3 +431,154 @@ def test_live_the_learner_covers_what_it_reported(tmp_path):
                              str(live / "ruleset.txt")], check=True, capture_output=True, text=True)
     script = _script()
     assert script.covers(result.stdout) == script.covers((live / "raw-stdout.txt").read_text(encoding="utf-8"))
+
+
+# ---------------------------------------------------------------------------
+# Step 4 regressions (notes/phase-IL3-agent-review.md), each red before its fix.
+# ---------------------------------------------------------------------------
+
+def _valid(name_length: int) -> str:
+    """A column name of exactly ``name_length`` characters the renderer could write."""
+    tail = "__1__2__gt_t_x__5"
+    return "f_" + "p" * (name_length - 2 - len(tail)) + tail
+
+
+@pytest.mark.parametrize("arity", ["65", "5000000", "9" * 140])
+def test_r1_the_arity_is_bounded_before_any_clause_is_built(arity):
+    """Review 1: an atom has at most 64 arguments (ilp-clauses.schema.json)."""
+    from gnd.export import ilp_rules
+    from gnd.export.ilp import IlpError
+
+    with pytest.raises(IlpError, match="^unparsable"):
+        ilp_rules.parse_ruleset(f"[[p__1__{arity}__gt_t_x__5=1]]")
+
+
+def test_r1_arity_64_is_read():
+    from gnd.export import ilp_rules
+
+    clause = ilp_rules.parse_ruleset("[[p__63__64__gt_t_x__5=1]]")["clauses"][0]
+    assert len(clause["body"][0]["atom"]["args"]) == 64
+    assert clause["body"][1]["atom"]["args"][0] == {"var": "V63"}
+
+
+def _long(neutral: dict[str, Any], predicate: str, type_name: str, extra: int | None = None) -> dict[str, Any]:
+    old = neutral["predicates"][0]
+    renamed = json.loads(json.dumps(neutral).replace(f'"{old["name"]}"', json.dumps(predicate))
+                         .replace('"t_amount"', json.dumps(type_name))
+                         .replace('"ge_t_amount"', json.dumps("ge_" + type_name))
+                         .replace('"gt_t_amount"', json.dumps("gt_" + type_name))
+                         .replace('"le_t_amount"', json.dumps("le_" + type_name))
+                         .replace('"lt_t_amount"', json.dumps("lt_" + type_name)))
+    if extra is not None:
+        fact = next(f for f in renamed["facts"] if f["predicate"] == predicate)
+        renamed["facts"].append({**fact, "values": [fact["values"][0], extra]})
+    return renamed
+
+
+@pytest.mark.parametrize(("predicate", "type_name", "extra"), [
+    ("f_" + "q" * 59, "t_" + "m" * 59, 10 ** 25),
+    ("f_refund_amount", "t_amount", 10 ** 33),
+    ("f_a__1__2__gt_t_x", "t_amount", None),
+])
+def test_r2_r3_the_renderer_refuses_a_name_it_cannot_read_back(tmp_path, predicate, type_name, extra):
+    """Reviews 2 and 3: a name over 160 characters, a 33-digit threshold, a name that
+    parses two ways: one documented refusal, never a schema-invalid table."""
+    from gnd.export import ilp_rules
+    from gnd.export.ilp import IlpError
+
+    neutral = _long(_neutral(tmp_path), predicate, type_name, extra)
+    with pytest.raises(IlpError, match="^column-name"):
+        ilp_rules.render(neutral)
+    assert "column-name" in ilp_rules.EXPORT_REFUSALS
+
+
+def _live_common():
+    sys.path.insert(0, str(EVIDENCE.parent))
+    try:
+        import live_common
+    finally:
+        sys.path.remove(str(EVIDENCE.parent))
+    return live_common
+
+
+@pytest.mark.parametrize("status", ["spawn-failed", "cleanup-failed"])
+def test_r4_an_unruled_status_is_not_recorded(status):
+    """Review 4: §6 rules succeeded, failed and timed-out only."""
+    common = _live_common()
+    with pytest.raises(SystemExit, match="unruled"):
+        common.termination({"status": status, "stdout_truncated": False, "stderr_truncated": False})
+
+
+def test_r4_only_exit_3_is_a_named_refusal():
+    common = _live_common()
+    assert common.import_outcome("clause 0: negation-as-failure: x") == "refused:negation-as-failure"
+    with pytest.raises(SystemExit, match="exit 70"):
+        common.refusal_for_exit(70, "internal: boom")
+    assert common.refusal_for_exit(3, "unparsable: column 1: x") == "refused:unparsable"
+
+
+_TAMPER = {
+    "limits": ("outcome.json", lambda o: o["limits"].__setitem__("timeout_seconds", 6000)),
+    "argv": ("outcome.json", lambda o: o["argv"].remove("-I")),
+    "licence": ("outcome.json", lambda o: o.__setitem__("licence", "")),
+    "import-args": ("outcome.json", lambda o: o["import_args"].__setitem__(-1, "text")),
+    "learner": ("outcome.json", lambda o: o["learner"].__setitem__("version", "9.9")),
+}
+
+
+@pytest.mark.parametrize("name", ["control", *sorted(_TAMPER), "stdout"])
+def test_r6_t9_fails_on_tampered_evidence(tmp_path, monkeypatch, name):
+    """Review 6: every recorded field T9 claims to check can fail it."""
+    live = tmp_path / "live"
+    shutil.copytree(LIVE_ROOT, live)
+    record = live / "invocation-1"
+    if name == "control":
+        pass
+    elif name == "stdout":
+        with (record / "raw-stdout.txt").open("a", encoding="utf-8") as stream:
+            stream.write("junk\n")
+    else:
+        path, change = _TAMPER[name]
+        outcome = json.loads((record / path).read_text(encoding="utf-8"))
+        change(outcome)
+        (record / path).write_text(json.dumps(outcome), encoding="utf-8")
+        if name == "learner":
+            meta = json.loads((record / "run-meta.json").read_text(encoding="utf-8"))
+            meta["learner"]["version"] = "9.9"
+            (record / "run-meta.json").write_text(json.dumps(meta), encoding="utf-8")
+    monkeypatch.setattr(sys.modules[__name__], "LIVE_ROOT", live)
+    replay = tmp_path / "replay"
+    replay.mkdir()
+    if name == "control":
+        test_t9_the_recorded_run_replays(replay, 1)
+        return
+    with pytest.raises(AssertionError):
+        test_t9_the_recorded_run_replays(replay, 1)
+
+
+def test_r7_every_reader_cap_accepts_at_its_bound():
+    """Review 7: the accept side of each cap, and an exact 161-character name."""
+    from gnd.export import ilp_rules
+    from gnd.export.ilp import IlpError
+
+    rules = "[" + " V ".join(f"[{_cond(k)}]" for k in range(32)) + "]"
+    assert len(ilp_rules.parse_ruleset(rules)["clauses"]) == 32
+    conditions = "[[" + "^".join(_cond(k) for k in range(16)) + "]]"
+    with pytest.raises(IlpError, match="propositional-conjunction"):
+        ilp_rules.parse_ruleset(conditions)
+    assert ilp_rules.parse_ruleset(f"[[{_valid(160)}=1]]")["clauses"]
+    with pytest.raises(IlpError, match="longer than 160"):
+        ilp_rules.parse_ruleset(f"[[{_valid(161)}=1]]")
+    for threshold in ("9" * 32, "m" + "9" * 32):
+        assert ilp_rules.parse_ruleset(f"[[f_p__1__2__gt_t_x__{threshold}=1]]")["clauses"]
+    for spelling in ("  if a then b", "\tIf a then b"):
+        with pytest.raises(IlpError, match="^ordered-rule-list"):
+            ilp_rules.parse_ruleset(spelling)
+
+
+def test_r8_the_help_names_the_rules_target():
+    """Review 8: the export's --target help and the import's CLAUSES help name rules."""
+    export = run_main(["export", "ilp", "--help"]).stdout.decode()
+    assert "rules (neutral form plus rules/features.json)" in " ".join(export.split())
+    imported = run_main(["import", "ilp-rules", "--help"]).stdout.decode()
+    assert "rule set" in " ".join(imported.split())

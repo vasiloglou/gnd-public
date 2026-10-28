@@ -1,0 +1,2 @@
+?e  f_based_at  ?b  ?e  f_works_in  ?a   => ?a  f_team_site  ?b	1.000000	1.000000	1.000000	5	5	5	-1
+?f  f_team_site  ?b  ?a  f_works_in  ?f   => ?a  f_based_at  ?b	1.000000	1.000000	1.000000	20	20	20	-1

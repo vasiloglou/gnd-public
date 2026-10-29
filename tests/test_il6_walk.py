@@ -14,6 +14,7 @@ import importlib.util
 import json
 import os
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -160,6 +161,8 @@ def test_t3_the_walk_writes_no_run_directory(tmp_path):
         text = (tmp_path / name).read_text(encoding="utf-8")
         assert str(tmp_path) not in text and str(tmp_path.resolve()) not in text, name
         assert not any(re.search(p, text) for p in ABSOLUTE), name
+    # The page says a refused import writes nothing (IL6 review R6b).
+    assert not (tmp_path / "ilasp.proposal.json").exists() and not (tmp_path / "amie.proposal.json").exists()
 
 
 # -- T4: the generated table ------------------------------------------------
@@ -182,13 +185,49 @@ def test_t4_the_table_names_every_row_once():
         assert len(re.findall(rf"^\| {adapter}\b[^|]*\| {invocation} \|", table, re.MULTILINE)) == 1, (adapter, invocation)
 
 
-@pytest.mark.parametrize("field, value", [
-    ("import_exit", 2), ("clauses_admitted", 5), ("termination", "learner-timeout"), ("first_refusal", None),
+def _evidence_copy(root: Path) -> Path:
+    """The inputs build() reads, copied under root so a test can change one of them."""
+    tool = _comparison()
+    for relative in (tool.EVIDENCE, tool.STAFFING):
+        shutil.copytree(ROOT / relative, root / relative)
+    return root / tool.EVIDENCE
+
+
+def _replace(path: Path, old: str, new: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    assert old in text, path
+    path.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+
+def _double_operations(path: Path) -> None:
+    proposal = json.loads(path.read_text(encoding="utf-8"))
+    proposal["operations"] = proposal["operations"] + proposal["operations"]
+    path.write_text(json.dumps(proposal), encoding="utf-8")
+
+
+def _drop_last_rule(path: Path) -> None:
+    lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
+    rules = [i for i, line in enumerate(lines) if "=>" in line]
+    del lines[rules[-1]]
+    path.write_text("".join(lines), encoding="utf-8")
+
+
+# Each case changes one input the row is derived from; build() must report the change (IL6 review R4).
+@pytest.mark.parametrize("change, section, row, field, value", [
+    (lambda e: _replace(e / "IL2/live/invocation-1/import-stderr.txt", "clause 0:", "clause 1:"),
+     "labelled", 3, "first_refusal", {"name": "empty-antecedent", "index": 1}),
+    (lambda e: _replace(e / "IL3/live/invocation-1/outcome.json", '"import_exit": 0', '"import_exit": 2'),
+     "labelled", 5, "import_exit", 2),
+    (lambda e: _double_operations(e / "IL5/live/invocation-1/proposal.json"), "labelled", 4, "clauses_admitted", 2),
+    (lambda e: _drop_last_rule(e / "IL4/live/invocation-2/rules.txt"), "unlabelled", 1, "rules_mined", 1),
+    (lambda e: _drop_last_rule(e / "IL4/live/invocation-2/rules.txt"), "unlabelled", 1, "rules_hold", 1),
 ])
-def test_t4_a_changed_golden_row_fails(field, value):
-    doc = _golden()
-    doc["labelled"][3][field] = value
-    assert _comparison().build(ROOT) != doc
+def test_t4_a_changed_input_changes_its_row(tmp_path, change, section, row, field, value):
+    evidence = _evidence_copy(tmp_path)
+    change(evidence)
+    built = _comparison().build(tmp_path)
+    assert built[section][row][field] == value
+    assert _golden()[section][row][field] != value
 
 
 # -- T5: each row agrees with the walk and its outcome.json ----------------

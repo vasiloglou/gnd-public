@@ -11,7 +11,7 @@ The milestone added learner adapters to the ILP bridge: `ilasp` (IL2), `rules`
 (IL3), `amie` with `gnd import mined-rules` (IL4) and `llm` (IL5), ran Popper
 against a real learner (IL1), and compared all of them on committed real runs
 (IL6). A file is unchanged when none of these alters the behaviour or format it
-documents. The two pin sites the plan names were edited in IL6.
+documents. The two pin sites the plan names were edited in IL6, and the review (R3) found a third, gnd-solve's Station 6 route.
 
 | Path | Changed | Why, or why no change was needed |
 |---|---|---|
@@ -76,7 +76,7 @@ documents. The two pin sites the plan names were edited in IL6.
 | src/gnd/skills/gnd-review-panel-light/SKILL.md | no | the lighter panel profile; unchanged for the same reason as the full panel |
 | src/gnd/skills/gnd-review-panel/SKILL.md | no | the advisory panel; the milestone changes no seat, input class or contract |
 | src/gnd/skills/gnd-review-panel/references/review-contract.md | no | the advisory panel; the milestone changes no seat, input class or contract |
-| src/gnd/skills/gnd-solve/SKILL.md | no | its station 7 route names the proposal sources as examples and stays true; the mined-rules proposal is named at the evolve skill's pin site (an open question records whether this route should name it too) |
+| src/gnd/skills/gnd-solve/SKILL.md | IL6 | Station 6 lists where a proposal may come from; it now names `gnd import mined-rules` beside `gnd discover` and `gnd import ilp-rules` (IL6 review R3) |
 | src/gnd/skills/gnd-update-review-panel/SKILL.md | no | maintains reviewer CLIs; unrelated to the bridge |
 | src/gnd/skills/gnd-update-review-panel/agents/openai.yaml | no | maintains reviewer CLIs; unrelated to the bridge |
 | src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py | no | maintains reviewer CLIs; unrelated to the bridge |

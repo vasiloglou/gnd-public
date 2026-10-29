@@ -6,7 +6,7 @@ changes requires a separate release decision.
 ## Unreleased: more rule learners (2026-10-28)
 
 The ILP bridge now has an adapter for each of five learners, and each was run
-once against a real learner version. The committed outputs replay in the
+against a real learner version: once, or once per setting the owner approved. The committed outputs replay in the
 documentation, so the comparison is reproducible without installing a learner.
 
 - `gnd export ilp --target ilasp` writes an answer-set-programming task for

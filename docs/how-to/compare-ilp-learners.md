@@ -214,7 +214,8 @@ EXPORTED 65 facts in 4 relations to export/amie (amie); skipped 2 fact types
 export_sha256 d7756509f96fd4b9e4449b53a004fb77d5f1a831378a958c5e1122958ca435f3
 ```
 
-AMIE 4.0.0's run of record used its defaults and mined 8 rules:
+AMIE 4.0.0's run of record kept its defaults except for a minimum support of 1
+(`-maxad 3 -mins 1`) and mined 8 rules:
 
 <!-- gnd-run expect=3 output=stderr -->
 ```sh
@@ -252,8 +253,9 @@ members are based, and a person in a team is based at the team's site.
 
 ## What the comparison shows
 
-- Every learner was run once, under one setting, on one small example. The
-  rows say what happened on that run, not which learner is better.
+- Each row is a single run, under one setting, on one small example. Most
+  learners have one row; Popper and AMIE have one per approved run. The rows
+  say what happened on those runs, not which learner is better.
 - The three labelled learners that produced a usable rule found the same
   pattern with different thresholds: 500 (Popper), 640 (the language model)
   and 450 (RIPPER). GND measured each one's coverage itself; RIPPER's 450

@@ -577,8 +577,8 @@ used the later renderings, and the shipped rendering is run 3's.
 ## What the bridge does not establish
 
 - That a learner accepts the rendering in general. Each rendering was run
-  once against one learner version and one setting, as the
-  [comparison](#comparing-the-learners) records; any other version or
-  setting is untested.
+  against one learner version, under the few settings the
+  [comparison](#comparing-the-learners) records, one run each; any other
+  version or setting is untested.
 - That learned rules are true. Coverage agreement on the labelled examples is
   necessary, not sufficient. Admission is your reviewed `gnd evolve` step.

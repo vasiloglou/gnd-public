@@ -1,0 +1,3 @@
+FAILED tests/test_il6_walk.py::test_t4_a_changed_input_changes_its_row[<lambda>-unlabelled-1-rules_mined-1]
+FAILED tests/test_il6_walk.py::test_t4_a_changed_input_changes_its_row[<lambda>-unlabelled-1-rules_hold-1]
+5 failed, 1 passed, 43 deselected in 0.19s

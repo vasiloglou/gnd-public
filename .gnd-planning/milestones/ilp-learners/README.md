@@ -49,7 +49,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL3 phase record](005-phase-IL3.md)
 - [IL4 spec (r1, approved)](notes/phase-IL4-spec.md)
 - [IL4 phase record](006-phase-IL4.md)
-- [IL6 spec (r1, draft, awaiting the owner gate)](notes/phase-IL6-spec.md)
+- [IL6 spec (r1, approved)](notes/phase-IL6-spec.md)
+- [IL6 phase record](007-phase-IL6.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -75,6 +76,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
+- none: IL6 is recorded; the milestone close is next.
 
-**Next action:** the owner rules on the IL6 spec (r1), IL6-D1 to IL6-D11.
+**Next action:** milestone close: the plan repairs, the open-questions sweep and the close review.

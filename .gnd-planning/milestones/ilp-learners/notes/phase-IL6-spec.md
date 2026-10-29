@@ -324,3 +324,18 @@ IL6-D6 (a).
   walk exports `--target neutral` before that import.
 - **Shipping into `src/gnd/examples/`** changes the built inventories and
   may change the RF6 census only if Python files are added; none are.
+
+## 13. Implementation findings
+
+- **IL6-F1.** `gnd export ilp` refuses an `--out` whose parent does not exist
+  (exit 74), so the walk page runs `mkdir export` before the exports.
+- **IL6-F2.** AMIE invocation 2's files ship in `staffing/learners/amie-2/`;
+  §6 named no folder for a second invocation.
+- **IL6-F3.** `staffing/README.md` ships with the example, as each other
+  example has one; T3's "nothing else ships" allows it by name.
+- **IL6-F4.** A T4 mutation set ILASP's termination to the value it already
+  had, so it could not fail; it became `learner-timeout`. Review R4 then
+  showed the whole T4 mutation test could not fail (it compared `build` with
+  a changed golden), and it was rewritten over a copied evidence tree.
+- **IL6-F5.** Review R3: `gnd-solve/SKILL.md` Station 6 lists the proposal
+  sources and is a third pin site; it was edited in IL6.

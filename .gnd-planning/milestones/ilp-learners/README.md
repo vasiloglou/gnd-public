@@ -35,6 +35,13 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   import refused the set (`does-not-hold`), as predicted. The
   [adversarial review](notes/phase-IL4-agent-review.md) found 7 issues; 4
   were fixed, one accepted, and IL4-Q1 and IL4-Q2 are open for the owner.
+- **The close is under way** ([close plan](notes/close-plan.md), approved
+  2026-10-29). **Part A, the close repairs, is recorded:**
+  [record](008-close-repairs.md), [spec r1 (approved)](notes/phase-IL-close-spec.md),
+  [adversarial review](notes/phase-IL-close-agent-review.md). Every ruled
+  "fix" question is fixed corpus-first; the review's 7 findings are fixed.
+  ILC-F5 and ILC-F6 (goldens that moved beyond the spec's list) are open for
+  the owner.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -51,6 +58,9 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL4 phase record](006-phase-IL4.md)
 - [IL6 spec (r1, approved)](notes/phase-IL6-spec.md)
 - [IL6 phase record](007-phase-IL6.md)
+- [Close plan (r1, approved)](notes/close-plan.md)
+- [IL-close spec (r1, approved)](notes/phase-IL-close-spec.md)
+- [IL-close part A record](008-close-repairs.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -76,6 +86,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- none: IL6 is recorded; the milestone close is next.
+- ILC-F5 and ILC-F6: accept the goldens that moved beyond spec §8.
 
-**Next action:** milestone close: the plan repairs, the open-questions sweep and the close review.
+**Next action:** close parts B to E: the plan repairs, the open-questions sweep, the four-reviewer close review and the close record.

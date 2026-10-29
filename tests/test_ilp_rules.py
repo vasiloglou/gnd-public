@@ -118,7 +118,7 @@ def test_t2_every_cell_matches_an_oracle(tmp_path, name):
     export = _export(tmp_path, model=model, labels=labels)
     table = json.loads((export / "rules" / "features.json").read_text(encoding="utf-8"))
     neutral = json.loads((export / "neutral.json").read_text(encoding="utf-8"))
-    rows = ilp_popper._threshold_rows(neutral)
+    rows = ilp_popper.threshold_rows(neutral)
     expected_columns = [
         f"{p['name']}__{k}__{len(p['types'])}__{name_}"
         for p in neutral["predicates"] for k in range(1, len(p["types"]))

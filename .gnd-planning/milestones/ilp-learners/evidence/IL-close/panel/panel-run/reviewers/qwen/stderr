@@ -1,0 +1,3 @@
+using macos seatbelt (profile: permissive-open) ...
+⚠ SAFE MODE — all customizations disabled (hooks, extensions, skills, MCP servers, QWEN.md). Restart without --safe-mode to resume normal operation.
+Run aborted: wall-clock budget of 600s exceeded (--max-wall-time).

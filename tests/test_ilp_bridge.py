@@ -616,7 +616,8 @@ def test_r5_boolean_atoms_become_booleans_at_boolean_roles():
     }
     core = _rewrite_one("wrong(A):- f_order_note(A,B,true),f_order_paid(A,B,true).\n",
                         neutral, columns)
-    assert core["antecedent"][0]["bind"]["note"] == "true"
+    # IL2-Q1 (o), ILC-F5: Popper quotes every string, so a bare true is the boolean.
+    assert core["antecedent"][0]["bind"]["note"] is True
     assert core["consequent"]["absence"]["bind"]["paid"] is True
 
 

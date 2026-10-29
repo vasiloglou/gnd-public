@@ -219,7 +219,9 @@ def main() -> int:
         write_json(out / "reported.json", {
             "schema_version": "gnd-mined-run/1", "learner": learner(stdout),
             "rules_sha256": hashlib.sha256(rules.encode("utf-8")).hexdigest(),
-            "population_sha256": outcome["population_sha256"]})
+            "population_sha256": outcome["population_sha256"],
+            # ILC-D3 (o): the facts AMIE read, retained beside the record.
+            "facts_sha256": hashlib.sha256((out / "facts.tsv").read_bytes()).hexdigest()})
         outcome["import_exit"], outcome["import"] = run_import(
             work, out, ("rules.txt", "reported.json"), IMPORT_ARGS, clean, source=FIXTURE,
             ignore=("expected", "rules.json"))

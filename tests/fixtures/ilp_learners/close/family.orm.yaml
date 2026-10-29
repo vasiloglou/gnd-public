@@ -1,0 +1,77 @@
+# IL-close C1d, C1e, C8a: one subtype family over two top types, p and q.
+# x is both a p and a q; y and w are p only; z is q only. So y and w share an
+# ancestor (p), while y and z share none, though all six are one family. Synthetic.
+version: 1
+model_id: family
+source:
+  kind: fixture
+object_types:
+  - id: p
+    name: P
+    kind: entity
+    reference: { mode: popular, value_type: p_code }
+  - id: p_code
+    name: PCode
+    kind: value
+    primitive: String
+  - id: q
+    name: Q
+    kind: entity
+    reference: { mode: popular, value_type: q_code }
+  - id: q_code
+    name: QCode
+    kind: value
+    primitive: String
+  - id: x
+    name: X
+    kind: entity
+    subtype_of: [p, q]
+    inherits_reference: true
+    derivation: asserted
+  - id: y
+    name: Y
+    kind: entity
+    subtype_of: [p]
+    inherits_reference: true
+    derivation: asserted
+  - id: w
+    name: W
+    kind: entity
+    subtype_of: [p]
+    inherits_reference: true
+    derivation: asserted
+  - id: z
+    name: Z
+    kind: entity
+    subtype_of: [q]
+    inherits_reference: true
+    derivation: asserted
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: ry
+    reading: "{Y} is in {Team}"
+    roles:
+      - { object_type: y, role_name: y }
+      - { object_type: team, role_name: team }
+  - id: rw
+    reading: "{W} is in {Team}"
+    roles:
+      - { object_type: w, role_name: w }
+      - { object_type: team, role_name: team }
+  - id: rz
+    reading: "{Z} is in {Team}"
+    roles:
+      - { object_type: z, role_name: z }
+      - { object_type: team, role_name: team }
+  - id: rp
+    reading: "{P} is in {Team}"
+    roles:
+      - { object_type: p, role_name: p }
+      - { object_type: team, role_name: team }

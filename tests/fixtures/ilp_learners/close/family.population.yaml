@@ -1,0 +1,28 @@
+# IL-close C1d, C1e: e1 and e2 are both a y and a w, in the same team.
+format_version: 2
+population:
+  model: family.orm.yaml
+  model_id: family
+  source: fixture
+  covers: [ry, rw, rz, rp]
+instances:
+  p: ["e1", "e2", "e3"]
+  q: ["e1", "e4"]
+  x: ["e1"]
+  y: ["e1", "e2"]
+  w: ["e1", "e2"]
+  z: ["e4"]
+  team: ["t1"]
+facts:
+  ry:
+    - { y: "e1", team: "t1" }
+    - { y: "e2", team: "t1" }
+  rw:
+    - { w: "e1", team: "t1" }
+    - { w: "e2", team: "t1" }
+  rz:
+    - { z: "e4", team: "t1" }
+  rp:
+    - { p: "e1", team: "t1" }
+    - { p: "e2", team: "t1" }
+    - { p: "e3", team: "t1" }

@@ -1,0 +1,284 @@
+{
+ "story": "IL-close part A's approval corpus (ILC-D9 (o)), committed red before any code. Each case names its spec section, its input and its expected exit and refusal; tests/test_il_close.py drives it. Fixtures here are synthetic (IL-R10).",
+ "mined": [
+  {
+   "id": "C1a",
+   "spec": "6.1",
+   "model": "subtype.orm.yaml",
+   "population": "subtype.population.yaml",
+   "story": "IL4-Q1. A manager is spelled by the staff family in both relations, so the join on ?a meets and the rule holds on both head pairs. Before the fix, manager:m1 never met staff:m1, so GND counted 0 against AMIE's Support 2.",
+   "rules": [
+    "?a  f_manages  ?b   => ?a  f_works_in  ?b\t1.000000\t1.000000\t1.000000\t2\t-1\t2\t-1"
+   ],
+   "expect": {
+    "exit": 0,
+    "support": [
+     [
+      2,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "id": "C1b",
+   "spec": "6.1",
+   "model": "multi.orm.yaml",
+   "population": "multi.population.yaml",
+   "story": "ILC-D1 (a). manager has two supertypes, staff and person. One family name, person (the least top-type id), spells all three, so a join with either supertype counts.",
+   "rules": [
+    "?a  f_manages  ?b   => ?a  f_works_in  ?b\t1.000000\t1.000000\t1.000000\t2\t-1\t2\t-1",
+    "?a  f_manages  ?b   => ?a  f_member_of  ?b\t1.000000\t1.000000\t1.000000\t2\t-1\t2\t-1"
+   ],
+   "expect": {
+    "exit": 0,
+    "support": [
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      2
+     ]
+    ],
+    "facts_tsv": [
+     "person:m1\tf_manages\tteam:t1",
+     "person:m1\tf_member_of\tteam:t1",
+     "person:m1\tf_works_in\tteam:t1",
+     "person:m2\tf_manages\tteam:t2",
+     "person:m2\tf_member_of\tteam:t2",
+     "person:m2\tf_works_in\tteam:t2",
+     "person:p4\tf_member_of\tteam:t2",
+     "person:s3\tf_works_in\tteam:t1"
+    ]
+   }
+  },
+  {
+   "id": "C1d",
+   "spec": "6.1",
+   "model": "family.orm.yaml",
+   "population": "family.population.yaml",
+   "story": "y and z are one family (through x) but share no ancestor. Check 9b refuses the join before any count, so the shared family name never makes them meet. ILC-F1: the spec's r1 wording, siblings of one type, share that type and pass 9b; see C1e.",
+   "rules": [
+    "?a  f_ry  ?b   => ?a  f_rz  ?b\t1.000000\t1.000000\t1.000000\t1\t-1\t1\t-1"
+   ],
+   "expect": {
+    "exit": 3,
+    "refusal": "type-confused-join",
+    "message": "variable ?a joins y and z"
+   }
+  },
+  {
+   "id": "C1e",
+   "spec": "6.1",
+   "model": "family.orm.yaml",
+   "population": "family.population.yaml",
+   "story": "Siblings y and w of p share p, so 9b passes the join, and the count now agrees: e1 and e2 are both, and the rule holds on both. Before the fix, y:e1 never met w:e1.",
+   "rules": [
+    "?a  f_ry  ?b   => ?a  f_rw  ?b\t1.000000\t1.000000\t1.000000\t2\t-1\t2\t-1"
+   ],
+   "expect": {
+    "exit": 0,
+    "support": [
+     [
+      2,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "id": "C2a",
+   "spec": "6.2",
+   "model": "STAFFING",
+   "population": "STAFFING",
+   "record": "no-facts",
+   "story": "ILC-D3 (b). A run record without facts_sha256 fails the schema: exit 3.",
+   "rules": "IL4-A1",
+   "expect": {
+    "exit": 3,
+    "message": "fails gnd-mined-run/1 at (root): 'facts_sha256' is a required property"
+   }
+  },
+  {
+   "id": "C2b",
+   "spec": "6.2",
+   "model": "staffing-swapped.orm.yaml",
+   "population": "STAFFING",
+   "record": "staffing",
+   "story": "IL4 review finding 4. based_at's roles swapped in the model: the population still loads, but the facts the model renders are not the ones AMIE read. Named facts-mismatch, not type-confused-join.",
+   "rules": "IL4-A1",
+   "expect": {
+    "exit": 3,
+    "refusal": "facts-mismatch"
+   }
+  },
+  {
+   "id": "C2c",
+   "spec": "6.2",
+   "story": "The re-derived run records replay to their recorded outcomes: invocation 1 refused does-not-hold, invocation 2 admitted. Discharged by tests/test_ilp_amie.py T9 and the walk, both in the gate.",
+   "replay": [
+    "IL4/live/invocation-1",
+    "IL4/live/invocation-2"
+   ],
+   "expect": {
+    "exits": [
+     3,
+     0
+    ]
+   }
+  }
+ ],
+ "comparison": [
+  {
+   "id": "C3",
+   "spec": "6.3",
+   "story": "IL6-Q2. A rule over a relation the export does not have, planted in a copy of invocation 1's rules: the table cannot count it, so the tool says so and exits 2.",
+   "plant": "?a  f_nowhere  ?b   => ?a  f_based_at  ?b\t1.000000\t1.000000\t1.000000\t1\t-1\t1\t-1",
+   "expect": {
+    "exit": 2,
+    "message": "rule 8: unknown-predicate: GND cannot count this rule; the table does not report it"
+   }
+  },
+  {
+   "id": "C11",
+   "spec": "8",
+   "story": "The committed evidence still gives the committed table.",
+   "expect": {
+    "exit": 0
+   }
+  }
+ ],
+ "join": [
+  {
+   "id": "C4a",
+   "spec": "6.4",
+   "model": "orders.orm.yaml",
+   "story": "IL1-Q1, IL1 review finding 3. C is an amount and D a quantity; C > D joins them. Written infix it was admitted; it is refused as the declared form is.",
+   "clause": "wrong(A):- f_order_amount(A,B,C),f_order_quantity(A,B,D),C > D.\n",
+   "expect": {
+    "refusal": "type-confused-join",
+    "message": "variable C joins amount and quantity"
+   }
+  },
+  {
+   "id": "C4b",
+   "spec": "6.4",
+   "model": "orders.orm.yaml",
+   "story": "A variable against a constant adds no join: unchanged.",
+   "clause": "wrong(A):- f_order_amount(A,B,C),f_order_quantity(A,B,D),C > 500.\n",
+   "expect": {
+    "consequent": {
+     "comparison": {
+      "operator": "<=",
+      "left": "$v_c",
+      "right": 500
+     }
+    }
+   }
+  },
+  {
+   "id": "C4c",
+   "spec": "6.4",
+   "model": "orders.orm.yaml",
+   "story": "Two amounts compared infix share their type, so the join passes.",
+   "clause": "wrong(A):- f_order_amount(A,B,C),f_order_amount(A,B,D),C > D.\n",
+   "expect": {
+    "consequent": {
+     "comparison": {
+      "operator": "<=",
+      "left": "$v_c",
+      "right": "$v_d"
+     }
+    }
+   }
+  }
+ ],
+ "ilasp": [
+  {
+   "id": "C5a",
+   "spec": "6.5",
+   "story": "IL2-Q3. The retained hypothesis with 500 replaced by 501, which the export never rendered as a threshold. off-threshold precedes the rewrite, so it comes before empty-antecedent.",
+   "text": "wrong :- gt_t_amount(V1,501).\n",
+   "coverage": [
+    []
+   ],
+   "expect": {
+    "exit": 3,
+    "refusal": "off-threshold",
+    "clause": 0,
+    "message": "501"
+   }
+  },
+  {
+   "id": "C5b",
+   "spec": "6.5",
+   "story": "The retained hypothesis, unchanged: as recorded.",
+   "text": "wrong :- gt_t_amount(V1,500).\n",
+   "coverage": [
+    []
+   ],
+   "expect": {
+    "exit": 3,
+    "refusal": "empty-antecedent",
+    "clause": 0
+   }
+  },
+  {
+   "id": "C5c",
+   "spec": "6.5",
+   "story": "A rendered threshold in a joined rule is kept and admitted.",
+   "text": "wrong :- f_refund_amount(V1,V2), gt_t_amount(V2,500).\n",
+   "coverage": [
+    [
+     "harbor",
+     "market",
+     "airport",
+     "station"
+    ]
+   ],
+   "expect": {
+    "exit": 0
+   }
+  }
+ ],
+ "extract": [
+  {
+   "id": "C6a",
+   "spec": "6.6",
+   "story": "IL1-Q4. A Warning line between two rules in the solution block: both rules are kept.",
+   "log": "1.0s ********** SOLUTION **********\n1.0s Precision:1.00 Recall:1.00 TP:4 FN:0 TN:4 FP:0 Size:6\n1.0s wrong(V0):- f_a(V0,V1).\n1.0s Warning: a line between rules\n1.0s wrong(V0):- f_b(V0,V1).\n1.0s ******************************\n1.1s wrong(V0):- f_after(V0,V1).\n",
+   "expect": "wrong(V0):- f_a(V0,V1).\nwrong(V0):- f_b(V0,V1).\n"
+  },
+  {
+   "id": "C6b",
+   "spec": "6.6",
+   "story": "Invocation 3's retained log gives its retained program, byte for byte.",
+   "evidence": "IL1/live/invocation-3",
+   "expect": "program.pl"
+  }
+ ],
+ "booleans": [
+  {
+   "id": "C7",
+   "spec": "6.7",
+   "story": "IL2-Q1. A bare true is the boolean; a quoted 'true' stays the string.",
+   "clause": "wrong(A):- f_x(A,B,true),f_y(A,'true'),f_z(A,false).\n",
+   "expect": [
+    [
+     2,
+     true
+    ],
+    [
+     1,
+     "true"
+    ],
+    [
+     1,
+     false
+    ]
+   ]
+  }
+ ]
+}

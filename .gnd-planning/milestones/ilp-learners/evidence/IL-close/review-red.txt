@@ -1,0 +1,11 @@
+# The review regressions R1 to R6 against 2c4fba9, before the fixes.
+# uv run pytest tests/test_il_close.py -q -p no:cacheprovider -k 'test_r' --tb=line
+E   AssertionError: assert ('manager:1\tf_manages\tteam:t1' in 'staff:1\tf_manages\tteam:t1\nstaff:1\tf_works_in\tteam:t1\nstaff:2\tf_manages\tteam:t2\nstaff:2\tf_works_in\tteam:t2\n')
+E   AssertionError: assert 'staff' == 'manager'
+E   AssertionError: b'clause 0: off-threshold: gt_t_bogus compares with 5, which the export does not render as a threshold
+E   AssertionError: b'no-relations: the population covers no binary asserted fact type, so there is nothing to mine
+E   AssertionError: Traceback (most recent call last):
+5 failed, 3 passed, 31 deselected in 1.07s
+# R6 against the review's mutant: the facts check moved before learner-mismatch.
+mutant loaded: True
+3 failed, 36 deselected in 1.20s

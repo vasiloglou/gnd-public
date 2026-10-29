@@ -74,6 +74,8 @@ lt_t_amount__m5(-10).
   values, 32 are taken at evenly spaced ranks, always including the minimum
   and the maximum. A threshold that holds for no observed value (`gt` at the
   maximum, `lt` at the minimum) is not written.
+- **Range:** Popper grounds `bk.pl` in clingo, so an integer outside clingo's
+  32-bit range is refused `unrepresentable` at export, as for ILASP (IL2-D14).
 - **Reading back:** the parser reads `gt_t_amount__120(V)` as the declared
   comparison `gt_t_amount(V, 120)`; `ge` and `le` names are read too. A
   negative value is spelled `m`, and the value follows the last `__`.
@@ -134,6 +136,11 @@ clause form `gnd-ilp-clauses/1` (`--target neutral`). The run record
 Popper prints counts, not sets. You compute `covered` yourself, for example by
 running each learned clause over `bk.pl` and `exs.pl` in Prolog.
 
+CLAUSES is the program Popper logs: every `wrong(…).` line between its last
+`********** SOLUTION **********` line and the closing line of 30 stars. The
+block's other lines, such as its scores or a warning, are skipped, so no rule
+is dropped.
+
 **The import refuses (exit 3) unless every check passes**, and then it writes
 nothing. Admission is all-or-nothing.
 
@@ -146,13 +153,17 @@ nothing. Admission is all-or-nothing.
      adapter's (`popper` for a Popper import). A neutral import accepts any
      learner name; its rules carry `method: ilp-neutral`;
    - `coverage-shape`: `coverage` does not list every clause exactly once.
-2. **The fragment:** each clause is checked in the order of the table below.
-3. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
+2. **Thresholds (Popper):** `off-threshold`, as `clause K: off-threshold`: a
+   `gt_` or `lt_` threshold atom that `bias.pl` does not declare, such as
+   `gt_t_amount__501` when no observed amount is 501, or `gt` at the maximum.
+   Popper could not have learned it from the export.
+3. **The fragment:** each clause is checked in the order of the table below.
+4. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
    checker once per population, and reads each new constraint's verdict:
    - `warning` means covered;
    - `pass` means not covered;
    - `vacuous` and `unchecked` mean not covered, and are listed separately.
-4. **Set comparison, per clause:**
+5. **Set comparison, per clause:**
    - `unknown-example`: a reported id is not in the manifest;
    - `coverage-mismatch`: the set GND covers differs from the reported set.
      Equal counts are not enough.
@@ -177,7 +188,7 @@ failing check refuses the clause with the name shown, as `clause <k>: <name>`.
 | 7 | the remaining atoms (the antecedent) are non-empty and joined by shared variables | `empty-antecedent`, `disconnected-body` |
 | 8 | every variable of the designated literal occurs in the antecedent | `non-ground-absence`, `unbound-comparison` |
 | 9 | no string constant starts with `$`, which a guarded bind reads as a variable | `constant-spelling` |
-| 9b | no variable joins object types that share no ancestor. A variable's sites are the atom positions it holds and the declared type of a comparison predicate it is an operand of (`gt_t_amount(C,100)` makes C an `amount`); every pair must share an ancestor, as `semantic:op-term-type-compat` requires. Each `_` is its own variable | `type-confused-join` |
+| 9b | no variable joins object types that share no ancestor. A variable's sites are the atom positions it holds and the declared type of a comparison predicate it is an operand of (`gt_t_amount(C,100)` makes C an `amount`); every pair must share an ancestor, as `semantic:op-term-type-compat` requires. An infix comparison of two variables, `C > D`, joins them: each type of C must share an ancestor with each type of D. A variable compared with a constant joins nothing. Each `_` is its own variable | `type-confused-join` |
 | 10 | the model plus the constraint validates | `invalid-guarded`, with the validator's rule ids |
 
 A comparison predicate the export declared, such as `gt_t_amount(C,100)`, counts
@@ -206,7 +217,9 @@ GND reads only what SWI writes.
 - A Prolog variable `V` is spelled `$v_` plus an injective encoding: upper case
   becomes lower case, a lower-case letter gains a leading `_`, and `_` doubles.
   So `B` becomes `$v_b`. Each anonymous `_` becomes a fresh `$anon<k>`.
-- At a boolean-typed role, the atoms `true` and `false` become booleans.
+- The bare atoms `true` and `false` are booleans, as the export writes them;
+  Popper quotes every string, so `'true'` is the string. At a boolean-typed
+  role, the quoted `'true'` and `'false'` also become booleans.
 
 Each constraint is top-level `guarded`, with `source: induced`,
 `status: proposed` and `modality: deontic`. It is never a `derivation_rule`. Its
@@ -284,6 +297,12 @@ exit 3 and `clause K: <name>`:
 | `40`, `-3` | an integer |
 | `"a\"b"` | a string; the escapes are `\\`, `\"` and `\n` |
 | `true`, `false` | a boolean |
+
+**Thresholds.** After the run record's checks and before the fragment table,
+the import checks each comparison's constant against the thresholds the task
+offers for its type, its `thr_t` facts. Any other constant, such as `501` when
+no observed amount is 501, is refused `off-threshold`, as
+`clause K: off-threshold`: ILASP could not have learned it from the export.
 
 Any other bare name, such as `web`, is refused `unparsable`: clingo reads
 `web` and `"web"` as different constants. On a boolean role a quoted
@@ -439,7 +458,16 @@ exits 64.
   fact, sorted. Each binary asserted fact type the population `covers` is one
   relation, `f_<fact type id>`. Each value is spelled
   `<object type id>:<value>`, so the miner cannot join a refund number with an
-  equal amount. A tab, newline or backslash in a string is written `\t`,
+  equal amount. A type in a subtype hierarchy is spelled by its **family**
+  instead: the least top-type id, in code-point order, of the connected part of
+  the subtype graph that holds it. So a `manager` that is a subtype of `staff`
+  is spelled `staff:m1`, and a rule joining the two counts as the checker
+  does. Only a subtype that inherits its supertype's reference joins its
+  family; one with its own reference scheme starts a family of its own,
+  because its values may be spelled like the supertype's and still differ. A
+  hierarchy with no top type, a cycle, is named by its least type id. Types of
+  one family that share no ancestor are refused by the join check first. `export.json`'s `adapter_version` is `2`; a model without
+  subtypes renders the same facts as version `1`. A tab, newline or backslash in a string is written `\t`,
   `\n` or `\\`; any other character that is not printable (a control
   character, a non-breaking or zero-width space) is refused `unrepresentable`.
 - `amie/relations.json`: the population's SHA-256, each relation's fact type,
@@ -462,12 +490,25 @@ body order), a variable other than `?a` to `?z`, more
 than 256 rules, more than 4 atoms, a count over 18 digits, more than 1 MiB.
 
 **The run record** (`gnd-mined-run/1` in `mined-import.schema.json`) names the
-miner and binds RULES and the population by SHA-256. A different miner is
-refused `learner-mismatch`, other RULES `rules-mismatch`, another population
-`population-mismatch`. The record does not bind the model: the rules are read
-under whichever model is given, and since GND recounts every rule over that
-model and population, a different model can change the refusal's name or
-the rule's meaning, never admit a rule that does not hold there. The
+miner and binds RULES, the population and `amie/facts.tsv`, the facts the
+miner read, by SHA-256:
+
+```json
+{"schema_version": "gnd-mined-run/1",
+ "learner": {"name": "amie", "version": "4.0.0"},
+ "rules_sha256": "<sha256 of RULES>", "population_sha256": "<sha256 of POP>",
+ "facts_sha256": "<sha256 of DIR/amie/facts.tsv>"}
+```
+
+A different miner is refused `learner-mismatch`, other RULES
+`rules-mismatch`, another population `population-mismatch`. The import then
+renders the facts again from MODEL and POP; facts other than the ones the
+miner read are refused `facts-mismatch`, and so is a pair from which no export
+can be written, naming the export's reason. The facts hold every relation name,
+role order and spelled value, so a model that reads the population
+differently, such as one with a fact type's roles swapped, is refused before
+any rule is mapped. The record does not bind the export's version: version `2`
+renders the facts of a model without subtypes byte for byte as `1` did. The
 proposal binds the model it was built against.
 
 **The mapping.** A rule `B1, …, Bn => r(x, y)` becomes one `guarded`

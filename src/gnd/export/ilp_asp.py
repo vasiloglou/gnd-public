@@ -18,11 +18,11 @@ import re
 from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
-from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
+from gnd.export.ilp import COMPARISON_NAME, IlpError, clingo_integer, observed_integers
 from gnd.export.ilp_popper import thresholds
 
-__all__ = ["ADAPTER_VERSION", "REFUSALS", "context_fact", "extract_hypothesis",
-           "parse_hypothesis", "render", "split_task"]
+__all__ = ["ADAPTER_VERSION", "IMPORT_REFUSALS", "REFUSALS", "check_thresholds", "context_fact",
+           "extract_hypothesis", "parse_hypothesis", "render", "split_task"]
 
 ADAPTER_VERSION = "1"
 
@@ -37,6 +37,8 @@ _COMPARISON_RECALL = 1
 REFUSALS = ("asp-constraint", "choice-rule", "weak-constraint", "classical-negation",
             "arithmetic-term", "interval-or-pool", "directive", "builtin-comparison",
             "empty-body", "disjunction", "head-shape")
+#: The import's own refusal of a parsed hypothesis, before the shared rewrite (IL2-Q3, ILC-D6 (o)).
+IMPORT_REFUSALS = ("off-threshold",)
 
 MAX_RULES = 32
 MAX_LITERALS = 16
@@ -75,10 +77,7 @@ def _term(value: Any) -> str:
     if isinstance(value, bool):
         return "true" if value else "false"
     if isinstance(value, int):
-        if value not in _INT_RANGE:
-            raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {value} is outside clingo's "
-                           "32-bit integer range (IL2-D14)")
-        return str(value)
+        return clingo_integer(value)
     out = []
     for character in value:
         if character in '\\"':
@@ -168,21 +167,16 @@ def extract_hypothesis(log: str) -> str:
     """The learned hypothesis in ILASP's output, one rule per line; ``""`` if none.
 
     ILASP 4.4.1 prints its ``%%`` timing block first and the hypothesis after
-    it (the IL2-D4 probe, IL2-F5). The hypothesis is the first maximal run of
-    non-blank lines after the last line that starts with ``%%``, whatever
-    their heads, so the reader refuses a learned constraint by name; a line
+    it (the IL2-D4 probe, IL2-F5). The hypothesis is every non-blank line
+    after the last line that starts with ``%%``, whatever its head, so the
+    reader refuses a learned constraint by name and no block is dropped
+    (IL2-F8, predicate-7 review finding 3); a line
     that is exactly ``UNSATISFIABLE`` means none, although ILASP still exits 0."""
     lines = [line.strip() for line in log.splitlines()]
     if "UNSATISFIABLE" in lines:
         return ""
     banners = [index for index, line in enumerate(lines) if line.startswith("%%")]
-    program: list[str] = []
-    for line in lines[banners[-1] + 1 if banners else 0:]:
-        if line:
-            program.append(line)
-        elif program:
-            break
-    return "".join(f"{line}\n" for line in program)
+    return "".join(f"{line}\n" for line in lines[banners[-1] + 1 if banners else 0:] if line)
 
 
 def _unparsable(line: int, column: int, detail: str) -> IlpError:
@@ -463,3 +457,31 @@ def _thread(body: list[dict[str, Any]]) -> dict[str, Any]:
 def parse_hypothesis(text: str) -> dict[str, Any]:
     """ILASP's printed hypothesis as a ``gnd-ilp-clauses/1`` document (unvalidated)."""
     return _Reader(text).hypothesis()
+
+
+def check_thresholds(document: dict[str, Any], neutral: dict[str, Any], text: str = "") -> None:
+    """Refuse a comparison constant the task never offered (IL2-Q3, ILC-D6 (o)).
+
+    The task's ``thr_t`` facts are the type's :func:`thresholds`; a constant
+    outside them is no threshold ILASP could have learned from the export, so
+    the clause is refused ``off-threshold`` by index. The reader has already
+    shaped every comparison atom as ``(variable, integer)``, so the hypothesis
+    TEXT is not needed; one the export did not declare is left to the fragment
+    table."""
+    observed = observed_integers(neutral)
+    types = {row["name"]: row["type"] for row in neutral["comparisons"]}
+    offered: dict[str, set[int]] = {}
+    for index, clause in enumerate(document["clauses"]):
+        for literal in clause["body"]:
+            atom = literal.get("atom")
+            # An undeclared comparison is the fragment table's unknown-predicate (review 3).
+            if atom is None or atom["predicate"] not in types:
+                continue
+            type_name = types[atom["predicate"]]
+            if type_name not in offered:
+                offered[type_name] = set(thresholds(observed.get(type_name, set())))
+            value = atom["args"][1]["const"]
+            if value not in offered[type_name]:
+                raise IlpError(EXIT_ILL_FORMED, f"clause {index}: off-threshold: {atom['predicate']} "
+                               f"compares with {value}, which the export does not render as a "
+                               "threshold")

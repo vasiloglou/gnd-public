@@ -62,13 +62,18 @@ def _stderr(message: str) -> None:
     print(message, file=sys.stderr)
 
 
-def _schema(name: str) -> Draft202012Validator:
-    text = files("gnd").joinpath(name).read_text(encoding="utf-8")
-    return Draft202012Validator(_rf7_input.loads(text))
+def _schema(name: str, definition: str | None = None) -> Draft202012Validator:
+    """The shipped schema; with ``definition``, only that ``$defs`` entry, so a
+    failure names its field rather than the root ``oneOf`` (ILC-F4)."""
+    schema = _rf7_input.loads(files("gnd").joinpath(name).read_text(encoding="utf-8"))
+    if definition is not None:
+        schema = {"$schema": schema["$schema"], "$defs": schema["$defs"],
+                  "$ref": f"#/$defs/{definition}"}
+    return Draft202012Validator(schema)
 
 
-def _validate(document: Any, name: str, version: str, label: str) -> None:
-    errors = sorted(_schema(name).iter_errors(document), key=lambda e: list(e.absolute_path))
+def _validate(document: Any, name: str, version: str, label: str, definition: str | None = None) -> None:
+    errors = sorted(_schema(name, definition).iter_errors(document), key=lambda e: list(e.absolute_path))
     if errors:
         first = errors[0]
         where = "/".join(str(part) for part in first.absolute_path) or "(root)"
@@ -338,6 +343,8 @@ def _cmd_import_ilp_rules(
             raise IlpError(EXIT_ILL_FORMED, f"coverage-shape: the run record must list each of "
                            f"the {count} clauses exactly once, not {indexes}")
         reported = {row["clause"]: row["covered"] for row in record["coverage"]}
+        if entry.vet is not None:
+            entry.vet(clause_doc, prepared.neutral, clause_bytes.decode("utf-8"))
         method = entry.method
         run_sha = hashlib.sha256(run_bytes).hexdigest()
         prefix = f"learned by {learner['name']} {learner['version']} from manifest " \
@@ -496,7 +503,7 @@ def _cmd_import_ilp_rules(
 #: The run record's cap; it is a few hundred bytes.
 MINED_RUN_CAP = 64 * 1024
 #: The import's own refusals of its inputs, before the mapping (spec §6).
-MINED_INPUT_REFUSALS = ("learner-mismatch", "rules-mismatch", "population-mismatch")
+MINED_INPUT_REFUSALS = ("learner-mismatch", "rules-mismatch", "population-mismatch", "facts-mismatch")
 
 
 @dataclass(frozen=True)
@@ -603,7 +610,7 @@ def _cmd_import_mined_rules(
         run_bytes = _read_capped(paths["run record"], MINED_RUN_CAP, "run record")
         record = _json(run_bytes, f"run record {paths['run record']}")
         _validate(record, "mined-import.schema.json", "gnd-mined-run/1",
-                  f"run record {paths['run record']}")
+                  f"run record {paths['run record']}", definition="run")
         entry = _learners.learner(target)
         learner = record["learner"]
         if learner["name"] != entry.learner:
@@ -617,6 +624,20 @@ def _cmd_import_mined_rules(
         if record["population_sha256"] != inputs.digest:
             raise IlpError(EXIT_ILL_FORMED, f"population-mismatch: the run record binds population "
                            f"{record['population_sha256']}, not {inputs.digest}")
+        # The facts the miner read bind the model's reading of the population:
+        # relation names, role order and spelling (IL4-Q2, ILC-D3 (o)).
+        try:
+            facts_sha = hashlib.sha256(_amie.render(inputs.model, inputs.population,
+                                                    inputs.digest)["amie/facts.tsv"]).hexdigest()
+        except IlpError as error:
+            # No export writes these facts, so none is the one the record binds (review 4).
+            raise IlpError(EXIT_ILL_FORMED, f"facts-mismatch: the run record binds facts "
+                           f"{record['facts_sha256']}, but this model exports none from the "
+                           f"population ({error})") from None
+        if record["facts_sha256"] != facts_sha:
+            raise IlpError(EXIT_ILL_FORMED, f"facts-mismatch: the run record binds facts "
+                           f"{record['facts_sha256']}, but this model renders the population "
+                           f"as {facts_sha}")
         from gnd.redaction import RedactionPolicy
 
         relations, uncovered, _skipped = _amie.relation_table(inputs.model, list(inputs.population.covers))
@@ -652,8 +673,8 @@ def _cmd_import_mined_rules(
         base = len(inputs.document.get("constraints") or [])
         for index, (rule, mined_rule, counted) in enumerate(zip(parsed, mined, counts, strict=True)):
             head = relations[mined_rule.head[1]]
-            spelled = [tuple(_amie.spell(object_type, row[role], where=head.fact_type)
-                             for role, object_type in zip(head.roles, head.types, strict=True))
+            spelled = [tuple(_amie.spell(name, row[role], where=head.fact_type)
+                             for role, name in zip(head.roles, head.families, strict=True))
                        for row in inputs.population.facts.get(head.fact_type) or []]
             first: dict[tuple[str, ...], int] = {}
             for row_index, pair in enumerate(spelled):

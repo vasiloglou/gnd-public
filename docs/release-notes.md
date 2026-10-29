@@ -19,6 +19,23 @@ documentation, so the comparison is reproducible without installing a learner.
   population itself and admits the set only when every rule holds.
 - The Popper adapter ran against Popper 5.0.1; its rendering now writes each
   threshold as a predicate of its own.
+- Fixes at the milestone's close (2026-10-29):
+  - A mined rule that joins a subtype with its supertype now counts as the
+    checker does. The AMIE export spells such values by their subtype family,
+    and its adapter version is now 2.
+  - A mined run record must name the facts the miner read (`facts_sha256`).
+    Facts the model renders differently are refused `facts-mismatch`.
+  - An infix comparison of two variables, such as `C > D`, is type-checked as a
+    join.
+  - An ILASP constant that is not one of the export's thresholds is refused
+    `off-threshold`.
+  - The Popper reader keeps every rule in the solution block, and reads a bare
+    `true` or `false` as a boolean.
+  - A Popper threshold that the export never rendered is refused
+    `off-threshold`, and the Popper export refuses an integer outside clingo's
+    32-bit range as `unrepresentable`, as the ILASP export does.
+  - The ILASP extractor reads every non-blank line after the timing block, so
+    no learned rule after a blank line is dropped.
 
 [Compare the rule learners on real runs](how-to/compare-ilp-learners.md)
 replays every run, and the [comparison table](reference/ilp-bridge.md#comparing-the-learners)

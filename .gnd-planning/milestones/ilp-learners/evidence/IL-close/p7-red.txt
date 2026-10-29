@@ -1,0 +1,13 @@
+$ git rev-parse --short HEAD
+3c01567
+$ uv run pytest -q -p no:randomly --tb=no -rf tests/test_il_close.py -k "r7 or r8 or r9"
+FFFFF.FF                                                                 [100%]
+=========================== short test summary info ============================
+FAILED tests/test_il_close.py::test_r7_popper_refuses_an_integer_clingo_would_wrap[2147483648]
+FAILED tests/test_il_close.py::test_r7_popper_refuses_an_integer_clingo_would_wrap[-2147483649]
+FAILED tests/test_il_close.py::test_r8_a_popper_threshold_must_be_rendered[gt_t_amount__501]
+FAILED tests/test_il_close.py::test_r8_a_popper_threshold_must_be_rendered[gt_t_amount__99999999999]
+FAILED tests/test_il_close.py::test_r8_a_popper_threshold_must_be_rendered[gt_t_amount__1500]
+FAILED tests/test_il_close.py::test_r8_off_threshold_is_an_import_refusal_of_the_popper_adapter
+FAILED tests/test_il_close.py::test_r9_the_ilasp_extractor_hands_a_second_block_to_the_reader
+7 failed, 1 passed, 39 deselected

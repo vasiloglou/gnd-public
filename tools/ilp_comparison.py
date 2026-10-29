@@ -13,6 +13,9 @@ Usage, from the repository root::
     uv run python tools/ilp_comparison.py           # check: exit 1 if either differs
     uv run python tools/ilp_comparison.py --write   # rewrite the bridge section
 
+Exit 2 means a mined rule GND cannot map or count: the table would misreport
+it, so nothing is compared or written (IL6-Q2).
+
 The golden is the phase's corpus (IL6-D11): it was committed before this tool
 and the tool never writes it.
 
@@ -51,6 +54,10 @@ UNLABELLED = (
 #: A note a phase record adds to a row's reproducibility (IL6-D5 (o)).
 NOTES = {("rules", 1): "; repeated runs pick other thresholds (IL3-F5)"}
 _REFUSAL = re.compile(r"(?:clause|rule) (\d+): ([a-z]+(?:-[a-z]+)*): ")
+
+
+class ComparisonError(Exception):
+    """A mined rule the table cannot count (IL6-Q2): the tool exits 2 and names it."""
 
 
 def _json(path: Path) -> Any:
@@ -114,7 +121,10 @@ def labelled_row(root: Path, adapter: str, invocation: int, directory: str, outp
 
 
 def hold(root: Path, text: str) -> int:
-    """GND's count of the mined rules that hold on the staffing population (every head pair)."""
+    """GND's count of the mined rules that hold on the staffing population (every head pair).
+
+    A rule GND cannot map or count raises :class:`ComparisonError` naming it;
+    it is never counted as not holding."""
     from gnd.export import ilp, ilp_amie
     from gnd.export.ilp_service import _mined_inputs
     from gnd.redaction import RedactionPolicy
@@ -129,22 +139,31 @@ def hold(root: Path, text: str) -> int:
         try:
             counted = ilp_amie.count(ilp_amie.mapped(rule, index, relations, uncovered, shape, closures),
                                      facts, index)
-        except ilp.IlpError:
-            continue
+        except ilp.IlpError as error:
+            name = _REFUSAL.match(str(error))
+            refusal = name.group(2) if name else str(error)
+            raise ComparisonError(f"rule {index}: {refusal}: GND cannot count this rule; "
+                                  "the table does not report it") from None
         held += counted.denominator > 0 and counted.numerator == counted.denominator
     return held
 
 
 def unlabelled_row(root: Path, adapter: str, invocation: int, directory: str) -> dict[str, Any]:
     from gnd.export import ilp_amie
+    from gnd.export.ilp import IlpError
 
     live = root / EVIDENCE / directory
     outcome = _json(live / "outcome.json")
     row = _common(adapter, invocation, outcome, "staffing")
     path = live / "rules.txt"
     text = path.read_text(encoding="utf-8") if path.exists() else ""
-    return {**row, "rules_mined": len(ilp_amie.parse_rules(text)) if text else None,
-            "rules_hold": hold(root, text) if text else None,
+    try:
+        mined, held = (len(ilp_amie.parse_rules(text)), hold(root, text)) if text else (None, None)
+    except IlpError as error:
+        # Review 5: rules or staffing inputs GND cannot read are counted by no row.
+        raise ComparisonError(f"{directory}: {error}: GND cannot count these rules; "
+                              "the table does not report them") from None
+    return {**row, "rules_mined": mined, "rules_hold": held,
             "rules_admitted": _admitted(live, row["import_exit"]), "first_refusal": _first_refusal(live)}
 
 
@@ -214,7 +233,11 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--write", action="store_true", help="rewrite the bridge section")
     args = parser.parse_args()
-    doc = build(args.root)
+    try:
+        doc = build(args.root)
+    except ComparisonError as error:
+        print(error, file=sys.stderr)
+        return 2
     golden, bridge = args.root / GOLDEN, args.root / BRIDGE
     wanted = {golden: _golden_bytes(doc), bridge: _bridge(bridge.read_text(encoding="utf-8"), doc)}
     stale = [path for path, text in wanted.items() if path.read_text(encoding="utf-8") != text]

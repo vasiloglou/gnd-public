@@ -22,15 +22,18 @@ import re
 from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
-from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
+from gnd.export.ilp import COMPARISON_NAME, IlpError, clingo_integer, observed_integers
 
-__all__ = ["ADAPTER_VERSION", "AGGREGATES", "MAX_THRESHOLDS", "SOLUTION_BANNER", "extract_program",
-           "parse_program", "quote", "render", "thresholds"]
+__all__ = ["ADAPTER_VERSION", "AGGREGATES", "IMPORT_REFUSALS", "MAX_THRESHOLDS", "SOLUTION_BANNER",
+           "check_thresholds", "extract_program", "parse_program", "quote", "render", "threshold_rows",
+           "thresholds"]
 
 #: ``export.json``'s ``adapter_version`` for the Popper target (IL1-A1 (o)).
 ADAPTER_VERSION = "3"
 #: Threshold values per integer type, fixed before results (IL1-A1-D3 (o)).
 MAX_THRESHOLDS = 32
+#: The import's own refusal of a parsed program, before the shared rewrite (predicate-7 review, finding 2).
+IMPORT_REFUSALS = ("off-threshold",)
 #: The comparison operators rendered as thresholds (IL1-A1-D2 (o)).
 _THRESHOLD_OPERATORS = (">", "<")
 #: A threshold atom: a comparison name, ``__`` and the value, negative as ``m``;
@@ -67,6 +70,8 @@ MAX_OCTAL_DIGITS = 7
 SOLUTION_BANNER = "*" * 10 + " SOLUTION " + "*" * 10
 _ELAPSED = re.compile(r"^\d+(?:\.\d+)?s ")
 _RULE = re.compile(r"wrong\(.*\.")
+#: The solution block's closing line (IL1 invocation 3's log).
+_CLOSING = "*" * len(SOLUTION_BANNER)
 
 
 def quote(text: str) -> str:
@@ -86,7 +91,7 @@ def _term(value: Any) -> str:
     if isinstance(value, bool):
         return "true" if value else "false"
     if isinstance(value, int):
-        return str(value)
+        return clingo_integer(value)
     return quote(value)
 
 
@@ -108,7 +113,7 @@ def _suffix(value: int) -> str:
     return f"m{-value}" if value < 0 else str(value)
 
 
-def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]:
+def threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]:
     """``(name, type, extension)`` per rendered threshold predicate, in render order.
 
     The extension is the observed values of the type the comparison holds for,
@@ -125,6 +130,26 @@ def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]
     return rows
 
 
+def check_thresholds(document: dict[str, Any], neutral: dict[str, Any], text: str) -> None:
+    """Refuse a threshold atom the export never rendered (predicate-7 review, finding 2).
+
+    Popper can only learn a threshold predicate ``bias.pl`` declares, so a
+    ``gt`` or ``lt`` threshold name in TEXT that the export did not render is
+    refused ``off-threshold`` by clause index, as ILASP's import refuses an
+    unoffered constant (IL2-Q3). A binary comparison atom, the IK5 spelling, and
+    ``ge`` and ``le`` names are left to the fragment table; DOCUMENT is TEXT
+    already parsed."""
+    operators = {row["name"]: row["operator"] for row in neutral["comparisons"]}
+    rendered = {name for name, _type, _holds in threshold_rows(neutral)}
+    parser = _Parser(text)
+    parser.program()
+    for index, name in parser.thresholds:
+        comparison = name[:name.rindex("__")]
+        if operators.get(comparison) in _THRESHOLD_OPERATORS and name not in rendered:
+            raise IlpError(EXIT_ILL_FORMED, f"clause {index}: off-threshold: {name} is not a "
+                           "threshold predicate the export renders")
+
+
 def render(neutral: dict[str, Any]) -> dict[str, bytes]:
     position = {example["id"]: index for index, example in enumerate(neutral["examples"])}
     # Grouped by predicate, so each predicate's clauses are contiguous; the
@@ -132,7 +157,7 @@ def render(neutral: dict[str, Any]) -> dict[str, bytes]:
     facts = sorted(neutral["facts"], key=lambda fact: (fact["predicate"], position[fact["example"]]))
     lines = [f"{fact['predicate']}({quote(fact['example'])},"
              f"{','.join(_term(v) for v in fact['values'])}).\n" for fact in facts]
-    rows = _threshold_rows(neutral)
+    rows = threshold_rows(neutral)
     # Ground facts, not rules: Popper v5.0.1 grounds bk.pl in clingo and calls
     # predicates unbound, and a rule-defined threshold has no atoms there
     # (IL1-A2 (o), review finding 2).
@@ -176,6 +201,9 @@ class _Parser:
             position = match.end()
         self.tokens.append(("end", "", line, position - start + 1))
         self.index = 0
+        #: ``(clause index, name)`` of each threshold atom read as a comparison.
+        self.thresholds: list[tuple[int, str]] = []
+        self.clause_index = 0
 
     @staticmethod
     def _fail(line: int, column: int, detail: str) -> None:
@@ -196,8 +224,9 @@ class _Parser:
         return token[0] == kind and (value is None or token[1] == value)
 
     def program(self) -> dict[str, Any]:
-        clauses = []
+        clauses: list[dict[str, Any]] = []
         while not self.at("end"):
+            self.clause_index = len(clauses)
             clauses.append(self.clause())
         return {"schema_version": "gnd-ilp-clauses/1", "clauses": clauses}
 
@@ -258,7 +287,10 @@ class _Parser:
                 return [{"aggregate": {"name": name,
                                        "args": self.arguments(goals=True, depth=depth + 1)}}]
             line, column = self.peek()[2:]
-            return [{"atom": _comparison(name, self.arguments(goals=False), line, column)}]
+            atom = _comparison(name, self.arguments(goals=False), line, column)
+            if atom["predicate"] != name:
+                self.thresholds.append((self.clause_index, name))
+            return [{"atom": atom}]
         left = self.term()
         token = self.peek()
         if token[0] != "op":
@@ -297,7 +329,8 @@ class _Parser:
         if kind == "var":
             return {"var": value}
         if kind == "name":
-            return {"const": value}
+            # The renderer writes a boolean bare (_term); read it back as one (IL2-Q1).
+            return {"const": {"true": True, "false": False}.get(value, value)}
         if kind == "int":
             if len(value.lstrip("-")) > MAX_INT_DIGITS:
                 self._fail(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
@@ -375,19 +408,22 @@ def _octal(rest: str, line: int, column: int) -> str:
 def extract_program(log: str) -> str:
     """The learned program in Popper's log, one rule per line; ``""`` if none.
 
-    The program is the first maximal run of ``wrong(...).`` lines after the last
-    :data:`SOLUTION_BANNER`, each with its elapsed-seconds prefix removed. Linear
-    in the log; the log itself is bounded by the run's process limits."""
+    The program is every ``wrong(...).`` line in the block after the last
+    :data:`SOLUTION_BANNER`, up to its closing line of stars or the end of the
+    log, each with its elapsed-seconds prefix removed; the block's other lines
+    (the scores, a warning) are skipped, so no rule is dropped (IL1-Q4,
+    ILC-D7 (o)). Linear in the log; the log itself is bounded by the run's
+    process limits."""
     lines = [_ELAPSED.sub("", line, count=1).strip() for line in log.splitlines()]
     banners = [index for index, line in enumerate(lines) if line == SOLUTION_BANNER]
     if not banners:
         return ""
     program: list[str] = []
     for line in lines[banners[-1] + 1:]:
+        if line == _CLOSING:
+            break
         if _RULE.fullmatch(line):
             program.append(line)
-        elif program:
-            break
     return "".join(f"{line}\n" for line in program)
 
 

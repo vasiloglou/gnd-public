@@ -242,11 +242,12 @@ def test_extract_reads_the_hypothesis_after_the_timing_block():
     assert extract_hypothesis((PROBE / "toy-unsat.stdout.txt").read_text()) == ""
 
 
-def test_extract_takes_one_run_after_the_last_banner():
+def test_extract_takes_every_line_after_the_last_banner():
+    """IL2-F8: no block after the last banner is dropped (predicate-7 review, finding 3)."""
     from gnd.export.ilp_asp import extract_hypothesis
 
     log = "wrong :- early(V1).\n%%%%\n%% Total : 1s\n%%%%\nwrong :- a(V1).\nwrong :- b(V1).\n\nwrong :- c(V1).\n"
-    assert extract_hypothesis(log) == "wrong :- a(V1).\nwrong :- b(V1).\n"
+    assert extract_hypothesis(log) == "wrong :- a(V1).\nwrong :- b(V1).\nwrong :- c(V1).\n"
     assert extract_hypothesis("") == ""
 
 

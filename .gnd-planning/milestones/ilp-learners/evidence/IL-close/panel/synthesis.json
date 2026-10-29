@@ -1,0 +1,342 @@
+{
+ "schema_version": 1,
+ "run_sha256": "79fb0dc3b8b42a1d0f3dcbb8ab073ac0410eec5f811c7f8966d1140654a5c3ba",
+ "summary": "Five of six seats succeeded (qwen exited nonzero); all five asked for revisions. Four agreed groups: the close repairs rewrote approved criteria (high, four supporters), and three narrower disposition and gate-claim corrections. Seven divergent views stay visible, including claude's blocking concern that Part D did not review the milestone diff the close plan named.",
+ "agreed_concerns": [
+  {
+   "group_id": "G1",
+   "severity": "high",
+   "title": "The close repairs rewrote approved criteria, or left them contradicting each other, and verdicts read MET against the rewritten text",
+   "summary": "The (c) repairs changed the wording of approved completion predicates (rule-set learner type, the IL6 walk, the miner's count) to match what was delivered, left IL6-C1 and predicate 1's compatibility clause unrepaired, and the close record's verdicts relied on the rewritten text.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c1-intent-boolean-rules"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c2-intent-il6-walk"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c3-intent-miner-count"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c4-verdict-il3-met"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c5-verdict-il6-met"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c6-verdict-il4-met"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il1-compatibility-verdict"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ilp-plan-unrepaired-criterion-wording"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il6-c1-not-repaired"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "G2",
+   "severity": "medium",
+   "title": "IL4-Q1 is marked fixed, but own-reference subtype joins still get a false refusal that is carried nowhere",
+   "summary": "The fix covers reference-inheriting subtypes only; the own-reference residual appears only as a boundary bullet.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il4-q1-residual-uncarried"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il4-q1-fixed-scope"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "G3",
+   "severity": "medium",
+   "title": "IL1-Q3 is marked discharged, but its out-of-set-values half stayed open",
+   "summary": "IL2 discharged only the names the renderer never writes; Popper threshold values outside the export's set remained in IL1's boundary.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il1-q3-partly-discharged"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il1-q3-partial-discharge"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "G4",
+   "severity": "low",
+   "title": "The close record's gate claim does not cover its final bytes",
+   "summary": "The gate ran before the planning-text edits that one gate test scans, and 009 drops 008's qualifier about the later import-order fix.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "gate-predates-planning-edits"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ilp-close-009-final-bytes-claim"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "part-d-input-narrowed"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "predicate-7-review-coverage"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "predicate-1-residual-incomplete"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "plan-status-line-untagged"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "il5-version-unreported"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "il-r9-enumeration"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "il-close-fastlas-attribution"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "F1",
+   "rank": 1,
+   "title": "Restore the approved criterion text; record deviations beside it",
+   "action": "Revert the (c) rewrites of approved criteria to their approved wording and annotate each with a (c) deviation note naming the owner ruling that allowed it (IL3-D1 (a), IL4-D4 (o), IL4-F4, the IL1 amendments); annotate IL6-C1 and predicate 1 the same way; record those verdicts as MET WITH DEVIATION.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c1-intent-boolean-rules"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c2-intent-il6-walk"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c3-intent-miner-count"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c4-verdict-il3-met"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c5-verdict-il6-met"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c6-verdict-il4-met"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il1-compatibility-verdict"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ilp-plan-unrepaired-criterion-wording"
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il6-c1-not-repaired"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c1-intent-boolean-rules",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c2-intent-il6-walk",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c3-intent-miner-count",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c4-verdict-il3-met",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c5-verdict-il6-met",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "c6-verdict-il4-met",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il1-compatibility-verdict",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ilp-plan-unrepaired-criterion-wording",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il6-c1-not-repaired",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini",
+    "glm"
+   ]
+  },
+  {
+   "fix_id": "F2",
+   "rank": 2,
+   "title": "Mark IL4-Q1 partly fixed and carry the own-reference residual",
+   "action": "Qualify IL4-Q1 as fixed for reference-inheriting subtypes and carry the own-reference false refusal to a named successor.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il4-q1-residual-uncarried"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il4-q1-fixed-scope"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il4-q1-residual-uncarried",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il4-q1-fixed-scope",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "F3",
+   "rank": 3,
+   "title": "Mark IL1-Q3 partly discharged and carry its out-of-set half",
+   "action": "Record IL1-Q3 as partly discharged and carry the Popper out-of-set threshold values with the mined-import successor rows.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il1-q3-partly-discharged"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il1-q3-partial-discharge"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "il1-q3-partly-discharged",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "il1-q3-partial-discharge",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "fix_id": "F4",
+   "rank": 4,
+   "title": "Re-run the gate on the final bytes and keep 008's qualifier",
+   "action": "Re-run the gate on the final close bytes, record it, and carry 008's import-order qualifier into 009's gate note.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "gate-predates-planning-edits"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ilp-close-009-final-bytes-claim"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "gate-predates-planning-edits",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "ilp-close-009-final-bytes-claim",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "glm"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+  "command": "import mined-rules",
+  "inputs": {
+    "model": {
+      "path": "model.orm.yaml",
+      "sha256": "fe3857c96fc16d01d38526a4aedc89de52158f3b1a01e305ffbc6f201a2770aa"
+    },
+    "population": {
+      "path": "population.yaml",
+      "sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a"
+    },
+    "rules": {
+      "path": "rules.txt",
+      "sha256": "4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c"
+    },
+    "run": {
+      "path": "reported.json",
+      "sha256": "366cefd20acc5f26bafb2c7582011db31bfa04695da4c69253582e3373128c74"
+    }
+  },
+  "learner": {
+    "name": "amie",
+    "version": "4.0.0"
+  },
+  "population_sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a",
+  "proposal": "proposal.json",
+  "rules": [
+    {
+      "body_size_agrees": true,
+      "confidence": {
+        "formula": "std-confidence-head-pairs",
+        "value": 1.0
+      },
+      "index": 0,
+      "ref": "constraints[0]",
+      "reported": {
+        "body_size": 5,
+        "functional_variable": "-1",
+        "head_coverage": "1.000000",
+        "pca_body_size": "5",
+        "pca_confidence": "1.000000",
+        "std_confidence": "1.000000",
+        "support": 5
+      },
+      "support": {
+        "denominator": 5,
+        "numerator": 5
+      }
+    },
+    {
+      "body_size_agrees": true,
+      "confidence": {
+        "formula": "std-confidence-head-pairs",
+        "value": 1.0
+      },
+      "index": 1,
+      "ref": "constraints[1]",
+      "reported": {
+        "body_size": 20,
+        "functional_variable": "-1",
+        "head_coverage": "1.000000",
+        "pca_body_size": "20",
+        "pca_confidence": "1.000000",
+        "std_confidence": "1.000000",
+        "support": 20
+      },
+      "support": {
+        "denominator": 20,
+        "numerator": 20
+      }
+    }
+  ],
+  "schema_version": "gnd-mined-import/1",
+  "target": "amie",
+  "tool": "gnd"
+}

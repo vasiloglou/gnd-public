@@ -1,0 +1,33 @@
+# IL-close C4 (IL1-Q1): two integer value types, amount and quantity. Synthetic.
+version: 1
+model_id: close-orders
+source:
+  kind: fixture
+object_types:
+  - id: order
+    name: Order
+    kind: entity
+    reference: { mode: popular, value_type: order_code }
+  - id: order_code
+    name: OrderCode
+    kind: value
+    primitive: String
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+  - id: quantity
+    name: Quantity
+    kind: value
+    primitive: Integer
+fact_types:
+  - id: order_amount
+    reading: "{Order} has {Amount}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: amount, role_name: amount }
+  - id: order_quantity
+    reading: "{Order} has {Quantity}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: quantity, role_name: quantity }

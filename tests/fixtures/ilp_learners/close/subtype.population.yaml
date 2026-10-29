@@ -1,0 +1,19 @@
+# IL-close C1a: every manager works in the team they manage; s3 is not a manager.
+format_version: 2
+population:
+  model: subtype.orm.yaml
+  model_id: subtype
+  source: fixture
+  covers: [manages, works_in]
+instances:
+  staff: ["m1", "m2", "s3"]
+  manager: ["m1", "m2"]
+  team: ["t1", "t2"]
+facts:
+  manages:
+    - { manager: "m1", team: "t1" }
+    - { manager: "m2", team: "t2" }
+  works_in:
+    - { staff: "m1", team: "t1" }
+    - { staff: "m2", team: "t2" }
+    - { staff: "s3", team: "t1" }

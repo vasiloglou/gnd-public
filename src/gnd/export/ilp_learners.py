@@ -50,19 +50,24 @@ class Learner:
     #: A non-exporting entry binds another's, so the import never builds an
     #: export no command can write (IL5-D1, IL1-Q2).
     binds: str | None = None
+    #: The import's adapter check of the parsed clauses and their text against
+    #: the export's neutral form, after the run record's bindings and before the
+    #: rewrite; ``None`` checks nothing more (IL2-Q3).
+    vet: Callable[[dict[str, Any], dict[str, Any], str], None] | None = None
 
 
 LEARNERS: dict[str, Learner] = {
     "popper": Learner(target="popper", learner="popper", method="ilp-popper", exports=True,
                       render=ilp_popper.render, parse=ilp_popper.parse_program,
-                      contract="labelled-clauses", adapter_version=ilp_popper.ADAPTER_VERSION),
+                      contract="labelled-clauses", adapter_version=ilp_popper.ADAPTER_VERSION,
+                      vet=ilp_popper.check_thresholds),
     "neutral": Learner(target="neutral", learner=None, method="ilp-neutral", exports=True,
                        render=None, parse=None, contract="labelled-clauses",
                        adapter_version=ilp.ADAPTER_VERSION),
     "ilasp": Learner(target="ilasp", learner="ilasp", method="ilp-ilasp", exports=True,
                      render=ilp_asp.render, parse=ilp_asp.parse_hypothesis,
                      contract="labelled-clauses", adapter_version=ilp_asp.ADAPTER_VERSION,
-                     boolean_strings=False),
+                     boolean_strings=False, vet=ilp_asp.check_thresholds),
     # The agent adapter ids of gnd.agents.AgentAdapterId, pinned by a test (IL5-D2).
     "llm": Learner(target="llm", learner=("claude", "codex"), method="ilp-llm", exports=False,
                    render=None, parse=None, contract="labelled-clauses",

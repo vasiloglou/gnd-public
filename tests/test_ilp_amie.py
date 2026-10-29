@@ -228,10 +228,12 @@ def _import(tmp_path: Path, lines: list[str], *, drop: list[str] = (), learner: 
     population = _population(work, list(drop)) if drop else shutil.copy(POPULATION, work / "population.yaml")
     rules = work / "rules.txt"
     rules.write_text("".join(f"{line}\n" for line in lines), encoding="utf-8")
+    facts = _export(work, work / "model.orm.yaml", Path(population), name="facts") / "amie" / "facts.tsv"
     record = run or {"schema_version": "gnd-mined-run/1",
                      "learner": {"name": learner, "version": "4.0.0"},
                      "rules_sha256": hashlib.sha256(rules.read_bytes()).hexdigest(),
-                     "population_sha256": hashlib.sha256(Path(population).read_bytes()).hexdigest()}
+                     "population_sha256": hashlib.sha256(Path(population).read_bytes()).hexdigest(),
+                     "facts_sha256": hashlib.sha256(facts.read_bytes()).hexdigest()}
     (work / "reported.json").write_text(json.dumps(record), encoding="utf-8")
     out = work / "proposal.json"
     result = run_main(["import", "mined-rules", str(work / "model.orm.yaml"), str(rules),
@@ -480,6 +482,10 @@ REQUIRED = {"invocation", "run_of_record", "termination", "import", "export_sha2
             "reproducibility", "licence"}
 
 
+#: The AMIE adapter version both retained runs read (ILC-D4 (o)).
+RUN_ADAPTER_VERSION = "1"
+
+
 def _script():
     spec = importlib.util.spec_from_file_location("il4_run_amie", EVIDENCE / "run_amie.py")
     module = importlib.util.module_from_spec(spec)
@@ -498,7 +504,9 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
     assert outcome["invocation"] == invocation and outcome["run_of_record"] is (invocation == 1)
     assert outcome["termination"] in TERMINATIONS
     assert outcome["reproducibility"] == "single run, reproducibility not measured"
-    assert outcome["adapter_version"] == ilp_amie.ADAPTER_VERSION
+    # Both runs read adapter version 1; ILC-D4 (o) bumped it for subtype spelling only,
+    # which the staffing model does not have (C1c), so the facts they read are re-made.
+    assert outcome["adapter_version"] == RUN_ADAPTER_VERSION != ilp_amie.ADAPTER_VERSION
     script = _script()
     process = outcome["process"]
     assert outcome["termination"] == script.termination(process)
@@ -512,8 +520,11 @@ def test_t9_the_recorded_run_replays(tmp_path, invocation):
     assert outcome["population_sha256"] == hashlib.sha256(POPULATION.read_bytes()).hexdigest()
 
     export = _export(tmp_path)
-    assert hashlib.sha256((export / "export.json").read_bytes()).hexdigest() == outcome["export_sha256"]
     assert (export / "amie" / "facts.tsv").read_bytes() == (live / "facts.tsv").read_bytes()
+    index = json.loads((export / "export.json").read_text(encoding="utf-8"))
+    index["adapter_version"] = RUN_ADAPTER_VERSION
+    remade = (json.dumps(index, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
+    assert hashlib.sha256(remade).hexdigest() == outcome["export_sha256"]
 
     stdout = (live / "raw-stdout.txt").read_text(encoding="utf-8")
     assert len(stdout.encode("utf-8")) == process["stdout_observed_bytes"]

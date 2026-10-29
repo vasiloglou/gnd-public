@@ -1,0 +1,24 @@
+# IL-close C1b: m1 and m2 are managers, so staff, persons and managers at once.
+format_version: 2
+population:
+  model: multi.orm.yaml
+  model_id: multi
+  source: fixture
+  covers: [manages, works_in, member_of]
+instances:
+  staff: ["m1", "m2", "s3"]
+  person: ["m1", "m2", "p4"]
+  manager: ["m1", "m2"]
+  team: ["t1", "t2"]
+facts:
+  manages:
+    - { manager: "m1", team: "t1" }
+    - { manager: "m2", team: "t2" }
+  works_in:
+    - { staff: "m1", team: "t1" }
+    - { staff: "m2", team: "t2" }
+    - { staff: "s3", team: "t1" }
+  member_of:
+    - { person: "m1", team: "t1" }
+    - { person: "m2", team: "t2" }
+    - { person: "p4", team: "t2" }

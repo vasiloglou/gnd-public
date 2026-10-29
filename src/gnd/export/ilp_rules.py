@@ -18,7 +18,7 @@ from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import IlpError, canonical_bytes
-from gnd.export.ilp_popper import _threshold_rows
+from gnd.export.ilp_popper import threshold_rows
 
 __all__ = ["ADAPTER_VERSION", "EXPORT_REFUSALS", "FALSE_SPELLINGS", "MAX_CELLS", "MAX_FEATURES", "REFUSALS",
            "TRUE_SPELLINGS", "extract_ruleset", "parse_ruleset", "render"]
@@ -60,7 +60,7 @@ def _suffix(value: int) -> str:
 
 
 def _columns(neutral: dict[str, Any]) -> list[dict[str, Any]]:
-    rows = _threshold_rows(neutral)
+    rows = threshold_rows(neutral)
     columns = []
     for predicate in neutral["predicates"]:
         arity = len(predicate["types"])

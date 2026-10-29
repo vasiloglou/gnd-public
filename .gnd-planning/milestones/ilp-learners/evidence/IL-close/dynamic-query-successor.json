@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL4/dynamic-query-successor.json",
+  "predecessor_sha256": "e00c868a957ee39b93fd08ae08b92a728b4e675e844fbd4e860a3102b9c01bac",
+  "reason": "ilp-learners IL-close part A (spec r1, approved 2026-10-29): the close repairs. The rows are gnd.export.ilp_amie's subtype family (its union-find over reference-inheriting subtypes and the relation table's family spelling), gnd.export.ilp_asp's off-threshold check and the registry's vet hook, the Popper reader's bare booleans, check 9b's infix join, and _threshold_rows renamed threshold_rows (ILC-D8 (o)). Syntax census only; no model-query exception widening. Then the predicate-7 review fixes (notes/phase-IL-close-p7-review.md): gnd.export.ilp_popper's off-threshold check and the parser's record of the threshold names it read, the vet hook's clause-text argument, and the ILASP extractor reading every non-blank line. Syntax census only; no model-query exception widening.",
+  "removed": [
+    [
+      "src/gnd/export/ilp_asp.py",
+      "extract_hypothesis",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_threshold_rows",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_threshold_rows",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_threshold_rows",
+      "list[tuple[str, str, list[int]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_threshold_rows",
+      "observed.get(row['type'], set())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "_threshold_rows",
+      "tuple[str, str, list[int]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "check_join_types",
+      "closures.get(first, frozenset({first}))",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "check_join_types",
+      "closures.get(second, frozenset({second}))",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/export/ilp_amie.py",
+      "Relation",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "dict[str, str]",
+      3
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "members.get(component, identifier)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "members[root(identifier)]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "rows[identifier]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "tops.get(component, identifier)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "tops.get(root(identifier), members[root(identifier)])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "relation_table",
+      "families.get(types[0], types[0])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "relation_table",
+      "families.get(types[1], types[1])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "root",
+      "parent[identifier]",
+      3
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "root",
+      "parent[parent[identifier]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_asp.py",
+      "check_thresholds",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_asp.py",
+      "check_thresholds",
+      "dict[str, set[int]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_asp.py",
+      "check_thresholds",
+      "observed.get(type_name, set())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_asp.py",
+      "check_thresholds",
+      "offered[type_name]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_asp.py",
+      "check_thresholds",
+      "set[int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_asp.py",
+      "check_thresholds",
+      "types[atom['predicate']]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_learners.py",
+      "Learner",
+      "Callable[[dict[str, Any], dict[str, Any], str], None]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_learners.py",
+      "Learner",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "__init__",
+      "list[tuple[int, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "__init__",
+      "tuple[int, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "check_thresholds",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "check_thresholds",
+      "name[:name.rindex('__')]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "check_thresholds",
+      "operators.get(comparison)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "program",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "program",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "term",
+      "{'true': True, 'false': False}.get(value, value)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "threshold_rows",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "threshold_rows",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "threshold_rows",
+      "list[tuple[str, str, list[int]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "threshold_rows",
+      "observed.get(row['type'], set())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_popper.py",
+      "threshold_rows",
+      "tuple[str, str, list[int]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "check_join_types",
+      "sites.get(left, ())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "check_join_types",
+      "sites.get(right, ())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "joined",
+      "closures.get(first, frozenset({first}))",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rewrite.py",
+      "joined",
+      "closures.get(second, frozenset({second}))",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6759,
+  "result_occurrences": 8462
+}

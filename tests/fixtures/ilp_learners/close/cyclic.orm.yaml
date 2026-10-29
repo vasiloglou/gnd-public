@@ -1,0 +1,42 @@
+# IL-close review finding 2: the subtype fixture with a cycle, staff under manager.
+# gnd validate accepts it; the component has no top type. Synthetic.
+version: 1
+model_id: subtype
+source:
+  kind: fixture
+object_types:
+  - id: staff
+    name: Staff
+    kind: entity
+    subtype_of: [manager]
+    inherits_reference: true
+    derivation: asserted
+  - id: staff_code
+    name: StaffCode
+    kind: value
+    primitive: String
+  - id: manager
+    name: Manager
+    kind: entity
+    subtype_of: [staff]
+    inherits_reference: true
+    derivation: asserted
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: manages
+    reading: "{Manager} manages {Team}"
+    roles:
+      - { object_type: manager, role_name: manager }
+      - { object_type: team, role_name: team }
+  - id: works_in
+    reading: "{Staff} works in {Team}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: team, role_name: team }

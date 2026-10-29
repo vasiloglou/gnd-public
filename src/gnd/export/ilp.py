@@ -32,7 +32,9 @@ __all__ = [
     "IlpError",
     "build_neutral",
     "canonical_bytes",
+    "clingo_integer",
     "export_tree",
+    "export_value",
     "type_closures",
 ]
 
@@ -191,7 +193,23 @@ def type_closures(model: Any) -> dict[str, frozenset[str]]:
             for identifier in index.object_types_by_id()}
 
 
-def _value(value: Any, *, where: str) -> Any:
+#: clingo's integers are 32-bit; a wider one would mean something else to it.
+_CLINGO_INTEGERS = range(-2**31, 2**31)
+
+
+def clingo_integer(value: int) -> str:
+    """An integer as an ASP target spells it, refused ``unrepresentable`` outside
+    clingo's range, which clingo would wrap (IL2-D14). Popper grounds ``bk.pl``
+    in clingo too, so both adapters spell with it (predicate-7 review, finding 1)."""
+    if value not in _CLINGO_INTEGERS:
+        raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {value} is outside clingo's "
+                       "32-bit integer range (IL2-D14)")
+    return str(value)
+
+
+def export_value(value: Any, *, where: str) -> Any:
+    """A fact value as the export renders it: a bool, a string or an int; an opaque
+    or other value is refused by name. The triple export spells with it too (IL4)."""
     if isinstance(value, dict) and set(value) == {"$opaque"}:
         raise _refuse("opaque", f"{where} holds an opaque value the export cannot render")
     if isinstance(value, (bool, str, int)):
@@ -220,7 +238,7 @@ def build_neutral(
                 for role in column.role_names:
                     if role not in row:
                         raise _refuse("unrepresentable", f"{where} lacks role {role!r}")
-                    values.append(_value(row[role], where=where))
+                    values.append(export_value(row[role], where=where))
                 facts.append((position, name, _compact(values), values))
                 if len(facts) > MAX_FACTS:
                     raise _refuse("too-large", f"the export exceeds {MAX_FACTS} facts")

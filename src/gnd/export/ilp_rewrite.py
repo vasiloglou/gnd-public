@@ -90,15 +90,31 @@ def check_join_types(
         if declared is not None:
             for name in _vars([compare["left"], compare["right"]]):
                 sites.setdefault(name, set()).add(object_type[declared])
+
+    def joined(first: str, second: str) -> bool:
+        return bool(closures.get(first, frozenset({first})) & closures.get(second, frozenset({second})))
+
     pairs = 0
     for name, found in sites.items():
         ordered = sorted(found)
         for position, first in enumerate(ordered):
             for second in ordered[position + 1:]:
                 pairs += 1
-                if not closures.get(first, frozenset({first})) & closures.get(second, frozenset({second})):
+                if not joined(first, second):
                     raise _refuse("type-confused-join", index,
                                   f"variable {name} joins {first} and {second}")
+    # An infix comparison of two variables joins them, as a declared one does
+    # through its type (IL1-Q1, ILC-D5 (o)); a constant operand joins nothing.
+    for compare, declared in compares:
+        left, right = compare["left"].get("var"), compare["right"].get("var")
+        if declared is not None or left in (None, "_") or right in (None, "_") or left == right:
+            continue
+        for first in sorted(sites.get(left, ())):
+            for second in sorted(sites.get(right, ())):
+                pairs += 1
+                if not joined(first, second):
+                    raise _refuse("type-confused-join", index,
+                                  f"variable {left} joins {first} and {second}")
     return pairs
 
 

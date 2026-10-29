@@ -1,0 +1,4 @@
+$ uv run python tools/check_installed_docs.py --out <scratch>/t9b   (over the final bytes, after the review fixes)
+229 tutorial blocks passed
+Both installed wheel origins passed the documented learning paths.
+exit 0

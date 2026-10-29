@@ -34,9 +34,13 @@ When the owner requests a development record, use the
 The driving agent owns that record and commit; GND never touches git.
 
 `gnd export ilp` is not a derivation export. It is the ILP bridge: it writes
-labelled populations for a rule learner, and `gnd import ilp-rules` brings the
-learner's rules back as an evolve proposal. See `gnd export ilp --help`;
-the proposal is reviewed like any other evolution proposal.
+labelled populations for a rule learner with `--target` `popper`, `neutral`,
+`ilasp` or `rules`, and `gnd import ilp-rules` brings the learner's rules back
+as an evolve proposal (`--target llm` reads an agent's JSON answer). With
+`--target` `amie` it writes one unlabelled population for a rule miner, and
+`gnd import mined-rules` brings back only rules that hold on it. See
+`gnd export ilp --help`; the proposal is reviewed like any other evolution
+proposal.
 
 For explicitly selected Lean definitions, run `gnd export lean MODEL POP
 --toolchain leanprover/lean4:v4.34.0` offline. Publish a raw create-once bundle

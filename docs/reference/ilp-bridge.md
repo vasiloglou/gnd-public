@@ -74,6 +74,8 @@ lt_t_amount__m5(-10).
   values, 32 are taken at evenly spaced ranks, always including the minimum
   and the maximum. A threshold that holds for no observed value (`gt` at the
   maximum, `lt` at the minimum) is not written.
+- **Range:** Popper grounds `bk.pl` in clingo, so an integer outside clingo's
+  32-bit range is refused `unrepresentable` at export, as for ILASP (IL2-D14).
 - **Reading back:** the parser reads `gt_t_amount__120(V)` as the declared
   comparison `gt_t_amount(V, 120)`; `ge` and `le` names are read too. A
   negative value is spelled `m`, and the value follows the last `__`.
@@ -151,13 +153,17 @@ nothing. Admission is all-or-nothing.
      adapter's (`popper` for a Popper import). A neutral import accepts any
      learner name; its rules carry `method: ilp-neutral`;
    - `coverage-shape`: `coverage` does not list every clause exactly once.
-2. **The fragment:** each clause is checked in the order of the table below.
-3. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
+2. **Thresholds (Popper):** `off-threshold`, as `clause K: off-threshold`: a
+   `gt_` or `lt_` threshold atom that `bias.pl` does not declare, such as
+   `gt_t_amount__501` when no observed amount is 501, or `gt` at the maximum.
+   Popper could not have learned it from the export.
+3. **The fragment:** each clause is checked in the order of the table below.
+4. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
    checker once per population, and reads each new constraint's verdict:
    - `warning` means covered;
    - `pass` means not covered;
    - `vacuous` and `unchecked` mean not covered, and are listed separately.
-4. **Set comparison, per clause:**
+5. **Set comparison, per clause:**
    - `unknown-example`: a reported id is not in the manifest;
    - `coverage-mismatch`: the set GND covers differs from the reported set.
      Equal counts are not enough.

@@ -22,15 +22,18 @@ import re
 from typing import Any
 
 from gnd.exits import EXIT_ILL_FORMED
-from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
+from gnd.export.ilp import COMPARISON_NAME, IlpError, clingo_integer, observed_integers
 
-__all__ = ["ADAPTER_VERSION", "AGGREGATES", "MAX_THRESHOLDS", "SOLUTION_BANNER", "extract_program",
-           "parse_program", "quote", "render", "threshold_rows", "thresholds"]
+__all__ = ["ADAPTER_VERSION", "AGGREGATES", "IMPORT_REFUSALS", "MAX_THRESHOLDS", "SOLUTION_BANNER",
+           "check_thresholds", "extract_program", "parse_program", "quote", "render", "threshold_rows",
+           "thresholds"]
 
 #: ``export.json``'s ``adapter_version`` for the Popper target (IL1-A1 (o)).
 ADAPTER_VERSION = "3"
 #: Threshold values per integer type, fixed before results (IL1-A1-D3 (o)).
 MAX_THRESHOLDS = 32
+#: The import's own refusal of a parsed program, before the shared rewrite (predicate-7 review, finding 2).
+IMPORT_REFUSALS = ("off-threshold",)
 #: The comparison operators rendered as thresholds (IL1-A1-D2 (o)).
 _THRESHOLD_OPERATORS = (">", "<")
 #: A threshold atom: a comparison name, ``__`` and the value, negative as ``m``;
@@ -88,7 +91,7 @@ def _term(value: Any) -> str:
     if isinstance(value, bool):
         return "true" if value else "false"
     if isinstance(value, int):
-        return str(value)
+        return clingo_integer(value)
     return quote(value)
 
 
@@ -125,6 +128,26 @@ def threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]:
                 if holds:
                     rows.append((f"{row['name']}__{_suffix(value)}", row["type"], holds))
     return rows
+
+
+def check_thresholds(document: dict[str, Any], neutral: dict[str, Any], text: str) -> None:
+    """Refuse a threshold atom the export never rendered (predicate-7 review, finding 2).
+
+    Popper can only learn a threshold predicate ``bias.pl`` declares, so a
+    ``gt`` or ``lt`` threshold name in TEXT that the export did not render is
+    refused ``off-threshold`` by clause index, as ILASP's import refuses an
+    unoffered constant (IL2-Q3). A binary comparison atom, the IK5 spelling, and
+    ``ge`` and ``le`` names are left to the fragment table; DOCUMENT is TEXT
+    already parsed."""
+    operators = {row["name"]: row["operator"] for row in neutral["comparisons"]}
+    rendered = {name for name, _type, _holds in threshold_rows(neutral)}
+    parser = _Parser(text)
+    parser.program()
+    for index, name in parser.thresholds:
+        comparison = name[:name.rindex("__")]
+        if operators.get(comparison) in _THRESHOLD_OPERATORS and name not in rendered:
+            raise IlpError(EXIT_ILL_FORMED, f"clause {index}: off-threshold: {name} is not a "
+                           "threshold predicate the export renders")
 
 
 def render(neutral: dict[str, Any]) -> dict[str, bytes]:
@@ -178,6 +201,9 @@ class _Parser:
             position = match.end()
         self.tokens.append(("end", "", line, position - start + 1))
         self.index = 0
+        #: ``(clause index, name)`` of each threshold atom read as a comparison.
+        self.thresholds: list[tuple[int, str]] = []
+        self.clause_index = 0
 
     @staticmethod
     def _fail(line: int, column: int, detail: str) -> None:
@@ -198,8 +224,9 @@ class _Parser:
         return token[0] == kind and (value is None or token[1] == value)
 
     def program(self) -> dict[str, Any]:
-        clauses = []
+        clauses: list[dict[str, Any]] = []
         while not self.at("end"):
+            self.clause_index = len(clauses)
             clauses.append(self.clause())
         return {"schema_version": "gnd-ilp-clauses/1", "clauses": clauses}
 
@@ -260,7 +287,10 @@ class _Parser:
                 return [{"aggregate": {"name": name,
                                        "args": self.arguments(goals=True, depth=depth + 1)}}]
             line, column = self.peek()[2:]
-            return [{"atom": _comparison(name, self.arguments(goals=False), line, column)}]
+            atom = _comparison(name, self.arguments(goals=False), line, column)
+            if atom["predicate"] != name:
+                self.thresholds.append((self.clause_index, name))
+            return [{"atom": atom}]
         left = self.term()
         token = self.peek()
         if token[0] != "op":

@@ -328,10 +328,11 @@ def _sections() -> dict[str, str]:
 
 
 def _refusal_homes() -> dict[str, tuple[str, ...]]:
-    from gnd.export import ilp_amie, ilp_asp, ilp_rewrite, ilp_rules
+    from gnd.export import ilp_amie, ilp_asp, ilp_popper, ilp_rewrite, ilp_rules
     from gnd.export.ilp_service import MINED_INPUT_REFUSALS
 
     return {
+        "Import": ilp_popper.IMPORT_REFUSALS,
         "ILASP adapter": (*ilp_asp.REFUSALS, *getattr(ilp_asp, "IMPORT_REFUSALS", ("off-threshold",))),
         "Boolean rule sets": (*ilp_rules.EXPORT_REFUSALS, *ilp_rules.REFUSALS),
         "AMIE-style miner": (*ilp_amie.EXPORT_REFUSALS, *MINED_INPUT_REFUSALS, "facts-mismatch",
@@ -444,3 +445,83 @@ def test_r6_facts_mismatch_comes_after_the_other_input_refusals(tmp_path, change
                        "--target", "amie", "--out", str(work / "p.json")])
     assert result.returncode == 3
     assert result.stderr.decode().startswith(f"{expected}:"), result.stderr
+
+
+# ---------------------------------------------------------------------------
+# R7 to R9: the predicate-7 review's findings (notes/phase-IL-close-p7-review.md),
+# successors to the approved corpus; each was red against 3c01567.
+# ---------------------------------------------------------------------------
+
+def _amounts(values: list[int]) -> dict[str, Any]:
+    return {"predicates": [{"name": "f_r", "types": ["ex", "t_amount"]}],
+            "comparisons": [{"name": f"{p}_t_amount", "operator": o, "type": "t_amount"}
+                            for p, o in (("ge", ">="), ("gt", ">"), ("le", "<="), ("lt", "<"))],
+            "examples": [{"id": f"e{k}", "label": "pos" if k % 2 else "neg"} for k in range(len(values))],
+            "facts": [{"example": f"e{k}", "predicate": "f_r", "values": [v]} for k, v in enumerate(values)]}
+
+
+@pytest.mark.parametrize("value", [2**31, -2**31 - 1])
+def test_r7_popper_refuses_an_integer_clingo_would_wrap(value):
+    """P7 review 1: Popper grounds bk.pl in clingo, so IL2-D14 binds its export too."""
+    from gnd.export import ilp_popper
+    from gnd.export.ilp import IlpError
+
+    with pytest.raises(IlpError) as error:
+        ilp_popper.render(_amounts([5, value]))
+    assert error.value.code == 3
+    assert str(error.value) == f"unrepresentable: {value} is outside clingo's 32-bit integer range (IL2-D14)"
+    assert b"2147483647" in ilp_popper.render(_amounts([5, 2**31 - 1, -2**31]))["popper/bk.pl"]
+
+
+def _popper(tmp_path: Path, text: str) -> tuple[Any, Path]:
+    export = tmp_path / "export"
+    assert run_main(["export", "ilp", str(REFUNDS / "model.orm.yaml"), "--labels",
+                     str(REFUNDS / "labels.json"), "--target", "popper", "--out", str(export)]).returncode == 0
+    clauses = tmp_path / "clauses.pl"
+    clauses.write_text(text, encoding="utf-8")
+    run = tmp_path / "run.json"
+    run.write_text(json.dumps({
+        "schema_version": "gnd-ilp-run/1", "learner": {"name": "popper", "version": "5.0.1"},
+        "export_sha256": _sha((export / "export.json").read_bytes()),
+        "clauses_sha256": _sha(clauses.read_bytes()), "coverage": [{"clause": 0, "covered": []}]}))
+    out = tmp_path / "proposal.json"
+    result = run_main(["import", "ilp-rules", str(REFUNDS / "model.orm.yaml"), str(clauses),
+                       "--labels", str(REFUNDS / "labels.json"), "--reported-coverage", str(run),
+                       "--target", "popper", "--out", str(out), "--format", "json"])
+    return result, out
+
+
+@pytest.mark.parametrize("name", ["gt_t_amount__501", "gt_t_amount__99999999999", "gt_t_amount__1500"])
+def test_r8_a_popper_threshold_must_be_rendered(tmp_path, name):
+    """P7 review 2: a threshold name not in bias.pl is off-threshold, as for ILASP.
+
+    501 is no observed amount, 99999999999 none any export could hold, and
+    gt at the maximum, 1500, holds for nothing, so it is not rendered."""
+    result, out = _popper(tmp_path, f"wrong(V0):- f_refund_amount(V0,V1,V2), {name}(V2).\n")
+    assert result.returncode == 3
+    assert result.stderr.decode().startswith(f"clause 0: off-threshold: {name} "), result.stderr
+    assert not out.exists()
+
+
+def test_r8_a_rendered_popper_threshold_passes_the_check(tmp_path):
+    result, _out = _popper(tmp_path, "wrong(V0):- f_refund_amount(V0,V1,V2), gt_t_amount__500(V2).\n")
+    assert "off-threshold" not in result.stderr.decode(), result.stderr
+
+
+def test_r8_off_threshold_is_an_import_refusal_of_the_popper_adapter():
+    from gnd.export import ilp_popper
+    from gnd.export.ilp_learners import LEARNERS
+
+    assert ilp_popper.IMPORT_REFUSALS == ("off-threshold",)
+    assert LEARNERS["popper"].vet is ilp_popper.check_thresholds
+
+
+def test_r9_the_ilasp_extractor_hands_a_second_block_to_the_reader():
+    """P7 review 3: every non-blank line after the last %% line, as IL2-F8 recorded."""
+    from gnd.export.ilp import IlpError
+    from gnd.export.ilp_asp import extract_hypothesis, parse_hypothesis
+
+    text = extract_hypothesis("%%%%\n%% Total : 1s\n%%%%\nwrong :- p(V1).\n\n:- q(V1).\n")
+    assert text == "wrong :- p(V1).\n:- q(V1).\n"
+    with pytest.raises(IlpError, match="asp-constraint"):
+        parse_hypothesis(text)

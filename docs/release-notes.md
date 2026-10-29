@@ -31,6 +31,11 @@ documentation, so the comparison is reproducible without installing a learner.
     `off-threshold`.
   - The Popper reader keeps every rule in the solution block, and reads a bare
     `true` or `false` as a boolean.
+  - A Popper threshold that the export never rendered is refused
+    `off-threshold`, and the Popper export refuses an integer outside clingo's
+    32-bit range as `unrepresentable`, as the ILASP export does.
+  - The ILASP extractor reads every non-blank line after the timing block, so
+    no learned rule after a blank line is dropped.
 
 [Compare the rule learners on real runs](how-to/compare-ilp-learners.md)
 replays every run, and the [comparison table](reference/ilp-bridge.md#comparing-the-learners)

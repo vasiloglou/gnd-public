@@ -344,7 +344,7 @@ def _cmd_import_ilp_rules(
                            f"the {count} clauses exactly once, not {indexes}")
         reported = {row["clause"]: row["covered"] for row in record["coverage"]}
         if entry.vet is not None:
-            entry.vet(clause_doc, prepared.neutral)
+            entry.vet(clause_doc, prepared.neutral, clause_bytes.decode("utf-8"))
         method = entry.method
         run_sha = hashlib.sha256(run_bytes).hexdigest()
         prefix = f"learned by {learner['name']} {learner['version']} from manifest " \

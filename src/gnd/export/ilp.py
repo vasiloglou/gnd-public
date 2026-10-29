@@ -32,6 +32,7 @@ __all__ = [
     "IlpError",
     "build_neutral",
     "canonical_bytes",
+    "clingo_integer",
     "export_tree",
     "export_value",
     "type_closures",
@@ -190,6 +191,20 @@ def type_closures(model: Any) -> dict[str, frozenset[str]]:
     index = ModelIndex.for_model(model)
     return {identifier: frozenset({identifier}) | index.supertype_closure(identifier)
             for identifier in index.object_types_by_id()}
+
+
+#: clingo's integers are 32-bit; a wider one would mean something else to it.
+_CLINGO_INTEGERS = range(-2**31, 2**31)
+
+
+def clingo_integer(value: int) -> str:
+    """An integer as an ASP target spells it, refused ``unrepresentable`` outside
+    clingo's range, which clingo would wrap (IL2-D14). Popper grounds ``bk.pl``
+    in clingo too, so both adapters spell with it (predicate-7 review, finding 1)."""
+    if value not in _CLINGO_INTEGERS:
+        raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {value} is outside clingo's "
+                       "32-bit integer range (IL2-D14)")
+    return str(value)
 
 
 def export_value(value: Any, *, where: str) -> Any:

@@ -414,6 +414,17 @@ Recorded as found.
   70. Only a reference-inheriting subtype now joins its supertype's family.
   An own-reference subtype's join is refused `support-mismatch`, as before
   IL-close: a false refusal, never an admission.
+- **ILC-F9 (an IL2 test moves; predicate-7 review finding 3).** IL2's
+  `test_extract_takes_one_run_after_the_last_banner` pinned an extractor
+  that stopped at the first blank line, against the recorded IL2-F8 fix
+  ("every non-blank line"). The extractor now follows IL2-F8, and the test,
+  renamed `test_extract_takes_every_line_after_the_last_banner`, expects the
+  rule after the blank line. Returned to the owner.
+- **Predicate-7 review.** `notes/phase-IL-close-p7-review.md`: over the five
+  commits that landed after their phase's review; 2 hardening, 1
+  completeness, all reproduced and fixed with regressions R7 to R9. The Popper
+  vet hook needed the clause text, so `Learner.vet` takes it as a third
+  argument (ILC-F7's hook, widened).
 - **Review.** `notes/phase-IL-close-agent-review.md`: 1 blocking, 4
   hardening, 2 completeness; all reproduced, all fixed with regressions R1 to
   R6.

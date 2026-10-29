@@ -15,7 +15,9 @@ gate:
     a ruff import-order fix followed, no behaviour). T9 on the same bytes:
     both wheel origins, 229 tutorial blocks each. The gate was re-run on the
     final close bytes, after parts B to D (evidence/IL-close/close-gate.txt);
-    its test_ilp_learners T8 scans this directory for private paths.
+    its test_ilp_learners T8 scans this directory for private paths. After
+    the predicate-7 review's fixes the same gate gave 1290 passed, 24
+    deselected in 148.58s (evidence/IL-close/p7-gate.txt).
 slow_cadence:
   command: "uv run pytest -q"
   trigger: "explicit owner selection or separately configured CI"
@@ -67,7 +69,7 @@ by GND (`002` to `008`, PRs #56, #57, #58, #60, #61, #62 and this close):
 | 4 | IL4: typed relations; `guarded` import; GND support and confidence; `support-mismatch`; holds only; one run replayed | MET WITH DEVIATION: the count compared is AMIE's Support, not a positive-example count, which AMIE does not print (IL4-F4). Joins through a reference-inheriting subtype were false refusals until `008`; through an own-reference subtype they still are (carried) | `006`, `008` |
 | 5 | IL5: `llm` entry; JSON through the shared re-check; one run after D8 | MET WITH RESIDUAL: the agent's `learner.version` is `unreported` and the model id is an unverified claim (IL5-F7, IL5-Q6 carried) | `004` |
 | 6 | IL6: the walk exits as recorded; the comparison table; docs, skills, entry points with census checks | MET WITH DEVIATION, owner-ruled: `amie` runs on the staffing fixture, not refunds (IL4-D4 (o)) | `007` |
-| 7 | Every phase: approval, focused checks, one reviewer, refactoring review, a record | MET WITH RESIDUAL: code changed after its phase's review carries no review opinion: IL1's amendment-2 rendering and refactor (`002`), IL2's fixes, D13/D14 code and step 5 refactors (`003`). The close review did not read the milestone diff (below) | `002`–`008` |
+| 7 | Every phase: approval, focused checks, one reviewer, refactoring review, a record | MET, after the predicate-7 review (below): the code that changed after its phase's review (IL1's review fixes, amendment-2 rendering and refactor, `002`; IL2's fixes, D13/D14 code and step 5 refactors, `003`) now has one reviewer's opinion, and its three findings are fixed. One reviewer is one reviewer. Neither review read the milestone diff as a whole (below) | `002`–`008`; `notes/phase-IL-close-p7-review.md` |
 | 7 | Close: four-reviewer evidence; question sweep; PR; owner acceptance recorded separately | review: five reviewers over the plan, this record and the close plan, not the diff; sweep below; PR and acceptance pending | this record |
 
 ## Plan notes (part B)
@@ -98,7 +100,7 @@ Every open-question row from `002` to `008`.
 |---|---|
 | IL1-Q1 | **fixed** in `008` (C4) |
 | IL1-Q2 | **discharged**: IL5 added `binds`, and `contract` varies by entry (IL4) |
-| IL1-Q3 | **partly discharged**: IL2 refuses threshold names the renderer never writes (IL2-D8). Popper threshold **values** outside the export's set are **carried** (`008`'s `off-threshold` covers ILASP only) |
+| IL1-Q3 | **discharged**: IL2 refuses threshold names the renderer never writes (IL2-D8), and the predicate-7 review's fix refuses a Popper threshold value outside the export's set as `off-threshold`, as `008` does for ILASP (R8) |
 | IL1-Q4 | **fixed** in `008` (C6) |
 | IL1-Q5 | **fixed** in `008` (C8a, C8b) |
 | IL1-Q6 | **carried**: reproducibility and a larger domain, to a later evaluation milestone (owner, 2026-10-29) |
@@ -125,6 +127,8 @@ Every open-question row from `002` to `008`.
 | IL6-Q3 | **carried**: one outcome schema across live-run records, to a later milestone |
 | `007` refactoring deferral | `tools/ilp_comparison.hold()` imports the private `ilp_service._mined_inputs`. **Carried** with IL-close-Q1: a public "count mined rules" entry serves the tool and the import |
 | ILC-F5, ILC-F6 | **accepted** by the owner, 2026-10-29 |
+| ILC-F9 | **returned to the owner**: an IL2 extractor test's expectation moved to the recorded IL2-F8 rule (predicate-7 review, finding 3) |
+| IL-close-Q2 | **carried**: whether clingo reads `_1` and `-2147483648` as the ASP reader does (predicate-7 review, not reproduced without clingo) |
 | IL-close-Q1 | **carried**: one rendering pass for `facts-mismatch` and the count |
 
 **Carried forward, for the successor:**
@@ -136,8 +140,8 @@ Every open-question row from `002` to `008`.
 | IL5-Q6 | the milestone that owns `gnd.agents` |
 | IL4-Q3 (remainder), IL-close-Q1, the `hold()` import | the next milestone that changes the mined import: one public counting entry, one rendering pass |
 | IL4-Q1 (own-reference subtypes) | the same milestone: count a join through an own-reference subtype, or refuse it by name |
-| IL1-Q3 (out-of-set Popper thresholds) | the same milestone as IL2-Q2's rerun: refuse a Popper threshold value the export never rendered |
-| The unreviewed code (predicate 7) and the milestone diff | the owner's call at acceptance: a diff review of `07f4d45^..HEAD` before or after merge |
+| IL-close-Q2 | the same milestone as IL2-Q2's rerun: run clingo over the two readings and refuse what it reads differently |
+| The milestone diff as a whole | the owner's call at acceptance: a diff review of `07f4d45^..HEAD` before or after merge |
 
 ## Close review (part D)
 
@@ -155,7 +159,7 @@ agreed concerns, 7 divergent, 4 prioritized fixes. Evidence:
 acceptance.
 
 **One retained stream is sanitized.** codex's `stderr` named the scratch
-directory, whose path holds a `-Users-` token that IL-R10's privacy test
+directory, whose path holds a home-directory token that IL-R10's privacy test
 refuses (the panel had already masked the username). The path was replaced by
 `<scratch>/panel-tree`. Its envelope still binds the original bytes, so that
 one stream no longer re-verifies against the run; the synthesis and
@@ -192,6 +196,29 @@ the bytes it cites and applied:
 | claude: IL5's unreported version | **applied**: MET WITH RESIDUAL |
 | claude: IL-R9's note listed only some learners | **applied**: all four named |
 | kimi: FastLAS attributed to IL2-D1 without record support | **applied**: cites the IL2 spec's §13 ruling |
+
+## Predicate-7 review (after part E)
+
+At the owner's request, before acceptance, one reviewer read the five commits
+that landed after their phase's review: `16cbbe1`, `c03ff94`, `b906749`,
+`58704ed` and `b8caf6c` (predicate 7 named the last four; `16cbbe1` also
+landed after IL1's review). The report, its reproduction and the triage are in
+[`notes/phase-IL-close-p7-review.md`](notes/phase-IL-close-p7-review.md).
+One reviewer is one reviewer.
+
+| Finding | Class | Disposition |
+|---|---|---|
+| The Popper export wrote integers clingo would wrap | hardening | **fixed, R7**: one range check, `gnd.export.ilp.clingo_integer`, for both ASP-grounded adapters (IL2-D14) |
+| The Popper reader accepted threshold values the export never rendered | hardening | **fixed, R8**: `off-threshold`, as for ILASP; discharges IL1-Q3 |
+| The ILASP extractor stopped at the first blank line, against IL2-F8 and the docs | completeness | **fixed, R9**; ILC-F9 |
+| A home-directory token in this record failed IL-R10's privacy test | outside scope | **fixed** |
+| Two clingo readings, not reproduced without clingo | — | **carried**, IL-close-Q2 |
+
+The regressions were red against `3c01567` (`evidence/IL-close/p7-red.txt`).
+The RF6 census successor was regenerated over the fixed code, and the close
+gate passed on these bytes: 1290 passed, 24 deselected
+(`evidence/IL-close/p7-gate.txt`). **The close
+panel (part D) did not see these changes** or this section.
 
 ## Boundary -- what the milestone does NOT establish
 

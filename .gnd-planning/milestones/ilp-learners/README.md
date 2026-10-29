@@ -45,7 +45,11 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - **Parts B to E:** the plan carries italic `(c)` close notes beside its
   approved text; the [close record](009-milestone-close.md) sweeps every open
   question and records the close review (the maintained panel, five of six
-  seats, all findings applied). **Owner acceptance is pending.**
+  seats, all findings applied).
+- **The predicate-7 review:** at the owner's request, one reviewer read the
+  code that landed after its phase's review
+  ([review](notes/phase-IL-close-p7-review.md)); 3 findings, all fixed (R7
+  to R9), ILC-F9 returned to the owner. **Owner acceptance is pending.**
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -66,6 +70,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL-close spec (r1, approved)](notes/phase-IL-close-spec.md)
 - [IL-close part A record](008-close-repairs.md)
 - [Milestone close record](009-milestone-close.md), with the [close panel](evidence/IL-close/panel/PANEL-REVIEW.md)
+- [Predicate-7 review](notes/phase-IL-close-p7-review.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -91,6 +96,7 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- owner acceptance of the close, and whether to run a diff review of the milestone first.
+- ILC-F9 (an IL2 extractor test's expectation moved to IL2-F8's recorded rule);
+- owner acceptance of the close, and whether to run a review of the whole milestone diff first.
 
 **Next action:** the owner's acceptance of the close, recorded separately.

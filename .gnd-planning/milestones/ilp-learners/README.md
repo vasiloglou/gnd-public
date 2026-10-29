@@ -40,8 +40,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   [record](008-close-repairs.md), [spec r1 (approved)](notes/phase-IL-close-spec.md),
   [adversarial review](notes/phase-IL-close-agent-review.md). Every ruled
   "fix" question is fixed corpus-first; the review's 7 findings are fixed.
-  ILC-F5 and ILC-F6 (goldens that moved beyond the spec's list) are open for
-  the owner.
+  ILC-F5 and ILC-F6 (goldens that moved beyond the spec's list) were
+  accepted by the owner on 2026-10-29.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -86,6 +86,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- ILC-F5 and ILC-F6: accept the goldens that moved beyond spec §8.
+- none for part A; parts B to E are in progress.
 
 **Next action:** close parts B to E: the plan repairs, the open-questions sweep, the four-reviewer close review and the close record.

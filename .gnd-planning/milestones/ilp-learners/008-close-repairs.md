@@ -170,9 +170,13 @@ built). One structural point is deferred:
 
 | Id | Question | Owner | Target |
 |---|---|---|---|
-| ILC-F5 | IL1's test r5 pinned a bare `true` at a string role as the string; under IL2-Q1 it is the boolean. Accept the moved assertion? | owner | close |
-| ILC-F6 | Moves beyond spec §8: the IL4 `export.json` goldens (`adapter_version` 2), invocation 2's `import-report.json`, walk block 10 (not 9), T9's adapter-version assertion, `run_amie.py`. Accept? | owner | close |
+| ILC-F5 | IL1's test r5 pinned a bare `true` at a string role as the string; under IL2-Q1 it is the boolean. Accept the moved assertion? | owner | **accepted 2026-10-29** |
+| ILC-F6 | Moves beyond spec §8: the IL4 `export.json` goldens (`adapter_version` 2), invocation 2's `import-report.json`, walk block 10 (not 9), T9's adapter-version assertion, `run_amie.py`. Accept? | owner | **accepted 2026-10-29** |
 | IL-close-Q1 | Share one rendering pass between `facts-mismatch` and the count | owner | later milestone |
+
+**Owner ruling, 2026-10-29,** quoted: "I accept ILC-F5 and ILC-F6 as
+recorded. Continue with close parts B to E." Recorded after this record's
+commit `d6c70c7`; the rest of the record is unchanged.
 
 ## Refuted premises
 

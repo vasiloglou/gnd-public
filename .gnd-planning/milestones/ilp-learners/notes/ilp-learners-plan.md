@@ -1,6 +1,8 @@
 # ILP learners
 
-r3 (p2), 2026-10-27. **Draft; awaiting owner approval. Plan review closed by its stop rule.**
+r3 (p2), 2026-10-27. **Approved by the owner on 2026-10-27, as recorded in `001-plan-gate.md`.** Plan review closed by its stop rule.
+Close repairs (c), 2026-10-29: wording that records what happened, applied at the owner's
+direction without review (plan §8, p2; close plan Part B). None changes an approved criterion's intent.
 Milestone: `ilp-learners`. `auto=false`.
 Inspection baseline: `63f7f1f` (main, after PR #45, the induced-knowledge close).
 
@@ -19,12 +21,14 @@ Inspection baseline: `63f7f1f` (main, after PR #45, the induced-knowledge close)
 - **r3 (p2).** The owner directed, 2026-10-27 (o): "Apply themes A–I as r3
   with no further review round, D13 yes." r3 records those repairs and D13 and
   nothing else. **r3 bytes carry no review opinion.**
-- **No approval.** No plan or spec approval exists.
+- **Approval (c).** The owner approved r3 and the IL1 spec r3 on 2026-10-27;
+  the approval is recorded in `001-plan-gate.md`, not here.
 
 **Change tags:**
 - `(p1)` marks text added or changed in r2 in response to round 1.
 - `(p2)` marks text added or changed in r3 in response to round 2.
 - `(o)` marks an owner answer or ruling, quoted where the owner's words exist.
+- `(c)` marks a close repair, 2026-10-29 (close plan Part B); it carries no review opinion.
 - Untagged text is the author's r1 proposal.
 - Planning authorship is not approval.
 - The retained snapshot under `evidence/plan-review-r1/` is the authoritative
@@ -40,7 +44,8 @@ surveyed five other learner families for later adapters. This milestone:
 
 The four families:
 - **ILASP / FastLAS** (answer set programming);
-- **Boolean rule sets** (integer-programming or certifiable rule-set learners);
+- **Boolean rule sets** (a sequential-covering learner, RIPPER, IL3-D1 (a); integer-programming
+  and certifiable learners were not integrated) (c);
 - **an AMIE-style exact rule miner** (unlabelled Horn-rule mining);
 - **an LLM proposer** (a language model writes clauses).
 
@@ -52,9 +57,9 @@ The four families:
   through `gnd evolve` (IK-R1, IK-R2).
 - Round 1 confirmed this admission gate holds (reader 1).
 
-Planning only. The first phase's [draft spec](phase-IL1-spec.md) awaits plan
-approval and its own owner gate. No implementation, measurement, install or
-approval is claimed here.
+Planning only, as written. Executed since (c): every phase is recorded,
+`002` to `007`, and the close in `008` and `009`; this plan claims none of
+their results.
 
 Completion requires:
 
@@ -101,8 +106,9 @@ Completion requires:
    - One real run with a named agent and model is recorded, **only after D8 is
      ruled** at the IL5 gate (p1). If D8 declines the run, IL5 completes with
      fixture-only evidence and records the outcome `not run (D8)` (p2).
-6. **IL6:** one public anonymized walk runs the IK6 refunds example through
-   every adapter and exits as recorded at every step. An adapter whose run is
+6. **IL6:** one public anonymized walk runs the labelled adapters on the IK6
+   refunds example, and `amie` on the committed staffing fixture, which has
+   the relations a miner needs (c), and exits as recorded at every step. An adapter whose run is
    `not run (D8)` shows that outcome (p2).
    - **The comparison table** is committed, with the columns fixed in §4
      (p1). AMIE has its own unlabelled row (p1).
@@ -139,7 +145,7 @@ unchanged. This milestone adds:
 | IL-R6 | **Untrusted output, never executed.** Learner and LLM output is parsed by a closed, capped, total reader (standing rule 1). Nothing a learner writes is evaluated as code. Prompt text built from host values is neutralized (IK-R5). |
 | IL-R7 | **IK5 compatibility.** The `gnd-ilp/1`, `gnd-ilp-clauses/1`, `gnd-ilp-run/1`, `gnd-ilp-import/1` and `gnd-ilp-export/1` wires, the Popper rendering and every IK5 and IK6 golden stay byte-identical unless a phase spec names the change. **Adding a target widens the closed `target` enums of `ilp.schema.json` and `ilp-import.schema.json` within `/1` (D9 (o)); every existing document stays valid. A test asserts both enums equal the registry's targets (p1): `ilp.schema.json` equals `EXPORT_TARGETS` and `ilp-import.schema.json` equals `IMPORT_TARGETS`, the targets `gnd import ilp-rules` accepts (p2).** |
 | IL-R8 (p1) | **Synthetic inputs only.** Every live run reads only the IK6 refunds example or a committed synthetic fixture under `tests/fixtures/ilp_learners/`, named in its phase spec, with the export digest recorded. No host data reaches a learner or a provider. |
-| IL-R9 (p1) | **Outcomes before runs.** Before each live run its spec fixes the closed outcome as two fields (p2): `termination` ∈ {`rendering-rejected`, `completed`, `learner-timeout`, `wall-clock-kill`, `output-limit`} and `import` ∈ {`none`, `refused:<name>`, `admitted`}, where an unparsable program is `refused:unparsable`. It also fixes the program-extraction rule as one function shared by the script and the replay test (p2), the learner settings with the full argv, all six `ProcessLimits` fields, and the learner's own timeout below the wall clock. Every invocation is numbered and retained; the first after the gate is the run of record. A second run needs an owner ruling and is reported beside the first. A rendering or settings fix after a run is an owner-recorded amendment naming the changed goldens and the `adapter_version` bump; a parser-only fix that changes no golden stays in scope. Each record states, for every number, whether it came from the learner or the script, plus seeds, threads, and "single run, reproducibility not measured". The import is run with fixed `--requested-at`, `--actor` and `--format json`, from a fixed working directory with relative paths, so the replay can reproduce it (p2). |
+| IL-R9 (p1) | **Outcomes before runs.** Before each live run its spec fixes the closed outcome as two fields (p2): `termination` ∈ {`rendering-rejected`, `completed`, `learner-timeout`, `wall-clock-kill`, `output-limit`} and `import` ∈ {`none`, `refused:<name>`, `admitted`}, where an unparsable program is `refused:unparsable`. It also fixes the program-extraction rule as one function shared by the script and the replay test (p2), the learner settings with the full argv, all six `ProcessLimits` fields, and the learner's own timeout below the wall clock, where the learner has one; ILASP 4.4.1 and the agent CLIs have none, so `learner-timeout` is unreachable there and the wall clock is the bound (c). Every invocation is numbered and retained; the first after the gate is the run of record. A second run needs an owner ruling and is reported beside the first. A rendering or settings fix after a run is an owner-recorded amendment naming the changed goldens and the `adapter_version` bump; a parser-only fix that changes no golden stays in scope. Each record states, for every number, whether it came from the learner or the script, plus seeds, threads, and "single run, reproducibility not measured". The import is run with fixed `--requested-at`, `--actor` and `--format json`, from a fixed working directory with relative paths, so the replay can reproduce it (p2). |
 | IL-R10 (p1) | **Evidence is private-clean.** A test scans this milestone directory for home paths, usernames and the downstream-name digests, with a negative control. Evidence scripts pass `HOME`, `USER` and `TMPDIR` into the bounded environment so redaction applies where it can, and write install commands with a `<scratch>` placeholder. Because `run_bounded_process` redacts only values of 4 or more bytes and only the child's output, each script also substitutes `<scratch>` and `<home>` itself in every file it writes; the scan is the backstop and matches the username as a whole path component, whatever its length (p2). |
 | IL-R11 (p1) | **All-or-nothing admission** (IK5-D9) holds for every adapter (D10 (o)). |
 
@@ -355,7 +361,8 @@ test.
 - **Denominator:** |{(x,y) : ∃z body}|.
 - **Confidence:** `confidence.value` = numerator / denominator, with formula
   `std-confidence-head-pairs`.
-- **The comparison:** the miner's positive-example count must equal GND's
+- **The comparison:** the miner's support, its count of distinct head pairs
+  (AMIE prints no positive examples; IL4-F4) (c), must equal GND's
   numerator; otherwise the rule refuses `support-mismatch`.
 - **Not compared:** PCA confidence. It is kept verbatim as the miner's claim.
 - **Weaker than IK5:** only counts are compared, because the miner emits no
@@ -580,7 +587,8 @@ Draft spec r3: [phase-IL1-spec.md](phase-IL1-spec.md) (p1, p2).
     `gnd export ilp` RF1 goldens (the help usage line and the `unknown_flag`
     exit stderr) (p2).
   - IL5 adds `gnd.export.ilp_prompt`.
-- **Skills:** the two pin sites that name `gnd export ilp` are inspected per
+- **Skills:** the pin sites that name `gnd export ilp` (gnd-export, gnd-model-evolve, and
+  gnd-solve's Station 6, IL6 review R3) (c) are inspected per
   phase, and edited only where behaviour changed. No new packaged skill.
 - **Public Python names:** none are planned, and `api.__all__` is unchanged.
 
@@ -657,7 +665,7 @@ Every phase's gate also runs these controls (p1):
 
 | Phase | Falsifiable result | Consumers |
 |---|---|---|
-| IL1 | registry equality and fake-entry tests; goldens unchanged except listed C2 cases; type-check refusals; octal cases; one recorded outcome with replay | `test_ilp_bridge.py` (its source-order tokens kept), `test_ik6_walk.py`, `test_ik_close.py` (imports `parse_program`, patches `_load_candidate`) (p1), RF1 CLI goldens, layer map |
+| IL1 | registry equality and fake-entry tests; goldens unchanged except the C2 cases and the IK5 goldens named by the owner-recorded amendments (c); type-check refusals; octal cases; one recorded outcome with replay | `test_ilp_bridge.py` (its source-order tokens kept), `test_ik6_walk.py`, `test_ik_close.py` (imports `parse_program`, patches `_load_candidate`) (p1), RF1 CLI goldens, layer map |
 | IL2 | ASP golden; per-construct refusals; replayed live record | new adapter tests; RF1 CLI goldens; schema enums |
 | IL3 | feature golden; polarity table; work ceiling; replayed live record | new tests; schema inventories |
 | IL4 | typed triple golden; oracle counts; five named refusals; post-parse exit 64; replayed live record | new tests; schema inventories; RF5 entry points; the two moved `export ilp` RF1 goldens (p2) |

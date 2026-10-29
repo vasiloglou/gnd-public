@@ -54,8 +54,10 @@ JAVA_HOME = Path("/opt/homebrew/opt/openjdk")
 JAR = "amie4.0.0.jar"
 JAR_BYTES = 96_104_317
 JAR_SHA256 = "bbf65ef5b54f896a7c6d05e3faeaf5b58262e3828e61ae6dc3f3c71c932b8485"
-#: IL4-D11 (o): no -const, -mins 1, defaults otherwise.
-SETTINGS = ("-maxad", "3", "-mins", "1")
+#: Each invocation's AMIE settings. 1, IL4-D11 (o): no -const, -mins 1, defaults
+#: otherwise. 2, IL6-D6 (o): the same plus standard confidence, kept at 1 (IL4-Q4).
+SETTINGS = {1: ("-maxad", "3", "-mins", "1"),
+            2: ("-maxad", "3", "-mins", "1", "-enstd", "-minc", "1")}
 LIMITS = ProcessLimits(timeout_seconds=600, terminate_grace_seconds=10, stdin_limit_bytes=0,
                        stdout_limit_bytes=16 * 1024 * 1024, stderr_limit_bytes=4 * 1024 * 1024,
                        total_output_limit_bytes=20 * 1024 * 1024)
@@ -65,16 +67,15 @@ IMPORT_ARGS = ("import", "mined-rules", "model.orm.yaml", "rules.txt", "--popula
                "--actor", "ilp-live", "--requested-at", "2026-01-01T00:00:00Z", "--format", "json")
 #: IL4-D10 (o): r and s agree on both facts, so r => s and s => r hold.
 PROBE = "a:1\tr\ta:2\na:2\tr\ta:3\na:1\ts\ta:2\na:2\ts\ta:3\n"
-#: The argv and the licence line as outcome.json records them, placeholders substituted.
-RECORDED_ARGV = [str(JAVA), "-Xmx2G", "-jar", f"<scratch>/{JAR}", *SETTINGS, "amie/facts.tsv"]
+#: The licence line as outcome.json records it.
 LICENCE = ("AMIE CC-BY-4.0 and its Javatools CC-BY-3.0, accepted (IL4-D3 (o)); attribution: "
            "AMIE by the DIG team, Telecom Paris (github.com/dig-team/AMIE); OpenJDK GPL-2.0 "
            "with the Classpath Exception, installed, used read only")
 #: AMIE prints no version; this is the verified release asset's (IL4-D2 (o)).
 LEARNER = {"name": "amie", "version": "4.0.0"}
 
-__all__ = ["IMPORT_ARGS", "LEARNER", "LICENCE", "LIMITS", "RECORDED_ARGV", "import_outcome",
-           "java_argv", "java_environment", "learner", "read_rules", "termination"]
+__all__ = ["IMPORT_ARGS", "LEARNER", "LICENCE", "LIMITS", "SETTINGS", "import_outcome", "java_argv",
+           "java_environment", "learner", "read_rules", "recorded_argv", "termination"]
 
 
 def read_rules(stdout: str, ended: str) -> str:
@@ -88,8 +89,13 @@ def learner(stdout: str) -> dict[str, str]:
     return dict(LEARNER)
 
 
-def java_argv(jar: Path) -> list[str]:
-    return [str(JAVA), "-Xmx2G", "-jar", str(jar), *SETTINGS]
+def java_argv(jar: Path, invocation: int) -> list[str]:
+    return [str(JAVA), "-Xmx2G", "-jar", str(jar), *SETTINGS[invocation]]
+
+
+def recorded_argv(invocation: int) -> list[str]:
+    """The argv as outcome.json records it, the scratch placeholder substituted."""
+    return [*java_argv(Path(f"<scratch>/{JAR}"), invocation), "amie/facts.tsv"]
 
 
 def java_environment(scratch: Path) -> dict[str, str]:
@@ -110,8 +116,8 @@ def jvm_version(scratch: Path) -> str:
     return done.stderr.splitlines()[0]
 
 
-def mine(scratch: Path, cwd: Path, tsv: str) -> tuple[list[str], Any]:
-    argv = [*java_argv(verified_jar(scratch)), tsv]
+def mine(scratch: Path, cwd: Path, tsv: str, invocation: int) -> tuple[list[str], Any]:
+    argv = [*java_argv(verified_jar(scratch), invocation), tsv]
     return argv, asyncio.run(run_bounded_process(argv, cwd=cwd, env=java_environment(scratch),
                                                  limits=LIMITS))
 
@@ -124,8 +130,8 @@ def probe(scratch: Path, clean: Sanitizer) -> int:
     shutil.rmtree(work, ignore_errors=True)
     work.mkdir()
     (work / "toy.tsv").write_text(PROBE, encoding="utf-8")
-    argv, result = mine(scratch, work, "toy.tsv")
-    usage = subprocess.run([*java_argv(verified_jar(scratch))[:4], "-h"], cwd=work,
+    argv, result = mine(scratch, work, "toy.tsv", 1)
+    usage = subprocess.run([*java_argv(verified_jar(scratch), 1)[:4], "-h"], cwd=work,
                            env=java_environment(scratch), capture_output=True, text=True, check=False)
     out.mkdir()
     (out / "toy.tsv").write_text(PROBE, encoding="utf-8")
@@ -153,6 +159,8 @@ def main() -> int:
     if args.probe:
         return probe(scratch, clean)
     out = HERE / "live" / f"invocation-{args.invocation}"
+    if args.invocation not in SETTINGS:
+        raise SystemExit(f"invocation {args.invocation} has no owner-ruled settings (IL-R9)")
     if out.exists():
         raise SystemExit(f"{out} exists: every invocation is retained, never overwritten (IL-R9)")
     work = scratch / f"il4-work-{args.invocation}"
@@ -166,7 +174,7 @@ def main() -> int:
     digest = hashlib.sha256((work / "export" / "export.json").read_bytes()).hexdigest()
     jvm = jvm_version(scratch)
 
-    argv, result = mine(scratch, work / "export", "amie/facts.tsv")
+    argv, result = mine(scratch, work / "export", "amie/facts.tsv", args.invocation)
     stdout, stderr = result.stdout.decode("utf-8", "replace"), result.stderr.decode("utf-8", "replace")
     process = json.loads(clean(result.model_dump_json()))
     out.mkdir(parents=True)

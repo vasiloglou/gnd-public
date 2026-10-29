@@ -1,0 +1,9 @@
+{
+ "learner": {
+  "name": "amie",
+  "version": "4.0.0"
+ },
+ "population_sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a",
+ "rules_sha256": "4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c",
+ "schema_version": "gnd-mined-run/1"
+}

@@ -1,0 +1,2 @@
+$ uv run pytest -q -p no:randomly $(cat .gnd-planning/milestones/ilp-learners/evidence/IL6/gate-files.txt)
+1242 passed, 24 deselected in 127.41s (0:02:07)

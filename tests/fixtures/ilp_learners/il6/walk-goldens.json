@@ -1,0 +1,13 @@
+{
+  "files": {
+    "amie-2.proposal.json": "c5aae4920d8b52c643244d854f5b3608be0a674395a23583b518a4c652232822",
+    "export/amie/export.json": "d7756509f96fd4b9e4449b53a004fb77d5f1a831378a958c5e1122958ca435f3",
+    "export/ilasp/export.json": "1acb801053b0491a86a393bcce88f482a7431ca62051c9bb6c13f3eab7228a5e",
+    "export/neutral/export.json": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77",
+    "export/popper/export.json": "39788cf3c243b83715b448a42c99ba74b8315510be8954dd477dd6711e519493",
+    "export/rules/export.json": "7b455e99b224d1c7ab41fd2bcfdd1eb10914e795f57d2dd8e5b1c0494a2e5827",
+    "llm.proposal.json": "e21739ceeb6dfef4a2999ef563db039eb4070b5730ea3c4523340eae8f70a4ea",
+    "popper.proposal.json": "defbeaf0fd62103066cdb42fbf29b8b17b9b2ee9484ec01e72c982432704b02d",
+    "rules.proposal.json": "b0eb52126c3731144164a23038ee227c17d4986a57926a44b8acb59c7466fdef"
+  }
+}

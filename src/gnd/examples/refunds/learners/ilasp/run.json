@@ -1,0 +1,20 @@
+{
+ "schema_version": "gnd-ilp-run/1",
+ "learner": {
+  "name": "ilasp",
+  "version": "4.4.1"
+ },
+ "export_sha256": "1acb801053b0491a86a393bcce88f482a7431ca62051c9bb6c13f3eab7228a5e",
+ "clauses_sha256": "980756ff90d0e7fa358e9c8242a2396e3da9ef734e1f88e53799ecc9ebd6e50f",
+ "coverage": [
+  {
+   "clause": 0,
+   "covered": [
+    "harbor",
+    "market",
+    "airport",
+    "station"
+   ]
+  }
+ ]
+}

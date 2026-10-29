@@ -30,8 +30,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   admitted at support 4/5. The [adversarial review](notes/phase-IL3-agent-review.md)
   found 8 issues; 7 were fixed and IL3-Q1 is open for the owner. RIPPER is not
   deterministic under its seed (IL3-F5, IL3-Q3).
-- **IL4 is complete:** [phase record](006-phase-IL4.md), on `claude/il4`,
-  not yet merged. Invocation 1 with AMIE 4.0.0 on the synthetic staffing
+- **IL4 is complete:** [phase record](006-phase-IL4.md). Merged in PR #61. Invocation 1 with AMIE 4.0.0 on the synthetic staffing
   fixture completed; AMIE printed 8 rules, two hold, so the all-or-nothing
   import refused the set (`does-not-hold`), as predicted. The
   [adversarial review](notes/phase-IL4-agent-review.md) found 7 issues; 4
@@ -50,6 +49,8 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [IL3 phase record](005-phase-IL3.md)
 - [IL4 spec (r1, approved)](notes/phase-IL4-spec.md)
 - [IL4 phase record](006-phase-IL4.md)
+- [IL6 spec (r1, approved)](notes/phase-IL6-spec.md)
+- [IL6 phase record](007-phase-IL6.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -75,6 +76,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- none for IL5: the provider terms were confirmed and invocation 1 ran (completed, admitted).
+- none: IL6 is recorded; the milestone close is next.
 
-**Next action:** the owner reviews the IL4 pull request; then the IL6 spec (the walk and the comparison table) is drafted.
+**Next action:** milestone close: the plan repairs, the open-questions sweep and the close review.

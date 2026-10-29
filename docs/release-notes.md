@@ -3,6 +3,27 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: more rule learners (2026-10-28)
+
+The ILP bridge now has an adapter for each of five learners, and each was run
+against a real learner version: once, or once per setting the owner approved. The committed outputs replay in the
+documentation, so the comparison is reproducible without installing a learner.
+
+- `gnd export ilp --target ilasp` writes an answer-set-programming task for
+  ILASP, and `--target rules` a feature table for a rule-set learner such as
+  RIPPER. `gnd import ilp-rules` reads both back, plus a language model's
+  answer with `--target llm`.
+- `gnd export ilp --target amie --population POPULATION` writes one unlabelled
+  population as typed triples for the AMIE rule miner, and
+  `gnd import mined-rules` brings its rules back. GND counts each rule on the
+  population itself and admits the set only when every rule holds.
+- The Popper adapter ran against Popper 5.0.1; its rendering now writes each
+  threshold as a predicate of its own.
+
+[Compare the rule learners on real runs](how-to/compare-ilp-learners.md)
+replays every run, and the [comparison table](reference/ilp-bridge.md#comparing-the-learners)
+summarizes them. Each row is a single run on a small example, not a ranking.
+
 ## Unreleased: induced knowledge (2026-10-26)
 
 GND can now propose rules from data, and never adopts one without review.

@@ -42,6 +42,10 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   "fix" question is fixed corpus-first; the review's 7 findings are fixed.
   ILC-F5 and ILC-F6 (goldens that moved beyond the spec's list) were
   accepted by the owner on 2026-10-29.
+- **Parts B to E:** the plan carries italic `(c)` close notes beside its
+  approved text; the [close record](009-milestone-close.md) sweeps every open
+  question and records the close review (the maintained panel, five of six
+  seats, all findings applied). **Owner acceptance is pending.**
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -61,6 +65,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 - [Close plan (r1, approved)](notes/close-plan.md)
 - [IL-close spec (r1, approved)](notes/phase-IL-close-spec.md)
 - [IL-close part A record](008-close-repairs.md)
+- [Milestone close record](009-milestone-close.md), with the [close panel](evidence/IL-close/panel/PANEL-REVIEW.md)
 - [Plan gate record](001-plan-gate.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with
   reader notes 1–4 and the [r1 snapshot](evidence/plan-review-r1/)
@@ -86,6 +91,6 @@ IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL
 comparison walk and docs. Close is separate.
 
 **Open at gates:**
-- none for part A; parts B to E are in progress.
+- owner acceptance of the close, and whether to run a diff review of the milestone first.
 
-**Next action:** close parts B to E: the plan repairs, the open-questions sweep, the four-reviewer close review and the close record.
+**Next action:** the owner's acceptance of the close, recorded separately.

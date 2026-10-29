@@ -10,10 +10,12 @@ gate:
   exit: 0
   output: "1281 passed, 24 deselected in 273.13s (0:04:33)"
   note: >-
-    The part A gate (008), on the final code bytes: IL6's 23-file gate, which
-    is cumulative over IL1 to IL6, plus tests/test_il_close.py. T9 on the same
-    bytes: both wheel origins, 229 tutorial blocks each. Parts B and C change
-    planning text only.
+    The part A gate (008): IL6's 23-file gate, which is cumulative over IL1
+    to IL6, plus tests/test_il_close.py, run after the review fixes (cbc6432;
+    a ruff import-order fix followed, no behaviour). T9 on the same bytes:
+    both wheel origins, 229 tutorial blocks each. The gate was re-run on the
+    final close bytes, after parts B to D (evidence/IL-close/close-gate.txt);
+    its test_ilp_learners T8 scans this directory for private paths.
 slow_cadence:
   command: "uv run pytest -q"
   trigger: "explicit owner selection or separately configured CI"
@@ -22,7 +24,8 @@ slow_cadence:
 
 # ILP learners -- milestone close
 
-**Status: draft for the close review (part D).** Owner acceptance is recorded
+**Status: closed pending owner acceptance.** The close review (part D) ran
+over the draft and its findings are applied below. Owner acceptance is recorded
 separately, after the PR; this record does not claim it.
 
 The close follows the [close plan](notes/close-plan.md), approved by the owner
@@ -58,29 +61,34 @@ by GND (`002` to `008`, PRs #56, #57, #58, #60, #61, #62 and this close):
 
 | # | Predicate | Verdict | Where |
 |---|---|---|---|
-| 1 | IL1: one registry; IK5/IK6/RF1 goldens byte-identical except D12/D13 refusals; join check; octal escapes; one real Popper run, replayed | MET WITH RESIDUAL: the owner-recorded amendments moved named IK5 goldens (IL1-Q7, plan repaired) | `002` |
-| 2 | IL2: ILASP task golden under two seeds; learned rules through the shared checker; one run replayed | MET (FastLAS not kept, IL2-D1) | `003` |
-| 3 | IL3: thresholded feature export; positive single-feature conjuncts; refusals by name; all-or-nothing; one run replayed | MET; one run read as the rule-set result although RIPPER is not deterministic under its seed (IL3-F5, carried) | `005` |
-| 4 | IL4: typed relations; `guarded` import; GND support and confidence; `support-mismatch`; holds only; one run replayed | MET; subtype joins were false refusals until `008` | `006`, `008` |
-| 5 | IL5: `llm` entry; JSON through the shared re-check; one run after D8 | MET | `004` |
-| 6 | IL6: the walk exits as recorded; the comparison table; docs, skills, entry points with census checks | MET; the walk's wording repaired (IL4-Q5) | `007` |
-| 7 | Every phase: approval, focused checks, one reviewer, refactoring review, a record | MET | `002`–`008` |
-| 7 | Close: four-reviewer evidence; question sweep; PR; owner acceptance recorded separately | sweep below; review in part D; PR and acceptance pending | this record |
+| 1 | IL1: one registry; IK5/IK6/RF1 goldens byte-identical except D12/D13 refusals; join check; octal escapes; one real Popper run, replayed | MET WITH DEVIATION, owner-ruled: the IL1 amendments moved named IK5 goldens, and the IL1-F1 ruling dropped the neutral `learner-mismatch` refusal, so the neutral target accepts any learner name | `002` |
+| 2 | IL2: ILASP task golden under two seeds; learned rules through the shared checker; one run replayed | MET; FastLAS was not integrated: IL2-D1 was ruled (a), "ILASP 4.4.1 only" | `003`; `notes/phase-IL2-spec.md` §13 |
+| 3 | IL3: thresholded feature export; positive single-feature conjuncts; refusals by name; all-or-nothing; one run replayed | MET. The milestone goal's "integer-programming or certifiable" family was **not delivered**: IL3-D1 (a), owner-ruled, integrated RIPPER instead. One run is read as the rule-set result although RIPPER is not deterministic under its seed (IL3-F5, carried) | `005` |
+| 4 | IL4: typed relations; `guarded` import; GND support and confidence; `support-mismatch`; holds only; one run replayed | MET WITH DEVIATION: the count compared is AMIE's Support, not a positive-example count, which AMIE does not print (IL4-F4). Joins through a reference-inheriting subtype were false refusals until `008`; through an own-reference subtype they still are (carried) | `006`, `008` |
+| 5 | IL5: `llm` entry; JSON through the shared re-check; one run after D8 | MET WITH RESIDUAL: the agent's `learner.version` is `unreported` and the model id is an unverified claim (IL5-F7, IL5-Q6 carried) | `004` |
+| 6 | IL6: the walk exits as recorded; the comparison table; docs, skills, entry points with census checks | MET WITH DEVIATION, owner-ruled: `amie` runs on the staffing fixture, not refunds (IL4-D4 (o)) | `007` |
+| 7 | Every phase: approval, focused checks, one reviewer, refactoring review, a record | MET WITH RESIDUAL: code changed after its phase's review carries no review opinion: IL1's amendment-2 rendering and refactor (`002`), IL2's fixes, D13/D14 code and step 5 refactors (`003`). The close review did not read the milestone diff (below) | `002`–`008` |
+| 7 | Close: four-reviewer evidence; question sweep; PR; owner acceptance recorded separately | review: five reviewers over the plan, this record and the close plan, not the diff; sweep below; PR and acceptance pending | this record |
 
-## Plan repairs (part B)
+## Plan notes (part B)
 
-Applied to `notes/ilp-learners-plan.md` at the owner's direction without
-review (plan §8, p2), each tagged `(c)`:
+Added to `notes/ilp-learners-plan.md` at the owner's direction without
+review (plan §8, p2). Each is an italic `(c)` note after the approved text,
+which stays as approved. The first draft rewrote approved criteria instead;
+the close review found that changed their intent (agreed group G1, below), so
+the approved wording was restored and each deviation is now stated beside it
+with the ruling that allowed it.
 
-| Row | Repair |
+| Row | Note |
 |---|---|
-| IL3-Q4 | §1 names RIPPER, a sequential-covering learner; integer-programming and certifiable learners were not integrated |
-| IL4-Q5 | IL6's walk: labelled adapters on refunds, `amie` on the staffing fixture |
-| IL4-Q5 | §4 IL4: "the miner's support, its count of distinct head pairs" |
-| IL2-Q4 | IL-R9: the learner's own timeout "where the learner has one" |
-| IL1-Q7 | §9 IL1 row: the IK5 goldens moved by owner-recorded amendments |
-| IL6 refuted premise 2 | §5: the pin sites include gnd-solve's Station 6 |
-| Status | The header records the approval in `001-plan-gate.md`; "No approval exists" and "Planning only … awaits approval" are replaced by pointers to the records |
+| IL3-Q4 | §1: IL3-D1 (a) integrated RIPPER; no integer-programming or certifiable learner was integrated |
+| IL4-Q5 | Goal 6 and IL6-C1: `amie` ran on the staffing fixture (IL4-D4 (o)) |
+| IL4-Q5 | §4 IL4: the count compared is AMIE's Support (IL4-F4) |
+| IL2-Q4 | IL-R9: ILASP, RIPPER, AMIE and the agent CLIs have no timeout of their own |
+| IL1-Q7 | Goal 1 and the §9 IL1 row: the IL1 amendments moved named IK5 goldens |
+| IL1-F1 | IL1-C2 and §5: the neutral `learner-mismatch` refusal was dropped |
+| IL6 refuted premise 2 | §5: a third pin site, gnd-solve's Station 6 |
+| Status | The header gives the approved digest from `001-plan-gate.md` and says these bytes are r3 plus the notes |
 
 ## Question sweep (part C)
 
@@ -90,15 +98,15 @@ Every open-question row from `002` to `008`.
 |---|---|
 | IL1-Q1 | **fixed** in `008` (C4) |
 | IL1-Q2 | **discharged**: IL5 added `binds`, and `contract` varies by entry (IL4) |
-| IL1-Q3 | **discharged** in IL2 |
+| IL1-Q3 | **partly discharged**: IL2 refuses threshold names the renderer never writes (IL2-D8). Popper threshold **values** outside the export's set are **carried** (`008`'s `off-threshold` covers ILASP only) |
 | IL1-Q4 | **fixed** in `008` (C6) |
 | IL1-Q5 | **fixed** in `008` (C8a, C8b) |
 | IL1-Q6 | **carried**: reproducibility and a larger domain, to a later evaluation milestone (owner, 2026-10-29) |
-| IL1-Q7 | **plan repaired** (part B) |
+| IL1-Q7 | **plan noted** (part B) |
 | IL2-Q1 | **fixed** in `008` (C7); ILC-F5 accepted |
 | IL2-Q2 | **carried**: the ILASP bias amendment and a rerun, to a later evaluation milestone |
 | IL2-Q3 | **fixed** in `008` (C5) |
-| IL2-Q4 | **plan repaired** (part B) |
+| IL2-Q4 | **plan noted** (part B) |
 | IL5-Q1, IL5-Q2, IL5-Q3 | **closed**: ruled 2026-10-28 |
 | IL5-Q4 | **discharged** in IL3 (`live_common`) |
 | IL5-Q5 | **carried**: to the milestone that owns verbalization (owner: "Defer both") |
@@ -106,12 +114,12 @@ Every open-question row from `002` to `008`.
 | IL3-Q1 | **closed**: the census row is enough (owner) |
 | IL3-Q2 | **fixed** in `008` (C9) |
 | IL3-Q3 | **carried**: RIPPER's run-to-run variation, to a later evaluation milestone |
-| IL3-Q4 | **plan repaired** (part B) |
-| IL4-Q1 | **fixed** in `008` (C1, R1, R2) |
+| IL3-Q4 | **plan noted** (part B) |
+| IL4-Q1 | **partly fixed** in `008` (C1, R1, R2): joins through a reference-inheriting subtype count as the checker does. Joins through an own-reference subtype are still refused `support-mismatch`, a false refusal: **carried** |
 | IL4-Q2 | **fixed** in `008` (C2, R4, R6) |
 | IL4-Q3 | **partly fixed**: `ilp.export_value` is public (C9). Moving the per-rule provenance into `ilp_amie` was not in the ruled scope; **carried** with IL-close-Q1 |
 | IL4-Q4 | **discharged** in IL6: invocation 2 ran and was admitted |
-| IL4-Q5 | **plan repaired** (part B) |
+| IL4-Q5 | **plan noted** (part B) |
 | IL6-Q1 | **fixed** in `008` (C8c) |
 | IL6-Q2 | **fixed** in `008` (C3, R5) |
 | IL6-Q3 | **carried**: one outcome schema across live-run records, to a later milestone |
@@ -127,11 +135,63 @@ Every open-question row from `002` to `008`.
 | IL5-Q5 | the milestone that owns verbalization |
 | IL5-Q6 | the milestone that owns `gnd.agents` |
 | IL4-Q3 (remainder), IL-close-Q1, the `hold()` import | the next milestone that changes the mined import: one public counting entry, one rendering pass |
+| IL4-Q1 (own-reference subtypes) | the same milestone: count a join through an own-reference subtype, or refuse it by name |
+| IL1-Q3 (out-of-set Popper thresholds) | the same milestone as IL2-Q2's rerun: refuse a Popper threshold value the export never rendered |
+| The unreviewed code (predicate 7) and the milestone diff | the owner's call at acceptance: a diff review of `07f4d45^..HEAD` before or after merge |
 
 ## Close review (part D)
 
-Pending: the maintained panel over the plan (spec), this record (results) and
-the close plan (delta).
+**Instrument.** The maintained six-seat panel, launched with
+`uv run python tools/run_gnd_review_panel.py close-review-request.json --out panel-run --reviewer-timeout 900 --overall-timeout 1200`
+from a disposable worktree at `24e0e14`, after the launcher's credential and
+OpenRouter checks passed. Request kind `spec-results-delta`: the plan (spec),
+this record's draft (results) and the close plan (delta), with a six-criterion
+rubric. **Exit 0, quorum established.** Six attempted, **five succeeded**
+(claude, codex, gemini, kimi, glm); qwen exited nonzero. The reviewed
+artifacts were unchanged after the run. `gnd review finalize` exited 0: 4
+agreed concerns, 7 divergent, 4 prioritized fixes. Evidence:
+`evidence/IL-close/panel/` (request, run directory, synthesis,
+`PANEL-REVIEW.md`). The panel is advisory: five models agreeing is not
+acceptance.
+
+**One retained stream is sanitized.** codex's `stderr` named the scratch
+directory, whose path holds a `-Users-` token that IL-R10's privacy test
+refuses (the panel had already masked the username). The path was replaced by
+`<scratch>/panel-tree`. Its envelope still binds the original bytes, so that
+one stream no longer re-verifies against the run; the synthesis and
+`PANEL-REVIEW.md` were finalized over the original bytes.
+
+| File | SHA-256 as run (bound by the envelope) | SHA-256 committed |
+|---|---|---|
+| `evidence/IL-close/panel/panel-run/reviewers/codex/stderr` | `28dbe867b5ed4bc499ab467b7ff52d17e39314c6db22810e3c43f91a49ce0b94` | `73b2407c06d1b24f1af95c7c6b4ff612a962189e16636fd804cd4d379f54f2c8` |
+
+**The bar.** The plan asks for four reviewers at close; five succeeded. **The
+input was narrower than the close plan committed.** The close plan named "the
+milestone diff `07f4d45^..HEAD`"; a panel request names one spec, one result
+and one delta, so the diff was not offered (claude, divergent). Reviewers read
+the phase records for context, not the code. The code that never had a review
+opinion is named under predicate 7, and a diff review is left to the owner at
+acceptance.
+
+All five seats asked for revisions. Every agreed group was reproduced against
+the bytes it cites and applied:
+
+| Group | Supporters | Concern | Disposition |
+|---|---|---|---|
+| G1, high | claude, codex, gemini, glm | The draft's plan repairs rewrote approved criteria (the rule-set family, the walk, the miner's count) or left them contradicting each other, and verdicts read MET against the rewritten text | **applied (F1)**: approved wording restored, each deviation an italic `(c)` note with its ruling; IL1, IL4 and IL6 now MET WITH DEVIATION; IL3 states the family was not delivered |
+| G2, medium | claude, codex | IL4-Q1 marked fixed with the own-reference residual uncarried | **applied (F2)**: partly fixed; carried |
+| G3, medium | claude, codex | IL1-Q3 marked discharged with its out-of-set half open | **applied (F3)**: partly discharged; carried |
+| G4, low | claude, glm | The gate claim did not cover the final bytes, and dropped 008's qualifier | **applied (F4)**: the qualifier is kept; the gate re-ran on the final bytes |
+
+| Divergent view | Disposition |
+|---|---|
+| claude: Part D's input dropped the milestone diff | **accepted as a residual**, stated above; the owner decides on a diff review |
+| claude: predicate 7 overstated review coverage | **applied**: MET WITH RESIDUAL, naming the code |
+| claude: predicate 1 omitted the IL1-F1 drop | **applied**: in predicate 1 and as plan notes at IL1-C2 and §5 |
+| claude: the status line was untagged and blurred the approved bytes | **applied**: tagged, with the approved digest |
+| claude: IL5's unreported version | **applied**: MET WITH RESIDUAL |
+| claude: IL-R9's note listed only some learners | **applied**: all four named |
+| kimi: FastLAS attributed to IL2-D1 without record support | **applied**: cites the IL2 spec's §13 ruling |
 
 ## Boundary -- what the milestone does NOT establish
 

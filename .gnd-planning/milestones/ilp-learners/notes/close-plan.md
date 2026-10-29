@@ -1,7 +1,8 @@
 # ilp-learners close plan
 
-Draft r1, 2026-10-29. **Draft: the owner's rulings on the open questions are
-recorded below; the plan itself awaits approval.**
+r1, 2026-10-29. **Approved by the owner, 2026-10-29:** "The close plan is
+approved. Draft the IL-close repair spec and stop at its owner gate." The
+approval was given over SHA-256 `e636b452…d3d7d`, the bytes before this status line.
 
 Baseline: `a75b328` (main, after PR #62, the IL6 merge). All six phases are
 recorded: `002` to `007`.

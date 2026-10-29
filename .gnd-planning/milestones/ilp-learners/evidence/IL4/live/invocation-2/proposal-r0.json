@@ -1,0 +1,202 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "ilp-live",
+    "origin": "gnd import mined-rules",
+    "requested_at": "2026-01-01T00:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "c80bb856f5eed08cdee222765850e11169fec35d9958d0e71efd6b061a381f9b",
+    "text": "{\"version\":1,\"model_id\":\"staffing\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"staff\",\"name\":\"Staff\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"staff_code\"}},{\"id\":\"staff_code\",\"name\":\"StaffCode\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"team\",\"name\":\"Team\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"team_code\"}},{\"id\":\"team_code\",\"name\":\"TeamCode\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"site\",\"name\":\"Site\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"site_code\"}},{\"id\":\"site_code\",\"name\":\"SiteCode\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"works_in\",\"reading\":\"{Staff} works in {Team}\",\"roles\":[{\"object_type\":\"staff\",\"role_name\":\"staff\"},{\"object_type\":\"team\",\"role_name\":\"team\"}]},{\"id\":\"team_site\",\"reading\":\"{Team} sits at {Site}\",\"roles\":[{\"object_type\":\"team\",\"role_name\":\"team\"},{\"object_type\":\"site\",\"role_name\":\"site\"}]},{\"id\":\"based_at\",\"reading\":\"{Staff} is based at {Site}\",\"roles\":[{\"object_type\":\"staff\",\"role_name\":\"staff\"},{\"object_type\":\"site\",\"role_name\":\"site\"}]},{\"id\":\"parks_at\",\"reading\":\"{Staff} parks at {Site}\",\"roles\":[{\"object_type\":\"staff\",\"role_name\":\"staff\"},{\"object_type\":\"site\",\"role_name\":\"site\"}]},{\"id\":\"is_contractor\",\"reading\":\"{Staff} is a contractor\",\"roles\":[{\"object_type\":\"staff\",\"role_name\":\"staff\"}]},{\"id\":\"mentors\",\"reading\":\"{Staff} mentors {Staff}\",\"roles\":[{\"object_type\":\"staff\",\"role_name\":\"mentor\"},{\"object_type\":\"staff\",\"role_name\":\"mentee\"}]}],\"constraints\":[{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"based_at\",\"bind\":{\"staff\":\"$e\",\"site\":\"$b\"}},{\"fact_type\":\"works_in\",\"bind\":{\"staff\":\"$e\",\"team\":\"$a\"}}],\"consequent\":{\"atom\":{\"fact_type\":\"team_site\",\"bind\":{\"team\":\"$a\",\"site\":\"$b\"}}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"mined by amie 4.0.0 from population dfbfee12, rule 0\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"amie\",\"version\":\"4.0.0\"},\"method\":\"ilp-amie\",\"manifest_sha256\":\"dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a\",\"examples\":[\"ft1#0\",\"ft1#1\",\"ft1#2\",\"ft1#3\",\"ft1#4\"],\"support\":{\"numerator\":5,\"denominator\":5},\"counterexamples\":[],\"evidence\":[{\"ref\":\"population.yaml\",\"sha256\":\"dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a\"},{\"ref\":\"mined/rules\",\"sha256\":\"4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c\"},{\"ref\":\"mined/run\",\"sha256\":\"366cefd20acc5f26bafb2c7582011db31bfa04695da4c69253582e3373128c74\"}]}}},{\"type\":\"guarded\",\"antecedent\":[{\"fact_type\":\"team_site\",\"bind\":{\"team\":\"$f\",\"site\":\"$b\"}},{\"fact_type\":\"works_in\",\"bind\":{\"staff\":\"$a\",\"team\":\"$f\"}}],\"consequent\":{\"atom\":{\"fact_type\":\"based_at\",\"bind\":{\"staff\":\"$a\",\"site\":\"$b\"}}},\"source\":\"induced\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"mined by amie 4.0.0 from population dfbfee12, rule 1\",\"provenance\":{\"induction\":{\"inducer\":{\"name\":\"amie\",\"version\":\"4.0.0\"},\"method\":\"ilp-amie\",\"manifest_sha256\":\"dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a\",\"examples\":[\"ft2#0\",\"ft2#5\",\"ft2#10\",\"ft2#15\",\"ft2#1\",\"ft2#6\",\"ft2#11\",\"ft2#16\",\"ft2#2\",\"ft2#7\",\"ft2#12\",\"ft2#17\",\"ft2#3\",\"ft2#8\",\"ft2#13\",\"ft2#18\",\"ft2#4\",\"ft2#9\",\"ft2#14\",\"ft2#19\"],\"support\":{\"numerator\":20,\"denominator\":20},\"counterexamples\":[],\"evidence\":[{\"ref\":\"population.yaml\",\"sha256\":\"dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a\"},{\"ref\":\"mined/rules\",\"sha256\":\"4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c\"},{\"ref\":\"mined/run\",\"sha256\":\"366cefd20acc5f26bafb2c7582011db31bfa04695da4c69253582e3373128c74\"}]}}}]}\n"
+  },
+  "expected_model_sha256": "fe3857c96fc16d01d38526a4aedc89de52158f3b1a01e305ffbc6f201a2770aa",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "antecedent": [
+          {
+            "bind": {
+              "site": "$b",
+              "staff": "$e"
+            },
+            "fact_type": "based_at"
+          },
+          {
+            "bind": {
+              "staff": "$e",
+              "team": "$a"
+            },
+            "fact_type": "works_in"
+          }
+        ],
+        "consequent": {
+          "atom": {
+            "bind": {
+              "site": "$b",
+              "team": "$a"
+            },
+            "fact_type": "team_site"
+          }
+        },
+        "modality": "deontic",
+        "provenance": {
+          "induction": {
+            "counterexamples": [],
+            "evidence": [
+              {
+                "ref": "population.yaml",
+                "sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a"
+              },
+              {
+                "ref": "mined/rules",
+                "sha256": "4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c"
+              },
+              {
+                "ref": "mined/run",
+                "sha256": "366cefd20acc5f26bafb2c7582011db31bfa04695da4c69253582e3373128c74"
+              }
+            ],
+            "examples": [
+              "ft1#0",
+              "ft1#1",
+              "ft1#2",
+              "ft1#3",
+              "ft1#4"
+            ],
+            "inducer": {
+              "name": "amie",
+              "version": "4.0.0"
+            },
+            "manifest_sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a",
+            "method": "ilp-amie",
+            "support": {
+              "denominator": 5,
+              "numerator": 5
+            }
+          }
+        },
+        "rationale": "mined by amie 4.0.0 from population dfbfee12, rule 0",
+        "source": "induced",
+        "status": "proposed",
+        "type": "guarded"
+      },
+      "after_sha256": "14201f131816dffa990b72752c4dd28d878115d227587a691400367af6801524",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "canonical_before_sha256": null,
+        "duplicate_occurrence": 0,
+        "family": "guarded",
+        "host": "model",
+        "host_id": null,
+        "locator_kind": "constraint"
+      },
+      "operation_id": "mined-0000"
+    },
+    {
+      "after": {
+        "antecedent": [
+          {
+            "bind": {
+              "site": "$b",
+              "team": "$f"
+            },
+            "fact_type": "team_site"
+          },
+          {
+            "bind": {
+              "staff": "$a",
+              "team": "$f"
+            },
+            "fact_type": "works_in"
+          }
+        ],
+        "consequent": {
+          "atom": {
+            "bind": {
+              "site": "$b",
+              "staff": "$a"
+            },
+            "fact_type": "based_at"
+          }
+        },
+        "modality": "deontic",
+        "provenance": {
+          "induction": {
+            "counterexamples": [],
+            "evidence": [
+              {
+                "ref": "population.yaml",
+                "sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a"
+              },
+              {
+                "ref": "mined/rules",
+                "sha256": "4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c"
+              },
+              {
+                "ref": "mined/run",
+                "sha256": "366cefd20acc5f26bafb2c7582011db31bfa04695da4c69253582e3373128c74"
+              }
+            ],
+            "examples": [
+              "ft2#0",
+              "ft2#5",
+              "ft2#10",
+              "ft2#15",
+              "ft2#1",
+              "ft2#6",
+              "ft2#11",
+              "ft2#16",
+              "ft2#2",
+              "ft2#7",
+              "ft2#12",
+              "ft2#17",
+              "ft2#3",
+              "ft2#8",
+              "ft2#13",
+              "ft2#18",
+              "ft2#4",
+              "ft2#9",
+              "ft2#14",
+              "ft2#19"
+            ],
+            "inducer": {
+              "name": "amie",
+              "version": "4.0.0"
+            },
+            "manifest_sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a",
+            "method": "ilp-amie",
+            "support": {
+              "denominator": 20,
+              "numerator": 20
+            }
+          }
+        },
+        "rationale": "mined by amie 4.0.0 from population dfbfee12, rule 1",
+        "source": "induced",
+        "status": "proposed",
+        "type": "guarded"
+      },
+      "after_sha256": "a7164b10605ec359a7f392067a0e4ddb455e4a286c55bcd6adae742023ea875c",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "canonical_before_sha256": null,
+        "duplicate_occurrence": 0,
+        "family": "guarded",
+        "host": "model",
+        "host_id": null,
+        "locator_kind": "constraint"
+      },
+      "operation_id": "mined-0001"
+    }
+  ],
+  "proposal_id": "mined-c80bb856f5eed08c",
+  "rationale": "gnd import mined-rules: 2 mined rules from amie 4.0.0 that hold on population.yaml",
+  "schema_version": 3
+}

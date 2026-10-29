@@ -1,4 +1,5 @@
 {
+ "facts_sha256": "fa9abba9fe0e7eb6b6e84e43bf8fab1a5d6b053a29987730322600ebf663b867",
  "learner": {
   "name": "amie",
   "version": "4.0.0"

@@ -25,7 +25,7 @@ from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
 
 __all__ = ["ADAPTER_VERSION", "AGGREGATES", "MAX_THRESHOLDS", "SOLUTION_BANNER", "extract_program",
-           "parse_program", "quote", "render", "thresholds"]
+           "parse_program", "quote", "render", "threshold_rows", "thresholds"]
 
 #: ``export.json``'s ``adapter_version`` for the Popper target (IL1-A1 (o)).
 ADAPTER_VERSION = "3"
@@ -67,6 +67,8 @@ MAX_OCTAL_DIGITS = 7
 SOLUTION_BANNER = "*" * 10 + " SOLUTION " + "*" * 10
 _ELAPSED = re.compile(r"^\d+(?:\.\d+)?s ")
 _RULE = re.compile(r"wrong\(.*\.")
+#: The solution block's closing line (IL1 invocation 3's log).
+_CLOSING = "*" * len(SOLUTION_BANNER)
 
 
 def quote(text: str) -> str:
@@ -108,7 +110,7 @@ def _suffix(value: int) -> str:
     return f"m{-value}" if value < 0 else str(value)
 
 
-def _threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]:
+def threshold_rows(neutral: dict[str, Any]) -> list[tuple[str, str, list[int]]]:
     """``(name, type, extension)`` per rendered threshold predicate, in render order.
 
     The extension is the observed values of the type the comparison holds for,
@@ -132,7 +134,7 @@ def render(neutral: dict[str, Any]) -> dict[str, bytes]:
     facts = sorted(neutral["facts"], key=lambda fact: (fact["predicate"], position[fact["example"]]))
     lines = [f"{fact['predicate']}({quote(fact['example'])},"
              f"{','.join(_term(v) for v in fact['values'])}).\n" for fact in facts]
-    rows = _threshold_rows(neutral)
+    rows = threshold_rows(neutral)
     # Ground facts, not rules: Popper v5.0.1 grounds bk.pl in clingo and calls
     # predicates unbound, and a rule-defined threshold has no atoms there
     # (IL1-A2 (o), review finding 2).
@@ -297,7 +299,8 @@ class _Parser:
         if kind == "var":
             return {"var": value}
         if kind == "name":
-            return {"const": value}
+            # The renderer writes a boolean bare (_term); read it back as one (IL2-Q1).
+            return {"const": {"true": True, "false": False}.get(value, value)}
         if kind == "int":
             if len(value.lstrip("-")) > MAX_INT_DIGITS:
                 self._fail(line, column, f"an integer longer than {MAX_INT_DIGITS} digits")
@@ -375,19 +378,22 @@ def _octal(rest: str, line: int, column: int) -> str:
 def extract_program(log: str) -> str:
     """The learned program in Popper's log, one rule per line; ``""`` if none.
 
-    The program is the first maximal run of ``wrong(...).`` lines after the last
-    :data:`SOLUTION_BANNER`, each with its elapsed-seconds prefix removed. Linear
-    in the log; the log itself is bounded by the run's process limits."""
+    The program is every ``wrong(...).`` line in the block after the last
+    :data:`SOLUTION_BANNER`, up to its closing line of stars or the end of the
+    log, each with its elapsed-seconds prefix removed; the block's other lines
+    (the scores, a warning) are skipped, so no rule is dropped (IL1-Q4,
+    ILC-D7 (o)). Linear in the log; the log itself is bounded by the run's
+    process limits."""
     lines = [_ELAPSED.sub("", line, count=1).strip() for line in log.splitlines()]
     banners = [index for index, line in enumerate(lines) if line == SOLUTION_BANNER]
     if not banners:
         return ""
     program: list[str] = []
     for line in lines[banners[-1] + 1:]:
+        if line == _CLOSING:
+            break
         if _RULE.fullmatch(line):
             program.append(line)
-        elif program:
-            break
     return "".join(f"{line}\n" for line in program)
 
 

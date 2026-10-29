@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gnd.dev/schemas/mined-import.schema.json",
   "title": "GND mined-rules import: the miner run record (gnd-mined-run/1) and the import report (gnd-mined-import/1)",
-  "description": "ilp-learners IL4. The run record binds a miner's printed rules to the population it mined; the report is what gnd import mined-rules --format json prints. Contract: docs/reference/ilp-bridge.md, \"AMIE-style miner\".",
+  "description": "ilp-learners IL4. The run record binds a miner's printed rules to the population it mined and to the facts it read (facts_sha256, IL-close); the report is what gnd import mined-rules --format json prints. Contract: docs/reference/ilp-bridge.md, \"AMIE-style miner\".",
   "oneOf": [
     {
       "$ref": "#/$defs/run"
@@ -77,7 +77,8 @@
         "schema_version",
         "learner",
         "rules_sha256",
-        "population_sha256"
+        "population_sha256",
+        "facts_sha256"
       ],
       "properties": {
         "schema_version": {
@@ -90,6 +91,9 @@
           "$ref": "#/$defs/sha256"
         },
         "population_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "facts_sha256": {
           "$ref": "#/$defs/sha256"
         }
       }

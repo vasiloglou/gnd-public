@@ -21,8 +21,8 @@ from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import COMPARISON_NAME, IlpError, observed_integers
 from gnd.export.ilp_popper import thresholds
 
-__all__ = ["ADAPTER_VERSION", "REFUSALS", "context_fact", "extract_hypothesis",
-           "parse_hypothesis", "render", "split_task"]
+__all__ = ["ADAPTER_VERSION", "IMPORT_REFUSALS", "REFUSALS", "check_thresholds", "context_fact",
+           "extract_hypothesis", "parse_hypothesis", "render", "split_task"]
 
 ADAPTER_VERSION = "1"
 
@@ -37,6 +37,8 @@ _COMPARISON_RECALL = 1
 REFUSALS = ("asp-constraint", "choice-rule", "weak-constraint", "classical-negation",
             "arithmetic-term", "interval-or-pool", "directive", "builtin-comparison",
             "empty-body", "disjunction", "head-shape")
+#: The import's own refusal of a parsed hypothesis, before the shared rewrite (IL2-Q3, ILC-D6 (o)).
+IMPORT_REFUSALS = ("off-threshold",)
 
 MAX_RULES = 32
 MAX_LITERALS = 16
@@ -463,3 +465,28 @@ def _thread(body: list[dict[str, Any]]) -> dict[str, Any]:
 def parse_hypothesis(text: str) -> dict[str, Any]:
     """ILASP's printed hypothesis as a ``gnd-ilp-clauses/1`` document (unvalidated)."""
     return _Reader(text).hypothesis()
+
+
+def check_thresholds(document: dict[str, Any], neutral: dict[str, Any]) -> None:
+    """Refuse a comparison constant the task never offered (IL2-Q3, ILC-D6 (o)).
+
+    The task's ``thr_t`` facts are the type's :func:`thresholds`; a constant
+    outside them is no threshold ILASP could have learned from the export, so
+    the clause is refused ``off-threshold`` by index. The reader has already
+    shaped every comparison atom as ``(variable, integer)``."""
+    observed = observed_integers(neutral)
+    types = {row["name"]: row["type"] for row in neutral["comparisons"]}
+    offered: dict[str, set[int]] = {}
+    for index, clause in enumerate(document["clauses"]):
+        for literal in clause["body"]:
+            atom = literal.get("atom")
+            if atom is None or not _RENDERED_COMPARISON.fullmatch(atom["predicate"]):
+                continue
+            type_name = types.get(atom["predicate"])
+            if type_name not in offered:
+                offered[type_name] = set(thresholds(observed.get(type_name, set())))
+            value = atom["args"][1]["const"]
+            if value not in offered[type_name]:
+                raise IlpError(EXIT_ILL_FORMED, f"clause {index}: off-threshold: {atom['predicate']} "
+                               f"compares with {value}, which the export does not render as a "
+                               "threshold")

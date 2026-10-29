@@ -380,6 +380,33 @@ Recorded as found.
 - **ILC-F3 (signature).** `ilp_amie.family` takes the model, as
   `ilp.type_closures` does, and reads `ModelIndex` inside; §6.1 wrote
   `family(model_index)`.
+- **ILC-F4 (C2a's message).** The run-record schema is a root `oneOf` of the
+  record and the report, so a record missing `facts_sha256` was reported only
+  as "not valid under any of the given schemas". The mined import now
+  validates the record against `$defs/run` alone, so the message names the
+  field, as C2a expects. No other import's message changes.
+- **ILC-F5 (refutes §6.7's "changes no golden").** IL1's
+  `test_ilp_bridge.py::test_r5_boolean_atoms_become_booleans_at_boolean_roles`
+  pinned that a bare `true` at a **string** role reads as the string `"true"`.
+  Under IL2-Q1 it reads as the boolean. Popper quotes every string it is
+  given, so only a constant no export rendered reaches that case. The
+  assertion now expects the boolean. **Returned to the owner (IL-R7).**
+- **ILC-F6 (§8 omissions, all mechanical consequences of D3 and D4).**
+  **Returned to the owner (IL-R7).**
+  - `tests/fixtures/ilp_learners/il4/expected/{staffing,north}/export.json`:
+    `adapter_version` "1" → "2". Their `facts.tsv` and `relations.json` are
+    unchanged.
+  - `evidence/IL4/live/invocation-2/import-report.json` binds the run record
+    by digest, as the proposal does. It is re-derived, and the original is
+    kept as `import-report-r0.json`.
+  - The walk page's AMIE export block is block 10, not 9. Its digest moves to
+    `fead4b6c…`, and a paragraph now says the runs read version 1.
+  - `test_ilp_amie.py` T9 also asserted the run's `adapter_version` equals the
+    current one. It now asserts the run's is "1".
+  - `evidence/IL4/run_amie.py` writes `facts_sha256`, so a future run's record
+    is valid. The retained runs are not re-run.
+- **ILC-F7 (IL-R3).** The ILASP threshold check is a registry hook,
+  `Learner.vet`, so the import service names no learner.
 - **Red run.** `evidence/IL-close/red.txt`: 19 failed, 12 passed. Each failure
   is its case's own defect (for example `support-mismatch … GND counts 0` for
   C1a). The 12 that pass pin behaviour the repairs must keep: C1c, C1d, C4b,

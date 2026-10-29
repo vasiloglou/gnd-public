@@ -5,7 +5,9 @@ Contract page: ``docs/reference/ilp-bridge.md``, "AMIE-style miner".
 
 **Export.** One relation ``f_<fact type>`` per binary asserted fact type the
 population covers; each value is spelled ``<object type id>:<value>``, so a
-join inside the miner stays typed (IL4-D5 (o)). ``amie/facts.tsv`` holds one
+join inside the miner stays typed (IL4-D5 (o)). A type in a subtype
+hierarchy is spelled by its family instead (:func:`family`, IL4-Q1), so a
+subtype and its supertype meet in a join as the checker's values do. ``amie/facts.tsv`` holds one
 sorted ``subject TAB relation TAB object`` line per distinct fact, and
 ``amie/relations.json`` the population digest, the relations and every skipped
 fact type with its reason. No labels.
@@ -31,10 +33,13 @@ from gnd.export.ilp import IlpError
 __all__ = [
     "ADAPTER_VERSION", "COUNT_REFUSALS", "EXPORT_REFUSALS", "FORMULA", "MAPPING_REFUSALS",
     "MAX_ATOMS", "MAX_DIGITS", "MAX_JOIN_ROWS", "MAX_RULES", "MAX_TEXT", "Counts", "MinedRule",
-    "canonical", "count", "extract_rules", "mapped", "parse_rules", "relation_table", "render", "spell",
+    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "relation_table", "render",
+    "spell",
 ]
 
-ADAPTER_VERSION = "1"
+#: "2" spells a subtype hierarchy by its family (IL4-Q1, ILC-D4 (o)); a model with
+#: no subtypes renders the same facts as "1".
+ADAPTER_VERSION = "2"
 #: IL4-D7 (o), fixed before results.
 MAX_TEXT = 1024 * 1024
 MAX_RULES = 256
@@ -61,9 +66,41 @@ _ESCAPES = {"\\": "\\\\", "\t": "\\t", "\n": "\\n"}
 
 # -- export ------------------------------------------------------------------
 
-def spell(object_type: str, value: Any, *, where: str) -> str:
-    """``<object type id>:<value>``, the one spelling the export and the count share."""
-    value = _ilp._value(value, where=where)
+def family(model: Any) -> dict[str, str]:
+    """Each object type's family: the least top-type id, in code-point order, of the
+    weakly connected component of the subtype graph that holds it (ILC-D1 (o)).
+
+    A type in no subtype relation is its own family. Two types whose ancestor
+    closures intersect are always in one family, so the count never separates
+    what check 9b joins; types of one family that share no ancestor are refused
+    by 9b before any count. Linear in the subtype graph, read through ModelIndex."""
+    from gnd.model_index import ModelIndex
+
+    rows = ModelIndex.for_model(model).object_types_by_id()
+    parent = {identifier: identifier for identifier in rows}
+
+    def root(identifier: str) -> str:
+        while parent[identifier] != identifier:
+            parent[identifier] = parent[parent[identifier]]
+            identifier = parent[identifier]
+        return identifier
+
+    for identifier, row in rows.items():
+        for supertype in row.get("subtype_of") or []:
+            if supertype in parent:
+                parent[root(identifier)] = root(supertype)
+    names: dict[str, str] = {}
+    for identifier, row in rows.items():
+        if not row.get("subtype_of"):
+            component = root(identifier)
+            names[component] = min(names.get(component, identifier), identifier)
+    return {identifier: names.get(root(identifier), identifier) for identifier in rows}
+
+
+def spell(family_name: str, value: Any, *, where: str) -> str:
+    """``<family>:<value>``, the one spelling the export and the count share; the
+    family is the object type itself outside a subtype hierarchy (:func:`family`)."""
+    value = _ilp.export_value(value, where=where)
     if isinstance(value, bool):
         text = "true" if value else "false"
     elif isinstance(value, int):
@@ -73,16 +110,18 @@ def spell(object_type: str, value: Any, *, where: str) -> str:
         if any(not character.isprintable() for character in text):
             raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: {where} holds a non-printable character "
                            "the triple export cannot spell")
-    return f"{object_type}:{text}"
+    return f"{family_name}:{text}"
 
 
 @dataclass(frozen=True)
 class Relation:
-    """One exported relation: its fact type, its two role names and their object types."""
+    """One exported relation: its fact type, its two role names, their object types
+    and the families that spell their values."""
 
     fact_type: str
     roles: tuple[str, str]
     types: tuple[str, str]
+    families: tuple[str, str]
 
 
 def relation_table(model: Any, covers: list[str]) -> tuple[dict[str, Relation], dict[str, Relation],
@@ -95,6 +134,7 @@ def relation_table(model: Any, covers: list[str]) -> tuple[dict[str, Relation], 
 
     shape, columns = _ilp.schema(model, RedactionPolicy.from_model(model).effective_roles)
     object_types = {row["name"]: row["object_type"] for row in shape["types"]}
+    families = family(model)
     covered = set(covers)
     exported: dict[str, Relation] = {}
     uncovered: dict[str, Relation] = {}
@@ -104,8 +144,9 @@ def relation_table(model: Any, covers: list[str]) -> tuple[dict[str, Relation], 
         if len(column.role_names) != 2:
             skipped.append({"fact_type": column.fact_type, "reason": "arity"})
             continue
-        relation = Relation(column.fact_type, (column.role_names[0], column.role_names[1]),
-                            (object_types[column.types[1]], object_types[column.types[2]]))
+        types = (object_types[column.types[1]], object_types[column.types[2]])
+        relation = Relation(column.fact_type, (column.role_names[0], column.role_names[1]), types,
+                            (families.get(types[0], types[0]), families.get(types[1], types[1])))
         if column.fact_type in covered:
             exported[name] = relation
         else:
@@ -123,8 +164,8 @@ def pairs(relations: Mapping[str, Relation], population: Any) -> dict[str, list[
             where = f"fact type {relation.fact_type!r}"
             if not isinstance(row, dict) or not all(role in row for role in relation.roles):
                 raise IlpError(EXIT_ILL_FORMED, f"unrepresentable: a {where} fact lacks a role")
-            rows.append(tuple(spell(object_type, row[role], where=where)
-                              for role, object_type in zip(relation.roles, relation.types, strict=True)))
+            rows.append(tuple(spell(name, row[role], where=where)
+                              for role, name in zip(relation.roles, relation.families, strict=True)))
         out[name] = rows
     return out
 

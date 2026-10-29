@@ -211,8 +211,13 @@ gnd export ilp staffing/model.orm.yaml --population staffing/population.yaml --t
 
 ```text
 EXPORTED 65 facts in 4 relations to export/amie (amie); skipped 2 fact types
-export_sha256 d7756509f96fd4b9e4449b53a004fb77d5f1a831378a958c5e1122958ca435f3
+export_sha256 fead4b6c18464920d555fef7e6b6f6c4f7f350877a6ae95d26210538eb2cf7fd
 ```
+
+Both AMIE runs read this export at adapter version 1, digest `d7756509…`.
+Version 2 changes only how a subtype is spelled, and this model has none, so
+`amie/facts.tsv` is byte for byte the file AMIE read; each run record binds
+that file's digest.
 
 AMIE 4.0.0's run of record kept its defaults except for a minimum support of 1
 (`-maxad 3 -mins 1`) and mined 8 rules:

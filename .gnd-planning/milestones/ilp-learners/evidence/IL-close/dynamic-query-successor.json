@@ -2,7 +2,7 @@
   "schema_version": 1,
   "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL4/dynamic-query-successor.json",
   "predecessor_sha256": "e00c868a957ee39b93fd08ae08b92a728b4e675e844fbd4e860a3102b9c01bac",
-  "reason": "ilp-learners IL-close part A (spec r1, approved 2026-10-29): the close repairs. The rows are gnd.export.ilp_amie's subtype family (its union-find and the relation table's family spelling), gnd.export.ilp_asp's off-threshold check and the registry's vet hook, the Popper reader's bare booleans, check 9b's infix join, and _threshold_rows renamed threshold_rows (ILC-D8 (o)). Syntax census only; no model-query exception widening.",
+  "reason": "ilp-learners IL-close part A (spec r1, approved 2026-10-29): the close repairs. The rows are gnd.export.ilp_amie's subtype family (its union-find over reference-inheriting subtypes and the relation table's family spelling), gnd.export.ilp_asp's off-threshold check and the registry's vet hook, the Popper reader's bare booleans, check 9b's infix join, and _threshold_rows renamed threshold_rows (ILC-D8 (o)). Syntax census only; no model-query exception widening.",
   "removed": [
     [
       "src/gnd/export/ilp_popper.py",
@@ -58,18 +58,36 @@
       "src/gnd/export/ilp_amie.py",
       "family",
       "dict[str, str]",
-      2
+      3
     ],
     [
       "src/gnd/export/ilp_amie.py",
       "family",
-      "names.get(component, identifier)",
+      "members.get(component, identifier)",
       1
     ],
     [
       "src/gnd/export/ilp_amie.py",
       "family",
-      "names.get(root(identifier), identifier)",
+      "members[root(identifier)]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "rows[identifier]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "tops.get(component, identifier)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "family",
+      "tops.get(root(identifier), members[root(identifier)])",
       1
     ],
     [
@@ -129,7 +147,7 @@
     [
       "src/gnd/export/ilp_asp.py",
       "check_thresholds",
-      "types.get(atom['predicate'])",
+      "types[atom['predicate']]",
       1
     ],
     [
@@ -205,6 +223,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 6751,
-  "result_occurrences": 8451
+  "result_distinct_rows": 6754,
+  "result_occurrences": 8455
 }

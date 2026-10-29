@@ -50,7 +50,7 @@ def _sha(data: bytes) -> str:
 def _fixture(name: str, kind: str) -> Path:
     if name == "STAFFING":
         return IL4 / ("model.orm.yaml" if kind == "model" else "population.yaml")
-    return CLOSE / name
+    return CLOSE / name if not Path(name).is_absolute() else Path(name)
 
 
 def _rules(case: dict[str, Any]) -> list[str]:
@@ -352,3 +352,95 @@ def test_c9_the_public_names_replace_the_private_ones():
 
     assert "threshold_rows" in ilp_popper.__all__ and not hasattr(ilp_popper, "_threshold_rows")
     assert "export_value" in ilp.__all__ and not hasattr(ilp, "_value")
+
+
+# ---------------------------------------------------------------------------
+# R1 to R6: the adversarial review's findings (notes/phase-IL-close-agent-review.md),
+# successors to the approved corpus; each was red against 2c4fba9.
+# ---------------------------------------------------------------------------
+
+_HOLDS = "?a  f_manages  ?b   => ?a  f_works_in  ?b\t1.000000\t1.000000\t1.000000\t2\t-1\t2\t-1"
+
+
+def test_r1_an_own_reference_subtype_is_its_own_family(tmp_path):
+    """Review 1: manager 1 (Integer) and staff "1" (String) are different values to the
+    checker, so they must not share a spelling; the import refuses by name, never exit 70."""
+    case = {"model": "ownref.orm.yaml", "population": "ownref.population.yaml", "rules": [_HOLDS]}
+    (tmp_path / "facts").mkdir()
+    facts = _facts(tmp_path / "facts", CLOSE / case["model"], CLOSE / case["population"]).decode()
+    assert "manager:1\tf_manages\tteam:t1" in facts and "staff:1\tf_works_in\tteam:t1" in facts
+    result, out = _mined(tmp_path, case)
+    assert result.returncode == 3 and not out.exists(), result.stderr
+    assert result.stderr.decode().startswith("rule 0: support-mismatch:")
+
+
+def test_r2_a_cyclic_hierarchy_is_one_family(tmp_path):
+    """Review 2: a component with no top type is named by its least member."""
+    from gnd.export import ilp_amie
+    from gnd.model import load_model
+
+    assert ilp_amie.family(load_model(CLOSE / "cyclic.orm.yaml"))["staff"] == "manager"
+    result, _out = _mined(tmp_path, {"model": "cyclic.orm.yaml", "population": "subtype.population.yaml",
+                                     "rules": [_HOLDS]})
+    assert result.returncode == 0, result.stderr
+
+
+def test_r3_an_undeclared_comparison_is_left_to_the_fragment_table(tmp_path):
+    """Review 3: a predicate the export never declared is unknown-predicate, not off-threshold."""
+    result, _out = _ilasp(tmp_path, "wrong :- f_refund_amount(V1,V2), gt_t_bogus(V2,5).\n", [[]])
+    assert result.stderr.decode().startswith("clause 0: unknown-predicate:"), result.stderr
+
+
+def test_r4_facts_no_export_could_write_are_a_facts_mismatch(tmp_path):
+    """Review 4: the re-render's own refusal is reported as facts-mismatch, in the input order."""
+    work = tmp_path / "pop"
+    work.mkdir()
+    population = work / "population.yaml"
+    population.write_text((CLOSE / "subtype.population.yaml").read_text(encoding="utf-8")
+                          .replace("covers: [manages, works_in]", "covers: []"), encoding="utf-8")
+    # Any recorded digest will do: no export can write these facts.
+    case = {"model": "subtype.orm.yaml", "population": str(population), "rules": [_HOLDS], "record": "staffing"}
+    result, _out = _mined(tmp_path, case)
+    assert result.returncode == 3
+    assert result.stderr.decode().startswith("facts-mismatch:"), result.stderr
+    assert "no-relations" in result.stderr.decode()
+
+
+def test_r5_unreadable_rules_fail_the_tool_loudly(tmp_path):
+    """Review 5: an unparsable rules file is exit 2 with its reason, not a traceback and exit 1."""
+    spec = importlib.util.spec_from_file_location("ilp_comparison", TOOL)
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)  # type: ignore[union-attr]
+    for relative in (tool.EVIDENCE, tool.STAFFING, tool.GOLDEN, tool.BRIDGE):
+        source, target = REPO_ROOT / relative, tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        (shutil.copytree if source.is_dir() else shutil.copy)(source, target)
+    rules = tmp_path / tool.EVIDENCE / "IL4/live/invocation-1/rules.txt"
+    rules.write_text(rules.read_text(encoding="utf-8") + "garbage line\n", encoding="utf-8")
+    completed = _tool(tmp_path)
+    assert completed.returncode == 2, completed.stderr
+    assert "unparsable: line 9" in completed.stderr and "Traceback" not in completed.stderr
+
+
+@pytest.mark.parametrize(("change", "expected"), [
+    ({"learner": {"name": "popper", "version": "1"}}, "learner-mismatch"),
+    ({"rules_sha256": "0" * 64}, "rules-mismatch"),
+    ({"population_sha256": "0" * 64}, "population-mismatch"),
+])
+def test_r6_facts_mismatch_comes_after_the_other_input_refusals(tmp_path, change, expected):
+    """Review 6: with the facts also wrong, the earlier input refusal is named."""
+    case = {"model": "subtype.orm.yaml", "population": "subtype.population.yaml", "rules": [_HOLDS]}
+    (tmp_path / "good").mkdir()
+    good, _out = _mined(tmp_path / "good", case)
+    assert good.returncode == 0, good.stderr
+    record = json.loads((tmp_path / "good" / "import" / "reported.json").read_text(encoding="utf-8"))
+    work = tmp_path / "bad"
+    work.mkdir()
+    reported = work / "reported.json"
+    reported.write_text(json.dumps({**record, "facts_sha256": "1" * 64, **change}), encoding="utf-8")
+    imports = tmp_path / "good" / "import"
+    result = run_main(["import", "mined-rules", str(imports / "model.orm.yaml"), str(imports / "rules.txt"),
+                       "--population", str(imports / "population.yaml"), "--reported", str(reported),
+                       "--target", "amie", "--out", str(work / "p.json")])
+    assert result.returncode == 3
+    assert result.stderr.decode().startswith(f"{expected}:"), result.stderr

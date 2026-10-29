@@ -150,14 +150,20 @@ def hold(root: Path, text: str) -> int:
 
 def unlabelled_row(root: Path, adapter: str, invocation: int, directory: str) -> dict[str, Any]:
     from gnd.export import ilp_amie
+    from gnd.export.ilp import IlpError
 
     live = root / EVIDENCE / directory
     outcome = _json(live / "outcome.json")
     row = _common(adapter, invocation, outcome, "staffing")
     path = live / "rules.txt"
     text = path.read_text(encoding="utf-8") if path.exists() else ""
-    return {**row, "rules_mined": len(ilp_amie.parse_rules(text)) if text else None,
-            "rules_hold": hold(root, text) if text else None,
+    try:
+        mined, held = (len(ilp_amie.parse_rules(text)), hold(root, text)) if text else (None, None)
+    except IlpError as error:
+        # Review 5: rules or staffing inputs GND cannot read are counted by no row.
+        raise ComparisonError(f"{directory}: {error}: GND cannot count these rules; "
+                              "the table does not report them") from None
+    return {**row, "rules_mined": mined, "rules_hold": held,
             "rules_admitted": _admitted(live, row["import_exit"]), "first_refusal": _first_refusal(live)}
 
 

@@ -473,16 +473,18 @@ def check_thresholds(document: dict[str, Any], neutral: dict[str, Any]) -> None:
     The task's ``thr_t`` facts are the type's :func:`thresholds`; a constant
     outside them is no threshold ILASP could have learned from the export, so
     the clause is refused ``off-threshold`` by index. The reader has already
-    shaped every comparison atom as ``(variable, integer)``."""
+    shaped every comparison atom as ``(variable, integer)``; one the export did
+    not declare is left to the fragment table."""
     observed = observed_integers(neutral)
     types = {row["name"]: row["type"] for row in neutral["comparisons"]}
     offered: dict[str, set[int]] = {}
     for index, clause in enumerate(document["clauses"]):
         for literal in clause["body"]:
             atom = literal.get("atom")
-            if atom is None or not _RENDERED_COMPARISON.fullmatch(atom["predicate"]):
+            # An undeclared comparison is the fragment table's unknown-predicate (review 3).
+            if atom is None or atom["predicate"] not in types:
                 continue
-            type_name = types.get(atom["predicate"])
+            type_name = types[atom["predicate"]]
             if type_name not in offered:
                 offered[type_name] = set(thresholds(observed.get(type_name, set())))
             value = atom["args"][1]["const"]

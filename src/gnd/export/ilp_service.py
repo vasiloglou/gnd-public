@@ -626,8 +626,14 @@ def _cmd_import_mined_rules(
                            f"{record['population_sha256']}, not {inputs.digest}")
         # The facts the miner read bind the model's reading of the population:
         # relation names, role order and spelling (IL4-Q2, ILC-D3 (o)).
-        facts_sha = hashlib.sha256(_amie.render(inputs.model, inputs.population,
-                                                inputs.digest)["amie/facts.tsv"]).hexdigest()
+        try:
+            facts_sha = hashlib.sha256(_amie.render(inputs.model, inputs.population,
+                                                    inputs.digest)["amie/facts.tsv"]).hexdigest()
+        except IlpError as error:
+            # No export writes these facts, so none is the one the record binds (review 4).
+            raise IlpError(EXIT_ILL_FORMED, f"facts-mismatch: the run record binds facts "
+                           f"{record['facts_sha256']}, but this model exports none from the "
+                           f"population ({error})") from None
         if record["facts_sha256"] != facts_sha:
             raise IlpError(EXIT_ILL_FORMED, f"facts-mismatch: the run record binds facts "
                            f"{record['facts_sha256']}, but this model renders the population "

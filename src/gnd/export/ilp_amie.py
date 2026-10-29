@@ -70,10 +70,14 @@ def family(model: Any) -> dict[str, str]:
     """Each object type's family: the least top-type id, in code-point order, of the
     weakly connected component of the subtype graph that holds it (ILC-D1 (o)).
 
-    A type in no subtype relation is its own family. Two types whose ancestor
-    closures intersect are always in one family, so the count never separates
-    what check 9b joins; types of one family that share no ancestor are refused
-    by 9b before any count. Linear in the subtype graph, read through ModelIndex."""
+    Only a subtype that inherits its supertype's reference joins its family: one
+    with its own reference scheme (``inherits_reference`` not true) may spell a
+    value its supertype spells differently, so it starts a family of its own and
+    a join across the two is never counted as met (review 1). A component with
+    no top type (a cycle) is named by its least member (review 2). A type in no
+    subtype relation is its own family. Types of one family that share no
+    ancestor are refused by check 9b before any count. Linear in the subtype
+    graph, read through ModelIndex."""
     from gnd.model_index import ModelIndex
 
     rows = ModelIndex.for_model(model).object_types_by_id()
@@ -85,16 +89,20 @@ def family(model: Any) -> dict[str, str]:
             identifier = parent[identifier]
         return identifier
 
-    for identifier, row in rows.items():
-        for supertype in row.get("subtype_of") or []:
+    joined = {identifier for identifier, row in rows.items()
+              if row.get("subtype_of") and row.get("inherits_reference") is True}
+    for identifier in joined:
+        for supertype in rows[identifier]["subtype_of"]:
             if supertype in parent:
                 parent[root(identifier)] = root(supertype)
-    names: dict[str, str] = {}
-    for identifier, row in rows.items():
-        if not row.get("subtype_of"):
-            component = root(identifier)
-            names[component] = min(names.get(component, identifier), identifier)
-    return {identifier: names.get(root(identifier), identifier) for identifier in rows}
+    tops: dict[str, str] = {}
+    members: dict[str, str] = {}
+    for identifier in rows:
+        component = root(identifier)
+        members[component] = min(members.get(component, identifier), identifier)
+        if identifier not in joined:
+            tops[component] = min(tops.get(component, identifier), identifier)
+    return {identifier: tops.get(root(identifier), members[root(identifier)]) for identifier in rows}
 
 
 def spell(family_name: str, value: Any, *, where: str) -> str:

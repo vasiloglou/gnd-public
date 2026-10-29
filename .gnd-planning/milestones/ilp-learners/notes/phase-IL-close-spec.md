@@ -407,6 +407,16 @@ Recorded as found.
     is valid. The retained runs are not re-run.
 - **ILC-F7 (IL-R3).** The ILASP threshold check is a registry hook,
   `Learner.vet`, so the import service names no learner.
+- **ILC-F8 (refutes §6.1's "Boundary"; review finding 1).** An
+  own-reference subtype (`inherits_reference` not true) can hold a value
+  spelled like its supertype's that the checker keeps distinct, such as
+  Integer `1` and String `"1"`. The family merged them, and the import exited
+  70. Only a reference-inheriting subtype now joins its supertype's family.
+  An own-reference subtype's join is refused `support-mismatch`, as before
+  IL-close: a false refusal, never an admission.
+- **Review.** `notes/phase-IL-close-agent-review.md`: 1 blocking, 4
+  hardening, 2 completeness; all reproduced, all fixed with regressions R1 to
+  R6.
 - **Red run.** `evidence/IL-close/red.txt`: 19 failed, 12 passed. Each failure
   is its case's own defect (for example `support-mismatch … GND counts 0` for
   C1a). The 12 that pass pin behaviour the repairs must keep: C1c, C1d, C4b,

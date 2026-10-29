@@ -456,8 +456,11 @@ exits 64.
   instead: the least top-type id, in code-point order, of the connected part of
   the subtype graph that holds it. So a `manager` that is a subtype of `staff`
   is spelled `staff:m1`, and a rule joining the two counts as the checker
-  does. Types of one family that share no ancestor are refused by the join
-  check first. `export.json`'s `adapter_version` is `2`; a model without
+  does. Only a subtype that inherits its supertype's reference joins its
+  family; one with its own reference scheme starts a family of its own,
+  because its values may be spelled like the supertype's and still differ. A
+  hierarchy with no top type, a cycle, is named by its least type id. Types of
+  one family that share no ancestor are refused by the join check first. `export.json`'s `adapter_version` is `2`; a model without
   subtypes renders the same facts as version `1`. A tab, newline or backslash in a string is written `\t`,
   `\n` or `\\`; any other character that is not printable (a control
   character, a non-breaking or zero-width space) is refused `unrepresentable`.
@@ -494,10 +497,11 @@ miner read, by SHA-256:
 A different miner is refused `learner-mismatch`, other RULES
 `rules-mismatch`, another population `population-mismatch`. The import then
 renders the facts again from MODEL and POP; facts other than the ones the
-miner read are refused `facts-mismatch`. The facts hold every relation name,
+miner read are refused `facts-mismatch`, and so is a pair from which no export
+can be written, naming the export's reason. The facts hold every relation name,
 role order and spelled value, so a model that reads the population
 differently, such as one with a fact type's roles swapped, is refused before
-any rule is read. The record does not bind the export's version: version `2`
+any rule is mapped. The record does not bind the export's version: version `2`
 renders the facts of a model without subtypes byte for byte as `1` did. The
 proposal binds the model it was built against.
 

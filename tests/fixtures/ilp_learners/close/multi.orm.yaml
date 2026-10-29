@@ -1,0 +1,53 @@
+# IL-close C1b (ILC-D1 (o)): manager has two supertypes, so staff, person and
+# manager are one subtype family, named person (the least top-type id). Synthetic.
+version: 1
+model_id: multi
+source:
+  kind: fixture
+object_types:
+  - id: staff
+    name: Staff
+    kind: entity
+    reference: { mode: popular, value_type: staff_code }
+  - id: staff_code
+    name: StaffCode
+    kind: value
+    primitive: String
+  - id: person
+    name: Person
+    kind: entity
+    reference: { mode: popular, value_type: person_code }
+  - id: person_code
+    name: PersonCode
+    kind: value
+    primitive: String
+  - id: manager
+    name: Manager
+    kind: entity
+    subtype_of: [staff, person]
+    inherits_reference: true
+    derivation: asserted
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: manages
+    reading: "{Manager} manages {Team}"
+    roles:
+      - { object_type: manager, role_name: manager }
+      - { object_type: team, role_name: team }
+  - id: works_in
+    reading: "{Staff} works in {Team}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: team, role_name: team }
+  - id: member_of
+    reading: "{Person} is a member of {Team}"
+    roles:
+      - { object_type: person, role_name: person }
+      - { object_type: team, role_name: team }

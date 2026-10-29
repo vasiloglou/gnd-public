@@ -1,0 +1,63 @@
+# IL-close C2b: IL4's staffing model with based_at's roles swapped (IL4 review
+# finding 4). The population still loads; the facts AMIE read do not match.
+# IL4's synthetic staffing model (IL4-D4 (o)). Small enough to check by hand:
+# every staff member works in one team, every team sits at one site.
+version: 1
+model_id: staffing
+source:
+  kind: fixture
+object_types:
+  - id: staff
+    name: Staff
+    kind: entity
+    reference: { mode: popular, value_type: staff_code }
+  - id: staff_code
+    name: StaffCode
+    kind: value
+    primitive: String
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+  - id: site
+    name: Site
+    kind: entity
+    reference: { mode: popular, value_type: site_code }
+  - id: site_code
+    name: SiteCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: works_in
+    reading: "{Staff} works in {Team}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: team, role_name: team }
+  - id: team_site
+    reading: "{Team} sits at {Site}"
+    roles:
+      - { object_type: team, role_name: team }
+      - { object_type: site, role_name: site }
+  - id: based_at
+    reading: "{Site} is the base of {Staff}"
+    roles:
+      - { object_type: site, role_name: site }
+      - { object_type: staff, role_name: staff }
+  - id: parks_at
+    reading: "{Staff} parks at {Site}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: site, role_name: site }
+  - id: is_contractor
+    reading: "{Staff} is a contractor"
+    roles:
+      - { object_type: staff, role_name: staff }
+  - id: mentors
+    reading: "{Staff} mentors {Staff}"
+    roles:
+      - { object_type: staff, role_name: mentor }
+      - { object_type: staff, role_name: mentee }

@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-**r1 draft, 2026-10-29. Awaiting the owner gate.** `auto=false`. No
-implementation file is created or edited before the gate clears.
+**r1, approved by the owner on 2026-10-29** (§12): every proposed ruling,
+ILC-D1 to ILC-D9, corpus-first. `auto=false`.
 
 **Base:** `claude/il-close`, branched from `main` at `a75b328` (PR #62, IL6,
 merged). All six phases are recorded (`002` to `007`).
@@ -346,4 +346,42 @@ Estimate:
 
 ## 12. Owner gate record
 
-(empty until the owner rules)
+**2026-10-29, the owner:** "Go with your recs on ILC-D1 to ILC-D9; implement
+the IL-close repairs corpus-first." The approval was given over SHA-256
+`17e4e255bf306e19bccf239848b1ebe2c1adbe1863fc4aeacd5b3c5311e87467`, the r1
+bytes before this record and the status line.
+
+| ID | Ruling (o) |
+|---|---|
+| ILC-D1 | (a) the family |
+| ILC-D2 | (a) `ilp_amie.family` |
+| ILC-D3 | (b) `facts_sha256` |
+| ILC-D4 | (a) AMIE `ADAPTER_VERSION` "2" |
+| ILC-D5 | (a) variable–variable only |
+| ILC-D6 | (a) `off-threshold` in `ilp_asp.IMPORT_REFUSALS` |
+| ILC-D7 | (a) every rule line in the solution block |
+| ILC-D8 | (a) public names, no aliases |
+| ILC-D9 | (a) corpus-first at `tests/fixtures/ilp_learners/close/cases.json` |
+
+## 13. Findings
+
+Recorded as found.
+
+- **ILC-F1 (refutes §6.1's example and C1d's wording).** Siblings `a`, `b` of
+  one type `t` share `t`, so their closures intersect and check 9b passes their
+  join; they are not "disjoint". The claim §6.1 makes still holds for types in
+  one family that share no ancestor. The corpus keeps C1d's intent with such
+  types (`y` under `p`, `z` under `q`, joined through `x` under both) and adds
+  C1e: siblings now count, as the checker does. No approved answer changed:
+  the corpus was not yet committed.
+- **ILC-F2 (corpus, before commit).** C4c's first clause had a disconnected
+  antecedent, so it tested `disconnected-body`, not the join. It now joins its
+  two amounts through `B`.
+- **ILC-F3 (signature).** `ilp_amie.family` takes the model, as
+  `ilp.type_closures` does, and reads `ModelIndex` inside; §6.1 wrote
+  `family(model_index)`.
+- **Red run.** `evidence/IL-close/red.txt`: 19 failed, 12 passed. Each failure
+  is its case's own defect (for example `support-mismatch … GND counts 0` for
+  C1a). The 12 that pass pin behaviour the repairs must keep: C1c, C1d, C4b,
+  C4c, C5b, C5c, C6b, C8a, C8b, C11, and C8c for the rule-set and fragment
+  sections.

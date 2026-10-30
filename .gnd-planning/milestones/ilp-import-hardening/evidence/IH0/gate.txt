@@ -1,0 +1,10 @@
+# IH0 gate at the fix (working tree on cbc97b2)
+$ uv run pytest -q -o addopts='' tests/test_ih0_review.py tests/test_ilp_amie.py tests/test_ilp_asp.py tests/test_ilp_bridge.py tests/test_ilp_learners.py tests/test_ilp_llm.py tests/test_ilp_rules.py tests/test_il_close.py tests/test_il6_walk.py tests/test_il6_skill_census.py tests/test_gnd_arch.py tests/test_development_scaffold.py tests/test_rf5_commands.py tests/test_rf1_cli_pins.py tests/test_release_docs.py
+1076 passed, 8 skipped in 55.47s
+exit: 0
+$ uv run python tools/ilp_comparison.py
+exit: 0
+$ uv run ruff check src/gnd/export/ilp_rules.py src/gnd/export/ilp_popper.py src/gnd/export/ilp_asp.py src/gnd/export/ilp_learners.py tools/ilp_comparison.py tests/test_ih0_review.py tests/test_ilp_rules.py
+All checks passed!
+exit: 0
+# ruff over all of src tools tests exits 1, on findings only in files IH0 does not touch; CI does not run ruff.

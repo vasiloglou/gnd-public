@@ -1,0 +1,17 @@
+# IH1 tests at the fix's parent commit d9b274c (IH0's head plus the IH1 spec)
+# command: uv run pytest -q -o addopts='' tests/test_ih1_counting.py -p no:randomly --tb=no -rA
+# exit: 1 (7 failed, 4 passed). The 4 passing are the order pins: T4 (red against a mutant, mutant.txt) and T5 with its two swapped-tuple self-checks.
+FFFFF.F...F                                                              [100%]
+=========================== short test summary info ============================
+PASSED tests/test_ih1_counting.py::test_t4_facts_mismatch_precedes_every_mapping_refusal
+PASSED tests/test_ih1_counting.py::test_t5_the_refusal_tuples_follow_the_documented_order
+PASSED tests/test_ih1_counting.py::test_t5_the_pin_fails_on_a_swapped_tuple[MAPPING_REFUSALS]
+PASSED tests/test_ih1_counting.py::test_t5_the_pin_fails_on_a_swapped_tuple[COUNT_REFUSALS]
+FAILED tests/test_ih1_counting.py::test_t1_the_counting_entry_is_public_and_the_tool_uses_it
+FAILED tests/test_ih1_counting.py::test_t6_provenance_lives_in_ilp_amie_without_a_discover_edge
+FAILED tests/test_ih1_counting.py::test_t10_the_amie_export_names_every_refusal_it_raises
+FAILED tests/test_ih1_counting.py::test_t2_an_admitting_import_builds_the_tables_once
+FAILED tests/test_ih1_counting.py::test_t3_the_entry_counts_rules_that_do_not_hold
+FAILED tests/test_ih1_counting.py::test_t9_population_mismatch_precedes_loading_the_population
+FAILED tests/test_ih1_counting.py::test_t7_hold_reports_mapping_refusals_before_too_large
+7 failed, 4 passed in 2.49s

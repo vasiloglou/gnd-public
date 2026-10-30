@@ -15,8 +15,9 @@ fact type with its reason. No labels.
 **Import.** :func:`parse_rules` reads AMIE's printed rule lines (closed, capped,
 total); :func:`mapped` turns one into a ``guarded`` constraint with an ``atom``
 consequent, refusing every other shape by name in :data:`MAPPING_REFUSALS`
-order; :func:`count` counts it over distinct head pairs. Nothing here runs a
-learner or evaluates rule text.
+order; :func:`count` counts it over distinct head pairs, and :func:`provenance`
+names the head facts a holding rule's examples are (IL4-Q3, IH1). Nothing here
+runs a learner or evaluates rule text.
 """
 
 from __future__ import annotations
@@ -33,8 +34,8 @@ from gnd.export.ilp import IlpError
 __all__ = [
     "ADAPTER_VERSION", "COUNT_REFUSALS", "EXPORT_REFUSALS", "FORMULA", "MAPPING_REFUSALS",
     "MAX_ATOMS", "MAX_DIGITS", "MAX_JOIN_ROWS", "MAX_RULES", "MAX_TEXT", "Counts", "MinedRule",
-    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "relation_table", "render",
-    "spell",
+    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "provenance",
+    "reference_primitives", "relation_table", "render", "render_tables", "spell",
 ]
 
 #: "2" spells a subtype hierarchy by its family (IL4-Q1, ILC-D4 (o)); a model with
@@ -47,11 +48,15 @@ MAX_ATOMS = 4
 MAX_DIGITS = 18
 MAX_JOIN_ROWS = 1_000_000
 FORMULA = "std-confidence-head-pairs"
-EXPORT_REFUSALS = ("no-relations", "unrepresentable")
+#: The export's refusals: its own two, then the shared neutral form's (IH0 finding J).
+EXPORT_REFUSALS = ("no-relations", "unrepresentable", "opaque", "too-large")
 #: The mapping's refusals in check order; ``type-confused-join`` is the shared
-#: join check (``ilp_rewrite.check_join_types``), called last.
+#: join check (``ilp_rewrite.check_join_types``), and ``own-reference-join``
+#: refuses a join through an own-reference subtype, which the count cannot meet
+#: as the checker does (IH2, IH-D1 (b)).
 MAPPING_REFUSALS = ("open-world-head", "unknown-predicate", "constant-atom", "reflexive-atom",
-                    "recursion", "unbound-head", "disconnected-body", "type-confused-join")
+                    "recursion", "unbound-head", "disconnected-body", "type-confused-join",
+                    "own-reference-join")
 #: The counting's and admission's refusals in check order (D11 (o): holds only).
 COUNT_REFUSALS = ("too-large", "covers-nothing", "support-mismatch", "does-not-hold")
 
@@ -72,8 +77,10 @@ def family(model: Any) -> dict[str, str]:
 
     Only a subtype that inherits its supertype's reference joins its family: one
     with its own reference scheme (``inherits_reference`` not true) may spell a
-    value its supertype spells differently, so it starts a family of its own and
-    a join across the two is never counted as met (review 1). A component with
+    value its supertype spells differently, so it starts a family of its own, and
+    the mapping refuses a join across the two ``own-reference-join`` (review 1, IH2).
+    A subtype of both still joins them in one family; the mapping refuses a join
+    there by :func:`reference_primitives` (IH2 review F1). A component with
     no top type (a cycle) is named by its least member (review 2). A type in no
     subtype relation is its own family. Types of one family that share no
     ancestor are refused by check 9b before any count. Linear in the subtype
@@ -105,6 +112,36 @@ def family(model: Any) -> dict[str, str]:
     return {identifier: tops.get(root(identifier), members[root(identifier)]) for identifier in rows}
 
 
+def reference_primitives(model: Any) -> dict[str, frozenset[str]]:
+    """Each object type's reference primitives: a value type's own primitive; an
+    entity's own reference's; and, for a subtype that inherits its reference, the
+    union of its supertypes' (IH2 review F1). The mapping refuses a variable whose
+    types' sets together hold more than one kind of value ``own-reference-join``,
+    though :func:`family` may name them alike. Read through ModelIndex; a cycle
+    contributes nothing more."""
+    from gnd.model_index import ModelIndex
+
+    rows = ModelIndex.for_model(model).object_types_by_id()
+    out: dict[str, frozenset[str]] = {}
+
+    def resolve(identifier: str, seen: frozenset[str]) -> frozenset[str]:
+        if identifier in out:
+            return out[identifier]
+        row = rows.get(identifier) or {}
+        if row.get("primitive"):
+            return frozenset({str(row["primitive"])})
+        if row.get("subtype_of") and row.get("inherits_reference") is True:
+            return frozenset().union(*(resolve(parent, seen | {identifier})
+                                       for parent in row["subtype_of"] if parent not in seen))
+        value_type = (row.get("reference") or {}).get("value_type")
+        return resolve(value_type, seen | {identifier}) if value_type and value_type not in seen \
+            else frozenset()
+
+    for identifier in rows:
+        out[identifier] = resolve(identifier, frozenset())
+    return out
+
+
 def spell(family_name: str, value: Any, *, where: str) -> str:
     """``<family>:<value>``, the one spelling the export and the count share; the
     family is the object type itself outside a subtype hierarchy (:func:`family`)."""
@@ -123,13 +160,14 @@ def spell(family_name: str, value: Any, *, where: str) -> str:
 
 @dataclass(frozen=True)
 class Relation:
-    """One exported relation: its fact type, its two role names, their object types
-    and the families that spell their values."""
+    """One exported relation: its fact type, its two role names, their object types,
+    the families that spell their values and their reference primitives (IH2)."""
 
     fact_type: str
     roles: tuple[str, str]
     types: tuple[str, str]
     families: tuple[str, str]
+    primitives: tuple[frozenset[str], frozenset[str]] = (frozenset(), frozenset())
 
 
 def relation_table(model: Any, covers: list[str]) -> tuple[dict[str, Relation], dict[str, Relation],
@@ -143,6 +181,7 @@ def relation_table(model: Any, covers: list[str]) -> tuple[dict[str, Relation], 
     shape, columns = _ilp.schema(model, RedactionPolicy.from_model(model).effective_roles)
     object_types = {row["name"]: row["object_type"] for row in shape["types"]}
     families = family(model)
+    primitives = reference_primitives(model)
     covered = set(covers)
     exported: dict[str, Relation] = {}
     uncovered: dict[str, Relation] = {}
@@ -154,7 +193,8 @@ def relation_table(model: Any, covers: list[str]) -> tuple[dict[str, Relation], 
             continue
         types = (object_types[column.types[1]], object_types[column.types[2]])
         relation = Relation(column.fact_type, (column.role_names[0], column.role_names[1]), types,
-                            (families.get(types[0], types[0]), families.get(types[1], types[1])))
+                            (families.get(types[0], types[0]), families.get(types[1], types[1])),
+                            (primitives.get(types[0], frozenset()), primitives.get(types[1], frozenset())))
         if column.fact_type in covered:
             exported[name] = relation
         else:
@@ -187,9 +227,21 @@ def render(model: Any, population: Any, population_sha256: str) -> dict[str, byt
     covers = list(getattr(population, "covers", None) or [])
     relations, _uncovered, skipped = relation_table(model, covers)
     if not relations:
-        raise IlpError(EXIT_ILL_FORMED, "no-relations: the population covers no binary asserted "
-                       "fact type, so there is nothing to mine")
-    facts = pairs(relations, population)
+        raise _no_relations()
+    return render_tables(relations, skipped, pairs(relations, population), population_sha256)
+
+
+def _no_relations() -> IlpError:
+    return IlpError(EXIT_ILL_FORMED, "no-relations: the population covers no binary asserted "
+                    "fact type, so there is nothing to mine")
+
+
+def render_tables(relations: Mapping[str, Relation], skipped: list[dict[str, str]],
+                  facts: Mapping[str, list[tuple[str, str]]], population_sha256: str) -> dict[str, bytes]:
+    """:func:`render` over a relation table and pairs already built, so the mined
+    import renders the facts it counts without building them twice (IH1-D3 (o))."""
+    if not relations:
+        raise _no_relations()
     lines = sorted({f"{s}\t{name}\t{o}" for name, rows in facts.items() for s, o in rows})
     if sum(len(line) for line in lines) > _ilp.MAX_FILE_BYTES or len(lines) > _ilp.MAX_FACTS:
         raise IlpError(EXIT_ILL_FORMED, f"too-large: the export exceeds {_ilp.MAX_FACTS} facts")
@@ -312,6 +364,17 @@ class MinedRule:
     head: tuple[str, str, str]
 
 
+def _kind(primitive: str) -> str:
+    """The kind of value a reference primitive exports: the export renders a bool, an
+    int or a string (``ilp.export_value``), and only values of different kinds can
+    share a spelling the checker tells apart."""
+    from gnd.terms import NUMERIC_PRIMITIVES
+
+    if primitive == "Boolean":
+        return "boolean"
+    return "number" if primitive in NUMERIC_PRIMITIVES else "text"
+
+
 def _mapping(name: str, index: int, detail: str) -> IlpError:
     return IlpError(EXIT_ILL_FORMED, f"rule {index}: {name}: {detail}")
 
@@ -361,6 +424,26 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
         check_join_types(joins, [], index, shape, closures=closures)
     except IlpError as error:
         raise IlpError(error.code, str(error).replace(f"clause {index}:", f"rule {index}:", 1)) from None
+    # After 9b a variable's types are related by subtyping. Two families meet only through
+    # an own-reference subtype, whose values the count spells apart (IH2). One family whose
+    # references resolve to more than one kind of value, through a type under two references
+    # (review F1, close review 1), spells "1" and 1 alike where the checker does not; even a
+    # variable over that one type alone may hold both. Integer and Number spell alike and
+    # compare alike, so they are one kind (close review 1, finding 3).
+    spanned: dict[str, tuple[set[str], set[str]]] = {}
+    for subject, relation, obj in atoms:
+        entry = relations[relation]
+        for term, name, kinds in zip((subject, obj), entry.families, entry.primitives, strict=True):
+            names, seen = spanned.setdefault(term, (set(), set()))
+            names.add(name)
+            seen.update(kinds)
+    for term, (names, seen) in spanned.items():
+        if len(names) > 1:
+            raise _mapping("own-reference-join", index, f"variable {term} joins the families "
+                           f"{' and '.join(sorted(names))}, which the count spells apart")
+        if len({_kind(primitive) for primitive in seen}) > 1:
+            raise _mapping("own-reference-join", index, f"variable {term} joins references of "
+                           f"{' and '.join(sorted(seen))} in one family, which the count spells alike")
 
     def atom(subject: str, relation: str, obj: str) -> dict[str, Any]:
         entry = relations[relation]
@@ -373,6 +456,20 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
 
 
 # -- counting ----------------------------------------------------------------
+
+def provenance(head_pairs: list[tuple[str, str]], satisfied: tuple[tuple[str, str], ...],
+               fact_id: Any, fact_type: str) -> list[str]:
+    """Each satisfied head pair's first fact, named by FACT_ID, in satisfied order.
+
+    HEAD_PAIRS is the counted relation's :func:`pairs`, in population row order,
+    so no value is spelled twice; FACT_ID is the caller's (``PopulationView.fact_id``),
+    so this module needs nothing from ``gnd.discover`` (IL4-Q3, IH1)."""
+    first: dict[tuple[str, str], int] = {}
+    for row, pair in enumerate(head_pairs):
+        first.setdefault(pair, row)
+    # Each satisfied pair is a head fact, so it has a first row (IK-R11: opaque ids).
+    return [fact_id(fact_type, first[pair]) for pair in satisfied]
+
 
 @dataclass(frozen=True)
 class Counts:

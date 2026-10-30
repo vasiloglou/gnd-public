@@ -153,10 +153,18 @@ nothing. Admission is all-or-nothing.
      adapter's (`popper` for a Popper import). A neutral import accepts any
      learner name; its rules carry `method: ilp-neutral`;
    - `coverage-shape`: `coverage` does not list every clause exactly once.
-2. **Thresholds (Popper):** `off-threshold`, as `clause K: off-threshold`: a
-   `gt_` or `lt_` threshold atom that `bias.pl` does not declare, such as
-   `gt_t_amount__501` when no observed amount is 501, or `gt` at the maximum.
-   Popper could not have learned it from the export.
+2. **Thresholds:** `off-threshold`, as `clause K: off-threshold`: a threshold
+   the learner could not have learned from the export.
+   - **Popper:** a threshold atom of a declared comparison, `ge_` and `le_`
+     included, that `bias.pl` does not declare, such as `gt_t_amount__501`
+     when no observed amount is 501, or `gt` at the maximum. A binary
+     comparison atom, the earlier spelling, is not checked here.
+   - **ILASP:** a comparison constant the task does not offer for its type.
+   - **Rules:** a column of a declared `gt` or `lt` comparison, at an
+     integer position of its own type, that `features.json` does not hold.
+     Any other column goes on to the fragment table.
+   - **LLM and neutral:** not checked; any constant goes on to the fragment
+     table.
 3. **The fragment:** each clause is checked in the order of the table below.
 4. **Re-evaluation:** GND adds every rewritten constraint to the model, runs the
    checker once per population, and reads each new constraint's verdict:
@@ -421,9 +429,14 @@ every position:
 wrong(X) :- f_refund_amount(X, V1, V2), gt_t_amount(V2, 500).
 ```
 
+A condition on a column the export could write but did not, such as
+`f_refund_amount__2__3__gt_t_amount__451` when no observed amount is 451, is
+refused `off-threshold`, as `clause K: off-threshold`: wittgenstein could not
+have learned it from the export.
+
 The clauses then go through the fragment table and the coverage re-check like
 any other target's, so a name whose comparison the export never declared is
-refused there, and a comparison whose type differs from its position's is
+refused there, and a comparison at a position that is not an integer is
 refused `comparison-type`. Admission is all-or-nothing: one refused rule
 refuses the set. Anything outside the grammar, an empty set `[]`, more than 32
 rules, more than 16 conditions in a rule, a name over 160 characters, an
@@ -464,7 +477,11 @@ exits 64.
   is spelled `staff:m1`, and a rule joining the two counts as the checker
   does. Only a subtype that inherits its supertype's reference joins its
   family; one with its own reference scheme starts a family of its own,
-  because its values may be spelled like the supertype's and still differ. A
+  because its values may be spelled like the supertype's and still differ, and
+  the import refuses a rule that joins the two (see its table). A type that
+  is a subtype of both still puts them in one family, and its values may be
+  of either kind; the import refuses a variable over such types (see its
+  table). A
   hierarchy with no top type, a cycle, is named by its least type id. Types of
   one family that share no ancestor are refused by the join check first. `export.json`'s `adapter_version` is `2`; a model without
   subtypes renders the same facts as version `1`. A tab, newline or backslash in a string is written `\t`,
@@ -475,7 +492,9 @@ exits 64.
   reason: `derived`, `arity` (not binary) or `not-covered`.
 
 A population that covers no binary asserted fact type is refused
-`no-relations`. There are no labels and no `neutral.json`.
+`no-relations`. As for every target ([Export](#export)), an opaque value is
+refused `opaque` and an export over the fact cap `too-large`. There are no
+labels and no `neutral.json`.
 
 **The import** reads RULES as AMIE prints them: one line per rule, eight
 tab-separated fields: the rule, head coverage, standard confidence, PCA
@@ -501,7 +520,8 @@ miner read, by SHA-256:
 ```
 
 A different miner is refused `learner-mismatch`, other RULES
-`rules-mismatch`, another population `population-mismatch`. The import then
+`rules-mismatch`, another population `population-mismatch`, compared on the
+population's bytes before they are parsed. The import then
 renders the facts again from MODEL and POP; facts other than the ones the
 miner read are refused `facts-mismatch`, and so is a pair from which no export
 can be written, naming the export's reason. The facts hold every relation name,
@@ -526,6 +546,7 @@ in this order:
 | a head variable the body does not bind | refused `unbound-head` |
 | body atoms that fall into parts sharing no variable | refused `disconnected-body`: the checker evaluates a connected antecedent only |
 | a variable joining roles of incompatible object types | refused `type-confused-join`, by the fragment table's join check |
+| a variable whose types span two families (a subtype that does not inherit its supertype's reference starts one), or whose types' references, taken together, resolve to more than one kind of value: text, number (Integer and Number) or boolean. A type under two references, such as a subtype of both an own-reference subtype and its supertype, may hold `1` and `"1"` | refused `own-reference-join`: the count spells such values apart or alike where the checker does not, so it cannot count them as the checker does |
 
 **The counting.** GND counts every rule itself, over distinct head pairs:
 - **the denominator** is the number of distinct `(x, y)` that some binding of
@@ -535,8 +556,9 @@ in this order:
   `std-confidence-head-pairs`.
 
 The body's join is bounded before it runs: if the product of its relations'
-sizes exceeds 1,000,000 rows the rule is refused `too-large`. Then, in this
-order: a denominator of 0 is refused `covers-nothing`; a numerator that
+sizes exceeds 1,000,000 rows the rule is refused `too-large`. Every rule is
+counted before any is checked, so any rule's `too-large` comes first. Then,
+rule by rule, in this order: a denominator of 0 is refused `covers-nothing`; a numerator that
 differs from the miner's Support is refused `support-mismatch`; and a rule
 that does not hold on every head pair is refused `does-not-hold`, because only
 rules that hold are admitted. A body size that differs from the denominator is
@@ -561,9 +583,11 @@ golden, so do not edit it by hand.
 
 Columns: the outcome is the learner's termination and the import's result.
 *Clauses proposed* is what the target's reader parses from the learner's
-output. *Not evaluated* is the clauses after the first refusal, which the
-import never reached. *Hold (GND's count)* is how many mined rules GND counts
-as holding on every head pair. A dash means there was nothing to count.
+output; output the import refused at that reader has no count. *Not
+evaluated* is the clauses after the first refusal, which the import never
+reached; a refusal at a binding or the threshold check, before the first
+clause, leaves every clause unevaluated. *Hold (GND's
+count)* is how many mined rules GND counts as holding on every head pair. A dash means there was nothing to count.
 
 <!-- ilp-comparison:start (generated by tools/ilp_comparison.py; do not edit) -->
 **Labelled learners, on the refunds example.**

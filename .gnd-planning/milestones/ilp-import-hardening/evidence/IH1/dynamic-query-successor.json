@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/ilp-import-hardening/evidence/IH0/dynamic-query-successor.json",
+  "predecessor_sha256": "c23a6118ef8532e933fbd1c9dcf27987a28374c400b8462ae95abaf856c908b6",
+  "reason": "ilp-import-hardening IH1 (spec r1, approved 2026-10-30): one counting entry for the mined import. Added: gnd.export.ilp_service's MinedInputs, MinedTables, MinedCount and count_mined_rules, and the import's reads of the shared tables; gnd.export.ilp_amie's provenance and render_tables. Removed: the _Mined dataclass's row, render's facts[name] and the import's inline provenance rows, which moved into those names; _mined_inputs and _Mined stay as identity aliases. Syntax census only; no model-query exception widening.",
+  "result_distinct_rows": 6782,
+  "result_occurrences": 8489,
+  "added": [
+    [
+      "src/gnd/export/ilp_amie.py",
+      "provenance",
+      "dict[tuple[str, str], int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "provenance",
+      "first[pair]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "provenance",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "provenance",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "provenance",
+      "tuple[str, str]",
+      3
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "provenance",
+      "tuple[tuple[str, str], ...]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "Mapping[str, Relation]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "Mapping[str, list[tuple[str, str]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "facts[name]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "list[dict[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render_tables",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedCount",
+      "tuple[_amie.Counts, ...]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedCount",
+      "tuple[_amie.MinedRule, ...]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedInputs",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedTables",
+      "dict[str, _amie.Relation]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedTables",
+      "dict[str, list[tuple[str, str]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedTables",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedTables",
+      "list[dict[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedTables",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "MinedTables",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "tables.facts[mined_rule.head[1]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "tables.relations[mined_rule.head[1]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "count_mined_rules",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "count_mined_rules",
+      "list[dict[str, Any]]",
+      1
+    ]
+  ],
+  "removed": [
+    [
+      "src/gnd/export/ilp_amie.py",
+      "render",
+      "facts[name]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_Mined",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "dict[tuple[str, ...], int]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "first[pair]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "inputs.population.facts.get(head.fact_type)",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "relations[mined_rule.head[1]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "row[role]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_service.py",
+      "_cmd_import_mined_rules",
+      "tuple[str, ...]",
+      1
+    ]
+  ]
+}

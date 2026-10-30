@@ -134,18 +134,18 @@ def check_thresholds(document: dict[str, Any], neutral: dict[str, Any], text: st
     """Refuse a threshold atom the export never rendered (predicate-7 review, finding 2).
 
     Popper can only learn a threshold predicate ``bias.pl`` declares, so a
-    ``gt`` or ``lt`` threshold name in TEXT that the export did not render is
-    refused ``off-threshold`` by clause index, as ILASP's import refuses an
-    unoffered constant (IL2-Q3). A binary comparison atom, the IK5 spelling, and
-    ``ge`` and ``le`` names are left to the fragment table; DOCUMENT is TEXT
-    already parsed."""
+    threshold name of a declared comparison in TEXT that the export did not
+    render, ``ge`` and ``le`` names included (IH0 finding B), is refused
+    ``off-threshold`` by clause index, as ILASP's import refuses an unoffered
+    constant (IL2-Q3). A binary comparison atom, the IK5 spelling, is left to
+    the fragment table; DOCUMENT is TEXT already parsed."""
     operators = {row["name"]: row["operator"] for row in neutral["comparisons"]}
     rendered = {name for name, _type, _holds in threshold_rows(neutral)}
     parser = _Parser(text)
     parser.program()
     for index, name in parser.thresholds:
         comparison = name[:name.rindex("__")]
-        if operators.get(comparison) in _THRESHOLD_OPERATORS and name not in rendered:
+        if comparison in operators and name not in rendered:
             raise IlpError(EXIT_ILL_FORMED, f"clause {index}: off-threshold: {name} is not a "
                            "threshold predicate the export renders")
 

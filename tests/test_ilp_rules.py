@@ -311,7 +311,7 @@ def test_t13_the_reference_section_matches_the_code():
         assert f"{getattr(ilp_rules, bound):,}" in section, bound
     documented = set(re.findall(r"refused `([a-z-]+)`", section))
     assert documented <= {*ilp_rules.EXPORT_REFUSALS, *ilp_rules.REFUSALS, *ilp_rewrite.REFUSALS,
-                          "unparsable"}
+                          *getattr(ilp_rules, "IMPORT_REFUSALS", ()), "unparsable"}
 
 
 # ---------------------------------------------------------------------------

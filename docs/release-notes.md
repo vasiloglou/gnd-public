@@ -3,6 +3,31 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: ILP import hardening (2026-10-30)
+
+- The rules and Popper imports refuse a threshold their export never offered
+  as `off-threshold`: a rules column the export could write but did not, and a
+  Popper `ge_` or `le_` threshold name that `bias.pl` does not declare.
+- An ILASP `#sum+` aggregate, or one with more than 16 terms and conditions,
+  is refused `aggregate` by clause, not by a schema error.
+- `tools/ilp_comparison.py` names a refusal that cites no clause, counts every
+  clause as not evaluated after a refusal before the first clause, reports
+  output the import refused at its reader, and exits 2 on other learner output
+  it cannot read.
+- `gnd import mined-rules` refuses a population whose bytes are not the run
+  record's as `population-mismatch` (exit 3) before loading it, so a broken
+  population that is not the bound one no longer exits 5. It counts every rule
+  before any admission check, so a later rule's `too-large` is reported before
+  an earlier rule's `covers-nothing` or `support-mismatch`; the exit is still 3.
+- `gnd import mined-rules` refuses as `own-reference-join`, before any
+  count, a mined rule with a variable whose types span two subtype families,
+  or whose types' references resolve to more than one kind of value (text,
+  number or boolean). The count spells such values apart or alike where the
+  checker does not. The first was refused `support-mismatch`, falsely when
+  the references share a kind; the second, a type under two references, could
+  exit 70. Both now exit 3 by the new name. A rule over such a type whose
+  values happen to be of one kind is refused too.
+
 ## Unreleased: more rule learners (2026-10-28)
 
 The ILP bridge now has an adapter for each of five learners, and each was run

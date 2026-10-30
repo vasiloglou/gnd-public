@@ -48,7 +48,8 @@ from gnd.export.ilp import IlpError
 from gnd.export.ilp_rewrite import rewrite
 from gnd.measure import labels as _labels
 
-__all__ = ["_cmd_export_ilp", "_cmd_import_ilp_rules", "_cmd_import_mined_rules"]
+__all__ = ["MinedCount", "MinedInputs", "MinedTables", "_cmd_export_ilp", "_cmd_import_ilp_rules",
+           "_cmd_import_mined_rules", "count_mined_rules", "load_mined_inputs", "mined_tables"]
 
 #: IK5-D14: bounds fixed before results.
 CLAUSES_CAP = 1024 * 1024
@@ -507,7 +508,9 @@ MINED_INPUT_REFUSALS = ("learner-mismatch", "rules-mismatch", "population-mismat
 
 
 @dataclass(frozen=True)
-class _Mined:
+class MinedInputs:
+    """The model and one population, loaded from the bytes that are digested."""
+
     model_bytes: bytes
     model: Any
     document: dict[str, Any]
@@ -516,8 +519,32 @@ class _Mined:
     digest: str
 
 
-def _mined_inputs(model_path: Path, population_path: Path) -> _Mined:
-    """The model and one population, loaded from the bytes that are digested."""
+@dataclass(frozen=True)
+class MinedTables:
+    """The relation table and the spelled pairs one population yields, built once (IH1-D3 (o))."""
+
+    relations: dict[str, _amie.Relation]
+    uncovered: dict[str, _amie.Relation]
+    skipped: list[dict[str, str]]
+    facts: dict[str, list[tuple[str, str]]]
+
+
+@dataclass(frozen=True)
+class MinedCount:
+    """Every rule mapped, then every rule counted, in rule order."""
+
+    tables: MinedTables
+    rules: tuple[_amie.MinedRule, ...]
+    counts: tuple[_amie.Counts, ...]
+
+
+def load_mined_inputs(model_path: Path, population_path: Path, *,
+                      population_sha256: str | None = None) -> MinedInputs:
+    """The model and one population, loaded from the bytes that are digested.
+
+    With POPULATION_SHA256, the population's bytes are compared before they are
+    parsed, so a population that is not the bound one is ``population-mismatch``,
+    not a load failure (IH0 finding F, IH1-D5 (o))."""
     from gnd.evolve.service import _parse_model_text
     from gnd.model import MAX_MODEL_BYTES, load_model_bytes
     from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
@@ -528,15 +555,52 @@ def _mined_inputs(model_path: Path, population_path: Path) -> _Mined:
         raise IlpError(EXIT_ILL_FORMED, "references: models with declared reference "
                        "populations are not exported (IK5 boundary)")
     population_bytes = _read_capped(population_path, MAX_POPULATION_BYTES, "population")
+    digest = hashlib.sha256(population_bytes).hexdigest()
+    if population_sha256 is not None and population_sha256 != digest:
+        raise IlpError(EXIT_ILL_FORMED, f"population-mismatch: the run record binds population "
+                       f"{population_sha256}, not {digest}")
     try:
         population = load_population_bytes(population_bytes, source=population_path, model=model)
     except Exception as error:  # noqa: BLE001 -- a load failure is exit 5, as on the labels path
         raise IlpError(EXIT_GENERATOR, f"population {population_path} failed to load: {error}") from None
-    return _Mined(model_bytes, model, _parse_model_text(model_bytes.decode("utf-8")),
-                  population_bytes, population, hashlib.sha256(population_bytes).hexdigest())
+    return MinedInputs(model_bytes, model, _parse_model_text(model_bytes.decode("utf-8")),
+                       population_bytes, population, digest)
 
 
-def _mined_tree(inputs: _Mined, target: str) -> dict[str, bytes]:
+#: Identity aliases for the private names IH1 made public (plan §2 "Names").
+_Mined = MinedInputs
+_mined_inputs = load_mined_inputs
+
+
+def mined_tables(inputs: MinedInputs) -> MinedTables:
+    """The relation table and the spelled pairs of INPUTS' population."""
+    relations, uncovered, skipped = _amie.relation_table(inputs.model, list(inputs.population.covers))
+    return MinedTables(relations, uncovered, skipped, _amie.pairs(relations, inputs.population))
+
+
+def count_mined_rules(inputs: MinedInputs, parsed: list[dict[str, Any]], *,
+                      tables: MinedTables | None = None) -> MinedCount:
+    """Map every rule in :data:`ilp_amie.MAPPING_REFUSALS` order, then count every rule.
+
+    Raises only the mapping refusals and ``too-large``. The admission checks
+    (``covers-nothing``, ``support-mismatch``, ``does-not-hold``) are the
+    import's, so a caller can count rules that do not hold. TABLES, when
+    given, are the ones the caller already built (IH1-D3 (o)); without them,
+    building them can also raise the population's own refusals (``opaque``,
+    ``unrepresentable``)."""
+    from gnd.redaction import RedactionPolicy
+
+    tables = mined_tables(inputs) if tables is None else tables
+    shape, _columns = _ilp.schema(inputs.model, RedactionPolicy.from_model(inputs.model).effective_roles)
+    closures = _ilp.type_closures(inputs.model)
+    rules = tuple(_amie.mapped(rule, index, tables.relations, tables.uncovered, shape, closures)
+                  for index, rule in enumerate(parsed))
+    counts = tuple(_amie.count(rule, tables.facts, index, limit=_amie.MAX_JOIN_ROWS)
+                   for index, rule in enumerate(rules))
+    return MinedCount(tables, rules, counts)
+
+
+def _mined_tree(inputs: MinedInputs, target: str) -> dict[str, bytes]:
     entry = _learners.learner(target)
     rendering = _amie.render(inputs.model, inputs.population, inputs.digest)
     return _ilp.index_tree(rendering, target, adapter_version=entry.adapter_version)
@@ -547,7 +611,7 @@ def _export_mined(model_path: Path, population_path: Path, target: str, out_path
         _stderr(f"population {population_path} does not exist")
         return EXIT_NO_INPUT
     try:
-        inputs = _mined_inputs(model_path, population_path)
+        inputs = load_mined_inputs(model_path, population_path)
         tree = _mined_tree(inputs, target)
         _ilp.write_tree(out_path, tree)
     except IlpError as error:
@@ -581,10 +645,13 @@ def _cmd_import_mined_rules(
 ) -> int:
     """``gnd import mined-rules``: admit mined Horn rules that hold as guarded constraints.
 
-    Order (spec §4 rule 3): the rules read, the run record read and bindings,
-    the model and population, each rule's mapping in MAPPING_REFUSALS order,
-    each rule's counts in COUNT_REFUSALS order, candidate validation, the
-    checker, the proposal write. Any refusal refuses the whole set (IL-R11)."""
+    Order (spec §4 rule 3, IH1 spec Design 3): the rules read, the run record
+    read and bindings, the model, the population's binding, then the
+    population; the tables and the facts binding; :func:`count_mined_rules`
+    (every rule's mapping in MAPPING_REFUSALS order, then every rule's
+    ``too-large``); the admission checks in COUNT_REFUSALS order; candidate
+    validation, the checker, the proposal write. Any refusal refuses the whole
+    set (IL-R11)."""
     from gnd.checker import check
     from gnd.discover import output
     from gnd.discover.support import PopulationView, Work
@@ -620,15 +687,15 @@ def _cmd_import_mined_rules(
         if record["rules_sha256"] != rules_sha:
             raise IlpError(EXIT_ILL_FORMED, f"rules-mismatch: the run record binds rules "
                            f"{record['rules_sha256']}, not {rules_sha}")
-        inputs = _mined_inputs(paths["model"], paths["population"])
-        if record["population_sha256"] != inputs.digest:
-            raise IlpError(EXIT_ILL_FORMED, f"population-mismatch: the run record binds population "
-                           f"{record['population_sha256']}, not {inputs.digest}")
+        inputs = load_mined_inputs(paths["model"], paths["population"],
+                                   population_sha256=record["population_sha256"])
         # The facts the miner read bind the model's reading of the population:
-        # relation names, role order and spelling (IL4-Q2, ILC-D3 (o)).
+        # relation names, role order and spelling (IL4-Q2, ILC-D3 (o)). The tables
+        # are built once and counted below (IH1-D3 (o)).
         try:
-            facts_sha = hashlib.sha256(_amie.render(inputs.model, inputs.population,
-                                                    inputs.digest)["amie/facts.tsv"]).hexdigest()
+            tables = mined_tables(inputs)
+            facts_sha = hashlib.sha256(_amie.render_tables(
+                tables.relations, tables.skipped, tables.facts, inputs.digest)["amie/facts.tsv"]).hexdigest()
         except IlpError as error:
             # No export writes these facts, so none is the one the record binds (review 4).
             raise IlpError(EXIT_ILL_FORMED, f"facts-mismatch: the run record binds facts "
@@ -638,17 +705,10 @@ def _cmd_import_mined_rules(
             raise IlpError(EXIT_ILL_FORMED, f"facts-mismatch: the run record binds facts "
                            f"{record['facts_sha256']}, but this model renders the population "
                            f"as {facts_sha}")
-        from gnd.redaction import RedactionPolicy
-
-        relations, uncovered, _skipped = _amie.relation_table(inputs.model, list(inputs.population.covers))
-        shape, _columns = _ilp.schema(inputs.model, RedactionPolicy.from_model(inputs.model).effective_roles)
-        closures = _ilp.type_closures(inputs.model)
-        mined = [_amie.mapped(rule, index, relations, uncovered, shape, closures)
-                 for index, rule in enumerate(parsed)]
-        facts = _amie.pairs(relations, inputs.population)
-        counts = []
-        for index, (rule, mined_rule) in enumerate(zip(parsed, mined, strict=True)):
-            counted = _amie.count(mined_rule, facts, index, limit=_amie.MAX_JOIN_ROWS)
+        # Every mapping refusal, then every too-large, then the admission checks (IH1-D4 (o)).
+        counted_rules = count_mined_rules(inputs, parsed, tables=tables)
+        mined, counts = counted_rules.rules, counted_rules.counts
+        for index, (rule, counted) in enumerate(zip(parsed, counts, strict=True)):
             if counted.denominator == 0:
                 raise IlpError(EXIT_ILL_FORMED, f"rule {index}: covers-nothing: no binding satisfies "
                                "the body, so the rule has no support")
@@ -656,7 +716,6 @@ def _cmd_import_mined_rules(
                 raise IlpError(EXIT_ILL_FORMED, f"rule {index}: support-mismatch: {learner['name']} "
                                f"reports Support {rule['support']}, GND counts {counted.numerator} "
                                f"of {counted.denominator} head pairs")
-            counts.append(counted)
         for index, counted in enumerate(counts):
             if counted.numerator != counted.denominator:
                 raise IlpError(EXIT_ILL_FORMED, f"rule {index}: does-not-hold: {counted.numerator} of "
@@ -672,15 +731,8 @@ def _cmd_import_mined_rules(
         constraints, rows = [], []
         base = len(inputs.document.get("constraints") or [])
         for index, (rule, mined_rule, counted) in enumerate(zip(parsed, mined, counts, strict=True)):
-            head = relations[mined_rule.head[1]]
-            spelled = [tuple(_amie.spell(name, row[role], where=head.fact_type)
-                             for role, name in zip(head.roles, head.families, strict=True))
-                       for row in inputs.population.facts.get(head.fact_type) or []]
-            first: dict[tuple[str, ...], int] = {}
-            for row_index, pair in enumerate(spelled):
-                first.setdefault(pair, row_index)
-            # Each satisfied pair is a head fact, so it has a first row (IK-R11: opaque ids).
-            examples = [view.fact_id(head.fact_type, first[pair]) for pair in counted.satisfied]
+            examples = _amie.provenance(tables.facts[mined_rule.head[1]], counted.satisfied, view.fact_id,
+                                        tables.relations[mined_rule.head[1]].fact_type)
             support = {"numerator": counted.numerator, "denominator": counted.denominator}
             induction = {"inducer": dict(learner), "method": entry.method,
                          "manifest_sha256": inputs.digest,

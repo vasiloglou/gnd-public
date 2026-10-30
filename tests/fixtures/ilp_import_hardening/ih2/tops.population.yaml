@@ -1,0 +1,16 @@
+# IH2 close review 1, finding 2: d 1 leads t1 and d "1" heads it; the checker
+# tells them apart, the count spelled both x:1.
+format_version: 2
+population:
+  model: tops.orm.yaml
+  model_id: tops
+  source: fixture
+  covers: [leads, heads]
+instances:
+  d: [1, "1"]
+  team: ["t1"]
+facts:
+  leads:
+    - { d: 1, team: "t1" }
+  heads:
+    - { d: "1", team: "t1" }

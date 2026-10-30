@@ -54,6 +54,10 @@ UNLABELLED = (
 #: A note a phase record adds to a row's reproducibility (IL6-D5 (o)).
 NOTES = {("rules", 1): "; repeated runs pick other thresholds (IL3-F5)"}
 _REFUSAL = re.compile(r"(?:clause|rule) (\d+): ([a-z]+(?:-[a-z]+)*): ")
+_NAME = re.compile(r"[a-z]+(?:-[a-z]+)*")
+#: Refusals the import raises before it rewrites clause 0, whatever clause they
+#: name: the adapter's vet (IH0 finding C).
+_BEFORE_ANY_CLAUSE = ("off-threshold",)
 
 
 class ComparisonError(Exception):
@@ -76,8 +80,18 @@ def _first_refusal(live: Path) -> dict[str, Any] | None:
     stderr = live / "import-stderr.txt"
     if not stderr.exists():
         return None
-    match = _REFUSAL.match(stderr.read_text(encoding="utf-8"))
-    return {"name": match.group(2), "index": int(match.group(1))} if match else None
+    from gnd.export.ilp import refusal_name
+
+    message = stderr.read_text(encoding="utf-8")
+    if not message.strip():
+        return None
+    name = refusal_name(message)
+    if not _NAME.fullmatch(name):
+        # A message that names no refusal, such as "invalid model: ..." (IH0 fix review, finding 4).
+        return None
+    match = _REFUSAL.match(message)
+    # An un-indexed refusal (a binding, the reader) names no clause (IH0 finding C).
+    return {"name": name, "index": int(match.group(1)) if match else None}
 
 
 def _admitted(live: Path, exit_code: int | None) -> int | None:
@@ -100,7 +114,14 @@ def _proposed(adapter: str, text: str) -> int | None:
     if not text.strip():
         return None
     parse = learner(adapter).parse
-    return len(parse(text)["clauses"] if parse else json.loads(text)["clauses"])
+    if parse:
+        return len(parse(text)["clauses"])
+    document = json.loads(text)
+    clauses = document.get("clauses") if isinstance(document, dict) else None
+    if not isinstance(clauses, list):
+        # Read as the reader refuses it, so the row or exit 2 follows (close review 2, finding 1).
+        raise ValueError("the answer holds no clauses list")  # noqa: TRY004 -- one refusal protocol
+    return len(clauses)
 
 
 def labelled_row(root: Path, adapter: str, invocation: int, directory: str, output: str) -> dict[str, Any]:
@@ -108,12 +129,25 @@ def labelled_row(root: Path, adapter: str, invocation: int, directory: str, outp
     outcome = _json(live / "outcome.json")
     row = _common(adapter, invocation, outcome, "refunds")
     path = live / output
-    proposed = _proposed(adapter, path.read_text(encoding="utf-8")) if path.exists() else None
+    from gnd.export.ilp import IlpError, refusal_name
+
     refusal = _first_refusal(live)
-    if row["import_exit"] is None:
+    try:
+        proposed = _proposed(adapter, path.read_text(encoding="utf-8")) if path.exists() else None
+    except (IlpError, ValueError) as error:
+        # The import refused this output at its reader: the row reports that
+        # refusal with no clause count (IH0 fix review, finding 3). Any other
+        # output GND cannot read is counted by no row, as review 5 (IH0 finding D).
+        if row["import_exit"] != 3 or refusal is None or refusal["name"] != refusal_name(str(error)):
+            raise ComparisonError(f"{directory}: {error}: GND cannot read this output; the table "
+                                  "does not report it") from None
+        proposed = None
+    if row["import_exit"] is None or proposed is None:
         not_evaluated = None
     elif refusal is None:
-        not_evaluated = 0
+        not_evaluated = 0 if row["import_exit"] == 0 else None
+    elif refusal["index"] is None or refusal["name"] in _BEFORE_ANY_CLAUSE:
+        not_evaluated = proposed
     else:
         not_evaluated = proposed - refusal["index"] - 1
     return {**row, "clauses_proposed": proposed, "first_refusal": refusal,
@@ -123,29 +157,24 @@ def labelled_row(root: Path, adapter: str, invocation: int, directory: str, outp
 def hold(root: Path, text: str) -> int:
     """GND's count of the mined rules that hold on the staffing population (every head pair).
 
-    A rule GND cannot map or count raises :class:`ComparisonError` naming it;
-    it is never counted as not holding."""
+    The import's own counting entry counts them. A rule GND cannot map or count
+    raises :class:`ComparisonError` naming it; it is never counted as not
+    holding. Every mapping refusal comes before any ``too-large`` (IH1-D2 (o))."""
     from gnd.export import ilp, ilp_amie
-    from gnd.export.ilp_service import _mined_inputs
-    from gnd.redaction import RedactionPolicy
+    from gnd.export.ilp_service import count_mined_rules, load_mined_inputs, mined_tables
 
-    inputs = _mined_inputs(root / STAFFING / "model.orm.yaml", root / STAFFING / "population.yaml")
-    relations, uncovered, _skipped = ilp_amie.relation_table(inputs.model, list(inputs.population.covers))
-    shape, _columns = ilp.schema(inputs.model, RedactionPolicy.from_model(inputs.model).effective_roles)
-    closures = ilp.type_closures(inputs.model)
-    facts = ilp_amie.pairs(relations, inputs.population)
-    held = 0
-    for index, rule in enumerate(ilp_amie.parse_rules(text)):
-        try:
-            counted = ilp_amie.count(ilp_amie.mapped(rule, index, relations, uncovered, shape, closures),
-                                     facts, index)
-        except ilp.IlpError as error:
-            name = _REFUSAL.match(str(error))
-            refusal = name.group(2) if name else str(error)
-            raise ComparisonError(f"rule {index}: {refusal}: GND cannot count this rule; "
-                                  "the table does not report it") from None
-        held += counted.denominator > 0 and counted.numerator == counted.denominator
-    return held
+    inputs = load_mined_inputs(root / STAFFING / "model.orm.yaml", root / STAFFING / "population.yaml")
+    # A population GND cannot spell is no rule's fault: its IlpError reaches the
+    # row, which names it (IH1 fix review, H1).
+    tables = mined_tables(inputs)
+    try:
+        counted = count_mined_rules(inputs, ilp_amie.parse_rules(text), tables=tables)
+    except ilp.IlpError as error:
+        message = str(error)
+        rule = message.split(": ", 1)[0] + ": " if message.startswith("rule ") else ""
+        raise ComparisonError(f"{rule}{ilp.refusal_name(message)}: GND cannot count this rule; "
+                              "the table does not report it") from None
+    return sum(c.denominator > 0 and c.numerator == c.denominator for c in counted.counts)
 
 
 def unlabelled_row(root: Path, adapter: str, invocation: int, directory: str) -> dict[str, Any]:
@@ -178,7 +207,9 @@ def _cell(value: Any) -> str:
 
 
 def _refusal(value: dict[str, Any] | None, unit: str) -> str:
-    return "—" if value is None else f"`{value['name']}`, {unit} {value['index']}"
+    if value is None:
+        return "—"
+    return f"`{value['name']}`" + ("" if value["index"] is None else f", {unit} {value['index']}")
 
 
 def _head(row: dict[str, Any]) -> str:

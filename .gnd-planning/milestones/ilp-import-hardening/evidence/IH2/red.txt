@@ -1,0 +1,23 @@
+# IH2 tests at IH1's head 4389b61 (no IH2 source change). Paths are rewritten to <repo>.
+$ uv run pytest -q -o addopts='' -p no:cacheprovider tests/test_ih2_ownref.py
+FFF...                                                                   [100%]
+=================================== FAILURES ===================================
+E   AssertionError: rule 0: support-mismatch: amie reports Support 2, GND counts 0 of 2 head pairs
+      
+    assert False
+     +  where False = <built-in method startswith of str object at 0x10d7aed30>('rule 0: own-reference-join:')
+     +    where <built-in method startswith of str object at 0x10d7aed30> = 'rule 0: support-mismatch: amie reports Support 2, GND counts 0 of 2 head pairs\n'.startswith
+<repo>/tests/test_ih2_ownref.py:69: AssertionError: rule 0: support-mismatch: amie reports Support 2, GND counts 0 of 2 head pairs
+E   AssertionError: an own-reference join reached the count
+<repo>/tests/test_ih2_ownref.py:77: AssertionError: an own-reference join reached the count
+E   AssertionError: assert ('disconnecte...onfused-join') == ('type-confus...ference-join')
+      
+      At index 0 diff: 'disconnected-body' != 'type-confused-join'
+      Use -v to get more diff
+<repo>/tests/test_ih2_ownref.py:91: AssertionError: assert ('disconnecte...onfused-join') == ('type-confus...ference-join')
+=========================== short test summary info ============================
+FAILED tests/test_ih2_ownref.py::test_t1_a_string_own_reference_join_is_refused_by_name
+FAILED tests/test_ih2_ownref.py::test_t5_the_mapping_refuses_before_the_count
+FAILED tests/test_ih2_ownref.py::test_t3_own_reference_join_is_the_last_mapping_refusal
+3 failed, 3 passed in 0.56s
+exit: 1

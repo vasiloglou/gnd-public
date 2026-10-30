@@ -372,7 +372,8 @@ def test_r1_an_own_reference_subtype_is_its_own_family(tmp_path):
     assert "manager:1\tf_manages\tteam:t1" in facts and "staff:1\tf_works_in\tteam:t1" in facts
     result, out = _mined(tmp_path, case)
     assert result.returncode == 3 and not out.exists(), result.stderr
-    assert result.stderr.decode().startswith("rule 0: support-mismatch:")
+    # IH2, IH-D1 (b) (o): refused by its own name before any count, not support-mismatch.
+    assert result.stderr.decode().startswith("rule 0: own-reference-join:")
 
 
 def test_r2_a_cyclic_hierarchy_is_one_family(tmp_path):

@@ -1,0 +1,51 @@
+# IH2 review F1: manager has its own Integer reference; director is a subtype of
+# both manager and staff, which joins them in one family. Synthetic.
+version: 1
+model_id: diamond
+source:
+  kind: fixture
+object_types:
+  - id: staff
+    name: Staff
+    kind: entity
+    reference: { mode: popular, value_type: staff_code }
+  - id: staff_code
+    name: StaffCode
+    kind: value
+    primitive: String
+  - id: manager
+    name: Manager
+    kind: entity
+    subtype_of: [staff]
+    inherits_reference: false
+    reference: { mode: popular, value_type: manager_no }
+    derivation: asserted
+  - id: manager_no
+    name: ManagerNo
+    kind: value
+    primitive: Integer
+  - id: director
+    name: Director
+    kind: entity
+    subtype_of: [manager, staff]
+    inherits_reference: true
+    derivation: asserted
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: manages
+    reading: "{Manager} manages {Team}"
+    roles:
+      - { object_type: manager, role_name: manager }
+      - { object_type: team, role_name: team }
+  - id: works_in
+    reading: "{Staff} works in {Team}"
+    roles:
+      - { object_type: staff, role_name: staff }
+      - { object_type: team, role_name: team }

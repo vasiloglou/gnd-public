@@ -1,14 +1,18 @@
-# IH0: review of the ilp-learners diff
+# IH0: review of the ilp-learners source changes
 
-**Status:** r1 draft, awaiting the plan gate and then this phase's owner
-gate. `auto=false`. Nothing below is approved.
+**Status:** r2 draft (p1), awaiting the plan gate and then this phase's
+owner gate. `auto=false`. Nothing below is approved. r1 (`269663b5…db81`)
+had one reader's opinion ([plan review r1](plan-review-r1-reader-1.md),
+findings 1, 12, 13); **r2 bytes carry no review opinion.**
 
 ## Provenance
 
-- Plan: `ilp-import-hardening-plan.md` r1, §4 "IH0", §9 IH0 row, §10
-  IH-D2 and IH-D4. The plan carries no review opinion and no approval.
-- Predecessor: `../ilp-learners/009-milestone-close.md` ("Carried forward",
-  last row) and `../ilp-learners/010-owner-acceptance.md` ("Boundary").
+- Plan: `ilp-import-hardening-plan.md` r2, §4 "IH0", §9 IH0 row, §10
+  IH-D2 and IH-D4. The plan has no approval.
+- Source of the obligation (p1): the owner's answer of 2026-10-29 (o), "yes",
+  to the plan whose first phase is the diff review. `../ilp-learners/009-milestone-close.md`
+  left the review to "the owner's call at acceptance", and
+  `../ilp-learners/010-owner-acceptance.md` ("Boundary") records that none ran.
 - Earlier reviews of parts of the range, which IH0 does not replace:
   - IL1 to IL6 phase reviews, `../ilp-learners/notes/phase-IL<n>-agent-review.md`;
   - the close review, `../ilp-learners/notes/phase-IL-close-agent-review.md`;
@@ -19,10 +23,12 @@ gate. `auto=false`. Nothing below is approved.
 
 | Obligation | Source | Discharged in |
 |---|---|---|
-| Review IL's whole diff | plan §4 IH0; 009 "Carried forward" | §Design 1–3 |
+| Review IL's source changes as one change | plan §4 IH0; the owner, 2026-10-29 (o) (p1) | §Design 1–3 |
+| Re-read commits that already had a phase or predicate-7 review, not skip them (p1) | plan §4 IH0 | §Design 3 (the brief) |
 | Reproduce every finding before believing it | plan §4 IH0; process-phase step 4 | §Design 4 |
 | Carry a finding that needs a learner run, never run one | IH-R1 | §Design 4 |
-| Fix blocking findings with a regression shown red against `fb03739` | plan §4 IH0 | §Design 5; §Tests |
+| Fix blocking findings with a regression shown red against the fix's parent commit (p1) | plan §4 IH0 | §Design 5; §Tests |
+| Residual, copied forward (p1): "a review is a disagreement locator, not a proof. Tests, docs and evidence are out of its scope unless the owner widens it (IH-D2)." | plan §4 IH0 | §Out of scope; the record's boundary |
 | Assign every other finding to IH1, IH2 or a carried row | plan §4 IH0 | §Design 5 |
 | Focused gate for every touched module | plan §9 IH0 row | §Tests |
 | Refusal order has one home | IH-R4 | §Standing rules |
@@ -45,25 +51,33 @@ gate. `auto=false`. Nothing below is approved.
 
 ## Goal
 
-Every finding over `07f4d45^..fb03739` in the scope IH-D2 fixes is
-reproduced, triaged and disposed of; each blocking fix has a regression test
-that exits non-zero against `fb03739` and zero after the fix; the focused
+Every finding over IL's merges in the scope IH-D2 fixes is reproduced,
+triaged and disposed of; each blocking fix has a regression test that exits
+non-zero against the fix's parent commit and zero after the fix (p1); the focused
 gate of each touched module exits 0.
 
 ## Design
 
-1. **The range.** `git diff 07f4d45^ fb03739 -- src tools` (proposed
-   IH-D2): 64 files, 3,628 insertions, 193 deletions at `fb03739`. The
-   readers get the commit list (`git log --oneline 07f4d45^..fb03739`, 125
-   commits) to attribute each finding to its originating commit.
+1. **The subject (p1).** IL's own first-parent merges, each read as
+   `git diff m^1 m -- src tools`: `65fd6df` (#56), `426bd80` (#57),
+   `75a397f` (#58), `e30eec8` (#59), `70266b5` (#60), `860e651` (#61),
+   `a75b328` (#62), `7818be1` (#63), `fb03739` (#64). 37 files, +3,187/−161,
+   judged at `fb03739` (proposed IH-D2). The merges #47, #50, #52 and #53 in
+   the same range belong to other milestones and are out of scope. Readers
+   get each merge's commit list (`git log --oneline m^1..m^2`) to attribute
+   each finding to its originating commit.
 2. **The readers** (IH-D4). Each reader gets the same brief and reads the
    whole range independently; none sees another's report. Each judges code
    at `fb03739`.
 3. **The brief**, given verbatim to each reader:
-   > Review the source diff `07f4d45^..fb03739` (paths `src/` and `tools/`)
-   > of this repository: the ilp-learners milestone, which added learner
-   > adapters for ILASP, RIPPER, AMIE and an LLM to the ILP bridge. Earlier
-   > reviews each covered one phase's commits; read the range as one change.
+   > Review the ilp-learners milestone's source changes in this repository:
+   > the merges 65fd6df, 426bd80, 75a397f, e30eec8, 70266b5, 860e651,
+   > a75b328, 7818be1 and fb03739, each read as `git diff m^1 m -- src tools`.
+   > The milestone added learner adapters for ILASP, RIPPER, AMIE and an LLM
+   > to the ILP bridge. Other merges between them (#47, #50, #52, #53) belong
+   > to other milestones: do not review them. Earlier reviews each covered
+   > one phase's commits; read IL's changes as one change, including commits
+   > that already had a review.
    > Look for: wrong exits or refusal names, refusals in the wrong order,
    > inputs a reader accepts that its writer never writes (and the reverse),
    > duplicated logic that has already drifted, private names used across
@@ -79,7 +93,7 @@ gate of each touched module exits 0.
 5. **Triage and disposition**, per finding:
    - **blocking** (a wrong admission, a crash, a wrong exit on valid input):
      fixed in IH0, with a regression test in `tests/test_ih0_review.py`
-     shown red against `fb03739` in `evidence/IH0/red.txt`;
+     shown red against the fix's parent commit in `evidence/IH0/red.txt` (p1);
    - **hardening**: fixed in IH0 if it is local and small, or assigned to
      IH1 or IH2 by name if it is in the counting path they rewrite;
    - **completeness**: deferred by default, as a carried row with a target.
@@ -97,7 +111,7 @@ gate of each touched module exits 0.
 
 | ID | Question | Readings and cost | Proposed |
 |---|---|---|---|
-| IH0-D1 (plan IH-D2) | Scope | `src/` + `tools/` (about 3,600 lines); adding `tests/` (about 14,000 lines) finds weak or vacuous tests but multiplies reading time about four times | `src/` + `tools/` |
+| IH0-D1 (plan IH-D2) | Scope (p1) | IL's merges in `src/` + `tools/` (37 files, about 3,350 changed lines); adding the other milestones' merges (64 files); adding `tests/` (about 14,000 lines) finds weak or vacuous tests but multiplies reading time about four times | IL's merges, `src/` + `tools/` |
 | IH0-D2 (plan IH-D4) | Instrument | four local readers; the maintained panel (parent credentials required); one reader | four local readers |
 | IH0-D3 | Hardening findings in the counting path | fix in IH0, or assign to IH1 so the code moves once | assign to IH1 |
 | IH0-D4 | A fix that moves a golden or bumps an adapter version | stop for the owner per fix, or batch them into one ruling after triage | batch after triage |
@@ -106,7 +120,7 @@ gate of each touched module exits 0.
 
 | Test | Expected |
 |---|---|
-| `tests/test_ih0_review.py::test_f<n>_…`, one per fixed finding | exit non-zero at `fb03739` (retained in `evidence/IH0/red.txt`), exit 0 after the fix |
+| `tests/test_ih0_review.py::test_f<n>_…`, one per fixed finding | exit non-zero at the fix's parent commit (retained in `evidence/IH0/red.txt`), exit 0 after the fix (p1) |
 | the focused tests of every module a fix touches, named in the record | exit 0 |
 | `tests/test_ilp_learners.py::test_t8_the_milestone_directory_is_private_clean`, widened to this milestone's directory | exit 0 |
 
@@ -116,12 +130,14 @@ record lists every test added, with its red output.
 ## Out of scope for this phase
 
 - Fixing anything IH1 or IH2 owns, unless blocking.
-- Tests, docs and evidence in the range, unless IH0-D1 widens the scope.
+- Tests, docs and evidence, unless IH0-D1 widens the scope.
+- The source changes of #47, #50, #52 and #53 (p1).
+- **Residual:** a review is a disagreement locator, not a proof (p1).
 - Any learner, solver or model run.
 
 ## Size
 
-Review: four readers over about 3,600 lines. Fixes: unknown until triage.
+Review: four readers over about 3,350 changed lines (p1). Fixes: unknown until triage.
 The record measures both.
 
 ## Approval instrument

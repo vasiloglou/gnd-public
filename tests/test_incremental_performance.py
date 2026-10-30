@@ -200,6 +200,30 @@ def test_prepared_policy_rechecks_live_hashability(monkeypatch):
     assert owner.stats()['bypasses'] == 1
 
 
+def test_prepared_policy_rechecks_nested_class_despite_cached_key_hash(monkeypatch):
+    class MutableHash(type):
+        pass
+
+    class PolicyClass(metaclass=MutableHash):
+        pass
+
+    m = model()
+    owner = ReuseState(m)
+    calls = []
+
+    def calculate():
+        calls.append(1)
+        return len(calls)
+
+    with owner.transaction(m):
+        policy = owner.prepare_policy((('limit', 3), (PolicyClass,)))
+        assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 1
+        hash(policy.key)  # CPython 3.14 caches tuple hashes from here on
+        monkeypatch.setattr(MutableHash, '__hash__', None)
+        assert owner.reuse('unit', 'one', (), calculate, policy=policy) == 2
+    assert owner.stats()['bypasses'] == 1
+
+
 def test_custom_metaclass_equality_cannot_hide_record_dictionary():
     class Meta(type):
         __hash__ = type.__hash__

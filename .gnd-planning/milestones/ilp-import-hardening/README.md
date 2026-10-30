@@ -42,4 +42,5 @@ close ruling (auto=true). The workflow's steps passed on Python 3.13 and 3.11
 on clean clones of the PR head ([CI run](evidence/close/ci-run.txt)); four
 close readers' findings are dispositioned ([close review](notes/close-review.md)).
 
-**Next action:** owner acceptance, and the owner's merge of vasiloglou/gnd-public#65.
+**Accepted by the owner** on 2026-10-30, with the merge of
+vasiloglou/gnd-public#65 authorized. No successor milestone is started.

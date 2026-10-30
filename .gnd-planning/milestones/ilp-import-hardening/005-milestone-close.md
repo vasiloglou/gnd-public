@@ -29,7 +29,7 @@ evidence:
 
 # ILP import hardening -- milestone close
 
-**Status: closed locally, pending owner acceptance and merge.** All three
+**Status: closed and accepted by the owner on 2026-10-30, with the merge authorized (see Owner acceptance at the end).** All three
 phases have records. The close review ran, and its findings were fixed or
 carried. The close CI ran on the PR head on both Pythons. The close ruling
 below is a **delegated close ruling (auto=true)**, not owner acceptance.
@@ -67,7 +67,7 @@ Merging PR #65 is the owner's act, and its record follows separately.
 | 2. IH1: public `count_mined_rules` used by the import and `hold()`; no `_mined_inputs` outside `ilp_service`; build once; provenance in `ilp_amie` with no discover edge; refusal order pinned; goldens and replays byte-identical | met: 003, T1 to T13. Two owner-approved error-path changes, IH1-D4 and D5 |
 | 3. IH2: refused by its own name before any count, per IH-D1 (b); the false `support-mismatch` reproduced first | met: 004, T1 to T11. The rule was settled by the close review (below) |
 | 4. Every phase: approval, focused checks, one independent diff review, a refactoring review and a record | met for IH0, IH1 and IH2. IH0's approval was "Start IH0", recorded as such; IH2's gate was delegated |
-| 5. Close: a question sweep; the local CI run on the PR head; a close review per IH-D6; a PR; owner acceptance, recorded separately | the sweep, CI and review are below. The PR is vasiloglou/gnd-public#65. **Owner acceptance is pending** |
+| 5. Close: a question sweep; the local CI run on the PR head; a close review per IH-D6; a PR; owner acceptance, recorded separately | the sweep, CI and review are below. The PR is vasiloglou/gnd-public#65. **Owner acceptance: given 2026-10-30** (below) |
 
 ## Gate output (summary of the log)
 
@@ -194,3 +194,12 @@ The close executed no refactor: its repairs are a tool guard and docs.
 
 The owner reviews PR vasiloglou/gnd-public#65 and accepts or amends. A merge
 is the owner's act; its record follows.
+
+## Owner acceptance
+
+2026-10-30, by the owner, in the session that ran this close: "Accept and
+merge", in answer to "Do you accept the milestone close and authorize merging
+PR #65?". This acceptance is the owner's own, distinct from the delegated close
+ruling above, and covers the bytes of this record's commit and the PR head that
+carries it. It authorizes merging vasiloglou/gnd-public#65; it does not start a
+successor milestone, publish, or certify anything.

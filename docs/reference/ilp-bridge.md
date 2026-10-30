@@ -160,7 +160,9 @@ nothing. Admission is all-or-nothing.
      when no observed amount is 501, or `gt` at the maximum. A binary
      comparison atom, the earlier spelling, is not checked here.
    - **ILASP:** a comparison constant the task does not offer for its type.
-   - **Rules:** a well-formed column that `features.json` does not hold.
+   - **Rules:** a column of a declared `gt` or `lt` comparison, at an
+     integer position of its own type, that `features.json` does not hold.
+     Any other column goes on to the fragment table.
    - **LLM and neutral:** not checked; any constant goes on to the fragment
      table.
 3. **The fragment:** each clause is checked in the order of the table below.

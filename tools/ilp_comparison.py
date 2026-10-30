@@ -114,7 +114,14 @@ def _proposed(adapter: str, text: str) -> int | None:
     if not text.strip():
         return None
     parse = learner(adapter).parse
-    return len(parse(text)["clauses"] if parse else json.loads(text)["clauses"])
+    if parse:
+        return len(parse(text)["clauses"])
+    document = json.loads(text)
+    clauses = document.get("clauses") if isinstance(document, dict) else None
+    if not isinstance(clauses, list):
+        # Read as the reader refuses it, so the row or exit 2 follows (close review 2, finding 1).
+        raise ValueError("the answer holds no clauses list")  # noqa: TRY004 -- one refusal protocol
+    return len(clauses)
 
 
 def labelled_row(root: Path, adapter: str, invocation: int, directory: str, output: str) -> dict[str, Any]:

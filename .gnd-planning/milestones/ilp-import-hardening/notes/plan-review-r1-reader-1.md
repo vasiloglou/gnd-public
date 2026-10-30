@@ -5,7 +5,8 @@ A general-purpose agent reviewed plan r1 (SHA-256 `cbfa12fd…51ce`) and the
 IH0 spec r1 (SHA-256 `269663b5…db81`) at `1182f96`. It edited no repository
 file, ran no learner, solver or model, and wrote its probes only under the
 session scratch directory, written `<scratch>` below. One reviewer is one
-reviewer. The report is retained verbatim.
+reviewer. The report is retained verbatim, except that a private host name is
+written `<host>` (close review, 2026-10-30).
 
 ---
 
@@ -58,7 +59,7 @@ reviewer. The report is retained verbatim.
 ### 9. Hardening — IH-R3 "full local CI matrix" does not reproduce the CI matrix; its source is not a retained record
 **Where:** plan §0 IH-R3; §1 Sources last row; §9.
 **Evidence:** `.github/workflows/development.yml` runs regression/installed on ubuntu/3.11 and macOS/3.13 (candidate on ubuntu/3.11). A local run on this Mac is macOS/3.11 + macOS/3.13 only. "this session's local CI on PR #64" is not a committed record (repairs are `a7d6dc0`, `fe80002`).
-**Fix:** name the exact local commands (incl. `uv run pytest -q -ra --tb=short` and the candidate build + `test_release_acceptance.py`), state that the Linux leg is not reproduced (or where it runs, e.g. beast-3 is also macOS), name the evidence file (`evidence/close/ci-matrix.txt`), and cite the repair commits.
+**Fix:** name the exact local commands (incl. `uv run pytest -q -ra --tb=short` and the candidate build + `test_release_acceptance.py`), state that the Linux leg is not reproduced (or where it runs, e.g. `<host>` is also macOS), name the evidence file (`evidence/close/ci-matrix.txt`), and cite the repair commits.
 
 ### 10. Completeness — RF6 successor chain home missing
 **Where:** plan §3/§5 ("RF6 census rows regenerated"); IH1 criterion 6.

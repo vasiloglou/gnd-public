@@ -486,7 +486,9 @@ exits 64.
   reason: `derived`, `arity` (not binary) or `not-covered`.
 
 A population that covers no binary asserted fact type is refused
-`no-relations`. There are no labels and no `neutral.json`.
+`no-relations`. As for every target ([Export](#export)), an opaque value is
+refused `opaque` and an export over the fact cap `too-large`. There are no
+labels and no `neutral.json`.
 
 **The import** reads RULES as AMIE prints them: one line per rule, eight
 tab-separated fields: the rule, head coverage, standard confidence, PCA
@@ -512,7 +514,8 @@ miner read, by SHA-256:
 ```
 
 A different miner is refused `learner-mismatch`, other RULES
-`rules-mismatch`, another population `population-mismatch`. The import then
+`rules-mismatch`, another population `population-mismatch`, compared on the
+population's bytes before they are parsed. The import then
 renders the facts again from MODEL and POP; facts other than the ones the
 miner read are refused `facts-mismatch`, and so is a pair from which no export
 can be written, naming the export's reason. The facts hold every relation name,
@@ -546,8 +549,9 @@ in this order:
   `std-confidence-head-pairs`.
 
 The body's join is bounded before it runs: if the product of its relations'
-sizes exceeds 1,000,000 rows the rule is refused `too-large`. Then, in this
-order: a denominator of 0 is refused `covers-nothing`; a numerator that
+sizes exceeds 1,000,000 rows the rule is refused `too-large`. Every rule is
+counted before any is checked, so any rule's `too-large` comes first. Then,
+rule by rule, in this order: a denominator of 0 is refused `covers-nothing`; a numerator that
 differs from the miner's Support is refused `support-mismatch`; and a rule
 that does not hold on every head pair is refused `does-not-hold`, because only
 rules that hold are admitted. A body size that differs from the denominator is

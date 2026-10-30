@@ -15,8 +15,9 @@ fact type with its reason. No labels.
 **Import.** :func:`parse_rules` reads AMIE's printed rule lines (closed, capped,
 total); :func:`mapped` turns one into a ``guarded`` constraint with an ``atom``
 consequent, refusing every other shape by name in :data:`MAPPING_REFUSALS`
-order; :func:`count` counts it over distinct head pairs. Nothing here runs a
-learner or evaluates rule text.
+order; :func:`count` counts it over distinct head pairs, and :func:`provenance`
+names the head facts a holding rule's examples are (IL4-Q3, IH1). Nothing here
+runs a learner or evaluates rule text.
 """
 
 from __future__ import annotations
@@ -33,8 +34,8 @@ from gnd.export.ilp import IlpError
 __all__ = [
     "ADAPTER_VERSION", "COUNT_REFUSALS", "EXPORT_REFUSALS", "FORMULA", "MAPPING_REFUSALS",
     "MAX_ATOMS", "MAX_DIGITS", "MAX_JOIN_ROWS", "MAX_RULES", "MAX_TEXT", "Counts", "MinedRule",
-    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "relation_table", "render",
-    "spell",
+    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "provenance",
+    "relation_table", "render", "render_tables", "spell",
 ]
 
 #: "2" spells a subtype hierarchy by its family (IL4-Q1, ILC-D4 (o)); a model with
@@ -47,7 +48,8 @@ MAX_ATOMS = 4
 MAX_DIGITS = 18
 MAX_JOIN_ROWS = 1_000_000
 FORMULA = "std-confidence-head-pairs"
-EXPORT_REFUSALS = ("no-relations", "unrepresentable")
+#: The export's refusals: its own two, then the shared neutral form's (IH0 finding J).
+EXPORT_REFUSALS = ("no-relations", "unrepresentable", "opaque", "too-large")
 #: The mapping's refusals in check order; ``type-confused-join`` is the shared
 #: join check (``ilp_rewrite.check_join_types``), called last.
 MAPPING_REFUSALS = ("open-world-head", "unknown-predicate", "constant-atom", "reflexive-atom",
@@ -187,9 +189,21 @@ def render(model: Any, population: Any, population_sha256: str) -> dict[str, byt
     covers = list(getattr(population, "covers", None) or [])
     relations, _uncovered, skipped = relation_table(model, covers)
     if not relations:
-        raise IlpError(EXIT_ILL_FORMED, "no-relations: the population covers no binary asserted "
-                       "fact type, so there is nothing to mine")
-    facts = pairs(relations, population)
+        raise _no_relations()
+    return render_tables(relations, skipped, pairs(relations, population), population_sha256)
+
+
+def _no_relations() -> IlpError:
+    return IlpError(EXIT_ILL_FORMED, "no-relations: the population covers no binary asserted "
+                    "fact type, so there is nothing to mine")
+
+
+def render_tables(relations: Mapping[str, Relation], skipped: list[dict[str, str]],
+                  facts: Mapping[str, list[tuple[str, str]]], population_sha256: str) -> dict[str, bytes]:
+    """:func:`render` over a relation table and pairs already built, so the mined
+    import renders the facts it counts without building them twice (IH1-D3 (o))."""
+    if not relations:
+        raise _no_relations()
     lines = sorted({f"{s}\t{name}\t{o}" for name, rows in facts.items() for s, o in rows})
     if sum(len(line) for line in lines) > _ilp.MAX_FILE_BYTES or len(lines) > _ilp.MAX_FACTS:
         raise IlpError(EXIT_ILL_FORMED, f"too-large: the export exceeds {_ilp.MAX_FACTS} facts")
@@ -373,6 +387,20 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
 
 
 # -- counting ----------------------------------------------------------------
+
+def provenance(head_pairs: list[tuple[str, str]], satisfied: tuple[tuple[str, str], ...],
+               fact_id: Any, fact_type: str) -> list[str]:
+    """Each satisfied head pair's first fact, named by FACT_ID, in satisfied order.
+
+    HEAD_PAIRS is the counted relation's :func:`pairs`, in population row order,
+    so no value is spelled twice; FACT_ID is the caller's (``PopulationView.fact_id``),
+    so this module needs nothing from ``gnd.discover`` (IL4-Q3, IH1)."""
+    first: dict[tuple[str, str], int] = {}
+    for row, pair in enumerate(head_pairs):
+        first.setdefault(pair, row)
+    # Each satisfied pair is a head fact, so it has a first row (IK-R11: opaque ids).
+    return [fact_id(fact_type, first[pair]) for pair in satisfied]
+
 
 @dataclass(frozen=True)
 class Counts:

@@ -14,6 +14,11 @@ changes requires a separate release decision.
   clause as not evaluated after a refusal before the first clause, reports
   output the import refused at its reader, and exits 2 on other learner output
   it cannot read.
+- `gnd import mined-rules` refuses a population whose bytes are not the run
+  record's as `population-mismatch` (exit 3) before loading it, so a broken
+  population that is not the bound one no longer exits 5. It counts every rule
+  before any admission check, so a later rule's `too-large` is reported before
+  an earlier rule's `covers-nothing` or `support-mismatch`; the exit is still 3.
 
 ## Unreleased: more rule learners (2026-10-28)
 

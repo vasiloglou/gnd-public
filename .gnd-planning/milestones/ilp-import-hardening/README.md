@@ -5,7 +5,10 @@ Planning opened 2026-10-29 at the owner's request, as the successor to
 into the mined-rule import.
 
 **Status:** plan r2 approved by the owner on 2026-10-29, with its proposed
-rulings ([plan gate](001-plan-gate.md)). No phase is selected. `auto=false`.
+rulings ([plan gate](001-plan-gate.md)). On 2026-10-30 the owner delegated
+the rest of this milestone (`process-milestone ilp-import-hardening auto`):
+spec, plan and close rulings within it. Merge, publication, paid calls and
+certification stay the owner's.
 Plan r1 had one reader's review (IH-D5, owner-ruled): request-changes, 14
 findings, all applied in r2 ([disposition](notes/plan-review-r1-disposition.md)).
 r2 bytes carry no review opinion.
@@ -24,7 +27,11 @@ carried ([triage](notes/phase-IH0-triage.md)).
 **IH0-D4, ruled 2026-10-29 (o):** "Keep both held". The LLM threshold check
 and Popper's binary and infix spellings stay unapplied.
 
-[IH1 spec (r1, draft)](notes/phase-IH1-spec.md): open decisions IH1-D3 to
-IH1-D5.
+**IH1 done** ([record](003-phase-IH1.md)): one public counting entry, built
+once, with the owner's IH1-D3 to D5 (o). One reviewer: no blocking; two
+hardening and three completeness findings, all fixed.
 
-**Next action:** the owner rules on IH1's spec and its decisions.
+[IH2 spec (r1)](notes/phase-IH2-spec.md): `own-reference-join`, gated under
+the delegation in IH2's record.
+
+**Next action:** IH2, then the close.

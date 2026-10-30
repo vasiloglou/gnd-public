@@ -164,6 +164,17 @@
     "exit": 0
   },
   {
+    "id": "g19-aggregate-descent",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/repaired.pop.json",
+      "--fact-type",
+      "prolific"
+    ],
+    "exit": 0
+  },
+  {
     "id": "g10-unknown-fact-type",
     "argv": [
       "why-not",

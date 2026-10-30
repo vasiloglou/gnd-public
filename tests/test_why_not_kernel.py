@@ -643,3 +643,90 @@ def _more_agreement():
 @pytest.mark.parametrize("name,fts,facts,target,row", _more_agreement(), ids=[c[0] for c in _more_agreement()])
 def test_review_r5_t8_covers_descent_and_refusal_cases(name, fts, facts, target, row):
     test_t8_status_agrees_with_check(name, fts, facts, target, row)
+
+
+# -- close review C1-1 ----------------------------------------------------------
+
+def test_close_c1_descent_stops_at_an_aggregate_blocker():
+    tally = fact_type("tally", [("person", "code"), ("n", "int")], {
+        "body": [atom("wrote", work="$w", person="$p")],
+        "aggregate": {"fn": "count", "of": "$w", "over": ["$w"], "as": "$n"},
+        "head": {"person": "$p", "n": "$n"}})
+    prolific = fact_type("prolific", [("person", "code")], {
+        "body": [atom("member", person="$p"), atom("tally", person="$p", n=3)],
+        "head": {"person": "$p"}})
+    fts = [fact_type("wrote", [("work", "code"), ("person", "code")]),
+           fact_type("member", [("person", "code")]), tally, prolific]
+    result = run(fts, {"wrote": [{"work": "w1", "person": "ann"}], "member": [{"person": "ann"}]},
+                 "prolific")
+    (clause,) = result["clauses"]
+    assert result["status"] == "blocked"
+    assert clause["blocker"]["fact_type"] == "tally" and clause["blocker"]["ground"] is True
+    assert (clause["descent"], clause["descent_stopped"]) == (None, "aggregate")
+
+
+# -- close review C4: mutants that survived the phase tests -------------------------
+
+def test_close_c4_1_negated_atom_with_a_constant():
+    fts = [fact_type("s", [("q", "code")]), fact_type("x", [("q", "code"), ("tag", "code")]),
+           fact_type("t", [("q", "code")], {"body": [atom("s", q="$q")],
+                                            "negate": [atom("x", q="$q", tag="k")], "head": {"q": "$q"}})]
+    result = run(fts, {"s": [{"q": "a"}], "x": [{"q": "a", "tag": "k"}]}, "t")
+    blocker = result["clauses"][0]["blocker"]
+    assert (result["status"], blocker["kind"], blocker["count"]) == ("blocked", "negated", 0)
+    assert run(fts, {"s": [{"q": "a"}], "x": [{"q": "a", "tag": "j"}]}, "t")["status"] == "derived"
+
+
+def test_close_c4_2_identity_in_row_mode_negation_and_head():
+    t = fact_type("t", [("v", "num")], {"body": [atom("b", v="$v")], "head": {"v": "$v"}})
+    fts = [fact_type("b", [("v", "num")]), t]
+    assert run(fts, {"b": [{"v": 1}]}, "t", row=cells(("Number", 1.0)))["status"] == "derived"
+    neg = fact_type("n", [("v", "num")], {"body": [atom("s", v="$v")],
+                                          "negate": [atom("x", v="$v")], "head": {"v": "$v"}})
+    fts = [fact_type("s", [("v", "num")]), fact_type("x", [("v", "num")]), neg]
+    blocked = run(fts, {"s": [{"v": 1}], "x": [{"v": 1.0}]}, "n")
+    assert blocked["clauses"][0]["blocker"]["kind"] == "negated"
+    flags = [fact_type("s", [("v", "flag")]), fact_type("x", [("v", "num")]),
+             fact_type("n", [("v", "flag")], {"body": [atom("s", v="$v")],
+                                              "negate": [atom("x", v=1)], "head": {"v": "$v"}})]
+    # true and 1 are two values: x(1) does not negate s(true)'s binding, but the
+    # constant 1 is present, so the clause still blocks on the negation.
+    assert run(flags, {"s": [{"v": True}], "x": [{"v": 1}]}, "n")["clauses"][0]["blocker"]["kind"] == "negated"
+    head = fact_type("h", [("k", "code"), ("v", "num")], {
+        "body": [atom("b", k="$k", v="$a")], "head": {"k": "$k", "v": {"fn": "round", "args": [{"fn": "add", "args": ["$a", 0]}, 2]}}})
+    fts = [fact_type("b", [("k", "code"), ("v", "num")]), head]
+    assert run(fts, {"b": [{"k": "a", "v": 1}]}, "h",
+               row=cells(("String", "a"), ("Number", 1.0)))["status"] == "derived"
+
+
+def test_close_c4_3_cycle_across_two_predicates():
+    p = fact_type("p", [("v", "code")], {"head": {"v": "$v"}, "clauses": [
+        {"body": [atom("b", v="$v")]}, {"body": [atom("q", v="$v")]}]})
+    q = fact_type("q", [("v", "code")], {"body": [atom("p", v="$v")], "head": {"v": "$v"}})
+    result = run([fact_type("b", [("v", "code")]), p, q], {"b": []}, "p", row=strings("a"))
+    # p(a) -> q(a) -> p(a) -> q(a): the repeat two levels down is a cycle.
+    q_level = result["clauses"][1]["descent"]
+    p_again = q_level["clauses"][0]["descent"]
+    assert (q_level["fact_type"], p_again["fact_type"]) == ("q", "p")
+    assert p_again["clauses"][1]["descent_stopped"] == "cycle"
+
+
+def test_close_c4_4_asserted_not_read_on_a_later_sample():
+    s = fact_type("s", [("v", "code")], {"body": [atom("m", v="$v")], "head": {"v": "$v"}},
+                  derivation="semiderived")
+    t = fact_type("t", [("v", "code")], {"body": [atom("k", v="$v"), atom("s", v="$v")],
+                                         "head": {"v": "$v"}})
+    fts = [fact_type("k", [("v", "code")]), fact_type("m", [("v", "code")]), s, t]
+    result = run(fts, {"k": [{"v": "a"}, {"v": "b"}], "m": [], "s": [{"v": "b"}]}, "t")
+    blocker = result["clauses"][0]["blocker"]
+    assert blocker["samples"] == [{"v": "a"}, {"v": "b"}]
+    assert blocker["asserted_not_read"] is True
+
+
+def test_close_c4_5_non_atom_sample_count_is_uncapped():
+    fts = [fact_type("s", [("v", "int")]), fact_type("x", [("v", "int")]),
+           fact_type("n", [("v", "int")], {"body": [atom("s", v="$v")],
+                                           "negate": [atom("x", v="$v")], "head": {"v": "$v"}})]
+    rows = [{"v": i} for i in range(8)]
+    blocker = run(fts, {"s": rows, "x": rows}, "n")["clauses"][0]["blocker"]
+    assert (blocker["sample_count"], len(blocker["samples"]), blocker["reads"]) == (8, 5, ["$v"])

@@ -587,7 +587,8 @@
             "not-derived",
             "not-ground",
             "cycle",
-            "depth"
+            "depth",
+            "aggregate"
           ]
         }
       }

@@ -35,7 +35,8 @@
       "delisted",
       "top_score",
       "doubled",
-      "tagged"
+      "tagged",
+      "prolific"
     ],
     "model": "model.orm.json",
     "model_id": "urn:gnd-fixture:why-not-claims@1",

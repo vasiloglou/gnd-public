@@ -111,6 +111,8 @@ clause's `descent`. Descent stops, and `descent_stopped` says why, when:
 - the blocker's fact type is base (`not-derived`);
 - no sample binds every role (`not-ground`). Ask again with `--row` to choose
   the row;
+- the blocker's fact type is computed by an aggregate, which why-not does not
+  walk (`aggregate`);
 - the same fact type and row are already being explained (`cycle`);
 - eight levels have been explained (`depth`).
 
@@ -138,7 +140,8 @@ those values are appropriate for the reader.
 Inputs have the witness lane's ceilings: 10 MiB per file, nesting depth 64,
 4,096 bytes per string, and 128 digits per number. Work has two budgets.
 GND's evaluator may perform 200,000 joins while deciding the status. The
-walk may make 100,000 joins and 200,000 probes and hold 400,000 binding cells.
+walk may make 100,000 joins and 200,000 probes, and may store 400,000 binding
+cells in total across all its steps, clauses and descent levels.
 Reaching any of them returns `refused` with `reason: work-limit` and exit 4.
 
 The output is described by `why-not.schema.json`, packaged with GND.

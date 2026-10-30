@@ -448,6 +448,38 @@
           "role_name": "tag"
         }
       ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "person": "$p",
+              "work": "$w"
+            },
+            "fact_type": "wrote"
+          },
+          {
+            "bind": {
+              "n": 3,
+              "person": "$p"
+            },
+            "fact_type": "tally"
+          }
+        ],
+        "head": {
+          "person": "$p"
+        }
+      },
+      "id": "prolific",
+      "reading": "{code} prolific",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "person"
+        }
+      ]
     }
   ],
   "model_id": "urn:gnd-fixture:why-not-claims@1",

@@ -122,6 +122,8 @@ CASES = [
                   "--row", f"{R}/doubled-w2.json"]),
     ("g18-head-bind-constant", [f"{C}/model.orm.json", f"{C}/gap.pop.json", "--fact-type",
                                 "tagged", "--row", f"{R}/tagged-w1.json"]),
+    ("g19-aggregate-descent", [f"{C}/model.orm.json", f"{C}/repaired.pop.json", "--fact-type",
+                               "prolific"]),
     ("g10-unknown-fact-type", [f"{C}/model.orm.json", f"{C}/gap.pop.json", "--fact-type", "nope"]),
     ("g10-not-derived", [f"{C}/model.orm.json", f"{C}/gap.pop.json", "--fact-type", "listed"]),
     ("g11-zero-targets", [f"{C}/model.orm.json", f"{C}/gap.pop.json", "--fact-type", "claim",

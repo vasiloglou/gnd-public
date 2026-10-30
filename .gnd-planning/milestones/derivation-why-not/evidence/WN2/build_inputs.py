@@ -85,6 +85,10 @@ MODEL = {
         ft("tagged", [("work", "code"), ("tag", "code")], {
             "body": [atom("listed", work="$w")],
             "head": {"work": "$w", "tag": "val-const-head"}}),
+        # Close review C1-1: a ground blocker over an aggregate-ruled type.
+        ft("prolific", [("person", "code")], {
+            "body": [atom("wrote", work="$w", person="$p"), atom("tally", person="$p", n=3)],
+            "head": {"person": "$p"}}),
     ],
 }
 DERIVED = [f["id"] for f in MODEL["fact_types"] if "derivation" in f]

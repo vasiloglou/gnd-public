@@ -67,6 +67,26 @@ def _added_files() -> list[Path]:
     return sorted(ROOT / name for name in names if (ROOT / name).is_file())
 
 
+def _git(*args: str) -> str:
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout
+
+
+def _added_lines_of_modified_files() -> str:
+    """Lines the milestone added to files that existed at the base (close review C3-5)."""
+    diff = _git("diff", "--unified=0", "--diff-filter=M", BASE)
+    return "\n".join(
+        line[1:] for line in diff.splitlines() if line.startswith("+") and not line.startswith("+++")
+    )
+
+
+def test_modified_files_and_commit_messages_name_no_downstream_application():
+    assert _added_lines_of_modified_files()
+    assert not _digests(_added_lines_of_modified_files()) & FORBIDDEN
+    messages = _git("log", "--format=%B", f"{BASE}..HEAD")
+    assert messages and not _digests(messages) & FORBIDDEN
+    assert _digests("See the zz-planted-name repository.") & CONTROL
+
+
 def test_added_files_name_no_downstream_application():
     files = _added_files()
     assert any("derivation-why-not" in str(path) for path in files)

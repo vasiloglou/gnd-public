@@ -85,6 +85,7 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 | `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate |
 | `gnd replay MODEL POPULATION CERTIFICATE --json` | Independent finite inference replay |
 | `gnd witness-view CERTIFICATE --json` | Non-replayable presentation of a certificate |
+| `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted |
 | `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, values redacted |
 | `gnd export souffle ...` / `gnd export lean ...` / `gnd export pyrel ...` | Selected bounded export profile |
 | `gnd install --project` | Copy packaged skills to project discovery roots |

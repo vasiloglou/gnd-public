@@ -4,7 +4,7 @@ Planning opened 2026-10-30 for [issue #66](https://github.com/vasiloglou/gnd-pub
 when a derivation rule derives nothing, say which body step emptied the join,
 with the binding counts before it, so a host can add the missing fact.
 
-**Status: WN1-WN3 complete ([WN1](002-phase-WN1.md), [WN2](003-phase-WN2.md), [WN3](004-phase-WN3.md)); close next.** Plan r3 and WN1
+**Status: closed under delegated approval (auto=true) ([close record](005-milestone-close.md)); owner acceptance pending; PR #67 not merged.** Plan r3 and WN1
 spec r3 were approved by the owner on 2026-10-30 ([plan gate](001-plan-gate.md)).
 Execution runs under `/process-milestone derivation-why-not auto`: phase gates
 inside this milestone are delegated approvals (auto=true), recorded as such.
@@ -16,6 +16,7 @@ Baseline `fb03739` (main after PR #64).
 - [WN1 record](002-phase-WN1.md), with the [diff review](notes/phase-WN1-claude-review.md)
 - [WN2 spec](notes/phase-WN2-spec.md), [record](003-phase-WN2.md) and [diff review](notes/phase-WN2-claude-review.md)
 - [WN3 spec](notes/phase-WN3-spec.md), [record](004-phase-WN3.md) and [diff review](notes/phase-WN3-claude-review.md)
+- [Close record](005-milestone-close.md), with close readers [1](notes/close-review-reader-1.md), [2](notes/close-review-reader-2.md), [3](notes/close-review-reader-3.md) and [4](notes/close-review-reader-4.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with reader notes 1-4
 - [Plan review round 2 disposition](notes/plan-review-r2-disposition.md), with reader notes 1-4
 
@@ -50,4 +51,4 @@ Plan review:
   blocking, 25 self-inflicted (ratio 0.93). The stop rule holds, so no third
   round runs.
 
-Next action: the milestone close (four local close readers, question sweep, close record).
+Next action: the owner's acceptance and merge decision on PR #67, and the open questions in the close record's sweep (the anonymity token set, `asserted_not_read` scope, the GR-T5 issue, the `ilp-bridge` fence).

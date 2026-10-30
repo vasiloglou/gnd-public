@@ -531,6 +531,11 @@ class _Walk:
             return None, "not-derived"
         if not grounded:
             return None, "not-ground"
+        # An aggregate head is not walked: the target refuses it as unsupported,
+        # and a blocker over one stops here rather than descending.
+        rule = self.index.fact_type(fact_type_id)["derivation_rule"]
+        if any(isinstance(clause.get("aggregate"), dict) for clause in iter_derivation_clauses(rule)):
+            return None, "aggregate"
         values = grounded[0]
         row = [
             {"primitive": primitive, "value": values[role]}

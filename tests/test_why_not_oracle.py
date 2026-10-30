@@ -10,6 +10,7 @@ import pytest
 
 from gnd.model import ModelValidationError
 from gnd.witness.why_not import explain
+from tests.test_why_not_kernel import check_status
 from tests.why_not_oracle import Oracle, identity
 from tests.why_not_support import atom, build, cells, fact_type, population
 
@@ -38,6 +39,9 @@ def compare(model, doc, pop, pdoc, target, row=None):
     ours = explain(model, pop, target, row=row).to_dict()
     oracle = Oracle(doc, pdoc["facts"])
     assert (ours["status"] == "derived") == oracle.derived(target, row)
+    # Close review C2-1: every corpus case also agrees with check's verdict.
+    expected = check_status(model, pop, target, row)
+    assert expected is not None and ours["status"] == expected
     if ours["status"] != "blocked":
         return ours
     for got, want in zip(ours["clauses"], oracle.walk(target, row), strict=True):

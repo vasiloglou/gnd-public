@@ -1,0 +1,31 @@
+# IH2 review successors T6-T8, in a scratch worktree, three ways.
+# 1. IH1's head 4389b61 (no IH2 source):
+E   AssertionError: internal: constraints[0] holds by GND's count but the checker says 'warning'
+E   AssertionError: rule 0: support-mismatch: amie reports Support 2, GND counts 0 of 2 head pairs
+2 failed, 1 passed in 0.47s
+# 2. IH2's check before the review repair (families only; the primitives branch removed):
+E   AssertionError: internal: constraints[0] holds by GND's count but the checker says 'warning'
+1 failed, 2 passed in 0.54s
+# 3. The review's subject-only mutant (only each atom's subject is checked):
+E   AssertionError: rule 0: support-mismatch: amie reports Support 2, GND counts 0 of 2 head pairs
+1 failed, 2 passed in 0.57s
+
+# T9 to T11, added after the close review (reader 4's H1, then reader 1's findings 1 to 3), three ways.
+# 4. IH1's head 4389b61 (no IH2 source):
+E   AssertionError: ('mixed', "internal: constraints[0] holds by GND's count but the checker says 'warning'
+E   AssertionError: internal: constraints[0] holds by GND's count but the checker says 'warning'
+FAILED tests/test_ih2_ownref.py::test_t9_a_variable_over_a_type_with_two_kinds_of_reference_is_refused
+FAILED tests/test_ih2_ownref.py::test_t11_a_type_under_two_unrelated_references_is_refused
+2 failed, 1 passed in 0.52s
+# 5. The per-type check of reader 4's H1 repair (types' primitive sets compared, not their union):
+E   AssertionError: ('mixed', "internal: constraints[0] holds by GND's count but the checker says 'warning'
+E   AssertionError: rule 0: own-reference-join: variable ?a joins references of Integer and Number in one family, which the count spells alike
+E   AssertionError: internal: constraints[0] holds by GND's count but the checker says 'warning'
+FAILED tests/test_ih2_ownref.py::test_t9_a_variable_over_a_type_with_two_kinds_of_reference_is_refused
+FAILED tests/test_ih2_ownref.py::test_t10_integer_and_number_references_are_one_kind
+FAILED tests/test_ih2_ownref.py::test_t11_a_type_under_two_unrelated_references_is_refused
+3 failed in 0.48s
+# 6. The union of primitive names, before kinds (IH2's F1 repair as first written):
+E   AssertionError: rule 0: own-reference-join: variable ?a joins references of Integer and Number in one family, which the count spells alike
+FAILED tests/test_ih2_ownref.py::test_t10_integer_and_number_references_are_one_kind
+1 failed, 2 passed in 0.51s

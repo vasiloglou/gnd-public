@@ -31,7 +31,11 @@ and Popper's binary and infix spellings stay unapplied.
 once, with the owner's IH1-D3 to D5 (o). One reviewer: no blocking; two
 hardening and three completeness findings, all fixed.
 
-[IH2 spec (r1)](notes/phase-IH2-spec.md): `own-reference-join`, gated under
-the delegation in IH2's record.
+**IH2 done** ([record](004-phase-IH2.md)), under a delegated approval
+(auto=true) of its [spec](notes/phase-IH2-spec.md): `own-reference-join`
+refuses a variable over two families, or over references of more than one
+kind of value, before any count. One reviewer, then the close review, found
+and fixed two exit-70 shapes and one false refusal.
 
-**Next action:** IH2, then the close.
+**Next action:** the close: the CI run on both Pythons, the question sweep
+and the close record.

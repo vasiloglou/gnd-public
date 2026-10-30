@@ -1,0 +1,18 @@
+# IH2 review F2: manager "1" and staff "1" are one value to the checker.
+format_version: 2
+population:
+  model: ownref-object.orm.yaml
+  model_id: ownref_object
+  source: fixture
+  covers: [manages, works_in]
+instances:
+  staff: ["1", "2"]
+  manager: ["1", "2"]
+  team: ["t1", "t2"]
+facts:
+  manages:
+    - { manager: "1", team: "t1" }
+    - { manager: "2", team: "t2" }
+  works_in:
+    - { staff: "1", team: "t1" }
+    - { staff: "2", team: "t2" }

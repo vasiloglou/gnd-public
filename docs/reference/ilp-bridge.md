@@ -475,7 +475,11 @@ exits 64.
   is spelled `staff:m1`, and a rule joining the two counts as the checker
   does. Only a subtype that inherits its supertype's reference joins its
   family; one with its own reference scheme starts a family of its own,
-  because its values may be spelled like the supertype's and still differ. A
+  because its values may be spelled like the supertype's and still differ, and
+  the import refuses a rule that joins the two (see its table). A type that
+  is a subtype of both still puts them in one family, and its values may be
+  of either kind; the import refuses a variable over such types (see its
+  table). A
   hierarchy with no top type, a cycle, is named by its least type id. Types of
   one family that share no ancestor are refused by the join check first. `export.json`'s `adapter_version` is `2`; a model without
   subtypes renders the same facts as version `1`. A tab, newline or backslash in a string is written `\t`,
@@ -540,6 +544,7 @@ in this order:
 | a head variable the body does not bind | refused `unbound-head` |
 | body atoms that fall into parts sharing no variable | refused `disconnected-body`: the checker evaluates a connected antecedent only |
 | a variable joining roles of incompatible object types | refused `type-confused-join`, by the fragment table's join check |
+| a variable whose types span two families (a subtype that does not inherit its supertype's reference starts one), or whose types' references, taken together, resolve to more than one kind of value: text, number (Integer and Number) or boolean. A type under two references, such as a subtype of both an own-reference subtype and its supertype, may hold `1` and `"1"` | refused `own-reference-join`: the count spells such values apart or alike where the checker does not, so it cannot count them as the checker does |
 
 **The counting.** GND counts every rule itself, over distinct head pairs:
 - **the denominator** is the number of distinct `(x, y)` that some binding of

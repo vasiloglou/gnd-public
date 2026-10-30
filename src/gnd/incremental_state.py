@@ -208,6 +208,22 @@ def _policy(value, *, guards=None, mutable=None):
     return walk(value, 0)
 
 
+def _live_hash_leaves(key):
+    """Non-tuple leaves of a normalized key whose hashability can change.
+
+    CPython 3.14 caches tuple hashes, so rehashing a reused key tuple no longer
+    revisits its leaves; callers hash these leaves individually instead.
+    """
+    leaves, stack = {}, [key]
+    while stack:
+        item = stack.pop()
+        if type(item) is tuple:
+            stack.extend(item)
+        elif type(item) not in (type(None), bool, int, float, str, bytes, CodeType):
+            leaves[id(item)] = item
+    return tuple(leaves.values())
+
+
 @dataclasses.dataclass(frozen=True, slots=True)
 class _PreparedPolicy:
     authority: object
@@ -216,6 +232,7 @@ class _PreparedPolicy:
     mutable: tuple
     mutable_key: object
     footprint: _Footprint | None
+    live: tuple = ()
 
 
 _DIAGNOSTICS = (
@@ -410,16 +427,19 @@ class ReuseState:
             raise ReuseRefused("not-active")
         guards, mutable = [], []
         key = mutable_key = footprint = None
+        live = ()
         try:
             key = _policy(policy, guards=guards, mutable=mutable)
             mutable_key = fingerprint(tuple(mutable))
             footprint = _footprint(key, self._max_bytes)
             if mutable_key is None or footprint is None:
                 key = None
+            else:
+                live = _live_hash_leaves(key)
         except (TypeError, ValueError, OverflowError, RecursionError, _Unsupported):
             key = None
         return _PreparedPolicy(self._authority, key, tuple(guards), tuple(mutable),
-                               mutable_key, footprint)
+                               mutable_key, footprint, live)
 
     def reuse(self, namespace, unit, snapshot, calculate, *, policy=(), rows=0):
         if self._closed:
@@ -445,6 +465,8 @@ class ReuseState:
                         or any(function.__code__ is not code for function, code in policy.guards)
                         or fingerprint(policy.mutable) != policy.mutable_key):
                     raise _Unsupported
+                for leaf in policy.live:
+                    hash(leaf)  # the reused key tuple may carry a cached hash
                 policy_key, policy_size = policy.key, policy.footprint
             else:
                 policy_key = _policy(policy)

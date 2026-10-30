@@ -4,7 +4,7 @@ Planning opened 2026-10-30 for [issue #66](https://github.com/vasiloglou/gnd-pub
 when a derivation rule derives nothing, say which body step emptied the join,
 with the binding counts before it, so a host can add the missing fact.
 
-**Status: closed under delegated approval (auto=true) ([close record](005-milestone-close.md)); owner acceptance pending; PR #67 not merged.** Plan r3 and WN1
+**Status: closed under delegated approval (auto=true) ([close record](005-milestone-close.md)); accepted by the owner on 2026-10-30, merge of PR #67 authorized.** Plan r3 and WN1
 spec r3 were approved by the owner on 2026-10-30 ([plan gate](001-plan-gate.md)).
 Execution runs under `/process-milestone derivation-why-not auto`: phase gates
 inside this milestone are delegated approvals (auto=true), recorded as such.
@@ -51,4 +51,4 @@ Plan review:
   blocking, 25 self-inflicted (ratio 0.93). The stop rule holds, so no third
   round runs.
 
-Next action: the owner's acceptance and merge decision on PR #67, and the open questions in the close record's sweep (the anonymity token set, `asserted_not_read` scope, the GR-T5 issue, the `ilp-bridge` fence).
+Next action: none in this milestone. Still open for the owner: the questions in the close record's sweep (the anonymity token set, `asserted_not_read` scope, the GR-T5 issue, the `ilp-bridge` fence).

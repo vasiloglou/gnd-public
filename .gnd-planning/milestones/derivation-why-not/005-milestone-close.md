@@ -57,8 +57,9 @@ evidence:
 
 # Derivation why-not -- milestone close
 
-**Status: closed under delegated approval (auto=true); owner acceptance
-pending; not merged.** The owner's `/process-milestone derivation-why-not auto`
+**Status: closed under delegated approval (auto=true), and accepted by the
+owner on 2026-10-30 with the merge authorized (see Owner acceptance at the
+end).** The owner's `/process-milestone derivation-why-not auto`
 request in this session delegates the close ruling. This record states that
 ruling. It is not the owner's own reading, and it neither merges PR #67 nor
 publishes anything.
@@ -146,7 +147,8 @@ four why-not test files: each now fails (1 failed each).
 
 ## Boundary -- what the milestone does NOT establish
 
-- **Owner acceptance and merge.** Neither is given; PR #67 stays open.
+- **Owner acceptance** is recorded separately below; the delegated ruling
+  above does not establish it.
 - **Distribution lanes, the installed-docs wheel check and the broad suite did
   not run** (owner-selected).
 - **Each review is one reader**; the four close readers are four readers over
@@ -156,3 +158,24 @@ four why-not test files: each now fails (1 failed each).
 - **The repair loop is one synthetic example**; free roles need a value from
   outside the payload.
 - **A pre-existing docs defect** (`ilp-bridge`) remains.
+
+## Merge with main
+
+Before the merge, main gained the ilp-import-hardening milestone (PR #65).
+Both milestones chained their RF6 dynamic-query successors from IL-close. The
+merge keeps main's IH0-IH2 chain and adds
+[evidence/WN-merge/dynamic-query-successor.json](evidence/WN-merge/dynamic-query-successor.json),
+which rebases the 41 WN1 and 2 WN2 rows onto IH2 unchanged. The WN1 and WN2
+successor files stay as committed history. The release notes keep both
+milestones' entries. The merged tree's focused checks are in the merge commit.
+
+## Owner acceptance
+
+2026-10-30, by the owner, in the session that ran this close: "Accept and
+merge", in answer to "Do you accept the milestone and want PR #67 merged, or
+should I run the broad suite and distribution lanes on the branch first?". This
+acceptance is the owner's own, distinct from the delegated close ruling above,
+and covers the bytes of this record's commit and the PR head that carries it.
+It authorizes merging vasiloglou/gnd-public#67; it does not run the broad
+suite or distribution lanes, start a successor milestone, publish, or certify
+anything. The four open owner questions in the sweep stay open.

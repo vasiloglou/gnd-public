@@ -38,6 +38,10 @@ evidence:
     sha256: ddab892040455be964b9ce06541a136344995404b84dd39a8176728034ade936
   - path: .gnd-planning/milestones/ilp-import-hardening/evidence/IH0/gate.txt
     sha256: 70b14232a99a1b1bf510fe11a227b6b949f65a77fef9e69742c85318036de396
+  - path: .gnd-planning/milestones/ilp-import-hardening/evidence/IH0/dynamic-query-successor.json
+    sha256: c23a6118ef8532e933fbd1c9dcf27987a28374c400b8462ae95abaf856c908b6
+  - path: .gnd-planning/milestones/ilp-import-hardening/evidence/IH0/full-suite.txt
+    sha256: 7839c75c314bc5319e97ed2f7a68cb872ba882e70317332c2f0d2d6e77741b2b
   - path: tests/test_ih0_review.py
     sha256: 5269fafb5832c06f6f7d881d7bf6122febfa4ca1e9a4d8376a9b949629531781
 ---
@@ -131,6 +135,28 @@ All 20 pass after the fix. A 21st test, added after the red run, is the
 spec's widened privacy check over this milestone's directory; it is a pin, not
 a finding's regression.
 
+## Gate repair (2026-10-30)
+
+**The gate above missed the RF6 dynamic-query census.** It did not include
+`tests/test_rf6_query_policy.py`, and `60792cf` failed two of its tests:
+`check_columns` and the aggregate cap added syntax candidates, and Popper's
+operator lookup removed one. The repair:
+- chains an IH0 successor,
+  [evidence/IH0/dynamic-query-successor.json](evidence/IH0/dynamic-query-successor.json),
+  after IL-close's in `tests/support/pyrel_application_successors.py`;
+- is a syntax census only, with no model-query exception widened;
+- leaves the RF6 tests at 297 passed.
+
+**The full default suite** then ran once on that head
+([evidence/IH0/full-suite.txt](evidence/IH0/full-suite.txt)): 16,407 passed,
+1 failed. The failure, in `tests/test_incremental_performance.py`, is not
+IH0's:
+- it is specific to Python 3.14: it fails alone on a clean main checkout
+  under 3.14.3, and passes there under 3.13;
+- CI runs 3.13 and 3.11.
+
+IH1's gate adds the RF6 tests and one full-suite run.
+
 ## Review
 
 **The source review:** four readers, retained verbatim and sanitized as
@@ -199,6 +225,11 @@ not committed:
    in those spellings refuses the IK5 corpus's `I2` and `F12`, and fails two
    IK5 T5 tests.
 
+**Ruled 2026-10-29 (o):** "Keep both held". Neither fix is applied; the LLM
+import and Popper's binary and infix spellings stay unchecked for thresholds,
+as `docs/reference/ilp-bridge.md` Import step 2 states. IH0-Q4 closes with
+it: with no fourth check, the three forms keep their own homes.
+
 ## Open questions
 
 | ID | Question | Target |
@@ -206,7 +237,7 @@ not committed:
 | IH0-Q1 | Popper and ILASP name a negated off-threshold literal differently (G) | this milestone's close, for assignment |
 | IH0-Q2 | The export's work report leaves out threshold rendering (K) | this milestone's close, for assignment |
 | IH0-Q3 | The `llm` entry's `adapter_version` is never read (L) | this milestone's close, for assignment |
-| IH0-Q4 | One home for the offered-threshold check | the batched ruling (IH0-D4) |
+| IH0-Q4 | One home for the offered-threshold check | closed by the IH0-D4 ruling (o): no shared home |
 | — | E, F and J are assigned to IH1; the own-reference suspicions to IH2 | IH1, IH2 |
 
 ## Refuted premises

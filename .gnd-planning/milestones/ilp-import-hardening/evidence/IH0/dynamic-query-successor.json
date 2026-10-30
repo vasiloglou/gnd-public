@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/ilp-learners/evidence/IL-close/dynamic-query-successor.json",
+  "predecessor_sha256": "07fcf1b3708fbf041355f52636b10f05902cf962296842b64b46b9315f4b3ed1",
+  "reason": "ilp-import-hardening IH0 (spec r2, approved 2026-10-29): the review fixes. Added: gnd.export.ilp_rules' check_columns, the rules adapter's off-threshold vet, and the ILASP reader's aggregate element cap. Removed: gnd.export.ilp_popper's check_thresholds no longer looks up the comparison's operator. Syntax census only; no model-query exception widening.",
+  "result_distinct_rows": 6763,
+  "result_occurrences": 8467,
+  "added": [
+    [
+      "src/gnd/export/ilp_asp.py",
+      "aggregate",
+      "args[:_AGGREGATE_ARGS]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rules.py",
+      "check_columns",
+      "arities.get(fact['predicate'])",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rules.py",
+      "check_columns",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_rules.py",
+      "check_columns",
+      "types[position]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_rules.py",
+      "check_columns",
+      "variable[1:]",
+      1
+    ]
+  ],
+  "removed": [
+    [
+      "src/gnd/export/ilp_popper.py",
+      "check_thresholds",
+      "operators.get(comparison)",
+      1
+    ]
+  ]
+}

@@ -1,0 +1,6 @@
+# Full default suite on IH0's head plus the RF6 successor (Python 3.14.3, macOS)
+$ uv run pytest -q -ra --tb=short
+FAILED tests/test_incremental_performance.py::test_prepared_policy_rechecks_live_hashability
+1 failed, 16407 passed, 794 deselected, 1 warning in 3314.38s (0:55:14)
+exit: 1
+# The one failure is pre-existing and Python-3.14-only: it fails alone on a clean main checkout (fb03739) under 3.14.3, and passes there under Python 3.13. CI runs 3.13 and 3.11.

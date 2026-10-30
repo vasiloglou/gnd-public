@@ -13,7 +13,7 @@ FIXTURES = Path(__file__).parent / "fixtures/public-launch-phase-2"
 
 
 def test_public_exports_and_current_keyword_signatures():
-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession")
+    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not")
     expected = {
         "validate": ("model", "unredacted", "references"),
         "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references"),
@@ -25,6 +25,14 @@ def test_public_exports_and_current_keyword_signatures():
         assert signature.parameters["unredacted"].kind is inspect.Parameter.KEYWORD_ONLY
         assert signature.parameters["unredacted"].default is False
         assert signature.return_annotation != inspect.Signature.empty
+    # why_not takes paths and returns raw values like witness: no `unredacted`.
+    signature = inspect.signature(api.why_not)
+    assert tuple(signature.parameters) == (
+        "model_path", "population_path", "fact_type", "row_path", "reference_root")
+    for name in ("row_path", "reference_root"):
+        assert signature.parameters[name].kind is inspect.Parameter.KEYWORD_ONLY
+        assert signature.parameters[name].default is None
+    assert tuple(inspect.signature(api.witness).parameters)[:2] == ("model_path", "population_path")
 
 
 def test_loaded_model_validation_rechecks_nested_mutation():

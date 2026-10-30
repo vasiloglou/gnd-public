@@ -6,7 +6,7 @@ import os
 from gnd.artifacts import canonical_json_bytes
 from gnd.witness import service as api
 from gnd.witness.io import load_certificate
-from gnd.witness.view import result_view, witness_view
+from gnd.witness.view import result_view, why_not_view, witness_view
 
 
 def add_parsers(subparsers):
@@ -29,10 +29,32 @@ def add_parsers(subparsers):
     p.add_argument("--raw", action="store_true")
     p.add_argument("--expand", action="store_true")
     p.add_argument("--json", action="store_true")
+    p = subparsers.add_parser(
+        "why-not", help="explain why a derived fact type or row is not derived"
+    )
+    p.add_argument("model")
+    p.add_argument("population")
+    p.add_argument("--fact-type", required=True)
+    p.add_argument("--row", help="a witness request holding the one claimed row")
+    p.add_argument("--reference-root")
+    p.add_argument("--raw", action="store_true", help="explicitly expose population values")
 
 
 def run(args):
     try:
+        if args.command == "why-not":
+            result = api.why_not(
+                args.model,
+                args.population,
+                args.fact_type,
+                row_path=args.row,
+                reference_root=args.reference_root,
+            )
+            view = {**result, "view": "raw"} if args.raw else {
+                **why_not_view(result), "view": "redacted"
+            }
+            print(json.dumps(view, ensure_ascii=False, sort_keys=True))
+            return result["exit_code"]
         if args.command == "replay":
             result = api.replay(
                 args.model, args.population, args.certificate, reference_root=args.reference_root

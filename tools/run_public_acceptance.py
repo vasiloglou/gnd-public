@@ -370,7 +370,7 @@ from gnd import api
 from gnd.synth.values import make_value, SynthDependencyError
 assert importlib.util.find_spec('faker') is None
 assert importlib.util.find_spec('pytest') is None
-assert api.__all__ == ('validate','check','transition','verbalize','diff','witness','replay','check_with_receipt','CheckReceipt','ReceiptRefused','EvaluationSession')
+assert api.__all__ == ('validate','check','transition','verbalize','diff','witness','replay','check_with_receipt','CheckReceipt','ReceiptRefused','EvaluationSession','why_not')
 try:
     make_value('String', Random(0))
 except SynthDependencyError as error:

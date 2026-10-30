@@ -35,7 +35,7 @@ def _assert_subset(payload: dict[str, object], expected: dict[str, object]) -> N
 def test_public_all_is_exact() -> None:
     api = _api()
     # Keep the ordered inventory exact, including IE3's additive session API.
-    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused', 'EvaluationSession')
+    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused', 'EvaluationSession', 'why_not')
     assert {name for name in vars(api) if not name.startswith('_')} >= set(api.__all__)
 
 def test_public_signatures_are_stable() -> None:

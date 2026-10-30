@@ -265,6 +265,7 @@ VENDORED_SCHEMAS = (
     "gnd/mined-import.schema.json",
     "gnd/ilp-run.schema.json",
     "gnd/ilp-import.schema.json",
+    "gnd/why-not.schema.json",
 )
 
 

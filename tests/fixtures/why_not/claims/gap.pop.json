@@ -30,7 +30,12 @@
       "tally",
       "ratio",
       "pair",
-      "lonely"
+      "lonely",
+      "pinned",
+      "delisted",
+      "top_score",
+      "doubled",
+      "tagged"
     ],
     "model": "model.orm.json",
     "model_id": "urn:gnd-fixture:why-not-claims@1",

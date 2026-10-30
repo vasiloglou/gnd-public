@@ -3,7 +3,7 @@
 The production exact evaluation decides whether the target is derived,
 unavailable or not derived; this module only walks a clause the evaluator
 reported as not derived. The normative definition of a step and of the blocking
-step is the WN1 spec, section 6.3, until the reference page takes it over.
+step is docs/reference/why-not.md.
 """
 
 from __future__ import annotations

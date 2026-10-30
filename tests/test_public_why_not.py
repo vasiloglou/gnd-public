@@ -81,6 +81,44 @@ def test_t2_schema_refuses_a_leaked_sample_and_a_wrong_band():
     assert not VALIDATOR.is_valid(payload)
 
 
+def _golden(name):
+    return json.loads((GOLDENS / f"{name}.json").read_text())
+
+
+def _set(payload, path, value):
+    target = payload
+    for key in path[:-1]:
+        target = target[key]
+    target[path[-1]] = value
+    return payload
+
+
+# Review WN2-R1: each mutation is a payload the schema must refuse.
+SCHEMA_REFUSES = {
+    "raw values labelled redacted": lambda: {**_golden("g1-rule-blocked.raw"), "view": "redacted"},
+    "work-limit with exit 3": lambda: _set(_golden("g8-work-limit"), ["exit_code"], 3),
+    "input-invalid with exit 4": lambda: _set(_golden("g10-not-derived"), ["exit_code"], 4),
+    "input-invalid with work": lambda: _set(_golden("g10-not-derived"), ["work"], {"joins": 1}),
+    "blocked with no clauses": lambda: _set(_golden("g1-rule-blocked"), ["clauses"], []),
+    "refused with a fact type": lambda: _set(_golden("g10-not-derived"), ["fact_type"], "claim"),
+    "unavailable without a record": lambda: _set(_golden("g7-unavailable"), ["unavailable"], None),
+    "unavailable without a term reason": lambda: _set(_golden("g7-unavailable"), ["reason"], None),
+    "redacted constant shown": lambda: _set(
+        _golden("g14-constant-atom"), ["clauses", 0, "blocker", "roles", "person"],
+        {"constant": "val-const-atom"}),
+    "redacted descent sample shown": lambda: _set(
+        _golden("g2-row-descent"), ["clauses", 0, "descent", "clauses", 0, "blocker", "samples"],
+        [{"work": "val-w1"}]),
+    "redacted binding shown": lambda: _set(
+        _golden("g7-unavailable"), ["unavailable", "binding"], {"a": 0}),
+}
+
+
+@pytest.mark.parametrize("name", sorted(SCHEMA_REFUSES))
+def test_t2_schema_refuses_a_payload_the_contract_forbids(name):
+    assert not VALIDATOR.is_valid(SCHEMA_REFUSES[name]())
+
+
 # -- T3: the intake-limit projection ------------------------------------------------
 
 def test_t3_intake_limits_project_the_why_not_ceilings():
@@ -118,15 +156,25 @@ def _input_values():
     values = set()
     for path in files:
         if path.name == "model.orm.json":
+            # Rule constants are values too (review WN2-R3); the fixture spells
+            # every one with a val- prefix.
+            rules = [ft.get("derivation_rule") for ft in json.loads(path.read_text())["fact_types"]]
+            values.update(v for v in _scalars(rules) if v.startswith("val-"))
             continue
         document = json.loads(path.read_text())
-        values.update(_scalars(document.get("facts", document.get("targets"))))
+        if "targets" in document:
+            # Only a row's cell values are population values; fact type and
+            # primitive names are model vocabulary.
+            values.update(_scalars([c["value"] for t in document["targets"] for c in t["tuple"]]))
+        else:
+            values.update(_scalars(document["facts"]))
     return values
 
 
 def test_t4_no_population_value_reaches_a_redacted_payload(capsys):
     values = _input_values()
-    assert {"val-w1", "val-p1", "WH-A", "DEST-E", "1004"} <= values
+    assert {"val-w1", "val-p1", "WH-A", "DEST-E", "1004", "val-const-atom", "val-const-head",
+            "val-other", "9999"} <= values
     for case in CASES:
         _, out = run_cli(resolve(case["argv"]), capsys)
         assert not [v for v in values if v in out], case["id"]
@@ -171,10 +219,48 @@ def _hostile_inputs(tmp_path):
 
 @pytest.mark.parametrize("name", ["nan", "deep", "long-int", "huge-model"])
 def test_g12_hostile_inputs_exit_3(name, tmp_path, capsys):
+    # Whole-file refusals. The population loader refuses the nan and deep files
+    # for shape before intake runs (review WN2-R2); the intake ceilings
+    # themselves are pinned by the two tests below.
     model, population = _hostile_inputs(tmp_path)[name]
     code, out = run_cli(["why-not", model, population, "--fact-type", "claim"], capsys)
     assert (code, out) == (3, (GOLDENS / "refused-input.json").read_text())
     assert api.why_not(model, population, "claim")["reason"] == "input-invalid"
+
+
+@pytest.mark.parametrize(("document", "refused"), [
+    ([[[]]], False),
+    (json.loads("[" * 64 + "]" * 64), False),
+    (json.loads("[" * 65 + "]" * 65), True),
+    ({"v": 1.5}, False),
+    ({"v": float("nan")}, True),
+    ({"v": float("inf")}, True),
+    ({"v": int("9" * 128)}, False),
+    ({"v": int("9" * 129)}, True),
+    ({"v": "x" * 4096}, False),
+    ({"v": "x" * 4097}, True),
+])
+def test_intake_ceilings_under_the_projected_limits(document, refused):
+    from gnd.witness.io import validate_witness_structure
+    from gnd.witness.service import _why_not_intake_limits
+    from gnd.witness.types import WitnessInputError
+
+    if refused:
+        with pytest.raises(WitnessInputError):
+            validate_witness_structure(document, limits=_why_not_intake_limits())
+    else:
+        validate_witness_structure(document, limits=_why_not_intake_limits())
+
+
+def test_the_service_runs_intake_under_the_projected_limits(monkeypatch):
+    from gnd.witness import io
+    from gnd.witness.service import _why_not_intake_limits
+
+    seen = []
+    real = io.intake
+    monkeypatch.setattr(io, "intake", lambda *a, limits: (seen.append(limits), real(*a, limits=limits))[1])
+    payload = api.why_not(FX / "claims/model.orm.json", FX / "claims/gap.pop.json", "credited")
+    assert payload["status"] == "blocked" and seen == [_why_not_intake_limits()]
 
 
 def test_g10_fact_type_must_be_a_string():

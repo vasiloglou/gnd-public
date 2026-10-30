@@ -287,6 +287,167 @@
           "role_name": "x"
         }
       ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "work": "$w"
+            },
+            "fact_type": "listed"
+          },
+          {
+            "bind": {
+              "person": "val-const-atom",
+              "work": "$w"
+            },
+            "fact_type": "wrote"
+          }
+        ],
+        "head": {
+          "work": "$w"
+        }
+      },
+      "id": "pinned",
+      "reading": "{code} pinned",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "points": "$a",
+              "work": "$w"
+            },
+            "fact_type": "score"
+          }
+        ],
+        "head": {
+          "work": "$w"
+        },
+        "negate": [
+          {
+            "bind": {
+              "work": "$w"
+            },
+            "fact_type": "listed"
+          }
+        ]
+      },
+      "id": "delisted",
+      "reading": "{code} delisted",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "points": "$a",
+              "work": "$w"
+            },
+            "fact_type": "score"
+          }
+        ],
+        "head": {
+          "work": "$w"
+        },
+        "where": [
+          {
+            "left": "$a",
+            "operator": ">",
+            "right": 5000
+          }
+        ]
+      },
+      "id": "top_score",
+      "reading": "{code} top_score",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "points": "$a",
+              "work": "$w"
+            },
+            "fact_type": "score"
+          }
+        ],
+        "head": {
+          "n": {
+            "args": [
+              "$a",
+              2
+            ],
+            "fn": "mul"
+          },
+          "work": "$w"
+        }
+      },
+      "id": "doubled",
+      "reading": "{code} {int} doubled",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "int",
+          "role_name": "n"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "work": "$w"
+            },
+            "fact_type": "listed"
+          }
+        ],
+        "head": {
+          "tag": "val-const-head",
+          "work": "$w"
+        }
+      },
+      "id": "tagged",
+      "reading": "{code} {code} tagged",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "code",
+          "role_name": "tag"
+        }
+      ]
     }
   ],
   "model_id": "urn:gnd-fixture:why-not-claims@1",

@@ -66,6 +66,25 @@ MODEL = {
         ft("lonely", [("x", "code")], {
             "body": [atom("pair", x="$x", y="$y"), atom("listed", work="$x")],
             "head": {"x": "$x"}}),
+        # Review WN2-R3: a constant in an atom, and negated, comparison, head
+        # and head-bind blockers.
+        ft("pinned", [("work", "code")], {
+            "body": [atom("listed", work="$w"), atom("wrote", work="$w", person="val-const-atom")],
+            "head": {"work": "$w"}}),
+        ft("delisted", [("work", "code")], {
+            "body": [atom("score", work="$w", points="$a")],
+            "negate": [atom("listed", work="$w")],
+            "head": {"work": "$w"}}),
+        ft("top_score", [("work", "code")], {
+            "body": [atom("score", work="$w", points="$a")],
+            "where": [{"operator": ">", "left": "$a", "right": 5000}],
+            "head": {"work": "$w"}}),
+        ft("doubled", [("work", "code"), ("n", "int")], {
+            "body": [atom("score", work="$w", points="$a")],
+            "head": {"work": "$w", "n": {"fn": "mul", "args": ["$a", 2]}}}),
+        ft("tagged", [("work", "code"), ("tag", "code")], {
+            "body": [atom("listed", work="$w")],
+            "head": {"work": "$w", "tag": "val-const-head"}}),
     ],
 }
 DERIVED = [f["id"] for f in MODEL["fact_types"] if "derivation" in f]
@@ -118,6 +137,10 @@ def main():
                                          {"primitive": "Integer", "value": 1001}]}))
     write(rows / "tally-malformed.json", request(
         {"fact_type": "tally", "tuple": [{"primitive": "String", "value": "val-p1"}]}))
+    write(rows / "doubled-w2.json", request(
+        {"fact_type": "doubled", "tuple": [{"primitive": "String", "value": "val-w2"},
+                                           {"primitive": "Integer", "value": 9999}]}))
+    write(rows / "tagged-w1.json", request(target("tagged", "val-w1", "val-other")))
     write(rows / "reach-a-e.json", request(
         {"fact_type": "dispatch_reachable",
          "tuple": [{"primitive": "String", "value": "WH-A"},

@@ -90,8 +90,8 @@ The tutorial proofs import the actual verified definitions; their dependency
 audits retain the ordinary foundational axioms reported by Lean.
 
 The existing [export contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/export-contract.md)
-remains authoritative for supported GND fragments. The seven stable Python
-functions remain documented in the [API reference](../reference/python-api.md).
+remains authoritative for supported GND fragments. The stable Python functions
+remain documented in the [API reference](../reference/python-api.md).
 External-runtime commands and developer-owned programs are separate surfaces.
 
 ## Extend the application

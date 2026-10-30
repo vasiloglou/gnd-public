@@ -105,6 +105,65 @@
     "exit": 0
   },
   {
+    "id": "g14-constant-atom",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "pinned"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g15-negated",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "delisted"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g16-comparison",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "top_score"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g17-head",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "doubled",
+      "--row",
+      "<fx>/rows/doubled-w2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g18-head-bind-constant",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "tagged",
+      "--row",
+      "<fx>/rows/tagged-w1.json"
+    ],
+    "exit": 0
+  },
+  {
     "id": "g10-unknown-fact-type",
     "argv": [
       "why-not",

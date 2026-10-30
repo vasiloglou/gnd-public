@@ -37,5 +37,9 @@ refuses a variable over two families, or over references of more than one
 kind of value, before any count. One reviewer, then the close review, found
 and fixed two exit-70 shapes and one false refusal.
 
-**Next action:** the close: the CI run on both Pythons, the question sweep
-and the close record.
+**Closed locally** ([close record](005-milestone-close.md)), under a delegated
+close ruling (auto=true). The workflow's steps passed on Python 3.13 and 3.11
+on clean clones of the PR head ([CI run](evidence/close/ci-run.txt)); four
+close readers' findings are dispositioned ([close review](notes/close-review.md)).
+
+**Next action:** owner acceptance, and the owner's merge of vasiloglou/gnd-public#65.

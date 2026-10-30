@@ -1,0 +1,349 @@
+# IH-R3: the development workflow's steps, run locally on the PR head.
+# Host: a second macOS host (Apple silicon), not this author's machine.
+# Each Python version ran from its own clean git clone of d132003, at the same time.
+# uv 0.10.10 (the build profile's pinned version), private to the run.
+# Filtered for size, otherwise verbatim and sanitized: the --collect-only test-id
+# listing and pytest progress-dot lines are dropped, with the count of dropped
+# lines stated in place. Paths: <clone> is the clone, <tmp> the system temp dir,
+# <home> the home directory, <user> the account name.
+# The Linux leg of the workflow is not reproduced (IH-R3).
+
+#### ci.sh
+#!/bin/zsh
+# usage: ci.sh PYTHON DIR -- mirrors .github/workflows/development.yml
+PY=$1; D=$2; export UV_PYTHON=$PY
+cd "$D" || exit 2
+step() { echo "== $*"; "$@"; rc=$?; echo "== exit $rc"; [ $rc -eq 0 ] || FAIL=1; }
+FAIL=0
+echo "== candidate"
+rm -rf candidate
+step uv build --out-dir candidate/release
+mkdir -p candidate/source && tar -xzf candidate/release/*.tar.gz -C candidate/source
+step uv build --wheel candidate/source/* --out-dir "$PWD/candidate/comparison"
+git rev-parse HEAD > candidate/SOURCE_COMMIT
+(cd candidate && shasum -a 256 release/* comparison/* > SHA256SUMS && shasum -a 256 -c SHA256SUMS); echo "== exit $? (sha256 check)"
+echo "== regression"
+step uv sync --locked --group dev
+step uv run gnd install --symlink --project --force
+step uv run gnd doctor --project
+step uv run pytest --collect-only -q
+step uv run pytest -q -raP tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py tests/test_v70_phase3_successors.py --tb=short
+step uv run pytest -q -ra --tb=short
+echo "== installed"
+step test "$(cat candidate/SOURCE_COMMIT)" = "$(git rev-parse HEAD)"
+export GND_CANDIDATE_DIR="$PWD/candidate"; step uv run pytest -q -o addopts='' tests/test_release_acceptance.py -s --tb=short
+[ $FAIL -eq 0 ] && echo "== CI RESULT python $PY: PASS" || echo "== CI RESULT python $PY: FAIL"
+
+#### python 3.13
+uv 0.10.10 (8c730aaad 2026-03-13)
+== candidate
+== uv build --out-dir candidate/release
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built candidate/release/get_nick_done-0.1.0.tar.gz
+Successfully built candidate/release/get_nick_done-0.1.0-py3-none-any.whl
+== exit 0
+== uv build --wheel candidate/source/get_nick_done-0.1.0 --out-dir <clone>/candidate/comparison
+Building wheel (uv build backend)...
+Successfully built candidate/comparison/get_nick_done-0.1.0-py3-none-any.whl
+== exit 0
+release/get_nick_done-0.1.0-py3-none-any.whl: OK
+release/get_nick_done-0.1.0.tar.gz: OK
+comparison/get_nick_done-0.1.0-py3-none-any.whl: OK
+== exit 0 (sha256 check)
+== regression
+== uv sync --locked --group dev
+Using CPython 3.13.18
+Creating virtual environment at: .venv
+Resolved 32 packages in 1ms
+   Building get-nick-done @ file://<clone>
+      Built get-nick-done @ file://<clone>
+Downloading pygments (1.2MiB)
+Downloading pydantic-core (1.9MiB)
+Downloading faker (2.0MiB)
+Downloading ruff (10.1MiB)
+Downloading duckdb (14.8MiB)
+ Downloaded pygments
+ Downloaded faker
+ Downloaded pydantic-core
+ Downloaded ruff
+ Downloaded duckdb
+Prepared 20 packages in 11.67s
+Installed 20 packages in 26ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + duckdb==1.5.5
+ + faker==40.36.0
+ + get-nick-done==0.1.0 (from file://<clone>)
+ + iniconfig==2.3.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pytest==9.1.1
+ + referencing==0.37.0
+ + rpds-py==2026.6.3
+ + ruamel-yaml==0.19.1
+ + ruff==0.16.2
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
+== exit 0
+== uv run gnd install --symlink --project --force
+claude/project -> <clone>/.claude/skills
+  placed 16 file(s)
+codex/project -> <clone>/.codex/skills
+  placed 16 file(s)
+== exit 0
+== uv run gnd doctor --project
+executable directory: <clone>/.venv/bin (on PATH)
+checking both scopes regardless of the flags given (skill precedence is user level over project level)
+claude/global -> <home>/.claude/skills
+  not installed
+codex/global -> <home>/.codex/skills
+  not installed
+  note: <home>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+claude/project -> <clone>/.claude/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-30T07:55:52Z): current=16
+codex/project -> <clone>/.codex/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-30T07:55:52Z): current=16
+  note: <clone>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+== exit 0
+== uv run pytest --collect-only -q
+[... 16435 lines dropped ...]
+
+16435/17229 tests collected (794 deselected) in 6.64s
+== exit 0
+== uv run pytest -q -raP tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py tests/test_v70_phase3_successors.py --tb=short
+[... 3 lines dropped ...]
+==================================== PASSES ====================================
+___________ test_connected_three_atom_join_meets_the_declared_bound ____________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.08654191661626101, 0.08862537461100146, 0.08886328339576721, 0.08923931661993265, 0.08836802500300109, 0.08964374981587753, 0.08853703299537301, 0.09017666659783571, 0.089679666608572], [0.18588853338733316, 0.18974529160186648, 0.1866091665928252, 0.18747215000912548, 0.18497149139875546, 0.1900197999784723, 0.18839735001092778, 0.18634775860700756, 0.18843772481195628]], 'medians': [0.08886328339576721, 0.18747215000912548], 'relative_mad': [0.005573262362593661, 0.00599764499454022], 'ratio': 2.109669402763203, 'limit': 0.2}
+__________ test_guarded_timing_decision_controls[small0-large0-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172], [0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345]], 'medians': [0.172, 0.345], 'relative_mad': [0.0, 0.0], 'ratio': 2.005813953488372, 'limit': 0.3784}
+__________ test_guarded_timing_decision_controls[small1-large1-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438]], 'medians': [0.2, 0.438], 'relative_mad': [0.0, 0.0], 'ratio': 2.19, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small2-large2-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442]], 'medians': [0.2, 0.442], 'relative_mad': [0.0, 0.0], 'ratio': 2.21, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small3-large3-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]], 'medians': [0.2, 0.8], 'relative_mad': [0.0, 0.0], 'ratio': 4.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small4-large4-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02], [0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19]], 'medians': [0.02, 0.19], 'relative_mad': [0.0, 0.0], 'ratio': 9.5, 'limit': 0.2}
+__________ test_guarded_timing_decision_controls[small6-large6-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.7]], 'medians': [0.2, 0.4], 'relative_mad': [0.0, 0.0], 'ratio': 2.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small7-large7-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.15, 0.15, 0.15, 0.15, 0.2, 0.25, 0.25, 0.25, 0.25], [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]], 'medians': [0.2, 0.4], 'relative_mad': [0.24999999999999994, 0.0], 'ratio': 2.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small8-large8-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.3, 0.3, 0.3, 0.3, 0.4, 0.5, 0.5, 0.5, 0.5]], 'medians': [0.2, 0.4], 'relative_mad': [0.0, 0.24999999999999994], 'ratio': 2.0, 'limit': 0.44000000000000006}
+160 passed, 1 deselected in 47.50s
+== exit 0
+== uv run pytest -q -ra --tb=short
+[... 229 lines dropped ...]
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  <clone>/src/gnd/exp/session_eval.py:1295: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+16435 passed, 794 deselected, 1 warning in 2188.61s (0:36:28)
+== exit 0
+== installed
+== test d132003f3be057106f624ec20b9c35210c72bf21 = d132003f3be057106f624ec20b9c35210c72bf21
+== exit 0
+== uv run pytest -q -o addopts= tests/test_release_acceptance.py -s --tb=short
+....<tmp>/pytest-of-<user>/pytest-103/candidate-release0/base/lib/python3.13/site-packages/gnd/__init__.py
+
+[... 26 lines dropped ...]
+1806 passed, 4 deselected in 385.87s (0:06:25)
+
+[... 2 lines dropped ...]
+91 passed in 2.79s
+
+.<tmp>/pytest-of-<user>/pytest-103/candidate-comparison0/base/lib/python3.13/site-packages/gnd/__init__.py
+
+[... 26 lines dropped ...]
+1806 passed, 4 deselected in 388.63s (0:06:28)
+
+[... 2 lines dropped ...]
+91 passed in 2.67s
+
+.
+10 passed in 802.76s (0:13:22)
+== exit 0
+== CI RESULT python 3.13: PASS
+== DONE
+
+#### python 3.11
+uv 0.10.10 (8c730aaad 2026-03-13)
+== candidate
+== uv build --out-dir candidate/release
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built candidate/release/get_nick_done-0.1.0.tar.gz
+Successfully built candidate/release/get_nick_done-0.1.0-py3-none-any.whl
+== exit 0
+== uv build --wheel candidate/source/get_nick_done-0.1.0 --out-dir <clone>/candidate/comparison
+Building wheel (uv build backend)...
+Successfully built candidate/comparison/get_nick_done-0.1.0-py3-none-any.whl
+== exit 0
+release/get_nick_done-0.1.0-py3-none-any.whl: OK
+release/get_nick_done-0.1.0.tar.gz: OK
+comparison/get_nick_done-0.1.0-py3-none-any.whl: OK
+== exit 0 (sha256 check)
+== regression
+== uv sync --locked --group dev
+Using CPython 3.11.18
+Creating virtual environment at: .venv
+Resolved 32 packages in 1ms
+   Building get-nick-done @ file://<clone>
+      Built get-nick-done @ file://<clone>
+Downloading faker (2.0MiB)
+Downloading pygments (1.2MiB)
+Downloading ruff (10.1MiB)
+Downloading pydantic-core (1.9MiB)
+Downloading duckdb (14.8MiB)
+ Downloaded pygments
+ Downloaded pydantic-core
+ Downloaded faker
+ Downloaded ruff
+ Downloaded duckdb
+Prepared 20 packages in 11.20s
+Installed 20 packages in 43ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + duckdb==1.5.5
+ + faker==40.36.0
+ + get-nick-done==0.1.0 (from file://<clone>)
+ + iniconfig==2.3.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pytest==9.1.1
+ + referencing==0.37.0
+ + rpds-py==2026.6.3
+ + ruamel-yaml==0.19.1
+ + ruff==0.16.2
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
+== exit 0
+== uv run gnd install --symlink --project --force
+claude/project -> <clone>/.claude/skills
+  placed 16 file(s)
+codex/project -> <clone>/.codex/skills
+  placed 16 file(s)
+== exit 0
+== uv run gnd doctor --project
+executable directory: <clone>/.venv/bin (on PATH)
+checking both scopes regardless of the flags given (skill precedence is user level over project level)
+claude/global -> <home>/.claude/skills
+  not installed
+codex/global -> <home>/.codex/skills
+  not installed
+  note: <home>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+claude/project -> <clone>/.claude/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-30T07:55:51Z): current=16
+codex/project -> <clone>/.codex/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-10-30T07:55:51Z): current=16
+  note: <clone>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+== exit 0
+== uv run pytest --collect-only -q
+[... 16435 lines dropped ...]
+
+16435/17229 tests collected (794 deselected) in 7.06s
+== exit 0
+== uv run pytest -q -raP tests/test_agent_cli.py tests/test_guarded_corpus.py tests/test_public_souffle_successors.py tests/test_v70_phase3_successors.py --tb=short
+[... 3 lines dropped ...]
+==================================== PASSES ====================================
+___________ test_connected_three_atom_join_meets_the_declared_bound ____________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.10806989159900696, 0.1101811750093475, 0.11000941679812967, 0.10923200040124356, 0.11046304997289554, 0.11015505817485974, 0.11078085020417347, 0.10528563320403919, 0.10554847480962053], [0.2333334501949139, 0.23227052518632263, 0.23410100820474328, 0.2337260085856542, 0.2346353002008982, 0.23385942499153317, 0.23277007520664483, 0.22954042518977075, 0.22647533339913933]], 'medians': [0.11000941679812967, 0.2333334501949139], 'relative_mad': [0.0070124306490907, 0.003289532680326002], 'ratio': 2.12103160789487, 'limit': 0.2420207169558853}
+__________ test_guarded_timing_decision_controls[small0-large0-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172, 0.172], [0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345, 0.345]], 'medians': [0.172, 0.345], 'relative_mad': [0.0, 0.0], 'ratio': 2.005813953488372, 'limit': 0.3784}
+__________ test_guarded_timing_decision_controls[small1-large1-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438, 0.438]], 'medians': [0.2, 0.438], 'relative_mad': [0.0, 0.0], 'ratio': 2.19, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small2-large2-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442, 0.442]], 'medians': [0.2, 0.442], 'relative_mad': [0.0, 0.0], 'ratio': 2.21, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small3-large3-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]], 'medians': [0.2, 0.8], 'relative_mad': [0.0, 0.0], 'ratio': 4.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small4-large4-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02], [0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19]], 'medians': [0.02, 0.19], 'relative_mad': [0.0, 0.0], 'ratio': 9.5, 'limit': 0.2}
+__________ test_guarded_timing_decision_controls[small6-large6-True] ___________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.7]], 'medians': [0.2, 0.4], 'relative_mad': [0.0, 0.0], 'ratio': 2.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small7-large7-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.15, 0.15, 0.15, 0.15, 0.2, 0.25, 0.25, 0.25, 0.25], [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]], 'medians': [0.2, 0.4], 'relative_mad': [0.24999999999999994, 0.0], 'ratio': 2.0, 'limit': 0.44000000000000006}
+__________ test_guarded_timing_decision_controls[small8-large8-False] __________
+----------------------------- Captured stdout call -----------------------------
+{'samples': [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2], [0.3, 0.3, 0.3, 0.3, 0.4, 0.5, 0.5, 0.5, 0.5]], 'medians': [0.2, 0.4], 'relative_mad': [0.0, 0.24999999999999994], 'ratio': 2.0, 'limit': 0.44000000000000006}
+160 passed, 1 deselected in 47.80s
+== exit 0
+== uv run pytest -q -ra --tb=short
+[... 229 lines dropped ...]
+=============================== warnings summary ===============================
+tests/test_exp_session_store.py::test_canonical_feedback_revalidates_model_copy_updates_recursively
+  <clone>/src/gnd/exp/session_eval.py:1295: UserWarning: Pydantic serializer warnings:
+    PydanticSerializationUnexpectedValue(Expected `dict[str, any]` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `_CaseFeedbackV1` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV4` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `CaseFeedbackV3` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `literal['accepted','violated','inadequate','ill_formed','indeterminate','internal_error']` - serialized value may not be as expected [field_name='outcome', input_value='provider-prose', input_type=str])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedbackV7` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    PydanticSerializationUnexpectedValue(Expected `TransitionCaseFeedback` - serialized value may not be as expected [field_name='required', input_value=CaseFeedback(case_id='req...c_indeterminate_count=1), input_type=CaseFeedback])
+    document = handler(self)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+16435 passed, 794 deselected, 1 warning in 2084.85s (0:34:44)
+== exit 0
+== installed
+== test d132003f3be057106f624ec20b9c35210c72bf21 = d132003f3be057106f624ec20b9c35210c72bf21
+== exit 0
+== uv run pytest -q -o addopts= tests/test_release_acceptance.py -s --tb=short
+....<tmp>/pytest-of-<user>/pytest-101/candidate-release0/base/lib/python3.11/site-packages/gnd/__init__.py
+
+[... 26 lines dropped ...]
+1806 passed, 4 deselected in 408.15s (0:06:48)
+
+[... 2 lines dropped ...]
+91 passed in 2.66s
+
+.<tmp>/pytest-of-<user>/pytest-101/candidate-comparison0/base/lib/python3.11/site-packages/gnd/__init__.py
+
+[... 26 lines dropped ...]
+1806 passed, 4 deselected in 391.30s (0:06:31)
+
+[... 2 lines dropped ...]
+91 passed in 2.60s
+
+.
+10 passed in 842.05s (0:14:02)
+== exit 0
+== CI RESULT python 3.11: PASS
+== DONE

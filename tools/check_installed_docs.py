@@ -55,7 +55,7 @@ def main():
         with zipfile.ZipFile(wheel) as archive:
             payload = sum(info.file_size for info in archive.infolist())
             assert payload < 12 * 1024 * 1024, payload
-            for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds'):
+            for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds', 'quoted_claims'):
                 assert any(name.startswith(f'gnd/examples/{domain}/') for name in archive.namelist())
         venv = out / f'venv-{origin}'
         run(['uv', 'venv', '--python', sys.executable, venv])

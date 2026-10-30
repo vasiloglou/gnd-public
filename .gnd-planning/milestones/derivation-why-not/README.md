@@ -4,7 +4,7 @@ Planning opened 2026-10-30 for [issue #66](https://github.com/vasiloglou/gnd-pub
 when a derivation rule derives nothing, say which body step emptied the join,
 with the binding counts before it, so a host can add the missing fact.
 
-**Status: WN1 and WN2 complete ([WN1](002-phase-WN1.md), [WN2](003-phase-WN2.md)); WN3 next.** Plan r3 and WN1
+**Status: WN1-WN3 complete ([WN1](002-phase-WN1.md), [WN2](003-phase-WN2.md), [WN3](004-phase-WN3.md)); close next.** Plan r3 and WN1
 spec r3 were approved by the owner on 2026-10-30 ([plan gate](001-plan-gate.md)).
 Execution runs under `/process-milestone derivation-why-not auto`: phase gates
 inside this milestone are delegated approvals (auto=true), recorded as such.
@@ -15,6 +15,7 @@ Baseline `fb03739` (main after PR #64).
 - [Plan gate record](001-plan-gate.md)
 - [WN1 record](002-phase-WN1.md), with the [diff review](notes/phase-WN1-claude-review.md)
 - [WN2 spec](notes/phase-WN2-spec.md), [record](003-phase-WN2.md) and [diff review](notes/phase-WN2-claude-review.md)
+- [WN3 spec](notes/phase-WN3-spec.md), [record](004-phase-WN3.md) and [diff review](notes/phase-WN3-claude-review.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with reader notes 1-4
 - [Plan review round 2 disposition](notes/plan-review-r2-disposition.md), with reader notes 1-4
 
@@ -49,4 +50,4 @@ Plan review:
   blocking, 25 self-inflicted (ratio 0.93). The stop rule holds, so no third
   round runs.
 
-Next action: WN3 (the two-gap repair loop as a packaged example, and a how-to).
+Next action: the milestone close (four local close readers, question sweep, close record).

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "fact_type": "certified",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "q-17"
+        },
+        {
+          "primitive": "String",
+          "value": "Ada Byrne"
+        }
+      ]
+    }
+  ]
+}

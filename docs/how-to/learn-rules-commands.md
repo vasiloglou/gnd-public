@@ -18,9 +18,9 @@ runs in the project's tests, and the output shown is the output of a real run.
 Set GND up as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
 shows. In an empty folder, copy the example and check the model. Use a new
 empty folder for every run of this page: the commands refuse to overwrite
-their own outputs, so a second pass in the same folder stops at step 2 with
-exit 11 (`--out ilp already exists; nothing was written`), and later steps
-refuse the same way.
+their own outputs, so a second pass in the same folder stops at step 2
+(`--out ilp already exists; nothing was written`), and later steps refuse the
+same way.
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
@@ -56,6 +56,7 @@ The written rule fired on 2 of the 4 flagged weeks and on no clean week.
 `gnd export ilp` writes the labelled weeks in a form a rule learner can read.
 ILP, inductive logic programming, is the family of learners that build logic
 rules from labelled examples.
+
 A learner such as [Popper](https://github.com/logic-and-learning-lab/Popper)
 can use that export directly. The example ships a small stand-in learner
 instead, so the walk runs with nothing to install. It tries 40 simple rules of
@@ -196,7 +197,7 @@ advisory rules. The written rule is advisory too, and stays quiet here because
 
 The apply changed the model, so step 1 cannot be repeated on it: `labels.json`
 records the digest of the model it was written for, and `gnd measure` now
-refuses it with exit 3 (`label manifest labels.json was written for model
+refuses it (`label manifest labels.json was written for model
 sha256 ..., not this model`). To score the new model, give the manifest the
 new model's digest, as [measuring host labels](../reference/measure-labels.md)
 describes.

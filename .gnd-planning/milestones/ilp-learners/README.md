@@ -4,6 +4,10 @@ Planning opened 2026-10-27 at the owner's request, as the successor to
 [induced knowledge](../induced-knowledge/README.md). The aim is to connect more
 learners to the ILP bridge, which shipped with Popper only and never ran it.
 
+**Closed 2026-10-29.** The owner accepted the close
+([acceptance](010-owner-acceptance.md)) and merged it in PR #63. The carried
+questions are listed in the [close record](009-milestone-close.md).
+
 **Status:** plan r3 and IL1 spec r3 were **approved by the owner on 2026-10-27**
 ([plan gate](001-plan-gate.md)). Plan review is closed by its stop rule.
 - **Round 1:** r1 was reviewed by four local readers. All four asked for
@@ -50,7 +54,7 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
   code that landed after its phase's review
   ([review](notes/phase-IL-close-p7-review.md)); 3 findings, all fixed (R7
   to R9). **The owner accepted the close and ILC-F9 on 2026-10-29**
-  ([acceptance](010-owner-acceptance.md)). Merging PR #63 is a separate owner act.
+  ([acceptance](010-owner-acceptance.md)), and merged PR #63.
 
 **Documents:**
 - [Canonical plan (r3, approved)](notes/ilp-learners-plan.md)
@@ -97,7 +101,6 @@ learners to the ILP bridge, which shipped with Popper only and never ran it.
 IL2 ILASP → IL5 LLM proposer → IL3 rule sets → IL4 AMIE-style miner → IL6
 comparison walk and docs. Close is separate.
 
-**Open at gates:**
-- the merge of PR #63.
+**Open at gates:** none.
 
-**Next action:** the owner's merge of PR #63.
+**Next action:** none in this milestone; the carried rows go to their named successors.

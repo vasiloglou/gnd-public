@@ -125,11 +125,12 @@ clause 0: empty-antecedent: nothing is left for the antecedent
 **Why it was refused.** ILASP's answer is `wrong :- gt_t_amount(V1,500).`:
 "wrong when some amount is over 500". It never says which week the amount
 belongs to; the rule names no refund at all. ILASP prefers it because it is
-the shortest rule that fits. **How GND caught it.** The import turns a rule
-into a constraint over the model's fact types. A comparison is only a test on
-a value some fact supplies; with no fact in the rule, nothing is left to
-check, so the import refuses with `empty-antecedent` (exit 3) and writes no
-proposal.
+the shortest rule that fits.
+
+**How GND caught it.** The import turns a rule into a constraint over the
+model's fact types. A comparison is only a test on a value some fact supplies;
+with no fact in the rule, nothing is left to check, so the import refuses with
+`empty-antecedent` and writes no proposal.
 
 ## 3. A language model
 
@@ -233,11 +234,12 @@ rule 0: does-not-hold: 19 of 20 head pairs hold; only rules that hold are admitt
 
 **Why it was refused.** AMIE reports rules that hold most of the time. Its
 first rule, "whoever is based at a site parks there", is true for 19 of the
-20 people; one person parks elsewhere. **How GND caught it.** The import
-counts every rule on the population itself. A rule becomes a constraint, and
-a constraint with an exception is not a rule the data supports, so GND admits
-only rules that hold for every case. The first one that does not refuses the
-whole set (exit 3). Of the 8 mined rules, 2 hold.
+20 people; one person parks elsewhere.
+
+**How GND caught it.** The import counts every rule on the population itself.
+A rule becomes a constraint, and a constraint with an exception is not a rule
+the data supports, so GND admits only rules that hold for every case. The
+first one that does not refuses the whole set. Of the 8 mined rules, 2 hold.
 
 A second run, approved by the project owner, asked AMIE for only rules with
 no exceptions (`-enstd -minc 1`, standard confidence 1):

@@ -33,6 +33,10 @@ RETAINED_EXTERNAL_REFERENCES = {
             'corrected-artifact-hashes.log',
         )
     },
+    # The IL6 reviewer's verbatim report quotes a README line in grep output.
+    Path('.gnd-planning/milestones/ilp-learners/notes/phase-IL6-agent-review.md'): {
+        'notes/phase-IL6-spec.md',
+    },
 }
 
 # Review snapshots preserve the exact original text, including relative links.

@@ -1,0 +1,319 @@
+{
+  "fact_types": [
+    {
+      "id": "listed",
+      "reading": "{code} listed",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        }
+      ]
+    },
+    {
+      "id": "wrote",
+      "reading": "{code} {code} wrote",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "code",
+          "role_name": "person"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "work": "$w"
+            },
+            "fact_type": "listed"
+          },
+          {
+            "bind": {
+              "person": "$p",
+              "work": "$w"
+            },
+            "fact_type": "wrote"
+          }
+        ],
+        "head": {
+          "person": "$p",
+          "work": "$w"
+        }
+      },
+      "id": "credited",
+      "reading": "{code} {code} credited",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "code",
+          "role_name": "person"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "person": "$p",
+              "work": "$w"
+            },
+            "fact_type": "credited"
+          },
+          {
+            "bind": {
+              "work": "$w"
+            },
+            "fact_type": "listed"
+          }
+        ],
+        "head": {
+          "person": "$p",
+          "work": "$w"
+        }
+      },
+      "id": "claim",
+      "reading": "{code} {code} claim",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "code",
+          "role_name": "person"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": "A work is noted when an editor says so.",
+      "id": "note",
+      "reading": "{code} note",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "aggregate": {
+          "as": "$n",
+          "fn": "count",
+          "of": "$w",
+          "over": [
+            "$w"
+          ]
+        },
+        "body": [
+          {
+            "bind": {
+              "person": "$p",
+              "work": "$w"
+            },
+            "fact_type": "wrote"
+          }
+        ],
+        "head": {
+          "n": "$n",
+          "person": "$p"
+        }
+      },
+      "id": "tally",
+      "reading": "{code} {int} tally",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "person"
+        },
+        {
+          "object_type": "int",
+          "role_name": "n"
+        }
+      ]
+    },
+    {
+      "id": "score",
+      "reading": "{code} {int} score",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "int",
+          "role_name": "points"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "points": "$a",
+              "work": "$w"
+            },
+            "fact_type": "score"
+          }
+        ],
+        "head": {
+          "r": {
+            "args": [
+              {
+                "args": [
+                  1,
+                  "$a"
+                ],
+                "fn": "div"
+              },
+              2
+            ],
+            "fn": "round"
+          },
+          "work": "$w"
+        }
+      },
+      "id": "ratio",
+      "reading": "{code} {num} ratio",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "work"
+        },
+        {
+          "object_type": "num",
+          "role_name": "r"
+        }
+      ]
+    },
+    {
+      "id": "left",
+      "reading": "{code} left",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "x"
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "reading": "{code} right",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "y"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "x": "$x"
+            },
+            "fact_type": "left"
+          },
+          {
+            "bind": {
+              "y": "$y"
+            },
+            "fact_type": "right"
+          }
+        ],
+        "head": {
+          "x": "$x",
+          "y": "$y"
+        }
+      },
+      "id": "pair",
+      "reading": "{code} {code} pair",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "x"
+        },
+        {
+          "object_type": "code",
+          "role_name": "y"
+        }
+      ]
+    },
+    {
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "bind": {
+              "x": "$x",
+              "y": "$y"
+            },
+            "fact_type": "pair"
+          },
+          {
+            "bind": {
+              "work": "$x"
+            },
+            "fact_type": "listed"
+          }
+        ],
+        "head": {
+          "x": "$x"
+        }
+      },
+      "id": "lonely",
+      "reading": "{code} lonely",
+      "roles": [
+        {
+          "object_type": "code",
+          "role_name": "x"
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-fixture:why-not-claims@1",
+  "object_types": [
+    {
+      "id": "code",
+      "kind": "value",
+      "name": "Code",
+      "primitive": "String"
+    },
+    {
+      "id": "int",
+      "kind": "value",
+      "name": "Int",
+      "primitive": "Integer"
+    },
+    {
+      "id": "num",
+      "kind": "value",
+      "name": "Num",
+      "primitive": "Number"
+    }
+  ],
+  "source": {
+    "confidence": "standard",
+    "kind": "text-conversation",
+    "mode": "one-shot"
+  },
+  "version": 2
+}

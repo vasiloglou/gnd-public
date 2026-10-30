@@ -1,0 +1,44 @@
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g1-rule-blocked]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g2-row-descent]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g3-derived]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g4-rule-opaque]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g5-aggregate]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g6-opaque-value]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g7-unavailable]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g8-work-limit]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g9-references]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g10-unknown-fact-type]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g10-not-derived]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g11-zero-targets]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g11-two-targets]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g11-other-fact-type]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g11-primitive-mismatch]
+FAILED tests/test_public_why_not.py::test_t1_cli_matches_the_golden_in_both_views[g13-malformed-row-first]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g1-rule-blocked]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g2-row-descent]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g3-derived]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g4-rule-opaque]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g5-aggregate]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g6-opaque-value]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g7-unavailable]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g8-work-limit]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g9-references]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g10-unknown-fact-type]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g10-not-derived]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g11-zero-targets]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g11-two-targets]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g11-other-fact-type]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g11-primitive-mismatch]
+FAILED tests/test_public_why_not.py::test_t1_api_returns_the_raw_payload[g13-malformed-row-first]
+FAILED tests/test_public_why_not.py::test_t2_schema_validates_every_golden_and_api_payload
+FAILED tests/test_public_why_not.py::test_t3_intake_limits_project_the_why_not_ceilings
+FAILED tests/test_public_why_not.py::test_t4_no_population_value_reaches_a_redacted_payload
+FAILED tests/test_public_why_not.py::test_g12_hostile_inputs_exit_3[nan] - Sy...
+FAILED tests/test_public_why_not.py::test_g12_hostile_inputs_exit_3[deep] - S...
+FAILED tests/test_public_why_not.py::test_g12_hostile_inputs_exit_3[long-int]
+FAILED tests/test_public_why_not.py::test_g12_hostile_inputs_exit_3[huge-model]
+FAILED tests/test_public_why_not.py::test_g10_fact_type_must_be_a_string - At...
+FAILED tests/test_public_why_not.py::test_t8_row_intake_stops_at_the_projected_target_ceiling
+FAILED tests/test_public_why_not.py::test_t8_view_visits_each_clause_once - A...
+FAILED tests/test_public_why_not.py::test_t8_view_is_a_closed_selection - Imp...
+43 failed, 1 passed in 2.71s

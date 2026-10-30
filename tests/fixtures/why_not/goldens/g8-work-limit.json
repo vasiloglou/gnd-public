@@ -1,0 +1,1 @@
+{"clauses": [], "exit_code": 4, "fact_type": null, "mode": null, "order": null, "reason": "work-limit", "schema_version": "gnd-why-not/1", "status": "refused", "unavailable": null, "view": "redacted", "work": {"binding_cells": 0, "joins": 0, "pre_joins": 200001, "probes": 0}}

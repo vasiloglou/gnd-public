@@ -1,0 +1,1 @@
+{"clauses": [], "exit_code": 2, "fact_type": "note", "mode": "rule", "order": "declared", "reason": "rule-opaque", "schema_version": "gnd-why-not/1", "status": "unsupported", "unavailable": null, "view": "redacted", "work": {"binding_cells": 0, "joins": 0, "pre_joins": 0, "probes": 0}}

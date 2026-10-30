@@ -1,0 +1,38 @@
+{
+  "facts": {
+    "listed": [
+      {
+        "work": {
+          "$opaque": "val-hidden"
+        }
+      }
+    ],
+    "score": [
+      {
+        "points": 0,
+        "work": "val-w1"
+      },
+      {
+        "points": 1004,
+        "work": "val-w2"
+      }
+    ],
+    "wrote": []
+  },
+  "format_version": 2,
+  "instances": {},
+  "population": {
+    "covers": [
+      "credited",
+      "claim",
+      "note",
+      "tally",
+      "ratio",
+      "pair",
+      "lonely"
+    ],
+    "model": "model.orm.json",
+    "model_id": "urn:gnd-fixture:why-not-claims@1",
+    "source": "fixture"
+  }
+}

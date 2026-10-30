@@ -1,0 +1,1 @@
+{"clauses": [], "exit_code": 0, "fact_type": "claim", "mode": "row", "order": "declared", "reason": null, "schema_version": "gnd-why-not/1", "status": "derived", "unavailable": null, "view": "raw", "work": {"binding_cells": 0, "joins": 0, "pre_joins": 5, "probes": 0}}

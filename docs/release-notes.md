@@ -3,6 +3,25 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: why a derived fact is missing (2026-10-30)
+
+`gnd why-not` and `gnd.api.why_not` explain a derivation that produced nothing,
+or not the row you expected ([issue #66](https://github.com/vasiloglou/gnd-public/issues/66)).
+GND's evaluator decides first whether the row is derived. If it is not, the
+answer walks each clause in declared order. It gives the binding count after
+each step and the first step that left none, with up to five of the bindings
+that reached it, and explains a derived blocker's row in turn.
+
+- New surface: one command, one API function (`why_not`, appended to
+  `gnd.api.__all__`), and one output schema, `why-not.schema.json`.
+- The CLI redacts population values unless `--raw` is passed; the API returns
+  them, like `api.witness`.
+- Exit bands: `0` blocked or derived, `2` unsupported (aggregates, prose rules,
+  opaque values), `3` invalid input, `4` an unavailable term or a work limit.
+- `check`, `witness` and `replay` are unchanged.
+
+See [Why a derived fact is missing](reference/why-not.md).
+
 ## Unreleased: ILP import hardening (2026-10-30)
 
 - The rules and Popper imports refuse a threshold their export never offered

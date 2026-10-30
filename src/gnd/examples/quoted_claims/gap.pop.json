@@ -1,0 +1,26 @@
+{
+  "format_version": 2,
+  "instances": {},
+  "facts": {
+    "quote": [
+      {
+        "quote": "q-17",
+        "work": "Field Notes"
+      },
+      {
+        "quote": "q-18",
+        "work": "Letters Home"
+      }
+    ],
+    "authored": [],
+    "reviewed": []
+  },
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd-example:quoted-claims@1",
+    "source": "fixture",
+    "covers": [
+      "certified"
+    ]
+  }
+}

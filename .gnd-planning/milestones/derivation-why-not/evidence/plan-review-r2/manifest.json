@@ -1,0 +1,18 @@
+{
+  "round": 2,
+  "date": "2026-10-30",
+  "instrument": "four local reviewer agents (WN-D8, owner-selected 2026-10-30); confirmation round directed by the owner after round 1",
+  "inspection_head": "fb03739",
+  "subjects": {
+    "notes/derivation-why-not-plan.md": "evidence/plan-review-r2/derivation-why-not-plan.md.snapshot",
+    "notes/phase-WN1-spec.md": "evidence/plan-review-r2/phase-WN1-spec.md.snapshot"
+  },
+  "sha256": {
+    "evidence/plan-review-r2/derivation-why-not-plan.md.snapshot": "b0308e35e0e088d7264b24c0f34de0bec2f676e7d83cc325bd90bbfa1514630e",
+    "evidence/plan-review-r2/phase-WN1-spec.md.snapshot": "d1c87cb1315341e453debb6fd7088abc0b8f5a4dc831dd2a4ac33abdf44f6f69",
+    "notes/plan-review-r2-reader-1.md": "ca732d1318e72a86fa49fd218d4cd8f866eb8be98f55f95c522939b533a52618",
+    "notes/plan-review-r2-reader-2.md": "e73b55253eaaad572d012a04d29da4163073a0db3b5954f775e5857f969bb144",
+    "notes/plan-review-r2-reader-3.md": "c71c5ddd5541d0d822ec9093e48b6ef00c00b941e37bf3709f81c08568d8619c",
+    "notes/plan-review-r2-reader-4.md": "e4873f1108a585ec25d35b02fd6f9c5b56d70ad65501b6d4389a5ced58d8b26e"
+  }
+}

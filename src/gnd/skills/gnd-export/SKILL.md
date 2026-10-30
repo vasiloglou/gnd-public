@@ -12,7 +12,11 @@ Read the [export boundary](references/export-contract.md) and
 1. Select the model, candidate population, fixed-reference root and a nonempty
    version-1 target request. Preserve exact input bytes.
 2. Run `gnd witness MODEL POP --targets REQUEST --reference-root ROOT` for a
-   redacted, non-replayable view. Inspect every request's status.
+   redacted, non-replayable view. Inspect every request's status. For a
+   `missing` row, write a one-target request for that row and run
+   `gnd why-not MODEL POP --fact-type ID --row ROW_REQUEST --reference-root ROOT`.
+   It names the first rule step that left no bindings; it explains, it proves
+   nothing.
 3. On explicit raw export selection, run the same command with
    `--raw --out NEW_CERTIFICATE`. The destination is create-once; raw certificates
    contain source values. Never overwrite an existing destination.

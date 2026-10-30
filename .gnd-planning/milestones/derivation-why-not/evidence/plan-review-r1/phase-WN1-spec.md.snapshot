@@ -1,0 +1,258 @@
+# Phase WN1 -- the why-not explanation kernel
+
+## 1. Status
+
+**Draft r1, blocked.** Implementable once the owner approves plan r1 and rules
+WN-D2, WN-D3, WN-D4, WN-D6, WN-D7 and WN-D9 (plan §10), which change the
+algorithm, the module path and the payload fields below. No implementation has
+started.
+
+## 2. Provenance
+
+- Derived from [plan r1](derivation-why-not-plan.md) §0, §2, §4 WN1 and §10, at
+  baseline `fb03739`.
+- No review has read these bytes. Proposed values are marked "proposed".
+
+## 3. Obligations
+
+| Source | Obligation | Discharged in |
+|---|---|---|
+| plan WN1-C1, O1, O2, O4 | declared-order prefix counts and first blocking step, per clause | §6.2; §8 T1..T6 |
+| plan WN1-C2, O5 | row mode; derived rows reported as derived, agreeing with `check` | §6.3; §8 T7, T8 |
+| plan WN1-C3, WN-R3 | independent naive oracle agrees on a generated corpus | §6.5; §8 T9 |
+| plan WN1-C4, O7, WN-D3 | bounded descent into a derived blocking atom | §6.4; §8 T10, T11 |
+| plan WN1-C5, WN-R4, O10 | ceilings at every binding; time bound | §6.6; §8 T12, T13 |
+| plan WN1-C6, WN-D6 | unsupported fragments named | §6.1; §8 T14 |
+| plan O3, WN-R5, WN-D9 | bound constants retained as samples, redaction left to WN2 view | §6.2 |
+| plan WN-R1 | no change to check, witness or report contracts | §8 T15 |
+| plan WN-R2 | production helpers reused | §6.2 |
+| plan WN-R7, O12 | layer map entry, no allowance | §6.7; §8 T16 |
+| plan O14, WN-R8 | no downstream names | §8 T17 (review lens) |
+
+## 4. Rules bound to WN1
+
+Plan rules:
+
+- **WN-R1** read-only: the kernel computes over a prepared relation snapshot and
+  returns a value; it registers no branch, writes no report field and does not
+  set `_WITNESS_TRACE`. T15 pins check and witness payloads.
+- **WN-R2** production semantics: atom matching calls
+  `extensions._joined_atom_candidates`; value identity `_identity_key`;
+  negation probes use the same identity tokens as `_apply_negation`;
+  comparisons call `compare_terms`; head terms call `evaluate_term`. Derived
+  body relations come from `_evaluate_stratified_extensions(..., exact=True)`,
+  the same call `witness` makes.
+- **WN-R3** falsifiable: every `blocked` clause carries the counts that make
+  the claim checkable; T9 recomputes them independently.
+- **WN-R4** bounded: §6.6.
+- **WN-R5** redaction: the kernel returns raw samples; WN2's view redacts.
+  The kernel is internal (underscore-free names live only in
+  `gnd.witness.why_not`, not in `gnd.api`).
+- **WN-R6** one home: §6.2 is the normative definition until WN2 moves it to
+  `docs/reference/why-not.md`, at which point this spec cites the doc.
+- **WN-R7** layering: §6.7.
+- **WN-R8**: `auto=false`; anonymity is a review lens.
+
+Standing rules:
+
+1. **Totality.** The kernel is called only by WN2's service after the witness
+   input lane loads and validates the model and population. It is still total
+   over its own arguments: an unknown fact type, a non-derived fact type, a
+   malformed target or a malformed clause raises `WhyNotInputError` (a
+   `ValueError`), never another exception class (T14).
+2. **Cap bounds the algorithm.** Prefix enumeration is charged per binding
+   produced and per candidate probed; T13 is the time-bound test.
+3. **Validation order.** Per call: limits check, then fact-type existence, then
+   derived-ness, then support classification, then target shape (row mode),
+   then evaluation. An unsupported rule reports `unsupported` even when the
+   target is also malformed, because the caller cannot fix the target into a
+   supported request. Pinned by a source-order case (T14).
+4. **One walk over N kinds.** One step loop handles the four step kinds (atom,
+   negated atom, comparison, head) in a fixed sequence; there is no per-kind
+   copy of the counting or charging code.
+5. **One home.** See WN-R6.
+6. **Measure, don't argue.** WN-D2's cost claim (declared order may enumerate
+   a cross product the evaluator avoids) is measured in T13 on the corpus and
+   recorded, not asserted.
+
+## 5. Goal
+
+`gnd.witness.why_not.explain(model, relations, fact_type_id, *, row=None,
+limits=DEFAULT_LIMITS)` returns a `WhyNotResult` whose `status` is `derived`
+when the rule (or the claimed row) has at least one derivation, `blocked` when
+every clause has a step whose count is 0, `unsupported` with a reason for the
+fragments in §6.1, and raises `WhyNotWorkError` on a ceiling breach. On the T9
+corpus, every count and every blocker equals the naive oracle's, and `status`
+is `derived` exactly when `check`'s extension contains the row (row mode) or is
+non-empty (rule mode).
+
+## 6. Design
+
+### 6.1 Support classification (proposed per WN-D6)
+
+Reuse the shape of `witness.io.support_closure`, but with a why-not policy:
+
+| Feature | Behavior |
+|---|---|
+| positive atoms, constants and repeated variables in atoms | supported |
+| `negate` atoms | supported |
+| `where` comparisons | supported |
+| several clauses | supported; one entry per clause |
+| derived or semiderived body predicates | supported; their extension comes from exact evaluation |
+| computed head terms | rule mode supported; row mode compares after evaluation |
+| `aggregate` in the clause | `unsupported`, reason `aggregate` |
+| string (opaque) rule | `unsupported`, reason `rule-opaque` |
+| opaque (dict) values in a relation the clause reads | `unsupported`, reason `opaque-value` |
+| target fact type is not derived/semiderived | input error |
+
+### 6.2 Normative definition: steps and the blocking step
+
+For one clause *c* with positive atoms *a1..an* (declaration order), negated
+atoms *n1..nm*, comparisons *w1..wp* and head *h*:
+
+1. Seed bindings *B0*: rule mode `[{}]`; row mode, one binding mapping each head
+   variable to its claimed cell value, failing at step `head-bind` when two
+   head roles bind one variable to different values or a constant head term
+   differs from the claimed cell.
+2. For *k* = 1..n: *Bk* = distinct join of *B(k-1)* with the candidates of
+   *ak* (`_joined_atom_candidates`), merging on shared variables. A disconnected
+   *ak* is a product, charged in full. Step record
+   `{"kind": "atom", "index": k-1, "fact_type": ..., "count": |Bk|}`.
+3. Then each negated atom in order: remove bindings whose ground tuple is in
+   the relation (same identity tokens as `_apply_negation`; a not-fully-bound
+   negated atom keeps the binding, as production does). Step kind `negated`.
+4. Then each comparison in order: keep bindings where `compare_terms` returns an
+   available `True`. An unavailable result stops the clause with status
+   `unavailable` and the term reason (matches production's
+   `RelationUnavailable`). Step kind `comparison`.
+5. Then the head: evaluate head terms for each binding; in row mode keep those
+   whose row equals the claimed row by identity. Step kind `head`.
+6. The **blocking step** is the first step whose count is 0. Steps after it are
+   not computed. The clause is `derived` if no step reaches 0.
+
+The payload states `"order": "declared"`. Counts are counts of distinct
+bindings over the variables bound so far, which is what "the row count each
+earlier atom still had" means here.
+
+The blocker record carries: step kind and index; `fact_type` (atoms only);
+`derivation` of that predicate (`base`, `derived`, `semiderived`);
+`bound_roles` (roles whose term is a constant or a variable bound by the
+previous step) and `free_roles`; `sample_bindings`, up to WN-D9 (proposed 5)
+bindings from the previous step restricted to the variables the blocking atom
+reads, in canonical order (sorted by canonical JSON); and `sample_count`, the
+previous step's count.
+
+### 6.3 Result types
+
+```python
+@dataclass(frozen=True)
+class ClauseExplanation:
+    clause_index: int
+    status: Literal["derived", "blocked", "unavailable"]
+    steps: tuple[dict, ...]            # step records, in order, up to the blocker
+    blocker: dict | None
+    descent: "WhyNotResult | None"
+    reason: str | None                 # term reason when unavailable
+
+@dataclass(frozen=True)
+class WhyNotResult:
+    fact_type: str
+    mode: Literal["rule", "row"]
+    order: Literal["declared"]
+    status: Literal["derived", "blocked", "unsupported"]
+    reason: str | None
+    clauses: tuple[ClauseExplanation, ...]
+    work: dict                         # {"bindings": int, "probes": int}
+```
+
+`status` is `derived` if any clause is `derived`; else `blocked` if every clause
+is `blocked`; else (some clause `unavailable`) `blocked` with that clause's
+reason retained. WN2 maps statuses to exit bands per WN-D5.
+
+### 6.4 Descent (proposed per WN-D3 (b))
+
+When the blocker is an atom over a derived or semiderived predicate, and at
+least one sample binding grounds every role of that atom, call `explain` on
+that predicate in row mode with the first such grounded row (canonical order),
+depth + 1. Stop, recording `descent_stopped`, when: depth reaches the ceiling
+(proposed 8); no sample grounds the atom (`not-ground`); the predicate was
+already visited on this path (`cycle`). The descent result shares the parent's
+work budget.
+
+### 6.5 The independent oracle (tests only)
+
+`tests/why_not_oracle.py`: a naive nested-loop evaluator over plain dicts that
+re-implements matching from the model's YAML semantics with no import from
+`gnd.extensions`. It computes every prefix count and the blocker for a clause.
+T9 generates a corpus from fixed seeds and compares.
+
+### 6.6 Ceilings
+
+Reuse `WitnessLimits` (WN-D6 proposed): each binding produced charges 1 against
+`joins`; each binding stored charges its cell count against `binding_cells`;
+descent depth is bounded by `proof_depth` and by the §6.4 ceiling. Breach raises
+`WhyNotWorkError`.
+
+### 6.7 Module and layering
+
+- `src/gnd/witness/why_not.py`, about 300 lines: support policy, the step loop,
+  descent, result types, `WhyNotInputError`, `WhyNotWorkError`.
+- `tools/gnd_layers.json`: `"gnd.witness.why_not": {"lane": "witness",
+  "layer": "lanes"}`.
+- No change to `extensions.py` is planned. If the step loop needs a helper that
+  is private there, the spec is amended (append-only) rather than copying it.
+
+## 7. Decisions
+
+| ID | Question | Readings and cost |
+|---|---|---|
+| D1 (=WN-D2) | Declared-order prefixes vs evaluator order | Declared order can enumerate products (exit 4 earlier); evaluator order names a different "first" atom on disconnected bodies. Different blockers, same exit code. |
+| D2 (=WN-D3) | Descent | No descent: one call per level from the host. Bounded descent: extra work, the depth ceiling. |
+| D3 (=WN-D6) | Ceilings: reuse `WitnessLimits` or a sibling class | Reuse keeps one policy; a sibling allows a larger `joins` budget for products. |
+| D4 (=WN-D9) | Sample count | 5 proposed; affects payload size only. |
+| D5 | Semiderived target: is an asserted-but-underived row `derived`? | Proposed: why-not looks only at the rule's derivations, so the row is explained as blocked. `check` reports the same row as `derived-extension-unsound`; the WN2 doc says so. |
+| D6 | `unavailable` comparison: blocked or its own top status | Proposed: blocked with reason. A separate status adds an exit band question. |
+
+## 8. Tests
+
+All in `tests/test_why_not_kernel.py` unless named; each asserts exact payload
+values. "Exit" here is the kernel status; WN2 maps it to process exits.
+
+| ID | Case | Expected |
+|---|---|---|
+| T1 | two-atom rule, second atom has no match | `blocked`, steps counts `[n, 0]`, blocker atom index 1 |
+| T2 | first atom empty | blocker index 0, steps `[0]` |
+| T3 | constant in an atom filters everything | blocker at that atom; `bound_roles` includes the constant role |
+| T4 | negated atom removes all bindings | blocker kind `negated` |
+| T5 | comparison removes all bindings; unavailable comparison | blocker kind `comparison`; `unavailable` with reason |
+| T6 | two clauses, one blocked at atom 0, one at atom 2 | two clause entries, each with its own blocker; top `blocked` |
+| T7 | row mode: claimed row derived; claimed row not derived; head-bind conflict | `derived`; `blocked`; blocker kind `head-bind` |
+| T8 | agreement with `check`: for every corpus case, `derived` iff the row is in the exact extension | all agree |
+| T9 | `test_why_not_oracle.py`: seeded corpus (repeated variables, constants, disconnected atoms, negation, comparisons, two clauses, derived body predicate) | every count and blocker equals the oracle |
+| T10 | descent: blocker over a derived predicate, ground sample | nested result names the base predicate |
+| T11 | descent stops: not ground; cycle; depth ceiling | `descent_stopped` reason for each |
+| T12 | limits below need | `WhyNotWorkError` |
+| T13 | time bound: a 4-atom disconnected prefix at the default ceiling | completes or raises within a fixed wall bound; measured cost recorded |
+| T14 | aggregate, opaque rule, opaque value, unknown and non-derived fact type, malformed row, validation order (unsupported before malformed row) | named reason or `WhyNotInputError`; order pinned |
+| T15 | parity: existing witness corpus and check contract fixtures unchanged | existing tests pass unmodified |
+| T16 | `test_rf1_layering.py` with the new map entry | passes, zero allowances |
+| T17 | review lens: no downstream names in the diff | diff reviewer confirms |
+
+Branch walk: statuses `derived`/`blocked`/`unsupported` (T1, T7, T14); clause
+statuses incl. `unavailable` (T5); step kinds atom/negated/comparison/head/
+head-bind (T1, T4, T5, T7); descent and its three stop reasons (T10, T11);
+work breach (T12).
+
+## 9. Out of scope for WN1
+
+The CLI, API, schema, redacted view, docs and pins (WN2); the example (WN3);
+any change to `check`, `witness` or `extensions.py` semantics.
+
+## 10. Size
+
+Estimate: about 300 source lines, about 450 test lines including the oracle.
+
+## 11. Approval instrument
+
+This prose. No fixture corpus is authored before approval; T9's corpus is
+generated from fixed seeds at implementation.

@@ -18,6 +18,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Validate a model | CLI `validate`; `api.validate` | Valid syntax/semantics do not establish complete requirements | [Python API](python-api.md) |
 | Check candidate facts | `check`; `api.check`; admission projection | Checks supplied facts and declared coverage; no automatic repair | [Quickstart](../quickstart.md) |
 | Explain supplied facts | `verbalize population`; `api.verbalize` | Deterministic sentences are not a truth judgment | [Python API](python-api.md) |
+| Explain a missing derived fact | `why-not`; `api.why_not` | Declared-order steps and the first empty one; no aggregates or prose rules; values redacted by default | [Why-not](why-not.md) |
 | Compute derived relations | Structured clauses, joins, supported exact terms, stratified negation, recursion and aggregates | Resource bounds and construct-specific validation apply | [Data and transitions](../guides/data-and-transitions.md) |
 | Check calendar deadlines | Date/Duration guarded comparisons | Calendar days only; no live clock, timezones, or business calendar | [Data and transitions](../guides/data-and-transitions.md) |
 | Use a fixed catalog | Version-4 reference populations with path and byte-hash binding | Candidate/reference fact ownership is disjoint | [Data and transitions](../guides/data-and-transitions.md) |

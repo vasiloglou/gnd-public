@@ -1,0 +1,18 @@
+{
+  "targets": [
+    {
+      "fact_type": "claim",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "val-w1"
+        },
+        {
+          "primitive": "Integer",
+          "value": 1001
+        }
+      ]
+    }
+  ],
+  "version": 1
+}

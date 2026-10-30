@@ -6,7 +6,8 @@ returns ordinary dictionaries; your application decides how to display a
 finding and what action to take.
 
 The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
-`verbalize`, `diff`, `witness`, and `replay`. The opt-in `EvaluationSession`
+`verbalize`, `diff`, `witness`, `replay` and `why_not`: nine functions, the one
+count other pages refer to. The opt-in `EvaluationSession`
 class reuses eligible work between calls. Code generation, experiment
 orchestration, and model evolution have CLI and skill workflows described in
 the [task guides](../advanced.md).
@@ -15,8 +16,8 @@ the [task guides](../advanced.md).
 
 Install GND using the [quickstart](../quickstart.md), then run these blocks in
 order from a fresh directory. Every block starts a new Python process; the
-files on disk carry the examples forward. The data is synthetic and all seven
-examples run locally without an API key or native compiler.
+files on disk carry the examples forward. The data is synthetic and every
+example runs locally without an API key or native compiler.
 
 <!-- gnd-run expect=0 -->
 ```python
@@ -296,6 +297,44 @@ binds the model, candidate, and fixed references; changed inputs can invalidate
 that binding. The witness/replay bands have their own meaning: `0` all targets
 proved, `1` invalid proof, `2` missing/unknown/unsupported, `3` invalid inputs,
 and `4` work bound reached. A missing proof does not establish a false fact.
+
+## `why_not`: find where a derivation stops
+
+The seed population has no route from `WH-A` to `DEST-E`. Ask why that row is
+not derived.
+
+<!-- gnd-run expect=0 -->
+```python
+import json
+from pathlib import Path
+from gnd import api
+
+row = {"version": 1, "targets": [{
+    "fact_type": "dispatch_reachable",
+    "tuple": [{"primitive": "String", "value": "WH-A"},
+              {"primitive": "String", "value": "DEST-E"}],
+}]}
+Path("why-not-row.json").write_text(json.dumps(row))
+result = api.why_not(
+    "api-dispatch/model.orm.json", "api-dispatch/seed.pop.json",
+    "dispatch_reachable", row_path="why-not-row.json",
+)
+assert result["exit_code"] == 0 and result["status"] == "blocked", result
+direct, onward = result["clauses"]
+assert direct["blocker"]["fact_type"] == "dispatch_leg"
+assert direct["blocker"]["samples"] == [{"source": "WH-A", "target": "DEST-E"}]
+assert onward["blocker"]["samples"] == [{"source": "WH-B", "target": "DEST-E"}]
+print("No leg from WH-A to DEST-E; the onward route stops at WH-B.")
+```
+
+`why_not(model_path, population_path, fact_type, *, row_path=None,
+reference_root=None)` uses file paths. Without `row_path` it asks why the fact
+type has no rows at all. The result's `status` is `derived`, `blocked`,
+`unsupported`, `unavailable` or `refused`. For each clause, `clauses` gives the
+binding count after each step and the first step that left none. When that
+step is a derived fact type, `descent` explains its row in turn. The Python
+result carries raw values; the CLI's default view removes them. The
+[why-not reference](why-not.md) defines the steps and the exit bands.
 
 ## Integrate reports deliberately
 

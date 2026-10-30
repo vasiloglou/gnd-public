@@ -1,0 +1,14 @@
+{
+  "targets": [
+    {
+      "fact_type": "tally",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "val-p1"
+        }
+      ]
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,264 @@
+[
+  {
+    "id": "g1-rule-blocked",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "credited"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g2-row-descent",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "claim",
+      "--row",
+      "<fx>/rows/claim-w1-p1.json"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g3-derived",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/repaired.pop.json",
+      "--fact-type",
+      "claim",
+      "--row",
+      "<fx>/rows/claim-w1-p1.json"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g4-rule-opaque",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "note"
+    ],
+    "exit": 2
+  },
+  {
+    "id": "g5-aggregate",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "tally"
+    ],
+    "exit": 2
+  },
+  {
+    "id": "g6-opaque-value",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/opaque.pop.json",
+      "--fact-type",
+      "claim"
+    ],
+    "exit": 2
+  },
+  {
+    "id": "g7-unavailable",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "ratio"
+    ],
+    "exit": 4
+  },
+  {
+    "id": "g8-work-limit",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/big.pop.json",
+      "--fact-type",
+      "lonely"
+    ],
+    "exit": 4
+  },
+  {
+    "id": "g9-references",
+    "argv": [
+      "why-not",
+      "<ex>/model.orm.json",
+      "<ex>/seed.pop.json",
+      "--fact-type",
+      "dispatch_reachable",
+      "--row",
+      "<fx>/rows/reach-a-e.json"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g14-constant-atom",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "pinned"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g15-negated",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "delisted"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g16-comparison",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "top_score"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g17-head",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "doubled",
+      "--row",
+      "<fx>/rows/doubled-w2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g18-head-bind-constant",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "tagged",
+      "--row",
+      "<fx>/rows/tagged-w1.json"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g19-aggregate-descent",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/repaired.pop.json",
+      "--fact-type",
+      "prolific"
+    ],
+    "exit": 0
+  },
+  {
+    "id": "g10-unknown-fact-type",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "nope"
+    ],
+    "exit": 3
+  },
+  {
+    "id": "g10-not-derived",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "listed"
+    ],
+    "exit": 3
+  },
+  {
+    "id": "g11-zero-targets",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "claim",
+      "--row",
+      "<fx>/rows/zero.json"
+    ],
+    "exit": 3
+  },
+  {
+    "id": "g11-two-targets",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "claim",
+      "--row",
+      "<fx>/rows/two.json"
+    ],
+    "exit": 3
+  },
+  {
+    "id": "g11-other-fact-type",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "claim",
+      "--row",
+      "<fx>/rows/other-fact-type.json"
+    ],
+    "exit": 3
+  },
+  {
+    "id": "g11-primitive-mismatch",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "claim",
+      "--row",
+      "<fx>/rows/primitive-mismatch.json"
+    ],
+    "exit": 3
+  },
+  {
+    "id": "g13-malformed-row-first",
+    "argv": [
+      "why-not",
+      "<fx>/claims/model.orm.json",
+      "<fx>/claims/gap.pop.json",
+      "--fact-type",
+      "tally",
+      "--row",
+      "<fx>/rows/tally-malformed.json"
+    ],
+    "exit": 3
+  }
+]

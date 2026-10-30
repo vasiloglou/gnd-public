@@ -88,3 +88,68 @@ def result_view(result):
         ],
         "work": result.get("work", {}),
     }
+
+
+# Why-not presentation: a closed selection by name. Population values (samples,
+# constants, unavailable bindings) are replaced, never copied.
+_WHY_NOT_STEP = ("kind", "index", "fact_type", "count")
+_WHY_NOT_BLOCKER = (
+    "kind", "index", "fact_type", "count", "derivation", "ground",
+    "asserted_not_read", "sample_count",
+)
+
+
+def _why_not_role(spec):
+    if "constant" in spec:
+        return {"constant": "redacted"}
+    return {"variable": spec["variable"], "bound": spec["bound"]}
+
+
+def _why_not_clause(clause):
+    blocker = {}
+    for key, value in clause["blocker"].items():
+        if key in _WHY_NOT_BLOCKER:
+            blocker[key] = value
+        elif key == "reads":
+            blocker[key] = [str(name) for name in value]
+        elif key == "roles":
+            blocker[key] = {str(role): _why_not_role(spec) for role, spec in value.items()}
+    blocker["samples"] = "redacted"
+    descent = clause["descent"]
+    return {
+        "clause_index": clause["clause_index"],
+        "steps": [
+            {key: step[key] for key in _WHY_NOT_STEP if key in step} for step in clause["steps"]
+        ],
+        "blocker": blocker,
+        "steps_after_blocker": clause["steps_after_blocker"],
+        "descent": None if descent is None else _why_not_explanation(descent),
+        "descent_stopped": clause["descent_stopped"],
+    }
+
+
+def _why_not_explanation(payload):
+    unavailable = payload["unavailable"]
+    return {
+        "status": payload["status"],
+        "reason": payload["reason"],
+        "fact_type": payload["fact_type"],
+        "mode": payload["mode"],
+        "order": payload["order"],
+        "unavailable": None if unavailable is None else {
+            "reason": unavailable["reason"],
+            "source_relation": unavailable["source_relation"],
+            "binding": "redacted",
+        },
+        "clauses": [_why_not_clause(clause) for clause in payload["clauses"]],
+        "work": {str(key): int(value) for key, value in payload["work"].items()},
+    }
+
+
+def why_not_view(payload):
+    """The default CLI view of a why-not payload: structure and counts, no values."""
+    return {
+        "schema_version": payload["schema_version"],
+        "exit_code": payload["exit_code"],
+        **_why_not_explanation(payload),
+    }

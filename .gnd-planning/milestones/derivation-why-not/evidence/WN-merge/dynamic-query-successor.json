@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/ilp-import-hardening/evidence/IH2/dynamic-query-successor.json",
+  "predecessor_sha256": "7ab59670e22d7b2f2c8066865506c9d81bdee787bdabababcda007c4a0267edc",
+  "reason": "derivation-why-not merge with main after ilp-import-hardening (2026-10-30): both milestones chained from IL-close. This successor rebases the why-not deltas onto IH2 unchanged: the 41 WN1 rows and the 2 WN2 rows, removed nothing. Syntax census only; no model-query exception widening.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/witness/why_not.py",
+      "ClauseExplanation",
+      "tuple[dict, ...]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "WhyNotResult",
+      "tuple[ClauseExplanation, ...]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "__init__",
+      "dict[str, int]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_atom_blocker",
+      "dict[str, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_atom_blocker",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_atom_blocker",
+      "fact.get(role)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_atom_blocker",
+      "sample[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_atom_blocker",
+      "self.population.facts.get(fact_type_id, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_candidates",
+      "dict[tuple, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_candidates",
+      "self.facts.get(str(atom.get('fact_type')), ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_clause",
+      "list[dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_closure",
+      "dependencies.get(current, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_closure",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_descend",
+      "self.roles[fact_type_id]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_descend",
+      "values[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_ground",
+      "binding[variable]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_head",
+      "clause['head'][role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_head",
+      "self.roles[fact_type_id]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_identity_row",
+      "tuple[bytes, ...]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_join",
+      "candidate[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_join",
+      "index.get(key, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_join",
+      "left[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_negate",
+      "fact[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_negate",
+      "self.facts.get(str(atom.get('fact_type')), ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_samples",
+      "binding[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_samples",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_samples",
+      "dict[tuple, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_samples",
+      "sorted(seen.values(), key=_canonical)[:5]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_seed",
+      "clause['head'][role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_seed",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_seed",
+      "seed[variable]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_seed",
+      "self.roles[fact_type_id]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_term_variables",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "charge",
+      "getattr(self.limits, counter)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "charge",
+      "self.work[counter]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "checked_why_not_limits",
+      "getattr(DEFAULT_WHY_NOT_LIMITS, f.name)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "checked_why_not_limits",
+      "getattr(limits, f.name)",
+      3
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "explain",
+      "combined.facts.get(fact_id, ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "explain",
+      "list[dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "explain",
+      "self.extensions.get(fact_type_id)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "explain",
+      "self.unavailable[fact_type_id]",
+      1
+    ],
+    [
+      "src/gnd/witness/service.py",
+      "why_not",
+      "_WHY_NOT_EXITS[result['status']]",
+      1
+    ],
+    [
+      "src/gnd/witness/view.py",
+      "_why_not_clause",
+      "step[key]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6838,
+  "result_occurrences": 8552
+}

@@ -1,0 +1,662 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/why-not.schema.json",
+  "title": "GND why-not explanation (gnd-why-not/1)",
+  "description": "WN2. What gnd why-not and gnd.api.why_not return: whether production derives the target, and, when it does not, for each clause the declared-order prefix counts, the first blocking step and an optional descent into a derived blocker. The CLI's default view replaces every population value with \"redacted\".",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "exit_code",
+    "status",
+    "reason",
+    "fact_type",
+    "mode",
+    "order",
+    "unavailable",
+    "clauses",
+    "work"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "gnd-why-not/1"
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        2,
+        3,
+        4
+      ]
+    },
+    "view": {
+      "enum": [
+        "redacted",
+        "raw"
+      ]
+    },
+    "status": {
+      "enum": [
+        "blocked",
+        "derived",
+        "unsupported",
+        "unavailable",
+        "refused"
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fact_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "rule",
+        "row",
+        null
+      ]
+    },
+    "order": {
+      "enum": [
+        "declared",
+        null
+      ]
+    },
+    "unavailable": {
+      "$ref": "#/$defs/unavailable"
+    },
+    "clauses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/clause"
+      }
+    },
+    "work": {
+      "$ref": "#/$defs/work"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "blocked"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 0
+          },
+          "reason": {
+            "const": null
+          },
+          "clauses": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "derived"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 0
+          },
+          "reason": {
+            "const": null
+          },
+          "clauses": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "unsupported"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 2
+          },
+          "reason": {
+            "enum": [
+              "opaque-value",
+              "aggregate",
+              "rule-opaque"
+            ]
+          },
+          "clauses": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "unavailable"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 4
+          },
+          "reason": {
+            "type": "string",
+            "pattern": "^term:"
+          },
+          "unavailable": {
+            "type": "object"
+          },
+          "clauses": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "refused"
+          },
+          "reason": {
+            "const": "input-invalid"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 3
+          },
+          "work": {
+            "maxProperties": 0
+          },
+          "clauses": {
+            "maxItems": 0
+          },
+          "fact_type": {
+            "const": null
+          },
+          "mode": {
+            "const": null
+          },
+          "order": {
+            "const": null
+          },
+          "unavailable": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "refused"
+          },
+          "reason": {
+            "const": "work-limit"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "exit_code": {
+            "const": 4
+          },
+          "clauses": {
+            "maxItems": 0
+          },
+          "fact_type": {
+            "const": null
+          },
+          "mode": {
+            "const": null
+          },
+          "order": {
+            "const": null
+          },
+          "unavailable": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "refused"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "reason": {
+            "enum": [
+              "input-invalid",
+              "work-limit"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "view"
+        ],
+        "properties": {
+          "view": {
+            "const": "redacted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "unavailable": {
+            "$ref": "#/$defs/redacted_unavailable"
+          },
+          "clauses": {
+            "items": {
+              "$ref": "#/$defs/redacted_clause"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pre_joins": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joins": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "binding_cells": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "unavailable": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reason",
+            "source_relation",
+            "binding"
+          ],
+          "properties": {
+            "reason": {
+              "type": "string"
+            },
+            "source_relation": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "binding": {
+              "oneOf": [
+                {
+                  "type": "object"
+                },
+                {
+                  "const": "redacted"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "index",
+        "count"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "atom",
+            "negated",
+            "comparison",
+            "head",
+            "head-bind:variable",
+            "head-bind:constant"
+          ]
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fact_type": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "role": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "variable",
+            "bound"
+          ],
+          "properties": {
+            "variable": {
+              "type": "string",
+              "pattern": "^\\$"
+            },
+            "bound": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "constant"
+          ],
+          "properties": {
+            "constant": {}
+          }
+        }
+      ]
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "index",
+        "sample_count",
+        "samples"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "atom",
+            "negated",
+            "comparison",
+            "head",
+            "head-bind:variable",
+            "head-bind:constant"
+          ]
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fact_type": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "derivation": {
+          "enum": [
+            "base",
+            "derived",
+            "semiderived"
+          ]
+        },
+        "ground": {
+          "type": "boolean"
+        },
+        "asserted_not_read": {
+          "type": "boolean"
+        },
+        "roles": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "reads": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^\\$"
+          }
+        },
+        "sample_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "samples": {
+          "oneOf": [
+            {
+              "type": "array",
+              "maxItems": 5,
+              "items": {
+                "type": "object"
+              }
+            },
+            {
+              "const": "redacted"
+            }
+          ]
+        }
+      }
+    },
+    "explanation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "fact_type",
+        "mode",
+        "order",
+        "unavailable",
+        "clauses",
+        "work"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "blocked",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fact_type": {
+          "type": "string"
+        },
+        "mode": {
+          "const": "row"
+        },
+        "order": {
+          "const": "declared"
+        },
+        "unavailable": {
+          "$ref": "#/$defs/unavailable"
+        },
+        "clauses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clause"
+          }
+        },
+        "work": {
+          "$ref": "#/$defs/work"
+        }
+      }
+    },
+    "clause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_index",
+        "steps",
+        "blocker",
+        "steps_after_blocker",
+        "descent",
+        "descent_stopped"
+      ],
+      "properties": {
+        "clause_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          }
+        },
+        "blocker": {
+          "$ref": "#/$defs/blocker"
+        },
+        "steps_after_blocker": {
+          "const": "not-evaluated"
+        },
+        "descent": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/explanation"
+            }
+          ]
+        },
+        "descent_stopped": {
+          "enum": [
+            null,
+            "not-derived",
+            "not-ground",
+            "cycle",
+            "depth",
+            "aggregate"
+          ]
+        }
+      }
+    },
+    "redacted_unavailable": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binding": {
+              "const": "redacted"
+            }
+          }
+        }
+      ]
+    },
+    "redacted_clause": {
+      "type": "object",
+      "properties": {
+        "blocker": {
+          "type": "object",
+          "properties": {
+            "samples": {
+              "const": "redacted"
+            },
+            "roles": {
+              "type": "object",
+              "additionalProperties": {
+                "not": {
+                  "required": [
+                    "constant"
+                  ],
+                  "not": {
+                    "properties": {
+                      "constant": {
+                        "const": "redacted"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "descent": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "unavailable": {
+                  "$ref": "#/$defs/redacted_unavailable"
+                },
+                "clauses": {
+                  "items": {
+                    "$ref": "#/$defs/redacted_clause"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

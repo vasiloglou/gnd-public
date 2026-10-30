@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/derivation-why-not/evidence/WN1/dynamic-query-successor.json",
+  "predecessor_sha256": "fe02b126eeb860964f64fe511b779bc8c4ceea7b4686d1cbd2baae577e2062b3",
+  "reason": "WN2 adds the why-not service, its closed redacted view and the CLI branch; the new candidates are reads of why-not payload and witness request records, not model queries",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/witness/service.py",
+      "why_not",
+      "_WHY_NOT_EXITS[result['status']]",
+      1
+    ],
+    [
+      "src/gnd/witness/view.py",
+      "_why_not_clause",
+      "step[key]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6802,
+  "result_occurrences": 8507
+}

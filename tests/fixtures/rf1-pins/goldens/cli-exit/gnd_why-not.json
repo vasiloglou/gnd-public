@@ -1,0 +1,12 @@
+{
+ "help": {
+  "exit": 0,
+  "stderr": "",
+  "stdout": "usage: gnd why-not [-h] --fact-type FACT_TYPE [--row ROW]\n                   [--reference-root REFERENCE_ROOT] [--raw]\n                   model population\n\npositional arguments:\n  model\n  population\n\noptions:\n  -h, --help            show this help message and exit\n  --fact-type FACT_TYPE\n  --row ROW             a witness request holding the one claimed row\n  --reference-root REFERENCE_ROOT\n  --raw                 explicitly expose population values\n"
+ },
+ "unknown_flag": {
+  "exit": 64,
+  "stderr": "usage: gnd why-not [-h] --fact-type FACT_TYPE [--row ROW]\n                   [--reference-root REFERENCE_ROOT] [--raw]\n                   model population\ngnd why-not: error: the following arguments are required: model, population, --fact-type\n",
+  "stdout": ""
+ }
+}

@@ -110,13 +110,16 @@ from gnd.witness.service import (
     replay as replay,  # noqa: PLC0414 -- compatibility surface
 )
 from gnd.witness.service import (
+    why_not as why_not,  # noqa: PLC0414 -- compatibility surface
+)
+from gnd.witness.service import (
     witness as witness,  # noqa: PLC0414 -- compatibility surface
 )
 from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not")  # noqa: RUF022 - approved stable order
 
 
 

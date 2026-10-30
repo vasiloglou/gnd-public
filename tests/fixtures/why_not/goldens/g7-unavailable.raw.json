@@ -1,0 +1,1 @@
+{"clauses": [], "exit_code": 4, "fact_type": "ratio", "mode": "rule", "order": "declared", "reason": "term:div-zero", "schema_version": "gnd-why-not/1", "status": "unavailable", "unavailable": {"binding": {"a": 0, "w": "val-w1"}, "reason": "term:div-zero", "source_relation": null}, "view": "raw", "work": {"binding_cells": 0, "joins": 0, "pre_joins": 2, "probes": 0}}

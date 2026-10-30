@@ -1,0 +1,18 @@
+{
+  "targets": [
+    {
+      "fact_type": "dispatch_reachable",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "WH-A"
+        },
+        {
+          "primitive": "String",
+          "value": "DEST-E"
+        }
+      ]
+    }
+  ],
+  "version": 1
+}

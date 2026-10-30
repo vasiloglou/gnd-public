@@ -1,0 +1,7 @@
+command: uv run pytest -q -p no:cacheprovider tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/test_why_not_anonymity.py tests/test_rf1_layering.py tests/test_rf4_peripheral.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py tests/test_public_v71_witness_corpus.py tests/test_public_optional_value_witness.py tests/test_derivation_rule.py tests/test_derivation_covers.py tests/test_public_derivation_evaluation_complete.py tests/test_public_derivation_parity_local.py tests/test_public_why_not.py tests/test_public_api.py tests/test_v61_phase2_api.py tests/test_public_reference_signatures.py tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_documentation_tutorials.py tests/test_public_acceptance_runner.py tests/test_why_not_repair_loop.py tests/test_il6_skill_census.py tests/test_ik6_skill_census.py tests/test_packaged_skills.py tests/test_public_workflow_claim_routes.py tests/test_verification_fixes.py tests/test_skill_prose_sync.py
+interpreter: Python 3.14.3
+tree: ae0820035c1a02dfe4513df2b7c1779471cc74e2 plus the uncommitted close changes
+All checks passed!
+2484 passed, 33 deselected in 368.06s (0:06:08)
+7 tutorial blocks passed
+9 tutorial blocks passed

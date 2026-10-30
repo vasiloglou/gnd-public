@@ -1,0 +1,5 @@
+2465 passed, 33 deselected in 337.64s (0:05:37)
+
+Recheck after the review fixes (loop, skill, docs and anonymity tests; why-not tutorial group):
+171 passed in 57.34s
+7 tutorial blocks passed

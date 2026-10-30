@@ -1,0 +1,353 @@
+# Phase WN1 -- the why-not explanation kernel
+
+## 1. Status
+
+**Draft r2, blocked.** Implementable once the owner approves plan r2 and rules
+WN-D2, WN-D6, WN-D7, WN-D9 and WN-D10 (plan §10); WN-D3 is adopted `(p1)` and
+confirmed at the gate. These change the algorithm, the module path, the limits
+class and the payload fields below. No implementation has started.
+
+## 2. Provenance
+
+- Derived from [plan r2](derivation-why-not-plan.md) §0, §2, §4 WN1 and §10, at
+  baseline `fb03739`.
+- r1 (SHA-256 `cbc99f2643350c4eea495142abf26a6f8c715642d74dbda01e80538702081f03`)
+  was read in plan review round 1 by four local readers; see the
+  [round-1 disposition](plan-review-r1-disposition.md). r2 applies themes A-K at
+  the owner's direction of 2026-10-30 (quoted in the plan header). **These r2
+  bytes carry no review opinion** until the confirmation round reads them.
+- Change tags: `(p1-X)` marks a round-1 repair under theme X.
+
+## 3. Obligations
+
+| Source | Obligation | Discharged in |
+|---|---|---|
+| plan WN1-C1, WN-R2, O9 | status first: fragment closure, production pre-evaluation, `unavailable` and `derived` from production | §6.1, §6.2; §8 T1, T8 |
+| plan WN1-C2, O1, O2, O4, O5 | declared-order prefix counts and the first blocking step; row mode | §6.3; §8 T2..T7 |
+| plan WN1-C3, WN-R3 | independent oracle and discriminating corpus | §6.6; §8 T9 |
+| plan WN1-C4, O7, WN-D3 | ground-only descent | §6.5; §8 T10, T11 |
+| plan WN1-C5, WN-R4, O10 | counted ceilings, including the pre-evaluation | §6.7; §8 T12, T13 |
+| plan WN1-C6 | one case per declared branch | §8 branch walk |
+| plan WN1-C7, WN-R7, O12 | layer map, RF6 query policy, outer-trace isolation | §6.8; §8 T15, T15b, T16 |
+| plan O3, WN-R5, WN-D9 | role-keyed raw samples (the kernel returns raw; WN2 redacts) | §6.3, §6.4 |
+| plan WN-R1 | no change to check, witness or report contracts | §8 T15 |
+| plan O14, WN-R8 | no downstream names | §8 T17 |
+
+## 4. Rules bound to WN1
+
+Plan rules:
+
+- **WN-R1** read-only: the kernel returns a value; it registers no branch and
+  writes no report field. It installs only a charge-only trace (§6.7) and resets
+  it. T15 pins check and witness payloads; T15b runs the kernel inside an active
+  witness trace and asserts that trace's rows and charges are unchanged. (p1-C)
+- **WN-R2** production decides: §6.2 takes `derived`, `unavailable` and
+  `unsupported` from production. The walk uses `extensions._joined_atom_candidates`
+  for atom matching, `values._identity_key` and `_identity_token` for identity,
+  the negation identity rule of `_apply_negation`, `terms.compare_terms` and
+  `terms.evaluate_term` plus `materialize_scalar` for head values. (p1-A, B)
+- **WN-R3** falsifiable: every `blocked` clause carries the counts that make the
+  claim checkable; T9 recomputes them independently.
+- **WN-R4** bounded and counted: §6.7.
+- **WN-R5** values: the kernel returns raw values; WN2's view redacts.
+- **WN-R6** one home: §6.3 is the normative definition until WN2 moves it to
+  `docs/reference/why-not.md`; this spec then cites the doc.
+- **WN-R7** layering and query policy: §6.8.
+- **WN-R8**: `auto=false`; anonymity by T17.
+
+Standing rules:
+
+1. **Totality.** The kernel is called only by WN2's service after the witness
+   input lane loads and validates the inputs. It is still total over its own
+   arguments: an unknown or non-derived fact type, a malformed row or a
+   malformed clause raises `WhyNotInputError` (a `ValueError`), never another
+   class (T14).
+2. **Cap bounds the algorithm.** Bindings, probes and cells are charged,
+   including inside the production pre-evaluation; T13 is a set of counter
+   tests. (p1-C)
+3. **Validation order.** Limits check, fact-type existence, derived-ness, row
+   shape (row mode), fragment classification, production pre-evaluation, then
+   the walk. A malformed row is refused before an unsupported fragment is
+   reported, because a caller can fix the row but not the fragment and should
+   hear about the fixable fault first. Pinned by a case with both faults (T14).
+   (p1-E: r1 had the opposite order with a reason that did not hold.)
+4. **One walk over N kinds.** One step loop handles the step kinds (atom,
+   negated, comparison, head) in a fixed sequence, with one counting and
+   charging path.
+5. **One home.** See WN-R6.
+6. **Measure, don't argue.** WN-D2's cost claim is measured by T13a/T13b
+   counters and recorded in the phase record's measurement section.
+
+## 5. Goal
+
+`gnd.witness.why_not.explain(model, candidate, fact_type_id, *, row=None,
+references=None, limits=DEFAULT_WHY_NOT_LIMITS) -> WhyNotResult`, where
+`candidate` is a loaded `Population`, `references` a resolved reference context
+(as `produce_witness` takes them), and `row` either `None` (rule mode) or a list
+of typed cells `{"primitive": …, "value": …}` in the target's role order, the
+witness target-cell format. (p1-G)
+
+On the T8 and T9 corpora: `status` is `unavailable` exactly when production puts
+the target in `unavailable`; `derived` exactly when production's extension
+contains the row (row mode) or is non-empty (rule mode); `unsupported` exactly
+for the §6.1 fragments; otherwise `blocked`, and every count and blocker record
+equals the oracle's. A ceiling breach raises `WhyNotWorkError`.
+
+## 6. Design
+
+### 6.1 Fragment classification
+
+Over the target's transitive dependency closure (`derivation_dependencies`):
+(p1-B)
+
+| Feature | Behavior |
+|---|---|
+| positive atoms, constants and repeated variables in atoms | walked |
+| `negate` atoms | walked |
+| `where` comparisons, root before clause-local (`iter_derivation_clauses`) | walked |
+| several clauses | one entry per clause |
+| derived or semiderived body predicates | read from production's exact extension |
+| body predicate with a string (opaque) rule | read as base from its asserted rows, as `_base_relations` does |
+| constant, variable and computed head terms | walked; computed terms are evaluated, not bound |
+| `aggregate` in a target clause | `unsupported`, reason `aggregate` |
+| target rule is a string | `unsupported`, reason `rule-opaque` |
+| an opaque (dict) value in any relation in the closure | `unsupported`, reason `opaque-value` |
+
+Unbound negated and head variables cannot reach the kernel: the validator refuses
+them (`_validation.py:4306`, `:4330`). The walk has no branch for them. (p1-E)
+
+### 6.2 Status first
+
+1. Build base relations as `produce_witness` does (`bind_population` with
+   references, then `checker._base_relations`).
+2. Under the charge-only trace (§6.7), call
+   `checker._evaluate_stratified_extensions(model, relations, heads=closure, exact=True)`.
+3. If the target is in `result.extensions.unavailable`: return `unavailable` with
+   `reason`, `source_relation` and the raw `binding`.
+4. Row mode: if the claimed row's identity token is in the target extension,
+   return `derived`. Rule mode: if the extension is non-empty, return `derived`.
+5. Otherwise walk each clause (§6.3) over production's relations and extensions.
+   No relation is read as empty unless production returned it. If every clause
+   walks to the end with a non-zero count, raise `WhyNotInternalError`; this is a
+   defect, not a result.
+
+### 6.3 Normative definition: steps and the blocking step
+
+For one clause *c* with positive atoms *a1..an*, negated atoms *n1..nm*,
+comparisons *w1..wp* and head *h*:
+
+1. Seed *B0*: rule mode `[{}]`. Row mode: one binding mapping each head variable
+   to its claimed cell value. Step `head-bind` with count 0 if a head variable
+   appears at two roles with different claimed values (`head-bind:variable`), or a
+   constant head term differs from its claimed cell (`head-bind:constant`).
+   Computed head terms are not bound here.
+2. For *k* = 1..n: *Bk* = the join of *B(k-1)* with the candidates of *ak*
+   (`_joined_atom_candidates`), indexed on shared variables, as a **set** of
+   bindings under `_identity_key`. A disconnected *ak* is a product. Step record
+   `{"kind": "atom", "index": k-1, "fact_type": …, "count": |Bk|}`.
+3. Each negated atom in order: remove bindings whose ground tuple is in the
+   relation. Step kind `negated`.
+4. Each comparison in order: keep bindings where `compare_terms` returns
+   `True`. (An unavailable result cannot occur here: §6.2 step 3 already
+   returned.) Step kind `comparison`.
+5. Head: evaluate every head term, materialize it, and in row mode keep bindings
+   whose row identity token equals the claimed row's. In rule mode the head step
+   cannot empty a non-empty set and is recorded only in row mode. Step kind
+   `head`.
+6. The **blocking step** is the first step whose count is 0. Later steps are not
+   computed; the clause carries `"steps_after_blocker": "not-evaluated"`. (p1-F)
+
+Counts are counts of distinct bindings over the variables bound so far, under
+`_identity_key` (so `1` and `1.0` are one value, `True` and `1` are two). (p1-D)
+
+The blocker record (p1-F):
+
+```json
+{"kind": "atom", "index": 1, "fact_type": "AuthorOf", "derivation": "base",
+ "ground": false,
+ "roles": {"work": {"variable": "$w", "bound": true},
+           "person": {"variable": "$p", "bound": false}},
+ "sample_count": 4,
+ "samples": [{"work": "w1"}, {"work": "w2"}]}
+```
+
+`roles` covers every role of the atom: `{"variable": name, "bound": bool}` or
+`{"constant": value}`. `ground` is true when every role is a constant or a
+bound variable. `samples` holds up to WN-D9 (5) bindings of the previous step,
+projected onto the atom's bound roles and **keyed by role**, in canonical order
+(sorted by canonical JSON). `sample_count` is the previous step's count. For
+`negated`, `comparison` and `head` blockers, `fact_type`/`roles` are replaced by
+the step's index and the bound variables it reads.
+
+### 6.4 Result types
+
+```python
+@dataclass(frozen=True)
+class ClauseExplanation:
+    clause_index: int
+    status: Literal["derived", "blocked"]
+    steps: tuple[dict, ...]
+    blocker: dict | None
+    steps_after_blocker: Literal["not-evaluated"] | None
+    descent: "WhyNotResult | None"
+    descent_stopped: Literal["not-ground", "cycle", "depth"] | None
+
+@dataclass(frozen=True)
+class WhyNotResult:
+    fact_type: str
+    mode: Literal["rule", "row"]
+    order: Literal["declared"]
+    status: Literal["derived", "blocked", "unavailable", "unsupported"]
+    reason: str | None
+    unavailable: dict | None        # reason, source_relation, binding (raw)
+    clauses: tuple[ClauseExplanation, ...]
+    work: dict                      # {"bindings": int, "probes": int, "cells": int}
+```
+
+A clause can be `derived` while the top status is `blocked` only in row mode
+with a computed head, where a clause derives other rows; the top status follows
+§6.2 alone. (p1-E)
+
+### 6.5 Descent (WN-D3 `(p1, adopted)`)
+
+When the blocker is an atom over a derived or semiderived predicate and at least
+one sample grounds it (`ground` true for that sample), call `explain` on that
+predicate in row mode with the first grounded row in canonical order, at depth
++ 1, sharing the work budget. Stop and record `descent_stopped` when no sample
+grounds the atom (`not-ground`), when (predicate, canonical row) is already on
+the path (`cycle`), or at depth 8 (`depth`). A descent that returns `derived` is
+an internal defect (production said the parent's body row is absent) and raises
+`WhyNotInternalError`. (p1-F, E)
+
+### 6.6 The independent oracle (tests only)
+
+`tests/why_not_oracle.py`: (p1-D)
+
+- imports nothing from `gnd.extensions`, `gnd.terms` or `gnd.values`; it reads the
+  model document as plain JSON;
+- owns its identity table: booleans are a domain apart from numbers; integers and
+  floats compare by exact numeric value; strings compare as strings;
+- computes derived body predicates by naive fixpoint over its own rows;
+- supports comparisons with literal operators over variables and constants only;
+  corpus rules use no function terms (those are covered by T5 and T7 against
+  production);
+- returns the full step list and blocker record, samples included.
+
+Corpus: hand-built discriminators, each a named case, plus 200 generated cases
+from seeds 0..199 (`random.Random(seed)`), each with at most 4 atoms and 12 rows
+per relation. Named discriminators:
+
+- identity duplicates (`1` and `1.0`; exact duplicate rows);
+- `True`, `1` and `"1"` in one column;
+- atoms 1 and 2 disconnected, atom 3 bridging them (declared order differs from
+  the evaluator's);
+- a constant in an atom; a variable repeated within an atom; a variable shared
+  across atoms;
+- negation that removes all bindings; a comparison that removes all bindings;
+- two clauses with different blockers;
+- a derived body predicate (one stratum) and a recursive one.
+
+A census test asserts each discriminator is present in the corpus.
+
+### 6.7 Ceilings and the charge-only trace (WN-D6)
+
+`WhyNotLimits`: the `WitnessLimits` fields and defaults plus `probes: int =
+200000`; `checked_limits`-style validation refuses raising any default. The
+kernel sets `extensions._WITNESS_TRACE` to a `_ChargeOnlyTrace` whose `charge(n)`
+adds to the shared budget and whose `row(...)` does nothing, for the duration of
+the pre-evaluation, then resets the token. (p1-C)
+
+Charges:
+
+- production pre-evaluation: through `_witness_charge`, as for `witness`
+  (each binding produced in a join or component product);
+- walk: each binding stored charges 1 to `joins` and its cell count to
+  `binding_cells`; each candidate row scanned and each index lookup charges 1 to
+  `probes`. A zero-output connected join is therefore charged for every left
+  binding it probes;
+- descent depth: `proof_depth` and the §6.5 ceiling.
+
+A breach raises `WhyNotWorkError`.
+
+Setting the trace also disables incremental-context reuse for that evaluation
+(`extensions.py:1026`), as it does for `witness`; this costs time, not results.
+
+### 6.8 Module, layering and query policy
+
+- `src/gnd/witness/why_not.py`, about 450 source lines.
+- `tools/gnd_layers.json`: `"gnd.witness.why_not": {"lane": "witness", "layer":
+  "lanes"}`.
+- Model reads go through `ModelIndex.for_model(model)` or `witness.io.roster`; no
+  direct `fact_types` or `roles` read, so the RF6 allow-list is unchanged (T16).
+  (p1-I)
+- No change to `extensions.py`. If the walk needs a private helper there that is
+  not already re-exported by `gnd.checker`, the spec is amended (append-only)
+  rather than the helper copied.
+
+## 7. Decisions
+
+| ID | Question | Readings and cost |
+|---|---|---|
+| D1 (=WN-D2) | Declared-order prefixes vs evaluator order | Declared order can enumerate products (exit 4 sooner); evaluator order names a different "first" atom on disconnected bodies. Different blockers, same exit code. |
+| D2 (=WN-D3) | Descent | `(p1, adopted)` ground-only; confirmed at the gate. |
+| D3 (=WN-D6) | Limits class | A sibling `WhyNotLimits` with a `probes` field, or widening `WitnessLimits`, which changes a class witness validates by iterating its fields. |
+| D4 (=WN-D7) | Module home | `gnd.witness.why_not` in the witness lane, or a new lane. |
+| D5 (=WN-D9) | Sample count | 5 proposed; payload size only. |
+| D6 | Semiderived target with an asserted but underived row | Proposed: production's extension decides (§6.2 step 4). If the row is in the extension, `derived`; if only asserted, the walk explains why the rule does not derive it. `check` reports such a row as `derived-extension-unsound`; the WN2 doc says so. |
+| D7 (=WN-D10) | Approval instrument for WN1 | Prose: the kernel's records are internal; WN2 fixes the wire form corpus-first. |
+
+r1's D6 (unavailable comparisons) is withdrawn: production decides (§6.2). (p1-A)
+
+## 8. Tests
+
+All in `tests/test_why_not_kernel.py` unless named; each asserts exact values.
+
+| ID | Case | Expected |
+|---|---|---|
+| T1 | status first: target unavailable through (a) its own comparison, (b) a computed head term, (c) a non-integral head, (d) a positive dependency, (e) a negated dependency; two-clause rule where one clause derives and the other has an unavailable comparison | `unavailable` with production's reason and `source_relation`; never `derived` or `blocked` |
+| T2 | two-atom rule, second atom has no match | `blocked`, counts `[n, 0]`, blocker atom index 1, `steps_after_blocker` set |
+| T3 | first atom empty; a constant in an atom filters everything | blocker index 0; constant role shown as `{"constant": …}` |
+| T4 | negated atom removes all bindings | blocker kind `negated` |
+| T5 | comparison removes all bindings | blocker kind `comparison` |
+| T6 | two clauses blocked at atom 0 and atom 2 | two clause entries, each with its own blocker |
+| T7 | row mode: derived row; underived row; `head-bind:variable`; `head-bind:constant`; computed head in row mode reaching 0 at `head`; computed head in rule mode | `derived`; `blocked`; each sub-branch named; `head` step blocker; rule-mode computed head walks without a `head` step |
+| T8 | agreement with production over T1..T7, T9 and T10 cases, plus a `covers` fixture (a derived body predicate read from asserted rows) and a semiderived target (D6) | top status equals the production classification in every case |
+| T9 | `tests/test_why_not_oracle.py`: the §6.6 corpus and census | every count and the full blocker record equal the oracle's; census finds each discriminator |
+| T10 | descent: blocker over a derived predicate with a grounding sample; over a recursive predicate with a different row at each level | nested result names the base predicate; recursion continues past the first level |
+| T11 | descent stops: not ground; cycle on the same (predicate, row); depth 8 | each `descent_stopped` reason |
+| T12 | each ceiling separately: `joins`, `binding_cells`, `probes`, `proof_depth`; a budget exhausted inside descent | `WhyNotWorkError` in each case |
+| T13 | counters: (a) four disconnected atoms of 18 rows (104,976 bindings > `joins` 100,000): breach, counter stops at `joins + 1`; (b) the twin with 17 rows (83,521): completes, final count equals the exact product; (c) a zero-output connected join with 5,000 left bindings: `probes` equals left bindings plus rows scanned, exactly; (d) the blow-up inside a derived body predicate: breach during pre-evaluation; (e) linear growth of `bindings` between two corpus sizes; a generous secondary wall cap of 10 s | exact counter values as stated; measured values recorded in the phase record |
+| T14 | aggregate, opaque target rule, opaque value two strata upstream, unknown and non-derived fact type, malformed row, a call with both a malformed row and an unsupported fragment | named reason or `WhyNotInputError`; the malformed row is reported first |
+| T15 | parity: existing witness corpus and check contract tests unchanged | pass unmodified |
+| T15b | `explain` inside an active witness trace | the outer trace's rows and charges are unchanged afterwards |
+| T16 | `test_rf1_layering.py`, `test_rf4_peripheral.py`, `test_rf6_query_policy.py` | pass, zero allowances, no new query rows |
+| T17 | denylist test over the milestone's new files; names read from owner configuration (an environment-free local file the owner names at the gate) | no match |
+
+Branch walk: top statuses `derived`/`blocked`/`unavailable`/`unsupported` (T7,
+T2, T1, T14); clause `derived` beside a `blocked` clause (T7); step kinds atom,
+negated, comparison, head, `head-bind:variable`, `head-bind:constant` (T2..T7);
+descent and its three stop reasons, and descent agreement (T10, T11); each
+ceiling (T12, T13); internal-defect raises (a monkeypatched production result
+that disagrees, T8).
+
+Focused gate: `uv run pytest -q tests/test_why_not_kernel.py
+tests/test_why_not_oracle.py tests/test_rf1_layering.py tests/test_rf4_peripheral.py
+tests/test_rf6_query_policy.py tests/test_gnd_arch.py
+tests/test_public_v71_witness_corpus.py tests/test_public_optional_value_witness.py`.
+
+## 9. Out of scope for WN1
+
+The CLI, API, schema, redacted view, docs and pins (WN2); the example (WN3);
+any change to `check`, `witness` or `extensions.py` semantics; partially bound
+descent.
+
+## 10. Size
+
+Estimate: about 450 source lines and about 800 test lines including the oracle
+and corpus. (p1-K) Measured at record time.
+
+## 11. Approval instrument
+
+This prose (D7 = WN-D10, proposed): the kernel's records are internal and WN2
+fixes the wire form corpus-first. T9's corpus is built at implementation from
+the named discriminators and fixed seeds.

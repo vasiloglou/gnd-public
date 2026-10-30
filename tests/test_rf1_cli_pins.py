@@ -18,7 +18,7 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 56  # IK5 adds `gnd export ilp` and `gnd import ilp-rules`; IL4 `gnd import mined-rules`
+EXPECTED_PARSERS = 57  # IK5 adds `gnd export ilp` and `gnd import ilp-rules`; IL4 `gnd import mined-rules`; WN2 `gnd why-not`
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )

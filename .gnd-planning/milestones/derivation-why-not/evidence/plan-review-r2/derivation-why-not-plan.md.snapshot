@@ -1,0 +1,462 @@
+# Derivation-failure explanation (why-not)
+
+Draft r2, 2026-10-30. **Awaiting owner review.** Milestone: `derivation-why-not`.
+Source: [gnd-public issue #66](https://github.com/vasiloglou/gnd-public/issues/66)
+(request GR-T7 in the reporter's numbering).
+Inspection baseline: `fb03739` (main after PR #64).
+Planning only. Plan approval, phase execution, implementation and publication
+have not occurred.
+
+**Revision history.** Tags mark where a sentence came from:
+
+- **r1:** first draft. Reviewed in plan review round 1 (four local readers) as
+  SHA-256 `77928fb29f34589501843e20fe1db945fab550ca15d3e899fc0b20d3bb84cc70`
+  (WN1 spec `cbc99f2643350c4eea495142abf26a6f8c715642d74dbda01e80538702081f03`);
+  see the [round-1 disposition](plan-review-r1-disposition.md).
+- **`(o)` 2026-10-30:** WN-D8, quoted: "WN-D8: use four local reviewer agents
+  for the plan and close review, as in recent milestones. Run plan review round
+  1 over r1." Instrument only.
+- **`(p1)` r2, 2026-10-30:** the owner's direction, quoted: "I accept the
+  round-1 disposition's repair themes A-K. Apply them as r2, take the proposed
+  answers where a decision is re-argued, and run the one confirmation round over
+  the blocking themes." Theme letters are cited as `(p1-A)` and so on. **Sentences
+  marked `(p1)` carry no review opinion until the confirmation round reads them.**
+  The re-argued answers for WN-D3, D4 and D5 were written after that direction;
+  they are marked `(p1, adopted)` and the plan gate confirms them. New decisions
+  WN-D10..D13 remain proposals.
+
+Rulings on individual decisions are not approval of the plan.
+
+## Problem and completion predicates
+
+When an admitted derivation rule derives no rows, `gnd check` reports an empty
+extension (a vacuous or passing derivation verdict) and nothing more. It does not
+say which body atom found no match, or under which bindings the join became
+empty. `gnd witness` explains a row that *was* derived; nothing explains a row
+that was not.
+
+The reporter runs a certified-answer loop: a model answers, and a GND rule over
+quote-verified facts either derives the claim or does not. The silent tier is
+the one where the rule derives nothing. On the reporter's tuning set no change
+of rule fixes those cases; the retry has to extract the missing fact, and that
+needs the missing predicate named. Without the signal, the reporter's only move
+is to re-ask the whole question. Their experiment added 25 facts and gained 3 of
+45 answers, and was dropped. The workaround today is one claim-and-recheck run
+per body atom, host-side.
+
+**What the issue asks for.** For a named rule, or for a claimed row of its head:
+the first body atom, in rule order, at which the conjunction becomes empty, with
+its predicate, the constants bound by the earlier atoms, and the row count each
+earlier atom still had. It offers three shapes: a `gnd why-not` command, a field
+in the `check` report, or a new `gnd.api` function.
+
+**Inspection of current bytes** (`fb03739`):
+
+- `gnd.api.__all__` has eleven names (`api.py:119`), of which eight are
+  functions (`python-api.md:8-9`). The issue's "eighth `gnd.api` function" counts
+  functions as of its pin (`8a3a98b`); why-not would be the ninth function and the
+  twelfth `__all__` name. Three pages still say "seven-function"
+  (`cli.md:108`, `tour.md:29`, `runtimes/decision.md:93`). (p1-I)
+- The witness lane (`src/gnd/witness/`, about 1,400 lines) captures grounded
+  firings through `_WITNESS_TRACE` (`extensions.py:454`) and charges work only
+  through it (`_witness_charge`, `extensions.py:457-460`). It records only
+  successful firings, so it cannot name a failure.
+- The production join (`extensions._clause_bindings`, `extensions.py:921`) does
+  **not** evaluate body atoms in declaration order. It splits the body into
+  connected components, reorders each to the earliest connected atom
+  (`_joined_bindings`, `extensions.py:683`), takes their product, applies `negate`
+  atoms, then `where` comparisons (`extensions.py:1699`), then head terms. The
+  join returns a bag; duplicates are removed only at head projection
+  (`extensions.py:952-958`). (p1-D)
+- In production, an unavailable comparison or head term for **any** binding, or a
+  non-integral head value, makes the **whole** head relation unavailable, even
+  when other bindings or clauses derive rows. It is carried out of band in
+  `_ExactExtensions.unavailable` and propagates to dependents
+  (`exact-origin-propagated`). `check` then reports `unchecked` (band 4).
+  Reproduced in round 1 with a `div(1, $a) > 0` rule. (p1-A)
+- Opaque values make every head downstream of them `unchecked`/`opaque-value`
+  through a transitive closure (`_evaluate_derivations_dispatch`). (p1-B)
+- `tests/test_rf6_query_policy.py` counts every `fact_types`/`roles` read under
+  `src/gnd` against an approved allow-list; new code reads the model through
+  `ModelIndex` or an already-counted helper. (p1-I)
+- The `check` report schema is a closed, versioned output contract with ten
+  derivation-verdict variants. Adding a field is a schema version bump.
+- `api.witness` returns raw values; only the CLI view redacts them
+  (`python-api.md:270-274`). `check` and `transition` spell their switch
+  `unredacted=False` (`test_public_api.py:18-20`). (p1-G)
+
+**Outcome.** A read-only explanation lane beside `witness`. Given a model, a
+population and a derived fact type (optionally one claimed head row), GND first
+asks its own evaluator whether the rule (or row) is derived, unavailable or not
+derived. Only when it is cleanly not derived does why-not walk each clause and
+report the first blocking step, the binding counts before it, and the roles the
+host must fill. A host can then extract the named missing fact, add it, and
+re-check.
+
+The milestone can close when:
+
+1. The production evaluator decides the status: `derived`, `unavailable` and
+   `unsupported` are taken from it, and why-not walks only what it reports as not
+   derived and available. On every corpus case, why-not's status agrees with
+   `check` (WN1). (p1-A)
+2. For every walked clause, the declared-order prefix counts and the first
+   blocking step match an independent naive oracle on a corpus that contains each
+   named discriminator, with a census assertion (WN1). (p1-D)
+3. All work, including the production pre-evaluation, is charged against fixed
+   ceilings; deterministic counter tests fix the outcome on both sides of each
+   ceiling (WN1, WN2). (p1-C)
+4. `gnd why-not` and `gnd.api.why_not` expose the kernel with the witness lane's
+   input ceilings, a closed redacted CLI view and the exit bands of WN-D5; an
+   output schema validates every payload; every pin listed in WN2-C3 is updated;
+   golden payloads were committed before the code (WN2). (p1-G, p1-H, p1-I, p1-K)
+5. A packaged two-gap example shows the repair loop with facts built only from
+   payload fields, negative controls, and a final `witness` exit 0 (WN3). (p1-J)
+6. Focused gates, independent diff reviews, the question sweep and a PR are
+   recorded. Owner acceptance is separate.
+
+## 0. Binding design rules
+
+| Rule | Requirement |
+|---|---|
+| WN-R1: Read-only, no new verdict | Why-not never changes a check verdict, exit code, report schema or extension. `gnd check` and `gnd witness` payloads stay byte-identical. The kernel may install only a charge-only trace (its row hook records nothing); an outer witness trace is restored unchanged (WN1 T15b). (p1-C) |
+| WN-R2: Production decides, the walk explains | `derived`, `unavailable` and `unsupported` come from the production exact evaluation over the target's dependency closure. The walk runs only when production reports the target not derived and available. A relation in `unavailable` is never read as empty. A walk that finds no zero step is an internal defect, raised as such. Matching, identity, negation, comparisons and head terms reuse the production helpers; there is no second matcher. (p1-A) |
+| WN-R3: A falsifiable answer | Every blocked clause carries the counts that make the claim checkable: the prefix before the blocker is non-zero and the prefix through it is zero. An independent oracle recomputes them. |
+| WN-R4: Bounded work, counted | Bindings produced, candidates probed and cells stored are charged against a `WhyNotLimits` class (WN-D6), including work inside the production pre-evaluation. A breach is exit 4 `work-limit` with partial counts withheld. Tests assert counters, not wall time. (p1-C) |
+| WN-R5: Values only where asked | The API returns raw values, as `api.witness` does; the CLI's default view is a closed allow-list selection that shows predicates, roles, variable names, counts and flags, never population values, including in nested descent, the claimed row, reasons and errors. `--raw` shows values. (p1-G, WN-D4) |
+| WN-R6: One home per sentence | The normative definition of the blocking step lives in the WN1 spec and, after WN2, in `docs/reference/why-not.md`; every other page cites it. The stable-API count sentence gets one home in WN2 (`python-api.md`); the other pages cite it. (p1-I) |
+| WN-R7: Layering and query policy | New modules join the `witness` lane in `tools/gnd_layers.json` with zero new allowances. Model reads go through `ModelIndex` or `witness.io.roster`; no new row in the RF6 query allow-list. Public names follow AGENTS.md shim rules. (p1-I) |
+| WN-R8: Approval, evidence, anonymity | `auto=false`. Plan authorship is not approval. Downstream applications are not named in committed artifacts; a mechanical denylist test over the milestone's new files enforces it, with names taken from owner configuration, not from this plan. (p1-K) |
+
+Each phase spec binds every rule above and every paid-for rule in
+`.claude/skills/process-phase/references/standing-rules.md`, by name or with a
+one-sentence argument that it does not apply.
+
+## 1. Scope, sources and authority
+
+| Source | Use |
+|---|---|
+| Issue #66 | Request, use case, proposed shapes |
+| `src/gnd/extensions.py` (join, negation, where, head, unavailable propagation, opaque closure, `_WITNESS_TRACE`) | Production semantics |
+| `src/gnd/witness/` and `src/gnd/commands/witness.py` | Input lane, targets, redaction, exit bands, command registration |
+| `src/gnd/model/_validation.py` (`iter_derivation_clauses`, negation and head safety rules) | Clause presentation and reachable branches |
+| `src/gnd/model_index.py`, `tests/test_rf6_query_policy.py` | Model query policy |
+| `src/gnd/api.py`, `docs/reference/python-api.md`, `cli.md`, `capabilities.md`, `docs/compatibility.md` | Public surface, pins, release-note rule |
+| `report.schema.json`, `payloads.py` | Why the check report is not the home (WN-D1) |
+| `tools/gnd_layers.json`, AGENTS.md, CONTRIBUTING.md | Layering, PR rules |
+
+A `gnd coverage MODEL` census counts experiment claims; it says nothing about
+whether an explanation feature exists, so it does not settle this scope.
+
+### Obligations harvested
+
+| ID | Obligation (source) | Kind | Owner |
+|---|---|---|---|
+| O1 | Name the first body atom at which the conjunction becomes empty (issue, "Asked for") | requested | WN1 |
+| O2 | Report its predicate (issue) | requested | WN1, WN2 payload |
+| O3 | Report constants bound by earlier atoms (issue) | requested | WN1 role-keyed samples; WN2 `--raw` |
+| O4 | Report the row count each earlier atom still had (issue) | requested | WN1 |
+| O5 | Rule mode and claimed-row mode (issue) | requested | WN1 |
+| O6 | Choose a surface (issue) | owner decision | WN-D1; WN2 |
+| O7 | Name the missing predicate so the host can extract it (issue, "Why") | requested outcome | WN1 role map and descent; WN3 |
+| O8 | Avoid one claim-and-recheck per atom (issue, "Workaround") | requested outcome | WN2: one call returns every clause |
+| O9 | Agreement with `check`; check and witness results unchanged | cross-cutting gate | WN-R1, WN-R2; WN1 T8; WN2-C5 |
+| O10 | Bounded work and counter-based time-bound tests (standing rule 2) | inherited | WN1-C5, WN2-C6 |
+| O11 | Totality over hostile input (standing rule 1) | inherited | WN2-C1 |
+| O12 | Layer map, RF6 query policy, shim inventory, API and CLI pins | cross-cutting | WN1-C7, WN2-C3 |
+| O13 | Docs and release note for the new public surface (`compatibility.md:7`) | cross-cutting | WN2-C4 (p1-I), WN3-C3 |
+| O14 | Downstream anonymity (owner constraint, as in `transition-check-performance` plan O14) | owner constraint | WN-R8 denylist test; every diff review |
+| O15 | Related direct-derivation request GR-T5 | noted | out of scope (§7); whether it is filed here is unchecked |
+| O16 | Reporter acceptance in their loop | carried | the reporter, after merge |
+
+## 2. Contract proposal and product behavior
+
+All of this is proposed unless marked otherwise; §10 lists the rulings.
+
+**Surface (WN-D1, proposed (a)).** A new command and API function in the
+witness lane:
+
+```text
+gnd why-not MODEL POPULATION --fact-type ID [--row REQUEST] [--reference-root DIR] [--raw]
+```
+
+```python
+gnd.api.why_not(model_path, population_path, fact_type, *, row_path=None,
+                reference_root=None) -> dict
+```
+
+`--row` takes the witness request format with **exactly one** target, whose
+`fact_type` must equal `--fact-type`; anything else is exit 3 (WN-D11). (p1-G)
+The API returns raw values like `api.witness`; the CLI view redacts unless
+`--raw` (WN-D4). Not a field in the `check` report: that would bump the report
+schema and make every check pay for an explanation nobody asked for.
+
+**Status first (WN-R2).** (p1-A) The kernel:
+
+1. classifies the fragment over the target's transitive dependency closure
+   (`unsupported` for aggregates in the target, opaque string rules on the
+   target, or any opaque value anywhere in the closure; a body predicate with a
+   string rule is read as base, as production reads it); (p1-B)
+2. runs the production exact evaluation over the closure under a charge-only
+   trace;
+3. returns `unavailable` with production's reason, binding (raw only) and
+   `source_relation` if the target is in `unavailable`;
+4. returns `derived` if the claimed row is in the extension by identity, or (rule
+   mode) the extension is non-empty;
+5. otherwise walks each clause.
+
+**Blocking step (WN-D2, proposed: declared-order prefixes).** For each clause
+(as presented by `iter_derivation_clauses`), walk the positive body atoms in
+declaration order. Prefix *k* is the conjunction of atoms 1..*k*, with head
+constants bound first in row mode. Its count is the number of distinct bindings
+under production identity. The first *k* whose count is 0 is the blocker. If
+every positive prefix is non-empty, continue with negated atoms, then `where`
+comparisons (root comparisons before clause-local ones), then head terms. The
+payload states `"order": "declared"`, so the reader knows it is not the
+evaluator's order.
+
+**Descent (WN-D3, `(p1, adopted)`: ground atoms only).** When the blocker is an
+atom over a derived or semiderived predicate and at least one sample binding
+grounds every role of it, why-not explains the first such grounded row
+(canonical order) as a claimed row, recursively, up to depth 8. Cycles are keyed
+on (predicate, canonical row). When no sample grounds the atom, descent stops
+with `not-ground`, and the payload's role map tells the host which roles are
+free; the host asks again with a row. Partially bound descent is not offered.
+(p1-F)
+
+**Payload sketch (CLI redacted view).** (p1-F)
+
+```json
+{"status": "blocked", "mode": "row", "order": "declared",
+ "clauses": [{"clause_index": 0, "status": "blocked",
+   "steps": [{"kind": "atom", "index": 0, "fact_type": "Quote", "count": 4},
+             {"kind": "atom", "index": 1, "fact_type": "AuthorOf", "count": 0}],
+   "blocker": {"kind": "atom", "index": 1, "fact_type": "AuthorOf",
+               "derivation": "base", "ground": false,
+               "roles": {"work": {"variable": "$w", "bound": true},
+                         "person": {"variable": "$p", "bound": false}},
+               "sample_count": 4, "samples": "redacted"},
+   "steps_after_blocker": "not-evaluated",
+   "descent": null}]}
+```
+
+Under `--raw`, `samples` is a list of up to WN-D9 (5) role-keyed objects, e.g.
+`{"work": "w1"}`, and constant terms show their values.
+
+**Exit bands (WN-D5, `(p1, adopted)`).** (p1-H)
+
+| Exit | Status | Meaning for a host loop |
+|---|---|---|
+| 0 | `blocked` or `derived` | an answer about derivability; read `status` |
+| 2 | `unsupported` | why-not cannot explain this fragment; reason given |
+| 3 | input invalid | as elsewhere |
+| 4 | `unavailable` or work limit | indeterminate, as `check`'s band 4; `reason` is `term:…`/`opaque` origin or `work-limit` |
+
+This keeps `unsupported` apart from `derived`, and `unavailable` in the same
+band as `check`'s indeterminate result. `cli.md`'s exit paragraph gains a
+why-not sentence.
+
+**Supported fragment (WN-D6).** Positive atoms, negated atoms, comparisons,
+constant, variable and computed head terms, multiple clauses, base and derived
+body predicates, reference populations. Aggregates in the target clause, an
+opaque target rule and opaque values in the closure are `unsupported`. The
+validator already refuses unbound negated and head variables
+(`_validation.py:4306`, `:4330`), so the walk has no branch for them. (p1-E)
+
+## 3. Dependencies and artifact homes
+
+WN1 → WN2 → WN3 → close. No phase depends on provider review, downstream
+execution, publication or certification.
+
+| Artifact | Home |
+|---|---|
+| Plan, specs, records, review notes | `.gnd-planning/milestones/derivation-why-not/` |
+| Kernel | `src/gnd/witness/why_not.py` (WN1) |
+| Service, CLI, view | `src/gnd/witness/service.py`, `cli.py`, `view.py` extended; registration in `src/gnd/commands/witness.py` (WN2) (p1-I) |
+| Output schema | `src/gnd/why-not.schema.json` (WN-D12): output-only contracts live at the package root like `report.schema.json`; `src/gnd/schema/` holds interchange schemas synced with canonical references (`test_schema_sync.py`) (p1-I) |
+| API | `src/gnd/api.py` re-export, appended to `__all__` (WN2) |
+| Reference doc | `docs/reference/why-not.md`, `zensical.toml` nav; rows in `cli.md`, `python-api.md`, `capabilities.md` (WN2) |
+| Golden payloads (WN2 approval corpus) | `tests/fixtures/why_not/` (WN-D10) |
+| Example | a small certified-answer model under `src/gnd/examples/` (name chosen in the WN3 spec) |
+
+## 4. Phases
+
+### WN1: The explanation kernel
+
+Spec: [phase-WN1-spec.md](phase-WN1-spec.md), r2, blocked on plan approval and
+on WN-D2, D6, D7, D9 and D10; WN-D3 is adopted and confirmed at the gate. (p1-K)
+
+- **WN1-C1:** status first: fragment closure, production pre-evaluation,
+  `unavailable` and `derived` from production; the walk only otherwise. (p1-A, B)
+- **WN1-C2:** declared-order prefix counts and the first blocking step for
+  positive atoms, negated atoms, comparisons and head terms, per clause; row
+  mode with both `head-bind` sub-branches.
+- **WN1-C3:** an independent oracle with its own identity table and naive
+  fixpoint agrees on every count and the full blocker record over a corpus with
+  each named discriminator and a census assertion. (p1-D)
+- **WN1-C4:** ground-only descent with (predicate, row) cycle keys and three stop
+  reasons, each with a case. (p1-F)
+- **WN1-C5:** ceilings charged everywhere, including the pre-evaluation; counter
+  tests on both sides of each ceiling; linear growth across two sizes. (p1-C)
+- **WN1-C6:** one case per declared branch (spec §8 branch walk). (p1-E)
+- **WN1-C7:** layer map entry; RF6 query policy unchanged; T15b outer-trace
+  isolation. (p1-I, C)
+
+### WN2: Public command, API and docs
+
+Approval instrument: corpus-first (WN-D10). Golden payloads for the redacted and
+`--raw` views, expected exits and refusals are committed red before code. (p1-K)
+
+- **WN2-C1:** `gnd why-not` and `gnd.api.why_not` through the witness input lane;
+  hostile inputs (oversize, deep nesting, NaN, long integers, unknown or
+  non-derived fact type, a row file with zero, two or a mismatched target) exit 3.
+- **WN2-C2:** `why-not.schema.json` validates every golden payload; the redacted
+  view is a closed allow-list in `witness/view.py`; a leak test asserts that no
+  population value appears anywhere in the redacted payload or in error text,
+  including descent and the claimed row. `VENDORED_SCHEMAS` in
+  `test_public_built_inventory.py` gains the schema. (p1-G, I)
+- **WN2-C3:** pins: (p1-I)
+  - API: `test_public_api.py` (signature row for `why_not`),
+    `test_v61_phase2_api.py:38` (`__all__` order), a new case in
+    `test_public_reference_signatures.py`, and `test_public_runtime.py:52`
+    (WN-D13);
+  - CLI: `test_rf1_cli_pins.py` (`EXPECTED_PARSERS` 56 → 57, `cli/tree.json`,
+    help goldens for Python 3.11, 3.13 and 3.14, new `cli-help/gnd_why-not` and
+    `cli-exit/gnd_why-not` goldens, `goldens.sha256`, captured with
+    `tools/rf1_pins.py capture`), `test_rf5_commands.py:118`, a
+    `tests/fixtures/rf5-handlers/cases.json` case; `commands/witness.py` and
+    `witness.cli` keep importing `gnd.witness.service`, not `gnd.api`.
+- **WN2-C4:** docs: `docs/reference/why-not.md` is the one home, with a
+  `zensical.toml` nav entry; `cli.md` row (probed by
+  `test_reference_command_routes_exist`) and exit sentence; `python-api.md`
+  section with a runnable `gnd-run` block and fixture; `capabilities.md` row; the
+  stable-API count sentence gets one home and the three stale pages cite it; a
+  release note. (p1-I)
+- **WN2-C5:** `gnd check` and `gnd witness` payloads byte-identical on the
+  existing contract fixtures.
+- **WN2-C6:** counter-based time-bound tests over target intake and view
+  rendering. (p1-C)
+
+### WN3: The repair loop, end to end
+
+- **WN3-C1:** a small packaged example with a claim rule over quoted facts and a
+  population with **two** missing base facts; it joins the example list in
+  `tools/check_installed_docs.py`. (p1-I, J)
+- **WN3-C2:** a committed test walks the loop in row mode on the claimed row:
+  (p1-J)
+  - before repair, `check` gives the expected derivation verdict and the row is
+    absent from the extension;
+  - why-not exits 0 `blocked` and names gap 1; the test builds the fact **only**
+    from payload fields (`fact_type`, the role map, raw samples) plus an explicit
+    "extracted" table supplying free roles;
+  - negative controls: the same values on the previous step's predicate, and the
+    right predicate with a wrong bound value, both leave the claim underived and
+    why-not's blocker unchanged;
+  - after repair 1, why-not names gap 2; after repair 2 it exits 0 `derived`;
+  - `witness` then exits 0 for the row.
+- **WN3-C3:** a how-to page (`docs/how-to/`). Business-facing tutorial pages, if
+  any, follow the skills-not-code rule.
+- **WN3-C4:** packaged skills: the spec decides whether `gnd-export` (which owns
+  the witness workflow) or `gnd-dev-session` routes to why-not; any edit is a
+  route sentence only. `gnd-induce` is not packaged at this baseline. (p1-I)
+
+### Milestone close (not a feature phase)
+
+Final parity evidence, the four-reader close review (WN-D8), the question sweep,
+carryovers (O15 to its own issue if the owner wants one, O16 to the reporter),
+and a PR.
+
+### Obligation-to-gate map
+
+| Obligation | Gate |
+|---|---|
+| O1, O2, O4 | WN1-C2, C3 |
+| O3 | WN1-C2 samples; WN2-C2 |
+| O5 | WN1-C2 |
+| O6 | WN-D1; WN2-C1 |
+| O7 | WN1-C4; WN3-C2 |
+| O8 | WN2-C1 |
+| O9 | WN1-C1 and T8; WN2-C5; close |
+| O10 | WN1-C5; WN2-C6 |
+| O11 | WN2-C1 |
+| O12 | WN1-C7; WN2-C3 |
+| O13 | WN2-C4; WN3-C3 |
+| O14 | WN-R8 denylist test; every diff review |
+| O15, O16 | close carryovers |
+
+## 5. Documentation, skill and compatibility surfaces
+
+- New: one command, one API function (ninth function, twelfth `__all__` name,
+  appended), one schema, one reference page, one how-to, one example.
+- No change to the `check`, `witness` or `replay` contracts.
+- Release note in WN2, with the surface (`compatibility.md:7`). (p1-I)
+- Packaged skills: WN3-C4.
+
+## 6. Risks and required controls
+
+| Risk | Control |
+|---|---|
+| Why-not and `check` disagree | WN-R2 status-first design; WN1 T8 over the whole corpus |
+| An unavailable relation read as empty | WN-R2; T8 cases for target, positive dependency, negated dependency, descent target |
+| Declared order misleads when the evaluator reorders | `"order": "declared"` in the payload; a corpus case where the orders differ |
+| Unbounded work in the pre-evaluation or in probes | WN-R4; charge-only trace; counter tests (WN1-C5) |
+| Values leak | WN-R5 closed view; WN2-C2 leak test |
+| "Blocked" read as "false" | Docs state why-not explains a missing derivation in this population; it proves nothing about the world |
+| The oracle shares code with the kernel | Oracle imports nothing from `gnd.extensions`, `gnd.terms` or `gnd.values` |
+| Downstream names leak | WN-R8 denylist test; review lens |
+| A repair round introduces defects | §8 round budget and stop rule |
+
+## 7. Out of scope
+
+- A field in the `check` report or any report schema bump.
+- The direct-derivation request (GR-T5) and the reporter's other requests.
+- Automatic repair: GND names the gap; adding facts is the host's move.
+- Partially bound descent (WN-D3).
+- Explaining constraint violations (already reported by `check`).
+- Aggregates and opaque rules; native, LQP and PyRel runtimes.
+- Changes inside the downstream application. Publication, release,
+  certification.
+
+## 8. Execution, approval and review protocol
+
+`auto=false`. Each phase follows `process-phase`: spec, owner gate,
+implementation and focused tests, an independent diff review, a refactoring
+review and a record. No code is written before recorded spec approval. Plan and
+close review: four local readers, WN-D8 `(o)`, with lenses: correctness against
+production semantics; implementability; protocol and anonymity; test design and
+falsifiability. The per-phase diff instrument is **proposed**: one local reader
+per phase. (p1-K) One reader is one reader, not a panel.
+
+Round budget: round 1 ran over r1. One confirmation round runs over r2, limited
+to the blocking themes (A, B, C, D, I, J). Then the stop rule from
+`review-convergence.md` applies. No third round without a new owner request.
+Work happens on a topic branch, then a PR; merge requires the owner.
+
+## 9. Per-phase verification story
+
+| Phase | Expected result | Focused gate (p1-K) |
+|---|---|---|
+| WN1 | Kernel agrees with production and the oracle; counters fix outcomes; no public diff | `uv run pytest -q tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/test_rf1_layering.py tests/test_rf4_peripheral.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py tests/test_public_v71_witness_corpus.py tests/test_public_optional_value_witness.py` |
+| WN2 | Goldens pass; schema validates; pins updated; check/witness parity | WN1 gate plus `tests/test_public_why_not.py tests/test_public_api.py tests/test_v61_phase2_api.py tests/test_public_reference_signatures.py tests/test_rf1_cli_pins.py tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_documentation_tutorials.py`; `test_public_built_inventory.py` and `test_public_runtime.py` are distribution lanes, run on owner selection |
+| WN3 | Two-gap repair loop passes; docs build | WN2 gate plus the example test and the installed-docs check |
+
+The broad suite runs on explicit owner selection.
+
+## 10. Owner decisions and open questions
+
+| ID | Question | Readings and cost | Ruling or proposal |
+|---|---|---|---|
+| WN-D1 | Surface | (a) new command + API in the witness lane; (b) a `check` report field: schema bump, cost on every check; (c) both | proposed **(a)** |
+| WN-D2 | Which order defines "first blocking atom" | (a) declaration-order prefixes: readable, can enumerate a product (exit 4 sooner); (b) the evaluator's reordered join: cheaper, but the "first" atom depends on connectivity | proposed **(a)**, order named in the payload |
+| WN-D3 | Descent into a derived blocker | (a) none; (b) ground atoms only, cycles keyed on (predicate, row); (c) partially bound descent: a new pattern mode | **(b)** `(p1, adopted)` |
+| WN-D4 | Values in output | (a) API raw like `api.witness`, CLI redacted with `--raw`; (b) `unredacted=False` like `check`: API redacted by default, a third spelling for the lane; (c) a new `raw=False`: a fourth convention | **(a)** `(p1, adopted)` |
+| WN-D5 | Exit bands | (a) r1: `0` blocked, `2` derived or unsupported: host cannot tell them apart; (b) `0` blocked or derived (read `status`), `2` unsupported, `3`, `4` unavailable or work limit | **(b)** `(p1, adopted)` |
+| WN-D6 | Fragment and ceilings | fragment as §2; ceilings in a sibling `WhyNotLimits` (WitnessLimits values plus a `probes` field) rather than widening `WitnessLimits`, which witness's `checked_limits` iterates | proposed as stated (p1-C) |
+| WN-D7 | Code home | (a) `gnd.witness.why_not`; (b) a new lane | proposed **(a)** |
+| WN-D8 | Review instrument for plan and close | | **Ruled (o) 2026-10-30:** four local readers |
+| WN-D9 | Sample count | | proposed 5, total count always given |
+| WN-D10 | Approval instrument per phase | WN1 prose: its payload is internal and WN2 fixes the wire form; WN2 corpus-first: it ships a serialized format, exit codes and refusals (`review-convergence.md`) | proposed as stated (p1-K) |
+| WN-D11 | Rows per call | (a) one row matching `--fact-type`, else exit 3; (b) many rows with a combining rule: a host loop asks per claim anyway | proposed **(a)** |
+| WN-D12 | Schema home and vendoring | (a) `src/gnd/why-not.schema.json`, no skill copy; (b) `src/gnd/schema/` beside the witness schemas, which mixes output with synced interchange schemas; (c) also vendor into `gnd-export/references` with a sync test and two `EXPECTED_SKILL_FILES` pins | proposed **(a)** |
+| WN-D13 | The stale ten-name tuple in `test_public_runtime.py:52` | (a) fix it in WN2 to the twelve names, recorded; (b) leave it: a distribution probe that would then be two names behind | proposed **(a)** |
+
+No open question is inherited from an earlier milestone.

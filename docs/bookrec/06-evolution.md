@@ -184,7 +184,7 @@ path.write_text(json.dumps(contract, indent=2) + "\n")
 Static conformance does not run the project's declared smoke examples. Execute
 them against the evolved model as well. This uses the same versioned testing
 support as the generated pytest module, without requiring pytest; it is separate
-from the seven stable application API functions.
+from the stable [Python API](../reference/python-api.md).
 
 <!-- gnd-run expect=0 -->
 ```python

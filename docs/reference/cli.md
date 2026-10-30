@@ -85,6 +85,8 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 | `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate |
 | `gnd replay MODEL POPULATION CERTIFICATE --json` | Independent finite inference replay |
 | `gnd witness-view CERTIFICATE --json` | Non-replayable presentation of a certificate |
+| `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted |
+| `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, values redacted |
 | `gnd export souffle ...` / `gnd export lean ...` / `gnd export pyrel ...` | Selected bounded export profile |
 | `gnd install --project` | Copy packaged skills to project discovery roots |
 | `gnd doctor --project` | Diagnose installed skills and shadowing across scopes |
@@ -95,7 +97,9 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 
 Snapshot check and verify bands are `0` pass, `1` alethic failure, `2` vacuous,
 `3` invalid input, and `4` indeterminate. A witness band `2` instead means
-missing, unknown, or unsupported targets. A session band `15` means
+missing, unknown, or unsupported targets. A why-not band `0` means an answer
+(`blocked` or `derived`), `2` an unsupported rule and `4` an unavailable term
+or a work limit. A session band `15` means
 nonacceptance; conformance band `13` means drift; closure band `14` means
 incomplete obligations; solve band `17` means a halted walk.
 
@@ -105,5 +109,5 @@ rather than assigning one universal meaning to every nonzero exit.
 
 The authoritative parser lives in
 [cli.py](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/cli.py).
-CLI composition does not enlarge the seven-function stable
-[Python API](python-api.md).
+CLI composition does not enlarge the stable [Python API](python-api.md),
+whose function list is the one count of record.

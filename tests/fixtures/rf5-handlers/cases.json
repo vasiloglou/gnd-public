@@ -29,6 +29,17 @@
     "target": "gnd.witness.cli.run"
   },
   {
+    "id": "why-not",
+    "argv": [
+      "why-not",
+      "missing",
+      "missing",
+      "--fact-type",
+      "missing"
+    ],
+    "target": "gnd.witness.cli.run"
+  },
+  {
     "id": "import rai-orm",
     "argv": [
       "import",

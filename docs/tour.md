@@ -26,7 +26,7 @@ requirements. → [Constraint coverage](reference/capabilities.md#constraint-cov
 
 **Batch and in-process.** Check a directory of populations into one matrix with
 `gnd check MODEL --populations DIR`, or call the same checker from your application
-through the seven-function `gnd.api`. → [Python API](reference/python-api.md)
+through the stable `gnd.api`. → [Python API](reference/python-api.md)
 
 ## Check plans, not only states
 

@@ -57,7 +57,7 @@ def test_installed_validator_requires_matching_wheels(tmp_path, monkeypatch, sam
             target = Path(argv[argv.index('--out-dir') + 1])
             target.mkdir()
             with zipfile.ZipFile(target / 'example.whl', 'w') as wheel:
-                for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds'):
+                for domain in ('bookrec', 'expense', 'dispatch', 'release', 'release_governance', 'approvals', 'plan_apps', 'refunds', 'quoted_claims'):
                     info = zipfile.ZipInfo(f'gnd/examples/{domain}/README.md')
                     content = 'same' if same_bytes or target.name == 'release' else 'changed'
                     wheel.writestr(info, content)

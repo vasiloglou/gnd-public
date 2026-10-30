@@ -4,15 +4,16 @@ Planning opened 2026-10-30 for [issue #66](https://github.com/vasiloglou/gnd-pub
 when a derivation rule derives nothing, say which body step emptied the join,
 with the binding counts before it, so a host can add the missing fact.
 
-**Status: plan r3 and WN1 spec r3 were approved by the owner on 2026-10-30
-([plan gate](001-plan-gate.md)).** Plan review closed by its stop rule after
-round 2; r3 applies the round-2 repairs with no further round and carries no
-review opinion. No phase is selected and nothing is implemented. `auto=false`.
+**Status: WN1 complete ([record](002-phase-WN1.md)); WN2 next.** Plan r3 and WN1
+spec r3 were approved by the owner on 2026-10-30 ([plan gate](001-plan-gate.md)).
+Execution runs under `/process-milestone derivation-why-not auto`: phase gates
+inside this milestone are delegated approvals (auto=true), recorded as such.
 Baseline `fb03739` (main after PR #64).
 
 - [Canonical plan (r3, approved)](notes/derivation-why-not-plan.md)
 - [WN1 spec (r3, approved)](notes/phase-WN1-spec.md)
 - [Plan gate record](001-plan-gate.md)
+- [WN1 record](002-phase-WN1.md), with the [diff review](notes/phase-WN1-claude-review.md)
 - [Plan review round 1 disposition](notes/plan-review-r1-disposition.md), with reader notes 1-4
 - [Plan review round 2 disposition](notes/plan-review-r2-disposition.md), with reader notes 1-4
 
@@ -47,8 +48,5 @@ Plan review:
   blocking, 25 self-inflicted (ratio 0.93). The stop rule holds, so no third
   round runs.
 
-Open at the WN1 gate: the base commit, the forbidden-token list for the
-anonymity test (only digests are committed), and any restated T13 counter
-values.
-
-Next action: an explicit `process-phase WN1 derivation-why-not` selection.
+Next action: WN2 (`gnd why-not`, `gnd.api.why_not`, schema, pins and docs),
+corpus-first.

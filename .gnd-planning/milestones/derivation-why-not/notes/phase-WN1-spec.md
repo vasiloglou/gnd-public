@@ -380,3 +380,122 @@ corpus and census. Measured at record time.
 This prose (D7 = WN-D10, proposed): the kernel's records are internal and WN2
 fixes the wire form corpus-first. T9's corpus is built at implementation from
 the named discriminators and fixed seeds.
+
+## WN1 gate -- delegated approval (auto=true), 2026-10-30
+
+Appended after approval; the approved r3 bytes are bound in
+[001-plan-gate.md](../001-plan-gate.md) (SHA-256
+`78fbfe88d414bd4db3fa305cab6b8eaf6147963ad3ab31a5631fdc2a6faf3977`).
+
+**Authorization.** The owner invoked `/process-milestone derivation-why-not auto`
+on 2026-10-30, delegating plan/spec/close approval rulings and amendments within
+this milestone. The rulings below are agent decisions recorded under that
+delegation, not the owner's reading of the spec.
+
+**Instrument.** Spec prose (WN-D10, ruled at the plan gate). Per-phase diff
+review: one local reviewer agent (plan §8, approved). No spec panel.
+
+**The three open gate items:**
+
+1. **Base commit:** `fb037390eef37015ef5244f841e2b5399940193a` (main after PR #64),
+   reachable from `origin/main`. WN1 builds on the milestone topic branch above it.
+2. **Forbidden tokens for T17:** taken from the owner's standing rule against
+   naming downstream applications in this repository and from the downstream
+   names in issue #66 (four tokens). Only their normalized SHA-256 digests are
+   committed, in `tests/test_why_not_anonymity.py`.
+3. **T13 restatement (standing rule 6), before implementation.** Arithmetic on
+   the approved fixtures shows a ceiling the spec did not account for: each
+   stored binding also charges its cell count to `binding_cells`, whose
+   `WitnessLimits` default is 100,000. T13(b) at 310 rows stores
+   310 + 96,100 × 2 + 1 × 2 = 192,512 cells and would breach on cells, not complete.
+   Amendment: `WhyNotLimits.binding_cells` defaults to **400,000** (the walk's
+   cell budget, a different quantity from the witness certificate's cells); the
+   input-loading projection onto `WitnessLimits` uses the witness defaults for
+   every field it reads. T13(a) at 320 rows then breaches `joins` first
+   (`joins` = 100,001 with 199,680 cells). T13(d) uses 500 rows per atom, so
+   production's product charges 500 + 250,000 > `pre_joins` 200,000. All other T13
+   figures stand. The prior answer (`binding_cells` = the witness default) is
+   retained here as superseded.
+
+**Implementability sweep.** Every §6 requirement was checked against the code at
+the base commit: the evaluator signature and result types
+(`extensions.py:1469-1811`), the four `_witness_charge` sites, the
+`checker` re-exports of every helper §4 names, `witness.io.validate_targets` for
+row shape, and `derivation_dependencies`. Each has at least one implementation
+that satisfies it as written.
+
+**Decision: proceed to implementation.**
+
+## Implementation findings
+
+(Appended as found.)
+
+- **F1 (refutes §6.8, scope).** The RF6 policy has a second gate the spec did
+  not name: `test_dynamic_candidate_inventory_is_complete_and_live` counts every
+  non-literal subscript and `.get`, including annotations such as
+  `tuple[dict, ...]`. The kernel adds 41 such candidates. Discharged the way
+  earlier phases did: an authenticated successor at
+  `evidence/WN1/dynamic-query-successor.json` (predecessor: the IL-close
+  successor), appended to `DYNAMIC_SUCCESSORS` in
+  `tests/support/pyrel_application_successors.py`. No direct model-query row is
+  added; the direct-read policy is unchanged.
+- **F2 (refutes §6.1 row 6 and T11 case 4).** Validation refuses a structured
+  rule whose body reads a fact type with a string rule ("structured rule
+  depends on ..., whose derivation is an opaque string"). The "string-rule body
+  predicate read as base" row and its descent stop cannot be reached from a
+  validated model; the T11 case is dropped. `descent_stopped: not-derived` is
+  reached by base blockers (T2, T10).
+- **F3 (refutes T1(c)).** A non-integral head cannot reach the exact path from a
+  validated model: a computed head into a non-Integer role requires `round`, and
+  a rounded value into an Integer role derives a row (`check` reports `fail`, not
+  `unchecked`). The T1(c) case is dropped.
+- **F4 (T12).** A descent chain whose levels are all empty stores no bindings, so
+  the budget-inside-descent case uses `probes` (one index lookup per level;
+  breach at 4 > 3) instead of `joins`.
+- **F5 (§6.6).** The schema spells equality `=` (`comparison_operator` enum), not
+  `==`; the oracle uses `=`.
+- **F6 (§6.6 corpus).** Validation refuses a body component that feeds no head
+  role, so the generator puts every variable in the head and keeps a variable in
+  every atom. Opaque cells need population `format_version` 2.
+- **F7 (WN-R1 wording).** The kernel's own code registers no branch. The
+  production pre-evaluation it reuses records the same derivation branches
+  `witness`'s identical call records, observable only under
+  `capture_branches()`.
+- **F8 (T8 scope).** Aggregate targets are excluded from T8's map: `check`
+  evaluates them while why-not refuses them by fragment (T14).
+- **F9 (§6.3, non-atom blockers).** `reads` lists the bound variables the
+  blocking step's own terms mention: the negated atom's, the comparison's
+  operands', or the head's.
+
+- **F10 (T8, prose targets).** `check` emits no derivation verdict for a
+  string-rule target, so T8 treats an absent verdict as "no comparison" and
+  asserts only why-not's `rule-opaque` there.
+- **F11 (§6.7, review WN1-R1).** Duplicate population rows made the walk iterate
+  pairs that produced no new binding and so were never charged. Candidates are
+  now deduplicated by identity after the charged scan (the first occurrence is
+  kept), so every inner pair is a charged distinct binding.
+
+### Measured T13 values
+
+| Case | Spec | Measured |
+|---|---|---|
+| (a) 320 rows | `joins` 100,001; cells 199,680; `pre_joins` < 1,000 | as stated |
+| (b) 310 rows | counts `[310, 96100, 1, 0]`; `joins` 96,411; cells 192,512 | as stated; `probes` 96,722 |
+| (c) zero-output join | `probes` 10,300; `joins` 5,000 | as stated |
+| (d) 500 rows | `pre_joins` breach | 200,001 |
+| (e) 155 rows | `joins` 24,181 | as stated |
+
+### Residuals accepted at WN1
+
+- The opaque-row strip outside the closure (review mutant M11) is behaviorally
+  equivalent on every input tried: evaluation of the closure never reads the
+  stripped rows. It is kept as a cheap guard; no test can pin it.
+- For non-atom blockers the oracle compares kind, index and count, not `reads`
+  or `samples`, and it emits no `head` steps. Those fields are pinned by the
+  kernel's named T5-T7 cases instead.
+- The "declared order differs" discriminator restates the evaluator's ordering
+  rule rather than calling production, as §6.6 allows.
+- The B24 wall-time check in `test_public_v71_witness_corpus.py` missed its 10 s
+  cap once (10.5 s) under concurrent load. Run alone, the B24 `binding_cells`
+  cases pass on this branch and at the base commit, and WN1 changes no tracked
+  `src/` file.

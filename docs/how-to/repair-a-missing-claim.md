@@ -36,8 +36,8 @@ gnd validate quoted_claims/model.orm.json
 OK: quoted_claims/model.orm.json is a valid GND ORM model
 ```
 
-`gnd check` passes: the population covers `certified`, asserts no certified
-rows, and none derive. That is consistent, and it does not tell you why the
+`gnd check` passes: the population covers the claim's fact type, asserts
+none of its rows, and none derive. That is consistent, and it does not tell you why the
 claim is missing.
 
 <!-- gnd-run expect=0 output=stdout -->
@@ -186,7 +186,7 @@ proved
 
 ## Keep the population consistent
 
-The row now derives, but the population still covers `certified` and asserts
+The row now derives, but the population still covers that fact type and asserts
 no rows, so `gnd check` would report the derived extension incomplete. Assert
 the derived row, and the check passes again:
 

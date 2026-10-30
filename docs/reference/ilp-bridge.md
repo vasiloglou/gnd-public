@@ -370,15 +370,15 @@ Fact values reach the prompt only as ASCII JSON, so they cannot start a line.
 Model text reaches it through the verbalization's neutralizers, which keep each
 name or reading on one line but leave its characters alone. So the prompt
 builder refuses `forged-line` when a verbalization line, trimmed, equals one of
-the prompt's own structural lines, starts with ```` ``` ````, or has the form
+the prompt's own structural lines, starts with three backticks, or has the form
 `model: ID`. That fixes the prompt's structure, not its meaning: a
 sentence inside a value is still text the model reads. GND's re-check of every
 clause is the control.
 
 **The answer** is the text of the one block that opens with a line equal to
-```` ```json ```` and closes with the next line equal to ```` ``` ````. No
-block, two blocks, an unterminated block, or any other line starting with
-```` ``` ```` outside the block is no answer. The first line of
+three backticks followed by `json` and closes with the next line equal to
+three backticks. No block, two blocks, an unterminated block, or any other
+line starting with three backticks outside the block is no answer. The first line of
 the form `model: ID` is recorded as the agent's own claim, never verified.
 
 ## Boolean rule sets

@@ -92,6 +92,6 @@ unavailable with null unavailable/reason valid: True
 
 **Reproduction:** a `grep -rniE "seven[- ]function|seven stable"` over the docs finds only these two lines.
 
-**Fix:** Change both to "the stable [Python API](…/python-api.md)" with no number.
+**Fix:** Change both to "the stable [Python API](../../../../docs/reference/python-api.md)" with no number.
 
 No blocking defects found: totality, redaction of what the code emits, the exit bands, intake and the pins all hold under the probes.

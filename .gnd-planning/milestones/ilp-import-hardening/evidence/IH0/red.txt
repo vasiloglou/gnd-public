@@ -1,0 +1,26 @@
+# IH0 regression tests at the fix's parent commit cbc97b2 (src and tools identical to fb03739)
+# command: uv run pytest -q -o addopts='' tests/test_ih0_review.py -p no:randomly --tb=no -rA
+# exit: 1 (16 failed, 4 passed; the 4 passing are controls)
+FFFF..FFFF.FFFFFF.FF                                                     [100%]
+=========================== short test summary info ============================
+PASSED tests/test_ih0_review.py::test_t1_an_offered_threshold_passes_the_vet[rules]
+PASSED tests/test_ih0_review.py::test_t1_an_offered_threshold_passes_the_vet[popper]
+PASSED tests/test_ih0_review.py::test_t2_the_first_refusal_and_what_it_left_unevaluated[fragment]
+PASSED tests/test_ih0_review.py::test_t5_off_threshold_is_named_where_the_adapter_is_documented[Import]
+FAILED tests/test_ih0_review.py::test_t1_an_unoffered_threshold_is_refused[rules]
+FAILED tests/test_ih0_review.py::test_t1_an_unoffered_threshold_is_refused[rules-second]
+FAILED tests/test_ih0_review.py::test_t1_an_unoffered_threshold_is_refused[popper-ge]
+FAILED tests/test_ih0_review.py::test_t1_an_unoffered_threshold_is_refused[popper-le]
+FAILED tests/test_ih0_review.py::test_t1_the_rules_adapter_names_its_import_refusal
+FAILED tests/test_ih0_review.py::test_t2_the_first_refusal_and_what_it_left_unevaluated[binding]
+FAILED tests/test_ih0_review.py::test_t2_the_first_refusal_and_what_it_left_unevaluated[unnamed]
+FAILED tests/test_ih0_review.py::test_t2_the_first_refusal_and_what_it_left_unevaluated[vet]
+FAILED tests/test_ih0_review.py::test_t2_output_the_import_refused_at_its_reader_is_a_row[rules-polarity]
+FAILED tests/test_ih0_review.py::test_t2_output_the_import_refused_at_its_reader_is_a_row[popper-syntax]
+FAILED tests/test_ih0_review.py::test_t2_an_unindexed_refusal_is_shown_without_an_index
+FAILED tests/test_ih0_review.py::test_t3_labelled_evidence_the_reader_refuses_fails_the_tool_loudly
+FAILED tests/test_ih0_review.py::test_t4_an_aggregate_is_refused_by_name[sum-plus]
+FAILED tests/test_ih0_review.py::test_t4_an_aggregate_is_refused_by_name[seventeen-elements]
+FAILED tests/test_ih0_review.py::test_t5_off_threshold_is_named_where_the_adapter_is_documented[Boolean rule sets]
+FAILED tests/test_ih0_review.py::test_t6_a_subtype_column_the_export_did_not_write_is_refused
+16 failed, 4 passed in 1.63s

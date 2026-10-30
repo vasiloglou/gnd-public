@@ -54,6 +54,10 @@ UNLABELLED = (
 #: A note a phase record adds to a row's reproducibility (IL6-D5 (o)).
 NOTES = {("rules", 1): "; repeated runs pick other thresholds (IL3-F5)"}
 _REFUSAL = re.compile(r"(?:clause|rule) (\d+): ([a-z]+(?:-[a-z]+)*): ")
+_NAME = re.compile(r"[a-z]+(?:-[a-z]+)*")
+#: Refusals the import raises before it rewrites clause 0, whatever clause they
+#: name: the adapter's vet (IH0 finding C).
+_BEFORE_ANY_CLAUSE = ("off-threshold",)
 
 
 class ComparisonError(Exception):
@@ -76,8 +80,18 @@ def _first_refusal(live: Path) -> dict[str, Any] | None:
     stderr = live / "import-stderr.txt"
     if not stderr.exists():
         return None
-    match = _REFUSAL.match(stderr.read_text(encoding="utf-8"))
-    return {"name": match.group(2), "index": int(match.group(1))} if match else None
+    from gnd.export.ilp import refusal_name
+
+    message = stderr.read_text(encoding="utf-8")
+    if not message.strip():
+        return None
+    name = refusal_name(message)
+    if not _NAME.fullmatch(name):
+        # A message that names no refusal, such as "invalid model: ..." (IH0 fix review, finding 4).
+        return None
+    match = _REFUSAL.match(message)
+    # An un-indexed refusal (a binding, the reader) names no clause (IH0 finding C).
+    return {"name": name, "index": int(match.group(1)) if match else None}
 
 
 def _admitted(live: Path, exit_code: int | None) -> int | None:
@@ -108,12 +122,25 @@ def labelled_row(root: Path, adapter: str, invocation: int, directory: str, outp
     outcome = _json(live / "outcome.json")
     row = _common(adapter, invocation, outcome, "refunds")
     path = live / output
-    proposed = _proposed(adapter, path.read_text(encoding="utf-8")) if path.exists() else None
+    from gnd.export.ilp import IlpError, refusal_name
+
     refusal = _first_refusal(live)
-    if row["import_exit"] is None:
+    try:
+        proposed = _proposed(adapter, path.read_text(encoding="utf-8")) if path.exists() else None
+    except (IlpError, ValueError) as error:
+        # The import refused this output at its reader: the row reports that
+        # refusal with no clause count (IH0 fix review, finding 3). Any other
+        # output GND cannot read is counted by no row, as review 5 (IH0 finding D).
+        if row["import_exit"] != 3 or refusal is None or refusal["name"] != refusal_name(str(error)):
+            raise ComparisonError(f"{directory}: {error}: GND cannot read this output; the table "
+                                  "does not report it") from None
+        proposed = None
+    if row["import_exit"] is None or proposed is None:
         not_evaluated = None
     elif refusal is None:
-        not_evaluated = 0
+        not_evaluated = 0 if row["import_exit"] == 0 else None
+    elif refusal["index"] is None or refusal["name"] in _BEFORE_ANY_CLAUSE:
+        not_evaluated = proposed
     else:
         not_evaluated = proposed - refusal["index"] - 1
     return {**row, "clauses_proposed": proposed, "first_refusal": refusal,
@@ -178,7 +205,9 @@ def _cell(value: Any) -> str:
 
 
 def _refusal(value: dict[str, Any] | None, unit: str) -> str:
-    return "—" if value is None else f"`{value['name']}`, {unit} {value['index']}"
+    if value is None:
+        return "—"
+    return f"`{value['name']}`" + ("" if value["index"] is None else f", {unit} {value['index']}")
 
 
 def _head(row: dict[str, Any]) -> str:

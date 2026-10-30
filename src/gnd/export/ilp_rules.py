@@ -20,8 +20,9 @@ from gnd.exits import EXIT_ILL_FORMED
 from gnd.export.ilp import IlpError, canonical_bytes
 from gnd.export.ilp_popper import threshold_rows
 
-__all__ = ["ADAPTER_VERSION", "EXPORT_REFUSALS", "FALSE_SPELLINGS", "MAX_CELLS", "MAX_FEATURES", "REFUSALS",
-           "TRUE_SPELLINGS", "extract_ruleset", "parse_ruleset", "render"]
+__all__ = ["ADAPTER_VERSION", "EXPORT_REFUSALS", "FALSE_SPELLINGS", "IMPORT_REFUSALS", "MAX_CELLS",
+           "MAX_FEATURES", "REFUSALS", "TRUE_SPELLINGS", "check_columns", "extract_ruleset",
+           "parse_ruleset", "render"]
 
 ADAPTER_VERSION = "1"
 FEATURES_SCHEMA_VERSION = "gnd-ilp-features/1"
@@ -41,6 +42,8 @@ FALSE_SPELLINGS = ("=0", "=0.0", "=False", "<=0.5")
 EXPORT_REFUSALS = ("no-features", "too-many-features", "too-large", "column-name")
 #: The reader's own refusals, in the order it applies them; ``unparsable`` aside.
 REFUSALS = ("ordered-rule-list", "empty-antecedent", "negation-as-failure", "propositional-conjunction")
+#: The import's adapter check (IH0 finding A), after the run record's bindings.
+IMPORT_REFUSALS = ("off-threshold",)
 
 _COLUMN = re.compile(r"([a-z][a-z0-9_]*?)__([1-9][0-9]*)__([1-9][0-9]*)__"
                      r"((?:gt|lt)_t_[A-Za-z0-9_]+?)__(m?)([0-9]+)")
@@ -226,6 +229,37 @@ def parse_ruleset(text: str) -> dict[str, Any]:
                           f"the rule conjoins {len(rule)} features")
         clauses.append(_clause(rule[0][0]))
     return {"schema_version": "gnd-ilp-clauses/1", "clauses": clauses}
+
+
+def check_columns(document: dict[str, Any], neutral: dict[str, Any], text: str = "") -> None:
+    """Refuse a rule whose column the feature table does not hold (IH0 finding A).
+
+    wittgenstein only sees the columns of ``features.json``, so a column the
+    export did not write is no rule it could have learned; the clause is refused
+    ``off-threshold`` by index, as Popper's and ILASP's imports refuse an
+    unoffered threshold. Every column of a declared ``gt``/``lt`` comparison
+    at an integer position of a predicate of that arity is checked, whatever
+    the two types, since a value subtype can let a cross-type join through the
+    fragment table (IH0 fix review, finding 1). Any other is left to the
+    fragment table, which names it (IL3's approved corpus). Every clause is :func:`_clause`'s
+    shape, so its column name is spelled back from it; the TEXT is not needed."""
+    written = {column["name"] for column in _columns(neutral)}
+    arities = {row["name"]: row["types"] for row in neutral["predicates"]}
+    comparisons = {row["name"]: row["type"] for row in neutral["comparisons"]
+                   if row["operator"] in (">", "<")}
+    integers = {row["type"] for row in neutral["comparisons"]}
+    for index, clause in enumerate(document["clauses"]):
+        fact, comparison = clause["body"][0]["atom"], clause["body"][1]["atom"]
+        variable, constant = comparison["args"][0]["var"], comparison["args"][1]["const"]
+        position, types = int(variable[1:]), arities.get(fact["predicate"])
+        if types is None or len(types) != len(fact["args"]) or \
+                comparison["predicate"] not in comparisons or types[position] not in integers:
+            continue
+        name = (f"{fact['predicate']}__{position}__{len(fact['args'])}__"
+                f"{comparison['predicate']}__{_suffix(constant)}")
+        if name not in written:
+            raise IlpError(EXIT_ILL_FORMED, f"clause {index}: off-threshold: {name} is not a "
+                           "column the export writes")
 
 
 def extract_ruleset(stdout: str) -> str:

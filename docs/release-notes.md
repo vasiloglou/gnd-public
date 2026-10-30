@@ -3,6 +3,18 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: ILP import hardening (2026-10-29)
+
+- The rules and Popper imports refuse a threshold their export never offered
+  as `off-threshold`: a rules column the export could write but did not, and a
+  Popper `ge_` or `le_` threshold name that `bias.pl` does not declare.
+- An ILASP `#sum+` aggregate, or one with more than 16 terms and conditions,
+  is refused `aggregate` by clause, not by a schema error.
+- `tools/ilp_comparison.py` names a refusal that cites no clause, counts every
+  clause as not evaluated after a refusal before the first clause, reports
+  output the import refused at its reader, and exits 2 on other learner output
+  it cannot read.
+
 ## Unreleased: more rule learners (2026-10-28)
 
 The ILP bridge now has an adapter for each of five learners, and each was run

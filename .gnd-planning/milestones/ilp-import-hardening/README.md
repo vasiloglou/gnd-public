@@ -17,8 +17,11 @@ r2 bytes carry no review opinion.
   - **Close:** runs the full local CI on both Pythons before the PR merges.
 - [IH0 spec (r2, draft)](notes/phase-IH0-spec.md)
 
-**Open decisions:** none in the plan or the IH0 spec; every row is ruled in
-the [plan gate](001-plan-gate.md).
+**IH0 done** ([record](002-phase-IH0.md)): four readers, 13 finding rows, no
+blocking; five fixed with regressions, E, F and J assigned to IH1, three
+carried ([triage](notes/phase-IH0-triage.md)).
 
-**Next action:** the owner selects `process-phase IH0 ilp-import-hardening`
-to run the review.
+**Open decision:** the batched ruling IH0-D4 on two held fixes that would move
+earlier corpora's approved answers (the record's "Held for the owner").
+
+**Next action:** the owner rules on the held fixes; then IH1's spec.

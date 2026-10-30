@@ -21,7 +21,10 @@ r2 bytes carry no review opinion.
 blocking; five fixed with regressions, E, F and J assigned to IH1, three
 carried ([triage](notes/phase-IH0-triage.md)).
 
-**Open decision:** the batched ruling IH0-D4 on two held fixes that would move
-earlier corpora's approved answers (the record's "Held for the owner").
+**IH0-D4, ruled 2026-10-29 (o):** "Keep both held". The LLM threshold check
+and Popper's binary and infix spellings stay unapplied.
 
-**Next action:** the owner rules on the held fixes; then IH1's spec.
+[IH1 spec (r1, draft)](notes/phase-IH1-spec.md): open decisions IH1-D3 to
+IH1-D5.
+
+**Next action:** the owner rules on IH1's spec and its decisions.

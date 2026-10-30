@@ -1,0 +1,48 @@
+# IH2 close review 1, finding 2: d is a subtype of two unrelated top types, x with a
+# String reference and y with an Integer one, so d's values may be "1" or 1. Synthetic.
+version: 1
+model_id: tops
+source:
+  kind: fixture
+object_types:
+  - id: x
+    name: X
+    kind: entity
+    reference: { mode: popular, value_type: xc }
+  - id: xc
+    name: Xc
+    kind: value
+    primitive: String
+  - id: y
+    name: Y
+    kind: entity
+    reference: { mode: popular, value_type: yc }
+  - id: yc
+    name: Yc
+    kind: value
+    primitive: Integer
+  - id: d
+    name: D
+    kind: entity
+    subtype_of: [x, y]
+    inherits_reference: true
+    derivation: asserted
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: tc }
+  - id: tc
+    name: Tc
+    kind: value
+    primitive: String
+fact_types:
+  - id: leads
+    reading: "{D} leads {Team}"
+    roles:
+      - { object_type: d, role_name: d }
+      - { object_type: team, role_name: team }
+  - id: heads
+    reading: "{D} heads {Team}"
+    roles:
+      - { object_type: d, role_name: d }
+      - { object_type: team, role_name: team }

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/ilp-import-hardening/evidence/IH1/dynamic-query-successor.json",
+  "predecessor_sha256": "3ffd3a42217459e945e5425301bfda45ff4e12fa3051b72eb4cc4c489fb67575",
+  "reason": "IH2: the own-reference-join check (IH-D1 (b)), with reference_primitives and _kind after the review's F1 and the close review. Added: in mapped, the relations[relation] lookup and the annotations of its local table; in relation_table, the two primitives.get lookups; Relation's primitives field annotations; reference_primitives and its resolve helper's lookups (rows.get, out[identifier]) and annotations. Removed: nothing. Syntax census only.",
+  "result_distinct_rows": 6795,
+  "result_occurrences": 8507,
+  "added": [
+    [
+      "src/gnd/export/ilp_amie.py",
+      "Relation",
+      "frozenset[str]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "Relation",
+      "tuple[frozenset[str], frozenset[str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "dict[str, tuple[set[str], set[str]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "relations[relation]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "set[str]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "tuple[set[str], set[str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "reference_primitives",
+      "dict[str, frozenset[str]]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "reference_primitives",
+      "frozenset[str]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "relation_table",
+      "primitives.get(types[0], frozenset())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "relation_table",
+      "primitives.get(types[1], frozenset())",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "resolve",
+      "frozenset[str]",
+      2
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "resolve",
+      "out[identifier]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "resolve",
+      "rows.get(identifier)",
+      1
+    ]
+  ],
+  "removed": []
+}

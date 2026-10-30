@@ -1,0 +1,10 @@
+# Close regressions at 4389b61 (no close source change), in a scratch worktree. Paths are rewritten to <repo>. pytest's "where 1 = CompletedProcess(...)" lines, which carry absolute paths, are dropped.
+$ uv run pytest -q -o addopts='' -p no:cacheprovider --tb=line tests/test_ih_close.py
+E   AssertionError: Traceback (most recent call last):
+      KeyError: 'clauses'
+E   AssertionError: Traceback (most recent call last):
+      TypeError: list indices must be integers or slices, not str
+FAILED tests/test_ih_close.py::test_r2_1_an_llm_answer_without_clauses_fails_the_tool_by_name[no-clauses]
+FAILED tests/test_ih_close.py::test_r2_1_an_llm_answer_without_clauses_fails_the_tool_by_name[not-an-object]
+2 failed in 0.47s
+exit: 1

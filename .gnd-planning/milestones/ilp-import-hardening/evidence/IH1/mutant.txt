@@ -1,0 +1,6 @@
+# T4 against a mutant: IH1's ilp_service with the facts-digest check moved after count_mined_rules
+# command: uv run pytest -q -o addopts='' tests/test_ih1_counting.py -k t4 --tb=line
+# exit: 1
+E   AssertionError: rule 0: reflexive-atom: f_works_in joins ?a with itself
+<scratch>/IH1/parent/tests/test_ih1_counting.py:138: AssertionError: rule 0: reflexive-atom: f_works_in joins ?a with itself
+1 failed, 10 deselected in 0.71s

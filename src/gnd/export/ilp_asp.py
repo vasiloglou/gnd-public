@@ -55,6 +55,8 @@ _UNDERSCORE_CONSTANT = re.compile(r"_+[a-z]")
 _COMPARE_OPS = frozenset({"<", "<=", "=", "==", "!=", "<>", ">=", ">"})
 _ARITHMETIC = frozenset({"+", "-", "*", "/", "\\", "**", "&", "?", "^"})
 _AGGREGATES = frozenset({"count", "sum", "sum+", "min", "max"})
+#: ilp-clauses.schema.json's maxItems for an aggregate's args.
+_AGGREGATE_ARGS = 16
 _ESCAPES = {"\\": "\\", '"': '"', "n": "\n"}
 _TOKEN = re.compile(r"""
     (?P<space>[ \t\r\n]+)
@@ -335,7 +337,9 @@ class _Reader:
         if self.peek()[0] == "op" and self.peek()[1] in _COMPARE_OPS:
             self.take("op")
             self.term(depth)
-        return {"aggregate": {"name": name, "args": args}}
+        # Nor is all of the body: the schema's name pattern has no "+" and its
+        # element cap is 16, so the clause reaches check 2 (IH0 finding H).
+        return {"aggregate": {"name": name.replace("+", "_plus"), "args": args[:_AGGREGATE_ARGS]}}
 
     def arguments(self, depth: int) -> list[Any]:
         self.take("op", "(")

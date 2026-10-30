@@ -1,0 +1,45 @@
+# IH2 review F2: ownref-string with each fact type's roles reversed, so the
+# own-reference join is in the object position. Synthetic.
+version: 1
+model_id: ownref_object
+source:
+  kind: fixture
+object_types:
+  - id: staff
+    name: Staff
+    kind: entity
+    reference: { mode: popular, value_type: staff_code }
+  - id: staff_code
+    name: StaffCode
+    kind: value
+    primitive: String
+  - id: manager
+    name: Manager
+    kind: entity
+    subtype_of: [staff]
+    inherits_reference: false
+    reference: { mode: popular, value_type: manager_no }
+    derivation: asserted
+  - id: manager_no
+    name: ManagerNo
+    kind: value
+    primitive: String
+  - id: team
+    name: Team
+    kind: entity
+    reference: { mode: popular, value_type: team_code }
+  - id: team_code
+    name: TeamCode
+    kind: value
+    primitive: String
+fact_types:
+  - id: manages
+    reading: "{Team} is managed by {Manager}"
+    roles:
+      - { object_type: team, role_name: team }
+      - { object_type: manager, role_name: manager }
+  - id: works_in
+    reading: "{Team} employs {Staff}"
+    roles:
+      - { object_type: team, role_name: team }
+      - { object_type: staff, role_name: staff }

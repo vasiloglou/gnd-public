@@ -1,0 +1,18 @@
+# IH2 close review 1, finding 3: manager 1 and staff 1 are one value.
+format_version: 2
+population:
+  model: diamond-number.orm.yaml
+  model_id: diamond_number
+  source: fixture
+  covers: [manages, works_in]
+instances:
+  staff: [1, 2]
+  manager: [1, 2]
+  team: ["t1", "t2"]
+facts:
+  manages:
+    - { manager: 1, team: "t1" }
+    - { manager: 2, team: "t2" }
+  works_in:
+    - { staff: 1, team: "t1" }
+    - { staff: 2, team: "t2" }

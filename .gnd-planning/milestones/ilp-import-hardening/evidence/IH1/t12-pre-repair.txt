@@ -1,0 +1,5 @@
+# T12 against IH1's hold() before the fix review's repair (tables built inside the refusal handler)
+# command: uv run pytest -q -o addopts='' tests/test_ih1_counting.py -k t12 --tb=line
+# exit: 1
+E   ilp_comparison.ComparisonError: opaque: GND cannot count this rule; the table does not report it
+1 failed, 12 deselected in 2.10s

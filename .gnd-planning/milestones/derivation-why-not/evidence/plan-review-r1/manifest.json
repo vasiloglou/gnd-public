@@ -1,0 +1,18 @@
+{
+  "round": 1,
+  "date": "2026-10-30",
+  "instrument": "four local reviewer agents (WN-D8, owner-selected 2026-10-30)",
+  "inspection_head": "fb03739",
+  "subjects": {
+    "notes/derivation-why-not-plan.md": "evidence/plan-review-r1/derivation-why-not-plan.md.snapshot",
+    "notes/phase-WN1-spec.md": "evidence/plan-review-r1/phase-WN1-spec.md.snapshot"
+  },
+  "sha256": {
+    "evidence/plan-review-r1/derivation-why-not-plan.md.snapshot": "77928fb29f34589501843e20fe1db945fab550ca15d3e899fc0b20d3bb84cc70",
+    "evidence/plan-review-r1/phase-WN1-spec.md.snapshot": "cbc99f2643350c4eea495142abf26a6f8c715642d74dbda01e80538702081f03",
+    "notes/plan-review-r1-reader-1.md": "e9977174ac53c4c1388d32d42b34ec77be44cd6b65800431597507f2f738300f",
+    "notes/plan-review-r1-reader-2.md": "828a67c90c320813c6640a4168e3ba0ec00491512c437afa8178f37342ec1df8",
+    "notes/plan-review-r1-reader-3.md": "82c43a07402ffcac277151db4cb51f51a23ae8347413085fae6028d3493ed0e0",
+    "notes/plan-review-r1-reader-4.md": "8473f266df616e88453a132d29f70e17994d48d5e1ac336c9f1f11683c9f24ec"
+  }
+}

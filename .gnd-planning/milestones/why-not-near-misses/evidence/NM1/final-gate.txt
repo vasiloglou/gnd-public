@@ -1,0 +1,15 @@
+$ uv run pytest -q -p no:cacheprovider tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/test_public_why_not.py tests/test_why_not_anonymity.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py
+314 passed in 39.30s
+exit 0
+$ uv run pytest -q -p no:cacheprovider tests/test_why_not_repair_loop.py tests/test_rf5_commands.py tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py tests/test_public_api.py tests/test_public_reference_signatures.py tests/test_rf2_pre_move_pins.py
+434 passed in 12.90s
+exit 0
+$ uv run pytest -q -p no:cacheprovider tests/test_public_built_inventory.py tests/test_public_runtime.py tests/test_v61_phase2_api.py
+29 passed, 30 deselected in 0.49s
+exit 0
+$ uv run ruff check src/gnd/witness/why_not.py tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/why_not_oracle.py tests/support/pyrel_application_successors.py
+All checks passed!
+exit 0
+$ uv run python -c import unicodedata, sys; print(unicodedata.unidata_version, sys.version.split()[0])
+16.0.0 3.14.3
+exit 0

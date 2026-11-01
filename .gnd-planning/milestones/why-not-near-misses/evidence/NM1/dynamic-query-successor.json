@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/derivation-why-not/evidence/WN-merge/dynamic-query-successor.json",
+  "predecessor_sha256": "bdc3ebd6e9cd2f62e2480d1ef28572a6131c4c31910cfa9c431d89fec3aa2df1",
+  "reason": "why-not-near-misses NM1 (2026-11-01): the near-miss search in the why-not kernel adds 26 syntax candidates in src/gnd/witness/why_not.py (type annotations and per-role subscripts over atom bindings and fact rows), removed nothing. Syntax census only; no model-query exception widening.",
+  "added": [
+    [
+      "src/gnd/witness/why_not.py",
+      "_eligible",
+      "dict[str, list[str]]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_eligible",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_eligible",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_eligible_rows",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_eligible_rows",
+      "list[dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_eligible_rows",
+      "self.facts.get(str(atom.get('fact_type')), ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_miss_pair",
+      "candidate[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_miss_pair",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_miss_pair",
+      "sample[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "binding[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "dict[str, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "dict[tuple, dict[tuple, dict]]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "dict[tuple, dict]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "fact[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "list[dict]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "pairs[:NEAR_MISS_SHOWN]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "roles[role]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "roles[role]['variable'][1:]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "rows[key]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "self.facts.get(str(atom.get('fact_type')), ())",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "sorted(group.values(), key=_canonical)[:NEAR_MISS_SHOWN]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "sorted(rows[key].values(), key=_canonical)[:NEAR_MISS_SHOWN]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "tuple[int, bool, list[dict]]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "add",
+      "group.get(identity)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "add",
+      "projection[role]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "eligible",
+      "fact[role]",
+      2
+    ]
+  ],
+  "removed": [],
+  "result_distinct_rows": 6864,
+  "result_occurrences": 8584
+}

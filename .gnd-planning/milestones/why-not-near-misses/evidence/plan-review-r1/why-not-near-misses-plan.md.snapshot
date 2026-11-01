@@ -1,0 +1,457 @@
+# Near-miss values in why-not, and a disclosure mode
+
+Draft r1 (with the documentation phase added before review), 2026-11-01.
+**Awaiting owner review.** Milestone: `why-not-near-misses`.
+Source: [gnd-public issue #70](https://github.com/vasiloglou/gnd-public/issues/70)
+(request GR-T8 in the reporter's numbering), plus the owner's direction of
+2026-11-01 on disclosure.
+Inspection baseline: `33c260e` (main after PR #69).
+Planning only. Plan approval, phase execution, implementation and publication
+have not occurred.
+
+**Provenance tags.**
+
+- **`(o1)` 2026-11-01:** the owner's direction in session, quoted: "Except for 1
+  I think you should go with your recommendations. For 1 I think we need a
+  general mode flag. when gnd works in a safe environment meaning it is behind
+  the public interface it should not redact. But when it is facing a customer it
+  should." The "recommendations" are the five design questions raised on issue
+  #70 in the same session; §10 records which rulings this direction covers.
+  Item 1 was redaction; its answer is NM-D1 and phase NM2.
+- **`(o2)` 2026-11-01:** asked "Four local readers or the six-seat panel?" with
+  four local readers offered first, the owner replied, quoted: "yes I also want
+  you to add a plan to update the documentation". Read as ruling NM-D9 (four
+  local readers) and as the requirement for phase NM4. If "yes" meant something
+  else, NM-D9 reverts to open.
+
+A direction on design questions is not approval of the plan.
+
+## Problem and completion predicates
+
+`gnd why-not` names the first step of a clause that left no bindings and up to
+five bindings that reached it. When that step is a positive atom, nothing says
+what the atom's fact type *does* hold. A join that is empty because one side
+spells an entity `ACME CORP.` and the other `Acme Corp.` reads the same as a
+join with nothing to meet. The reporter's deletion test localized all 30 gaps
+where the missing fact was simply absent, but only 2 of 4 where bound values
+existed on both sides and failed to meet; one real failure (an entity name
+re-extracted in capitals) was found only by reading a dump.
+
+**What the issue asks for.** A diagnostic, not a change of meaning: for an empty
+join, report the join variables and a few values from each side that differ only
+by case, whitespace or punctuation. GND keeps exact matching; deciding that two
+spellings name one entity stays the caller's job.
+
+**What the owner added `(o1)`.** Near-miss values are population values, so
+they fall under redaction. Today GND has two redaction conventions and no
+deployment-level switch:
+
+- **Declared redaction** (`src/gnd/redaction.py`): roles a model declares
+  sensitive are projected out of check-family outputs (13 `OutputKind`s:
+  validate, check, admission, verify, transition, plan, batch, measure, three
+  session kinds, population verbalization, diff). Applied by default in the API
+  and the CLI; `unredacted=True` or the hidden CLI flag `--unredacted`
+  (`commands/_arguments.py:60`, used by 6 parsers, plus `judgments.py:15`)
+  retains values. Reports carry `{"mode": "applied" | "unredacted", ...}`.
+- **View redaction** (witness lane): `api.witness` and `api.why_not` return raw
+  values; the CLI views `witness`, `replay`, `why-not` show no population values
+  unless `--raw` (`witness/cli.py:18-40`). `lean` and `souffle` exports also take
+  `--raw` (`export/lean_cli.py:18`, `souffle_cli.py:19`).
+
+No environment variable or configuration file selects either today
+(`grep environ src/gnd` finds only process plumbing). An operator running GND
+behind their own interface has to pass a raw flag on every call; an operator
+exposing GND to customers has no way to stop a caller from passing one.
+
+**Outcome.**
+
+1. Each atom blocker in a why-not payload carries a bounded, deterministic list
+   of near-miss rows: rows of the blocker's fact type that would have joined if
+   string values were compared after a fixed normalization, but do not join
+   exactly. Matching stays exact; verdicts, statuses and exits are unchanged.
+2. One disclosure mode, set by the operator, decides whether GND emits
+   population values across both conventions: `internal` emits them, `customer`
+   withholds them and refuses requests for them.
+
+The milestone can close when:
+
+1. On every corpus case, near-misses equal an independent oracle's, the
+   exactness invariant holds (no near-miss row matches exactly), and every
+   existing why-not golden is unchanged except for the added fields and
+   `work.probes`, whose new literal values the NM1 record lists (NM1).
+2. Near-miss search is charged against the walk budget with literal-valued
+   counter tests on both sides of the ceiling (NM1).
+3. In `customer` mode, a leak test over every emitter in both conventions finds
+   no population value, and every raw request is refused with exit 3 or a
+   `ValueError`; in `internal` mode the same calls return raw values; with the
+   mode unset, every existing contract fixture is byte-identical (NM2).
+4. `gnd why-not` and `gnd.api.why_not` expose near-misses; the schema ties every
+   value-bearing why-not field to `"redacted"` when `view` is `redacted`; pins,
+   docs and a release note are updated (NM3).
+5. The how-to repair page gains a spelling-gap step built only from payload
+   fields, with a negative control (NM3).
+6. Every page and packaged skill reference that describes redaction, raw
+   values or why-not output has a recorded disposition (edited, cites the one
+   home, or unchanged with a reason); the new pages render; every `gnd-run`
+   block on a changed page executes; the docs build, link and banned-word checks
+   exit 0; the owner has seen the two documentation checkpoints (NM4).
+7. Focused gates, independent diff reviews, the question sweep and a PR are
+   recorded. Owner acceptance is separate.
+
+## 0. Binding design rules
+
+| Rule | Requirement |
+|---|---|
+| NM-R1: Exact matching stays the meaning | Near-misses never change a status, blocker, count, exit, extension or any `check`/`witness` payload. Normalization is used only to *find* candidates; the join, identity, negation and comparisons keep the production helpers. A near-miss row that matches exactly is an internal defect, raised as such. |
+| NM-R2: One fixed normalization, one home | The normalization is a single function with one normative definition (the NM1 spec, then `docs/reference/why-not.md`). No fuzzy, edit-distance or locale-dependent matching. Non-string values never near-match. |
+| NM-R3: Bounded, counted, deterministic | Near-miss search is linear in the blocker's input bindings plus its fact type's rows, charged to the existing walk counters; output order is canonical and the list is capped. Tests assert counters, not wall time. |
+| NM-R4: Disclosure is decided once, after the verdict | Mode resolution happens at the public boundary (CLI entry, `gnd.api` function), never in the checker, evaluator or why-not kernel, preserving `redaction.py`'s post-verdict projection boundary. One resolver serves both conventions (standing rule 4: one walk over all emitters, not per-command copies). |
+| NM-R5: Unset means today | With no mode set, every output of every command and API function is byte-identical to `33c260e`. Changing a default is a separately recorded compatibility decision, not a side effect. |
+| NM-R6: Customer mode is a lock | In `customer` mode an explicit raw request (`--raw`, `--unredacted`, `unredacted=True`, a raw certificate export) is refused, not silently downgraded, so a caller cannot believe it received values it did not. |
+| NM-R7: Layering and query policy | New code joins existing homes in `tools/gnd_layers.json` with zero new allowances; model reads follow WN-R7 of the derivation-why-not plan; RF6 allow-list gains no row. |
+| NM-R8: Approval, evidence, anonymity | `auto=false`. Plan authorship is not approval. Downstream applications are not named in committed artifacts; `tests/test_why_not_anonymity.py` extends its scan to files added since `33c260e`. |
+
+Each phase spec binds every rule above and every rule in
+`.codex/skills/process-phase/references/standing-rules.md`, by name or with a
+one-sentence argument that it does not apply.
+
+## 1. Scope, sources and authority
+
+| Source | Use |
+|---|---|
+| Issue #70 | Request, use case, example shape |
+| Owner direction `(o1)` | Disclosure mode; rulings NM-D2..D6 |
+| `src/gnd/witness/why_not.py` (`_join`, `_candidates`, `_atom_blocker`, `_samples`, `_Budget`) | Where near-misses attach and how work is charged |
+| `src/gnd/witness/view.py`, `witness/cli.py`, `witness/service.py`, `src/gnd/why-not.schema.json` | Why-not views, flags, schema |
+| `src/gnd/redaction.py`, `commands/_arguments.py`, `commands/checking.py`, `measure.py`, `verify.py`, `judgments.py`, `export/lean_cli.py`, `souffle_cli.py`, `api.py` | Every disclosure decision site |
+| `derivation-why-not` plan and close, `notes/phase-WN2-claude-review.md` | Inherited rules; WN2-R1 (schema does not tie `view` to redacted fields) |
+| `docs/reference/why-not.md`, `cli.md`, `python-api.md`, `docs/how-to/repair-a-missing-claim.md`, `docs/compatibility.md` | Public docs and release-note rule |
+
+A `gnd coverage MODEL` census counts experiment claims; it says nothing about
+whether a runtime diagnostic or a disclosure switch exists, so it does not
+settle scope.
+
+### Obligations harvested
+
+| ID | Obligation (source) | Kind | Owner |
+|---|---|---|---|
+| O1 | For an empty join, report the join variables (issue, "Asked for") | requested | NM1: `roles` per near-miss |
+| O2 | Report a few values from each side differing only by case, whitespace or punctuation (issue) | requested | NM1 |
+| O3 | Keep exact matching; equivalence stays the caller's (issue) | requested constraint | NM-R1 |
+| O4 | Tell a spelling gap from a missing fact (issue, "Why") | requested outcome | NM1 empty vs non-empty list; NM3 how-to |
+| O5 | Replace the host-side case-fold workaround (issue, "Workaround") | requested outcome | NM1 covers case, whitespace, punctuation, compatibility forms |
+| O6 | A general mode: no redaction behind the public interface, redaction facing customers `(o1)` | owner requirement | NM2 |
+| O7 | Near-miss values redacted wherever population values are (WN-R5 inherited; `(o1)`) | inherited + owner | NM1 view, NM2 mode, NM3 schema |
+| O8 | Schema ties `view: redacted` to redacted fields (WN2-R1, second bullet, open since WN2) | inherited residual | NM3, why-not schema only |
+| O9 | Bounded work, counter tests (standing rule 2) | inherited | NM1-C4, NM2-C5 |
+| O10 | Totality over hostile input, incl. the mode setting itself (standing rule 1) | inherited | NM2-C1 |
+| O11 | API, CLI, schema pins; RF1/RF5 goldens | cross-cutting | NM2-C4, NM3-C2 |
+| O12 | Docs and release note (`compatibility.md:7-9`) | cross-cutting | NM2-C6, NM3-C3 |
+| O13 | Downstream anonymity | owner constraint | NM-R8 |
+| O14 | Reporter acceptance in their repair loop | carried | the reporter, after merge |
+| O15 | A plan to update the documentation `(o2)` | owner requirement | NM4 |
+| O16 | Visible checkpoints before work is complete, docs early (owner's standing preference) | owner preference | NM4 checkpoints DC1, DC2 |
+
+## 2. Contract proposal and product behavior
+
+All of this is proposed unless §10 marks it ruled.
+
+### 2.1 Near-misses (NM1, NM3)
+
+**Where.** On every blocker of kind `atom` (positive body atom), at any descent
+depth. Not on `negated`, `comparison` or `head` blockers (NM-D6, `(o1)`).
+
+**Normalization `N(v)`** (NM-D4, `(o1)`), defined only for `str`:
+
+1. Unicode NFKC;
+2. `str.casefold()`;
+3. delete every character whose Unicode general category starts with `P`;
+4. replace each maximal run of characters for which `str.isspace()` is true
+   with one U+0020, then strip leading and trailing U+0020.
+
+`N(v)` is undefined (no near-match possible) for non-`str` values, and a value
+with `N(v) == ""` never near-matches.
+
+**Definition (row-level, NM-D3, `(o1)`).** Let the blocker's atom have roles
+`R`, partitioned into constant roles, bound-variable roles `B` and
+free-variable roles. For a binding `b` that reached the blocker and a row `f`
+of the atom's fact type (the rows the join read, `_Walk.facts`), `(b, f)` is a
+**near-miss** when:
+
+- every constant role matches `f` exactly (production identity);
+- every role in `B` matches exactly or `N` is defined and equal on both sides;
+- at least one role in `B` differs exactly (its `differing` set is non-empty).
+
+Free roles are unconstrained. A blocker with `B` empty has no near-misses (no
+value reached it to compare).
+
+**Payload (raw view).**
+
+```json
+"near_miss_count": 1,
+"near_misses": [
+  {"roles": ["party"],
+   "sample": {"party": "Acme Corp.", "case": "c-9"},
+   "candidate": {"party": "ACME CORP.", "case": "c-9"}}
+]
+```
+
+`sample` is `b` projected onto `B` (keyed by role, as `samples` is); `candidate`
+is `f` projected onto `B`; `roles` is the sorted differing set. Pairs are
+distinct by `(sample, candidate)` identity, sorted by canonical JSON of
+`[sample, candidate]`, capped at 5 (NM-D5, as WN-D9); `near_miss_count` is the
+uncapped number of distinct pairs. Both fields are present on every atom
+blocker; an empty list with count 0 means "searched, none".
+
+**Redacted view.** `near_miss_count` is shown; `near_misses` is `"redacted"`.
+
+### 2.2 Disclosure mode (NM2)
+
+**Values (NM-D1 proposal under `(o1)`).**
+
+| Mode | Declared redaction | Witness-lane views (`witness`, `replay`, `why-not`) | Raw requests |
+|---|---|---|---|
+| unset | today: applied unless `unredacted` | today: API raw, CLI redacted unless `--raw` | today |
+| `internal` | not applied (as `unredacted=True`) | raw in API and CLI | allowed (no-ops) |
+| `customer` | applied | redacted in API and CLI (`api.why_not` returns the redacted view) | refused: CLI exit 3; API `ValueError` naming the mode |
+
+**Setting it (NM-D2).** Proposed: environment variable `GND_DISCLOSURE` with
+values `internal` or `customer`, plus a global CLI option
+`gnd --disclosure {internal,customer}` that takes precedence over the variable
+for that invocation. No per-call API keyword: the mode belongs to the
+deployment, not the caller, and a keyword would let a customer-facing caller
+override it. Any other value of the variable is refused at the public boundary
+(CLI exit 3, API `ValueError`), never treated as unset.
+
+**What it does not cover.** Exit codes, verdicts, counts and structural fields
+are identical across modes; only population-value fields differ. Files GND
+writes into a caller-chosen location for later reading by the same caller
+(experiment session stores, `--out` certificates) follow the mode at write time;
+`customer` refuses raw certificate export. Whether retained session evidence
+written before the mode was set must be re-projected is out of scope (§7).
+
+**Reporting.** Outputs that already report a redaction mode keep their field
+(`mode: applied | unredacted`); why-not keeps `view: raw | redacted`. No new
+field and no report schema bump.
+
+## 3. Dependencies and artifact homes
+
+NM1 → NM3; NM2 → NM3; NM1 and NM2 are independent and may run in either order.
+NM3 → NM4 → close. NM4's first checkpoint (DC1) runs right after plan approval,
+before NM2 and NM3 code, and needs only the approved plan. Nothing depends on provider review, downstream execution,
+publication or certification.
+
+| Artifact | Home |
+|---|---|
+| Plan, specs, records, reviews | `.gnd-planning/milestones/why-not-near-misses/` |
+| Normalization and near-miss search | `src/gnd/witness/why_not.py` (NM1) |
+| Disclosure resolver | proposed `src/gnd/disclosure.py`, new layer-map entry beside `redaction` (NM2; NM-D7) |
+| CLI option | root parser in `src/gnd/cli.py`; consumers in the parsers listed in §1 (NM2) |
+| Schema | `src/gnd/why-not.schema.json`, version decision NM-D8 (NM3) |
+| Goldens | `tests/fixtures/why_not/` (NM1 adds cases; NM3 regenerates views) |
+| Docs | NM4 inventory below; a feature phase changes only what its own docs gates need to stay green |
+| Example data for the spelling gap | `src/gnd/examples/quoted_claims/spelling-gap.pop.json` (NM3) |
+
+## 4. Phases
+
+### NM1: Near-miss search in the kernel
+
+Spec: [phase-NM1-spec.md](phase-NM1-spec.md), r1, blocked on plan approval.
+
+- **NM1-C1:** `N` as §2.1, one function, with unit cases per step (NFKC, casefold,
+  punctuation, whitespace, empty result, non-`str`).
+- **NM1-C2:** near-miss search on atom blockers, including nested descents,
+  with the exactness invariant raised as `WhyNotInternalError`.
+- **NM1-C3:** the independent oracle (`tests/why_not_oracle.py`) gains its own
+  near-miss computation (own normalization, no import from `gnd.witness`), and
+  agrees on every corpus case.
+- **NM1-C4:** work charged to `probes` and `binding_cells`; literal counter
+  tests on both sides of the probe ceiling.
+- **NM1-C5:** the kernel payload gains the two fields; the redacted view hides
+  `near_misses`; no change to any other field of any existing golden except
+  `work.probes`, which now includes the search.
+
+### NM2: Disclosure mode
+
+- **NM2-C1:** one resolver: CLI option over environment variable over unset;
+  invalid values refused (exit 3 / `ValueError`); hostile values (empty, very
+  long, non-ASCII, mixed case) cased by test.
+- **NM2-C2:** every disclosure site in §1 consults the resolver: the 13
+  declared-redaction output kinds, the three witness-lane views, the two export
+  `--raw` flags and `judgments --unredacted`. A table test enumerates the sites
+  from the parsers and `redaction.emitter_specs()`, so a new emitter without a
+  row fails.
+- **NM2-C3:** `customer` leak test over every site in NM2-C2 using a fixture with
+  declared-sensitive roles and why-not values; raw requests refused per site.
+- **NM2-C4:** unset parity: existing contract fixtures and RF1 exit goldens
+  byte-identical; RF1 help goldens regenerate only for the new root option.
+- **NM2-C5:** counter-bounded resolver (it reads one variable once per call).
+- **NM2-C6:** the CLI help text for `--disclosure` and the refusal messages;
+  docs gates stay green. Pages are NM4's.
+
+### NM3: Public surface and docs
+
+- **NM3-C1:** `gnd why-not` and `gnd.api.why_not` emit near-misses in both views
+  and honour the mode.
+- **NM3-C2:** schema: near-miss fields; when `view` is `redacted`, `samples`,
+  `constant`, `binding` and `near_misses` are `const: "redacted"` (closes WN2-R1's
+  second bullet for why-not); negative schema cases for each; schema version per
+  NM-D8; `VENDORED_SCHEMAS` unchanged in membership.
+- **NM3-C3:** the packaged example population with a spelling gap, and a
+  committed test of the spelling-gap repair built only from payload fields, with
+  a negative control (a candidate whose other bound role differs is not
+  reported).
+- **NM3-C4:** keep docs gates green: the existing why-not output blocks in
+  `docs/how-to/repair-a-missing-claim.md` and `docs/reference/python-api.md`
+  print whole payloads, so they gain the two fields and `gnd-why-not/2` in this
+  phase. Everything else on those pages is NM4's.
+
+### NM4: Documentation
+
+Docs follow `docs/development/documentation.md` (house style) and the plan's
+anonymity rule. No business tutorial page is in scope; if the owner adds one, it
+shows skill prompts and results, not code. Every output shown is from a real run
+(`gnd-run` blocks executed by `tools/run_tutorials.py`); nothing is fabricated.
+
+**Checkpoints (owner-visible, before the work is complete).**
+
+- **DC1, right after plan approval:** drafts of `reference/disclosure.md` and
+  the near-miss section of `reference/why-not.md`, rendered locally, with
+  example payloads marked *illustrative* because the code does not exist yet.
+  The owner's reaction can amend NM2 and NM3 specs before code. Draft pages are
+  not committed to `docs/` until NM4.
+- **DC2, after NM3:** every changed page rendered with real `gnd-run` output,
+  before the NM4 record.
+
+**Inventory and planned change.** From
+`grep -rli 'redact\|--raw\|unredacted\|why-not' docs src/gnd/skills` at
+`33c260e`; the NM4 spec re-runs it and records a disposition for every hit.
+
+| Page | Change |
+|---|---|
+| `docs/reference/disclosure.md` (new) | The one home for the mode: the three states, how to set it, precedence, which commands and API functions it governs (generated from NM2-C2's site table, not hand-listed), what customer mode refuses and with which exit, what never changes (verdicts, exits, counts), unset = today. Nav entry under Reference. |
+| `docs/reference/why-not.md` | The one home for near-misses: the normalization steps, the row-level rule, the two fields, the cap, the redacted view, the exactness guarantee, what a near-miss does not mean; `gnd-why-not/2` and how the mode applies. |
+| `docs/reference/cli.md` | Root `--disclosure` option; line 24's redaction paragraph and the witness/why-not rows cite `disclosure.md`; the exit paragraph gains the customer refusal. |
+| `docs/reference/python-api.md` | Lines 273-275, 336 and 345-346 cite `disclosure.md`; `unredacted=True` and raw witness results under `customer`; why-not near-miss fields in the `why_not` section. |
+| `docs/reference/capabilities.md` | Why-not row (line 21) mentions near-misses; a new row for the disclosure mode. |
+| `docs/reference/formats.md` | A why-not schema row in the canonical-references table, if the NM4 spec finds none. |
+| `docs/how-to/repair-a-missing-claim.md` | New section "When the values are spelled differently": run why-not on the spelling-gap population, read `near_misses`, fix the spelling (a host decision), prove with `witness`; the negative control in prose. |
+| `docs/how-to/disclosure-mode.md` (new) | "Run GND behind your interface or in front of customers": set the mode, show one check with a declared-sensitive role in both modes and a refused `--raw` in customer mode, all as `gnd-run` blocks over a packaged example. Nav entry under How-to guides. |
+| `docs/guides/exports.md`, `docs/agents/export-and-review.md` | One sentence each citing `disclosure.md` where raw certificates or raw views are described. |
+| `docs/runtimes/lean.md`, `souffle.md`; `docs/bookrec/*`, `docs/expense/*` | Expected unchanged (they run with the mode unset); the disposition records why. |
+| `docs/release-notes.md` | Entries for near-misses, the `gnd-why-not/2` migration line, and the disclosure mode. |
+| `src/gnd/skills/gnd-export/SKILL.md`, `references/export-contract.md` | Near-miss fields in the why-not route; customer mode refuses raw exports. Packaged-skill pins updated. |
+| `src/gnd/skills/gnd-dev-session/` references that describe redaction | One sentence citing the mode where session outputs are described; or unchanged with a reason. |
+
+- **NM4-C1:** the inventory disposition table is complete and committed in the
+  NM4 record.
+- **NM4-C2:** DC1 and DC2 shown to the owner, with their reactions recorded.
+- **NM4-C3:** `tools/run_tutorials.py`, `zensical build --strict`,
+  `tools/check_docs.py site`, `tests/test_documentation_tutorials.py`,
+  `tests/test_plan_app_docs.py` (banned words) and `tools/check_installed_docs.py`
+  (the new example) exit 0.
+- **NM4-C4:** one-home check: `N`, the near-miss rule and the mode table appear
+  in exactly one page each; other pages link. A grep test enforces the mode
+  table's single home.
+- **NM4-C5:** an independent docs review (one local reader) against the shipped
+  behaviour, not the plan.
+
+### Milestone close (not a feature phase)
+
+Final parity, the close review (NM-D9), the question sweep, carryovers (O14 to
+the reporter; any remaining WN2-R1 bullets), and a PR.
+
+### Obligation-to-gate map
+
+| Obligation | Gate |
+|---|---|
+| O1, O2 | NM1-C2, C3 |
+| O3 | NM-R1; NM1-C5 parity |
+| O4 | NM1-C2; NM3-C3 |
+| O5 | NM1-C1 |
+| O6 | NM2-C1..C3 |
+| O7 | NM1-C5; NM2-C3; NM3-C2 |
+| O8 | NM3-C2 |
+| O9 | NM1-C4; NM2-C5 |
+| O10 | NM2-C1 |
+| O11 | NM2-C4; NM3-C2 |
+| O12 | NM2-C6; NM3-C3 |
+| O13 | NM-R8 |
+| O14 | close carryover |
+| O15 | NM4-C1..C5 |
+| O16 | NM4-C2 |
+
+## 5. Documentation, skill and compatibility surfaces
+
+- New: two why-not payload fields; one environment variable; one global CLI
+  option; one reference page.
+- Changed, opt-in only: outputs under `internal` or `customer`. Unset is
+  byte-identical (NM-R5).
+- No change to `check`, `witness` or `replay` contracts, exit bands, or report
+  schemas.
+- Release notes, both new pages and every cross-page edit: NM4.
+
+## 6. Risks and required controls
+
+| Risk | Control |
+|---|---|
+| Near-misses read as "these are the same entity" | Docs and field names say candidate, not match; NM-R1; how-to negative control |
+| Normalization drifts between kernel and docs | NM-R2 one home; oracle with its own implementation |
+| Quadratic search | NM-R3 index on normalized keys; counter tests |
+| A new emitter escapes the mode | NM2-C2 enumerating table test |
+| `customer` silently downgrades a raw request | NM-R6 refusal, cased per site |
+| Mode leaks into verdicts | NM-R4 resolution only at the boundary; unset parity |
+| Unset behaviour changes | NM-R5; NM2-C4 parity |
+| Downstream names leak | NM-R8 |
+| A repair round introduces defects | §8 stop rule |
+| Docs describe the plan rather than the code | Pages written in NM4 after the code; DC1 drafts marked illustrative and not committed; NM4-C5 review against shipped behaviour |
+| Docs drift into two homes | NM4-C4 |
+
+## 7. Out of scope
+
+- Fuzzy, edit-distance, phonetic or locale-aware matching; any automatic
+  reconciliation of spellings.
+- Near-misses for negated atoms, comparisons and head terms (NM-D6).
+- Changing any default with the mode unset.
+- Re-projecting retained evidence written before a mode was set.
+- WN2-R1's other bullets (reason/exit pairing, `refused` nulls, `blocked`
+  minItems) and WN2-R2/R3, unless the owner adds them.
+- A configuration file; per-tenant modes.
+- Publication, release, certification.
+
+## 8. Execution, approval and review protocol
+
+`auto=false`. Each phase follows `process-phase`: spec, owner gate,
+implementation and focused tests, an independent diff review, a refactoring
+review and a record. No code before recorded spec approval. Plan and close
+review instrument: NM-D9. Work happens on a topic branch, then a PR; merge
+requires the owner.
+
+## 9. Per-phase verification story
+
+| Phase | Expected result | Focused gate |
+|---|---|---|
+| NM1 | Oracle agreement; counters; unchanged other fields; no public diff beyond the kernel dict | `uv run pytest -q tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/test_why_not_anonymity.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py` |
+| NM2 | Leak and refusal per site; unset parity | NM1 gate plus a new `tests/test_disclosure_mode.py`, `tests/test_public_api.py`, `tests/test_rf1_cli_pins.py`, `tests/test_rf5_commands.py`, `tests/test_rf5_handler_pins.py` and the redaction contract tests the NM2 spec names (unresolved until that spec) |
+| NM3 | Goldens; schema negatives; docs gates still green | NM2 gate plus `tests/test_public_why_not.py tests/test_why_not_repair_loop.py tests/test_documentation_tutorials.py tests/test_plan_app_docs.py`, `tools/run_tutorials.py`, `zensical build --strict`, `tools/check_docs.py site` |
+| NM4 | All pages dispositioned; docs gates; checkpoints seen | NM4-C3 commands plus the one-home grep test |
+
+The broad suite runs on explicit owner selection.
+
+## 10. Owner decisions and open questions
+
+| ID | Question | Readings and cost | Ruling or proposal |
+|---|---|---|---|
+| NM-D1 | Redaction of near-miss values | (a) follow why-not's view (API raw, CLI redacted); (b) a general disclosure mode across GND | **Ruled `(o1)` 2026-11-01: a general mode.** Its shape (three states, unset = today) is proposed in §2.2 and confirmed at the gate |
+| NM-D2 | How the mode is set | (a) env var + global CLI option, no API keyword; (b) also an API keyword: a caller can override a customer deployment; (c) a config file: new discovery surface | proposed **(a)** |
+| NM-D3 | Rows with several bound roles | (a) row-level: other bound roles must match exactly or normalized-equal; (b) per role: noisier | **(a)**, recommended in session and covered by `(o1)` |
+| NM-D4 | Normalization | §2.1 fixed four steps; no fuzzy matching | **as stated**, `(o1)` |
+| NM-D5 | Work and cap | charged to walk counters; 5 pairs; full count | **as stated**, `(o1)` |
+| NM-D6 | Which blockers | (a) positive atoms only; (b) also negated atoms | **(a)**, proposed by the plan author; the session raised it without a recommendation, so `(o1)` does not cover it. Confirm at the gate |
+| NM-D7 | Resolver home | (a) new `gnd.disclosure` beside `gnd.redaction`; (b) inside `gnd.redaction`, which the checker must never import, so only emitters may | proposed **(a)** |
+| NM-D8 | Why-not schema version | (a) `gnd-why-not/2`: the schema is closed (`additionalProperties: false`), so v1 validators reject the new fields; (b) stay `/1`: hosts validating against the shipped v1 schema break silently | proposed **(a)**, with a release-note migration line |
+| NM-D9 | Plan and close review instrument | (a) four local readers, as WN-D8; (b) the maintained six-seat panel | **Ruled `(o2)` 2026-11-01: (a)**, with the reading stated in the provenance |
+| NM-D11 | Docs checkpoint DC1 before code | (a) drafts after plan approval, before NM2/NM3 code: the owner sees the contract as a reader would and can amend specs cheaply; (b) docs only after code: no illustrative drafts, but late feedback | proposed **(a)** |
+| NM-D10 | Customer-mode refusal band | (a) exit 3 (input invalid): the request is invalid for this deployment; (b) a new band: an exit-band change | proposed **(a)** |
+
+No open question is inherited except WN2-R1 (partly owned by NM3-C2).

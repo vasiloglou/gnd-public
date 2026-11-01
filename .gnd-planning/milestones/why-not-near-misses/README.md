@@ -14,10 +14,12 @@ plus the owner's 2026-11-01 direction to add a general disclosure mode.
 - Phases: NM1 near-miss kernel, NM2 disclosure mode, NM3 public surface,
   NM4 documentation (checkpoints DC1 after plan approval, DC1b after NM2, DC2
   after NM3), then close.
-- Pending decisions: none (NM1 D3-D5 ruled `(s1)`).
+- Pending decisions: none (NM2 D1-D7 ruled `(s2)`).
 - Checkpoint DC1: illustrative drafts in `checkpoints/DC1/` (not in `docs/`),
   shown to the owner 2026-11-01 as a private rendered page. Reaction, quoted:
   "Looks good" (asked "How do the DC1 drafts look?"); no spec amendments.
 - NM1: implemented and verified, record [001-phase-NM1.md](001-phase-NM1.md);
   committed on the owner's go-ahead ("yes", 2026-11-01), not pushed.
-- Next action: the NM2 spec (disclosure mode).
+- NM2 spec: [notes/phase-NM2-spec.md](notes/phase-NM2-spec.md), r1, **approved
+  2026-11-01 `(s2)`**.
+- Next action: NM2 implementation.

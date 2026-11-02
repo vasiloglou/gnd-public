@@ -17,7 +17,9 @@ Set `GND_DISCLOSURE` or the root option `--disclosure` to `internal` or
 - Contract change under `customer` only: `api.why_not` returns the redacted
   view, and `api.witness` and `api.replay` return the default view without a
   certificate.
-- Child processes receive `GND_DISCLOSURE=customer` only under `customer`.
+- Under `customer`, child processes receive `GND_DISCLOSURE=customer`. In any other
+  mode GND adds nothing to a child's environment, so a child inherits whatever
+  `GND_DISCLOSURE` the caller's environment already holds.
 
 See [disclosure](reference/disclosure.md).
 

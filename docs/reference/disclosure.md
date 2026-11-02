@@ -144,11 +144,18 @@ For code that runs inside the GND process it is a guard, not a lock: that code
 can change the environment or call internal functions. Do not run untrusted
 code in the process.
 
-One signal remains by design. A why-not answer in customer mode still carries
-the near-miss counters. A caller who supplies a `--row` learns whether the
-population holds a value spelled like theirs up to case, spacing and
-punctuation (see [values spelled differently](why-not.md#values-spelled-differently)).
-Here the claim names the work "Field Notes", which the population spells
+Do not forward arguments that name a program to run: `--executable` on
+`export souffle-run`, `export souffle-witness` and `export lean-compile`, and
+`--test-argv` and `--adapter-policy` on `exp run` and `solve`. A caller who
+chooses the program runs code of their own, and no mode holds after that.
+
+Some signals remain by design, because the mode is applied after the verdict.
+A caller who supplies a claimed row learns whether it matches exactly from the
+status, the exit code and the per-step counts of `why-not`, `witness` and
+`replay`. The near-miss counters add one more: whether the population holds a
+value spelled like theirs up to case, spacing and punctuation (see
+[values spelled differently](why-not.md#values-spelled-differently)). Here the
+claim names the work "Field Notes", which the population spells
 "FIELD NOTES":
 
 <!-- gnd-run expect=0 -->

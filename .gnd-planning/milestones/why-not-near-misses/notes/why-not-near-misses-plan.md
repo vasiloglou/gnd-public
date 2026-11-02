@@ -675,3 +675,31 @@ The broad suite runs on explicit owner selection.
 | NM-D17 | Near-miss count in customer mode | (a) keep `near_miss_count` and `near_miss_truncated`, name the membership signal in the threat model; (b) a boolean only | **Ruled `(p2-W)`: (a)** |
 
 No open question is inherited from an earlier milestone.
+
+## Close note (2026-11-02)
+
+Appended at milestone close. The r3 text above is left as approved; where it
+and this note differ, this note states what happened.
+
+- **Execution has occurred.** The header's "Phase execution, implementation and
+  publication have not occurred" and §4 NM1's "awaiting its owner gate" are
+  superseded: NM1-NM4 were specified, approved `(s1)`-`(s5)`, implemented and
+  committed (records `001`-`004`), and the close is
+  [005-milestone-close.md](../005-milestone-close.md). Nothing is published.
+- **Refuted premises.** Each phase spec records the plan premises it found
+  false (the NM2 spec's "Corrections to the plan, found at harvest", the NM3
+  and NM4 specs' H-rows). They are the repair the specs deferred to this
+  close; the r3 text is not edited.
+- **NM-R6 "one signal".** The threat model's single named signal (the
+  redacted near-miss count) understated what customer mode reveals. The
+  status, the exit code and the per-step counts of `why-not`, `witness` and
+  `replay` also confirm whether a caller-supplied row matches exactly (close
+  reader 2, F1). `docs/reference/disclosure.md` now names both; the
+  near-miss count is the one signal this milestone added.
+- **NM3-Q1.** The installed-docs check takes `--out <new dir>`:
+  `uv run python tools/check_installed_docs.py --out <new dir>`. The NM3
+  spec's Verification-selection row omitted it.
+- **`DisclosureRefused` in `gnd.api.__all__`.** Added in NM3 (DC1b finding);
+  two exact-inventory pins outside the NM3 gate (`tests/test_v61_phase2_api.py`,
+  `tests/test_public_runtime.py`, a distribution-lane test) were updated at
+  close.

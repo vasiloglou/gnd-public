@@ -54,5 +54,9 @@ plus the owner's 2026-11-01 direction to add a general disclosure mode.
   D5 added and ruled (a) `(s5)` ("Drop the three edits"). Committed on the
   owner's go-ahead ("Commit NM4", 2026-11-02), not pushed; the census suites
   re-run after the commit pass.
-- Next action: the milestone close (final parity, four-reader close review,
-  question sweep, note to the reporter, PR).
+- Close: record [005-milestone-close.md](005-milestone-close.md). Four close
+  readers approve; their findings are fixed or dispositioned there. The plan
+  carries a close note. The reporter note is posted on issue #70 on the
+  owner's approval ("approved", 2026-11-02). The broad suite was stopped
+  unfinished on the owner's direction; merge authorized by the owner ("yes",
+  2026-11-02).

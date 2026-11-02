@@ -156,7 +156,8 @@ Near-misses compare strings by `N(v)`:
 3. deletion of every character whose Unicode general category is punctuation
    (`P*`);
 4. each run of whitespace becomes one space; leading and trailing spaces are
-   removed.
+   removed. Whitespace is what Python's `str.split()` splits on: Unicode
+   whitespace plus the separators U+001C to U+001F.
 
 `N` is defined only for strings. Numbers, booleans and other values never
 near-match, and neither does a string whose `N` is empty (`"..."`). `N` uses
@@ -189,10 +190,15 @@ differs exactly. `roles` lists the bound roles that differ exactly.
 - `near_misses` lists `min(5, near_miss_count)` pairs, ordered by the canonical
   encoding of `sample`, then of `candidate`. `sample` and `candidate` are
   projected onto the bound roles.
-- Values that are one value to GND, such as `1` and `1.0`, are shown once: as
-  the one that comes first in canonical byte order (`1.0` before `1`). This
-  rule applies to `near_misses` only. `samples` keep the first value why-not
-  met, so one blocker can show `1` in `samples` and `1.0` in `near_misses`.
+- Values that are one value to GND, such as `1` and `1.0`, are shown once.
+  When separate bindings or rows differ only in such spellings, the pair shows
+  the projection whose canonical encoding comes first. The whole projection is
+  compared, not the number alone, so which spelling wins can depend on the
+  other values and the role names; the choice is the same on every run. Within
+  one binding, a value keeps the spelling of the row that last joined it, so a
+  `sample` can show `1` where an earlier step bound `1.0`. This rule applies
+  to `near_misses` only. `samples` keep the first value why-not met, so one
+  blocker can show `1` in `samples` and `1.0` in `near_misses`.
 - Near-misses appear on positive atom blockers at every descent level. The
   three fields are absent from `negated`, `comparison` and `head` blockers.
 
@@ -201,7 +207,10 @@ differs exactly. `roles` lists the bound roles that differ exactly.
 The search looks at every row of the fact type and every binding once, and
 builds at most 25 pairs for each normalized value. It has its own ceiling of
 200,000 inspections, separate from the walk's budgets, so it can never cause a
-`work-limit` exit. If the ceiling is reached, `near_miss_truncated` is true,
+`work-limit` exit. One ceiling serves the whole request: every clause and
+every descent level draws on it, so a lowered ceiling can truncate a later
+blocker after an earlier one used it up. If the ceiling is reached,
+`near_miss_truncated` is true,
 `near_miss_count` is a lower bound and the list holds what was found. With the
 default limits the ceiling cannot be reached and the flag is always false,
 because the walk's own probes already cover every row and binding the search

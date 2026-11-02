@@ -61,8 +61,10 @@ def forward(environ: Mapping[str, str] | None = None) -> dict[str, str]:
 
 @contextmanager
 def invocation(mode: str | None) -> Iterator[None]:
-    """Set the mode for one in-process CLI invocation; the token is reset on exit."""
-    token = _MODE.set(mode)
+    """Set the mode for one in-process CLI invocation; the token is reset on exit.
+
+    An enclosing ``customer`` holds: a nested invocation never loosens it."""
+    token = _MODE.set("customer" if _MODE.get() == "customer" else mode)
     try:
         yield
     finally:

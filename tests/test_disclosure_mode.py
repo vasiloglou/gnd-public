@@ -244,9 +244,12 @@ CASES = {
 
 
 def test_t15_every_row_has_a_discharging_case():
+    # A registry check: every governed row maps to a named case and every case is used.
+    # The discharge itself is shown by the named tests, not here.
     from gnd.disclosure import SURFACES
     names = set(globals())
     assert all(test in names for test in CASES.values())
+    used = set()
     for key, surface in SURFACES.items():
         if surface.kind == "value-free" and not surface.spawns:
             continue
@@ -262,6 +265,8 @@ def test_t15_every_row_has_a_discharging_case():
             group = ("declared-api" if surface.convention == "declared" else "view-api" if surface.convention
                      else "every-mode")
         assert group in CASES, key
+        used.add(group)
+    assert used == set(CASES)
 
 
 # -- T16-T18, T27: the check family ---------------------------------------------------
@@ -666,6 +671,19 @@ def test_t38_parity_holds_with_an_ambient_variable(tmp_path):
     assert done.returncode == 0, done.stdout[-2000:]
 
 
+def test_close_r4_the_tutorial_runner_scrubs_an_ambient_variable(tmp_path, monkeypatch):
+    import importlib.util
+    import sys
+    spec = importlib.util.spec_from_file_location("run_tutorials", ROOT / "tools" / "run_tutorials.py")
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    page = tmp_path / "doc.md"
+    page.write_text("<!-- gnd-run expect=0 -->\n```python\nimport os\n"
+                    "assert 'GND_DISCLOSURE' not in os.environ\n```")
+    monkeypatch.setenv("GND_DISCLOSURE", "customer")
+    assert runner.run_pages([page], tmp_path / "run", Path(sys.executable)) == 1
+
+
 def test_t39_the_packaged_example(monkeypatch):
     result = gnd(monkeypatch, "check", MODEL, POP, "--format", "json")
     assert result.returncode == 1 and b'"redacted": true' in result.stdout.replace(b'"redacted":true', b'"redacted": true')
@@ -771,6 +789,22 @@ def test_review_r4_an_enclosing_customer_context_holds_in_process(monkeypatch):
     assert (refused.returncode, refused.stdout) == (3, b"")
     assert loosen.returncode == 3 and loosen.stderr.decode().strip() == LOOSENING
     assert default.returncode == 1 and b"example.com" not in default.stdout
+
+
+def test_close_r2_a_nested_value_free_invocation_keeps_an_enclosing_customer(monkeypatch):
+    """Close reader 2 F2: a value-free leaf runs with no mode of its own; it must not clear customer."""
+    from gnd import cli, disclosure
+    monkeypatch.delenv("GND_DISCLOSURE", raising=False)
+    seen = []
+    monkeypatch.setattr(cli, "_run_handler", lambda handler, args: seen.append((disclosure.resolve(), disclosure.forward())) or 0)
+    with disclosure.invocation("customer"):
+        assert cli.main(["doctor"]) == 0
+        with disclosure.invocation(None):
+            inner = disclosure.resolve()
+    with disclosure.invocation(None):
+        unset = disclosure.resolve()
+    assert seen == [("customer", {"GND_DISCLOSURE": "customer"})]
+    assert (inner, unset, disclosure.resolve()) == ("customer", None, None)
 
 
 def test_review_r5_judgments_and_feedback_bypass_the_mode(tmp_path, monkeypatch):

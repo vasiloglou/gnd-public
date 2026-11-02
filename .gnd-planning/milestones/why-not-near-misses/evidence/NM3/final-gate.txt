@@ -1,0 +1,35 @@
+# NM3 final gate, 2026-11-01. Each command, its last output line and exit.
+
+$ uv run pytest -q tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/test_public_why_not.py tests/test_why_not_anonymity.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py tests/test_disclosure_mode.py tests/test_public_api.py tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_why_not_near_misses_public.py tests/test_why_not_repair_loop.py tests/test_public_built_inventory.py tests/test_conformance_payload.py
+1014 passed, 16 deselected in 250.80s (0:04:10)
+exit 0
+
+$ uv run pytest -q tests/test_documentation_tutorials.py tests/test_plan_app_docs.py
+141 passed in 249.03s (0:04:09)
+exit 0
+
+$ uv run python tools/run_tutorials.py
+239 tutorial blocks passed
+exit 0
+
+$ uv run python tools/check_installed_docs.py --out <scratch>/installed-docs
+Both installed wheel origins passed the documented learning paths.
+exit 0
+
+# After review fixes R1 (T8 assertion) and R3 (release-note wording):
+
+$ uv run pytest -q -p no:cacheprovider tests/test_why_not_near_misses_public.py tests/test_why_not_repair_loop.py
+72 passed in 2.26s
+exit 0
+
+$ uv run zensical build --strict
+No issues found
+exit 0
+
+$ uv run python tools/check_docs.py site
+12269 local links/assets/anchors checked
+exit 0
+
+$ uv run ruff check src/gnd/witness src/gnd/api.py src/gnd/disclosure.py tests/test_why_not_near_misses_public.py tests/test_why_not_repair_loop.py tests/test_why_not_oracle.py tests/test_public_api.py .gnd-planning/milestones/why-not-near-misses/evidence/NM3/build_goldens.py
+All checks passed!
+exit 0

@@ -83,7 +83,8 @@ value identity: `1` and `1.0` are one value; `true` and `1` are two.
  "roles": {"work": {"variable": "$w", "bound": true},
            "person": {"variable": "$p", "bound": false}},
  "sample_count": 2,
- "samples": [{"work": "w1"}, {"work": "w2"}]}
+ "samples": [{"work": "w1"}, {"work": "w2"}],
+ "near_miss_count": 0, "near_miss_truncated": false, "near_misses": []}
 ```
 
 - `roles` covers every role of the atom. A role holds a variable, with whether
@@ -94,12 +95,117 @@ value identity: `1` and `1.0` are one value; `true` and `1` are two.
   bound roles, in a fixed order.
 - `derivation` is `base` for a fact type with asserted rows only, including one
   with a prose rule. Otherwise it is `derived` or `semiderived`.
+- `near_miss_count`, `near_miss_truncated` and `near_misses` report rows that
+  differ from a binding only in spelling; see
+  [values spelled differently](#values-spelled-differently).
 
 So the blocker above says: two listed works reached `wrote`, and neither has an
 author. Adding `wrote(w1, someone)` would unblock the clause for `w1`.
 
 For a `negated`, `comparison` or `head` blocker, `reads` lists the bound
 variables the step reads, and `samples` are keyed by variable.
+
+## Values spelled differently
+
+A join can be empty for two reasons: the fact you need is missing, or it is
+there but spelled differently. `FIELD NOTES` and `Field Notes` are two values
+to GND, so a blocker caused by either reads the same. To tell them apart, every
+atom blocker reports *near-misses*: rows of its fact type that would have
+joined if bound strings were compared after a fixed normalization.
+
+Near-misses never change the answer. The status, the blocker, the counts, the
+`work` counters and the exit are what exact matching gives. Whether two
+spellings name one entity is your decision; why-not only points at the
+candidates.
+
+This is the blocker for the claim `certified(q-17, Ada Byrne)` over the
+packaged `quoted_claims` example's `spelling-gap.pop.json`, with `--raw`:
+
+```json
+{"kind": "atom", "index": 1, "fact_type": "authored", "derivation": "base",
+ "ground": true, "asserted_not_read": false,
+ "roles": {"work": {"variable": "$w", "bound": true},
+           "person": {"variable": "$p", "bound": true}},
+ "sample_count": 1,
+ "samples": [{"work": "Field Notes", "person": "Ada Byrne"}],
+ "near_miss_count": 1,
+ "near_miss_truncated": false,
+ "near_misses": [
+   {"roles": ["work"],
+    "sample": {"work": "Field Notes", "person": "Ada Byrne"},
+    "candidate": {"work": "FIELD NOTES", "person": "Ada Byrne"}}]}
+```
+
+The binding for `Field Notes` reached `authored` and found no row, but the
+population holds a row for `FIELD NOTES` by the same person. Fix the spelling
+on one side, or add the row with the spelling the rule expects. The population
+also holds `Field notes` by Bo Lin; it is not reported, because the other bound
+role, `person`, differs.
+
+An empty list with `near_miss_count: 0` means that why-not searched and found
+nothing close: the fact is missing.
+
+This section is the normative definition.
+
+### The normalization
+
+Near-misses compare strings by `N(v)`:
+
+1. Unicode NFKC normalization;
+2. case folding (`str.casefold`);
+3. deletion of every character whose Unicode general category is punctuation
+   (`P*`);
+4. each run of whitespace becomes one space; leading and trailing spaces are
+   removed.
+
+`N` is defined only for strings. Numbers, booleans and other values never
+near-match, and neither does a string whose `N` is empty (`"..."`). `N` uses
+the Unicode database of the Python running GND.
+
+So `ACME CORP.` near-matches `Acme Corp.`, and `Straße` near-matches `STRASSE`.
+Punctuation is deleted, not replaced: `ACME-CORP` near-matches `ACMECORP`, not
+`ACME CORP`. `Acme . Corp` near-matches `Acme Corp`, and `℅` near-matches
+`co`. There is no fuzzy, edit-distance or locale-dependent matching.
+
+### Which rows are candidates
+
+Let the blocker's *bound roles* be the roles whose variable an earlier step
+bound. A blocker with no bound role has no near-misses.
+
+A row of the blocker's fact type is a candidate when it has every role of the
+atom, every constant role matches exactly, and a free variable that appears at
+two roles has the same value at both. A bound variable that appears at two
+roles is compared with the binding at each occurrence, so a candidate row may
+spell it differently at different roles.
+
+A binding and a candidate row form a **near-miss** when, at every bound role,
+the two values are equal or have the same `N`, and at least one bound role
+differs exactly. `roles` lists the bound roles that differ exactly.
+
+### Count, list and order
+
+- `near_miss_count` counts distinct (binding, row) pairs, each projected onto
+  the bound roles. Rows or bindings that differ only at other roles count once.
+- `near_misses` lists `min(5, near_miss_count)` pairs, ordered by the canonical
+  encoding of `sample`, then of `candidate`. `sample` and `candidate` are
+  projected onto the bound roles.
+- Values that are one value to GND, such as `1` and `1.0`, are shown once: as
+  the one that comes first in canonical byte order (`1.0` before `1`). This
+  rule applies to `near_misses` only. `samples` keep the first value why-not
+  met, so one blocker can show `1` in `samples` and `1.0` in `near_misses`.
+- Near-misses appear on positive atom blockers at every descent level. The
+  three fields are absent from `negated`, `comparison` and `head` blockers.
+
+### Search limits
+
+The search looks at every row of the fact type and every binding once, and
+builds at most 25 pairs for each normalized value. It has its own ceiling of
+200,000 inspections, separate from the walk's budgets, so it can never cause a
+`work-limit` exit. If the ceiling is reached, `near_miss_truncated` is true,
+`near_miss_count` is a lower bound and the list holds what was found. With the
+default limits the ceiling cannot be reached and the flag is always false,
+because the walk's own probes already cover every row and binding the search
+inspects.
 
 ## Descent into a derived blocker
 
@@ -131,7 +237,9 @@ as not covered is explained like any other.
 
 The Python API returns raw values, like `api.witness`. The CLI prints a
 redacted view by default: `samples`, constant roles and an unavailable term's
-binding read `"redacted"`, and the answer carries `"view": "redacted"`. Pass
+binding read `"redacted"`, and the answer carries `"view": "redacted"`. An
+atom blocker keeps `near_miss_count` and `near_miss_truncated` and shows
+`near_misses` as `"redacted"`. Pass
 `--raw` to print the values, with `"view": "raw"`. Use the raw view only where
 those values are appropriate for the reader.
 
@@ -143,5 +251,8 @@ GND's evaluator may perform 200,000 joins while deciding the status. The
 walk may make 100,000 joins and 200,000 probes, and may store 400,000 binding
 cells in total across all its steps, clauses and descent levels.
 Reaching any of them returns `refused` with `reason: work-limit` and exit 4.
+The near-miss search has its own ceiling of 200,000 inspections, which never
+refuses a request (see [search limits](#search-limits)).
 
-The output is described by `why-not.schema.json`, packaged with GND.
+The output is described by `why-not.schema.json`, packaged with GND. Its
+`schema_version` is `gnd-why-not/2`.

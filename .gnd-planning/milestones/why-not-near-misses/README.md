@@ -23,6 +23,18 @@ plus the owner's 2026-11-01 direction to add a general disclosure mode.
 - NM2 spec: [notes/phase-NM2-spec.md](notes/phase-NM2-spec.md), r1, **approved
   2026-11-01 `(s2)`**.
 - NM2: implemented and verified, record [002-phase-NM2.md](002-phase-NM2.md);
-  not yet committed beyond the red harness (2f96c17).
-- Next action: commit NM2 on the owner's go-ahead; then checkpoint DC1b
-  (the disclosure how-to with real runs) and the NM3 spec.
+  committed 23e4a99 on the owner's go-ahead ("Commit NM2", 2026-11-01), not pushed.
+- Checkpoint DC1b: [checkpoints/DC1b/disclosure-mode.md](checkpoints/DC1b/disclosure-mode.md)
+  (the how-to, every output from real runs of 23e4a99; the tutorial runner passes
+  13/13 blocks) and its rendered page `checkpoints/DC1b/dc1b.html`, shown to the
+  owner 2026-11-01 as a private page. Findings: `DisclosureRefused` is not
+  exported from `gnd.api` (proposed for NM3); `gnd check` default text output on
+  a model with a redacted role prints a banner then JSON (on main before NM2;
+  out of scope). Reaction, quoted: "Looks good" (asked "How does the DC1b page
+  look?"); no spec amendments.
+- NM3 spec: [notes/phase-NM3-spec.md](notes/phase-NM3-spec.md), r1, **approved
+  2026-11-01 `(s3)`** ("Approve as proposed"; D1-D5 all (a)).
+- NM3: implemented and verified, record [003-phase-NM3.md](003-phase-NM3.md);
+  committed as the red corpus 9fe2685 and the following feat(NM3) commit on the
+  owner's go-ahead ("Commit NM3", 2026-11-01), not pushed.
+- Next action: checkpoint DC2 (every NM4 page with real output), then the NM4 spec.

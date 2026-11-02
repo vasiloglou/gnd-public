@@ -69,6 +69,9 @@ gnd why-not quoted_claims/model.orm.json quoted_claims/gap.pop.json \
                 "ground": true,
                 "index": 1,
                 "kind": "atom",
+                "near_miss_count": 0,
+                "near_miss_truncated": false,
+                "near_misses": "redacted",
                 "roles": {
                     "person": {
                         "bound": true,
@@ -107,7 +110,7 @@ gnd why-not quoted_claims/model.orm.json quoted_claims/gap.pop.json \
     "mode": "row",
     "order": "declared",
     "reason": null,
-    "schema_version": "gnd-why-not/1",
+    "schema_version": "gnd-why-not/2",
     "status": "blocked",
     "unavailable": null,
     "view": "redacted",
@@ -206,12 +209,65 @@ gnd check quoted_claims/model.orm.json quoted_claims/repaired.pop.json --format 
 0 ['pass']
 ```
 
+## When the values are spelled differently
+
+Sometimes the fact is there, spelled another way. In `spelling-gap.pop.json`
+someone recorded the work as `FIELD NOTES`. To GND that is a different value
+from `Field Notes`, so the claim is blocked at `authored` exactly as before.
+The answer's near-misses show the difference:
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+gnd why-not quoted_claims/model.orm.json quoted_claims/spelling-gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json --raw \
+  | python -c "import json, sys; b = json.load(sys.stdin)['clauses'][0]['blocker']; print(b['fact_type'], b['near_miss_count']); print(b['near_misses'])"
+```
+
+```text
+authored 1
+[{'candidate': {'person': 'Ada Byrne', 'work': 'FIELD NOTES'}, 'roles': ['work'], 'sample': {'person': 'Ada Byrne', 'work': 'Field Notes'}}]
+```
+
+The binding for `Field Notes` met a row for `FIELD NOTES` by the same person.
+`roles` names the role that differs. The population also has `Field notes` by
+Bo Lin, which is not listed: its other bound role, `person`, differs too.
+Near-misses compare strings after case folding and removing punctuation and
+extra spaces; the [why-not reference](../reference/why-not.md#values-spelled-differently)
+defines the rule.
+
+Why-not does not decide that the two spellings name one work. If they do,
+correct the row to the spelling the rule expects, and ask again:
+
+<!-- gnd-run expect=0 output=stdout -->
+```sh
+python -c "
+import json
+p = json.load(open('quoted_claims/spelling-gap.pop.json'))
+for row in p['facts']['authored']:
+    if row == {'work': 'FIELD NOTES', 'person': 'Ada Byrne'}:
+        row['work'] = 'Field Notes'
+json.dump(p, open('quoted_claims/respelled.pop.json', 'w'))
+"
+gnd why-not quoted_claims/model.orm.json quoted_claims/respelled.pop.json \
+  --fact-type certified --row quoted_claims/claim.json --raw \
+  | python -c "import json, sys; b = json.load(sys.stdin)['clauses'][0]['blocker']; print(b['fact_type'], b['near_miss_count'])"
+```
+
+```text
+reviewed 0
+```
+
+The claim now stops at `reviewed`, with no near-misses: that fact is missing,
+and you add it as in the previous section.
+
 ## What the answer does not tell you
 
 - Why-not says which fact is missing, not whether it is true. Add a fact only
   when a source supports it.
 - A step with an unbound role needs a value from somewhere else, as
   `reviewer` did here.
+- A near-miss is a candidate, not a match. Correct a spelling only when you
+  know both name the same thing.
 - Each answer covers the rule as written, in declared order. The
   [why-not reference](../reference/why-not.md) defines the steps, the exit
   codes and the limits.

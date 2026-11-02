@@ -64,6 +64,7 @@ from gnd.checking_service import (
 from gnd.checking_service import (
     run_check_raw as _run_check_raw,  # noqa: F401 -- historical helper import
 )
+from gnd.disclosure import DisclosureRefused
 from gnd.disclosure import values_allowed as _values_allowed
 from gnd.exits import EXIT_INTERNAL
 from gnd.export.service import (
@@ -120,7 +121,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused")  # noqa: RUF022 - approved stable order
 
 
 

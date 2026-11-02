@@ -116,7 +116,7 @@ def _why_not_envelope(exit_code, status, reason, *, explanation=None, work=None)
         "fact_type": None, "mode": None, "order": None, "unavailable": None, "clauses": [],
     }
     return {
-        "schema_version": "gnd-why-not/1",
+        "schema_version": "gnd-why-not/2",
         "exit_code": exit_code,
         "status": status,
         "reason": reason,
@@ -160,7 +160,9 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
             raw_refs,
             limits=limits,
         )
-        result = explain(model, candidate, fact_type, row=row, references=context).to_dict()
+        result = explain(
+            model, candidate, fact_type, row=row, references=context, near_misses=True
+        ).to_dict()
     except WhyNotWorkError as error:
         return _why_not_envelope(4, "refused", "work-limit", work=error.work)
     except (

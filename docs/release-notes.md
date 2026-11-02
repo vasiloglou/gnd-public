@@ -3,6 +3,26 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: near-miss values in why-not (2026-11-01)
+
+`gnd why-not` and `gnd.api.why_not` now tell a missing fact from one spelled
+differently ([issue #70](https://github.com/vasiloglou/gnd-public/issues/70)).
+Every atom blocker reports near-misses: rows of its fact type that would have
+joined if bound strings were compared after case folding, Unicode
+normalization and removing punctuation and extra spaces. Matching stays exact:
+status, blockers, counts, `work` counters and exit codes are unchanged.
+
+- Three new fields on every atom blocker: `near_miss_count`,
+  `near_miss_truncated` and `near_misses` (up to five pairs).
+- The redacted view shows the two counters; `near_misses` reads `"redacted"`.
+- The search has its own ceiling of 200,000 inspections and never refuses a
+  request.
+- Migration for `gnd-why-not/1` consumers: the schema is closed, so read
+  `schema_version` and accept `/2`. Atom blockers carry three new required
+  fields; nothing else changes.
+
+See [values spelled differently](reference/why-not.md#values-spelled-differently).
+
 ## Unreleased: why a derived fact is missing (2026-10-30)
 
 `gnd why-not` and `gnd.api.why_not` explain a derivation that produced nothing,

@@ -127,7 +127,8 @@ def run_pages(pages: list[Path], cwd: Path, python: Path, lane: str = 'offline',
         raise AssertionError('receipts must be a list or None')
     cwd.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
-    for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'GND_PYREL_PYTHON'):
+    for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'GND_PYREL_PYTHON',
+                'GND_DISCLOSURE'):
         env.pop(key, None)
     env['PATH'] = str(python.absolute().parent) + os.pathsep + env.get('PATH', '')
     env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'

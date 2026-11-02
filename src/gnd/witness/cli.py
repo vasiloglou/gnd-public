@@ -43,7 +43,7 @@ def add_parsers(subparsers):
 def run(args):
     try:
         if args.command == "why-not":
-            result = api.why_not(
+            result = api.why_not_result(
                 args.model,
                 args.population,
                 args.fact_type,
@@ -56,7 +56,7 @@ def run(args):
             print(json.dumps(view, ensure_ascii=False, sort_keys=True))
             return result["exit_code"]
         if args.command == "replay":
-            result = api.replay(
+            result = api.replay_result(
                 args.model, args.population, args.certificate, reference_root=args.reference_root
             )
         elif args.command == "witness-view":
@@ -66,7 +66,7 @@ def run(args):
         else:
             if args.out and not args.raw:
                 raise ValueError("--out requires --raw")
-            result = api.witness(
+            result = api.witness_result(
                 args.model, args.population, args.targets, reference_root=args.reference_root
             )
             certificate = result["certificate"]

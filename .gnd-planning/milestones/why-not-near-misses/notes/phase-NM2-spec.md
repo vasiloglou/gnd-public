@@ -521,4 +521,59 @@ This prose (D7 (a)).
 
 ## Implementation findings
 
-Recorded as found.
+Recorded as found, 2026-11-01.
+
+- **F1 (refutes H5).** `uv python install 3.11` reported that 3.11 was already
+  installed, so nothing was downloaded. The RF1 captures ran in two scratch
+  virtual environments (3.11.15 and 3.13.12) and the project environment
+  (3.14.3), as WN2 did.
+- **F2 (RF5 pin; no behaviour change).** `test_rf5_commands.py:111` pins
+  `main()`'s last statement to `return args.handler(args)`. The mode is
+  therefore applied by replacing `args.handler` with a wrapper (`_disclosed`)
+  that sets and resets the context variable. The walk and the refusal keep the
+  order of the Refusals table.
+- **F3 (more successor rows than designed).** `run_bounded_process`, its
+  `_result` and `invoke_agent` are RF4 moves out of `gnd.agent_cli`, so D4 and
+  the agent forwarding add three current source-successor rows. That makes nine
+  rows, not six.
+- **F4 (no new public name).** `gnd.api` imports the helper as
+  `_values_allowed`. T13 caught the public `values_allowed` binding.
+- **F5 (table rows).** `EvaluationSession.reset`, `close` and `stats` were
+  missing from the spec's table. They are value-free, and T13 caught them.
+- **F6 (forwarding site).** Declared-adapter forwarding sits in
+  `gnd.declared_adapter._invoke_command`, which is in the same `exp` lane and
+  layer as `gnd.exp`. One site covers the schema-v6 command policy and the
+  v7/v8 declared sessions. The legacy path passes `extra_environment` only when
+  it is non-empty, so injected test invokers and unset calls are unchanged.
+- **F7 (spawner walk).** T28 counts callers of `run_bounded_process` as spawn
+  sites, so table rows 2–10 are found. `lean_runtime` spawns through
+  `souffle_runtime.command`, which is covered by row 11.
+- **F8 (test reach; recorded, not hidden).** Coverage per case:
+  - T16 runs end to end for `check` (CLI) and for `check`, `verbalize`,
+    `check_with_receipt` and the two delegating `EvaluationSession` methods
+    (API).
+  - For `validate`, `diff`, `transition` and `judgments`, T16 covers the
+    customer refusal plus the generic CLI walk test over all 15 site leaves.
+    That walk shows each dest is set to the mode's value; no leak run was made
+    for these four.
+  - T25 tests raw resolution at the I/O seam (`souffle_io.export_souffle`,
+    `souffle_runtime.run_souffle`) rather than with a real `souffle` or `lake`.
+    `souffle_witness` and `export_lean` are covered only by the customer
+    refusal.
+- **F9.** Three `cli.py` imports lost their `noqa: F401`, because the new code
+  uses them.
+- **F10 (review R1, refutes a table row; owner-visible).** `gnd doccheck`
+  prints the population values a rendered document misses, declared `redact`
+  roles included, in every mode. The spec's table classed it value-free. It is
+  now **every-mode**, beside `fidelity`, under NM-D13's "any further row NM2-C2
+  classifies every-mode". It is not made a site: that would change the fidelity
+  family, which NM-D13 keeps unchanged. `disclosure.md` (NM4) must list it.
+- **F11 (review R3).** `invoke_agent` takes `disclosed_names` as well as
+  `extra_environment`, so only names the caller declares non-secret are
+  unmasked. A name that overrides an inherited one is recorded once, as
+  supplied.
+- **F12 (review R9).** The isolation scrub runs when `tests/conftest.py` is
+  imported, not as a function fixture, so fixtures of every scope see no
+  ambient mode.
+- **F13 (review R4).** The CLI walk treats an enclosing in-process customer
+  context like `GND_DISCLOSURE=customer`, as `gnd.api` does.

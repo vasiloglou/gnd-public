@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/why-not-near-misses/evidence/NM1/dynamic-query-successor.json",
+  "predecessor_sha256": "059eedc06d2de91ba27aa8073379011ff4f9353375907313ff535bde4e9d0120",
+  "reason": "why-not-near-misses NM2 (2026-11-01): the disclosure mode adds 19 syntax candidates (type annotations in gnd.disclosure, gnd.agents (two), gnd.api and gnd.process; the CLI walk's getattr and subscript over the parsed namespace; the table lookup) and moves one subscript from why_not to why_not_result. Syntax census only; no model-query exception widening.",
+  "added": [
+    [
+      "src/gnd/agents.py",
+      "invoke_agent",
+      "Mapping[str, str]",
+      1
+    ],
+    [
+      "src/gnd/agents.py",
+      "invoke_agent",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/api.py",
+      "_check_unresolved",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/cli.py",
+      "_disclosure",
+      "getattr(args, dest)",
+      1
+    ],
+    [
+      "src/gnd/cli.py",
+      "_leaf",
+      "action.choices[name]",
+      1
+    ],
+    [
+      "src/gnd/cli.py",
+      "_leaf",
+      "getattr(args, action.dest)",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "<module>",
+      "ContextVar[str | None]",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "<module>",
+      "Mapping[str, Surface]",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "Surface",
+      "Literal['declared', 'view']",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "Surface",
+      "Literal['site', 'value-free', 'every-mode']",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "bearing",
+      "SURFACES.get(leaf)",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "checked_environment",
+      "(os.environ if environ is None else environ).get(ENVIRONMENT)",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "checked_environment",
+      "Mapping[str, str]",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "forward",
+      "Mapping[str, str]",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "forward",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/disclosure.py",
+      "resolve",
+      "Mapping[str, str]",
+      1
+    ],
+    [
+      "src/gnd/process.py",
+      "_result",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/process.py",
+      "run_bounded_process",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/witness/service.py",
+      "why_not_result",
+      "_WHY_NOT_EXITS[result['status']]",
+      1
+    ]
+  ],
+  "removed": [
+    [
+      "src/gnd/witness/service.py",
+      "why_not",
+      "_WHY_NOT_EXITS[result['status']]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6882,
+  "result_occurrences": 8602
+}

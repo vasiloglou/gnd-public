@@ -22,4 +22,7 @@ plus the owner's 2026-11-01 direction to add a general disclosure mode.
   committed on the owner's go-ahead ("yes", 2026-11-01), not pushed.
 - NM2 spec: [notes/phase-NM2-spec.md](notes/phase-NM2-spec.md), r1, **approved
   2026-11-01 `(s2)`**.
-- Next action: NM2 implementation.
+- NM2: implemented and verified, record [002-phase-NM2.md](002-phase-NM2.md);
+  not yet committed beyond the red harness (2f96c17).
+- Next action: commit NM2 on the owner's go-ahead; then checkpoint DC1b
+  (the disclosure how-to with real runs) and the NM3 spec.

@@ -23,6 +23,7 @@ from urllib.parse import urlsplit
 from gnd import input_policy as _rf7_input
 from gnd.agents import AgentCLIError, InvocationStatus
 from gnd.artifacts import canonical_json_bytes, reject_json_constant, reject_json_duplicate_pairs
+from gnd.disclosure import forward
 from gnd.exp.adapter_policy import (
     CommandAdapterPolicy,
     OpenAICompatiblePolicy,
@@ -315,7 +316,9 @@ async def _invoke_command(
 ) -> DeclaredInvocationResult:
     policy = resolved.policy
     assert isinstance(policy, CommandAdapterPolicy)
-    environment = resolved.environment
+    # Under customer the disclosure mode is passed on; it is not a secret.
+    forwarded = forward()
+    environment = {**resolved.environment, **forwarded}
     executable = resolved.executable_path
     if executable is None:  # pragma: no cover - policy resolution owns this refusal
         raise AgentCLIError(f"trusted adapter executable {policy.executable!r} was not found")
@@ -324,6 +327,7 @@ async def _invoke_command(
         (executable, *policy.version_argv),
         cwd=cwd,
         env=environment,
+        disclosed_names=frozenset(forwarded),
         limits=ProcessLimits(
             timeout_seconds=min(VERSION_TIMEOUT_SECONDS, timeout_seconds),
             terminate_grace_seconds=0.25,
@@ -370,6 +374,7 @@ async def _invoke_command(
         (executable, *words),
         cwd=cwd,
         env=environment,
+        disclosed_names=frozenset(forwarded),
         limits=ProcessLimits(
             timeout_seconds=remaining,
             terminate_grace_seconds=1.0,

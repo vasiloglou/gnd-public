@@ -1,9 +1,12 @@
 """Explicit optional export lane service wrappers."""
 from __future__ import annotations
 
+from gnd.disclosure import values_allowed
+
 
 def export_souffle(model_path, population_path, *, reference_root=None, out=None, raw=False):
     """Render/publish the explicit standalone Souffle derivation fragment."""
+    raw = values_allowed(raw, "raw=True")
     from gnd.export.souffle_io import export_souffle as export
 
     return export(
@@ -20,6 +23,7 @@ def verify_souffle(bundle_path):
 
 def run_souffle(bundle_path, *, executable="souffle", raw=False):
     """Run only an explicitly selected, checked foreign derivation program."""
+    raw = values_allowed(raw, "raw=True")
     from gnd.export.souffle_runtime import run_souffle as run
 
     result = run(bundle_path, executable=executable)
@@ -32,6 +36,7 @@ def run_souffle(bundle_path, *, executable="souffle", raw=False):
 
 def souffle_witness(bundle_path, targets_path, *, executable="souffle", raw=False, out=None):
     """Map native positive provenance and independently replay before publication."""
+    raw = values_allowed(raw, "raw=True")
     from gnd import artifacts
     from gnd.export.souffle import INPUT_ERRORS, wire
     from gnd.export.souffle_io import read_file
@@ -64,6 +69,7 @@ def export_lean(
     model_path, population_path, *, toolchain, reference_root=None, out=None, raw=False
 ):
     """Export finite definitions; no theorem or snapshot-equivalence claim."""
+    raw = values_allowed(raw, "raw=True")
     from gnd.export.lean_io import export_lean as export
 
     return export(

@@ -344,12 +344,14 @@ def _result(
     termination_steps: tuple[Literal["sigterm", "sigkill"], ...] = (),
     process_group_cleaned: bool,
     did_time_out: bool = False,
+    disclosed_names: frozenset[str] = frozenset(),
 ) -> BoundedProcessResult:
     ended = time.monotonic()
     stdout_raw = bytes(stdout_state.retained)
     stderr_raw = bytes(stderr_state.retained)
-    stdout = _redact(stdout_raw, _sensitive_values(env))
-    stderr = _redact(stderr_raw, _sensitive_values(env))
+    masked = {name: value for name, value in env.items() if name not in disclosed_names}
+    stdout = _redact(stdout_raw, _sensitive_values(masked))
+    stderr = _redact(stderr_raw, _sensitive_values(masked))
     raw_return_code = process.returncode if process is not None else None
     return_code = raw_return_code if raw_return_code is None or raw_return_code >= 0 else None
     signal_number = (
@@ -389,8 +391,13 @@ async def run_bounded_process(
     env: dict[str, str],
     limits: ProcessLimits,
     stdin_bytes: bytes | None = None,
+    disclosed_names: frozenset[str] = frozenset(),
 ) -> BoundedProcessResult:
     """Run trusted argv under one wall deadline and return closed evidence.
+
+    Every supplied environment value is masked out of the retained streams,
+    except the values of ``disclosed_names``, which the caller states are not
+    secret (the disclosure mode passed to a child, for example).
 
     On POSIX the child starts a new session and cleanup is guaranteed for all
     descendants that remain in that process group. Deliberate ``setsid`` escape
@@ -497,6 +504,7 @@ async def run_bounded_process(
             started=started,
             argv=argv,
             env=env_snapshot,
+            disclosed_names=disclosed_names,
             stdout_state=stdout_state,
             stderr_state=stderr_state,
             process_group_cleaned=True,
@@ -511,6 +519,7 @@ async def run_bounded_process(
             started=started,
             argv=argv,
             env=env_snapshot,
+            disclosed_names=disclosed_names,
             stdout_state=stdout_state,
             stderr_state=stderr_state,
             process_group_cleaned=True,
@@ -623,6 +632,7 @@ async def run_bounded_process(
         started=started,
         argv=argv,
         env=env_snapshot,
+        disclosed_names=disclosed_names,
         stdout_state=stdout_state,
         stderr_state=stderr_state,
         termination_steps=termination_steps,

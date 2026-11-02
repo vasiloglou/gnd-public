@@ -128,7 +128,7 @@ Also avoided: 125-128 and 128+n, which are shell- and signal-reserved.
 
 from __future__ import annotations
 
-import argparse  # noqa: F401 -- historical CLI binding
+import argparse
 import asyncio  # noqa: F401 -- historical CLI binding
 import hashlib  # noqa: F401 -- historical CLI binding
 import json  # noqa: F401 -- historical CLI binding
@@ -137,7 +137,7 @@ import os  # noqa: F401 -- historical CLI binding
 import re  # noqa: F401 -- historical CLI binding
 import shutil  # noqa: F401 -- historical CLI binding
 import stat  # noqa: F401 -- historical CLI binding
-import sys  # noqa: F401 -- historical CLI binding
+import sys
 import tempfile  # noqa: F401 -- historical CLI binding
 from pathlib import Path, PurePosixPath, PureWindowsPath  # noqa: F401 -- historical CLI binding
 from typing import Any, get_args  # noqa: F401 -- historical CLI binding
@@ -145,15 +145,16 @@ from typing import Any, get_args  # noqa: F401 -- historical CLI binding
 from jsonschema import Draft202012Validator  # noqa: F401 -- historical CLI binding
 
 from gnd import api as api_module  # noqa: F401 -- historical CLI binding
-from gnd import exits as exits_module  # noqa: F401 -- historical CLI binding
-from gnd import install as install_module  # noqa: F401 -- historical CLI binding
-from gnd import report as report_module  # noqa: F401 -- historical CLI binding
 from gnd import (
+    disclosure,
     resolve_version,
     solve,  # noqa: F401 -- historical CLI binding
     transition,  # noqa: F401 -- historical CLI binding
     verbalize,  # noqa: F401 -- historical CLI binding
 )
+from gnd import exits as exits_module
+from gnd import install as install_module  # noqa: F401 -- historical CLI binding
+from gnd import report as report_module  # noqa: F401 -- historical CLI binding
 from gnd.checker import (
     CheckReport,  # noqa: F401 -- historical CLI binding
     check,  # noqa: F401 -- historical CLI binding
@@ -636,6 +637,14 @@ def main(argv: list[str] | None = None) -> int:
         version=f"%(prog)s {resolve_version()}",
         help="print the installed version and exit",
     )
+    parser.add_argument(
+        "--disclosure",
+        choices=disclosure.MODES,
+        action=_StoreOnce,
+        help="disclosure mode for this invocation, internal or customer; a root "
+             "option, given before the subcommand; it can only tighten "
+             "GND_DISCLOSURE=customer",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     _group_witness.add_parsers(subparsers, command='witness')
@@ -666,4 +675,56 @@ def main(argv: list[str] | None = None) -> int:
     _group_judgments.add_parsers(subparsers, command='judgments')
 
     args = parser.parse_args(argv)
+    try:
+        args.handler = _disclosed(args.handler, _disclosure(parser, args))
+    except disclosure.DisclosureRefused as error:
+        print(f"gnd: error: {error}", file=sys.stderr)
+        return exits_module.EXIT_ILL_FORMED
     return args.handler(args)
+
+
+def _disclosed(handler, mode):
+    """The handler, run with the invocation's mode set and reset afterwards."""
+    def run(args):
+        with disclosure.invocation(mode):
+            return _run_handler(handler, args)
+    return run
+
+
+def _run_handler(handler, args) -> int:
+    return handler(args)
+
+
+def _leaf(parser, args) -> str:
+    """The leaf command's path, followed through each subparser's dest."""
+    path = ["gnd"]
+    while True:
+        action = next((a for a in parser._actions if isinstance(a, argparse._SubParsersAction)), None)
+        if action is None:
+            return " ".join(path)
+        name = getattr(args, action.dest)
+        path.append(name)
+        parser = action.choices[name]
+
+
+def _disclosure(parser, args) -> str | None:
+    """The one CLI walk: resolve the mode, refuse, or act as if raw were passed."""
+    if not disclosure.bearing(_leaf(parser, args)):
+        return None
+    env = disclosure.checked_environment()
+    option = getattr(args, "disclosure", None)
+    # An in-process caller already under customer stays under it, as gnd.api does.
+    outer = disclosure.resolve()
+    if "customer" in (env, outer) and option == "internal":
+        raise disclosure.DisclosureRefused(
+            f"--disclosure internal is refused when {disclosure.ENVIRONMENT}=customer"
+        )
+    mode = "customer" if "customer" in (option, env, outer) else option or env or outer
+    for dest, flag in (("raw", "--raw"), ("unredacted", "--unredacted")):
+        if not hasattr(args, dest):
+            continue
+        if mode == "customer" and getattr(args, dest):
+            raise disclosure.DisclosureRefused(f"{flag} is refused in customer disclosure mode")
+        if mode == "internal":
+            setattr(args, dest, True)
+    return mode

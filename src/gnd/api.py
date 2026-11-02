@@ -64,6 +64,7 @@ from gnd.checking_service import (
 from gnd.checking_service import (
     run_check_raw as _run_check_raw,  # noqa: F401 -- historical helper import
 )
+from gnd.disclosure import values_allowed as _values_allowed
 from gnd.exits import EXIT_INTERNAL
 from gnd.export.service import (
     compile_lean as compile_lean,  # noqa: PLC0414 -- compatibility surface
@@ -170,6 +171,7 @@ def check_with_receipt(
     model: Model, population: Population, *, unredacted: bool = False
 ) -> tuple[dict[str, Any], CheckReceipt]:
     """Return the check payload and an opaque, in-process CheckReceipt."""
+    unredacted = _values_allowed(unredacted, "unredacted=True")
     if not isinstance(model, Model) or not isinstance(population, Population):
         raise TypeError("check_with_receipt requires loaded Model and Population objects")
     with index_scope(), calculation_scope(model, population):
@@ -634,6 +636,7 @@ def validate(
     references: BoundReferenceContext | None = None,
 ) -> dict[str, Any]:
     """Validate a model path or reuse a loaded model, returning its report."""
+    unredacted = _values_allowed(unredacted, "unredacted=True")
     _check_model_input(model)
     return _run_validate(model, unredacted=unredacted, references=references).payload
 
@@ -651,6 +654,20 @@ def check(
     references: BoundReferenceContext | None = None,
 ) -> dict[str, Any]:
     """Check one population and return the same payload emitted by the CLI."""
+    return _check_unresolved(
+        model, population, compiled_operations=compiled_operations,
+        unredacted=_values_allowed(unredacted, "unredacted=True"), anchors=anchors,
+        document=document, population_bytes=population_bytes, admission=admission,
+        references=references,
+    )
+
+
+def _check_unresolved(
+    model, population, *, compiled_operations=False, unredacted=False, anchors=None,
+    document=None, population_bytes=None, admission=False, references=None,
+) -> dict[str, Any]:
+    """``check`` with ``unredacted`` taken as given; for internal callers whose
+    output the disclosure mode does not govern."""
     if not isinstance(compiled_operations, bool):
         raise TypeError('compiled_operations must be a boolean')
     if compiled_operations and admission:
@@ -681,6 +698,7 @@ def diff(
     references_b: BoundReferenceContext | None = None,
 ) -> dict[str, Any]:
     """Read two models and optionally one directory of population documents."""
+    unredacted = _values_allowed(unredacted, "unredacted=True")
     from dataclasses import replace  # noqa: F811 -- historical compatibility binding
     from importlib.resources import files
 
@@ -863,6 +881,7 @@ def verbalize(
     unredacted: bool = False,
 ) -> dict[str, Any]:
     """Public population sentence view; applied redaction is the default."""
+    unredacted = _values_allowed(unredacted, "unredacted=True")
     return _run_verbalize(
         model, population, anchors=anchors, document=document,
         population_bytes=population_bytes, unredacted=unredacted,
@@ -880,6 +899,7 @@ def transition(
     pre_receipt: CheckReceipt | None = None,
 ) -> dict[str, Any]:
     """Audit a declared post, or compute it when ``post`` is omitted."""
+    unredacted = _values_allowed(unredacted, "unredacted=True")
     _check_model_input(model)
     _check_population_input(pre, name="pre")
     _check_steps_input(steps)
@@ -908,6 +928,7 @@ def judgments(
     unredacted=False,
 ):
     """Evaluate saved opinions without obtaining any external judgment."""
+    unredacted = _values_allowed(unredacted, "unredacted=True")
     from pathlib import Path
 
     from gnd.artifacts import ArtifactError, read_regular_bounded
@@ -955,11 +976,13 @@ def judgments(
         model = load_model_bytes(mr, source=model_path)
         candidate = load_population_bytes(pr, source=population_path, model=model)
         refs = bind_declared_references(model, root=reference_root or Path(model_path).parent)
-        raw_mechanical = check(model, candidate, admission=True, references=refs, unredacted=True)
+        raw_mechanical = _check_unresolved(model, candidate, admission=True, references=refs,
+                                           unredacted=True)
         result["mechanical_report"] = (
             raw_mechanical
             if unredacted
-            else check(model, candidate, admission=True, references=refs, unredacted=False)
+            else _check_unresolved(model, candidate, admission=True, references=refs,
+                                   unredacted=False)
         )
         for payload in (raw_mechanical, result["mechanical_report"]):
             inner = payload.get("report", payload)
@@ -1069,7 +1092,7 @@ class EvaluationSession:
         def run():
             if not isinstance(population, Population):
                 raise TypeError("EvaluationSession requires a loaded Population")
-            payload = check(self._model, population)
+            payload = _check_unresolved(self._model, population, unredacted=False)
             return payload, build_feedback(self._model, population, payload, attempt=attempt)
         return self._call(run, options=(False, False), attempt=attempt)
 

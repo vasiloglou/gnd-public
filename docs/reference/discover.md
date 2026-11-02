@@ -65,7 +65,9 @@ block with up to 256 example ids, in one of two forms:
   type.
 
 Both counts start at 0. The ids are opaque positions, not values, so they never
-carry what a redacted role holds.
+carry what a redacted role holds. Its output is the same in every
+[disclosure mode](disclosure.md): it never proposes values for a redacted role,
+so there is nothing to withhold.
 
 **Implied rules are counted, not suggested.** The text output prints the
 nonzero counts on one line, for example

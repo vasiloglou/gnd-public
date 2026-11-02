@@ -3,7 +3,7 @@
 One resolver decides it at the public boundary, after any verdict: the CLI
 sets the mode for one invocation, and API functions read it together with the
 ``GND_DISCLOSURE`` environment variable. ``customer`` from either source wins.
-The normative text is the NM2 spec until docs/reference/disclosure.md holds it.
+The normative text is docs/reference/disclosure.md.
 """
 
 from __future__ import annotations

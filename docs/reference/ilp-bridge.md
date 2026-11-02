@@ -120,6 +120,10 @@ are byte-identical.
   first (wide facts reach the file cap sooner);
 - `references`: a model with declared reference populations.
 
+The export is the same in every [disclosure mode](disclosure.md): it refuses
+declared roles and writes undeclared values, because handing values to a
+learner you chose is its job. Do not run it for a customer.
+
 ## Import
 
 CLAUSES is either Popper's printed program (`--target popper`) or the neutral

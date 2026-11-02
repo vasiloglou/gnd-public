@@ -3,6 +3,24 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: disclosure mode (2026-11-01)
+
+One GND installation can now serve readers behind your interface and
+customers ([issue #70](https://github.com/vasiloglou/gnd-public/issues/70)).
+Set `GND_DISCLOSURE` or the root option `--disclosure` to `internal` or
+`customer`; unset changes nothing.
+
+- `internal` acts as if every value option were passed.
+- `customer` withholds declared roles and every witness, replay, why-not, Lean
+  and Soufflé value, in the CLI and the Python API. A request for values exits
+  3 or raises `gnd.api.DisclosureRefused`.
+- Contract change under `customer` only: `api.why_not` returns the redacted
+  view, and `api.witness` and `api.replay` return the default view without a
+  certificate.
+- Child processes receive `GND_DISCLOSURE=customer` only under `customer`.
+
+See [disclosure](reference/disclosure.md).
+
 ## Unreleased: near-miss values in why-not (2026-11-01)
 
 `gnd why-not` and `gnd.api.why_not` now tell a missing fact from one spelled

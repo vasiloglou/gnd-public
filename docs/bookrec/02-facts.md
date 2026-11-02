@@ -61,7 +61,7 @@ print(result["counts"])
 `api.check` returns a report dictionary rather than raising an exception for a
 rule violation. Its `exit_code` corresponds to the CLI exit. The synthetic
 examples below request unredacted details so you can see the offending pair;
-choose disclosure deliberately when checking real user data.
+choose [disclosure](../reference/disclosure.md) deliberately when checking real user data.
 
 ## Reject two concrete errors
 

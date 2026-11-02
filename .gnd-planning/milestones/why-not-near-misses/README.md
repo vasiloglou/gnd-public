@@ -37,4 +37,22 @@ plus the owner's 2026-11-01 direction to add a general disclosure mode.
 - NM3: implemented and verified, record [003-phase-NM3.md](003-phase-NM3.md);
   committed as the red corpus 9fe2685 and the following feat(NM3) commit on the
   owner's go-ahead ("Commit NM3", 2026-11-01), not pushed.
-- Next action: checkpoint DC2 (every NM4 page with real output), then the NM4 spec.
+- Checkpoint DC2: [checkpoints/DC2/](checkpoints/DC2/), drafts of the new
+  `reference/disclosure.md` and `how-to/disclosure-mode.md` and the edits to 15
+  existing pages and skill files (`changes.md`), every output from real runs of
+  420114e (18 blocks run, 13 outputs re-checked byte for byte by
+  `check_outputs.py`); the reference table is generated from
+  `gnd.disclosure.SURFACES` by `disclosure_table.py`. Rendered page `dc2.html`,
+  shown to the owner 2026-11-01 as a private page. Questions put: NM2-Q1
+  (`doccheck` every-mode) and a drift test rather than a build-time generator
+  for the table. Reaction, quoted: "Looks good" (asked "How does the DC2 page
+  look?"); no amendments. The two questions were not ruled explicitly; the NM4
+  spec carries them as decisions with these drafts' choices as the proposals.
+- NM4 spec: [notes/phase-NM4-spec.md](notes/phase-NM4-spec.md), r1, **approved
+  2026-11-02 `(s4)`** ("Approve as proposed"; D1-D4 all (a)).
+- NM4: implemented and verified, record [004-phase-NM4.md](004-phase-NM4.md);
+  D5 added and ruled (a) `(s5)` ("Drop the three edits"). Committed on the
+  owner's go-ahead ("Commit NM4", 2026-11-02), not pushed; the census suites
+  re-run after the commit pass.
+- Next action: the milestone close (final parity, four-reader close review,
+  question sweep, note to the reporter, PR).

@@ -277,6 +277,8 @@ fact_types:
 - **`inverse_reading`**: optional. The reverse-direction reading; Halpin notates these with `/` separators in the diagram.
 - **`redact`**: optional boolean on a fact type. `true` selects every declared
   role of that fact type for report redaction; absent and `false` select none.
+  Under `GND_DISCLOSURE=customer` the selected roles stay redacted and
+  `--unredacted` is refused; under `internal` they are shown.
 - **`depends_on`**: optional unique list of declared fact-type ids. It names upstream fact types for the requested occurrence-admission projection. An upstream and downstream occurrence connect only when they share a canonical identifying value in compatible reference roles; cycles are legal. This declaration is included in the full model digest but excluded from source-anchor vocabulary digests, which describe document-recognition vocabulary rather than admission policy.
 - **`roles`**: required, ordered list. Order corresponds to placeholder order in `reading`.
   - **`object_type`**: required, must reference an existing `object_types[].id` (`semantic:role-ref`).

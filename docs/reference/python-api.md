@@ -270,8 +270,10 @@ print("The requested route has a finite derivation witness.")
 
 `witness(model_path, population_path, targets_path, *, reference_root=None)`
 uses file paths. It returns `exit_code`, per-target `results`, `certificate`,
-`reason`, and bounded `work` information. The Python result contains raw values
-in the certificate; the CLI's default witness view removes them. Store or
+`reason`, and bounded `work` information. With no disclosure mode set, the Python result contains raw values
+in the certificate; the CLI's default witness view removes them. Under
+`GND_DISCLOSURE=customer` the result is the default view with no
+`certificate` (see [disclosure](disclosure.md)). Store or
 display the raw certificate only when those values are appropriate for your
 audience.
 
@@ -332,9 +334,38 @@ reference_root=None)` uses file paths. Without `row_path` it asks why the fact
 type has no rows at all. The result's `status` is `derived`, `blocked`,
 `unsupported`, `unavailable` or `refused`. For each clause, `clauses` gives the
 binding count after each step and the first step that left none. When that
-step is a derived fact type, `descent` explains its row in turn. The Python
-result carries raw values; the CLI's default view removes them. The
+step is a derived fact type, `descent` explains its row in turn. With no disclosure
+mode set, the Python result carries raw values; the CLI's default view removes
+them. Under `customer` the function returns the redacted view. The
 [why-not reference](why-not.md) defines the steps and the exit bands.
+
+## Under a disclosure mode
+
+The functions read `GND_DISCLOSURE` when they are called. Under `customer`
+the witness has no certificate, why-not returns the redacted view, and a
+request for values raises `DisclosureRefused`:
+
+<!-- gnd-run expect=0 output=stdout -->
+```python
+import os
+from gnd import api
+
+os.environ["GND_DISCLOSURE"] = "customer"
+proof = api.witness("api-dispatch/model.orm.json", "api-dispatch/repaired.pop.json", "targets.json")
+print(proof["exit_code"], "certificate" in proof)
+answer = api.why_not("api-dispatch/model.orm.json", "api-dispatch/seed.pop.json", "dispatch_reachable")
+print(answer["status"], answer["view"])
+try:
+    api.check("api-dispatch/model.orm.json", "api-dispatch/seed.pop.json", unredacted=True)
+except api.DisclosureRefused as error:
+    print(error)
+```
+
+```text
+0 False
+derived redacted
+unredacted=True is refused in customer disclosure mode
+```
 
 ## Integrate reports deliberately
 
@@ -343,7 +374,9 @@ result carries raw values; the CLI's default view removes them. The
 - Branch on documented fields and `schema_version`. Reference and temporal
   features select report variants; do not assume one version for all models.
 - Model-based redaction applies by default to checking, verbalization, and
-  diff reports. `unredacted=True` is an explicit request to retain source values.
+  diff reports. `unredacted=True` is an explicit request to retain source
+  values. Under the [disclosure mode](disclosure.md) `internal` it is granted
+  without asking; under `customer` it raises `DisclosureRefused`.
 - Wrong Python argument types can raise `TypeError` before evaluation. Returned
   report failures are not a substitute for ordinary exception handling.
 - A mechanical pass checks supplied facts against supplied rules. Assurance

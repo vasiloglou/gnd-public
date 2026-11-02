@@ -42,6 +42,8 @@ a guide illustrates one construct and is not a complete loadable model.
 | Extraction sidecars and document manifests | [Extraction contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-extract/references/extraction-contract.md), [rendering contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-render-doc/references/rendering-contract.md) |
 | Session contracts and outcomes | [Session skill](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-dev-session/SKILL.md), [v7 contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-dev-session/references/session-v7-contract.md), [v8 judgments](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-dev-session/references/judgment-contract.md) |
 | Finite witnesses and bounded native bundles | [Witness contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/witness-contract.md), [export contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-export/references/export-contract.md) |
+| Why-not answers | [Why-not reference](why-not.md), [why-not schema](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/why-not.schema.json) (`gnd-why-not/2`) |
+| Which outputs carry values in each mode | [Disclosure](disclosure.md) |
 
 These links point into the repository's maintained specification and schema
 sources. For a released integration, consult the same paths at the tag/commit

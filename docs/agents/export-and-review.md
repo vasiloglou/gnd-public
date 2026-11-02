@@ -39,6 +39,10 @@ gnd witness model.orm.json pop.json --targets targets.json --reference-root refe
 gnd replay  model.orm.json pop.json witness.json --reference-root references --json
 ```
 
+Under `GND_DISCLOSURE=customer`, `--raw` is refused with exit 3, so a service
+facing customers cannot publish a raw certificate or bundle; see
+[disclosure](../reference/disclosure.md).
+
 See [exports and witnesses](../guides/exports.md) and the
 [Python API](../reference/python-api.md) (`api.witness`, `api.replay`).
 

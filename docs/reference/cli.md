@@ -6,6 +6,11 @@ you have authored; these forms are contextual, not a script to paste as a unit.
 For complete runnable examples, start with [BookRec](../bookrec/01-model.md),
 [expenses](../expense/01-model.md), or the [quickstart](../quickstart.md).
 
+The root option `--disclosure internal|customer` goes before the subcommand
+(`gnd --disclosure customer check …`) and sets the
+[disclosure mode](disclosure.md) for that invocation; `GND_DISCLOSURE` sets it
+for a process. It is accepted only at the root.
+
 ## Models and facts
 
 | Command form | Result |
@@ -22,7 +27,9 @@ For complete runnable examples, start with [BookRec](../bookrec/01-model.md),
 
 Use `--anchors PATH --document PATH` for snapshot source anchoring.
 Check-family reports normally apply declared redaction; `--unredacted` requests
-the value-bearing view. `validate --trace` is a text surface: JSON validation
+the value-bearing view. The disclosure mode can grant or refuse that request;
+see [what customer mode refuses](disclosure.md#what-customer-mode-refuses).
+`validate --trace` is a text surface: JSON validation
 does not add trace fields.
 
 ## Project generation and change
@@ -81,12 +88,12 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 
 | Command form | Result |
 |---|---|
-| `gnd witness MODEL POPULATION --targets REQUEST` | Redacted finite-witness result |
-| `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate |
+| `gnd witness MODEL POPULATION --targets REQUEST` | Redacted finite-witness result (raw under `internal`) |
+| `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate; refused under `customer` |
 | `gnd replay MODEL POPULATION CERTIFICATE --json` | Independent finite inference replay |
 | `gnd witness-view CERTIFICATE --json` | Non-replayable presentation of a certificate |
-| `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted |
-| `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, values redacted |
+| `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted (raw under `internal`) |
+| `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, with values spelled differently counted; values redacted |
 | `gnd export souffle ...` / `gnd export lean ...` / `gnd export pyrel ...` | Selected bounded export profile |
 | `gnd install --project` | Copy packaged skills to project discovery roots |
 | `gnd doctor --project` | Diagnose installed skills and shadowing across scopes |
@@ -106,6 +113,8 @@ incomplete obligations; solve band `17` means a halted walk.
 General command refusals may use `64` for usage, `66` for missing inputs,
 `70` for internal faults, or `74` for I/O. Consult the command report/help
 rather than assigning one universal meaning to every nonzero exit.
+A request for values refused by the disclosure mode exits `3` with nothing on
+stdout. A misspelled or repeated `--disclosure` is a usage error, `64`.
 
 The authoritative parser lives in
 [cli.py](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/cli.py).

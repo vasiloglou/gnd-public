@@ -1,0 +1,52 @@
+# NM4 final gate, 2026-11-02. Each command, its last output line(s) and exit.
+
+$ uv run python tools/run_tutorials.py
+256 tutorial blocks passed
+exit 0
+
+$ uv run zensical build --strict
+Build finished in 0.60s
+exit 0
+
+$ uv run python tools/check_docs.py site
+12774 local links/assets/anchors checked
+exit 0
+
+$ uv run pytest -q -p no:cacheprovider tests/test_documentation_tutorials.py tests/test_plan_app_docs.py tests/test_disclosure_docs.py
+152 passed in 85.28s (0:01:25)
+exit 0
+
+$ uv run pytest -q -p no:cacheprovider tests/test_packaged_skills.py tests/test_skill_prose_sync.py tests/test_public_binding_prose.py tests/test_public_workflow_claim_routes.py tests/test_marketplace_plugins.py tests/test_why_not_anonymity.py tests/test_disclosure_mode.py tests/test_rf1_layering.py
+166 passed in 21.88s
+exit 0
+
+$ uv run pytest -q -p no:cacheprovider tests/test_ik6_skill_census.py tests/test_il6_skill_census.py
+=========================== short test summary info ============================
+FAILED tests/test_ik6_skill_census.py::test_t4_each_changed_cell_names_the_phases_git_records
+FAILED tests/test_ik6_skill_census.py::test_t4_a_wrong_phase_fails_by_name - ...
+FAILED tests/test_il6_skill_census.py::test_t7_each_cell_names_exactly_the_phases_git_records
+FAILED tests/test_il6_skill_census.py::test_t7_a_wrong_phase_fails_by_name - ...
+FAILED tests/test_il6_skill_census.py::test_t7_an_unmarked_change_fails_by_name
+5 failed, 13 passed in 6.33s
+exit 1
+
+$ uv run python tools/check_installed_docs.py --out <scratch>/installed-docs-nm4b
+Both installed wheel origins passed the documented learning paths.
+exit 0
+
+$ python3 .gnd-planning/milestones/why-not-near-misses/evidence/NM4/check_against_dc2.py
+2 new pages equal their drafts; 21 edits present; 66 DC2 sentences and rows shipped
+exit 0
+
+$ python3 .gnd-planning/milestones/why-not-near-misses/evidence/NM4/check_inventory.py
+35 inventory files, each with a disposition
+exit 0
+
+# The five census failures credit the two uncommitted skill edits to the census's own scope
+# (IK-close / IL6). With `git diff --quiet HEAD` treated as clean, as after a commit under NM4:
+#   test_ik6_skill_census phase errors once committed: []
+#   test_il6_skill_census phase errors once committed: []
+# After the NM4 commit (8bc5039):
+$ uv run pytest -q -p no:cacheprovider tests/test_ik6_skill_census.py tests/test_il6_skill_census.py tests/test_why_not_anonymity.py tests/test_disclosure_docs.py
+27 passed in 6.33s
+exit 0

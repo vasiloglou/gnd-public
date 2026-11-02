@@ -235,13 +235,17 @@ as not covered is explained like any other.
 
 ## Values in the answer
 
-The Python API returns raw values, like `api.witness`. The CLI prints a
-redacted view by default: `samples`, constant roles and an unavailable term's
-binding read `"redacted"`, and the answer carries `"view": "redacted"`. An
-atom blocker keeps `near_miss_count` and `near_miss_truncated` and shows
-`near_misses` as `"redacted"`. Pass
-`--raw` to print the values, with `"view": "raw"`. Use the raw view only where
-those values are appropriate for the reader.
+With no [disclosure mode](disclosure.md) set, the Python API returns raw
+values, like `api.witness`, and the CLI prints a redacted view: `samples`,
+constant roles and an unavailable term's binding read `"redacted"`, and the
+answer carries `"view": "redacted"`. An atom blocker keeps
+`near_miss_count` and `near_miss_truncated` and shows `near_misses` as
+`"redacted"`. Pass `--raw` to print the values, with `"view": "raw"`.
+
+Under `GND_DISCLOSURE=internal` both print the raw view. Under `customer`
+both return the redacted view and `--raw` is refused with exit 3. The
+near-miss counters stay visible in every mode; [who customer mode
+protects](disclosure.md#who-customer-mode-protects) says what they reveal.
 
 ## Limits
 

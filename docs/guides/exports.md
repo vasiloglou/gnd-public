@@ -39,6 +39,9 @@ The first command displays a value-redacted view. The second explicitly
 publishes a raw certificate to a new destination. The third replays that
 certificate with an independent finite inference kernel. A displayed witness
 view, including an expanded view, is not replayable input.
+Under `GND_DISCLOSURE=customer`, `--raw` is refused with exit 3, so a service
+facing customers cannot publish a raw certificate or bundle; see
+[disclosure](../reference/disclosure.md).
 
 Read every target status. Exit `0` requires every requested tuple to be
 proved. Missing, unknown, or unsupported targets use band `2`; invalid input

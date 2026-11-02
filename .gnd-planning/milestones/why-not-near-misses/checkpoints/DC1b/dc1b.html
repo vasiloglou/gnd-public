@@ -1,0 +1,200 @@
+<title>Disclosure Mode Checkpoint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a checkpoint band on top, then the how-to exactly as it will ship. */
+:root{--bg:#f7f8f6;--surface:#ffffff;--fg:#1d2420;--muted:#5d6862;--line:#d9dfdb;--accent:#2f6d5a;--code:#eef2ef;--out:#e8eef5;--outline:#3b5f86;--warn:#8a5a14;--warnbg:#fbf3e4;
+--display:"Source Serif 4",Georgia,serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--surface:#1b201d;--fg:#e3e8e5;--muted:#9aa59f;--line:#2e3632;--accent:#7cc4a9;--code:#202723;--out:#1c2530;--outline:#86afd8;--warn:#e2b468;--warnbg:#2a2318;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141816;--surface:#1b201d;--fg:#e3e8e5;--muted:#9aa59f;--line:#2e3632;--accent:#7cc4a9;--code:#202723;--out:#1c2530;--outline:#86afd8;--warn:#e2b468;--warnbg:#2a2318;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+.wrap{max-width:46rem;margin:0 auto;padding-block:2rem 4rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.25;text-wrap:balance}
+h1{font-size:2rem;margin:.2em 0 .4em}h2{font-size:1.45rem;margin:2.2em 0 .5em;padding-top:.6em;border-top:1px solid var(--line)}h3{font-size:1.15rem;margin:1.6em 0 .4em}
+a{color:var(--accent)}
+.band{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.2rem 1.4rem;margin-bottom:2.5rem}
+.band .eyebrow{font:500 .75rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.band h2{border:0;margin:.5rem 0 .6rem;padding:0;font-size:1.3rem}
+.band ul{padding-left:1.2rem;margin:.4rem 0}.band li{margin:.25rem 0}
+.modes{width:100%;border-collapse:collapse;font-size:.9rem;margin:.8rem 0}
+.tablebox{overflow-x:auto}
+.modes th,.modes td{border-bottom:1px solid var(--line);padding:.45rem .5rem;text-align:left;vertical-align:top}
+.modes th{font-weight:600;color:var(--muted);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+.modes td code{white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.85rem;color:var(--muted);margin-top:.6rem}
+.legend span::before{content:"";display:inline-block;width:.8rem;height:.8rem;border-radius:2px;margin-right:.35rem;vertical-align:-1px}
+.legend .c::before{background:var(--code)}.legend .o::before{background:var(--out);box-shadow:inset 3px 0 0 var(--outline)}
+.doc{border-top:3px double var(--line);padding-top:1rem}
+code{font-family:var(--mono);font-size:.88em}
+p code,li code,td code{background:var(--code);padding:.08em .3em;border-radius:3px}
+pre{background:var(--code);padding:.8rem 1rem;border-radius:4px;overflow-x:auto;font-size:.85rem;line-height:1.5;margin:.8rem 0}
+pre code{background:none;padding:0;white-space:pre}
+pre.out{background:var(--out);border-left:3px solid var(--outline);margin-top:-.4rem}
+.admonition{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:.6rem 1rem;font-size:.9rem}
+.admonition-title{font-weight:600;margin:0 0 .3rem}
+.flag{background:var(--warnbg);color:var(--fg);border-left:3px solid var(--warn);padding:.6rem .9rem;border-radius:3px;font-size:.92rem}
+@media (max-width:420px){h1{font-size:1.6rem}}
+</style>
+<div class="wrap">
+<section class="band">
+<div class="eyebrow">Checkpoint DC1b · why-not-near-misses · NM2 at 23e4a99</div>
+<h2>The disclosure how-to, from real runs</h2>
+<p>Below the double line is the how-to page as NM4 will ship it at <code>docs/how-to/disclosure-mode.md</code>. Every output block (blue edge) came from running the command above it against the NM2 commit, and the repository's tutorial runner re-checks all 13 blocks: <strong>13 passed</strong>.</p>
+<div class="tablebox"><table class="modes">
+<tr><th>Same request</th><th>No mode</th><th><code>internal</code></th><th><code>customer</code></th></tr>
+<tr><td><code>gnd check</code> on the redacted email role</td><td>violation named, addresses withheld · exit 1</td><td>both addresses shown · exit 1</td><td>violation named, addresses withheld · exit 1</td></tr>
+<tr><td><code>--unredacted</code></td><td>addresses shown</td><td>addresses shown</td><td>refused · exit 3</td></tr>
+<tr><td><code>gnd why-not</code> blocker samples</td><td>withheld (<code>"redacted"</code>)</td><td><code>Ada Byrne</code>, <code>Field Notes</code></td><td>withheld (<code>"redacted"</code>)</td></tr>
+<tr><td><code>--raw</code></td><td>values shown</td><td>values shown</td><td>refused · exit 3</td></tr>
+</table></div>
+<div class="legend"><span class="c">command you run</span><span class="o">what GND printed</span></div>
+<h3>What I'd still fix</h3>
+<ul>
+<li><code>DisclosureRefused</code> is importable only from <code>gnd.disclosure</code>, not <code>gnd.api</code>. The page catches <code>ValueError</code>, which works today. I'd export it from <code>gnd.api</code> in NM3 so callers can catch it by name.</li>
+<li><code>gnd check</code> on a model with a redacted role prints a <code>REDACTION applied</code> line and then the JSON report, even in the default text format. This already happens on main before NM2. The page uses <code>--format json</code> to avoid it. I'd raise it as its own issue, not fix it in this milestone.</li>
+<li>The reference page this one links to (<code>reference/disclosure.md</code>) is written in NM4, so that link doesn't work yet.</li>
+</ul>
+</section>
+<article class="doc">
+<h1>Run GND behind your interface or in front of customers</h1>
+<p>Use this when one GND installation serves two kinds of reader. Your own team,
+behind your interface, wants the population values that explain a failure.
+A customer, reached through your service, must not see them. One setting, the
+<em>disclosure mode</em>, tells GND which reader it is serving. The full rules are in
+the <a href="#" title="ships in NM4">disclosure reference</a>.</p>
+<div class="admonition info">
+<p class="admonition-title">Files on GitHub</p>
+<ul>
+<li><a href="https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/disclosure/model.orm.yaml"><code>disclosure/model.orm.yaml</code></a>: a support desk's contacts, with the email role declared sensitive</li>
+<li><a href="https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/disclosure/population.json"><code>disclosure/population.json</code></a>: one customer with two email addresses</li>
+<li><a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/disclosure-mode.md">this page's Markdown source</a></li>
+</ul>
+</div>
+<h2>The example</h2>
+<p>A support desk records each customer's email address. The model says a
+customer has at most one, and marks the address as sensitive:</p>
+<pre><code class="language-yaml">roles:
+  - { object_type: customer_code, role_name: customer }
+  - { object_type: email_address, role_name: email, redact: true }
+</code></pre>
+<p>The population gives customer <code>c-1</code> two addresses, so the check fails. Copy
+the example:</p>
+<pre><code class="language-sh">python -c &quot;import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/disclosure', 'disclosure', dirs_exist_ok=True)&quot;
+</code></pre>
+<p>The blocks below print three fields of the check report: the violation
+message, the offending facts and the redaction mode. Save the filter once:</p>
+<pre><code class="language-sh">cat &gt; show.py &lt;&lt;'PY'
+import json, sys
+verdict = json.load(sys.stdin)[&quot;verdicts&quot;][0]
+print(verdict[&quot;message&quot;])
+print(verdict[&quot;offending_facts&quot;])
+PY
+</code></pre>
+<h2>With no mode set: as before</h2>
+<p>Without a mode, GND behaves as it always has: the declared role is redacted
+unless you ask for it with <code>--unredacted</code>.</p>
+<pre><code class="language-sh">gnd check disclosure/model.orm.yaml disclosure/population.json --format json | python show.py
+</code></pre>
+<pre class="out"><code class="language-text">[REDACTED INSTANCE DETAIL]
+[{'redacted': True, 'roles': ['has_email.email']}]
+</code></pre>
+<p>The check still fails with exit 1. The report says which constraint failed
+and which role was withheld, but not the addresses.</p>
+<h2>Behind your interface: <code>internal</code></h2>
+<p>Set the mode on the root command, before the subcommand, or in the
+environment of the process that runs GND:</p>
+<pre><code class="language-sh">gnd --disclosure internal check disclosure/model.orm.yaml disclosure/population.json --format json | python show.py
+</code></pre>
+<pre class="out"><code class="language-text">Each customer plays 'has_email' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+[{'customer': 'c-1', 'email': 'ann@example.com'}, {'customer': 'c-1', 'email': 'ann.lee@example.com'}]
+</code></pre>
+<p><code>internal</code> acts as if every raw option were passed. Your team sees the two
+addresses and can decide which one to keep.</p>
+<h2>In front of customers: <code>customer</code></h2>
+<p>Set the mode in the environment of the service that faces customers, so no
+request can loosen it. In production you export it once in that service's
+environment; here it is set for one command:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd check disclosure/model.orm.yaml disclosure/population.json --format json | python show.py
+</code></pre>
+<pre class="out"><code class="language-text">[REDACTED INSTANCE DETAIL]
+[{'redacted': True, 'roles': ['has_email.email']}]
+</code></pre>
+<p>The verdict is the same; only the values are withheld.</p>
+<h3>Requests for values are refused, not downgraded</h3>
+<p>A customer's request might be turned into <code>--unredacted</code> by your service.
+Under <code>customer</code> GND refuses it with exit 3 and prints nothing on stdout, so
+nobody mistakes a redacted answer for the raw one:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd check disclosure/model.orm.yaml disclosure/population.json --unredacted
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: --unredacted is refused in customer disclosure mode
+</code></pre>
+<p>The root option can tighten the mode but never loosen it:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd --disclosure internal check disclosure/model.orm.yaml disclosure/population.json
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: --disclosure internal is refused when GND_DISCLOSURE=customer
+</code></pre>
+<p>A mistyped value is refused too, so a misspelled lock never opens:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=Customer gnd check disclosure/model.orm.yaml disclosure/population.json
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: GND_DISCLOSURE must be 'internal' or 'customer'
+</code></pre>
+<h2>Why-not and witness answers</h2>
+<p>The mode also covers the commands that explain a derivation: <code>witness</code>,
+<code>witness-view</code>, <code>replay</code>, <code>why-not</code>, and the Lean and Soufflé exports. This
+uses the <code>quoted_claims</code> example from
+<a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/repair-a-missing-claim.md">Repair a claim that does not derive</a>, where a
+claimed quotation is missing because nobody recorded who wrote the work.</p>
+<pre><code class="language-sh">python -c &quot;import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/quoted_claims', 'quoted_claims', dirs_exist_ok=True)&quot;
+cat &gt; blocker.py &lt;&lt;'PY'
+import json, sys
+answer = json.load(sys.stdin)
+blocker = answer[&quot;clauses&quot;][0][&quot;blocker&quot;]
+print(answer[&quot;view&quot;], blocker[&quot;fact_type&quot;], blocker[&quot;samples&quot;])
+PY
+</code></pre>
+<p>Behind your interface, the answer shows the values that reached the blocking
+step:</p>
+<pre><code class="language-sh">gnd --disclosure internal why-not quoted_claims/model.orm.json quoted_claims/gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json | python blocker.py
+</code></pre>
+<pre class="out"><code class="language-text">raw authored [{'person': 'Ada Byrne', 'work': 'Field Notes'}]
+</code></pre>
+<p>In front of customers, the same answer names the blocking step but not the
+values:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd why-not quoted_claims/model.orm.json quoted_claims/gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json | python blocker.py
+</code></pre>
+<pre class="out"><code class="language-text">redacted authored redacted
+</code></pre>
+<p>and <code>--raw</code> is refused:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd why-not quoted_claims/model.orm.json quoted_claims/gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json --raw
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: --raw is refused in customer disclosure mode
+</code></pre>
+<h2>From Python</h2>
+<p>The Python API reads the same environment variable. A request for values under
+<code>customer</code> raises <code>DisclosureRefused</code>, a <code>ValueError</code>:</p>
+<pre><code class="language-python">import os
+os.environ[&quot;GND_DISCLOSURE&quot;] = &quot;customer&quot;
+from gnd import api
+try:
+    api.check(&quot;disclosure/model.orm.yaml&quot;, &quot;disclosure/population.json&quot;, unredacted=True)
+except ValueError as error:
+    print(type(error).__name__, error)
+</code></pre>
+<pre class="out"><code class="language-text">DisclosureRefused unredacted=True is refused in customer disclosure mode
+</code></pre>
+<h2>What the mode does not change</h2>
+<ul>
+<li><code>gnd exp run</code> session feedback, <code>gnd discover</code>, <code>gnd export ilp</code>,
+  <code>gnd fidelity</code> and <code>gnd doccheck</code> behave the same in every mode. Do not
+  route their output to a customer.</li>
+<li>Values in check messages for roles you have not declared with <code>redact: true</code>
+  are not withheld. Declare every sensitive role.</li>
+<li>Under <code>customer</code>, the processes GND starts (the agents of <code>gnd exp run</code>, the
+  stations of <code>gnd solve</code>) receive <code>GND_DISCLOSURE=customer</code>. Under <code>internal</code>
+  or no mode they receive nothing extra.</li>
+</ul>
+</article>
+</div>

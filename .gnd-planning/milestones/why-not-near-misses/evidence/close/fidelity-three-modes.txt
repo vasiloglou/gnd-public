@@ -1,0 +1,8 @@
+# NM2-Q2: gnd fidelity end to end in three disclosure modes, at eb9839a, 2026-11-02.
+# One case built from the fidelity payload test's helpers (tests/test_fidelity_payload.py).
+$ uv run python evidence/close/fidelity_three_modes.py <repo> <scratch>
+mode      exit  --out sha256[:16]   stdout sha256[:16]
+unset     0     cff2836381998194    cff2836381998194
+internal  0     cff2836381998194    cff2836381998194
+customer  0     cff2836381998194    cff2836381998194
+identical in every mode: True

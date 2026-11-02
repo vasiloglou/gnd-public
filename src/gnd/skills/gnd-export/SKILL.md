@@ -16,10 +16,13 @@ Read the [export boundary](references/export-contract.md) and
    `missing` row, write a one-target request for that row and run
    `gnd why-not MODEL POP --fact-type ID --row ROW_REQUEST --reference-root ROOT`.
    It names the first rule step that left no bindings; it explains, it proves
-   nothing.
+   nothing. Its atom blockers count rows spelled differently (`near_miss_count`);
+   read the pairs with `--raw` before changing a spelling.
 3. On explicit raw export selection, run the same command with
    `--raw --out NEW_CERTIFICATE`. The destination is create-once; raw certificates
-   contain source values. Never overwrite an existing destination.
+   contain source values. Never overwrite an existing destination. Under
+   `GND_DISCLOSURE=customer` this is refused with exit 3; do not retry it in
+   another mode for that reader.
 4. Replay separately with `gnd replay MODEL POP CERTIFICATE --reference-root ROOT --json`.
    Exit zero means every requested finite proof replayed against those bound
    inputs. Missing or unknown results establish no absence theorem.

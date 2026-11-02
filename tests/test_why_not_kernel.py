@@ -730,3 +730,395 @@ def test_close_c4_5_non_atom_sample_count_is_uncapped():
     rows = [{"v": i} for i in range(8)]
     blocker = run(fts, {"s": rows, "x": rows}, "n")["clauses"][0]["blocker"]
     assert (blocker["sample_count"], len(blocker["samples"]), blocker["reads"]) == (8, 5, ["$v"])
+
+
+# -- NM1: near-misses (notes/phase-NM1-spec.md in why-not-near-misses) ------------
+
+NEAR = ("near_miss_count", "near_miss_truncated", "near_misses")
+
+
+def two_step(name, roles, rows, src_roles=None, src_rows=(), constant=None):
+    """``t`` joins ``src`` to ``name`` on every variable of ``name``'s roles."""
+    src_roles = src_roles if src_roles is not None else roles
+    bind = {role: f"$v_{role}" for role, _ in roles}
+    if constant is not None:
+        bind.update(constant)
+    src_bind = {role: f"$v_{role}" for role, _ in src_roles}
+    head = {f"h_{v[1:]}": v for v in sorted(set(src_bind.values()) | {v for v in bind.values() if str(v).startswith("$")})}
+    types = dict(src_roles) | dict(roles)
+    fts = [
+        fact_type("src", src_roles),
+        fact_type(name, roles),
+        fact_type("t", [(h, types[v[3:]]) for h, v in head.items()],
+                  {"body": [atom("src", **src_bind), atom(name, **bind)], "head": head}),
+    ]
+    return fts, {"src": list(src_rows), name: list(rows)}
+
+
+def issue_case(rows):
+    return two_step("party_to", [("party", "code"), ("case", "code")], rows,
+                    src_rows=[{"party": "Acme Corp.", "case": "c-9"}])
+
+
+def near_cases():
+    """Hand-written NM1 cases: (id, fact types, facts, target, row, limits)."""
+    yield "T2", *issue_case([{"party": "ACME CORP.", "case": "c-9"}]), "t", None, None
+    yield "T3", *issue_case([{"party": "Other", "case": "c-9"}]), "t", None, None
+    yield "T5", *two_step("auth", [("work", "code"), ("person", "code")], [{"work": "w1", "person": "Ann  Lee"}],
+                          src_rows=[{"work": "w1", "person": "ann lee"}]), "t", None, None
+    yield "T6", *issue_case([{"party": "ACME CORP.", "case": "c-1"}]), "t", None, None
+    yield "T7", *two_step("party_as", [("party", "code"), ("side", "code")],
+                          [{"party": "ACME CORP.", "side": "defendant"}],
+                          src_roles=[("party", "code")], src_rows=[{"party": "Acme Corp."}],
+                          constant={"side": "plaintiff"}), "t", None, None
+    yield "T10", *pair_case([{"work": "w1", "a": "x", "b": "z"}]), "t", None, None
+    yield "T10b", *pair_case([{"work": "W1.", "a": "x", "b": "x"}]), "t", None, None
+    yield "T10c", *bound_twice_case(), "t", None, None
+    yield "T11", *two_step("dst", [("p", "code")], [{"p": v} for v in ("ACME", "acme.", "BETA", "beta.", "BeTa")],
+                           src_rows=[{"p": v} for v in ("Acme", "acme", "Beta")]), "t", None, None
+    yield "T11b", *two_step("kv", [("k", "code"), ("v", "code")], [{"k": "ACME", "v": "1"}, {"k": "ACME", "v": "2"}],
+                            src_roles=[("k", "code")], src_rows=[{"k": "Acme"}]), "t", None, None
+    yield "T11c", *two_step("dst", [("k", "code")], [{"k": "ACME"}], src_roles=[("k", "code"), ("z", "code")],
+                            src_rows=[{"k": "Acme", "z": "1"}, {"k": "Acme", "z": "2"}]), "t", None, None
+    yield "T12", *truncation_case(), "t", None, WhyNotLimits(near_miss_inspections=5)
+    yield "T12b", *spelled(100), "t", None, None
+    yield "T21", *representative_case([{"n": 1, "m": "ACME"}, {"n": 1.0, "m": "ACME"}]), "t", None, None
+    yield "T21-reversed", *representative_case([{"n": 1.0, "m": "ACME"}, {"n": 1, "m": "ACME"}]), "t", None, None
+    yield "T4", *descent_case(), "t", None, None
+
+
+def pair_case(rows):
+    fts = [
+        fact_type("src", [("work", "code")]),
+        fact_type("pair", [("work", "code"), ("a", "code"), ("b", "code")]),
+        fact_type("t", [("work", "code"), ("y", "code")], {
+            "body": [atom("src", work="$w"), atom("pair", work="$w", a="$y", b="$y")],
+            "head": {"work": "$w", "y": "$y"}}),
+    ]
+    return fts, {"src": [{"work": "w1"}], "pair": rows}
+
+
+def bound_twice_case():
+    fts = [
+        fact_type("src", [("k", "code")]),
+        fact_type("pair", [("a", "code"), ("b", "code")]),
+        fact_type("t", [("k", "code")], {"body": [atom("src", k="$k"), atom("pair", a="$k", b="$k")], "head": {"k": "$k"}}),
+    ]
+    return fts, {"src": [{"k": "acme"}], "pair": [{"a": "ACME", "b": "acme"}]}
+
+
+def truncation_case():
+    return two_step("dst", [("p", "code")], [{"p": "ACME"}, {"p": "BETA"}, {"p": "acme."}],
+                    src_rows=[{"p": "Acme"}, {"p": "Beta"}])
+
+
+def spelled(n):
+    """``n`` bindings and ``n`` rows, all one normalized value, never equal."""
+    return two_step("dst", [("p", "code")], [{"p": "ACME" + "!" * i} for i in range(n)],
+                    src_rows=[{"p": "acme" + "." * i} for i in range(n)])
+
+
+def representative_case(rows):
+    return two_step("dst", [("n", "num"), ("m", "code")], rows, src_rows=[{"n": 1.0, "m": "Acme"}])
+
+
+def descent_case():
+    fts = [
+        fact_type("filed", [("party", "code"), ("case", "code")]),
+        fact_type("party_to", [("party", "code"), ("case", "code")]),
+        fact_type("named", [("party", "code"), ("case", "code")], {
+            "body": [atom("party_to", party="$p", case="$c")], "head": {"party": "$p", "case": "$c"}}),
+        fact_type("t", [("party", "code"), ("case", "code")], {
+            "body": [atom("filed", party="$p", case="$c"), atom("named", party="$p", case="$c")],
+            "head": {"party": "$p", "case": "$c"}}),
+    ]
+    return fts, {"filed": [{"party": "Acme Corp.", "case": "c-9"}],
+                 "party_to": [{"party": "ACME CORP.", "case": "c-9"}]}
+
+
+CASES = {name: (fts, facts, target, row, limits) for name, fts, facts, target, row, limits in near_cases()}
+
+
+def near(name, **kwargs):
+    fts, facts, target, row, limits = CASES[name]
+    if limits is not None:
+        kwargs.setdefault("limits", limits)
+    return run(fts, facts, target, row=row, near_misses=True, **kwargs)
+
+
+def near_blocker(name, **kwargs):
+    (clause,) = near(name, **kwargs)["clauses"]
+    return clause["blocker"]
+
+
+def near_fields(blocker):
+    return {key: blocker[key] for key in NEAR}
+
+
+def test_nm1_t1_normalization_table():
+    norm = why_not._normalize
+    assert norm("ACME CORP.") == norm("Acme Corp.") == "acme corp"
+    assert norm("Acme\tCorp") == norm("Acme Corp")
+    assert norm("ＡＣＭＥ") == "acme"
+    assert norm("Straße") == norm("STRASSE")
+    assert norm("ACME-CORP") == norm("ACMECORP") != norm("ACME CORP")
+    assert norm("Acme . Corp") == norm("Acme Corp")
+    assert norm("℅") == "co"
+    assert norm("...") is None and norm("－－") is None and norm("") is None
+
+
+def test_nm1_t2_issue_shape():
+    blocker = near_blocker("T2")
+    assert blocker["index"] == 1 and blocker["fact_type"] == "party_to"
+    assert near_fields(blocker) == {
+        "near_miss_count": 1, "near_miss_truncated": False,
+        "near_misses": [{"roles": ["party"], "sample": {"case": "c-9", "party": "Acme Corp."},
+                         "candidate": {"case": "c-9", "party": "ACME CORP."}}],
+    }
+    plain = run(*CASES["T2"][:3])["clauses"][0]["blocker"]
+    assert {k: v for k, v in blocker.items() if k not in NEAR} == plain
+
+
+@pytest.mark.parametrize("name", ["T3", "T6", "T7", "T10"])
+def test_nm1_no_near_miss(name):
+    assert near_fields(near_blocker(name)) == {
+        "near_miss_count": 0, "near_miss_truncated": False, "near_misses": []}
+
+
+def test_nm1_t4_descent_carries_near_misses():
+    (clause,) = near("T4")["clauses"]
+    pair = {"roles": ["party"], "sample": {"case": "c-9", "party": "Acme Corp."},
+            "candidate": {"case": "c-9", "party": "ACME CORP."}}
+    assert clause["blocker"]["fact_type"] == "named"
+    assert near_fields(clause["blocker"]) == {"near_miss_count": 1, "near_miss_truncated": False, "near_misses": [pair]}
+    (nested,) = clause["descent"]["clauses"]
+    assert nested["blocker"]["fact_type"] == "party_to"
+    assert near_fields(nested["blocker"]) == {"near_miss_count": 1, "near_miss_truncated": False, "near_misses": [pair]}
+
+
+def test_nm1_t5_only_the_near_role_is_listed():
+    blocker = near_blocker("T5")
+    assert blocker["near_miss_count"] == 1
+    assert blocker["near_misses"] == [{"roles": ["person"], "sample": {"person": "ann lee", "work": "w1"},
+                                       "candidate": {"person": "Ann  Lee", "work": "w1"}}]
+
+
+def test_nm1_t8_key_function_and_identity():
+    key = why_not._near_key
+    keys = [key(7), key("7"), key(True), key(1)]
+    assert key("7") == ("n", "7")
+    assert [k[0] for k in keys] == ["x", "n", "x", "x"] and len(set(keys)) == 4
+    assert key(1) == key(1.0)
+    fts, facts = two_step("dst", [("n", "num")], [{"n": 1.0}], src_rows=[{"n": 1}])
+    assert run(fts, facts, "t", near_misses=True)["status"] == "derived"
+
+
+def test_nm1_t10b_t10c_repeated_variables():
+    assert near_fields(near_blocker("T10b")) == {
+        "near_miss_count": 1, "near_miss_truncated": False,
+        "near_misses": [{"roles": ["work"], "sample": {"work": "w1"}, "candidate": {"work": "W1."}}]}
+    assert near_fields(near_blocker("T10c")) == {
+        "near_miss_count": 1, "near_miss_truncated": False,
+        "near_misses": [{"roles": ["a"], "sample": {"a": "acme", "b": "acme"},
+                         "candidate": {"a": "ACME", "b": "acme"}}]}
+
+
+def test_nm1_t11_global_order_over_two_keys():
+    blocker = near_blocker("T11")
+    assert blocker["near_miss_count"] == 7 and blocker["near_miss_truncated"] is False
+    assert [(p["sample"]["p"], p["candidate"]["p"]) for p in blocker["near_misses"]] == [
+        ("Acme", "ACME"), ("Acme", "acme."), ("Beta", "BETA"), ("Beta", "BeTa"), ("Beta", "beta.")]
+
+
+def test_nm1_t11b_t11c_dedup_by_projection():
+    assert near_blocker("T11b")["near_miss_count"] == 1
+    assert near_blocker("T11c")["near_miss_count"] == 1
+
+
+def test_nm1_t12_truncation_bracket():
+    full = near("T12", limits=WhyNotLimits(near_miss_inspections=5))
+    cut = near("T12", limits=WhyNotLimits(near_miss_inspections=4))
+    assert near_fields(full["clauses"][0]["blocker"])["near_miss_count"] == 3
+    assert full["clauses"][0]["blocker"]["near_miss_truncated"] is False
+    # Bindings first (2), then rows ACME and BETA: Acme-ACME and Beta-BETA.
+    assert cut["clauses"][0]["blocker"]["near_miss_count"] == 2
+    assert cut["clauses"][0]["blocker"]["near_miss_truncated"] is True
+    for result in (full, cut):
+        assert {k: result[k] for k in ("status", "work")} == {k: run(*CASES["T12"][:3])[k] for k in ("status", "work")}
+
+
+@pytest.mark.parametrize("n", [100, 200, 400])
+def test_nm1_t12b_linear_inspections(n):
+    fts, facts = spelled(n)
+    full = run(fts, facts, "t", near_misses=True, limits=WhyNotLimits(near_miss_inspections=2 * n))
+    cut = run(fts, facts, "t", near_misses=True, limits=WhyNotLimits(near_miss_inspections=2 * n - 1))
+    assert full["clauses"][0]["blocker"]["near_miss_count"] == n * n
+    assert full["clauses"][0]["blocker"]["near_miss_truncated"] is False
+    assert cut["clauses"][0]["blocker"]["near_miss_count"] == n * (n - 1)
+    assert cut["clauses"][0]["blocker"]["near_miss_truncated"] is True
+
+
+def test_nm1_t12c_quadratic_case_builds_at_most_25_pairs(monkeypatch):
+    built = []
+    original = why_not._near_miss_pair
+
+    def counting(*args):
+        built.append(args)
+        return original(*args)
+
+    monkeypatch.setattr(why_not, "_near_miss_pair", counting)
+    fts, facts = spelled(512)
+    blocker = run(fts, facts, "t", near_misses=True)["clauses"][0]["blocker"]
+    assert blocker["near_miss_count"] == 262144 and blocker["near_miss_truncated"] is False
+    assert 0 < len(built) <= 25 and len(blocker["near_misses"]) == 5
+
+
+def bare_walk(facts, cap=200000):
+    walk = why_not._Walk.__new__(why_not._Walk)
+    walk.facts = facts
+    walk.budget = why_not._Budget(WhyNotLimits(near_miss_inspections=cap))
+    walk.near_miss_inspections = 0
+    return walk
+
+
+def test_nm1_t16_exact_row_is_an_internal_error():
+    walk = bare_walk({"dst": ({"p": "ACME"},)})
+    roles = {"p": {"variable": "$p", "bound": True}}
+    with pytest.raises(WhyNotInternalError, match="matches exactly"):
+        walk._near_misses([{"p": "ACME"}], atom("dst", p="$p"), roles)
+
+
+def test_nm1_d3_binding_without_a_bound_variable_is_an_internal_error():
+    walk = bare_walk({"dst": ({"p": "ACME"},)})
+    roles = {"p": {"variable": "$p", "bound": True}}
+    with pytest.raises(WhyNotInternalError, match="lacks a variable"):
+        walk._near_misses([{"q": "x"}], atom("dst", p="$p"), roles)
+
+
+def test_nm1_t19b_eligibility_with_bound_roles():
+    rows = (
+        {"a": "ACME", "b": "acme", "c": "x", "d": 1, "e": 1},
+        {"a": "a", "b": "a", "c": "z", "d": 1, "e": 1},
+        {"a": "a", "b": "a", "c": "x", "d": 1, "e": 2},
+    )
+    walk = bare_walk({"five": rows})
+    shape = atom("five", a="$k", b="$k", c="x", d="$y", e="$y")
+    assert walk._eligible_rows(shape, frozenset({"k"})) == [rows[0]]
+
+
+def test_nm1_t20_inspection_ceiling_cannot_be_raised():
+    with pytest.raises(WhyNotInputError):
+        why_not.checked_why_not_limits(WhyNotLimits(near_miss_inspections=200001))
+
+
+def test_nm1_t21_representative_is_order_independent():
+    one = near_blocker("T21")
+    other = near_blocker("T21-reversed")
+    assert why_not._canonical(one) == why_not._canonical(other)
+    # The canonical minimum is byte order over the encoding: "1.0}" sorts before
+    # "1}", so the last-key 1.0 represents the group (NM1 finding F1).
+    assert why_not._canonical(one["near_misses"][0]["candidate"]) == b'{"m":"ACME","n":1.0}\n'
+    assert one["near_miss_count"] == 1
+
+
+def test_nm1_flag_off_adds_nothing():
+    for name, (fts, facts, target, row, _limits) in CASES.items():
+        result = run(fts, facts, target, row=row)
+        assert not any(key in repr(result) for key in NEAR), name
+
+
+# -- NM1 review regressions (notes/phase-NM1-claude-review.md) --------------------
+
+def two_clause(first_body, rows_first):
+    """Clause 0 blocks on ``first_body``; clause 1 is the T2 issue shape."""
+    fts = [
+        fact_type("src", [("party", "code"), ("case", "code")]),
+        fact_type("other", [("party", "code"), ("case", "code")]),
+        fact_type("party_to", [("party", "code"), ("case", "code")]),
+        fact_type("t", [("party", "code"), ("case", "code")], {"head": {"party": "$p", "case": "$c"}, "clauses": [
+            {"body": first_body},
+            {"body": [atom("src", party="$p", case="$c"), atom("party_to", party="$p", case="$c")]}]}),
+    ]
+    facts = {"src": [{"party": "Acme Corp.", "case": "c-9"}], "other": rows_first,
+             "party_to": [{"party": "ACME CORP.", "case": "c-9"}]}
+    return fts, facts
+
+
+def test_nm1_review_r1_one_counter_serves_the_whole_walk():
+    # Clause 0 inspects 2 (one binding, one row); clause 1 then has 1 left.
+    fts, facts = two_clause([atom("src", party="$p", case="$c"), atom("other", party="$p", case="$c")],
+                            [{"party": "acme corp", "case": "c-9"}])
+    result = run(fts, facts, "t", near_misses=True, limits=WhyNotLimits(near_miss_inspections=3))
+    first, second = (clause["blocker"] for clause in result["clauses"])
+    assert (first["near_miss_count"], first["near_miss_truncated"]) == (1, False)
+    assert (second["near_miss_count"], second["near_miss_truncated"]) == (0, True)
+
+
+def test_nm1_review_r7_unbound_blocker_inspects_nothing():
+    # Clause 0 blocks at its first atom with nothing bound; its rows exist but
+    # must not be inspected, so clause 1 still fits in a cap of 2.
+    fts, facts = two_clause([atom("other", party="$p", case="$c"), atom("src", party="nobody", case="$c")],
+                            [{"party": "x", "case": "c-1"}])
+    facts["other"] = []
+    result = run(fts, facts, "t", near_misses=True, limits=WhyNotLimits(near_miss_inspections=2))
+    first, second = (clause["blocker"] for clause in result["clauses"])
+    assert first["index"] == 0 and not any(spec.get("bound") for spec in first["roles"].values())
+    assert near_fields(first) == {"near_miss_count": 0, "near_miss_truncated": False, "near_misses": []}
+    assert (second["near_miss_count"], second["near_miss_truncated"]) == (1, False)
+
+
+def test_nm1_review_r2_samples_shown_are_the_canonical_first_five():
+    # Bindings arrive longest first; canonical order puts the shortest first.
+    fts, facts = two_step("dst", [("p", "code")], [{"p": "ACME"}],
+                          src_rows=[{"p": "acme" + "." * i} for i in range(7, 0, -1)])
+    blocker = run(fts, facts, "t", near_misses=True)["clauses"][0]["blocker"]
+    assert blocker["near_miss_count"] == 7
+    assert [p["sample"]["p"] for p in blocker["near_misses"]] == ["acme" + "." * i for i in range(1, 6)]
+
+
+NON_ATOM_CASES = [
+    ("negated", [fact_type("quote", [("q", "code"), ("work", "code")]), fact_type("banned", [("q", "code")]),
+                 fact_type("ok", [("q", "code")], {"body": [atom("quote", q="$q", work="$w")],
+                                                   "negate": [atom("banned", q="$q")], "head": {"q": "$q"}})],
+     {"quote": [{"q": "q1", "work": "w"}], "banned": [{"q": "q1"}]}, "ok", None),
+    ("comparison", [fact_type("score", [("q", "code"), ("n", "int")]),
+                    fact_type("high", [("q", "code")], {"body": [atom("score", q="$q", n="$n")],
+                                                        "where": [{"operator": ">", "left": "$n", "right": 5}],
+                                                        "head": {"q": "$q"}})],
+     {"score": [{"q": "a", "n": 1}]}, "high", None),
+    ("head-bind", [fact_type("src", [("q", "code")]),
+                   fact_type("pinned", [("q", "code"), ("k", "code")], {"body": [atom("src", q="$q")],
+                                                                        "head": {"q": "$q", "k": "fixed"}})],
+     {"src": [{"q": "a"}]}, "pinned", strings("a", "other")),
+]
+
+
+@pytest.mark.parametrize("name,fts,facts,target,row", NON_ATOM_CASES, ids=[c[0] for c in NON_ATOM_CASES])
+def test_nm1_review_r3_non_atom_blockers_are_unchanged(name, fts, facts, target, row):
+    on = run(fts, facts, target, row=row, near_misses=True)
+    assert on == run(fts, facts, target, row=row)
+    assert on["clauses"][0]["blocker"]["kind"] != "atom"
+
+
+def _strip_near(value):
+    if isinstance(value, dict):
+        return {k: _strip_near(v) for k, v in value.items() if k not in NEAR}
+    if isinstance(value, list):
+        return [_strip_near(v) for v in value]
+    return value
+
+
+def _misplaced_near_keys(result):
+    for clause in result["clauses"]:
+        if clause["blocker"]["kind"] != "atom" and set(NEAR) & set(clause["blocker"]):
+            yield clause["blocker"]
+        if clause["descent"] is not None:
+            yield from _misplaced_near_keys(clause["descent"])
+
+
+@pytest.mark.parametrize("name,fts,facts,target,row", [*AGREEMENT, *_more_agreement()],
+                         ids=[c[0] for c in [*AGREEMENT, *_more_agreement()]])
+def test_nm1_review_r5_flag_is_inert_on_the_wn1_named_cases(name, fts, facts, target, row):
+    on = run(fts, facts, target, row=row, near_misses=True)
+    assert _strip_near(on) == run(fts, facts, target, row=row)
+    assert not list(_misplaced_near_keys(on))

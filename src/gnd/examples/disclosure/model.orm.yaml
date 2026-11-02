@@ -1,0 +1,23 @@
+# A support desk's customer contacts. Synthetic data for the disclosure-mode
+# how-to: the email role is declared sensitive with redact: true.
+version: 2
+model_id: urn:gnd-example:disclosure@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: customer_code, name: CustomerCode, kind: value, primitive: String }
+  - { id: email_address, name: EmailAddress, kind: value, primitive: String }
+fact_types:
+  - id: has_email
+    reading: "{CustomerCode} has email {EmailAddress}"
+    roles:
+      - { object_type: customer_code, role_name: customer }
+      - { object_type: email_address, role_name: email, redact: true }
+    constraints:
+      - id: one_email_per_customer
+        type: uniqueness
+        scope: internal
+        roles: [customer]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each customer has at most one email address." }

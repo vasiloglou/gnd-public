@@ -21,6 +21,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
+from gnd.disclosure import forward
 from gnd.process import BoundedProcessResult, ProcessLimits, run_bounded_process
 
 __all__ = [
@@ -547,11 +548,15 @@ async def run_reviewer_adapter(
     executable = resolved.executable
     policy = resolved.policy
     seat_environment = reviewer_process_environment(policy, environment)
+    # Under customer the disclosure mode is passed on; it is not a secret.
+    forwarded = forward()
+    seat_environment = {**seat_environment, **forwarded}
     _assert_executable_identity(resolved)
     capability = await run_bounded_process(
         (executable, *policy.capability_argv),
         cwd=cwd,
         env=seat_environment,
+        disclosed_names=frozenset(forwarded),
         limits=_process_limits(
             deadline=deadline,
             terminate_grace_seconds=terminate_grace_seconds,
@@ -590,6 +595,7 @@ async def run_reviewer_adapter(
         invocation_argv,
         cwd=cwd,
         env=seat_environment,
+        disclosed_names=frozenset(forwarded),
         limits=_process_limits(
             deadline=deadline,
             terminate_grace_seconds=terminate_grace_seconds,

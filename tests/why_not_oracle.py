@@ -10,6 +10,7 @@ and constants only; function terms are covered against production elsewhere.
 from __future__ import annotations
 
 import json
+import unicodedata
 from fractions import Fraction
 
 OPERATORS = {
@@ -28,6 +29,23 @@ def identity(value):
     if isinstance(value, (int, float)):
         return ("n", Fraction(value))
     return ("s", value)
+
+
+def normalize(value):
+    """NM1 spec: NFKC, casefold, drop category P*, collapse whitespace; None if
+    not a string or empty."""
+    if type(value) is not str:
+        return None
+    text = unicodedata.normalize("NFKC", value).casefold()
+    text = "".join(ch for ch in text if not unicodedata.category(ch).startswith("P"))
+    text = " ".join(text.split())
+    return text or None
+
+
+def near(a, b):
+    if identity(a) == identity(b):
+        return True
+    return normalize(a) is not None and normalize(a) == normalize(b)
 
 
 def is_variable(term):
@@ -157,16 +175,16 @@ class Oracle:
         claimed = tuple(identity(cell["value"]) for cell in row)
         return any(tuple(identity(r[role]) for role in roles) == claimed for r in rows)
 
-    def walk(self, fact_id, row=None):
+    def walk(self, fact_id, row=None, near_misses=False):
         """Return the clause records: steps and the blocker, for a target not derived."""
         ft = _definition(self.document, fact_id)
         roles = [role["role_name"] for role in ft["roles"]]
         out = []
         for index, clause in enumerate(clauses(ft["derivation_rule"])):
-            out.append(self._walk_clause(fact_id, index, clause, roles, row))
+            out.append(self._walk_clause(fact_id, index, clause, roles, row, near_misses))
         return out
 
-    def _walk_clause(self, fact_id, clause_index, clause, roles, row):
+    def _walk_clause(self, fact_id, clause_index, clause, roles, row, near_misses=False):
         steps = []
         bindings = [{}]
         if row is not None:
@@ -190,7 +208,7 @@ class Oracle:
             if not bindings:
                 return {
                     "clause_index": clause_index, "steps": steps,
-                    "blocker": self._atom_blocker(index, atom, previous),
+                    "blocker": self._atom_blocker(index, atom, previous, near_misses),
                 }
         for index, atom in enumerate(clause.get("negate") or ()):
             present = {
@@ -212,7 +230,7 @@ class Oracle:
                 return {"clause_index": clause_index, "steps": steps, "blocker": dict(steps[-1])}
         return {"clause_index": clause_index, "steps": steps, "blocker": None}
 
-    def _atom_blocker(self, index, atom, previous):
+    def _atom_blocker(self, index, atom, previous, near_misses=False):
         bound = set(previous[0]) if previous else set()
         roles = {}
         for role, term in atom["bind"].items():
@@ -228,7 +246,7 @@ class Oracle:
                 for role, spec in roles.items() if spec.get("bound")
             }
             samples.setdefault(tuple(sorted((k, identity(v)) for k, v in sample.items())), sample)
-        return {
+        blocker = {
             "kind": "atom", "index": index, "fact_type": atom["fact_type"],
             "derivation": ft["derivation"] if _structured(ft) else "base",
             "ground": all("constant" in spec or spec["bound"] for spec in roles.values()),
@@ -236,6 +254,53 @@ class Oracle:
             "sample_count": len(previous),
             "samples": sorted(samples.values(), key=canonical)[:5],
         }
+        if near_misses:
+            every = self._near_misses(atom, roles, previous)
+            blocker["near_miss_count"] = len(every)
+            blocker["near_miss_truncated"] = False
+            blocker["near_misses"] = every[:5]
+            # Every pair, for the subset check on a truncated kernel report.
+            blocker["all_near_misses"] = every
+        return blocker
+
+    def _near_misses(self, atom, roles, previous):
+        """Brute force over every (distinct sample, distinct eligible row) pair."""
+        bound = sorted(role for role, spec in roles.items() if spec.get("bound"))
+        if not bound:
+            return []
+
+        def distinct(projections):
+            groups = {}
+            for projection in projections:
+                key = tuple(identity(projection[role]) for role in bound)
+                if key not in groups or canonical(projection) < canonical(groups[key]):
+                    groups[key] = projection
+            return list(groups.values())
+
+        samples = distinct(
+            {role: binding[roles[role]["variable"][1:]] for role in bound} for binding in previous
+        )
+        free = {}
+        for role, spec in roles.items():
+            if "variable" in spec and not spec["bound"]:
+                free.setdefault(spec["variable"], []).append(role)
+        eligible = [
+            fact for fact in self.relations[atom["fact_type"]]
+            if all(role in fact for role in roles)
+            and all(identity(fact[role]) == identity(spec["constant"])
+                    for role, spec in roles.items() if "constant" in spec)
+            and all(len({identity(fact[role]) for role in group}) == 1 for group in free.values())
+        ]
+        candidates = distinct({role: fact[role] for role in bound} for fact in eligible)
+        pairs = []
+        for sample in samples:
+            for candidate in candidates:
+                if all(near(sample[r], candidate[r]) for r in bound):
+                    differing = [r for r in bound if identity(sample[r]) != identity(candidate[r])]
+                    if differing:
+                        pairs.append({"roles": differing, "sample": sample, "candidate": candidate})
+        pairs.sort(key=lambda pair: (canonical(pair["sample"]), canonical(pair["candidate"])))
+        return pairs
 
 
 def canonical(value):

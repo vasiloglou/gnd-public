@@ -1,0 +1,76 @@
+<title>Disclosure Docs Checkpoint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a checkpoint band on top, a part index, then the three drafts in order. */
+:root{--bg:#f7f8f6;--surface:#ffffff;--fg:#1d2420;--muted:#5d6862;--line:#d9dfdb;--accent:#2f6d5a;--code:#eef2ef;--out:#e8eef5;--outline:#3b5f86;--warn:#8a5a14;--warnbg:#fbf3e4;
+--display:"Source Serif 4",Georgia,serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--surface:#1b201d;--fg:#e3e8e5;--muted:#9aa59f;--line:#2e3632;--accent:#7cc4a9;--code:#202723;--out:#1c2530;--outline:#86afd8;--warn:#e2b468;--warnbg:#2a2318;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141816;--surface:#1b201d;--fg:#e3e8e5;--muted:#9aa59f;--line:#2e3632;--accent:#7cc4a9;--code:#202723;--out:#1c2530;--outline:#86afd8;--warn:#e2b468;--warnbg:#2a2318;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+.wrap{max-width:46rem;margin:0 auto;padding-block:2rem 4rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.25;text-wrap:balance}
+h1{font-size:2rem;margin:.2em 0 .4em}h2{font-size:1.45rem;margin:2.2em 0 .5em;padding-top:.6em;border-top:1px solid var(--line)}h3{font-size:1.15rem;margin:1.6em 0 .4em}
+a{color:var(--accent)}
+.band{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.2rem 1.4rem;margin-bottom:2.5rem}
+.band .eyebrow{font:500 .75rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.band h2{border:0;margin:.5rem 0 .6rem;padding:0;font-size:1.3rem}
+.band ul{padding-left:1.2rem;margin:.4rem 0}.band li{margin:.25rem 0}
+.modes{width:100%;border-collapse:collapse;font-size:.9rem;margin:.8rem 0}
+.tablebox{overflow-x:auto}
+.modes th,.modes td{border-bottom:1px solid var(--line);padding:.45rem .5rem;text-align:left;vertical-align:top}
+.modes th{font-weight:600;color:var(--muted);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+.modes td code{white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.85rem;color:var(--muted);margin-top:.6rem}
+.legend span::before{content:"";display:inline-block;width:.8rem;height:.8rem;border-radius:2px;margin-right:.35rem;vertical-align:-1px}
+.legend .c::before{background:var(--code)}.legend .o::before{background:var(--out);box-shadow:inset 3px 0 0 var(--outline)}
+.doc{border-top:3px double var(--line);padding-top:1rem}
+code{font-family:var(--mono);font-size:.88em}
+p code,li code,td code{background:var(--code);padding:.08em .3em;border-radius:3px}
+pre{background:var(--code);padding:.8rem 1rem;border-radius:4px;overflow-x:auto;font-size:.85rem;line-height:1.5;margin:.8rem 0}
+pre code{background:none;padding:0;white-space:pre}
+pre.out{background:var(--out);border-left:3px solid var(--outline);margin-top:-.4rem}
+.admonition{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:.6rem 1rem;font-size:.9rem}
+.admonition-title{font-weight:600;margin:0 0 .3rem}
+.flag{background:var(--warnbg);color:var(--fg);border-left:3px solid var(--warn);padding:.6rem .9rem;border-radius:3px;font-size:.92rem}
+.parts{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font-size:.92rem;margin:.6rem 0 0;padding:0;list-style:none}
+.part-label{font:500 .75rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:3rem 0 .2rem}
+blockquote{margin:.8rem 0;padding:.2rem 0 .2rem 1rem;border-left:3px solid var(--accent)}
+blockquote h2{border:0;margin-top:.6em;padding-top:0}
+.doc table{border-collapse:collapse;font-size:.88rem;margin:.8rem 0;display:block;overflow-x:auto}
+.doc th,.doc td{border-bottom:1px solid var(--line);padding:.4rem .5rem;text-align:left;vertical-align:top}
+.doc th{font-weight:600}
+@media (max-width:420px){h1{font-size:1.6rem}}
+</style>
+<div class="wrap">
+<section class="band">
+<div class="eyebrow">Checkpoint DC2 · why-not-near-misses · NM3 at 420114e</div>
+<h2>Every page NM4 changes, from real runs</h2>
+<p>Three drafts follow. They are the new reference page <code>docs/reference/disclosure.md</code>, the new how-to <code>docs/how-to/disclosure-mode.md</code>, and the edits to 15 existing pages and packaged skill files, with every other page in the inventory listed as unchanged and the reason why. Every output block (blue edge) came from running the command above it against the NM3 commit. A re-run compared them byte for byte: <strong>18 blocks ran, 13 outputs matched</strong>. The table at the end of the reference page is generated from the code's disclosure table, not typed.</p>
+<div class="legend"><span class="c">command you run</span><span class="o">what GND printed</span></div>
+<h3>What changed since DC1 and DC1b</h3>
+<ul>
+<li>The reference page now says what shipped. Refusals are one stderr line with empty stdout, not a JSON payload. <code>gnd doccheck</code> and <code>EvaluationSession.observe</code> join the outputs that are the same in every mode. Reviewers of <code>gnd review panel</code> also receive <code>customer</code>.</li>
+<li>The how-to's why-not section now uses the spelling-gap population, so it shows the near-miss count and the pair under <code>internal</code>, and the count alone under <code>customer</code>.</li>
+<li>The page has a usage-error example for <code>--disclosure</code> (exit 64), and the reference page runs the membership signal for real.</li>
+</ul>
+<h3>Decisions for you</h3>
+<ul>
+<li><strong><code>gnd doccheck</code> in every mode</strong> (open question NM2-Q1). It quotes the population values a rendered document misses. I listed it with the outputs that are the same in every mode. The alternative is to make it follow the mode, which is a code change outside NM4.</li>
+<li><strong>The generated table.</strong> In NM4 a test keeps the reference table equal to <code>gnd.disclosure.SURFACES</code>. I'd make it a page check (the table is pasted and the test fails on drift), not a build-time generator.</li>
+</ul>
+<ul class="parts"><li><a href="#part-reference">1 · Reference: disclosure</a></li><li><a href="#part-howto">2 · How-to: disclosure mode</a></li><li><a href="#part-changes">3 · Changes to existing pages</a></li></ul>
+</section>
+<div class="part-label" id="part-reference">Part 1 · docs/reference/disclosure.md (new)</div>
+<article class="doc">
+@@REFERENCE@@
+</article>
+<div class="part-label" id="part-howto">Part 2 · docs/how-to/disclosure-mode.md (new)</div>
+<article class="doc">
+@@HOWTO@@
+</article>
+<div class="part-label" id="part-changes">Part 3 · edits to existing pages</div>
+<article class="doc">
+@@CHANGES@@
+</article>
+</div>

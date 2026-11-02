@@ -95,7 +95,7 @@ def result_view(result):
 _WHY_NOT_STEP = ("kind", "index", "fact_type", "count")
 _WHY_NOT_BLOCKER = (
     "kind", "index", "fact_type", "count", "derivation", "ground",
-    "asserted_not_read", "sample_count",
+    "asserted_not_read", "sample_count", "near_miss_count", "near_miss_truncated",
 )
 
 
@@ -115,6 +115,8 @@ def _why_not_clause(clause):
         elif key == "roles":
             blocker[key] = {str(role): _why_not_role(spec) for role, spec in value.items()}
     blocker["samples"] = "redacted"
+    if "near_misses" in clause["blocker"]:
+        blocker["near_misses"] = "redacted"
     descent = clause["descent"]
     return {
         "clause_index": clause["clause_index"],

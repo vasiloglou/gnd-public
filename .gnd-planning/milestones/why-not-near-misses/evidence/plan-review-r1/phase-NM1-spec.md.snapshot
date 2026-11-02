@@ -1,0 +1,172 @@
+# Phase NM1: near-miss search in the why-not kernel
+
+**Status: draft r1, awaiting owner review; implementable once the plan and this
+spec are approved.**
+
+## Provenance
+
+- Plan: [why-not-near-misses-plan.md](why-not-near-misses-plan.md) r1, §2.1 and
+  §4 NM1. No review has run over the plan or this spec.
+- Inherited: derivation-why-not WN1 spec and record (kernel, oracle, budgets),
+  WN-R1..R8.
+- Tag `(o1)`: the owner's direction of 2026-11-01 (quoted in the plan), which
+  covers NM-D3, D4 and D5. NM-D6 is the plan author's proposal.
+
+## Obligations
+
+| Source | Obligation | Discharged in |
+|---|---|---|
+| Plan O1 | join variables of an empty join | §6 `roles` per pair |
+| Plan O2 | values from each side differing by case, whitespace, punctuation | §6 `_normalize`, `_near_misses` |
+| Plan O3, NM-R1 | exact matching unchanged | §6 invariant; T7, T9 |
+| Plan O4 | spelling gap distinguishable from missing fact | §6 empty list vs pairs; T2, T3 |
+| Plan O5 | covers what host case-folding covers, and more | T1 |
+| Plan O7 | redacted view hides values | §6 view; T10 |
+| Plan O9, NM-R3 | bounded, counted | §6 charges; T11, T12 |
+| NM-R7 | layering, RF6 | T13 |
+| NM-R8 | anonymity | T14 |
+| NM1-C1..C5 | phase criteria | T1–T14 |
+
+## Standing rules bound to this phase
+
+1. **Totality:** `_normalize` is total over every value a population can carry
+   (str, int, Fraction, bool, None-free shapes); non-`str` returns `None`. T1.
+2. **Input cap bounds the algorithm:** search is linear in rows plus bindings
+   plus emitted pairs, each charged to `probes`; T12 time-bound by counters.
+3. **Validation order:** unchanged; near-miss search runs only after the blocker
+   is fixed, so it can never change which step blocks. T9.
+4. **One walk:** one `_near_misses` serves every atom blocker at every depth;
+   no per-kind copy. T4.
+5. **One home:** the normalization's normative text lives here until NM3 moves
+   it to `docs/reference/why-not.md`, which then becomes the home and this spec
+   cites it.
+6. **Measurement over argument:** the golden diff is produced by running the
+   corpus, and its only changes are listed in the record.
+
+NM-R2 (one normalization), NM-R4..R6 (disclosure) do not apply to the kernel:
+it emits raw values and never resolves a mode.
+
+## Goal
+
+For every why-not answer with an atom blocker, the kernel's dict carries
+`near_miss_count` and `near_misses` as defined below; on the extended corpus
+`uv run pytest -q tests/test_why_not_kernel.py tests/test_why_not_oracle.py`
+exits 0 with oracle agreement on every case; every other field of every
+existing golden is unchanged except `work.probes`; a breach of the probe
+ceiling during the search exits 4 `work-limit` through the existing path.
+
+## Design
+
+### `src/gnd/witness/why_not.py` (about +70 lines)
+
+```python
+def _normalize(value: Any) -> str | None:
+    """NFKC, casefold, drop Unicode punctuation (category P*), collapse
+    whitespace to one space, strip. None for non-str or an empty result."""
+```
+
+Steps, normative: `unicodedata.normalize("NFKC", v)` → `.casefold()` → drop
+each character `c` with `unicodedata.category(c).startswith("P")` → split on
+`str.split()` and join with `" "`. Return `None` when the result is `""` or the
+input is not `str` (including `bool`).
+
+```python
+def _near_misses(self, previous: list[dict], atom: dict, roles: dict[str, dict]
+                 ) -> tuple[int, list[dict]]:
+```
+
+- `B` = roles whose spec is `{"variable": ..., "bound": True}`; constants =
+  roles with `"constant"`. If `B` is empty: return `(0, [])` and charge nothing.
+- Rows: `self.facts.get(fact_type, ())`, the same rows `_candidates` read.
+  Charge `probes` by `len(rows)`.
+- Index key for a value: `("n", _normalize(v))` when that is not `None`, else
+  `("x", checker._identity_key(v))`. Each row whose constant roles match by
+  identity and which has every role in `B` goes into
+  `index[tuple(key(row[r]) for r in sorted(B))]`.
+- For each binding in `previous`: charge one probe; look up its key over the
+  same sorted `B` (values `binding[variable]`); for each row found, charge one
+  probe and compute `differing = sorted(r for r in B if identity(row[r]) !=
+  identity(binding[var(r)]))`. If `differing` is empty, raise
+  `WhyNotInternalError("a near-miss row matches exactly")`. Otherwise record
+  `{"roles": differing, "sample": {r: binding[var(r)] for r in B},
+  "candidate": {r: row[r] for r in B}}`, deduplicated by identity of
+  `(sample, candidate)`.
+- Return `(len(distinct), sorted(distinct, key=canonical of [sample, candidate])[:5])`.
+
+`_atom_blocker` calls it after `samples` and adds both keys to the blocker dict:
+`"near_miss_count": int`, `"near_misses": list`. Non-atom blockers are
+unchanged.
+
+### `src/gnd/witness/view.py` (about +4 lines)
+
+The redacted blocker selection adds `near_miss_count` (shown) and
+`near_misses` → `"redacted"`, through the existing closed allow-list.
+
+### `src/gnd/why-not.schema.json`
+
+Not changed in NM1. Because the schema is closed, NM1 tests validate the kernel
+dict without the schema; NM3 owns the schema (NM-D8). The CLI is therefore not
+yet allowed to emit the fields: `witness/service.py` strips them in NM1 so the
+public payload stays byte-identical until NM3. (A one-line strip, removed in
+NM3; T15 pins it.)
+
+### `tests/why_not_oracle.py` (about +50 lines)
+
+Its own `normalize` (same four steps, written from this spec, importing only
+`unicodedata`) and its own near-miss enumeration by brute force over
+`previous × rows`, with no index. No import from `gnd.witness`, `gnd.checker`,
+`gnd.values` (existing AST import test).
+
+## Decisions
+
+| ID | Question | Readings and cost | Proposal |
+|---|---|---|---|
+| D1 | Public payload in NM1 | (a) strip the fields at the service until NM3 so the shipped schema keeps validating; (b) emit now and bump the schema in NM1: pulls NM3 forward | **(a)** |
+| D2 | Probe charges for the search | (a) on `probes` (exits unchanged; golden `work.probes` values move); (b) a new counter: changes `work`'s keys and the `WhyNotLimits` surface | **(a)** |
+| D3 | Values of a binding that reached the blocker but whose variable for a `B` role is absent | cannot happen (bound is decided from `previous[0]`, and every binding in a prefix has the same keys); raise `WhyNotInternalError` if it does | as stated |
+
+## Tests
+
+Corpus additions in `tests/test_why_not_kernel.py` (inline fixtures, as T2–T7
+are written) and the oracle comparison in `tests/test_why_not_oracle.py`.
+Every case below expects the kernel to return (no exception) unless stated.
+
+| ID | Case | Expected |
+|---|---|---|
+| T1 | `_normalize` table: `"ACME CORP."`/`"Acme Corp."`, `"Acme  Corp"` (two spaces, tab, NBSP), full-width `"ＡＣＭＥ"`, `"Straße"`/`"STRASSE"`, `"..."` → `None`, `7` → `None`, `True` → `None`, `Fraction(1,2)` → `None` | equal pairs equal; `None` where stated |
+| T2 | Issue shape: `party` spelled `ACME CORP.` in one atom's rows and `Acme Corp.` in the binding | blocker unchanged; `near_miss_count` 1; one pair, `roles == ["party"]` |
+| T3 | Missing fact: no row of the blocker's type shares any normalized key | `near_miss_count` 0, `near_misses == []` |
+| T4 | Near-miss on a blocker inside a descent | nested blocker carries the pair |
+| T5 | Two bound roles, one exact and one near | one pair, `roles` lists only the near role |
+| T6 | Discriminator for row-level (NM-D3): two bound roles, one near and the other wholly different | `near_miss_count` 0 (per-role reading would report 1) |
+| T7 | Constant role differs from the row | no pair |
+| T8 | Non-string bound role: `7` vs `"7"` | no pair |
+| T9 | Status, blocker kind/index/fact_type, steps, samples identical with the search disabled (monkeypatched to return `(0, [])`) on every corpus case | equal, except the two new keys and `work.probes` |
+| T10 | Redacted view: `near_misses == "redacted"`, `near_miss_count` shown; none of the T2 values appear in the view | as stated |
+| T11 | Cap: 7 distinct pairs | `near_miss_count` 7, 5 pairs, canonical order |
+| T12 | Probe ceiling: a fixture where the walk completes at `probes = L` without the search and the search adds `k` probes; limits `L+k` and `L+k-1` | exit 0 and `WhyNotWorkError` respectively, literal `L` and `k` in the test |
+| T12b | Linear growth: rows 100 → 200 → 400 with all keys equal on one side | `probes` grows linearly, literal values |
+| T13 | `tests/test_rf1_layering.py`, `tests/test_rf6_query_policy.py`, `tests/test_gnd_arch.py` | exit 0, no new allowance |
+| T14 | `tests/test_why_not_anonymity.py` | exit 0 |
+| T15 | Public payload unchanged in NM1: `tests/test_public_why_not.py` goldens | exit 0, byte-identical |
+| T16 | Exactness invariant: monkeypatch the index key to return a constant so an exact-matching row is offered | `WhyNotInternalError` |
+| T17 | Oracle agreement on every kernel and corpus case, including T2–T11 | equal pair lists and counts |
+
+Existing tests with literal `probes` values (`test_t13c_zero_output_join_is_charged_per_probe`,
+`test_review_r5_negation_probe_charges_are_exact`, and any golden `work.probes`)
+are updated with the new literal values; the record lists each old and new
+value.
+
+## Out of scope for this phase
+
+The schema, the CLI/API payload, the disclosure mode, docs, the how-to, negated
+or comparison blockers.
+
+## Size
+
+About 75 source lines and 250 test lines.
+
+## Approval instrument
+
+This prose. NM1 changes no shipped payload (D1), so a corpus-first instrument
+belongs to NM3, which fixes the wire form.

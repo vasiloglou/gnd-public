@@ -1,0 +1,729 @@
+<title>Disclosure Docs Checkpoint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a checkpoint band on top, a part index, then the three drafts in order. */
+:root{--bg:#f7f8f6;--surface:#ffffff;--fg:#1d2420;--muted:#5d6862;--line:#d9dfdb;--accent:#2f6d5a;--code:#eef2ef;--out:#e8eef5;--outline:#3b5f86;--warn:#8a5a14;--warnbg:#fbf3e4;
+--display:"Source Serif 4",Georgia,serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--surface:#1b201d;--fg:#e3e8e5;--muted:#9aa59f;--line:#2e3632;--accent:#7cc4a9;--code:#202723;--out:#1c2530;--outline:#86afd8;--warn:#e2b468;--warnbg:#2a2318;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141816;--surface:#1b201d;--fg:#e3e8e5;--muted:#9aa59f;--line:#2e3632;--accent:#7cc4a9;--code:#202723;--out:#1c2530;--outline:#86afd8;--warn:#e2b468;--warnbg:#2a2318;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+.wrap{max-width:46rem;margin:0 auto;padding-block:2rem 4rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.25;text-wrap:balance}
+h1{font-size:2rem;margin:.2em 0 .4em}h2{font-size:1.45rem;margin:2.2em 0 .5em;padding-top:.6em;border-top:1px solid var(--line)}h3{font-size:1.15rem;margin:1.6em 0 .4em}
+a{color:var(--accent)}
+.band{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.2rem 1.4rem;margin-bottom:2.5rem}
+.band .eyebrow{font:500 .75rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.band h2{border:0;margin:.5rem 0 .6rem;padding:0;font-size:1.3rem}
+.band ul{padding-left:1.2rem;margin:.4rem 0}.band li{margin:.25rem 0}
+.modes{width:100%;border-collapse:collapse;font-size:.9rem;margin:.8rem 0}
+.tablebox{overflow-x:auto}
+.modes th,.modes td{border-bottom:1px solid var(--line);padding:.45rem .5rem;text-align:left;vertical-align:top}
+.modes th{font-weight:600;color:var(--muted);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+.modes td code{white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.85rem;color:var(--muted);margin-top:.6rem}
+.legend span::before{content:"";display:inline-block;width:.8rem;height:.8rem;border-radius:2px;margin-right:.35rem;vertical-align:-1px}
+.legend .c::before{background:var(--code)}.legend .o::before{background:var(--out);box-shadow:inset 3px 0 0 var(--outline)}
+.doc{border-top:3px double var(--line);padding-top:1rem}
+code{font-family:var(--mono);font-size:.88em}
+p code,li code,td code{background:var(--code);padding:.08em .3em;border-radius:3px}
+pre{background:var(--code);padding:.8rem 1rem;border-radius:4px;overflow-x:auto;font-size:.85rem;line-height:1.5;margin:.8rem 0}
+pre code{background:none;padding:0;white-space:pre}
+pre.out{background:var(--out);border-left:3px solid var(--outline);margin-top:-.4rem}
+.admonition{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:.6rem 1rem;font-size:.9rem}
+.admonition-title{font-weight:600;margin:0 0 .3rem}
+.flag{background:var(--warnbg);color:var(--fg);border-left:3px solid var(--warn);padding:.6rem .9rem;border-radius:3px;font-size:.92rem}
+.parts{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;font-size:.92rem;margin:.6rem 0 0;padding:0;list-style:none}
+.part-label{font:500 .75rem/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:3rem 0 .2rem}
+blockquote{margin:.8rem 0;padding:.2rem 0 .2rem 1rem;border-left:3px solid var(--accent)}
+blockquote h2{border:0;margin-top:.6em;padding-top:0}
+.doc table{border-collapse:collapse;font-size:.88rem;margin:.8rem 0;display:block;overflow-x:auto}
+.doc th,.doc td{border-bottom:1px solid var(--line);padding:.4rem .5rem;text-align:left;vertical-align:top}
+.doc th{font-weight:600}
+@media (max-width:420px){h1{font-size:1.6rem}}
+</style>
+<div class="wrap">
+<section class="band">
+<div class="eyebrow">Checkpoint DC2 · why-not-near-misses · NM3 at 420114e</div>
+<h2>Every page NM4 changes, from real runs</h2>
+<p>Three drafts follow. They are the new reference page <code>docs/reference/disclosure.md</code>, the new how-to <code>docs/how-to/disclosure-mode.md</code>, and the edits to 15 existing pages and packaged skill files, with every other page in the inventory listed as unchanged and the reason why. Every output block (blue edge) came from running the command above it against the NM3 commit. A re-run compared them byte for byte: <strong>18 blocks ran, 13 outputs matched</strong>. The table at the end of the reference page is generated from the code's disclosure table, not typed.</p>
+<div class="legend"><span class="c">command you run</span><span class="o">what GND printed</span></div>
+<h3>What changed since DC1 and DC1b</h3>
+<ul>
+<li>The reference page now says what shipped. Refusals are one stderr line with empty stdout, not a JSON payload. <code>gnd doccheck</code> and <code>EvaluationSession.observe</code> join the outputs that are the same in every mode. Reviewers of <code>gnd review panel</code> also receive <code>customer</code>.</li>
+<li>The how-to's why-not section now uses the spelling-gap population, so it shows the near-miss count and the pair under <code>internal</code>, and the count alone under <code>customer</code>.</li>
+<li>The page has a usage-error example for <code>--disclosure</code> (exit 64), and the reference page runs the membership signal for real.</li>
+</ul>
+<h3>Decisions for you</h3>
+<ul>
+<li><strong><code>gnd doccheck</code> in every mode</strong> (open question NM2-Q1). It quotes the population values a rendered document misses. I listed it with the outputs that are the same in every mode. The alternative is to make it follow the mode, which is a code change outside NM4.</li>
+<li><strong>The generated table.</strong> In NM4 a test keeps the reference table equal to <code>gnd.disclosure.SURFACES</code>. I'd make it a page check (the table is pasted and the test fails on drift), not a build-time generator.</li>
+</ul>
+<ul class="parts"><li><a href="#part-reference">1 · Reference: disclosure</a></li><li><a href="#part-howto">2 · How-to: disclosure mode</a></li><li><a href="#part-changes">3 · Changes to existing pages</a></li></ul>
+</section>
+<div class="part-label" id="part-reference">Part 1 · docs/reference/disclosure.md (new)</div>
+<article class="doc">
+<h1 id="choose-what-gnd-discloses">Choose what GND discloses</h1>
+<p>GND reads your populations, so many of its outputs can quote population values:
+a why-not sample, a witness certificate, a sensitive role in a check report.
+Whether that is acceptable depends on who reads the output.</p>
+<ul>
+<li><strong>Behind your own interface</strong>, the reader is you or your service. Values help:
+  they say which fact to add or fix.</li>
+<li><strong>In front of customers</strong>, the reader may be anyone whose requests your
+  service forwards. Values should stay inside.</li>
+</ul>
+<p>One setting, the <em>disclosure mode</em>, says which of these situations GND is in.
+To try it on an example, see
+<a href="#part-howto">Run GND behind your interface or in front of customers</a>.</p>
+<h2 id="the-three-states">The three states</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Declared sensitive roles in check reports</th>
+<th>Witness, replay, why-not, Lean and Soufflé outputs</th>
+<th>Requests for values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unset</td>
+<td>redacted unless <code>--unredacted</code></td>
+<td>value-free unless <code>--raw</code>; the Python functions return raw values</td>
+<td>allowed</td>
+</tr>
+<tr>
+<td><code>internal</code></td>
+<td>shown</td>
+<td>raw, in the CLI and the Python API</td>
+<td>allowed (already granted)</td>
+</tr>
+<tr>
+<td><code>customer</code></td>
+<td>redacted</td>
+<td>value-free, in the CLI and the Python API</td>
+<td>refused, exit 3 or <code>DisclosureRefused</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Unset</strong> is the default and changes nothing: every output and every option
+behaves as it did before the mode existed.</p>
+<p><strong><code>internal</code></strong> acts as if every value option were passed: <code>--unredacted</code> on
+the check family, <code>--raw</code> on <code>witness</code>, <code>witness-view</code>, <code>replay</code>,
+<code>why-not</code> and the Lean and Soufflé exports, and the matching Python keywords.</p>
+<p><strong><code>customer</code></strong> withholds two kinds of value:</p>
+<ul>
+<li>in check-family reports, the roles your model declares sensitive with
+  <code>redact: true</code> (see <a href="#declare-what-is-sensitive">declare what is sensitive</a>);</li>
+<li>in witness, replay, why-not, Lean and Soufflé outputs, every population
+  value. The Python functions return what the CLI prints by default:
+  <code>api.why_not</code> returns the redacted view, and <code>api.witness</code> and
+  <code>api.replay</code> return the default view with no raw certificate.</li>
+</ul>
+<p>It does <strong>not</strong> withhold values in check-family messages for roles you have not
+declared. Declare them.</p>
+<h2 id="set-the-mode">Set the mode</h2>
+<p>Set the environment variable of the process that runs GND:</p>
+<pre><code class="language-sh">export GND_DISCLOSURE=customer
+</code></pre>
+<p>or pass the root option, before the subcommand:</p>
+<pre><code class="language-sh">gnd --disclosure internal why-not model.orm.yaml population.json --fact-type cited_by
+</code></pre>
+<p>The value is exactly <code>internal</code> or <code>customer</code>. GND resolves the mode in this
+order:</p>
+<ol>
+<li>If <code>GND_DISCLOSURE</code> holds anything else (<code>Customer</code>, a trailing space,
+   the empty string), every command that can emit values refuses with exit 3,
+   even when <code>--disclosure</code> is given. A mistyped lock never opens.</li>
+<li>If <code>GND_DISCLOSURE=customer</code>, <code>--disclosure internal</code> is refused with
+   exit 3. The option can tighten the mode, never loosen it.</li>
+<li>Otherwise <code>--disclosure</code>, if given, applies to that invocation; else the
+   environment; else the mode is unset.</li>
+</ol>
+<p>The option itself is checked like any other argument. A value other than the
+two names, or a second <code>--disclosure</code>, is a usage error, exit 64:</p>
+<pre><code class="language-sh">set +e
+gnd --disclosure Customer validate model.orm.yaml 2&gt;&amp;1 | tail -1; echo &quot;exit ${PIPESTATUS[0]}&quot;
+gnd --disclosure customer --disclosure customer validate model.orm.yaml 2&gt;&amp;1 | tail -1; echo &quot;exit ${PIPESTATUS[0]}&quot;
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: argument --disclosure: invalid choice: 'Customer' (choose from internal, customer)
+exit 64
+gnd: error: --disclosure may be given at most once
+exit 64
+</code></pre>
+<p>The Python API has no per-call keyword. It reads the environment, and, when it
+runs inside a <code>gnd</code> command, that command's mode. <code>customer</code> from either
+wins.</p>
+<h2 id="what-customer-mode-refuses">What customer mode refuses</h2>
+<p>Every request for values is refused, not quietly downgraded, so nobody mistakes
+a redacted answer for the raw one.</p>
+<table>
+<thead>
+<tr>
+<th>Request under <code>customer</code></th>
+<th>Command line</th>
+<th>Python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--unredacted</code> on a check-family command; <code>unredacted=True</code></td>
+<td>exit 3</td>
+<td><code>DisclosureRefused</code></td>
+</tr>
+<tr>
+<td><code>--raw</code> on <code>witness</code>, <code>witness-view</code>, <code>replay</code>, <code>why-not</code>, <code>export lean</code>, <code>export souffle*</code>; <code>raw=True</code></td>
+<td>exit 3</td>
+<td><code>DisclosureRefused</code></td>
+</tr>
+<tr>
+<td><code>gnd --disclosure internal …</code> with <code>GND_DISCLOSURE=customer</code></td>
+<td>exit 3</td>
+<td>—</td>
+</tr>
+<tr>
+<td>a malformed <code>GND_DISCLOSURE</code></td>
+<td>exit 3</td>
+<td><code>DisclosureRefused</code></td>
+</tr>
+</tbody>
+</table>
+<p>A refused command prints nothing on stdout and one line on stderr that names the
+option or the variable, never a value. <code>DisclosureRefused</code> is exported from
+<code>gnd.api</code> and is a <code>ValueError</code>. The
+<a href="#requests-for-values-are-refused-not-downgraded">how-to</a>
+shows each refusal.</p>
+<h2 id="outputs-that-are-the-same-in-every-mode">Outputs that are the same in every mode</h2>
+<p>These outputs do not follow the mode, and none of them takes a value option.
+Do not route them to a customer.</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>What it emits</th>
+<th>Why it is unchanged</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gnd exp run</code> session feedback, attempts and results; <code>EvaluationSession.check_with_feedback</code></td>
+<td>declared redaction, always applied</td>
+<td>The session contract fixes it, and feedback goes to agents that may be external providers, so <code>internal</code> must not lift it.</td>
+</tr>
+<tr>
+<td><code>EvaluationSession.observe</code></td>
+<td>the caller's own population</td>
+<td>It returns what the caller passed in.</td>
+</tr>
+<tr>
+<td><code>gnd discover</code></td>
+<td>candidate constraints; never value candidates for redacted roles</td>
+<td>Its proposals name positions, not values.</td>
+</tr>
+<tr>
+<td><code>gnd export ilp</code></td>
+<td>undeclared values in its learner input; refuses declared roles</td>
+<td>Its job is to hand values to a learner you chose.</td>
+</tr>
+<tr>
+<td><code>gnd fidelity</code></td>
+<td>the extracted facts it measures</td>
+<td>Its input is your own extraction case.</td>
+</tr>
+<tr>
+<td><code>gnd doccheck</code></td>
+<td>the population values a rendered document misses</td>
+<td>Its input is your own rendering case.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="child-processes">Child processes</h2>
+<p>Under <code>customer</code>, GND passes <code>GND_DISCLOSURE=customer</code> to the processes it
+starts: the agents of <code>gnd exp run</code>, the stations of <code>gnd solve</code> and the
+reviewers of <code>gnd review panel</code>. Under <code>internal</code> or unset it passes
+nothing, so a child never gets more disclosure than it would have on its own.</p>
+<p>Passing the mode on sets a default for the child, not a lock: an agent controls
+its own environment.</p>
+<h2 id="who-customer-mode-protects">Who customer mode protects</h2>
+<p>Customer mode protects the end users of an operator-controlled wrapper: a
+service that turns a customer's request into GND command-line arguments or
+<code>gnd.api</code> keywords. Such a caller cannot get values out by asking for them.</p>
+<p>For code that runs inside the GND process it is a guard, not a lock: that code
+can change the environment or call internal functions. Do not run untrusted
+code in the process.</p>
+<p>One signal remains by design. A why-not answer in customer mode still carries
+the near-miss counters. A caller who supplies a <code>--row</code> learns whether the
+population holds a value spelled like theirs up to case, spacing and
+punctuation (see <a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/why-not.md#values-spelled-differently">values spelled differently</a>).
+Here the claim names the work "Field Notes", which the population spells
+"FIELD NOTES":</p>
+<pre><code class="language-sh">python -c &quot;import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/quoted_claims', 'quoted_claims', dirs_exist_ok=True)&quot;
+</code></pre>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd why-not quoted_claims/model.orm.json quoted_claims/spelling-gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json \
+  | python -c &quot;import json, sys; b = json.load(sys.stdin)['clauses'][0]['blocker']; print(b['near_miss_count'], b['near_misses'])&quot;
+</code></pre>
+<pre class="out"><code class="language-text">1 redacted
+</code></pre>
+<p>The count says one row of <code>authored</code> matches after normalization; the values
+stay withheld.</p>
+<h2 id="declare-what-is-sensitive">Declare what is sensitive</h2>
+<p>Check-family redaction follows the model. Mark a whole fact type or one role,
+as described in the
+<a href="https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md">representation format</a>:</p>
+<pre><code class="language-yaml">fact_types:
+  - id: has_email
+    reading: &quot;{Customer} has email {EmailAddress}&quot;
+    roles:
+      - { object_type: customer_code, role_name: customer }
+      - { object_type: email_address, role_name: email, redact: true }
+</code></pre>
+<p>The packaged <code>disclosure</code> example declares this role; the
+<a href="#part-howto">how-to</a> runs it in each mode.</p>
+<h2 id="every-command-and-function">Every command and function</h2>
+<p>Every command, every public <code>gnd.api</code> function and every report kind is in
+exactly one row. A test keeps this table equal to the code.</p>
+<table>
+<thead>
+<tr>
+<th>Surfaces</th>
+<th>What they disclose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Command: <code>gnd check</code>, <code>gnd validate</code>, <code>gnd diff</code>, <code>gnd verbalize population</code>, <code>gnd measure</code>, <code>gnd verify</code>, <code>gnd judgments check</code></td>
+<td>declared roles: shown under <code>internal</code>, redacted under <code>customer</code>; <code>--unredacted</code> / <code>unredacted=True</code> refused under <code>customer</code></td>
+</tr>
+<tr>
+<td><code>gnd.api</code>: <code>validate</code>, <code>check</code>, <code>diff</code>, <code>verbalize</code>, <code>transition</code>, <code>check_with_receipt</code>, <code>judgments</code>, <code>EvaluationSession.check</code>, <code>EvaluationSession.check_with_receipt</code>, <code>EvaluationSession.transition</code></td>
+<td>declared roles: shown under <code>internal</code>, redacted under <code>customer</code>; <code>--unredacted</code> / <code>unredacted=True</code> refused under <code>customer</code></td>
+</tr>
+<tr>
+<td>Output kind: <code>validate</code>, <code>check</code>, <code>admission</code>, <code>verify</code>, <code>transition</code>, <code>plan</code>, <code>batch</code>, <code>measure</code>, <code>population-verbalization</code>, <code>diff</code></td>
+<td>declared roles: shown under <code>internal</code>, redacted under <code>customer</code>; <code>--unredacted</code> / <code>unredacted=True</code> refused under <code>customer</code></td>
+</tr>
+<tr>
+<td>Command: <code>gnd witness</code>, <code>gnd witness-view</code>, <code>gnd replay</code>, <code>gnd why-not</code>, <code>gnd export lean</code>, <code>gnd export souffle</code>, <code>gnd export souffle-run</code>, <code>gnd export souffle-witness</code></td>
+<td>every value: raw under <code>internal</code>, value-free under <code>customer</code>; <code>--raw</code> / <code>raw=True</code> refused under <code>customer</code></td>
+</tr>
+<tr>
+<td><code>gnd.api</code>: <code>witness</code>, <code>replay</code>, <code>why_not</code>, <code>export_lean</code>, <code>export_souffle</code>, <code>run_souffle</code>, <code>souffle_witness</code></td>
+<td>every value: raw under <code>internal</code>, value-free under <code>customer</code>; <code>--raw</code> / <code>raw=True</code> refused under <code>customer</code></td>
+</tr>
+<tr>
+<td><code>gnd.export.service</code>: <code>export_lean</code>, <code>export_souffle</code>, <code>run_souffle</code>, <code>souffle_witness</code></td>
+<td>every value: raw under <code>internal</code>, value-free under <code>customer</code>; <code>--raw</code> / <code>raw=True</code> refused under <code>customer</code></td>
+</tr>
+<tr>
+<td>Command: <code>gnd exp run</code> (starts processes), <code>gnd discover</code>, <code>gnd export ilp</code>, <code>gnd fidelity</code>, <code>gnd doccheck</code></td>
+<td>the same in every mode (see <a href="#outputs-that-are-the-same-in-every-mode">outputs the same in every mode</a>)</td>
+</tr>
+<tr>
+<td><code>gnd.api</code>: <code>EvaluationSession.check_with_feedback</code>, <code>EvaluationSession.observe</code></td>
+<td>the same in every mode (see <a href="#outputs-that-are-the-same-in-every-mode">outputs the same in every mode</a>)</td>
+</tr>
+<tr>
+<td>Output kind: <code>session-feedback</code>, <code>session-attempt</code>, <code>session-result</code></td>
+<td>the same in every mode (see <a href="#outputs-that-are-the-same-in-every-mode">outputs the same in every mode</a>)</td>
+</tr>
+<tr>
+<td>Command: <code>gnd solve</code> (starts processes), <code>gnd review panel</code> (starts processes), <code>gnd review panel-light</code> (starts processes), <code>gnd codegen</code>, <code>gnd conformance</code>, <code>gnd coverage</code>, <code>gnd doctor</code>, <code>gnd evolve apply</code>, <code>gnd evolve finalize</code>, <code>gnd evolve preview</code>, <code>gnd exp author-expectation</code>, <code>gnd exp close</code>, <code>gnd exp init</code>, <code>gnd exp validate</code>, <code>gnd export lean-compile</code>, <code>gnd export lean-verify</code>, <code>gnd export pyrel</code>, <code>gnd export souffle-verify</code>, <code>gnd extract</code>, <code>gnd import ilp-rules</code>, <code>gnd import mined-rules</code>, <code>gnd import rai-orm</code>, <code>gnd install</code>, <code>gnd recovery inventory</code>, <code>gnd recovery verify</code>, <code>gnd review finalize</code>, <code>gnd synth</code>, <code>gnd uninstall</code></td>
+<td>emits no population values</td>
+</tr>
+<tr>
+<td><code>gnd.api</code>: <code>CheckReceipt</code>, <code>ReceiptRefused</code>, <code>DisclosureRefused</code>, <code>EvaluationSession</code>, <code>verify_lean</code>, <code>verify_souffle</code>, <code>compile_lean</code>, <code>EvaluationSession.reset</code>, <code>EvaluationSession.close</code>, <code>EvaluationSession.stats</code></td>
+<td>emits no population values</td>
+</tr>
+<tr>
+<td><code>gnd.export.service</code>: <code>verify_lean</code>, <code>verify_souffle</code>, <code>compile_lean</code></td>
+<td>emits no population values</td>
+</tr>
+</tbody>
+</table>
+<p>Names bound in <code>gnd.api</code> that are library types or helpers (<code>Model</code>,
+<code>load_population</code>, …) emit nothing and are not listed.</p>
+</article>
+<div class="part-label" id="part-howto">Part 2 · docs/how-to/disclosure-mode.md (new)</div>
+<article class="doc">
+<h1 id="run-gnd-behind-your-interface-or-in-front-of-customers">Run GND behind your interface or in front of customers</h1>
+<p>Use this when one GND installation serves two kinds of reader. Your own team,
+behind your interface, wants the population values that explain a failure.
+A customer, reached through your service, must not see them. One setting, the
+<em>disclosure mode</em>, tells GND which reader it is serving. The full rules are in
+the <a href="#part-reference">disclosure reference</a>.</p>
+<div class="admonition info">
+<p class="admonition-title">Files on GitHub</p>
+<ul>
+<li><a href="https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/disclosure/model.orm.yaml"><code>disclosure/model.orm.yaml</code></a>: a support desk's contacts, with the email role declared sensitive</li>
+<li><a href="https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/disclosure/population.json"><code>disclosure/population.json</code></a>: one customer with two email addresses</li>
+<li><a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/disclosure-mode.md">this page's Markdown source</a></li>
+</ul>
+</div>
+<h2 id="the-example">The example</h2>
+<p>A support desk records each customer's email address. The model says a
+customer has at most one, and marks the address as sensitive:</p>
+<pre><code class="language-yaml">roles:
+  - { object_type: customer_code, role_name: customer }
+  - { object_type: email_address, role_name: email, redact: true }
+</code></pre>
+<p>The population gives customer <code>c-1</code> two addresses, so the check fails. Copy
+the example:</p>
+<pre><code class="language-sh">python -c &quot;import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/disclosure', 'disclosure', dirs_exist_ok=True)&quot;
+</code></pre>
+<p>The blocks below print three fields of the check report: the violation
+message, the offending facts and the redaction mode. Save the filter once:</p>
+<pre><code class="language-sh">cat &gt; show.py &lt;&lt;'PY'
+import json, sys
+verdict = json.load(sys.stdin)[&quot;verdicts&quot;][0]
+print(verdict[&quot;message&quot;])
+print(verdict[&quot;offending_facts&quot;])
+PY
+</code></pre>
+<h2 id="with-no-mode-set-as-before">With no mode set: as before</h2>
+<p>Without a mode, GND behaves as it always has: the declared role is redacted
+unless you ask for it with <code>--unredacted</code>.</p>
+<pre><code class="language-sh">gnd check disclosure/model.orm.yaml disclosure/population.json --format json | python show.py
+</code></pre>
+<pre class="out"><code class="language-text">[REDACTED INSTANCE DETAIL]
+[{'redacted': True, 'roles': ['has_email.email']}]
+</code></pre>
+<p>The check still fails with exit 1. The report says which constraint failed
+and which role was withheld, but not the addresses.</p>
+<h2 id="behind-your-interface-internal">Behind your interface: <code>internal</code></h2>
+<p>Set the mode on the root command, before the subcommand, or in the
+environment of the process that runs GND:</p>
+<pre><code class="language-sh">gnd --disclosure internal check disclosure/model.orm.yaml disclosure/population.json --format json | python show.py
+</code></pre>
+<pre class="out"><code class="language-text">Each customer plays 'has_email' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+[{'customer': 'c-1', 'email': 'ann@example.com'}, {'customer': 'c-1', 'email': 'ann.lee@example.com'}]
+</code></pre>
+<p><code>internal</code> acts as if every raw option were passed. Your team sees the two
+addresses and can decide which one to keep.</p>
+<h2 id="in-front-of-customers-customer">In front of customers: <code>customer</code></h2>
+<p>Set the mode in the environment of the service that faces customers, so no
+request can loosen it. In production you export it once in that service's
+environment; here it is set for one command:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd check disclosure/model.orm.yaml disclosure/population.json --format json | python show.py
+</code></pre>
+<pre class="out"><code class="language-text">[REDACTED INSTANCE DETAIL]
+[{'redacted': True, 'roles': ['has_email.email']}]
+</code></pre>
+<p>The verdict is the same; only the values are withheld.</p>
+<h3 id="requests-for-values-are-refused-not-downgraded">Requests for values are refused, not downgraded</h3>
+<p>A customer's request might be turned into <code>--unredacted</code> by your service.
+Under <code>customer</code> GND refuses it with exit 3 and prints nothing on stdout, so
+nobody mistakes a redacted answer for the raw one:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd check disclosure/model.orm.yaml disclosure/population.json --unredacted
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: --unredacted is refused in customer disclosure mode
+</code></pre>
+<p>The root option can tighten the mode but never loosen it:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd --disclosure internal check disclosure/model.orm.yaml disclosure/population.json
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: --disclosure internal is refused when GND_DISCLOSURE=customer
+</code></pre>
+<p>A mistyped value is refused too, so a misspelled lock never opens:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=Customer gnd check disclosure/model.orm.yaml disclosure/population.json
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: GND_DISCLOSURE must be 'internal' or 'customer'
+</code></pre>
+<h2 id="why-not-and-witness-answers">Why-not and witness answers</h2>
+<p>The mode also covers the commands that explain a derivation: <code>witness</code>,
+<code>witness-view</code>, <code>replay</code>, <code>why-not</code>, and the Lean and Soufflé exports. This
+uses the <code>quoted_claims</code> example from
+<a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/repair-a-missing-claim.md">Repair a claim that does not derive</a>. In its
+<code>spelling-gap.pop.json</code> the claimed quotation is missing because the work the
+claim calls "Field Notes" is recorded as "FIELD NOTES".</p>
+<pre><code class="language-sh">python -c &quot;import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/quoted_claims', 'quoted_claims', dirs_exist_ok=True)&quot;
+cat &gt; blocker.py &lt;&lt;'PY'
+import json, sys
+answer = json.load(sys.stdin)
+blocker = answer[&quot;clauses&quot;][0][&quot;blocker&quot;]
+print(answer[&quot;view&quot;], blocker[&quot;fact_type&quot;], blocker[&quot;near_miss_count&quot;])
+print(blocker[&quot;near_misses&quot;])
+PY
+</code></pre>
+<p>Behind your interface, the answer shows the row spelled differently:</p>
+<pre><code class="language-sh">gnd --disclosure internal why-not quoted_claims/model.orm.json quoted_claims/spelling-gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json | python blocker.py
+</code></pre>
+<pre class="out"><code class="language-text">raw authored 1
+[{'candidate': {'person': 'Ada Byrne', 'work': 'FIELD NOTES'}, 'roles': ['work'], 'sample': {'person': 'Ada Byrne', 'work': 'Field Notes'}}]
+</code></pre>
+<p>In front of customers, the same answer names the blocking step and keeps the
+count, but not the values:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd why-not quoted_claims/model.orm.json quoted_claims/spelling-gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json | python blocker.py
+</code></pre>
+<pre class="out"><code class="language-text">redacted authored 1
+redacted
+</code></pre>
+<p>and <code>--raw</code> is refused:</p>
+<pre><code class="language-sh">GND_DISCLOSURE=customer gnd why-not quoted_claims/model.orm.json quoted_claims/spelling-gap.pop.json \
+  --fact-type certified --row quoted_claims/claim.json --raw
+</code></pre>
+<pre class="out"><code class="language-text">gnd: error: --raw is refused in customer disclosure mode
+</code></pre>
+<h2 id="from-python">From Python</h2>
+<p>The Python API reads the same environment variable. A request for values under
+<code>customer</code> raises <code>DisclosureRefused</code>, a <code>ValueError</code>:</p>
+<pre><code class="language-python">import os
+os.environ[&quot;GND_DISCLOSURE&quot;] = &quot;customer&quot;
+from gnd import api
+try:
+    api.check(&quot;disclosure/model.orm.yaml&quot;, &quot;disclosure/population.json&quot;, unredacted=True)
+except ValueError as error:
+    print(type(error).__name__, error)
+</code></pre>
+<pre class="out"><code class="language-text">DisclosureRefused unredacted=True is refused in customer disclosure mode
+</code></pre>
+<h2 id="what-the-mode-does-not-change">What the mode does not change</h2>
+<ul>
+<li><code>gnd exp run</code> session feedback, <code>gnd discover</code>, <code>gnd export ilp</code>,
+  <code>gnd fidelity</code> and <code>gnd doccheck</code> behave the same in every mode. Do not
+  route their output to a customer.</li>
+<li>Values in check messages for roles you have not declared with <code>redact: true</code>
+  are not withheld. Declare every sensitive role.</li>
+<li>Under <code>customer</code>, the processes GND starts (the agents of <code>gnd exp run</code>, the
+  stations of <code>gnd solve</code>) receive <code>GND_DISCLOSURE=customer</code>. Under <code>internal</code>
+  or no mode they receive nothing extra.</li>
+</ul>
+</article>
+<div class="part-label" id="part-changes">Part 3 · edits to existing pages</div>
+<article class="doc">
+<h1 id="changes-to-existing-pages">Changes to existing pages</h1>
+<p>Each section names a page, says what the new text replaces, and gives the new
+text. Pages with no change are listed at the end with the reason.</p>
+<h2 id="docsreferencewhy-notmd"><code>docs/reference/why-not.md</code></h2>
+<p><em>Replaces the first sentence of "Values in the answer" ("The Python API returns
+raw values, like <code>api.witness</code>."), which is false under <code>customer</code>.</em></p>
+<blockquote>
+<h2 id="values-in-the-answer">Values in the answer</h2>
+<p>With no <a href="#part-reference">disclosure mode</a> set, the Python API returns raw
+values, like <code>api.witness</code>, and the CLI prints a redacted view: <code>samples</code>,
+constant roles and an unavailable term's binding read <code>"redacted"</code>, and the
+answer carries <code>"view": "redacted"</code>. An atom blocker keeps
+<code>near_miss_count</code> and <code>near_miss_truncated</code> and shows <code>near_misses</code> as
+<code>"redacted"</code>. Pass <code>--raw</code> to print the values, with <code>"view": "raw"</code>.</p>
+<p>Under <code>GND_DISCLOSURE=internal</code> both print the raw view. Under <code>customer</code>
+both return the redacted view and <code>--raw</code> is refused with exit 3. The
+near-miss counters stay visible in every mode; <a href="#who-customer-mode-protects">who customer mode
+protects</a> says what they reveal.</p>
+</blockquote>
+<h2 id="docsreferenceclimd"><code>docs/reference/cli.md</code></h2>
+<p><em>New paragraph after the page's opening paragraph.</em></p>
+<blockquote>
+<p>The root option <code>--disclosure internal|customer</code> goes before the subcommand
+(<code>gnd --disclosure customer check …</code>) and sets the
+<a href="#part-reference">disclosure mode</a> for that invocation; <code>GND_DISCLOSURE</code> sets it
+for a process. It is accepted only at the root.</p>
+</blockquote>
+<p><em>Replaces "Check-family reports normally apply declared redaction;
+<code>--unredacted</code> requests the value-bearing view."</em></p>
+<blockquote>
+<p>Check-family reports normally apply declared redaction; <code>--unredacted</code> requests
+the value-bearing view. The disclosure mode can grant or refuse that request;
+see <a href="#what-customer-mode-refuses">what customer mode refuses</a>.</p>
+</blockquote>
+<p><em>The witness and why-not rows of "Proofs, exports, and skill installation".</em></p>
+<blockquote>
+<p>| <code>gnd witness MODEL POPULATION --targets REQUEST</code> | Redacted finite-witness result (raw under <code>internal</code>) |
+| <code>gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE</code> | Explicit new raw certificate; refused under <code>customer</code> |
+| <code>gnd why-not MODEL POPULATION --fact-type ID</code> | Where each clause of a derivation stops, values redacted (raw under <code>internal</code>) |
+| <code>gnd why-not MODEL POPULATION --fact-type ID --row REQUEST</code> | Where a derivation stops for one claimed row, with values spelled differently counted; values redacted |</p>
+</blockquote>
+<p><em>Appended to "General command refusals may use <code>64</code> for usage …".</em></p>
+<blockquote>
+<p>A request for values refused by the disclosure mode exits <code>3</code> with nothing on
+stdout. A misspelled or repeated <code>--disclosure</code> is a usage error, <code>64</code>.</p>
+</blockquote>
+<h2 id="docsreferencepython-apimd"><code>docs/reference/python-api.md</code></h2>
+<p><em>Replaces, in the <code>witness</code> section, "The Python result contains raw values in
+the certificate; the CLI's default witness view removes them."</em></p>
+<blockquote>
+<p>With no disclosure mode set, the Python result contains raw values in the
+certificate; the CLI's default witness view removes them. Under
+<code>GND_DISCLOSURE=customer</code> the result is the default view with no
+<code>certificate</code> (see <a href="#part-reference">disclosure</a>).</p>
+</blockquote>
+<p><em>Replaces, in the <code>why_not</code> section, "The Python result carries raw values; the
+CLI's default view removes them."</em></p>
+<blockquote>
+<p>With no disclosure mode set, the Python result carries raw values; the CLI's
+default view removes them. Under <code>customer</code> the function returns the redacted
+view.</p>
+</blockquote>
+<p><em>Replaces the bullet "Model-based redaction applies by default … <code>unredacted=True</code>
+is an explicit request to retain source values."</em></p>
+<blockquote>
+<ul>
+<li>Model-based redaction applies by default to checking, verbalization, and
+  diff reports. <code>unredacted=True</code> is an explicit request to retain source
+  values. Under the <a href="#part-reference">disclosure mode</a> <code>internal</code> it is granted
+  without asking; under <code>customer</code> it raises <code>DisclosureRefused</code>.</li>
+</ul>
+</blockquote>
+<p><em>New section before "Integrate reports deliberately". It runs after the page's
+existing blocks; here it repeats the page's setup so it runs on its own.</em></p>
+<pre><code class="language-python">from importlib.resources import files
+from shutil import copytree
+
+copytree(str(files(&quot;gnd&quot;) / &quot;examples&quot; / &quot;dispatch&quot;), &quot;api-dispatch&quot;)
+</code></pre>
+<blockquote>
+<h2 id="under-a-disclosure-mode">Under a disclosure mode</h2>
+<p>The functions read <code>GND_DISCLOSURE</code> when they are called. Under <code>customer</code>
+the witness has no certificate, why-not returns the redacted view, and a
+request for values raises <code>DisclosureRefused</code>:</p>
+</blockquote>
+<pre><code class="language-python">import json, os
+from pathlib import Path
+from gnd import api
+
+targets = {&quot;version&quot;: 1, &quot;targets&quot;: [{
+    &quot;fact_type&quot;: &quot;dispatch_reachable&quot;,
+    &quot;tuple&quot;: [{&quot;primitive&quot;: &quot;String&quot;, &quot;value&quot;: &quot;WH-A&quot;},
+              {&quot;primitive&quot;: &quot;String&quot;, &quot;value&quot;: &quot;DEST-D&quot;}],
+}]}
+Path(&quot;targets.json&quot;).write_text(json.dumps(targets))
+os.environ[&quot;GND_DISCLOSURE&quot;] = &quot;customer&quot;
+proof = api.witness(&quot;api-dispatch/model.orm.json&quot;, &quot;api-dispatch/repaired.pop.json&quot;, &quot;targets.json&quot;)
+print(proof[&quot;exit_code&quot;], &quot;certificate&quot; in proof)
+answer = api.why_not(&quot;api-dispatch/model.orm.json&quot;, &quot;api-dispatch/seed.pop.json&quot;, &quot;dispatch_reachable&quot;)
+print(answer[&quot;status&quot;], answer[&quot;view&quot;])
+try:
+    api.check(&quot;api-dispatch/model.orm.json&quot;, &quot;api-dispatch/seed.pop.json&quot;, unredacted=True)
+except api.DisclosureRefused as error:
+    print(error)
+</code></pre>
+<pre class="out"><code class="language-text">0 False
+derived redacted
+unredacted=True is refused in customer disclosure mode
+</code></pre>
+<h2 id="docsreferencecapabilitiesmd"><code>docs/reference/capabilities.md</code></h2>
+<p><em>The why-not row's boundary, and one new row after it.</em></p>
+<blockquote>
+<p>| Explain a missing derived fact | <code>why-not</code>; <code>api.why_not</code> | Declared-order steps and the first empty one; counts values spelled differently; no aggregates or prose rules; values redacted by default | <a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/why-not.md">Why-not</a> |
+| Serve internal or customer readers | <code>GND_DISCLOSURE</code>, <code>--disclosure</code> | Customer mode refuses requests for values; a guard, not a lock, for code inside the process; some outputs are the same in every mode | <a href="#part-reference">Disclosure</a> |</p>
+</blockquote>
+<h2 id="docsreferenceformatsmd"><code>docs/reference/formats.md</code></h2>
+<p><em>Two new rows in the canonical-references table.</em></p>
+<blockquote>
+<p>| Why-not answers | <a href="https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/why-not.md">Why-not reference</a>, <a href="https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/why-not.schema.json">why-not schema</a> (<code>gnd-why-not/2</code>) |
+| Which outputs carry values in each mode | <a href="#part-reference">Disclosure</a> |</p>
+</blockquote>
+<h2 id="docsreferencediscovermd-and-docsreferenceilp-bridgemd"><code>docs/reference/discover.md</code> and <code>docs/reference/ilp-bridge.md</code></h2>
+<p><em>One sentence each, after the passage on redacted roles.</em></p>
+<blockquote>
+<p><code>discover</code>: Its output is the same in every <a href="#part-reference">disclosure mode</a>:
+it never proposes values for a redacted role, so there is nothing to withhold.</p>
+<p><code>ilp-bridge</code>: The export is the same in every <a href="#part-reference">disclosure mode</a>:
+it refuses declared roles and writes undeclared values, because handing values
+to a learner you chose is its job. Do not run it for a customer.</p>
+</blockquote>
+<h2 id="docsguidesexportsmd-and-docsagentsexport-and-reviewmd"><code>docs/guides/exports.md</code> and <code>docs/agents/export-and-review.md</code></h2>
+<p><em>One sentence each, after the explanation of the redacted view.</em></p>
+<blockquote>
+<p>Under <code>GND_DISCLOSURE=customer</code>, <code>--raw</code> is refused with exit 3, so a service
+facing customers cannot publish a raw certificate or bundle; see
+<a href="#part-reference">disclosure</a>.</p>
+</blockquote>
+<h2 id="docsrelease-notesmd"><code>docs/release-notes.md</code></h2>
+<p><em>New entry above the near-miss entry.</em></p>
+<blockquote>
+<h2 id="unreleased-disclosure-mode-2026-11-01">Unreleased: disclosure mode (2026-11-01)</h2>
+<p>One GND installation can now serve readers behind your interface and
+customers (<a href="https://github.com/vasiloglou/gnd-public/issues/70">issue #70</a>).
+Set <code>GND_DISCLOSURE</code> or the root option <code>--disclosure</code> to <code>internal</code> or
+<code>customer</code>; unset changes nothing.</p>
+<ul>
+<li><code>internal</code> acts as if every value option were passed.</li>
+<li><code>customer</code> withholds declared roles and every witness, replay, why-not, Lean
+  and Soufflé value, in the CLI and the Python API. A request for values exits
+  3 or raises <code>gnd.api.DisclosureRefused</code>.</li>
+<li>Contract change under <code>customer</code> only: <code>api.why_not</code> returns the redacted
+  view, and <code>api.witness</code> and <code>api.replay</code> return the default view without a
+  certificate.</li>
+<li>Child processes receive <code>GND_DISCLOSURE=customer</code> only under <code>customer</code>.</li>
+</ul>
+<p>See <a href="#part-reference">disclosure</a>.</p>
+</blockquote>
+<h2 id="packaged-skills">Packaged skills</h2>
+<p><em><code>src/gnd/skills/gnd-orm-core/references/representation-format.md</code>, appended
+to the fact-type <code>redact</code> entry.</em></p>
+<blockquote>
+<p>Under <code>GND_DISCLOSURE=customer</code> the selected roles stay redacted and
+<code>--unredacted</code> is refused; under <code>internal</code> they are shown.</p>
+</blockquote>
+<p><em><code>src/gnd/skills/gnd-export/SKILL.md</code>, step 2 after "it explains, it proves
+nothing", and step 3.</em></p>
+<blockquote>
+<p>Its atom blockers count rows spelled differently (<code>near_miss_count</code>); read
+the pairs with <code>--raw</code> before changing a spelling.</p>
+<ol>
+<li>On explicit raw export selection, run the same command with
+   <code>--raw --out NEW_CERTIFICATE</code>. Under <code>GND_DISCLOSURE=customer</code> this is
+   refused with exit 3; do not retry it in another mode for that reader.</li>
+</ol>
+</blockquote>
+<p><em><code>src/gnd/skills/gnd-export/references/export-contract.md</code>, after "<code>--raw</code>
+explicitly exposes the certificate."</em></p>
+<blockquote>
+<p>Under <code>GND_DISCLOSURE=customer</code> every <code>--raw</code> is refused with exit 3 and
+nothing is written; under <code>internal</code> the raw view is the default.</p>
+</blockquote>
+<p><em><code>src/gnd/skills/gnd-dev-session/references/judgment-contract.md</code>, after
+"--unredacted only for an explicit raw operator view".</em></p>
+<blockquote>
+<p>Under <code>GND_DISCLOSURE=customer</code>, <code>--unredacted</code> is refused with exit 3.</p>
+</blockquote>
+<p><em><code>src/gnd/skills/gnd-dev-session/references/session-v7-contract.md</code>, after the
+feedback redaction paragraph.</em></p>
+<blockquote>
+<p>Feedback redaction is the same in every disclosure mode; <code>internal</code> does not
+lift it.</p>
+</blockquote>
+<p>The packaged-skill pins are updated with these edits.</p>
+<h2 id="pages-with-no-change">Pages with no change</h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Why it stays</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs/runtimes/lean.md</code>, <code>docs/runtimes/souffle.md</code></td>
+<td>Tutorials run with the mode unset (the runner drops <code>GND_DISCLOSURE</code>); their <code>--raw</code> is the documented unset behaviour.</td>
+</tr>
+<tr>
+<td><code>docs/bookrec/*</code>, <code>docs/expense/*</code></td>
+<td>Same: tutorials run unset, and their redaction passages describe the unset default.</td>
+</tr>
+<tr>
+<td><code>docs/development/architecture-audit.md</code></td>
+<td>"redaction" names a module in a historical inventory.</td>
+</tr>
+<tr>
+<td><code>src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json</code></td>
+<td>The <code>redact</code> property has no description that states behaviour.</td>
+</tr>
+<tr>
+<td><code>src/gnd/skills/gnd-model-evolve/references/evolution-contract.md</code></td>
+<td>"redact" refers to user-authored prose in records, not population values.</td>
+</tr>
+<tr>
+<td><code>src/gnd/skills/gnd-dev-session/SKILL.md</code></td>
+<td>Its "redaction" is of adapter credentials, not population values.</td>
+</tr>
+<tr>
+<td><code>docs/how-to/repair-a-missing-claim.md</code></td>
+<td>Changed in NM3; it runs unset and links the why-not reference.</td>
+</tr>
+</tbody>
+</table>
+</article>
+</div>

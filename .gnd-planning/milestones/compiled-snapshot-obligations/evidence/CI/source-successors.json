@@ -291,6 +291,208 @@
         ]
       },
       "reason": "RF7 C1/C2/C4/C5 and branch-local R2 successor; the owner-approved evolve-loading follow-up (2026-10-27, spec D6-A) binds declared references through gnd.model.bind_declared_references, which returns None for a model that declares none and passes the binder's errors through unwrapped; every outcome is pinned unchanged by tests/test_evolve_loading.py H3."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "export_souffle",
+      "home": "gnd.export.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2: the raw keyword is resolved through gnd.disclosure.values_allowed (customer refuses raw=True; internal acts as raw=True); unset is unchanged.",
+      "before": {
+        "raw_sha256": "4475c3550f6e1b1b62300cae4c75ae2f53c12098a1e181b0b0620193b9b07db2",
+        "algorithm_sha256": "6443816c7e2c530cb96402d603bdb320adb9c6b8efed30c065d8361c5372f775",
+        "imports": [
+          "export"
+        ]
+      },
+      "after": {
+        "raw_sha256": "3894627e37b3a30febb60780291197ff8a04e657e71729f559ab5be0ff200b0e",
+        "algorithm_sha256": "e31b4aa5e24e1e660a91ae1db5174ea88adf7201e52d45bc4624cf0b81441c9c",
+        "imports": [
+          "export"
+        ]
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "run_souffle",
+      "home": "gnd.export.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2: the raw keyword is resolved through gnd.disclosure.values_allowed (customer refuses raw=True; internal acts as raw=True); unset is unchanged.",
+      "before": {
+        "raw_sha256": "1168372d0d440e55a9548991c031a0e1eeb69b820e9cd7b15a1bb79baa6762ea",
+        "algorithm_sha256": "71409766c632f03e1ffbd23d7eca61b65003ee0d74acd48b8bb7c8d947b5be16",
+        "imports": [
+          "run"
+        ]
+      },
+      "after": {
+        "raw_sha256": "ac486ec3c200e51cee7f3aad62a510c1ebec27f8ae5afe473a0dd635b8bba0d1",
+        "algorithm_sha256": "5c1ee763a449646272a5817184b1ff5349b55e49caf03ab279e8134c68c9a38a",
+        "imports": [
+          "run"
+        ]
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "souffle_witness",
+      "home": "gnd.export.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2: the raw keyword is resolved through gnd.disclosure.values_allowed (customer refuses raw=True; internal acts as raw=True); unset is unchanged.",
+      "before": {
+        "raw_sha256": "c5afdb578f09a3010630c5e3cce3798bf44891385b3c593cdc9c62ff38c9712f",
+        "algorithm_sha256": "d0a85b5eeafd3bee43404c76808145cf3f7d326d645425932916441283683c07",
+        "imports": [
+          "INPUT_ERRORS",
+          "Path",
+          "WitnessResult",
+          "artifacts",
+          "native_witness",
+          "parse_wire",
+          "read_file",
+          "wire"
+        ]
+      },
+      "after": {
+        "raw_sha256": "052d4afa5c2ea6cd1ead60a5eb0f734bad460ee43235e978e6a827306c5d6791",
+        "algorithm_sha256": "92d68b311a78d42ddafc78132f4623491197cf8cd91e648e6be01327e6d5c388",
+        "imports": [
+          "INPUT_ERRORS",
+          "Path",
+          "WitnessResult",
+          "artifacts",
+          "native_witness",
+          "parse_wire",
+          "read_file",
+          "wire"
+        ]
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "export_lean",
+      "home": "gnd.export.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2: the raw keyword is resolved through gnd.disclosure.values_allowed (customer refuses raw=True; internal acts as raw=True); unset is unchanged.",
+      "before": {
+        "raw_sha256": "82d705e543ed41aa6f0b16e8e3ecb89e706e97db44de168c99e418fd2764cf09",
+        "algorithm_sha256": "795382ffda62b1e00bb0b0104efb74b8fa4869a6ab55e9aadc10c9dd008bd9ae",
+        "imports": [
+          "export"
+        ]
+      },
+      "after": {
+        "raw_sha256": "b47c5f18f80c731574b7655d0b590089996595fcc1dfc7bbdddba4914592bd06",
+        "algorithm_sha256": "7aa8666fc2cdabccc93672c493d14ca11af409c85ecc2ca2c927428c7ececcd9",
+        "imports": [
+          "export"
+        ]
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "witness",
+      "home": "gnd.witness.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2 (D1 b): the public function applies the disclosure mode (customer returns the CLI's default view); the unchanged raw body moved to witness_result, which the CLI calls.",
+      "before": {
+        "raw_sha256": "a3a37853622c9f276b942ae29c4fc48a88264ebe3801011d65886444c8fdcc12",
+        "algorithm_sha256": "c75fd8e0206111a02ade91a2200294d23b08ab3b4c70569cc6439a6a2af314ab",
+        "imports": [
+          "WitnessResult",
+          "YAMLError",
+          "load_targets",
+          "produce_witness"
+        ]
+      },
+      "after": {
+        "raw_sha256": "214b370c376ad7d8a2c7e04282b09ff56f3ecd0b136579463db99c1d196b754f",
+        "algorithm_sha256": "03509a64978b45e31fcf737be6b5147ac25b112ca85fdc851b005d14cb0a9053",
+        "imports": []
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "replay",
+      "home": "gnd.witness.service",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2 (D1 b): the public function applies the disclosure mode (customer returns the CLI's default view); the unchanged raw body moved to replay_result, which the CLI calls.",
+      "before": {
+        "raw_sha256": "97c865e778272baf0e3b0a3f1dd14540db5065084f5b56f1cac1d3a1a93f3003",
+        "algorithm_sha256": "2b99c38822a21ea7e9bf6d35fe0d9289637ee90e5a41f75849ee8d741bb5a350",
+        "imports": [
+          "WitnessResult",
+          "YAMLError",
+          "load_certificate",
+          "replay_witness"
+        ]
+      },
+      "after": {
+        "raw_sha256": "363a39041b4af17ee3df2a196e41cdde1e5a01b4dab9ccae97c6b316f3f59adf",
+        "algorithm_sha256": "b6856b4859762d8b829c5b2de402c7a79de7e763eed8fa4ac99085bf32523c78",
+        "imports": []
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.agent_cli",
+      "name": "_result",
+      "home": "gnd.process",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2 (D4): values of caller-named disclosed_names are not masked; the default (no names) is unchanged.",
+      "before": {
+        "raw_sha256": "37532471c28c8c3b12f85ffe6671bce4231978b912ac0a1c50f885179e406cf8",
+        "algorithm_sha256": "0729eaeee612c18468d207e4da8030a34272a6718077dfe1621c1a80b5ac0095",
+        "imports": []
+      },
+      "after": {
+        "raw_sha256": "2289898e4c6c936e1fdea33f3e9842aff38e4cb4929dbf61265c5d4a486356db",
+        "algorithm_sha256": "004faf2faa6e596e562417f3b1570ef7f09261c5fefdd39289c9b9788f4f64c8",
+        "imports": []
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.agent_cli",
+      "name": "run_bounded_process",
+      "home": "gnd.process",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2 (D4): a disclosed_names keyword passed through to _result; the default (no names) is unchanged.",
+      "before": {
+        "raw_sha256": "d42cec8802937f6e865abd1cf05ed76040786ec40d674a2b4cad135b42b295c1",
+        "algorithm_sha256": "41600a94daa1672d0b0f29a72f8363ea56e0342eaaafb2d995ba64789c6fd999",
+        "imports": []
+      },
+      "after": {
+        "raw_sha256": "e33f1c2065a6b4e8a97b53e3474ffae4579b040f5927c3741c70e8324a4d521b",
+        "algorithm_sha256": "f5bfc92856ee445d8e5a799b9b76c44f04b79c68154b22eb8ddc20144c0e8d82",
+        "imports": []
+      }
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.agent_cli",
+      "name": "invoke_agent",
+      "home": "gnd.agents",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "reason": "why-not-near-misses NM2: an optional extra_environment (the disclosure mode under customer) merged after the fixed names with supplied facts and named as disclosed; absent, the call is unchanged.",
+      "before": {
+        "raw_sha256": "1dcd64a084b0daf637c6e54070e7df82d2c67fca1a58b15589696b7ae56a1681",
+        "algorithm_sha256": "54cb1220ad293c362a536538f1ec2cabd959b1e7bf0fbb87d194cf03f3e8cdca",
+        "imports": []
+      },
+      "after": {
+        "raw_sha256": "0ebb72ffa4792c04c149f1959d37c46ebed094569c5a882a6ad0566032112b41",
+        "algorithm_sha256": "fb66e8afef32efac6e1bf3b408816c9cd93c11dbb293a237fdb0264635695dd5",
+        "imports": []
+      }
     }
   ]
 }

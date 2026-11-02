@@ -1,0 +1,12 @@
+{
+  "format_version": 2,
+  "instances": {},
+  "facts": {
+    "has_email": [
+      {"customer": "c-1", "email": "ann@example.com"},
+      {"customer": "c-1", "email": "ann.lee@example.com"},
+      {"customer": "c-2", "email": "bo@example.com"}
+    ]
+  },
+  "population": {"model": "model.orm.yaml", "model_id": "urn:gnd-example:disclosure@1", "source": "fixture", "covers": []}
+}

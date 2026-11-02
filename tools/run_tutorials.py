@@ -127,7 +127,8 @@ def run_pages(pages: list[Path], cwd: Path, python: Path, lane: str = 'offline',
         raise AssertionError('receipts must be a list or None')
     cwd.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
-    for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'GND_PYREL_PYTHON'):
+    for key in ('PYTHONPATH', 'PYTHONHOME', 'PYTEST_ADDOPTS', 'PYTEST_PLUGINS', 'GND_PYREL_PYTHON',
+                'GND_DISCLOSURE'):
         env.pop(key, None)
     env['PATH'] = str(python.absolute().parent) + os.pathsep + env.get('PATH', '')
     env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'
@@ -207,6 +208,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'induced': [root / 'docs/how-to/learn-rules-commands.md'],
         'learners': [root / 'docs/how-to/compare-ilp-learners.md'],
         'why-not': [root / 'docs/how-to/repair-a-missing-claim.md'],
+        'disclosure': [root / 'docs/how-to/disclosure-mode.md', root / 'docs/reference/disclosure.md'],
         'agent-install': [root / 'docs/agents/install.md'],
         'agent-plans': [root / 'docs/agents/plans.md'],
         'agent-model': [root / 'docs/agents/model-from-text.md'],

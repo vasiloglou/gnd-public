@@ -1,0 +1,57 @@
+# close gate, working tree on eb9839a plus the close changes; Python 3.14.3
+$ uv run pytest -q -p no:cacheprovider tests/test_why_not_kernel.py tests/test_why_not_oracle.py tests/test_public_why_not.py tests/test_why_not_anonymity.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py tests/test_disclosure_mode.py tests/test_public_api.py tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py tests/test_rf5_commands.py tests/test_rf5_handler_pins.py tests/test_why_not_near_misses_public.py tests/test_why_not_repair_loop.py tests/test_public_built_inventory.py tests/test_conformance_payload.py tests/test_documentation_tutorials.py tests/test_plan_app_docs.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_skill_prose_sync.py tests/test_ik6_skill_census.py tests/test_il6_skill_census.py tests/test_public_binding_prose.py tests/test_public_workflow_claim_routes.py tests/test_marketplace_plugins.py
+........................................................................ [ 97%]
+.................................                                        [100%]
+1257 passed, 16 deselected in 268.72s (0:04:28)
+exit 0
+
+$ uv run pytest -q -p no:cacheprovider tests/test_rf1_agent_cli_pins.py tests/test_rf1_session_pins.py tests/test_rf2_instrument.py tests/test_agent_cli.py tests/test_review_runner.py tests/test_solve.py tests/test_rf8_sessions.py tests/test_public_tests_mode_corpus.py tests/test_public_local_command_adapter_controls.py tests/test_rf4_peripheral.py tests/test_rf8_structure.py tests/test_rf2_pre_move_pins.py tests/test_public_reference_signatures.py tests/test_v61_phase2_api.py tests/test_public_runtime.py tests/test_public_redaction_reports.py tests/test_public_report_redaction_metadata.py tests/test_v62_phase1_redaction.py tests/test_v62_phase2_redaction.py tests/test_v62_phase3_redaction.py tests/test_v62_phase4_redaction.py tests/test_v62_phase5_redaction.py tests/test_v62_phase6_redaction.py tests/test_v70_phase3_redaction.py tests/test_rf3_core.py tests/test_rf6_moves.py tests/test_public_collection.py
+=========================== short test summary info ============================
+FAILED tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+1 failed, 1415 passed, 72 deselected in 209.42s (0:03:29)
+exit 1
+
+$ uv run pytest -q -p no:cacheprovider -m distribution tests/test_public_runtime.py::test_installed_import_help_and_api_surface
+.                                                                        [100%]
+1 passed in 9.59s
+exit 0
+
+$ uv run python tools/run_tutorials.py
+lease-schedule.md: selected executable blocks passed
+rules-as-pyrel.md: selected executable blocks passed
+256 tutorial blocks passed
+exit 0
+
+$ uv run zensical build --strict
+Build started
+No issues found
+Build finished in 1.20s
+exit 0
+
+$ uv run python tools/check_docs.py site
+12774 local links/assets/anchors checked
+exit 0
+
+$ uv run python tools/check_installed_docs.py --out /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-intelligent-pasteur-df4027/1e7a79df-b7dd-4f4d-bbf6-f9b2d4d6efad/scratchpad/installed-docs-final
+rules-as-pyrel.md: selected executable blocks passed
+256 tutorial blocks passed
+Both installed wheel origins passed the documented learning paths.
+exit 0
+
+$ uv run ruff check src/gnd/disclosure.py src/gnd/witness src/gnd/api.py src/gnd/cli.py tests/test_disclosure_mode.py tests/test_v61_phase2_api.py tests/test_public_runtime.py tests/test_why_not_near_misses_public.py tests/test_disclosure_docs.py
+All checks passed!
+exit 0
+
+# rerun of the one failure (a wall-clock ceiling: elapsed < 0.4 s with a 0.05 s timeout and 0.2 s grace)
+$ uv run pytest -q -p no:cacheprovider tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+1 passed in 1.50s
+exit 0
+$ uv run pytest -q -p no:cacheprovider tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+1 passed in 1.50s
+exit 0
+$ uv run pytest -q -p no:cacheprovider tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+1 passed in 1.51s
+exit 0
+$ uv run pytest -q -p no:cacheprovider tests/test_agent_cli.py
+26 passed in 9.98s
+exit 0

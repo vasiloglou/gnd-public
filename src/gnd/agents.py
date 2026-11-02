@@ -6,6 +6,7 @@ import math
 import os
 import shutil
 import time
+from collections.abc import Mapping
 from enum import StrEnum
 from pathlib import Path
 from typing import Literal
@@ -236,6 +237,8 @@ async def invoke_agent(
     terminate_grace_seconds: float = 1.0,
     feedback_bytes: bytes | None = None,
     feedback_sha256: str | None = None,
+    extra_environment: Mapping[str, str] | None = None,
+    disclosed_names: frozenset[str] = frozenset(),
 ) -> InvocationResult:
     """Invoke one trusted adapter through the neutral bounded runner.
 
@@ -271,6 +274,14 @@ async def invoke_agent(
     overall_deadline = time.monotonic() + timeout_seconds
     argv = build_agent_argv(adapter, effective_prompt)
     environment, environment_facts = _private_environment()
+    # A caller-supplied addition (the disclosure mode under customer). Its values
+    # stay masked in retained output unless the caller names them as disclosed.
+    extra = dict(extra_environment or {})
+    environment.update(extra)
+    environment_facts = (
+        *(fact for fact in environment_facts if fact.name not in extra),
+        *(EnvironmentFact(name=name, provenance="supplied") for name in sorted(extra)),
+    )
     executable = shutil.which(argv[0], path=environment.get("PATH"))
     if executable is None:
         raise AgentCLIError(f"trusted adapter executable {argv[0]!r} was not found on PATH")
@@ -373,6 +384,7 @@ async def invoke_agent(
         (executable, "--version"),
         cwd=cwd,
         env=environment,
+        disclosed_names=disclosed_names & frozenset(extra),
         limits=ProcessLimits(
             timeout_seconds=min(VERSION_TIMEOUT_SECONDS, remaining_timeout()),
             terminate_grace_seconds=min(terminate_grace_seconds, 0.25),
@@ -413,6 +425,7 @@ async def invoke_agent(
         actual_argv,
         cwd=cwd,
         env=environment,
+        disclosed_names=disclosed_names & frozenset(extra),
         limits=ProcessLimits(
             timeout_seconds=remaining,
             terminate_grace_seconds=terminate_grace_seconds,

@@ -8,6 +8,8 @@ step is docs/reference/why-not.md.
 
 from __future__ import annotations
 
+import unicodedata
+from collections.abc import Mapping
 from dataclasses import dataclass, fields
 from typing import Any
 
@@ -20,6 +22,7 @@ from gnd.witness.io import roster, validate_targets
 from gnd.witness.types import WitnessInputError
 
 MAX_DESCENT = 8
+NEAR_MISS_SHOWN = 5
 
 
 class WhyNotInputError(ValueError):
@@ -49,6 +52,7 @@ class WhyNotLimits:
     probes: int = 200000
     binding_cells: int = 400000
     proof_depth: int = 128
+    near_miss_inspections: int = 200000
 
 
 DEFAULT_WHY_NOT_LIMITS = WhyNotLimits()
@@ -174,6 +178,32 @@ def _canonical(value: Any) -> bytes:
     return canonical_json_bytes(value)
 
 
+def _normalize(value: Any) -> str | None:
+    """NFKC, casefold, delete Unicode punctuation (category P*), collapse
+    whitespace runs to one space, strip. None for non-str or an empty result.
+    Uses the running interpreter's Unicode database."""
+    if type(value) is not str:
+        return None
+    folded = unicodedata.normalize("NFKC", value).casefold()
+    kept = "".join(c for c in folded if not unicodedata.category(c).startswith("P"))
+    return " ".join(kept.split()) or None
+
+
+def _near_key(value: Any) -> tuple:
+    normal = _normalize(value)
+    return ("n", normal) if normal is not None else ("x", checker._identity_key(value))
+
+
+def _near_miss_pair(sample: dict, candidate: dict, bound_roles: list[str]) -> dict:
+    differing = [
+        role for role in bound_roles
+        if checker._identity_key(sample[role]) != checker._identity_key(candidate[role])
+    ]
+    if not differing:
+        raise WhyNotInternalError("a near-miss row matches exactly")
+    return {"roles": differing, "sample": sample, "candidate": candidate}
+
+
 def _status(fact_type_id, mode, status, reason=None, unavailable=None, clauses=(), work=None):
     return WhyNotResult(
         fact_type_id, mode, "declared", status, reason, unavailable, tuple(clauses), dict(work or {})
@@ -188,6 +218,7 @@ def explain(
     row: list[dict] | None = None,
     references=None,
     limits: WhyNotLimits = DEFAULT_WHY_NOT_LIMITS,
+    near_misses: bool = False,
 ) -> WhyNotResult:
     """Explain why ``fact_type_id`` (or one claimed row of it) is not derived."""
     checked_why_not_limits(limits)
@@ -240,18 +271,26 @@ def explain(
         )
     finally:
         checker._WITNESS_TRACE.reset(token)
-    walk = _Walk(model, index, population, relations, result.extensions, budget)
+    walk = _Walk(
+        model, index, population, relations, result.extensions, budget, near_misses=near_misses
+    )
     return walk.explain(fact_type_id, row, depth=0, path=())
 
 
 class _Walk:
-    def __init__(self, model, index, population, relations, extensions, budget) -> None:
+    def __init__(
+        self, model, index, population, relations, extensions, budget, *, near_misses: bool = False
+    ) -> None:
         self.model = model
         self.index = index
         self.population = population
         self.extensions = extensions
         self.unavailable = extensions.unavailable
         self.budget = budget
+        # The near-miss search has its own ceiling, outside ``work``: it reports
+        # truncation instead of failing the walk.
+        self.near_misses = near_misses
+        self.near_miss_inspections = 0
         self.roles = roster(model)
         view = dict(relations)
         view.update(extensions)
@@ -523,7 +562,99 @@ class _Walk:
             "asserted_not_read": asserted_not_read, "roles": roles,
             "sample_count": len(previous), "samples": samples,
         }
+        if self.near_misses:
+            count, truncated, pairs = self._near_misses(previous, atom, roles)
+            blocker["near_miss_count"] = count
+            blocker["near_miss_truncated"] = truncated
+            blocker["near_misses"] = pairs
         return blocker, grounded
+
+    def _eligible(self, atom: dict, bound: frozenset[str]):
+        """The per-row checks of production's candidate match, except bound roles."""
+        binds = checker.atom_bind(atom)
+        free: dict[str, list[str]] = {}
+        for role, term in binds.items():
+            variable = checker._derivation_variable(term)
+            if variable is not None and variable not in bound:
+                free.setdefault(variable, []).append(role)
+        repeated = [roles for roles in free.values() if len(roles) > 1]
+
+        def eligible(fact) -> bool:
+            if not isinstance(fact, Mapping) or any(role not in fact for role in binds):
+                return False
+            if any(
+                checker._derivation_variable(term) is None
+                and checker._identity_key(fact[role]) != checker._identity_key(term)
+                for role, term in binds.items()
+            ):
+                return False
+            return all(
+                len({checker._identity_key(fact[role]) for role in roles}) == 1
+                for roles in repeated
+            )
+
+        return eligible
+
+    def _eligible_rows(self, atom: dict, bound: frozenset[str]) -> list[dict]:
+        eligible = self._eligible(atom, bound)
+        return [
+            dict(fact) for fact in self.facts.get(str(atom.get("fact_type")), ()) if eligible(fact)
+        ]
+
+    def _near_misses(self, previous: list[dict], atom: dict, roles: dict[str, dict]
+                     ) -> tuple[int, bool, list[dict]]:
+        bound_roles = sorted(role for role, spec in roles.items() if spec.get("bound"))
+        if not bound_roles:
+            return 0, False, []
+        variables = {role: roles[role]["variable"][1:] for role in bound_roles}
+        cap = self.budget.limits.near_miss_inspections
+        samples: dict[tuple, dict[tuple, dict]] = {}
+        rows: dict[tuple, dict[tuple, dict]] = {}
+
+        def add(groups, projection):
+            key = tuple(_near_key(projection[role]) for role in bound_roles)
+            identity = tuple(checker._identity_key(projection[role]) for role in bound_roles)
+            group = groups.setdefault(key, {})
+            current = group.get(identity)
+            # Identity-equal projections are one value; show the canonical minimum.
+            if current is None or _canonical(projection) < _canonical(current):
+                group[identity] = projection
+
+        def inspect() -> bool:
+            if self.near_miss_inspections == cap:
+                return False
+            self.near_miss_inspections += 1
+            return True
+
+        truncated = False
+        for binding in previous:
+            if not inspect():
+                truncated = True
+                break
+            if any(name not in binding for name in variables.values()):
+                raise WhyNotInternalError("a binding lacks a variable its prefix bound")
+            add(samples, {role: binding[name] for role, name in variables.items()})
+        if not truncated:
+            eligible = self._eligible(atom, frozenset(previous[0]))
+            for fact in self.facts.get(str(atom.get("fact_type")), ()):
+                if not inspect():
+                    truncated = True
+                    break
+                if eligible(fact):
+                    add(rows, {role: fact[role] for role in bound_roles})
+        count, pairs = 0, []
+        for key, group in samples.items():
+            if key not in rows:
+                continue
+            count += len(group) * len(rows[key])
+            left = sorted(group.values(), key=_canonical)[:NEAR_MISS_SHOWN]
+            right = sorted(rows[key].values(), key=_canonical)[:NEAR_MISS_SHOWN]
+            pairs.extend(
+                _near_miss_pair(sample, candidate, bound_roles)
+                for sample in left for candidate in right
+            )
+        pairs.sort(key=lambda pair: (_canonical(pair["sample"]), _canonical(pair["candidate"])))
+        return count, truncated, pairs[:NEAR_MISS_SHOWN]
 
     def _descend(self, atom, blocker, grounded, depth, path):
         fact_type_id = blocker["fact_type"]

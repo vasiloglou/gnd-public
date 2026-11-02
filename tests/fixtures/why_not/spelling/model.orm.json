@@ -1,0 +1,117 @@
+{
+  "version": 2,
+  "model_id": "urn:gnd-example:quoted-claims@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "quote_id",
+      "name": "Quotation",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "work",
+      "name": "Work",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "person",
+      "name": "Person",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "quote",
+      "reading": "{Quotation} appears in {Work}",
+      "roles": [
+        {
+          "object_type": "quote_id",
+          "role_name": "quote"
+        },
+        {
+          "object_type": "work",
+          "role_name": "work"
+        }
+      ]
+    },
+    {
+      "id": "authored",
+      "reading": "{Work} was written by {Person}",
+      "roles": [
+        {
+          "object_type": "work",
+          "role_name": "work"
+        },
+        {
+          "object_type": "person",
+          "role_name": "person"
+        }
+      ]
+    },
+    {
+      "id": "reviewed",
+      "reading": "{Work} was reviewed by {Person}",
+      "roles": [
+        {
+          "object_type": "work",
+          "role_name": "work"
+        },
+        {
+          "object_type": "person",
+          "role_name": "reviewer"
+        }
+      ]
+    },
+    {
+      "id": "certified",
+      "reading": "{Quotation} is certified as said by {Person}",
+      "roles": [
+        {
+          "object_type": "quote_id",
+          "role_name": "quote"
+        },
+        {
+          "object_type": "person",
+          "role_name": "person"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "quote",
+            "bind": {
+              "quote": "$q",
+              "work": "$w"
+            }
+          },
+          {
+            "fact_type": "authored",
+            "bind": {
+              "work": "$w",
+              "person": "$p"
+            }
+          },
+          {
+            "fact_type": "reviewed",
+            "bind": {
+              "work": "$w",
+              "reviewer": "$r"
+            }
+          }
+        ],
+        "head": {
+          "quote": "$q",
+          "person": "$p"
+        }
+      }
+    }
+  ]
+}

@@ -42,6 +42,7 @@ from types import MappingProxyType
 from typing import BinaryIO, Literal
 
 from gnd import input_policy as _rf7_input
+from gnd.disclosure import forward
 from gnd.exits import (
     EXIT_INTERNAL,
     EXIT_IO,
@@ -513,6 +514,9 @@ def _run_child(spawn: StationSpawn, out: object, err: object) -> StationOutcome:
             stdout=out,
             stderr=err,
             start_new_session=True,  # its own process group, so a timeout reaps the tree
+            # Under customer a station inherits the mode even when it came from
+            # the root option; otherwise the environment is inherited as before.
+            **({"env": {**os.environ, **forwarded}} if (forwarded := forward()) else {}),
         )
     except OSError:
         return StationOutcome(None, "spawn-error")

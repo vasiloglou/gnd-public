@@ -268,6 +268,11 @@
       "source": "gnd.commands.exp",
       "target": "gnd.input_policy",
       "reason": "RF7 shared bounded input parsing infrastructure for CLI JSON arguments/schema intake; no domain algorithm added."
+    },
+    {
+      "source": "gnd.cli",
+      "target": "gnd.disclosure",
+      "reason": "NM2: the root --disclosure option and the one disclosure walk before dispatch."
     }
   ],
   "service_bindings": {

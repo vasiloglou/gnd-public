@@ -309,6 +309,9 @@
     "gnd.diff": {
       "layer": "entry"
     },
+    "gnd.disclosure": {
+      "layer": "checking"
+    },
     "gnd.discover": {
       "lane": "discover",
       "layer": "lanes"

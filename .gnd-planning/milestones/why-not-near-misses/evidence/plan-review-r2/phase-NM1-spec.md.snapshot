@@ -1,0 +1,231 @@
+# Phase NM1: near-miss search in the why-not kernel
+
+**Status: draft r2, awaiting owner review; implementable once the plan and this
+spec are approved.**
+
+## Provenance
+
+- Plan: [why-not-near-misses-plan.md](why-not-near-misses-plan.md) r2, §2.1 and
+  §4 NM1.
+- r1 of this spec was read in plan review round 1 as SHA-256
+  `e3855ca569e890a994f015b64f5c64c651f2416f7b4e7b499ec529737913b670`; see the
+  [round-1 disposition](plan-review-r1-disposition.md). r2 applies themes A, B,
+  C, P and Q at the owner's direction `(p1)` (quoted in the plan). **r2 bytes
+  carry no review opinion** until the confirmation round.
+- Inherited: derivation-why-not WN1 spec and record (kernel, oracle, budgets),
+  WN-R1..R8.
+- `(o1)` covers NM-D3, D4, D5; `(p1)` rules NM-D14 (truncate) and NM-D15 (search
+  off on the public path). NM-D6 (positive atoms only) is the plan author's
+  proposal.
+
+## Obligations
+
+| Source | Obligation | Discharged in |
+|---|---|---|
+| Plan O1 | join variables of an empty join | Design: `roles` per pair |
+| Plan O2 | values from each side differing by case, whitespace, punctuation | Design: `_normalize`, `_near_misses` |
+| Plan O3, NM-R1 | exact matching, statuses, `work` and exits unchanged | Design: eligibility, own counter; T9, T15 |
+| Plan O4 | spelling gap distinguishable from missing fact | empty vs non-empty report; T2, T3 |
+| Plan O5 | covers what host case-folding covers, and more | T1 |
+| Plan O9, NM-R3 | bounded, linear, counted | keyed counting, cap; T12, T12b, T12c |
+| NM1-C1..C5 | phase criteria | T1-T18 |
+| NM-R7 | layering, RF6 | T13 |
+| NM-R8 | anonymity | T14 |
+| Round 1 themes A, B, C, P, Q | repairs | eligibility (A); flag off (B); keyed counting and cap (C); tests (P); Unicode note (Q) |
+
+## Standing rules bound to this phase
+
+1. **Totality:** `_normalize` is total over every value a population can carry;
+   non-`str` (including `bool`) returns `None`. T1, T8.
+2. **Input cap bounds the algorithm:** the search inspects each eligible row and
+   each binding once and builds at most 25 candidate pairs per key; its own
+   counter is capped. T12, T12b, T12c.
+3. **Validation order:** unchanged; the search runs only after the blocker is
+   fixed and cannot change which step blocks. T9.
+4. **One walk:** one `_near_misses` serves every atom blocker at every depth.
+   T4.
+5. **One home:** the normalization's normative text lives here until NM3 moves
+   it to `docs/reference/why-not.md`; this spec then cites that page.
+6. **Measurement over argument:** "nothing else changes" is shown by running the
+   unchanged suites, not argued (T15).
+
+NM-R4..R6 (disclosure) do not apply: the kernel emits raw values and never
+resolves a mode.
+
+## Goal
+
+With `near_misses=True`, every atom blocker in the kernel's result carries
+`near_miss_count`, `near_miss_truncated` and `near_misses` as defined below, and
+`uv run pytest -q tests/test_why_not_kernel.py tests/test_why_not_oracle.py`
+exits 0 with oracle agreement on every hand-written and generated case. With the
+default `near_misses=False`, the kernel's output is byte-identical to `33c260e`,
+and the NM1 focused gate in plan §9 (which includes `tests/test_public_why_not.py`)
+exits 0 with no golden or existing test changed. No input that exits 0 at
+`33c260e` exits otherwise with the search on.
+
+## Design
+
+### `src/gnd/witness/why_not.py` (about +110 lines)
+
+**Limits.** `WhyNotLimits` gains `near_miss_inspections: int = 200000`.
+`checked_why_not_limits` already checks every field (`fields(WhyNotLimits)`),
+so the new ceiling cannot be raised. The service's projection onto
+`WitnessLimits` (`service._why_not_intake_limits`) reads named fields only and
+is unaffected.
+
+**Entry point.**
+
+```python
+def explain(model, candidate, fact_type_id: str, *, row: list[dict] | None = None,
+            references=None, limits: WhyNotLimits = DEFAULT_WHY_NOT_LIMITS,
+            near_misses: bool = False) -> WhyNotResult:
+```
+
+`_Walk.__init__` stores the flag and a separate counter
+`self.near_miss_inspections = 0`. The counter is not in `_Budget.work`.
+
+**Normalization.**
+
+```python
+def _normalize(value: Any) -> str | None:
+    """NFKC, casefold, delete Unicode punctuation (category P*), collapse
+    whitespace runs to one space, strip. None for non-str or an empty result.
+    Uses the running interpreter's Unicode database."""
+```
+
+Normative steps: `unicodedata.normalize("NFKC", v)` → `.casefold()` → keep only
+characters `c` with `not unicodedata.category(c).startswith("P")` →
+`" ".join(s.split())`. Return `None` if `type(value) is not str` or the result is
+`""`.
+
+**Eligibility** (theme A). For the blocker's atom, from `checker.atom_bind(atom)`:
+constant roles; `B` = roles whose variable is bound (`bound` from
+`previous[0]`, as `_atom_blocker` computes); free roles grouped by variable. A
+row `f` from `self.facts.get(fact_type, ())` is eligible when it has every role
+of the atom, every constant role equals the constant by
+`checker._identity_key`, and for each free variable occurring in two or more
+roles the identity keys at those roles are equal. These are the per-row checks of
+`extensions._joined_atom_candidates` (`extensions.py:629-680`) minus the bound
+comparison; a unit test (T19) asserts that, with `B` empty, the eligible rows
+are exactly the candidates `_candidates(atom)` returns.
+
+**Keys.** `k(v) = ("n", _normalize(v))` if that is not `None`, else
+`("x", checker._identity_key(v))`. A bound variable occurring at several roles
+contributes one key component per role, each compared with the same binding
+value.
+
+**Search.**
+
+```python
+def _near_misses(self, previous: list[dict], atom: dict, roles: dict[str, dict]
+                 ) -> tuple[int, bool, list[dict]]:
+```
+
+1. If `B` is empty: return `(0, False, [])`; no inspections.
+2. For each row: one inspection (step 4 checks the cap); if eligible, add its
+   `B`-projection (role → value, distinct by identity) to `rows_by_key[K(f)]`,
+   where `K` is the tuple of `k` over sorted `B`.
+3. For each binding in `previous`: one inspection; add its `B`-projection
+   (role → `binding[variable]`, distinct by identity) to `samples_by_key[K(b)]`.
+4. Before each inspection, if `self.near_miss_inspections` equals
+   `limits.near_miss_inspections`, stop: `truncated = True`.
+5. For each key in both maps: `count += len(samples) * len(rows)`. Sort each
+   side by `canonical`; take the first 5 of each; form those pairs; for each,
+   compute `differing = sorted(r for r in B if identity(sample[r]) !=
+   identity(candidate[r]))`; if empty, raise
+   `WhyNotInternalError("a near-miss row matches exactly")` (an eligible row
+   matching a binding exactly on `B` would have joined).
+6. Sort all formed pairs by `(canonical(sample), canonical(candidate))`; keep 5.
+
+Return `(count, truncated, pairs)`; each pair is
+`{"roles": differing, "sample": sample, "candidate": candidate}`. When
+truncated, `count` counts only what was inspected before the stop.
+
+`_atom_blocker` calls it only when the flag is set and adds
+`"near_miss_count"`, `"near_miss_truncated"`, `"near_misses"`. Non-atom blockers
+and flag-off output are unchanged.
+
+### `src/gnd/witness/view.py`
+
+Not changed in NM1 (no public path sets the flag; NM3 owns the view and schema).
+
+### `tests/why_not_oracle.py` (about +60 lines)
+
+Its own `normalize` (same four steps, written from this spec, importing only
+`unicodedata`), its own eligibility check (constants and repeated free variables
+by its own `identity`), and brute-force enumeration of every
+(distinct sample, distinct eligible row) pair with the pair condition checked
+directly, no keys. No import from `gnd.witness`, `gnd.checker`, `gnd.values`
+(existing AST import test).
+
+### `tests/test_why_not_oracle.py` generator
+
+`generate(seed, domains=DOMAINS)` gains an optional argument; the existing
+parametrization keeps `DOMAINS` and is unchanged. A new parametrization over
+seeds 0..199 uses `SPELLING = {"code": ["a", "A", "a.", " a ", "b", "B-", "c"],
+"int": [0, 1, 2, 3]}`, enables near-misses, and asserts agreement plus at least
+20 blockers with a non-zero count across the seeds (a liveness floor, fixed after
+the first run and recorded).
+
+## Decisions
+
+| ID | Question | Readings and cost | Proposal |
+|---|---|---|---|
+| D1 | Public payload in NM1 | ruled by NM-D15 `(p1-B)`: flag off on every public path | as ruled |
+| D2 | Search work accounting | ruled by NM-D14 `(p1-C)`: own counter and cap, not in `work`, truncates | as ruled |
+| D3 | A binding missing a `B` variable | cannot happen (every binding in a prefix has the same keys; confirmed by round 1); raise `WhyNotInternalError` if it does | as stated |
+| D4 | Truncated count | (a) count of what was inspected (a lower bound); (b) omit the count when truncated: a nullable field | **(a)** |
+
+## Tests
+
+Inline fixtures in `tests/test_why_not_kernel.py` (as T2-T7 of WN1 are written);
+oracle comparisons in `tests/test_why_not_oracle.py`. Every case expects the
+kernel to return with `near_misses=True` unless stated.
+
+| ID | Case | Expected |
+|---|---|---|
+| T1 | `_normalize` table: `"ACME CORP."`=`"Acme Corp."`; `"Acme\tCorp"`=`"Acme Corp"`; full-width `"ＡＣＭＥ"`=`"acme"`; `"Straße"`=`"STRASSE"`; `"ACME-CORP"`=`"ACMECORP"` and ≠`"ACME CORP"` (deletion, not replacement); `"Acme . Corp"`=`"Acme Corp"` (punctuation before whitespace); `"..."`, `"－－"` (full-width punctuation only) → `None` | as stated |
+| T2 | Issue shape: `party` `ACME CORP.` in the row, `Acme Corp.` in the binding | blocker unchanged; count 1; one pair, `roles == ["party"]`; truncated false |
+| T3 | Missing fact: no eligible row shares a key | count 0, `[]` |
+| T4 | Pair on a blocker inside a descent | nested blocker carries it |
+| T5 | Two bound roles, one exact and one near | one pair, `roles` = the near role |
+| T6 | Row-level discriminator: one bound role near, the other wholly different | count 0 |
+| T7 | Constant role differs from the row | count 0 |
+| T8 | Key function: `7`, `"7"`, `True`, `1`, `1.0` give `("x", …)` keys distinct from `("n", "7")`; buildable case: a Number role holding `1` and `1.0` joins exactly, so no blocker | as stated |
+| T9 | On every corpus case: flag on vs off, the result is identical except the three keys on atom blockers | equal |
+| T10 | Repeated free variable, inconsistent row (`pair(work=$w, a=$y, b=$y)` with `{w1, x, z}`) | count 0, no exception |
+| T10b | Repeated free variable, consistent row with a near bound value (`{W1., x, x}`) | count 1 |
+| T10c | Repeated bound variable at two roles, one near and one exact | one pair, both roles compared |
+| T11 | Cap: 7 distinct pairs | count 7, 5 pairs in canonical order |
+| T11b | Dedup by row: rows `{k:"ACME", v:"1"}`, `{k:"ACME", v:"2"}` with `v` free, binding `k="Acme"` | count 1 |
+| T11c | Dedup by binding: two bindings differing only outside `B`, same `B` value | count 1 |
+| T12 | Truncation: a fixture whose search makes exactly `m` inspections; `near_miss_inspections=m` and `m-1` | truncated false with full count; truncated true with the lower-bound count; status and exit identical; literal `m` |
+| T12b | Linear growth: n = 100, 200, 400 bindings and rows, all sharing one key | inspections exactly `2n`; count `n²`; literal values |
+| T12c | The r1 quadratic case (512 × 512 variants of one value) | completes with default limits; count 262,144; no `WhyNotWorkError` |
+| T13 | `tests/test_rf1_layering.py`, `tests/test_rf6_query_policy.py`, `tests/test_gnd_arch.py` | exit 0, no new allowance |
+| T14 | `tests/test_why_not_anonymity.py` | exit 0 |
+| T15 | Flag off: `tests/test_why_not_kernel.py`, `tests/test_why_not_oracle.py` (existing cases) and `tests/test_public_why_not.py` unchanged | exit 0 with no edit to any existing test or golden |
+| T16 | Exactness invariant: call `_near_misses` with a hand-built `previous` whose binding matches an eligible row exactly | `WhyNotInternalError` |
+| T17 | Oracle agreement on every hand-written case above | equal counts, flags and pairs |
+| T18 | Oracle agreement over 200 `SPELLING` seeds | equal; at least the recorded floor of non-zero counts |
+| T19 | Eligibility equals production with `B` empty, on every corpus atom | equal row sets |
+| T20 | `checked_why_not_limits` refuses `near_miss_inspections` above the default | `WhyNotInputError` |
+
+## Out of scope for this phase
+
+The schema, the view, the CLI and API payloads, the disclosure mode, docs,
+negated or comparison blockers.
+
+## Size
+
+About 110 source lines and 350 test lines.
+
+## Approval instrument
+
+This prose. NM1 changes no shipped byte; the corpus-first instrument belongs to
+NM3, which fixes the wire form.
+
+## Recorded at implementation
+
+`unicodedata.unidata_version` of each interpreter the gate runs on, and the T18
+liveness floor.

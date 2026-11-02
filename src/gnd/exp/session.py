@@ -16,6 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Literal
 
+from gnd import disclosure
 from gnd.agents import (
     AgentAdapterId,
     AgentCLIError,
@@ -945,6 +946,9 @@ async def run_session(
                 timeout_seconds=invocation_timeout,
                 feedback_bytes=feedback_bytes,
                 feedback_sha256=feedback_sha256,
+                # Only customer is passed on; unset and internal call as before.
+                **({"extra_environment": forwarded, "disclosed_names": frozenset(forwarded)}
+                   if (forwarded := disclosure.forward()) else {}),
             )
         else:
             assert adapter_id is not None

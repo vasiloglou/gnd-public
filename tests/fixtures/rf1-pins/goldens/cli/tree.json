@@ -33,6 +33,24 @@
   },
   {
    "choices": [
+    "internal",
+    "customer"
+   ],
+   "class": "_StoreOnce",
+   "const": null,
+   "default": null,
+   "dest": "disclosure",
+   "help": "disclosure mode for this invocation, internal or customer; a root option, given before the subcommand; it can only tighten GND_DISCLOSURE=customer",
+   "metavar": null,
+   "nargs": null,
+   "option_strings": [
+    "--disclosure"
+   ],
+   "required": false,
+   "type": null
+  },
+  {
+   "choices": [
     "witness",
     "replay",
     "witness-view",

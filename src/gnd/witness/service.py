@@ -5,7 +5,9 @@ import json  # noqa: F401 -- historical compatibility binding
 
 from gnd import input_policy as _rf7_input
 from gnd import model as model_module
+from gnd.disclosure import resolve
 from gnd.errors import ModelValidationError, PopulationLoadError
+from gnd.witness.view import result_view, why_not_view
 
 
 def _witness_inputs(model_path, population_path, reference_root):
@@ -37,7 +39,7 @@ def _witness_inputs(model_path, population_path, reference_root):
     return model, candidate, context, md, pd
 
 
-def witness(model_path, population_path, targets_path, *, reference_root=None):
+def witness_result(model_path, population_path, targets_path, *, reference_root=None):
     """Produce finite witnesses; exit zero requires every requested tuple proved."""
     from ruamel.yaml.error import YAMLError
 
@@ -66,7 +68,7 @@ def witness(model_path, population_path, targets_path, *, reference_root=None):
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
-def replay(model_path, population_path, certificate_path, *, reference_root=None):
+def replay_result(model_path, population_path, certificate_path, *, reference_root=None):
     """Replay a finite proof with an independent local inference kernel."""
     from ruamel.yaml.error import YAMLError
 
@@ -114,7 +116,7 @@ def _why_not_envelope(exit_code, status, reason, *, explanation=None, work=None)
         "fact_type": None, "mode": None, "order": None, "unavailable": None, "clauses": [],
     }
     return {
-        "schema_version": "gnd-why-not/1",
+        "schema_version": "gnd-why-not/2",
         "exit_code": exit_code,
         "status": status,
         "reason": reason,
@@ -130,7 +132,7 @@ def _why_not_envelope(exit_code, status, reason, *, explanation=None, work=None)
 _WHY_NOT_EXITS = {"blocked": 0, "derived": 0, "unsupported": 2, "unavailable": 4}
 
 
-def why_not(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
+def why_not_result(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
     """Explain why a derived fact type, or one claimed row of it, is not derived."""
     from ruamel.yaml.error import YAMLError
 
@@ -158,7 +160,9 @@ def why_not(model_path, population_path, fact_type, *, row_path=None, reference_
             raw_refs,
             limits=limits,
         )
-        result = explain(model, candidate, fact_type, row=row, references=context).to_dict()
+        result = explain(
+            model, candidate, fact_type, row=row, references=context, near_misses=True
+        ).to_dict()
     except WhyNotWorkError as error:
         return _why_not_envelope(4, "refused", "work-limit", work=error.work)
     except (
@@ -176,6 +180,34 @@ def why_not(model_path, population_path, fact_type, *, row_path=None, reference_
         _WHY_NOT_EXITS[result["status"]], result["status"], result["reason"], explanation=result
     )
 
+
+
+# The public functions apply the disclosure mode; the *_result functions return
+# the raw result the CLI needs (its own --raw view and witness --out).
+def witness(model_path, population_path, targets_path, *, reference_root=None):
+    """Produce finite witnesses; exit zero requires every requested tuple proved.
+
+    Under the customer disclosure mode the result is the value-free view."""
+    result = witness_result(model_path, population_path, targets_path, reference_root=reference_root)
+    return result_view(result) if resolve() == "customer" else result
+
+
+def replay(model_path, population_path, certificate_path, *, reference_root=None):
+    """Replay a finite proof with an independent local inference kernel.
+
+    Under the customer disclosure mode the result is the value-free view."""
+    result = replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
+    return result_view(result) if resolve() == "customer" else result
+
+
+def why_not(model_path, population_path, fact_type, *, row_path=None, reference_root=None):
+    """Explain why a derived fact type, or one claimed row of it, is not derived.
+
+    Under the customer disclosure mode the result is the redacted view."""
+    result = why_not_result(
+        model_path, population_path, fact_type, row_path=row_path, reference_root=reference_root
+    )
+    return {**why_not_view(result), "view": "redacted"} if resolve() == "customer" else result
 
 
 # Historical qualifications are serialized by existing callers.

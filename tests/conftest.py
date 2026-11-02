@@ -1,5 +1,6 @@
 """Current P2 fixture registration only; no historical session/collection hooks."""
 
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -10,6 +11,10 @@ from test_public_distribution import (
 
 from gnd.model import Model
 from gnd.population import Population, _stamp_validated_against
+
+# NM2-C6: an operator's GND_DISCLOSURE never reaches a test or a fixture of any
+# scope; tests that need a mode set it with monkeypatch.
+os.environ.pop("GND_DISCLOSURE", None)
 
 
 def make_population(model: Model, /, **kwargs: Any) -> Population:

@@ -260,5 +260,18 @@
       "<fx>/rows/tally-malformed.json"
     ],
     "exit": 3
+  },
+  {
+    "id": "g20-spelling-gap",
+    "argv": [
+      "why-not",
+      "<fx>/spelling/model.orm.json",
+      "<fx>/spelling/spelling-gap.pop.json",
+      "--fact-type",
+      "certified",
+      "--row",
+      "<fx>/spelling/claim.json"
+    ],
+    "exit": 0
   }
 ]

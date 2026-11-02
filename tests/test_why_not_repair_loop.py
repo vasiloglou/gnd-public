@@ -113,3 +113,35 @@ def test_negative_controls_leave_the_blocker_unchanged(tmp_path, name, extra):
     after = why_not(population(tmp_path, f"{name}.pop.json", extra))
     assert (after["exit_code"], after["status"]) == (0, "blocked")
     assert key(after) == key(before) == ("atom", 1, "authored")
+
+
+def test_nm3_t8_spelling_gap_repair_loop(tmp_path):
+    """NM3-C3: fix a spelling from the near-miss pair alone, then finish the loop."""
+    document = json.loads((EXAMPLE / "spelling-gap.pop.json").read_text())
+    first = why_not(EXAMPLE / "spelling-gap.pop.json")
+    assert key(first) == ("atom", 1, "authored")
+    found = blocker(first)
+    assert (found["near_miss_count"], found["near_miss_truncated"]) == (1, False)
+    (pair,) = found["near_misses"]
+    # Negative control: the near-match for another person and the other work are not reported.
+    assert pair["candidate"] == {"work": "FIELD NOTES", "person": "Ada Byrne"}
+    rows = document["facts"][found["fact_type"]]
+    matches = [i for i, row in enumerate(rows)
+               if all(row[role] == value for role, value in pair["candidate"].items())]
+    (index,) = matches
+    untouched = [dict(row) for i, row in enumerate(rows) if i != index]
+    rows[index] = {**rows[index], **pair["sample"]}
+    respelled = tmp_path / "respelled.pop.json"
+    respelled.write_text(json.dumps(document))
+
+    second = why_not(respelled)
+    assert key(second) == ("atom", 2, "reviewed")
+    assert [blocker(second)[k] for k in ("near_miss_count", "near_miss_truncated", "near_misses")] \
+        == [0, False, []]
+    fact_type, row = repair(second)
+    document["facts"][fact_type].append(row)
+    repaired = tmp_path / "repaired.pop.json"
+    repaired.write_text(json.dumps(document))
+    assert why_not(repaired)["status"] == "derived"
+    assert api.witness(MODEL, repaired, CLAIM)["exit_code"] == 0
+    assert [r for i, r in enumerate(document["facts"]["authored"]) if i != index] == untouched

@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import ast
+import json
 import random
 from pathlib import Path
 
+import jsonschema
 import pytest
 
 from gnd.model import ModelValidationError
@@ -431,3 +433,19 @@ def test_nm1_review_r6_larger_spelled_cases_agree(n):
     pop, pdoc = population(model, doc, facts)
     (blocker,) = compare_near(model, doc, pop, pdoc, "t")
     assert blocker["near_miss_count"] == n * n
+
+
+def test_nm3_t13_kernel_reports_validate_against_the_v2_blocker():
+    """NM3 T13 (D2): every T18 report satisfies the /2 blocker rule, count tie included."""
+    schema = json.loads((Path(__file__).resolve().parents[1]
+                         / "src/gnd/why-not.schema.json").read_text())
+    validator = jsonschema.Draft202012Validator(
+        {"$defs": schema["$defs"], "$ref": "#/$defs/blocker"})
+    nonzero = 0
+    for model, _doc, pop, _pdoc, row in _spelling_corpus():
+        for target_row in (None, row):
+            result = explain(model, pop, "t", row=target_row, near_misses=True).to_dict()
+            for blocker in atom_blockers(result):
+                validator.validate(blocker)
+                nonzero += blocker["near_miss_count"] > 0
+    assert nonzero >= NONZERO_FLOOR

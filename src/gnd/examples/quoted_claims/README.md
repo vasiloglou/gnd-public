@@ -8,6 +8,8 @@ reviewed it.
 - `gap.pop.json`: where two quotations appear; no authorship and no reviews.
 - `claim.json`: the claimed row, `certified(q-17, Ada Byrne)`, as a witness
   request.
+- `spelling-gap.pop.json`: as `gap.pop.json`, with three `authored` rows; one
+  spells the work `FIELD NOTES`, so why-not reports it as a near-miss.
 - `extracted.json`: the reviewer a source document names, for the one role no
   binding reaches.
 

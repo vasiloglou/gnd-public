@@ -978,6 +978,7 @@ def bare_walk(facts, cap=200000):
     walk.facts = facts
     walk.budget = why_not._Budget(WhyNotLimits(near_miss_inspections=cap))
     walk.near_miss_inspections = 0
+    walk._spellings = {}
     return walk
 
 
@@ -1019,6 +1020,31 @@ def test_nm1_t21_representative_is_order_independent():
     # "1}", so the last-key 1.0 represents the group (NM1 finding F1).
     assert why_not._canonical(one["near_misses"][0]["candidate"]) == b'{"m":"ACME","n":1.0}\n'
     assert one["near_miss_count"] == 1
+
+
+def test_close_r1_sample_spelling_is_every_spelling_that_met_the_binding():
+    """Close reader 1 F1: a binding met as both 1 and 1.0 shows one spelling, the
+    canonical first, in either row order and whichever step bound it last."""
+    shown = set()
+    for src_rows in ([{"a": 1.0, "z": "Acme"}, {"a": 1, "z": "Acme"}],
+                     [{"a": 1, "z": "Acme"}, {"a": 1.0, "z": "Acme"}]):
+        fts, facts = two_step("dst", [("a", "num"), ("z", "code")], [{"a": 1.0, "z": "ACME"}],
+                              src_rows=src_rows)
+        (clause,) = run(fts, facts, "t", near_misses=True)["clauses"]
+        (pair,) = clause["blocker"]["near_misses"]
+        shown.add(why_not._canonical(pair["sample"]))
+    assert shown == {b'{"a":1,"z":"Acme"}\n'}
+    fts = [
+        fact_type("one", [("a", "num")]),
+        fact_type("two", [("a", "num"), ("z", "code")]),
+        fact_type("dst", [("a", "num"), ("z", "code")]),
+        fact_type("t", [("h", "code")], {"body": [atom("one", a="$x"), atom("two", a="$x", z="$z"),
+                                                   atom("dst", a="$x", z="$z")], "head": {"h": "$z"}}),
+    ]
+    facts = {"one": [{"a": 1}], "two": [{"a": 1.0, "z": "Acme"}], "dst": [{"a": 1, "z": "ACME"}]}
+    (clause,) = run(fts, facts, "t", near_misses=True)["clauses"]
+    (pair,) = clause["blocker"]["near_misses"]
+    assert why_not._canonical(pair["sample"]) == b'{"a":1,"z":"Acme"}\n'
 
 
 def test_nm1_flag_off_adds_nothing():

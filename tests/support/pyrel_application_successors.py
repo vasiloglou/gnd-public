@@ -91,6 +91,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/derivation-why-not/evidence/WN-merge/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/why-not-near-misses/evidence/NM1/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/why-not-near-misses/evidence/NM2/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/why-not-near-misses/evidence/close-followups/dynamic-query-successor.json',
 ]
 
 

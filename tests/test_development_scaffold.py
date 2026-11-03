@@ -18,6 +18,8 @@ REQUIRED = ['README.md', 'LICENSE', 'NOTICE', 'AGENTS.md', 'CONTRIBUTING.md',
             '.gnd-planning/open-questions.md',
             'src/gnd/skills/gnd-orm-core/references/milestone-record-format.md']
 
+NM_HOME = Path('.gnd-planning/milestones/why-not-near-misses')
+
 # These links identify the original operator's retained, external run evidence.
 # The historical report is immutable; their presence on a fresh checkout is not
 # part of reference closure. Exempt only its enumerated targets, not arbitrary
@@ -36,6 +38,12 @@ RETAINED_EXTERNAL_REFERENCES = {
     # The IL6 reviewer's verbatim report quotes a README line in grep output.
     Path('.gnd-planning/milestones/ilp-learners/notes/phase-IL6-agent-review.md'): {
         'notes/phase-IL6-spec.md',
+    },
+    # The NM4 DC2 draft quotes new text for several docs pages, links as written.
+    NM_HOME / 'checkpoints/DC2/changes.md': {
+        'disclosure.md', 'disclosure.md#who-customer-mode-protects',
+        'disclosure.md#what-customer-mode-refuses', 'why-not.md',
+        '../reference/disclosure.md', 'reference/disclosure.md',
     },
 }
 
@@ -65,6 +73,18 @@ RETAINED_DOCUMENT_ORIGINS = {
     IK_HOME / 'evidence/plan-review-r2/phase-IK1-spec.md': (
         IK_HOME / 'notes/phase-IK1-spec.md',
         '4f4cb8b580c680e5523d6cf1f4a4752abe3d76099a19c713620c51e8e5d3cac1'),
+    NM_HOME / 'checkpoints/DC1/disclosure.md': (
+        Path('docs/reference/disclosure.md'),
+        'df5b92d56b59ebe0e8af1e166ea3de6038530d05ef0e12ef97643046082f77f6'),
+    NM_HOME / 'checkpoints/DC1b/disclosure-mode.md': (
+        Path('docs/how-to/disclosure-mode.md'),
+        '1b89b59939f21e416db8fb9fe0bf47f42924f89b3276e5a61acd858c0962f3c2'),
+    NM_HOME / 'checkpoints/DC2/docs/how-to/disclosure-mode.md': (
+        Path('docs/how-to/disclosure-mode.md'),
+        '4e1caa9d58d5e5b5e49efaa9b2f518b4c4383d98fb7c78171f087dec78c82c89'),
+    NM_HOME / 'checkpoints/DC2/docs/reference/disclosure.md': (
+        Path('docs/reference/disclosure.md'),
+        'e24ba07319c29019b940bfff6bd1b6513baf6c627b89058b1ef764d28ff2c527'),
 }
 
 

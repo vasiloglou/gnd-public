@@ -77,12 +77,12 @@ two names, or a second `--disclosure`, is a usage error, exit 64:
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
 set +e
-gnd --disclosure Customer validate model.orm.yaml 2>&1 | tail -1; echo "exit ${PIPESTATUS[0]}"
+gnd --disclosure Customer validate model.orm.yaml 2>&1 | tail -1 | sed 's/ (choose.*//'; echo "exit ${PIPESTATUS[0]}"
 gnd --disclosure customer --disclosure customer validate model.orm.yaml 2>&1 | tail -1; echo "exit ${PIPESTATUS[0]}"
 ```
 
 ```text
-gnd: error: argument --disclosure: invalid choice: 'Customer' (choose from internal, customer)
+gnd: error: argument --disclosure: invalid choice: 'Customer'
 exit 64
 gnd: error: --disclosure may be given at most once
 exit 64

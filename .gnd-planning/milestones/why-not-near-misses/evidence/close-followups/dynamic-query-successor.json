@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/why-not-near-misses/evidence/NM2/dynamic-query-successor.json",
+  "predecessor_sha256": "16a20550809d4acf8d64853c3595eab11c3b9830ba24eb359f6585ec503f8df9",
+  "reason": "why-not-near-misses close follow-ups (2026-11-02): near-miss samples show, per variable, the spelling whose canonical encoding comes first among every row that met the binding. The kernel keeps those spellings beside each binding, adding annotations, dict lookups and subscripts in why_not.py and moving one annotation from _clause to _walk. Syntax census only; no model-query exception widening.",
+  "added": [
+    [
+      "src/gnd/witness/why_not.py",
+      "__init__",
+      "dict[tuple, dict]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_candidates",
+      "dict[tuple, dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_candidates",
+      "spelled.get(key, candidate)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_first_spellings",
+      "merged[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_join",
+      "self._spellings.get(_binding_key(left), left)",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_join",
+      "spelled[_binding_key(right)]",
+      2
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "self._spellings.get(_binding_key(binding), binding)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "spelling[name]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_spell",
+      "self._spellings.get(key, merged)",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_walk",
+      "list[dict]",
+      1
+    ]
+  ],
+  "removed": [
+    [
+      "src/gnd/witness/why_not.py",
+      "_clause",
+      "list[dict]",
+      1
+    ],
+    [
+      "src/gnd/witness/why_not.py",
+      "_near_misses",
+      "binding[name]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 6889,
+  "result_occurrences": 8613
+}

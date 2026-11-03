@@ -195,9 +195,9 @@ differs exactly. `roles` lists the bound roles that differ exactly.
   the projection whose canonical encoding comes first. The whole projection is
   compared, not the number alone, so which spelling wins can depend on the
   other values and the role names; the choice is the same on every run. Within
-  one binding, a value keeps the spelling of the row that last joined it, so a
-  `sample` can show `1` where an earlier step bound `1.0`. This rule applies
-  to `near_misses` only. `samples` keep the first value why-not met, so one
+  one binding, each value shows the spelling, among every row that met it,
+  whose canonical encoding comes first (`1` before `1.0`), whatever the row
+  order. This rule applies to `near_misses` only. `samples` keep the first value why-not met, so one
   blocker can show `1` in `samples` and `1.0` in `near_misses`.
 - Near-misses appear on positive atom blockers at every descent level. The
   three fields are absent from `negated`, `comparison` and `head` blockers.

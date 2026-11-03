@@ -163,6 +163,15 @@ def _binding_key(binding: dict) -> tuple:
     return tuple(sorted((name, checker._identity_key(value)) for name, value in binding.items()))
 
 
+def _first_spellings(left: dict, right: dict) -> dict:
+    """Per variable, the spelling whose canonical encoding comes first."""
+    merged = dict(left)
+    for name, value in right.items():
+        if name not in merged or _canonical(value) < _canonical(merged[name]):
+            merged[name] = value
+    return merged
+
+
 def _term_variables(term: Any) -> set[str]:
     variable = checker._derivation_variable(term)
     if variable is not None:
@@ -291,6 +300,10 @@ class _Walk:
         # truncation instead of failing the walk.
         self.near_misses = near_misses
         self.near_miss_inspections = 0
+        # Per binding key, every spelling that met each variable, reduced to the
+        # canonical first; kept only for the near-miss search, per clause walk.
+        self._spellings: dict[tuple, dict] = {}
+        self._candidate_spellings: dict[tuple, dict] = {}
         self.roles = roster(model)
         view = dict(relations)
         view.update(extensions)
@@ -349,6 +362,13 @@ class _Walk:
         return [seed], None
 
     def _clause(self, fact_type_id, clause_index, clause, row, *, depth, path):
+        saved, self._spellings = self._spellings, {}
+        try:
+            return self._walk(fact_type_id, clause_index, clause, row, depth=depth, path=path)
+        finally:
+            self._spellings = saved
+
+    def _walk(self, fact_type_id, clause_index, clause, row, *, depth, path):
         bindings, failed = self._seed(fact_type_id, clause, row)
         steps: list[dict] = []
         if failed is not None:
@@ -411,12 +431,23 @@ class _Walk:
         # Identity-duplicate rows yield one candidate, so every pair the join
         # visits produces a distinct, charged binding.
         distinct: dict[tuple, dict] = {}
+        spelled: dict[tuple, dict] = {}
         for candidate in candidates:
-            distinct.setdefault(_binding_key(candidate), candidate)
+            key = _binding_key(candidate)
+            distinct.setdefault(key, candidate)
+            if self.near_misses:
+                spelled[key] = _first_spellings(spelled.get(key, candidate), candidate)
+        self._candidate_spellings = spelled
         return list(distinct.values())
+
+    def _spell(self, merged: dict, left: dict, right: dict) -> None:
+        key = _binding_key(merged)
+        spelling = _first_spellings(self._spellings.get(key, merged), left)
+        self._spellings[key] = _first_spellings(spelling, right)
 
     def _join(self, previous, atom):
         candidates = self._candidates(atom)
+        spelled = self._candidate_spellings
         bound = set(previous[0]) if previous else set()
         variables = {
             variable for term in checker.atom_bind(atom).values()
@@ -430,6 +461,9 @@ class _Walk:
                     merged = dict(left)
                     merged.update(right)
                     self._store(produced, merged)
+                    if self.near_misses:
+                        self._spell(merged, self._spellings.get(_binding_key(left), left),
+                                    spelled[_binding_key(right)])
             return list(produced.values())
         index: dict = {}
         for candidate in candidates:
@@ -442,6 +476,9 @@ class _Walk:
                 merged = dict(left)
                 merged.update(right)
                 self._store(produced, merged)
+                if self.near_misses:
+                    self._spell(merged, self._spellings.get(_binding_key(left), left),
+                                spelled[_binding_key(right)])
         return list(produced.values())
 
     def _ground(self, atom, binding):
@@ -633,7 +670,8 @@ class _Walk:
                 break
             if any(name not in binding for name in variables.values()):
                 raise WhyNotInternalError("a binding lacks a variable its prefix bound")
-            add(samples, {role: binding[name] for role, name in variables.items()})
+            spelling = self._spellings.get(_binding_key(binding), binding)
+            add(samples, {role: spelling[name] for role, name in variables.items()})
         if not truncated:
             eligible = self._eligible(atom, frozenset(previous[0]))
             for fact in self.facts.get(str(atom.get("fact_type")), ()):

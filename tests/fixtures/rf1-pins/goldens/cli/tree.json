@@ -904,7 +904,7 @@
      "const": null,
      "default": "('uniqueness', 'mandatory', 'value', 'frequency', 'subset', 'equality', 'exclusion')",
      "dest": "families",
-     "help": "comma-separated subset of the seven families (default: all)",
+     "help": "comma-separated subset of the seven families (default: all seven); add fact-type to opt in to fact-type proposals",
      "metavar": null,
      "nargs": null,
      "option_strings": [
@@ -942,6 +942,36 @@
      ],
      "required": false,
      "type": "gnd.commands.discover._at_least.<locals>.parse"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "min_support",
+     "help": "fact-type family: fewest distinct entities for a proposal (default 20)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--min-support"
+     ],
+     "required": false,
+     "type": "gnd.commands.discover._at_least.<locals>.parse"
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "show_values",
+     "help": "fact-type family: also report each attribute value as text (disclosure mode decides)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--show-values"
+     ],
+     "required": false,
+     "type": null
     },
     {
      "choices": [

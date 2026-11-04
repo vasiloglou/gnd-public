@@ -97,6 +97,60 @@ Against other candidates:
 32, which needs at least 20 subjects. They are listed in the report with their
 counterexample ids and are never suggested.
 
+## Proposing fact types from generic rows
+
+When facts land in a generic fact type ("an item has an attribute with a
+value"), a recurring attribute name often deserves its own fact type. The
+opt-in family `fact-type` proposes one. It never runs by default:
+
+```sh
+gnd discover model.orm.yaml items.population.json --families fact-type --min-support 20 \
+  --out proposal.json --report report.json --actor you --requested-at 2026-11-04T00:00:00+00:00
+```
+
+A fact type is generic only when its provenance declares which three roles
+are the entity, the attribute name and the value:
+
+```yaml
+provenance:
+  generic: {entity: item, attribute: name, value: value}
+```
+
+A malformed declaration exits 3. An undeclared fact type is never grouped,
+whatever its shape.
+
+Rows are grouped by the attribute value. A group is proposed when its
+distinct entities (not rows) reach `--min-support` (default 20) and all its
+values share one JSON type. The proposal adds a binary fact type
+`<generic>_induced_<n>` with roles `entity` and `value` and a placeholder
+reading (`{Item} has induced attribute 0 {AttributeValue}`) for a reviewer to
+rename, a value type when the generic value type's primitive differs, and a
+uniqueness on the entity role carrying the induced, proposed, deontic
+envelope. A group in which any entity has several values breaks that
+uniqueness, so it is counted (`multi_valued`) and not proposed. A new id never
+reuses one the model already has; a clash takes the next suffix
+(`<generic>_induced_<n>_1`). A redacted entity or value role stays redacted
+in the new fact type. Proposals that would push the evolve proposal past its
+size cap are counted (`over_budget`) and left out.
+Nothing moves: the rows stay in the generic fact type, and admitting the
+proposal is a reviewed `gnd evolve apply`. The proposal passes
+`gnd evolve preview --policy additive`.
+
+When an existing fact type already has the same role players, the group is
+listed under `shape_matches` with that fact type and not proposed. A redacted
+attribute role is skipped and counted.
+
+The report's `fact_type_proposals` key lists, per proposed fact type, the
+opaque ids of the rows that would migrate (`ft<k>#<index>`) and the
+attribute value's SHA-256. The value itself appears as `value` only when the
+disclosure mode allows `--show-values`: with the flag when the mode is unset,
+always under `internal`, and never under `customer`, where the flag exits 3.
+Without the family the key is absent and every output is as before. The
+family's row visits are reported as `row_visits` in its own key, not in the
+report's `work` totals, so those totals mean what they meant before.
+`--min-support` and `--show-values` without `--families fact-type` are usage
+errors (64).
+
 ## Outputs
 
 - **`--report`:** always written. Format `gnd-discover/1`, schema

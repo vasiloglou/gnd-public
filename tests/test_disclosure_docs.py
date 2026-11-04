@@ -20,6 +20,7 @@ STATES = "| Mode | Declared sensitive roles"
 CLASS = {
     ("site", "declared"): "declared roles: shown under `internal`, redacted under `customer`; `--unredacted` or `unredacted=True`, where taken, refused under `customer`",
     ("site", "view"): "every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer`",
+    ("site", "option"): "one named value option, `gnd discover --show-values`: values under `internal`, as requested when unset, the option refused under `customer`; every other output the same in every mode",
     ("every-mode", None): "the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode))",
     ("value-free", None): "emits no population values",
 }

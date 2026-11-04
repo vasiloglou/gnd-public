@@ -26,6 +26,14 @@ changes requires a separate release decision.
   facts name their source facts, and so, through each source's sidecar,
   their spans in each document. `gnd replay --composition` checks that
   lineage against the record. Version-1 witnesses are unchanged.
+- **Fact-type proposals** ([#77](https://github.com/vasiloglou/gnd-public/issues/77)).
+  `gnd discover --families fact-type` proposes a binary fact type for each
+  attribute of a declared generic fact type that reaches `--min-support`
+  distinct entities with one value type, as an additive evolve proposal.
+  The report lists the rows that would migrate by opaque id and the
+  attribute by digest; `--show-values` follows the disclosure mode. The
+  default seven families are unchanged; see
+  [constraint discovery](reference/discover.md#proposing-fact-types-from-generic-rows).
 
 ## Unreleased: model growth guardrails (2026-11-04)
 

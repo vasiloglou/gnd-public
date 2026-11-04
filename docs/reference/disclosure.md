@@ -119,7 +119,6 @@ Do not route them to a customer.
 |---|---|---|
 | `gnd exp run` session feedback, attempts and results; `EvaluationSession.check_with_feedback` | declared redaction, always applied | The session contract fixes it, and feedback goes to agents that may be external providers, so `internal` must not lift it. |
 | `EvaluationSession.observe` | the caller's own population | It returns what the caller passed in. |
-| `gnd discover` | candidate constraints; never value candidates for redacted roles | Its proposals name positions, not values. |
 | `gnd export ilp` | undeclared values in its learner input; refuses declared roles | Its job is to hand values to a learner you chose. |
 | `gnd fidelity` | the extracted facts it measures | Its input is your own extraction case. |
 | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
@@ -210,7 +209,8 @@ exactly one row. A test keeps this table equal to the code.
 | Command: `gnd witness`, `gnd witness-view`, `gnd replay`, `gnd why-not`, `gnd export lean`, `gnd export souffle`, `gnd export souffle-run`, `gnd export souffle-witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | `gnd.api`: `witness`, `replay`, `why_not`, `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | `gnd.export.service`: `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
-| Command: `gnd exp run` (starts processes), `gnd discover`, `gnd export ilp`, `gnd fidelity`, `gnd doccheck`, `gnd compose` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
+| Command: `gnd discover` | one named value option, `gnd discover --show-values`: values under `internal`, as requested when unset, the option refused under `customer`; every other output the same in every mode |
+| Command: `gnd exp run` (starts processes), `gnd export ilp`, `gnd fidelity`, `gnd doccheck`, `gnd compose` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | `gnd.api`: `EvaluationSession.check_with_feedback`, `EvaluationSession.observe`, `compose` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | Output kind: `session-feedback`, `session-attempt`, `session-result` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | Command: `gnd solve` (starts processes), `gnd review panel` (starts processes), `gnd review panel-light` (starts processes), `gnd codegen`, `gnd conformance`, `gnd coverage`, `gnd doctor`, `gnd evolve apply`, `gnd evolve finalize`, `gnd evolve preview`, `gnd exp author-expectation`, `gnd exp close`, `gnd exp init`, `gnd exp validate`, `gnd export lean-compile`, `gnd export lean-verify`, `gnd export pyrel`, `gnd export souffle-verify`, `gnd extract`, `gnd import ilp-rules`, `gnd import mined-rules`, `gnd import rai-orm`, `gnd install`, `gnd recovery inventory`, `gnd recovery verify`, `gnd review finalize`, `gnd synth`, `gnd uninstall` | emits no population values |

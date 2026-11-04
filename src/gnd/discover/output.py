@@ -176,6 +176,11 @@ def render_text(report: dict[str, Any]) -> str:
     )
     lines.append("REJECTED " + " ".join(f"{k}={v}" for k, v in report["rejected"].items()))
     lines.append("SUPPRESSED " + " ".join(f"{k}={v}" for k, v in report["suppressed"].items() if v))
+    if "fact_type_proposals" in report:
+        family = report["fact_type_proposals"]
+        lines.append(f"FACT TYPES {len(family['proposed'])}")
+        lines.extend(f"  {row['fact_type']} support={row['support']['numerator']}" for row in family["proposed"])
+        lines.extend(f"  shape of {row['existing']}" for row in family["shape_matches"])
     lines.append(f"WORK total={report['work']['total']}")
     lines.append(f"PROPOSAL {report['proposal'] or '(none)'}")
     return "\n".join(lines) + "\n"

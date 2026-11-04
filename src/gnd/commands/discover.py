@@ -7,16 +7,18 @@ import gnd.discover.service as _handler_discover_service
 from gnd.commands._arguments import _add_format_argument
 
 FAMILIES = _handler_discover_service.FAMILIES
+#: The opt-in eighth family (CT4); never part of the default.
+OPT_IN = ("fact-type",)
 
 
 def _families(text: str) -> tuple[str, ...]:
     names = tuple(name.strip() for name in text.split(",") if name.strip())
-    unknown = sorted(set(names) - set(FAMILIES))
+    unknown = sorted(set(names) - set(FAMILIES) - set(OPT_IN))
     if not names or unknown:
         raise argparse.ArgumentTypeError(
-            f"unknown families {unknown}; choose from {', '.join(FAMILIES)}"
+            f"unknown families {unknown}; choose from {', '.join(FAMILIES + OPT_IN)}"
         )
-    return tuple(family for family in FAMILIES if family in names)
+    return tuple(family for family in FAMILIES + OPT_IN if family in names)
 
 
 def _at_least(minimum: int):
@@ -80,7 +82,7 @@ def _register_discover(subparsers):
     )
     discover_parser.add_argument(
         "--families", type=_families, default=FAMILIES,
-        help="comma-separated subset of the seven families (default: all)",
+        help="comma-separated subset of the seven families (default: all seven); add fact-type to opt in to fact-type proposals",
     )
     discover_parser.add_argument(
         "--max-values", type=_at_least(1), default=20,
@@ -89,6 +91,14 @@ def _register_discover(subparsers):
     discover_parser.add_argument(
         "--max-pairs", type=_at_least(0), default=256,
         help="most unordered role pairs compared for subset/equality/exclusion (default 256)",
+    )
+    discover_parser.add_argument(
+        "--min-support", type=_at_least(1), default=None,
+        help="fact-type family: fewest distinct entities for a proposal (default 20)",
+    )
+    discover_parser.add_argument(
+        "--show-values", action="store_true",
+        help="fact-type family: also report each attribute value as text (disclosure mode decides)",
     )
     _add_format_argument(discover_parser)
     return {"discover_parser": discover_parser}
@@ -109,6 +119,19 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 def handle(args, parsers) -> int:
     if args.command == "discover":
+        if "fact-type" not in args.families and (args.show_values or args.min_support is not None):
+            parsers["discover_parser"].error("--min-support and --show-values need --families fact-type")
+        show_values = False
+        if "fact-type" in args.families:
+            import sys
+
+            from gnd.disclosure import DisclosureRefused, values_allowed
+
+            try:
+                show_values = values_allowed(args.show_values, "--show-values")
+            except DisclosureRefused as error:
+                print(f"gnd: error: {error}", file=sys.stderr)
+                return 3
         return _handler_discover_service._cmd_discover(
             args.model,
             args.population,
@@ -120,6 +143,10 @@ def handle(args, parsers) -> int:
             max_values=args.max_values,
             max_pairs=args.max_pairs,
             output_format=args.format,
+            **({} if "fact-type" not in args.families else {
+                "min_support": 20 if args.min_support is None else args.min_support,
+                "show_values": show_values,
+            }),
         )
 
     raise ValueError(f"unsupported command: {args.command}")

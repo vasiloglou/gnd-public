@@ -239,6 +239,7 @@ CASES = {
     "view-api": "test_t19_t20_witness_lane_api",
     "export": "test_t25_export_functions_resolve_raw",
     "every-mode": "test_t26_every_mode_and_value_free_leaves_see_no_mode",
+    "option-cli": "test_ct4_discover_show_values_follows_the_mode",
     "session": "test_t30_t31_sessions_forward_customer_only",
 }
 
@@ -256,7 +257,8 @@ def test_t15_every_row_has_a_discharging_case():
         if key.startswith("kind:"):
             group = "session" if key.startswith("kind:session") else "declared-api"
         elif key.startswith("gnd "):
-            group = ("declared-cli" if surface.convention == "declared" else "view-cli" if surface.convention
+            group = ("declared-cli" if surface.convention == "declared" else "option-cli"
+                     if surface.convention == "option" else "view-cli" if surface.convention
                      else "session" if key == "gnd exp run" else "every-mode")
         elif key.startswith("export.service:") or key.split(":")[1] in (
                 "export_lean", "export_souffle", "run_souffle", "souffle_witness"):
@@ -495,7 +497,7 @@ def test_t26_every_mode_and_value_free_leaves_see_no_mode(monkeypatch):
             assert {k: v for k, v in other[0].items() if k != "disclosure"} == \
                    {k: v for k, v in unset[0].items() if k != "disclosure"}, path
         checked += 1
-    assert checked == 49 - 15 - 4   # minus the site leaves and the spawners
+    assert checked == 49 - 16 - 4   # minus the site leaves and the spawners
 
 
 # -- T28-T34b: child processes -------------------------------------------------------------
@@ -880,3 +882,18 @@ def test_review_r7_discover_output_is_the_same_in_every_mode(tmp_path, monkeypat
                         (work / "report.json").read_bytes().replace(str(work).encode(), b"<work>")))
     assert outputs[0][0] == 0
     assert outputs[0] == outputs[1] == outputs[2]
+
+
+def test_ct4_discover_show_values_follows_the_mode():
+    # CT-D13 (a): the one option a site decides with values_allowed.
+    from gnd.disclosure import DisclosureRefused, invocation, values_allowed
+
+    with invocation(None):
+        assert values_allowed(False, "--show-values") is False
+        assert values_allowed(True, "--show-values") is True
+    with invocation("internal"):
+        assert values_allowed(False, "--show-values") is True
+    with invocation("customer"):
+        assert values_allowed(False, "--show-values") is False
+        with pytest.raises(DisclosureRefused, match="--show-values"):
+            values_allowed(True, "--show-values")

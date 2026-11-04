@@ -360,6 +360,11 @@ def _evolve_emit_claim(claim: Any, output_format: str, *, stage: str) -> None:
         print(f"  breaking: {str(claim.breaking).lower()}")
         for reference in claim.affected_references:
             print(f"  affected: {reference}")
+        if claim.policy is not None:
+            print(f"  policy: {claim.policy}")
+            print(f"  populated: {' '.join(claim.populated) or '-'}")
+            for issue in claim.policy_issues:
+                print(f"  policy-issue: {issue.operation_index} {issue.cell} {issue.reference}")
     elif stage == "apply":
         print(f"PENDING {claim.state_identity_sha256}")
         print(f"  proposal: {claim.proposal_id}")
@@ -440,6 +445,7 @@ def _evolve_error_exit(error: Exception) -> int:
     from gnd.evolve import (
         EvolutionError,
         EvolutionOperationsGatedError,
+        EvolutionPolicyRefusedError,
         EvolutionReadOnlyCompatibilityError,
     )
     from gnd.safefs import InstallPathError
@@ -452,6 +458,11 @@ def _evolve_error_exit(error: Exception) -> int:
     # silently become exit 11.
     if isinstance(error, EvolutionOperationsGatedError):
         return EXIT_EVOLUTION_OPERATIONS_GATED
+    # By type as well: the additive policy's refusal at apply names
+    # user-supplied ids, and 3 is the band for a valid request refused by
+    # policy (MG-D12).
+    if isinstance(error, EvolutionPolicyRefusedError):
+        return 3
     # Before the generic arm, and by TYPE for the same reason: a pending state
     # this tool can read but cannot finish is a collision with existing
     # evidence, not a malformed input (D-P3.5).
@@ -466,6 +477,13 @@ def _evolve_error_exit(error: Exception) -> int:
     if isinstance(error, OSError):
         return EXIT_IO
     return EXIT_INTERNAL
+
+def _evolve_policy_arguments(policy: str | None, populated: list[str] | None) -> None:
+    """``--populated`` is meaningful only under a policy; refuse it alone (3)."""
+
+    if populated and policy is None:
+        raise _EvolutionCLIError(3, "--populated requires --policy additive")
+
 
 def _evolve_fail(error: Exception, *, stage: str) -> int:
     exit_code = _evolve_error_exit(error)
@@ -510,12 +528,20 @@ def _cmd_evolve_preview(
     records_path: str,
     preview_path: str,
     output_format: str,
+    *,
+    policy: str | None = None,
+    populated: list[str] | None = None,
 ) -> int:
-    """Validate one proposal through ``EvolutionService.preview`` and publish its claim."""
+    """Validate one proposal through ``EvolutionService.preview`` and publish its claim.
+
+    Under ``--policy additive`` the preview is published even when the policy
+    refuses operations, so the issues are reviewable; the exit is then 3.
+    """
 
     from gnd.evolve import EvolutionService, read_evolution_proposal
 
     try:
+        _evolve_policy_arguments(policy, populated)
         workspace = _evolve_workspace(workspace_path)
         model, _model_relative = _evolve_workspace_path(
             workspace, model_path, label="model", required=True
@@ -538,10 +564,17 @@ def _cmd_evolve_preview(
             evidence_root=records,
             allowed_project_root=workspace,
         )
-        preview = service.preview(proposal)
+        preview = service.preview(proposal, policy=policy, populated=populated or ())
         rendered = _evolve_json_bytes(preview)
         _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
         _evolve_emit_claim(preview, output_format, stage="preview")
+        if preview.policy_issues:
+            print(
+                f"EVOLUTION PREVIEW REFUSED (3): {policy} policy refused "
+                f"{len(preview.policy_issues)} operation(s); see policy_issues in {preview_file}",
+                file=sys.stderr,
+            )
+            return 3
         return 0
     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return _evolve_fail(error, stage="preview")
@@ -553,6 +586,9 @@ def _cmd_evolve_apply(
     workspace_path: str,
     records_path: str,
     output_format: str,
+    *,
+    policy: str | None = None,
+    populated: list[str] | None = None,
 ) -> int:
     """Revalidate an exact preview, publish the model CAS, and complete it.
 
@@ -564,6 +600,8 @@ def _cmd_evolve_apply(
     from gnd.evolve import EvolutionPreview, EvolutionService, read_evolution_proposal
 
     try:
+        _evolve_policy_arguments(policy, populated)
+        populated_args = tuple(sorted(set(populated or ())))
         workspace = _evolve_workspace(workspace_path)
         model, model_relative = _evolve_workspace_path(
             workspace, model_path, label="model", required=True
@@ -592,6 +630,21 @@ def _cmd_evolve_apply(
             raise _EvolutionCLIError(
                 EXIT_COLLISION,
                 "reviewed preview belongs to a different explicit proposal identity",
+            )
+        # Before the retry branch and before the fresh/reviewed equality: the
+        # additive guarantee holds only when apply repeats the preview's
+        # policy, and the retry branch never rebuilds a preview (MG2, r2-A).
+        if reviewed.policy != policy:
+            raise _EvolutionCLIError(
+                3,
+                "--policy differs from the reviewed preview: "
+                f"preview {reviewed.policy or 'none'}, apply {policy or 'none'}",
+            )
+        if policy is not None and (reviewed.populated_args or ()) != populated_args:
+            raise _EvolutionCLIError(
+                3,
+                "--populated differs from the reviewed preview: "
+                f"preview {list(reviewed.populated_args or ())}, apply {list(populated_args)}",
             )
         service = EvolutionService(
             model_path=model,
@@ -640,7 +693,7 @@ def _cmd_evolve_apply(
                 )
             pending = service.apply(staged)
             return _evolve_finish_apply(service, pending, output_format)
-        fresh = service.preview(proposal)
+        fresh = service.preview(proposal, policy=policy, populated=populated_args)
         if reviewed != fresh:
             raise _EvolutionCLIError(
                 EXIT_COLLISION,
@@ -661,6 +714,8 @@ def _cmd_evolve_apply(
             accepted = service.preview(
                 proposal,
                 accepted_blast_radius_sha256=accepted_digest,
+                policy=policy,
+                populated=populated_args,
             )
         pending = service.apply(accepted)
         return _evolve_finish_apply(service, pending, output_format)

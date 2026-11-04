@@ -1,0 +1,162 @@
+# MG2 additive-policy fixture (spec §Tests). No `operations`, so the
+# operations gate (exit 18) never pre-empts a policy cell.
+#
+# customer_places_order is POPULATED (two sample rows); order_has_amount is
+# the unpopulated control with the same constraint shapes. Constraints that
+# the cases modify are user-supplied/confirmed or llm-inferred/proposed/
+# deontic, the two shapes D-12 admits for a changed constraint.
+version: 1
+model_id: evolve-policy-base
+source: { kind: fixture }
+object_types:
+  - id: customer
+    name: Customer
+    kind: entity
+    reference: { mode: popular, value_type: customer_id }
+    description: { summary: "A party that places orders." }
+    provenance: { rationale: "Named in the brief." }
+  - id: customer_id
+    name: CustomerId
+    kind: value
+    primitive: Integer
+  - id: order
+    name: Order
+    kind: entity
+    reference: { mode: popular, value_type: order_id }
+  - id: order_id
+    name: OrderId
+    kind: value
+    primitive: Integer
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+  - id: channel
+    name: Channel
+    kind: value
+    primitive: String
+  # Unreferenced by any constraint: the subject of the RENAME and DELETE cells,
+  # whose candidates stay valid without touching anything else.
+  - id: note
+    name: Note
+    kind: value
+    primitive: String
+  - id: memo
+    name: Memo
+    kind: value
+    primitive: String
+fact_types:
+  - id: customer_places_order
+    reading: "{Customer} places {Order} via {Channel}"
+    roles:
+      - { object_type: customer, role_name: customer }
+      - { object_type: order, role_name: order }
+      - { object_type: channel, role_name: channel }
+    sample_population:
+      - { customer: 1, order: 10, channel: web }
+      - { customer: 2, order: 11, channel: web }
+    provenance: { rationale: "Populated by the first extraction round." }
+    constraints:
+      - type: uniqueness
+        roles: [order, channel]
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An order is placed once per channel." }
+      - type: value
+        object_type: channel
+        role_ref: { fact_type: customer_places_order, role: channel }
+        allowed: [web, phone, store]
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Orders arrive by web, phone or in store." }
+      - type: frequency
+        scope: internal
+        roles: [customer]
+        bound: { min: 1, max: 10 }
+        source: user-supplied
+        status: confirmed
+        modality: deontic
+        provenance: { user_note: "A customer places at most ten orders." }
+      - type: value
+        object_type: order
+        role_ref: { fact_type: customer_places_order, role: order }
+        range: { min: 1, max: 1000, min_inclusive: true, max_inclusive: true }
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Order numbers are small positive integers."
+        provenance: { rationale_world_fact: "Order numbers are assigned sequentially from one." }
+  - id: order_has_amount
+    reading: "{Order} has {Amount}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: amount, role_name: amount }
+    constraints:
+      - type: uniqueness
+        roles: [order]
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An order has one amount." }
+      - type: value
+        object_type: amount
+        role_ref: { fact_type: order_has_amount, role: amount }
+        range: { min: 0, max: 100000 }
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Amounts are non-negative and bounded."
+        provenance: { rationale_world_fact: "Retail amounts are bounded." }
+  # No constraints and unreferenced by hosted constraints: the subject of the
+  # fact-type RENAME/DELETE and role MODIFY/RENAME cells.
+  - id: order_has_memo
+    reading: "{Order} has {Memo}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: memo, role_name: memo }
+constraints:
+  # An induced, proposed rule spanning the populated fact type: the one shape
+  # whose proposed -> confirmed transition D-12 admits as a reviewed status
+  # change, so the policy's (p1) F ruling is reachable at the service level.
+  - type: guarded
+    antecedent:
+      - { fact_type: customer_places_order, bind: { customer: $c, order: $o, channel: $ch } }
+      - { fact_type: order_has_amount, bind: { order: $o, amount: $a } }
+    consequent: { comparison: { left: $a, operator: "<=", right: 100000 } }
+    source: induced
+    status: proposed
+    modality: deontic
+    rationale: "learned by popper 0.0.0+authored from manifest dbec4c36, clause 0"
+    provenance:
+      induction:
+        method: ilp-neutral
+        inducer: { name: popper, version: 0.0.0+authored }
+        manifest_sha256: dbec4c367f7b912c1c92b0ad73b037c9d7dc2b5c7003838e3b1d8cd2970d9bf5
+        support: { numerator: 2, denominator: 2 }
+        examples: [n1, n2]
+        counterexamples: []
+        evidence:
+          - { ref: ilp/export.json, sha256: 3274fb8975386692226bbdf52186163d4493cfa36bd5cf3b266fe5d7f6a1fc61 }
+          - { ref: ilp/clauses, sha256: 52066321e4d1ea260fd16803b796485ba168c436bc36b5a5b973c93107972fa8 }
+          - { ref: ilp/run, sha256: cc981d873c7125b9d9078c8d2c912da37acf680793e6caead6095f6cd70174a6 }
+  # Spans only unpopulated fact types: the subject of review F1's retarget case.
+  - type: exclusion
+    role_seq_a:
+      - { fact_type: order_has_memo, role: order }
+    role_seq_b:
+      - { fact_type: order_has_amount, role: order }
+    source: user-supplied
+    status: confirmed
+    modality: deontic
+    provenance: { user_note: "An order carries a memo or an amount, not both." }
+  - type: subset
+    subset_role_seq:
+      - { fact_type: order_has_amount, role: order }
+    superset_role_seq:
+      - { fact_type: customer_places_order, role: order }
+    source: user-supplied
+    status: confirmed
+    modality: deontic
+    provenance: { user_note: "An order with an amount was placed by someone." }

@@ -737,9 +737,52 @@ class _EvolutionPreviewV2(_ClosedFrozenModel):
     preview_sha256: Sha256String
 
 
+#: The matrix cells `gnd evolve preview --policy additive` can refuse (MG2).
+#: One closed spelling, shared by the preview document, the policy walk and
+#: the contract table; a cell outside it fails to read.
+PolicyCell = Literal[
+    "object_types.modify",
+    "object_types.rename",
+    "object_types.delete",
+    "fact_types.modify",
+    "fact_types.rename",
+    "fact_types.delete",
+    "role.add",
+    "role.modify",
+    "role.rename",
+    "role.delete",
+    "constraint.populated.add",
+    "constraint.populated.modify",
+    "model_identity.modify",
+]
+
+#: The four optional preview fields the additive policy writes. They are
+#: omitted from the serialized document when unset, so a preview made without
+#: `--policy` keeps the bytes and `preview_sha256` it had before the policy
+#: existed; `accepted_blast_radius_sha256` keeps writing `null` as before.
+_POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
+
+
+class PolicyIssue(_ClosedFrozenModel):
+    """One operation the additive policy refused, by index, locator and cell.
+
+    `detail` names ids, key names and the verdict word only; it never carries a
+    constraint or sample value, so the preview stays value-free."""
+
+    operation_index: int = Field(ge=0)
+    operation_id: StableId
+    reference: NonEmptyString
+    cell: PolicyCell
+    detail: NonEmptyString
+
+
 class _EvolutionPreviewV3(_EvolutionPreviewV2):
     schema_version: Literal[EVOLUTION_SCHEMA_VERSION] = EVOLUTION_SCHEMA_VERSION
     proposal: _EvolutionProposalV3
+    policy: Literal["additive"] | None = None
+    populated_args: tuple[NonEmptyString, ...] | None = None
+    populated: tuple[NonEmptyString, ...] | None = None
+    policy_issues: tuple[PolicyIssue, ...] | None = None
 
 
 class EvolutionPreview(_ClosedFrozenModel):
@@ -754,6 +797,10 @@ class EvolutionPreview(_ClosedFrozenModel):
     breaking: bool
     blast_radius: BlastRadiusReport
     accepted_blast_radius_sha256: Sha256String | None = None
+    policy: Literal["additive"] | None = None
+    populated_args: tuple[NonEmptyString, ...] | None = None
+    populated: tuple[NonEmptyString, ...] | None = None
+    policy_issues: tuple[PolicyIssue, ...] | None = None
     preview_sha256: Sha256String
 
     @classmethod
@@ -784,12 +831,30 @@ class EvolutionPreview(_ClosedFrozenModel):
     def _serialize_wire_version(self, handler):
         document = handler(self)
         document["proposal"] = self.proposal.model_dump(mode="json")
+        # Unset policy fields are omitted, not written as null: the digest at
+        # `_bindings_match` is recomputed from this serializer, so the written
+        # bytes and the bound digest agree, and a policy-free preview keeps
+        # the bytes it had before the fields existed (MG-R1).
+        for key in _POLICY_FIELDS:
+            if document.get(key) is None:
+                document.pop(key, None)
         return document
 
     @model_validator(mode="after")
     def _bindings_match(self) -> EvolutionPreview:
         if self.proposal.schema_version != self.schema_version:
             raise ValueError("preview and proposal versions must match")
+        policy_values = (self.policy, self.populated_args, self.populated, self.policy_issues)
+        if any(value is None for value in policy_values) and any(
+            value is not None for value in policy_values
+        ):
+            raise ValueError("policy, populated_args, populated and policy_issues are set together")
+        if self.policy is not None:
+            for name, value in (("populated_args", self.populated_args), ("populated", self.populated)):
+                if tuple(sorted(set(value))) != value:
+                    raise ValueError(f"{name} must be unique and sorted")
+            if not set(self.populated_args) <= set(self.populated):
+                raise ValueError("populated_args must be a subset of populated")
         if self.proposal_sha256 != self.proposal.proposal_sha256:
             raise ValueError("proposal_sha256 does not bind proposal")
         if self.candidate_model != self.proposal.candidate_model:
@@ -1285,6 +1350,7 @@ __all__ = [
     "LinkedProject",
     "LinkedProjectConformance",
     "ModelIdentityLocator",
+    "PolicyIssue",
     "ProjectLocator",
     "RoleLocator",
     "StableLocator",

@@ -1,0 +1,203 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/MG1/dynamic-query-successor.json",
+ "predecessor_sha256": "61211da9ba78ac7ecc696674e3a942a4c37df2efa045926eeaf85d4778b0dd62",
+ "reason": "model-growth-guardrails MG2 (2026-11-04): gnd.evolve.policy (additive_policy_issues, effective_populated, the diff walk) and the four optional preview fields on EvolutionPreview/_EvolutionPreviewV3 add parameter and return annotations, dict lookups keyed by the diff path, and the CLI handlers' policy/populated parameters. Syntax census only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/evolve/cli_service.py",
+   "_cmd_evolve_apply",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/cli_service.py",
+   "_cmd_evolve_preview",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/cli_service.py",
+   "_evolve_policy_arguments",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "<module>",
+   "Literal['object_types.modify', 'object_types.rename', 'object_types.delete', 'fact_types.modify', 'fact_types.rename', 'fact_types.delete', 'role.add', 'role.modify', 'role.rename', 'role.delete', 'constraint.populated.add', 'constraint.populated.modify', 'model_identity.modify']",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "EvolutionPreview",
+   "tuple[NonEmptyString, ...]",
+   2
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "EvolutionPreview",
+   "tuple[PolicyIssue, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_EvolutionPreviewV3",
+   "tuple[NonEmptyString, ...]",
+   2
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_EvolutionPreviewV3",
+   "tuple[PolicyIssue, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_serialize_wire_version",
+   "document.get(key)",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_diff",
+   "list[tuple[str, Any, Any]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_diff",
+   "prefix.rsplit('.', 1)[-1]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_diff",
+   "tuple[str, Any, Any]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_element_modify_detail",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_fact_type_id_of",
+   "reference[len(prefix):end]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_lookup",
+   "mapping.get(key)",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_role_ref_fact_types",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "_transition",
+   "tuple[Any, Any]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "additive_policy_issues",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "additive_policy_issues",
+   "list[PolicyIssue]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "additive_policy_issues",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "additive_policy_issues",
+   "tuple[PolicyIssue, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "constraint_change",
+   "parent.rsplit('.', 1)[-1]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "constraint_change",
+   "path.rsplit('.', 1)[-1]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "diff_paths",
+   "list[tuple[str, Any, Any]]",
+   2
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "diff_paths",
+   "tuple[str, Any, Any]",
+   2
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "effective_populated",
+   "Iterable[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "effective_populated",
+   "frozenset[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "effective_populated",
+   "set[str]",
+   2
+  ],
+  [
+   "src/gnd/evolve/service.py",
+   "__init__",
+   "tuple[PolicyIssue, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/service.py",
+   "_policy_values",
+   "Sequence[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/service.py",
+   "_policy_values",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/evolve/service.py",
+   "preview",
+   "Sequence[str]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 6933,
+ "result_occurrences": 8663
+}

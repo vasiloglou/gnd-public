@@ -23,4 +23,7 @@ T13, T15). Successor:
   36/43 findings self-inflicted, so the stop rule ended review.
 - MG1 done: [002-phase-MG1.md](002-phase-MG1.md) (focused gate 701 passed;
   one reviewer, approve-with-fixes, all dispositioned).
-- Next action: the MG2 spec (additive evolve policy), then its owner gate.
+- MG2 done: [003-phase-MG2.md](003-phase-MG2.md) (spec approved `(s1)`
+  2026-11-04; one reviewer, reject, both blocking findings fixed with
+  regressions).
+- Next action: the MG3 spec (duplicate-shape report), then its owner gate.

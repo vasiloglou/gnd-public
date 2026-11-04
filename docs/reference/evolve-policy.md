@@ -5,7 +5,8 @@ facts already admitted under the current model uninterpretable: a rename,
 delete or change of an existing object type, fact type or role; a replaced
 reference scheme; a new or stronger constraint on a fact type that has a
 population. Without `--policy`, nothing changes: every preview and apply is
-byte-identical to what it was before the option existed.
+byte-identical to what it was before the option existed. For a worked round,
+see [Grow a model by additions](../how-to/grow-a-model.md).
 
 ```bash
 gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json --policy additive --populated orders

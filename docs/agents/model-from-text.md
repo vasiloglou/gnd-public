@@ -22,7 +22,9 @@ Write model.orm.yaml and model.verbalization.txt and validate the model.
 Modes: **Guided** walks every CSDP step in conversation, one confirmation at a time.
 **MVP-fast** runs the same steps in batches, covers only the slice you are building now,
 and ends with one compact review; it is the default for prototypes. **One-shot** drafts
-the whole model from a rich description for you to review.
+the whole model from a rich description for you to review. **Unattended** is for a
+pipeline with nobody to review: the model says so (`source.mode: unattended`), confirms
+nothing, and cites a span of its source text for every claim, which `gnd validate` checks.
 
 ## What the dialogue looks like
 

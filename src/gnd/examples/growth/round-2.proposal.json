@@ -1,0 +1,47 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "agent:grower",
+    "origin": "docs/how-to/grow-a-model.md",
+    "requested_at": "2026-11-04T12:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "2af6e9b6fb3abd867ecdb631bc84b22b774722c4e775ac4fd290ed9a83828a9c",
+    "text": "{\"version\":1,\"model_id\":\"growth-shop\",\"source\":{\"kind\":\"text-conversation\",\"confidence\":\"standard\",\"mode\":\"one-shot\"},\"object_types\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_no\"},\"description\":{\"summary\":\"A person who buys from the shop.\"}},{\"id\":\"customer_no\",\"name\":\"CustomerNo\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"order\",\"name\":\"Order\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"order_no\"}},{\"id\":\"order_no\",\"name\":\"OrderNo\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"channel\",\"name\":\"Channel\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"order_placed_by_customer\",\"reading\":\"{Order} is placed by {Customer}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"sample_population\":[{\"order\":10,\"customer\":1},{\"order\":11,\"customer\":2}],\"constraints\":[{\"type\":\"mandatory\",\"role\":\"order\",\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"Every order seems to name a customer.\",\"provenance\":{\"rationale_world_fact\":\"Shops record who placed each order.\"}}]},{\"id\":\"order_arrives_via_channel\",\"reading\":\"{Order} arrives via {Channel}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"channel\",\"role_name\":\"channel\"}]},{\"id\":\"customer_is_active\",\"reading\":\"{Customer} is active\",\"roles\":[{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"derivation\":\"derived\",\"derivation_rule\":{\"body\":[{\"fact_type\":\"order_placed_by_customer\",\"bind\":{\"order\":\"$o\",\"customer\":\"$c\"}}],\"head\":{\"customer\":\"$c\"}}}],\"constraints\":[]}\n"
+  },
+  "expected_model_sha256": "100474ee44f3e3dfcb8b3e2d223921a18dc853341b78e9fc91c5bf9134269e55",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "modality": "deontic",
+        "provenance": {
+          "rationale_world_fact": "Shops record who placed each order."
+        },
+        "rationale": "Every order seems to name a customer.",
+        "role": "order",
+        "source": "llm-inferred",
+        "status": "proposed",
+        "type": "mandatory"
+      },
+      "after_sha256": "5f921f24dd292a674c2550b13e2dce6a20b01811761817a39cbd72a91354b8e8",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "canonical_before_sha256": null,
+        "duplicate_occurrence": 0,
+        "family": "mandatory",
+        "host": "fact_type",
+        "host_id": "order_placed_by_customer",
+        "locator_kind": "constraint"
+      },
+      "operation_id": "add-mandatory"
+    }
+  ],
+  "proposal_id": "round-2",
+  "rationale": "One round of growing the shop model.",
+  "schema_version": 3
+}

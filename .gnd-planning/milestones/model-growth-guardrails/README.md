@@ -35,4 +35,6 @@ T13, T15). Successor:
   one reviewer, approve-with-fixes; focused gate 1533 passed).
 - MG5 done: [006-phase-MG5.md](006-phase-MG5.md) (spec delegated `(d1)`;
   one reviewer, approve-with-fixes; focused gate 3006 passed).
-- Next action: MG6 (documentation), then the close.
+- MG6 done: [007-phase-MG6.md](007-phase-MG6.md) (how-to executed; one
+  docs reviewer, approve-with-fixes; DC2 owner viewing pending).
+- Next action: the milestone close (four local readers, MG-D1).

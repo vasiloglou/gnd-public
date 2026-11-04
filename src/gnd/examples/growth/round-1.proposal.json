@@ -1,0 +1,47 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "agent:grower",
+    "origin": "docs/how-to/grow-a-model.md",
+    "requested_at": "2026-11-04T12:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "e2a9d908821474fe4559d6560960c0a8ead82b0fe3a3cd1fe757434a1675bd8e",
+    "text": "{\"version\":1,\"model_id\":\"growth-shop\",\"source\":{\"kind\":\"text-conversation\",\"confidence\":\"standard\",\"mode\":\"one-shot\"},\"object_types\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_no\"},\"description\":{\"summary\":\"A person who buys from the shop.\"}},{\"id\":\"customer_no\",\"name\":\"CustomerNo\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"order\",\"name\":\"Order\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"order_no\"}},{\"id\":\"order_no\",\"name\":\"OrderNo\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"channel\",\"name\":\"Channel\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"order_placed_by_customer\",\"reading\":\"{Order} is placed by {Customer}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"sample_population\":[{\"order\":10,\"customer\":1},{\"order\":11,\"customer\":2}]},{\"id\":\"order_arrives_via_channel\",\"reading\":\"{Order} arrives via {Channel}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"channel\",\"role_name\":\"channel\"}]},{\"id\":\"customer_is_active\",\"reading\":\"{Customer} is active\",\"roles\":[{\"object_type\":\"customer\",\"role_name\":\"customer\"}],\"derivation\":\"derived\",\"derivation_rule\":{\"body\":[{\"fact_type\":\"order_placed_by_customer\",\"bind\":{\"order\":\"$o\",\"customer\":\"$c\"}}],\"head\":{\"customer\":\"$c\"}}},{\"id\":\"order_returned_via_channel\",\"reading\":\"{Order} is returned via {Channel}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"channel\",\"role_name\":\"channel\"}]}],\"constraints\":[]}\n"
+  },
+  "expected_model_sha256": "100474ee44f3e3dfcb8b3e2d223921a18dc853341b78e9fc91c5bf9134269e55",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "id": "order_returned_via_channel",
+        "reading": "{Order} is returned via {Channel}",
+        "roles": [
+          {
+            "object_type": "order",
+            "role_name": "order"
+          },
+          {
+            "object_type": "channel",
+            "role_name": "channel"
+          }
+        ]
+      },
+      "after_sha256": "2d88f46a535f40b7007dd320e1975bd1b9e2612dd7f5ecc04bd194aa496ae8a2",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "collection": "fact_types",
+        "element_id": "order_returned_via_channel",
+        "locator_kind": "element"
+      },
+      "operation_id": "add-returned"
+    }
+  ],
+  "proposal_id": "round-1",
+  "rationale": "One round of growing the shop model.",
+  "schema_version": 3
+}

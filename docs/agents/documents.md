@@ -17,7 +17,8 @@ and explain its findings.
 
 1. `gnd extract model.orm.yaml --out artifacts` writes the extraction vocabulary: a
    shape-only JSON Schema, a constraint-blind verbalization and a header template. It
-   runs offline and never reads the document.
+   runs offline and never reads the document. With `--guidelines` it also writes a
+   constraint-blind guide to what each fact type and role means.
 2. The agent writes `extracted.population.json` and a sidecar that binds the model,
    the document and the vocabulary by digest.
 3. `gnd verify model.orm.yaml extracted.population.json --artifacts artifacts` checks

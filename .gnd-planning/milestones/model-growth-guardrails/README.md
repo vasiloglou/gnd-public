@@ -16,7 +16,8 @@ T13, T15). Successor:
   duplicate-shape report, MG4 extraction guidelines, MG5 unattended
   model-from-text, MG6 documentation, then the close.
 - Ruled: MG-D1 `(o1)`; MG-D2, D3 (confirm transition), D8, D13, D14 `(p1)`.
-  Pending: the remaining MG-D rows (plan §10) and MG1 spec D1..D5.
+  The remaining §10 rows were accepted at the plan gate; later phase rulings
+  are recorded in each spec.
 - Review: round 1 by four local readers `(o1)`: 55 findings, 10 blocking
   themes, see [the disposition](notes/plan-review-r1-disposition.md).
 - Review: [round 2](notes/plan-review-r2-disposition.md), confirmation,
@@ -37,4 +38,7 @@ T13, T15). Successor:
   one reviewer, approve-with-fixes; focused gate 3006 passed).
 - MG6 done: [007-phase-MG6.md](007-phase-MG6.md) (how-to executed; one
   docs reviewer, approve-with-fixes; DC2 owner viewing pending).
-- Next action: the milestone close (four local readers, MG-D1).
+- Close: [008-milestone-close.md](008-milestone-close.md), four local
+  readers, approve-with-fixes, two blocking findings fixed; close gate 3897
+  passed. Closed locally under the delegation; merge, owner acceptance and
+  the DC2 viewing are pending.

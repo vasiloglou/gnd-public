@@ -28,6 +28,22 @@ fixed in the same PR:
   reference closure; they are registered as retained snapshots, pinned by
   digest.
 
+## CI on main after PR 79
+
+`main` at `1446f90`, on beast-3, mirroring `development.yml` (Python 3.11 and
+3.13) and `docs.yml` (3.11), with `uv` 0.10.10:
+
+| Step | 3.11 | 3.13 |
+|---|---|---|
+| Candidate build, sync, install, doctor, collect | pass | pass |
+| Platform-sensitive tests | 160 passed | 160 passed |
+| Full suite | 16836 passed | 16836 passed |
+| Installed-wheel acceptance | 10 passed | 10 passed |
+| Tutorials, `zensical build --strict`, `check_docs.py site` | 256 blocks; pass; pass | not run |
+
+The PR 79 run's uv-pin errors came from an older PATH that put `uv` 0.13.6
+first; with 0.10.10 they do not occur. The SIGKILL timing failure did not recur.
+
 ## NM2-Q3: why the RF1 goldens are not rebased
 
 A fresh `tools/rf1_pins.py` capture and merge differs from the committed

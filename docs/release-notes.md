@@ -3,6 +3,20 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: rule verbalization (2026-11-03)
+
+`gnd.api.verbalize_rules` renders a model's derivation rules as text, the same
+sentence the full model verbalization prints for each rule
+([issue #72](https://github.com/vasiloglou/gnd-public/issues/72)). A prose rule
+is reported as `unsupported`. See the
+[rule verbalization reference](reference/rule-verbalization.md).
+
+- `gnd.api.__all__` gains `verbalize_rules`.
+- Fix: the full model verbalization of a model given as a path no longer
+  raises `AttributeError` when the model holds a structured aggregate rule.
+  Its output now equals the output for the loaded model. Output for every
+  input that rendered before is unchanged.
+
 ## Unreleased: disclosure mode (2026-11-01)
 
 One GND installation can now serve readers behind your interface and

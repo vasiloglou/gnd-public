@@ -213,7 +213,7 @@ exactly one row. A test keeps this table equal to the code.
 | `gnd.api`: `EvaluationSession.check_with_feedback`, `EvaluationSession.observe` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | Output kind: `session-feedback`, `session-attempt`, `session-result` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | Command: `gnd solve` (starts processes), `gnd review panel` (starts processes), `gnd review panel-light` (starts processes), `gnd codegen`, `gnd conformance`, `gnd coverage`, `gnd doctor`, `gnd evolve apply`, `gnd evolve finalize`, `gnd evolve preview`, `gnd exp author-expectation`, `gnd exp close`, `gnd exp init`, `gnd exp validate`, `gnd export lean-compile`, `gnd export lean-verify`, `gnd export pyrel`, `gnd export souffle-verify`, `gnd extract`, `gnd import ilp-rules`, `gnd import mined-rules`, `gnd import rai-orm`, `gnd install`, `gnd recovery inventory`, `gnd recovery verify`, `gnd review finalize`, `gnd synth`, `gnd uninstall` | emits no population values |
-| `gnd.api`: `CheckReceipt`, `ReceiptRefused`, `DisclosureRefused`, `EvaluationSession`, `verify_lean`, `verify_souffle`, `compile_lean`, `EvaluationSession.reset`, `EvaluationSession.close`, `EvaluationSession.stats` | emits no population values |
+| `gnd.api`: `CheckReceipt`, `ReceiptRefused`, `DisclosureRefused`, `EvaluationSession`, `verify_lean`, `verify_souffle`, `verbalize_rules`, `compile_lean`, `EvaluationSession.reset`, `EvaluationSession.close`, `EvaluationSession.stats` | emits no population values |
 | `gnd.export.service`: `verify_lean`, `verify_souffle`, `compile_lean` | emits no population values |
 <!-- disclosure-table:end -->
 

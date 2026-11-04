@@ -12,19 +12,27 @@ from __future__ import annotations
 import hashlib
 import json
 from collections import Counter
+from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from gnd.atoms import atom_bind
 from gnd.documents import Model
 from gnd.model import analyze_declared_aggregate, iter_derivation_clauses, load_model
+from gnd.model_index import ModelIndex
 from gnd.refscheme import reference_identity
 from gnd.terms import term_variables
 from gnd.universe import resolve_primitive
 from gnd.verbalize import description_lines, line_text
 from gnd.vocabulary import reading_text
 
-__all__ = ["VerbalizationError", "render_model_verbalization"]
+__all__ = [
+    "RuleVerbalization",
+    "VerbalizationError",
+    "render_model_verbalization",
+    "render_rule_verbalizations",
+]
 
 
 class VerbalizationError(ValueError):
@@ -148,52 +156,93 @@ def _bound_text(bound: Any) -> str:
     return f"at most {maximum}"
 
 
-def _guarded_term(term: Any) -> str:
+def _guarded_term(term: Any, fallbacks: list[str] | None = None) -> str:
     if isinstance(term, dict) and set(term) == {"duration_days"}:
         return f"{term['duration_days']} calendar days"
     if isinstance(term, dict) and set(term) == {"date"}:
         return f"date {term['date']}"
     if isinstance(term, dict) and set(term) == {"fn", "args"}:
+        if fallbacks is not None and (
+            not isinstance(term["args"], list)
+            or (term["fn"] in {"date_add", "date_sub"} and len(term["args"]) != 2)
+        ):
+            fallbacks.append("unrecognized-term")
+            return ""
         if term["fn"] in {"date_add", "date_sub"}:
             day, duration = term["args"]
             direction = "after" if term["fn"] == "date_add" else "before"
-            return f"({_guarded_term(duration)} {direction} {_guarded_term(day)})"
-        arguments = ", ".join(_guarded_term(argument) for argument in term["args"])
+            return (
+                f"({_guarded_term(duration, fallbacks)} {direction} "
+                f"{_guarded_term(day, fallbacks)})"
+            )
+        arguments = ", ".join(_guarded_term(argument, fallbacks) for argument in term["args"])
         return f"{term['fn']}({arguments})"
+    if fallbacks is not None and isinstance(term, (dict, list)):
+        fallbacks.append("unrecognized-term")
     return term if isinstance(term, str) and term.startswith("$") else _canonical(term)
 
 
-def _guarded_atom(atom: Any) -> str:
+def _guarded_atom(atom: Any, fallbacks: list[str] | None = None) -> str:
     if not isinstance(atom, dict):
+        if fallbacks is not None:
+            fallbacks.append("unrecognized-atom")
         return _canonical(atom)
     binds = atom_bind(atom)
     if not isinstance(binds, dict):
         return str(atom.get("fact_type"))
-    arguments = ", ".join(f"{role} = {_guarded_term(term)}" for role, term in binds.items())
+    if fallbacks is not None and not binds:
+        fallbacks.append("unrecognized-atom")
+    arguments = ", ".join(
+        f"{role} = {_guarded_term(term, fallbacks)}" for role, term in binds.items()
+    )
     return f"{atom.get('fact_type')}({arguments})"
 
 
-def _derivation_cnl(rule: dict[str, Any], model: Model) -> str:
+def _derivation_cnl(
+    rule: dict[str, Any], model: Model, fallbacks: list[str] | None = None
+) -> str:
+    """Render one structured rule.
+
+    ``fallbacks`` is ``None`` for the full model verbalization, whose bytes are
+    digest-bound and unchanged. A list collects every branch that would render a
+    construct partially, so a caller can refuse instead of returning that text.
+    """
     if "clauses" in rule:
         return "; or ".join(
-            _derivation_cnl(clause, model) for clause in iter_derivation_clauses(rule)
+            _derivation_cnl(clause, model, fallbacks) for clause in iter_derivation_clauses(rule)
         )
-    body = " and ".join(_guarded_atom(atom) for atom in rule.get("body") or [])
+    if fallbacks is not None:
+        # Shapes the default path would render partially or raise on; validation
+        # refuses each, so they are reachable only through a mutated Model.
+        if not isinstance(rule.get("head"), dict) or not rule["head"]:
+            fallbacks.append("unrecognized-head")
+            return ""
+        if not isinstance(rule.get("where") or [], list) or any(
+            not isinstance(item, dict) for item in rule.get("where") or []
+        ):
+            fallbacks.append("unrecognized-comparison")
+            return ""
+        if "aggregate" in rule and not isinstance(rule["aggregate"], dict):
+            fallbacks.append("unrecognized-aggregate")
+    body = " and ".join(_guarded_atom(atom, fallbacks) for atom in rule.get("body") or [])
     negated = " and ".join(
-        f"no {_guarded_atom(atom)} fact holds" for atom in rule.get("negate") or []
+        f"no {_guarded_atom(atom, fallbacks)} fact holds" for atom in rule.get("negate") or []
     )
     comparisons = " and ".join(
-        f"{_guarded_term(item.get('left'))} {item.get('operator')} "
-        f"{_guarded_term(item.get('right'))}"
+        f"{_guarded_term(item.get('left'), fallbacks)} {item.get('operator')} "
+        f"{_guarded_term(item.get('right'), fallbacks)}"
         for item in rule.get("where") or []
     )
     conditions = " and ".join(item for item in (body, negated, comparisons) if item)
     head = ", ".join(
-        f"{role} = {_guarded_term(term)}" for role, term in (rule.get("head") or {}).items()
+        f"{role} = {_guarded_term(term, fallbacks)}"
+        for role, term in (rule.get("head") or {}).items()
     )
     aggregate = rule.get("aggregate")
     if isinstance(aggregate, dict):
         analysis = analyze_declared_aggregate(model, rule)
+        if fallbacks is not None and (analysis is None or analysis.issue is not None):
+            fallbacks.append("unanalyzable-aggregate")
         if analysis is not None and analysis.issue is None:
             result = f"${analysis.result_variable}"
             group = [f"${variable}" for variable in analysis.group_variables]
@@ -215,7 +264,7 @@ def _derivation_cnl(rule: dict[str, Any], model: Model) -> str:
             value_term = aggregate.get("of")
         clause = (
             f"group by {', '.join(group) if group else '()'}; "
-            f"aggregate {function} of {_guarded_term(value_term)} "
+            f"aggregate {function} of {_guarded_term(value_term, fallbacks)} "
             f"distinctly over ({over}) as {result}"
         )
         prefix = " and ".join(item for item in (body, negated) if item)
@@ -568,7 +617,7 @@ def render_model_verbalization(model: Model | str | Path) -> str:
                 details.append(f"{field}={_canonical(item[field])}")
         lines.append(
             line_text(
-                f"[fact-type:{fact_id}] {_fact_type_cnl(item, model)} "
+                f"[fact-type:{fact_id}] {_fact_type_cnl(item, loaded)} "
                 f"{'Values of every role are redacted from reports. ' if item.get('redact') is True else ''}"
                 f"{' '.join(details)} canonical={_canonical(fact_header)}"
             )
@@ -621,3 +670,72 @@ def render_model_verbalization(model: Model | str | Path) -> str:
             )
 
     return "\n".join(lines).rstrip("\n") + "\n"
+
+
+@dataclass(frozen=True)
+class RuleVerbalization:
+    """One derived fact type's rule, rendered or reported as not renderable."""
+
+    fact_type: str
+    status: Literal["rendered", "unsupported"]
+    text: str | None
+    reason: Literal["prose-rule"] | None
+
+
+def check_fact_type_selection(fact_types: object) -> None:
+    """The one argument check for a fact-type selection: None or a list or tuple of str."""
+    if fact_types is not None and (
+        not isinstance(fact_types, (list, tuple))
+        or not all(isinstance(item, str) for item in fact_types)
+    ):
+        raise TypeError("fact_types must be a list or tuple of fact-type ids")
+
+
+def render_rule_verbalizations(
+    model: Model | str | Path,
+    *,
+    fact_types: Sequence[str] | None = None,
+) -> tuple[RuleVerbalization, ...]:
+    """Render each selected derived fact type's rule in stable id order.
+
+    ``text`` is the sentence the full model verbalization prints after
+    ``This fact type is derived:``. A prose rule is reported, not rendered. A
+    loaded Model is re-validated first, because its dicts can be mutated after
+    loading; one that no longer validates raises VerbalizationError. The
+    fallback collector is a second guard against partial rendering.
+    """
+    check_fact_type_selection(fact_types)
+    loaded = _coerce_model(model)
+    if isinstance(model, Model):
+        from gnd.verbalize_population import PopulationVerbalizationError, validate_model_object
+
+        try:
+            validate_model_object(loaded)
+        except PopulationVerbalizationError as error:
+            raise VerbalizationError("invalid model") from error
+    derived = {
+        str(item.get("id")): item
+        for item in ModelIndex.for_model(loaded).iter_fact_types_shared()
+        if item.get("derivation_rule") is not None
+    }
+    if fact_types is None:
+        selected = sorted(derived)
+    else:
+        missing = [identifier for identifier in fact_types if identifier not in derived]
+        if missing:
+            raise VerbalizationError(f"no derived fact type {missing[0]!r}")
+        selected = sorted(set(fact_types))
+    results = []
+    for identifier in selected:
+        rule = derived[identifier]["derivation_rule"]
+        if not isinstance(rule, dict):
+            results.append(RuleVerbalization(identifier, "unsupported", None, "prose-rule"))
+            continue
+        fallbacks: list[str] = []
+        text = _derivation_cnl(rule, loaded, fallbacks)
+        if fallbacks:
+            raise VerbalizationError(
+                f"{identifier}: derivation_rule is not a validated structured rule ({fallbacks[0]})"
+            )
+        results.append(RuleVerbalization(identifier, "rendered", line_text(text), None))
+    return tuple(results)

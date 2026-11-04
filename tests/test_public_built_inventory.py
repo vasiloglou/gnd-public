@@ -266,6 +266,7 @@ VENDORED_SCHEMAS = (
     "gnd/ilp-run.schema.json",
     "gnd/ilp-import.schema.json",
     "gnd/why-not.schema.json",
+    "gnd/rule-verbalization.schema.json",
 )
 
 

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/rule-verbalization.schema.json",
+  "title": "gnd.api.verbalize_rules payload",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "exit_code", "model_id", "rules"],
+      "properties": {
+        "schema": {"const": "gnd-rule-verbalization/1"},
+        "exit_code": {"const": 0},
+        "model_id": {"type": ["string", "null"]},
+        "rules": {"type": "array", "items": {"$ref": "#/$defs/rule"}}
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "exit_code", "error"],
+      "properties": {
+        "schema": {"const": "gnd-rule-verbalization/1"},
+        "exit_code": {"const": 3},
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "message"],
+          "properties": {
+            "kind": {"const": "input"},
+            "message": {"type": "string"}
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "rule": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fact_type", "status", "text"],
+          "properties": {
+            "fact_type": {"type": "string"},
+            "status": {"const": "rendered"},
+            "text": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fact_type", "status", "reason", "path"],
+          "properties": {
+            "fact_type": {"type": "string"},
+            "status": {"const": "unsupported"},
+            "reason": {"enum": ["prose-rule"]},
+            "path": {"const": "/derivation_rule"}
+          }
+        }
+      ]
+    }
+  }
+}

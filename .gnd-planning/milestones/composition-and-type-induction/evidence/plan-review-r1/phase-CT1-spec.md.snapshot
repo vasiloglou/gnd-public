@@ -1,0 +1,173 @@
+# Phase CT1: several anchors per fact role
+
+**Status: r1 draft, awaiting owner review.** Plan approval and this spec's
+owner gate are both still open. No code is written before the gate.
+
+## Provenance
+
+- Plan: [composition-and-type-induction-plan.md](composition-and-type-induction-plan.md)
+  r1, §2.1 and §4 CT1.
+- Source: [issue #73](https://github.com/vasiloglou/gnd-public/issues/73)
+  request 3 (GR-T10).
+- Inspection baseline: `1446f90`.
+- No review has read these bytes.
+
+## Obligations
+
+| Source | Obligation | Discharged in |
+|---|---|---|
+| Issue #73.3 | One fact role may be supported by more than one span | Design: v2 parse; T1 |
+| Plan CT-R1 | Every v1 sidecar parses, binds and checks as at `1446f90` | Design: version dispatch; T6, T7 |
+| Plan CT-R2 | Several anchors add evidence; none proves the fact | Reference page wording; no new verdict |
+| Plan CT-D2 | Pass rule over several anchors | Design: `_anchor_records`; T3, T4 |
+| Plan CT-D12 | One document per sidecar in v2 | Design: same top-level keys; T2 |
+| Plan CT-Q1 | Tests asserting the duplicate refusal | Answered at write time: none (`grep -rln 'duplicate fact-role' tests` is empty at `1446f90`); the message survives for exact duplicates, T2 |
+| Plan CT-R8 | Layering, anonymity | T9, T10 |
+
+## Standing rules bound to this phase
+
+1. **Totality:** `parse_anchor_sidecar` stays total over arbitrary bytes for
+   both versions; every new branch raises `AnchorError` with
+   `anchor:sidecar-invalid`. The hostile cases in T2 include a v2 sidecar
+   with 10,000 anchors on one role and an `anchors` element that is not an
+   object.
+2. **Input cap bounds the algorithm:** the duplicate check for v2 keys on
+   `(fact_key, role, span.start, span.end, occurrence)` in a set, so it is
+   linear. The checker evaluates each anchor once. Lexical and recogniser
+   index requests (`_core.py:1918-1946`) take the maximum occurrence per
+   value as today, over all anchors. T8 counts per-anchor evaluations on
+   10,000 anchors for one role.
+3. **Validation order:** version check first; then v1's existing order
+   unchanged; for v2 the same order with the duplicate rule replaced. Pinned
+   by T2's two-fault case (bad version plus duplicate reports the version).
+4. **One walk:** one `_anchor_records(sidecar) -> dict[key, tuple[record,
+   ...]]` serves the checker's lexical index, recogniser limits and
+   evaluation. The three loops that now read `records.values()` read
+   flattened tuples. No per-version copy of the checker loop.
+5. **One home:** the sidecar format's normative text moves into a new
+   `src/gnd/anchor-sidecar.schema.json` plus `docs/reference/anchors.md`
+   (prose cites the schema). `docs/guides/documents.md:58-72` and
+   `gnd-orm-core/references/constraint-reference.md:47-51` cite it instead of
+   restating it. They yield in this phase.
+6. **Measurement over argument:** v1 parity is shown by running the v1
+   suites unchanged (T6), not argued.
+
+## Goal
+
+`parse_anchor_sidecar` accepts `schema_version: 2` with several anchors per
+`(fact_key, role)`, and refuses exact duplicates with `anchor:sidecar-invalid:
+duplicate anchor`. `gnd check MODEL POP --anchors S --document D` exits 0 on
+a v2 sidecar where every anchor of every anchored role binds within its span,
+and exits 1 with the row in the failed list when any one does not (CT-D2 (a)).
+Every v1 input gives byte-identical output and exit to `1446f90`. The CT1
+gate in §Tests exits 0.
+
+## Design
+
+### `src/gnd/anchors.py` (about +40 lines)
+
+```python
+SUPPORTED_SIDECAR_VERSIONS = (1, 2)
+
+@dataclass(frozen=True)
+class AnchorSidecar:            # unchanged fields
+    schema_version: int         # now 1 or 2
+    population_sha256: str
+    vocabulary_digest: str
+    document_sha256: str
+    anchors: tuple[dict[str, Any], ...]
+```
+
+In `parse_anchor_sidecar` (`:105-139`):
+
+| Step | v1 (unchanged) | v2 |
+|---|---|---|
+| version | `== 1` else `unsupported sidecar version` | `in (1, 2)` |
+| top-level keys | `{schema_version, population_sha256, vocabulary_digest, document_sha256, anchors}` | the same |
+| per-anchor keys and checks | as today | the same |
+| duplicate identity | `(fact_type, roles_json, role)` → `duplicate fact-role anchor` | `(fact_type, roles_json, role, start, end, occurrence)` → `duplicate anchor` |
+
+`bind_anchors` (`:218-251`) is unchanged: it already validates each anchor
+independently.
+
+### `src/gnd/checker/_core.py` (about +40, −10 lines)
+
+Replace `records[key] = record` (`:1911-1917`) with:
+
+```python
+def _anchor_records(anchors: AnchorSidecar) -> dict[tuple, tuple[dict[str, Any], ...]]:
+    """Every record per (fact type, typed roles, role), in sidecar order."""
+```
+
+Evaluation per row and role (`:1975-2006`): `record is None` becomes "no
+records" (failed, as today). Otherwise each record is evaluated by today's
+body. The role passes when **every** record passes (CT-D2 (a)). A row fails
+once even if several records fail, so `failed` and `failed_refs` keep their
+shapes. With v1 each tuple has length 1, and the loop is the old loop.
+
+### `src/gnd/verbalize_population.py`, `src/gnd/export/verification_service.py`
+
+`_excerpts` (`:126-136`) already lists per role. Add a v2 case to its tests.
+Export verification (`:492-511`) reads through the parser. Add a v2 case. No
+code change is expected. If one is found, it is recorded as a finding.
+
+### `src/gnd/anchor-sidecar.schema.json` (new, about 80 lines)
+
+A JSON Schema with `oneOf` over v1 and v2, documenting what the parser
+enforces. A test parses every fixture sidecar with both the schema and the
+parser and asserts they agree. The parser stays the authority. The schema is
+a description of it, held identical by that test.
+
+### Producers
+
+`gnd extract`'s anchor writer (`src/gnd/extract/anchors.py`) keeps writing
+v1. A v2 sidecar is written by the caller. CT2 decides whether composition
+writes v2.
+
+## Decisions
+
+| ID | Question | Readings and cost | Proposal |
+|---|---|---|---|
+| D1 | Pass rule | Plan CT-D2 | (a) every anchor |
+| D2 | Duplicate identity in v2 | (a) `(fact, role, span, occurrence)`; (b) `(fact, role, span)`: two occurrences of the same text in one span would be refused, though they name different ranges | (a) |
+| D3 | Ship a sidecar JSON Schema | (a) yes, test-pinned to the parser; (b) no, parser only: callers writing v2 have only prose to follow | (a) |
+| D4 | Does `gnd extract` write v2? | (a) no, v1 stays its output; (b) yes, always: changes every extract golden for no new content | (a) |
+
+## Tests
+
+New file `tests/test_anchor_sidecar_v2.py` unless noted.
+
+| # | Case | Expected |
+|---|---|---|
+| T1 | v2 sidecar, one role with two anchors at different spans, both valid | parse ok; `gnd check` exit 0 |
+| T2 | Hostile and refusal: exact duplicate in v2; same fact role twice in v1; `schema_version: 3`; version 3 plus a duplicate (order); 10,000 anchors on one role; non-object anchor | `duplicate anchor`; `duplicate fact-role anchor`; `unsupported sidecar version`; the version message; parse ok; `anchor:sidecar-invalid` |
+| T3 | v2, two anchors on one role, one in range and one out | `gnd check` exit 1, row in failed list once |
+| T4 | Same as T3 with the bad anchor first, then last | same result both ways (order independence) |
+| T5 | v2 with recognisers (`recognise:` on the constraint), two anchors whose occurrences differ | both evaluated; recogniser limit uses the maximum occurrence |
+| T6 | Unchanged: `tests/test_v70_phase1_adversarial.py`, `tests/test_v70_phase1_surfaces.py`, `tests/test_v70_phase5_adversarial.py`, `tests/test_v70_phase5_corpus.py`, `tests/test_rf1_semantic_pins.py` | exit 0 with no edits |
+| T7 | Every fixture sidecar under `tests/fixtures` re-run through `gnd check` before and after | byte-identical outputs (recorded comparison) |
+| T8 | 10,000 anchors on one role | per-anchor evaluation count equals 10,000; index request count unchanged from a 1-anchor run |
+| T9 | `tests/test_rf1_layering.py`, `tests/test_rf6_query_policy.py`, `tests/test_gnd_arch.py` | exit 0, zero new allowances |
+| T10 | Anonymity scan over files added since `1446f90` | exit 0 |
+| T11 | Schema and parser agree on every fixture sidecar and on T2's cases | agreement |
+| T12 | `gnd verbalize --anchors` (population view) and export verification on a v2 sidecar | excerpts listed per anchor; verification exit 0 |
+
+### Verification selection
+
+`uv run pytest -q tests/test_anchor_sidecar_v2.py` plus the T6, T9 and T12
+files. The exact verbalize and export test files are fixed at
+implementation, before the first run, and recorded.
+
+## Out of scope for this phase
+
+- Several documents per sidecar (CT-D12); composition (CT2); witnesses (CT3).
+- Changing what `extract` writes (D4).
+- Anchors with reference populations.
+
+## Size
+
+About 80 source lines, 80 schema lines, 400 test lines.
+
+## Approval instrument
+
+This prose. No fixture corpus is authored first.

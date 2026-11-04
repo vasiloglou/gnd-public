@@ -1,0 +1,250 @@
+# Phase MG1: public rendering of derivation rules
+
+**Status: r1 draft, awaiting owner review.** Plan approval and this spec's
+owner gate are both still open. No code is written before the gate.
+
+## Provenance
+
+- Plan: [model-growth-guardrails-plan.md](model-growth-guardrails-plan.md) r1,
+  §2.1 and §4 MG1.
+- Source: [issue #72](https://github.com/vasiloglou/gnd-public/issues/72)
+  (GR-T9 in the reporter's numbering).
+- Inspection baseline: `1446f90` (main after PR #79).
+- No review has read these bytes.
+
+## Obligations
+
+| Source | Obligation | Discharged in |
+|---|---|---|
+| Issue #72 "Asked for" | A public, deterministic renderer of derivation rules in GND's controlled language | Design: `gnd.api.verbalize_rules` |
+| Issue #72 | Covers body atoms with bindings, negated atoms, comparisons, sibling clauses, declared aggregates, head projection | Design: reuse of `_derivation_cnl`; T2 corpus per construct |
+| Issue #72 | A construct the renderer cannot express is reported, not rendered partially | Design: `unsupported` status and the closed reason list; T4, T5 |
+| Issue #72 "Why" | GND's text is the authoritative one; a caller's renderer must not drift from it | MG-R2: one renderer; T3 byte parity with the full model verbalization |
+| Plan MG-R1 | Existing digest-bound verbalizations unchanged | T3, T7 |
+| Plan MG-R5 | Disclosure site table covers the new callable | Design: `api:verbalize_rules` row; T8 |
+| Plan MG-R6 | Layering and query policy | T9 |
+| Plan MG-R7 | Anonymity | T10 |
+| Plan O-pins | `gnd.api.__all__` pins | T6 |
+
+## Standing rules bound to this phase
+
+1. **Totality:** `verbalize_rules` is total over its arguments. A path that is
+   not a valid model exits 3 through the existing model loader; a `fact_types`
+   argument that is not a sequence of strings exits 64; an id that names no
+   fact type, or names one without a `derivation_rule`, exits 3 with the id in
+   the message. T5.
+2. **Input cap bounds the algorithm:** rendering is one pass per selected rule
+   over its clauses, atoms and terms. No new loop is quadratic in a
+   document-controlled count. A time-bound test renders a generated model with
+   2,000 derived fact types and asserts a counted bound on renderer calls, not
+   wall time. T11.
+3. **Validation order:** argument shape (64), then model load (3), then ids
+   (3), then rendering. Pinned by T5's source-order case.
+4. **One walk:** the supported/unsupported classification is one walk over the
+   rule's clauses, shared with rendering, not a second traversal kept in step
+   by hand. T4.
+5. **One home:** the controlled-language grammar for rules stays in
+   `_derivation_cnl`. `docs/reference/` cites it; it is not restated as a
+   second normative grammar. The new function calls the existing renderer and
+   adds nothing to its sentences.
+6. **Measurement over argument:** "existing verbalizations unchanged" is shown
+   by running the evolve and recovery suites unchanged (T7).
+
+MG-R3 and MG-R4 (evolve policy) do not apply: this phase touches no evolve
+path.
+
+## Goal
+
+`gnd.api.verbalize_rules(model)` returns a payload with `exit` 0 whose
+`rules` list holds one entry per derived fact type in stable id order. A
+supported rule's `text` equals, byte for byte, the rule sentence inside that
+fact type's line in `render_model_verbalization(model)`. A rule holding a
+construct the renderer cannot express has `status: "unsupported"`, no
+`text`, and a closed reason with its JSON path. `uv run pytest -q` over the
+MG1 gate in plan §9 exits 0, and no existing golden or test changes except the
+two `__all__` pins named in T6.
+
+## Design
+
+### `src/gnd/model_verbalization.py` (about +60 lines)
+
+One new public function beside `render_model_verbalization`, in the same
+module so the grammar keeps one home:
+
+```python
+def render_rule_verbalizations(
+    model: Model | str | Path,
+    *,
+    fact_types: Sequence[str] | None = None,
+) -> tuple[RuleVerbalization, ...]: ...
+
+@dataclass(frozen=True)
+class RuleVerbalization:
+    fact_type: str
+    status: Literal["rendered", "unsupported"]
+    text: str | None          # None exactly when status == "unsupported"
+    reasons: tuple[UnsupportedConstruct, ...]   # empty exactly when rendered
+
+@dataclass(frozen=True)
+class UnsupportedConstruct:
+    path: str                 # JSON pointer inside the fact type, e.g. "/derivation_rule/clauses/1/head/total"
+    reason: Literal[
+        "prose-rule",          # derivation_rule is a string, not a structured rule
+        "unanalyzable-aggregate",  # analyze_declared_aggregate returned None or an issue
+        "unrecognized-term",   # a term shape _guarded_term renders only as canonical JSON fallback
+        "unrecognized-atom",   # an atom whose binds are not a mapping
+    ]
+```
+
+`__all__` gains `RuleVerbalization`, `UnsupportedConstruct` and
+`render_rule_verbalizations`.
+
+**How unsupported is decided.** `_derivation_cnl` has four fallback branches
+today; each is where a partial rendering happens:
+
+| Branch (file:line at `1446f90`) | Today | MG1 |
+|---|---|---|
+| `_fact_type_cnl`, non-dict `derivation_rule` (`model_verbalization.py:119-124`) | prose appended verbatim | `prose-rule` |
+| `_derivation_cnl` aggregate `analysis is None or analysis.issue` (`:197-212`) | raw `as`/`fn`/`of` fields rendered | `unanalyzable-aggregate` |
+| `_guarded_term` final fallback for a `dict` or `list` term (`:162`) | canonical JSON of the term | `unrecognized-term` |
+| `_guarded_atom` non-dict binds (`:168-172`) | fact-type id only | `unrecognized-atom` |
+
+A string or scalar constant falling through `_guarded_term`'s last line is a
+**constant**, rendered as canonical JSON, and is supported. Only a `dict` or
+`list` reaching that line is unrecognized.
+
+The renderer functions gain an optional collector argument
+(`_unsupported: list[UnsupportedConstruct] | None = None`) threaded through
+`_derivation_cnl`, `_guarded_atom` and `_guarded_term`. With the default
+`None` each function's output is byte-identical to `1446f90`; the existing
+full verbalization passes `None`. This is the one walk of standing rule 4.
+
+Which of the four branches a **validated** model can reach is not known at
+write time. The implementability sweep below measures it before the gate; a
+branch no validated model reaches keeps its reason but is marked
+"defensive" in the docs and tested through the private function, not the API.
+
+### `src/gnd/api.py` (about +50 lines)
+
+```python
+def verbalize_rules(
+    model: str | os.PathLike[str] | Model,
+    *,
+    fact_types: Sequence[str] | None = None,
+) -> dict[str, Any]: ...
+```
+
+Payload, schema `gnd-rule-verbalization/1`:
+
+```json
+{
+  "schema": "gnd-rule-verbalization/1",
+  "exit": 0,
+  "model_id": "bookrec",
+  "rules": [
+    {"fact_type": "ft_recommended", "status": "rendered",
+     "text": "when ft_reads(reader = $r, book = $b) and ..., derive (reader = $r, book = $b)",
+     "unsupported": []},
+    {"fact_type": "ft_total", "status": "unsupported",
+     "unsupported": [{"path": "/derivation_rule/aggregate", "reason": "unanalyzable-aggregate"}]}
+  ]
+}
+```
+
+`exit` stays 0 when some rules are unsupported: the request succeeded and the
+payload reports what could not be rendered (D2). Refusals use the existing
+`failure(code, kind, message)` helper: 64 for argument shape, 3 for model or
+id. `fact_types=None` selects every derived fact type. `__all__` appends
+`"verbalize_rules"` at the end, keeping the approved order of the rest.
+
+### `src/gnd/rule-verbalization.schema.json` (new, about 50 lines)
+
+Closed schema for the payload above, with the `reason` enum spelled exactly as
+`UnsupportedConstruct.reason` and a test asserting the two sets are equal.
+
+### `src/gnd/disclosure.py` (1 line)
+
+`api:verbalize_rules` joins the `value-free` rows: it reads model content
+only and never a population (D3).
+
+### `docs/reference/rule-verbalization.md` (new) and `docs/reference/api.md`
+
+The reference page states the payload, the four reasons and the parity
+promise, and cites `_derivation_cnl` as the grammar's home. Written after the
+code (MG-R2). Full documentation sweep stays in MG6.
+
+## Decisions
+
+| ID | Question | Readings and cost | Proposal |
+|---|---|---|---|
+| D1 | Return type | (a) a payload dict with `exit`, like every other `gnd.api` function; (b) a bare `str` as the issue sketched: cannot carry per-rule unsupported reasons without exceptions, and every other API function returns a payload | (a) |
+| D2 | Exit when some rules are unsupported | (a) exit 0, reported per rule; (b) exit 3 for the whole call: a model with one prose rule could not render its other rules | (a) |
+| D3 | Disclosure row | (a) `value-free`: models are not populations; (b) `site`: would make customer mode withhold rule constants, which are model content the caller already holds | (a) |
+| D4 | CLI surface | (a) API only, as asked; (b) also `gnd verbalize --rules`: a CLI leaf, RF1 pins and a disclosure row, for no requested use | (a); a CLI can follow on request |
+| D6 | A root `aggregate` with `clauses` | `iter_derivation_clauses` copies root keys into each clause, so the aggregate text repeats in every disjunct (`model_verbalization.py:177-180`, `_validation.py:2845`). (a) render as today and add a T-case that checks the text against the evaluator's reading on one fixture; if they disagree, report `unanalyzable-aggregate` for that rule rather than change the shared text; (b) change the text: alters every digest-bound verbalization (MG-R1) | (a) |
+| D5 | Selector name | (a) `fact_types=`, because rules are keyed by the derived fact type; (b) `rule_ids=` as the issue sketched: GND has no separate rule id | (a) |
+
+## Tests
+
+New file `tests/test_rule_verbalization.py` unless noted.
+
+| # | Case | Expected |
+|---|---|---|
+| T1 | `bookrec/complete.orm.yaml` | exit 0; one `rendered` entry per derived fact type, stable id order |
+| T2 | Corpus: every packaged example and fixture model with `derivation_rule` (15 example models; fixtures with `clauses` 6, `negate` 31, `aggregate` 6, `where` 5 at `1446f90`) | each construct appears in at least one `rendered` text; floor recorded |
+| T3 | Same corpus | each `rendered` `text` is a substring of its fact type's line in `render_model_verbalization`, at the position after `This fact type is derived: ` and ending at the line's end |
+| T4 | One fixture per reachable reason (sweep decides which are reachable through validation) | `status: unsupported`, exact `path` and `reason`; no `text` |
+| T4b | A defensive reason not reachable through validation | private renderer with a hand-built dict reports it |
+| T5 | `fact_types=["no_such"]`; `fact_types=["<non-derived id>"]`; `fact_types="ft_x"` (a string, not a sequence); model path that does not exist | 3; 3; 64; 3. A case with both a bad argument and a bad model exits 64 (order) |
+| T6 | Exact `__all__` pins: `tests/test_public_api.py:16`, `tests/test_v61_phase2_api.py:38-39`, `tests/test_public_runtime.py:52`, `tests/test_why_not_near_misses_public.py:225` (asserts `DisclosureRefused` is last, so it changes to assert membership plus the new tail), and the list in `docs/release-notes.md:56` | updated to append `verbalize_rules`; no other pin changes |
+| T7 | Unchanged: `tests/test_evolve*.py`, `tests/test_recovery*.py`, RF1 verbalization goldens | exit 0 with no edits |
+| T8 | `tests/test_disclosure_mode.py` total-table check | exit 0 with the new row; fails without it |
+| T9 | `tests/test_rf1_layering.py`, `tests/test_rf6_query_policy.py`, `tests/test_gnd_arch.py` | exit 0, zero new allowances |
+| T10 | Anonymity scan over files added since `1446f90` | exit 0 |
+| T11 | 2,000 generated derived fact types | renderer call count ≤ a stated linear bound |
+| T12 | Schema: payload validates; a payload with a reason outside the enum fails; enum equals the dataclass literal | as stated |
+
+### Implementability sweep (before the gate)
+
+Run, read-only, over the T2 corpus: for each of the four fallback branches,
+count validated models that reach it. A branch with zero reaches through
+validation is tested as T4b, not T4.
+
+**Measured 2026-11-03 at `1446f90`** (a scratch script that loads every
+`*.orm.yaml` under `src/gnd/examples` and `tests` through `load_model`, and
+counts each fallback while calling `_derivation_cnl`; the script is not
+committed):
+
+| Measure | Count |
+|---|---|
+| Valid models holding a `derivation_rule` | 61 |
+| Rules | 116 |
+| Clauses with `body` / `negate` / `where` / `aggregate`; rules with `clauses` | 104 / 21 / 6 / 9; 12 |
+| `prose-rule` | **18** |
+| `unanalyzable-aggregate` | 0 |
+| `unrecognized-term` | 0 |
+| `unrecognized-atom` | 0 |
+| Exceptions raised by `_derivation_cnl` | 0 |
+
+So `prose-rule` is reachable and is a T4 case. The other three are not
+reached by any corpus model. Whether validation *forbids* them, rather than
+the corpus just lacking them, is not established by this count. The
+implementer either finds the validator rule that refuses each one (cited in the
+record, T4b then) or authors a valid fixture that reaches it (T4). This is
+open item MG1-Q1.
+
+## Out of scope for this phase
+
+- Rendering rules from a population or a witness; any change to rule
+  semantics.
+- A CLI command (D4).
+- Changing the wording of any rendered rule.
+- Object-type `derivation_rule` (refused by validation, D-P1.1).
+
+## Size
+
+About 110 source lines, 300 test lines, one schema, one reference page.
+
+## Approval instrument
+
+This prose. No fixture corpus is authored first.

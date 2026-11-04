@@ -121,7 +121,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules")  # noqa: RUF022 - approved stable order
 
 
 
@@ -887,6 +887,60 @@ def verbalize(
         model, population, anchors=anchors, document=document,
         population_bytes=population_bytes, unredacted=unredacted,
     )
+
+
+_RULE_VERBALIZATION_SCHEMA = "gnd-rule-verbalization/1"
+
+
+def _rule_verbalization_refusal(message: str) -> dict[str, Any]:
+    return {
+        "schema": _RULE_VERBALIZATION_SCHEMA,
+        "exit_code": 3,
+        "error": {"kind": "input", "message": message},
+    }
+
+
+def verbalize_rules(
+    model: str | os.PathLike[str] | Model,
+    *,
+    fact_types: list[str] | tuple[str, ...] | None = None,
+) -> dict[str, Any]:
+    """Render derived fact types' rules in GND's controlled language.
+
+    Each rendered ``text`` is the sentence the full model verbalization prints
+    for that rule. A prose rule is reported as ``unsupported``. Argument types
+    raise ``TypeError``; an invalid model or unknown id returns ``exit_code`` 3.
+    """
+    from gnd import model_verbalization
+
+    _check_model_input(model)
+    model_verbalization.check_fact_type_selection(fact_types)
+    try:
+        selected, _ = _resolve_model(model)
+    except (ModelValidationError, model_module.ModelLoadError, OSError):
+        return _rule_verbalization_refusal("invalid model")
+    try:
+        # The renderer re-validates an in-memory Model; any other exception is
+        # a defect and propagates rather than reading as an input error.
+        rules = model_verbalization.render_rule_verbalizations(selected, fact_types=fact_types)
+    except model_verbalization.VerbalizationError as error:
+        return _rule_verbalization_refusal(str(error))
+    return {
+        "schema": _RULE_VERBALIZATION_SCHEMA,
+        "exit_code": 0,
+        "model_id": selected.model_id,
+        "rules": [
+            {"fact_type": rule.fact_type, "status": rule.status, "text": rule.text}
+            if rule.status == "rendered"
+            else {
+                "fact_type": rule.fact_type,
+                "status": rule.status,
+                "reason": rule.reason,
+                "path": "/derivation_rule",
+            }
+            for rule in rules
+        ],
+    }
 
 
 def transition(

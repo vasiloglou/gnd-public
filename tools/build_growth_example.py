@@ -4,8 +4,10 @@
 
 round-1.proposal.json adds a fact type shaped like order_arrives_via_channel
 (admitted by --policy additive; the shape report names the match).
-round-2.proposal.json adds a mandatory constraint on the populated
-order_placed_by_customer (refused by --policy additive, exit 3).
+round-2.proposal.json binds the model as round 1 publishes it and adds a
+mandatory constraint on the populated order_placed_by_customer (refused by
+--policy additive, exit 3). The notes each round reads (round-N.document.txt)
+are prose shown by the how-to; this script does not read them.
 Deterministic: fixed ids, actor and timestamp.
 """
 from __future__ import annotations
@@ -54,7 +56,7 @@ def main(directory: str) -> None:
     round_1 = proposal(text, "round-1", EvolutionOperation(
         operation_id="add-returned", kind=EvolutionOperationKind.ADD,
         locator=ElementLocator(collection="fact_types", element_id=RETURNED["id"]), after=RETURNED))
-    round_2 = proposal(text, "round-2", EvolutionOperation(
+    round_2 = proposal(round_1.candidate_model.text, "round-2", EvolutionOperation(
         operation_id="add-mandatory", kind=EvolutionOperationKind.ADD,
         locator=ConstraintLocator(host="fact_type", host_id="order_placed_by_customer", family="mandatory"),
         after=MANDATORY))

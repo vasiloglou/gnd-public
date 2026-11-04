@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">One round of growing a model</title><desc id="desc">A document arrives. The program proposes additions as a proposal bound to the model's digest. gnd evolve preview with the additive policy and the shape report checks the round. An admitted round is applied with the same policy and the model grows, as in round 1 with returned via. A refused round leaves the model unchanged, as in round 2 with the mandatory rule. Then the next document arrives.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:15px}</style><rect width="640" height="600" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">One round of growing a model</text>
+<rect x="24" y="70" width="592" height="78" rx="12" fill="#fff"/>
+<text x="40" y="100" class="strong">A document arrives</text>
+<text x="40" y="128" class="">a returns note, an intake note, any passage of text</text>
+<path class="edge" d="M320 148L320 176"/>
+<rect x="24" y="182" width="592" height="78" rx="12" fill="#eef5f8"/>
+<text x="40" y="212" class="strong">The program proposes additions</text>
+<text x="40" y="240" class="">round-N.proposal.json, bound to the model's digest</text>
+<path class="edge" d="M320 260L320 288"/>
+<rect x="24" y="294" width="592" height="78" rx="12" fill="#eef5f8"/>
+<text x="40" y="324" class="strong">GND checks the round</text>
+<text x="40" y="352" class="mono">gnd evolve preview ... --policy additive --shape-report</text>
+<path class="edge" d="M180 372L180 400"/>
+<path class="edge" d="M460 372L460 400"/>
+<rect x="24" y="406" width="280" height="104" rx="12" fill="#e9f4ec"/>
+<text x="40" y="436" class="strong">Admitted (exit 0)</text>
+<text x="40" y="463" class="">apply with the same policy</text>
+<text x="40" y="490" class="small">round 1: "is returned via" is added</text>
+<rect x="336" y="406" width="280" height="104" rx="12" fill="#fff0e4"/>
+<text x="352" y="436" class="strong">Refused (exit 3)</text>
+<text x="352" y="463" class="">the model is unchanged</text>
+<text x="352" y="490" class="small">round 2: a rule on held facts</text>
+<path class="edge" d="M180 510L180 538"/>
+<path class="edge" d="M460 510L460 538"/>
+<text x="320" y="572" class="mid">the next document arrives</text>
+</svg>

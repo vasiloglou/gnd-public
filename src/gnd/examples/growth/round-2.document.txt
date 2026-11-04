@@ -1,0 +1,4 @@
+Order intake note, week 45
+
+Every order must be placed by a customer. The shop no longer accepts
+anonymous counter sales, so an order with no customer on it is a mistake.

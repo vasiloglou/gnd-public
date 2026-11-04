@@ -28,6 +28,15 @@ def _register_extract(subparsers):
     extract_parser.add_argument(
         "--out", required=True, help="output directory for the four-file bundle"
     )
+    extract_parser.add_argument(
+        "--guidelines",
+        action="store_true",
+        help=(
+            "also write <stem>.guidelines.md, constraint-blind per-fact-type "
+            "guidance (readings, role players, descriptions, reference modes), "
+            "digest-recorded in <stem>.artifacts.json"
+        ),
+    )
 
     return {'extract_parser': extract_parser}
 
@@ -45,7 +54,7 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 def handle(args, parsers) -> int:
     if args.command == "extract":
-        return _handler_extract_service._cmd_extract(args.model, args.out)
+        return _handler_extract_service._cmd_extract(args.model, args.out, guidelines=args.guidelines)
 
     raise ValueError(f"unsupported command: {args.command}")
 

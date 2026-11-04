@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/MG3/dynamic-query-successor.json",
+ "predecessor_sha256": "d21caf7a30f3d101f9ee542e1868ca2bfebd85f8455e8f4edfc9daf91eb9b98f",
+ "reason": "model-growth-guardrails MG4 (2026-11-04): gnd.extract.guidelines (render_guidelines, its role and identity helpers and the per-render identity memo) and the guidelines keyword of gnd.extract.service._cmd_extract add parameter and return annotations and dict lookups keyed by a fact-type, signature or object-type id. Syntax census only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/extract/guidelines.py",
+   "_role_lines",
+   "_IDENTITY_SENTENCES[identity]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "_role_lines",
+   "dict[str, tuple[str, str | None]]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "_role_lines",
+   "identities[object_type_id]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "_role_lines",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "_role_lines",
+   "tuple[str, str | None]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "dict[str, tuple[str, str | None]]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "dict[tuple[str, ...], list[str]]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "role_players.get(fact_type_id, {})",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "shared.get(signatures.get(fact_type_id, ()), [])",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "signatures.get(fact_type_id, ())",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/extract/guidelines.py",
+   "render_guidelines",
+   "tuple[str, str | None]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 6977,
+ "result_occurrences": 8709
+}

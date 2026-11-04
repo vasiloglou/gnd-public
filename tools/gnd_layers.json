@@ -564,6 +564,10 @@
       "lane": "extract",
       "layer": "lanes"
     },
+    "gnd.extract.guidelines": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
     "gnd.extract.projection": {
       "lane": "extract",
       "layer": "lanes"

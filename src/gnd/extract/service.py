@@ -86,8 +86,12 @@ def _artifact_index_issue(
         return (3, f"the extraction bundle index is not verifiable ({error})")
     return None
 
-def _cmd_extract(model_path: str, out_dir: str) -> int:
+def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> int:
     """``gnd extract MODEL --out DIR`` — the per-model artifact bundle.
+
+    With ``guidelines`` the bundle gains ``<stem>.guidelines.md`` (MG4),
+    digest-recorded in the index like the other artifacts; without it the
+    bundle is byte-identical to what it was before the option existed.
 
     Everything here is a pure offline function of ``model.orm.yaml`` (R-04'''):
     the projection, the constraint-blind verbalization, the applicable set, and
@@ -143,6 +147,10 @@ def _cmd_extract(model_path: str, out_dir: str) -> int:
         f"{stem}.verbalization.txt": render_verbalization(model),
         f"{stem}.applicable.json": canonical(applicable_set(model)),
     }
+    if guidelines:
+        from gnd.extract.guidelines import GUIDELINES_SUFFIX, render_guidelines
+
+        artifacts[f"{stem}{GUIDELINES_SUFFIX}"] = render_guidelines(model)
 
     out_root = Path(out_dir)
     index_rel = f"{stem}.artifacts.json"

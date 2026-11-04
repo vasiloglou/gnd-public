@@ -31,5 +31,7 @@ T13, T15). Successor:
 - MG3 done: [004-phase-MG3.md](004-phase-MG3.md) (spec delegated `(d1)`,
   amended `(d2)` after one reviewer's blocking finding; focused gate 1941
   passed).
-- Next action: MG4 (extraction guidelines), spec
-  [notes/phase-MG4-spec.md](notes/phase-MG4-spec.md).
+- MG4 done: [005-phase-MG4.md](005-phase-MG4.md) (spec delegated `(d1)`;
+  one reviewer, approve-with-fixes; focused gate 1533 passed).
+- Next action: MG5 (unattended mode), spec
+  [notes/phase-MG5-spec.md](notes/phase-MG5-spec.md).

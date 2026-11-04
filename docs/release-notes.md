@@ -3,6 +3,19 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: extraction guidelines (2026-11-04)
+
+`gnd extract MODEL --out DIR --guidelines` adds `<stem>.guidelines.md`, a
+constraint-blind guide for an extractor: per fact type, its readings, the
+fact types with the same role players, and per role the object type's
+description, reference mode and primitive
+([issue #78](https://github.com/vasiloglou/gnd-public/issues/78)). Its digest
+is recorded in `<stem>.artifacts.json`.
+
+- Without the flag, every bundle is byte-identical to before.
+- Value constraints are left out, so the bundle stays constraint-blind. A
+  description can restate a rule; the guideline repeats it as written.
+
 ## Unreleased: duplicate-shape report (2026-11-04)
 
 `gnd evolve preview --shape-report` lists, for each fact type a proposal

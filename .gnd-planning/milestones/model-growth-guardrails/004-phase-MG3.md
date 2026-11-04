@@ -99,7 +99,7 @@ owner's reading. Issue #76.
 | mutation table `evidence/MG3/mutants.json` | M1 to M10 each `KILLED` |
 | `uv run ruff check src/gnd/evolve src/gnd/refscheme.py tests/test_evolve_shape_matches.py` | `All checks passed!` |
 | anonymity scan over added and changed files | 0 matches |
-| `uv run pytest -q tests/test_il6_skill_census.py`, after the commit | in the commit body |
+| `uv run pytest -q tests/test_il6_skill_census.py`, after commit `41be029` | `9 passed in 6.09s`, exit 0 |
 
 ## Coverage against the branch table
 

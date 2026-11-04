@@ -60,7 +60,7 @@ automatic side effects of validation. See [evolution and recovery](../guides/evo
 | `gnd export ilp MODEL --population POPULATION --target amie --out DIR` | One unlabelled population's binary fact types as typed triples for a rule miner ([contract](ilp-bridge.md#amie-style-miner)) |
 | `gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target popper --out PROPOSAL` | Learned clauses as induced, advisory guarded constraints, admitted only when GND's coverage equals the learner's; `--target` is `popper`, `neutral`, `ilasp`, `llm` or `rules` ([contract](ilp-bridge.md)) |
 | `gnd import mined-rules MODEL RULES --population POPULATION --reported REPORTED --target amie --out PROPOSAL` | A rule miner's rules as induced, advisory guarded constraints, admitted only when every count equals the miner's and every rule holds ([contract](ilp-bridge.md#amie-style-miner)) |
-| `gnd extract MODEL --out ARTIFACTS` | Offline schema/vocabulary bundle for a separate extraction workflow |
+| `gnd extract MODEL --out ARTIFACTS [--guidelines]` | Offline schema/vocabulary bundle for a separate extraction workflow; `--guidelines` adds a constraint-blind per-fact-type guideline file |
 | `gnd verify MODEL POPULATION --artifacts ARTIFACTS --format json` | Bound extraction-handoff validation followed by checking |
 | `gnd verify MODEL POPULATION --no-extraction --format json` | Explicitly check directly authored, unextracted facts |
 | `gnd doccheck MODEL MANIFEST --artifacts ARTIFACTS` | Validation of a rendered document's obligations |

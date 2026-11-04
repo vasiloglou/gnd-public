@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/why-not-near-misses/evidence/close-followups/dynamic-query-successor.json",
+ "predecessor_sha256": "0108249929997d71ee9a15b06841c494889d8c4c71dda814ed2c4bb9c212d6ed",
+ "reason": "model-growth-guardrails MG1 (2026-11-03): gnd.api.verbalize_rules and render_rule_verbalizations add parameter and return annotations, a dict lookup of the selected derived fact type, and the collector parameter threaded through _derivation_cnl, _guarded_atom and _guarded_term. Syntax census only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/api.py",
+   "_rule_verbalization_refusal",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/api.py",
+   "verbalize_rules",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/api.py",
+   "verbalize_rules",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/api.py",
+   "verbalize_rules",
+   "os.PathLike[str]",
+   1
+  ],
+  [
+   "src/gnd/api.py",
+   "verbalize_rules",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "RuleVerbalization",
+   "Literal['rendered', 'unsupported']",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "_derivation_cnl",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "_guarded_atom",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "_guarded_term",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "render_rule_verbalizations",
+   "Sequence[str]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "render_rule_verbalizations",
+   "derived[identifier]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "render_rule_verbalizations",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/model_verbalization.py",
+   "render_rule_verbalizations",
+   "tuple[RuleVerbalization, ...]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 6902,
+ "result_occurrences": 8626
+}

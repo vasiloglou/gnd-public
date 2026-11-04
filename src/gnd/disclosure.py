@@ -119,6 +119,7 @@ SURFACES: Mapping[str, Surface] = {
     "api:EvaluationSession.observe": Surface("every-mode", note="returns the caller's own population"),
     **_rows("value-free", [f"api:{name}" for name in (
         "CheckReceipt", "ReceiptRefused", "DisclosureRefused", "EvaluationSession", "verify_lean", "verify_souffle",
+        "verbalize_rules",
         "compile_lean", "EvaluationSession.reset", "EvaluationSession.close",
         "EvaluationSession.stats")]),
     **_rows("value-free", [f"api:{name}" for name in (

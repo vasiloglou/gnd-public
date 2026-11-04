@@ -222,7 +222,8 @@ def test_t9_view_keeps_truncation_and_never_adds_fields():
 
 def test_t10_disclosure_refused_is_public():
     assert api.DisclosureRefused is disclosure.DisclosureRefused
-    assert api.__all__[-1] == "DisclosureRefused"
+    assert "DisclosureRefused" in api.__all__
+    assert api.__all__[api.__all__.index("why_not") + 1] == "DisclosureRefused"
     assert disclosure.SURFACES["api:DisclosureRefused"].kind == "value-free"
 
 

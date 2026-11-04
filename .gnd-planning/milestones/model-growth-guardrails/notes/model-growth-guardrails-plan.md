@@ -368,7 +368,8 @@ successor's CT4 needs MG2 and MG3 merged.
 
 ### MG1: Public rule rendering (#72; about 85 source lines, 350 test lines)
 
-Spec: [phase-MG1-spec.md](phase-MG1-spec.md), r2.
+Spec: [phase-MG1-spec.md](phase-MG1-spec.md), r3, **approved `(s1)` 2026-11-03**;
+recorded in [002-phase-MG1.md](../002-phase-MG1.md).
 
 - **MG1-C1:** `verbalize_rules` and `render_rule_verbalizations` as §2.1; the
   four test `__all__` pins and `tools/run_public_acceptance.py:373` updated

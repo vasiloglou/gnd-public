@@ -6,8 +6,8 @@ returns ordinary dictionaries; your application decides how to display a
 finding and what action to take.
 
 The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
-`verbalize`, `diff`, `witness`, `replay` and `why_not`: nine functions, the one
-count other pages refer to. The opt-in `EvaluationSession`
+`verbalize`, `verbalize_rules`, `diff`, `witness`, `replay` and `why_not`: ten
+functions, the one count other pages refer to. The opt-in `EvaluationSession`
 class reuses eligible work between calls. Code generation, experiment
 orchestration, and model evolution have CLI and skill workflows described in
 the [task guides](../advanced.md).
@@ -103,8 +103,29 @@ population_bytes=None, unredacted=False)` returns
 `{"rows": [...], "exit_code": ..., "error": ...}`. Each row describes a
 supplied fact using the model's reading. This is useful for an inspection page
 or a review screen. It performs no LLM call and does not turn a sentence into a
-checker verdict. This function verbalizes a **population**; the model-authoring
-skill produces the separate verbalization of the model's rules.
+checker verdict. This function verbalizes a **population**; `verbalize_rules`
+below renders the model's derivation rules.
+
+## `verbalize_rules`: read a derivation rule back as text
+
+<!-- gnd-run expect=0 -->
+```python
+from gnd import api
+
+result = api.verbalize_rules("api-dispatch/model.orm.json")
+assert result["exit_code"] == 0, result
+rule = result["rules"][0]
+assert rule["status"] == "rendered", rule
+print(rule["fact_type"], ":", rule["text"])
+```
+
+`verbalize_rules(model, *, fact_types=None)` returns one entry per derived fact
+type, in id order. A rendered entry's `text` is the sentence the full model
+verbalization prints for that rule, so an application can compare a rule with
+the question it was written for without keeping its own renderer. A rule
+written as prose comes back as `unsupported` with reason `prose-rule`. The
+payload and its rules are in the
+[rule verbalization reference](rule-verbalization.md).
 
 ## `diff`: compare rules over the same vocabulary
 

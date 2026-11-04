@@ -1,8 +1,16 @@
 # Phase MG1: public rendering of derivation rules
 
-**Status: r3, awaiting the owner's plan gate and this spec's gate.**
-Plan approval and this spec's gate are both still open. No code is written
-before the gate.
+**Status: r3, approved by the owner 2026-11-03 `(s1)`.** Implementation has
+not started.
+
+`(s1)` Owner approval, 2026-11-03, quoted: "Approve MG1 spec", in answer to
+"Approve the MG1 spec r3 with its decisions as proposed?". Approved bytes:
+SHA-256 `4cddaa525a9da4d237fa863f6c3af45dd162cddb286be87e46c299cc60fce87c`
+(before this tag), the same bytes recorded in the plan gate
+([001-plan-gate.md](../001-plan-gate.md)). Rulings: approval instrument prose;
+no spec review panel beyond the two plan rounds; D1 (a), D2 (a), D3 (a), D4
+(a), D5 (a) as proposed; D6 and D7 as already settled. The plan was approved
+`(a1)` the same day.
 
 ## Provenance
 
@@ -210,11 +218,11 @@ earlier entry at `:56` is not edited. Full sweep in MG6.
 
 | ID | Question | Readings and cost | Proposal |
 |---|---|---|---|
-| D1 | Return type | (a) a payload dict with `exit_code`, the convention of `validate`, `check` and `verbalize`; (b) a bare `str`: cannot carry per-rule status | (a) |
-| D2 | Exit when some rules are unsupported | (a) 0, reported per rule; (b) 3 for the call: one prose rule would hide all others | (a) |
-| D3 | Disclosure row | (a) `value-free`: model content; (b) `site`: customer mode would withhold rule constants the caller already holds | (a) |
-| D4 | CLI surface | (a) API only, as asked; (b) `gnd verbalize --rules`: a CLI leaf, RF1 pins, a disclosure row, no requested use | (a) |
-| D5 | Selector name | (a) `fact_types=`: rules are keyed by the derived fact type; (b) `rule_ids=`: GND has no separate rule id | (a) |
+| D1 | Return type | (a) a payload dict with `exit_code`, the convention of `validate`, `check` and `verbalize`; (b) a bare `str`: cannot carry per-rule status | **Ruled `(s1)`: (a)** |
+| D2 | Exit when some rules are unsupported | (a) 0, reported per rule; (b) 3 for the call: one prose rule would hide all others | **Ruled `(s1)`: (a)** |
+| D3 | Disclosure row | (a) `value-free`: model content; (b) `site`: customer mode would withhold rule constants the caller already holds | **Ruled `(s1)`: (a)** |
+| D4 | CLI surface | (a) API only, as asked; (b) `gnd verbalize --rules`: a CLI leaf, RF1 pins, a disclosure row, no requested use | **Ruled `(s1)`: (a)** |
+| D5 | Selector name | (a) `fact_types=`: rules are keyed by the derived fact type; (b) `rule_ids=`: GND has no separate rule id | **Ruled `(s1)`: (a)** |
 | D6 | Root `aggregate` with `clauses` | Settled by reading the evaluator (above): per-clause aggregation, text unchanged | pinned, T13 |
 | D7 | Theme B | Ruled `(p1)`: fix in MG1 | fixed |
 
@@ -276,3 +284,76 @@ About 100 source lines, 450 test lines, one schema, one reference page.
 ## Approval instrument
 
 This prose. No fixture corpus is authored first.
+
+## Implementation findings
+
+Recorded as found, 2026-11-03. The approved text above is not edited.
+
+- **F1, refutes the fallback table's `date_add` row.** Validation refuses any
+  temporal term in a derivation rule, not only a malformed one: a well-formed
+  two-argument `date_add` in a `where` operand is refused with "temporal terms
+  are supported only in guarded comparison operands". No valid two-argument
+  control exists. T4b uses the well-formed form against the unmutated rule
+  (`$r > $last`) as control. A well-formed `date_add` placed in a loaded
+  `Model` renders completely ("(30 calendar days after $last)"), so it is
+  not a partial rendering: `verbalize_rules` refuses it through
+  re-validation (exit 3), and `render_rule_verbalizations` renders it. T4c
+  uses the malformed three-argument form, which the collector refuses, and a
+  separate case pins the well-formed behavior.
+- **F2, refutes the spec's evolve-preview parity row (T7).** T7 asks for
+  digests of `gnd evolve preview` output for every evolve fixture. Evolve
+  calls `render_model_verbalization` with loaded models only
+  (`evolve/service.py:1323-1324,1634-1639,1751,1938-1943`), and the loaded
+  render is byte-identical for all 282 corpus models
+  (`evidence/MG1/parity-after.json` against `parity-before.json`). The
+  evolve suites in the gate run unchanged. No separate evolve-preview digest
+  table was captured.
+- **F3.** The collector also covers a `where` that is not a list, a `head`
+  that is missing, empty or not a mapping, `fn` terms whose `args` is not a
+  list, and an empty `bind`. Each such guard returns early only when a
+  collector is passed. With the default `None` the existing expressions run
+  unchanged, so an invalid in-memory model still behaves in
+  `render_model_verbalization` as before (out of scope).
+- **F4.** The disclosure page's surface table is generated
+  (`tests/test_disclosure_docs.py`). Adding the row re-pastes one table line.
+- **F5.** `tools/run_public_acceptance.py:373` lacked `DisclosureRefused` at
+  `1446f90`, as round 2 reported. It now lists both names.
+- **F6, refutes T9's "no new allow-list row" in part.** The RF6 model-query
+  allow-list and its attribute-get metric are unchanged (both RF6 metric
+  tests pass with no edit). `tests/test_rf6_query_policy.py` also keeps a
+  syntax census of every dynamic subscript and `.get` in `src`, annotations
+  included. MG1 adds 13 occurrences there: 12 annotations and the lookup
+  `derived[identifier]`. Following the repository's pattern, they are
+  registered as a counted successor,
+  `evidence/MG1/dynamic-query-successor.json`, appended to
+  `DYNAMIC_SUCCESSORS` in `tests/support/pyrel_application_successors.py`
+  (6,902 distinct rows, 8,626 occurrences).
+- **F7.** The first gate run reported exit 0 through a `tail` pipe while
+  pytest reported 2 failures (the F6 census). The recorded gate exit is taken
+  from pytest itself.
+- **F8, review dispositions** ([phase-MG1-claude-review.md](phase-MG1-claude-review.md)).
+  Each finding was reproduced before it was believed.
+  - R-F1 (hardening; refutes rule 4's "the collector refuses every partial
+    rendering"): reproduced. An atom without `fact_type`, mutated into a
+    loaded `Model`, rendered `when None(book = $b) …` as `rendered`. **Fixed:**
+    `render_rule_verbalizations` re-validates a `Model` argument with
+    `validate_model_object` and raises `VerbalizationError`; the collector
+    stays as a second guard. Regression `test_review_f1_…` (6 cases) failed
+    before the fix (6 failed) and passes after. The well-formed `date_add`
+    case now pins that re-validation refuses it and that the collector alone
+    renders it without flagging (F1 above is narrowed accordingly).
+  - R-F2 (completeness): reproduced; mutant H survived. **Fixed:**
+    `test_review_f2_…` calls the collector directly for every in-memory
+    mutation plus an unanalyzable aggregate; with mutant H applied it fails
+    (1 failed), restored it passes.
+  - R-F3 (completeness): **fixed** by asserting `model_id` and the id in both
+    refusal messages.
+  - R-F4 (completeness): **recorded.** Validation reports only the whole-rule
+    path (`$.fact_types[i].derivation_rule`) for 9 of 11 mutations, so T4b
+    asserts that path; the control/mutant pairing isolates the cause.
+  - R-F5 (completeness): **fixed** with `test_review_f5_…`, which counts walks
+    over `iter_fact_types_shared` (exactly 1) beside T11's render count.
+  - R-F6 (hardening): **fixed.** `verbalize_rules` maps only load-time
+    exceptions (`ModelValidationError`, `ModelLoadError`, `OSError`) and
+    `VerbalizationError` to exit 3; any other exception propagates.
+    `test_review_f6_…` failed before the fix and passes after.

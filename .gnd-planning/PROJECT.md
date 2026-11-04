@@ -185,4 +185,5 @@ witness lineage and fact-type proposals in discover; its CT4 waits on the
 first milestone's MG2 and MG3. Both plans are at r3 after two four-reader
 review rounds (the second stopped by the declared stop rule; r3 carries no
 review opinion). The owner approved both plans at r3 on 2026-11-03 `(a1)`.
-No phase spec is approved yet; no code.
+MG1 (public rule rendering, #72) is implemented and recorded in
+[002-phase-MG1.md](milestones/model-growth-guardrails/002-phase-MG1.md).

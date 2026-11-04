@@ -11,7 +11,7 @@ T13, T15). Successor:
 - Plan: [notes/model-growth-guardrails-plan.md](notes/model-growth-guardrails-plan.md),
   r3, **approved by the owner 2026-11-03 `(a1)`** ([gate record](001-plan-gate.md)).
 - First spec: [notes/phase-MG1-spec.md](notes/phase-MG1-spec.md), r3,
-  **awaiting its own owner gate**.
+  **approved by the owner 2026-11-03 `(s1)`**.
 - Phases: MG1 public rule rendering, MG2 additive evolve policy, MG3
   duplicate-shape report, MG4 extraction guidelines, MG5 unattended
   model-from-text, MG6 documentation, then the close.
@@ -21,5 +21,6 @@ T13, T15). Successor:
   themes, see [the disposition](notes/plan-review-r1-disposition.md).
 - Review: [round 2](notes/plan-review-r2-disposition.md), confirmation,
   36/43 findings self-inflicted, so the stop rule ended review.
-- Next action: the MG1 spec gate (spec decisions D1..D5 proposed), then
-  `process-phase MG1 model-growth-guardrails`.
+- MG1 done: [002-phase-MG1.md](002-phase-MG1.md) (focused gate 701 passed;
+  one reviewer, approve-with-fixes, all dispositioned).
+- Next action: the MG2 spec (additive evolve policy), then its owner gate.

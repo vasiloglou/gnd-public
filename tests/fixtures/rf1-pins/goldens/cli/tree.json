@@ -5186,6 +5186,21 @@
      "type": null
     },
     {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": null,
+     "dest": "document",
+     "help": "re-hash the unattended model's source spans over this declared document; repeatable; exit 3 on an undeclared document or a span that is out of range or has a different excerpt digest",
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--document"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
      "choices": [
       "text",
       "json"

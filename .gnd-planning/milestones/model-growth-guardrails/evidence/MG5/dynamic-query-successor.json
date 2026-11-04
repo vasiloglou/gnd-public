@@ -1,0 +1,41 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/MG4/dynamic-query-successor.json",
+ "predecessor_sha256": "d3a6cd551e9040d7f50e57fee979d9e391aaa74a068be785e1d6be5e9e52d5db",
+ "reason": "model-growth-guardrails MG5 (2026-11-04): gnd validate --document (gnd.commands.checking._read_validate_documents and _cmd_validate_documents, the documents keyword of _cmd_validate) adds parameter and return annotations. The unattended rule family lives in gnd.model._validation, outside the census. Syntax census only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/commands/checking.py",
+   "_cmd_validate",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_cmd_validate_documents",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_read_validate_documents",
+   "dict[str, bytes]",
+   2
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_read_validate_documents",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_read_validate_documents",
+   "tuple[dict[str, bytes], int | None, str | None]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 6982,
+ "result_occurrences": 8715
+}

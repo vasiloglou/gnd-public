@@ -3,6 +3,20 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: unattended model-from-text (2026-11-04)
+
+A model can now say that nobody reviewed it
+([issue #74](https://github.com/vasiloglou/gnd-public/issues/74)). With
+`source.mode: unattended`, `gnd validate` refuses a model that does not
+declare `reviewer: none` and its source documents, that marks anything
+`confirmed` or `user-supplied`, that leaves an element, constraint or sample
+row without a cited span, or that claims an unreviewed constraint is
+`alethic`. `gnd validate --document DOC` re-hashes the cited spans. The
+`gnd-model-from-text` skill gains an Unattended mode.
+
+- Every model without the mode validates exactly as before.
+- The schema gains `$defs.source_span`; induced constraints may carry spans.
+
 ## Unreleased: extraction guidelines (2026-11-04)
 
 `gnd extract MODEL --out DIR --guidelines` adds `<stem>.guidelines.md`, a

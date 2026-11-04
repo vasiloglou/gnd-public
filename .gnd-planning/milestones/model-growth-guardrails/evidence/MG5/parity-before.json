@@ -1,0 +1,1292 @@
+{
+ "models": {
+  "src/gnd/skills/gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "2e8e482b6f6fe35c659ff19b5aef6efa45747460e5506d73da9f11f23b40f3ba"
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "8f0b3fb040123a34bf246f9843829eb9f26554f42a526ca4148d2b94fe7adf3e"
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "08e5a4c105feae127a063428a04bb89293137404735abdaad3c10f5b2a4f8ad2"
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "014ade62f150a1f1ead050159bb129506f61ba2793ec6749166e848f728a2af4"
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "7f7558201b68fdf56bd67f381b506f8155db7f691a6574ce236386cefd166b0c"
+  },
+  "tests/fixtures/adversarial/models/f05_frequency_external.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "532305b12d6993765af6fbc97669d5817e2991fa9568cf776bb2f994bb444416"
+  },
+  "tests/fixtures/adversarial/models/f05_setfam_join.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3b0c3551395f9c4ec68693c827dfd0fce724e6c4b3943651609fea23484795b8"
+  },
+  "tests/fixtures/adversarial/models/f05_uniqueness_external.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7480fa9d2df9b4df2f4a50c3c2b4934235fc346ab79052e904923abd6e8a7132"
+  },
+  "tests/fixtures/adversarial/models/float_range.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "71b14f6d49ca839ce16032af263fb049b4c053e576d425374d78f29b86b90499"
+  },
+  "tests/fixtures/adversarial/models/hostile_values.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9e153e9202c268a75c0906be195607794908c08cc7437531b9bbeac1d30f5e75"
+  },
+  "tests/fixtures/adversarial/models/model_id_a.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a40fabc1eac8711f8e905155b53e56fc4f276c5a594e6068061b1087191ef25a"
+  },
+  "tests/fixtures/adversarial/models/no_observable_subjects.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "569ec0003871abf2e44c6aef57628008b6e73d8b410199fa32562036c6c3fcbc"
+  },
+  "tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "e10c3323be3b4224b9da6547b861a53bfd8431c34103a85a3f52c6124687282d"
+  },
+  "tests/fixtures/adversarial/models/omission.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "0189e3be86715de742731316cd4fc9aa68635c2cf408d2f59578d37467262bb1"
+  },
+  "tests/fixtures/adversarial/models/partition_exclusive.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "716a6a652da42f5706318b42e14d888556b64ec6fdc3fe8e7ded37170a59e47d"
+  },
+  "tests/fixtures/adversarial/models/partition_flagless.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "e06c36636da17982269ab2cfc52469e56f5aea00ec8accdb7b276e9b0c246f5a"
+  },
+  "tests/fixtures/adversarial/models/reference_cardinality.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "cb4fc39718ade198e5bd430718026000a07e2cde4a6e983f648024fde486d8ff"
+  },
+  "tests/fixtures/adversarial/models/reference_value_type.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9c31565ee5da4693ce4f3e2fa73a2eefc4719512cd9c363c2eddd51bf2748d19"
+  },
+  "tests/fixtures/adversarial/models/subtype_mandatory.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "6ebb5bcc0fd21723dca3cd7c7f603a59e069a7f448f5aef1f70b3321f45097ad"
+  },
+  "tests/fixtures/adversarial/models/textual_alethic.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ce3330268aab6b5bff91670dbeae7448857632cde9071b4a5debd96af544ee2f"
+  },
+  "tests/fixtures/adversarial/models/typed_range.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3fbd9d4470e5da722a119df66b0064ceee77bb9ac3b5d16be8aadb85918c5a3b"
+  },
+  "tests/fixtures/adversarial/models/uncomparable_literal.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "d6fdbe49c32f6936cbe94c5ddb798682e3f10e256d701a93d0d4aa7eb7f74750"
+  },
+  "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c9247b5798cb10ab4ae52e51d31497add56190d78da914c25248827ef6e78e8b"
+  },
+  "tests/fixtures/adversarial/models/xor_multirole.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a6e039d8314138f33dbbf310cc784fd5caba6908651aa694f93851922304b129"
+  },
+  "tests/fixtures/architecture/static/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9024c10fd370226fa5044527ade4b0f9a06ef4023d04566346332919b6e689cc"
+  },
+  "tests/fixtures/checker/misc.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "b1cde7237c0ac8d90f9c307c7542a6b79e57626cf714c4daf3bbd8a564b56143"
+  },
+  "tests/fixtures/checker/ring.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "13cc5c1ba21b8fbb2ef161fdd708026886a512d0f9077af353581baffbb215d9"
+  },
+  "tests/fixtures/checker/setfam.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a689d1741622d977c37ef96f52e16673aced0baa65f194c5186f3ddfebbf0519"
+  },
+  "tests/fixtures/compiled-snapshot/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "819888baa1f4ff69bbc6ea3e09c60a0e962a2f60d8f17a7eadcec649a2171889"
+  },
+  "tests/fixtures/coverage/mixed/v2_operations.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "60a734721cdd8a6acb6fe79ee44a32d6dad18bf20371ec74ace0b9d5fb16732e"
+  },
+  "tests/fixtures/coverage/positional/library.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "99b5dc436379cd9a477730994ea243d9b9b5b9576d07b1c62498f4517d9f87d7"
+  },
+  "tests/fixtures/coverage/refused/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a1de6e12a2566fe9acfde12d1f02a97a676f2b8542c84221210e69b46b5fa97a"
+  },
+  "tests/fixtures/derivation-evaluation/cases/constraint-semiderived-computed-view/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "65304f68724116aeb6801b2bc176fc46099fdd8d2943825e8d6fd3e95cc80a9c"
+  },
+  "tests/fixtures/derivation-evaluation/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "190bdbc74bab2fa14cc2c86d8c3ddfb98d86b98c46f0c6ed3a8cce8445c7a53c"
+  },
+  "tests/fixtures/derivation-evaluation/cases/cost-quadratic-mutation-red/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "504a7c5bc6e33b266ae5d0f6c7e788928b86cc3d561e69a12a4fba8de9f7dcfd"
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-bare-dollar-literal/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "55b01b5a7b50874296751b164bec9d00f74a45391c05db16fd5d013d284486b7"
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-depth3-dependency-order/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "fafdc1fc3b9b1564d9eb0c63ed8664e0bdfc97a4773a32da0165968ca7af62f4"
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-negated-present/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a8cfef460e86fc03baf7e14c57cea0cca9e3f02ebdd617a1fba652c7be59a8eb"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3f78934972f6036dccfcd0e0137495003e196e5a6c7598950b4e24bfb384a85f"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "348c0a0e065540ffb3f704a4f7609841beced2d4a5ebbc6bd7c05b02422d76ae"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "09bedcfc97f99fceffeecd7ed02a7f1a0f88dbaf77a8c8318a61d2c1b727adb8"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-unlisted-derived-empty-computed/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "5d1c10aa7a9b54d719f2e8f5bc81b5e2173cc405fcca5112bf144a004571defe"
+  },
+  "tests/fixtures/derivation-evaluation/cases/wire-text-json-parity/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "0babc32b92e38c3657f89f86f67875258cdc9300eedda6aa7fc7bd878c93f6ab"
+  },
+  "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a38c48b7b561d08efc0c3e0b199662444453ba08c8dc44436559ad2576651ed7"
+  },
+  "tests/fixtures/derivation/cases/a01-string-arm.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8c561b23c285490ce4c219259c45adc072426fa16b29d12958ca0630e143a8ee"
+  },
+  "tests/fixtures/derivation/cases/a02-object-arm.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "b3d2e20b588ec8572c48157f6b514fb2a074758b4b99f98f034de160e851d164"
+  },
+  "tests/fixtures/derivation/cases/a03-absent.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "36f8f0d4744b4b8af437771d50106ff7fb30953301e151896fa82a7099c41e07"
+  },
+  "tests/fixtures/derivation/cases/a04-compatible-subtype.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9eeec475480102a3a926d6600a884c8497b86e6c5620860aa48666acca85e72d"
+  },
+  "tests/fixtures/derivation/cases/a05-compatible-numeric.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "bcfdae2effe3465fea9cd99d759ef7a033791aa46effb98b7202c101df0a1c22"
+  },
+  "tests/fixtures/derivation/cases/a06-dag-depth-3.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "76aca03fa0f8a6dc64e27c048a2a8e395e69b0da44ce23e19b8a1ee66c71380a"
+  },
+  "tests/fixtures/derivation/cases/a07-component-product.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "0c1da94dc4aed284498bd3ac26e634cb3c2243fd217fec6218e4dade08c59961"
+  },
+  "tests/fixtures/derivation/cases/a08-semiderived.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "2961e7031534bbdfc10742bed16ca86e74bc7e6ec4aecc43a690ac7346048a9c"
+  },
+  "tests/fixtures/derivation/cases/m01-token-fact-type.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "95b7a25d1fdec42f258b46964f39534c74140528106aa7d6824e8052fb51c83c"
+  },
+  "tests/fixtures/derivation/cases/m02-token-head-variable.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "a6e32021105007a5d8adbc328abcf7ee6890df55d4e54d8aac3c5a701ee6e908"
+  },
+  "tests/fixtures/derivation/cases/m03-token-derivation-mode.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "a54647a985c3af23a731c5c67fbbb38f8a85aeda60edab419784582371567bcc"
+  },
+  "tests/fixtures/derivation/cases/m04-token-negate-variable.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "156c3dcd82eb57a62abbadee8a6055022af310fb511662cd4ca654ba62a8480c"
+  },
+  "tests/fixtures/derivation/cases/m05-token-storage.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "b72667fcc6b3c5f838cc4ad7306a03bdaa4887eb1200eb0a09c091b7d73f419c"
+  },
+  "tests/fixtures/derivation/cases/m06-token-semiderived-mode.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "294d0aed5d9b00c9954fb07d5f300b14c7d4845862055c0db245176e1502a12b"
+  },
+  "tests/fixtures/derivation/cases/m07-token-dag-to-cycle.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "d839a6ad4d3066791c2354ba6a924b757116d565d7a911bd0458b76da77c6586"
+  },
+  "tests/fixtures/derivation/cases/m08-token-absent-to-ruleless.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "9c7f205206093211da109fb1e68d03cf45b7a0dec5fdb0f5f7f62bf833157dd0"
+  },
+  "tests/fixtures/derivation/cases/m09-token-type-clash.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "fe9423eb2308b219ad27b3680ee8941b3f9ce0ccaf8115282c210d2ffa0e44e4"
+  },
+  "tests/fixtures/derivation/cases/r01-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "9f37daacd1b01a7856bdf34fa134d432a41f10ab5c4959aba30ed38af88fcf20"
+  },
+  "tests/fixtures/derivation/cases/r02-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "46a1dfd8d6ffaacb3acaeb068b750ecb24b1d68b94edf55d0005e6e2cf5ff886"
+  },
+  "tests/fixtures/derivation/cases/r03-head-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "f5ce2f10247fdfcaa4e7a6f38f4a9e78daa439c3a05a12040cf0364a743c08a8"
+  },
+  "tests/fixtures/derivation/cases/r04-negate-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "45637a35a56468e00e76a7c0a28f1dc96389712907fdcd3e9e0f6ac4196dd7fe"
+  },
+  "tests/fixtures/derivation/cases/r05-rule-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "78e28d55cfe8f505dffa38eb115ae9d00c6c4b00d5d13d162ea437aba8fc7096"
+  },
+  "tests/fixtures/derivation/cases/r06-rule-extra-key.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "79e275edeea70a5a043f9b2897c5f06410883ca6c032776ce0fcd378b4dbdd16"
+  },
+  "tests/fixtures/derivation/cases/r07-body-missing.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "ccfaa1f5a20e6b36f46b1c859e58a51a1c4d99c8b9b9b34a2bf5ff5a6ef17d37"
+  },
+  "tests/fixtures/derivation/cases/r08-body-not-array.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "7014f26961e3b3814cc51705631ab4a8f4565956f8878ba087daffa9108a1b1d"
+  },
+  "tests/fixtures/derivation/cases/r09-body-empty.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "540e2cdc4373ac1826683e248adbeada20fbd9d086fdfcda4123b143c1e45ad6"
+  },
+  "tests/fixtures/derivation/cases/r10-atom-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "3db52ed7c0141f516bf373136c89680717800ca67313253ce38f400be9e3444f"
+  },
+  "tests/fixtures/derivation/cases/r11-negate-not-array.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "b25a3b6f400c92cceb3cd87b8c9e6bd2d35c989faa289f18f041c432652a08e6"
+  },
+  "tests/fixtures/derivation/cases/r12-head-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "06ab0194f54217827aa73481a22e6df98da4126f34af0dfc2380c32ee78b9056"
+  },
+  "tests/fixtures/derivation/cases/r13-head-empty.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "0cde3f8b07374baab61d67b121c2a9c44cc9fa72cf43ce7cfaeda9189a10fc4d"
+  },
+  "tests/fixtures/derivation/cases/r14-atom-role-missing.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "60c74b4f233f049ff422ffef327d89a157a652fe1f06a1e81a202222fb53dc31"
+  },
+  "tests/fixtures/derivation/cases/r15-atom-role-extra.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "c090c51e82e5d68f16f938c83f0ad99b61bb7f294b6e63e032be662d6f6982d4"
+  },
+  "tests/fixtures/derivation/cases/r16-head-role-missing.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "0457d3a1fbd14e91699881b900e3f74a1b5fef17ef3bd79e01d116741e1e67b1"
+  },
+  "tests/fixtures/derivation/cases/r17-head-role-extra.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "788bc65fa6ab4ce6d22efdf4c70ffb41441e939f274a86040f5a6520f537a58b"
+  },
+  "tests/fixtures/derivation/cases/r18-head-unbound.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "7b2a956d49699c5dca6b924ef99e160474008958dd05b2e4a8de611b3c16338d"
+  },
+  "tests/fixtures/derivation/cases/r19-negate-unbound.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "a80e080679f7a8c8fd5ad8a53c64df35e5b1601d96d38145d021273abe646063"
+  },
+  "tests/fixtures/derivation/cases/r20-component-unused.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "78dffa52e3bba04ec3ed27fa555df556bc3d793f849482d8a6b687a85ea67fb2"
+  },
+  "tests/fixtures/derivation/cases/r21-head-literal-string.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "9312c398037ef753306e3d5784e69f7639493b8ddfe6f1e5eb1a767dbd5e7ba6"
+  },
+  "tests/fixtures/derivation/cases/r22-head-literal-number.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c6fefb2ddab9052fa22f40c6fb8dc3f6e64303562442783540f8d6d60c226fd3"
+  },
+  "tests/fixtures/derivation/cases/r23-head-literal-boolean.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "08e2886b51c21475a7ab13437db9964127f95872ec6790a59050c049dc412bad"
+  },
+  "tests/fixtures/derivation/cases/r24-head-malformed-variable.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "3da77d28ed311927edc19ca5d8b5b0278435c5ef9345bc936457ad5081291d3c"
+  },
+  "tests/fixtures/derivation/cases/r25-type-repeated-within-atom.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "e1ee690ccc397a4cd9483523917c14fcbab90d1b5a5ce3d3ccdd2a6a3a804d01"
+  },
+  "tests/fixtures/derivation/cases/r26-type-across-positive-atoms.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "70548177a03299e965e9a3b6f6c4f441c2b2e66fd4048115e57641e9345cf3d0"
+  },
+  "tests/fixtures/derivation/cases/r27-type-positive-vs-negated.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "aac4c8090e608352c7de82c59553465a2b4f02e9ab8e482b4095686511631951"
+  },
+  "tests/fixtures/derivation/cases/r28-type-body-vs-head.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "cb38b05f462b6fe1405e8740b3e0ff11b5490ce468c84d63cd880696e2ae6f23"
+  },
+  "tests/fixtures/derivation/cases/r29-self-loop.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "82450113f383cf035bdc3c53e1f57338176a79e9a7218ffa0e0fead914908ebc"
+  },
+  "tests/fixtures/derivation/cases/r30-cycle-2.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "95a13ffec7a6bd58537fcc18a50100cb5cec74aba20b51d212f80a28338a7a39"
+  },
+  "tests/fixtures/derivation/cases/r31-cycle-3.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "97f9dc6b8ebeb59e685748cbb05205f208bff745907f0ae61c916d79ce2b3fc9"
+  },
+  "tests/fixtures/derivation/cases/r32-opaque-dependency-positive.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "c265b8aae5d4ac382c9c42cf85836c9cf5cfa942cbc32ccbea13ba75c1e1563b"
+  },
+  "tests/fixtures/derivation/cases/r33-opaque-dependency-negated.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "c22b71ec5520101f279e141638dbf75a6267bdd3499022d2b93a4d487f22a620"
+  },
+  "tests/fixtures/derivation/cases/r34-rule-on-asserted.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "f700fb3e180719144ddc3ea695651c36b9e87215cfa448cb950aac244552b8fb"
+  },
+  "tests/fixtures/derivation/cases/r35-storage-contradiction.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "43543c659c7dff0c586940e6ef80fdd5b75ea7c245598e47750cd33b9fb31bb7"
+  },
+  "tests/fixtures/derivation/cases/r36-structured-on-object-type.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "631b4245248e412cecb537c3ed5203b93288ab319e423e9aee671a5d40d856c1"
+  },
+  "tests/fixtures/derivation/cases/r37-operations-plus-derivation.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "934724a37231f698863e878bac05d25d24d6540cb3bd83c281298fd5b45d2dd6"
+  },
+  "tests/fixtures/derivation/cases/r38-aggregate-key.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "58eb1d1d6fe98122e0bdb5088da3ad2c4d17629eafd3c8b377689c2ba8147604"
+  },
+  "tests/fixtures/derivation/cases/r39-sum-key.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "6990a6e6d45091da1782d87abb4f3db9282db26b57aa6286af96e0da79b3d10f"
+  },
+  "tests/fixtures/derivation/cases/r40-disjunction-key.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "f868c02d670f0f8bd016d1963f595f134d270123bd1f2267bfedd7bec7a2ec31"
+  },
+  "tests/fixtures/derivation/cases/r41-arithmetic-key.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "f5c24bc0b4fd6c1b14b95ddd70bc9598a8f71b62691f9981ece41b9c102e3bd4"
+  },
+  "tests/fixtures/derivation/cases/r42-precedence-ref-before-shape.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "bcaca14d25d3db3cd0e431f1e7d486204cf5f40b636b3d1fcfbb4652079acb21"
+  },
+  "tests/fixtures/derivation/cases/r43-precedence-shape-before-graph.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "c4cd319ee1ab33368c00680b9a98cd1956a511f11884e581e6d3fb652a318af7"
+  },
+  "tests/fixtures/evolve-policy/base.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "743007e3aea98c11db764f82dc4db373ed0be663ae0f8e2a0cccc888bfc2cb1e"
+  },
+  "tests/fixtures/guarded/models/alethic.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "44caab3865313544211b7782fc4e90a6d9665bbedb01144d3498f7dafd150b1c"
+  },
+  "tests/fixtures/guarded/models/deontic.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7e0890611a353711cc3d8cbfd17db83ba0cb29d9ff8564f1b61acd640fcaab7b"
+  },
+  "tests/fixtures/guarded/models/disconnected.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "27dab11fa3e5fd148f3e2c9ced78e458cfcb11f54f318bd37874919ec32fafd8"
+  },
+  "tests/fixtures/guarded/models/join.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9f57321ab15db02403eb0d11a59b070af10ea802c3d35024a5ade2e17c18cb6f"
+  },
+  "tests/fixtures/guarded/models/submission.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "fbd7b248c1dc4b3141a6e93549ad9d3eb725ca334d8f87ed8040e7ab5c004f97"
+  },
+  "tests/fixtures/guarded/models/undecidable.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "848b50ec33fc627e638252cbb830ebb50e090c47b45c600124c98eb84de820c6"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a7dc1f00e47a6d78502e3014426cbda246919f009734292a02e4ef53b2c2c952"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8f951d626047987434ebb1678a34d4c4d8d376c88cdcb22e12e2ccdc646b6266"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8376dfc453738674af8e0bcc249fe5287e88d7f918b1ae29dc1bd9ed9b884dba"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "58fc6585e6ede609af9eea03785d370e329722476b85f3314fb8e5f1bf763d06"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/ownref-object.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8c05b41a474ab083e9a2cdffc7e2733655b7b58c14e6856eb78c78c7099f3963"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/ownref-string.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "453637944e0c4be8500325acf20237270b22db5f31e26cb042628a23a942f3d1"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ce9a48f5edb280266a9655428f57331ce08997e87b191a12c73600ab135198a8"
+  },
+  "tests/fixtures/ilp_learners/close/cyclic.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c295bc0e1386e5f1c726fb128d1718de0a4cd128d0cff50d23a6aa41dd372000"
+  },
+  "tests/fixtures/ilp_learners/close/family.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "290bcad81e722a4865786610a671969a6063f842431cc3d1a1a873f11f0c46a9"
+  },
+  "tests/fixtures/ilp_learners/close/multi.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "4211b1c2af6d58811c378451fdbd081d3517545be386b635aeb7f622427a397a"
+  },
+  "tests/fixtures/ilp_learners/close/orders.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "2d791cee6956f1fbccd44eac4c515a562ab830535e41b81d4b8fe6cffee14de6"
+  },
+  "tests/fixtures/ilp_learners/close/ownref.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "76e35569f9a88983a78708cc64fc667291d509ccec2f4f02abeed21ebc9b41c1"
+  },
+  "tests/fixtures/ilp_learners/close/staffing-swapped.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "acd1e2f90aa17c03c79eb743887e973458643be16ee7224cc6e42bdcfc35e757"
+  },
+  "tests/fixtures/ilp_learners/close/subtype.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "b520e5de09842b1fe4d686f1c0aefda6ebc1c79a888beb716df9f69e2b6bda65"
+  },
+  "tests/fixtures/ilp_learners/il4/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "705a3932114c89db580648ebf53c629c0e12f65c165dc8e8049f83833c711355"
+  },
+  "tests/fixtures/incremental_evaluation/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "e2572ba2270c620e927a8141c15ee7ef6340e8ec1581dbad047b398a2c0ec437"
+  },
+  "tests/fixtures/induced_knowledge/ik3-corpus/labels.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "b00adde6b69512e32485f71861e85feab09df672f173b8e8e3fcd0f53a9d89c6"
+  },
+  "tests/fixtures/induced_knowledge/ik4-corpus/staff-declared.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "361be1d2a25e0da9ebc39fca2d1e2679c975f54fd155a10c69a8a3fb88b7ce93"
+  },
+  "tests/fixtures/induced_knowledge/ik4-corpus/staff.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a22ce73dee8e564b86793d0efd6056b94aee2a3343b9581023c169834821c6a2"
+  },
+  "tests/fixtures/induced_knowledge/ik5-corpus/orders.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "48f5b33aef8b16b5125ebdf232d88b2f0e5206bee528838da9fa1c11e3e840c4"
+  },
+  "tests/fixtures/migration/base/v2_migration_corpus.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3b1c910d4927b318948e7832202f99c03817aea619f774238a7ab0084efec305"
+  },
+  "tests/fixtures/models/dispatch.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "0894484dd4dce8362970737f513a3e64dbc61590ff4b1dea18e980ccb33b5625"
+  },
+  "tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "010d46bb8533519584632e5e656adf199abaf697b02644429166d47b68832686"
+  },
+  "tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7ed6b3919df235889893766cdfac78a30d9f83828b5e8cff515dddd50dfc93ce"
+  },
+  "tests/fixtures/models/invalid/duplicate_role_names_cross_type.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "6627322861cf619878a3844c9365166e282312f5cb2122e78e64462c221dc656"
+  },
+  "tests/fixtures/models/invalid/role_seq_arity.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "34c6ec664c7c23395fbe7b4841df406929f91ee46447c669383a34285ae6f157"
+  },
+  "tests/fixtures/models/invalid/role_seq_type_compat.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "e42055cb27ca8b5c5cd5d925086847f8d46199130f0059f68dbe3d734812f6f4"
+  },
+  "tests/fixtures/models/keywords.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "dbaee1d471d904770d466d66223353e5f7098315dc346314facf77d80cbb62a6"
+  },
+  "tests/fixtures/models/library.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "08bbbeff2d319f774c8d8543350ee8d943e50c08044fc2caa865c5ec1b23e28e"
+  },
+  "tests/fixtures/models/v2_operations.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "b65830ee4348dd889c5a79df2b4804e6284c4a3bee06b6a0a20f7128b4f7838f"
+  },
+  "tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "691180b0b4083fae7c614946767c879496c266c13e0ef044def40bcc4a4f12b4"
+  },
+  "tests/fixtures/phase3-consumers/eligibility.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "81d7a4ab0b8b592e99d2f40119bfe8296d6a463635b6b44c15c6be414d6979ef"
+  },
+  "tests/fixtures/phase3-consumers/legacy-derived.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a324eab9231d516402a38c293351c1fc36452ffb8ea039c170e05bccd2c5fe6c"
+  },
+  "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "d97dee5198c6f8c8b7e0b5e4200e2c7964e597b7d5a55889683e7d0606b7c162"
+  },
+  "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8a3df4848c2b19bc83d59b5dd51e7fc52f46a423dfa6cbeec205ebeecc6815e7"
+  },
+  "tests/fixtures/public-applicability/c01/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "0de41b2b6d6d3f65f5bebb36fff84c8efc4a2368acb359193dc5ea8c6e351832"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/different-version.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "e5040482b369d6fff6602875c27584f7530f4b52b15c5f8ed1241787f49f572a"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/nonstructured.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "bd04941bcf651cad60272e5ee9c33fb42b02e8a4ffaa9191df6363fd923ea755"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/same-version-different-model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "e8c586f445abeb86adce9489f0ef320d411adc6855c9d24ddb76738bc2d3f65f"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/structured.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "57aa472df6bf637076e56d3a166553e470991270de9dbf61b26861c3bd17d5e0"
+  },
+  "tests/fixtures/public-bridge/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "406501e3151a1f69eb0d1370c689f0f84a08ccb0475d0cf779c31defbac01056"
+  },
+  "tests/fixtures/public-bridge/fixtures/c02/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "1615879603a6237487da66c623f0b753b41b947c749484cdbbe87077ef6fdd1c"
+  },
+  "tests/fixtures/public-bridge/fixtures/c04/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7ab1df9447391dc61f51de9b242e41907f454ddb144ca58f03b1d9f704736edd"
+  },
+  "tests/fixtures/public-bridge/fixtures/c06/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "2df2b92aefcb18c1e09e3ef392bd3155dac84989b47102bc32b932fea9ac07b1"
+  },
+  "tests/fixtures/public-bridge/fixtures/c07/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a1e7c8c6abcee810896fa5a7eb7310411557ce2eb5b339e73e22ff625fd248c9"
+  },
+  "tests/fixtures/public-composition-digests/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ca2f3168d17517dcc888cccf4165c11c2b9f989550af2b18f8d919fc4c1c0aba"
+  },
+  "tests/fixtures/public-composition-digests/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "01aa444e9b78b177906fb014e78ab49cd93e474d691272e143b2ffae6058a658"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/constraint-one-final-walk/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "be744eb6f8ee25b27bd95925909382f29e367b6b6406b70aafd7c4daf6e2c56b"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8e3a5ec2d5e0c284bf1fe4fd72b8d2f296cec564e8f050328fd26e0fb6ce9eda"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/cost-disconnected-counted/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "2bf403798e0d8830b11d165b47b476e2dd6cb407f645282de55c827cae6ff438"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/eval-disconnected-product/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "e94756c34afaceea062c97bffada092297a1d4c3282630dc77ddcd0a23edfbe9"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-exact/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8b924baedbac31b3cb1a0ec7130ad5a93ab6c8330ef8233e9c6c06d6f5765d62"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-missing/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "1a43e6ddaacbc50908eb98105a5264b06ab6963b7dd0d614a92dbd98ffc96635"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "49dd156aec4b48f59980a5bc2bd98fa11643a6c7c05f858a6976a61ba638c706"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/wire-v4-check-internal/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8cea8e31efa7abc264b5f3b8916a1c9238caa47a2ff3af12a32b62f282e9abf1"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/witness-missing-canonical/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9bed2401a8605d7fc743e8bb818db6e13b13f49ef14fe71d1606102583c74072"
+  },
+  "tests/fixtures/public-emitter-trust-controls/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ce029984d5d7e90fb75dd54413124d7c0fdfdbf6a665c2bc72fd5339457f4132"
+  },
+  "tests/fixtures/public-emitter21/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "be913691871ea03309957722e47f5a615db828a6af66bc1346c5bfac4fd10961"
+  },
+  "tests/fixtures/public-generated-examples/bookrec/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7fcaa6966d9790fd900a73faf9acb9e9cc7a1514848232cb595dc797d87d7e38"
+  },
+  "tests/fixtures/public-generated-examples/expense/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c93e196fa78b13e4bf9f2c394500b767e10dcb397255c4401db4db91e37e48eb"
+  },
+  "tests/fixtures/public-launch-phase-2/invalid.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "10f44ec8b3eb4977c4b1940da9577e6446f31a8a45f23b24df62b631c5a6ad82"
+  },
+  "tests/fixtures/public-launch-phase-2/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "57493f1e66dd46577b2a0d4bd44207be01940b7b184504628fbd5b705d77199b"
+  },
+  "tests/fixtures/public-launch-phase-2/textual.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "18f43e63fa90ebe87e124da310c40c022db6c18e09efa3166432818a7d884785"
+  },
+  "tests/fixtures/public-lean-successors/dispatch/base/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "baa1f845c81c21797e1419fc78ab8eb17db59c0490cee57994abdb1a92bff887"
+  },
+  "tests/fixtures/public-phase1-trace/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ce1f75c8751331ecc93075aff5d5d5a29eaea6da206fa2831046f71c4adcd6c9"
+  },
+  "tests/fixtures/public-semantic-partition/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "e584fa24ffb0e128e37dbb0b358513448a506f5907295b8996ad4bb0ca1e0e94"
+  },
+  "tests/fixtures/public-semantic-shapes/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ce1c42a80c2d5f533a318527c12fd2cf0a5aabcc7be61d49f0e5973642ae0815"
+  },
+  "tests/fixtures/public-snapshot-counterexamples/joins-model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "2ce262d43cb60f7c16b7ea433ddf42f89d07e64b55ac0a9dd71c3513e8e6f5ab"
+  },
+  "tests/fixtures/public-transition-contract/v2_expense.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "005034bfaeb88d148124776df0ebfb1152161c7e54219a997d024c0921453133"
+  },
+  "tests/fixtures/public-transition-trace/expense/rejecting-models/bad-role-ref.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "7445cc972a7f0727568533afe890e92887dcc834d303fd54142e12f9490ca086"
+  },
+  "tests/fixtures/public-transition-trace/expense/v2_expense.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "fb5030dcb6a526b85bf6edf0fb3434ef3171f04e95f6b0d7bb2aae57b2e5a1cb"
+  },
+  "tests/fixtures/public-walk-floor/session/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "bc9bbdf34704fd4a2ed4f74155a3968a1d07295a7110f9339738016fefae913e"
+  },
+  "tests/fixtures/pyrel-oracle/basics.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ef91cfe501f742cad4b601ef4e777d8366044556dbdff8c4041ba8e2c441f8be"
+  },
+  "tests/fixtures/pyrel-rules-calendar/clinic.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "68f98ce4cb761b4d2532307fd8f5c84f485698817f5af086dcb47d82d2452941"
+  },
+  "tests/fixtures/pyrel-rules-calendar/refonly/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "8ee142f1e65d8403e65f642d3db5878ba64009a72bbdb6b2f2a8dce3cf8b6c48"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/D7_body_unpadded_literal/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "fcfdd10d19faadc4fccba36ca4dae44caaf55fb2b36ffbbea887ea161c9f293a"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/E2_deontic_oor_only/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "f38237a51d645b3c82209d89c29b23b8ab3dd25afda8d68f7402d1c7f686d80d"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/E3_alethic_oor_only/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "845798b33284327c92a8324428a73087dc919a70206e113efe91cd59a6d87ffe"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/F1_date_families/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "db807a0342d268196970ffb277ebc437714a70980456705637dd34f23dab8eb2"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/G2_nondate_string/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "defc915256fde18235f11d021a8485cd59ed4cc2895e4d78bb28b20de8ffdacf"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/G_invalid_iso/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "510d525b7fe07c592f710bc0bee9610aa495b965c2f7a6d6359efd3d3bc99984"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/H2_unpadded_in_atom/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "16ecd996350382658a05b2e2e683ec4b88efa3abe69aafc7d410411b3fbdf3a8"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/J3_allowed_unpadded/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "761b4b75390c58bd63fcc13c64c0da166ebf1e7c44be8227c1ccfc9574e44898"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/J4_allowed_nondate/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "05719dce9dbe200825125a43b97819da1a94645e99ab0ed1b077a518c392df0f"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K0_instances_day_20240229/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "b2a5899bc650671f484aeb02abd3f7d40b0ba117808d54456c06714927972875"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K1_instances_day_2024-1-01/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "b1401773668ac83a427277a752164db9159ce82c4efa1b3d2d5b0a9af00f06de"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K2_instances_days_-1/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "01520093e94695ea723f998139a9413c7178e750d4d65ad25baef21d349b0aca"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K3_instances_days_2000000/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "f95acc1ee3a6631e0dc82b6013ee2fd0b3cc2469d61f487a0829739439e5b563"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K5_instances_days_True/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "9daf609e13f4bbcd81324c99f8d8cadddf4414eddc3d277cdff29a34480f79f3"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K6_integer_roster_float/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "6bf40361226e08cc4d90cbae16f90cc3411d198453b1ad530da9799d6116a5a5"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/N2_empty_date_sub_side/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "fc2c4bff74b812b73240d999b13945ba439a0df76a7a7f659c2b3506c3dd10c4"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/N3_empty_derived_date_side/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "a7095e2bef4d41644d8aa9d1d95320dcbdfc284a59159e8d41aecce29d4b1bd7"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/R7_ref_owns_derived/model.orm.json": {
+   "exit": 3,
+   "stdout_sha256": "c07f1dd8fbcd1bead3405d80f7c08203005a1709d53e84c045a75fb6843eb32d"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/Z2/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "17796e3a2d71b9654c4ba8ecc5d97c4f87e08e6e57d49cda81195e87fbee3b76"
+  },
+  "tests/fixtures/pyrel-rules-calendar/workload.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "82af005a48c2ff742fb53f4a51b6fda8345e8bf1ed4814767a551c4118e5a66d"
+  },
+  "tests/fixtures/pyrel-rules-derivations/mutual.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "95babaa6921eff208965a9aa7a617797af6280b85c5eda7fce7ba9999d41c4b8"
+  },
+  "tests/fixtures/pyrel-rules-derivations/orders.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "068da83d840fbf883e9ea4ba717e44231c477149c2be6f5f91e553531a61e5ab"
+  },
+  "tests/fixtures/pyrel-rules-derivations/registrar-derived.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "4df99810e9e6c1fd00677c3f5d81da0f12190aa331e630ed8eb8b2fe4a977d35"
+  },
+  "tests/fixtures/pyrel-rules-derivations/registrar-semiderived.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "cac80e98ecd0640588231dd7309f51ff94bc0c772a78f663fd1d02503c506116"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/der.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "2d403966bb625832932d7c9ca740698f7c1ffade45c757d4503b1fa039fcefb0"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/fl.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "c491d386b67fbad21b54d7b247e7941b204e35caf7da2703b869b56af56168d5"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/misc.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "07bc834d3dd3ad9fdf025a0886df49c308baf062945ed27cd4d28f638fa3569f"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/names3.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "81cd534794786a807c723b75f26b4f4f07ea20e7a7703515938846918676b0ba"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/num.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "371e18341825ff87a2d203ddbd65ec20c73f338f7ea9fc55cb7533b6a56a5c1c"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/rec_swap.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "ec4ed43196ec49fcef97cd025e894ffffba4f8d3b9df70157e735d2e11d15f86"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/ring.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "e255cdd851f9452c77d9319a81bc3a191086aaf045efb65108a75e2b54366c6a"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/scc.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "73b702fec023bbe5cfd4941b06c481c71c64a431cf7c9bed71de43bc592c6184"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/xswap.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "fbacb33ac6b1c7739276713815fd0ed1392ba60b501eb342cdaeea35226bbb49"
+  },
+  "tests/fixtures/pyrel-rules-families/cardinality.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "3ccbe75eb526f49382f4c5b964a0b7669783d2d8396680a13fd8de5504c5386e"
+  },
+  "tests/fixtures/pyrel-rules-families/equality.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "6d800f8afd004ab93c915725a77c17f65270c4305992d9ea93e2743fd5407b23"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusion.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "357a70576801f1953c8fdeddf0fde7dc6c53d660a6aa4efeeb3340a660c8d173"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusive-or-multi.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "18addcc2f99bf0036bd6a6d0cb16bdb1dc02bc8a740e8b50d08fac0f6dfc9b3e"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusive-or.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "34d3f4cb3906a4a09e5a5e93f157c8d3a12deb4e772aa51ae53e40666f297c12"
+  },
+  "tests/fixtures/pyrel-rules-families/frequency.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "edc4f51365baeb2b154fc0039d2c063e918a08655d35722bdfd3d9287f751f2d"
+  },
+  "tests/fixtures/pyrel-rules-families/mandatory-disjunctive.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "5458cc34d8d58485e3a7d73e9fb23f655fda230ed0ad8f236a7a52a1c6717c54"
+  },
+  "tests/fixtures/pyrel-rules-families/review/frequency-integer.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "b6a78feec77696439883c571114ddbd3e76a1777f93f8ba098a1273a0a3fe7d7"
+  },
+  "tests/fixtures/pyrel-rules-families/review/helper-collision.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "aab520f5fbf8cb2c2cd87ff53ecd81d592aa8ce3079a7ebdbdfb8c01c783f987"
+  },
+  "tests/fixtures/pyrel-rules-families/review/inclusive-or-integer.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "d11440017f91c68af629ec158987117e1f4b4478f1ced6d7ca85939562a2fa73"
+  },
+  "tests/fixtures/pyrel-rules-families/review/refuse-external-frequency.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "30d68c900962263ceaff0364665e7196c74cc430dc5454d13c37d25d824ab345"
+  },
+  "tests/fixtures/pyrel-rules-families/review/refuse-external-uniqueness.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "21bdacc2ce39e9590782847cbb115b80f1092d6ba7095fee65386c09200a5006"
+  },
+  "tests/fixtures/pyrel-rules-families/review/ring-integer.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "6bf34b8b18cd2d34faab24995fe15841b4469017925646669776183239e44578"
+  },
+  "tests/fixtures/pyrel-rules-families/review/textual-with-exclusion.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "48a4c31e55d856dde0fb285e8c2710c7cecf4d91b8c11cfc3861b55791ddd5f9"
+  },
+  "tests/fixtures/pyrel-rules-families/review/textual.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "b3beb2a9414d69a687ff26be83daf4573df43a6674b71c59e3718aa036250de0"
+  },
+  "tests/fixtures/pyrel-rules-families/review/value-roster-pass.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "a660b1a34195322bcba3b6729fd08d818f7b0978f348dd2475339aaeb87d1b6d"
+  },
+  "tests/fixtures/pyrel-rules-families/review/value-roster.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "457da3c0bb79f28101bfdc98393ab4f1ea0bca8d227b589b303696bab913cff7"
+  },
+  "tests/fixtures/pyrel-rules-families/ring.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "04023611d534596f0a80b24de8dadced66140f13ad3fe784d25e050bb90856dd"
+  },
+  "tests/fixtures/pyrel-rules-families/value.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "f536a75da275da10ea7e0225edb26c1898f4940ff65c043253cc03b85d3c089c"
+  },
+  "tests/fixtures/pyrel-rules-plans/refused-dispatch-ops/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "d8640a27c8f5cb63809b1de9a82e5ac7988fa5a96cf060e23f3783e3171c1bd1"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar-nonfunctional.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "59f60d6962131f798c967e40c6a97d2294ee5cbbf5fb39cfb0aabe37cad644ee"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar-semiderived.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "bd05aa1c73f8cb37682b16c6c1674edb760e3d91a070843d4122d480a37b350f"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "126485dbbb66facb1b6c3470a7a480a5acc05e15408e8785f65cccff2560fe39"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/dynbind.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "b7048943a47b7a968e89f5541d63e8024874fac5d68102ec84097778a1341539"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/lab.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "73fd6b77909b6f6adef7d984dda80339e5f1942a006412f45460bc99b8584625"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/lab3.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "98028c5a3a6e3cc5e8a62c9c86ac06442bcf21d03997a969c236dba041084903"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/steps.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "4651e42e7b138d8b244674d08cae250fd0093a92f8528c76ed18627b53dbe02d"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/steps2.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "9de84e1d1e939c459c9d80b0f967892c1a31933962b82a5c48e2f5e13245251c"
+  },
+  "tests/fixtures/pyrel-rules/disc.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "b0f0acf026547baef77f92aa53f73d2a7a8c723e316667ada4f63b00b6031436"
+  },
+  "tests/fixtures/pyrel-rules/invalid.orm.json": {
+   "exit": 3,
+   "stdout_sha256": "50511ed021a09699c6cb837847a85697c0e208914775679c276a620f54f52272"
+  },
+  "tests/fixtures/pyrel-rules/names.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "6695b21331307a52090a87c8e5c40453cd7821117a5e34baed4d15a1401a0b83"
+  },
+  "tests/fixtures/pyrel-rules/names2.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "d4ea2c3773ab145879f06c23ad9d4ba061d5387e7205328155b20e1fffbf28a2"
+  },
+  "tests/fixtures/pyrel-rules/probe.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "84d2ff4ec2d826219955fdd28457f7f3b80504ec66208da47ec72a102a94456e"
+  },
+  "tests/fixtures/pyrel-rules/span.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "cbacc77452d6edccf36434bf69a0f6ff3f16081c23e57907782cdef1743dca3b"
+  },
+  "tests/fixtures/pyrel-rules/sub.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "c0b52529f83a9dc2496431d8c888bbc915db5438451de0d0e08894bd2a09be55"
+  },
+  "tests/fixtures/reference-corpus/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "dc80b0212705e0da1efc2d5e309c89b20584fcd81f7d032d745f66eb1d7d3140"
+  },
+  "tests/fixtures/reference-corpus/release/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "4204d3fa49a6f17a20a2726df834f11d13a8d0e56a98ca3edc5c285233c3539e"
+  },
+  "tests/fixtures/reference-legacy/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "cf818050b8e640029f62281de4df13c12ddb3bc1438a5999e9a80f3dc6c1c0a6"
+  },
+  "tests/fixtures/reference-legacy/release/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "d8bc6b7da92001db246bcfa6f3ad8c71d899aecf3b709c9ee70b884ca3fbd0fc"
+  },
+  "tests/fixtures/skeleton/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9abcab8fed095b5fc245fbeca9110a41b38f3e2bd692b842bb32606485e4006d"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-exhausted.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7b4eabc4d576e6e701ea5930f3e8963468bacacdae96a2f67ba7fa637b03af27"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-pair.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "f690d9617e3e3b18bc043b655e1f6c17aedb1941c1a000ce08f60704e8b8bf4b"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-second.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3077c33e5d678a9d57fefb053f1364eb8220e046b5f341acdc2ad452091c8bd9"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-single.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "6a69bdf9aa4b5451385e454b266a30146f37e2c3addc502c456c74c9dd40461e"
+  },
+  "tests/fixtures/synth-external-uniqueness/mandatory-exhausted.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "50868d99a98587ea6d02ef81c5194a039488b130e26e8c73a725d638a2f347a3"
+  },
+  "tests/fixtures/synth-external-uniqueness/mandatory-one-to-one.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "42d467a998461ec7c59a4e20ff6f1c21e760e553a30fc8c157b49c280a4ae35d"
+  },
+  "tests/fixtures/transition_cost/steps.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "f35676005d7fb0a989a6658d8b382b6c00b080916b9125793982f58425ee1228"
+  },
+  "tests/fixtures/v51-extraction-boundary/models/mixed.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "aeb9cc518162559e6ba0f239496833ea1c55c658fdf95a3be573f9c3c361369e"
+  },
+  "tests/fixtures/v51-generated-project/alpha/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a0f89e9c0d33d46106a337af619c44b24bfbd6323a22aef78308665bb81fd63c"
+  },
+  "tests/fixtures/v51-generated-project/beta/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "80407a1704ffc369ed7dd1c541b3c645aa5883819772985ca6316c6c2ea52d2f"
+  },
+  "tests/fixtures/v6-assurance/cases/expense-approval/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c11a0684e0a9d5f36812f3190d7c7bc22a21027a03da51aa879b9d64cc276d0f"
+  },
+  "tests/fixtures/v6-assurance/cases/recommendation-completeness/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3849f26b3ff65d9a05d0d6ced09a2aa9f2fb8487d37aaf3c174baae5266b1328"
+  },
+  "tests/fixtures/v6-assurance/cases/separation-of-duties/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3b3c854b7ecda2f0fbe00b0ea5e1ad276f05237c4f5f412d084b3b3d59d4d35c"
+  },
+  "tests/fixtures/v61-phase1/batch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "403bdfe251d2efcd862c97e43a52a095ecb090853a771b21d53a86f78de9035e"
+  },
+  "tests/fixtures/v61-phase1/import/identity.expected.model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "42e9b003969925884b2058ed48ef0c5cf0805dc0c349cb71a00e32ec4dcc740c"
+  },
+  "tests/fixtures/v61-phase1/import/identity.source.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "6ad896cdc05e8c04ccb43f0a74cfb8c176241d34c270fc3e9fb71abe90a5339b"
+  },
+  "tests/fixtures/v61-phase1/import/mutations/modality-no-default.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "e2b4ea317abbfbedfd9fc030fbf353b02fb28dec7ab425e79277a090db6a293b"
+  },
+  "tests/fixtures/v61-phase1/import/mutations/outside-four-classes.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "563b8503127722e3e14b2179e1b849a0d4adaace5ab53134a5d828752082508a"
+  },
+  "tests/fixtures/v61-phase1/import/mutations/ring-missing-target.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "fe054854fe6441a3cfadb89c42191cca270f8fe52a26131b1724538f9733aea9"
+  },
+  "tests/fixtures/v61-phase1/import/mutations/role-collision.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "2c74a9418a5174d7ca0198903142632f451ea600d4f37d5979617030c10bc27a"
+  },
+  "tests/fixtures/v61-phase1/import/provenance.source.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "c7e8346669d4a32536393224f8ce1bd6eff09183ff27210733eef86c6bd71d02"
+  },
+  "tests/fixtures/v61-phase1/import/ring.source.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "7585d71195d94fed5ade46fe39f6c7d2d9ccdc4575ebf5c4e7af0579705d2c9c"
+  },
+  "tests/fixtures/v61-phase1/import/role-name.source.orm.yaml": {
+   "exit": 3,
+   "stdout_sha256": "5d64cada6ac2853ebb53593b2139c4af2e64ed21800907ef8a304c2580b8a17f"
+  },
+  "tests/fixtures/v61-phase4/models/fact-type-declaration.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "02df85fc98e2c597a17cdf075995962dcd8eb6fbb944ed32890b89de5d38180e"
+  },
+  "tests/fixtures/v61-phase4/models/no-declaration.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "bce6e7525b417b614ac1ae7d3e269eff9094a32179fcd4e0b14c5ddf6c444469"
+  },
+  "tests/fixtures/v61-phase4/models/operation-flow-declarations.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "df713b40e2fb57933ee01598c1ffc71d5b91407c789dfffe894842f7427d3582"
+  },
+  "tests/fixtures/v61-phase4/models/redundant-declarations.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "359a2dcd05ec0cc7b8ec57b91cf8254c957615cc4079d07a4a7d13c04aaa91ae"
+  },
+  "tests/fixtures/v61-phase4/models/role-declaration-unchecked.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "d4f3ff9f723c0c63a3b676316faee95ef81ddeb089da46bbb195288c1737b3c0"
+  },
+  "tests/fixtures/v61-phase4/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "03d8a7fdfc26dc4b28f742e896e2a5a647b6026cccf01ca3ec6ece8d3816c3af"
+  },
+  "tests/fixtures/v61-phase4/models/witness-declarations.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "a740eb4089769f527b079c0ea422d5759082893bf2f6a0b7d949f26fe4dbaa55"
+  },
+  "tests/fixtures/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "e59486b8ff690165d348bbfee97e117ec495e21b8f866cfd9b19f0a35f16195b"
+  },
+  "tests/fixtures/v62-phase2/models/dynamic.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "4cdfb09722455d91eae574d72b4245ba281f4749941be76d7971f17e2fd3bc7c"
+  },
+  "tests/fixtures/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "95f7c008374e5e341a0508498e3b97a345c4bcb18ee1f416b84605ce7079c279"
+  },
+  "tests/fixtures/v62-phase4/models/aggregates.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "7041b4619df4123ee62571c930ce03db4194bdecfd08fe52330732d7e4945019"
+  },
+  "tests/fixtures/v62-phase5/models/floats.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "bbb684dc1aae3f363b61ee9c961a060147564f971ce7356ea4612cbb03b29cfa"
+  },
+  "tests/fixtures/v62-phase6/models/existential-guard.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "9e33fd00243a6ecc4eef21f48314322e3d20aa5e0f23c7a32694e8322379868d"
+  },
+  "tests/fixtures/v70-phase1/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c4ac9e3eeca16e37f5754a5706086e7ce89fc6acc98b5d71e226fe8bb07276c7"
+  },
+  "tests/fixtures/v70-phase2/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "ea2cd255f365e41c7315d261bf5320023594a754b8ba3590e89ce27e1170fe45"
+  },
+  "tests/fixtures/v70-phase3/join-model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "78f6b3c7cbfb1b9c960fd8d5a83c262b58d7cbbdc1289f520a37711a1b350f73"
+  },
+  "tests/fixtures/v70-phase3/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "b725f25a3761597c7872344d579f09b4a12675ccbdeb5c2921ee20fa9f03914e"
+  },
+  "tests/fixtures/v70-phase4/negation.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3dd3dc02eccacd9c38e51fd0ccea91991e221d6f65717b00646e16d529287953"
+  },
+  "tests/fixtures/v70-phase4/positive.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "97ee42f23ccbd3b867034add0913dee03fb999c495abe516a5db01779fc05af1"
+  },
+  "tests/fixtures/v70-phase4/recursive.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "839d2f7178ab34ead7cfc1333109c9c051b910e04d7a9537708d48d2a308837c"
+  },
+  "tests/fixtures/v70-phase5/bad-inverse.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "5fbd136dff4340464b08e0625136679e80069ad18711767ea329fc2dd295a734"
+  },
+  "tests/fixtures/v70-phase5/private.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "4a40305751dc66b67001f8b9acdb4c121cc8652a5d6ebc4df2592fcdf20a6f7c"
+  },
+  "tests/fixtures/v70-phase5/public.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "5dfc4c22edeaad8b01b6c58032d56637abe97d9961b946704d0e63d8baf46f96"
+  },
+  "tests/fixtures/v70-phase6/negation-a.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "5d9415e0c28e96f24d823e98a7faa0ed70ab9a09ba66dbca01ab0b99ff038f11"
+  },
+  "tests/fixtures/v70-phase6/negation-b.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "79a95a2b756565672497e50cc102a5c287f1c27a0d9ecdfd36c7662473eaab5c"
+  },
+  "tests/fixtures/v70-phase6/range-a.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "668762452f434c9d5fb6bc24c50623d97aee7a5fd0436f1b36ef40656cf22a37"
+  },
+  "tests/fixtures/v70-phase6/range-b.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "803d89256555d97b909013cdf62bcb86743a3a32d36934622eb8dd4f511028e7"
+  },
+  "tests/fixtures/v71/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "4fdbfcb728c0e29aad3aab60957c1ed7406cd99c9273ff5644cf3805b76751f9"
+  },
+  "tests/fixtures/v71/phase1/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "c8d17beee65c18846b53cc033f64681d868e05e357cd1a4f36a370120eaf7341"
+  },
+  "tests/fixtures/v71/phase1/release/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "930bc32b037601efb18e9559cc849e6a9cf803b6c6f33022b67af43ce1b44164"
+  },
+  "tests/fixtures/v71/phase2/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "75c1f3f76e06d82404b1ae0c6dc66f5d7730d69a9139ee5d292dd8431f09ea22"
+  },
+  "tests/fixtures/v71/phase3/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "bc56162704f7dbebae1d00491d8fd4ed9700b2ab5aae0373cd72818f6fd62f2c"
+  },
+  "tests/fixtures/v71/phase4/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "8ceabc6cc0dbd31049bd6dfe898ed39fc8d6d8bfab56a604464f6877173c47d1"
+  },
+  "tests/fixtures/v71/phase4/dispatch/owned-model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "53468725c5bede9dcdb04513fbd5139ed9f9ff2bb91f722861c0a66157961314"
+  },
+  "tests/fixtures/v71/phase4/dispatch/reference-model.orm.yaml": {
+   "exit": 0,
+   "stdout_sha256": "3b4c106b8c8e0d694df5dafb54029177ea082ebc6fa7eedff4d8b8db6c5f9adb"
+  },
+  "tests/fixtures/v71/phase6/dispatch/base/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "212ec318a8e065277c06929af7df6c2b7701fc6d397ecc342ca4bf1afe0e4f45"
+  },
+  "tests/fixtures/v71/phase6/dispatch/count-join/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "6330f5d5b1cbf7d8f0ca588ea3a5e571135370c545f8a8f3db7121ad1eb26a2f"
+  },
+  "tests/fixtures/v71/phase6/dispatch/count/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "bd1da07a109da06d644a969ad565d7a2bb5c82a172f2c697f0b51742ea688a8b"
+  },
+  "tests/fixtures/why_not/claims/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "8b80ea754dfb50e75fb3a0037cec2bee4cdecb369aebba5358261b06a539fa49"
+  },
+  "tests/fixtures/why_not/spelling/model.orm.json": {
+   "exit": 0,
+   "stdout_sha256": "2e3e1cecafff037c4a027dc3a4ce248874dfb691fda12fd6be5f4664c5f95f2f"
+  }
+ }
+}

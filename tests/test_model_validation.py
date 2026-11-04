@@ -87,6 +87,8 @@ def test_normative_semantic_rule_inventory_matches_registration_order():
             "semantic:derivation-unstratified",
             "semantic:derivation-recursive-value-invention",
         ],
+        # MG5: one walk, eight named refusals, documented in rule order.
+        "_rule_unattended": [f"semantic:unattended-u{n}" for n in range(1, 9)],
     }
     assert [rule.__name__ for rule in model_module._SEMANTIC_RULES[:5]] == [
         "_rule_temporal_language", "_rule_id_unique", "_rule_role_ref",

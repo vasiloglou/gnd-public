@@ -16,6 +16,7 @@ for a process. It is accepted only at the root.
 | Command form | Result |
 |---|---|
 | `gnd validate MODEL --format json` | Structural and semantic model validation |
+| `gnd validate MODEL --document DOC` | Also re-hash an unattended model's source spans over a declared document |
 | `gnd validate MODEL --trace` | Text report of transition digests and obligations, without evaluating a walk |
 | `gnd check MODEL POPULATION --format json` | Snapshot constraint and derivation findings |
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |

@@ -22,7 +22,7 @@ source:                                       # how the model was derived; metad
     - "user-prompt.md"
   started_at: "2026-05-14T10:00:00Z"
   confidence: standard                        # standard | low
-  mode: guided                                # guided | one-shot
+  mode: guided                                # guided | one-shot | unattended (see "Unattended source")
 
 object_types:                                 # list of entity / value types
   - …
@@ -636,6 +636,54 @@ fact_types:
 The sample_population is rendered in the verbalization (see [verbalization-patterns.md](verbalization-patterns.md)) but is *not* used to auto-confirm sample-derived constraints — they stay `proposed` until user confirmation.
 
 Note that `sample_population` (authoring-time examples embedded in the model) is distinct from a **population file** (a standalone document checked against the model) — the latter is specified in [population-format.md](population-format.md).
+
+## Unattended source
+
+A model authored with no human in the loop declares it, and then every claim it makes cites the
+text it came from. This section is the rule family's one normative home; `gnd validate` enforces
+it (`semantic:unattended-u1` … `-u8`, all errors) only when `source.mode` is `unattended`. Every
+other model validates exactly as before, with one schema exception: an `induced` constraint may now
+carry `provenance.spans` in any mode (its provenance is otherwise closed).
+
+```yaml
+source:
+  kind: prose
+  mode: unattended
+  reviewer: none                              # required: nobody confirmed anything
+  documents:                                  # required, at least one
+    - { sha256: <SHA-256 of the raw file bytes>, label: report.txt }
+object_types:
+  - id: customer
+    # …
+    provenance:
+      spans: [{ document_sha256: <declared>, start: 120, end: 129, excerpt_sha256: <…> }]
+```
+
+A **span** is `{document_sha256, start, end, excerpt_sha256}` and nothing else (`$defs.source_span`).
+`start` and `end` count **code points** of the NFC normalization of the document's strict UTF-8
+decoding, as anchors do; `excerpt_sha256` is the SHA-256 of the UTF-8 encoding of that slice;
+`0 ≤ start < end`; `document_sha256` names a declared document.
+
+| Rule | Refused |
+|---|---|
+| U1 | `reviewer` absent or not `none`; `documents` absent, empty, or an entry that is not `{sha256, label}` |
+| U2 | any constraint, operation or obligation with `status: confirmed` |
+| U3 | any constraint with `source: explicit` or `user-supplied` (also refused by U2 and the status/source rule) |
+| U4 | an object type or fact type without a non-empty `provenance.spans` |
+| U5 | a constraint without a non-empty `provenance.spans`, for every source except `common-sense`, which keeps its required `library_entry` (spans it does carry are checked by U7) |
+| U6 | `provenance.sample_spans` (a list of `{row, span}`) that does not name every `sample_population` row index exactly once, or names a row that does not exist |
+| U7 | a span that is malformed, has `start ≥ end`, or names an undeclared document |
+| U8 | an `alethic` constraint whose source is `sample`, `llm-inferred`, `common-sense` or `induced` |
+
+`gnd validate MODEL --document PATH` (repeatable, optional) re-hashes every span over each supplied
+document: a document whose SHA-256 is not declared (`unattended:document-undeclared`), a span whose
+`end` is past the document (`unattended:span-out-of-range`) or whose excerpt digest differs
+(`unattended:excerpt-mismatch`) exits 3. A model without the mode declares no document, so any
+`--document` is undeclared. A document that is not strict UTF-8 (`unattended:document-unreadable`) or
+exceeds 10 MiB exits 3; a missing path exits 66 and an unreadable one 74. Documents are read only
+after the model validates, so an invalid model reports its own issues first. Spans over a declared
+document that was not supplied are not re-hashed. Messages carry paths, digests and offsets, never
+document text.
 
 ## `rejected_proposals` — kept so future runs don't re-propose
 
@@ -1430,6 +1478,14 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
 | `semantic:anchored-invalid` | error | an inline anchor selects a declared role, and each role recogniser fits that role's resolved primitive |
 | `semantic:induced-provenance` | error | an `induced` claim's induction block is consistent: support numerator ≤ denominator, listed examples ≤ numerator, counterexamples ≤ denominator − numerator, no id in both lists, and no whitespace in a token, id, ref or digest |
 | `semantic:induced-confirmed-reviewed` | error | an `induced` claim with `status: confirmed` names a non-blank `reviewed_in` |
+| `semantic:unattended-u1` | error | under `source.mode: unattended` only: header: `reviewer: none` and at least one `{sha256, label}` document ("Unattended source") |
+| `semantic:unattended-u2` | error | under `source.mode: unattended` only: no `confirmed` constraint, operation or obligation ("Unattended source") |
+| `semantic:unattended-u3` | error | under `source.mode: unattended` only: no `explicit` or `user-supplied` constraint ("Unattended source") |
+| `semantic:unattended-u4` | error | under `source.mode: unattended` only: every object type and fact type cites a span ("Unattended source") |
+| `semantic:unattended-u5` | error | under `source.mode: unattended` only: every constraint except `common-sense` cites a span ("Unattended source") |
+| `semantic:unattended-u6` | error | under `source.mode: unattended` only: every sample row cites a span ("Unattended source") |
+| `semantic:unattended-u7` | error | under `source.mode: unattended` only: every span is well formed and names a declared document ("Unattended source") |
+| `semantic:unattended-u8` | error | under `source.mode: unattended` only: no `alethic` constraint from `sample`, `llm-inferred`, `common-sense` or `induced` ("Unattended source") |
 
 Errors abort the load with a pointed message naming the offending element; warnings ride on the loaded model and are printed by `gnd validate` (exit 0 when only warnings exist).
 

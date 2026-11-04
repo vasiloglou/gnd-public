@@ -33,5 +33,6 @@ T13, T15). Successor:
   passed).
 - MG4 done: [005-phase-MG4.md](005-phase-MG4.md) (spec delegated `(d1)`;
   one reviewer, approve-with-fixes; focused gate 1533 passed).
-- Next action: MG5 (unattended mode), spec
-  [notes/phase-MG5-spec.md](notes/phase-MG5-spec.md).
+- MG5 done: [006-phase-MG5.md](006-phase-MG5.md) (spec delegated `(d1)`;
+  one reviewer, approve-with-fixes; focused gate 3006 passed).
+- Next action: MG6 (documentation), then the close.

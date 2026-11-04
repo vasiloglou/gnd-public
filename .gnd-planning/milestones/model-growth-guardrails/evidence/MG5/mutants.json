@@ -1,0 +1,101 @@
+[
+ {
+  "id": "M1-mode-gate-removed",
+  "file": "src/gnd/model/_validation.py",
+  "old": "    if isinstance(source, Mapping) and source.get(\"mode\") == UNATTENDED_MODE:\n",
+  "new": "    if isinstance(source, Mapping):\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t2b_the_same_edit_without_the_mode_raises_no_unattended_issue"
+  ]
+ },
+ {
+  "id": "M2-byte-offsets",
+  "file": "src/gnd/model/_validation.py",
+  "old": "        elif hashlib.sha256(text[span[\"start\"]:span[\"end\"]].encode(\"utf-8\")).hexdigest() != span[\"excerpt_sha256\"]:\n",
+  "new": "        elif hashlib.sha256(text.encode(\"utf-8\")[span[\"start\"]:span[\"end\"]]).hexdigest() != span[\"excerpt_sha256\"]:\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t3_matching_spans_exit_0"
+  ]
+ },
+ {
+  "id": "M3-u6-first-row-only",
+  "file": "src/gnd/model/_validation.py",
+  "old": "    missing = sorted(set(range(count)) - covered)\n",
+  "new": "    missing = sorted(set(range(min(count, 1))) - covered)\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t2_each_branch_refuses_with_its_rule_id[u6-one-row-uncovered]"
+  ]
+ },
+ {
+  "id": "M4-common-sense-not-exempt",
+  "file": "src/gnd/model/_validation.py",
+  "old": "_UNATTENDED_SPANLESS_SOURCE = \"common-sense\"\n",
+  "new": "_UNATTENDED_SPANLESS_SOURCE = \"none\"\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t2c_the_conforming_model_exits_0"
+  ]
+ },
+ {
+  "id": "M5-u8-skips-sample",
+  "file": "src/gnd/model/_validation.py",
+  "old": "_UNATTENDED_ALETHIC_SOURCES = (\"sample\", \"llm-inferred\", \"common-sense\", \"induced\")\n",
+  "new": "_UNATTENDED_ALETHIC_SOURCES = (\"llm-inferred\", \"common-sense\", \"induced\")\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t2_each_branch_refuses_with_its_rule_id[u8-sample]"
+  ]
+ },
+ {
+  "id": "M6-no-nfc",
+  "file": "src/gnd/anchors.py",
+  "old": "        return unicodedata.normalize(\"NFC\", raw.decode(\"utf-8\", \"strict\"))\n",
+  "new": "        return raw.decode(\"utf-8\", \"strict\")\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t3_a_decomposed_document_normalizes_to_the_same_offsets"
+  ]
+ },
+ {
+  "id": "M7-undeclared-accepted",
+  "file": "src/gnd/model/_validation.py",
+  "old": "    elif span[\"document_sha256\"] not in declared:\n",
+  "new": "    elif False:\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t2_each_branch_refuses_with_its_rule_id[u7-undeclared-document]"
+  ]
+ },
+ {
+  "id": "M8-confirmed-admitted",
+  "file": "src/gnd/model/_validation.py",
+  "old": "        if element.get(\"status\") == \"confirmed\":\n",
+  "new": "        if False:\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_t2_each_branch_refuses_with_its_rule_id[u2-constraint-confirmed]"
+  ]
+ },
+ {
+  "id": "M9-match-not-fullmatch",
+  "file": "src/gnd/model/_validation.py",
+  "old": "            and _SHA256_HEX.fullmatch(entry[\"sha256\"])\n",
+  "new": "            and _SHA256_HEX.match(entry[\"sha256\"].strip())\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_review_f1_a_digest_with_a_trailing_newline_is_refused"
+  ]
+ },
+ {
+  "id": "M10-duplicate-rows-admitted",
+  "file": "src/gnd/model/_validation.py",
+  "old": "        if row in covered or not 0 <= row < count:\n",
+  "new": "        if False:\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_review_f5_sample_span_rows_must_name_each_row_once"
+  ]
+ },
+ {
+  "id": "M11-refusal-drops-warnings",
+  "file": "src/gnd/commands/checking.py",
+  "old": "    warnings = list(result.warnings)\n",
+  "new": "    warnings = []\n",
+  "tests": [
+   "tests/test_unattended_mode.py::test_review_f3_a_document_refusal_keeps_the_models_warnings"
+  ]
+ }
+]

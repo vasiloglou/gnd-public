@@ -292,6 +292,7 @@ def replay_witness(
     *,
     reference_inputs: tuple[tuple[str, bytes], ...] = (),
     limits=DEFAULT_LIMITS,
+    composition: tuple[str, dict] | None = None,
 ):
     targets = ()
     try:
@@ -301,8 +302,23 @@ def replay_witness(
         model, candidate, refs = intake(
             model_document, candidate_document, reference_inputs, limits=limits
         )
-        if certificate["binding"] != identity(model, candidate, reference_inputs):
+        binding = dict(certificate["binding"])
+        composed = certificate["version"] == 2
+        if composed and composition is None:
+            return WitnessResult(3, reason="composition-required")
+        if not composed and composition is not None:
             return WitnessResult(3, reason="binding-stale")
+        if composed and binding.pop("composition_sha256") != composition[0]:
+            return WitnessResult(3, reason="binding-stale")
+        if binding != identity(model, candidate, reference_inputs):
+            return WitnessResult(3, reason="binding-stale")
+        if composed:
+            lineage = composition[1]
+            for node in certificate["nodes"]:
+                if node["kind"] == "base" and node["sources"] != lineage.get(
+                    (node["fact_type"], node["origin"]["fact_index"])
+                ):
+                    raise InvalidProof("base node sources differ from the composition record")
         validate_targets(targets, model)
         flags, _, _ = classify_targets(model, targets, (candidate, *refs.values()))
         if not any(flags):

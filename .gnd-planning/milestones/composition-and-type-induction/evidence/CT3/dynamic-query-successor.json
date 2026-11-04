@@ -1,0 +1,35 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/composition-and-type-induction/evidence/CT2/dynamic-query-successor.json",
+ "predecessor_sha256": "86f0d766ac1b6a55118a6fb5180da6180140af22bb24a2cf0fd0be59de282296",
+ "reason": "composition-and-type-induction CT3 (2026-11-04): gnd.witness accepts version-2 witnesses over composed populations: io.certificate_shape checks composition_sha256 and base-node sources, kernel.replay_witness compares them with the composition record, service adds composed_witness_result and composed_replay_result, view lists sources. Parameter, return and local annotations and local dictionary reads only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/witness/kernel.py",
+   "replay_witness",
+   "lineage.get((node['fact_type'], node['origin']['fact_index']))",
+   1
+  ],
+  [
+   "src/gnd/witness/kernel.py",
+   "replay_witness",
+   "tuple[str, dict]",
+   1
+  ],
+  [
+   "src/gnd/witness/service.py",
+   "_composition_lineage",
+   "record[key]",
+   1
+  ],
+  [
+   "src/gnd/witness/service.py",
+   "_stamp_composition",
+   "lineage.get((node['fact_type'], node['origin']['fact_index']))",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 7057,
+ "result_occurrences": 8817
+}

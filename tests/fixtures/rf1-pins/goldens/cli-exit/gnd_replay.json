@@ -2,11 +2,11 @@
  "help": {
   "exit": 0,
   "stderr": "",
-  "stdout": "usage: gnd replay [-h] [--reference-root REFERENCE_ROOT] [--json] [--raw]\n                  model population certificate\n\npositional arguments:\n  model\n  population\n  certificate\n\noptions:\n  -h, --help            show this help message and exit\n  --reference-root REFERENCE_ROOT\n  --json\n  --raw                 explicitly expose target values\n"
+  "stdout": "usage: gnd replay [-h] [--reference-root REFERENCE_ROOT]\n                  [--composition COMPOSITION] [--json] [--raw]\n                  model population certificate\n\npositional arguments:\n  model\n  population\n  certificate\n\noptions:\n  -h, --help            show this help message and exit\n  --reference-root REFERENCE_ROOT\n  --composition COMPOSITION\n                        composition record a version-2 witness binds\n  --json\n  --raw                 explicitly expose target values\n"
  },
  "unknown_flag": {
   "exit": 64,
-  "stderr": "usage: gnd replay [-h] [--reference-root REFERENCE_ROOT] [--json] [--raw]\n                  model population certificate\ngnd replay: error: the following arguments are required: model, population, certificate\n",
+  "stderr": "usage: gnd replay [-h] [--reference-root REFERENCE_ROOT]\n                  [--composition COMPOSITION] [--json] [--raw]\n                  model population certificate\ngnd replay: error: the following arguments are required: model, population, certificate\n",
   "stdout": ""
  }
 }

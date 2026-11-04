@@ -39,6 +39,47 @@ def _witness_inputs(model_path, population_path, reference_root):
     return model, candidate, context, md, pd
 
 
+def _composition_lineage(composition, model_path, population_path):
+    """Read a composition record bound to these model and population bytes (CT3)."""
+    import hashlib
+
+    from gnd.anchors import MAX_DOCUMENT_BYTES, read_regular_path
+    from gnd.composition import MAX_RECORD_BYTES, lineage_index, parse_record
+    from gnd.witness.types import WitnessInputError
+
+    raw = read_regular_path(composition, label="composition record", max_bytes=MAX_RECORD_BYTES)
+    record = parse_record(raw)
+    for path, key in ((model_path, "model_sha256"), (population_path, "population_sha256")):
+        digest = hashlib.sha256(read_regular_path(path, label="witness input", max_bytes=MAX_DOCUMENT_BYTES)).hexdigest()
+        if digest != record[key]:
+            raise WitnessInputError("composition record does not bind these inputs")
+    return hashlib.sha256(raw).hexdigest(), lineage_index(record)
+
+
+def _stamp_composition(result, composition):
+    """Make a produced certificate a version-2 witness over a composed population."""
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, WitnessResult, result_rows
+
+    certificate = result.get("certificate")
+    if certificate is None:
+        return result
+    digest, lineage = composition
+    certificate["version"] = 2
+    certificate["binding"]["composition_sha256"] = digest
+    for node in certificate["nodes"]:
+        if node["kind"] == "base":
+            sources = lineage.get((node["fact_type"], node["origin"]["fact_index"]))
+            if node["origin"]["kind"] != "candidate" or not sources:
+                raise WitnessInputError("the composition record has no lineage for a base fact")
+            node["sources"] = sources
+    if len(canonical_json_bytes(certificate)) > DEFAULT_LIMITS.bytes:
+        # The stamped lineage must still fit the certificate wire budget.
+        targets = tuple(r["target"] for r in certificate["results"])
+        return WitnessResult(4, result_rows(targets, "resource-refused"), reason="work-limit").model_dump(mode="json")
+    return result
+
+
 def witness_result(model_path, population_path, targets_path, *, reference_root=None):
     """Produce finite witnesses; exit zero requires every requested tuple proved."""
     from ruamel.yaml.error import YAMLError
@@ -91,6 +132,44 @@ def replay_result(model_path, population_path, certificate_path, *, reference_ro
         PopulationLoadError,
         YAMLError,
     ):
+        return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+
+
+def _input_errors():
+    from gnd.artifacts import ArtifactError
+
+    # read_regular_path refuses unsafe paths with ArtifactError, not OSError.
+    return (ValueError, TypeError, OSError, RecursionError, ModelValidationError,
+            model_module.ModelLoadError, PopulationLoadError, ArtifactError)
+
+
+def composed_witness_result(model_path, population_path, targets_path, *, composition):
+    """A version-2 witness over a composed population: each base node names its source facts (CT3)."""
+    from gnd.witness.types import WitnessResult
+
+    try:
+        lineage = _composition_lineage(composition, model_path, population_path)
+        if model_module.load_model(model_path).reference_populations:
+            raise ValueError("a composed population has no reference populations")
+        return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
+    except _input_errors():
+        return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
+
+
+def composed_replay_result(model_path, population_path, certificate_path, *, composition):
+    """Replay a version-2 witness against the composition record it binds (CT3)."""
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.witness.io import load_certificate
+    from gnd.witness.kernel import replay_witness
+    from gnd.witness.types import WitnessResult
+
+    try:
+        certificate = load_certificate(certificate_path)
+        lineage = _composition_lineage(composition, model_path, population_path)
+        _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
+        return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
+    except (*_input_errors(), YAMLError):
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
 
@@ -184,19 +263,31 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
 
 # The public functions apply the disclosure mode; the *_result functions return
 # the raw result the CLI needs (its own --raw view and witness --out).
-def witness(model_path, population_path, targets_path, *, reference_root=None):
+def witness(model_path, population_path, targets_path, *, reference_root=None, composition=None):
     """Produce finite witnesses; exit zero requires every requested tuple proved.
 
     Under the customer disclosure mode the result is the value-free view."""
-    result = witness_result(model_path, population_path, targets_path, reference_root=reference_root)
+    if composition is not None and reference_root is not None:
+        raise ValueError("composition cannot be combined with reference_root")
+    result = (
+        witness_result(model_path, population_path, targets_path, reference_root=reference_root)
+        if composition is None
+        else composed_witness_result(model_path, population_path, targets_path, composition=composition)
+    )
     return result_view(result) if resolve() == "customer" else result
 
 
-def replay(model_path, population_path, certificate_path, *, reference_root=None):
+def replay(model_path, population_path, certificate_path, *, reference_root=None, composition=None):
     """Replay a finite proof with an independent local inference kernel.
 
     Under the customer disclosure mode the result is the value-free view."""
-    result = replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
+    if composition is not None and reference_root is not None:
+        raise ValueError("composition cannot be combined with reference_root")
+    result = (
+        replay_result(model_path, population_path, certificate_path, reference_root=reference_root)
+        if composition is None
+        else composed_replay_result(model_path, population_path, certificate_path, composition=composition)
+    )
     return result_view(result) if resolve() == "customer" else result
 
 

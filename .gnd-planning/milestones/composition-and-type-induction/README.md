@@ -23,3 +23,5 @@ Predecessor: [model-growth-guardrails](../model-growth-guardrails/README.md).
   reviewer, approve-with-fixes, all dispositioned; focused gate 473 passed).
 - CT2 done: [003-phase-CT2.md](003-phase-CT2.md) (spec delegated `(d1)`; one
   reviewer, approve-with-fixes, two blocking findings fixed; focused gate 663 passed).
+- CT3 done: [004-phase-CT3.md](004-phase-CT3.md) (spec delegated `(d1)`; one
+  reviewer, approve-with-fixes, one blocking finding fixed; focused gate 1341 passed).

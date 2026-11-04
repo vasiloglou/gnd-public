@@ -21,6 +21,11 @@ changes requires a separate release decision.
   checks each anchored value against its own source, and names the sources
   of every offending fact. `gnd.api.__all__` gains `compose`; see the
   [composition reference](reference/composition.md).
+- **Witness lineage** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
+  `gnd witness --composition RECORD` writes a version-2 witness whose base
+  facts name their source facts, and so, through each source's sidecar,
+  their spans in each document. `gnd replay --composition` checks that
+  lineage against the record. Version-1 witnesses are unchanged.
 
 ## Unreleased: model growth guardrails (2026-11-04)
 

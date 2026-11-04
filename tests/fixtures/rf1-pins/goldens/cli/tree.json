@@ -4452,6 +4452,21 @@
     },
     {
      "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "composition",
+     "help": "composition record a version-2 witness binds",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--composition"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
      "class": "_StoreTrueAction",
      "const": true,
      "default": false,
@@ -5874,6 +5889,21 @@
      "nargs": null,
      "option_strings": [
       "--out"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "composition",
+     "help": "composition record of a composed population: writes a version-2 witness",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--composition"
      ],
      "required": false,
      "type": null

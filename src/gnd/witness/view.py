@@ -46,6 +46,9 @@ def witness_view(certificate, *, raw=False, expand=False, limits=DEFAULT_LIMITS)
                 }
             source = certificate["nodes"][i]
             node = dict(source) if raw else {"id": source["id"], "kind": source["kind"]}
+            if "sources" in source and not raw:
+                # Source facts are ids and indexes, never values (CT3).
+                node["sources"] = deepcopy(source["sources"])
             node["premises"] = []
             destination.append(node)
             stack.extend(
@@ -67,7 +70,8 @@ def witness_view(certificate, *, raw=False, expand=False, limits=DEFAULT_LIMITS)
             for r in certificate["results"]
         ],
         "nodes": [
-            {"id": n["id"], "kind": n["kind"], "premises": n.get("premises", [])}
+            {"id": n["id"], "kind": n["kind"], "premises": n.get("premises", []),
+             **({"sources": deepcopy(n["sources"])} if "sources" in n else {})}
             for n in certificate["nodes"]
         ],
         "work": {"node_visits": visits} if expand else {},

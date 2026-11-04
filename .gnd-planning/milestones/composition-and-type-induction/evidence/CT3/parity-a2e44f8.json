@@ -1,0 +1,102 @@
+{
+ "dispatch:replay-direct": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "7f6b2dbe0b61c882850efbd37c53cb64396359d66b77ca38bec837b69565fef0"
+ },
+ "dispatch:replay-direct-view": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "9b4853cb8fb7300826aeac6f4205a75b32d3866f69290e1b20d917f064f8deaf"
+ },
+ "dispatch:replay-recursive": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "b2cbd29a6e41b10888ebf0a29540c6ac4013f88d740d3678ef3e5aefa4d5a1fa"
+ },
+ "dispatch:replay-recursive-view": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "ae53036101d5f7686af075e1bc982597a15fdb37f3c813cdad01790ca7238b5d"
+ },
+ "dispatch:view-direct": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "7f6af233218e88b6d00516206b1bada34c830ba63262987d91bd9febf2ff99f5"
+ },
+ "dispatch:view-direct-expand": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "eee2c929079e02c6cb8c7497f89162b5375d93a4a468695472d1aed0ac5e9ab9"
+ },
+ "dispatch:view-recursive": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "6bd3fe57c6ae7183458607061aad11197d1d10ed7e2ac48acca17cae5ee2386d"
+ },
+ "dispatch:view-recursive-expand": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "2b921a73059543a832258c385422358fa0ac6d7c858af01adfa46d8a8d2aea19"
+ },
+ "dispatch:witness-raw": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "0fae9bc297a94c0aa8a3a8ae620c70767153eebb66df49e4e625c5e55c263fba"
+ },
+ "dispatch:witness-view": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "974641a7e6442d13a21692e705296df69e71b2c0e7184fd70d5c8d30f2a2d11a"
+ },
+ "release:replay-direct": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "9587ebc6f98554d38eb373b06fd3eddec85c6d6bea6d7d5ff6769256a5cdb19d"
+ },
+ "release:replay-direct-view": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "9b4853cb8fb7300826aeac6f4205a75b32d3866f69290e1b20d917f064f8deaf"
+ },
+ "release:replay-recursive": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "32d1012625beab272abf905e75650dbb27566c87b3d6c75f0d4e0318faae8095"
+ },
+ "release:replay-recursive-view": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "ae53036101d5f7686af075e1bc982597a15fdb37f3c813cdad01790ca7238b5d"
+ },
+ "release:view-direct": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "7f6af233218e88b6d00516206b1bada34c830ba63262987d91bd9febf2ff99f5"
+ },
+ "release:view-direct-expand": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "eee2c929079e02c6cb8c7497f89162b5375d93a4a468695472d1aed0ac5e9ab9"
+ },
+ "release:view-recursive": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "6bd3fe57c6ae7183458607061aad11197d1d10ed7e2ac48acca17cae5ee2386d"
+ },
+ "release:view-recursive-expand": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "2b921a73059543a832258c385422358fa0ac6d7c858af01adfa46d8a8d2aea19"
+ },
+ "release:witness-raw": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "e67e0d30f13fa5a3906672f6fa39863f472ba1d4ecdfea4d6f312082973915d9"
+ },
+ "release:witness-view": {
+  "exit": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "974641a7e6442d13a21692e705296df69e71b2c0e7184fd70d5c8d30f2a2d11a"
+ }
+}

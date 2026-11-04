@@ -154,6 +154,30 @@ party_is_based_in_city#1: contract-b:party_is_based_in_city#0`.
 `gnd.api.check(model, population, composition=RECORD, sources=DIR)` does the
 same; `composition` may be a path or a parsed record.
 
+## Trace a derived fact back to its sources
+
+```sh
+gnd witness model.orm.yaml composed.population.json --targets targets.json --composition composition.json --raw --out witness.json
+gnd replay model.orm.yaml composed.population.json witness.json --composition composition.json
+```
+
+With `--composition`, `gnd witness` writes a version-2 witness. Its binding
+adds `composition_sha256`, the SHA-256 of the record file, and every base
+node adds `sources`, the record's source facts for that composed fact. Each
+source fact's anchors, in its own source's sidecar, locate spans in its own
+document, so a derived fact traces to the passages of every document it
+drew on. The record must bind the model and the composed population, or the
+witness is refused (3).
+
+`gnd replay --composition` replays a version-2 witness: a base node whose
+`sources` differ from the record is `proof-invalid` (1), and a different
+record is `binding-stale` (3). A version-2 witness without `--composition`
+is refused with `composition-required` (3). Replay checks the witness
+against the record; only `gnd check --composition --sources` re-derives the
+record from the sources, so run it before trusting a record. `gnd.api.witness` and
+`gnd.api.replay` take the same `composition=` keyword. The format is in the
+`gnd-export` skill's witness contract.
+
 ## Disclosure
 
 `gnd compose` and `gnd.api.compose` return your own composed population in

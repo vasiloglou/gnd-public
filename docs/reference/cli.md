@@ -38,8 +38,8 @@ does not add trace fields.
 |---|---|
 | `gnd codegen MODEL --out DIR` | Derived project files and initial extension structure |
 | `gnd conformance MODEL DIR --format json` | Static integrity, currency, structure and architecture findings |
-| `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW` | Immutable proposal preview for review |
-| `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR` | Model publication and linked-project rechecks |
+| `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations |
+| `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR [--policy additive --populated FT]` | Model publication and linked-project rechecks; repeats the preview's policy |
 | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR` | Completion of an interrupted published evolution |
 | `gnd discover MODEL POPULATION --out PROPOSAL --report REPORT --actor ID --requested-at 2026-10-24T12:00:00+00:00` | Candidate constraints observed in one population, as a reviewable evolve proposal plus a report ([contract](discover.md)) |
 | `gnd recovery inventory ROOT --source SRC --tests TESTS --out INVENTORY` | Bounded static census of explicitly selected roots |

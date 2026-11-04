@@ -50,6 +50,19 @@ def _register_evolve(subparsers):
         required=True,
         help="write-once PREVIEW JSON path beneath ROOT",
     )
+    evolve_preview_parser.add_argument(
+        "--policy",
+        choices=("additive",),
+        default=None,
+        help="refuse operations outside the additive policy (see the evolution contract)",
+    )
+    evolve_preview_parser.add_argument(
+        "--populated",
+        action="append",
+        default=None,
+        metavar="FACT_TYPE",
+        help="treat FACT_TYPE as populated under --policy additive; repeatable",
+    )
     _add_format_argument(evolve_preview_parser)
 
     evolve_apply_parser = evolve_subparsers.add_parser(
@@ -81,6 +94,19 @@ def _register_evolve(subparsers):
         "--records",
         required=True,
         help="authoritative immutable evidence DIR",
+    )
+    evolve_apply_parser.add_argument(
+        "--policy",
+        choices=("additive",),
+        default=None,
+        help="refuse operations outside the additive policy (see the evolution contract)",
+    )
+    evolve_apply_parser.add_argument(
+        "--populated",
+        action="append",
+        default=None,
+        metavar="FACT_TYPE",
+        help="treat FACT_TYPE as populated under --policy additive; repeatable",
     )
     _add_format_argument(evolve_apply_parser)
 
@@ -134,6 +160,8 @@ def handle(args, parsers) -> int:
                 args.records,
                 args.out,
                 args.format,
+                policy=args.policy,
+                populated=args.populated,
             )
         if args.evolve_command == "apply":
             return _handler_evolve_cli_service._cmd_evolve_apply(
@@ -143,6 +171,8 @@ def handle(args, parsers) -> int:
                 args.workspace,
                 args.records,
                 args.format,
+                policy=args.policy,
+                populated=args.populated,
             )
         return _handler_evolve_cli_service._cmd_evolve_finalize(
             args.model,

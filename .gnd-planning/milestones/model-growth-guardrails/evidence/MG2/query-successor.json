@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/incremental-evaluation/evidence/IE3/query-successor.json",
+  "predecessor_sha256": "cf45348bb4039b6fa1bc7de5296b9256912ae7d7edda97150b25b43db3426100",
+  "reason": "model-growth-guardrails MG2 (2026-11-04): gnd.evolve.policy.effective_populated reads the fact types each declared reference population owns (Model.reference_populations[*].fact_types) to decide which fact types the additive policy treats as populated. One counted read; no model-query allow-list widening, ceiling 365 and the original 310 unchanged.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/evolve/policy.py",
+      "effective_populated",
+      "entry.get('fact_types')",
+      1
+    ]
+  ],
+  "result_distinct_rows": 295,
+  "result_occurrences": 364,
+  "original_metric_current": 309
+}

@@ -9,6 +9,7 @@ EVIDENCE = ROOT / '.gnd-planning/milestones/pyrel-applications/evidence'
 PHASES = ['PA1', 'PA2', 'PA3', 'PA4', 'PA5R']
 QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE3/query-successor.json',
+    ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG2/query-successor.json',
 ]
 
 
@@ -93,6 +94,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/why-not-near-misses/evidence/NM2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/why-not-near-misses/evidence/close-followups/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG2/dynamic-query-successor.json',
 ]
 
 

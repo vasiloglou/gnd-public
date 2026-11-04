@@ -3,6 +3,21 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: additive evolve policy (2026-11-04)
+
+`gnd evolve preview --policy additive [--populated FT ...]` refuses a proposal
+that renames, deletes or changes an existing object type, fact type or role,
+replaces a reference scheme, or adds or strengthens a constraint on a
+populated fact type ([issue #75](https://github.com/vasiloglou/gnd-public/issues/75)).
+The refused operations are named in the preview's `policy_issues`, the preview
+is still written, and the exit is 3. `apply` repeats the same options, refuses
+when they differ from the preview's, and re-runs the policy on the bytes it
+publishes. See the [additive evolve policy reference](reference/evolve-policy.md).
+
+- Without `--policy`, every preview and apply is byte-identical to before.
+- A preview made with the option carries `policy`, `populated_args`,
+  `populated` and `policy_issues`; the keys are omitted otherwise.
+
 ## Unreleased: rule verbalization (2026-11-03)
 
 `gnd.api.verbalize_rules` renders a model's derivation rules as text, the same

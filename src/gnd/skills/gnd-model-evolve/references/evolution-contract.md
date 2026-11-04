@@ -22,8 +22,8 @@ One transaction uses exactly three service operations and two public commands in
 
 | Stage | Service | Public command | Publication |
 |---|---|---|---|
-| inspect | `EvolutionService.preview` | `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--format json]` | immutable preview evidence only; no model or project mutation |
-| commit and complete | `EvolutionService.apply` then `EvolutionService.finalize` | `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR [--format json]` | candidate model CAS and durable pending state, then verbalization, live conformance leaves, and final record last |
+| inspect | `EvolutionService.preview` | `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive [--populated FACT_TYPE ...]] [--format json]` | immutable preview evidence only; no model or project mutation |
+| commit and complete | `EvolutionService.apply` then `EvolutionService.finalize` | `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR [--policy additive [--populated FACT_TYPE ...]] [--format json]` | candidate model CAS and durable pending state, then verbalization, live conformance leaves, and final record last |
 | resume | `EvolutionService.finalize` | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR [--format json]` | only the leaves an interrupted apply left missing, final record last |
 
 The `apply` command performs both service operations in one process. That is what discharges the
@@ -179,6 +179,77 @@ The preview contains the complete proposal and its digest; committed before and 
 bytes; complete candidate verbalization; validation warnings and candidate identity; sorted
 operation references; `breaking`; the complete blast-radius report; optional accepted report
 digest; and `preview_sha256` over every field except itself.
+
+Under `--policy additive` the preview also carries four fields, set together: `policy`
+(`"additive"`), `populated_args` (the sorted `--populated` ids), `populated` (the sorted effective
+set, defined below) and `policy_issues` (one entry per refused operation, in proposal order, each
+naming `operation_index`, `operation_id`, the locator `reference`, the matrix `cell` and a `detail`
+of ids and key names only). Without the option the four keys are **omitted** from the document,
+not written as `null`, so a policy-free preview has the bytes and `preview_sha256` it had before
+the policy existed; `accepted_blast_radius_sha256` keeps writing `null`. Readers of versions 1 and 2
+are unchanged.
+
+### Additive policy
+
+`gnd evolve preview --policy additive` judges every operation by one matrix over (locator kind,
+operation kind). The policy keeps every fact already admitted under the current model
+interpretable under the candidate: nothing existing is renamed, deleted or changed, and no
+constraint on a populated fact type is added or strengthened. This table and the strengthening list
+are the policy's one normative home; `gnd.evolve.policy` implements them, and preview and apply
+share that implementation.
+
+**Populated.** A fact type is populated when it has `sample_population` rows, when a declared
+reference population owns it, when a `population` artifact locator in the proposal references
+`fact_types[ID]`, or when `--populated ID` names it. A `--populated` id that names no fact type of
+the current model exits `3`. A model-hosted constraint's subjects are the fact types its role
+references and rule atoms name, in `before` and `after` alike; it counts as populated when **any**
+subject is. A fact type the same proposal adds is never populated. A `modify` of an element the
+same proposal adds is judged like any other `modify`: declare the element once, in its final shape.
+
+| Locator | add | modify | rename | delete |
+|---|---|---|---|---|
+| `object_types` element | admitted | admitted iff the diff is confined to `description` and `provenance.rationale`; otherwise `object_types.modify` | `object_types.rename` | `object_types.delete` |
+| `fact_types` element | admitted | admitted iff the diff is confined to `provenance.rationale`; otherwise `fact_types.modify` (a changed reading, role list, constraint or sample row included) | `fact_types.rename` | `fact_types.delete` |
+| `operations` element | the operations gate's (exit `18`) | pre-empted by the gate | pre-empted | pre-empted |
+| role | admitted on a fact type the same proposal adds; otherwise `role.add` | `role.modify` | `role.rename` | `role.delete` |
+| constraint, subject not populated | admitted | admitted | pre-empted: a constraint has no stable id to rename (exit `3` at proposal read) | admitted |
+| constraint, subject populated | `constraint.populated.add` | admitted iff every differing key weakens or is `rationale` (or `provenance.reviewed_in`); otherwise `constraint.populated.modify` | pre-empted | admitted |
+| model identity | — | `model_identity.modify` | — | — |
+
+An element `modify` replaces the whole element, so its cell is an allow-list over the dotted paths
+at which `before` and `after` differ; a path beneath an admitted key (`description.summary`) is
+admitted.
+
+**Strengthening and weakening**, per differing key of a constraint `modify`. Any other differing
+key (`type`, `role`, `role_ref`, `object_type`, a role sequence, `source`, `owner`, `status` to
+`rejected`, `allowed` against `range`, a `ranges` list of changed length, an unknown key) is
+neither, and refused on a populated subject.
+
+| Key | Strengthening | Weakening |
+|---|---|---|
+| `roles` (uniqueness only; a frequency projection change is neither) | proper subset | proper superset |
+| `allowed` (value) | proper subset | proper superset |
+| `range.min`, `ranges[i].min`, `bound.min` | raised, or added | lowered, or removed |
+| `range.max`, `ranges[i].max`, `bound.max` | lowered, or added | raised, or removed |
+| `min_inclusive`, `max_inclusive` | `true` to `false` | `false` to `true` |
+| `modality` | `deontic` to `alethic` | `alethic` to `deontic` |
+| `status` | `proposed` to `confirmed` | `confirmed` to `proposed` |
+
+D-12 runs first, so a changed constraint still has to be llm-inferred/proposed/deontic,
+user-supplied/confirmed, or a reviewed induced confirmation; the policy judges what D-12 admits.
+
+**Order.** Pending state (`11`), stale identity (`11`), the operations gate (`18`), candidate
+validation, replay equality and D-12 (`3`), then the policy. A preview with issues is still written
+to `--out`, for review, and the command exits `3`.
+
+**Apply.** The additive guarantee holds when `apply` repeats the preview's `--policy` and
+`--populated`. The command compares its options with the reviewed preview's `policy` and
+`populated_args` before the retry branch and the fresh/reviewed equality and exits `3` when they differ, in either direction; it then
+rebuilds the preview with those options, so a preview whose `policy_issues` were edited and whose
+digest was recomputed differs from the fresh one and exits `11`. `EvolutionService.apply` re-runs
+the policy on the bytes it is about to publish and refuses with `3` on any issue, naming the
+operation index and cell; it never reads the preview's issue list. A preview stripped of every
+policy field and applied without `--policy` publishes as a policy-free preview.
 
 `preview` performs no publication. It validates the current and candidate models, replays declared
 operations, enforces D-12, renders the complete verbalization, and builds the report.
@@ -343,7 +414,7 @@ exit, drift publication flag, model commit point, transaction scope, and final r
 | Exit | Meaning | Publication consequence | Returned by |
 |---|---|---|---|
 | `0` | requested stage completed; inspect the emitted preview, pending, or record claim | stage-specific only | preview, apply, finalize |
-| `3` | malformed model, proposal, preview, pending state, or closed evidence | no new authorized mutation | preview, apply, finalize |
+| `3` | malformed model, proposal, preview, pending state, or closed evidence; an operation the additive policy refuses; `--policy` or `--populated` differing from the reviewed preview's | no new authorized mutation (a refusing preview is still written for review) | preview, apply, finalize |
 | `11` | stale identity or collision, **or** a published-but-incomplete evolution refusing a new one | preserve current bytes; no rollback; the pending transaction is untouched | preview, apply, finalize |
 | `13` | model was published and linked conformance found drift | retain drift evidence; do not regenerate | apply, finalize |
 | `66` | required input path is absent | nothing was established about the absent input | preview, apply, finalize |

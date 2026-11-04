@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import stat
 from collections import Counter
+from collections.abc import Sequence
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -55,6 +56,7 @@ from .models import (
     LinkedProject,
     LinkedProjectConformance,
     ModelIdentityLocator,
+    PolicyIssue,
     ProjectLocator,
     RoleLocator,
     ValidationEvidence,
@@ -67,6 +69,7 @@ from .models import (
     read_evolution_record_document,
     read_linked_project_conformance_document,
 )
+from .policy import POLICY_ADDITIVE, additive_policy_issues, effective_populated
 
 MAX_EVOLUTION_PROPOSAL_BYTES = 10 * 1024 * 1024
 MAX_PROJECT_TREE_ENTRIES = 100_000
@@ -76,6 +79,7 @@ _EXIT_PRECEDENCE = {0: 0, 13: 1, 3: 2, 66: 3, 74: 4}
 
 __all__ = [
     "EvolutionError",
+    "EvolutionPolicyRefusedError",
     "EvolutionService",
     "read_evolution_finalization_state",
     "read_evolution_intent",
@@ -110,6 +114,22 @@ class EvolutionOperationsGatedError(EvolutionError):
     from a substring match on the refusal text is how an exit band drifts into
     meaning something else. Everything the caller needs to act — the gated
     element ids and the hand-edit protocol — is in the message."""
+
+
+class EvolutionPolicyRefusedError(EvolutionError):
+    """The additive policy refused an operation at apply (MG2, exit 3).
+
+    Its own class, by type, like the gated error: `apply` re-runs the policy
+    on the bytes it is about to publish and never trusts the issue list the
+    preview carried (MG-R3)."""
+
+    def __init__(self, issues: tuple[PolicyIssue, ...]) -> None:
+        first = issues[0]
+        super().__init__(
+            f"additive policy refused operation {first.operation_index} ({first.cell}): "
+            f"{first.detail}; {len(issues)} issue(s) in all"
+        )
+        self.issues = issues
 
 
 #: What a refused proposal is told to do instead. The full blast-radius walker
@@ -1253,9 +1273,21 @@ class EvolutionService:
         proposal: EvolutionProposal,
         *,
         accepted_blast_radius_sha256: str | None = None,
+        policy: str | None = None,
+        populated: Sequence[str] = (),
     ) -> EvolutionPreview:
-        """Validate and bind a proposal without changing any publication leaf."""
+        """Validate and bind a proposal without changing any publication leaf.
 
+        With ``policy="additive"`` the preview also carries the additive
+        policy's verdict (MG2): ``populated_args``, the effective ``populated``
+        set and ``policy_issues``. Issues do not raise here; the preview is
+        returned for review and the CLI exits 3 when the list is non-empty.
+        """
+
+        if policy is not None and policy != POLICY_ADDITIVE:
+            raise EvolutionError(f"invalid evolution policy {policy!r}: the only policy is {POLICY_ADDITIVE!r}")
+        if populated and policy is None:
+            raise EvolutionError("invalid request: --populated requires --policy additive")
         try:
             proposal = read_evolution_proposal_document(proposal.model_dump(mode="json"))
         except (AttributeError, ValidationError, ValueError) as error:
@@ -1319,6 +1351,9 @@ class EvolutionService:
         if declared_document != candidate_document:
             raise EvolutionError("declared operations do not equal the canonical candidate model")
         _enforce_d12(before_document, candidate_document)
+        # After the gate (18), candidate validation, replay equality and D-12
+        # (all 3), so a preview written with issues is otherwise valid (spec D6).
+        policy_values = self._policy_values(before_loaded_model, proposal, policy, populated)
 
         verbalization_text = render_model_verbalization(candidate_model)
         before_verbalization_text = render_model_verbalization(before_loaded_model)
@@ -1357,6 +1392,9 @@ class EvolutionService:
             "breaking": breaking,
             "blast_radius": blast_radius,
             "accepted_blast_radius_sha256": accepted_blast_radius_sha256,
+            # Present only under a policy: absent fields stay out of the
+            # digest body, so a policy-free preview keeps its digest (MG-R1).
+            **policy_values,
         }
         digest_body = {key: _json_ready(value) for key, value in values.items()}
         digest_body["schema_version"] = proposal.schema_version
@@ -1365,6 +1403,30 @@ class EvolutionService:
             **values,
             preview_sha256=canonical_sha256(digest_body),
         )
+
+    @staticmethod
+    def _policy_values(
+        before_loaded_model: Any,
+        proposal: EvolutionProposal,
+        policy: str | None,
+        populated: Sequence[str],
+    ) -> dict[str, Any]:
+        """The four policy fields of a preview, or nothing without a policy."""
+
+        if policy is None:
+            return {}
+        populated_args = tuple(sorted(set(populated)))
+        try:
+            effective = effective_populated(before_loaded_model, proposal, populated_args=populated_args)
+        except ValueError as error:
+            raise EvolutionError(str(error)) from error
+        issues = additive_policy_issues(before_loaded_model, proposal, populated=effective)
+        return {
+            "policy": policy,
+            "populated_args": populated_args,
+            "populated": tuple(sorted(effective)),
+            "policy_issues": issues,
+        }
 
     def _linked_snapshot(
         self,
@@ -1621,6 +1683,17 @@ class EvolutionService:
             label="current model at apply",
             model_path=self._model_path,
         )
+        # Re-run the additive policy on the bytes about to be published rather
+        # than reading the preview's issue list: anyone can recompute
+        # preview_sha256 over a stripped list, so the re-run is the guard (MG-R3).
+        if preview.policy is not None:
+            recomputed = self._policy_values(
+                before_loaded_model, proposal, preview.policy, preview.populated_args or ()
+            )
+            if recomputed["populated"] != preview.populated:
+                raise EvolutionError("populated set changed before apply")
+            if recomputed["policy_issues"]:
+                raise EvolutionPolicyRefusedError(recomputed["policy_issues"])
         candidate_loaded_model, candidate_document, validation = self._validated_candidate(
             preview.candidate_model,
             declared_references=before_loaded_model.reference_populations,

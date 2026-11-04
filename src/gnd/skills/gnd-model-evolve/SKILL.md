@@ -120,6 +120,20 @@ The refusal message names the intersecting ids. It is a refusal on **policy**, n
 proposal is well formed, and what is missing is machinery that computes what the change does to
 the operations depending on it. The full blast-radius walker over operations is M3 work.
 
+## The additive policy — `--policy additive` and exit 3
+
+An agent growing a model in rounds, without a human in the loop, must never invalidate facts it
+has already admitted. Pass `--policy additive` to **both** `preview` and `apply`, with the same
+`--populated FACT_TYPE` ids for fact types whose population lives outside the model. Preview then
+refuses, with exit `3` and the refused operations listed under `policy_issues` in the written
+preview: any rename, delete or change of an existing object type, fact type or role; a replaced
+reference scheme; a new or strengthened constraint on a populated fact type (sample rows, a
+declared reference population, a `population` artifact, or `--populated`). Apply refuses with `3`
+when its options differ from the preview's, and re-runs the policy on the bytes it publishes. The
+matrix and the strengthening list are in the
+[evolution contract](references/evolution-contract.md) ("Additive policy"); the guarantee holds
+only when apply repeats the options.
+
 ### The hand-edit protocol for the refused residue
 
 There is no flag to override this and no `--force`. For a gated delta:

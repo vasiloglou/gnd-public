@@ -1145,6 +1145,38 @@
       },
       {
        "choices": [
+        "additive"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "policy",
+       "help": "refuse operations outside the additive policy (see the evolution contract)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--policy"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": null,
+       "dest": "populated",
+       "help": "treat FACT_TYPE as populated under --policy additive; repeatable",
+       "metavar": "FACT_TYPE",
+       "nargs": null,
+       "option_strings": [
+        "--populated"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": [
         "text",
         "json"
        ],
@@ -1358,6 +1390,38 @@
         "--out"
        ],
        "required": true,
+       "type": null
+      },
+      {
+       "choices": [
+        "additive"
+       ],
+       "class": "_StoreAction",
+       "const": null,
+       "default": null,
+       "dest": "policy",
+       "help": "refuse operations outside the additive policy (see the evolution contract)",
+       "metavar": null,
+       "nargs": null,
+       "option_strings": [
+        "--policy"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
+       "choices": null,
+       "class": "_AppendAction",
+       "const": null,
+       "default": null,
+       "dest": "populated",
+       "help": "treat FACT_TYPE as populated under --policy additive; repeatable",
+       "metavar": "FACT_TYPE",
+       "nargs": null,
+       "option_strings": [
+        "--populated"
+       ],
+       "required": false,
        "type": null
       },
       {

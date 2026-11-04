@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">Round 2: a rule on facts already held is refused</title><desc id="desc">An order intake note says every order must be placed by a customer. The program proposes a mandatory constraint, drawn as an orange dot where Order is placed by Customer meets Order. That fact type already holds orders 10 and 11, so the additive policy refuses the round with exit 3 and policy issue constraint.populated.add. The model is unchanged.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:16px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .value{stroke-dasharray:6 4} .role{fill:#fff;stroke:#334155;stroke-width:1.5} .line{stroke:#334155;stroke-width:2;fill:none} .derived{stroke-dasharray:4 4} .bad{fill:#b34e26;stroke:#b34e26} .badtext{fill:#b34e26;font-weight:700} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}</style><rect width="640" height="640" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Round 2: a rule on facts already held is refused</text>
+<rect x="24" y="62" width="592" height="92" rx="12" fill="#fff"/>
+<text x="40" y="90" class="strong">New document · order intake note</text>
+<text x="40" y="117" class="small">"Every order must be placed by a customer. The shop no longer</text>
+<text x="40" y="140" class="small">accepts anonymous counter sales."</text>
+<path class="edge" d="M320 154L320 182"/>
+<text x="332" y="176" class="small">the program proposes one constraint</text>
+<rect x="24" y="230" width="120" height="60" rx="12" fill="#eef5f8"/>
+<text x="84" y="255" class="strong mid">Customer</text>
+<text x="84" y="277" class="small mid">CustomerNo</text>
+<rect x="260" y="230" width="120" height="60" rx="12" fill="#eef5f8"/>
+<text x="320" y="255" class="strong mid">Order</text>
+<text x="320" y="277" class="small mid">OrderNo</text>
+<rect x="496" y="230" width="120" height="60" rx="12" fill="#eef5f8" class="value"/>
+<text x="556" y="255" class="strong mid">Channel</text>
+<text x="556" y="277" class="small mid">text</text>
+<path class="line" d="M144 260L260 260"/>
+<rect x="178" y="251" width="24" height="18" class="role"/>
+<rect x="202" y="251" width="24" height="18" class="role"/>
+<circle cx="252" cy="260" r="7" class="bad"/>
+<text x="202" y="218" class="small mid">Order is placed by Customer</text>
+<text x="120" y="332" class="small badtext">PROPOSED · every Order must name a Customer</text>
+<text x="120" y="356" class="small">the dot would be a new rule on orders 10 and 11</text>
+<path class="line" d="M380 246L496 246"/>
+<rect x="414" y="237" width="24" height="18" class="role"/>
+<rect x="438" y="237" width="24" height="18" class="role"/>
+<text x="438" y="218" class="small mid">Order arrives via Channel</text>
+<path class="line" d="M380 278L496 278"/>
+<rect x="414" y="269" width="24" height="18" class="role"/>
+<rect x="438" y="269" width="24" height="18" class="role"/>
+<text x="616" y="306" class="small" text-anchor="end">Order is returned via Channel</text>
+<path class="line derived" d="M84 290L84 336"/>
+<rect x="72" y="336" width="24" height="18" class="role"/>
+<text x="84" y="382" class="small mid">Customer is active</text>
+<rect x="24" y="416" width="592" height="130" rx="12" fill="#fff0e4"/>
+<text x="40" y="446" class="strong">GND says · REFUSED (3) under the additive policy</text>
+<text x="40" y="475" class="">policy-issue: constraint.populated.add</text>
+<text x="40" y="502" class="">populated: order_placed_by_customer (holds orders 10 and 11)</text>
+<text x="40" y="529" class="">The model is unchanged; the preview is still written.</text>
+<text x="24" y="584" class="small">Why: a rule added to facts GND already accepted could reject them</text>
+<text x="24" y="612" class="small">later, so earlier rounds would stop meaning what they meant.</text>
+</svg>

@@ -1,0 +1,6 @@
+Returns desk note, week 44
+
+Customers may send an order back within 30 days. A returned order comes
+back through one of our channels, which need not be the channel it arrived
+by. Order 10 arrived by courier and was returned in store; order 11 arrived
+by post and was returned by post.

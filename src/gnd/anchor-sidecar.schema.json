@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/anchor-sidecar.schema.json",
+  "title": "GND anchor sidecar",
+  "description": "Describes <population>.anchors.json. The parser gnd.anchors.parse_anchor_sidecar is the authority; it also refuses a repeated anchor identity, start >= end, files over 1 MiB, duplicate JSON keys, NaN and Infinity, integers over 18 digits, nesting deeper than 32, integer-valued floats and invalid UTF-8.",
+  "oneOf": [
+    {"$ref": "#/$defs/sidecar", "properties": {"schema_version": {"const": 1}}},
+    {"$ref": "#/$defs/sidecar", "properties": {"schema_version": {"const": 2}}}
+  ],
+  "$defs": {
+    "digest": {"type": "string", "minLength": 64, "maxLength": 64, "pattern": "^[0-9a-f]{64}$"},
+    "scalar": {"type": ["string", "boolean", "integer", "number", "null"]},
+    "sidecar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "population_sha256", "vocabulary_digest", "document_sha256", "anchors"],
+      "properties": {
+        "schema_version": {"type": "integer"},
+        "population_sha256": {"$ref": "#/$defs/digest"},
+        "vocabulary_digest": {"$ref": "#/$defs/digest"},
+        "document_sha256": {"$ref": "#/$defs/digest"},
+        "anchors": {"type": "array", "items": {"$ref": "#/$defs/anchor"}}
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact_key", "role", "span", "occurrence", "excerpt_sha256"],
+      "properties": {
+        "fact_key": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fact_type", "roles"],
+          "properties": {
+            "fact_type": {"type": "string"},
+            "roles": {"type": "object", "additionalProperties": {"$ref": "#/$defs/scalar"}}
+          }
+        },
+        "role": {"type": "string", "minLength": 1},
+        "span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": {"type": "integer", "minimum": 0},
+            "end": {"type": "integer", "minimum": 1}
+          }
+        },
+        "occurrence": {"type": "integer", "minimum": 0},
+        "excerpt_sha256": {"$ref": "#/$defs/digest"},
+        "block_id": {"type": "string", "minLength": 1},
+        "unit_id": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

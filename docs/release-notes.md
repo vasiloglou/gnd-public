@@ -3,6 +3,16 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: composition and type induction (in progress)
+
+- **Several anchors per fact role** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
+  An anchor sidecar at `schema_version: 2` may hold several anchors for one
+  fact role, and the role passes only when every one binds. A repeated
+  anchor (same fact, role, span and occurrence) is refused. Version-1
+  sidecars check as before, and `gnd extract` still writes version 1. The
+  format is in the new [anchor sidecar reference](reference/anchors.md),
+  with a published `anchor-sidecar.schema.json`.
+
 ## Unreleased: model growth guardrails (2026-11-04)
 
 For a model that a program grows round by round, without a person in the

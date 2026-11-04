@@ -1908,15 +1908,18 @@ def _anchored_verdicts(
     if not obligations:
         return {}
     source = None if document_bytes is None else canonical_document_text(document_bytes)
+    # A version-2 sidecar may hold several anchors per fact role; each one is
+    # a claim, so the role passes only when every anchor binds (CT-D2).
     records = {}
     if anchors is not None:
         for record in anchors.anchors:
             key = (record["fact_key"]["fact_type"],
                    tuple((name, type(value).__name__, repr(value)) for name, value in sorted(record["fact_key"]["roles"].items())),
                    record["role"])
-            records[key] = record
+            records.setdefault(key, []).append(record)
+    every_record = [record for group in records.values() for record in group]
     lexical_wanted: dict[str, set[int]] = {}
-    for record in records.values():
+    for record in every_record:
         value = record["fact_key"]["roles"][record["role"]]
         if isinstance(value, str):
             lexical_wanted.setdefault(anchor_normalize(value), set()).add(record["occurrence"])
@@ -1933,7 +1936,7 @@ def _anchored_verdicts(
             key = (str(fact_type["id"]), str(constraint["role"]))
             recognisers_by_role.setdefault(key, set()).update(constraint["recognise"])
     recognition_limits: dict[str, dict[Any, int]] = {}
-    for record in records.values():
+    for record in every_record:
         fact_type = record["fact_key"]["fact_type"]
         role = record["role"]
         value = record["fact_key"]["roles"][role]
@@ -1978,12 +1981,11 @@ def _anchored_verdicts(
                         continue
                     value = row[role_name]
                     key = (fact_id, tuple((name, type(item).__name__, repr(item)) for name, item in sorted(row.items())), role_name)
-                    record = records.get(key)
-                    if record is None:
+                    role_records = records.get(key)
+                    if role_records is None:
                         failed.append({"fact_type": fact_id, "roles": row})
                         failed_refs.add(row_index)
                         continue
-                    span = record["span"]
                     recognisers = constraint.get("recognise") or []
                     if recognisers:
                         cache_key = (tuple(recognisers), type(value).__name__, repr(value))
@@ -1999,14 +2001,17 @@ def _anchored_verdicts(
                     else:
                         uncertain = True
                         continue
-                    occurrence = record["occurrence"]
-                    selected_range = (
-                        ranges.get(occurrence) if isinstance(ranges, dict)
-                        else ranges[occurrence] if occurrence < len(ranges) else None
-                    )
-                    if selected_range is None or not (span["start"] <= selected_range[0] and selected_range[1] <= span["end"]):
-                        failed.append({"fact_type": fact_id, "roles": row})
-                        failed_refs.add(row_index)
+                    for record in role_records:
+                        span = record["span"]
+                        occurrence = record["occurrence"]
+                        selected_range = (
+                            ranges.get(occurrence) if isinstance(ranges, dict)
+                            else ranges[occurrence] if occurrence < len(ranges) else None
+                        )
+                        if selected_range is None or not (span["start"] <= selected_range[0] and selected_range[1] <= span["end"]):
+                            failed.append({"fact_type": fact_id, "roles": row})
+                            failed_refs.add(row_index)
+                            break
             if failed:
                 verdict = "warning" if constraint.get("modality") == "deontic" else "fail"
                 event, reason = "violated", None

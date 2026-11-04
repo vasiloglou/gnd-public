@@ -14,5 +14,10 @@ Predecessor: [model-growth-guardrails](../model-growth-guardrails/README.md).
 - Ruled: CT-D1 `(o1)`; CT-D4, CT-D9 `(p1)`. Pending: the other CT-D rows
   and CT1 spec D1..D4. Review: [round 1](notes/plan-review-r1-disposition.md).
 - Review: [round 2](notes/plan-review-r2-disposition.md); stop rule applied.
-- Next action: the CT1 spec gate (spec decisions D1..D4 proposed); CT1 does
-  not depend on the predecessor and can run in parallel with it.
+- Auto: the owner said "Yes, run it auto" on 2026-11-04, invoking
+  `process-milestone composition-and-type-induction auto`; spec rulings from
+  CT1 on are delegated approvals (auto=true). MG2 and MG3 merged with PR #83,
+  so CT4 is unblocked.
+- CT1 spec: delegated approval `(d1)` 2026-11-04, D1..D4 ruled.
+- CT1 done: [002-phase-CT1.md](002-phase-CT1.md) (spec delegated `(d1)`; one
+  reviewer, approve-with-fixes, all dispositioned; focused gate 473 passed).

@@ -1,0 +1,429 @@
+# Model growth guardrails
+
+r1, 2026-11-03. **Draft, awaiting plan review and the owner's plan gate.**
+Milestone: `model-growth-guardrails`.
+Sources: [issue #72](https://github.com/vasiloglou/gnd-public/issues/72) (GR-T9),
+[#74](https://github.com/vasiloglou/gnd-public/issues/74) (GR-T11),
+[#75](https://github.com/vasiloglou/gnd-public/issues/75) (GR-T12),
+[#76](https://github.com/vasiloglou/gnd-public/issues/76) (GR-T13),
+[#78](https://github.com/vasiloglou/gnd-public/issues/78) (GR-T15), and the
+owner's direction of 2026-11-03 to plan these five as one milestone and
+[#73](https://github.com/vasiloglou/gnd-public/issues/73) and
+[#77](https://github.com/vasiloglou/gnd-public/issues/77) as a successor
+([composition-and-type-induction](../../composition-and-type-induction/notes/composition-and-type-induction-plan.md)).
+Inspection baseline: `1446f90` (main after PR #79).
+Plan authorship is not approval. No phase has a spec approval; no code is
+written.
+
+**Owner rulings.**
+
+- **`(o1)` 2026-11-03:** asked "How should the plans be reviewed?" with the
+  options "Four local readers" (offered first) and "Six-seat panel", the owner
+  replied, quoted: "Four local readers". This rules MG-D1 (a) for plan review,
+  and the successor's CT-D1 (a). It is provisional for the close review until
+  confirmed at the plan gate. It approves no plan or spec bytes.
+
+## Problem and completion predicates
+
+A downstream application grows a domain model per task, without a human in
+the loop: an LLM proposes the model from document passages, extracts facts
+into it, writes derivation rules over the facts, and adds to the model as new
+questions need it. Each of the five requests closes a gap where that
+application keeps its own copy of a check GND should own:
+
+| Request | Gap today | Application's workaround |
+|---|---|---|
+| #72 | Rule text exists (`_derivation_cnl`) but not on the public API | mirrors the grammar host-side |
+| #75 | `gnd evolve` publishes any add, modify, rename or delete | its own "additions only" check before preview |
+| #76 | Preview does not flag a new fact type shaped like an existing one | compares role signatures itself |
+| #78 | The extract bundle carries names and shapes, not what roles mean | renders its own guidelines from the model |
+| #74 | `gnd-model-from-text` assumes a human confirms; the model cannot say nobody did | adapts the skill in prompts; keeps the "no human" record outside the model |
+
+**Outcome.** Each check moves into GND, with one home, deterministic output
+and the refusal and exit conventions GND already uses.
+
+The milestone can close when:
+
+1. `gnd.api.verbalize_rules` renders every structured rule in the corpus byte
+   for byte as the full model verbalization does, and reports every
+   construct it cannot express by path and closed reason (MG1).
+2. `gnd evolve preview --policy additive` refuses every operation class §2.2
+   names, the refusal is bound into the digested preview, and `apply` re-runs
+   the policy and refuses the same proposal. Without `--policy`, every
+   preview and apply is byte-identical to `1446f90` (MG2).
+3. `gnd evolve preview` reports, for each added fact type, the existing fact
+   types with the same role-player signature, deterministically and without
+   refusing (MG3).
+4. `gnd extract --guidelines` adds a digest-bound guideline artifact built
+   only from model content, and the existing constraint-blind pins still hold
+   (MG4).
+5. A model declaring `source.mode: unattended` is refused by `gnd validate` if
+   it carries `confirmed` status or `user-supplied` source, or an element
+   without its required source span. `gnd-model-from-text` documents the
+   mode. Models without that declaration validate exactly as at `1446f90`
+   (MG5).
+6. Every page and packaged skill reference naming these surfaces has a
+   recorded disposition and the docs gates exit 0 (MG6).
+7. Focused gates, independent diff reviews, the question sweep and a PR are
+   recorded. Owner acceptance is separate.
+
+## 0. Binding design rules
+
+| Rule | Requirement |
+|---|---|
+| MG-R1: Existing digests do not move | Full model verbalizations, evolve previews, extract bundles and validation results for inputs that do not use a new option are byte-identical to `1446f90`. Recorded in evolve previews and recovery reports, these are digest-bound evidence. Any phase that cannot keep this lists the exception and stops for an owner ruling. |
+| MG-R2: One home per grammar and policy | Rule text stays in `_derivation_cnl`. The additive policy is one function shared by preview and apply. The role-signature read is one helper shared by MG3 and MG4, and later by CT4 in the successor. The guideline text has one generator. Docs cite these; they do not restate them as normative. |
+| MG-R3: Refusals are bound, not advisory, where they gate publication | The additive policy's verdict is part of the digested preview, and `apply` re-runs it on the bytes it publishes, like `_enforce_operations_gate` (`evolve/service.py:592-673`, re-run at `:1574-1577`). |
+| MG-R4: Advice never gates | The duplicate-shape report (MG3) never changes an exit, a `breaking` flag or `report_sha256`'s existing inputs. Deciding whether two readings mean the same thing stays the caller's. |
+| MG-R5: Disclosure | Every new public callable and CLI leaf has a row in `gnd.disclosure`'s total site table (NM2-C2). Guideline text is model content (`value-free`); none of these phases emits population values. |
+| MG-R6: Layering and query policy | New code joins existing homes in `tools/gnd_layers.json` with zero new allowances; model reads go through `ModelIndex`; the RF6 allow-list gains no row. |
+| MG-R7: Approval, evidence, anonymity | `auto=false`. Downstream applications are not named in committed artifacts; the phase records run the anonymity scan over files added since `1446f90`. |
+| MG-R8: Provenance is never overstated | No phase marks anything `confirmed` on a machine's behalf. The unattended mode (MG5) refuses such claims; the guideline (MG4) never presents a constraint as fact. |
+
+Each phase spec binds every rule above and every rule in
+`.codex/skills/process-phase/references/standing-rules.md`, by name or with a
+one-sentence argument that it does not apply.
+
+## 1. Scope, sources and authority
+
+| Source | Use |
+|---|---|
+| Issues #72, #74, #75, #76, #78 | Requests, use cases, workarounds |
+| Owner direction 2026-11-03 | Split into two milestones; these five here |
+| `src/gnd/model_verbalization.py:176-226` (`_derivation_cnl`), `:117-124` (only caller), `:27` (`__all__`) | Rule rendering (MG1) |
+| `src/gnd/api.py:124` (`__all__`, approved stable order) and its exact pins `tests/test_public_api.py:16`, `tests/test_v61_phase2_api.py:38-39`, `tests/test_public_runtime.py:52`, `tests/test_why_not_near_misses_public.py:225` | Public surface (MG1) |
+| `src/gnd/evolve/models.py:219-223` (operation kinds), `:226-282` (locators), `:545` (proposal schema 3), `:742-790` (preview bindings, `breaking`); `evolve/service.py:592-673` (operations gate), `:1251-1367` (preview), `:1336-1340` (`breaking`), `:1574-1577` (apply re-runs the gate), `:709-788` (blast radius), `:411-515` (`_surface_index`) | Additive policy and shape report (MG2, MG3) |
+| `src/gnd/model_index.py:213` (`role_object_types`), `:264` (`supertype_closure`), `:276` (`primitive`); `extract/refscheme.py:97` (`reference_identity`) | Role-player signature (MG3, MG4) |
+| `src/gnd/extract/service.py:137-172` (bundle and `artifacts.json`), `:39-87` (`_artifact_index_issue`); `extract/vocabulary.py:3-17` (constraint-blind rationale); `tests/test_extract_vocabulary.py:65` (pin); `codegen/emit.py:945-950,769-783` (bundle mirror); `tests/test_fidelity_stub_gate.py:38`, `tests/test_public_legacy_codegen_pins.py:24` (file-set pins) | Guideline artifact (MG4) |
+| `src/gnd/verbalize.py:39,58` (`DESCRIPTION_CORE_KEYS`, `description_lines`) | Description text (MG4) |
+| `src/gnd/orm-meta.schema.json:26-28` (`source`, free-form), `:735-746` (`source_kind`), `:748+` (`provenance_policy`), `:1045,:2449` (`status`); `model/_validation.py:858` (`_rule_status_source`), `:1384-1420` (D-03 modality) | Unattended mode (MG5) |
+| `src/gnd/skills/gnd-model-from-text/SKILL.md:27,96,101,257,284`; `gnd-orm-core/references/representation-format.md:18-25,612-622` | Skill modes, `source.mode`, text provenance (MG5) |
+| `src/gnd/anchors.py:49-137,218-251`; `recovery/report.py:251-314` | Span and excerpt-digest precedents (MG5) |
+| `src/gnd/disclosure.py:76-134`; `tests/test_disclosure_mode.py` | Site table (MG-R5) |
+| Induced-knowledge close `012-milestone-close.md` "Open questions carried forward", row "IK1 boundary" | A description can restate a constraint and the docs do not warn (MG4) |
+
+A `gnd coverage MODEL` census counts experiment claims; it says nothing about
+whether a public renderer, an evolve policy or an extract artifact exists, so
+no census is run for this framework milestone.
+
+### Obligations harvested
+
+| ID | Obligation (source) | Kind | Owner |
+|---|---|---|---|
+| O1 | Public, deterministic rule rendering (#72) | requested | MG1 |
+| O2 | Cover body, negation, comparisons, clauses, aggregates, head (#72) | requested | MG1-C2 |
+| O3 | Report what cannot be rendered; never render partially (#72) | requested | MG1-C3 |
+| O4 | Refuse rename, delete, change of existing types and roles (#75) | requested | MG2-C1 |
+| O5 | Refuse a replaced reference scheme (#75) | requested | MG2-C1 |
+| O6 | Refuse an added or stronger constraint on a populated fact type (#75) | requested | MG2-C2, MG-D3, MG-D4 |
+| O7 | Name rejected operations in the preview claim so `apply` cannot publish them (#75) | requested | MG2-C3 |
+| O8 | For each proposed fact type, existing ones with same arity, role players, compatible reference modes, and their readings (#76) | requested | MG3 |
+| O9 | Structural only; meaning stays the caller's (#76) | requested constraint | MG-R4 |
+| O10 | Optional guideline artifact: readings, descriptions, value constraints as text, reference mode (#78) | requested | MG4, MG-D6 |
+| O11 | No constraint that would push an extractor to hide violating facts (#78) | requested constraint | MG4-C2; MG-R8 |
+| O12 | Guideline digest-bound in `artifacts.json` (#78) | requested | MG4-C1 |
+| O13 | Unattended mode: every fact and constraint cites a span (digest, offsets) (#74) | requested | MG5-C1, MG-D8 |
+| O14 | Nothing auto-confirmed; sources and `deontic` default kept (#74) | requested | MG5-C2 |
+| O15 | Header records mode, absence of reviewer, source digests (#74) | requested | MG5-C1 |
+| O16 | Validation refuses `confirmed` or `user-supplied` in this mode (#74) | requested | MG5-C2 |
+| O17 | Existing digests unchanged | cross-cutting | MG-R1 |
+| O18 | API and CLI pins, disclosure rows | cross-cutting | each phase; MG-R5 |
+| O19 | Docs and release notes (`docs/compatibility.md:7-9`) | cross-cutting | each phase's reference page; MG6 |
+| O20 | Description restating a constraint, undocumented (IK1 boundary, carried) | inherited | MG4-C3; MG6 |
+| O21 | Downstream anonymity | owner constraint | MG-R7 |
+| O22 | Visible checkpoints before work is complete, docs early | owner preference | MG6 checkpoints |
+| O23 | Reporter acceptance in its own pipeline | carried | the reporter, after merge |
+
+## 2. Contract proposal and product behavior
+
+All of this is proposed unless §10 marks it ruled.
+
+### 2.1 Rule rendering (MG1)
+
+`gnd.api.verbalize_rules(model, *, fact_types=None) -> dict`, schema
+`gnd-rule-verbalization/1`. One entry per derived fact type, in stable id
+order: `status` `rendered` with `text`, or `unsupported` with a list of
+`{path, reason}`. Reasons: `prose-rule`, `unanalyzable-aggregate`,
+`unrecognized-term`, `unrecognized-atom`. A rendered `text` equals the rule
+sentence inside the full model verbalization. Exit 0 with some rules
+unsupported; 3 for a bad model or unknown id; 64 for a malformed argument.
+API only, no CLI leaf. Detail: [phase-MG1-spec.md](phase-MG1-spec.md).
+
+### 2.2 Additive policy (MG2)
+
+`gnd evolve preview --policy additive` (default: no policy, as today). The
+policy refuses a proposal holding any of:
+
+| Class | Operations |
+|---|---|
+| Change to existing structure | any `RENAME` or `DELETE`; any `MODIFY` of an object type, fact type or role that existed in the before-model |
+| Reference scheme | a `MODIFY` changing an existing object type's `reference` (mode, value type, unit or composite) |
+| Constraint on a populated fact type | an `ADD` of a constraint, or a `MODIFY` that strengthens one (MG-D3), on a fact type that is *populated* (MG-D4) |
+
+Additions are allowed: new object types, new fact types, new roles only on new
+fact types, new constraints on fact types that are not populated, and
+description or provenance edits that change no structure (MG-D5).
+
+The verdict is one function `additive_policy_issues(before, proposal, *,
+populated) -> tuple[PolicyIssue, ...]` in `gnd.evolve`. Preview records the
+policy name and its issues in the preview document (MG-D2) and exits 3 when
+any issue exists, naming each refused operation by index and locator. `apply`
+reads the policy from the preview, re-runs the function on the bytes it would
+publish, and refuses on any issue (MG-R3).
+
+### 2.3 Duplicate-shape report (MG3)
+
+Preview gains a `shape_matches` list: for every `ADD` of a fact type, each
+existing fact type whose **role-player signature** equals the new one's, with
+its id and reading. The signature is the multiset of `(object type,
+reference identity)` over roles, where reference identity comes from
+`refscheme.reference_identity` and value types resolve to their primitive.
+Role order does not matter, and supertypes do not match subtypes (MG-D7). The
+report is advice (MG-R4): no exit or `breaking` change. Whether it enters the
+preview digest is MG-D2.
+
+### 2.4 Guideline artifact (MG4)
+
+`gnd extract --guidelines` writes `<stem>.guidelines.md`, recorded with its
+SHA-256 in `artifacts.json` (absent without the flag, so MG-R1 holds). For
+each fact type: its readings; per role, the role name, the object type, the
+object type's description core keys (`summary`, `row`, `source`, `notes`) and
+its reference mode. Value constraints: see MG-D6. Constraint verbalization
+stays out of `verbalization.txt`. The guideline generator is one function
+in `extract/`, using MG3's signature helper for reference modes.
+
+### 2.5 Unattended mode (MG5)
+
+A model whose `source` object holds `mode: unattended` must also hold
+`reviewer: none` and `documents: [{sha256, label}]`. Validation in this mode:
+
+1. refuses any `status: confirmed` and any `source: user-supplied`;
+2. requires a `provenance.spans` list on every object type, fact type and
+   constraint whose source is `explicit`, `sample` or `llm-inferred`; each
+   span is `{document_sha256, start, end, excerpt_sha256}` and names a
+   declared document; `common-sense` constraints cite `library_entry` as
+   today (MG-D8);
+3. keeps the D-03 rule, so proposed `llm-inferred`, `sample` and
+   `common-sense` constraints stay `deontic`.
+
+`gnd validate --document PATH` (repeatable, optional) re-hashes spans against
+supplied documents, as `bind_anchors` does for populations (MG-D9). Without
+`mode: unattended`, nothing about validation changes. The skill gains an
+Unattended mode distinct from One-shot, because One-shot auto-confirms
+library-tier proposals (`SKILL.md:101,257`), which this mode forbids (MG-D10).
+
+## 3. Dependencies and artifact homes
+
+MG1, MG2, MG4 and MG5 are independent. MG3 follows MG2 because both change
+the preview document and should take one versioned change (MG-D2). MG4 uses
+MG3's signature helper; if MG4 runs first it creates the helper and MG3
+reuses it. MG6 follows all five; its first checkpoint needs only the
+approved plan. Close follows MG6. The successor milestone's CT4 needs MG2
+and MG3 merged.
+
+| Artifact | Home |
+|---|---|
+| Plan, specs, records, reviews | `.gnd-planning/milestones/model-growth-guardrails/` |
+| Rule renderer | `src/gnd/model_verbalization.py`; wrapper in `src/gnd/api.py`; `src/gnd/rule-verbalization.schema.json` (MG1) |
+| Additive policy | `src/gnd/evolve/policy.py` (new, lane `evolve`), called from `evolve/service.py` preview and apply; CLI in `commands/evolve.py` (MG2) |
+| Role-player signature | `src/gnd/model_queries.py` or `model_index.py` (layer `model`; fixed in the MG3 or MG4 spec, whichever runs first) |
+| Shape report | `src/gnd/evolve/service.py`, preview models in `evolve/models.py` (MG3) |
+| Guideline generator | `src/gnd/extract/guidelines.py` (new, lane `extract`); CLI flag in `commands/extract.py`; `codegen/emit.py` mirror if MG-D11 says so (MG4) |
+| Unattended validation | `src/gnd/model/_validation.py` (one rule), `orm-meta.schema.json` (`$defs.source_span`) (MG5) |
+| Skill text | `src/gnd/skills/gnd-model-from-text/SKILL.md`, `gnd-orm-core/references/representation-format.md` (MG5; sync-pinned twins per AGENTS.md) |
+| Docs | each phase's reference page; MG6 everything else |
+
+## 4. Phases
+
+### MG1: Public rule rendering (#72; about 110 source lines, 300 test lines)
+
+Spec: [phase-MG1-spec.md](phase-MG1-spec.md), r1, awaiting review and owner
+gate.
+
+- **MG1-C1:** `verbalize_rules` and `render_rule_verbalizations` as §2.1; pins
+  updated.
+- **MG1-C2:** corpus parity: every rendered text equals its substring in the
+  full verbalization, over every example and fixture model with a rule (61
+  models, 116 rules measured at `1446f90`), with every construct present.
+- **MG1-C3:** each reason reachable through validation has a case; each one
+  that is not is shown unreachable by citing the validator rule (MG1-Q1).
+- **MG1-C4:** evolve, recovery and RF1 suites unchanged.
+
+### MG2: Additive policy on evolve (#75; about 200 source lines, 450 test lines)
+
+- **MG2-C1:** one case per refused class in §2.2 that fails without the
+  policy, and one per allowed class that the policy admits.
+- **MG2-C2:** strengthening and populated as ruled in MG-D3 and MG-D4, each
+  reading with a discriminating fixture.
+- **MG2-C3:** the policy and its issues are in the digested preview; `apply`
+  refuses a preview with issues; `apply` refuses a hand-edited preview that
+  drops them; `apply` with a preview made without the policy is unchanged.
+- **MG2-C4:** without `--policy`, every evolve golden and test is unchanged
+  (MG-R1).
+
+### MG3: Duplicate-shape report (#76; about 100 source lines, 250 test lines)
+
+- **MG3-C1:** the signature helper, with cases for role order, repeated
+  object types, value types resolved to primitives, composite reference
+  schemes, and a subtype that does not match.
+- **MG3-C2:** `shape_matches` in preview for every added fact type, stable
+  order, with readings.
+- **MG3-C3:** no exit, `breaking` or existing digest input changes (MG-R4).
+- **MG3-C4:** a time-bound test: a model with 5,000 fact types and a proposal
+  adding 500 matches in a counted linear number of signature reads.
+
+### MG4: Extraction guidelines (#78; about 150 source lines, 300 test lines)
+
+- **MG4-C1:** `--guidelines` writes the artifact and its digest; without the
+  flag, bundles are byte-identical (MG-R1); `_artifact_index_issue`
+  consumers accept the extra file; file-set pins updated only for the
+  flag-on case.
+- **MG4-C2:** `test_vocabulary_is_constraint_blind` still passes; a new test
+  injects constraints into a model and shows the guideline changes only as
+  MG-D6 allows.
+- **MG4-C3:** the docs state that a description can restate a constraint, and
+  that the guideline repeats descriptions verbatim (O20).
+
+### MG5: Unattended model-from-text (#74; about 150 source lines, 400 test lines, skill text)
+
+- **MG5-C1:** schema `$defs.source_span` and the `source` keys of §2.5,
+  validated only when `mode: unattended`.
+- **MG5-C2:** the validation rule's refusals, one case each, each failing
+  without the rule; an unattended model with only `proposed` elements and
+  complete spans exits 0.
+- **MG5-C3:** `gnd validate --document` re-hash: a span whose excerpt digest
+  differs exits 3; a document not declared in `source.documents` exits 3.
+- **MG5-C4:** every packaged and fixture model validates exactly as before
+  (MG-R1).
+- **MG5-C5:** the skill's Unattended mode section and the representation
+  reference, synced to their twins.
+
+### MG6: Documentation
+
+- **MG6-C1:** disposition table over every page and skill reference naming
+  the API surface, evolve preview, the extract bundle or model-from-text
+  modes.
+- **MG6-C2:** checkpoint DC1 (illustrative drafts after plan approval,
+  uncommitted) and DC2 (real runs after MG5), shown to the owner (O22).
+- **MG6-C3:** one how-to: growing a model by additions with GND checking each
+  round (preview with `--policy additive`, the shape report, extraction with
+  guidelines, rule read-back). Registered with the docs runner and executed.
+- **MG6-C4:** release notes; docs gates exit 0.
+- **MG6-C5:** one independent docs reviewer against the shipped behaviour.
+
+### Milestone close (not a feature phase)
+
+Final parity, the close review (MG-D1), the question sweep, carryover O23 to
+the reporter, and a PR.
+
+### Obligation-to-gate map
+
+| Obligation | Gate |
+|---|---|
+| O1, O2, O3 | MG1-C1..C3 |
+| O4, O5 | MG2-C1 |
+| O6 | MG2-C1, C2 |
+| O7 | MG2-C3 |
+| O8 | MG3-C1, C2 |
+| O9 | MG-R4; MG3-C3 |
+| O10, O12 | MG4-C1 |
+| O11 | MG4-C2 |
+| O13, O15 | MG5-C1, C3 |
+| O14, O16 | MG5-C2 |
+| O17 | MG-R1; MG1-C4, MG2-C4, MG4-C1, MG5-C4 |
+| O18 | each phase's pin and disclosure cases |
+| O19 | each phase; MG6-C4 |
+| O20 | MG4-C3 |
+| O21 | MG-R7 |
+| O22 | MG6-C2 |
+| O23 | close carryover |
+
+## 5. Documentation, skill and compatibility surfaces
+
+- New: one `gnd.api` callable and its payload schema (MG1); one evolve option
+  and preview fields (MG2, MG3); one extract option and artifact (MG4); one
+  validate option, one schema `$def` and one skill mode (MG5).
+- **Without the new options:** model verbalization, evolve previews and
+  applies, extract bundles and validation are unchanged (MG-R1). Changes that
+  cannot be avoided: `gnd.api.__all__` grows by one name; root help and RF1
+  CLI goldens list the new options; the preview document schema changes if
+  MG-D2 says so.
+- Packaged skills: `gnd-model-from-text` (MG5), `gnd-model-evolve` (MG2, MG3
+  mention the option and report), `gnd-extract` (MG4). Twins kept
+  byte-identical.
+
+## 6. Risks and required controls
+
+| Risk | Control |
+|---|---|
+| A rule text change moves digest-bound verbalizations | MG-R1; MG1 adds a collector argument only; evolve and recovery suites unchanged |
+| The additive policy is bypassed by editing the preview | MG-R3: `apply` re-runs the policy on its own bytes |
+| "Strengthening" means different things to the caller and to GND | MG-D3 picks one closed list; docs state it; each item has a case |
+| "Populated" is undecidable from preview's inputs | MG-D4 restricts it to what preview can read |
+| The shape report is read as "these are duplicates" | MG-R4; field named `shape_matches`, docs say candidate |
+| The guideline reintroduces constraint bias | MG-D6; MG4-C2 injection test |
+| Unattended mode breaks existing models | Rule applies only when `mode: unattended`; MG5-C4 |
+| One-shot and Unattended are confused | Distinct mode names; skill table contrasts them |
+| Spans cite documents that do not exist | `source.documents` closed list; optional re-hash (MG5-C3) |
+| Downstream names leak | MG-R7 |
+| Repair rounds introduce defects | §8 stop rule |
+
+## 7. Out of scope
+
+- Composing populations and anchors across documents; proposing types from a
+  population (successor milestone).
+- Changing any rule's wording; a CLI for rule rendering.
+- Semantic duplicate detection (synonym readings, embeddings); refusing on a
+  shape match.
+- Migrating facts between fact types; any evolve operation beyond the four
+  kinds.
+- Running `gnd-model-from-text` unattended inside GND (GND validates the
+  result; the host runs the LLM).
+- Publication, release, certification.
+
+## 8. Execution, approval and review protocol
+
+`auto=false`. Each phase follows `process-phase`: spec, owner gate,
+implementation and focused tests, an independent diff review, a refactoring
+review and a record. No code before recorded spec approval. Plan and close
+review instrument: MG-D1. Stop rule (declared before round two, per
+`review-convergence.md`): at most two plan review rounds; stop early when the
+self-inflicted ratio exceeds one half. Work happens on a topic branch, then a
+PR; merge requires the owner.
+
+## 9. Per-phase verification story
+
+| Phase | Expected result | Focused gate |
+|---|---|---|
+| MG1 | Corpus parity; reasons; pins | `uv run pytest -q tests/test_rule_verbalization.py tests/test_public_api.py tests/test_v61_phase2_api.py tests/test_public_runtime.py tests/test_why_not_near_misses_public.py tests/test_disclosure_mode.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py` plus the evolve and recovery test files (exact list fixed in the spec) |
+| MG2 | Refusal per class; apply re-check; unset parity | evolve test files plus a new `tests/test_evolve_additive_policy.py`; RF1 CLI pins (unresolved until the spec) |
+| MG3 | Signature cases; report; no gate change | MG2 gate plus `tests/test_evolve_shape_matches.py` |
+| MG4 | Artifact and digest; flag-off parity; constraint injection | `tests/test_extract_*.py`, `tests/test_fidelity_stub_gate.py`, `tests/test_public_legacy_codegen_pins.py`, a new `tests/test_extract_guidelines.py` |
+| MG5 | Refusals; re-hash; corpus parity | `tests/test_model_*.py` validation files (fixed in the spec), a new `tests/test_unattended_mode.py`, the skill twin sync test |
+| MG6 | Pages executed; checkpoints seen | `tools/run_tutorials.py`, `zensical build --strict`, `tools/check_docs.py site` |
+
+The broad suite runs on explicit owner selection.
+
+## 10. Owner decisions and open questions
+
+| ID | Question | Readings and cost | Proposal |
+|---|---|---|---|
+| MG-D1 | Plan and close review instrument | (a) four local readers, as the last two milestones; (b) six-seat panel: needs provider credentials, slower | **Ruled `(o1)`: (a)** for plan review; close review confirmed at the plan gate |
+| MG-D2 | Preview document change for MG2 and MG3 | (a) one new preview schema version carrying `policy`, `policy_issues` and `shape_matches`, all inside the digest; (b) policy inside, shape report outside the digest: the report could be edited without detection, harmless because it is advice; (c) keep v3, put the policy in the proposal: `apply` then trusts proposal bytes | (a), with MG-R1 satisfied because a preview without the new options keeps the old version |
+| MG-D3 | What counts as strengthening a constraint | (a) closed list: a new mandatory; a new or narrower uniqueness; a narrowed value set or range; a frequency `min` raised or `max` lowered; `deontic`→`alethic`; `proposed`→`confirmed` on an existing alethic constraint; (b) any `MODIFY` of a constraint on a populated fact type: simpler, refuses harmless edits (rationale text) | (a) |
+| MG-D4 | What "populated" means | Preview reads no population contents. (a) a fact type with `sample_population` rows, owned by a reference population, or named by a supplied population artifact locator; (b) also accept `--populated FT` repeatable from the caller; (c) treat every existing fact type as populated: refuses any new constraint on an existing fact type | (a)+(b): the caller knows which types hold admitted facts |
+| MG-D5 | Description and provenance edits on existing elements | (a) allowed: they change no structure; (b) refused as a `MODIFY` | (a) |
+| MG-D6 | Value constraints in the guideline | The issue asks for them; the bundle is deliberately constraint-blind (`extract/vocabulary.py:3-17`, pinned). (a) omit value constraints; guideline holds readings, descriptions, reference modes, value-type primitives; (b) include them under a second flag `--guidelines-with-values`, marked as excluded from fidelity measurement; (c) include them by default: breaks the constraint-blind principle | (a), with (b) as an owner option |
+| MG-D7 | Signature match rule | (a) role-order-free multiset, exact object types, primitives for value types, no supertype matching; (b) also match through supertypes: more matches, more noise | (a) |
+| MG-D8 | Which elements need spans in unattended mode | (a) object types, fact types and constraints with source `explicit`, `sample` or `llm-inferred`; `common-sense` cites `library_entry`; (b) every element including common-sense: no span exists for library knowledge | (a) |
+| MG-D9 | Span re-hash | (a) optional `gnd validate --document`; shape-only otherwise; (b) mandatory documents for unattended models: `gnd validate` would need the documents everywhere the model goes | (a) |
+| MG-D10 | Skill mode | (a) a new Unattended mode, One-shot unchanged; (b) change One-shot to stop auto-confirming: changes current users' results | (a) |
+| MG-D11 | Codegen bundle mirror | (a) codegen does not emit the guideline; (b) mirror it: more pins, no requested use | (a) |
+
+| ID | Open question | Owner |
+|---|---|---|
+| MG1-Q1 | Are `unanalyzable-aggregate`, `unrecognized-term`, `unrecognized-atom` reachable through validation? The corpus reaches none (MG1 spec sweep) | MG1 implementer |
+| MG1-Q2 | A root `aggregate` with `clauses` repeats in every disjunct; does the text match the evaluator? | MG1 spec D6 |
+
+No open question is inherited from an earlier milestone except the IK1
+boundary row (O20).

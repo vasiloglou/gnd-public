@@ -1,0 +1,396 @@
+# Composition and type induction
+
+r1, 2026-11-03. **Draft, awaiting plan review and the owner's plan gate.**
+Milestone: `composition-and-type-induction`.
+Sources: [issue #73](https://github.com/vasiloglou/gnd-public/issues/73) (GR-T10),
+[#77](https://github.com/vasiloglou/gnd-public/issues/77) (GR-T14), and the
+owner's direction of 2026-11-03 to plan them as the successor of
+[model-growth-guardrails](../../model-growth-guardrails/notes/model-growth-guardrails-plan.md).
+Inspection baseline: `1446f90` (main after PR #79).
+Plan authorship is not approval. No phase has a spec approval; no code is
+written. CT4 is blocked until MG2 and MG3 merge.
+
+**Owner rulings.** `(o1)` 2026-11-03, recorded in the predecessor plan's
+header, rules CT-D1 (a): four local readers for plan review, provisional for
+the close review until confirmed at the plan gate. It approves no bytes.
+
+## Problem and completion predicates
+
+**Composition (#73).** An anchor sidecar binds one population to one
+document: it carries the raw-byte SHA-256 of each (`anchors.py:48-54,228`),
+and `gnd check --anchors --document` checks each anchored value against its
+span. A downstream application extracts facts per document, then needs one
+population per task, built from many documents, to evaluate derivation rules
+over. Merging changes the population digest and can change fact keys, so the
+sidecars stop binding, and the application keeps its own provenance map that
+GND cannot check. It also needs several spans for one fact role (a definition
+and the clause that uses it); the parser refuses that today
+(`anchors.py:133-135`), and the checker keeps only the last record per key
+(`checker/_core.py:1911-1917`).
+
+**Type induction (#77).** `gnd discover` proposes constraints of seven
+families, as an evolve proposal for review. When facts land in a generic fact
+type ("entity has attribute with value"), a recurring attribute name with a
+consistent value type often calls for a dedicated fact type. Nothing proposes
+that today. It is the type-level part of the closed
+[issue #34](https://github.com/vasiloglou/gnd-public/issues/34).
+
+The milestone can close when:
+
+1. A version-2 sidecar may hold several anchors for one fact role; `gnd check`
+   evaluates `anchored` constraints over all of them under the CT-D2 rule;
+   every version-1 sidecar checks exactly as at `1446f90` (CT1).
+2. `gnd compose` and `gnd.api.compose` build one population from several
+   (document, population, sidecar) inputs and an explicit transformation
+   manifest, and write a composition record GND can check. `gnd check
+   --composition` re-verifies every source binding and every composed fact's
+   lineage, and refuses a record whose bytes or lineage differ (CT2).
+3. A derivation witness over a composed population names, for each base
+   fact, its source facts, and through their sidecars their document spans;
+   `gnd replay` verifies that lineage (CT3).
+4. `gnd discover --families fact-type` proposes dedicated fact types from a
+   generic fact type's rows, above a stated support threshold, as an
+   additive, `proposed`, `deontic` evolve proposal plus a migration report of
+   opaque row ids. The proposal passes `gnd evolve preview --policy
+   additive`, and each proposal carries its MG3 shape matches (CT4).
+5. Docs dispositions recorded, new pages executed, docs gates exit 0 (CT5).
+6. Focused gates, independent diff reviews, the question sweep and a PR are
+   recorded. Owner acceptance is separate.
+
+## 0. Binding design rules
+
+| Rule | Requirement |
+|---|---|
+| CT-R1: Old artifacts keep their meaning | Version-1 sidecars, witnesses without composition, discover runs without the new family, and evolve proposals at schema 3 parse, check and replay byte-identically to `1446f90`. |
+| CT-R2: Anchors bind values to ranges, nothing more | Neither GND nor the caller claims that a span entails a fact (issue #73's own boundary). Several anchors add evidence for one role; none of them proves the fact. Docs say so. |
+| CT-R3: Composition is explicit and checkable | Every change composition makes (deduplication, renaming, scope tag) is listed in a caller-supplied manifest. GND never infers a merge. The composition record binds every input by digest and every composed fact to its source facts; a checker re-derives the composed population from the inputs and the manifest and compares bytes. |
+| CT-R4: Digests are defined over stated bytes | Each new digest names its input: raw bytes for files a caller writes (sidecars, documents, populations, as today), canonical JSON for records GND writes. The canonical form is the existing helper, not a second implementation (standing rules, "interchange field"). |
+| CT-R5: Induction proposes; review admits | The type family emits `source: induced`, `status: proposed`, `modality: deontic` on everything it proposes, and never deletes or moves rows. Admission is a reviewed `gnd evolve` apply. |
+| CT-R6: No population value becomes a model name without a ruling | A proposed fact type's id and reading derive from an attribute-name value only as CT-D9 rules; redacted roles never contribute (owner ruling 2026-10-25, `discover/candidates.py:131-132`). |
+| CT-R7: Disclosure | New CLI leaves and API callables get rows in `gnd.disclosure`'s total table. Composition records and witnesses carry population values the way check-family outputs do and follow the mode the same way. Discover keeps its every-mode row (NM-D13). |
+| CT-R8: Layering, query policy, anonymity, approval | As MG-R6 and MG-R7 of the predecessor. The composer lives at layer `model` beside `bind_population`; composed-anchor checking at `checking`; API wrappers at `entry`. `auto=false`. |
+
+Each phase spec binds every rule above and every rule in
+`.codex/skills/process-phase/references/standing-rules.md`, by name or with a
+one-sentence argument that it does not apply.
+
+## 1. Scope, sources and authority
+
+| Source | Use |
+|---|---|
+| Issues #73, #77 | Requests, use cases, workarounds |
+| Owner direction 2026-11-03 | Successor milestone holding these two |
+| `src/gnd/anchors.py:105-139` (`parse_anchor_sidecar`; no JSON schema exists), `:133-135` (duplicate refusal), `:218-251` (`bind_anchors`), `:228` (raw-byte digests) | Sidecar format and binding (CT1, CT2) |
+| `src/gnd/checker/_core.py:1900-2010` (anchored obligations; `records[key] = record` at `:1916`) | Multi-anchor evaluation (CT1) |
+| `src/gnd/verbalize_population.py:120-136` (`_excerpts` already lists per role); `export/verification_service.py:492-511` | Other sidecar readers (CT1) |
+| `src/gnd/commands/checking.py:630-631,739-759`; `checking_service.py:222-223` (anchors with references refused), `:278-289` | CLI and service paths (CT1, CT2) |
+| `src/gnd/model/__init__.py:648-725` (`bind_population`, `OccurrenceOrigin`, `BoundPopulationView`); `src/gnd/population.py:470-496` | Union-with-origins precedent (CT2) |
+| `src/gnd/schema/witness.schema.json` `$defs.base` (`origin.kind`: `candidate`, `reference`); `witness/io.py:211-232,262-266`; `witness/kernel.py:167-182` | Witness fact identity and digests (CT3) |
+| `src/gnd/discover/candidates.py:29` (`FAMILIES`), `:131-165` (redaction ruling), `:253-331` (declared catalogue); `discover/service.py:58-87,153-169,231-257,290-298`; `discover/output.py:40-153`; `discover/support.py:48,80-145`; `src/gnd/discover.schema.json`; `commands/discover.py:9,56,82` | Discover families, admission, output (CT4) |
+| `src/gnd/evolve/models.py:226-240,285-340` (fact-type `ADD` via `ElementLocator`), `:387-425` (`ArtifactLocator`), `:549-560` (proposal has no population field) | Proposal shape (CT4) |
+| `orm-meta.schema.json` `fact_type` (no `source`/`status`/`modality`; `provenance` free-form); `model/_validation.py:2029-2042` (`_iter_provenance_bearing`) | Where the induced envelope can sit (CT4) |
+| Predecessor plan MG2 (additive policy), MG3 (signature helper and shape report) | Prerequisites of CT4 |
+| Induced-knowledge close `012`, row "Reader three F6" (hand-edited alethic induced proposal only warns at validate) | Inherited; CT4 emits deontic only |
+
+A `gnd coverage MODEL` census counts experiment claims; it does not show
+whether composition or a discover family exists, so none is run.
+
+### Obligations harvested
+
+| ID | Obligation (source) | Kind | Owner |
+|---|---|---|---|
+| O1 | Compose several (document, population, sidecar) inputs under an explicit manifest of dedupes, renamings, scope tags (#73.1) | requested | CT2 |
+| O2 | A manifest GND can check, each composed fact referring to its source facts and anchors (#73.1) | requested | CT2-C2, C3 |
+| O3 | Witnesses over the composed population name source facts and, through them, spans (#73.2) | requested | CT3 |
+| O4 | Several anchors per fact role (#73.3) | requested | CT1 |
+| O5 | Keep the present guarantee: anchors bind values to ranges; no entailment claim (#73) | requested constraint | CT-R2 |
+| O6 | Propose a fact type from generic rows sharing a name, a consistent value type, support above a threshold (#77) | requested | CT4-C1, C2 |
+| O7 | Include the rows that would migrate (#77) | requested | CT4-C3, CT-D8 |
+| O8 | Emit as `induced`, `proposed`, `deontic`; admission stays reviewed (#77) | requested | CT-R5; CT4-C4 |
+| O9 | Old artifacts unchanged | cross-cutting | CT-R1 |
+| O10 | API, CLI, schema pins; disclosure rows | cross-cutting | each phase; CT-R7 |
+| O11 | Docs and release notes | cross-cutting | each phase; CT5 |
+| O12 | Downstream anonymity | owner constraint | CT-R8 |
+| O13 | Visible checkpoints, docs early | owner preference | CT5 |
+| O14 | Inherited: induced alethic proposals only warn (IK close row "Reader three F6") | inherited | CT4 emits deontic only; the row stays with its IK2 follow-up |
+| O15 | Reporter acceptance in its own pipeline | carried | the reporter, after merge |
+
+## 2. Contract proposal and product behavior
+
+All of this is proposed unless §10 marks it ruled.
+
+### 2.1 Several anchors per fact role (CT1)
+
+Sidecar `schema_version: 2` has the same top-level keys as version 1, still
+one population and one document, and lifts the duplicate refusal: several
+anchors may share `(fact_key, role)` if their `(span, occurrence)` differ.
+Exact duplicates are refused. The checker keeps a list per key. An anchored
+constraint passes for a row's role when the CT-D2 rule holds over that list.
+Version 1 is parsed and checked as today. Detail:
+[phase-CT1-spec.md](phase-CT1-spec.md).
+
+### 2.2 Composition (CT2)
+
+**Inputs.** A list of sources, each `{id, document, population, sidecar}`
+(paths; each sidecar binds its population and document as today), the model,
+and a transformation manifest `gnd-composition-manifest/1`:
+
+```json
+{
+  "schema": "gnd-composition-manifest/1",
+  "sources": ["contract-a", "contract-b"],
+  "renamings": [{"source": "contract-b", "fact_type": "ft_party", "role": "name",
+                  "from": "ACME CORP.", "to": "Acme Corp."}],
+  "deduplications": "identical-rows",
+  "scope_tags": [{"source": "contract-a", "tag": "2024-agreement"}]
+}
+```
+
+`renamings` rewrite one role value in one source, by exact match. They are
+the only value change composition makes. `deduplications` picks CT-D3.
+`scope_tags` attach a tag to every fact from a source; tags travel in the
+record, not in the population (CT-D5).
+
+**Output.** The composed population (ordinary population JSON) and a
+composition record `gnd-composition/1`, which holds the following:
+
+- the model digest and the manifest's canonical-JSON digest;
+- per source: id, population, document and sidecar raw-byte digests;
+- the composed population's raw-byte digest;
+- for each composed fact, by position: its source facts, as `{source, fact_type, fact_index}`, and the renamings applied.
+
+Anchors are not copied: a composed fact's spans are its source facts' spans,
+reached through each source's own sidecar, which keeps binding its own
+population (CT-R3).
+
+**Checking.** `gnd check MODEL COMPOSED --composition RECORD --sources DIR`
+re-binds each source sidecar, re-runs composition from the inputs and the
+manifest, compares the composed bytes and the lineage, then checks anchored
+constraints for each composed fact against the anchors of its sources.
+Refusals: a source digest mismatch (3); a composed-bytes or lineage
+mismatch (3); a functional conflict between sources under CT-D4 (3, naming
+both source facts). `gnd.api.compose` and `gnd.api.check(...,
+composition=...)` mirror the CLI.
+
+### 2.3 Witness lineage (CT3)
+
+A witness over a composed population records the composition record's digest
+in its binding. Each base node keeps `origin.kind: candidate` and
+`fact_index`, and gains `sources: [{source, fact_type, fact_index}]` read from
+the record. `gnd replay` with `--composition` verifies that each base node's
+`sources` equal the record's lineage for that index. Version-1 witnesses
+replay unchanged. The alternative, a new `origin.kind: source`, is CT-D6.
+
+### 2.4 Type proposals in discover (CT4)
+
+**Generic fact type.** A fact type is generic when declared so: its
+`provenance` holds `"generic": {"entity": R1, "attribute": R2, "value": R3}`
+naming three roles (CT-D7). Structural guessing is out.
+
+**Family `fact-type`.** Opt-in: not in the default family list. For a generic
+fact type, group rows by the attribute role's value. A group yields a
+proposal when:
+
+- its support (distinct entities) is at least `--min-support` (default 20,
+  CT-D10);
+- every value in it has one primitive under `support.identity`;
+- the attribute role is not redacted (CT-R6);
+- no existing fact type has the same role-player signature (MG3), or it is
+  reported, not proposed, when one does.
+
+**Output.** One additive evolve proposal per run (schema 3, `ADD` of fact
+types via `ElementLocator`). Each new fact type is binary: entity and a value
+type for the primitive. The induced envelope (`source: induced, status:
+proposed, modality: deontic`, support as numerator and denominator) sits on a
+uniqueness constraint the proposal adds on the entity role, since fact types
+carry no envelope fields today (CT-D8). Beside the proposal, a migration
+report lists, per proposed fact type, the opaque row ids (`ft<pos>#<index>`)
+that would move. Nothing moves. The proposal passes `gnd evolve preview
+--policy additive`.
+
+## 3. Dependencies and artifact homes
+
+CT1 needs nothing. CT2 needs CT1, because a composed fact can have several
+anchors from different sources. CT3 needs CT2. CT4 needs the predecessor's
+MG2 and MG3 merged, and is independent of CT1–CT3. CT5 needs CT3 and CT4. If
+the predecessor slips, CT1–CT3 proceed and CT4 waits.
+
+| Artifact | Home |
+|---|---|
+| Plan, specs, records, reviews | `.gnd-planning/milestones/composition-and-type-induction/` |
+| Sidecar v2 parser and binding | `src/gnd/anchors.py`; a new `src/gnd/anchor-sidecar.schema.json` documenting v1 and v2 (CT1) |
+| Multi-anchor evaluation | `src/gnd/checker/_core.py` (CT1) |
+| Composer | `src/gnd/composition.py` (new, layer `model`, beside `bind_population`) (CT2) |
+| Composed checking | `src/gnd/checking_service.py` (CT2) |
+| CLI | `gnd compose` in `src/gnd/commands/` (group fixed in the CT2 spec); `--composition`, `--sources` on `gnd check` and `gnd replay` |
+| Schemas | `src/gnd/composition-manifest.schema.json`, `src/gnd/composition.schema.json` (CT2); `schema/witness.schema.json` (CT3) |
+| Type family | `src/gnd/discover/candidates.py`, `output.py`, `discover.schema.json` (CT4) |
+| Docs | each phase's reference page; CT5 the rest |
+
+## 4. Phases
+
+### CT1: Several anchors per fact role (#73.3; about 120 source lines, 400 test lines)
+
+Spec: [phase-CT1-spec.md](phase-CT1-spec.md), r1, awaiting review and owner
+gate.
+
+- **CT1-C1:** v2 parse: several anchors per fact role; exact duplicates
+  refused; v1 refusals unchanged.
+- **CT1-C2:** checker evaluates the list under CT-D2, with a discriminating
+  fixture (one anchor in range, one out).
+- **CT1-C3:** `bind_anchors`, `verbalize_population`, export verification
+  accept v2.
+- **CT1-C4:** every v1 test and golden unchanged (CT-R1).
+
+### CT2: Composition (#73.1; about 350 source lines, 700 test lines)
+
+- **CT2-C1:** manifest and record schemas; parser total over hostile JSON.
+- **CT2-C2:** composer: renamings, deduplication under CT-D3, scope tags,
+  lineage; deterministic bytes (stable source order, then source fact
+  order).
+- **CT2-C3:** checker: re-derivation, digest and lineage comparison,
+  per-source anchor evaluation; one refusal case per class.
+- **CT2-C4:** functional conflicts across sources refused under CT-D4, naming
+  both source facts.
+- **CT2-C5:** time-bound test: 50 sources × 2,000 facts compose in a counted
+  linear number of row visits.
+- **CT2-C6:** API and CLI, pins and disclosure rows.
+
+### CT3: Witness lineage (#73.2; about 120 source lines, 350 test lines)
+
+- **CT3-C1:** witness schema gains the composition binding and per-node
+  `sources`; v1 witnesses replay unchanged.
+- **CT3-C2:** `gnd replay --composition` verifies lineage; an edited
+  `sources` list exits as a replay mismatch.
+- **CT3-C3:** an end-to-end case: two documents, a rule joining facts from
+  both, a witness whose base nodes trace to spans in each document.
+
+### CT4: Type proposals (#77; about 250 source lines, 500 test lines) — blocked on MG2, MG3
+
+- **CT4-C1:** generic declaration parsed and validated; undeclared fact types
+  never yield proposals.
+- **CT4-C2:** grouping, support threshold and type consistency, each
+  threshold edge with a case (support at threshold − 1, at threshold; one
+  mixed-type value).
+- **CT4-C3:** migration report of opaque row ids; no raw values
+  (IK-R11).
+- **CT4-C4:** emitted proposal passes `preview --policy additive`; carries
+  the deontic envelope; a shape-matching existing fact type is reported, not
+  proposed.
+- **CT4-C5:** redacted attribute role skipped and counted.
+- **CT4-C6:** without the family, every discover golden and the seven-family
+  default are unchanged.
+
+### CT5: Documentation
+
+- **CT5-C1:** dispositions over every page and skill reference naming
+  anchors, sidecars, witnesses, replay or discover.
+- **CT5-C2:** checkpoints DC1 (after plan approval) and DC2 (real runs after
+  CT3 and CT4).
+- **CT5-C3:** one how-to: from several documents to one checked answer
+  traced back to each source.
+- **CT5-C4:** release notes; docs gates exit 0; one independent docs
+  reviewer.
+
+### Milestone close (not a feature phase)
+
+Final parity, the close review (CT-D1), the question sweep, carryover O15,
+and a PR.
+
+### Obligation-to-gate map
+
+| Obligation | Gate |
+|---|---|
+| O1 | CT2-C1, C2 |
+| O2 | CT2-C2, C3 |
+| O3 | CT3-C1..C3 |
+| O4 | CT1-C1..C3 |
+| O5 | CT-R2; CT5 |
+| O6 | CT4-C1, C2 |
+| O7 | CT4-C3 |
+| O8 | CT-R5; CT4-C4 |
+| O9 | CT-R1; CT1-C4, CT3-C1, CT4-C6 |
+| O10 | CT2-C6 and each phase's pins |
+| O11 | each phase; CT5 |
+| O12 | CT-R8 |
+| O13 | CT5-C2 |
+| O14 | CT4-C4 |
+| O15 | close carryover |
+
+## 5. Documentation, skill and compatibility surfaces
+
+- New: sidecar v2; a published sidecar schema; two composition schemas; one
+  CLI leaf (`gnd compose`) and options on `check` and `replay`; one API
+  callable and one keyword; witness fields; one discover family and options.
+- **Unchanged without the new inputs:** v1 sidecars, check, witness, replay
+  and discover outputs (CT-R1). Root help and RF1 goldens change for the new
+  leaf and options; `gnd.api.__all__` grows by one name; the discover help
+  "seven" wording changes to name the opt-in family.
+- Packaged skills: `gnd-extract` (sidecar v2), `gnd-orm-core` constraint
+  reference (anchored with several anchors), and the discover sections that
+  mention families. Twins kept byte-identical.
+
+## 6. Risks and required controls
+
+| Risk | Control |
+|---|---|
+| Several anchors read as stronger proof | CT-R2 in docs; CT-D2 names exactly what passes |
+| Composition silently merges distinct entities | CT-R3: only manifest renamings change values; dedupe only of identical rows by default |
+| A composed population drifts from its sources | Checker re-derives and compares bytes |
+| Two digest forms confused | CT-R4: each digest names its bytes; one canonical helper |
+| Witness format breaks old replays | CT-R1; CT3-C1 v1 parity |
+| Type proposals leak population values into model names | CT-R6; CT-D9 |
+| Induction proposes a duplicate of an existing type | MG3 shape check before proposing |
+| Rows moved without review | CT-R5: report only, nothing moves |
+| Prerequisite milestone slips | CT4 blocked explicitly; CT1–CT3 proceed |
+| Downstream names leak | CT-R8 |
+
+## 7. Out of scope
+
+- Inferring merges, entity resolution, fuzzy matching across documents.
+- Anchors combined with reference populations (still refused,
+  `checking_service.py:222-223`), unless CT-D11 rules otherwise.
+- Moving rows into proposed fact types; any non-additive evolve operation.
+- Structural detection of generic fact types.
+- Constraint induction on the newly proposed fact types beyond the one
+  uniqueness carrying the envelope.
+- Publication, release, certification.
+
+## 8. Execution, approval and review protocol
+
+As the predecessor's §8: `auto=false`, `process-phase` per phase, no code
+before recorded spec approval, plan and close review per CT-D1, at most two
+plan review rounds with the stop rule declared here, topic branch and PR,
+merge by the owner.
+
+## 9. Per-phase verification story
+
+| Phase | Expected result | Focused gate |
+|---|---|---|
+| CT1 | v2 parse and check; v1 parity | `uv run pytest -q` over the anchor, checker-anchored, verbalize-population and export-verification test files (exact list fixed in the CT1 spec) plus a new `tests/test_anchor_sidecar_v2.py` |
+| CT2 | Compose, re-derive, refuse | CT1 gate plus `tests/test_composition.py`, public API pins, RF1 CLI pins, disclosure table |
+| CT3 | Lineage in witness and replay; v1 replay parity | CT2 gate plus the witness and replay test files and a new `tests/test_witness_composition.py` |
+| CT4 | Family proposals; additive pass; parity | discover test files, `tests/test_discover_fact_type_family.py`, the MG2 policy tests |
+| CT5 | Pages executed; checkpoints seen | `tools/run_tutorials.py`, `zensical build --strict`, `tools/check_docs.py site` |
+
+## 10. Owner decisions and open questions
+
+| ID | Question | Readings and cost | Proposal |
+|---|---|---|---|
+| CT-D1 | Plan and close review instrument | (a) four local readers; (b) six-seat panel | **Ruled `(o1)`: (a)** for plan review; close review confirmed at the plan gate |
+| CT-D2 | When does a role with several anchors pass `anchored`? | (a) every anchor binds its value within its span: each anchor is a claim and a false one is an error; (b) any one anchor binds: one good anchor hides a wrong one | (a) |
+| CT-D3 | Deduplication | (a) identical rows (same fact type, same role values after renaming) collapse into one composed fact with all their source facts as lineage; (b) no dedupe, keep every row: functional constraints then fail on harmless repeats | (a) |
+| CT-D4 | Conflicting functional values across sources | (a) refuse the composition (exit 3) naming both source facts; (b) compose and let `gnd check` report the uniqueness violation: the conflict is real data and the check reports it with lineage | (b): composition is not a constraint checker; the record's lineage makes the check's report traceable |
+| CT-D5 | Where scope tags live | (a) in the composition record only; (b) as a role in the composed population: changes fact shapes, breaks the model | (a) |
+| CT-D6 | Witness lineage shape | (a) keep `origin.kind: candidate`, add `sources`; (b) a new `origin.kind: source`: the kernel would resolve rows in sources, a larger change | (a) |
+| CT-D7 | How a generic fact type is identified | (a) declared in `provenance.generic`; (b) structural guess (arity 3, two value roles): false positives become model proposals | (a) |
+| CT-D8 | Where the induced envelope sits | (a) on a uniqueness constraint the proposal adds; (b) a schema change giving fact types `source`/`status`/`modality`: model-spec change across validation and evolve | (a) |
+| CT-D9 | Naming a proposed fact type from an attribute value | (a) id `ft_<generic id>_<slug of value>`, reading `"<Entity> has <value> <ValueType>"`, only for unredacted roles, documented as a disclosure of that value into the model; (b) an opaque id plus the value only in the migration report, so a reviewer names it: no value in the model until a human picks a name | (b) |
+| CT-D10 | Support threshold | (a) `--min-support N` (distinct entities), default 20, no admission by `check` verdict for this family; (b) a fraction of entities: unstable on small populations | (a) |
+| CT-D11 | Composition with reference populations | (a) stays refused this milestone; (b) supported: reopens the anchors-with-references refusal | (a) |
+| CT-D12 | Sidecar version for multi-document | (a) composition keeps one document per sidecar (v2 is about several anchors only); (b) v2 also allows several documents per sidecar: two ways to say the same thing | (a) |
+
+| ID | Open question | Owner |
+|---|---|---|
+| CT-Q1 | Are there tests asserting "duplicate fact-role anchor"? **Answered at write time:** none; the string occurs only in `src/gnd/anchors.py` (CT1 spec) | closed |
+| CT-Q2 | Witness digest is canonical JSON of the candidate model dump (`witness/io.py:262-266`) while sidecars use raw bytes; the record must pin which form it compares | CT2 spec |

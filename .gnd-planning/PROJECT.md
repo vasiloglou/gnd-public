@@ -171,3 +171,18 @@ PR #45). The evolve-loading follow-up merged as PR #47
 host-path sanitization of older evidence as PR #46.
 
 The carried rows and their targets are in records 012 and 014.
+
+## model-growth-guardrails and composition-and-type-induction — planned, 2026-11-03
+
+Two milestones from the GR-T9..T15 requests (issues #72–#78). The first,
+[model-growth-guardrails](milestones/model-growth-guardrails/README.md),
+covers public rule rendering, an additive-only evolve policy, a
+duplicate-shape report, extraction guidelines and an unattended
+model-from-text mode. The second,
+[composition-and-type-induction](milestones/composition-and-type-induction/README.md),
+covers several anchors per fact role, composing populations with lineage,
+witness lineage and fact-type proposals in discover; its CT4 waits on the
+first milestone's MG2 and MG3. Both plans are at r3 after two four-reader
+review rounds (the second stopped by the declared stop rule; r3 carries no
+review opinion). The owner approved both plans at r3 on 2026-11-03 `(a1)`.
+No phase spec is approved yet; no code.

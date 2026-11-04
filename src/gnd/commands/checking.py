@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 from jsonschema import Draft202012Validator
 
@@ -24,14 +25,69 @@ from gnd.model import ModelValidationError, load_model
 
 _DEFAULT_CHECK = check
 
+def _read_validate_documents(paths: list[str]) -> tuple[dict[str, bytes], int | None, str | None]:
+    """The ``--document`` bytes by path, or the exit and message of the first unreadable one."""
+    from gnd.anchors import MAX_DOCUMENT_BYTES
+
+    documents: dict[str, bytes] = {}
+    for raw in paths:
+        path = Path(raw)
+        if not path.exists():
+            return {}, EXIT_NO_INPUT, f"document {raw} does not exist"
+        try:
+            if not path.is_file():
+                raise OSError("not a regular file")
+            with path.open("rb") as handle:
+                data = handle.read(MAX_DOCUMENT_BYTES + 1)
+        except OSError as error:
+            return {}, EXIT_IO, f"document {raw} could not be read: {error}"
+        if len(data) > MAX_DOCUMENT_BYTES:
+            # Refused before hashing a truncated prefix (review R-F4).
+            return {}, 3, f"document {raw} exceeds the {MAX_DOCUMENT_BYTES}-byte document cap"
+        documents[raw] = data
+    return documents, None, None
+
+
+def _cmd_validate_documents(model_path: str, output_format: str, result: Any, paths: list[str]) -> int:
+    """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue)."""
+    from gnd.model._validation import unattended_span_issues
+
+    documents, exit_code, message = _read_validate_documents(paths)
+    issues = []
+    if exit_code is None:
+        issues = unattended_span_issues(result.model.model_dump(exclude={"warnings"}), documents)
+        if not issues:
+            return result.exit_code
+        exit_code = 3
+    # The model's own warnings ride along on the refusal (review R-F3).
+    warnings = list(result.warnings)
+    if output_format == "json":
+        report_module.emit(report_module.build_validate_payload(
+            exit_code, model_path, schema_version=result.payload["schema_version"],
+            issues=issues or None, warnings=warnings, error=None if issues else RuntimeError(message)))
+        return exit_code
+    for warning in warnings:
+        print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
+    if issues:
+        _print_issues(issues)
+    else:
+        print(f"ERROR: {message}")
+    return exit_code
+
+
 def _cmd_validate(
     model_path: str,
     output_format: str,
     *,
     trace: bool = False,
     unredacted: bool = False,
+    documents: list[str] | None = None,
 ) -> int:
     result = api_module._run_validate(model_path, unredacted=unredacted)
+    if documents and result.exit_code == 0 and result.model is not None:
+        refused = _cmd_validate_documents(model_path, output_format, result, documents)
+        if refused != 0:
+            return refused
     if output_format == "json":
         try:
             report_module.emit(result.payload)
@@ -543,6 +599,17 @@ def _register_validate(subparsers):
             "operations_digest, which every steps.json is required to carry"
         ),
     )
+    validate_parser.add_argument(
+        "--document",
+        action="append",
+        default=None,
+        metavar="PATH",
+        help=(
+            "re-hash the unattended model's source spans over this declared "
+            "document; repeatable; exit 3 on an undeclared document or a span "
+            "that is out of range or has a different excerpt digest"
+        ),
+    )
     _add_format_argument(validate_parser)
     _add_unredacted_argument(validate_parser)
 
@@ -811,6 +878,7 @@ def handle(args, parsers) -> int:
             args.format,
             trace=args.trace,
             unredacted=args.unredacted,
+            documents=args.document,
         )
 
     if args.command == "coverage":

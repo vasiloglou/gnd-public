@@ -102,6 +102,37 @@ Fields you must not author, and what `gnd verify` does if you do:
 
 `covers` is a **completeness claim**, not a summary of what you found. Shortening it to the fact types you extracted would convert every missed fact type into an unexamined one, and the population would score as vacuously fine. That is the specific gaming path this rule closes.
 
+## 4a. The optional guideline file
+
+`gnd extract MODEL --out DIR --guidelines` adds `<stem>.guidelines.md` and records its SHA-256 under
+`artifacts` in `<stem>.artifacts.json`. Without the flag the bundle is byte-identical to a bundle
+made before the flag existed. No consumer verifies the guideline digest; the claim is that it is
+**recorded**. Read the guideline only when `<stem>.artifacts.json` lists it, and only after its
+SHA-256 matches the index: a flag-free re-extract into the same directory leaves an older guideline
+file in place, unlisted. This section is the layout's one normative home; `gnd.extract.guidelines`
+implements it.
+
+- A fixed header: derived mechanically, constraint-blind, and "extract what the document says,
+  even when it breaks a rule".
+- One `## Fact type` heading per fact type, carrying its id in backticks, in model order; then
+  `- Reading:`, `- Inverse reading:` when declared, and `- Same role players as:` naming every
+  other fact type with the same role-player signature (the shape rule of the evolution contract's
+  "Shape report").
+- One `### Role` heading per role, carrying its name in backticks, in role order; then
+  `- Object type:` (name, id, kind); one line per present description core key (`summary`, `row`,
+  `source`, `notes`); for an entity `- Identified by:` (the value of its value type, a composite
+  reference, or no printable reference value); `- Primitive:` when one resolves.
+
+No constraint is read except the external uniqueness that **is** an entity's composite reference
+scheme, and value constraints are omitted. So adding, removing or changing **any other**
+constraint leaves the file's bytes unchanged; an external uniqueness that anchors on an entity
+changes only that entity's `- Identified by:` line. **A description is the modeller's prose and can
+restate a rule** (for example "an order has exactly one amount"), and the guideline repeats
+descriptions as written, escaped onto one line. Read it as guidance about meaning, never as a rule
+to enforce while extracting. No description, reading or name can start a heading. The file is
+plain text in Markdown layout: raw HTML in a description is not escaped, so read the file as
+text and do not render it.
+
 ## 5. Failure semantics
 
 | What happened | Machine-readable form | Exit | What you do |

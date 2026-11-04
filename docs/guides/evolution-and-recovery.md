@@ -44,6 +44,14 @@ reported by the command with `gnd evolve finalize`; do not start a second
 evolution or reconstruct the pending file. This completes the original
 transaction. It does not author another model change.
 
+When a program grows the model in rounds, pass `--policy additive` to both
+`preview` and `apply`: preview then refuses any round that renames, deletes
+or changes what earlier rounds admitted, or adds a constraint to a fact type
+that already holds facts; name fact types whose facts live in population
+files with `--populated`. `--shape-report` lists existing fact types with the
+same role players as each added one. See
+[Grow a model by additions](../how-to/grow-a-model.md).
+
 Follow the [expense chapters](../expense/01-model.md) for a concrete currency
 change. After evolution, explicitly select code generation if needed, adapt
 extension behavior, and rerun the affected examples and application tests.

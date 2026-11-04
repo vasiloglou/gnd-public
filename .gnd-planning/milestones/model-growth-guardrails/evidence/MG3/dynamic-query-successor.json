@@ -1,0 +1,197 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/MG2/dynamic-query-successor.json",
+ "predecessor_sha256": "6dc3da453b49e2bb3f99c9b6eb7c6f49a71692cd7f082e8be51a949a841856a8",
+ "reason": "model-growth-guardrails MG3 (2026-11-04): the duplicate-shape report (gnd.evolve.shapes, the ShapeMember/ShapeAdded/ShapeReference/ShapeGroup preview models, the optional shape_matches field on EvolutionPreview/_EvolutionPreviewV3 and its reader check, gnd.refscheme.role_player_signature/fact_type_signatures/entity_reference) adds parameter, field and return annotations and dict lookups keyed by a fact-type id. Syntax census only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/evolve/models.py",
+   "EvolutionPreview",
+   "tuple[ShapeGroup, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "ShapeGroup",
+   "tuple[ShapeAdded, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "ShapeGroup",
+   "tuple[ShapeMember, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "ShapeGroup",
+   "tuple[ShapeReference, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "ShapeGroup",
+   "tuple[StableId, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "ShapeReference",
+   "Literal['direct', 'composite', 'unmatchable']",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_EvolutionPreviewV3",
+   "tuple[ShapeGroup, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_check_shape_matches",
+   "adds.get(member.operation_index)",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_check_shape_matches",
+   "set[int]",
+   1
+  ],
+  [
+   "src/gnd/evolve/models.py",
+   "_check_shape_matches",
+   "tuple[ShapeGroup, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_added_fact_types",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_added_fact_types",
+   "list[tuple[int, str]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_added_fact_types",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_added_fact_types",
+   "tuple[int, str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_readings",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_references",
+   "tuple[ShapeReference, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_references",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "Callable[[], dict[Any, Any]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "candidate_signatures[fact_type_id]",
+   2
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "dict[Any, Any]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "list[Any]",
+   2
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "list[tuple[tuple[str, ...], tuple[list[Any], list[Any]]]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "tuple[ShapeGroup, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "tuple[list[Any], list[Any]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "shape_matches",
+   "tuple[tuple[str, ...], tuple[list[Any], list[Any]]]",
+   1
+  ],
+  [
+   "src/gnd/refscheme.py",
+   "entity_reference",
+   "tuple[str, str | None]",
+   1
+  ],
+  [
+   "src/gnd/refscheme.py",
+   "fact_type_signatures",
+   "dict[str, tuple[str, ...]]",
+   1
+  ],
+  [
+   "src/gnd/refscheme.py",
+   "fact_type_signatures",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/refscheme.py",
+   "role_player_signature",
+   "Mapping[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/refscheme.py",
+   "role_player_signature",
+   "tuple[str, ...]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 6964,
+ "result_occurrences": 8696
+}

@@ -1,0 +1,44 @@
+== MG3
+M1-set-not-multiset KILLED 1 failed
+M2-supertype-closure KILLED 1 failed
+M3-apply-drops-report KILLED 1 failed
+M4-report-changes-breaking KILLED 1 failed
+M5-report-omits-added KILLED 1 failed
+M6-serializer-writes-null KILLED 1 failed
+M7-existing-always-before-shape KILLED 1 failed
+M8-retry-compares-advice KILLED 1 failed
+M9-quadratic-output KILLED 1 failed
+M10-reader-skips-operation-check KILLED 1 failed
+exit 0
+== MG4
+M1-prints-value-constraints KILLED 1 failed, 3 passed
+M2-description-unescaped KILLED 1 failed
+M3-backtick-unescaped KILLED 1 failed
+M4-flag-ignored KILLED 1 failed
+M5-always-written KILLED 1 failed
+M6-no-same-role-players KILLED 1 failed
+M7-no-identity-memo KILLED 1 failed
+M8-prints-external-uniqueness KILLED 1 failed
+M9-prints-sample-rows KILLED 1 failed
+exit 0
+== MG5
+M1-mode-gate-removed KILLED 1 failed
+M2-byte-offsets KILLED 1 failed
+M3-u6-first-row-only KILLED 1 failed
+M4-common-sense-not-exempt KILLED 1 failed
+M5-u8-skips-sample KILLED 1 failed
+M6-no-nfc KILLED 1 failed
+M7-undeclared-accepted KILLED 1 failed
+M8-confirmed-admitted KILLED 1 failed
+M9-match-not-fullmatch KILLED 1 failed
+M10-duplicate-rows-admitted KILLED 1 failed
+M11-refusal-drops-warnings KILLED 1 failed
+exit 0
+== close
+C1-object-scope-ignored KILLED 1 failed
+C2-identified-entity-ignored KILLED 1 failed
+C3-induced-spans-ungated KILLED 1 failed
+C4-u8-constraints-only KILLED 1 failed
+C5-no-near-miss-warning KILLED 1 failed
+C6-first-add-index KILLED 1 failed
+exit 0

@@ -134,6 +134,15 @@ matrix and the strengthening list are in the
 [evolution contract](references/evolution-contract.md) ("Additive policy"); the guarantee holds
 only when apply repeats the options.
 
+## The shape report — `--shape-report`, advice only
+
+Before adding a fact type, check whether the model already has one over the same object types.
+`gnd evolve preview --shape-report` lists, for each added fact type, the existing (and other added)
+fact types with the same role players, with their readings and how each entity is identified. It
+never changes an exit or `breaking`; deciding whether two readings mean the same thing is yours.
+`apply` needs no extra option. The rule is in the
+[evolution contract](references/evolution-contract.md) ("Shape report").
+
 ### The hand-edit protocol for the refused residue
 
 There is no flag to override this and no `--force`. For a gated delta:

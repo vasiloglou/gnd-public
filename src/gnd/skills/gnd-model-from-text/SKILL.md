@@ -98,6 +98,17 @@ Before eliciting examples, ask the user:
 
 If no answer: default to **MVP-fast** when the stated goal is a prototype or an MVP slice, and to **Guided** otherwise. Record the choice in `source.mode` of the YAML.
 
+#### Unattended mode — no human in the loop
+
+A host pipeline that runs this skill without a person to answer (an LLM proposing the model from document passages) uses **Unattended**, not One-shot. One-shot still assumes a reviewer edits the YAML afterwards and auto-confirms library-tier constraints; Unattended confirms nothing. The host runs the LLM; GND validates the result.
+
+- Set `source.mode: unattended`, `source.reviewer: none`, and list every source document in `source.documents` with the SHA-256 of its raw bytes.
+- Every object type, fact type and sample row, and every constraint except `common-sense` (which cites `library_entry`), carries a span of the document it came from.
+- Every constraint stays `proposed`, and every constraint this workflow emits stays `deontic`; no `explicit` or `user-supplied` source, since nobody said it.
+- Validate with `gnd validate MODEL --document DOC ...`, not `scripts/validate_model.py`, which checks the schema only and cannot see these rules.
+
+The rules, span units and refusals are in [representation-format.md](../gnd-orm-core/references/representation-format.md) ("Unattended source").
+
 In Guided mode CSDP pauses at three pivot points (Step 0 itself, Step 6d's LLM spot-check, Step 7's six substeps). In One-shot mode those pauses collapse — library-tier proposals auto-confirm; LLM-tier proposals stay `proposed` (and therefore `deontic`) for the user to review by editing the YAML.
 
 **MVP-fast mode** keeps the dialogue and drops the ceremony:

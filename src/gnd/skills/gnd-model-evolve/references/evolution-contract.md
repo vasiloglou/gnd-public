@@ -187,7 +187,8 @@ naming `operation_index`, `operation_id`, the locator `reference`, the matrix `c
 of ids and key names only). Without the option the four keys are **omitted** from the document,
 not written as `null`, so a policy-free preview has the bytes and `preview_sha256` it had before
 the policy existed; `accepted_blast_radius_sha256` keeps writing `null`. Readers of versions 1 and 2
-are unchanged.
+are unchanged. Under `--shape-report` the preview carries one more optional field, `shape_matches`
+("Shape report" below), omitted by the same rule.
 
 ### Additive policy
 
@@ -202,8 +203,11 @@ share that implementation.
 reference population owns it, when a `population` artifact locator in the proposal references
 `fact_types[ID]`, or when `--populated ID` names it. A `--populated` id that names no fact type of
 the current model exits `3`. A model-hosted constraint's subjects are the fact types its role
-references and rule atoms name, in `before` and `after` alike; it counts as populated when **any**
-subject is. A fact type the same proposal adds is never populated. A `modify` of an element the
+references and rule atoms name, in `before` and `after` alike, and, for a constraint that ranges
+over an object type without a role (`value` or `cardinality` with `object_type` and no `role_ref`,
+`subtype-partition`'s `supertype` and `subtypes`), every fact type with a role played by that
+object type, by a subtype of it, or by an entity it identifies as reference value type. It counts
+as populated when **any** subject is. A fact type the same proposal adds is never populated. A `modify` of an element the
 same proposal adds is judged like any other `modify`: declare the element once, in its final shape.
 
 | Locator | add | modify | rename | delete |
@@ -250,6 +254,45 @@ digest was recomputed differs from the fresh one and exits `11`. `EvolutionServi
 the policy on the bytes it is about to publish and refuses with `3` on any issue, naming the
 operation index and cell; it never reads the preview's issue list. A preview stripped of every
 policy field and applied without `--policy` publishes as a policy-free preview.
+
+### Shape report
+
+`gnd evolve preview --shape-report` adds `shape_matches`: one **group** per role-player signature
+that a fact type the proposal adds has, ordered by the first operation that adds a member. This
+section is the rule's one normative home; `gnd.refscheme` (`role_player_signature`) and
+`gnd.evolve.shapes` implement it.
+
+- **Signature.** The sorted multiset of a fact type's role-player object-type ids. Role order does
+  not matter; (A, A, B) and (A, B, B) differ; a subtype never matches its supertype; two value types
+  are two ids whatever their primitives. Equal ids imply equal reference schemes, so no reference
+  mode is compared.
+- **Group.** `signature`; `references`; `added`, every `add` of a `fact_types` element whose id the
+  candidate holds, with that signature, in operation order (`operation_index`, `fact_type`,
+  `reading`, `inverse_reading`; never empty); and `existing`, every fact type of the current model
+  with that signature, sorted by id (`fact_type`, `reading`, `inverse_reading`). An added fact
+  type's candidates are the other members of its group; a group with one added member and no
+  existing one says that fact type has none. Each fact type appears at most once, so the report is
+  linear in the model.
+- **Which shape an existing fact type has.** Its candidate shape and readings when the candidate
+  still holds it and the proposal does not re-add its id (so a `modify` is judged as modified);
+  otherwise its current shape (so a fact type the proposal deletes, or deletes and re-adds under
+  the same id, still meets its replacement). An id the proposal adds and then deletes or renames is
+  not reported.
+- **References.** For each entity role player, once and sorted: `object_type`, `identity` (`direct`,
+  `composite` or `unmatchable`, as `reference_identity` classifies it) and, exactly when `direct`,
+  the identifying `value_type`.
+
+The preview reader refuses a report whose groups are out of order, repeat a signature, name an
+operation that does not add that fact type, or carry unsorted or duplicate members or references.
+It does not recompute signatures; `apply` does, by rebuilding the report.
+
+The report is advice. A match is a candidate for the caller to judge, never a duplicate verdict: no
+exit, `breaking`, blast radius, `affected_references` or policy field reads it, and a preview made
+without the option is byte-identical to one made before the option existed. `apply` takes no shape
+option; it rebuilds the report exactly when the reviewed preview carries `shape_matches`, so an
+edited report differs from the fresh one and exits `11`. A report removed from the preview, digest
+recomputed, applies as a preview made without it, and the retry branch after an interrupted apply
+compares review identity without it: nothing is gated on it.
 
 `preview` performs no publication. It validates the current and candidate models, replays declared
 operations, enforces D-12, renders the complete verbalization, and builds the report.

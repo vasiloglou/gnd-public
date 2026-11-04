@@ -16,6 +16,7 @@ for a process. It is accepted only at the root.
 | Command form | Result |
 |---|---|
 | `gnd validate MODEL --format json` | Structural and semantic model validation |
+| `gnd validate MODEL --document DOC` | Also re-hash an unattended model's source spans over a declared document |
 | `gnd validate MODEL --trace` | Text report of transition digests and obligations, without evaluating a walk |
 | `gnd check MODEL POPULATION --format json` | Snapshot constraint and derivation findings |
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |
@@ -38,7 +39,7 @@ does not add trace fields.
 |---|---|
 | `gnd codegen MODEL --out DIR` | Derived project files and initial extension structure |
 | `gnd conformance MODEL DIR --format json` | Static integrity, currency, structure and architecture findings |
-| `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations |
+| `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT] [--shape-report]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations; the [shape report](evolve-policy.md#shape-report) lists same-shaped fact types |
 | `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR [--policy additive --populated FT]` | Model publication and linked-project rechecks; repeats the preview's policy |
 | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR` | Completion of an interrupted published evolution |
 | `gnd discover MODEL POPULATION --out PROPOSAL --report REPORT --actor ID --requested-at 2026-10-24T12:00:00+00:00` | Candidate constraints observed in one population, as a reviewable evolve proposal plus a report ([contract](discover.md)) |
@@ -60,7 +61,7 @@ automatic side effects of validation. See [evolution and recovery](../guides/evo
 | `gnd export ilp MODEL --population POPULATION --target amie --out DIR` | One unlabelled population's binary fact types as typed triples for a rule miner ([contract](ilp-bridge.md#amie-style-miner)) |
 | `gnd import ilp-rules MODEL CLAUSES --labels MANIFEST --reported-coverage RUN --target popper --out PROPOSAL` | Learned clauses as induced, advisory guarded constraints, admitted only when GND's coverage equals the learner's; `--target` is `popper`, `neutral`, `ilasp`, `llm` or `rules` ([contract](ilp-bridge.md)) |
 | `gnd import mined-rules MODEL RULES --population POPULATION --reported REPORTED --target amie --out PROPOSAL` | A rule miner's rules as induced, advisory guarded constraints, admitted only when every count equals the miner's and every rule holds ([contract](ilp-bridge.md#amie-style-miner)) |
-| `gnd extract MODEL --out ARTIFACTS` | Offline schema/vocabulary bundle for a separate extraction workflow |
+| `gnd extract MODEL --out ARTIFACTS [--guidelines]` | Offline schema/vocabulary bundle for a separate extraction workflow; `--guidelines` adds a constraint-blind per-fact-type guideline file |
 | `gnd verify MODEL POPULATION --artifacts ARTIFACTS --format json` | Bound extraction-handoff validation followed by checking |
 | `gnd verify MODEL POPULATION --no-extraction --format json` | Explicitly check directly authored, unextracted facts |
 | `gnd doccheck MODEL MANIFEST --artifacts ARTIFACTS` | Validation of a rendered document's obligations |

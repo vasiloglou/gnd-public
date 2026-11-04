@@ -5,7 +5,8 @@ facts already admitted under the current model uninterpretable: a rename,
 delete or change of an existing object type, fact type or role; a replaced
 reference scheme; a new or stronger constraint on a fact type that has a
 population. Without `--policy`, nothing changes: every preview and apply is
-byte-identical to what it was before the option existed.
+byte-identical to what it was before the option existed. For a worked round,
+see [Grow a model by additions](../how-to/grow-a-model.md).
 
 ```bash
 gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json --policy additive --populated orders
@@ -53,3 +54,19 @@ is the caller's to repeat.
 
 The policy is a gate, not advice: it changes the exit. The same proposal
 without `--policy` previews and applies as before.
+
+## Shape report
+
+`gnd evolve preview --shape-report` is advice that sits beside the policy.
+The preview's `shape_matches` groups every fact type the proposal adds with
+the existing fact types, and the other added ones, played by the same object
+types, with their readings and how each entity role player is identified.
+A match is a candidate, not a verdict: the report never changes an exit,
+`breaking` or the blast radius, and `apply` takes no extra option.
+
+```bash
+gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json --shape-report
+```
+
+The signature rule and the field layout are normative in the evolution
+contract (section "Shape report").

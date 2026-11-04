@@ -1425,6 +1425,21 @@
        "type": null
       },
       {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "shape_report",
+       "help": "list existing fact types with the same role players as each added one (advice only)",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--shape-report"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
        "choices": [
         "text",
         "json"
@@ -2882,7 +2897,7 @@
      "const": null,
      "default": null,
      "dest": "out",
-     "help": "output directory for the four-file bundle",
+     "help": "output directory for the bundle (four files, five with --guidelines)",
      "metavar": null,
      "nargs": null,
      "option_strings": [
@@ -2890,9 +2905,24 @@
      ],
      "required": true,
      "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "guidelines",
+     "help": "also write <stem>.guidelines.md, constraint-blind per-fact-type guidance (readings, role players, descriptions, reference modes), digest-recorded in <stem>.artifacts.json",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--guidelines"
+     ],
+     "required": false,
+     "type": null
     }
    ],
-   "description": "Derive the per-model extraction artifacts OFFLINE from model.orm.yaml: <stem>.projection.schema.json (the closed, shape-only structured-output projection, gated by a recursive allowlist that fails closed on unlisted keywords), <stem>.verbalization.txt (the constraint-blind rendering seed), <stem>.applicable.json (the three-path reference-scheme applicable set) and <stem>.artifacts.json (sha256 digests plus the header_template the executing skill copies verbatim). No provider is called and no network is touched — the executing agent running the gnd-extract skill is the only place a model is ever called. Exits 0 when the bundle is emitted, 3 when the model is invalid, 64 on usage errors, 70 when the projection gate refuses gnd's own emitter (an internal invariant breach), 74 when the output path is refused or unwritable.",
+   "description": "Derive the per-model extraction artifacts OFFLINE from model.orm.yaml: <stem>.projection.schema.json (the closed, shape-only structured-output projection, gated by a recursive allowlist that fails closed on unlisted keywords), <stem>.verbalization.txt (the constraint-blind rendering seed), <stem>.applicable.json (the three-path reference-scheme applicable set) and <stem>.artifacts.json (sha256 digests plus the header_template the executing skill copies verbatim), plus <stem>.guidelines.md with --guidelines. No provider is called and no network is touched — the executing agent running the gnd-extract skill is the only place a model is ever called. Exits 0 when the bundle is emitted, 3 when the model is invalid, 64 on usage errors, 70 when the projection gate refuses gnd's own emitter (an internal invariant breach), 74 when the output path is refused or unwritable.",
    "epilog": null,
    "formatter_class": "argparse.HelpFormatter",
    "listed_help": "emit the per-model extraction artifact bundle (VER-01, DATA-02)",
@@ -5151,6 +5181,21 @@
      "nargs": 0,
      "option_strings": [
       "--trace"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_AppendAction",
+     "const": null,
+     "default": null,
+     "dest": "document",
+     "help": "re-hash the unattended model's source spans over this declared document; repeatable; exit 3 on an undeclared document or a span that is out of range or has a different excerpt digest",
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--document"
      ],
      "required": false,
      "type": null

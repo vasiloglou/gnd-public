@@ -358,6 +358,10 @@
       "lane": "evolve",
       "layer": "lanes"
     },
+    "gnd.evolve.shapes": {
+      "lane": "evolve",
+      "layer": "lanes"
+    },
     "gnd.exits": {
       "layer": "infrastructure"
     },
@@ -557,6 +561,10 @@
       "layer": "lanes"
     },
     "gnd.extract.manifest": {
+      "lane": "extract",
+      "layer": "lanes"
+    },
+    "gnd.extract.guidelines": {
       "lane": "extract",
       "layer": "lanes"
     },

@@ -762,6 +762,10 @@ PolicyCell = Literal[
 #: existed; `accepted_blast_radius_sha256` keeps writing `null` as before.
 _POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
 
+#: Every optional preview field omitted when unset: the policy's four and the
+#: shape report's one (MG3), under the same rule.
+_OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches")
+
 
 class PolicyIssue(_ClosedFrozenModel):
     """One operation the additive policy refused, by index, locator and cell.
@@ -776,6 +780,82 @@ class PolicyIssue(_ClosedFrozenModel):
     detail: NonEmptyString
 
 
+class ShapeMember(_ClosedFrozenModel):
+    """One fact type in a shape group: its id and readings (MG3)."""
+
+    fact_type: StableId
+    reading: NonEmptyString
+    inverse_reading: str | None = None
+
+
+class ShapeAdded(ShapeMember):
+    """A fact type the proposal adds, with the operation that adds it."""
+
+    operation_index: int = Field(ge=0)
+
+
+class ShapeReference(_ClosedFrozenModel):
+    """How one entity role player is identified, from ``reference_identity``."""
+
+    object_type: StableId
+    identity: Literal["direct", "composite", "unmatchable"]
+    value_type: StableId | None = None
+
+    @model_validator(mode="after")
+    def _value_type_only_for_direct(self) -> ShapeReference:
+        if (self.identity == "direct") != (self.value_type is not None):
+            raise ValueError("a shape reference carries value_type exactly when identity is direct")
+        return self
+
+
+class ShapeGroup(_ClosedFrozenModel):
+    """Every fact type sharing one role-player signature with an added one.
+
+    Advice, never a verdict (MG-R4). Each added fact type's candidates are the
+    group's other members, so the report is linear in the model, not
+    quadratic in the group."""
+
+    signature: tuple[StableId, ...]
+    references: tuple[ShapeReference, ...]
+    added: tuple[ShapeAdded, ...] = Field(min_length=1)
+    existing: tuple[ShapeMember, ...]
+
+
+def _check_shape_matches(groups: tuple[ShapeGroup, ...], proposal: EvolutionProposal) -> None:
+    adds = {
+        position: operation.locator.element_id
+        for position, operation in enumerate(proposal.operations)
+        if operation.kind is EvolutionOperationKind.ADD
+        and isinstance(operation.locator, ElementLocator)
+        and operation.locator.collection == "fact_types"
+    }
+    firsts = [group.added[0].operation_index for group in groups]
+    if firsts != sorted(set(firsts)):
+        raise ValueError("shape_matches groups must be in order of their first added operation")
+    signatures = [group.signature for group in groups]
+    if len(set(signatures)) != len(signatures):
+        raise ValueError("shape_matches holds one group per signature")
+    seen: set[int] = set()
+    for group in groups:
+        if tuple(sorted(group.signature)) != group.signature:
+            raise ValueError("shape_matches signature must be sorted")
+        positions = [member.operation_index for member in group.added]
+        if positions != sorted(set(positions)):
+            raise ValueError("shape_matches added members must be unique and in operation order")
+        for member in group.added:
+            if adds.get(member.operation_index) != member.fact_type:
+                raise ValueError("shape_matches names an operation that does not add that fact type")
+            seen.add(member.operation_index)
+        existing = [member.fact_type for member in group.existing]
+        if existing != sorted(set(existing)):
+            raise ValueError("shape_matches existing members must be unique and sorted")
+        names = [reference.object_type for reference in group.references]
+        if names != sorted(set(names)) or not set(names) <= set(group.signature):
+            raise ValueError("shape_matches references must be unique, sorted and role players")
+    if not seen <= set(adds):
+        raise ValueError("shape_matches names an operation that adds no fact type")
+
+
 class _EvolutionPreviewV3(_EvolutionPreviewV2):
     schema_version: Literal[EVOLUTION_SCHEMA_VERSION] = EVOLUTION_SCHEMA_VERSION
     proposal: _EvolutionProposalV3
@@ -783,6 +863,7 @@ class _EvolutionPreviewV3(_EvolutionPreviewV2):
     populated_args: tuple[NonEmptyString, ...] | None = None
     populated: tuple[NonEmptyString, ...] | None = None
     policy_issues: tuple[PolicyIssue, ...] | None = None
+    shape_matches: tuple[ShapeGroup, ...] | None = None
 
 
 class EvolutionPreview(_ClosedFrozenModel):
@@ -801,6 +882,7 @@ class EvolutionPreview(_ClosedFrozenModel):
     populated_args: tuple[NonEmptyString, ...] | None = None
     populated: tuple[NonEmptyString, ...] | None = None
     policy_issues: tuple[PolicyIssue, ...] | None = None
+    shape_matches: tuple[ShapeGroup, ...] | None = None
     preview_sha256: Sha256String
 
     @classmethod
@@ -835,7 +917,7 @@ class EvolutionPreview(_ClosedFrozenModel):
         # `_bindings_match` is recomputed from this serializer, so the written
         # bytes and the bound digest agree, and a policy-free preview keeps
         # the bytes it had before the fields existed (MG-R1).
-        for key in _POLICY_FIELDS:
+        for key in _OPTIONAL_PREVIEW_FIELDS:
             if document.get(key) is None:
                 document.pop(key, None)
         return document
@@ -855,6 +937,8 @@ class EvolutionPreview(_ClosedFrozenModel):
                     raise ValueError(f"{name} must be unique and sorted")
             if not set(self.populated_args) <= set(self.populated):
                 raise ValueError("populated_args must be a subset of populated")
+        if self.shape_matches is not None:
+            _check_shape_matches(self.shape_matches, self.proposal)
         if self.proposal_sha256 != self.proposal.proposal_sha256:
             raise ValueError("proposal_sha256 does not bind proposal")
         if self.candidate_model != self.proposal.candidate_model:
@@ -1353,6 +1437,10 @@ __all__ = [
     "PolicyIssue",
     "ProjectLocator",
     "RoleLocator",
+    "ShapeAdded",
+    "ShapeGroup",
+    "ShapeMember",
+    "ShapeReference",
     "StableLocator",
     "TrackedRoster",
     "ValidationEvidence",

@@ -70,6 +70,7 @@ from .models import (
     read_linked_project_conformance_document,
 )
 from .policy import POLICY_ADDITIVE, additive_policy_issues, effective_populated
+from .shapes import shape_matches
 
 MAX_EVOLUTION_PROPOSAL_BYTES = 10 * 1024 * 1024
 MAX_PROJECT_TREE_ENTRIES = 100_000
@@ -1275,6 +1276,7 @@ class EvolutionService:
         accepted_blast_radius_sha256: str | None = None,
         policy: str | None = None,
         populated: Sequence[str] = (),
+        shape_report: bool = False,
     ) -> EvolutionPreview:
         """Validate and bind a proposal without changing any publication leaf.
 
@@ -1282,6 +1284,9 @@ class EvolutionService:
         policy's verdict (MG2): ``populated_args``, the effective ``populated``
         set and ``policy_issues``. Issues do not raise here; the preview is
         returned for review and the CLI exits 3 when the list is non-empty.
+
+        With ``shape_report=True`` the preview also carries ``shape_matches``
+        (MG3), advice that no exit, ``breaking`` or blast radius reads.
         """
 
         if policy is not None and policy != POLICY_ADDITIVE:
@@ -1354,6 +1359,13 @@ class EvolutionService:
         # After the gate (18), candidate validation, replay equality and D-12
         # (all 3), so a preview written with issues is otherwise valid (spec D6).
         policy_values = self._policy_values(before_loaded_model, proposal, policy, populated)
+        # After the policy and every refusal, and read by nothing below: the
+        # report is advice (MG-R4), so it can neither pre-empt nor change one.
+        shape_values = (
+            {"shape_matches": shape_matches(before_loaded_model, candidate_model, proposal)}
+            if shape_report
+            else {}
+        )
 
         verbalization_text = render_model_verbalization(candidate_model)
         before_verbalization_text = render_model_verbalization(before_loaded_model)
@@ -1395,6 +1407,7 @@ class EvolutionService:
             # Present only under a policy: absent fields stay out of the
             # digest body, so a policy-free preview keeps its digest (MG-R1).
             **policy_values,
+            **shape_values,
         }
         digest_body = {key: _json_ready(value) for key, value in values.items()}
         digest_body["schema_version"] = proposal.schema_version

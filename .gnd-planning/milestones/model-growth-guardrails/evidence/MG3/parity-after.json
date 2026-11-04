@@ -1,0 +1,63 @@
+{
+ "examples/bookrec/genre-proposal": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "e0419baa787a1bf57d97ea07b01c595bfcd1f97f9bccc3ac0b8d24d92be3b0b3",
+  "preview_exit": 0,
+  "preview_sha256": "4aa905a55ddf9e273e141c41c9052ce47fdfabec72f558c56cb638ac072d5e0c",
+  "published_model_sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67",
+  "stable": true
+ },
+ "examples/plan_apps/course/credit-cap-proposal": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "819e6a28280eaa9a3baa8ce4a2247d7a318d2aedeb285b731b0df72b36be3d86",
+  "preview_exit": 0,
+  "preview_sha256": "640439ac7778a35489457f6f714edb44f2bf7745c3d3e7f95bd41c66232d8cc5",
+  "published_model_sha256": "1ce4962838f0b93186662e5b81ad165ad408eb182c85b3255f03c8ba14d52429",
+  "stable": true
+ },
+ "induced_knowledge/ik4-corpus": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "a27a9de275b18f79e05f93206922d1fd25d3f2595f9b58a3ed1e99813f86bf69",
+  "preview_exit": 0,
+  "preview_sha256": "b00499c7e11ed00e44543917f1eaef4536b663196a34ed94b8b1ccad22caf186",
+  "published_model_sha256": "d392f336757f748152f7532e1c2f1cea06ac184aeaff192bac6c68411e07f22b",
+  "stable": true
+ },
+ "induced_knowledge/ik5-corpus": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "2c59bf9a70352536f1e1e87a558e87c12434c8c63ed4ca669c40496c24d41754",
+  "preview_exit": 0,
+  "preview_sha256": "9a3cdc1949ed1d0fe7c7e3c14f7050cd37ca385ad6858b9c6cc260075f3afa8b",
+  "published_model_sha256": "3c364776e371a356d66f2b980cddab38555ff6b028ea0a73bb4b9a2d10478c3d",
+  "stable": true
+ },
+ "models/v2_operations": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "86cb436772c45b65bc2e9958b10bd6ef51605b06433a327b4caddf3e708eacae",
+  "preview_exit": 0,
+  "preview_sha256": "0fa46936935dbc740768b987f064c7468dc683e37cb18aaaf390ca041b6f105f",
+  "published_model_sha256": "610c8009009854048c74d1f16c949d22c21b3580840d9012c7de922c1c045373",
+  "stable": true
+ },
+ "phase4/evolution-rename-delete-blast-radius": {
+  "preview_exit": 0,
+  "preview_sha256": "b95331e3f2695a092951a1b520b3e1e70ddd049e6f18d60d3125e5f281f4a4ee",
+  "stable": true
+ },
+ "phase4/evolution-safe-additive": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "d740f2c0dcdf756e71d5ce5f4a8f09507a211fc3b4eae78ef926a57b2f847b15",
+  "preview_exit": 0,
+  "preview_sha256": "bc31fc6e31aa00b5ef2d58c013855486331521207be0e145f6871495851b65a9",
+  "published_model_sha256": "0e1505aa39a2a051ed328d427c159e7b01ca8eaa6f526387282e6c6602c6a09f",
+  "stable": true
+ },
+ "reference-corpus/dispatch": {
+  "apply_exit": 0,
+  "apply_stdout_sha256": "e1f13d404660c68a7af6794245b8f0d2bfafd6a02db932efe0742ef9bd6e070e",
+  "preview_exit": 0,
+  "preview_sha256": "b603923dd83a902c86e964594ff5947b2985c67c362c2fc6aa7f4900a4cc8744",
+  "published_model_sha256": "c12848a173f9eb19f5527ddf622d2c8acfa7c47dec1e5b3bdc4762e65462c860",
+  "stable": true
+ }
+}

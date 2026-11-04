@@ -987,6 +987,12 @@
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 256
+                  },
+                  "spans": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/source_span"
+                    }
                   }
                 }
               }
@@ -2738,6 +2744,33 @@
     "sha256_hex": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_span": {
+      "description": "MG5 unattended mode: a cited excerpt of a declared source document. start and end count code points of the NFC normalization of the document's strict UTF-8 decoding; excerpt_sha256 is the SHA-256 of the UTF-8 encoding of that slice; document_sha256 is the SHA-256 of the raw document bytes and must name an entry of source.documents. Required, with the rest of the rule family, only under source.mode unattended (gnd-orm-core representation-format, 'Unattended source').",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_sha256",
+        "start",
+        "end",
+        "excerpt_sha256"
+      ],
+      "properties": {
+        "document_sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "excerpt_sha256": {
+          "$ref": "#/$defs/sha256_hex"
+        }
+      }
     },
     "induction": {
       "description": "The IK2 record of how an induced constraint was proposed: the inducer, the manifest it read, bounded opaque example ids, support counts and digest-bound evidence. Ids are opaque or manifest-relative and never host paths or raw values (IK-R11); every bound is fixed by the IK2 spec (IK-R12). The block is a recorded claim: the loader checks its shape and arithmetic, not its truth.",

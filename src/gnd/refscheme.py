@@ -1,12 +1,20 @@
 """RF3 shared dependency home; algorithms retain predecessor semantics."""
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any
 
 from gnd.extraction_scope import fact_type_scope
+from gnd.model_index import ModelIndex
 from gnd.universe import resolve_reference_value_type
 
-__all__ = ["applicable_set", "reference_identity"]
+__all__ = [
+    "applicable_set",
+    "entity_reference",
+    "fact_type_signatures",
+    "reference_identity",
+    "role_player_signature",
+]
 
 
 def _object_types_by_id(model: Any) -> dict[str, dict[str, Any]]:
@@ -271,3 +279,29 @@ _unmatchable_reason.__module__ = 'gnd.extract.refscheme'
 reference_identity.__module__ = 'gnd.extract.refscheme'
 
 applicable_set.__module__ = 'gnd.extract.refscheme'
+
+
+def role_player_signature(role_players: Mapping[str, Any]) -> tuple[str, ...]:
+    """The sorted multiset of role-player object-type ids of one fact type.
+
+    One home for the shape rule (MG-R2): role order is irrelevant, (A, A, B)
+    and (A, B, B) differ, and a subtype is not its supertype. Non-string
+    players are ignored, so the helper is total over any mapping.
+    """
+    return tuple(sorted(value for value in role_players.values() if isinstance(value, str)))
+
+
+def fact_type_signatures(index: ModelIndex) -> dict[str, tuple[str, ...]]:
+    """Every fact type's role-player signature, read through ``ModelIndex``."""
+    return {
+        fact_type_id: role_player_signature(players)
+        for fact_type_id, players in index.role_object_types().items()
+    }
+
+
+def entity_reference(object_type_id: str, model: Any) -> tuple[str, str | None]:
+    """``(kind, value_type)`` for one entity: the kind ``reference_identity``
+    returns (``direct``, ``composite`` or ``unmatchable``) and, for ``direct``
+    only, the identifying value type."""
+    kind, payload = reference_identity(object_type_id, model)
+    return kind, (str(payload) if kind == "direct" else None)

@@ -3,34 +3,55 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
-## Unreleased: additive evolve policy (2026-11-04)
+## Unreleased: model growth guardrails (2026-11-04)
 
-`gnd evolve preview --policy additive [--populated FT ...]` refuses a proposal
-that renames, deletes or changes an existing object type, fact type or role,
-replaces a reference scheme, or adds or strengthens a constraint on a
-populated fact type ([issue #75](https://github.com/vasiloglou/gnd-public/issues/75)).
-The refused operations are named in the preview's `policy_issues`, the preview
-is still written, and the exit is 3. `apply` repeats the same options, refuses
-when they differ from the preview's, and re-runs the policy on the bytes it
-publishes. See the [additive evolve policy reference](reference/evolve-policy.md).
+For a model that a program grows round by round, without a person in the
+loop, GND now owns five things the program used to keep for itself: four
+checks and a rule read-back. Walk
+through them in [Grow a model by additions](how-to/grow-a-model.md).
 
-- Without `--policy`, every preview and apply is byte-identical to before.
-- A preview made with the option carries `policy`, `populated_args`,
-  `populated` and `policy_issues`; the keys are omitted otherwise.
+- **Rule read-back** ([#72](https://github.com/vasiloglou/gnd-public/issues/72)).
+  `gnd.api.verbalize_rules` renders a model's derivation rules in GND's
+  controlled language and reports a prose rule as `unsupported`; see the
+  [rule verbalization reference](reference/rule-verbalization.md).
+  `gnd.api.__all__` gains `verbalize_rules`. Fix: the full verbalization of a
+  model given as a path no longer raises on a structured aggregate rule; its
+  output now equals the output for the loaded model.
+- **Additive policy** ([#75](https://github.com/vasiloglou/gnd-public/issues/75)).
+  `gnd evolve preview --policy additive [--populated FT ...]` refuses, with
+  exit 3 and the preview still written, a rename, delete or change of an
+  existing element, a replaced reference scheme, or a new or stronger
+  constraint on a populated fact type. The preview gains `policy`,
+  `populated_args`, `populated` and `policy_issues`, omitted without the
+  option. `apply` must repeat the options, exits 3 when they differ from the
+  preview's, and re-runs the policy; see the
+  [additive evolve policy](reference/evolve-policy.md).
+- **Duplicate-shape report** ([#76](https://github.com/vasiloglou/gnd-public/issues/76)).
+  `gnd evolve preview --shape-report` adds `shape_matches`, grouping each
+  added fact type with the fact types that have the same role players, with
+  their readings. Advice only; `apply` needs no new option and rebuilds the
+  report. See the [shape report](reference/evolve-policy.md#shape-report).
+- **Extraction guidelines** ([#78](https://github.com/vasiloglou/gnd-public/issues/78)).
+  `gnd extract --guidelines` adds a constraint-blind per-fact-type guide,
+  digest-recorded in `<stem>.artifacts.json`. No constraint is stated (an
+  identifying external uniqueness shows only as identification); value
+  constraints are left out;
+  a description can restate a rule and is repeated as written.
+- **Unattended model-from-text** ([#74](https://github.com/vasiloglou/gnd-public/issues/74)).
+  With `source.mode: unattended`, `gnd validate` requires `reviewer: none`,
+  declared source documents, nothing `confirmed`, no `explicit` or
+  `user-supplied` source, a cited span for every element, sample row and
+  constraint except `common-sense` ones, and `deontic` for unreviewed
+  constraints. `gnd validate --document DOC` re-hashes the spans.
+  The `gnd-model-from-text` skill gains an Unattended mode.
 
-## Unreleased: rule verbalization (2026-11-03)
-
-`gnd.api.verbalize_rules` renders a model's derivation rules as text, the same
-sentence the full model verbalization prints for each rule
-([issue #72](https://github.com/vasiloglou/gnd-public/issues/72)). A prose rule
-is reported as `unsupported`. See the
-[rule verbalization reference](reference/rule-verbalization.md).
-
-- `gnd.api.__all__` gains `verbalize_rules`.
-- Fix: the full model verbalization of a model given as a path no longer
-  raises `AttributeError` when the model holds a structured aggregate rule.
-  Its output now equals the output for the loaded model. Output for every
-  input that rendered before is unchanged.
+Without the new options, and for models without `source.mode: unattended`,
+previews, applies, extract bundles and validation results are
+byte-identical to before. One exception: the verbalization fix above, for
+inputs that used to raise. An `induced` constraint carrying
+`provenance.spans` outside unattended mode is still refused (exit 3), now by
+`semantic:unattended-u7` rather than the schema. The schema gains
+`$defs.source_span`.
 
 ## Unreleased: disclosure mode (2026-11-01)
 

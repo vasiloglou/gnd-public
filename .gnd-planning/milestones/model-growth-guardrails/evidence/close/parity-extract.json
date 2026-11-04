@@ -1,0 +1,1850 @@
+{
+ "models": {
+  "tests/fixtures/adversarial/models/f05_frequency_external.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "f05_frequency_external.applicable.json": "fe9f2d2c62690b0912dc9272b868af2858c4af12832a7a32eaa9db92323a484c",
+    "f05_frequency_external.artifacts.json": "44aa675d88db0ab16133cf5ed640e76528e00052117576ed263bc85bd5da4e5e",
+    "f05_frequency_external.projection.schema.json": "de5dcb104e62c4b023ee9ff548854ffefbc8337ee9b2e599d1bb4ed4cebe72de",
+    "f05_frequency_external.verbalization.txt": "68cbe6df942e28330f6b7f81e32bbc91367d50b4a45fee436879aa9bd0c1915f"
+   }
+  },
+  "tests/fixtures/adversarial/models/f05_setfam_join.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "f05_setfam_join.applicable.json": "7bea41d1f3dcaee2e8abb34cfb8dbb3a0f0d8e1ea564aa09640a9c888798a1e9",
+    "f05_setfam_join.artifacts.json": "aa645f860f5c90e201132032ed920040853301dd440e89b38bfafdce9c873572",
+    "f05_setfam_join.projection.schema.json": "2674b4835bcebb343c1d629b1bbfd353e0eb58fa527aa27f3b2711848cc9c239",
+    "f05_setfam_join.verbalization.txt": "3401e9c4d705818513b676794c443a98dc882393f9252cca86961efbf767d1af"
+   }
+  },
+  "tests/fixtures/adversarial/models/f05_uniqueness_external.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "f05_uniqueness_external.applicable.json": "fe9f2d2c62690b0912dc9272b868af2858c4af12832a7a32eaa9db92323a484c",
+    "f05_uniqueness_external.artifacts.json": "5920a213994d8147c955c29a069a7927ccaa04d53d5edc30e823553bad19ec70",
+    "f05_uniqueness_external.projection.schema.json": "de5dcb104e62c4b023ee9ff548854ffefbc8337ee9b2e599d1bb4ed4cebe72de",
+    "f05_uniqueness_external.verbalization.txt": "68cbe6df942e28330f6b7f81e32bbc91367d50b4a45fee436879aa9bd0c1915f"
+   }
+  },
+  "tests/fixtures/adversarial/models/float_range.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "float_range.applicable.json": "1742d29ebb45930d87b3e81e2205b05ee382c0f5c0b32712f6620f797e08fb1c",
+    "float_range.artifacts.json": "ccd1c0959a02ac9e200c96775e247d662d11145df1c4c68e9bbf124333e7c2b3",
+    "float_range.projection.schema.json": "b2b05a4a22565ff546f5d7dec9e154e6cd8c9df6af2608e671e2daf5fc3f9343",
+    "float_range.verbalization.txt": "136e2fa7a084b73607bc75e7657cd40cf91fbe85a805bdb4d5b8b4ad727ea71f"
+   }
+  },
+  "tests/fixtures/adversarial/models/hostile_values.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "hostile_values.applicable.json": "1c1c4739c5c9e5bd514d4f64b9629daa0f4393cdb80b341570b357f49a4b4a0f",
+    "hostile_values.artifacts.json": "fab8b75abe672143228b33328e9804faea7ea79ae56aa165b40fee5330013ab7",
+    "hostile_values.projection.schema.json": "53f58d998f92ea118ee322077b18ee54be1042f82944f709880e53312add2a00",
+    "hostile_values.verbalization.txt": "b5770223642435f863cdb84a02c6cb31624207546a6ba4ad397ad5334c4fa65f"
+   }
+  },
+  "tests/fixtures/adversarial/models/model_id_a.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model_id_a.applicable.json": "9722ddfa0721ba05b16182ad6af38b2394fe4e09563a417b46eac8ad17096877",
+    "model_id_a.artifacts.json": "178b7705ce485085ef5f1c4e1caa2a77b3e4a287798cbe61d86031f6d91c6bb4",
+    "model_id_a.projection.schema.json": "ddb73ea665eeceb9a7e57cadc1732a406fc81e684751747536af448de5f80d96",
+    "model_id_a.verbalization.txt": "26dff0be7979eff084efa02ad98b09ffef46d92689f035313b1bd47dc718909c"
+   }
+  },
+  "tests/fixtures/adversarial/models/no_observable_subjects.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "no_observable_subjects.applicable.json": "2f33e32b8b0dd699e411ce4fa2032e67b68dc2324c0ebbbffdd6f4d1f82cf8dd",
+    "no_observable_subjects.artifacts.json": "5e41048e5fa6663de4e1d31de46f10460de6db9001d11581e953dce501a90a67",
+    "no_observable_subjects.projection.schema.json": "f03c9987c134a004034bcbad1e392e111376be669400f131e1c7f0707a4cc98d",
+    "no_observable_subjects.verbalization.txt": "aa6cbd19917ee7de04ecaf2f41c67f43e982f923ef6df91ee681450fcec3b468"
+   }
+  },
+  "tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "no_subjects_cardinality_min.applicable.json": "2f33e32b8b0dd699e411ce4fa2032e67b68dc2324c0ebbbffdd6f4d1f82cf8dd",
+    "no_subjects_cardinality_min.artifacts.json": "860853b0254f4ae53e1c481946349f37c13c2d0fe88b86429334c43511258ad1",
+    "no_subjects_cardinality_min.projection.schema.json": "f03c9987c134a004034bcbad1e392e111376be669400f131e1c7f0707a4cc98d",
+    "no_subjects_cardinality_min.verbalization.txt": "aa6cbd19917ee7de04ecaf2f41c67f43e982f923ef6df91ee681450fcec3b468"
+   }
+  },
+  "tests/fixtures/adversarial/models/omission.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "omission.applicable.json": "ae7ea75f92491372880ca757b15677117411aa1a99db5a3c025160afce09ac7e",
+    "omission.artifacts.json": "888ffb93ec7589887eee0eedd925928d2acfec74d137d4f74d26313b4c66eae1",
+    "omission.projection.schema.json": "1c036d84f10e870d0dd8033b6b414bf938fc922380deacf5aafe04ed00c1b9b3",
+    "omission.verbalization.txt": "a4341ecffbe461ba820898f4d9831222c643ff9b567fe7e8e1fedffdcc52bfd0"
+   }
+  },
+  "tests/fixtures/adversarial/models/partition_exclusive.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "partition_exclusive.applicable.json": "577156584e31e35c6004afec74927f7343c3c53de53768bd2a50693d9a140cf6",
+    "partition_exclusive.artifacts.json": "bccca754c5131142c8a88d4e1f5b68357822d09f014983ba008300272af9ec16",
+    "partition_exclusive.projection.schema.json": "da06b48dab7d68b38177fd39a27a8f1d4a998eca4ab9fff604c6ecba9d6459de",
+    "partition_exclusive.verbalization.txt": "2304f804c06eae84c468bf9c427808c7866957ab2791a260aa5c04448a4a4bca"
+   }
+  },
+  "tests/fixtures/adversarial/models/partition_flagless.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/adversarial/models/reference_cardinality.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "reference_cardinality.applicable.json": "ae7ea75f92491372880ca757b15677117411aa1a99db5a3c025160afce09ac7e",
+    "reference_cardinality.artifacts.json": "9a28965895b6aafa2d2d43de501341046399a1ee309c8aaa5001092ced072a8b",
+    "reference_cardinality.projection.schema.json": "1c036d84f10e870d0dd8033b6b414bf938fc922380deacf5aafe04ed00c1b9b3",
+    "reference_cardinality.verbalization.txt": "a4341ecffbe461ba820898f4d9831222c643ff9b567fe7e8e1fedffdcc52bfd0"
+   }
+  },
+  "tests/fixtures/adversarial/models/reference_value_type.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "reference_value_type.applicable.json": "a3c76b4c2d1e50ccb64f8fdb2f4261ea4d4eff0e24943c6209443055be95e505",
+    "reference_value_type.artifacts.json": "f8ae2c7d03dabf03df433524cc3f5dc89ca2419667ba78cd7a28786ce9812261",
+    "reference_value_type.projection.schema.json": "322b69df508af1350371438e5a44454d9b262497aa72ebe754f18d75a91d03a7",
+    "reference_value_type.verbalization.txt": "a810b29852340ddc191412f6cecaf7e9dcf4b2e41e5a6817615b629aa3bfc663"
+   }
+  },
+  "tests/fixtures/adversarial/models/subtype_mandatory.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "subtype_mandatory.applicable.json": "3e012ce6d373e05720b05a6740f737fe471b5b9f4ff274a7f626aaf338a0bc34",
+    "subtype_mandatory.artifacts.json": "b98865cf6b2c8dcc99dc5015c576223899814dc073dca6c257aedb302e85f604",
+    "subtype_mandatory.projection.schema.json": "040477190103ebcd3a37ed56025db7b82fdadd6c7a81df32bfafe23bd394106f",
+    "subtype_mandatory.verbalization.txt": "7bf9b9cbf7c9894ef20927e9e2e6cbee3687e9a268b0f1a5dddf7225a4f5df64"
+   }
+  },
+  "tests/fixtures/adversarial/models/textual_alethic.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "textual_alethic.applicable.json": "d3399df50f9c58f9d3507a4cf8f0a0b9bd2d06aaba11c5122e8a41a46e08bdb3",
+    "textual_alethic.artifacts.json": "497b491d4766954c06301146d137af49ce9f6996d5cd037814d3152d55d97396",
+    "textual_alethic.projection.schema.json": "1c7e1959c28da9cafa36f50effa236f3601ac64968599fe73049ba999a669e40",
+    "textual_alethic.verbalization.txt": "5a98774ae130a6dfcad5831f0e4724dda42e52573bd2405bcd38e37de209fa96"
+   }
+  },
+  "tests/fixtures/adversarial/models/typed_range.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "typed_range.applicable.json": "0403dbad391aca960d8b6b72422daa6dea714cf47ce537d96e2295baaed1859d",
+    "typed_range.artifacts.json": "7b65717b3a8417e168629b5d6d2c37d500178cdba88c50b8aac4274eb9c86e8a",
+    "typed_range.projection.schema.json": "cd54ff9b27f84f85cd008dcf5bb0faf85ac7f0b1cb47e8645b342306ca71bb94",
+    "typed_range.verbalization.txt": "19b4b706052ba0e5fd22bf58dac74ad6989b6a7fbd700897d52c46036608d9f6"
+   }
+  },
+  "tests/fixtures/adversarial/models/uncomparable_literal.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "uncomparable_literal.applicable.json": "0403dbad391aca960d8b6b72422daa6dea714cf47ce537d96e2295baaed1859d",
+    "uncomparable_literal.artifacts.json": "f100e8ecc01f657fa6fed3092718ac2463f855d87e3ec164c15088d2c11c9f35",
+    "uncomparable_literal.projection.schema.json": "cd54ff9b27f84f85cd008dcf5bb0faf85ac7f0b1cb47e8645b342306ca71bb94",
+    "uncomparable_literal.verbalization.txt": "19b4b706052ba0e5fd22bf58dac74ad6989b6a7fbd700897d52c46036608d9f6"
+   }
+  },
+  "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "unresolvable_bound.applicable.json": "595896c392a82880b98e0457f4c8d2f29d0225520e4484b9853f29ca3bc32cc4",
+    "unresolvable_bound.artifacts.json": "e449ab65633cdb1aa6846500a708f2916468c010c6425c4412e1b42f67972955",
+    "unresolvable_bound.projection.schema.json": "fd903d7c3e154b928741af2a45b3aee02a83a256b82e6f8ed36de19aa3488885",
+    "unresolvable_bound.verbalization.txt": "03b89592c97223935482fb44bbf1bae7ffa0182734236b055d1349bcf69a7fd0"
+   }
+  },
+  "tests/fixtures/adversarial/models/xor_multirole.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "xor_multirole.applicable.json": "db515ec33707722fb1054a2fc689c3be4518b707822c163c5f5f921d232e828c",
+    "xor_multirole.artifacts.json": "06ccc2f8ff08c272ea9b3121a1489116ed84fcc651d0e88d92600a324349afca",
+    "xor_multirole.projection.schema.json": "3dc2c8debab16fc45f6bfa2966c6d26bf43612a5860cde7435e325cf52936128",
+    "xor_multirole.verbalization.txt": "e47e68f2529b55ef6c1d7e23b8f9ec034f9dfae54194a9cd38aa1475bfd1b6a7"
+   }
+  },
+  "tests/fixtures/architecture/static/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "60f4fb2f6c42bac33fb8366ed9e6cd743f65a8bdb86871071d533d3a814232b9",
+    "model.artifacts.json": "0812878f733f4ad5f632ec020c4022c580c608466f77cf1ab3108bea9daf13c1",
+    "model.projection.schema.json": "b849ab09dbd22a9846ec4ec575498c19b94a22f4752110ef449b5378d4d441c0",
+    "model.verbalization.txt": "e565beec779a18c22b7f041494ad0f41d3ca59bbb50180b0598ed4ad06e70766"
+   }
+  },
+  "tests/fixtures/checker/misc.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "misc.applicable.json": "bd69ec155e96689eb272afa48f5645f534892da2277e01997a6588cf0d54a92a",
+    "misc.artifacts.json": "f67705fca9ff77fa8064a3e0d0adcc072fb7d39dda8ce0c45779cb1127ba2802",
+    "misc.projection.schema.json": "99b9aaa08c0f64738a2de2199db31526695822db3b204c97ba52a9dfac47b599",
+    "misc.verbalization.txt": "dc1409047bf4f36966cce0b9bfa74d021f7c1a68884c424985e12e38cbb66d1e"
+   }
+  },
+  "tests/fixtures/checker/ring.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "ring.applicable.json": "3016737f41e01a64285783327398854eb77b85fbda7d915c409ba570a7053123",
+    "ring.artifacts.json": "f82666521ec5ae9abbbf5ac98b7be92269a9abba7a8f5dc8d5d3e7d352614ef4",
+    "ring.projection.schema.json": "c231628a194e601ea4d2156f8fdb2904eb2f514d02f9dee4f996002dd9829437",
+    "ring.verbalization.txt": "98f196e821a6b7b140a5483cc3a2201780a8b597b5974564af7d593835ecc212"
+   }
+  },
+  "tests/fixtures/checker/setfam.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "setfam.applicable.json": "f25f0f5391073065917fd5c170868d1b8e29619bb5ac97a4e266cc13e1b446ee",
+    "setfam.artifacts.json": "cb1cedd59f911100bb4ed48414560a7c18b39382d2601ec99cc7b248302e080b",
+    "setfam.projection.schema.json": "3779a17296d4fe17c9d52ef5a5621d98967a92cd29f18301371ac2e6d76967e9",
+    "setfam.verbalization.txt": "9cdf8a0ab9bb6723b9b2630acccc9160ced7bedf2a64ae63ef39f6481eb15f9e"
+   }
+  },
+  "tests/fixtures/coverage/mixed/v2_operations.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_operations.applicable.json": "5050a03be29ae635d234356fe2f3d9a1c4a03488888b63722999b994330e8343",
+    "v2_operations.artifacts.json": "048e0caeb5b8fc477993e34047b978449b06c5c96e2e5337036f46dfcba110c6",
+    "v2_operations.projection.schema.json": "13ba2264b0e388c0a02ee0befb9f69eddd4865f1439556c78fb5cb3e045b5cc0",
+    "v2_operations.verbalization.txt": "4ab3c5f3977503d1667104df0a226ec6887751d21e6c339fa0b29a32b44831b3"
+   }
+  },
+  "tests/fixtures/coverage/positional/library.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "library.applicable.json": "32a14809f4a8441e0303562f5b268d755201f75a9acd680a15fb9298376d045e",
+    "library.artifacts.json": "b3c88de2eac13b87df0af88c3418c0d7e64b8fc5cbed6310288573beed104c50",
+    "library.projection.schema.json": "b82393b429ab2dc2da257cb778cf00a646c6a4f714fa32f381c90de7568df52d",
+    "library.verbalization.txt": "4cf9874be0b7ae0edf6aee5b9e2dc9d89ccff3bde111510b704bcce17ee420ea"
+   }
+  },
+  "tests/fixtures/coverage/refused/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_worked_example.applicable.json": "2d02c326c6850f1651281ae313ea70f87bf51816d2b8533c0f11b55cf889642f",
+    "v2_worked_example.artifacts.json": "5bb06d6344bb25b7cce10e93e60e94bcc9f0b8d0f676c7de1150d4150dbb4413",
+    "v2_worked_example.projection.schema.json": "c2237ef5ff80aa899d599c810ae3460fc62cd14c68d9c7080d27322733b6fc68",
+    "v2_worked_example.verbalization.txt": "5647a751a4817a4093d8018421697cc88724660635445abbc799a94c8a633230"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/constraint-semiderived-computed-view/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "88aa15ab9e114195d5cb111d16bc0ef3e627085b89626cacc92a39bd52980ea4",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "c3dcb4a5c22d9243b3f43295dc4f015ed8d12b65c8737f7830838d96bff9d439",
+    "model.artifacts.json": "8f9ed4093853d3c799501c97b4d054d05dfc3bec11de2c6bfdd5ced9ae5bd207",
+    "model.projection.schema.json": "dae10337dcfb1a86667340ed4065f5837dcc682fe57b7ff1125785a43e14805f",
+    "model.verbalization.txt": "e6fdf20a13ff9ffe1bc2a9e200bf09a6cca43052256b22477991bb4960f411bf"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/cost-quadratic-mutation-red/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "ffb3e87de1f6a524e95f672c51d28dbcf773fcdd3f8d2d0ce5cbd590a41a5da2",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-bare-dollar-literal/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "c45181b68adf1ae9efebce8ca8b7fee94cf4cd5655e2e2c7afad52a5ee971b56",
+    "model.artifacts.json": "bfaa5b2c371e1462af2e4627858ad2a1b43b7bb57cb0495d5f53e0ac3ae417fd",
+    "model.projection.schema.json": "61d992908dc9ad952575f17009088c003fc9659b1041d3e0cee6ef209148cba5",
+    "model.verbalization.txt": "35f15249500fa75de4a20151fc366f9640288b8dcc3fadacbcfd909cb3a160b1"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-depth3-dependency-order/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "c3dcb4a5c22d9243b3f43295dc4f015ed8d12b65c8737f7830838d96bff9d439",
+    "model.artifacts.json": "3a4612402878092d278c003662c105b9e7adf14aaa0a0d33392d6496bbcf853d",
+    "model.projection.schema.json": "dae10337dcfb1a86667340ed4065f5837dcc682fe57b7ff1125785a43e14805f",
+    "model.verbalization.txt": "e6fdf20a13ff9ffe1bc2a9e200bf09a6cca43052256b22477991bb4960f411bf"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-negated-present/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "504a7ad8a37a36a12fc70ac0f43be3797f175ab967422a35fd29b29fd2704883",
+    "model.artifacts.json": "5a4c5888d91d06e33e586734c1978cd9bf515c4303bd144805989f508aba3b7d",
+    "model.projection.schema.json": "ee9b06deb1d8e62381e44bfa7bab9e75ddf83aa3d64c7c27693e382d08527887",
+    "model.verbalization.txt": "eef8af43761b12d504ae1e22c01f0d07174ace7f9d9aa122684d42077163231a"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "91d149c35310ec028915086e0b05c11a72193cc385f506ea77e550bbfd2a90ec",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "9bc4a493c608bcffaa17d9cb2effaaed31bdf3f144851f1d9cbd7b2867b6f798",
+    "model.artifacts.json": "5a48322a43cb5e9002801f2a00f9358828a5b7f294cc4af3e2a360dbfa2643c2",
+    "model.projection.schema.json": "5c3c707a3d925ce75f4302c8a1a8a78fe9a66e22a5c1c0a436c05099804d979f",
+    "model.verbalization.txt": "14eccc52cffb4eade3271759460fc099de3552de6c56261a4d79ee6122d9d152"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "97464471472a17ddb0a364325ec5949d88778a7553a3a999adf405543bb58ea4",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-unlisted-derived-empty-computed/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "bbbbff853c936eafa0b5d01cc63b5d6384ab67bc156b048ed0cd4308a7a4759b",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/wire-text-json-parity/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "cb2bcd3d85d2f2ec98cc89b23fadcac2394215d2e8e90d3cf652e934dd5065ab",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "549e6813c25aab5ccf437e48727aadb1123a524c8e2e67528be66e1a0bd043fb",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/derivation/cases/a01-string-arm.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a01-string-arm.applicable.json": "8d8b380b71d1f123daee851e11923e87952b4a320648b9d56cc2a34f40b99094",
+    "a01-string-arm.artifacts.json": "3722b1bace7bd8adad91b155d0c15b5e231f35a39c6b2620ff44f9705eb1ab19",
+    "a01-string-arm.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "a01-string-arm.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/a02-object-arm.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a02-object-arm.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "a02-object-arm.artifacts.json": "d70509c681fba2b955f6e8f3ad5ee09af187198e96bf0829db7c66f157ba9421",
+    "a02-object-arm.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "a02-object-arm.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/a03-absent.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a03-absent.applicable.json": "4b69db2aa7e916b73226be7f8625116d7e6796d5deadcee7c5ec7cdcd4589d34",
+    "a03-absent.artifacts.json": "2b64710d948823abf0ee3c81ed24f4a250f0ffa68dbc5dd9ffc88581969386df",
+    "a03-absent.projection.schema.json": "dcf394f5a23e1b7f36f3673964272f9d87d270d0f8ab69c4656a8b3935157423",
+    "a03-absent.verbalization.txt": "a6685f209bbc2d46c80a352acfed92e57d909258450ecd8862a4cde451d360a5"
+   }
+  },
+  "tests/fixtures/derivation/cases/a04-compatible-subtype.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a04-compatible-subtype.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "a04-compatible-subtype.artifacts.json": "1f0caa6be5102ef603ed980b96001c6feae8ba16def82829636c7f8449f034d9",
+    "a04-compatible-subtype.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "a04-compatible-subtype.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/a05-compatible-numeric.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a05-compatible-numeric.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "a05-compatible-numeric.artifacts.json": "44e8243775e4f094dcd8b8589ddfb34b31ccfcd5e04eeed57f24af3fcb635953",
+    "a05-compatible-numeric.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "a05-compatible-numeric.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/a06-dag-depth-3.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a06-dag-depth-3.applicable.json": "f4e849468cec734c14e03b8a52e5e18ce550a64e25b23cd6fdab1bc7864e66da",
+    "a06-dag-depth-3.artifacts.json": "151f0fbc1e8768438c7c3eaf6846905a9774a6e23caf0cd38a6ed3c25a05b80b",
+    "a06-dag-depth-3.projection.schema.json": "e0e9c3464ff1486e1504130c38df3d4f27f6c04008c509656ee3bdb5ff767bb8",
+    "a06-dag-depth-3.verbalization.txt": "494036f0922707c8e140853b11de1eea63648890e9a11d65c0643a5c9c859efc"
+   }
+  },
+  "tests/fixtures/derivation/cases/a07-component-product.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a07-component-product.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "a07-component-product.artifacts.json": "12743f354a3b64a2333b59dfa20b9735445a2f598691050293b51ca9cf427be9",
+    "a07-component-product.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "a07-component-product.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/a08-semiderived.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "a08-semiderived.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "a08-semiderived.artifacts.json": "e43c46b9dfc3fd4302aa34b0761f618789f5772590a247a575e2591ee1d9bb33",
+    "a08-semiderived.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "a08-semiderived.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/m01-token-fact-type.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m02-token-head-variable.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m03-token-derivation-mode.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m04-token-negate-variable.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m05-token-storage.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m06-token-semiderived-mode.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m07-token-dag-to-cycle.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "m07-token-dag-to-cycle.applicable.json": "f4e849468cec734c14e03b8a52e5e18ce550a64e25b23cd6fdab1bc7864e66da",
+    "m07-token-dag-to-cycle.artifacts.json": "e0fd28277191cbb14e5734ac6782a864904f7b62f52c1ec59f32f660dc357fd4",
+    "m07-token-dag-to-cycle.projection.schema.json": "e0e9c3464ff1486e1504130c38df3d4f27f6c04008c509656ee3bdb5ff767bb8",
+    "m07-token-dag-to-cycle.verbalization.txt": "494036f0922707c8e140853b11de1eea63648890e9a11d65c0643a5c9c859efc"
+   }
+  },
+  "tests/fixtures/derivation/cases/m08-token-absent-to-ruleless.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/m09-token-type-clash.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r01-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r02-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r03-head-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r04-negate-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r05-rule-not-mapping.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r06-rule-extra-key.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r07-body-missing.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r08-body-not-array.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r09-body-empty.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r10-atom-not-mapping.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r11-negate-not-array.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r12-head-not-mapping.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r13-head-empty.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r14-atom-role-missing.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r15-atom-role-extra.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r16-head-role-missing.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r17-head-role-extra.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r18-head-unbound.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r19-negate-unbound.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r20-component-unused.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r21-head-literal-string.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r22-head-literal-number.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "r22-head-literal-number.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "r22-head-literal-number.artifacts.json": "2ebf6ebd7bd9923e49187fbdc83ca83c24f1d9a7f3d1a4afdc6530304d600681",
+    "r22-head-literal-number.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "r22-head-literal-number.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/r23-head-literal-boolean.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r24-head-malformed-variable.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r25-type-repeated-within-atom.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r26-type-across-positive-atoms.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r27-type-positive-vs-negated.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r28-type-body-vs-head.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r29-self-loop.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "r29-self-loop.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "r29-self-loop.artifacts.json": "c7773c3cc51e84ef838c9bcbad847576809e2d396e6be0c462acb0d3a2bc2aff",
+    "r29-self-loop.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "r29-self-loop.verbalization.txt": "649fe168600d65b01379ec7ae1b37ce0dd0d35b36806ade19b8d7d332888dc57"
+   }
+  },
+  "tests/fixtures/derivation/cases/r30-cycle-2.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "r30-cycle-2.applicable.json": "c4a9ca11e64877d4490c971d113eee3662d63d5b8a2c736fa449cc4795d9669c",
+    "r30-cycle-2.artifacts.json": "e183299dbd9da322ba72f7ebf0bf30cd49e3a4de29caa36ebc23d1644129d3fc",
+    "r30-cycle-2.projection.schema.json": "236cd413cb39913e340945907f62cc4cb3b3ed5159cf538abf518e393d8d8c80",
+    "r30-cycle-2.verbalization.txt": "0c648e2f3eac36d7f4099cf28ddcff34714283a97c8ecc5e2b307ba876a93ac4"
+   }
+  },
+  "tests/fixtures/derivation/cases/r31-cycle-3.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "r31-cycle-3.applicable.json": "f30754d72a84e4fdc32465f81afa672e6c54c96ba3d8d65c07924966957bfaa6",
+    "r31-cycle-3.artifacts.json": "a55361183af145bdca8c65f007f8bb148c496e63b2625f5e426548c894216b35",
+    "r31-cycle-3.projection.schema.json": "ec87502a97cc828d771d81225b014dfb2752179cd9ee14e91adaea27c3d19989",
+    "r31-cycle-3.verbalization.txt": "aafd2dc5f123a5e3c9e7b73231028b54cf8c331fb971d794c744eb46800c3b37"
+   }
+  },
+  "tests/fixtures/derivation/cases/r32-opaque-dependency-positive.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r33-opaque-dependency-negated.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r34-rule-on-asserted.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r35-storage-contradiction.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r36-structured-on-object-type.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r37-operations-plus-derivation.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "r37-operations-plus-derivation.applicable.json": "adc1f0fe625a5c04fc3389332e536ee8829bfc54ca11384230f2d7041f4ea297",
+    "r37-operations-plus-derivation.artifacts.json": "0f1b51db8e8714ac8fe0e9a0404742483568447757159073774cc20f2f7124ad",
+    "r37-operations-plus-derivation.projection.schema.json": "10646f4e233c736cfa7bb8bfb2fee65bac34287de1c7cc3e1032019e204a0bca",
+    "r37-operations-plus-derivation.verbalization.txt": "fcca65bf82835bae6da954555814557f84e4eb75d8506f2a96d30e24f8b09e37"
+   }
+  },
+  "tests/fixtures/derivation/cases/r38-aggregate-key.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r39-sum-key.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r40-disjunction-key.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r41-arithmetic-key.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r42-precedence-ref-before-shape.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/derivation/cases/r43-precedence-shape-before-graph.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/evolve-policy/base.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "base.applicable.json": "272259caa7417074b8e501b17c909be1d05420ed417eb6ec282bf5dc3663d588",
+    "base.artifacts.json": "96e9e3e89c982c1392119eeb76e101e60199d06b1bad934a53c975c2e58dab7b",
+    "base.projection.schema.json": "7b53fdb623e812c01f95a50da0a9549cc3794ebb6d0a48673ebe0e0359b7e2c9",
+    "base.verbalization.txt": "e17afa37439b08b9ebc89d8a1e109c97eb1faa1366a739abdc4eb2c659ac2116"
+   }
+  },
+  "tests/fixtures/guarded/models/alethic.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "alethic.applicable.json": "bcca624153979bd8cd665dcbba5c753b775b06799be57b27bc703473965b33ee",
+    "alethic.artifacts.json": "0032f7ed60d69f91c24814bebc23c81be85f89e559500a175580f9e8c7637053",
+    "alethic.projection.schema.json": "67a8366f78ee600f3f745b675dbd5111b84ce0880be15f83244e8d07d18edce8",
+    "alethic.verbalization.txt": "0d6fc441f71111a49baab366c76cda15586ab2ed02c1e23a50e2c56c42f12ed9"
+   }
+  },
+  "tests/fixtures/guarded/models/deontic.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "deontic.applicable.json": "bcca624153979bd8cd665dcbba5c753b775b06799be57b27bc703473965b33ee",
+    "deontic.artifacts.json": "b22d22a03c2e38c7334b368331025a82d10464cce0e47f9851eb88abb58c6168",
+    "deontic.projection.schema.json": "67a8366f78ee600f3f745b675dbd5111b84ce0880be15f83244e8d07d18edce8",
+    "deontic.verbalization.txt": "0d6fc441f71111a49baab366c76cda15586ab2ed02c1e23a50e2c56c42f12ed9"
+   }
+  },
+  "tests/fixtures/guarded/models/disconnected.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "disconnected.applicable.json": "ad04cf0329aa439c2f2d0d353ba9c88b032bfd72536f454e4cf9f3fe09657881",
+    "disconnected.artifacts.json": "6a420420123970534c77d4f7638d1da0142b11f5ed6347b5680a0f52ecf47e84",
+    "disconnected.projection.schema.json": "f67b4d0d5f18ddfa05337064c111676d425ac61063581a2b4b1ce3c914032216",
+    "disconnected.verbalization.txt": "c7d604d423cec04002c12a9f8c0853534b71da40fdf55bcc7dbd1e7ff2d79f6c"
+   }
+  },
+  "tests/fixtures/guarded/models/join.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "join.applicable.json": "7b8858c94029b2447988a7bef0839781439dd765766dfd9f26e5566a9b474bc1",
+    "join.artifacts.json": "469d0f61a5cd2934c3ca47a0c6c759e15c47e576ff6d24ce38a7b19ce10c3ddc",
+    "join.projection.schema.json": "40ef78158dbf353634839f5fc9e87d3b68baf01fe576e15b9258d999a3987f39",
+    "join.verbalization.txt": "8467f75394954042d29cfd28544a8b5c7a1503939ae2531add115be62088626b"
+   }
+  },
+  "tests/fixtures/guarded/models/submission.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "submission.applicable.json": "54bfeb8f67afafa948b9af98bbacfb324251ab6caedaa3d354a4b794db432ebb",
+    "submission.artifacts.json": "42d5d7d5715fb064eba6628427e5db30d54e88cf8431c2c639e5aa5ca6434bf3",
+    "submission.projection.schema.json": "7e963d934b9b0e20614bf2c6ee6dfaf8307f187e0f8ca6d360f08f29209b6bc6",
+    "submission.verbalization.txt": "5ec45b142830c7d386181a3e04f010568776f8857b7b4757b3a3d335a6c12957"
+   }
+  },
+  "tests/fixtures/guarded/models/undecidable.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "undecidable.applicable.json": "3d301ff3354e413619193551bbad42c6f1dd261650352f303fbf61739320a356",
+    "undecidable.artifacts.json": "680a02cc637cb9a1818954d2017e19c26db363242afa4e6597f287c9e2a49fe6",
+    "undecidable.projection.schema.json": "6ccabcc1dd5b3208c9734557d3d8f5358de145048cf74341273a9083ea9d7c14",
+    "undecidable.verbalization.txt": "f6a06e31d414ec320bdd28adc2025b45064fd804dc5483a29c02366c3d19f0d2"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "diamond-director.applicable.json": "3301115bc7624b73464ca1c667ff2dc2db7250c7bdf6806cd12d96658c322f31",
+    "diamond-director.artifacts.json": "d566cd6f30068247c4292e8048f9664e1317e112ac22cc3876415cde8710715e",
+    "diamond-director.projection.schema.json": "9a4fc99eda9020c05457155ecf7168de4638dc9758a0a287445a4e9a8ed18b8c",
+    "diamond-director.verbalization.txt": "563195f9fb90e090bb711e419410f6699629ff1f5d1c57a74f5b798a369e9f25"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "diamond-number.applicable.json": "2adc372b30d43c4e7d945591ffa8a9c744068a20118692db8c6cef88c6eebc6d",
+    "diamond-number.artifacts.json": "10145940b67c9f85c1870e9b9247937487db7eb54b3926a3c2f4bba695b0f19c",
+    "diamond-number.projection.schema.json": "520d0ee9c6e1141889f10ff976bbb05745eb94bef039b869163cc3d84f395564",
+    "diamond-number.verbalization.txt": "414a4dbb635adaa8fdc5fc0f686fcfde21e5fdb71e1e5e3877e47e050d54bf73"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "diamond-string.applicable.json": "2adc372b30d43c4e7d945591ffa8a9c744068a20118692db8c6cef88c6eebc6d",
+    "diamond-string.artifacts.json": "99e7823fb57d444dc91b74ba4cb12d8a2321acaf3ee7edf540ab54555388e1a9",
+    "diamond-string.projection.schema.json": "520d0ee9c6e1141889f10ff976bbb05745eb94bef039b869163cc3d84f395564",
+    "diamond-string.verbalization.txt": "f956dd663ee593ee77fbd521251836caa675863d243a5afb8ce97da51352740c"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "diamond.applicable.json": "2adc372b30d43c4e7d945591ffa8a9c744068a20118692db8c6cef88c6eebc6d",
+    "diamond.artifacts.json": "9d7b7934d94e37bc55a63621d9b966e555c2bf30b4c34064460ffe66fb5a6672",
+    "diamond.projection.schema.json": "520d0ee9c6e1141889f10ff976bbb05745eb94bef039b869163cc3d84f395564",
+    "diamond.verbalization.txt": "42837e190c607c0c43961fb5d9728ad78ae91c43f4c15f9b4cf02e6bfb71ba3d"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/ownref-object.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "ownref-object.applicable.json": "23e048f4b76c27c77c3e86774362d7c726b153678e6cbd9a0377ad0bb67cf27a",
+    "ownref-object.artifacts.json": "aafdb8b18f74e86a833a58d07151b1f55b71ee7d6b71b11eccb5e8b88de56f49",
+    "ownref-object.projection.schema.json": "77556e69936a1e451a79fdc66c194950c1dc5dd03f27c9b9f402a6ac005d9d9c",
+    "ownref-object.verbalization.txt": "168ef4a7eb698662fcc19e6cf08b21d7d381ec1b899cddc1b072aaba0478adec"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/ownref-string.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "ownref-string.applicable.json": "23e048f4b76c27c77c3e86774362d7c726b153678e6cbd9a0377ad0bb67cf27a",
+    "ownref-string.artifacts.json": "3d0104e34e65ed301524401b1c849e3f76ec9f702aa6ffd08b4025a81e713248",
+    "ownref-string.projection.schema.json": "f2ff7ca331865faf22f38d09e70485154a2c7477a6d1453ddb974beb4d417b0a",
+    "ownref-string.verbalization.txt": "baeed9340c32b77f2964ac51513705cdf22ce22d7d18a9e2782bc13e15fcb410"
+   }
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "tops.applicable.json": "6ff098e0999b3dea2801d91911aa0ce28a81b080d25f04dc11c5b173018f15d0",
+    "tops.artifacts.json": "a20ca4dc1434fb82211c182f7ee49b333b438e188be4218870bb6d8d66bf7ea4",
+    "tops.projection.schema.json": "6d7390c6eb178a0d3ecd46b0dd6d1c08698373b17c441c172918d8fe035328a9",
+    "tops.verbalization.txt": "69b0fc3ba096aa82607192d8a343d4e6c9277dde002d9b1d18c542b7fe01e6ac"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/cyclic.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "cyclic.applicable.json": "de528dfc2217a33c5ad1ba3a45d100767bc5759ed9b35431b5195ceee059920d",
+    "cyclic.artifacts.json": "3b6ad0da3309aad43d6f342df866e67d4ee52bf71ce64b49b9de64452d184bd5",
+    "cyclic.projection.schema.json": "87adeb86f914dab2b0c48a61f4d6cc80d3e2fe5aeaa9ee7159fd51f8d8178e18",
+    "cyclic.verbalization.txt": "acb0c1aba773da233d158085db46e160220b4facff62182215e9e771022a19ee"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/family.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "family.applicable.json": "b1f41da54855bb1cf960109bd373d392c647cc203fdea816b66bac2c54302ecc",
+    "family.artifacts.json": "d622ed0deaf162f1f782fee2376008d9e4d6f71bb605f4d84cc61408ab200fc7",
+    "family.projection.schema.json": "4786cd554eb24a44f6cd48a7f28568141def20bc67f2d9a1d0e088521cd8fbbf",
+    "family.verbalization.txt": "f6e19d8593998c52c17ee2a9a6e717d1694e076a3277e9a9fbfa36f5d2bd7d7c"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/multi.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "multi.applicable.json": "568f25aa07e52e0e6883ec92ab881c43a01b03b0ffac97c15882dde0aa15b417",
+    "multi.artifacts.json": "4be6fdd357ba8ed382b93de25fdbffd0ed429dabffd18602ceb82a59eda7e5e9",
+    "multi.projection.schema.json": "e4dbac41b2741a4fcbb6acf84877ea46617ba20416de09ff89347ea95bde4b4a",
+    "multi.verbalization.txt": "50a23e000f6056b4debc6f545b10965139b0d881b813c646e73e82cd6cef7e4a"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/orders.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "orders.applicable.json": "44d2a3fc01749ef896fbb3c2dd2bf1924848f8ce3af9be968f354837477e244c",
+    "orders.artifacts.json": "a6328282576149b4ce8cac91b8efcf44e29bc2a4ce0c43d8f2e1b9354e8414fa",
+    "orders.projection.schema.json": "fad3fc3342b17521a498958d3e729d3fb24e3fe2f2848d911e24c53eec35bec7",
+    "orders.verbalization.txt": "021718205fa2a959d8980686a6a0c498e02960aecdb24e6a767a0c492e166864"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/ownref.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "ownref.applicable.json": "23e048f4b76c27c77c3e86774362d7c726b153678e6cbd9a0377ad0bb67cf27a",
+    "ownref.artifacts.json": "d22c01152433270035833d6a9333c4fae56284a4d0098ecd7e61dc0d80507a79",
+    "ownref.projection.schema.json": "f2ff7ca331865faf22f38d09e70485154a2c7477a6d1453ddb974beb4d417b0a",
+    "ownref.verbalization.txt": "78f0008edcac4a10ca3f0bd459ba7a857a6698f98af17ffcec911bea31109406"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/staffing-swapped.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "staffing-swapped.applicable.json": "dac9709c69a563b9cfabf0744f9483702aae53bbd9a04ee7085c8e5fda0cdf8f",
+    "staffing-swapped.artifacts.json": "6fdb4111049a749d410c0fcc4d1cab84a2f090cc16fa142c0bca5b09a68f2cb1",
+    "staffing-swapped.projection.schema.json": "8bec2bf75dc4a336e1812fd87f655abf3415695b043347a520dedaf263b5a02f",
+    "staffing-swapped.verbalization.txt": "b728f2111882cea73465de7b1054700c6093f5a6ccc453110295cc1cdd93de5a"
+   }
+  },
+  "tests/fixtures/ilp_learners/close/subtype.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "subtype.applicable.json": "bb793cd9d87102301b1d5539a1d285068fc610454cb110819c703694d9a03de2",
+    "subtype.artifacts.json": "5132722d880ee93fb39618d4f5aa5e87c74f6302401f264486f15e5430524711",
+    "subtype.projection.schema.json": "87adeb86f914dab2b0c48a61f4d6cc80d3e2fe5aeaa9ee7159fd51f8d8178e18",
+    "subtype.verbalization.txt": "9d6da8e55cb9e5f91338949c070a617d7d32728b23c32da10b3ee8eaa8c58927"
+   }
+  },
+  "tests/fixtures/ilp_learners/il4/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "dac9709c69a563b9cfabf0744f9483702aae53bbd9a04ee7085c8e5fda0cdf8f",
+    "model.artifacts.json": "3038ed481f499978d8d3402afc94aaf60a2fddd1f5f404c1877733caf486bba6",
+    "model.projection.schema.json": "703759ba116bf3b3234243d469013aab14969582bcdf8c807f2835c3560e8cca",
+    "model.verbalization.txt": "5ab59864fa62accbdc8688d7ac2629454afc65545a4da39a1056222b4304aede"
+   }
+  },
+  "tests/fixtures/induced_knowledge/ik3-corpus/labels.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "labels.applicable.json": "4c60a1e4ea51cc05b2cb0f9e49cec063e7612151df653bfa65a3e32b6513a178",
+    "labels.artifacts.json": "f4f6cba207794b4e80efb1643c3283c163e41bf066acc13743d48a3a5c5ab897",
+    "labels.projection.schema.json": "a903cd24d5a66c944308e426158b7f5e097577ca60b6ae8a1eaa6511e371fe9d",
+    "labels.verbalization.txt": "a9f0526011918a8d88200d3cd1ced0a524e516db16c198b9e2b24a4d0731134e"
+   }
+  },
+  "tests/fixtures/induced_knowledge/ik4-corpus/staff-declared.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "staff-declared.applicable.json": "e0ef6391387e49cffc13850e83d03b9d9a624e2c59ff104b0148e2b0caab2a65",
+    "staff-declared.artifacts.json": "aed700b429de1a56843b6071884ab8c5eaea6fadd6ca4a65990bdda071e9ae3b",
+    "staff-declared.projection.schema.json": "b464cf20d38b9edb18d7eab8c1bb41a7c88fb997035780f44663d2c5e9c90b9f",
+    "staff-declared.verbalization.txt": "7455aa2798d21a0e724023a32e29b4df38834ac87ccdac5f8ea88982b8f25ae5"
+   }
+  },
+  "tests/fixtures/induced_knowledge/ik4-corpus/staff.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "staff.applicable.json": "4c60a1e4ea51cc05b2cb0f9e49cec063e7612151df653bfa65a3e32b6513a178",
+    "staff.artifacts.json": "1fbfc23ba549853e75d46e8e1fedbd7d538067e77c450883eda617a790354491",
+    "staff.projection.schema.json": "a903cd24d5a66c944308e426158b7f5e097577ca60b6ae8a1eaa6511e371fe9d",
+    "staff.verbalization.txt": "a9f0526011918a8d88200d3cd1ced0a524e516db16c198b9e2b24a4d0731134e"
+   }
+  },
+  "tests/fixtures/induced_knowledge/ik5-corpus/orders.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "orders.applicable.json": "20bbfe25d2a6f8141c04c498b582ff25ad82db0f63b04c11f8b7c506692ce2a8",
+    "orders.artifacts.json": "6e8ecf340e46153097dfc0bf98b6a4151e26b10a721914175aa106101775c099",
+    "orders.projection.schema.json": "4bd1bdf24fc8e4f271920394e49b9a810784c97f2e90668c5d75317c2f022220",
+    "orders.verbalization.txt": "1a2cb529297a564d1107c0f7565ee677666165f842790de34a4e394eadecee66"
+   }
+  },
+  "tests/fixtures/migration/base/v2_migration_corpus.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_migration_corpus.applicable.json": "f81f1b078655264afce499ffca1bce27b97dc27257701fd73ecac0ee56963f52",
+    "v2_migration_corpus.artifacts.json": "5c36341d9bc41c39cdb25932e2723646364f2873e044a0e3b16cf2a60a82825b",
+    "v2_migration_corpus.projection.schema.json": "992ec0f3f9c20342a6d132ee1b54fda16b62211cc6d09131a294180cf3f9af13",
+    "v2_migration_corpus.verbalization.txt": "d7ea00df77d6ccadfd8475970f1fd0abc005402f9c439b6566ae14a435b225ec"
+   }
+  },
+  "tests/fixtures/models/dispatch.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "dispatch.applicable.json": "dd204a202ba2a7b1fe3e7160c4ba258acca003ace2333efa942c6fa2620caebe",
+    "dispatch.artifacts.json": "ac4ea230076cb50b2177488a220a679830ec499dcc7764b27e90a0eddae9bc69",
+    "dispatch.projection.schema.json": "4fbeb1a473964521fe64d48a82366fb6ba33071930620a6488bfa8a5e883f156",
+    "dispatch.verbalization.txt": "e53ff68c187539abd9d43478674e4442187f13456dadca4caaeb9096ea491eb1"
+   }
+  },
+  "tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "full_vocabulary.applicable.json": "ad0b86d2746b4d53247aea447cfa674aeaca72e0c88e148132b0a76bf749c534",
+    "full_vocabulary.artifacts.json": "2e8dc522e7e9a63b259b70ed59e78c17a9b7460b9532d17c0cb85a5a9b5980d3",
+    "full_vocabulary.projection.schema.json": "ed4fc014deea101f9972d8c8ef396ca6220008cfd0404e570dfeeab1bb6b1b1b",
+    "full_vocabulary.verbalization.txt": "cf65777bc9a4386f9b22ee6073822774dd7df7050dbff657944597b68052cdfd"
+   }
+  },
+  "tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "guarded_minimal.applicable.json": "bcca624153979bd8cd665dcbba5c753b775b06799be57b27bc703473965b33ee",
+    "guarded_minimal.artifacts.json": "f6fd7731ac1b0aac049574ec98e1431435893003431ae88766c550ec7d66397d",
+    "guarded_minimal.projection.schema.json": "67a8366f78ee600f3f745b675dbd5111b84ce0880be15f83244e8d07d18edce8",
+    "guarded_minimal.verbalization.txt": "be36fe2c71374d6280ec005193a88d115fa9a4a08797ce449c05c67aa63be186"
+   }
+  },
+  "tests/fixtures/models/invalid/duplicate_role_names_cross_type.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/models/invalid/role_seq_arity.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/models/invalid/role_seq_type_compat.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/models/keywords.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "keywords.applicable.json": "8147dc90c8e94403e6989531e2e73798f94c0f9e9e44430299b1d62c99b5a807",
+    "keywords.artifacts.json": "d445a7e12de28f48d8b60f1180e5ffcf5d47da36c2a64dbbbf31448aca9d3639",
+    "keywords.projection.schema.json": "a7ebc8574ebe564401f1c090d38f109f474b7c5291e3a9f61f0cd1625e59d6e6",
+    "keywords.verbalization.txt": "075cd2c02582bfd9fa3366cf41bd3c8ab366f7183d4cb1d38e941c2da09e35a0"
+   }
+  },
+  "tests/fixtures/models/library.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "library.applicable.json": "32a14809f4a8441e0303562f5b268d755201f75a9acd680a15fb9298376d045e",
+    "library.artifacts.json": "61adbc4596d82805026157488f2f9b600f1e918ef3597c3716e93d170ac0e114",
+    "library.projection.schema.json": "b82393b429ab2dc2da257cb778cf00a646c6a4f714fa32f381c90de7568df52d",
+    "library.verbalization.txt": "4cf9874be0b7ae0edf6aee5b9e2dc9d89ccff3bde111510b704bcce17ee420ea"
+   }
+  },
+  "tests/fixtures/models/v2_operations.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_operations.applicable.json": "5050a03be29ae635d234356fe2f3d9a1c4a03488888b63722999b994330e8343",
+    "v2_operations.artifacts.json": "a366971af4ba749dbf7c1d1c6da30b027802c55833f0103c4717dda69ca1d295",
+    "v2_operations.projection.schema.json": "13ba2264b0e388c0a02ee0befb9f69eddd4865f1439556c78fb5cb3e045b5cc0",
+    "v2_operations.verbalization.txt": "4ab3c5f3977503d1667104df0a226ec6887751d21e6c339fa0b29a32b44831b3"
+   }
+  },
+  "tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_worked_example.applicable.json": "2d02c326c6850f1651281ae313ea70f87bf51816d2b8533c0f11b55cf889642f",
+    "v2_worked_example.artifacts.json": "16af0d508fec5015137fb6535e8b2f735b81d9ef2b7fafb85b8b7f2aa33f28be",
+    "v2_worked_example.projection.schema.json": "c2237ef5ff80aa899d599c810ae3460fc62cd14c68d9c7080d27322733b6fc68",
+    "v2_worked_example.verbalization.txt": "5647a751a4817a4093d8018421697cc88724660635445abbc799a94c8a633230"
+   }
+  },
+  "tests/fixtures/phase3-consumers/eligibility.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "eligibility.applicable.json": "9dbbd22eed7d73f562e7e66ce0bd472d09a6e75f63ee800a09360b602a070e0c",
+    "eligibility.artifacts.json": "ed7cd8fd93eb7d736968984882aab91baef39e7c80e9ba7c0e6300f88c5acca3",
+    "eligibility.projection.schema.json": "59a4a1e252fd3058d7025b18ed5ff7d16544821b7ce7c1cacd4e7e03725fa4c1",
+    "eligibility.verbalization.txt": "ffbdb630cd150ca1e5cae1fb97c50e8649f8d73520663782ebd3955d4cd03a96"
+   }
+  },
+  "tests/fixtures/phase3-consumers/legacy-derived.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "legacy-derived.applicable.json": "12f22859da6156720041a173fb8021fef97a17cd8354837f0e39eea5dedb21d5",
+    "legacy-derived.artifacts.json": "cf6fae8dfe7c8bcd4a774e955e917c9792a22e46d4ed3c06da4591ef524db54f",
+    "legacy-derived.projection.schema.json": "239a19ff5a9d5adff8808ca896db1843a766f34845a421eaa62b12daea1a80a5",
+    "legacy-derived.verbalization.txt": "65090107e99e9844346e98e5ea9d578082a7feb3a3787a0c0b984164bd14b825"
+   }
+  },
+  "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "4ac8124874d3ca4a89db363974677fcab936d153434d2f6355061f279ba3d2c0",
+    "model.artifacts.json": "3a6aa35e2a37122dd7bb2beed7bc803c91ba4284f679ddf4667b8f91f7a83f27",
+    "model.projection.schema.json": "189e8688e83d2a4534f416aaa038ca1b3b75e890050a1ed165deb1ad03bcbd3a",
+    "model.verbalization.txt": "04a3ea7b80307ca8784f5bdc177b79b1b8327a89d345556413ac6a13c7d939d4"
+   }
+  },
+  "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "3d301ff3354e413619193551bbad42c6f1dd261650352f303fbf61739320a356",
+    "model.artifacts.json": "ffccb06aed51cadda21633dc44dad98e73fb0919bcd5990c056757f7b94e2056",
+    "model.projection.schema.json": "6ccabcc1dd5b3208c9734557d3d8f5358de145048cf74341273a9083ea9d7c14",
+    "model.verbalization.txt": "f6a06e31d414ec320bdd28adc2025b45064fd804dc5483a29c02366c3d19f0d2"
+   }
+  },
+  "tests/fixtures/public-applicability/c01/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0a846fc6cfff6e39e42026ed9f8411a1bd727e2b29079f55b96578c73134f511",
+    "model.artifacts.json": "652fedeea99762477f3fa8440855ae7fdad49c5997fa84801263c63d845c2d9e",
+    "model.projection.schema.json": "c7997633f2ca381989ae6948250e49e0d9c2419fa3a864873cda6093337a5d2a",
+    "model.verbalization.txt": "139ec295a2e2ff605f18502db62482c28e0472791c7c5f01859580a16281a6e2"
+   }
+  },
+  "tests/fixtures/public-binding-reports/reports/models/different-version.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "different-version.applicable.json": "e340af02e0a3f2669eff41b55d7d33d3a7f5aef6e4a433ed9b13c47649e8e376",
+    "different-version.artifacts.json": "44f6acc7268f4af3e0e54baa6ad7c7ef17cfc77a3667044b1ad4bfbe3c67a525",
+    "different-version.projection.schema.json": "44592309455f1cd102b102c5d0c90d785e082d757f8d7084d32122b9c876c2b3",
+    "different-version.verbalization.txt": "f811cd587eb4e17bcb36a7802db3f29d4d6565c923341eda0927107f242f64e4"
+   }
+  },
+  "tests/fixtures/public-binding-reports/reports/models/nonstructured.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "nonstructured.applicable.json": "e340af02e0a3f2669eff41b55d7d33d3a7f5aef6e4a433ed9b13c47649e8e376",
+    "nonstructured.artifacts.json": "4a2bacc3545d458c253d4afd225bef813e280922678b39c3e8f7d7d5be441a8e",
+    "nonstructured.projection.schema.json": "44592309455f1cd102b102c5d0c90d785e082d757f8d7084d32122b9c876c2b3",
+    "nonstructured.verbalization.txt": "f811cd587eb4e17bcb36a7802db3f29d4d6565c923341eda0927107f242f64e4"
+   }
+  },
+  "tests/fixtures/public-binding-reports/reports/models/same-version-different-model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "same-version-different-model.applicable.json": "8b5b5f66c01e1563179ceed5c28c66b3e485f81249c930763e38bc8dc7b8a6d5",
+    "same-version-different-model.artifacts.json": "19435d6dae3fbbfc2f307f4bf0c18d3d546199a036220ce6b6f214a9f5bee655",
+    "same-version-different-model.projection.schema.json": "41d3ee1f33652d5648ffaeb79b1e901cb6569ce360c5eb01c32eead95ae4b566",
+    "same-version-different-model.verbalization.txt": "7289f10f7c7dfc7f240800332ec186974f683633c7326995954915459d6cf569"
+   }
+  },
+  "tests/fixtures/public-binding-reports/reports/models/structured.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "structured.applicable.json": "572d7ef800660924a9d4c4195fa307690bfbe744d60720b58daad12164542aeb",
+    "structured.artifacts.json": "17c99564d6dec9674f5d2cba7d7b8d7cc19802fa7d5e43a5387ab69acfb460fa",
+    "structured.projection.schema.json": "a5cf60370e6c9e6e9aa60f5b8ee0b8b92a24aec41f2b32a4d74f4f12ade44cd8",
+    "structured.verbalization.txt": "f460eb6c80ed6d2c21759f4a4d2b918a6467dea293f0b8863ed51c48998e4607"
+   }
+  },
+  "tests/fixtures/public-bridge/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0a846fc6cfff6e39e42026ed9f8411a1bd727e2b29079f55b96578c73134f511",
+    "model.artifacts.json": "f768c7b87acfce610158a3508ff76cdba6c9cc43be45cec5446336574098a42f",
+    "model.projection.schema.json": "c7997633f2ca381989ae6948250e49e0d9c2419fa3a864873cda6093337a5d2a",
+    "model.verbalization.txt": "139ec295a2e2ff605f18502db62482c28e0472791c7c5f01859580a16281a6e2"
+   }
+  },
+  "tests/fixtures/public-bridge/fixtures/c02/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0a846fc6cfff6e39e42026ed9f8411a1bd727e2b29079f55b96578c73134f511",
+    "model.artifacts.json": "e96f524d0aed446860de891da8326ce3d62792392c516bcfaefabeb4cea86bfc",
+    "model.projection.schema.json": "c7997633f2ca381989ae6948250e49e0d9c2419fa3a864873cda6093337a5d2a",
+    "model.verbalization.txt": "139ec295a2e2ff605f18502db62482c28e0472791c7c5f01859580a16281a6e2"
+   }
+  },
+  "tests/fixtures/public-bridge/fixtures/c04/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0a846fc6cfff6e39e42026ed9f8411a1bd727e2b29079f55b96578c73134f511",
+    "model.artifacts.json": "a906187f94617e6acd09b67090e7155b15b981cd5d0704425969777bb0cf7906",
+    "model.projection.schema.json": "c7997633f2ca381989ae6948250e49e0d9c2419fa3a864873cda6093337a5d2a",
+    "model.verbalization.txt": "139ec295a2e2ff605f18502db62482c28e0472791c7c5f01859580a16281a6e2"
+   }
+  },
+  "tests/fixtures/public-bridge/fixtures/c06/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "bc2b2766730613b06d7a47b47f7317aa3bb5bfe2a919b3d67856ce3ab93bb071",
+    "model.artifacts.json": "713f02e64504d94567711f6f6002dc65f61591bc15a84a06788b37527cc469b2",
+    "model.projection.schema.json": "9d73e06cc6a8cf27bc47dc04488cdf29fb98c429a42a40faac50d78b95a64321",
+    "model.verbalization.txt": "13b02a3678a5de7351b43b0feb86c5b39193ab6d9b98fbda212c42b773cd5718"
+   }
+  },
+  "tests/fixtures/public-bridge/fixtures/c07/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "bc2b2766730613b06d7a47b47f7317aa3bb5bfe2a919b3d67856ce3ab93bb071",
+    "model.artifacts.json": "460e5c39df493c12aefbbca5d23673b8c7c2a4d2b9edefee66c9b172a8ae804f",
+    "model.projection.schema.json": "9d73e06cc6a8cf27bc47dc04488cdf29fb98c429a42a40faac50d78b95a64321",
+    "model.verbalization.txt": "13b02a3678a5de7351b43b0feb86c5b39193ab6d9b98fbda212c42b773cd5718"
+   }
+  },
+  "tests/fixtures/public-composition-digests/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "static.applicable.json": "391a102f74413630a9945b3eee514eb5b28b029a6adcf0ffe3c92cdb855be61a",
+    "static.artifacts.json": "32c0e5be9f731797204f333f3524f46b0c35a29855f0a665c65632b16518f9a3",
+    "static.projection.schema.json": "d6055d5659fd13ad2c2cc79b4b4a6b5ec88dcdacfe17b6390cc9439e3d2ef810",
+    "static.verbalization.txt": "e0fa602b82da0daf4be644eaf04b8128c0623b7659f496ecc49a8250e9e0bc9b"
+   }
+  },
+  "tests/fixtures/public-composition-digests/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "exact-terms.applicable.json": "1593ece73a56356da56b5997d66922b60b77f0b69e17c79279528bce317038c7",
+    "exact-terms.artifacts.json": "98915e9d4f7f40155e28dd6174998311e5bfd955a1dea1d65f8200de5141aa82",
+    "exact-terms.projection.schema.json": "ce308767549f36f127b724c7b0f17dc05cd3e19c1f1b107c93b9fc369ab9899c",
+    "exact-terms.verbalization.txt": "410087d0beab23d3c2c7ab465dad3bed6a4a619148c950c185530d9d111cc293"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/constraint-one-final-walk/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "27a4cfc74ce0e0b94fc855bb9857bb0d431a5fddd6f02da64a18601eff96d371",
+    "model.artifacts.json": "58473794645e3233c6318bc2aca0743ba21ef196ab61bbb51f9174fd339204d5",
+    "model.projection.schema.json": "d81b16f8762f0799449f411b1327a1eef0cc9622a5342eb7670b041c47b8e6a2",
+    "model.verbalization.txt": "e745cbc0236e18bc16e91c33e10a91f1bf00a97415eae137674d24eee7f99947"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "c3dcb4a5c22d9243b3f43295dc4f015ed8d12b65c8737f7830838d96bff9d439",
+    "model.artifacts.json": "47e27191ed59080fde82991afbe8ceb365cdd3e4f864b1655bb910d513775f6e",
+    "model.projection.schema.json": "dae10337dcfb1a86667340ed4065f5837dcc682fe57b7ff1125785a43e14805f",
+    "model.verbalization.txt": "e6fdf20a13ff9ffe1bc2a9e200bf09a6cca43052256b22477991bb4960f411bf"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/cost-disconnected-counted/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "24741fe0ede468292422e54478cf301bc599f893d3d49e6cc8400073fe9acc60",
+    "model.artifacts.json": "0c275242f202ac3baceb97e9e266f9904bb566a84cb3adb4a956595d3072c590",
+    "model.projection.schema.json": "e4b492ae39301a4f556071fd42db988960f1ace06461e1dd82f653095ed28996",
+    "model.verbalization.txt": "ccc3cdaa171dfbfd76d8020ab16be10040b1b2ca867b80a4c0e3d9bc5846aa50"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/eval-disconnected-product/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "24741fe0ede468292422e54478cf301bc599f893d3d49e6cc8400073fe9acc60",
+    "model.artifacts.json": "565cd5e94af943f5e3b61b417d86d506d0eae94718333db7639c63903330aee5",
+    "model.projection.schema.json": "e4b492ae39301a4f556071fd42db988960f1ace06461e1dd82f653095ed28996",
+    "model.verbalization.txt": "ccc3cdaa171dfbfd76d8020ab16be10040b1b2ca867b80a4c0e3d9bc5846aa50"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-exact/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "3cfeb1596174e42651e415ee2e7bcd3410011c3dfa99e653f5ff386692eb62b5",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-missing/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "2ce697519df67233dacf5d1bb15c7ccc65f7f2e68f2119c03ca763053ae7d363",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "c5d3d503dd26c91827e7a7677f84c87c4b05de013f3fab27aeab6d4c239bfa65",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/wire-v4-check-internal/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "b554c06231ee87f3af020d82563cefe1e131dd299fcb9312c3d48260e638e8a8",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/witness-missing-canonical/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0b2a3ff37e4ce1965073dfdd2b237e803cb91d27fdd0ec1822e41f802c467443",
+    "model.artifacts.json": "b2a9672e0cf535c2cd7868b0fd2ebc2b303cad44c93e6893e65d3cadac315ceb",
+    "model.projection.schema.json": "68bb5be4262f77072df670d638eb1f1026cf7034845990b38d469e2606dfa916",
+    "model.verbalization.txt": "49735862c5c03fca61c10c3add43d7a9e22e166b30cd8cbc40cd60f47b8a9a43"
+   }
+  },
+  "tests/fixtures/public-emitter-trust-controls/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "role-declaration.applicable.json": "5b99dd7477063d8bb471db83d3ff5ede61c08189db6b1e7892e2c36d324d70fb",
+    "role-declaration.artifacts.json": "9df10d32aa095c8f2ed2be92219cf9bcdda7877b3dbaeb14fbfa882346d71b36",
+    "role-declaration.projection.schema.json": "218fad7cb74cd4f728a60cebcd13b9f6888a918352f3cb4fcb457e4bbc97c8de",
+    "role-declaration.verbalization.txt": "02a4110a5b89108ff7b1beef18d475ef4c7b26c08ecd0a8896916822df352452"
+   }
+  },
+  "tests/fixtures/public-emitter21/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "role-declaration.applicable.json": "5b99dd7477063d8bb471db83d3ff5ede61c08189db6b1e7892e2c36d324d70fb",
+    "role-declaration.artifacts.json": "4784349b20965977f1e51dccd5aeeb6166e41c85470827fc45e6509b60752a6f",
+    "role-declaration.projection.schema.json": "218fad7cb74cd4f728a60cebcd13b9f6888a918352f3cb4fcb457e4bbc97c8de",
+    "role-declaration.verbalization.txt": "02a4110a5b89108ff7b1beef18d475ef4c7b26c08ecd0a8896916822df352452"
+   }
+  },
+  "tests/fixtures/public-generated-examples/bookrec/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "1b68e16a8536f72dbd7e905919020252ffc71c5ba5e0060a833774ba44d3b37f",
+    "model.artifacts.json": "8481282a0e7a85361240936a220c31ff8413fbef702bbd3b06aab4440f1aef3d",
+    "model.projection.schema.json": "2620b1d2d0a680a386d07fd9f3f275f9574a90d4bd3f3d2b7908a93b2557ae92",
+    "model.verbalization.txt": "02e9da6c57c083c2879e31bad7f23dabf00d9e6ed769165fb06e0f11ceb6ae89"
+   }
+  },
+  "tests/fixtures/public-generated-examples/expense/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "592c461b58ca8e136cdb46766b8be2297746c3776b9708cc5626bd7c6b716b4e",
+    "model.artifacts.json": "8866b979d1ce2605e2e820b731d0e49c9ef0b784d25b0271330b644296b1a218",
+    "model.projection.schema.json": "85f6f722436558b5bd71c9a7972d8d59d631e076a6255dea9798a130afc37bcb",
+    "model.verbalization.txt": "42c267eb3b0c57d840cd41fbba68ee6b4de36f7dcbca966872611530f3be8cce"
+   }
+  },
+  "tests/fixtures/public-launch-phase-2/invalid.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/public-launch-phase-2/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "ae7ea75f92491372880ca757b15677117411aa1a99db5a3c025160afce09ac7e",
+    "model.artifacts.json": "7009e60874b5dd9a0f81486d002d5b36783fba707244ab5bf74abc04cc1bb813",
+    "model.projection.schema.json": "1c036d84f10e870d0dd8033b6b414bf938fc922380deacf5aafe04ed00c1b9b3",
+    "model.verbalization.txt": "a4341ecffbe461ba820898f4d9831222c643ff9b567fe7e8e1fedffdcc52bfd0"
+   }
+  },
+  "tests/fixtures/public-launch-phase-2/textual.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "textual.applicable.json": "ae7ea75f92491372880ca757b15677117411aa1a99db5a3c025160afce09ac7e",
+    "textual.artifacts.json": "78cb4920249b3c3b51e615230680b19508796b131daaa71220ba1550259cc757",
+    "textual.projection.schema.json": "1c036d84f10e870d0dd8033b6b414bf938fc922380deacf5aafe04ed00c1b9b3",
+    "textual.verbalization.txt": "a4341ecffbe461ba820898f4d9831222c643ff9b567fe7e8e1fedffdcc52bfd0"
+   }
+  },
+  "tests/fixtures/public-phase1-trace/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "0a846fc6cfff6e39e42026ed9f8411a1bd727e2b29079f55b96578c73134f511",
+    "model.artifacts.json": "e79591a308b31a1337d266caf406ad5402742fa3d4f8dbc45157376da1639c4e",
+    "model.projection.schema.json": "c7997633f2ca381989ae6948250e49e0d9c2419fa3a864873cda6093337a5d2a",
+    "model.verbalization.txt": "139ec295a2e2ff605f18502db62482c28e0472791c7c5f01859580a16281a6e2"
+   }
+  },
+  "tests/fixtures/public-semantic-partition/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "f251231c69be5887ec59789da75695773c79cd06a07d1b3535a925138b23811c",
+    "model.artifacts.json": "8ca95b4ae4ac0470e29d97142f502f1131ab1a80a80c276145e717848c767a08",
+    "model.projection.schema.json": "365192fe157f31ac613d2365af7114cc49e7ffd56b0f7afc13edbbc18fc1a88b",
+    "model.verbalization.txt": "b40e5691fcc3389c9a4494a3e3e1ca8ac481bd07d29702ff4e161558ca52a516"
+   }
+  },
+  "tests/fixtures/public-semantic-shapes/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "4ac8124874d3ca4a89db363974677fcab936d153434d2f6355061f279ba3d2c0",
+    "model.artifacts.json": "6e882436cf60579d5600226d2dc4c774d2d488dfc09b3ecd7c7b873970493e08",
+    "model.projection.schema.json": "189e8688e83d2a4534f416aaa038ca1b3b75e890050a1ed165deb1ad03bcbd3a",
+    "model.verbalization.txt": "04a3ea7b80307ca8784f5bdc177b79b1b8327a89d345556413ac6a13c7d939d4"
+   }
+  },
+  "tests/fixtures/public-snapshot-counterexamples/joins-model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "joins-model.applicable.json": "0908ece171595646b63a325cf7891913e440e4ed3560f919ab2332b4b6d725c1",
+    "joins-model.artifacts.json": "a92033bc7d3dd31ac6e5da0c2254e47a9e1343e61dbc6a2c1b124ad037800fb5",
+    "joins-model.projection.schema.json": "80af6881414eb1f4343f207a4a41f10b5c159d6a586cb5ea5b1b622ffe61384a",
+    "joins-model.verbalization.txt": "82f2d33b3774c9d8962fcb71f31e8a0540214da275f36e10b3f3758e53d94640"
+   }
+  },
+  "tests/fixtures/public-transition-contract/v2_expense.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_expense.applicable.json": "a24870feb9988f5a5b48f3ebd13a09593a6b96f699c21119511ad60774290a26",
+    "v2_expense.artifacts.json": "4e20f9770277026814f08562468f2b5931480638b4971768fe62ef4526275286",
+    "v2_expense.projection.schema.json": "6af2817dd7b5d5d63bc4f76bdc62e2df7e97089c5146c7e86eeae8863a4016fe",
+    "v2_expense.verbalization.txt": "d3d90ff128cde59c91521b7f7a10f25abef4fe894327913eb784a5c9f325ea51"
+   }
+  },
+  "tests/fixtures/public-transition-trace/expense/rejecting-models/bad-role-ref.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/public-transition-trace/expense/v2_expense.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "v2_expense.applicable.json": "a24870feb9988f5a5b48f3ebd13a09593a6b96f699c21119511ad60774290a26",
+    "v2_expense.artifacts.json": "263949f80f0aaba211f0cf92e6478764518878f7d24a4fb92af68cb55e1246c9",
+    "v2_expense.projection.schema.json": "6af2817dd7b5d5d63bc4f76bdc62e2df7e97089c5146c7e86eeae8863a4016fe",
+    "v2_expense.verbalization.txt": "d3d90ff128cde59c91521b7f7a10f25abef4fe894327913eb784a5c9f325ea51"
+   }
+  },
+  "tests/fixtures/public-walk-floor/session/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "f1611a2f7ea23422acdea2e7e8a0829001af6b23cdcdf89d9da8800cb0dcce5d",
+    "model.artifacts.json": "080bf8abe83b5a626b2d417c239a46b8cc27f18a150acfa3a9a5a9b21aee7204",
+    "model.projection.schema.json": "ae7a2d2c587dceacfb5e61d1f556e169e07bd9fcabc86397a56a4b427491afe9",
+    "model.verbalization.txt": "4314d02b729069790867366581472561af5d1b6a78bc60bf8b5e22f95bed3842"
+   }
+  },
+  "tests/fixtures/pyrel-oracle/basics.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "basics.applicable.json": "ca2696927418425e146d8c0b80c537f2709070a6f8b88d9ef7fc8302de228a6c",
+    "basics.artifacts.json": "7dad5536a82bb49da779501e0a2dac3622eebbfbea91d40859e50ee893c66e1d",
+    "basics.projection.schema.json": "63c5f5e713be757df51418ef673cae8e471228a54e1a228f559c1d88cc0970d5",
+    "basics.verbalization.txt": "42fc551f5ea844bce2ac34109e4243a4b3603bdf011913a285b6db95bdf574e3"
+   }
+  },
+  "tests/fixtures/reference-corpus/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "e18f048b6740358dfef1ae7657f6dea90a6b560768e7cab05d16772c4c0788bc",
+    "model.artifacts.json": "771360ea22b0339c5b7eb517da66dd8e93ded58750a4e9748e9a7748ad61fd9a",
+    "model.projection.schema.json": "77a9aa71dee9a0a74b8f0b7c004af32e6172c72519b94e28deaae2f256374559",
+    "model.verbalization.txt": "51ba9f4ef381012d1c2364fb5a1100ff97a50ace29813c2f55cc915afdcfb154"
+   }
+  },
+  "tests/fixtures/reference-corpus/release/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "d403d41e1cc5507208d05e98116c580f0a7aed99574859911f31135733df130e",
+    "model.artifacts.json": "b46402adbfed7f07580ba200a02d756cd6dd9cafd59386b719960c1699e35b37",
+    "model.projection.schema.json": "6c61bb273e5d3f8182d54bb1f2444bdfd30a40c0b0ec125d4abe0b82eb97f10c",
+    "model.verbalization.txt": "90d5ad9cb3157ef6cbdd16aeb8d9f8a9d28f7bf9c269ea83dfe061109c28264a"
+   }
+  },
+  "tests/fixtures/reference-legacy/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "540660a8293437397d179332b6789158cb65c594b8cfd0bffcb4f4e65df6eb74",
+    "model.artifacts.json": "9c69d7ee88c9c44c23fe9c6411200e75c24e002dd6c5c0b629efcc7a6f18eb52",
+    "model.projection.schema.json": "fc70eece27c9a65905a595ff4f2cba6936c9ed52a0b74beaa7bace03475f7957",
+    "model.verbalization.txt": "8f708e5327dd9801497f2a07102c6577eb8435b40b1d1fefb0475afe6e85e339"
+   }
+  },
+  "tests/fixtures/reference-legacy/release/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "fed6728b37f8d37b53060cc62e8aefbf2b167a71f985482e72120f1cf9ee0beb",
+    "model.artifacts.json": "7e9e1bee49a2b594ae95826408993b8baf1c8cb316cb4aea83ef47464aa69301",
+    "model.projection.schema.json": "1fe7363b62956bf78a317745b551bdfb171e77107a3863bfb7d7298a43aa105c",
+    "model.verbalization.txt": "1a3591b3313138520cf50a873f42cd25130f8dfbd639a46a32a03067383d8c59"
+   }
+  },
+  "tests/fixtures/skeleton/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "64b97756a49a4647664e314fdddad70647f89051af93391da1a035507deb6626",
+    "model.artifacts.json": "a5bd5144f40c7a64681d888b5d0465107f571eca2eb48b591085a43873489f29",
+    "model.projection.schema.json": "10b7e9710931fec4e1eabfbf8d7235b18659ceafb9743df3d140caff37232223",
+    "model.verbalization.txt": "28bc51751efb62cea4595da6d103cd67a8cd6478a8db9bc079653fc1a215a855"
+   }
+  },
+  "tests/fixtures/synth-external-uniqueness/external-exhausted.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "external-exhausted.applicable.json": "06cdf4e20d6f54bfa157c7d9cff9e7afb71c899fb27635a66ffce644a51d5586",
+    "external-exhausted.artifacts.json": "1468325c220077f25c20d15ed9ade1a1a557e499e32384b5ba43d8cf231f69c9",
+    "external-exhausted.projection.schema.json": "b81f92b17a02ae489ce588d4457f6cf1a51243376748f40f82914f7b326712e5",
+    "external-exhausted.verbalization.txt": "df452a84c6de3afafb5df927d0023c19cc51a8f421cc7bf76882f90902fd5408"
+   }
+  },
+  "tests/fixtures/synth-external-uniqueness/external-pair.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "external-pair.applicable.json": "a1ca74bd0b85d92852f7730b5b466c1b346760c580b89f2d5f20f558a6a636ce",
+    "external-pair.artifacts.json": "22019cdbca5bb01c0a89f318aba7935985f3811441cfe6671ce44943a8e866e9",
+    "external-pair.projection.schema.json": "9ef291dc6fd21ef5b112f9375d24adcf2d98443eb44886af6bb9439157913f8c",
+    "external-pair.verbalization.txt": "61be0a23c9b5df4896ee9e4fb6385b4f183cb9297e17516c301c707ef3ccae94"
+   }
+  },
+  "tests/fixtures/synth-external-uniqueness/external-second.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "external-second.applicable.json": "0d7dfa89beefaaa23eff3d78ddbb91dd50cc062e85f41642191dc8c50788db50",
+    "external-second.artifacts.json": "f597885db6f225e685a7a67efe11d0442bfec27a84273ef10d8b0e44c5751b0e",
+    "external-second.projection.schema.json": "bd0e1fbe647e120a4f989c87fae95a387d8dae00f0045580bd7efd23a18f11c2",
+    "external-second.verbalization.txt": "6d080f6ae2989f416ca53a169511f7b04b455f8a3fa8508a4a9efc9a5e9d87a5"
+   }
+  },
+  "tests/fixtures/synth-external-uniqueness/external-single.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "external-single.applicable.json": "06cdf4e20d6f54bfa157c7d9cff9e7afb71c899fb27635a66ffce644a51d5586",
+    "external-single.artifacts.json": "e397810e223a33c1571f96ceaa5b2211892bfbc9f7063f554d0b01929416f440",
+    "external-single.projection.schema.json": "b81f92b17a02ae489ce588d4457f6cf1a51243376748f40f82914f7b326712e5",
+    "external-single.verbalization.txt": "df452a84c6de3afafb5df927d0023c19cc51a8f421cc7bf76882f90902fd5408"
+   }
+  },
+  "tests/fixtures/synth-external-uniqueness/mandatory-exhausted.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "mandatory-exhausted.applicable.json": "54c13b003b3d8dea88bf932bc0f1c3a791a8e199a5ab67348b4ddaf05d3a4887",
+    "mandatory-exhausted.artifacts.json": "c8353cd97ccf290e59c771a511c2ef444fd9656ce113ed3b0824b6dfdafe399b",
+    "mandatory-exhausted.projection.schema.json": "35da2b0c63f0bd03e2055e72f809864e3707c4a3ddd5b4214086a70fb65777af",
+    "mandatory-exhausted.verbalization.txt": "a03dfdc4aabb448f02361c1396927263a9a4c91c207da7167b014e4f3d34df71"
+   }
+  },
+  "tests/fixtures/synth-external-uniqueness/mandatory-one-to-one.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "mandatory-one-to-one.applicable.json": "2a5ad2eaf2d958b3f68fcd238a4f5f65144f4f2440af7ddc7747baf1063c9bb3",
+    "mandatory-one-to-one.artifacts.json": "e5057f4243ac2088e3b9f925eda3f21cdf5e01ec502eef416b5eda36fe889211",
+    "mandatory-one-to-one.projection.schema.json": "169bbef4dab90f387c7f9a45ce49a9907f538fdc9aafe01cb6bae937e10f3b10",
+    "mandatory-one-to-one.verbalization.txt": "c545d134f8863fc06d03c016e09d9b3b38e5dfb4ad84cadea4cb544269412edb"
+   }
+  },
+  "tests/fixtures/unattended/conforming.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "conforming.applicable.json": "0746815956537c1d90321757f7a5f29a144cd7855d0f64d0ad01df2a0738020e",
+    "conforming.artifacts.json": "e33ffe5ce6226b85154d506fa25f011129f5ed49cb14fe00876703e0bc0a6bca",
+    "conforming.projection.schema.json": "d3e1664739fa0bc92ec6c9f2d59731374b9bae59b1eccd9d987b61851ea968fb",
+    "conforming.verbalization.txt": "c83fdb70e20b3b5d9f5fc9310daca7fa7f274036f2e5c5c0c9ba1b4f012d9be2"
+   }
+  },
+  "tests/fixtures/v51-extraction-boundary/models/mixed.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "mixed.applicable.json": "282dfe4fc20b4173bbb6fdbaf7665277d496cccba67eb3239dfc127fbd9ff4a2",
+    "mixed.artifacts.json": "522aee89240a0404842d6cefad5292d80661fe96983e98276c2f3c36ca9a4f3b",
+    "mixed.projection.schema.json": "a55abf0c92a20fd32fa0ee20372f1ed490944f5e0ebf64d587628fc9cf1b9e26",
+    "mixed.verbalization.txt": "f7cf512ec1c8476c1d315c0968170660b4953d35e5b59cd96fcda224f0ca0d5a"
+   }
+  },
+  "tests/fixtures/v51-generated-project/alpha/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "8d20021501fd47c24e0906544a637feffce188b8feff75e3c05c05cfc14d8666",
+    "model.artifacts.json": "edf0e9047fa410e3202e92744b7fa01081f1a8c1ae82ae8b098f020929b21ce7",
+    "model.projection.schema.json": "3c1bbdcb7bd2112b5f7301f4532790001b5a866a4c62f924a460410174d8b4a4",
+    "model.verbalization.txt": "eeabf6f8a5c960755f75eb61dcd109fdf51debcd0e6a567eba0d4aef5f55ed35"
+   }
+  },
+  "tests/fixtures/v51-generated-project/beta/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "dd842a6d1a4f236bfb5f465864a055a2123595170cc6ab4249f36fdf8bf1a520",
+    "model.artifacts.json": "8aa8aa75c2f95124306ed19d3274363d2a1f06ca028c429f6a832e9c1a443ae3",
+    "model.projection.schema.json": "8a437653d1834ee36ec10d746997340a91cf8c571478f1b1b80d1e1fc39aaaf4",
+    "model.verbalization.txt": "4cac56e409416636573cc669bd03fba4928517a83455671f7148b9c6a97207fc"
+   }
+  },
+  "tests/fixtures/v6-assurance/cases/expense-approval/conforming/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "37e5ea17fad66ac75587b81c34275a97273bd795db15a13da659c1cb1a25e255",
+    "model.artifacts.json": "6e175b7d3f9f5e209c733ee9597ad26935a52540dcd56da48000a8b2bd86b15d",
+    "model.projection.schema.json": "66346a9d485390ac5c9ba55052fac71551dd1e29731826663f51742c539947a3",
+    "model.verbalization.txt": "f043f8924ec814e389f921a53f19dad1f0f045d4b50f9aa35ef598d2680569b5"
+   }
+  },
+  "tests/fixtures/v6-assurance/cases/recommendation-completeness/conforming/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "f69a6bf0e0197045e193c04e40dd1a8d6ed084d2b46597927d4a70ce79ef1f43",
+    "model.artifacts.json": "7b22fc53f5f7673bb1770a5aa1628981e6da294cb3e5bcaf992f90ac7a617f20",
+    "model.projection.schema.json": "f8d670b5a66fc3937423dcd73092b64765c3c773871d41974c901d245e7d6cc3",
+    "model.verbalization.txt": "af0909a19d47f532c80f21ff44179b15a6b759e1c11d89d14b17af2f8c827d9b"
+   }
+  },
+  "tests/fixtures/v6-assurance/cases/separation-of-duties/conforming/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "ffe568b156ef8eae2188371f9eaff542381c739af1d0f931b2731ad549554a57",
+    "model.artifacts.json": "67494d12d2813690c2c5cf628aa443243778f54ee048d4cbef2481423a16d757",
+    "model.projection.schema.json": "cffe5ffe911dfceb58b2d2d0507f02380fb664d0de1ee45792d781f577d00800",
+    "model.verbalization.txt": "98a5afc58505f03ade8eb0dbd902c6240a260486115a820bde071cfe044a92b9"
+   }
+  },
+  "tests/fixtures/v61-phase1/batch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "f8714aa89353085334f5b51d50b2bee65d13a02204d28386853e6391f7250ad9",
+    "model.artifacts.json": "efc05dfb5bb748b5fd450e16225edd0c21574bff9c1a4a2c4896a47b87ebcbd3",
+    "model.projection.schema.json": "8e893efa3879d03f5ba3ab1d8130ee049ecc76d5a49191c53c4b39514e46e8f4",
+    "model.verbalization.txt": "69c4742f28e43d95eb722e8ea77028342648603960aa88d8ade70608cfc2fc30"
+   }
+  },
+  "tests/fixtures/v61-phase1/import/identity.expected.model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "identity.expected.model.applicable.json": "7e8d37914ebecc12d0137d0d29ad9e1858829e204f2b2ea60c19c3f9bd722ca4",
+    "identity.expected.model.artifacts.json": "a25d449c0f74358760b59a9ef111b228f4bcf069e288994f3b76c40b54aca7b2",
+    "identity.expected.model.projection.schema.json": "d129456c7419844bb740ea482cba6ade1022ecdea4d8dfe94de0f8c7227a1879",
+    "identity.expected.model.verbalization.txt": "de2ef00f9089b752ac4069d53f290dbf17acd8b3e76cde5f5dc53a9356fb8542"
+   }
+  },
+  "tests/fixtures/v61-phase1/import/identity.source.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "identity.source.applicable.json": "7e8d37914ebecc12d0137d0d29ad9e1858829e204f2b2ea60c19c3f9bd722ca4",
+    "identity.source.artifacts.json": "0d26524265539fc4119f873617b164404f8453d190546505b367c1318e36d1b2",
+    "identity.source.projection.schema.json": "d129456c7419844bb740ea482cba6ade1022ecdea4d8dfe94de0f8c7227a1879",
+    "identity.source.verbalization.txt": "de2ef00f9089b752ac4069d53f290dbf17acd8b3e76cde5f5dc53a9356fb8542"
+   }
+  },
+  "tests/fixtures/v61-phase1/import/mutations/modality-no-default.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase1/import/mutations/outside-four-classes.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase1/import/mutations/ring-missing-target.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase1/import/mutations/role-collision.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase1/import/provenance.source.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase1/import/ring.source.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase1/import/role-name.source.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v61-phase4/models/fact-type-declaration.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "fact-type-declaration.applicable.json": "3d34bba7de422ea7862db1888249e7f6bd91b700a1d0e07ca828e2adfca19591",
+    "fact-type-declaration.artifacts.json": "8241ac333cfecd13c188971dd7e389276a882f9d49ca0cbd4a422f2abea2a6f5",
+    "fact-type-declaration.projection.schema.json": "debdf174882a52bb7d190f05fb2c3f1f189e3bf17fae8617a738537c36396cd7",
+    "fact-type-declaration.verbalization.txt": "63aed4059d00306568a14cc13008d4f11938bea959d19c4c24c9642db7fdf817"
+   }
+  },
+  "tests/fixtures/v61-phase4/models/no-declaration.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "no-declaration.applicable.json": "5b99dd7477063d8bb471db83d3ff5ede61c08189db6b1e7892e2c36d324d70fb",
+    "no-declaration.artifacts.json": "66af1e16420e89d2ef015564cb2b00b21c7777d8c7157535bd5dd948c9ccdd01",
+    "no-declaration.projection.schema.json": "218fad7cb74cd4f728a60cebcd13b9f6888a918352f3cb4fcb457e4bbc97c8de",
+    "no-declaration.verbalization.txt": "02a4110a5b89108ff7b1beef18d475ef4c7b26c08ecd0a8896916822df352452"
+   }
+  },
+  "tests/fixtures/v61-phase4/models/operation-flow-declarations.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "operation-flow-declarations.applicable.json": "536058662d6e4d60d6ee4678d4eb4353fb4b93d3bcc89a9860163f69ecc422a8",
+    "operation-flow-declarations.artifacts.json": "b799be501e6cbbb147c966e8a0b033bd3bc8c0ade9ffcedf2ae5b3d49754de04",
+    "operation-flow-declarations.projection.schema.json": "9222778e0504844f04c4bad3a6815cd158cbe1e96098f7fa401823165893404d",
+    "operation-flow-declarations.verbalization.txt": "7300dab3354d7fbc2c1014a3b2fe2c81b82dd6ef03ad3fc179717f45df4bf504"
+   }
+  },
+  "tests/fixtures/v61-phase4/models/redundant-declarations.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "redundant-declarations.applicable.json": "3d34bba7de422ea7862db1888249e7f6bd91b700a1d0e07ca828e2adfca19591",
+    "redundant-declarations.artifacts.json": "1866f99b12afd34aa3b31b11684e8ba4d64bc31ff1efe12e32c7d65518b775f5",
+    "redundant-declarations.projection.schema.json": "debdf174882a52bb7d190f05fb2c3f1f189e3bf17fae8617a738537c36396cd7",
+    "redundant-declarations.verbalization.txt": "63aed4059d00306568a14cc13008d4f11938bea959d19c4c24c9642db7fdf817"
+   }
+  },
+  "tests/fixtures/v61-phase4/models/role-declaration-unchecked.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "role-declaration-unchecked.applicable.json": "6ad0ca299e43c81c67e27ca6ef359fb48a6a0757b235f198af65b4b75ba5a4c9",
+    "role-declaration-unchecked.artifacts.json": "bf658ddd73c948c77592d70926f68af774eb1f1ec7a6981743d5046cb4fa3c04",
+    "role-declaration-unchecked.projection.schema.json": "21ded747d8bce3843a92793d935e0d5af2f28d03edb2dbeb0cc17db96833cc72",
+    "role-declaration-unchecked.verbalization.txt": "ad3f9f52f75e54c6c1fc0af640cdfcfb8907ecd123b3d32e185655b90c8c31d5"
+   }
+  },
+  "tests/fixtures/v61-phase4/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "role-declaration.applicable.json": "5b99dd7477063d8bb471db83d3ff5ede61c08189db6b1e7892e2c36d324d70fb",
+    "role-declaration.artifacts.json": "bf7cb9c40d573553d2e148c47dd4129a8e04be4aa10fcb1ced4cacd68a445dcd",
+    "role-declaration.projection.schema.json": "218fad7cb74cd4f728a60cebcd13b9f6888a918352f3cb4fcb457e4bbc97c8de",
+    "role-declaration.verbalization.txt": "02a4110a5b89108ff7b1beef18d475ef4c7b26c08ecd0a8896916822df352452"
+   }
+  },
+  "tests/fixtures/v61-phase4/models/witness-declarations.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "witness-declarations.applicable.json": "9f69a77e562b4b09f674f7842bb62a3c4a1fe1cc777489256076b4222f0f4abd",
+    "witness-declarations.artifacts.json": "b27b7d848572750e61e46082ab7aa45dc8e64605efffda2d3d1c3a11ad29a725",
+    "witness-declarations.projection.schema.json": "bcb6178cbe0e48d4c4ee9490b8a0a3604e3419e498b5c92cb0826667a0727cd2",
+    "witness-declarations.verbalization.txt": "266678a7d8ab09d9370f0d56e907962b7147ac0d8736d3556836d79d3b7399d3"
+   }
+  },
+  "tests/fixtures/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "static.applicable.json": "391a102f74413630a9945b3eee514eb5b28b029a6adcf0ffe3c92cdb855be61a",
+    "static.artifacts.json": "f4459853b015c679fe49f5bac3cb19f37d40c7506c1f8c7d931561665865c89a",
+    "static.projection.schema.json": "d6055d5659fd13ad2c2cc79b4b4a6b5ec88dcdacfe17b6390cc9439e3d2ef810",
+    "static.verbalization.txt": "e0fa602b82da0daf4be644eaf04b8128c0623b7659f496ecc49a8250e9e0bc9b"
+   }
+  },
+  "tests/fixtures/v62-phase2/models/dynamic.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "dynamic.applicable.json": "3e40c26ad5efad1b81ee1537f9a283ea53b4936f127cbc8d8ab7d533875ab523",
+    "dynamic.artifacts.json": "755e38d26276f1ac0baa23bd2fc948c100eccee446d72d508a0bfe6f7dca0b7a",
+    "dynamic.projection.schema.json": "a6a377f256a65b294ec5cc46de2f2c75ed7df9025729d76d87ad5ab2a28b1eba",
+    "dynamic.verbalization.txt": "98de40690ac55f50b5bb79ee781f5f7bcb40479add6eb905f43b6a40be10603f"
+   }
+  },
+  "tests/fixtures/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "exact-terms.applicable.json": "1593ece73a56356da56b5997d66922b60b77f0b69e17c79279528bce317038c7",
+    "exact-terms.artifacts.json": "355691f20c6ae128d6438c89f1c848a890078a604367a83450a33e70cb7ed6ff",
+    "exact-terms.projection.schema.json": "ce308767549f36f127b724c7b0f17dc05cd3e19c1f1b107c93b9fc369ab9899c",
+    "exact-terms.verbalization.txt": "410087d0beab23d3c2c7ab465dad3bed6a4a619148c950c185530d9d111cc293"
+   }
+  },
+  "tests/fixtures/v62-phase4/models/aggregates.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "aggregates.applicable.json": "f14553e4ef20c17807f4b1bc0e074f4816b072f985a2b3e2831cd5eb49681e34",
+    "aggregates.artifacts.json": "a5f2bdee0b0458d82ae14093ded99fa7b4db3ca91951830eb220acf3f727622c",
+    "aggregates.projection.schema.json": "d996d129eaba47b6d5e2c92bb914c5e281fa1b53f64dadc6b0e056cf5c195b1c",
+    "aggregates.verbalization.txt": "7306bb6908fb05ef248ce5f611911cae77c2eec14332ecb456f7797cb7aac547"
+   }
+  },
+  "tests/fixtures/v62-phase5/models/floats.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "floats.applicable.json": "d8fdaf274fa7cc4caf403302bc90a30d61cc0f2d21693bf9e8602e3a56dea8dd",
+    "floats.artifacts.json": "9c9dfeb241b3a731816765a690fccd305edb889fbb9da84d3f46a86e03a542ae",
+    "floats.projection.schema.json": "3ed8f8762cb62ae4e18bb928137af8cc9c775f88020c8f2e48c34ace74041194",
+    "floats.verbalization.txt": "f9e4e1a81c0ed32dfa6036b7363aa2bda28b36a429404bcdcd32ed4ae535e3ac"
+   }
+  },
+  "tests/fixtures/v62-phase6/models/existential-guard.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "existential-guard.applicable.json": "9a5051df28578cf49aa72987b0c0211f8616fe34dc651200bfc0c0bc2efd1286",
+    "existential-guard.artifacts.json": "d77d872e65c9878189fd6bd850ae8c4a201d24472748f09532cfa2afbcd729fd",
+    "existential-guard.projection.schema.json": "f65793d75206d319f7607d788fbdf62ec10cc61120b89b93190405b1efe13319",
+    "existential-guard.verbalization.txt": "19603fbd52ddc0eaf0fccf00259cdbb1596f7f50681724924a27c58ee33fe77a"
+   }
+  },
+  "tests/fixtures/v70-phase1/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "48f638d9d298e4201560f398c4f9adc30e478f9556a0d69781c94c35db5a51f4",
+    "model.artifacts.json": "63d1f57ef510a5542f817906c4365251b9da8a2719e801962809c31320a5022a",
+    "model.projection.schema.json": "4d05a16b5f650f08a8e2a93ef10091003a103e32de88978168de17cb70002056",
+    "model.verbalization.txt": "0aa837c0074451a7ceae874c3d0eb98c9c6f79fabc93e0c9ffde244c893d2273"
+   }
+  },
+  "tests/fixtures/v70-phase2/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "d24e9cab372cd80381a26bf26315080d7fb719bcfec2e09ca94f298cef59a8a2",
+    "model.artifacts.json": "62aee08ab5fdb299ebf63f754c130788d15f79d0a9427e15dfc0a04d44b5ea4f",
+    "model.projection.schema.json": "796ba6e75645b80be46e702118f314008d50c4056cae5768c2bb213972bd6cd5",
+    "model.verbalization.txt": "44dbdd3a242d9e276ba8af59dca0bbec2f0d4762d77cd941ccf82f49289aa872"
+   }
+  },
+  "tests/fixtures/v70-phase3/join-model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "join-model.applicable.json": "222854213023541ede32c521c69d2ab2d560a70187d82da192ab084e66b49c2c",
+    "join-model.artifacts.json": "6041c68d90f83dc0d66cad58f2b2618a8e3f569228f3b23d26fb94d7a63c1e14",
+    "join-model.projection.schema.json": "d8fbf8fd2ff85cf9013ba603c38df4406923d9b8fbe61ba1424e7e7b1dc94f85",
+    "join-model.verbalization.txt": "64771a5801b37b261c9e07a5fe57ef998469e1def92b40ede11d14dc91722626"
+   }
+  },
+  "tests/fixtures/v70-phase3/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "b1b5a7d4322177184470d97d6640bcdecc29afffd5e329094c0c12be36e39987",
+    "model.artifacts.json": "375595b0c8aef94260dad8659f8773c5c42191b7dc7f5b099cd6b58e27925f40",
+    "model.projection.schema.json": "e479a57606766ac498a53aa1bffc0464ec58b97bb4af77bed321756d69728d1b",
+    "model.verbalization.txt": "cacf2027b0b7802b67c0b7c9149b51d465555ead1af880264153e9e19ceaa3f2"
+   }
+  },
+  "tests/fixtures/v70-phase4/negation.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "negation.applicable.json": "106c90dace817dc91d9b6ad0e3cd8d4458793d2eecba0ca553c62183e6b6da64",
+    "negation.artifacts.json": "1eb2e71e8f17f74ea4f445e914b261e636d30e129546803e8b4653432affcedc",
+    "negation.projection.schema.json": "215670e8099936abd58d1626322fba993875603645409fdf40433d249335b9d1",
+    "negation.verbalization.txt": "bf1cdc5e19baa7c8d6ceb9eeca43cd4b0d61a3ff7d0ba4fc1f07c0e8e96958f0"
+   }
+  },
+  "tests/fixtures/v70-phase4/positive.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "positive.applicable.json": "924364ea51d11670f8ce4f47a92de2dd2a7d4a83c0b5455c4575bac6a3900d0e",
+    "positive.artifacts.json": "10eebaf9829e2a6ce2c424cd3fcce7250aee24386f7af114de2c899d8296fd20",
+    "positive.projection.schema.json": "fb10526b0cf23d9018012734cdb628f7feee292a73ccea9fabacf6c1971c279b",
+    "positive.verbalization.txt": "955dc5f8e9e9ff66742802e0221b7d65c6d608068554c1af4ba87d6dff057a44"
+   }
+  },
+  "tests/fixtures/v70-phase4/recursive.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "recursive.applicable.json": "f451424bf0321dcf611bb7634d0f594e7c566ebd9eab14096484de9cf056343b",
+    "recursive.artifacts.json": "e135fd19b942df1c546bf839aa2dba603d7574900452779eb03331d8973c3438",
+    "recursive.projection.schema.json": "07204979afa3eb3a29820a82d229129deabf7f97a1e34d9acb0526a2aea1c316",
+    "recursive.verbalization.txt": "f500428eb2f2b7991f14f434c2a62b54d1fbc8cd6c8011d03e7662d14f13c33b"
+   }
+  },
+  "tests/fixtures/v70-phase5/bad-inverse.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "bad-inverse.applicable.json": "5c1ed522994862d0d129d7f4a38505679416604682dd48dd1d8e26cf0ab70beb",
+    "bad-inverse.artifacts.json": "1b50a27ec8eecd23bfb23acb645d215f3d0012d9e53661850f781c626cbe8bbf",
+    "bad-inverse.projection.schema.json": "252a6ee8fa0c1d566c18b0960b23c3d37c500bc9c3b8f186b3693d393162cd0a",
+    "bad-inverse.verbalization.txt": "824badbe0cb686cc1fcac2cc50e0dda969ce04d86ceee2631c7de48dde036324"
+   }
+  },
+  "tests/fixtures/v70-phase5/private.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "private.applicable.json": "1f9b2d2e133c5d774da8a3f38122e8727b9ae45ef94b49d88d0e11ed31e9bd8b",
+    "private.artifacts.json": "159c3c51d7fc16b6f50f91ec9aa9a8aaf2468c4efa2e600ee00cbbdd98de9ba8",
+    "private.projection.schema.json": "dc2ab8e31551449574ff3b9497ab01a475786a8dfbf17b46343518b281278ef9",
+    "private.verbalization.txt": "239072f532c23d572d89156dd8027670f4a6afc570b43286cde0f64325cbb408"
+   }
+  },
+  "tests/fixtures/v70-phase5/public.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "public.applicable.json": "5c1ed522994862d0d129d7f4a38505679416604682dd48dd1d8e26cf0ab70beb",
+    "public.artifacts.json": "220aca528b614456f1052469e8e5a688360ed21e3100749723d3328a6c6b1852",
+    "public.projection.schema.json": "252a6ee8fa0c1d566c18b0960b23c3d37c500bc9c3b8f186b3693d393162cd0a",
+    "public.verbalization.txt": "824badbe0cb686cc1fcac2cc50e0dda969ce04d86ceee2631c7de48dde036324"
+   }
+  },
+  "tests/fixtures/v70-phase6/negation-a.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "negation-a.applicable.json": "dccbbb57fc5c2e1a6c1580e2fa49823e53764e9d4021492e2e7dc40682628d6d",
+    "negation-a.artifacts.json": "4038027df80c6769acc033bf891eebf57b4dfdeeb005e472d99abd1646a86dc3",
+    "negation-a.projection.schema.json": "0a69cce54a9cafbf74548eee83a3d2469d1c167088fee5d5cafa962b1a197792",
+    "negation-a.verbalization.txt": "452d9d35ee0f940bbe2a40f33dc8e681bbda90dcaa90fef79ec84c89c1bdec91"
+   }
+  },
+  "tests/fixtures/v70-phase6/negation-b.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "negation-b.applicable.json": "dccbbb57fc5c2e1a6c1580e2fa49823e53764e9d4021492e2e7dc40682628d6d",
+    "negation-b.artifacts.json": "04dbfeb2f57a9f6c7d63f0645bf97fe5eb33edabdb3bb025d60cf9ef80fc620a",
+    "negation-b.projection.schema.json": "0a69cce54a9cafbf74548eee83a3d2469d1c167088fee5d5cafa962b1a197792",
+    "negation-b.verbalization.txt": "452d9d35ee0f940bbe2a40f33dc8e681bbda90dcaa90fef79ec84c89c1bdec91"
+   }
+  },
+  "tests/fixtures/v70-phase6/range-a.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "range-a.applicable.json": "2b3bf09fbf1914c62af06db19a0c043413ae6f88a8596c1db741622c114cded4",
+    "range-a.artifacts.json": "f4eee68eee4b2b5e62b5ed40b0174e9ceae2c6dd5a208f2582ac0c508652e13e",
+    "range-a.projection.schema.json": "7e8db8a89c877c08f9eff61e91b1091e9049bbd39ad9ab619f7f69f74e249e51",
+    "range-a.verbalization.txt": "8a0fc405345864e354e63fce8af15df8f389f271ca919d21f742b1d38a0d7dad"
+   }
+  },
+  "tests/fixtures/v70-phase6/range-b.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "range-b.applicable.json": "2b3bf09fbf1914c62af06db19a0c043413ae6f88a8596c1db741622c114cded4",
+    "range-b.artifacts.json": "de43be2de753d2c0b54ca55f845557f60869ea3d985064486e7bdbea44d3cf77",
+    "range-b.projection.schema.json": "7e8db8a89c877c08f9eff61e91b1091e9049bbd39ad9ab619f7f69f74e249e51",
+    "range-b.verbalization.txt": "8a0fc405345864e354e63fce8af15df8f389f271ca919d21f742b1d38a0d7dad"
+   }
+  },
+  "tests/fixtures/v71/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "540660a8293437397d179332b6789158cb65c594b8cfd0bffcb4f4e65df6eb74",
+    "model.artifacts.json": "5d7a89b7194ed4d2d6ada0e7a75743f50052b9d47f32061b893ceec14cb2756e",
+    "model.projection.schema.json": "fc70eece27c9a65905a595ff4f2cba6936c9ed52a0b74beaa7bace03475f7957",
+    "model.verbalization.txt": "8f708e5327dd9801497f2a07102c6577eb8435b40b1d1fefb0475afe6e85e339"
+   }
+  },
+  "tests/fixtures/v71/phase1/dispatch/model.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v71/phase1/release/model.orm.yaml": {
+   "exit": 3,
+   "files": {}
+  },
+  "tests/fixtures/v71/phase2/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "e18f048b6740358dfef1ae7657f6dea90a6b560768e7cab05d16772c4c0788bc",
+    "model.artifacts.json": "9e71ad13a4c1f52415aa6074c049c3f545d5b4c259cc8ae0955713b336c9933c",
+    "model.projection.schema.json": "77a9aa71dee9a0a74b8f0b7c004af32e6172c72519b94e28deaae2f256374559",
+    "model.verbalization.txt": "51ba9f4ef381012d1c2364fb5a1100ff97a50ace29813c2f55cc915afdcfb154"
+   }
+  },
+  "tests/fixtures/v71/phase3/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "024a3c62d5bbaf9f3c156538c3e4cd1d6d4f18b83b0fd50d998f579dbd08f8e7",
+    "model.artifacts.json": "82cac5a942553de708d386bc048fdfbe11423ef342190243494239a190341456",
+    "model.projection.schema.json": "e97a6997bf6ef057f94f09a18f6203194d1da71e16fb0c35c9a195f6f9f21b71",
+    "model.verbalization.txt": "eed520ecd2a68f9585a8ff918049af46e033eb51f310a56f99bbdfb2afca4be3"
+   }
+  },
+  "tests/fixtures/v71/phase4/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "model.applicable.json": "2708eb3bc1542140fbfaa133992e6a6817bc2f8702642aa08f9c5ba6761eb4ab",
+    "model.artifacts.json": "5cd33601dce587eba80f4ecb476942ed888b9aacb9b6bd35873eea4252b4ea56",
+    "model.projection.schema.json": "13a698e058f31e0679674738357373427e484d0bea09d8c3bf8798d0676406e9",
+    "model.verbalization.txt": "461afc65084e712f81ec9d235cca136487a409e10db49555b2b380d72d2a0b6b"
+   }
+  },
+  "tests/fixtures/v71/phase4/dispatch/owned-model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "owned-model.applicable.json": "2708eb3bc1542140fbfaa133992e6a6817bc2f8702642aa08f9c5ba6761eb4ab",
+    "owned-model.artifacts.json": "3ace01b2596b81462077f06d7d50b86f2526d8c4d34c40d727271e3a567d18c1",
+    "owned-model.projection.schema.json": "13a698e058f31e0679674738357373427e484d0bea09d8c3bf8798d0676406e9",
+    "owned-model.verbalization.txt": "461afc65084e712f81ec9d235cca136487a409e10db49555b2b380d72d2a0b6b"
+   }
+  },
+  "tests/fixtures/v71/phase4/dispatch/reference-model.orm.yaml": {
+   "exit": 0,
+   "files": {
+    "reference-model.applicable.json": "cf474d2f6269b861d1b97a16c27d42bc956d04f21500570280212a96aa5d8e08",
+    "reference-model.artifacts.json": "03d07a9e4dc3357656081003dc55efa76311a9f6fb433dd84537b62ec1461672",
+    "reference-model.projection.schema.json": "13a698e058f31e0679674738357373427e484d0bea09d8c3bf8798d0676406e9",
+    "reference-model.verbalization.txt": "bd802c0de309e442dda6ed43b994857fb4466a6b627f8e81af69ca75dcfe82cf"
+   }
+  }
+ }
+}

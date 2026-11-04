@@ -63,6 +63,11 @@ def _register_evolve(subparsers):
         metavar="FACT_TYPE",
         help="treat FACT_TYPE as populated under --policy additive; repeatable",
     )
+    evolve_preview_parser.add_argument(
+        "--shape-report",
+        action="store_true",
+        help="list existing fact types with the same role players as each added one (advice only)",
+    )
     _add_format_argument(evolve_preview_parser)
 
     evolve_apply_parser = evolve_subparsers.add_parser(
@@ -162,6 +167,7 @@ def handle(args, parsers) -> int:
                 args.format,
                 policy=args.policy,
                 populated=args.populated,
+                shape_report=args.shape_report,
             )
         if args.evolve_command == "apply":
             return _handler_evolve_cli_service._cmd_evolve_apply(

@@ -365,6 +365,10 @@ def _evolve_emit_claim(claim: Any, output_format: str, *, stage: str) -> None:
             print(f"  populated: {' '.join(claim.populated) or '-'}")
             for issue in claim.policy_issues:
                 print(f"  policy-issue: {issue.operation_index} {issue.cell} {issue.reference}")
+        for group in claim.shape_matches or ():
+            added = ",".join(member.fact_type for member in group.added)
+            existing = ",".join(member.fact_type for member in group.existing) or "-"
+            print(f"  shape-group: {','.join(group.signature)} added {added} existing {existing}")
     elif stage == "apply":
         print(f"PENDING {claim.state_identity_sha256}")
         print(f"  proposal: {claim.proposal_id}")
@@ -431,7 +435,9 @@ def _evolve_publish_preview(
 def _evolve_same_review_identity(reviewed: Any, staged: Any) -> bool:
     """Whether a staged accepted preview is the exact reviewed preview lineage."""
 
-    excluded = {"accepted_blast_radius_sha256", "preview_sha256"}
+    # The shape report is advice (MG3, review R-F4): a reviewed preview with or
+    # without it is the same review lineage, as the fresh/reviewed path admits.
+    excluded = {"accepted_blast_radius_sha256", "preview_sha256", "shape_matches"}
     if reviewed.model_dump(mode="json", exclude=excluded) != staged.model_dump(
         mode="json", exclude=excluded
     ):
@@ -531,6 +537,7 @@ def _cmd_evolve_preview(
     *,
     policy: str | None = None,
     populated: list[str] | None = None,
+    shape_report: bool = False,
 ) -> int:
     """Validate one proposal through ``EvolutionService.preview`` and publish its claim.
 
@@ -564,7 +571,9 @@ def _cmd_evolve_preview(
             evidence_root=records,
             allowed_project_root=workspace,
         )
-        preview = service.preview(proposal, policy=policy, populated=populated or ())
+        preview = service.preview(
+            proposal, policy=policy, populated=populated or (), shape_report=shape_report
+        )
         rendered = _evolve_json_bytes(preview)
         _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
         _evolve_emit_claim(preview, output_format, stage="preview")
@@ -693,7 +702,13 @@ def _cmd_evolve_apply(
                 )
             pending = service.apply(staged)
             return _evolve_finish_apply(service, pending, output_format)
-        fresh = service.preview(proposal, policy=policy, populated=populated_args)
+        # The shape report is advice with no apply option (MG3 D6): the fresh
+        # preview carries it exactly when the reviewed one does, so the
+        # equality below still binds every reviewed byte.
+        shape_report = reviewed.shape_matches is not None
+        fresh = service.preview(
+            proposal, policy=policy, populated=populated_args, shape_report=shape_report
+        )
         if reviewed != fresh:
             raise _EvolutionCLIError(
                 EXIT_COLLISION,
@@ -716,6 +731,7 @@ def _cmd_evolve_apply(
                 accepted_blast_radius_sha256=accepted_digest,
                 policy=policy,
                 populated=populated_args,
+                shape_report=shape_report,
             )
         pending = service.apply(accepted)
         return _evolve_finish_apply(service, pending, output_format)

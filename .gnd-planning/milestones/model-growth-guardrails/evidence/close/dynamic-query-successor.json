@@ -1,0 +1,66 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/MG5/dynamic-query-successor.json",
+ "predecessor_sha256": "134d2e725ebf21872d139f03bb888d11047630808746f68798f520605b6d89f3",
+ "reason": "model-growth-guardrails close (2026-11-04): close review R1-F1 widens the additive policy's model-hosted subjects to object-scoped constraints (gnd.evolve.policy._object_scoped_types and the players index inside additive_policy_issues), and R1-F2 keys the shape report's added fact types by their last ADD (gnd.evolve.shapes._added_fact_types); parameter, return and local annotations only. Syntax census only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/evolve/policy.py",
+   "_object_scoped_types",
+   "set[str]",
+   2
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "additive_policy_issues",
+   "dict[str, set[str]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "additive_policy_issues",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "playing",
+   "dict[str, set[str]]",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "playing",
+   "identifies.get(kind_of, set())",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "playing",
+   "players.get(object_type, set())",
+   1
+  ],
+  [
+   "src/gnd/evolve/policy.py",
+   "playing",
+   "set[str]",
+   4
+  ],
+  [
+   "src/gnd/evolve/shapes.py",
+   "_added_fact_types",
+   "dict[str, int]",
+   1
+  ]
+ ],
+ "removed": [
+  [
+   "src/gnd/evolve/shapes.py",
+   "_added_fact_types",
+   "set[str]",
+   1
+  ]
+ ],
+ "result_distinct_rows": 6988,
+ "result_occurrences": 8726
+}

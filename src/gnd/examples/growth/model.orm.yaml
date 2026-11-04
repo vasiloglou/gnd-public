@@ -1,0 +1,39 @@
+# A shop's model, grown one round at a time (docs/how-to/grow-a-model.md).
+version: 1
+model_id: growth-shop
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - id: customer
+    name: Customer
+    kind: entity
+    reference: { mode: popular, value_type: customer_no }
+    description: { summary: "A person who buys from the shop." }
+  - { id: customer_no, name: CustomerNo, kind: value, primitive: Integer }
+  - id: order
+    name: Order
+    kind: entity
+    reference: { mode: popular, value_type: order_no }
+  - { id: order_no, name: OrderNo, kind: value, primitive: Integer }
+  - { id: channel, name: Channel, kind: value, primitive: String }
+fact_types:
+  - id: order_placed_by_customer
+    reading: "{Order} is placed by {Customer}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: customer, role_name: customer }
+    sample_population:
+      - { order: 10, customer: 1 }
+      - { order: 11, customer: 2 }
+  - id: order_arrives_via_channel
+    reading: "{Order} arrives via {Channel}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: channel, role_name: channel }
+  - id: customer_is_active
+    reading: "{Customer} is active"
+    roles: [{ object_type: customer, role_name: customer }]
+    derivation: derived
+    derivation_rule:
+      body: [{ fact_type: order_placed_by_customer, bind: { order: "$o", customer: "$c" } }]
+      head: { customer: "$c" }
+constraints: []

@@ -21,3 +21,5 @@ Predecessor: [model-growth-guardrails](../model-growth-guardrails/README.md).
 - CT1 spec: delegated approval `(d1)` 2026-11-04, D1..D4 ruled.
 - CT1 done: [002-phase-CT1.md](002-phase-CT1.md) (spec delegated `(d1)`; one
   reviewer, approve-with-fixes, all dispositioned; focused gate 473 passed).
+- CT2 done: [003-phase-CT2.md](003-phase-CT2.md) (spec delegated `(d1)`; one
+  reviewer, approve-with-fixes, two blocking findings fixed; focused gate 663 passed).

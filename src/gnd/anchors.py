@@ -71,8 +71,13 @@ def _reject_constant(value: str) -> None:
 
 
 def _parse(raw: bytes) -> Any:
-    if len(raw) > MAX_SIDECAR_BYTES:
-        raise ValueError("sidecar exceeds 1 MiB")
+    return strict_json(raw, max_bytes=MAX_SIDECAR_BYTES, too_large="sidecar exceeds 1 MiB")
+
+
+def strict_json(raw: bytes, *, max_bytes: int, too_large: str) -> Any:
+    """Parse caller JSON refusing duplicate keys, constants, deep nesting and huge integers."""
+    if len(raw) > max_bytes:
+        raise ValueError(too_large)
     def _integer(value: str) -> int:
         if len(value) > 18:
             raise ValueError("oversized integer")

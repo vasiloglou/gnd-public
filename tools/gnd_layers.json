@@ -261,6 +261,9 @@
     "gnd.compiled_obligations": {
       "layer": "checking"
     },
+    "gnd.composition": {
+      "layer": "model"
+    },
     "gnd.conformance": {
       "lane": "conformance",
       "layer": "lanes"

@@ -22,7 +22,9 @@ for a process. It is accepted only at the root.
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |
 | `gnd check MODEL --populations DIR` | Batch checking of population files |
 | `gnd check MODEL --pre PRE --steps STEPS --post POST --format json` | Audit of a declared operation walk |
+| `gnd check MODEL COMPOSED --composition RECORD --sources DIR` | Re-derive a composition, then check it with lineage ([composition](composition.md)) |
 | `gnd verbalize population MODEL POPULATION --format jsonl` | Deterministic sentences for supplied facts |
+| `gnd compose MODEL DIR --out COMPOSED --record RECORD` | One population from several anchored sources, with a value-free record |
 | `gnd diff MODEL_A MODEL_B --populations DIR --format json` | Bounded comparisons over a shared vocabulary |
 | `gnd coverage MODEL --check REPORT --format json` | Model-element claims and cited evidence; flags select evidence families |
 

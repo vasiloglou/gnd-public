@@ -268,6 +268,8 @@ VENDORED_SCHEMAS = (
     "gnd/why-not.schema.json",
     "gnd/rule-verbalization.schema.json",
     "gnd/anchor-sidecar.schema.json",
+    "gnd/composition-manifest.schema.json",
+    "gnd/composition.schema.json",
 )
 
 

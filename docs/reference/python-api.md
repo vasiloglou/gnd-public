@@ -6,8 +6,8 @@ returns ordinary dictionaries; your application decides how to display a
 finding and what action to take.
 
 The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
-`verbalize`, `verbalize_rules`, `diff`, `witness`, `replay` and `why_not`: ten
-functions, the one count other pages refer to. The opt-in `EvaluationSession`
+`verbalize`, `verbalize_rules`, `diff`, `witness`, `replay`, `why_not` and
+`compose`: eleven functions, the one count other pages refer to. The opt-in `EvaluationSession`
 class reuses eligible work between calls. Code generation, experiment
 orchestration, and model evolution have CLI and skill workflows described in
 the [task guides](../advanced.md).
@@ -126,6 +126,16 @@ the question it was written for without keeping its own renderer. A rule
 written as prose comes back as `unsupported` with reason `prose-rule`. The
 payload and its rules are in the
 [rule verbalization reference](rule-verbalization.md).
+
+## `compose`: one population from several documents
+
+`compose(model, directory)` reads a composition directory (a manifest and,
+per source, a population, its anchor sidecar and its document), and returns
+the composed population and a value-free record of each composed fact's
+source facts. It writes nothing. `check(model, population,
+composition=RECORD, sources=DIRECTORY)` re-derives the composition first and
+names each offending composed fact's sources. The layout, the manifest and
+the record are in the [composition reference](composition.md).
 
 ## `diff`: compare rules over the same vocabulary
 

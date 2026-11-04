@@ -12,6 +12,15 @@ changes requires a separate release decision.
   sidecars check as before, and `gnd extract` still writes version 1. The
   format is in the new [anchor sidecar reference](reference/anchors.md),
   with a published `anchor-sidecar.schema.json`.
+- **Composition** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
+  `gnd compose MODEL DIR --out COMPOSED --record RECORD` and
+  `gnd.api.compose` build one population from several anchored sources under
+  a manifest of renamings, identical-row deduplication and scope tags, and
+  write a value-free record of each composed fact's source facts.
+  `gnd check --composition RECORD --sources DIR` re-derives the composition,
+  checks each anchored value against its own source, and names the sources
+  of every offending fact. `gnd.api.__all__` gains `compose`; see the
+  [composition reference](reference/composition.md).
 
 ## Unreleased: model growth guardrails (2026-11-04)
 

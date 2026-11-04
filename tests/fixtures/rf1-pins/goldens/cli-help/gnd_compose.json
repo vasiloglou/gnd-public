@@ -1,0 +1,4 @@
+{
+ "help": "usage: gnd compose [-h] --out OUT --record RECORD model directory\n\nRead DIR/manifest.json and, for each source id it lists,\nDIR/<id>/population.json, its adjacent anchor sidecar and\nDIR/<id>/document.txt. Bind every sidecar, apply the manifest's renamings,\ncollapse identical rows, and write the composed population and a value-free\ncomposition record. Nothing is merged that the manifest does not list. Check\nthe result with gnd check --composition RECORD --sources DIR.\n\npositional arguments:\n  model            path to the model file\n  directory        composition directory\n\noptions:\n  -h, --help       show this help message and exit\n  --out OUT        path of the composed population to write\n  --record RECORD  path of the composition record to write\n",
+ "path": "gnd compose"
+}

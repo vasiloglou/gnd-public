@@ -203,8 +203,11 @@ share that implementation.
 reference population owns it, when a `population` artifact locator in the proposal references
 `fact_types[ID]`, or when `--populated ID` names it. A `--populated` id that names no fact type of
 the current model exits `3`. A model-hosted constraint's subjects are the fact types its role
-references and rule atoms name, in `before` and `after` alike; it counts as populated when **any**
-subject is. A fact type the same proposal adds is never populated. A `modify` of an element the
+references and rule atoms name, in `before` and `after` alike, and, for a constraint that ranges
+over an object type without a role (`value` or `cardinality` with `object_type` and no `role_ref`,
+`subtype-partition`'s `supertype` and `subtypes`), every fact type with a role played by that
+object type, by a subtype of it, or by an entity it identifies as reference value type. It counts
+as populated when **any** subject is. A fact type the same proposal adds is never populated. A `modify` of an element the
 same proposal adds is judged like any other `modify`: declare the element once, in its final shape.
 
 | Locator | add | modify | rename | delete |

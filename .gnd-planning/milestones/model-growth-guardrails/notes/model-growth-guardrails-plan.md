@@ -622,3 +622,25 @@ The broad suite runs on explicit owner selection.
 
 Inherited rows `(r1-V)`: IK1 boundary (O20), IK1-Q4 (O21), IK close reader
 four (O22), NM2-Q3 (O23). IKE-Q3 belongs to the successor's CT4.
+
+## Close note `(c1)`, 2026-11-04
+
+Appended at milestone close; the approved r3 text above is not edited.
+**Delegated approval (auto=true)** under the owner's "process-milestone
+model-growth-guardrails auto" (2026-11-04), which switched MG3 to the close
+from `auto=false` to delegated rulings. These are agent rulings, not the
+owner's reading; each repairs a premise a phase or the close review refuted.
+
+| Site | Repair | Evidence |
+|---|---|---|
+| §8, MG-R7 "`auto=false`" | MG1 and MG2 ran `auto=false` with owner gates; MG3 to the close ran under the delegation above | records 004–008 |
+| §2.2 matrix, constraint RENAME cells | pre-empted: proposal validation refuses a constraint RENAME (exit 3) | MG2-Q2, record 003 |
+| §2.2 "Populated" for model-hosted constraints (MG-D17) | the subjects also include, for a `value` or `cardinality` constraint with `object_type` and no `role_ref` and for a `subtype-partition`, every fact type with a role played by that object type, a subtype of it or an entity it identifies | close review R1-F1, record 008 |
+| §2.3 layout | one group per signature, linear in the model; same content | MG3 amendment `(d2)`, record 004 |
+| §2.4 | the guideline also prints each entity's reference mode and marks derived fact types | close review R2-1, R2-5 |
+| §2.5 U8 | applies to every provenance-bearing element (operations and obligations too), as D-03 does | close review R3-2 |
+| §2.5 / MG-R1 | `spans` on induced provenance is admitted by the schema and refused outside the mode by U7, so no model's exit changes; no MG-R1 exception remains | close review R4-F1 |
+| §4 MG5-C4 counts | 349 model files; 163 one-shot with `confirmed`/`user-supplied` | MG5 `(d1)` |
+| §4 MG2-C4, MG3-C3 baseline | `d5f6e9e` stands in for `1446f90`; the evolve package is unchanged between them | record 003 |
+| O22 | refuted: `apply` publishes the proposal's candidate text as given | record 007 |
+| MG6-C2 | DC1 was missed; DC2 retained, owner viewing pending | record 007 |

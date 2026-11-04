@@ -276,6 +276,29 @@ def _role_ref_fact_types(value: Any, out: set[str]) -> None:
             _role_ref_fact_types(item, out)
 
 
+def _object_scoped_types(value: Any) -> set[str]:
+    """The object types a model-hosted constraint ranges over without a role.
+
+    A `value` or `cardinality` constraint with an `object_type` and no
+    `role_ref` constrains every instance of that object type, and a
+    `subtype-partition` constrains its `supertype` and `subtypes`. Their
+    subjects are then every fact type such an instance plays a role in
+    (close review R1-F1); a role-scoped constraint keeps its role refs.
+    """
+
+    if not isinstance(value, dict):
+        return set()
+    named: set[str] = set()
+    if _lookup(value, "role_ref") is None and isinstance(_lookup(value, "object_type"), str):
+        named.add(_lookup(value, "object_type"))
+    if isinstance(_lookup(value, "supertype"), str):
+        named.add(_lookup(value, "supertype"))
+    subtypes = _lookup(value, "subtypes")
+    if isinstance(subtypes, (list, tuple)):
+        named.update(item for item in subtypes if isinstance(item, str))
+    return named
+
+
 def additive_policy_issues(
     before: Model,
     proposal: EvolutionProposal,
@@ -296,6 +319,32 @@ def additive_policy_issues(
     }
     added_fact_types: set[str] = set()
     issues: list[PolicyIssue] = []
+    players: dict[str, set[str]] | None = None
+
+    def playing(object_types: set[str]) -> set[str]:
+        """Fact types with a role played by one of `object_types` or a subtype of one."""
+        nonlocal players
+        if players is None:
+            players = {}
+            # A value type that identifies an entity constrains that entity's
+            # reference values, so the entity's roles count too.
+            identifies: dict[str, set[str]] = {}
+            for object_type_id, row in index.object_types_by_id().items():
+                reference = _lookup(row, "reference")
+                value_type = _lookup(reference, "value_type") if isinstance(reference, dict) else None
+                if isinstance(value_type, str):
+                    identifies.setdefault(object_type_id, set()).add(value_type)
+            for fact_type_id, roles in index.role_object_types().items():
+                for player in roles.values():
+                    kinds = {player, *index.supertype_closure(player)}
+                    for kind_of in set(kinds):
+                        kinds |= identifies.get(kind_of, set())
+                    for kind_of in kinds:
+                        players.setdefault(kind_of, set()).add(fact_type_id)
+        found: set[str] = set()
+        for object_type in object_types:
+            found |= players.get(object_type, set())
+        return found
 
     def refuse(position: int, operation: Any, cell: str, detail: str) -> None:
         issues.append(
@@ -346,6 +395,7 @@ def additive_policy_issues(
                 subjects = set()
                 _role_ref_fact_types(operation.before, subjects)
                 _role_ref_fact_types(operation.after, subjects)
+                subjects |= playing(_object_scoped_types(operation.before) | _object_scoped_types(operation.after))
             # `populated` is computed from the before model, so a same-proposal
             # fact type is never in it; no subtraction is needed (review F5).
             if not (subjects & populated):

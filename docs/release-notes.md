@@ -33,7 +33,9 @@ through them in [Grow a model by additions](how-to/grow-a-model.md).
   report. See the [shape report](reference/evolve-policy.md#shape-report).
 - **Extraction guidelines** ([#78](https://github.com/vasiloglou/gnd-public/issues/78)).
   `gnd extract --guidelines` adds a constraint-blind per-fact-type guide,
-  digest-recorded in `<stem>.artifacts.json`. Value constraints are left out;
+  digest-recorded in `<stem>.artifacts.json`. No constraint is stated (an
+  identifying external uniqueness shows only as identification); value
+  constraints are left out;
   a description can restate a rule and is repeated as written.
 - **Unattended model-from-text** ([#74](https://github.com/vasiloglou/gnd-public/issues/74)).
   With `source.mode: unattended`, `gnd validate` requires `reviewer: none`,
@@ -45,9 +47,10 @@ through them in [Grow a model by additions](how-to/grow-a-model.md).
 
 Without the new options, and for models without `source.mode: unattended`,
 previews, applies, extract bundles and validation results are
-byte-identical to before. Two exceptions: the verbalization fix above, for
-inputs that used to raise, and an `induced` constraint may now carry
-`provenance.spans` in any mode. The schema gains
+byte-identical to before. One exception: the verbalization fix above, for
+inputs that used to raise. An `induced` constraint carrying
+`provenance.spans` outside unattended mode is still refused (exit 3), now by
+`semantic:unattended-u7` rather than the schema. The schema gains
 `$defs.source_span`.
 
 ## Unreleased: disclosure mode (2026-11-01)

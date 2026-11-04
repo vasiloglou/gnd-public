@@ -53,7 +53,7 @@ Every extraction reads a per-model bundle emitted **offline** by deterministic c
 gnd extract MODEL --out DIR
 ```
 
-That writes four files named after the model's stem:
+That writes four files named after the model's stem, and a fifth with `--guidelines`:
 
 | File | What it gives you |
 |---|---|

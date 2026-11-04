@@ -98,6 +98,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG4/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG5/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/close/dynamic-query-successor.json',
 ]
 
 

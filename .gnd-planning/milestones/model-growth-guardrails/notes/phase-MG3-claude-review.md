@@ -7,8 +7,8 @@ Subject: `git diff 9b069e2` plus untracked `src/gnd/evolve/shapes.py`,
 lives in this scratch directory and writes only to pytest `tmp_path`.
 
 Probe files:
-- `/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-intelligent-pasteur-df4027/3c87e025-cf83-4ba9-a19d-bb65f88a9984/scratchpad/review-mg3/probe_mg3.py`
-- `/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-intelligent-pasteur-df4027/3c87e025-cf83-4ba9-a19d-bb65f88a9984/scratchpad/review-mg3/probe_mg3_cap.py`
+- `<scratch>/review-mg3/probe_mg3.py`
+- `<scratch>/review-mg3/probe_mg3_cap.py`
 
 Run them from the repo root with `uv run pytest -p no:cacheprovider -s -q <file>`.
 

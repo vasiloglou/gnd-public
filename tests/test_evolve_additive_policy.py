@@ -1014,3 +1014,39 @@ def test_t14_the_cell_literal_the_contract_table_and_the_walk_agree() -> None:
 
     with pytest.raises(ValidationError):
         PolicyIssue(operation_index=0, operation_id="x", reference="r", cell="constraint.rename", detail="d")
+
+
+# --- close review R1-F1: object-scoped model-hosted constraints ----------------
+
+_QUOTE = {"source": "user-supplied", "status": "confirmed", "modality": "alethic",
+          "provenance": {"user_quote": "Stated by the owner."}}
+OBJECT_SCOPED = [
+    ("value-object-type", "value", {"type": "value", "object_type": "channel", "allowed": ["phone"], **_QUOTE}),
+    ("value-entity-value-type", "value", {"type": "value", "object_type": "order_id",
+                                          "range": {"min": 100, "max": 200}, **_QUOTE}),
+    ("cardinality-object", "cardinality", {"type": "cardinality", "scope": "object", "object_type": "order",
+                                           "bound": {"max": 1}, **_QUOTE}),
+]
+
+
+@pytest.mark.parametrize(("name", "family", "constraint"), OBJECT_SCOPED, ids=[row[0] for row in OBJECT_SCOPED])
+def test_close_r1_f1_an_object_scoped_constraint_on_a_populated_player_is_refused(
+        tmp_path: Path, name: str, family: str, constraint: dict[str, Any]) -> None:
+    """`channel` and `order` play roles in the populated customer_places_order."""
+    operation = _op("add", _constraint_locator(None, None, family), after=constraint)
+    preview = _preview(tmp_path, (operation,))
+    assert [issue.cell for issue in preview.policy_issues] == ["constraint.populated.add"]
+
+
+def test_close_r1_f1_controls(tmp_path: Path) -> None:
+    """An object type playing only unpopulated roles is admitted; a role_ref keeps the role's scope."""
+    unpopulated = {"type": "value", "object_type": "amount", "range": {"min": 0, "max": 5}, **_QUOTE}
+    preview = _preview(tmp_path / "a", (_op("add", _constraint_locator(None, None, "value"), after=unpopulated),))
+    assert preview.policy_issues == ()
+    from gnd.evolve.policy import _object_scoped_types
+
+    role_scoped = {"type": "value", "object_type": "channel", "allowed": ["web"],
+                   "role_ref": {"fact_type": "order_has_amount", "role": "amount"}}
+    assert _object_scoped_types(role_scoped) == set()
+    partition = {"type": "subtype-partition", "supertype": "customer", "subtypes": ["vip", "regular"]}
+    assert _object_scoped_types(partition) == {"customer", "vip", "regular"}

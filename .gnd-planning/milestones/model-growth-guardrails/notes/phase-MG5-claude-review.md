@@ -1,7 +1,7 @@
 # Phase MG5 diff review (single adversarial reviewer)
 
 Subject: the working-tree diff against `HEAD` (`9e36e70`) plus untracked MG5 files in
-`/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027`,
+`<repo>`,
 reviewed against `phase-MG5-spec.md` r1 `(d1)` and plan §0, §2.5 and §4 MG5.
 
 Note on the subject: the tree changed while I was reviewing it. `_validation.py` gained a
@@ -281,7 +281,7 @@ disabled.
 - Precedent for `internal_error` at exit 66 or 74 in other validate paths.
 
 Probe sources are in
-`/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-intelligent-pasteur-df4027/3c87e025-cf83-4ba9-a19d-bb65f88a9984/scratchpad/review-mg5/probes/`
+`<scratch>/review-mg5/probes/`
 (`p1.py` rule probes, `p2.py` `--document` CLI, `p3.py` warnings and imported alethic,
 `p4.py` model_dump check, `p5.py` cost, `mutants.py` mutant runner). They wrote only to
 system temp dirs.

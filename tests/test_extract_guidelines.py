@@ -351,3 +351,18 @@ def test_t12_entities_resolve_their_reference_once(monkeypatch: pytest.MonkeyPat
     assert time.perf_counter() - started < 5.0
     assert len(calls) == 100
 
+
+
+# --- close review regressions ------------------------------------------------------------
+
+
+def test_close_r2_reference_mode_and_derived_marker(tmp_path: Path) -> None:
+    sections = _sections(_render(BASE))
+    assert "- Reference mode: popular" in sections["customer_places_order"]
+    growth = REPO_ROOT / "src/gnd/examples/growth/model.orm.yaml"
+    document = YAML(typ="safe").load(growth.read_text(encoding="utf-8"))
+    derived = [f["id"] for f in document["fact_types"] if f.get("derivation") == "derived"]
+    text = _render(growth)
+    rendered = _sections(text)
+    assert derived and all("- Derived by a rule: not extracted from documents" in rendered[i] for i in derived)
+    assert text.count("- Derived by a rule") == len(derived)

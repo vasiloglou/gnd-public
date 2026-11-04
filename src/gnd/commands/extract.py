@@ -15,7 +15,8 @@ def _register_extract(subparsers):
             "<stem>.verbalization.txt (the constraint-blind rendering seed), "
             "<stem>.applicable.json (the three-path reference-scheme "
             "applicable set) and <stem>.artifacts.json (sha256 digests plus "
-            "the header_template the executing skill copies verbatim). No "
+            "the header_template the executing skill copies verbatim), plus "
+            "<stem>.guidelines.md with --guidelines. No "
             "provider is called and no network is touched — the executing "
             "agent running the gnd-extract skill is the only place a model "
             "is ever called. Exits 0 when the bundle is emitted, 3 when the "
@@ -26,7 +27,7 @@ def _register_extract(subparsers):
     )
     extract_parser.add_argument("model", help="path to the model file")
     extract_parser.add_argument(
-        "--out", required=True, help="output directory for the four-file bundle"
+        "--out", required=True, help="output directory for the bundle (four files, five with --guidelines)"
     )
     extract_parser.add_argument(
         "--guidelines",

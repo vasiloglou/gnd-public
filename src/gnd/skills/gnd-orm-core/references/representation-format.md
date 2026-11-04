@@ -642,8 +642,9 @@ Note that `sample_population` (authoring-time examples embedded in the model) is
 A model authored with no human in the loop declares it, and then every claim it makes cites the
 text it came from. This section is the rule family's one normative home; `gnd validate` enforces
 it (`semantic:unattended-u1` … `-u8`, all errors) only when `source.mode` is `unattended`. Every
-other model validates exactly as before, with one schema exception: an `induced` constraint may now
-carry `provenance.spans` in any mode (its provenance is otherwise closed).
+other model validates as before: the schema admits `provenance.spans` on an `induced` constraint
+(whose provenance is otherwise closed), and outside this mode U7 refuses the key, so such a model
+still exits 3.
 
 ```yaml
 source:

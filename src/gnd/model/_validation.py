@@ -4797,8 +4797,25 @@ def _sample_span_issues(fact_type: dict[str, Any], path: str, declared: set[str]
 def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
     """MG5: the unattended source mode, U1..U8, one walk; nothing without the mode."""
     source = _unattended_source(doc)
+    raw = doc.get("source")
+    mode = raw.get("mode") if isinstance(raw, Mapping) else None
     if source is None:
-        return []
+        # Close review R3-1: a near-miss spelling would silently switch the
+        # family off; say so (a warning: the mode is not declared).
+        near_miss = [
+            ValidationIssue(path="$.source.mode", rule_id="semantic:unattended-u1", severity="warning",
+                            message=f"source.mode {mode!r} is not 'unattended'; the unattended rules do not apply")
+        ] if isinstance(mode, str) and mode.strip().casefold() == UNATTENDED_MODE else []
+        # The schema admits `spans` on the otherwise closed induced provenance
+        # only for this mode; outside it the key stays refused, as before MG5
+        # (close review R4-F1: no MG-R1 exception).
+        return near_miss + [
+            ValidationIssue(path=f"{path}.provenance.spans", rule_id="semantic:unattended-u7",
+                            message="provenance.spans on an induced constraint requires source.mode: unattended")
+            for path, constraint in _iter_constraints(doc)
+            if constraint.get("source") == "induced" and isinstance(constraint.get("provenance"), Mapping)
+            and "spans" in constraint["provenance"]
+        ]
     issues: list[ValidationIssue] = []
     declared = _declared_documents(source, issues, rule_id="semantic:unattended-u1")
     for path, element in _iter_provenance_bearing(doc):
@@ -4830,11 +4847,13 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
         if isinstance(fact_type, Mapping):
             _sample_span_issues(dict(fact_type), f"$.fact_types[id={fact_type.get('id', '?')}]", declared, issues,
                                 rule_id="semantic:unattended-u6", span_rule_id="semantic:unattended-u7")
-    for path, constraint in constraints:
-        if constraint.get("modality") == "alethic" and constraint.get("source") in _UNATTENDED_ALETHIC_SOURCES:
+    # Every provenance-bearing element, obligations and operations included:
+    # D-03 is an error in this mode (close review R3-2).
+    for path, element in _iter_provenance_bearing(doc):
+        if element.get("modality") == "alethic" and element.get("source") in _UNATTENDED_ALETHIC_SOURCES:
             issues.append(ValidationIssue(
                 path=path,
-                message=f"an unreviewed {constraint.get('source')} constraint cannot be alethic in unattended mode",
+                message=f"an unreviewed {element.get('source')} {_provenance_bearing_label(element)} cannot be alethic in unattended mode",
                 rule_id="semantic:unattended-u8"))
     order = {f"semantic:unattended-u{n}": n for n in range(1, 9)}
     return sorted(issues, key=lambda issue: order[issue.rule_id])

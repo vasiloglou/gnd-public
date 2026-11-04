@@ -131,8 +131,9 @@ grep "Same role players" bundle/model.guidelines.md
 - Same role players as: `order_arrives_via_channel`
 ```
 
-The guide states no constraint, so the extractor writes what the document
-says, even where it breaks one. A description is the modeller's prose and
+The guide states no constraint (an external uniqueness that identifies an
+entity shows only as how that entity is identified), so the extractor writes
+what the document says, even where it breaks one. A description is the modeller's prose and
 may restate a constraint; the guide repeats it as written.
 
 ## Read the derivation rules back

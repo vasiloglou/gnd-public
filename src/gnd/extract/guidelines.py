@@ -54,6 +54,9 @@ def _role_lines(index: ModelIndex, model: Model, role_name: str, object_type_id:
         f"- Object type: {_quoted(name)} ({_code(object_type_id)}), {neutralize_text(kind)}",
     ]
     lines.extend(f"- {label}: '{text}'" for label, text in description_lines(object_type.get("description")))
+    reference = object_type.get("reference")
+    if kind == "entity" and isinstance(reference, dict) and isinstance(reference.get("mode"), str):
+        lines.append(f"- Reference mode: {neutralize_text(reference['mode'])}")
     if kind == "entity":
         # Once per entity, not per role (review R-F6): reference_identity walks
         # the model's constraints, and a large model repeats its entities.
@@ -98,6 +101,8 @@ def render_guidelines(model: Model) -> str:
         inverse = fact_type.get("inverse_reading")
         if isinstance(inverse, str) and inverse:
             lines.append(f"- Inverse reading: {_quoted(inverse)}")
+        if fact_type.get("derivation") == "derived":
+            lines.append("- Derived by a rule: not extracted from documents")
         others = [other for other in shared.get(signatures.get(fact_type_id, ()), []) if other != fact_type_id]
         if others:
             lines.append(f"- Same role players as: {', '.join(_code(other) for other in sorted(others))}")

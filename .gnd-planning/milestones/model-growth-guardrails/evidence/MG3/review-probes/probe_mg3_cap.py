@@ -1,7 +1,7 @@
 """MG3 probe: an option-only size blow-up past the 10 MiB preview read cap."""
 import json, sys, hashlib
 from pathlib import Path
-REPO = Path("/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027")
+REPO = Path("<repo>")
 sys.path.insert(0, str(REPO / "tests"))
 import test_evolve_shape_matches as T  # noqa
 from support.cli_runner import run_main  # noqa

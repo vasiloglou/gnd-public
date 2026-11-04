@@ -37,19 +37,18 @@ def _added_fact_types(proposal: EvolutionProposal, candidate: dict[str, Any]) ->
 
     An id the same proposal adds and then deletes or renames is not in the
     candidate, so it has no shape to report (review R-F2)."""
-    seen: set[str] = set()
-    added = []
+    last: dict[str, int] = {}
     for position, operation in enumerate(proposal.operations):
         if (
             operation.kind is EvolutionOperationKind.ADD
             and isinstance(operation.locator, ElementLocator)
             and operation.locator.collection == "fact_types"
             and operation.locator.element_id in candidate
-            and operation.locator.element_id not in seen
         ):
-            seen.add(operation.locator.element_id)
-            added.append((position, operation.locator.element_id))
-    return added
+            # The last ADD of an id is the one whose shape the candidate
+            # holds (close review R1-F2).
+            last[operation.locator.element_id] = position
+    return sorted((position, fact_type_id) for fact_type_id, position in last.items())
 
 
 def _readings(index: ModelIndex, fact_type_id: str) -> dict[str, Any]:

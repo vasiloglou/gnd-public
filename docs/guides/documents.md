@@ -23,7 +23,9 @@ read the source document or call a model provider.
 `gnd extract model.orm.yaml --out artifacts --guidelines` also writes
 `<stem>.guidelines.md`: per fact type, its readings, the fact types played
 by the same object types, and per role the object type's description,
-reference mode and primitive. It stays constraint-blind. A description is
+reference mode and primitive. It stays constraint-blind; an external
+uniqueness that identifies an entity appears only as that entity's
+identification. A description is
 the modeller's prose and can restate a rule, and the guideline repeats
 descriptions, so read it as guidance about meaning, not as rules to enforce.
 

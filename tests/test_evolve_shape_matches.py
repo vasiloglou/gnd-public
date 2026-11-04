@@ -674,3 +674,13 @@ def test_review_f4_a_stripped_report_on_the_retry_branch_is_the_same_lineage(tmp
     stripped = run_main(_apply_argv(paths))
     assert stripped.returncode == retried.returncode, (retried.stderr, stripped.stderr)
     assert stripped.returncode != 11 or b"staged accepted preview differs" not in stripped.stderr
+
+
+def test_close_r1_f2_a_re_added_id_reports_its_last_add() -> None:
+    from gnd.evolve.shapes import _added_fact_types
+
+    proposal = type("P", (), {"operations": (
+        _op("add", "fact_types", "x", after=dict(LONELY, id="x"), operation_id="a"),
+        _op("delete", "fact_types", "x", before=dict(LONELY, id="x"), operation_id="b"),
+        _op("add", "fact_types", "x", after=dict(COST, id="x"), operation_id="c"))})()
+    assert _added_fact_types(proposal, {"x": ()}) == [(2, "x")]

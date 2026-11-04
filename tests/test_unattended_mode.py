@@ -88,13 +88,15 @@ def test_t1b_spans_on_an_induced_constraint_pass_layer_one(tmp_path: Path) -> No
     induced = next(c for c in document["constraints"] if c.get("source") == "induced")
     induced["provenance"]["spans"] = [_span("customers")]
     (tmp_path / "ok").mkdir()
-    assert _validate(document, tmp_path / "ok")[0] == 0
+    # Close review R4-F1: outside the mode the key stays refused (exit 3, as at 9b069e2).
+    exit_code, rule_ids, _payload = _validate(document, tmp_path / "ok")
+    assert exit_code == 3 and rule_ids == ["semantic:unattended-u7"]
     for bad in ({**_span("customers"), "extra": 1}, {**_span("customers"), "start": -1},
                 {**_span("customers"), "excerpt_sha256": "a" * 63}):
         induced["provenance"]["spans"] = [bad]
         (tmp_path / "bad").mkdir(exist_ok=True)
         exit_code, rule_ids, _payload = _validate(document, tmp_path / "bad")
-        assert exit_code == 3 and rule_ids and not any(r.startswith("semantic:unattended") for r in rule_ids)
+        assert exit_code == 3 and rule_ids and "semantic:unattended-u7" not in rule_ids
 
 
 # --- T2: one case per branch -------------------------------------------------------
@@ -196,7 +198,8 @@ def test_t2_branches_unreachable_through_this_fixture_at_the_rule() -> None:
     assert _direct(document) == ["semantic:unattended-u8"]
     without = copy.deepcopy(document)
     without["source"].pop("mode")
-    assert _direct(without) == []
+    # Outside the mode only the induced-spans gate remains (close review R4-F1).
+    assert _direct(without) == ["semantic:unattended-u7"]
 
 
 def test_t2c_the_conforming_model_exits_0(tmp_path: Path) -> None:
@@ -430,3 +433,22 @@ def test_review_f13_without_the_mode_the_exit_follows_the_other_rules(tmp_path: 
         document["source"].pop("mode")
         exit_code, rule_ids, _payload = _validate(document, tmp_path)
         assert exit_code == (3 if rule_ids else 0), (_name, rule_ids)
+
+
+# --- close review regressions ------------------------------------------------------------
+
+
+@pytest.mark.parametrize("spelling", ["Unattended", "UNATTENDED", "unattended "])
+def test_close_r3_1_a_near_miss_spelling_warns(tmp_path: Path, spelling: str) -> None:
+    document = _doc()
+    document["source"]["mode"] = spelling
+    exit_code, _ids, payload = _validate(document, tmp_path)
+    assert exit_code == 0
+    assert [w["rule_id"] for w in payload["warnings"]].count("semantic:unattended-u1") == 1
+
+
+def test_close_r3_2_an_alethic_obligation_is_refused() -> None:
+    document = _doc()
+    document["operations"] = [{"id": "ship", "preconditions": [
+        {"id": "pre", "source": "llm-inferred", "status": "proposed", "modality": "alethic"}]}]
+    assert "semantic:unattended-u8" in _direct(document)

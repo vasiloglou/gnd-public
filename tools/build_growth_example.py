@@ -20,8 +20,13 @@ from ruamel.yaml import YAML
 
 from gnd.discover import output
 from gnd.evolve import (
-    CommittedText, ConstraintLocator, ElementLocator, EvolutionOperation, EvolutionOperationAudit,
-    EvolutionOperationKind, EvolutionProposal,
+    CommittedText,
+    ConstraintLocator,
+    ElementLocator,
+    EvolutionOperation,
+    EvolutionOperationAudit,
+    EvolutionOperationKind,
+    EvolutionProposal,
 )
 
 RETURNED = {"id": "order_returned_via_channel", "reading": "{Order} is returned via {Channel}",

@@ -42,3 +42,6 @@ T13, T15). Successor:
   readers, approve-with-fixes, two blocking findings fixed; close gate 3897
   passed. Closed locally under the delegation; merge, owner acceptance and
   the DC2 viewing are pending.
+- Merge: [009-owner-merge.md](009-owner-merge.md), the owner authorized
+  the merge of PR #83 (merge commit `f6d02e9`). Owner acceptance and the DC2
+  viewing remain pending.

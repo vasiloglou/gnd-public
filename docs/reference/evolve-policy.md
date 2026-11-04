@@ -53,3 +53,19 @@ is the caller's to repeat.
 
 The policy is a gate, not advice: it changes the exit. The same proposal
 without `--policy` previews and applies as before.
+
+## Shape report
+
+`gnd evolve preview --shape-report` is advice that sits beside the policy.
+The preview's `shape_matches` groups every fact type the proposal adds with
+the existing fact types, and the other added ones, played by the same object
+types, with their readings and how each entity role player is identified.
+A match is a candidate, not a verdict: the report never changes an exit,
+`breaking` or the blast radius, and `apply` takes no extra option.
+
+```bash
+gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json --shape-report
+```
+
+The signature rule and the field layout are normative in the evolution
+contract (section "Shape report").

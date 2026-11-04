@@ -1425,6 +1425,21 @@
        "type": null
       },
       {
+       "choices": null,
+       "class": "_StoreTrueAction",
+       "const": true,
+       "default": false,
+       "dest": "shape_report",
+       "help": "list existing fact types with the same role players as each added one (advice only)",
+       "metavar": null,
+       "nargs": 0,
+       "option_strings": [
+        "--shape-report"
+       ],
+       "required": false,
+       "type": null
+      },
+      {
        "choices": [
         "text",
         "json"

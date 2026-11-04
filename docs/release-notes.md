@@ -3,6 +3,18 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: duplicate-shape report (2026-11-04)
+
+`gnd evolve preview --shape-report` lists, for each fact type a proposal
+adds, the existing fact types played by the same object types, with their
+readings ([issue #76](https://github.com/vasiloglou/gnd-public/issues/76)).
+The report is advice: it never changes an exit or `breaking`. See the
+[shape report](reference/evolve-policy.md#shape-report).
+
+- Without the option, every preview is byte-identical to before.
+- `apply` needs no new option; it rebuilds the report when the reviewed
+  preview carries one.
+
 ## Unreleased: additive evolve policy (2026-11-04)
 
 `gnd evolve preview --policy additive [--populated FT ...]` refuses a proposal

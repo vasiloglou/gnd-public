@@ -26,4 +26,10 @@ T13, T15). Successor:
 - MG2 done: [003-phase-MG2.md](003-phase-MG2.md) (spec approved `(s1)`
   2026-11-04; one reviewer, reject, both blocking findings fixed with
   regressions).
-- Next action: the MG3 spec (duplicate-shape report), then its owner gate.
+- Auto: the owner invoked `process-milestone model-growth-guardrails auto`
+  on 2026-11-04; later spec rulings are delegated approvals (auto=true).
+- MG3 done: [004-phase-MG3.md](004-phase-MG3.md) (spec delegated `(d1)`,
+  amended `(d2)` after one reviewer's blocking finding; focused gate 1941
+  passed).
+- Next action: MG4 (extraction guidelines), spec
+  [notes/phase-MG4-spec.md](notes/phase-MG4-spec.md).

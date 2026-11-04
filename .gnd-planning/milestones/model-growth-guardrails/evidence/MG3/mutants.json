@@ -1,0 +1,92 @@
+[
+ {
+  "id": "M1-set-not-multiset",
+  "file": "src/gnd/refscheme.py",
+  "old": "return tuple(sorted(value for value in role_players.values() if isinstance(value, str)))",
+  "new": "return tuple(sorted({value for value in role_players.values() if isinstance(value, str)}))",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t1_role_player_signature"
+  ]
+ },
+ {
+  "id": "M2-supertype-closure",
+  "file": "src/gnd/evolve/shapes.py",
+  "old": "    candidate_signatures = fact_type_signatures(candidate_index)\n",
+  "new": "    candidate_signatures = {k: tuple(sorted('customer' if p == 'vip' else p for p in v)) for k, v in fact_type_signatures(candidate_index).items()}\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t2b_a_subtype_does_not_match_its_supertype"
+  ]
+ },
+ {
+  "id": "M3-apply-drops-report",
+  "file": "src/gnd/evolve/cli_service.py",
+  "old": "        shape_report = reviewed.shape_matches is not None\n",
+  "new": "        shape_report = False\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t5_a_shape_report_preview_applies"
+  ]
+ },
+ {
+  "id": "M4-report-changes-breaking",
+  "file": "src/gnd/evolve/service.py",
+  "old": "            **shape_values,\n        }",
+  "new": "            **shape_values,\n        }\n        if shape_report:\n            values['affected_references'] = ()",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t4_the_report_changes_no_gate_field"
+  ]
+ },
+ {
+  "id": "M5-report-omits-added",
+  "file": "src/gnd/evolve/shapes.py",
+  "old": "        bucket[0].append((position, fact_type_id))\n",
+  "new": "        bucket[0].append((position, fact_type_id)) if not bucket[0] else None\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t1b_two_identical_adds_match_each_other"
+  ]
+ },
+ {
+  "id": "M6-serializer-writes-null",
+  "file": "src/gnd/evolve/models.py",
+  "old": "_OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, \"shape_matches\")",
+  "new": "_OPTIONAL_PREVIEW_FIELDS = _POLICY_FIELDS",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t3b_without_the_option_there_is_no_key"
+  ]
+ },
+ {
+  "id": "M7-existing-always-before-shape",
+  "file": "src/gnd/evolve/shapes.py",
+  "old": "        if fact_type_id in candidate_signatures and fact_type_id not in added_ids:\n",
+  "new": "        if False:\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_review_f3_a_modified_fact_type_is_judged_in_its_candidate_shape"
+  ]
+ },
+ {
+  "id": "M8-retry-compares-advice",
+  "file": "src/gnd/evolve/cli_service.py",
+  "old": "    excluded = {\"accepted_blast_radius_sha256\", \"preview_sha256\", \"shape_matches\"}\n",
+  "new": "    excluded = {\"accepted_blast_radius_sha256\", \"preview_sha256\"}\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_review_f4_a_stripped_report_on_the_retry_branch_is_the_same_lineage"
+  ]
+ },
+ {
+  "id": "M9-quadratic-output",
+  "file": "src/gnd/evolve/shapes.py",
+  "old": "        if not bucket[0]:\n            groups.append((signature, bucket))\n",
+  "new": "        groups.append((signature, bucket))\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t1b_two_identical_adds_match_each_other"
+  ]
+ },
+ {
+  "id": "M10-reader-skips-operation-check",
+  "file": "src/gnd/evolve/models.py",
+  "old": "            if adds.get(member.operation_index) != member.fact_type:\n",
+  "new": "            if False:\n",
+  "tests": [
+   "tests/test_evolve_shape_matches.py::test_t3d_the_reader_refuses_inconsistent_reports"
+  ]
+ }
+]

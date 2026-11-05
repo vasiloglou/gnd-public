@@ -13,7 +13,7 @@ own owner gate.** No code is written. `auto=false`. PR #86 merged
 
 - [Plan gate record](001-plan-gate.md)
 - [Canonical plan (r1, approved)](notes/type-induction-skills-plan.md)
-- [TS1 spec (r1, draft, awaiting its gate)](notes/phase-TS1-spec.md)
+- [TS1 spec (r2, awaiting its owner gate)](notes/phase-TS1-spec.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -28,5 +28,6 @@ Phases:
 Still open: TS-D0 (quote the owner's rulings) and the §10 proposals TS-D2 to
 TS-D11, which the approval did not rule.
 
-Next action: an explicit `process-phase TS1 type-induction-skills` selection,
-which re-reads the TS1 spec's cited lines on main and stops at its owner gate.
+TS1 spec r2 (2026-11-05) re-reads its lines on main `b733b2a`; the CT4-Q1
+ruling (008) omits digests under `customer`, so groups are keyed `g<n>`
+instead. Next action: the owner's TS1 spec gate (instrument, D1..D7).

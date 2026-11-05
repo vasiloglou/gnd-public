@@ -1,6 +1,7 @@
 # Type induction skills
 
-r1, 2026-11-04. **Draft, awaiting the owner's plan gate.** Milestone:
+r1, 2026-11-04. **Approved by the owner `(a1)` 2026-11-05, without plan
+review** ([gate record](../001-plan-gate.md)). Milestone:
 `type-induction-skills`. Phase prefix `TS`.
 Sources: the [composition-and-type-induction close](../../composition-and-type-induction/007-milestone-close.md)
 question sweep (CT-close-Q1, CT-close-Q2), its CT4 record ruling D5
@@ -12,7 +13,9 @@ Inspection baseline: `549ebb9`, the tip of
 plan is based on that branch, not on main, because the code it changes
 (`src/gnd/discover/types.py`) exists only there. TS1 does not start until
 PR #86 merges; its spec then rebases onto the merge commit and re-reads the
-cited lines (TS-D1).
+cited lines (TS-D1). *(Superseded `(a1)`: PR #86 merged as `9f87fa0`; the
+branch was rebased onto main at `b733b2a` before the gate. TS1's spec still
+re-reads its cited lines at its own gate.)*
 Plan authorship is not approval. No phase has a spec approval; no code is
 written. `auto=false`.
 
@@ -29,6 +32,12 @@ written. `auto=false`.
   not in the repository, and the plan gate should quote them (TS-D0).
   It approves no bytes.
 - **r1:** first draft. No review has run over it.
+- **`(a1)` 2026-11-05**, quoted in the [gate record](../001-plan-gate.md):
+  "Yes, approve r1", answering whether the owner approves r1 (SHA-256
+  `c2a2c091857b123c1b45a5955d1d14caa65f76e21f53eeb079d899477822e547`, before
+  this tag) without a plan review. It approves this plan at r1 and waives §8's
+  plan review for r1. It does not rule the §10 rows (they stay proposals),
+  does not approve the TS1 spec, and authorizes no auto mode, merge or push.
 
 ## Problem and completion predicates
 

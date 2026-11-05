@@ -756,9 +756,17 @@ def _cmd_compose(model_path: str, directory: str, out: str, record: str) -> int:
 
     targets = [Path(out).resolve(), Path(record).resolve()]
     inputs = Path(directory).resolve()
-    if targets[0] == targets[1] or any(inputs == target or inputs in target.parents for target in targets):
-        print("ERROR: --out and --record must be two different paths outside the composition directory", file=sys.stderr)
+    model = Path(model_path).resolve()
+    if (_same_file(targets[0], targets[1]) or any(_same_file(model, target) for target in targets)
+            or any(_within(target, inputs) for target in targets)):
+        print("ERROR: --out and --record must be two different paths, neither the model nor inside the composition directory",
+              file=sys.stderr)
         return 64
+    # Refuse before staging so a failure cannot leave one output replaced
+    # and the other not (close review).
+    if any(target.is_dir() for target in targets):
+        print("ERROR: could not write composition output: Is a directory", file=sys.stderr)
+        return 74
     try:
         _atomic_write_all([(Path(out), canonical_json_bytes(result["population"])),
                            (Path(record), canonical_json_bytes(result["record"]))])
@@ -770,18 +778,42 @@ def _cmd_compose(model_path: str, directory: str, out: str, record: str) -> int:
     return 0
 
 
+def _same_file(first: Path, second: Path) -> bool:
+    """Whether two paths name one file, also on a case-insensitive filesystem (close review)."""
+    import os
+
+    if first.exists() and second.exists():
+        return os.path.samefile(first, second)
+    return (first.name.casefold() == second.name.casefold()
+            and (first.parent == second.parent
+                 or (first.parent.exists() and second.parent.exists() and os.path.samefile(first.parent, second.parent))))
+
+
+def _within(target: Path, directory: Path) -> bool:
+    """Whether ``target`` is ``directory`` or lies below it, compared by identity."""
+    import os
+
+    if not directory.exists():
+        return directory == target or directory in target.parents
+    return any(candidate.exists() and os.path.samefile(candidate, directory) for candidate in (target, *target.parents))
+
+
 def _atomic_write_all(outputs: list[tuple[Path, bytes]]) -> None:
     """Stage every output first, then rename each into place."""
     import os
     import tempfile
 
     staged: list[tuple[str, Path]] = []
+    umask = os.umask(0)
+    os.umask(umask)
     try:
         for target, data in outputs:
             fd, temporary = tempfile.mkstemp(prefix=".compose-", dir=target.parent if str(target.parent) else ".")
             staged.append((temporary, target))
             with os.fdopen(fd, "wb") as stream:
                 stream.write(data)
+            # mkstemp creates 0600; give the outputs the ordinary umask mode.
+            os.chmod(temporary, 0o666 & ~umask)
         for temporary, target in staged:
             os.replace(temporary, target)
     finally:

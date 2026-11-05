@@ -16,6 +16,7 @@ import json
 from dataclasses import dataclass, field
 from typing import Any
 
+from gnd.artifacts import canonical_json_bytes
 from gnd.discover.support import PopulationView, identity
 from gnd.evolve.models import (
     ConstraintLocator,
@@ -39,6 +40,15 @@ class GenericDeclarationError(ValueError):
 class TypeProposals:
     operations: list[EvolutionOperation] = field(default_factory=list)
     report: dict[str, Any] = field(default_factory=dict)
+    # Operations per proposed group, in order, so a caller can drop whole
+    # groups from the tail when the written proposal is over its cap.
+    group_sizes: list[int] = field(default_factory=list)
+
+    def drop_last(self, count: int) -> None:
+        for _ in range(min(count, len(self.group_sizes))):
+            del self.operations[len(self.operations) - self.group_sizes.pop():]
+            self.report["proposed"].pop()
+            self.report["skipped"]["over_budget"] += 1
 
 
 def generic_declarations(view: PopulationView) -> dict[str, dict[str, str]]:
@@ -60,7 +70,8 @@ def generic_declarations(view: PopulationView) -> dict[str, dict[str, str]]:
 
 
 def _value_digest(value: Any) -> str:
-    return hashlib.sha256(repr((type(value).__name__, value)).encode("utf-8")).hexdigest()
+    # The repository's one canonical form, so a reader can recompute it (close review).
+    return hashlib.sha256(canonical_json_bytes(value)).hexdigest()
 
 
 def propose(
@@ -108,9 +119,11 @@ def propose(
             if key is None or entity is None or value is None:
                 continue
             group = groups.setdefault(key, {"attribute": row[spec["attribute"]], "rows": [],
-                                            "entities": {}, "kinds": set()})
+                                            "entities": {}, "values": {}, "kinds": set()})
             group["rows"].append(view.fact_id(generic_id, row_index))
             group["entities"].setdefault(entity, []).append(view.fact_id(generic_id, row_index))
+            # Distinct values, not rows: an exact repeated row is one value (close review).
+            group["values"].setdefault(entity, set()).add(value)
             group["kinds"].add(value[0])
         for number, group in enumerate(groups.values()):
             digest = _value_digest(group["attribute"])
@@ -121,7 +134,7 @@ def propose(
             if support < min_support:
                 skipped["below_support"] += 1
                 continue
-            if any(len(ids) > 1 for ids in group["entities"].values()):
+            if any(len(values) > 1 for values in group["values"].values()):
                 # D5: an entity with several values breaks the uniqueness the
                 # envelope sits on, so the group is counted, not proposed.
                 skipped["multi_valued"] += 1
@@ -141,8 +154,8 @@ def propose(
             if match is not None:
                 shape_matches.append({"generic": generic_id, "attribute_sha256": digest, "existing": match})
                 continue
-            single = [ids[0] for ids in group["entities"].values() if len(ids) == 1]
-            multiple = [ids[0] for ids in group["entities"].values() if len(ids) > 1]
+            single = [ids[0] for ids in group["entities"].values()]
+            multiple: list[str] = []
             operations = []
             if value_type != value_role.object_type:
                 operations.append(("object_types", value_type, {
@@ -153,7 +166,8 @@ def propose(
                 objects[value_type].get("name") or value_type)
             operations.append(("fact_types", new_id, {
                 "id": new_id,
-                "reading": f"{{{entity_name}}} has induced attribute {number} {{{value_name}}}",
+                # The generic id keeps readings from two generic fact types apart (close review).
+                "reading": f"{{{entity_name}}} has induced {generic_id} attribute {number} {{{value_name}}}",
                 # A redacted generic role stays redacted in the new fact type (review F4).
                 "roles": [{"object_type": entity_role.object_type, "role_name": "entity",
                            **({"redact": True} if (generic_id, spec["entity"]) in redacted else {})},
@@ -173,6 +187,7 @@ def propose(
                 continue
             used += cost
             taken.update({new_id, f"{new_id}_value"})
+            result.group_sizes.append(len(operations) + 1)
             for collection, element_id, after in operations:
                 result.operations.append(EvolutionOperation(
                     operation_id=f"discover-type-{len(result.operations):04d}", kind=EvolutionOperationKind.ADD,

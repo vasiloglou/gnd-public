@@ -28,6 +28,8 @@ from gnd.references import (
 )
 from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, checked_limits
 
+_SOURCE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
+
 
 def validate_witness_structure(document: object, *, limits=DEFAULT_LIMITS) -> int:
     limits = checked_limits(limits)
@@ -242,7 +244,9 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
                 for entry in n["sources"]:
                     record(entry, "source fact_type fact_index")
                     integer(entry["fact_index"])
-                    if type(entry["source"]) is not str or type(entry["fact_type"]) is not str:
+                    # A source id has the composition record's id form (close review).
+                    if (type(entry["source"]) is not str or not _SOURCE_ID.fullmatch(entry["source"])
+                            or type(entry["fact_type"]) is not str):
                         raise WitnessInputError("invalid base sources")
         else:
             integer(n["clause_index"])

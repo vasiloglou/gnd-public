@@ -26,7 +26,11 @@ Each source id names a folder holding one population, its anchor sidecar
 (version 1 or 2, see [anchor sidecars](anchors.md)) and the document the
 sidecar binds. An id is 1 to 64 letters, digits, `.`, `_` or `-`, starting
 with a letter or digit. Other entries in `DIR` are ignored. No file may be a
-symbolic link.
+symbolic link, and no directory on the way to it either: every path is
+resolved step by step from the current directory (or from `/` for an
+absolute path), so `..` and a symlinked folder such as macOS `/tmp` are
+refused ("could not be read safely", exit 3). Work from a real directory
+with relative paths below it.
 
 ## The manifest
 
@@ -42,12 +46,20 @@ symbolic link.
 ```
 
 - `sources` lists every source once, in the order composition reads them.
+  Two ids that differ only in case are refused, so a case-insensitive
+  filesystem cannot open one folder twice.
 - A renaming rewrites one role's value in one source's facts, by exact match
   of value and JSON type. `from` and `to` have the same JSON type. A renaming
   that matches no row, names a fact type or role the model does not declare,
-  or repeats another is refused. The same value listed among that source's
-  instances of the role's object type is renamed too. Renaming is the only way
-  composition changes a value.
+  or repeats another is refused; a match among instances alone does not count
+  as a row. The same value listed among that source's instances of the role's
+  object type is renamed too, but only when it stays one entity: two renamings
+  that give one source value of one object type different new values are
+  refused, and so is renaming an instance that another role of that source
+  still uses under the old value. A renaming is per fact type and role, so a
+  value with no listed instance may be renamed in one fact type and kept in
+  another; list the renaming for every fact type that names the same entity.
+  Renaming is the only way composition changes a value.
 - `deduplications: "identical-rows"` collapses rows that are equal after
   renaming into one composed fact, whose lineage lists every source fact.
 - A scope tag (1 to 128 characters) is attached to a source in the record
@@ -70,8 +82,11 @@ instead. Instances and `covers` are unioned. The composed population takes
 its header (`model`, `model_id`, `source`) from the first source and is written as canonical JSON, so
 composing the same inputs twice gives the same bytes.
 
-`--out` and `--record` must be two different paths outside `DIR`. Both are
-written to temporary files first and then renamed into place. The exits are
+`--out` and `--record` must be two different files outside `DIR`, and neither
+may be the model (64). Files are compared by identity, so a case variant of
+the model's name, or of `DIR` on a case-insensitive filesystem, is refused too. An output that is an existing directory is refused (74)
+before anything is written. Both are written to temporary files first, with the
+ordinary umask mode, and then renamed into place. The exits are
 0, 3 (a refused input, `composition:invalid`, or an anchor binding message),
 64 (usage) and 74 (an output could not be written). On a refusal nothing is
 written. A refusal names sources and indexes, never a
@@ -101,7 +116,9 @@ Every digest is the SHA-256 of a file's raw bytes. `facts` lists every
 composed fact, by fact type and then index, with its source facts and the
 manifest indexes of the renamings applied to them. No role value appears in
 the record. The record is written as canonical JSON, and its identity
-(`record_sha256` in a check report) is the SHA-256 of those bytes.
+(`record_sha256` in a check report) is the SHA-256 of those bytes. A record
+file in any other form, re-indented for example, is refused (exit 3), so the
+check and a witness's `composition_sha256` always name the same bytes.
 [`composition.schema.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/composition.schema.json)
 describes it.
 

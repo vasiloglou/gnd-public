@@ -39,3 +39,33 @@ def test_the_model_validates_and_both_directories_compose() -> None:
     assert api.validate(model)["exit_code"] == 0
     for directory in ("composition", "composition-conflict"):
         assert api.compose(model, str(EXAMPLE / directory))["exit_code"] == 0, directory
+
+
+def test_the_witness_reaches_a_span_in_each_document(tmp_path: Path) -> None:
+    # Close review: follow every base node's sources through their own
+    # sidecars and check the answer reaches both documents.
+    import json
+
+    from gnd import api
+    from gnd.artifacts import canonical_json_bytes
+
+    model = str(EXAMPLE / "model.orm.yaml")
+    directory = EXAMPLE / "composition"
+    composed = api.compose(model, str(directory))
+    population, record = tmp_path / "composed.population.json", tmp_path / "composition.json"
+    population.write_bytes(canonical_json_bytes(composed["population"]))
+    record.write_bytes(canonical_json_bytes(composed["record"]))
+    result = api.witness(model, str(population), str(EXAMPLE / "targets.json"), composition=str(record))
+    assert result["exit_code"] == 0
+    reached = {}
+    for node in result["certificate"]["nodes"]:
+        for entry in node.get("sources", []):
+            folder = directory / entry["source"]
+            row = json.loads((folder / "population.json").read_text())["facts"][entry["fact_type"]][entry["fact_index"]]
+            anchors = json.loads((folder / "population.json.anchors.json").read_text())["anchors"]
+            text = (folder / "document.txt").read_text()
+            spans = [text[a["span"]["start"]:a["span"]["end"]] for a in anchors if a["fact_key"]["roles"] == row]
+            assert spans, entry
+            reached.setdefault(entry["source"], []).extend(spans)
+    assert sorted(reached) == ["contract-a", "contract-b"]
+    assert any("ACME CORP." in span for span in reached["contract-b"])

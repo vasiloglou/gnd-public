@@ -102,6 +102,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/composition-and-type-induction/evidence/CT2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/composition-and-type-induction/evidence/CT3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/composition-and-type-induction/evidence/CT4/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/composition-and-type-induction/evidence/close/dynamic-query-successor.json',
 ]
 
 

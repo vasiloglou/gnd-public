@@ -126,31 +126,44 @@ Rows are grouped by the attribute value. A group is proposed when its
 distinct entities (not rows) reach `--min-support` (default 20) and all its
 values share one JSON type. The proposal adds a binary fact type
 `<generic>_induced_<n>` with roles `entity` and `value` and a placeholder
-reading (`{Item} has induced attribute 0 {AttributeValue}`) for a reviewer to
-rename, a value type when the generic value type's primitive differs, and a
+reading naming the generic fact type
+(`{Item} has induced item_has_attribute attribute 0 {AttributeValue}`) for a
+reviewer to rename, a value type when the generic value type's primitive differs, and a
 uniqueness on the entity role carrying the induced, proposed, deontic
-envelope. A group in which any entity has several values breaks that
-uniqueness, so it is counted (`multi_valued`) and not proposed. A new id never
+envelope. A group in which any entity has several distinct values breaks that
+uniqueness, so it is counted (`multi_valued`) and not proposed; an exactly
+repeated row is one value. A new id never
 reuses one the model already has; a clash takes the next suffix
 (`<generic>_induced_<n>_1`). A redacted entity or value role stays redacted
 in the new fact type. Proposals that would push the evolve proposal past its
-size cap are counted (`over_budget`) and left out.
+size cap are counted (`over_budget`) and left out; when the family adds groups, the cap is checked on the written
+bytes and type groups are dropped from the tail, in steps, until the
+proposal fits.
 Nothing moves: the rows stay in the generic fact type, and admitting the
 proposal is a reviewed `gnd evolve apply`. The proposal passes
 `gnd evolve preview --policy additive`.
 
 When an existing fact type already has the same role players, the group is
 listed under `shape_matches` with that fact type and not proposed. A redacted
-attribute role is skipped and counted.
+attribute role is skipped and counted. Every group from one generic fact type
+has the same role players, so once one induced fact type is applied, every
+later group from that generic fact type is reported as a shape match against
+it rather than proposed; rename or retype the applied fact type, or review
+the shape matches, to go on. Groups proposed in one run are not compared with
+each other.
 
 The report's `fact_type_proposals` key lists, per proposed fact type, the
 opaque ids of the rows that would migrate (`ft<k>#<index>`) and the
-attribute value's SHA-256. The value itself appears as `value` only when the
+SHA-256 of the attribute value's canonical JSON (`gnd.artifacts.canonical_json_bytes`:
+sorted keys, no spaces, one trailing newline; for the string `size` that is
+`"size"` and a newline). The value itself appears as `value` only when the
 disclosure mode allows `--show-values`: with the flag when the mode is unset,
 always under `internal`, and never under `customer`, where the flag exits 3.
 Without the family the key is absent and every output is as before. The
 family's row visits are reported as `row_visits` in its own key, not in the
-report's `work` totals, so those totals mean what they meant before.
+report's `work` totals, so those totals mean what they meant before; the
+work ceiling does not bound them, and the family is bounded instead by the
+population's own size cap.
 `--min-support` and `--show-values` without `--families fact-type` are usage
 errors (64).
 

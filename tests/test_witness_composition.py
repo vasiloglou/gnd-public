@@ -261,3 +261,28 @@ def test_api_signatures_take_composition():
         "model_path", "population_path", "targets_path", "reference_root", "composition")
     assert tuple(inspect.signature(api.replay).parameters) == (
         "model_path", "population_path", "certificate_path", "reference_root", "composition")
+
+
+def test_the_result_envelope_schema_accepts_version_2(tmp_path, monkeypatch):
+    # Close review: the result schema embeds the certificate schema; keep them in step.
+    result_schema = json.loads((ROOT / "src/gnd/schema/witness-result.schema.json").read_text())
+    assert result_schema["$defs"]["certificate"] == {
+        key: value for key, value in SCHEMA.items() if key not in ("$schema", "$id", "title", "description", "$defs")}
+    assert all(result_schema["$defs"][key] == value for key, value in SCHEMA["$defs"].items())
+    model_path, _directory, out, record, targets, _certificate = produce(tmp_path, monkeypatch)
+    result = api.witness(model_path, out, targets, composition=record)
+    jsonschema.validate(result, result_schema)
+
+
+def test_a_source_id_outside_the_record_id_form_is_refused(tmp_path, monkeypatch):
+    # Close review: a hand-edited source string never reaches a view.
+    model_path, _directory, out, record, _targets, certificate = produce(tmp_path, monkeypatch)
+    witness = json.loads(certificate.read_text())
+    next(node for node in witness["nodes"] if node["kind"] == "base")["sources"][0]["source"] = "Acme Corp. SECRET"
+    certificate.write_text(json.dumps(witness))
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(witness, SCHEMA)
+    code, payload = _replay(model_path, out, certificate, "--composition", record)
+    assert code == 3 and "SECRET" not in json.dumps(payload)
+    view = gnd("witness-view", certificate, env={"GND_DISCLOSURE": "customer"})
+    assert "SECRET" not in view.stdout

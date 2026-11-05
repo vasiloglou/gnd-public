@@ -30,7 +30,7 @@ operating system, Python version, provider, or native toolchain. See the
 | Generate a Python project | `codegen` plus explicitly selected skill | Developer writes extension behavior; temporal models refused | [Generated projects](../guides/generated-projects.md) |
 | Detect model/project drift | `conformance`; static architecture checks | Does not execute the app or verify all extension behavior | [Generated projects](../guides/generated-projects.md) |
 | Change an existing model | Staged `evolve preview/apply/finalize` | Explicit reviewed changes; no automatic regeneration | [Evolution](../guides/evolution-and-recovery.md) |
-| Discover rules in data | `discover` over one population | Proposes induced, advisory rules only; admission is a reviewed evolve step; single-role families, stated bounds | [Discovery](discover.md) |
+| Discover rules in data | `discover` over one population | Proposes induced, advisory rules only; admission is a reviewed evolve step; single-role families, stated bounds; opt-in `fact-type` family proposes fact types from a declared generic fact type | [Discovery](discover.md) |
 | Recover a model from code | Bounded `recovery inventory/verify` and authoring skill | One-time static selected roots; no continuous synchronization | [Recovery](../guides/evolution-and-recovery.md) |
 | Compare compatible models | `diff`; `api.diff` | Same vocabulary; bounded entailment catalogue and concrete populations; no temporal models | [Python API](python-api.md) |
 | Exercise rule behavior | `synth`, `measure` | Optional synth dependency; generation is narrower than checking | [Synthetic data](../guides/synthetic-data.md) |
@@ -40,7 +40,8 @@ operating system, Python version, provider, or native toolchain. See the
 | Render evaluation documents | Agent rendering skill, `doccheck`, `fidelity` | Bound manifests and distractors; fidelity remains a separate measured claim | [Documents](../guides/documents.md) |
 | Run a bounded agent experiment | `exp` commands and selected adapter/policy | Requires authored contract; live adapter prerequisites are separate | [Experiments](../guides/experiments.md) |
 | Evaluate saved external opinions | `judgments check`; explicit session judgment gate | Consumes receipts; does not obtain opinions or calibrate providers | [Experiments](../guides/experiments.md) |
-| Explain a finite derived tuple | `witness`, `replay`, `witness-view`; API witness/replay | Selected positive proof fragment, not extension completeness | [Exports](../guides/exports.md) |
+| Compose several documents' facts | `compose`, `check --composition --sources`; API compose | Explicit manifest renamings only; re-derived on check; each anchored value checked in its own document; lineage proves no truth | [Composition](composition.md), [how-to](../how-to/compose-documents.md) |
+| Explain a finite derived tuple | `witness`, `replay`, `witness-view`; API witness/replay; `--composition` for source lineage | Selected positive proof fragment, not extension completeness | [Exports](../guides/exports.md) |
 | Export to external runtimes | Bounded Souffle/Lean/PyRel profiles | Export, native execution, compilation and proof are distinct | [Exports](../guides/exports.md), [worked native guides](../runtimes/scenario.md) |
 | Review a plan or result | Explicit advisory review-panel skill and CLI | Live tools/credentials; reviewer findings do not apply fixes | [Exports and a second opinion](../agents/export-and-review.md) |
 

@@ -109,7 +109,9 @@ def parse_manifest(raw: bytes) -> Manifest:
     sources = data["sources"]
     if (not isinstance(sources, list) or not sources
             or not all(isinstance(item, str) and _ID.fullmatch(item) for item in sources)
-            or len(set(sources)) != len(sources)):
+            or len({item.casefold() for item in sources}) != len(sources)):
+        # Case-folded: on a case-insensitive filesystem two ids that differ
+        # only in case would open one folder twice (close review).
         raise CompositionError("manifest sources must be distinct ids")
     if data["deduplications"] != "identical-rows":
         raise CompositionError("manifest deduplications must be identical-rows")
@@ -182,6 +184,10 @@ def parse_record(raw: bytes) -> dict[str, Any]:
             _lineage_entry(entry, f"record fact {index} source {position}")
         if not isinstance(fact["renamings"], list) or not all(type(item) is int and item >= 0 for item in fact["renamings"]):
             raise CompositionError(f"record fact {index} renamings must be manifest indexes")
+    # One record, one identity (close review): the check reports the canonical
+    # digest and a witness binds the raw one, so only canonical bytes are read.
+    if raw != canonical_json_bytes(data):
+        raise CompositionError("record is not in the canonical form gnd compose writes")
     return data
 
 
@@ -235,10 +241,13 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
         # that source is the same entity, so the renaming rewrites it too.
         object_type = index_.role_object_type(renaming["fact_type"], renaming["role"])
         if object_type is not None:
-            instance_renamings.setdefault(
-                (renaming["source"], object_type, type(renaming["from"]).__name__, repr(renaming["from"])),
-                (index, renaming["to"]),
-            )
+            instance_key = (renaming["source"], object_type, type(renaming["from"]).__name__, repr(renaming["from"]))
+            first = instance_renamings.setdefault(instance_key, (index, renaming["to"]))
+            target = (type(renaming["to"]).__name__, repr(renaming["to"]))
+            # One entity cannot become two (close review): renamings of one
+            # source value of one object type must agree on the new value.
+            if (type(first[1]).__name__, repr(first[1])) != target:
+                raise CompositionError(f"renamings {first[0]} and {index} rename one value to different values")
     sources = tuple(_load_source(model, directory, source_id) for source_id in manifest.sources)
     if sum(len(rows) for source in sources for rows in source.population.facts.values()) > MAX_ENTRIES:
         raise CompositionError(f"composed fact count exceeds {MAX_ENTRIES}")
@@ -247,6 +256,7 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
     positions: dict[str, dict[tuple[Any, ...], int]] = {}
     lineage: dict[tuple[str, int], dict[str, Any]] = {}
     used: set[int] = set()
+    kept: set[tuple[Any, ...]] = set()
     instances: dict[str, dict[tuple[str, str], Any]] = {}
     covers: list[str] = []
     for source in sources:
@@ -262,6 +272,10 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
                     if hit is not None:
                         renamed[role] = hit[1]
                         applied.append(hit[0])
+                        continue
+                    object_type = index_.role_object_type(fact_type, role)
+                    if object_type is not None:
+                        kept.add((source.id, object_type, type(value).__name__, repr(value)))
                 key = _row_key(renamed)
                 position = index.get(key)
                 if position is None:
@@ -274,10 +288,15 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
         for object_type, values in source.population.instances.items():
             bucket = instances.setdefault(object_type, {})
             for value in values:
-                hit = instance_renamings.get((source.id, object_type, type(value).__name__, repr(value)))
+                instance_key = (source.id, object_type, type(value).__name__, repr(value))
+                hit = instance_renamings.get(instance_key)
                 if hit is not None:
+                    # A fact row still using the old value would split the
+                    # entity in two (close review), so refuse instead.
+                    if instance_key in kept:
+                        raise CompositionError(
+                            f"renaming {hit[0]} renames an instance that another role of that source still uses unrenamed")
                     value = hit[1]
-                    used.add(hit[0])
                 bucket.setdefault((type(value).__name__, repr(value)), value)
         covers.extend(item for item in source.population.covers if item not in covers)
     unused = sorted(set(range(len(manifest.renamings))) - used)

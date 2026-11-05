@@ -66,9 +66,10 @@ assert repaired["exit_code"] == 0, repaired
 print("The repaired shipping facts satisfy the checked rules.")
 ```
 
-`check(model, population, *, unredacted=False, anchors=None, document=None,
-population_bytes=None, admission=False, references=None)` accepts paths or
-loaded `Model`/`Population` objects. It returns the same payload as the CLI's
+`check(model, population, *, compiled_operations=False, unredacted=False,
+anchors=None, document=None, population_bytes=None, admission=False,
+references=None, composition=None, sources=None)` accepts paths or loaded
+`Model`/`Population` objects. It returns the same payload as the CLI's
 JSON check. The admission option also reports which asserted fact occurrences
 are admitted or blocked; it does not edit or remove any facts.
 
@@ -79,7 +80,13 @@ Precedence when several conditions occur is `3 > 1 > 4 > 2 > 0`.
 
 Anchors connect values to source document spans. Supply `anchors` and
 `document` together; if using an in-memory population, supply its original
-`population_bytes` so the source binding can be checked. The optional
+`population_bytes` so the source binding can be checked. A sidecar may be
+version 1 or version 2 (several anchors per fact role, each of which must
+hold); see [anchor sidecars](anchors.md). `composition` (a record path or the
+record from `compose`) and `sources` (the composition directory) go together
+and check a composed population against each source; they are refused with
+`anchors`, `document`, `references`, `compiled_operations`, `admission` or
+`population_bytes` (see [composition](composition.md)). The optional
 `references` argument is a `BoundReferenceContext` for applications that
 already manage fixed-reference binding. Path-based examples resolve declared
 references beside the model automatically.

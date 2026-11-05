@@ -240,8 +240,9 @@ The record holds no role value: not "Acme Corp.", not "Lyon", not the
 contract codes. It holds digests of the model, the manifest, every source's
 three files and the composed population, plus ids and indexes. A record can be
 handed to an auditor, logged, or compared across runs without disclosing what
-the contracts say. The values stay in the populations, where
-[disclosure mode](../reference/disclosure.md) governs them.
+the contracts say. The values stay in the populations: `gnd compose` writes
+them in every mode, and [disclosure mode](../reference/disclosure.md) governs
+only what a check, witness view or other report prints about them.
 
 ## Check the composition against both documents
 

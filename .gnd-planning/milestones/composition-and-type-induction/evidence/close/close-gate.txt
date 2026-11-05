@@ -1,0 +1,6 @@
+1900 passed, 42 deselected in 405.12s (0:06:45)
+16 passed in 0.88s
+287 tutorial blocks passed
+Build finished in 0.55s
+14292 local links/assets/anchors checked
+All checks passed!  (ruff, rerun after two lint fixes in tests)

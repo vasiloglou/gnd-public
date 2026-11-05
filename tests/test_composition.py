@@ -134,7 +134,7 @@ def _manifest(**changes):
 
 @pytest.mark.parametrize("raw", [
     b"[]", b'{"schema": 1}', _manifest(schema="other"), _manifest(sources=[]), _manifest(sources=["a", "a"]),
-    _manifest(sources=["../x"]), _manifest(sources=["a"], renamings=[{"source": "z", "fact_type": "f", "role": "r", "from": "x", "to": "y"}]),
+    _manifest(sources=["../x"]), _manifest(sources=["a", "A"]), _manifest(sources=["a"], renamings=[{"source": "z", "fact_type": "f", "role": "r", "from": "x", "to": "y"}]),
     _manifest(scope_tags=[{"source": "z", "tag": "t"}]), _manifest(scope_tags=[{"source": "a", "tag": "t" * 129}]),
     _manifest(renamings=[{"source": "a", "fact_type": "f", "role": "r", "from": "x", "to": 1}]),
     _manifest(deduplications="none"),
@@ -424,14 +424,66 @@ def test_a_renaming_also_renames_the_sources_instances(tmp_path):
     assert json.loads(result.population_bytes)["instances"] == {"party": ["Acme Corp."]}
 
 
-@pytest.mark.parametrize("outputs", ("same", "inside"))
+def _with_instances(directory, source_id, instances):
+    population_path = directory / source_id / "population.json"
+    data = json.loads(population_path.read_text())
+    data["instances"] = instances
+    population_path.write_text(json.dumps(data, ensure_ascii=False))
+    sidecar_path = directory / source_id / "population.json.anchors.json"
+    sidecar = json.loads(sidecar_path.read_text())
+    sidecar["population_sha256"] = _sha(population_path.read_bytes())
+    sidecar_path.write_text(json.dumps(sidecar, ensure_ascii=False))
+
+
+def _renaming(fact_type, source="contract-b", old="ACME CORP.", new="Acme Corp."):
+    return {"source": source, "fact_type": fact_type, "role": "party", "from": old, "to": new}
+
+
+@pytest.mark.parametrize("renamings, message", [
+    # Close review: a renaming that only hits an instance matches no row.
+    ([_renaming("contract_has_party"), _renaming("party_is_based_in_city"),
+      _renaming("contract_has_party", old="Ghost")], "renaming 2 matches no row"),
+    # One value of one object type cannot become two values.
+    ([_renaming("contract_has_party"), _renaming("party_is_based_in_city", new="Acme Inc.")],
+     "renamings 0 and 1 rename one value to different values"),
+    # Renaming an instance that another fact type still uses would split it.
+    ([_renaming("contract_has_party")], "another role of that source still uses unrenamed"),
+])
+def test_instance_renamings_are_never_inferred_past_the_rows(tmp_path, renamings, message):
+    model_path, directory = build(tmp_path, renamings=renamings)
+    _with_instances(directory, "contract-b", {"party": ["ACME CORP.", "Ghost"]})
+    with pytest.raises(CompositionError, match=message):
+        compose(load_model(model_path), model_path.read_bytes(), directory)
+
+
+@pytest.mark.parametrize("outputs", ("same", "inside", "model"))
 def test_compose_refuses_unsafe_outputs(tmp_path, outputs):
     model_path, directory = build(tmp_path)
+    before = model_path.read_bytes()
     out = directory / "x.json" if outputs == "inside" else tmp_path / "x.json"
-    record = tmp_path / "x.json" if outputs == "same" else tmp_path / "r.json"
+    record = {"same": tmp_path / "x.json", "model": model_path}.get(outputs, tmp_path / "r.json")
     run = gnd("compose", model_path, directory, "--out", out, "--record", record)
     assert run.returncode == 64
     assert not out.exists()
+    assert model_path.read_bytes() == before
+
+
+def test_compose_writes_neither_output_when_one_target_is_a_directory(tmp_path):
+    model_path, directory = build(tmp_path)
+    out, record = tmp_path / "x.json", tmp_path / "adir"
+    out.write_text("old")
+    record.mkdir()
+    run = gnd("compose", model_path, directory, "--out", out, "--record", record)
+    assert run.returncode == 74
+    assert out.read_text() == "old"
+
+
+def test_compose_outputs_take_the_umask_mode(tmp_path):
+    _model_path, _directory, out, record, run = composed(tmp_path)
+    assert run.returncode == 0
+    umask = os.umask(0)
+    os.umask(umask)
+    assert {out.stat().st_mode & 0o777, record.stat().st_mode & 0o777} == {0o666 & ~umask}
 
 
 def test_compose_refuses_a_record_over_its_cap(tmp_path, monkeypatch):
@@ -536,3 +588,28 @@ def test_an_empty_composed_fact_type_is_vacuous(tmp_path):
     verdict, _ = _anchored_after(tmp_path, sources, renamings=[
         {"source": "contract-b", "fact_type": "party_is_based_in_city", "role": "party", "from": "ACME CORP.", "to": "Acme Corp."}])
     assert verdict["verdict"] == "vacuous"
+
+
+def test_a_reserialized_record_is_refused(tmp_path):
+    # Close review: one record has one identity, so a re-indented record is
+    # refused rather than checked under one digest and witnessed under another.
+    model_path, directory, out, record, run = composed(tmp_path)
+    assert run.returncode == 0
+    record.write_text(json.dumps(json.loads(record.read_text()), indent=2))
+    with pytest.raises(CompositionError, match="canonical form"):
+        parse_record(record.read_bytes())
+    assert check(model_path, out, record, directory).returncode == 3
+
+
+def test_compose_compares_outputs_by_identity(tmp_path):
+    # Close re-review: a case variant of the model or the directory is the same
+    # file on a case-insensitive filesystem, so it is refused everywhere for the
+    # model and wherever the filesystem folds case for the directory.
+    model_path, directory = build(tmp_path)
+    before = model_path.read_bytes()
+    run = gnd("compose", model_path, directory, "--out", tmp_path / "x.json", "--record", tmp_path / "MODEL.ORM.YAML")
+    assert run.returncode == 64 and model_path.read_bytes() == before
+    if (tmp_path / "COMPOSITION").exists():
+        run = gnd("compose", model_path, directory, "--out", tmp_path / "x.json",
+                  "--record", tmp_path / "COMPOSITION" / "r.json")
+        assert run.returncode == 64 and not (directory / "r.json").exists()

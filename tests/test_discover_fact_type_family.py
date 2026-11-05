@@ -232,6 +232,36 @@ def test_the_family_respects_the_proposal_budget(tmp_path, monkeypatch):
     assert len(family["proposed"]) == 1 and family["skipped"]["over_budget"] == 1
 
 
+def test_the_written_proposal_never_exceeds_its_cap(tmp_path, monkeypatch, capsys):
+    # Close review: the size estimate is only a pre-filter. Make it admit far
+    # more than the cap and check the written bytes are trimmed under it.
+    from datetime import UTC, datetime
+
+    from gnd.discover import service
+
+    facts = [{"item": f"I-{i:02d}", "name": f"attr-{a:03d}", "value": f"v{i}"} for a in range(60) for i in range(20)]
+    model, population = build(tmp_path, facts=facts)
+    def run(name):
+        nonlocal out, report
+        out, report = tmp_path / f"{name}.p.json", tmp_path / f"{name}.r.json"
+        return service._cmd_discover(str(model), str(population), out=str(out), report=str(report), actor="test",
+                                     requested_at=datetime(2026, 11, 4, tzinfo=UTC),
+                                     families=("fact-type",), max_values=20, max_pairs=256, output_format="text")
+
+    out = report = None
+    assert run("full") == 0
+    cap = len(out.read_bytes()) // 2
+    monkeypatch.setattr(service, "MAX_EVOLUTION_PROPOSAL_BYTES", cap)
+    monkeypatch.setattr(service, "BUDGET_MARGIN", -10 * cap)
+    assert run("capped") == 0
+    family = json.loads(report.read_text())["fact_type_proposals"]
+    assert 0 < len(family["proposed"]) < 60 and family["skipped"]["over_budget"] == 60 - len(family["proposed"])
+    assert len(out.read_bytes()) <= cap
+    written = {op["locator"]["host_id"] for op in json.loads(out.read_text())["operations"]
+               if op["locator"]["locator_kind"] == "constraint"}
+    assert written == {entry["fact_type"] for entry in family["proposed"]}
+
+
 def test_a_redacted_value_role_stays_redacted(tmp_path):
     model, population = build(tmp_path)
     model.write_text(model.read_text().replace("{object_type: attribute_value, role_name: value}",
@@ -270,3 +300,32 @@ def test_the_family_combines_with_other_families_and_applies(tmp_path):
                               str(preview), *common, "--policy", "additive"], capture_output=True, text=True, check=False)
     assert applied.returncode == 0, applied.stdout + applied.stderr
     assert "item_has_attribute_induced_0" in model.read_text()
+
+
+def test_an_exactly_repeated_row_is_one_value(tmp_path):
+    # Close review: count distinct values per entity, not rows.
+    facts = rows(colour=20, size=0, weight=0)
+    facts.append(dict(facts[0]))
+    model, population = build(tmp_path, facts=facts)
+    run, _out, report = discover(tmp_path, model, population)
+    assert run.returncode == 0, run.stderr
+    family = proposals(report)
+    assert len(family["proposed"]) == 1 and family["skipped"]["multi_valued"] == 0
+
+
+def test_other_families_over_the_cap_still_write_their_proposal(tmp_path, monkeypatch):
+    # Close re-review: with no type groups left to drop, the proposal is
+    # written as it was before the trim, and nothing raises.
+    from datetime import UTC, datetime
+
+    from gnd.discover import service
+
+    model, population = build(tmp_path)
+    monkeypatch.setattr(service, "MAX_EVOLUTION_PROPOSAL_BYTES", 200)
+    monkeypatch.setattr(service, "BUDGET_MARGIN", -10**8)
+    out, report = tmp_path / "p.json", tmp_path / "r.json"
+    code = service._cmd_discover(str(model), str(population), out=str(out), report=str(report), actor="test",
+                                 requested_at=datetime(2026, 11, 4, tzinfo=UTC),
+                                 families=("uniqueness", "mandatory", "fact-type"), max_values=20, max_pairs=256,
+                                 output_format="text")
+    assert code == 0 and report.exists()

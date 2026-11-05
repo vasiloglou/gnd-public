@@ -7,7 +7,9 @@ lists (51 files; `README.md` has no match). Files owned by the CT5 example work
 are out of scope. Three matches are not prose (rows at the end of the table). Packaged skills are installed without the docs site, so
 their edits name schema files and add no links.
 
-Totals: 11 updated, 40 unchanged (51 rows; corrected after the CT5 review, F7).
+Totals: 12 updated, 40 unchanged (52 rows; corrected after the CT5 review, F7,
+and after the close review, which found `capabilities.md`: the grep's
+`gnd witness|gnd replay` terms miss a table that names commands bare).
 
 | File | What it says about the changed surfaces | Disposition |
 |---|---|---|
@@ -62,6 +64,7 @@ Totals: 11 updated, 40 unchanged (51 rows; corrected after the CT5 review, F7).
 | src/gnd/skills/gnd-export/references/witness.schema.json | the version-2 `composition_sha256` and `sources` fields | unchanged: updated in CT3 and pinned to its twin by `tests/test_schema_sync.py` |
 | src/gnd/skills/gnd-model-from-text/evals/cases.json | "atomic decomposition" (a word match on *composition*) | unchanged: not about composition |
 | src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py | "composition of the two halves" in a docstring | unchanged: not about composition |
+| docs/reference/capabilities.md | `witness`, `replay` and `discover` rows (added at the close) | updated: a composition row, `--composition` on the witness row, the `fact-type` family on the discover row |
 
 Explicit checks:
 

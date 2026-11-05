@@ -938,8 +938,12 @@ def compose(
         raise TypeError("compose takes a model path and a directory path")
     try:
         raw = read_regular_path(model, label="model", max_bytes=MAX_DOCUMENT_BYTES)
+    except Exception:  # noqa: BLE001 -- a read failure is not an invalid model (close review)
+        return {"schema": "gnd-compose/1", "exit_code": 3,
+                "error": {"kind": "input", "message": "model could not be read safely"}}
+    try:
         selected = model_module.load_model_bytes(raw, source=model)
-    except Exception:  # noqa: BLE001 -- one value-free refusal for an unreadable or invalid model
+    except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
         return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}
     try:
         composed = compose_sources(selected, raw, directory)

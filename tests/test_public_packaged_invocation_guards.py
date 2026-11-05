@@ -130,7 +130,7 @@ FENCE_RE = re.compile('^\\s*```')
 PROMPT_RE = re.compile('^\\$\\s+')
 GROUPED_COMMANDS = frozenset({'evolve', 'exp', 'recovery', 'review'})
 MEASURED_EXECUTABLE_SNIPPETS = 29
-MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
+MEASURED_SNIPPETS_PER_SKILL = {'gnd-codegen': 5, 'gnd-conformance': 4, 'gnd-dev-session': 1, 'gnd-extract': 2, 'gnd-judge-fact-types': 2, 'gnd-model-evolve': 6, 'gnd-model-from-code': 4, 'gnd-model-from-text': 1, 'gnd-render-doc': 2, 'gnd-review-panel': 2, 'gnd-review-panel-light': 2}
 SKILLS_WITH_EXECUTABLE_SNIPPETS = frozenset(MEASURED_SNIPPETS_PER_SKILL)
 
 @dataclass(frozen=True)

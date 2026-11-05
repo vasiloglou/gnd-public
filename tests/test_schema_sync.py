@@ -15,6 +15,10 @@ authoring rules for. Giving it a canonical twin would expand that skill's remit
 to cover a contract no model or population author ever writes. Its own
 round-trip guard lives in ``tests/test_report_json.py``, which validates real
 payloads against it on every exit path.
+
+The second exception: the two type schemas (TS3) are canonical at the runtime
+``src/gnd/`` files and vendored into the gnd-orm-core references, the reverse
+of SCHEMA_PAIRS; their own case is at the end of this file.
 """
 
 
@@ -64,4 +68,20 @@ def test_witness_schema_twins_are_byte_identical() -> None:
     assert canonical.read_bytes() == vendored.read_bytes(), (
         "witness.schema.json has drifted between src/gnd/skills/gnd-export/references/ "
         "and src/gnd/schema/; copy the reference over the vendored file."
+    )
+
+
+#: TS3 (spec D5): the two type schemas run the other way. gnd discover owns
+#: src/gnd/type-evidence.schema.json and src/gnd/type-judgements.schema.json;
+#: the gnd-orm-core copies are read-only, regenerated from the runtime files.
+TYPE_SCHEMAS = ["type-evidence.schema.json", "type-judgements.schema.json"]
+
+
+@pytest.mark.parametrize("filename", TYPE_SCHEMAS)
+def test_type_schema_copies_are_byte_identical_to_the_runtime_files(filename: str) -> None:
+    runtime = REPO_ROOT / "src" / "gnd" / filename
+    copy = CANONICAL_DIR / filename
+    assert copy.read_bytes() == runtime.read_bytes(), (
+        f"{filename} has drifted: the runtime src/gnd/{filename} is canonical; "
+        "copy it over src/gnd/skills/gnd-orm-core/references/."
     )

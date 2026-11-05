@@ -1,0 +1,18 @@
+{
+ "files": {
+  "results.json": "34fa2ba4f97e87d057cc9bfc378efc2c2585058e65ebeec196febb68b7453ca0",
+  "run-1/discover.txt": "a7605912225d2dc5619996bbbd309c9c8ce85170771dbbf76a6c88efbe2fb78d",
+  "run-1/duplicates.judgements.json": "2926713478161e9999a8a5593a15c8d7cf5ed8c1287e3dcf914546135a07d21f",
+  "run-1/preview.txt": "4669a469d59f2054fd507190f0c8d3e70b40a43eac31c31b3c74115c27ecf4fb",
+  "run-1/turn-01.jsonl": "7c88011e63ec2328bfc0d164c2e55c184292620d5650e21bec0a693468e41b2f",
+  "run-1/turn-02.jsonl": "eb2fa4619079c685ea5013938048c581666ac1648b587fe5ca02ffad061cfc6e",
+  "run-1/workspace.json": "df293f08d5ac488a4df7e39f821c9e56c7c49663f66e1b8610b4cf844848d2dc"
+ },
+ "sources": {
+  "tools/record_judge_sessions.py": "2a7008a82ccdb9588369da6e421179eaf2d6f6deedda97c53323f72fee380836",
+  "src/gnd/skills/gnd-judge-fact-types/SKILL.md": "067b18182e03318603825db2f551b52a9df8e28a03b15cce07f03a6952f9c194",
+  "tests/fixtures/type-judgements/round-two/model.orm.yaml": "adb36c4fde0a7e74b67384195f756fb60e3f7fe5cefaa57d47f81dc839d10ebd",
+  "tests/fixtures/type-judgements/round-two/items.population.json": "ad0c9da0c4854872c3bf431810eefdd57f1f16f15b38494887bb13cd1a6c37fe",
+  "tests/fixtures/type-judgements/round-two/answer-key.json": "19a21e96ed519a61ff8b9467040f498457d2230c1101ea8807f5ea9e76497a9f"
+ }
+}

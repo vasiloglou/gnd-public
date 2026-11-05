@@ -9,9 +9,11 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CENSUS = ROOT / ".gnd-planning/milestones/ilp-learners/skill-census.md"
 PHASE = re.compile(r"IL[1-6](?:-Q\d+)?|IL-close")
-CURRENT = "IL6"  # the scope an uncommitted edit is credited to
 # The milestone's first commit (plan and IL1 spec); its parent is the milestone base.
 MILESTONE_FIRST = "07f4d45fcdf8a5c44a69ee5e2dd9fbe2112e1b86"
+# The close merge (PR #63). Every git read ends here, so a later packaged skill
+# (type-induction-skills TS3, spec D4) cannot fail this closed census.
+MILESTONE_LAST = "7818be1be242896420991b456f22144a9bf4768e"
 
 
 def census_rows(text: str) -> list[tuple[str, str]]:
@@ -36,19 +38,17 @@ def census_errors(rows: list[tuple[str, str]], packaged: list[str]) -> list[str]
 
 
 def packaged_files() -> list[str]:
-    out = subprocess.run(["git", "ls-files", "src/gnd/skills"], cwd=ROOT, check=True,
-                         capture_output=True, text=True).stdout
+    out = subprocess.run(["git", "ls-tree", "-r", "--name-only", MILESTONE_LAST, "src/gnd/skills"], cwd=ROOT,
+                         check=True, capture_output=True, text=True).stdout
     return out.split()
 
 
 def git_phases(path: str) -> set[str]:
-    """The milestone phases whose commit subjects since the base name this file, plus CURRENT
-    for an uncommitted edit. Other milestones' commits merged in the window are not counted."""
-    subjects = subprocess.run(["git", "log", "--format=%s", f"{MILESTONE_FIRST}^..HEAD", "--", path], cwd=ROOT,
-                              check=True, capture_output=True, text=True).stdout
-    phases = {m for scope in re.findall(r"\(([^)]*)\)", subjects) for m in PHASE.findall(scope)}
-    dirty = subprocess.run(["git", "diff", "--quiet", "HEAD", "--", path], cwd=ROOT, check=False).returncode
-    return phases | ({CURRENT} if dirty else set())
+    """The milestone phases whose commit subjects between the base and the close name this file.
+    Other milestones' commits merged in the window are not counted."""
+    subjects = subprocess.run(["git", "log", "--format=%s", f"{MILESTONE_FIRST}^..{MILESTONE_LAST}", "--", path],
+                              cwd=ROOT, check=True, capture_output=True, text=True).stdout
+    return {m for scope in re.findall(r"\(([^)]*)\)", subjects) for m in PHASE.findall(scope)}
 
 
 def phase_errors(rows: list[tuple[str, str]]) -> list[str]:

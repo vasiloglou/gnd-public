@@ -44,7 +44,7 @@ from gnd import cli, install
 
 #: The packaged tree ships 59 files across 15 skills — the same duplicated guard
 #: ``tests/test_install.py`` keeps, for the same reason.
-EXPECTED_SKILL_FILE_COUNT = 65
+EXPECTED_SKILL_FILE_COUNT = 68  # TS3: gnd-judge-fact-types and the two vendored type schemas
 
 #: The fifteen packaged skill directories, which is the artifact set in symlink
 #: mode: one link per skill. Named rather than counted so a removal that drops
@@ -57,6 +57,7 @@ EXPECTED_SKILL_NAMES = frozenset(
         "gnd-dev-session",
         "gnd-extract",
         "gnd-export",
+        "gnd-judge-fact-types",
         "gnd-model-evolve",
         "gnd-model-from-code",
         "gnd-model-from-text",
@@ -98,7 +99,8 @@ SAMPLE_FILE = "gnd-orm-core/SKILL.md"
 #: in quick 260816-rjw with the two loop skills, gnd-dev-session and gnd-solve.
 #: Twenty-four became twenty-six in milestone v1.2 with gnd-new-project, the
 #: `.gnd-planning/` scaffold, and twenty-six became twenty-eight in milestone
-#: v2.0 phase 6a with gnd-adopt, the GSD migration skill.
+#: v2.0 phase 6a with gnd-adopt, the GSD migration skill. type-induction-skills
+#: TS3 adds gnd-judge-fact-types (two more links).
 REPOSITORY_LINK_TARGETS: dict[str, str] = {
     ".claude/skills/gnd-export": "../../src/gnd/skills/gnd-export",
     ".codex/skills/gnd-export": "../../src/gnd/skills/gnd-export",
@@ -107,6 +109,7 @@ REPOSITORY_LINK_TARGETS: dict[str, str] = {
     ".claude/skills/gnd-conformance": "../../src/gnd/skills/gnd-conformance",
     ".claude/skills/gnd-dev-session": "../../src/gnd/skills/gnd-dev-session",
     ".claude/skills/gnd-extract": "../../src/gnd/skills/gnd-extract",
+    ".claude/skills/gnd-judge-fact-types": "../../src/gnd/skills/gnd-judge-fact-types",
     ".claude/skills/gnd-model-evolve": "../../src/gnd/skills/gnd-model-evolve",
     ".claude/skills/gnd-model-from-code": "../../src/gnd/skills/gnd-model-from-code",
     ".claude/skills/gnd-new-project": "../../src/gnd/skills/gnd-new-project",
@@ -122,6 +125,7 @@ REPOSITORY_LINK_TARGETS: dict[str, str] = {
     ".codex/skills/gnd-conformance": "../../src/gnd/skills/gnd-conformance",
     ".codex/skills/gnd-dev-session": "../../src/gnd/skills/gnd-dev-session",
     ".codex/skills/gnd-extract": "../../src/gnd/skills/gnd-extract",
+    ".codex/skills/gnd-judge-fact-types": "../../src/gnd/skills/gnd-judge-fact-types",
     ".codex/skills/gnd-model-evolve": "../../src/gnd/skills/gnd-model-evolve",
     ".codex/skills/gnd-model-from-code": "../../src/gnd/skills/gnd-model-from-code",
     ".codex/skills/gnd-new-project": "../../src/gnd/skills/gnd-new-project",

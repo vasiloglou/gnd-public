@@ -179,7 +179,7 @@ model), the output (a `duplicates` judgements file) and what it is not
    means a verdict or the binding was refused: read the message, fix the
    judgements file, never edit the evidence. Admission is the user's
    reviewed `gnd evolve apply` through
-   [gnd-model-evolve](../gnd-model-evolve/SKILL.md); this skill never
+   `gnd-model-evolve` (linked as `../gnd-model-evolve/SKILL.md`); this skill never
    applies a proposal and never touches git.
 
 ### 6.3 Decision rules (one home: the skill)
@@ -392,4 +392,24 @@ also authorizes the one paid run with the model it names.
 
 ## 12. Implementation findings
 
-None yet.
+Recorded as found, 2026-11-05. None changes an approved verdict in §6.5.
+
+- **I1 (§6.5, sweep row "Group B is `proposed`").** Wrong: every group is a
+  `shape_match`, because `item_has_attribute_induced_0` has the role
+  players every group of the generic fact type has. The sweep reasoned
+  about `item_has_colour` only. The answer key's verdicts and rules are
+  unchanged (A R1, B R2, C R3, D R4); B still shows a duplicate whose `of`
+  has no equal signature. T13 pins the statuses as measured.
+- **I2 (§6.2 step 6).** The spec linked `../gnd-model-evolve/SKILL.md` as
+  markdown, which does not resolve from `notes/` and failed
+  `test_development_scaffold::test_reference_closure_and_declared_bootstrap`.
+  The link was made code text; no other approved byte changed.
+- **I3 (§6.4).** `MEASURED_EXECUTABLE_SNIPPETS` is a floor (`>=`), so it
+  stays 29; only the per-skill map gains `'gnd-judge-fact-types': 2`.
+- **I4 (§6.6 step 3).** The second scripted turn names the group by its
+  evidence id, "Group g3 ...", since the judge sees ids, not case letters.
+- **I5 (§8 controls).** With the skill and schemas added and the pins
+  unedited, the pin files ran 34 failed, 626 passed (every T1–T7 file red,
+  IL6 included). That run's output was read, not retained.
+- **I6 (§6.6).** The recorder's pass rule had to reject `False` as an exit
+  (`False == 0` in Python); `passed` checks exits and booleans apart.

@@ -1,0 +1,14 @@
+GND DISCOVER
+MODEL model.orm.yaml
+POPULATION items.population.json
+EMITTED 0
+NEAR MISSES 0
+REJECTED vacuous=0 unchecked=0 fail=0 warning=0
+SUPPRESSED 
+FACT TYPES 2
+  item_has_attribute_induced_2 support=24
+  item_has_attribute_induced_3 support=24
+  shape of item_has_attribute_induced_0
+  shape of item_has_colour
+WORK total=0
+PROPOSAL proposal.json

@@ -1,0 +1,11 @@
+{
+ "before": [
+  "evidence.json",
+  "model.orm.yaml"
+ ],
+ "after": [
+  "duplicates.judgements.json",
+  "evidence.json",
+  "model.orm.yaml"
+ ]
+}

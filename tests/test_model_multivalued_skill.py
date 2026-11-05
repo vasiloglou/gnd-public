@@ -165,7 +165,10 @@ def results():
 def test_t14_every_recorded_check_holds():
     row = results()["run"]
     assert results()["skill"] == "gnd-model-multivalued" and results()["fixture"] == "multi-valued"
-    assert recorder.passed(row["checks"]), row["checks"]
+    # Recording finding R1: no_population_access was false because the check read the judgements file's
+    # written text ("the population is to be corrected"); the corrected checks pass over the kept streams.
+    assert [name for name, value in row["checks"].items() if not recorder.passed({name: value})] == [
+        "no_population_access"]
     assert set(row["checks"]) == {"written", "schema_valid", "discover_exit", "verdicts_match_key", "preview_exit",
                                   "asked_before_writing", "only_judgements_new", "no_apply_call",
                                   "no_population_access", "no_canary"}
@@ -179,6 +182,8 @@ def test_t14_the_manifest_binds_the_kept_files_and_the_current_sources():
                                         *(f"tests/fixtures/type-judgements/multi-valued/{name}" for name in
                                           ("model.orm.yaml", "items.population.json", "answer-key.json"))}
     for name, digest in manifest["sources"].items():
+        if name == "tools/record_judge_sessions.py":   # corrected after the run (R1); the skill and fixture are not
+            continue
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, f"{name} changed since the recording"
 
 
@@ -231,7 +236,8 @@ def test_t15_no_canary_and_no_population_or_apply_call_in_the_recording():
     assert not [str(p.relative_to(RECORDING)) for p, body in kept_texts() if any(c in body for c in CANARIES)]
     calls = recorder.tool_calls(RECORDING / "run-1")
     assert calls, "the recording kept no tool call; the scan below would check nothing"
-    assert not [c for c in calls if "evolve apply" in c or "population" in c]
+    streams = [p.read_text(encoding="utf-8") for p in sorted((RECORDING / "run-1").glob("turn-*.jsonl"))]
+    assert not recorder.forbidden_calls(streams, ["evolve apply", "population"])
     workspace = json.loads((RECORDING / "run-1/workspace.json").read_text(encoding="utf-8"))
     assert sorted(set(workspace["after"]) - set(workspace["before"])) == [results()["run"]["judgements"]]
     assert all(workspace["after"][name] == digest for name, digest in workspace["before"].items())
@@ -319,3 +325,19 @@ def test_review_f4_a_tool_call_outside_the_workspace_is_found(tmp_path):
                       {"file_path": "evidence.json"})
     found = recorder.outside_calls([raw], [workspace])
     assert len(found) == 5 and not any(str(workspace) in call for call in found)
+
+
+# --- recording finding R1: the population check read written text ----------------
+
+def test_r1_written_text_naming_the_population_is_not_an_access():
+    raw = tool_stream({"file_path": "/w/shapes.judgements.json", "content": "the population is to be corrected"},
+                      {"file_path": "/w/x.json", "old_string": "a", "new_string": "population"},
+                      {"command": "cat items.population.json"})
+    found = recorder.forbidden_calls([raw], ["population"])
+    assert len(found) == 1 and "items.population.json" in found[0]
+
+
+def test_r1_the_kept_streams_show_no_access_under_the_corrected_checks():
+    streams = [p.read_text(encoding="utf-8") for p in sorted((RECORDING / "run-1").glob("turn-*.jsonl"))]
+    assert not recorder.forbidden_calls(streams, ["population", "answer-key", "<repo>", "<home>", "<tmp>"])
+    assert not recorder.outside_calls(streams, [Path("<workspace>")])

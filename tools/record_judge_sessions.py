@@ -94,6 +94,16 @@ def workspace_digests(workspace: Path) -> dict[str, str]:
     return {p.name: sha256(p.read_bytes()) for p in sorted(workspace.iterdir()) if p.is_file()}
 
 
+WRITTEN = ("content", "old_string", "new_string")   # text the agent writes, not a path it reaches
+
+
+def _reaching(arguments) -> str:
+    """A tool input as text, without the text it writes (TS4 recording finding R1)."""
+    if not isinstance(arguments, dict):
+        return json.dumps(arguments, ensure_ascii=False)
+    return json.dumps({k: v for k, v in arguments.items() if k not in WRITTEN}, ensure_ascii=False)
+
+
 def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
     """Tool inputs naming any needle, read from the raw streams before redaction hides paths (review F5)."""
     found = []
@@ -105,7 +115,7 @@ def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
                 continue
             for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
                 if isinstance(part, dict) and part.get("type") == "tool_use":
-                    call = json.dumps(part.get("input"), ensure_ascii=False)
+                    call = _reaching(part.get("input"))
                     if any(needle in call for needle in needles):
                         found.append(call)
     return found
@@ -133,7 +143,7 @@ def outside_calls(streams: list[str], allowed: list[Path]) -> list[str]:
                 if not (isinstance(part, dict) and part.get("type") == "tool_use"):
                     continue
                 arguments = part.get("input") if isinstance(part.get("input"), dict) else {}
-                call = json.dumps(arguments, ensure_ascii=False)
+                call = _reaching(arguments)
                 paths = [str(arguments[key]) for key in PATH_KEYS if isinstance(arguments.get(key), str)]
                 astray = [p for p in paths if p.startswith(("/", "~"))
                           and not any(p == root or p.startswith(root + "/") for root in roots)]

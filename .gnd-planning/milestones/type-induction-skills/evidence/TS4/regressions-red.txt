@@ -18,3 +18,8 @@ FAILED tests/test_model_multivalued_skill.py::test_review_each_rule_states_its_k
 FAILED tests/test_model_multivalued_skill.py::test_review_f3_the_fixture_has_a_partial_overlap_group
 FAILED tests/test_model_multivalued_skill.py::test_review_f4_a_tool_call_outside_the_workspace_is_found
 4 failed, 15 passed, 52 deselected in 10.46s
+
+# recording finding R1, red before the fix: uv run pytest -q tests/test_model_multivalued_skill.py -k r1
+FAILED tests/test_model_multivalued_skill.py::test_r1_written_text_naming_the_population_is_not_an_access
+FAILED tests/test_model_multivalued_skill.py::test_r1_the_kept_streams_show_no_access_under_the_corrected_checks
+2 failed, 72 deselected in 0.21s

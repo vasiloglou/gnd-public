@@ -1,0 +1,18 @@
+{
+ "files": {
+  "results.json": "e8c8702142467007c4107d1c3f62ca6c7e6d9d1a0a2387ce34ffbe76f3d3c12c",
+  "run-1/discover.txt": "3e7ab8747df71f1a58d2470c3a87fe446b43a23a12c805cd29a751c954bbb7aa",
+  "run-1/preview.txt": "c086d7bf049919e688e02ae030f81f67cd589a082d87a806b3b37894140c10aa",
+  "run-1/shapes.judgements.json": "cc11bd2195751639f1c29d59d5e0728754e4fdb2d1394d812ec07d4265e07b54",
+  "run-1/turn-01.jsonl": "1a3a8846ca152a2c042b8904535f9f374c3a0ba2c788928e86a98a30337f9549",
+  "run-1/turn-02.jsonl": "d6941a9d060b340e3cc77f53c467e45c9447237a18a66fb3d72135f9a1728221",
+  "run-1/workspace.json": "5001b4b88d207f58e5c928b7fe3d32be43e4ccea5e0527581a6aed002d0b2a01"
+ },
+ "sources": {
+  "tools/record_judge_sessions.py": "e3e7ac932433ed89b8352e377e7383de85451528757ca82a27e6e04e6389eda2",
+  "src/gnd/skills/gnd-model-multivalued/SKILL.md": "2a3b486fa2333e4b55d98d4bb7c7ade6bab6519cc6e3e38fe9f95ecc0dd4f1cc",
+  "tests/fixtures/type-judgements/multi-valued/model.orm.yaml": "d90a666c8a7419b667ede47ee191a2424cc71cc07bdf2e4a145617b01c48629e",
+  "tests/fixtures/type-judgements/multi-valued/items.population.json": "66dc3f9a4f2c314b85f770aeff4fab9bdfa5d59c5143e5b75e7a86c9cf06ad57",
+  "tests/fixtures/type-judgements/multi-valued/answer-key.json": "c829a1cc4de34370087ae16f9816f3245b12c598baf3591c27e41b9b1c63d940"
+ }
+}

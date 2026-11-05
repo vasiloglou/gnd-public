@@ -974,6 +974,21 @@
      "type": null
     },
     {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "type_evidence",
+     "help": "fact-type family: also write the evidence the judgement skills read",
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--type-evidence"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
      "choices": [
       "text",
       "json"

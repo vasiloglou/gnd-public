@@ -1,0 +1,18 @@
+Mutation run over the final source (each line: mutation -> outcome, pytest summary).
+M8b survived this run; the F1 test was then strengthened and M8b re-run: 1 failed (killed).
+M1 origin digest under customer -> KILLED 1 failed, 1 passed, 49 deselected in 0.62s
+M2 generic not excluded -> KILLED 1 failed, 51 deselected in 0.36s
+M3 drop_last keeps status -> KILLED 1 failed, 1 passed, 50 deselected in 0.31s
+M4 value always emitted -> KILLED 1 failed, 47 deselected in 0.34s
+M5 pairs never computed -> KILLED 1 failed, 51 deselected in 0.35s
+M6 origin not validated -> KILLED 1 failed, 43 deselected in 0.34s
+M7 exact repeats lost -> KILLED 1 failed, 51 deselected in 0.35s
+M8 no candidate budget -> KILLED 1 failed, 1 passed, 50 deselected in 28.86s
+M8b no group budget -> SURVIVED 1 passed, 51 deselected in 2.99s
+M11 redacted candidate counted -> KILLED 1 failed, 50 deselected in 0.53s
+M12 declared kind only -> KILLED 1 failed, 1 passed, 50 deselected in 0.67s
+M13 service guard gone -> KILLED 1 failed, 51 deselected in 0.28s
+M9 group digest under customer -> KILLED 1 failed, 1 passed, 49 deselected in 0.69s
+M10 multi max wrong -> KILLED 1 failed, 51 deselected in 0.39s
+
+[exited with code 0]

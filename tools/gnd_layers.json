@@ -335,6 +335,10 @@
       "lane": "discover",
       "layer": "lanes"
     },
+    "gnd.discover.type_evidence": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
     "gnd.discover.types": {
       "lane": "discover",
       "layer": "lanes"

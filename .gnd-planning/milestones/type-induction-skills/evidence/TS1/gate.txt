@@ -1,0 +1,22 @@
+$ uv run pytest -q tests/test_discover_type_evidence.py
+52 passed in 19.93s
+exit 0
+$ uv run pytest -q <CT4 gate: 11 files>
+529 passed in 90.32s (0:01:30)
+exit 0
+$ uv run pytest -q tests/test_schema_sync.py
+4 passed in 0.06s
+exit 0
+$ uv run pytest -q -m distribution tests/test_public_built_inventory.py::test_wheel_carries_every_vendored_runtime_schema
+1 passed in 0.63s
+exit 0
+$ uv run ruff check <changed modules and tests>
+All checks passed!
+$ uv run pytest -q tests/test_discover_type_evidence.py   (after the ruff fix)
+52 passed in 18.90s
+exit 0
+$ uv run zensical build --strict
+No issues found
+$ uv run python tools/check_docs.py site
+14297 local links/assets/anchors checked
+exit 0

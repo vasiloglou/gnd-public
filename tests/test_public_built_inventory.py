@@ -270,6 +270,7 @@ VENDORED_SCHEMAS = (
     "gnd/anchor-sidecar.schema.json",
     "gnd/composition-manifest.schema.json",
     "gnd/composition.schema.json",
+    "gnd/type-evidence.schema.json",
 )
 
 

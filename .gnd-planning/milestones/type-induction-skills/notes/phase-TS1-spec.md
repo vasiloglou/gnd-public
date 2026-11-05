@@ -356,3 +356,58 @@ prose is that the format is read only by TS2 and the skills, both in this
 milestone, and T18 validates every written file. The owner may instead ask
 for a fixture corpus with narrated expected evidence first. Optional spec
 review panel: omitted (not asked for at the gate).
+
+## 12. Implementation findings
+
+Recorded as found, 2026-11-05. The approved bytes are those whose SHA-256
+§1 gives; this section was added after approval and carries no owner ruling.
+
+- **I1, refuted premise P2 (review F1).** §6.2 argued from the population
+  cap that the groups alone cannot exceed the evidence cap. False: a group
+  costs about 260 evidence bytes against about 40 population bytes, so a
+  valid 1.6 MB population with 40,000 attributes exited 70. Repair inside
+  TS1's criterion C7 (cap and truncation): groups that do not fit are left
+  out from the tail and counted in a new required field `truncated_groups`.
+  Exit 70 remains only for a header over the cap, which cannot happen.
+- **I2, standing rule 2 not met by the first build (review F2).** Building
+  every candidate entry and trimming afterwards cost groups × candidates in
+  time and memory (27.7 s and 4 GB at 20,000 × 200, within both input caps).
+  `build_evidence` now fills within the cap: group entries first, then
+  candidates in order until the bytes run out, the rest only counted. The
+  same input now takes 2.6 s and 156 MB. The spec's `build_evidence`
+  signature is unchanged except a keyword `redacted_roles` (I4).
+- **I3, D2's kind test (review F3).** Comparing a declared primitive's kind
+  with a cell's identity kind failed for DateTime: a DateTime cell held as a
+  JSON string has identity kind `string`. Pairs are now comparable when the
+  candidate's value cells hold exactly the group's kind; the declared
+  primitive decides only for a candidate with no rows. **Pre-existing, out
+  of scope:** for the same reason the CT4 family mints a String value type
+  for DateTime data, so such a group's `signature_equal` is false against a
+  DateTime fact type. Open question for a later phase or maintenance.
+- **I4, redacted candidate value roles (review F4).** §6.3 allowed counts on
+  a redacted entity role only. A pair count against a redacted value role
+  says how many hidden values equal the group's, so it is `null` in every
+  mode, as discover skips redacted value roles elsewhere.
+- **I5, the service guard (review F7).** `_cmd_discover` called with the
+  option and without the family returns 64 instead of raising.
+- **I6, the fallback trim was quadratic.** Found while mutating the budget
+  away: removing one candidate per serialisation did not finish. Each pass
+  now frees at least the excess first.
+- **I7, RF6.** TS-R7 expected zero growth. The live query policy is
+  unchanged (one false positive, a local key named `roles`, was renamed).
+  The dynamic-read inventory, a different count, grows with the new module
+  and the family's group records; recorded as the successor
+  `evidence/TS1/dynamic-query-successor.json`, as CT4 did.
+- **I8, the packaging test.** The ledger names `tests/test_schema_sync.py`,
+  which pairs canonical and vendored model schemas. Packaging of a runtime
+  schema is pinned by `tests/test_public_built_inventory.py` (marker
+  `distribution`, run explicitly) and `tests/support/runtime_schema_inventory.py`.
+- **I9, RF1.** Re-pinning goldens also needs `goldens.sha256` and the
+  manifest digest in `tests/test_rf1_pin_harness.py` (review F6). The tree
+  golden was edited for the `discover` subtree only, as CT4 did.
+- **I10, interpretations.** `value_primitive` is given for every group whose
+  values share one kind, so multi-valued groups carry it for TS4;
+  `same_attribute` compares the attribute digests only (`generic` is shown
+  beside it); every fact type's `induced_from` is validated, not only
+  candidates'; the `discover` help description is unchanged, so the golden
+  diff is the option alone (the docs page states the exits).

@@ -8,12 +8,14 @@ family move to skills; the CLI stays deterministic and supplies evidence.
 
 **Status: plan r1 approved by the owner `(a1)` 2026-11-05, without plan
 review ([gate record](001-plan-gate.md)). TS1 spec r2 approved by the owner
-`(a1)` 2026-11-05 (prose instrument, D1–D7 as proposed).** No code is written. `auto=false`. PR #86 merged
+`(a1)` 2026-11-05 (prose instrument, D1–D7 as proposed). TS1 implemented
+and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 (`9f87fa0`); the branch is rebased onto main at `b733b2a` (TS-D1 met).
 
 - [Plan gate record](001-plan-gate.md)
 - [Canonical plan (r1, approved)](notes/type-induction-skills-plan.md)
 - [TS1 spec (r2, approved)](notes/phase-TS1-spec.md)
+- [TS1 record](002-phase-TS1.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -30,4 +32,6 @@ TS-D11, which the approval did not rule.
 
 TS1 spec r2 (2026-11-05) re-reads its lines on main `b733b2a`; the CT4-Q1
 ruling (008) omits digests under `customer`, so groups are keyed `g<n>`
-instead. Next action: the owner's explicit go-ahead to implement TS1.
+instead. TS1 shipped `--type-evidence`; its open questions (TS-Q3, the CT4
+DateTime kind, plan repairs) are in the record. Next action: the TS2 spec,
+on the owner's selection.

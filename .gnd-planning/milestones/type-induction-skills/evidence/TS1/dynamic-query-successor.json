@@ -1,0 +1,203 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/composition-and-type-induction/evidence/rulings/dynamic-query-successor.json",
+ "predecessor_sha256": "e4078200c584c0100cec4b408e6f68856240daec94c04fdb793ca784eada3fcd",
+ "reason": "type-induction-skills TS1 (2026-11-05): gnd.discover.type_evidence (new, lane discover) writes the gnd-type-evidence/1 file; gnd.discover.types keeps a GroupRecord per group; gnd.discover.service and gnd.commands.discover wire --type-evidence. Parameter, return and local annotations and local dictionary reads of population rows and evidence entries only; model reads go through ModelIndex and PopulationView.",
+ "added": [
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "fact_type.get(key)",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "fact_type[key]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "frozenset[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "row.get(other[0].name)",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "row.get(own[0].name)",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "row[role.name]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_candidate_facts",
+   "view.roles[fact_id]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "_pairs_comparable",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "cache[key]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "dict[str, Any]",
+   6
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "dict[str, list[str]]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "dict[tuple[str, str], dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "frozenset[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "induced.get(fact_id)",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "list[str]",
+   2
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "list[tuple[types.GroupRecord, dict[str, Any]]]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "played.get(record.entity_object_type, [])",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "tuple[str, str]",
+   2
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "build_evidence",
+   "tuple[types.GroupRecord, dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "evidence_bytes",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "evidence_bytes",
+   "groups[index]",
+   2
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "origins",
+   "dict[str, dict[str, str] | None]",
+   2
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "origins",
+   "dict[str, str]",
+   2
+  ],
+  [
+   "src/gnd/discover/type_evidence.py",
+   "origins",
+   "origin[key]",
+   2
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "GroupRecord",
+   "frozenset[tuple[Any, Any]]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "GroupRecord",
+   "tuple[Any, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "GroupRecord",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "TypeProposals",
+   "list[GroupRecord]",
+   2
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "TypeProposals",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "group['rows'][:ROW_IDS_MAX]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 7123,
+ "result_occurrences": 8903
+}

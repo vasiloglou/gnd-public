@@ -100,6 +100,10 @@ def _register_discover(subparsers):
         "--show-values", action="store_true",
         help="fact-type family: also report each attribute value as text (disclosure mode decides)",
     )
+    discover_parser.add_argument(
+        "--type-evidence", default=None, metavar="PATH",
+        help="fact-type family: also write the evidence the judgement skills read",
+    )
     _add_format_argument(discover_parser)
     return {"discover_parser": discover_parser}
 
@@ -119,8 +123,10 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 def handle(args, parsers) -> int:
     if args.command == "discover":
-        if "fact-type" not in args.families and (args.show_values or args.min_support is not None):
-            parsers["discover_parser"].error("--min-support and --show-values need --families fact-type")
+        if "fact-type" not in args.families and (args.show_values or args.min_support is not None
+                                                 or args.type_evidence is not None):
+            parsers["discover_parser"].error(
+                "--min-support, --show-values and --type-evidence need --families fact-type")
         show_values, show_digests = False, True
         if "fact-type" in args.families:
             import sys
@@ -148,6 +154,7 @@ def handle(args, parsers) -> int:
                 "min_support": 20 if args.min_support is None else args.min_support,
                 "show_values": show_values,
                 "show_digests": show_digests,
+                **({} if args.type_evidence is None else {"type_evidence": args.type_evidence}),
             }),
         )
 

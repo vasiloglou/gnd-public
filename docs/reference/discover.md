@@ -16,7 +16,8 @@ gnd discover MODEL POPULATION --out PROPOSAL --report REPORT \
              --actor ID --requested-at 2026-10-24T12:00:00+00:00 \
              [--families uniqueness,mandatory,value,frequency,subset,equality,exclusion] \
              [--max-values 20] [--max-pairs 256] [--format text|json]
-gnd discover MODEL POPULATION --families fact-type [--min-support 20] [--show-values] ...
+gnd discover MODEL POPULATION --families fact-type [--min-support 20] [--show-values] \
+             [--type-evidence EVIDENCE] ...
 ```
 
 `--actor` and `--requested-at` fill the proposal's audit. They are required, so
@@ -167,8 +168,55 @@ family's row visits are reported as `row_visits` in its own key, not in the
 report's `work` totals, so those totals mean what they meant before; the
 work ceiling does not bound them, and the family is bounded instead by the
 population's own size cap.
-`--min-support` and `--show-values` without `--families fact-type` are usage
-errors (64).
+`--min-support`, `--show-values` and `--type-evidence` without
+`--families fact-type` are usage errors (64).
+
+### Type evidence
+
+The family only counts. Whether two attributes mean the same thing, or how
+a multi-valued attribute should be modelled, is a judgement it leaves to a
+reader. `--type-evidence EVIDENCE` writes what that reader needs: format
+`gnd-type-evidence/1`, schema
+[`type-evidence.schema.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/type-evidence.schema.json).
+The proposal and the report are byte for byte what the same run writes
+without the option.
+
+- **One entry per group, in the family's order,** with an id `g0`, `g1`, …
+  local to the file. A reader that records judgements binds the file's own
+  SHA-256, so the ids stay meaningful. Each entry carries:
+  - the status the family gave it: `proposed`, `shape_match`, `multi_valued`,
+    `below_support`, `mixed_type` or `over_budget`;
+  - the proposed fact type id, when there is one;
+  - the role-player signature it would have, once typed;
+  - its value primitive, distinct entities (`support`), rows and the first
+    32 row ids;
+  - `multi`: how many entities have several distinct values, and the most
+    any one has;
+  - `exact_repeats`: rows that repeat an (entity, value) pair.
+- **Candidates:** every other fact type the group's entity type plays, with
+  its readings, roles, row count and whether its signature equals the
+  group's. It also has two overlaps: the group's entities that play it, and,
+  for a binary fact type whose other role has the group's value kind, the
+  (entity, value) pairs it already holds (otherwise `null`, and always
+  `null` when that role is redacted).
+- **Origin:** a candidate whose provenance names the group it came from,
+  `induced_from: {generic, attribute_sha256}`, carries `origin` with
+  `same_attribute`, the comparison with this group's attribute. A malformed
+  `induced_from` exits 3 and nothing is written.
+- **Disclosure:** the attribute value appears as `value` only when
+  `--show-values` is allowed, as in the report. Under `customer` no
+  attribute digest appears, neither the group's nor an origin's;
+  `same_attribute` is still given. The file records both decisions as
+  `show_values` and `show_digests`, beside the model's and population's
+  SHA-256 and `min_support`. A generic fact type whose attribute role is
+  redacted forms no group and is listed by id in `redacted_generics`.
+- **Size:** the file is at most 10 MiB. Groups come first, in order; when
+  they alone would pass the cap, the rest are left out and counted in
+  `truncated_groups`. Candidates then fill what remains, in order, and those
+  left out are counted in `truncated`, so the last groups lose theirs first.
+- **When it is written:** after the report, even when nothing is proposed.
+  It must be a fifth distinct path (64). An existing file is refused (11)
+  and a symbolic link (74), both before anything is read.
 
 ## Outputs
 
@@ -182,6 +230,8 @@ errors (64).
     internal defect.
 - **`--out`:** written only when something is emitted. A schema-3 evolve
   proposal of ADD constraint operations; preview it with `gnd evolve preview`.
+- **`--type-evidence`:** optional, with the `fact-type` family; see
+  [type evidence](#type-evidence).
 
 **What is skipped.** Everything skipped is counted in the report, never dropped
 silently:

@@ -2,11 +2,16 @@
 
 ## 1. Status
 
-**r1, draft, 2026-11-05. Not approved.** `auto=false`. No review has run over
-these bytes and no implementation file has been created. The owner's
-"go ahead" was relayed from the parent session to start drafting; it is not a
-reading of this spec and approves nothing in it. The owner gate (§11) asks
-for the instrument and the §7 rulings in this session.
+**r1, approved by the owner `(a2)` 2026-11-05** (SHA-256 of the r1 bytes
+before this mark: `eb24b8f3e13bb34d77a82cd18e3d4b54cab2ed5fc0d9a822886a224be898bb35`).
+`auto=false`. Asked in this session "do you approve TS2 spec r1 with the
+prose instrument and D1–D10 as proposed?", the owner answered "yes". An
+earlier relayed "yes" from the parent session was not counted as the
+approval. Instrument: this prose (§11). §7 D1–D10 ruled as proposed; D11 is
+the instrument. No spec review panel ran or was asked for. Implementation
+begins only on the owner's explicit go-ahead; no implementation file has
+been created. The approval rules plan TS-D4, TS-D5, TS-D9, TS-D10 and the
+questions TS-Q2 and TS-Q3 only as D1, D7, D8 and D3 state them.
 
 ## 2. Provenance
 
@@ -352,17 +357,17 @@ not change.
 
 | ID | Question | Readings and cost | Proposal |
 |---|---|---|---|
-| D1 (plan TS-D4, D9, D10) | Where verdicts enter; unjudged groups; contradicted verdicts | (a) judgement files read by `gnd discover`, full coverage required, contradictions exit 3; (b) skills write evolve operations, or fall back to the signature rule, or count and skip | (a), the plan's proposals |
-| D2 | Shapes vocabulary | (a) `many-to-many` and `skip` only: a "the extra values are errors" outcome is the skill's route to fixing the population, recorded as `skip`; (b) keep `functional` as the plan wrote it: every eligible group is `multi_valued`, so it would always exit 3, a verdict that can never be accepted | (a); refuted premise P2. TS2-C4 is kept as "`functional`, or any word outside the vocabulary, exits 3" |
-| D3 (TS-Q3) | `induced_from` under `customer` | (a) write it anyway: the model is the caller's file, but it puts a guessable digest of the attribute name into the model, which 008 removed from reports; (b) omit `induced_from` under `customer`: later customer runs have no `origin` for this fact type and the judge relies on overlap counts, and D4 cannot fire; (c) write a reference to the evidence digest and group id: not recomputable once the population changes | (b). Every judged proposal still carries `judgement`. T24 runs under `internal`; T24b shows `origin: null` under `customer` |
-| D4 | Re-inducing an induced attribute | (a) `distinct` or `many-to-many` on a group with a candidate whose origin names the same generic and attribute exits 3: a fact the CLI already computes, not a judgement of meaning; (b) accept it and let review catch the duplicate | (a) |
-| D5 | Truncated evidence | (a) `truncated_groups > 0` exits 3: some groups cannot be judged, and full coverage (D1) cannot hold; (b) groups absent from the evidence keep the signature rule: a quiet partial judgement | (a). Candidate truncation (`truncated > 0`) is allowed; `of` must name a listed candidate |
-| D6 | Marking judged entries in the report | (a) `judged: true` on judged `proposed[]` and `shape_matches[]` entries, plus `judgements` digests; (b) only `shape_matches[]`, as the plan's §5 says: a reader cannot tell a judged proposal from a deterministic one | (a); additive to plan §5 |
-| D7 (plan TS-D5) | Vendor the schemas into `gnd-orm-core/references` | (a) in TS2, now that both exist: moves the packaged-skill file inventory pin in a phase that ships no skill; (b) in TS3, beside the first skill that links them | (b) |
-| D8 (TS-Q2) | A rename on `duplicate` | (a) no: renaming a reading is `gnd-model-evolve`'s operation, and the judge may propose it in prose; (b) a `rename` field the CLI renders as a MODIFY: a breaking-class change the additive policy refuses | (a) |
-| D9 | The kind vocabulary and the DateTime defect | (a) move `_kind`, `_PRIMITIVE_FOR_KIND` and `_primitive_of` to a public home in `discover/types.py` (names without the underscore), behaviour unchanged, in the refactoring step; leave the DateTime defect to maintenance, because fixing it changes default output and TS-R1 forbids that here; (b) fix both in TS2 with a stated parity exception | (a) |
-| D10 | Rationale exemption for model text | (a) exempt texts that are whole tokens of the model bytes: the judge reads the model, so quoting a reading is not a leak; (b) no exemption: a rationale that quotes an existing reading whose word equals an attribute name is refused | (a) |
-| D11 | Approval instrument | (a) prose; (b) a committed fixture corpus with narrated outcomes first | §11 |
+| D1 (plan TS-D4, D9, D10) | Where verdicts enter; unjudged groups; contradicted verdicts | (a) judgement files read by `gnd discover`, full coverage required, contradictions exit 3; (b) skills write evolve operations, or fall back to the signature rule, or count and skip | (a), the plan's proposals — owner `(a2)` 2026-11-05 |
+| D2 | Shapes vocabulary | (a) `many-to-many` and `skip` only: a "the extra values are errors" outcome is the skill's route to fixing the population, recorded as `skip`; (b) keep `functional` as the plan wrote it: every eligible group is `multi_valued`, so it would always exit 3, a verdict that can never be accepted | (a); refuted premise P2. TS2-C4 is kept as "`functional`, or any word outside the vocabulary, exits 3" — owner `(a2)` 2026-11-05 |
+| D3 (TS-Q3) | `induced_from` under `customer` | (a) write it anyway: the model is the caller's file, but it puts a guessable digest of the attribute name into the model, which 008 removed from reports; (b) omit `induced_from` under `customer`: later customer runs have no `origin` for this fact type and the judge relies on overlap counts, and D4 cannot fire; (c) write a reference to the evidence digest and group id: not recomputable once the population changes | (b). Every judged proposal still carries `judgement`. T24 runs under `internal`; T24b shows `origin: null` under `customer` — owner `(a2)` 2026-11-05 |
+| D4 | Re-inducing an induced attribute | (a) `distinct` or `many-to-many` on a group with a candidate whose origin names the same generic and attribute exits 3: a fact the CLI already computes, not a judgement of meaning; (b) accept it and let review catch the duplicate | (a) — owner `(a2)` 2026-11-05 |
+| D5 | Truncated evidence | (a) `truncated_groups > 0` exits 3: some groups cannot be judged, and full coverage (D1) cannot hold; (b) groups absent from the evidence keep the signature rule: a quiet partial judgement | (a). Candidate truncation (`truncated > 0`) is allowed; `of` must name a listed candidate — owner `(a2)` 2026-11-05 |
+| D6 | Marking judged entries in the report | (a) `judged: true` on judged `proposed[]` and `shape_matches[]` entries, plus `judgements` digests; (b) only `shape_matches[]`, as the plan's §5 says: a reader cannot tell a judged proposal from a deterministic one | (a); additive to plan §5 — owner `(a2)` 2026-11-05 |
+| D7 (plan TS-D5) | Vendor the schemas into `gnd-orm-core/references` | (a) in TS2, now that both exist: moves the packaged-skill file inventory pin in a phase that ships no skill; (b) in TS3, beside the first skill that links them | (b) — owner `(a2)` 2026-11-05 |
+| D8 (TS-Q2) | A rename on `duplicate` | (a) no: renaming a reading is `gnd-model-evolve`'s operation, and the judge may propose it in prose; (b) a `rename` field the CLI renders as a MODIFY: a breaking-class change the additive policy refuses | (a) — owner `(a2)` 2026-11-05 |
+| D9 | The kind vocabulary and the DateTime defect | (a) move `_kind`, `_PRIMITIVE_FOR_KIND` and `_primitive_of` to a public home in `discover/types.py` (names without the underscore), behaviour unchanged, in the refactoring step; leave the DateTime defect to maintenance, because fixing it changes default output and TS-R1 forbids that here; (b) fix both in TS2 with a stated parity exception | (a) — owner `(a2)` 2026-11-05 |
+| D10 | Rationale exemption for model text | (a) exempt texts that are whole tokens of the model bytes: the judge reads the model, so quoting a reading is not a leak; (b) no exemption: a rationale that quotes an existing reading whose word equals an attribute name is refused | (a) — owner `(a2)` 2026-11-05 |
+| D11 | Approval instrument | (a) prose; (b) a committed fixture corpus with narrated outcomes first | prose — owner `(a2)` 2026-11-05 |
 
 ## 8. Tests and verification selection
 

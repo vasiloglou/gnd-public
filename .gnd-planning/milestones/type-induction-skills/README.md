@@ -18,7 +18,7 @@ and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 - [TS1 record](002-phase-TS1.md)
 - [TS2 spec (r1, approved)](notes/phase-TS2-spec.md)
 - [TS2 record](003-phase-TS2.md)
-- [TS3 spec (r1, draft)](notes/phase-TS3-spec.md)
+- [TS3 spec (r1, approved)](notes/phase-TS3-spec.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -45,6 +45,6 @@ proposed). TS2 implemented and recorded ([record](003-phase-TS2.md)); one
 review, five findings fixed, 31 of 31 mutations killed. PR #89 merged as
 `b4ef8cbf`. TS3 spec r1 drafted 2026-11-05 on the owner's "go ahead"; it
 records refuted premise P3 (TS3-C4's "TS5 fixture" cannot precede TS3) and
-finds the live IL6 skill census breaks on any new skill (D4). Next action:
-the owner gate on TS3 spec r1, D1–D9, including the one paid recorded run
-(D1).
+finds the live IL6 skill census breaks on any new skill (D4). TS3 spec r1 approved by
+the owner `(a3)` 2026-11-05 (prose, D1–D9 as proposed, one paid Sonnet
+recorded run). Next action: TS3 implementation, on the owner's go-ahead.

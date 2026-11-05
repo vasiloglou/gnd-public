@@ -2,11 +2,15 @@
 
 ## 1. Status
 
-**r1, draft, awaiting the owner gate.** `auto=false`. Drafted 2026-11-05 on
-the owner's "go ahead" typed in this session after the TS2 merge. That
-go-ahead selects drafting only; it approves no bytes. No implementation file
-has been created. The gate rules §7 D1–D9, including the paid recorded run
-(D1, plan TS-D6), which is ruled here or not at all.
+**r1, approved by the owner `(a3)` 2026-11-05** (SHA-256 of the r1 bytes
+before this mark: `08fb00529559e3475aa4ddb833f8f83dd7234dcae242c2f0bbf5435bb10325f7`).
+`auto=false`. Asked in this session "do you approve TS3 spec r1 with D1–D9
+as proposed, including one paid Sonnet recorded run?", the owner answered
+"Yes, approve". Instrument: this prose (D9). §7 D1–D9 ruled as proposed; D1
+authorizes one paid recorded run with `sonnet` (Claude Sonnet 5.5) on the
+owner's Claude Code account. No spec review panel ran or was asked for.
+Implementation begins only on the owner's explicit go-ahead; no
+implementation file has been created.
 
 ## 2. Provenance
 
@@ -297,15 +301,15 @@ no test calls a model.
 
 | ID | Question | Readings and cost | Proposal |
 |---|---|---|---|
-| D1 (plan TS-D6) | Recorded run | (a) one run with a model named here, paid, on the owner's account, authorized by this gate; (b) prose pins only: TS3-C4 recorded "not met" | (a), model `sonnet` (Claude Sonnet 5.5) unless the owner names another; one run, kept whatever it shows |
-| D2 | Fixture home (refuted premise P3) | (a) TS3 authors `tests/fixtures/type-judgements/round-two/` with its answer key; TS5's how-to reuses it; (b) wait for TS5, as TS3-C4's "TS5 fixture" says: TS3 would then precede its own input | (a) |
-| D3 | Decision rules and the 90% line | (a) R1–R4 as §6.3; (b) never ask, always decide: fewer turns, but a partial overlap becomes a guess | (a) |
-| D4 | The live IL6 census | (a) pin `test_il6_skill_census.py`'s git reads to `7818be1` (the ilp-learners close merge), as IK6 already is; (b) add rows to the closed milestone's `skill-census.md`: edits a closed record; (c) retire the test | (a) |
-| D5 | Vendored schema direction | (a) the runtime files stay canonical; the `gnd-orm-core` copies are vendored, with their own sync case and the paragraph reworded; (b) move the runtime files under `src/gnd/schema/` and make the skill copies canonical, as `SCHEMA_PAIRS` does: touches TS1/TS2 code paths, docs links and the wheel inventory | (a) |
-| D6 | Disclosure of the recorded run | (a) unset mode without `--show-values`: value-free evidence, the strictest case; (b) `internal`: the judge sees names | (a) |
-| D7 | Sibling routes | (a) the `gnd-orm-core` row, AGENTS.md and `docs/agents/index.md` only; the multi-valued route waits for TS4, since a link to a skill that does not exist fails; (b) also a `gnd-model-evolve` sentence | (a) |
-| D8 | Recorder | (a) a new `tools/record_judge_sessions.py` importing the redaction helpers, which TS4 extends with its own entry; (b) generalize `record_skill_sessions.py`: touches a tool pinned to the PL18 gate | (a) |
-| D9 | Approval instrument | (a) this prose, with §6.5's answer key as the narrated expected outcome; (b) a committed corpus first | (a) |
+| D1 (plan TS-D6) | Recorded run | (a) one run with a model named here, paid, on the owner's account, authorized by this gate; (b) prose pins only: TS3-C4 recorded "not met" | (a), model `sonnet` (Claude Sonnet 5.5) unless the owner names another; one run, kept whatever it shows — owner `(a3)` 2026-11-05 |
+| D2 | Fixture home (refuted premise P3) | (a) TS3 authors `tests/fixtures/type-judgements/round-two/` with its answer key; TS5's how-to reuses it; (b) wait for TS5, as TS3-C4's "TS5 fixture" says: TS3 would then precede its own input | (a) — owner `(a3)` 2026-11-05 |
+| D3 | Decision rules and the 90% line | (a) R1–R4 as §6.3; (b) never ask, always decide: fewer turns, but a partial overlap becomes a guess | (a) — owner `(a3)` 2026-11-05 |
+| D4 | The live IL6 census | (a) pin `test_il6_skill_census.py`'s git reads to `7818be1` (the ilp-learners close merge), as IK6 already is; (b) add rows to the closed milestone's `skill-census.md`: edits a closed record; (c) retire the test | (a) — owner `(a3)` 2026-11-05 |
+| D5 | Vendored schema direction | (a) the runtime files stay canonical; the `gnd-orm-core` copies are vendored, with their own sync case and the paragraph reworded; (b) move the runtime files under `src/gnd/schema/` and make the skill copies canonical, as `SCHEMA_PAIRS` does: touches TS1/TS2 code paths, docs links and the wheel inventory | (a) — owner `(a3)` 2026-11-05 |
+| D6 | Disclosure of the recorded run | (a) unset mode without `--show-values`: value-free evidence, the strictest case; (b) `internal`: the judge sees names | (a) — owner `(a3)` 2026-11-05 |
+| D7 | Sibling routes | (a) the `gnd-orm-core` row, AGENTS.md and `docs/agents/index.md` only; the multi-valued route waits for TS4, since a link to a skill that does not exist fails; (b) also a `gnd-model-evolve` sentence | (a) — owner `(a3)` 2026-11-05 |
+| D8 | Recorder | (a) a new `tools/record_judge_sessions.py` importing the redaction helpers, which TS4 extends with its own entry; (b) generalize `record_skill_sessions.py`: touches a tool pinned to the PL18 gate | (a) — owner `(a3)` 2026-11-05 |
+| D9 | Approval instrument | (a) this prose, with §6.5's answer key as the narrated expected outcome; (b) a committed corpus first | (a) — owner `(a3)` 2026-11-05 |
 
 ## 8. Tests and verification selection
 

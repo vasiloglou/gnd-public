@@ -37,6 +37,11 @@ Walk through it in [From several documents to one checked answer](how-to/compose
   attribute by digest; `--show-values` follows the disclosure mode. The
   default seven families are unchanged; see
   [constraint discovery](reference/discover.md#proposing-fact-types-from-generic-rows).
+- **Type evidence** (type-induction-skills TS1). `gnd discover --families
+  fact-type --type-evidence EVIDENCE` also writes each group's counts and the
+  fact types its entity type already plays, for a judgement skill to read;
+  the other outputs are unchanged. See
+  [type evidence](reference/discover.md#type-evidence).
 
 ## Unreleased: model growth guardrails (2026-11-04)
 

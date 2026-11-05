@@ -21,6 +21,7 @@ from gnd import resolve_version
 from gnd.artifacts import ArtifactError
 from gnd.checker import check
 from gnd.discover import output, types
+from gnd.discover import type_evidence as evidence
 from gnd.discover.candidates import (
     CATALOGUE,
     FAMILIES,
@@ -320,6 +321,7 @@ def discover(
         "final": final,
         "type_operations": () if type_proposals is None else tuple(type_proposals.operations),
         "type_proposals": type_proposals,
+        "view": view,
         "fields": {
             "schema_version": output.REPORT_SCHEMA_VERSION,
             "tool": "gnd",
@@ -372,13 +374,23 @@ def _cmd_discover(
     min_support: int = 20,
     show_values: bool = False,
     show_digests: bool = True,
+    type_evidence: str | None = None,
 ) -> int:
     model_path, population_path = Path(model), Path(population)
     out_path, report_path = Path(out), Path(report)
-    resolved = [p.resolve() for p in (out_path, report_path, model_path, population_path)]
+    evidence_path = None if type_evidence is None else Path(type_evidence)
+    if evidence_path is not None and types.FAMILY not in families:
+        _stderr("--type-evidence needs --families fact-type")
+        return EXIT_USAGE
+    outputs = (out_path, report_path) + (() if evidence_path is None else (evidence_path,))
+    resolved = [p.resolve() for p in (*outputs, model_path, population_path)]
     if len(set(resolved)) != len(resolved):
-        # --out, --report and the two inputs must be four different files (R9).
-        _stderr("--out, --report, MODEL and POPULATION must be four different paths")
+        # --out, --report and the two inputs must be four different files (R9);
+        # with --type-evidence, five (TS1).
+        if evidence_path is None:
+            _stderr("--out, --report, MODEL and POPULATION must be four different paths")
+        else:
+            _stderr("--out, --report, --type-evidence, MODEL and POPULATION must be five different paths")
         return EXIT_USAGE
     for path in (model_path, population_path):
         if not path.is_file():
@@ -387,10 +399,16 @@ def _cmd_discover(
     if out_path.is_symlink():
         _stderr(f"refusing to write through symbolic link {out_path}")
         return EXIT_IO
+    if evidence_path is not None and evidence_path.is_symlink():
+        _stderr(f"refusing to write through symbolic link {evidence_path}")
+        return EXIT_IO
     if out_path.exists():
         # Owner ruling IK4-Q1 (2026-10-25): an existing proposal is never
         # overwritten or left beside a newer report; the run refuses first.
         _stderr(f"--out {out_path} already exists; nothing was written")
+        return EXIT_COLLISION
+    if evidence_path is not None and evidence_path.exists():
+        _stderr(f"--type-evidence {evidence_path} already exists; nothing was written")
         return EXIT_COLLISION
     try:
         result = discover(
@@ -419,6 +437,7 @@ def _cmd_discover(
         _stderr(f"could not read input: {error}")
         return EXIT_IO
     fields = result["fields"]
+    proposal_bytes = None
     try:
         if result["final"] or result["type_operations"]:
             proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
@@ -434,14 +453,34 @@ def _cmd_discover(
                     proposal_bytes = None
                     break
                 proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
-            if proposal_bytes is not None:
-                output.write(out_path, proposal_bytes)
-                fields["proposal"] = str(out_path)
-            else:
-                fields["proposal"] = None
-        else:
-            fields["proposal"] = None
+    except OSError as error:
+        _stderr(f"could not write output: {error}")
+        return EXIT_IO
+    fields["proposal"] = None if proposal_bytes is None else str(out_path)
+    evidence_bytes = None
+    if evidence_path is not None:
+        # Built after the written-bytes trim, so every status is final, and
+        # before any write, so a malformed induced_from writes nothing (TS1).
+        try:
+            evidence_bytes = evidence.evidence_bytes(evidence.build_evidence(
+                result["view"], result["type_proposals"],
+                model_sha256=fields["model"]["sha256"], population_sha256=fields["population"]["sha256"],
+                min_support=min_support, show_values=show_values, show_digests=show_digests,
+                redacted_generics=result["type_proposals"].redacted_generics,
+                redacted_roles=RedactionPolicy.from_model(result["view"].model).effective_roles,
+            ))
+        except evidence.TypeEvidenceError as error:
+            _stderr(str(error))
+            return EXIT_ILL_FORMED
+        except evidence.TypeEvidenceOverflow as error:
+            _stderr(f"internal: {error}")
+            return EXIT_INTERNAL
+    try:
+        if proposal_bytes is not None:
+            output.write(out_path, proposal_bytes)
         output.write(report_path, output.canonical_bytes(fields))
+        if evidence_bytes is not None:
+            output.write(evidence_path, evidence_bytes)
     except OSError as error:
         _stderr(f"could not write output: {error}")
         return EXIT_IO

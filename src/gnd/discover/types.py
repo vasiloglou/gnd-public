@@ -37,18 +37,52 @@ class GenericDeclarationError(ValueError):
 
 
 @dataclass
+class GroupRecord:
+    """One group as the family left it, for the type evidence (TS1).
+
+    ``attribute`` and ``pairs`` are population data held in memory; the
+    evidence writer decides what of them is emitted.
+    """
+
+    generic: str
+    attribute_sha256: str
+    status: str  # proposed, shape_match, multi_valued, below_support, mixed_type, over_budget
+    signature: str | None  # canonical JSON of the role players; None before typing
+    value_primitive: str | None  # None for a mixed-type group
+    entity_object_type: str
+    support: int
+    rows: int
+    multi_entities: int
+    multi_max: int
+    exact_repeats: int
+    row_ids: tuple[str, ...]  # first ROW_IDS_MAX
+    attribute: Any
+    pairs: frozenset[tuple[Any, Any]]  # typed (entity, value) identities
+    fact_type: str | None = None  # the proposed id, when status is proposed
+
+
+ROW_IDS_MAX = 32
+
+
+@dataclass
 class TypeProposals:
     operations: list[EvolutionOperation] = field(default_factory=list)
     report: dict[str, Any] = field(default_factory=dict)
     # Operations per proposed group, in order, so a caller can drop whole
     # groups from the tail when the written proposal is over its cap.
     group_sizes: list[int] = field(default_factory=list)
+    # Every group formed, in order; the proposed ones also in ``_proposed``.
+    groups: list[GroupRecord] = field(default_factory=list)
+    redacted_generics: list[str] = field(default_factory=list)
+    _proposed: list[GroupRecord] = field(default_factory=list)
 
     def drop_last(self, count: int) -> None:
         for _ in range(min(count, len(self.group_sizes))):
             del self.operations[len(self.operations) - self.group_sizes.pop():]
             self.report["proposed"].pop()
             self.report["skipped"]["over_budget"] += 1
+            dropped = self._proposed.pop()
+            dropped.status, dropped.fact_type = "over_budget", None
 
 
 def generic_declarations(view: PopulationView) -> dict[str, dict[str, str]]:
@@ -109,6 +143,7 @@ def propose(
     for generic_id, spec in declared.items():
         if (generic_id, spec["attribute"]) in redacted:
             skipped["redacted_attribute_roles"] += 1
+            result.redacted_generics.append(generic_id)
             continue
         roles = {role.name: role for role in view.roles[generic_id]}
         entity_role, value_role = roles[spec["entity"]], roles[spec["value"]]
@@ -122,25 +157,40 @@ def propose(
             if key is None or entity is None or value is None:
                 continue
             group = groups.setdefault(key, {"attribute": row[spec["attribute"]], "rows": [],
-                                            "entities": {}, "values": {}, "kinds": set()})
+                                            "entities": {}, "values": {}, "kinds": set(), "pairs": set()})
             group["rows"].append(view.fact_id(generic_id, row_index))
             group["entities"].setdefault(entity, []).append(view.fact_id(generic_id, row_index))
             # Distinct values, not rows: an exact repeated row is one value (close review).
             group["values"].setdefault(entity, set()).add(value)
             group["kinds"].add(value[0])
+            group["pairs"].add((entity, value))
         for number, group in enumerate(groups.values()):
             digest = _value_digest(group["attribute"])
             support = len(group["entities"])
+            counts = [len(values) for values in group["values"].values()]
+            record = GroupRecord(
+                generic=generic_id, attribute_sha256=digest, status="", signature=None,
+                value_primitive=(_primitive_of(view, group, spec, generic_id)
+                                 if len(group["kinds"]) == 1 else None),
+                entity_object_type=entity_role.object_type, support=support, rows=len(group["rows"]),
+                multi_entities=sum(1 for count in counts if count > 1), multi_max=max(counts),
+                exact_repeats=len(group["rows"]) - len(group["pairs"]),
+                row_ids=tuple(group["rows"][:ROW_IDS_MAX]), attribute=group["attribute"],
+                pairs=frozenset(group["pairs"]))
+            result.groups.append(record)
             if len(group["kinds"]) != 1:
                 skipped["mixed_type_groups"] += 1
+                record.status = "mixed_type"
                 continue
             if support < min_support:
                 skipped["below_support"] += 1
+                record.status = "below_support"
                 continue
             if any(len(values) > 1 for values in group["values"].values()):
                 # D5: an entity with several values breaks the uniqueness the
                 # envelope sits on, so the group is counted, not proposed.
                 skipped["multi_valued"] += 1
+                record.status = "multi_valued"
                 continue
             # Never reuse an id the model already holds (review F1): a clash
             # takes the next free suffix.
@@ -154,7 +204,9 @@ def propose(
                 value_type = f"{new_id}_value"
             players = {"entity": entity_role.object_type, "value": value_type}
             match = existing.get(role_player_signature(players))
+            record.signature = canonical_json_bytes(list(role_player_signature(players))).decode("utf-8").strip()
             if match is not None:
+                record.status = "shape_match"
                 shape_matches.append({"generic": generic_id, "existing": match,
                                       **({"attribute_sha256": digest} if show_digests else {})})
                 continue
@@ -188,6 +240,7 @@ def propose(
             cost += 3 * len(json.dumps(constraint, ensure_ascii=False))
             if budget is not None and used + cost > budget:
                 skipped["over_budget"] += 1
+                record.status = "over_budget"
                 continue
             used += cost
             taken.update({new_id, f"{new_id}_value"})
@@ -207,6 +260,8 @@ def propose(
             if show_values:
                 entry["value"] = group["attribute"]
             proposed.append(entry)
+            record.status, record.fact_type = "proposed", new_id
+            result._proposed.append(record)
     result.report = {"min_support": min_support, "proposed": proposed, "shape_matches": shape_matches,
                      "skipped": skipped, "row_visits": visits}
     return result

@@ -220,3 +220,7 @@ exactly one row. A test keeps this table equal to the code.
 
 Names bound in `gnd.api` that are library types or helpers (`Model`,
 `load_population`, …) emit nothing and are not listed.
+
+`gnd discover --type-evidence` is a further output of the same command and
+follows the same rule: attribute values only where `--show-values` is
+allowed, and no attribute digest under `customer`.

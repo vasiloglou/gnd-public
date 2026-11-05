@@ -74,7 +74,7 @@ def test_retained_candidate_identity(candidate):
             skill_names = {n.removeprefix('gnd/skills/') for n in names
                            if n.startswith('gnd/skills/') and not n.endswith('/')}
             assert skill_names == EXPECTED_SKILL_FILES
-            assert sum(n.endswith('/SKILL.md') for n in names) == 17
+            assert sum(n.endswith('/SKILL.md') for n in names) == 18
             assert any(n.endswith('/LICENSE') for n in names)
             assert any(n.endswith('/NOTICE') for n in names)
             for domain in ['dispatch', 'release']:

@@ -45,8 +45,9 @@ not to quote values is the main control.
 2. **List the eligible groups:** exactly those with status `proposed`,
    `shape_match` or `over_budget`, in evidence order. If there are none, say
    so and write nothing. Groups with status `multi_valued` are not this
-   skill's: they need a `shapes` judgements file. Other statuses take no
-   verdict.
+   skill's: they need a `shapes` judgements file from
+   [gnd-model-multivalued](../gnd-model-multivalued/SKILL.md). Other
+   statuses take no verdict.
 3. **Decide each eligible group** by the rules below, in order. A group they
    cannot decide goes to the user as a question that names its id, its counts
    and its candidates' readings. **No file is written until every eligible

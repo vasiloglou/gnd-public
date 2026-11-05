@@ -48,7 +48,7 @@ from gnd import cli, install
 #: gnd-new-project and the milestone-record contract reference).
 #: Duplicated deliberately: if a skill file is added, BOTH guards should fail
 #: and be updated as one decision.
-EXPECTED_SKILL_FILE_COUNT = 68  # TS3: gnd-judge-fact-types and the two vendored type schemas
+EXPECTED_SKILL_FILE_COUNT = 69  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued
 
 #: The fifteen directory names the packaged tree carries. The installer discovers
 #: them by traversal and never by name (D-06/D-26); this literal exists so a
@@ -62,6 +62,7 @@ EXPECTED_SKILL_NAMES = frozenset(
         "gnd-extract",
         "gnd-export",
         "gnd-judge-fact-types",
+        "gnd-model-multivalued",
         "gnd-model-evolve",
         "gnd-model-from-code",
         "gnd-model-from-text",

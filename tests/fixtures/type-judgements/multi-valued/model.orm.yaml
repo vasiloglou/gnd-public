@@ -1,0 +1,45 @@
+version: 2
+model_id: urn:gnd-fixture:ts4-multi-valued@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: item, name: Item, kind: value, primitive: String}
+  - {id: attribute_name, name: AttributeName, kind: value, primitive: String}
+  - {id: attribute_value, name: AttributeValue, kind: value, primitive: String}
+  - {id: label, name: Label, kind: value, primitive: String}
+fact_types:
+  - id: item_has_attribute
+    reading: "{Item} has attribute {AttributeName} with value {AttributeValue}"
+    roles:
+      - {object_type: item, role_name: item}
+      - {object_type: attribute_name, role_name: name}
+      - {object_type: attribute_value, role_name: value}
+    provenance:
+      generic: {entity: item, attribute: name, value: value}
+  - id: item_has_attribute_induced_0
+    reading: "{Item} is tagged {AttributeValue}"
+    roles: [{object_type: item, role_name: entity}, {object_type: attribute_value, role_name: value}]
+    provenance:
+      induced_from: {generic: item_has_attribute, attribute_sha256: a1f80da9143463391080d08702627e741ac5452b11d815a226bdfc9801f46cc2}
+    constraints:
+      - id: each_tag_once_per_item
+        type: uniqueness
+        scope: internal
+        roles: [entity, value]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "An item has each tag at most once."}
+  - id: item_has_label
+    reading: "{Item} has label {Label}"
+    roles: [{object_type: item, role_name: item}, {object_type: label, role_name: label}]
+    constraints:
+      - id: each_label_once_per_item
+        type: uniqueness
+        scope: internal
+        roles: [item, label]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "An item has each label at most once."}
+constraints: []
+rejected_proposals: []

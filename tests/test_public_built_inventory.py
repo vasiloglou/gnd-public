@@ -312,11 +312,11 @@ def test_public_built_surfaces_agree_with_current_inventory(
         "sdist": _sdist_skill_files(sdist),
         "wheel": _wheel_skill_files(wheel),
     }
-    assert len(EXPECTED_SKILL_FILES) == EXPECTED_SKILL_FILE_COUNT == 68
-    assert len(EXPECTED_SKILL_NAMES) == 17
+    assert len(EXPECTED_SKILL_FILES) == EXPECTED_SKILL_FILE_COUNT == 69
+    assert len(EXPECTED_SKILL_NAMES) == 18
     for label, entries in surfaces.items():
         assert entries == EXPECTED_SKILL_FILES, _diff(label, entries)
         assert _skill_names(entries) == EXPECTED_SKILL_NAMES
-        assert len(entries) == 68
-        assert len(_skill_names(entries)) == 17
+        assert len(entries) == 69
+        assert len(_skill_names(entries)) == 18
     assert surfaces["source"] == surfaces["sdist"] == surfaces["wheel"]

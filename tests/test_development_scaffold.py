@@ -138,7 +138,7 @@ def check_twins(root):
             assert p.read_bytes() == q.read_bytes()
             assert stat.S_IMODE(p.stat().st_mode) == stat.S_IMODE(q.stat().st_mode)
     names = {p.parent.name for p in (root/'src/gnd/skills').glob('*/SKILL.md')}
-    assert len(names) == 17
+    assert len(names) == 18
     for base in [left, right]:
         links = {p.name:p for p in base.iterdir() if p.is_symlink()}
         assert set(links) == names

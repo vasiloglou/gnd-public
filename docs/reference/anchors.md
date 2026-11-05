@@ -61,7 +61,8 @@ document. They differ in which anchors count as the same:
 | 2 | fact key, role, span start and end, occurrence | `duplicate anchor`: several anchors per fact role are allowed |
 
 In version 2, the same range with a different `excerpt_sha256` is still a
-duplicate: one range has one excerpt. `gnd extract` writes version 1.
+duplicate: one range has one excerpt. No `gnd` command writes a sidecar; the
+extractor does, and `gnd.anchors.write_anchor_sidecar` publishes either version.
 
 ## When a role with several anchors passes
 

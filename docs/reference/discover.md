@@ -16,6 +16,7 @@ gnd discover MODEL POPULATION --out PROPOSAL --report REPORT \
              --actor ID --requested-at 2026-10-24T12:00:00+00:00 \
              [--families uniqueness,mandatory,value,frequency,subset,equality,exclusion] \
              [--max-values 20] [--max-pairs 256] [--format text|json]
+gnd discover MODEL POPULATION --families fact-type [--min-support 20] [--show-values] ...
 ```
 
 `--actor` and `--requested-at` fill the proposal's audit. They are required, so
@@ -23,7 +24,9 @@ the same inputs always produce the same bytes.
 
 ## What it looks for
 
-Single-role rules of seven families:
+By default, single-role rules of seven families. The opt-in `fact-type`
+family is described in
+[proposing fact types from generic rows](#proposing-fact-types-from-generic-rows).
 
 | Family | Example | Candidates |
 |---|---|---|

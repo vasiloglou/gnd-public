@@ -82,8 +82,8 @@ OpenAI-compatible endpoint, including a small hosted or local model.
 
 ## Same checks from Python
 
-Your application calls the same checker in-process through `gnd.api`. It has seven
-stable functions:
+Your application calls the same checker in-process through `gnd.api`. It has eleven
+stable functions; the ones an agent loop uses most are:
 
 | Function | Use it to |
 |---|---|

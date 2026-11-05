@@ -301,7 +301,9 @@ and it must be named rather than left for the next reader to discover.
 - Keep a new `induced` constraint `proposed` + `deontic` with no `reviewed_in`; confirm it only as a
   reviewed status change of the existing proposed constraint.
 - A `gnd discover` proposal adds only such induced constraints, with population-bound support;
-  preview it like any other proposal and confirm each rule separately.
+  with the opt-in `--families fact-type` it also adds a placeholder-named fact type (and a value
+  type when needed) per recurring attribute of a declared generic fact type, moving no rows.
+  Preview it like any other proposal and confirm each rule separately.
 - A `gnd import ilp-rules` proposal adds only induced, advisory guarded constraints whose coverage
   GND re-checked against the labels; review it the same way.
 - A `gnd import mined-rules` proposal adds only induced, advisory guarded constraints that GND

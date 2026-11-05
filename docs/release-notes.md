@@ -3,15 +3,18 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
-## Unreleased: composition and type induction (in progress)
+## Unreleased: composition and type induction
+
+One checked answer from several documents, traced back to a passage in each.
+Walk through it in [From several documents to one checked answer](how-to/compose-documents.md).
 
 - **Several anchors per fact role** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
   An anchor sidecar at `schema_version: 2` may hold several anchors for one
   fact role, and the role passes only when every one binds. A repeated
   anchor (same fact, role, span and occurrence) is refused. Version-1
-  sidecars check as before, and `gnd extract` still writes version 1. The
-  format is in the new [anchor sidecar reference](reference/anchors.md),
-  with a published `anchor-sidecar.schema.json`.
+  sidecars check as before. The format is in the new
+  [anchor sidecar reference](reference/anchors.md), with a published
+  `anchor-sidecar.schema.json`.
 - **Composition** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
   `gnd compose MODEL DIR --out COMPOSED --record RECORD` and
   `gnd.api.compose` build one population from several anchored sources under

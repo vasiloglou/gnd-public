@@ -299,8 +299,10 @@ Path("route-certificate.json").write_text(json.dumps(result["certificate"]))
 print("The requested route has a finite derivation witness.")
 ```
 
-`witness(model_path, population_path, targets_path, *, reference_root=None)`
-uses file paths. It returns `exit_code`, per-target `results`, `certificate`,
+`witness(model_path, population_path, targets_path, *, reference_root=None,
+composition=None)` uses file paths; `composition=` names the record of a
+composed population and yields a version-2 certificate
+([composition](composition.md#trace-a-derived-fact-back-to-its-sources)). It returns `exit_code`, per-target `results`, `certificate`,
 `reason`, and bounded `work` information. With no disclosure mode set, the Python result contains raw values
 in the certificate; the CLI's default witness view removes them. Under
 `GND_DISCLOSURE=customer` the result is the default view with no
@@ -324,7 +326,7 @@ print("The route proof replayed against the bound inputs.")
 ```
 
 `replay(model_path, population_path, certificate_path, *,
-reference_root=None)` checks a raw finite certificate with an independent
+reference_root=None, composition=None)` checks a raw finite certificate with an independent
 inference kernel and returns the same witness-result envelope. The certificate
 binds the model, candidate, and fixed references; changed inputs can invalidate
 that binding. The witness/replay bands have their own meaning: `0` all targets

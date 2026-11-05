@@ -31,6 +31,9 @@ not told how to make the facts pass.
 To pin important values to the text, an `anchored` constraint checks that each value
 has a witness span in the bound source document
 (`gnd check … --anchors … --document report.md`).
+The sidecar format is in the [anchor sidecar reference](../reference/anchors.md); to
+combine several anchored documents into one population, see
+[composition](../reference/composition.md).
 
 ## Write a document from facts
 

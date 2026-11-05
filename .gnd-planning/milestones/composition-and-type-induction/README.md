@@ -27,3 +27,6 @@ Predecessor: [model-growth-guardrails](../model-growth-guardrails/README.md).
   reviewer, approve-with-fixes, one blocking finding fixed; focused gate 1341 passed).
 - CT4 done: [005-phase-CT4.md](005-phase-CT4.md) (spec delegated `(d1)`; one
   reviewer, approve-with-fixes; focused gate 579 passed).
+- CT5 done: [006-phase-CT5.md](006-phase-CT5.md) (spec delegated `(d1)`; DC2
+  shown, owner "Yes, finish it"; one docs reviewer, no blockers, nine findings
+  fixed; docs gates exit 0).

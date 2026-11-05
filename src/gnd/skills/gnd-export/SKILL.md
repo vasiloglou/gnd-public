@@ -7,7 +7,9 @@ description: Exports finite Lean models with unproved obligations, finite ground
 
 Read the [export boundary](references/export-contract.md) and
 [certificate contract](references/witness-contract.md). The closed
-[certificate schema](references/witness.schema.json) pins version 1.
+[certificate schema](references/witness.schema.json) pins versions 1 and 2.
+Version 2 is for a population made by `gnd compose`: add `--composition RECORD`
+to both `gnd witness` and `gnd replay`, as the certificate contract describes.
 
 1. Select the model, candidate population, fixed-reference root and a nonempty
    version-1 target request. Preserve exact input bytes.

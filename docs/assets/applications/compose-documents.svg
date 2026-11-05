@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">Two contracts and what each contributes</title><desc id="desc">Two documents side by side. Agreement C-1 names Acme Corp. as the supplier and says the supplier is based in Lyon; its extraction holds C-1 has party Acme Corp., with two anchors on the party because the name appears twice, and Acme Corp. is based in Lyon. Addendum C-2 is signed by ACME CORP. and says ACME CORP. is based in Lyon; its extraction holds C-2 has party ACME CORP. and ACME CORP. is based in Lyon. Each population has its own anchor sidecar binding it to its own document. Below, the question: which city is each contract's party based in?</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:15px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:14px} .quote{font-style:italic} .caps{fill:#b45309;font-weight:700}</style><rect width="640" height="600" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Two contracts, one party, two spellings</text>
+<rect x="24" y="62" width="288" height="134" rx="12" fill="#fff"/>
+<text x="40" y="88" class="strong">Agreement C-1</text>
+<text x="40" y="110" class="small mono">contract-a/document.txt</text>
+<text x="40" y="136" class="small quote">"Agreement C-1 is entered into by</text>
+<text x="40" y="156" class="small quote">Acme Corp. as the supplier. The</text>
+<text x="40" y="176" class="small quote">supplier, Acme Corp., is based in Lyon."</text>
+<rect x="328" y="62" width="288" height="134" rx="12" fill="#fff"/>
+<text x="344" y="88" class="strong">Addendum C-2</text>
+<text x="344" y="110" class="small mono">contract-b/document.txt</text>
+<text x="344" y="136" class="small quote">"Addendum C-2 is signed by</text>
+<text x="344" y="156" class="small quote"><tspan class="caps">ACME CORP.</tspan> as the supplier.</text>
+<text x="344" y="176" class="small quote"><tspan class="caps">ACME CORP.</tspan> is based in Lyon."</text>
+<path class="edge" d="M168 196L168 224"/>
+<path class="edge" d="M472 196L472 224"/>
+<text x="180" y="216" class="small">extracted on its own</text>
+<text x="484" y="216" class="small">extracted on its own</text>
+<rect x="24" y="230" width="288" height="112" rx="12" fill="#eef5f8"/>
+<text x="40" y="256" class="small mono">contract-a/population.json</text>
+<text x="40" y="282" class="small">C-1 has party Acme Corp.</text>
+<text x="40" y="304" class="small">Acme Corp. is based in Lyon</text>
+<text x="40" y="326" class="small">claims: C-1 is in Lyon</text>
+<rect x="328" y="230" width="288" height="112" rx="12" fill="#eef5f8"/>
+<text x="344" y="256" class="small mono">contract-b/population.json</text>
+<text x="344" y="282" class="small">C-2 has party <tspan class="caps">ACME CORP.</tspan></text>
+<text x="344" y="304" class="small"><tspan class="caps">ACME CORP.</tspan> is based in Lyon</text>
+<text x="344" y="326" class="small">claims: C-2 is in Lyon</text>
+<rect x="24" y="356" width="288" height="96" rx="12" fill="#fff"/>
+<text x="40" y="382" class="small mono">population.json.anchors.json</text>
+<text x="40" y="406" class="small">party: 2 anchors (named twice)</text>
+<text x="40" y="428" class="small">city: 1 anchor · binds A's document</text>
+<rect x="328" y="356" width="288" height="96" rx="12" fill="#fff"/>
+<text x="344" y="382" class="small mono">population.json.anchors.json</text>
+<text x="344" y="406" class="small">party: 1 anchor</text>
+<text x="344" y="428" class="small">city: 1 anchor · binds B's document</text>
+<rect x="24" y="478" width="592" height="96" rx="12" fill="#fff0e4"/>
+<text x="40" y="506" class="strong">The question needs both documents</text>
+<text x="40" y="532" class="small">Which city is each contract's party based in? The rule joins on the party,</text>
+<text x="40" y="554" class="small">and the two documents spell it differently. Nobody has said they are the same yet.</text>
+</svg>

@@ -61,6 +61,8 @@ def build_evidence(directory: Path) -> Path:
     subprocess.run([GND, "discover", "model.orm.yaml", "items.population.json", *COMMON, "--type-evidence",
                     "evidence.json", "--out", "first.proposal.json", "--report", "first.report.json"],
                    cwd=directory, env=_environment(), capture_output=True, check=True, timeout=300)
+    for name in ("items.population.json", "first.proposal.json", "first.report.json"):   # review F5
+        (directory / name).unlink(missing_ok=True)
     return directory / "evidence.json"
 
 
@@ -72,6 +74,28 @@ def judgements_in(workspace: Path) -> Path | None:
         except (ValueError, AttributeError, OSError):
             continue
     return None
+
+
+def workspace_digests(workspace: Path) -> dict[str, str]:
+    """Each workspace file's SHA-256, so an edited input is seen, not only a new name (review F6)."""
+    return {p.name: sha256(p.read_bytes()) for p in sorted(workspace.iterdir()) if p.is_file()}
+
+
+def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
+    """Tool inputs naming any needle, read from the raw streams before redaction hides paths (review F5)."""
+    found = []
+    for stream in streams:
+        for line in stream.splitlines():
+            try:
+                event = json.loads(line)
+            except ValueError:
+                continue
+            for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
+                if isinstance(part, dict) and part.get("type") == "tool_use":
+                    call = json.dumps(part.get("input"), ensure_ascii=False)
+                    if any(needle in call for needle in needles):
+                        found.append(call)
+    return found
 
 
 def tool_calls(target: Path) -> list[str]:
@@ -138,8 +162,8 @@ def record_run(skill: str, model: str, out: Path) -> dict:
         shutil.copytree(ROOT / "src/gnd/skills", plugin / "src/gnd/skills")
         shutil.copyfile(FIXTURE / "model.orm.yaml", workspace / "model.orm.yaml")
         shutil.copyfile(evidence, workspace / "evidence.json")
-        before = sorted(p.name for p in workspace.iterdir())
-        asked = None
+        before = workspace_digests(workspace)
+        asked, raw = None, []
         for number in range(1, MAX_TURNS + 1):
             said = plan["turns"][number - 1] if number <= len(plan["turns"]) else plan["agree"]
             command = ["claude", "--print", "--plugin-dir", str(plugin), "--permission-mode", "acceptEdits",
@@ -152,6 +176,7 @@ def record_run(skill: str, model: str, out: Path) -> dict:
             except subprocess.TimeoutExpired as error:
                 stream = error.stdout.decode() if isinstance(error.stdout, bytes) else (error.stdout or "")
                 code = None
+            raw.append(stream)
             (target / f"turn-{number:02d}.jsonl").write_text(
                 kept_stream(redact(stream.replace(str(plugin), "<plugin>"), workspace)), encoding="utf-8")
             result = {}
@@ -171,17 +196,19 @@ def record_run(skill: str, model: str, out: Path) -> dict:
             if code != 0 or (written is not None and number >= len(plan["turns"])):
                 break
         written = judgements_in(workspace)
-        after = sorted(p.name for p in workspace.iterdir())
+        after = workspace_digests(workspace)
         (target / "workspace.json").write_text(json.dumps({"before": before, "after": after}, indent=1) + "\n",
                                                encoding="utf-8")
         if written is not None:
             shutil.copyfile(written, target / written.name)
         checks = check(target, written, evidence, plan["option"])
         checks["asked_before_writing"] = asked
-        checks["only_judgements_new"] = sorted(set(after) - set(before)) == ([written.name] if written else [])
-        calls = tool_calls(target)
-        checks["no_apply_call"] = not any("evolve apply" in call for call in calls)
-        checks["no_population_access"] = not any("population" in call or str(FIXTURE) in call for call in calls)
+        new = sorted(set(after) - set(before))
+        checks["only_judgements_new"] = new == ([written.name] if written else []) and all(
+            after.get(name) == digest for name, digest in before.items())
+        checks["no_apply_call"] = not forbidden_calls(raw, ["evolve apply"])
+        checks["no_population_access"] = not forbidden_calls(
+            raw, ["population", "answer-key", str(FIXTURE), str(evidence.parent), str(ROOT / "tests")])
         kept = [p.read_text(encoding="utf-8", errors="replace") for p in sorted(target.rglob("*")) if p.is_file()]
         checks["no_canary"] = not any(canary in text for canary in CANARIES for text in kept)
         return {"model": model, "turns": len(turns), "turn_log": turns, "judgements": written.name if written else None,

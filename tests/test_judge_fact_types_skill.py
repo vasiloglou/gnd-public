@@ -224,3 +224,64 @@ def test_t17_no_downstream_name():
               for token in set(re.findall(r"[a-z][a-z0-9_-]+", body.lower()))
               if hashlib.sha256(token.encode()).hexdigest() in DOWNSTREAM]
     assert leaked == []
+
+
+# --- review regressions (phase-TS3-claude-review.md) -------------------------
+
+CLAUSES = {
+    # F1: free text the CLI scans must not carry a number a hidden value could equal
+    "F1-numbers": "When the evidence's `show_values` is false, write no number standing on its own",
+    "F1-refusal": "If a refusal names `judge.skill`, stop and tell the user",
+    # F2: R3 needs a comparable candidate; all-null overlaps are R4's
+    "F2": "at least one candidate has a non-null `overlap.pairs` and every such candidate has 0",
+    # F3: candidate truncation sends R3's case to the user
+    "F3": "When the evidence's `truncated` is above 0, R3 does not apply",
+    # F4: R1 needs the same generic fact type, as the CLI's D4 does
+    "F4": "whose `origin.generic` is the group's `generic` and whose `origin.same_attribute` is true",
+    # F7: the key clause of each rule and the eligible statuses
+    "F7-R1": "the verdict is `duplicate` of it",
+    "F7-R2": "at least 90% of the group's distinct pairs",
+    "F7-eligible": "exactly those with status `proposed`, `shape_match` or `over_budget`",
+}
+
+
+@pytest.mark.parametrize("name", sorted(CLAUSES))
+def test_review_each_rule_states_its_key_clause(name):
+    assert CLAUSES[name] in text()
+
+
+def test_review_f7_every_sentence_naming_apply_denies_it():
+    sentences = re.split(r"(?<=[.!?])\s+", text())
+    named = [s for s in sentences if "evolve apply" in s]
+    assert named and all("never" in s for s in named), named
+    seeded = re.split(r"(?<=[.!?])\s+", text() + " Then run `gnd evolve apply MODEL proposal.json` yourself.")
+    assert not all("never" in s for s in seeded if "evolve apply" in s)
+
+
+def test_review_f5_raw_tool_calls_are_checked_before_redaction():
+    raw = "\n".join(json.dumps({"type": "assistant", "message": {"content": [
+        {"type": "tool_use", "input": i}]}}) for i in (
+        {"command": "cat /var/folders/x/T/judge-evidence-1/items.population.json"},
+        {"file_path": str(FIXTURE / "answer-key.json")},
+        {"file_path": "/w/evidence.json"}))
+    found = recorder.forbidden_calls([raw], ["judge-evidence-1", str(FIXTURE), "population", "answer-key"])
+    assert len(found) == 2 and not any("/w/evidence.json" in call for call in found)
+
+
+def test_review_f5_the_evidence_directory_keeps_no_population(tmp_path):
+    recorder.build_evidence(tmp_path)
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["evidence.json", "model.orm.yaml"]
+
+
+def test_review_f6_workspace_digests_see_an_edited_input(tmp_path):
+    (tmp_path / "model.orm.yaml").write_text("a")
+    before = recorder.workspace_digests(tmp_path)
+    (tmp_path / "model.orm.yaml").write_text("b")
+    assert recorder.workspace_digests(tmp_path) != before
+
+
+def test_review_f8_no_absolute_path_in_the_phase_evidence():
+    paths = [p for p in (RECORDING.parent).rglob("*") if p.is_file()]
+    leaked = [str(p.relative_to(ROOT)) for p in paths for pattern in ABSOLUTE
+              if re.search(pattern, p.read_text(encoding="utf-8", errors="replace"))]
+    assert leaked == []

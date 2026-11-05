@@ -1,0 +1,10 @@
+FAILED tests/test_judge_fact_types_skill.py::test_review_each_rule_states_its_key_clause[F1-numbers]
+FAILED tests/test_judge_fact_types_skill.py::test_review_each_rule_states_its_key_clause[F1-refusal]
+FAILED tests/test_judge_fact_types_skill.py::test_review_each_rule_states_its_key_clause[F2]
+FAILED tests/test_judge_fact_types_skill.py::test_review_each_rule_states_its_key_clause[F3]
+FAILED tests/test_judge_fact_types_skill.py::test_review_each_rule_states_its_key_clause[F4]
+FAILED tests/test_judge_fact_types_skill.py::test_review_f5_raw_tool_calls_are_checked_before_redaction
+FAILED tests/test_judge_fact_types_skill.py::test_review_f5_the_evidence_directory_keeps_no_population
+FAILED tests/test_judge_fact_types_skill.py::test_review_f6_workspace_digests_see_an_edited_input
+FAILED tests/test_judge_fact_types_skill.py::test_review_f8_no_absolute_path_in_the_phase_evidence
+9 failed, 40 passed in 1.20s

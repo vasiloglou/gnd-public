@@ -22,7 +22,7 @@ def check_bundle(root):
     version = tomllib.loads((root / 'pyproject.toml').read_text())['project']['version']
     canonical = root / 'src/gnd/skills'
     expected = {p.parent.name for p in canonical.glob('*/SKILL.md')}
-    assert len(expected) == 16
+    assert len(expected) == 17
     assert not {'process-phase', 'plan-review-panel'} & expected
     for host in ['.claude-plugin', '.codex-plugin']:
         manifest = json.loads((root / host / 'plugin.json').read_text())

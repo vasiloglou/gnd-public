@@ -1,0 +1,45 @@
+{
+ "gate": ".gnd-planning/milestones/type-induction-skills/notes/phase-TS3-spec.md",
+ "skill": "gnd-judge-fact-types",
+ "fixture": "round-two",
+ "user_turns": [
+  "/gnd:gnd-judge-fact-types model.orm.yaml evidence.json",
+  "Group g3 is a different attribute from every candidate: distinct. Write the file.",
+  "Yes, as you propose."
+ ],
+ "recorded": "2026-11-05",
+ "run": {
+  "model": "sonnet",
+  "turns": 2,
+  "turn_log": [
+   {
+    "user": "/gnd:gnd-judge-fact-types model.orm.yaml evidence.json",
+    "exit": 0,
+    "cost_usd": 0.21706549999999997,
+    "assistant_last": "t I need from you:** is the `g3` attribute the same fact type as `item_has_colour`?\n  - If it is, the verdict is `duplicate` of `item_has_colour`.\n  - If it isn't, the verdict is `distinct`.\n  - If you know what `g3`'s attribute is, tell me. I can weigh it, but it won't go into the file. The evidence has `show_values` false, so I can't tell from the data.\n\nOnce you answer, I'll write `duplicates.judgements.json` beside the evidence and give you the `gnd discover` and `gnd evolve preview` commands. The `evidence_sha256` will be `75c734f87cfc1702eca3746c2cdd4bbac2d33012e7db405c6d85867cff83717b`.",
+    "judgements_after_turn": false
+   },
+   {
+    "user": "Group g3 is a different attribute from every candidate: distinct. Write the file.",
+    "exit": 0,
+    "cost_usd": 0.24608939999999996,
+    "assistant_last": " evidence. Replace the uppercase placeholders:\n\n```sh\ngnd discover model.orm.yaml POPULATION --families fact-type --type-evidence-in evidence.json --duplicate-judgements duplicates.judgements.json --out proposal.json --report report.json --actor ACTOR --requested-at TIMESTAMP\ngnd evolve preview model.orm.yaml proposal.json --workspace WORKSPACE --records RECORDS --out preview.json --policy additive\n```\n\nIf `gnd discover` exits 3, read its message and fix the judgements file. Don't edit the evidence. If the data or model changed since the evidence was written, make new evidence and judge again.",
+    "judgements_after_turn": true
+   }
+  ],
+  "judgements": "duplicates.judgements.json",
+  "checks": {
+   "written": true,
+   "schema_valid": true,
+   "discover_exit": 0,
+   "verdicts_match_key": true,
+   "preview_exit": 0,
+   "asked_before_writing": true,
+   "only_judgements_new": true,
+   "no_apply_call": true,
+   "no_population_access": true,
+   "no_canary": true
+  },
+  "seconds": 36.6
+ }
+}

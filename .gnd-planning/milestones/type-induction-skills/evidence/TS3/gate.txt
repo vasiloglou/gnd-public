@@ -1,0 +1,30 @@
+$ uv run pytest -q tests/test_packaged_skills.py tests/test_verification_fixes.py tests/test_install.py tests/test_doctor_uninstall.py tests/test_development_scaffold.py tests/test_contributor_preparation.py tests/test_marketplace_plugins.py tests/test_public_agents_skill_table.py tests/test_public_packaged_invocation_guards.py tests/test_public_packaged_command_help.py tests/test_public_workflow_claim_routes.py tests/test_public_packaged_import_skill_routes.py tests/test_skill_prose_sync.py tests/test_solve_successors.py tests/test_ik6_skill_census.py tests/test_il6_skill_census.py tests/test_schema_sync.py tests/test_discover_type_judgements.py tests/test_judge_fact_types_skill.py
+........................................................................ [ 91%]
+.......................................................................  [100%]
+791 passed, 1 deselected in 91.27s (0:01:31)
+exit 0
+$ uv run zensical build --strict
+Build started
+No issues found
+Build finished in 0.55s
+exit 0
+$ uv run python tools/check_docs.py site
+14307 local links/assets/anchors checked
+exit 0
+$ uv run gnd install --symlink --project --force
+  already current (0 writes)
+codex/project -> <repo>/.codex/skills
+  already current (0 writes)
+exit 0
+$ uv run gnd doctor --project
+codex/project -> <repo>/.codex/skills
+  installed (symlink mode, get-nick-done 0.1.0, placed 2026-11-05T21:02:03Z): current=17
+  note: <repo>/.agents/skills is a known alternative Codex skills location that GND does not write (the published docs and the shipped binary disagree; both roots were observed live)
+exit 0
+$ uv run pytest -q -m distribution tests/test_public_built_inventory.py
+................                                                         [100%]
+16 passed in 0.85s
+exit 0
+$ uv run ruff check tests/test_judge_fact_types_skill.py tests/test_il6_skill_census.py tests/test_schema_sync.py tools/record_judge_sessions.py
+All checks passed!
+exit 0

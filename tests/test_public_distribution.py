@@ -312,7 +312,7 @@ def test_artifact_and_installed_resource_sets(package_probe):
     for resource in ["gnd/schema/orm-meta.schema.json", "gnd/schema/population.schema.json"]:
         json.loads(wheel_payload[resource])
     paths = [p for p in wheel_payload if p.endswith("/SKILL.md")]
-    assert len(paths) == 16
+    assert len(paths) == 17
     missing = dict(wheel_payload)
     missing.pop("gnd/schema/orm-meta.schema.json")
     with pytest.raises(AssertionError, match="orm-meta.schema.json"):

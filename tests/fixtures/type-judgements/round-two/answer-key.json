@@ -1,0 +1,11 @@
+{
+ "fixture": "TS3 round two (phase-TS3-spec.md section 6.5)",
+ "generic": "item_has_attribute",
+ "evidence": "gnd discover with --families fact-type --type-evidence, disclosure unset, no --show-values, default --min-support",
+ "groups": {
+  "g0": {"case": "A", "rule": "R1", "verdict": "duplicate", "of": "item_has_attribute_induced_0"},
+  "g1": {"case": "B", "rule": "R2", "verdict": "duplicate", "of": "item_has_colour"},
+  "g2": {"case": "C", "rule": "R3", "verdict": "distinct"},
+  "g3": {"case": "D", "rule": "R4", "verdict": "distinct", "asked": true}
+ }
+}

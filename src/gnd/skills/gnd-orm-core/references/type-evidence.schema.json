@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/type-evidence.schema.json",
+  "title": "GND fact-type evidence",
+  "description": "The gnd-type-evidence/1 file written by `gnd discover --families fact-type --type-evidence PATH` (TS1). One entry per group the fact-type family formed, in the family's order, with the status the family gave it and its counts, plus every fact type the group's entity type already plays, with readings, role players, row counts and overlaps. It states counts and equal signatures, never a judgement: a judgement skill reads it. `value` is present only when the disclosure mode allowed `--show-values`; `attribute_sha256` only when the mode is not `customer`. A group's `group` id is local to this file, so a reader binds the file's own digest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "model_sha256", "population_sha256", "min_support", "show_values", "show_digests", "groups", "redacted_generics", "truncated", "truncated_groups"],
+  "properties": {
+    "format": {"const": "gnd-type-evidence/1"},
+    "model_sha256": {"$ref": "#/$defs/sha256"},
+    "population_sha256": {"$ref": "#/$defs/sha256"},
+    "min_support": {"type": "integer", "minimum": 1},
+    "show_values": {"type": "boolean"},
+    "show_digests": {"type": "boolean"},
+    "groups": {"type": "array", "items": {"$ref": "#/$defs/group"}},
+    "redacted_generics": {"description": "Generic fact types whose attribute role is redacted; they form no groups.", "type": "array", "items": {"type": "string"}},
+    "truncated": {"description": "Candidates left out of the groups present, from the tail, to keep the file under 10 MiB.", "type": "integer", "minimum": 0},
+    "truncated_groups": {"description": "Groups left out from the tail, with their candidates, when the groups alone exceed 10 MiB.", "type": "integer", "minimum": 0}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["group", "generic", "status", "fact_type", "signature", "value_primitive", "entity_object_type", "support", "rows", "multi", "exact_repeats", "row_ids", "candidates"],
+      "properties": {
+        "group": {"type": "string", "pattern": "^g(0|[1-9][0-9]*)$"},
+        "generic": {"type": "string"},
+        "attribute_sha256": {"description": "SHA-256 of the attribute value's canonical JSON; omitted under customer.", "$ref": "#/$defs/sha256"},
+        "value": {"description": "The attribute value itself; present only when show_values."},
+        "status": {"enum": ["proposed", "shape_match", "multi_valued", "below_support", "mixed_type", "over_budget"]},
+        "fact_type": {"description": "The proposed fact type id when status is proposed.", "type": ["string", "null"]},
+        "signature": {"description": "Canonical JSON of the sorted role-player ids the group would have; null when the group stopped before typing.", "type": ["string", "null"]},
+        "value_primitive": {"type": ["string", "null"]},
+        "entity_object_type": {"type": "string"},
+        "support": {"description": "Distinct entities.", "type": "integer", "minimum": 0},
+        "rows": {"type": "integer", "minimum": 0},
+        "multi": {
+          "description": "Entities with more than one distinct value, and the most distinct values one entity has.",
+          "type": "object", "additionalProperties": false, "required": ["entities", "max"],
+          "properties": {"entities": {"type": "integer", "minimum": 0}, "max": {"type": "integer", "minimum": 0}}
+        },
+        "exact_repeats": {"description": "Rows repeating an (entity, value) pair already counted.", "type": "integer", "minimum": 0},
+        "row_ids": {"description": "The first 32 opaque row ids (ft<k>#<index>).", "type": "array", "maxItems": 32, "items": {"type": "string", "pattern": "^ft[0-9]+#[0-9]+$"}},
+        "candidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fact_type", "readings", "roles", "signature_equal", "rows", "overlap", "origin"],
+      "properties": {
+        "fact_type": {"type": "string"},
+        "readings": {"type": "array", "items": {"type": "string"}},
+        "roles": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["name", "object_type"],
+                    "properties": {"name": {"type": "string"}, "object_type": {"type": "string"}}}
+        },
+        "signature_equal": {"type": "boolean"},
+        "rows": {"type": "integer", "minimum": 0},
+        "overlap": {
+          "type": "object", "additionalProperties": false, "required": ["entities", "pairs"],
+          "properties": {
+            "entities": {"description": "The group's entities that play this fact type.", "type": "integer", "minimum": 0},
+            "pairs": {"description": "The group's (entity, value) pairs this fact type also holds; null unless it is binary with a value role of the group's kind.", "type": ["integer", "null"], "minimum": 0}
+          }
+        },
+        "origin": {
+          "description": "The fact type's provenance.induced_from, compared with this group; null when absent.",
+          "type": ["object", "null"], "additionalProperties": false, "required": ["generic", "same_attribute"],
+          "properties": {
+            "generic": {"type": "string"},
+            "same_attribute": {"type": "boolean"},
+            "attribute_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+PREVIEW 8098901930892aa9c5a38a391e0199b928abc837ab818eefe9a7a8900ea11822
+  proposal: ece3e1af232902394afa4320d3fc9488fe499ee6e21a4578a225e8a8ff32770a
+  before: adb36c4fde0a7e74b67384195f756fb60e3f7fe5cefaa57d47f81dc839d10ebd
+  candidate: 01b67da4927d34e65a00599dd0211e4b0e97e46711ad8d054e0ef77dd2a4e1c4
+  blast-radius: d164b651efc2066675f678878fd9be9fcd483785cd127434da74abb538769d78
+  breaking: false
+  affected: fact_types[item_has_attribute_induced_2]
+  affected: fact_types[item_has_attribute_induced_2].constraints[uniqueness:new:0]
+  affected: fact_types[item_has_attribute_induced_3]
+  affected: fact_types[item_has_attribute_induced_3].constraints[uniqueness:new:0]
+  policy: additive
+  populated: -

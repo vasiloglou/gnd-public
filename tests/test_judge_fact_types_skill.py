@@ -16,7 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "src/gnd/skills"
 SKILL = SKILLS / "gnd-judge-fact-types/SKILL.md"
 FIXTURE = ROOT / "tests/fixtures/type-judgements/round-two"
-RECORDING = ROOT / ".gnd-planning/milestones/type-induction-skills/evidence/TS3/recording"
+# TS4 section 6.7: the second recording, over the current skill bytes; the first stays as history.
+RECORDING = ROOT / ".gnd-planning/milestones/type-induction-skills/evidence/TS3/recording-2"
+FIRST_RECORDING = RECORDING.parent / "recording"
 KEY = json.loads((FIXTURE / "answer-key.json").read_text(encoding="utf-8"))["groups"]
 CANARIES = ("dim-k4p1", "hue-k4p2", "mass-k4p3", "tint-k4p4")
 COMMON = ["--families", "fact-type", "--actor", "test", "--requested-at", "2026-11-05T00:00:00+00:00"]
@@ -147,6 +149,16 @@ def test_t14_the_manifest_binds_the_kept_files_and_their_sources():
         assert hashlib.sha256((RECORDING / name).read_bytes()).hexdigest() == digest, name
     assert set(manifest["sources"]) >= {"src/gnd/skills/gnd-judge-fact-types/SKILL.md",
                                          "tests/fixtures/type-judgements/round-two/answer-key.json"}
+    for name, digest in manifest["sources"].items():
+        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, f"{name} changed since the recording"
+
+
+def test_t14_the_first_recording_is_kept_intact():
+    manifest = json.loads((FIRST_RECORDING / "manifest.json").read_text(encoding="utf-8"))
+    for name, digest in manifest["files"].items():
+        assert hashlib.sha256((FIRST_RECORDING / name).read_bytes()).hexdigest() == digest, name
+    assert json.loads((FIRST_RECORDING / "results.json").read_text(encoding="utf-8"))["run"]["checks"][
+        "verdicts_match_key"] is True
 
 
 def recorded_judgements() -> Path:

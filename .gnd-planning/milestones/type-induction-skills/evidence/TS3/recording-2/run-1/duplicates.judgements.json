@@ -1,0 +1,37 @@
+{
+  "format": "gnd-type-judgements/1",
+  "kind": "duplicates",
+  "evidence_sha256": "75c734f87cfc1702eca3746c2cdd4bbac2d33012e7db405c6d85867cff83717b",
+  "judge": {
+    "skill": "gnd-judge-fact-types",
+    "agent": "Claude Sonnet"
+  },
+  "verdicts": [
+    {
+      "group": "g0",
+      "generic": "item_has_attribute",
+      "verdict": "duplicate",
+      "of": "item_has_attribute_induced_0",
+      "rationale": "Rule R1: candidate item_has_attribute_induced_0 (\"{Item} has dimension {AttributeValue}\") was induced from this very attribute, so g0 duplicates it."
+    },
+    {
+      "group": "g1",
+      "generic": "item_has_attribute",
+      "verdict": "duplicate",
+      "of": "item_has_colour",
+      "rationale": "Rule R2: every distinct pair of g1 is already held by item_has_colour (\"{Item} has colour {Colour}\"), so it already records this attribute's facts."
+    },
+    {
+      "group": "g2",
+      "generic": "item_has_attribute",
+      "verdict": "distinct",
+      "rationale": "Rule R3: neither item_has_attribute_induced_0 nor item_has_colour shares any pair with g2; the verdict rests on the absence of shared facts, and review should check it is not a synonym attribute for different entities."
+    },
+    {
+      "group": "g3",
+      "generic": "item_has_attribute",
+      "verdict": "distinct",
+      "rationale": "Rule R4: the overlap with item_has_colour is only partial, so the user decided g3 is a different attribute from every candidate."
+    }
+  ]
+}

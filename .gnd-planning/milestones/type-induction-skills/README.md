@@ -16,6 +16,8 @@ and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 - [Canonical plan (r1, approved)](notes/type-induction-skills-plan.md)
 - [TS1 spec (r2, approved)](notes/phase-TS1-spec.md)
 - [TS1 record](002-phase-TS1.md)
+- [TS2 spec (r1, approved)](notes/phase-TS2-spec.md)
+- [TS2 record](003-phase-TS2.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -33,5 +35,11 @@ TS-D11, which the approval did not rule.
 TS1 spec r2 (2026-11-05) re-reads its lines on main `b733b2a`; the CT4-Q1
 ruling (008) omits digests under `customer`, so groups are keyed `g<n>`
 instead. TS1 shipped `--type-evidence`; its open questions (TS-Q3, the CT4
-DateTime kind, plan repairs) are in the record. Next action: the TS2 spec,
-on the owner's selection.
+DateTime kind, plan repairs) are in the record. PR #88 merged as
+`7b171bb2`. TS2 spec r1 drafted 2026-11-05 on the owner's relayed "go
+ahead"; it records two refuted plan premises (P1, the judgement record
+cannot sit on an induced constraint; P2, a `functional` shapes verdict can
+never be accepted). TS2 spec r1 approved by the owner `(a2)` 2026-11-05 (prose, D1–D10 as
+proposed). TS2 implemented and recorded ([record](003-phase-TS2.md)); one
+review, five findings fixed, 31 of 31 mutations killed. Next action: the TS3
+spec, on the owner's selection.

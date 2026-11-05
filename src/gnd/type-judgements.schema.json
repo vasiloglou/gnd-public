@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schema/type-judgements.schema.json",
+  "title": "GND fact-type judgements",
+  "description": "The gnd-type-judgements/1 file a judgement skill writes and `gnd discover --families fact-type --type-evidence-in EVIDENCE` reads with `--duplicate-judgements` or `--shape-judgements` (TS2). It binds one evidence file by the SHA-256 of that file's raw bytes and gives exactly one verdict per group the kind judges: `duplicates` judges the groups with status proposed, shape_match or over_budget (`distinct`, or `duplicate` of a candidate named in `of`); `shapes` judges the multi_valued groups (`many-to-many` or `skip`). The rules the CLI checks are in docs/reference/discover.md, section Type judgements.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "kind", "evidence_sha256", "judge", "verdicts"],
+  "properties": {
+    "format": {"const": "gnd-type-judgements/1"},
+    "kind": {"enum": ["duplicates", "shapes"]},
+    "evidence_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "judge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skill", "agent"],
+      "properties": {
+        "skill": {"description": "The skill that wrote the verdicts.", "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"},
+        "agent": {"description": "Free text naming the agent or model; scanned for population values like a rationale.", "type": "string", "maxLength": 200}
+      }
+    },
+    "verdicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group", "generic", "verdict", "rationale"],
+        "properties": {
+          "group": {"description": "The evidence group id, g<n>.", "type": "string", "pattern": "^g(0|[1-9][0-9]*)$"},
+          "generic": {"description": "The group's generic fact type, as the evidence names it.", "type": "string", "minLength": 1, "maxLength": 256},
+          "verdict": {"enum": ["distinct", "duplicate", "many-to-many", "skip"]},
+          "of": {"description": "For a duplicate: the candidate fact type the group duplicates.", "type": "string", "minLength": 1, "maxLength": 256},
+          "rationale": {"description": "Why, in a sentence or two. Refused when it names a population value the disclosure mode hides.", "type": "string", "minLength": 1, "maxLength": 2000}
+        }
+      }
+    }
+  }
+}

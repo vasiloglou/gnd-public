@@ -104,6 +104,18 @@ def _register_discover(subparsers):
         "--type-evidence", default=None, metavar="PATH",
         help="fact-type family: also write the evidence the judgement skills read",
     )
+    discover_parser.add_argument(
+        "--type-evidence-in", default=None, metavar="PATH",
+        help="fact-type family: the evidence file the judgements bind",
+    )
+    discover_parser.add_argument(
+        "--duplicate-judgements", default=None, metavar="PATH",
+        help="fact-type family: read duplicate verdicts (needs --type-evidence-in)",
+    )
+    discover_parser.add_argument(
+        "--shape-judgements", default=None, metavar="PATH",
+        help="fact-type family: read multi-valued shape verdicts (needs --type-evidence-in)",
+    )
     _add_format_argument(discover_parser)
     return {"discover_parser": discover_parser}
 
@@ -123,10 +135,14 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 def handle(args, parsers) -> int:
     if args.command == "discover":
+        judging = {"type_evidence_in": args.type_evidence_in, "duplicate_judgements": args.duplicate_judgements,
+                   "shape_judgements": args.shape_judgements}
+        judging = {key: value for key, value in judging.items() if value is not None}
         if "fact-type" not in args.families and (args.show_values or args.min_support is not None
-                                                 or args.type_evidence is not None):
+                                                 or args.type_evidence is not None or judging):
             parsers["discover_parser"].error(
-                "--min-support, --show-values and --type-evidence need --families fact-type")
+                "--min-support, --show-values, --type-evidence, --type-evidence-in and the judgements "
+                "options need --families fact-type")
         show_values, show_digests = False, True
         if "fact-type" in args.families:
             import sys
@@ -155,6 +171,7 @@ def handle(args, parsers) -> int:
                 "show_values": show_values,
                 "show_digests": show_digests,
                 **({} if args.type_evidence is None else {"type_evidence": args.type_evidence}),
+                **judging,
             }),
         )
 

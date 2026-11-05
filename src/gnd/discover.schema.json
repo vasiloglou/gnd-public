@@ -482,6 +482,14 @@
                   "number",
                   "boolean"
                 ]
+              },
+              "judged": {
+                "description": "Present only under judgement (TS2): a verdict decided this proposal.",
+                "const": true
+              },
+              "shape": {
+                "description": "Present only for a group judged many-to-many (TS2): the uniqueness spans both roles.",
+                "const": "many-to-many"
               }
             }
           }
@@ -505,6 +513,10 @@
               },
               "existing": {
                 "type": "string"
+              },
+              "judged": {
+                "description": "Present only under judgement (TS2): a duplicate verdict named `existing`.",
+                "const": true
               }
             }
           }
@@ -539,12 +551,47 @@
             "over_budget": {
               "type": "integer",
               "minimum": 0
+            },
+            "judged_skip": {
+              "description": "Present only under judgement (TS2): multi-valued groups judged skip.",
+              "type": "integer",
+              "minimum": 0
             }
           }
         },
         "row_visits": {
           "type": "integer",
           "minimum": 0
+        },
+        "judgements": {
+          "description": "Present only under judgement (TS2): the raw-byte SHA-256 of the evidence and of each judgements file, null for a file not given.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "evidence_sha256",
+            "duplicates_sha256",
+            "shapes_sha256"
+          ],
+          "properties": {
+            "evidence_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "duplicates_sha256": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "shapes_sha256": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
         }
       }
     }

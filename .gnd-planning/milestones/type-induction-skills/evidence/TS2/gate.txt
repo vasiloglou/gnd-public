@@ -1,0 +1,34 @@
+$ uv run pytest -q tests/test_discover_type_judgements.py
+.                                                                        [100%]
+73 passed in 85.66s (0:01:25)
+exit 0
+$ uv run pytest -q tests/test_discover_type_evidence.py tests/test_discover_fact_type_family.py tests/test_discover.py tests/test_evolve_additive_policy.py tests/test_evolve_shape_matches.py tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py
+FAILED tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused
+2 failed, 579 passed in 153.70s (0:02:33)
+exit 1
+$ uv run pytest -q tests/test_schema_sync.py
+....                                                                     [100%]
+4 passed in 0.07s
+exit 0
+$ uv run pytest -q -m distribution tests/test_public_built_inventory.py::test_wheel_carries_every_vendored_runtime_schema
+.                                                                        [100%]
+1 passed in 0.88s
+exit 0
+$ uv run ruff check src/gnd/discover src/gnd/commands/discover.py tests/test_discover_type_judgements.py tests/test_discover_type_evidence.py
+All checks passed!
+exit 0
+$ uv run zensical build --strict
+No issues found
+Build finished in 0.61s
+exit 0
+$ uv run python tools/check_docs.py site
+14307 local links/assets/anchors checked
+exit 0
+parity parity-7b171bb2.json vs parity-after.json: 20 cases, differing: {'E6': ['stderr_sha256']}
+parity fixture-parity-7b171bb2.json vs fixture-parity-after.json: 36 cases, differing: {}
+
+Rerun after the RF6 dynamic-read successor was regenerated for the review fixes (the run above failed 2 RF6 inventory tests):
+$ uv run pytest -q tests/test_discover_type_evidence.py tests/test_discover_fact_type_family.py tests/test_discover.py tests/test_evolve_additive_policy.py tests/test_evolve_shape_matches.py tests/test_rf1_cli_pins.py tests/test_rf1_pin_harness.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py tests/test_gnd_arch.py
+.....                                                                    [100%]
+581 passed in 138.24s (0:02:18)
+exit 0

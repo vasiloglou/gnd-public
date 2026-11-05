@@ -1,0 +1,33 @@
+Mutation run over the final source, after the review fixes (each line: mutation -> outcome, pytest summary).
+Each mutation is applied in place to one line, the TS2 test file runs with -x (T28 deselected), and the source is restored.
+M1 evidence-in size refusal gone -> KILLED 1 failed, 65 passed, 1 deselected in 91.09s (0:01:31)
+M2 model_sha256 not named -> KILLED 1 failed, 66 passed, 1 deselected in 89.97s (0:01:29)
+M3 byte comparison gone -> KILLED 1 failed, 18 passed, 1 deselected in 26.91s
+M4 digest binding gone -> KILLED 1 failed, 17 passed, 1 deselected in 26.46s
+M5 kind check gone -> KILLED 1 failed, 20 passed, 1 deselected in 33.60s
+M6 truncated groups allowed -> KILLED 1 failed, 26 passed, 1 deselected in 51.71s
+M7 generic mismatch allowed -> KILLED 1 failed, 25 passed, 1 deselected in 51.15s
+M8 ineligible status allowed -> KILLED 1 failed, 24 passed, 1 deselected in 60.08s (0:01:00)
+M9 twice allowed -> KILLED 1 failed, 23 passed, 1 deselected in 48.31s
+M10 of not checked -> KILLED 1 failed, 30 passed, 1 deselected in 55.99s
+M11 of on distinct allowed -> KILLED 1 failed, 41 passed, 1 deselected in 82.03s (0:01:22)
+M12 D4 origin generic ignored -> KILLED 1 failed, 68 passed, 1 deselected in 136.58s (0:02:16)
+M13 D4 whole-model index ignored -> KILLED 1 failed, 61 passed, 1 deselected in 105.93s (0:01:45)
+M14 missing verdicts allowed -> KILLED 1 failed, 21 passed, 1 deselected in 38.73s
+M15 skill not scanned -> KILLED 1 failed, 62 passed, 1 deselected in 82.07s (0:01:22)
+M16 rationale not scanned -> KILLED 1 failed, 53 passed, 1 deselected in 69.61s (0:01:09)
+M17 boundary tags gone -> KILLED 1 failed, 63 passed, 1 deselected in 81.59s (0:01:21)
+M18 model exemption gone -> KILLED 1 failed, 54 passed, 1 deselected in 67.36s (0:01:07)
+M19 exemption wiring gone -> KILLED 1 failed, 69 passed, 1 deselected in 73.52s (0:01:13)
+M20 digests not hidden under customer -> KILLED 1 failed, 53 passed, 1 deselected in 41.84s
+M21 values not hidden -> KILLED 1 failed, 47 passed, 1 deselected in 38.32s
+M22 duplicate not reported -> KILLED 1 failed, 27 passed, 1 deselected in 26.33s
+M23 distinct follows the signature -> KILLED 1 failed, 27 passed, 1 deselected in 23.33s
+M24 many-to-many keeps one role -> KILLED 1 failed, 34 passed, 1 deselected in 25.59s
+M25 skip counted multi_valued -> KILLED 1 failed, 35 passed, 1 deselected in 36.15s
+M26 induced_from under customer -> KILLED 1 failed, 57 passed, 1 deselected in 49.49s
+M27 judged mark gone -> KILLED 1 failed, 27 passed, 1 deselected in 24.08s
+M28 clash reading not suffixed -> KILLED 1 failed, 64 passed, 1 deselected in 58.20s
+M29 repeats not counterexamples -> KILLED 1 failed, 34 passed, 1 deselected in 30.46s
+M30 type-evidence with evidence-in allowed -> KILLED 1 failed, 2 passed, 1 deselected in 3.14s
+M31 judgements before model -> KILLED 1 failed, 17 passed, 1 deselected in 15.41s

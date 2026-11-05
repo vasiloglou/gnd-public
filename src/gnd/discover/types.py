@@ -59,6 +59,7 @@ class GroupRecord:
     attribute: Any
     pairs: frozenset[tuple[Any, Any]]  # typed (entity, value) identities
     fact_type: str | None = None  # the proposed id, when status is proposed
+    values: frozenset[str] = frozenset()  # the value cells' text, for the rationale scan (TS2)
 
 
 ROW_IDS_MAX = 32
@@ -118,6 +119,8 @@ def propose(
     redacted: frozenset[tuple[str, str]],
     envelope: dict[str, Any],
     budget: int | None = None,
+    verdicts: dict[int, Any] | None = None,
+    judgement: dict[str, Any] | None = None,
 ) -> TypeProposals:
     """Group each eligible generic fact type's rows and propose a fact type per group.
 
@@ -126,6 +129,10 @@ def propose(
     disclosure mode, and so is ``show_digests``: a short attribute name can be
     recovered from its unsalted digest, so customer mode omits it (owner
     ruling after the close).
+
+    ``verdicts`` (TS2) maps a group's position, its evidence ``g<n>``, to a
+    checked verdict; ``judgement`` names the files they came from. A judged
+    group is rendered as its verdict says, not by the signature match.
     """
     index = ModelIndex.for_model(view.model)
     declared = {ft: spec for ft, spec in generic_declarations(view).items() if ft in eligible}
@@ -136,7 +143,7 @@ def propose(
     result = TypeProposals()
     proposed, shape_matches = [], []
     skipped = {"redacted_attribute_roles": 0, "mixed_type_groups": 0, "below_support": 0,
-               "multi_valued": 0, "over_budget": 0}
+               "multi_valued": 0, "over_budget": 0, **({} if verdicts is None else {"judged_skip": 0})}
     visits = 0
     taken = set(index.role_object_types()) | set(objects)
     used = 0
@@ -157,14 +164,23 @@ def propose(
             if key is None or entity is None or value is None:
                 continue
             group = groups.setdefault(key, {"attribute": row[spec["attribute"]], "rows": [],
-                                            "entities": {}, "values": {}, "kinds": set(), "pairs": set()})
-            group["rows"].append(view.fact_id(generic_id, row_index))
-            group["entities"].setdefault(entity, []).append(view.fact_id(generic_id, row_index))
+                                            "entities": {}, "values": {}, "kinds": set(), "pairs": {},
+                                            "repeats": [], "texts": set()})
+            fact = view.fact_id(generic_id, row_index)
+            group["rows"].append(fact)
+            group["entities"].setdefault(entity, []).append(fact)
             # Distinct values, not rows: an exact repeated row is one value (close review).
             group["values"].setdefault(entity, set()).add(value)
             group["kinds"].add(value[0])
-            group["pairs"].add((entity, value))
+            # Each pair's first row, and the rows that repeat one (TS2 many-to-many).
+            if (entity, value) in group["pairs"]:
+                group["repeats"].append(fact)
+            else:
+                group["pairs"][entity, value] = fact
+            group["texts"].add(cell_text(row[spec["value"]]))
         for number, group in enumerate(groups.values()):
+            position = len(result.groups)
+            verdict = None if verdicts is None else verdicts.get(position)
             digest = _value_digest(group["attribute"])
             support = len(group["entities"])
             counts = [len(values) for values in group["values"].values()]
@@ -176,7 +192,7 @@ def propose(
                 multi_entities=sum(1 for count in counts if count > 1), multi_max=max(counts),
                 exact_repeats=len(group["rows"]) - len(group["pairs"]),
                 row_ids=tuple(group["rows"][:ROW_IDS_MAX]), attribute=group["attribute"],
-                pairs=frozenset(group["pairs"]))
+                pairs=frozenset(group["pairs"]), values=frozenset(group["texts"]))
             result.groups.append(record)
             if len(group["kinds"]) != 1:
                 skipped["mixed_type_groups"] += 1
@@ -186,12 +202,19 @@ def propose(
                 skipped["below_support"] += 1
                 record.status = "below_support"
                 continue
+            many = False
             if any(len(values) > 1 for values in group["values"].values()):
                 # D5: an entity with several values breaks the uniqueness the
-                # envelope sits on, so the group is counted, not proposed.
-                skipped["multi_valued"] += 1
+                # envelope sits on, so the group is counted, not proposed,
+                # unless a shape verdict judged it many-to-many (TS2).
                 record.status = "multi_valued"
-                continue
+                if verdict is None:
+                    skipped["multi_valued"] += 1
+                    continue
+                if verdict.verdict == "skip":
+                    skipped["judged_skip"] += 1
+                    continue
+                many = True
             # Never reuse an id the model already holds (review F1): a clash
             # takes the next free suffix.
             new_id, clash = f"{generic_id}_induced_{number}", 0
@@ -205,34 +228,55 @@ def propose(
             players = {"entity": entity_role.object_type, "value": value_type}
             match = existing.get(role_player_signature(players))
             record.signature = canonical_json_bytes(list(role_player_signature(players))).decode("utf-8").strip()
-            if match is not None:
+            if verdict is not None and verdict.verdict == "duplicate":
+                record.status = "shape_match"
+                shape_matches.append({"generic": generic_id, "existing": verdict.of, "judged": True,
+                                      **({"attribute_sha256": digest} if show_digests else {})})
+                continue
+            if match is not None and verdict is None:
                 record.status = "shape_match"
                 shape_matches.append({"generic": generic_id, "existing": match,
                                       **({"attribute_sha256": digest} if show_digests else {})})
                 continue
-            single = [ids[0] for ids in group["entities"].values()]
-            multiple: list[str] = []
+            if many:
+                # The uniqueness spans both roles: each pair once (TS2-C5).
+                single, multiple = list(group["pairs"].values()), group["repeats"]
+                numerator, denominator, spanned = len(group["pairs"]), len(group["rows"]), ["entity", "value"]
+            else:
+                single, multiple = [ids[0] for ids in group["entities"].values()], []
+                numerator, denominator, spanned = len(single), support, ["entity"]
             operations = []
             if value_type != value_role.object_type:
                 operations.append(("object_types", value_type, {
                     "id": value_type, "name": _name(value_type), "kind": "value", "primitive": primitive,
                 }))
+            fact_provenance = {} if verdict is None else {"provenance": {
+                # D3: no attribute digest enters the model under customer.
+                **({"induced_from": {"generic": generic_id, "attribute_sha256": digest}} if show_digests else {}),
+                "judgement": {"evidence_sha256": judgement["evidence_sha256"],
+                              "judgements_sha256": judgement[verdict.kind]["sha256"], "kind": verdict.kind,
+                              "verdict": verdict.verdict, "skill": judgement[verdict.kind]["skill"]},
+            }}
             entity_name = str(objects[entity_role.object_type].get("name") or entity_role.object_type)
             value_name = _name(value_type) if value_type != value_role.object_type else str(
                 objects[value_type].get("name") or value_type)
+            # A judged group may take a clashing id where a signature match
+            # stopped it before, so its reading names the suffix too (review F4).
+            label = new_id.removeprefix(f"{generic_id}_induced_") if verdict is not None else number
             operations.append(("fact_types", new_id, {
                 "id": new_id,
                 # The generic id keeps readings from two generic fact types apart (close review).
-                "reading": f"{{{entity_name}}} has induced {generic_id} attribute {number} {{{value_name}}}",
+                "reading": f"{{{entity_name}}} has induced {generic_id} attribute {label} {{{value_name}}}",
                 # A redacted generic role stays redacted in the new fact type (review F4).
                 "roles": [{"object_type": entity_role.object_type, "role_name": "entity",
                            **({"redact": True} if (generic_id, spec["entity"]) in redacted else {})},
                           {"object_type": value_type, "role_name": "value",
                            **({"redact": True} if (generic_id, spec["value"]) in redacted else {})}],
+                **fact_provenance,
             }))
             induction = {**envelope, "examples": single[:256], "counterexamples": multiple[:32],
-                         "support": {"numerator": len(single), "denominator": support}}
-            constraint = {"type": "uniqueness", "roles": ["entity"], "source": "induced",
+                         "support": {"numerator": numerator, "denominator": denominator}}
+            constraint = {"type": "uniqueness", "roles": spanned, "source": "induced",
                           "status": "proposed", "modality": "deontic",
                           "provenance": {"induction": induction}}
             # The proposal carries each addition about three times (review F2).
@@ -259,12 +303,27 @@ def propose(
                 entry["attribute_sha256"] = digest
             if show_values:
                 entry["value"] = group["attribute"]
+            if verdict is not None:
+                entry["judged"] = True
+                if many:
+                    entry["shape"] = "many-to-many"
             proposed.append(entry)
             record.status, record.fact_type = "proposed", new_id
             result._proposed.append(record)
     result.report = {"min_support": min_support, "proposed": proposed, "shape_matches": shape_matches,
                      "skipped": skipped, "row_visits": visits}
+    if verdicts is not None:
+        result.report["judgements"] = {
+            "evidence_sha256": judgement["evidence_sha256"],
+            **{f"{kind}_sha256": (None if judgement[kind] is None else judgement[kind]["sha256"])
+               for kind in ("duplicates", "shapes")},
+        }
     return result
+
+
+def cell_text(value: Any) -> str:
+    # A cell's text as a rationale would quote it: a string as itself, else its JSON.
+    return value if isinstance(value, str) else canonical_json_bytes(value).decode("utf-8").strip()
 
 
 def _primitive_of(view: PopulationView, group: dict[str, Any], spec: dict[str, str], generic_id: str) -> str:
@@ -272,14 +331,16 @@ def _primitive_of(view: PopulationView, group: dict[str, Any], spec: dict[str, s
     value_role = next(role for role in view.roles[generic_id] if role.name == spec["value"])
     # The checker's identity kind names the primitive family; keep the declared
     # primitive when it agrees, otherwise the kind's own primitive.
-    return value_role.primitive if _kind(value_role.primitive) == kind else _PRIMITIVE_FOR_KIND.get(kind, "String")
+    return value_role.primitive if primitive_kind(value_role.primitive) == kind else PRIMITIVE_FOR_KIND.get(kind, "String")
 
 
-_PRIMITIVE_FOR_KIND = {"string": "String", "number": "Number", "boolean": "Boolean", "date": "Date",
+# The kind vocabulary (TS2 D9): a declared primitive's family, as the
+# checker's identity kinds name it, and back.
+PRIMITIVE_FOR_KIND = {"string": "String", "number": "Number", "boolean": "Boolean", "date": "Date",
                        "datetime": "DateTime"}
 
 
-def _kind(primitive: str | None) -> str | None:
+def primitive_kind(primitive: str | None) -> str | None:
     return {"String": "string", "Integer": "number", "Number": "number", "Float": "number",
             "Boolean": "boolean", "Date": "date", "DateTime": "datetime"}.get(primitive or "")
 

@@ -295,7 +295,8 @@ def test_the_option_needs_the_family(tmp_path):
     build(tmp_path)
     run, *_ = discover(tmp_path, families="uniqueness")
     assert run.returncode == 64
-    assert "--type-evidence need --families fact-type" in run.stderr
+    # TS2 extended the message to name the judgement options as well.
+    assert "--type-evidence, " in run.stderr and "need --families fact-type" in run.stderr
 
 
 @pytest.mark.parametrize("same", ["run.proposal.json", "run.report.json", "model.orm.yaml", "items.population.json"])

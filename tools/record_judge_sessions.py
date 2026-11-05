@@ -47,10 +47,11 @@ SKILLS = {   # declared before any run; the specs named in "gates" authorize the
     },
     "model-multivalued": {
         "option": "--shape-judgements", "fixture": ROOT / "tests/fixtures/type-judgements/multi-valued",
-        "canaries": ("tag-m5q1", "alias-m5q2", "role-m5q3", "code-m5q4"), "gates": (TS4_GATE,),
+        "canaries": ("tag-m5q1", "alias-m5q2", "role-m5q3", "code-m5q4", "note-m5q5"), "gates": (TS4_GATE,),
         "turns": ["/gnd:gnd-model-multivalued model.orm.yaml evidence.json",
                   ("In group g3 the one item's second value is an entry error: skip it, and the population "
-                   "will be fixed. Write the file.")],
+                   "will be fixed. Group g4 repeats labels the model already holds: skip it too. "
+                   "Write the file.")],
         "agree": "Yes, as you propose.",
     },
 }
@@ -107,6 +108,37 @@ def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
                     call = json.dumps(part.get("input"), ensure_ascii=False)
                     if any(needle in call for needle in needles):
                         found.append(call)
+    return found
+
+
+PATH_KEYS = ("file_path", "path", "notebook_path")
+
+
+def outside_calls(streams: list[str], allowed: list[Path]) -> list[str]:
+    """Tool inputs reaching outside the workspace and the plugin copy (TS4 review F4).
+
+    A path argument (Read, Glob, Grep, Edit, Write) must be relative or under an allowed root; any
+    input naming the repository or the home directory is flagged, so a Bash command is caught too.
+    """
+    roots = {str(root) for root in allowed} | {str(root).removeprefix("/private") for root in allowed}
+    needles = [str(ROOT), str(Path.home())]
+    found = []
+    for stream in streams:
+        for line in stream.splitlines():
+            try:
+                event = json.loads(line)
+            except ValueError:
+                continue
+            for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
+                if not (isinstance(part, dict) and part.get("type") == "tool_use"):
+                    continue
+                arguments = part.get("input") if isinstance(part.get("input"), dict) else {}
+                call = json.dumps(arguments, ensure_ascii=False)
+                paths = [str(arguments[key]) for key in PATH_KEYS if isinstance(arguments.get(key), str)]
+                astray = [p for p in paths if p.startswith(("/", "~"))
+                          and not any(p == root or p.startswith(root + "/") for root in roots)]
+                if astray or any(needle in call for needle in needles):
+                    found.append(call)
     return found
 
 
@@ -221,7 +253,8 @@ def record_run(skill: str, model: str, out: Path) -> dict:
             after.get(name) == digest for name, digest in before.items())
         checks["no_apply_call"] = not forbidden_calls(raw, ["evolve apply"])
         checks["no_population_access"] = not forbidden_calls(
-            raw, ["population", "answer-key", str(fixture), str(evidence.parent), str(ROOT / "tests")])
+            raw, ["population", "answer-key", str(fixture), str(evidence.parent), str(ROOT / "tests")]) \
+            and not outside_calls(raw, [workspace, plugin])
         kept = [p.read_text(encoding="utf-8", errors="replace") for p in sorted(target.rglob("*")) if p.is_file()]
         checks["no_canary"] = not any(canary in text for canary in plan["canaries"] for text in kept)
         return {"model": model, "turns": len(turns), "turn_log": turns, "judgements": written.name if written else None,

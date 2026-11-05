@@ -117,25 +117,33 @@ For each multi-valued group, look at its candidates. Its distinct pairs are
 - **S1 — already induced.** A candidate whose `origin.generic` is the
   group's `generic` and whose `origin.same_attribute` is true was induced
   from this very attribute: the verdict is `skip`, naming that fact type.
-  The CLI refuses `many-to-many` there.
+  The CLI refuses `many-to-many` there. Read that fact type's uniqueness in
+  the model. When that fact type's uniqueness covers the entity role alone,
+  it was induced as single-valued and the data now breaks it: still `skip`,
+  and tell the user the shape changed, so either the population is
+  corrected or that uniqueness is changed through
+  [gnd-model-evolve](../gnd-model-evolve/SKILL.md).
 - **S2 — already held.** Otherwise, a candidate whose `overlap.pairs` is at
   least 90% of the distinct pairs already holds this attribute's facts: the
   verdict is `skip`, naming it. A shapes file has no `duplicate` verdict.
 - **S3 — junction table.** Otherwise, when the evidence's `truncated` is 0,
-  no candidate's `overlap.pairs` is above 0, and at least one entity in ten
+  no candidate's `overlap.pairs` is above 0, no `null` overlap stops S3 (see
+  below), and at least one entity in ten
   has several values (`multi.entities` times ten is at least `support`): the
   verdict is `many-to-many`. Rows that repeat a pair become the uniqueness's
   counterexamples; say so in the rationale without counting them.
 - **S4 — ask.** Anything else: a partial pair overlap, candidates left out
-  by truncation, or fewer than one entity in ten with several values, which
+  by truncation, a `null` overlap that stops S3, or fewer than one entity in ten with several values, which
   may be entry errors rather than a shape. Ask the user, and record the
   answer as the verdict: `many-to-many`, or `skip`. When the user says the
   extra values are errors, the verdict is `skip`, and tell them to correct
   the population and make new evidence: a shapes file cannot declare an
   attribute single-valued.
 
-A candidate with a `null` pair overlap does not stop S3: its other role is
-not of the value's kind, so it cannot hold these pairs. `signature_equal` is
+A `null` pair overlap stops S3 when the candidate's other role is redacted in
+the model: redaction hides the pairs, and the candidate may hold them all.
+Otherwise a `null` overlap does not stop S3: the candidate is not a binary
+whose other role has the value's kind, so it cannot hold these pairs. `signature_equal` is
 false for every candidate of a multi-valued group and says nothing. When the
 evidence's `show_values` is true, the attribute value may inform the
 judgement, but it still does not go into the file.

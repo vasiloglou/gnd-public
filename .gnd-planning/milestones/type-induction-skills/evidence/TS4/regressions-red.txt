@@ -1,0 +1,20 @@
+# TS4 review regressions run against the pre-fix skill, fixture and recorder (3fe48d2a plus the new tests)
+# command: uv run pytest -q tests/test_model_multivalued_skill.py -k review
+                          {"pattern": "**/multi-valued/*", "path": str(ROOT)},
+                          {"file_path": str(ROOT.parent)},
+                          {"pattern": "tag-", "path": str(Path.home())},
+                          {"command": f"cat {ROOT}/README.md"},
+                          {"file_path": str(workspace / "evidence.json")},
+                          {"command": f"shasum -a 256 {workspace}/model.orm.yaml"},
+                          {"file_path": "evidence.json"})
+>       found = recorder.outside_calls([raw], [workspace])
+                ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'record_judge_sessions' has no attribute 'outside_calls'
+
+tests/test_model_multivalued_skill.py:319: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_model_multivalued_skill.py::test_review_each_rule_states_its_key_clause[F1]
+FAILED tests/test_model_multivalued_skill.py::test_review_each_rule_states_its_key_clause[F2]
+FAILED tests/test_model_multivalued_skill.py::test_review_f3_the_fixture_has_a_partial_overlap_group
+FAILED tests/test_model_multivalued_skill.py::test_review_f4_a_tool_call_outside_the_workspace_is_found
+4 failed, 15 passed, 52 deselected in 10.46s

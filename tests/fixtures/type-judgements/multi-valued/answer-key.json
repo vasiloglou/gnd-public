@@ -6,6 +6,7 @@
   "g0": {"case": "A", "rule": "S1", "verdict": "skip"},
   "g1": {"case": "B", "rule": "S2", "verdict": "skip"},
   "g2": {"case": "C", "rule": "S3", "verdict": "many-to-many"},
-  "g3": {"case": "D", "rule": "S4", "verdict": "skip", "asked": true}
+  "g3": {"case": "D", "rule": "S4", "verdict": "skip", "asked": true},
+  "g4": {"case": "E", "rule": "S4", "verdict": "skip", "asked": true}
  }
 }

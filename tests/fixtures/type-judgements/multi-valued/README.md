@@ -11,11 +11,12 @@ is the input of the TS4 recorded run of `gnd-model-multivalued` and of
   (the digest a real round-one run wrote); and `item_has_label`, a
   hand-modelled many-to-many binary over the value type Label. Both carry a
   uniqueness spanning their two roles.
-- `items.population.json`: four attributes over 24 items, with canary names
+- `items.population.json`: five attributes over 24 items, with canary names
   that appear in no model text. Every group is `multi_valued`. The applied
   fact type holds the first attribute's pairs; `item_has_label` holds all
-  of the second's. The third has two values for half the items and one
-  repeated row; the fourth has a second value for one item only.
+  of the second's and half of the fifth's (TS4 review F3). The third has two
+  values for half the items and one repeated row; the fourth has a second
+  value for one item only.
 - `answer-key.json`: the expected verdict per group and the decision rule
   (S1 to S4 of the skill) that gives it. It is never copied into a recording
   workspace; the skill sees only the model and the evidence.

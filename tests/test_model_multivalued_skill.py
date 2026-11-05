@@ -19,7 +19,7 @@ SKILL = SKILLS / "gnd-model-multivalued/SKILL.md"
 FIXTURE = ROOT / "tests/fixtures/type-judgements/multi-valued"
 RECORDING = ROOT / ".gnd-planning/milestones/type-induction-skills/evidence/TS4/recording"
 KEY = json.loads((FIXTURE / "answer-key.json").read_text(encoding="utf-8"))["groups"]
-CANARIES = ("tag-m5q1", "alias-m5q2", "role-m5q3", "code-m5q4")
+CANARIES = ("tag-m5q1", "alias-m5q2", "role-m5q3", "code-m5q4", "note-m5q5")
 COMMON = ["--families", "fact-type", "--actor", "test", "--requested-at", "2026-11-05T00:00:00+00:00"]
 
 sys.path.insert(0, str(ROOT / "tools"))
@@ -57,7 +57,7 @@ def test_t8_every_sentence_naming_apply_denies_it():
 
 RULES = ["S1 — already induced.", "S2 — already held.", "S3 — junction table.", "S4 — ask.",
          "Write nothing until every multi-valued group has a verdict.",
-         "A candidate with a `null` pair overlap does not stop S3"]
+         "Otherwise a `null` overlap does not stop S3"]
 
 
 @pytest.mark.parametrize("sentence", RULES)
@@ -203,7 +203,7 @@ def test_t14_the_recorded_file_binds_this_evidence_and_the_cli_renders_many_to_m
     assert run.returncode == 0, run.stdout + run.stderr
     report = json.loads((tmp_path / "report.json").read_text(encoding="utf-8"))["fact_type_proposals"]
     assert [p["shape"] for p in report["proposed"]] == ["many-to-many"]
-    assert report["skipped"]["judged_skip"] == 3
+    assert report["skipped"]["judged_skip"] == 4
     preview = subprocess.run([sys.executable, "-m", "gnd", "evolve", "preview", "model.orm.yaml", "proposal.json",
                               "--workspace", ".", "--records", "records", "--out", "preview.json", "--policy",
                               "additive"], cwd=tmp_path, capture_output=True, text=True, check=False)
@@ -264,3 +264,58 @@ def test_t17_no_downstream_name():
 def test_the_recorder_accepts_only_the_specs_that_authorize_an_entry(skill, spec, accepted):
     body = (ROOT / ".gnd-planning/milestones/type-induction-skills/notes" / spec).read_text(encoding="utf-8")
     assert any(h in body and m in body for h, m in recorder.SKILLS[skill]["gates"]) is accepted
+
+
+# --- review regressions (phase-TS4-claude-review.md) ---------------------------
+
+REVIEW_CLAUSES = {
+    # F1: a null overlap hides the pairs when the candidate's other role is redacted
+    "F1": "A `null` pair overlap stops S3 when the candidate's other role is redacted in the model",
+    # F2: an earlier functional induction of an attribute that is now multi-valued
+    "F2": "When that fact type's uniqueness covers the entity role alone",
+    # F3: the key clauses mutation testing left free
+    "F3-S2": "the verdict is `skip`, naming it",
+    "F3-S3-overlap": "no candidate's `overlap.pairs` is above 0",
+    "F3-S3-share": "`multi.entities` times ten is at least `support`",
+    "F3-kind": "`kind`: `shapes`",
+    "F3-skill": "`skill` is `gnd-model-multivalued`",
+    "F3-order": "exactly those with status `multi_valued`, in evidence order",
+    "F3-existing": "never over an existing file",
+    "F3-errors": "correct the population and make new evidence",
+    "F3-truncation": "candidates left out by truncation",
+    "F3-of": "there is no `of`",
+    "F3-rules-order": "by the rules below, in order.",
+}
+
+
+@pytest.mark.parametrize("name", sorted(REVIEW_CLAUSES))
+def test_review_each_rule_states_its_key_clause(name):
+    assert REVIEW_CLAUSES[name] in text()
+
+
+def test_review_f3_the_fixture_has_a_partial_overlap_group(evidence):
+    groups = {g["group"]: g for g in json.loads(evidence.read_text(encoding="utf-8"))["groups"]}
+    label = next(c for c in groups["g4"]["candidates"] if c["fact_type"] == "item_has_label")
+    distinct = groups["g4"]["rows"] - groups["g4"]["exact_repeats"]
+    assert 0 < label["overlap"]["pairs"] < 0.9 * distinct                     # S4, partial
+    assert groups["g4"]["multi"]["entities"] * 10 >= groups["g4"]["support"]  # S3 would apply without the clause
+    assert KEY["g4"]["verdict"] == "skip" and KEY["g4"]["asked"] is True
+
+
+def tool_stream(*inputs) -> str:
+    return "\n".join(json.dumps({"type": "assistant", "message": {"content": [
+        {"type": "tool_use", "input": i}]}}) for i in inputs)
+
+
+def test_review_f4_a_tool_call_outside_the_workspace_is_found(tmp_path):
+    workspace = tmp_path / "w"
+    raw = tool_stream({"pattern": "m5q", "path": str(ROOT), "glob": "**/*.json"},
+                      {"pattern": "**/multi-valued/*", "path": str(ROOT)},
+                      {"file_path": str(ROOT.parent)},
+                      {"pattern": "tag-", "path": str(Path.home())},
+                      {"command": f"cat {ROOT}/README.md"},
+                      {"file_path": str(workspace / "evidence.json")},
+                      {"command": f"shasum -a 256 {workspace}/model.orm.yaml"},
+                      {"file_path": "evidence.json"})
+    found = recorder.outside_calls([raw], [workspace])
+    assert len(found) == 5 and not any(str(workspace) in call for call in found)

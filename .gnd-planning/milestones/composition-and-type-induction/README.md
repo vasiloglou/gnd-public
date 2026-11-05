@@ -36,3 +36,5 @@ Predecessor: [model-growth-guardrails](../model-growth-guardrails/README.md).
 - Owner rulings on the close questions: [008-owner-rulings.md](008-owner-rulings.md)
   (Q1, Q2 deferred to a skill milestone; DC1 accepted as missed; splits
   refused; customer mode omits attribute digests).
+- Merged: [009-owner-merge.md](009-owner-merge.md) (PR #86 into main as
+  `9f87fa0` on the owner's "Yes, merge it"; acceptance pending).

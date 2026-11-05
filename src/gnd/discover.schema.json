@@ -437,7 +437,6 @@
             "required": [
               "fact_type",
               "generic",
-              "attribute_sha256",
               "support",
               "rows"
             ],
@@ -494,7 +493,6 @@
             "additionalProperties": false,
             "required": [
               "generic",
-              "attribute_sha256",
               "existing"
             ],
             "properties": {

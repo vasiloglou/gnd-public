@@ -55,11 +55,11 @@ with relative paths below it.
   as a row. The same value listed among that source's instances of the role's
   object type is renamed too, but only when it stays one entity: two renamings
   that give one source value of one object type different new values are
-  refused, and so is renaming an instance that another role of that source
-  still uses under the old value. A renaming is per fact type and role, so a
-  value with no listed instance may be renamed in one fact type and kept in
-  another; list the renaming for every fact type that names the same entity.
-  Renaming is the only way composition changes a value.
+  refused. One value of one object type is one entity in its source, so a
+  renaming must cover every role of that object type where the value appears:
+  renaming it in one fact type and keeping it in another is refused with the
+  fact type and role that still use the old value, whether or not the value is
+  listed as an instance. Renaming is the only way composition changes a value.
 - `deduplications: "identical-rows"` collapses rows that are equal after
   renaming into one composed fact, whose lineage lists every source fact.
 - A scope tag (1 to 128 characters) is attached to a source in the record

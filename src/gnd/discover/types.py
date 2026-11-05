@@ -80,6 +80,7 @@ def propose(
     *,
     min_support: int,
     show_values: bool,
+    show_digests: bool = True,
     redacted: frozenset[tuple[str, str]],
     envelope: dict[str, Any],
     budget: int | None = None,
@@ -88,7 +89,9 @@ def propose(
 
     ``envelope`` is the other families' induction provenance without its
     per-candidate fields; ``show_values`` is already decided by the caller's
-    disclosure mode.
+    disclosure mode, and so is ``show_digests``: a short attribute name can be
+    recovered from its unsalted digest, so customer mode omits it (owner
+    ruling after the close).
     """
     index = ModelIndex.for_model(view.model)
     declared = {ft: spec for ft, spec in generic_declarations(view).items() if ft in eligible}
@@ -152,7 +155,8 @@ def propose(
             players = {"entity": entity_role.object_type, "value": value_type}
             match = existing.get(role_player_signature(players))
             if match is not None:
-                shape_matches.append({"generic": generic_id, "attribute_sha256": digest, "existing": match})
+                shape_matches.append({"generic": generic_id, "existing": match,
+                                      **({"attribute_sha256": digest} if show_digests else {})})
                 continue
             single = [ids[0] for ids in group["entities"].values()]
             multiple: list[str] = []
@@ -196,8 +200,10 @@ def propose(
                 operation_id=f"discover-type-{len(result.operations):04d}", kind=EvolutionOperationKind.ADD,
                 locator=ConstraintLocator(host="fact_type", host_id=new_id, family="uniqueness"),
                 after=constraint))
-            entry = {"fact_type": new_id, "generic": generic_id, "attribute_sha256": digest,
-                     "support": induction["support"], "rows": group["rows"]}
+            entry = {"fact_type": new_id, "generic": generic_id, "support": induction["support"],
+                     "rows": group["rows"]}
+            if show_digests:
+                entry["attribute_sha256"] = digest
             if show_values:
                 entry["value"] = group["attribute"]
             proposed.append(entry)

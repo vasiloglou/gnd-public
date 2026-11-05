@@ -121,14 +121,15 @@ def handle(args, parsers) -> int:
     if args.command == "discover":
         if "fact-type" not in args.families and (args.show_values or args.min_support is not None):
             parsers["discover_parser"].error("--min-support and --show-values need --families fact-type")
-        show_values = False
+        show_values, show_digests = False, True
         if "fact-type" in args.families:
             import sys
 
-            from gnd.disclosure import DisclosureRefused, values_allowed
+            from gnd.disclosure import DisclosureRefused, resolve, values_allowed
 
             try:
                 show_values = values_allowed(args.show_values, "--show-values")
+                show_digests = resolve() != "customer"
             except DisclosureRefused as error:
                 print(f"gnd: error: {error}", file=sys.stderr)
                 return 3
@@ -146,6 +147,7 @@ def handle(args, parsers) -> int:
             **({} if "fact-type" not in args.families else {
                 "min_support": 20 if args.min_support is None else args.min_support,
                 "show_values": show_values,
+                "show_digests": show_digests,
             }),
         )
 

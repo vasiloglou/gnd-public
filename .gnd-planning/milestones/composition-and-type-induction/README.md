@@ -33,3 +33,6 @@ Predecessor: [model-growth-guardrails](../model-growth-guardrails/README.md).
 - Close: [007-milestone-close.md](007-milestone-close.md) (four local readers,
   all approve-with-fixes; close fixes re-reviewed; close gate exits 0).
   Owner acceptance pending; not merged.
+- Owner rulings on the close questions: [008-owner-rulings.md](008-owner-rulings.md)
+  (Q1, Q2 deferred to a skill milestone; DC1 accepted as missed; splits
+  refused; customer mode omits attribute digests).

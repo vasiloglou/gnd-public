@@ -1,0 +1,48 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/composition-and-type-induction/evidence/close/dynamic-query-successor.json",
+ "predecessor_sha256": "7777b54db540db6d427c5f75295094ddd95c8cc1a1e5fcdeb37df249b8935265",
+ "reason": "owner rulings after the close: split renamings refused without instances; customer mode omits attribute digests",
+ "added": [
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[tuple[Any, ...], int]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[tuple[Any, ...], tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "kept[entity]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[Any, ...]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[str, str]",
+   1
+  ]
+ ],
+ "removed": [
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "set[tuple[Any, ...]]",
+   1
+  ]
+ ],
+ "result_distinct_rows": 7091,
+ "result_occurrences": 8859
+}

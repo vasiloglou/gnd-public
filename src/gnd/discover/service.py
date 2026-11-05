@@ -199,6 +199,7 @@ def discover(
     max_pairs: int,
     min_support: int = 20,
     show_values: bool = False,
+    show_digests: bool = True,
 ) -> dict[str, Any]:
     """Run discovery; return the report fields plus private build inputs."""
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, ModelLoadError, "model")
@@ -308,7 +309,7 @@ def discover(
         budget = (min(MAX_MODEL_BYTES, MAX_EVOLUTION_PROPOSAL_BYTES) - BUDGET_MARGIN
                   - 2 * len(output.candidate_text(document).encode("utf-8")) - spent)
         type_proposals = types.propose(
-            view, eligible, min_support=min_support, show_values=show_values,
+            view, eligible, min_support=min_support, show_values=show_values, show_digests=show_digests,
             redacted=RedactionPolicy.from_model(model).effective_roles, envelope=envelope,
             budget=budget,
         )
@@ -370,6 +371,7 @@ def _cmd_discover(
     output_format: str,
     min_support: int = 20,
     show_values: bool = False,
+    show_digests: bool = True,
 ) -> int:
     model_path, population_path = Path(model), Path(population)
     out_path, report_path = Path(out), Path(report)
@@ -394,7 +396,7 @@ def _cmd_discover(
         result = discover(
             model_path, population_path,
             families=families, max_values=max_values, max_pairs=max_pairs,
-            min_support=min_support, show_values=show_values,
+            min_support=min_support, show_values=show_values, show_digests=show_digests,
         )
     except (ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError,
             types.GenericDeclarationError) as error:

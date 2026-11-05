@@ -446,8 +446,8 @@ def _renaming(fact_type, source="contract-b", old="ACME CORP.", new="Acme Corp."
     # One value of one object type cannot become two values.
     ([_renaming("contract_has_party"), _renaming("party_is_based_in_city", new="Acme Inc.")],
      "renamings 0 and 1 rename one value to different values"),
-    # Renaming an instance that another fact type still uses would split it.
-    ([_renaming("contract_has_party")], "another role of that source still uses unrenamed"),
+    # Renaming a value in one role and keeping it in another would split it.
+    ([_renaming("contract_has_party")], "renaming 0 splits a value of source contract-b"),
 ])
 def test_instance_renamings_are_never_inferred_past_the_rows(tmp_path, renamings, message):
     model_path, directory = build(tmp_path, renamings=renamings)
@@ -533,7 +533,7 @@ def test_covers_are_the_ordered_union(tmp_path):
     sources = copy.deepcopy(SOURCES)
     del sources["contract-a"]["facts"]["party_is_based_in_city"]
     model_path, directory = build(tmp_path, sources=sources, renamings=[
-        {"source": "contract-b", "fact_type": "contract_has_party", "role": "party", "from": "ACME CORP.", "to": "Acme Corp."}])
+        _renaming("contract_has_party"), _renaming("party_is_based_in_city")])
     result = compose(load_model(model_path), model_path.read_bytes(), directory)
     assert json.loads(result.population_bytes)["population"]["covers"] == ["contract_has_party", "party_is_based_in_city"]
 
@@ -613,3 +613,11 @@ def test_compose_compares_outputs_by_identity(tmp_path):
         run = gnd("compose", model_path, directory, "--out", tmp_path / "x.json",
                   "--record", tmp_path / "COMPOSITION" / "r.json")
         assert run.returncode == 64 and not (directory / "r.json").exists()
+
+
+def test_a_split_is_refused_without_listed_instances(tmp_path):
+    # Owner ruling after the close: one value of one object type is one entity
+    # in its source, listed as an instance or not.
+    model_path, directory = build(tmp_path, renamings=[_renaming("contract_has_party")])
+    with pytest.raises(CompositionError, match=r"splits a value of source contract-b: party_is_based_in_city\.party"):
+        compose(load_model(model_path), model_path.read_bytes(), directory)

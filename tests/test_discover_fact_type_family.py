@@ -148,6 +148,25 @@ def test_values_stay_out_unless_the_mode_allows(tmp_path):
     assert not refused_out.exists()
 
 
+def test_customer_mode_omits_the_attribute_digest(tmp_path):
+    # Owner ruling after the close: a short attribute name can be recovered
+    # from its unsalted digest, so customer mode reports no digest at all.
+    import hashlib
+
+    from gnd.artifacts import canonical_json_bytes
+
+    model, population = build(tmp_path)
+    digest = hashlib.sha256(canonical_json_bytes(CANARY_ATTRIBUTE)).hexdigest()
+    plain = discover(tmp_path, model, population, name="plain")[2]
+    assert proposals(plain)["proposed"][0]["attribute_sha256"] == digest
+    run, out, report = discover(tmp_path, model, population, env={"GND_DISCLOSURE": "customer"}, name="customer")
+    assert run.returncode == 0, run.stderr
+    family = proposals(report)
+    assert family["proposed"] and all("attribute_sha256" not in entry for entry in family["proposed"])
+    for blob in (out.read_text(), report.read_text(), run.stdout):
+        assert digest not in blob and CANARY_ATTRIBUTE not in blob
+
+
 def test_flags_need_the_family(tmp_path):
     model, population = build(tmp_path)
     for flag in (["--show-values"], ["--min-support", "5"]):

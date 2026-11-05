@@ -156,7 +156,10 @@ The report's `fact_type_proposals` key lists, per proposed fact type, the
 opaque ids of the rows that would migrate (`ft<k>#<index>`) and the
 SHA-256 of the attribute value's canonical JSON (`gnd.artifacts.canonical_json_bytes`:
 sorted keys, no spaces, one trailing newline; for the string `size` that is
-`"size"` and a newline). The value itself appears as `value` only when the
+`"size"` and a newline), as `attribute_sha256`. Attribute names are short
+and guessable, so anyone holding the report could recover a name by hashing
+likely candidates; under `customer` the digest is therefore omitted from
+proposals and shape matches. The value itself appears as `value` only when the
 disclosure mode allows `--show-values`: with the flag when the mode is unset,
 always under `internal`, and never under `customer`, where the flag exits 3.
 Without the family the key is absent and every output is as before. The

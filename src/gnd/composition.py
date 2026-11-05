@@ -256,10 +256,11 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
     positions: dict[str, dict[tuple[Any, ...], int]] = {}
     lineage: dict[tuple[str, int], dict[str, Any]] = {}
     used: set[int] = set()
-    kept: set[tuple[Any, ...]] = set()
+    kept: dict[tuple[Any, ...], tuple[str, str]] = {}
     instances: dict[str, dict[tuple[str, str], Any]] = {}
     covers: list[str] = []
     for source in sources:
+        changed: dict[tuple[Any, ...], int] = {}
         for fact_type, rows in source.population.facts.items():
             composed = facts.setdefault(fact_type, [])
             index = positions.get(fact_type)
@@ -269,13 +270,15 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
                 renamed, applied = dict(row), []
                 for role, value in row.items():
                     hit = renamings.get((source.id, fact_type, role, type(value).__name__, repr(value)))
+                    object_type = index_.role_object_type(fact_type, role)
+                    entity = (source.id, object_type, type(value).__name__, repr(value))
                     if hit is not None:
                         renamed[role] = hit[1]
                         applied.append(hit[0])
+                        changed.setdefault(entity, hit[0])
                         continue
-                    object_type = index_.role_object_type(fact_type, role)
                     if object_type is not None:
-                        kept.add((source.id, object_type, type(value).__name__, repr(value)))
+                        kept.setdefault(entity, (fact_type, role))
                 key = _row_key(renamed)
                 position = index.get(key)
                 if position is None:
@@ -285,6 +288,15 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
                 entry["sources"].append({"source": source.id, "fact_type": fact_type, "fact_index": fact_index})
                 entry["renamings"].update(applied)
                 used.update(applied)
+        # One value of one object type is one entity in its source (owner
+        # ruling after the close): renaming it in one role and keeping it in
+        # another would split it, so the manifest must rename every use.
+        for entity, renaming_index in changed.items():
+            if entity in kept:
+                fact_type, role = kept[entity]
+                raise CompositionError(
+                    f"renaming {renaming_index} splits a value of source {source.id}: "
+                    f"{fact_type}.{role} still uses the old value; rename it there too")
         for object_type, values in source.population.instances.items():
             bucket = instances.setdefault(object_type, {})
             for value in values:

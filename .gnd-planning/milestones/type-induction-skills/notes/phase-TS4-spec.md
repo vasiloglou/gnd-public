@@ -289,3 +289,18 @@ Prose (D6), delegated.
 - **P4 (plan §2.3, refuted premise):** the skill cannot write `functional`;
   TS2 removed it (P2). The plan's "routes to fixing the population" is kept
   as S4's instruction with a `skip` verdict.
+- **I1 (§6.5, after review F3):** the fixture gains g4 (`note-m5q5`, every
+  item two values, `item_has_label` holding half its pairs): S4 by partial
+  overlap, scripted answer `skip`. Without it no group exercised S3's
+  no-overlap clause. The four approved verdicts are unchanged; the key adds
+  g4, and the scripted second turn answers g4 as well. With the five
+  verdicts discover exits 0 (`judged_skip` 4) and preview exits 0.
+- **I2 (§6.3, after review F1, F2):** a `null` overlap on a candidate whose
+  other role is redacted now stops S3 (D3 narrowed, not reversed); S1 reads
+  the induced fact type's uniqueness and routes a single-role one to
+  `gnd-model-evolve` or a corrected population.
+- **I3 (§6.4):** links 218 → 228, not "measured nine": S1's new route
+  cites `gnd-model-evolve` a second time.
+- **I4 (§6.6, after review F4):** `no_population_access` also fails on any
+  tool path outside the workspace and plugin copy, or any input naming the
+  repository or home directory. It applies to the TS3 re-recording too.

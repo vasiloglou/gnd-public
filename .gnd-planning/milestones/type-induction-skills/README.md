@@ -20,6 +20,8 @@ and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 - [TS2 record](003-phase-TS2.md)
 - [TS3 spec (r1, approved)](notes/phase-TS3-spec.md)
 - [TS3 record](004-phase-TS3.md)
+- [TS4 spec (r1, delegated approval)](notes/phase-TS4-spec.md)
+- [TS4 record](005-phase-TS4.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -50,5 +52,13 @@ finds the live IL6 skill census breaks on any new skill (D4). TS3 spec r1 approv
 the owner `(a3)` 2026-11-05 (prose, D1–D9 as proposed, one paid Sonnet
 recorded run). TS3 implemented and recorded ([record](004-phase-TS3.md)): one paid
 Sonnet run matched the key; one review, eight findings fixed. The recording
-binds the pre-review skill bytes (TS3-Q3). Next action: push and PR on the
-owner's selection; then TS4.
+binds the pre-review skill bytes (TS3-Q3). PR #90 merged as `1668a58e`.
+
+**2026-11-05: the owner invoked `process-milestone type-induction-skills
+auto`** (delegated approval for this milestone's spec and close rulings; paid
+calls, merge and publication stay the owner's). TS4 spec r1 recorded as
+delegated approval `(d4)`; the owner separately authorized two paid Sonnet
+runs (TS4, and re-recording TS3). TS4 implemented and recorded
+([record](005-phase-TS4.md)): one review, four findings fixed; the TS4
+recording matched its key (one recorder false positive, R1, corrected); the
+TS3 re-recording passed all ten checks (TS3-Q3 resolved). Next: TS5.

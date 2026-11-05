@@ -2,8 +2,14 @@
 
 ## 1. Status
 
-**r2, awaiting owner review.** `auto=false`. Implementable once the owner
-approves this spec and rules §7. No implementation file has been created.
+**r2, approved by the owner `(a1)` 2026-11-05** (SHA-256 of the r2 bytes
+before this mark: `6d68a5093088e7a616fb625c595c8fd6ed0b64e9d4aad946e8301a8af18a7f3f`).
+`auto=false`. Asked "Approve TS1 spec r2 with the prose instrument and D1–D7
+as proposed?", the owner answered "Approve as proposed". Instrument: this
+prose (§11). §7 D1–D7 ruled as proposed. No spec review panel ran or was
+asked for. Implementation begins only on the owner's explicit go-ahead; no
+implementation file has been created. The approval rules no plan §10 row and
+does not settle TS-Q3.
 
 ## 2. Provenance
 
@@ -252,15 +258,15 @@ still appear (ids and counts only).
 
 ## 7. Decisions
 
-| ID | Question | Readings and cost | Proposal |
+| ID | Question | Readings and cost | Ruling |
 |---|---|---|---|
-| D1 (plan TS-Q1) | Candidate scope | (a) every fact type the entity type plays: larger file, but a judge sees fact types with other value types; (b) equal-signature binaries only: smaller, but hides the semantic duplicates whose value type differs, the case CT-close-Q1 is about | (a) |
-| D2 | Overlap for non-binary or kind-mismatched candidates | (a) `pairs: null`, entities still counted; (b) omit the candidate | (a) |
-| D3 | Evidence when nothing is proposed (no `--out`) | (a) still written: the multi-valued and shape-matched groups are what the skills need; (b) only with `--out`: matches "written only when something is emitted" | (a); exit 0 |
-| D4 | Write order | (a) after the report, create-once; a write failure leaves the report without evidence, exit 74; (b) staged all-or-nothing: a new staging path in discover | (a), as `--out` today |
-| D5 | `signature` form | (a) canonical JSON of the helper's output; (b) a hash: opaque | (a) |
-| D6 **(r2)** | Group key | (a) evidence-local `g<n>`, valid because judgements bind the evidence digest: works in every mode; (b) `attribute_sha256`: absent under `customer` since 008, so customer users could not judge at all | (a) |
-| D7 **(r2)** | `origin` under `customer` | (a) `same_attribute` boolean, computed in memory, digest omitted; (b) omit `origin` under `customer`: the judge loses its strongest signal | (a) |
+| D1 (plan TS-Q1) | Candidate scope | (a) every fact type the entity type plays: larger file, but a judge sees fact types with other value types; (b) equal-signature binaries only: smaller, but hides the semantic duplicates whose value type differs, the case CT-close-Q1 is about | (a) — owner `(a1)` 2026-11-05 |
+| D2 | Overlap for non-binary or kind-mismatched candidates | (a) `pairs: null`, entities still counted; (b) omit the candidate | (a) — owner `(a1)` 2026-11-05 |
+| D3 | Evidence when nothing is proposed (no `--out`) | (a) still written: the multi-valued and shape-matched groups are what the skills need; (b) only with `--out`: matches "written only when something is emitted" | (a); exit 0 — owner `(a1)` 2026-11-05 |
+| D4 | Write order | (a) after the report, create-once; a write failure leaves the report without evidence, exit 74; (b) staged all-or-nothing: a new staging path in discover | (a), as `--out` today — owner `(a1)` 2026-11-05 |
+| D5 | `signature` form | (a) canonical JSON of the helper's output; (b) a hash: opaque | (a) — owner `(a1)` 2026-11-05 |
+| D6 **(r2)** | Group key | (a) evidence-local `g<n>`, valid because judgements bind the evidence digest: works in every mode; (b) `attribute_sha256`: absent under `customer` since 008, so customer users could not judge at all | (a) — owner `(a1)` 2026-11-05 |
+| D7 **(r2)** | `origin` under `customer` | (a) `same_attribute` boolean, computed in memory, digest omitted; (b) omit `origin` under `customer`: the judge loses its strongest signal | (a) — owner `(a1)` 2026-11-05 |
 
 **Open for TS2, raised here (r2).** What `provenance.induced_from` stores
 when a judged proposal is rendered under `customer`: the attribute digest in
@@ -344,9 +350,9 @@ service 45), a 130-line schema, and about 500 test lines.
 
 ## 11. Approval instrument
 
-This prose (proposed). The phase is a serialized format, for which the
+This prose, chosen by the owner `(a1)` 2026-11-05. The phase is a serialized format, for which the
 review-convergence reference defaults to corpus-first; the argument for
 prose is that the format is read only by TS2 and the skills, both in this
 milestone, and T18 validates every written file. The owner may instead ask
 for a fixture corpus with narrated expected evidence first. Optional spec
-review panel: proposed omitted.
+review panel: omitted (not asked for at the gate).

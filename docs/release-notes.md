@@ -50,6 +50,16 @@ Walk through it in [From several documents to one checked answer](how-to/compose
   `many-to-many` is proposed with a uniqueness spanning both roles. Stale,
   incomplete or contradicted verdicts exit 3. See
   [type judgements](reference/discover.md#type-judgements).
+- **Two judgement skills** (type-induction-skills TS3, TS4). The packaged
+  skills `gnd-judge-fact-types` and `gnd-model-multivalued` read one
+  evidence file and the model, never the population, and write the
+  `duplicates` and `shapes` judgements files: an induced group is judged a
+  duplicate of a fact type the model has, or distinct; a multi-valued
+  attribute is judged a many-to-many fact type with a uniqueness spanning
+  both roles, the junction-table convention of the `rai-orm-from-schema`
+  dialect, or skipped. When the evidence cannot decide, they ask. Neither
+  applies anything. Walk through both in
+  [Judge induced fact types with two skills](how-to/judge-induced-fact-types.md).
 
 ## Unreleased: model growth guardrails (2026-11-04)
 

@@ -1,0 +1,41 @@
+{
+  "format": "gnd-type-judgements/1",
+  "kind": "shapes",
+  "evidence_sha256": "24c9df2540f74fa21a05abbd20fa6a26c0332a3358d037b5ffe9c8615b295b10",
+  "judge": {
+    "skill": "gnd-model-multivalued",
+    "agent": "Claude Sonnet"
+  },
+  "verdicts": [
+    {
+      "group": "g0",
+      "generic": "item_has_attribute",
+      "verdict": "skip",
+      "rationale": "Rule S1: item_has_attribute_induced_0 (\"is tagged\") was induced from this same attribute, and its uniqueness spans both roles, so it already models the attribute as many-to-many."
+    },
+    {
+      "group": "g1",
+      "generic": "item_has_attribute",
+      "verdict": "skip",
+      "rationale": "Rule S2: item_has_label (\"has label\") already holds every distinct pair of g1, so a new fact type would duplicate it."
+    },
+    {
+      "group": "g2",
+      "generic": "item_has_attribute",
+      "verdict": "many-to-many",
+      "rationale": "Rule S3: no candidate overlaps g2's pairs, nothing was truncated, and well over one entity in ten holds several values, so it is a junction table; the row that repeats a pair becomes a counterexample of the spanning uniqueness."
+    },
+    {
+      "group": "g3",
+      "generic": "item_has_attribute",
+      "verdict": "skip",
+      "rationale": "Rule S4, answered by the user: the one item with a second value is an entry error, so g3 is single-valued; the population is to be corrected and new evidence made."
+    },
+    {
+      "group": "g4",
+      "generic": "item_has_attribute",
+      "verdict": "skip",
+      "rationale": "Rule S4, answered by the user: g4 repeats labels that item_has_label (\"has label\") already holds, so it is covered by that fact type."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 680" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">The five multi-valued groups and the one many-to-many proposal</title><desc id="desc">Five multi-valued groups. g0: every pair already in Item is tagged AttributeValue, induced from the same attribute, skip by S1. g1: every pair already in Item has label Label, skip by S2. g2: 12 of 24 items hold two values, no candidate shares a pair, one exact repeat: many-to-many by S3. g3: one item with a second value, asked, you said entry error, skip. g4: half its pairs in has label, asked, you said covered, skip. On the right the one proposal: Item has induced attribute 2 AttributeValue with a uniqueness spanning both roles, 36 distinct pairs of 37 rows, counterexample row ft0#132.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:15px} .tiny{font-size:13px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:14px} .track{fill:#fff;stroke:#50657a} .fill{fill:#50657a;stroke:none} .same{fill:#b45309;stroke:none} .many{fill:#1f7a4d;stroke:none} .green{fill:#1f7a4d;font-weight:700} .orange{fill:#b45309;font-weight:700} .muted{fill:#50657a} .line{stroke:#c9d4dc;stroke-width:1} .uc{stroke:#1f7a4d;stroke-width:3;fill:none}</style><rect width="640" height="680" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Multi-valued: junction table, or already modelled?</text>
+<text x="24" y="78" class="small strong">group</text>
+<text x="80" y="78" class="small strong">items with several values</text>
+<text x="300" y="78" class="small strong">pairs already held</text>
+<text x="472" y="78" class="small strong">rule</text>
+<text x="520" y="78" class="small strong">verdict</text>
+<path class="line" d="M24 86L616 86"/>
+<text x="24" y="118" class="mono strong">g0</text>
+<rect class="track" x="80" y="102" width="192" height="20" rx="4"/><rect class="fill" x="80" y="102" width="192" height="20" rx="4"/>
+<text x="80" y="140" class="tiny muted">24 of 24</text>
+<text x="300" y="118" class="tiny orange">all 48 in "is tagged"</text>
+<text x="300" y="140" class="tiny orange">same attribute · uniqueness spans both roles</text>
+<text x="472" y="118" class="mono">S1</text>
+<text x="520" y="118" class="small muted strong">skip</text>
+<path class="line" d="M24 152L616 152"/>
+<text x="24" y="184" class="mono strong">g1</text>
+<rect class="track" x="80" y="168" width="192" height="20" rx="4"/><rect class="fill" x="80" y="168" width="192" height="20" rx="4"/>
+<text x="80" y="206" class="tiny muted">24 of 24</text>
+<text x="300" y="184" class="tiny muted">all 48 in "has label"</text>
+<text x="472" y="184" class="mono">S2</text>
+<text x="520" y="184" class="small muted strong">skip</text>
+<path class="line" d="M24 218L616 218"/>
+<text x="24" y="250" class="mono strong">g2</text>
+<rect class="track" x="80" y="234" width="192" height="20" rx="4"/><rect class="many" x="80" y="234" width="96" height="20" rx="4"/>
+<text x="80" y="272" class="tiny green">12 of 24 · one exact repeat</text>
+<text x="300" y="250" class="tiny muted">none · nothing truncated</text>
+<text x="472" y="250" class="mono">S3</text>
+<text x="520" y="250" class="small green">many-to-many</text>
+<path class="line" d="M24 284L616 284"/>
+<text x="24" y="316" class="mono strong">g3</text>
+<rect class="track" x="80" y="300" width="192" height="20" rx="4"/><rect class="same" x="80" y="300" width="8" height="20" rx="4"/>
+<text x="80" y="338" class="tiny orange">1 of 24 · asked; you said entry error</text>
+<text x="300" y="316" class="tiny muted">none</text>
+<text x="472" y="316" class="mono">S4</text>
+<text x="520" y="316" class="small muted strong">skip</text>
+<path class="line" d="M24 350L616 350"/>
+<text x="24" y="382" class="mono strong">g4</text>
+<rect class="track" x="80" y="366" width="192" height="20" rx="4"/><rect class="fill" x="80" y="366" width="192" height="20" rx="4"/>
+<text x="80" y="404" class="tiny muted">24 of 24</text>
+<text x="300" y="382" class="tiny orange">24 of 48 in "has label"</text>
+<text x="300" y="404" class="tiny orange">asked; you said covered</text>
+<text x="472" y="382" class="mono">S4</text>
+<text x="520" y="382" class="small muted strong">skip</text>
+<path class="line" d="M24 416L616 416"/>
+<path class="edge" d="M320 422L320 450"/>
+<text x="24" y="482" class="strong">The one proposal, from g2</text>
+<rect x="24" y="498" width="592" height="164" rx="12" fill="#e9f4ec"/>
+<rect x="48" y="528" width="110" height="40" rx="20" fill="#fff"/>
+<text x="103" y="554" class="mid small">Item</text>
+<rect x="238" y="528" width="80" height="40" fill="#fff"/>
+<rect x="318" y="528" width="80" height="40" fill="#fff"/>
+<text x="278" y="554" class="mid tiny">entity</text>
+<text x="358" y="554" class="mid tiny">value</text>
+<path class="uc" d="M240 518L396 518"/>
+<text x="318" y="508" class="mid tiny green">uniqueness over both roles</text>
+<rect x="478" y="528" width="120" height="40" rx="20" fill="#fff"/>
+<text x="538" y="554" class="mid small">AttributeValue</text>
+<path d="M158 548L238 548" stroke="#334155" stroke-width="1.5"/>
+<path d="M398 548L478 548" stroke="#334155" stroke-width="1.5"/>
+<text x="40" y="600" class="mono green">item_has_attribute_induced_2</text>
+<text x="40" y="624" class="small">each (item, value) pair recorded once · says nothing about how many values</text>
+<text x="40" y="648" class="small">support 36 distinct pairs of 37 rows · counterexample <tspan class="mono orange">ft0#132</tspan>, a repeated pair</text>
+</svg>

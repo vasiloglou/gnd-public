@@ -20,6 +20,7 @@ REQUIRED = ['README.md', 'LICENSE', 'NOTICE', 'AGENTS.md', 'CONTRIBUTING.md',
 
 NM_HOME = Path('.gnd-planning/milestones/why-not-near-misses')
 MG_HOME = Path('.gnd-planning/milestones/model-growth-guardrails')
+CT_HOME = Path('.gnd-planning/milestones/composition-and-type-induction')
 
 # These links identify the original operator's retained, external run evidence.
 # The historical report is immutable; their presence on a fresh checkout is not
@@ -89,6 +90,9 @@ RETAINED_DOCUMENT_ORIGINS = {
     MG_HOME / 'checkpoints/DC2/docs/how-to/grow-a-model.md': (
         Path('docs/how-to/grow-a-model.md'),
         'ce7d6295166cf753462adfe67def063215163c17c81fc5c627a4df3e30e03eeb'),
+    CT_HOME / 'checkpoints/DC2/docs/how-to/compose-documents.md': (
+        Path('docs/how-to/compose-documents.md'),
+        '47705a00acc19320e7c91899b8974d2a0c4a4de17ed4f98c42e8d55bfabee448'),
 }
 
 

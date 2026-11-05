@@ -1,0 +1,34 @@
+{
+  "schema": "gnd-composition-manifest/1",
+  "sources": [
+    "contract-a",
+    "contract-b"
+  ],
+  "renamings": [
+    {
+      "source": "contract-b",
+      "fact_type": "contract_has_party",
+      "role": "party",
+      "from": "ACME CORP.",
+      "to": "Acme Corp."
+    },
+    {
+      "source": "contract-b",
+      "fact_type": "party_is_based_in_city",
+      "role": "party",
+      "from": "ACME CORP.",
+      "to": "Acme Corp."
+    }
+  ],
+  "deduplications": "identical-rows",
+  "scope_tags": [
+    {
+      "source": "contract-a",
+      "tag": "agreement"
+    },
+    {
+      "source": "contract-b",
+      "tag": "addendum"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "fact_type": "contract_is_in_city",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "C-2"
+        },
+        {
+          "primitive": "String",
+          "value": "Lyon"
+        }
+      ]
+    }
+  ]
+}

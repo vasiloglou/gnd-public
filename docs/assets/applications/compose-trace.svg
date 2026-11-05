@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">The trace from the derived answer to a span in each document</title><desc id="desc">At the top, the derived answer: C-2 is in Lyon, proved by the rule. Below it two base facts. Acme Corp. is based in Lyon, from contract-a and contract-b, points at the sentence The supplier, Acme Corp., is based in Lyon. in the agreement and at ACME CORP. is based in Lyon. in the addendum. C-2 has party Acme Corp., from contract-b, points at Addendum C-2 is signed by ACME CORP. as the supplier. in the addendum. The addendum's spans are found under the name that document uses.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:15px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:14px} .derived{stroke-dasharray:6 4} .span{fill:#fff3bf;stroke:#b45309;stroke-width:1.5} .caps{fill:#b45309;font-weight:700} .quote{font-style:italic}</style><rect width="640" height="640" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Trace: from the answer to a span in each document</text>
+<rect x="176" y="62" width="288" height="66" rx="12" fill="#e9f4ec" class="derived"/>
+<text x="320" y="88" class="strong mid">C-2 is in Lyon</text>
+<text x="320" y="112" class="small mid">derived by the rule · witness.json</text>
+<path class="edge" d="M250 128L168 162"/>
+<path class="edge" d="M390 128L472 162"/>
+<rect x="24" y="168" width="288" height="96" rx="12" fill="#eef5f8"/>
+<text x="40" y="194" class="strong">Acme Corp. is based in Lyon</text>
+<text x="40" y="216" class="small mono">sources: contract-a#0,</text>
+<text x="40" y="234" class="small mono">         contract-b#0</text>
+<text x="40" y="254" class="small">two source facts; renaming 1</text>
+<rect x="328" y="168" width="288" height="96" rx="12" fill="#eef5f8"/>
+<text x="344" y="194" class="strong">C-2 has party Acme Corp.</text>
+<text x="344" y="216" class="small mono">sources: contract-b#0</text>
+<text x="344" y="254" class="small">renamed by renaming 0</text>
+<path class="edge" d="M120 264L120 318"/>
+<path class="edge" d="M472 264L472 318"/>
+<text x="132" y="296" class="small">its anchor in A</text>
+<text x="484" y="296" class="small">its anchor in B</text>
+<rect x="24" y="324" width="288" height="196" rx="12" fill="#fff"/>
+<text x="40" y="350" class="strong">Agreement C-1</text>
+<text x="40" y="370" class="small mono">contract-a/document.txt</text>
+<text x="40" y="396" class="small quote">Agreement C-1 is entered into by</text>
+<text x="40" y="416" class="small quote">Acme Corp. as the supplier.</text>
+<rect x="34" y="430" width="268" height="52" rx="8" class="span"/>
+<text x="40" y="452" class="small quote">The supplier, Acme Corp.,</text>
+<text x="40" y="472" class="small quote">is based in Lyon.</text>
+<text x="40" y="504" class="small">span 76..119, occurrence 0 of "Lyon"</text>
+<rect x="328" y="324" width="288" height="196" rx="12" fill="#fff"/>
+<text x="344" y="350" class="strong">Addendum C-2</text>
+<text x="344" y="370" class="small mono">contract-b/document.txt</text>
+<rect x="338" y="380" width="268" height="52" rx="8" class="span"/>
+<text x="344" y="402" class="small quote">Addendum C-2 is signed by</text>
+<text x="344" y="422" class="small quote"><tspan class="caps">ACME CORP.</tspan> as the supplier.</text>
+<rect x="338" y="440" width="268" height="32" rx="8" class="span"/>
+<text x="344" y="462" class="small quote"><tspan class="caps">ACME CORP.</tspan> is based in Lyon.</text>
+<text x="344" y="504" class="small">both found under B's own spelling</text>
+<path class="edge" d="M312 258L334 456"/>
+<text x="24" y="558" class="small">Each base fact's sources lead into that source's own sidecar, and from there</text>
+<text x="24" y="580" class="small">to a range of its own document. The anchors bind values to text; whether the</text>
+<text x="24" y="602" class="small">contracts are right is not something a span can prove.</text>
+</svg>

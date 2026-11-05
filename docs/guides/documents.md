@@ -79,6 +79,8 @@ failure or an unchecked result depending on the situation and modality. The
 matcher uses documented lexical normalization and explicit numeric/date
 recognizers; it does not infer arbitrary paraphrase equivalence. Source
 anchoring provides specific occurrence evidence, not a blanket truth claim.
+The sidecar format, including version 2's several anchors per role, is in
+the [anchor sidecar reference](../reference/anchors.md).
 
 ## Test a round trip without hiding failures
 

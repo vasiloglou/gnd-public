@@ -74,7 +74,7 @@ def invocation(mode: str | None) -> Iterator[None]:
 @dataclass(frozen=True)
 class Surface:
     kind: Literal["site", "value-free", "every-mode"]
-    convention: Literal["declared", "view"] | None = None
+    convention: Literal["declared", "view", "option"] | None = None
     spawns: bool = False
     note: str = ""
 
@@ -91,6 +91,8 @@ _VIEW = {"kind": "site", "convention": "view"}
 SURFACES: Mapping[str, Surface] = {
     **{f"gnd {leaf}": Surface(**_DECLARED) for leaf in (
         "check", "validate", "diff", "verbalize population", "measure", "verify", "judgments check")},
+    "gnd discover": Surface("site", convention="option",
+                            note="--show-values follows the mode; redacted roles never get value candidates"),
     **{f"gnd {leaf}": Surface(**_VIEW) for leaf in (
         "witness", "witness-view", "replay", "why-not",
         "export lean", "export souffle", "export souffle-run", "export souffle-witness")},
@@ -98,10 +100,10 @@ SURFACES: Mapping[str, Surface] = {
     "gnd solve": Surface("value-free", spawns=True, note="stations are GND commands"),
     "gnd review panel": Surface("value-free", spawns=True, note="reviewers are agents"),
     "gnd review panel-light": Surface("value-free", spawns=True, note="reviewers are agents"),
-    "gnd discover": Surface("every-mode", note="redacted roles never get value candidates"),
     "gnd export ilp": Surface("every-mode", note="refuses declared roles; writes undeclared values"),
     "gnd fidelity": Surface("every-mode", note="quotes the extracted facts it measures"),
     "gnd doccheck": Surface("every-mode", note="quotes the population values a rendered document misses"),
+    "gnd compose": Surface("every-mode", note="writes the caller's own composed population"),
     **_rows("value-free", [f"gnd {leaf}" for leaf in (
         "codegen", "conformance", "coverage", "doctor", "evolve apply",
         "evolve finalize", "evolve preview", "exp author-expectation", "exp close", "exp init",
@@ -117,6 +119,7 @@ SURFACES: Mapping[str, Surface] = {
         "witness", "replay", "why_not", "export_lean", "export_souffle", "run_souffle", "souffle_witness")},
     "api:EvaluationSession.check_with_feedback": Surface("every-mode", note="session feedback is applied"),
     "api:EvaluationSession.observe": Surface("every-mode", note="returns the caller's own population"),
+    "api:compose": Surface("every-mode", note="returns the caller's own composed population"),
     **_rows("value-free", [f"api:{name}" for name in (
         "CheckReceipt", "ReceiptRefused", "DisclosureRefused", "EvaluationSession", "verify_lean", "verify_souffle",
         "verbalize_rules",

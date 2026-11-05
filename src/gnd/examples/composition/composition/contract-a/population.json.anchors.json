@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "population_sha256": "e27825b8374866b9801091274a14701d989cafe34a0178a76bc27f43e76cd412",
+  "vocabulary_digest": "ef7a67d98e710ea959f8fef96dbddea49a0cafd5123bdaec5c684780c3b150b9",
+  "document_sha256": "32f5d38985bbf47cd14f87e1bbcdd9162a17fc87a64a40a36ad77003c33e7665",
+  "anchors": [
+    {
+      "fact_key": {
+        "fact_type": "contract_has_party",
+        "roles": {
+          "contract": "C-1",
+          "party": "Acme Corp."
+        }
+      },
+      "role": "party",
+      "span": {
+        "start": 15,
+        "end": 75
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "71237e3eee20a6d054563543ea24dd62026f7145e3c233f268547cb747abbd64"
+    },
+    {
+      "fact_key": {
+        "fact_type": "contract_has_party",
+        "roles": {
+          "contract": "C-1",
+          "party": "Acme Corp."
+        }
+      },
+      "role": "party",
+      "span": {
+        "start": 76,
+        "end": 119
+      },
+      "occurrence": 1,
+      "excerpt_sha256": "593200bce80ef1125f41d66914ba88584da31440c7b2d7e65abd8501edb8fa30"
+    },
+    {
+      "fact_key": {
+        "fact_type": "party_is_based_in_city",
+        "roles": {
+          "party": "Acme Corp.",
+          "city": "Lyon"
+        }
+      },
+      "role": "city",
+      "span": {
+        "start": 76,
+        "end": 119
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "593200bce80ef1125f41d66914ba88584da31440c7b2d7e65abd8501edb8fa30"
+    }
+  ]
+}

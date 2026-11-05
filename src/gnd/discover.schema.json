@@ -63,7 +63,8 @@
               "frequency",
               "subset",
               "equality",
-              "exclusion"
+              "exclusion",
+              "fact-type"
             ]
           }
         },
@@ -411,6 +412,141 @@
         "string",
         "null"
       ]
+    },
+    "fact_type_proposals": {
+      "description": "Present only with --families fact-type (CT4). Opaque row ids and SHA-256 digests of attribute values; `value` only when the disclosure mode allows --show-values.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "min_support",
+        "proposed",
+        "shape_matches",
+        "skipped",
+        "row_visits"
+      ],
+      "properties": {
+        "min_support": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "proposed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fact_type",
+              "generic",
+              "support",
+              "rows"
+            ],
+            "properties": {
+              "fact_type": {
+                "type": "string"
+              },
+              "generic": {
+                "type": "string"
+              },
+              "attribute_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "support": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "numerator",
+                  "denominator"
+                ],
+                "properties": {
+                  "numerator": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "denominator": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^ft[0-9]+#[0-9]+$"
+                }
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            }
+          }
+        },
+        "shape_matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "generic",
+              "existing"
+            ],
+            "properties": {
+              "generic": {
+                "type": "string"
+              },
+              "attribute_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "existing": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "skipped": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "redacted_attribute_roles",
+            "mixed_type_groups",
+            "below_support",
+            "multi_valued",
+            "over_budget"
+          ],
+          "properties": {
+            "redacted_attribute_roles": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mixed_type_groups": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "below_support": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "multi_valued": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "over_budget": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "row_visits": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     }
   },
   "$defs": {

@@ -18,6 +18,9 @@ from gnd.anchor_identity import ANCHOR_TRANSLATION as _ANCHOR_TRANSLATION
 from gnd.artifacts import canonical_json_bytes, read_regular_file_bytes, sha256_hex
 
 MAX_SIDECAR_BYTES = 1 << 20
+# Version 2 allows several anchors per fact role; its identity adds the span
+# and occurrence, so only an exactly repeated anchor is refused.
+SUPPORTED_SIDECAR_VERSIONS = (1, 2)
 
 
 MAX_DOCUMENT_BYTES = 10 << 20
@@ -68,8 +71,13 @@ def _reject_constant(value: str) -> None:
 
 
 def _parse(raw: bytes) -> Any:
-    if len(raw) > MAX_SIDECAR_BYTES:
-        raise ValueError("sidecar exceeds 1 MiB")
+    return strict_json(raw, max_bytes=MAX_SIDECAR_BYTES, too_large="sidecar exceeds 1 MiB")
+
+
+def strict_json(raw: bytes, *, max_bytes: int, too_large: str) -> Any:
+    """Parse caller JSON refusing duplicate keys, constants, deep nesting and huge integers."""
+    if len(raw) > max_bytes:
+        raise ValueError(too_large)
     def _integer(value: str) -> int:
         if len(value) > 18:
             raise ValueError("oversized integer")
@@ -106,7 +114,8 @@ def parse_anchor_sidecar(raw: bytes) -> AnchorSidecar:
     try:
         data = _parse(raw)
         _exact_keys(data, {"schema_version", "population_sha256", "vocabulary_digest", "document_sha256", "anchors"})
-        if type(data["schema_version"]) is not int or data["schema_version"] != 1:
+        version = data["schema_version"]
+        if type(version) is not int or version not in SUPPORTED_SIDECAR_VERSIONS:
             raise ValueError("unsupported sidecar version")
         if not all(_digest(data[key]) for key in ("population_sha256", "vocabulary_digest", "document_sha256")):
             raise ValueError("invalid digest")
@@ -131,8 +140,10 @@ def parse_anchor_sidecar(raw: bytes) -> AnchorSidecar:
             if type(anchor["occurrence"]) is not int or anchor["occurrence"] < 0 or not _digest(anchor["excerpt_sha256"]):
                 raise ValueError("invalid anchor occurrence or excerpt digest")
             identity = (fact_key["fact_type"], json.dumps(fact_key["roles"], sort_keys=True, ensure_ascii=False, allow_nan=False), anchor["role"])
+            if version == 2:
+                identity += (span["start"], span["end"], anchor["occurrence"])
             if identity in seen:
-                raise ValueError("duplicate fact-role anchor")
+                raise ValueError("duplicate fact-role anchor" if version == 1 else "duplicate anchor")
             seen.add(identity)
         return AnchorSidecar(data["schema_version"], data["population_sha256"], data["vocabulary_digest"], data["document_sha256"], tuple(data["anchors"]))
     except (ValueError, TypeError, UnicodeError, RecursionError) as error:

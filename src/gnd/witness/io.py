@@ -28,6 +28,8 @@ from gnd.references import (
 )
 from gnd.witness.types import DEFAULT_LIMITS, WitnessInputError, checked_limits
 
+_SOURCE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
+
 
 def validate_witness_structure(document: object, *, limits=DEFAULT_LIMITS) -> int:
     limits = checked_limits(limits)
@@ -158,12 +160,18 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
     record(doc, "version kind binding results nodes")
     if (
         type(doc["version"]) is not int
-        or doc["version"] != 1
+        or doc["version"] not in (1, 2)
         or doc["kind"] != "derivation-witness"
     ):
         raise WitnessInputError("unknown certificate kind/version")
+    # Version 2 is a witness over a composed population (CT3): the binding
+    # names the composition record and each base node its source facts.
+    composed = doc["version"] == 2
     b = doc["binding"]
-    record(b, "model_digest candidate_digest references")
+    record(b, "model_digest candidate_digest references" + (" composition_sha256" if composed else ""))
+    if composed and (type(b["composition_sha256"]) is not str
+                     or not re.fullmatch(r"[0-9a-f]{64}", b["composition_sha256"])):
+        raise WitnessInputError("invalid composition digest")
     for k in ("model_digest", "candidate_digest"):
         if type(b[k]) is not str or not re.fullmatch(r"sha256:[0-9a-f]{64}", b[k]):
             raise WitnessInputError("invalid digest")
@@ -208,7 +216,7 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
     for i, n in enumerate(doc["nodes"]):
         kind = n.get("kind") if type(n) is dict else None
         keys = {
-            "base": "id kind fact_type tuple origin",
+            "base": "id kind fact_type tuple origin" + (" sources" if composed else ""),
             "rule": "id kind fact_type clause_index tuple bindings premises",
             "comparison": "id kind rule_fact_type clause_index where_index bindings premises",
         }
@@ -230,6 +238,16 @@ def certificate_shape(doc, *, limits=DEFAULT_LIMITS):
                 or (origin["kind"] == "reference" and type(origin["reference_id"]) is not str)
             ):
                 raise WitnessInputError("invalid base origin")
+            if composed:
+                if type(n["sources"]) is not list or not n["sources"]:
+                    raise WitnessInputError("invalid base sources")
+                for entry in n["sources"]:
+                    record(entry, "source fact_type fact_index")
+                    integer(entry["fact_index"])
+                    # A source id has the composition record's id form (close review).
+                    if (type(entry["source"]) is not str or not _SOURCE_ID.fullmatch(entry["source"])
+                            or type(entry["fact_type"]) is not str):
+                        raise WitnessInputError("invalid base sources")
         else:
             integer(n["clause_index"])
             if kind == "comparison":

@@ -2565,6 +2565,67 @@
         },
         "admission": {
           "$ref": "#/$defs/admission"
+        },
+        "composition": {
+          "description": "Present only on `gnd check --composition` (CT2): the composition record's SHA-256 and, for every composed fact named in any verdict's offending facts, its source facts from the record. Ids and indexes only; no role value.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "record_sha256",
+            "lineage"
+          ],
+          "properties": {
+            "record_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "lineage": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fact_type",
+                  "index",
+                  "sources"
+                ],
+                "properties": {
+                  "fact_type": {
+                    "type": "string"
+                  },
+                  "index": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "sources": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "source",
+                        "fact_type",
+                        "fact_index"
+                      ],
+                      "properties": {
+                        "source": {
+                          "type": "string"
+                        },
+                        "fact_type": {
+                          "type": "string"
+                        },
+                        "fact_index": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       "oneOf": [

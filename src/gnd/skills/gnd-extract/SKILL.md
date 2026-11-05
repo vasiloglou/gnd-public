@@ -114,6 +114,8 @@ in [Deterministic document-extraction `covers`](../gnd-orm-core/references/popul
 
 Beside the population, write `extracted.population.extraction.json` — the digest-bound handoff record. Every field is required and the file loads strictly: an unknown field, a missing digest, or an absolute or parent-escaping path is a load-time rejection, not a warning.
 
+This extraction sidecar is not the optional anchor sidecar (`<population>.anchors.json`, described by `gnd/anchor-sidecar.schema.json`, version 1 or 2) that pins values to source spans; the gnd-orm-core constraint reference covers that one, and `gnd compose` reads one population, anchor sidecar and document per source.
+
 Compute every digest from the actual bytes on disk:
 
 ```

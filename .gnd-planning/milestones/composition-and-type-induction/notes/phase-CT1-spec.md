@@ -1,8 +1,28 @@
 # Phase CT1: several anchors per fact role
 
-**Status: r3, awaiting the owner's plan gate and this spec's gate.**
-Plan approval and this spec's gate are both still open. No code is written
-before the gate.
+**Status: r3, delegated approval (auto=true) 2026-11-04 `(d1)`.** The plan
+was approved `(a1)` 2026-11-03; implementation follows this approval.
+
+`(d1)` **Delegated approval (auto=true)**, 2026-11-04. Authorization: the
+owner's "Yes, run it auto" in this session, answering "Start
+composition-and-type-induction?", which invoked `process-milestone
+composition-and-type-induction auto`. This is an agent ruling under that
+delegation, not the owner's personal reading. Approved bytes: SHA-256
+`0c2f3d22948f3f8aa27f35dd1f26c5e71e14c5a7ae61abe659cb5663599bfd88` (before
+this tag), the bytes the plan gate recorded, after the implementability
+sweep at `a2e44f8` (main after PR #85): every file the Design and Tests name
+exists except `docs/reference/anchors.md`, which this phase creates (rule 5);
+the cited line numbers in `anchors.py` and `_core.py` hold, and
+`git log 1446f90..a2e44f8` touches neither file nor
+`verbalize_population.py` or `export/verification_service.py`; the corpus has
+the three fixture sidecars T7 names; one phase1 anchor serializes to 239
+bytes, so 3,500 fit the 1 MiB cap. Rulings: D1 (a), D2 (a), D3 (a) read as
+P1 to P9 (the Design table, not "P1–P3"), D4 (a). One recorded deviation:
+T7's "before" column is captured at both `1446f90` and `a2e44f8`, since main
+has moved; CT-R1 holds when all three columns agree. Budget: about 120
+source, 90 schema and 550 test lines; no paid calls. Compatibility: every v1
+sidecar unchanged (CT-R1); `gnd extract` still writes v1 (D4); no exit code
+or CLI change. Diff review instrument: one local reviewer agent.
 
 ## Provenance
 

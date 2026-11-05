@@ -1,0 +1,33 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "composition-contracts",
+    "source": "agent-output",
+    "covers": [
+      "contract_has_party",
+      "contract_is_in_city",
+      "party_is_based_in_city"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "contract_has_party": [
+      {
+        "contract": "C-2",
+        "party": "ACME CORP."
+      }
+    ],
+    "party_is_based_in_city": [
+      {
+        "party": "ACME CORP.",
+        "city": "Zurich"
+      }
+    ],
+    "contract_is_in_city": [
+      {
+        "contract": "C-2",
+        "city": "Zurich"
+      }
+    ]
+  }
+}

@@ -2,6 +2,7 @@
 
 import json
 import os
+import sys
 
 from gnd.artifacts import canonical_json_bytes
 from gnd.witness import service as api
@@ -17,11 +18,13 @@ def add_parsers(subparsers):
     p.add_argument("--reference-root")
     p.add_argument("--raw", action="store_true", help="explicitly expose replayable raw values")
     p.add_argument("--out", help="create a new raw certificate; requires --raw")
+    p.add_argument("--composition", help="composition record of a composed population: writes a version-2 witness")
     p = subparsers.add_parser("replay", help="independently replay a finite derivation witness")
     p.add_argument("model")
     p.add_argument("population")
     p.add_argument("certificate")
     p.add_argument("--reference-root")
+    p.add_argument("--composition", help="composition record a version-2 witness binds")
     p.add_argument("--json", action="store_true")
     p.add_argument("--raw", action="store_true", help="explicitly expose target values")
     p = subparsers.add_parser("witness-view", help="view a witness with default value redaction")
@@ -55,9 +58,15 @@ def run(args):
             }
             print(json.dumps(view, ensure_ascii=False, sort_keys=True))
             return result["exit_code"]
+        if args.command in {"witness", "replay"} and args.composition is not None and args.reference_root is not None:
+            print("gnd: error: --composition cannot be combined with --reference-root", file=sys.stderr)
+            return 64
         if args.command == "replay":
-            result = api.replay_result(
-                args.model, args.population, args.certificate, reference_root=args.reference_root
+            result = (
+                api.replay_result(args.model, args.population, args.certificate, reference_root=args.reference_root)
+                if args.composition is None
+                else api.composed_replay_result(
+                    args.model, args.population, args.certificate, composition=args.composition)
             )
         elif args.command == "witness-view":
             result = witness_view(
@@ -66,8 +75,11 @@ def run(args):
         else:
             if args.out and not args.raw:
                 raise ValueError("--out requires --raw")
-            result = api.witness_result(
-                args.model, args.population, args.targets, reference_root=args.reference_root
+            result = (
+                api.witness_result(args.model, args.population, args.targets, reference_root=args.reference_root)
+                if args.composition is None
+                else api.composed_witness_result(
+                    args.model, args.population, args.targets, composition=args.composition)
             )
             certificate = result["certificate"]
             if args.out and certificate is not None:

@@ -22,11 +22,14 @@ for a process. It is accepted only at the root.
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |
 | `gnd check MODEL --populations DIR` | Batch checking of population files |
 | `gnd check MODEL --pre PRE --steps STEPS --post POST --format json` | Audit of a declared operation walk |
+| `gnd check MODEL COMPOSED --composition RECORD --sources DIR` | Re-derive a composition, then check it with lineage ([composition](composition.md)) |
 | `gnd verbalize population MODEL POPULATION --format jsonl` | Deterministic sentences for supplied facts |
+| `gnd compose MODEL DIR --out COMPOSED --record RECORD` | One population from several anchored sources, with a value-free record |
 | `gnd diff MODEL_A MODEL_B --populations DIR --format json` | Bounded comparisons over a shared vocabulary |
 | `gnd coverage MODEL --check REPORT --format json` | Model-element claims and cited evidence; flags select evidence families |
 
-Use `--anchors PATH --document PATH` for snapshot source anchoring.
+Use `--anchors PATH --document PATH` for snapshot source anchoring; the
+sidecar format is in the [anchor sidecar reference](anchors.md).
 Check-family reports normally apply declared redaction; `--unredacted` requests
 the value-bearing view. The disclosure mode can grant or refuse that request;
 see [what customer mode refuses](disclosure.md#what-customer-mode-refuses).
@@ -42,7 +45,7 @@ does not add trace fields.
 | `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT] [--shape-report]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations; the [shape report](evolve-policy.md#shape-report) lists same-shaped fact types |
 | `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR [--policy additive --populated FT]` | Model publication and linked-project rechecks; repeats the preview's policy |
 | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR` | Completion of an interrupted published evolution |
-| `gnd discover MODEL POPULATION --out PROPOSAL --report REPORT --actor ID --requested-at 2026-10-24T12:00:00+00:00` | Candidate constraints observed in one population, as a reviewable evolve proposal plus a report ([contract](discover.md)) |
+| `gnd discover MODEL POPULATION --out PROPOSAL --report REPORT --actor ID --requested-at 2026-10-24T12:00:00+00:00` | Candidate constraints observed in one population, as a reviewable evolve proposal plus a report; `--families fact-type` opts in to proposing fact types from generic rows ([contract](discover.md)) |
 | `gnd recovery inventory ROOT --source SRC --tests TESTS --out INVENTORY` | Bounded static census of explicitly selected roots |
 | `gnd recovery verify ROOT REPORT` | Recheck a recovered-model bundle and source evidence |
 | `gnd import rai-orm RAI_MODEL --out DIR` | Import of the supported RAI ORM input profile and evidence |
@@ -92,6 +95,7 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 | `gnd witness MODEL POPULATION --targets REQUEST` | Redacted finite-witness result (raw under `internal`) |
 | `gnd witness MODEL POPULATION --targets REQUEST --raw --out CERTIFICATE` | Explicit new raw certificate; refused under `customer` |
 | `gnd replay MODEL POPULATION CERTIFICATE --json` | Independent finite inference replay |
+| `gnd witness ... --composition RECORD` / `gnd replay ... --composition RECORD` | Version-2 witness of a composed population, traced to its sources ([composition](composition.md#trace-a-derived-fact-back-to-its-sources)) |
 | `gnd witness-view CERTIFICATE --json` | Non-replayable presentation of a certificate |
 | `gnd why-not MODEL POPULATION --fact-type ID` | Where each clause of a derivation stops, values redacted (raw under `internal`) |
 | `gnd why-not MODEL POPULATION --fact-type ID --row REQUEST` | Where a derivation stops for one claimed row, with values spelled differently counted; values redacted |

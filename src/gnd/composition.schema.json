@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/composition.schema.json",
+  "title": "GND composition record",
+  "description": "The value-free record gnd compose writes beside a composed population: raw-byte digests of the model, manifest, composed population and each source's files, the scope tags, and for each composed fact its source facts and the manifest indexes of the renamings applied. The parser gnd.composition.parse_record is the authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "model_sha256",
+    "manifest_sha256",
+    "population_sha256",
+    "sources",
+    "scope_tags",
+    "facts"
+  ],
+  "properties": {
+    "schema": {
+      "const": "gnd-composition/1"
+    },
+    "model_sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "population_sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "population_sha256",
+          "sidecar_sha256",
+          "document_sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "population_sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "sidecar_sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "document_sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "scope_tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "tag"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fact_type",
+          "index",
+          "sources",
+          "renamings"
+        ],
+        "properties": {
+          "fact_type": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source",
+                "fact_type",
+                "fact_index"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "fact_type": {
+                  "type": "string"
+                },
+                "fact_index": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          },
+          "renamings": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

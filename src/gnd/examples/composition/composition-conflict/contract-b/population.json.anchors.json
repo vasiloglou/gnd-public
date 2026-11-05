@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "population_sha256": "ff7cc2577b90a75c1b98d75593d286c4f66068404fc81ff09864c56956d6914c",
+  "vocabulary_digest": "ef7a67d98e710ea959f8fef96dbddea49a0cafd5123bdaec5c684780c3b150b9",
+  "document_sha256": "e039abc51e879990b8fd90b582312a0610863357f0a1f072147316bb0685efcc",
+  "anchors": [
+    {
+      "fact_key": {
+        "fact_type": "contract_has_party",
+        "roles": {
+          "contract": "C-2",
+          "party": "ACME CORP."
+        }
+      },
+      "role": "party",
+      "span": {
+        "start": 14,
+        "end": 67
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "011a5397fec7066f19d0daae8be37df06fa7b1bf5fc56ff2f5dd630d366a0054"
+    },
+    {
+      "fact_key": {
+        "fact_type": "party_is_based_in_city",
+        "roles": {
+          "party": "ACME CORP.",
+          "city": "Zurich"
+        }
+      },
+      "role": "city",
+      "span": {
+        "start": 68,
+        "end": 98
+      },
+      "occurrence": 0,
+      "excerpt_sha256": "0bbf687c53299b46c44aba7993e5d07938863c5f2b09b8021041fe1886dca551"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 680" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">Composition: two populations and a manifest become one population and a record</title><desc id="desc">On the left, two populations: the agreement's facts and the addendum's facts, the addendum's party written ACME CORP. In the middle, the manifest: rename ACME CORP. to Acme Corp. in contract-b, once per fact type (renamings 0 and 1), deduplicate identical rows. On the right, the composed population: C-1 has party Acme Corp., C-2 has party Acme Corp. with the renaming highlighted, and one fact Acme Corp. is based in Lyon highlighted as deduplicated from both sources. Beside it the record: for every composed fact, its source ids and indexes and the renamings applied, and no values.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:15px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:13px} .caps{fill:#b45309;font-weight:700} .new{fill:#1f7a4d;font-weight:700} .hl{fill:#e9f4ec;stroke:#1f7a4d;stroke-width:1.5} .ren{fill:#fff0e4;stroke:#b45309;stroke-width:1.5}</style><rect width="640" height="680" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Compose: one population, one value-free record</text>
+<rect x="24" y="62" width="288" height="100" rx="12" fill="#eef5f8"/>
+<text x="40" y="88" class="small mono">contract-a/population.json</text>
+<text x="40" y="112" class="small">C-1 has party Acme Corp.</text>
+<text x="40" y="134" class="small">Acme Corp. is based in Lyon</text>
+<text x="40" y="154" class="small">claims: C-1 is in Lyon</text>
+<rect x="328" y="62" width="288" height="100" rx="12" fill="#eef5f8"/>
+<text x="344" y="88" class="small mono">contract-b/population.json</text>
+<text x="344" y="112" class="small">C-2 has party <tspan class="caps">ACME CORP.</tspan></text>
+<text x="344" y="134" class="small"><tspan class="caps">ACME CORP.</tspan> is based in Lyon</text>
+<text x="344" y="154" class="small">claims: C-2 is in Lyon</text>
+<path class="edge" d="M168 162L168 190"/>
+<path class="edge" d="M472 162L472 190"/>
+<rect x="24" y="196" width="592" height="92" rx="12" fill="#fff"/>
+<text x="40" y="222" class="strong">manifest.json <tspan class="small" font-weight="400">· what a person decided</tspan></text>
+<text x="40" y="248" class="small">renamings 0, 1: <tspan class="caps">ACME CORP.</tspan> to Acme Corp. in contract-b, one per fact type</text>
+<text x="40" y="272" class="small">deduplicate identical rows · scope tags: agreement, addendum</text>
+<path class="edge" d="M320 288L320 322"/>
+<text x="332" y="312" class="small mono">gnd compose MODEL DIR --out --record</text>
+<rect x="24" y="328" width="288" height="234" rx="12" fill="#eef5f8"/>
+<text x="40" y="354" class="small mono">composed.population.json</text>
+<text x="40" y="380" class="small">C-1 has party Acme Corp.</text>
+<rect x="34" y="390" width="268" height="44" rx="8" class="ren"/>
+<text x="40" y="408" class="small">C-2 has party Acme Corp.</text>
+<text x="40" y="426" class="small" fill="#b45309">renamed by manifest entry 0</text>
+<rect x="34" y="442" width="268" height="44" rx="8" class="hl"/>
+<text x="40" y="460" class="small">Acme Corp. is based in Lyon</text>
+<text x="40" y="478" class="small new">one fact, two sources, renaming 1</text>
+<text x="40" y="508" class="small">C-1 is in Lyon</text>
+<text x="40" y="530" class="small">C-2 is in Lyon</text>
+<rect x="328" y="328" width="288" height="234" rx="12" fill="#fff"/>
+<text x="344" y="354" class="small mono">composition.json (the record)</text>
+<text x="344" y="380" class="mono">contract_has_party#0</text>
+<text x="344" y="397" class="mono">  from contract-a#0</text>
+<text x="344" y="418" class="mono" fill="#b45309">contract_has_party#1</text>
+<text x="344" y="435" class="mono" fill="#b45309">  from contract-b#0, renaming 0</text>
+<text x="344" y="456" class="mono" fill="#1f7a4d">party_is_based_in_city#0</text>
+<text x="344" y="473" class="mono" fill="#1f7a4d">  from contract-a#0, contract-b#0</text>
+<text x="344" y="490" class="mono" fill="#1f7a4d">  renaming 1</text>
+<text x="344" y="508" class="mono">contract_is_in_city#0, #1 ...</text>
+<text x="344" y="530" class="small">digests of model, manifest, sources</text>
+<text x="344" y="552" class="small strong">ids and indexes only: no value</text>
+<text x="24" y="594" class="small">Rows identical after renaming become one composed fact whose lineage</text>
+<text x="24" y="616" class="small">lists every source fact. Composing the same inputs twice gives the same</text>
+<text x="24" y="638" class="small">bytes. Renaming is the only way a value changes.</text>
+</svg>

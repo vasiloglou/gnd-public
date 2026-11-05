@@ -51,3 +51,17 @@ def test_canonical_and_vendored_schemas_are_byte_identical(filename: str) -> Non
     )
 
 
+
+
+#: CT3: the witness schema's canonical copy is the gnd-export reference, not
+#: gnd-orm-core; witness version 2 changes both copies together.
+EXPORT_CANONICAL_DIR = REPO_ROOT / "src" / "gnd" / "skills" / "gnd-export" / "references"
+
+
+def test_witness_schema_twins_are_byte_identical() -> None:
+    canonical = EXPORT_CANONICAL_DIR / "witness.schema.json"
+    vendored = VENDORED_DIR / "witness.schema.json"
+    assert canonical.read_bytes() == vendored.read_bytes(), (
+        "witness.schema.json has drifted between src/gnd/skills/gnd-export/references/ "
+        "and src/gnd/schema/; copy the reference over the vendored file."
+    )

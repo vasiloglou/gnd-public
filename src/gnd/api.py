@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import copy
-import json  # noqa: F401 -- historical compatibility binding
+import json
 import os
 from collections.abc import Callable, Mapping  # noqa: F401 -- historical compatibility binding
 from dataclasses import (  # noqa: F401 -- historical compatibility binding  # noqa: F401 -- historical compatibility binding
@@ -121,7 +121,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose")  # noqa: RUF022 - approved stable order
 
 
 
@@ -653,19 +653,28 @@ def check(
     population_bytes: bytes | None = None,
     admission: bool = False,
     references: BoundReferenceContext | None = None,
+    composition: str | os.PathLike[str] | dict[str, Any] | None = None,
+    sources: str | os.PathLike[str] | None = None,
 ) -> dict[str, Any]:
-    """Check one population and return the same payload emitted by the CLI."""
+    """Check one population and return the same payload emitted by the CLI.
+
+    ``composition`` (a record path or parsed record) with ``sources`` (the
+    composition directory) checks a composed population: every source is
+    re-bound and the composition re-derived first, and anchored values are
+    checked against their own sources.
+    """
     return _check_unresolved(
         model, population, compiled_operations=compiled_operations,
         unredacted=_values_allowed(unredacted, "unredacted=True"), anchors=anchors,
         document=document, population_bytes=population_bytes, admission=admission,
-        references=references,
+        references=references, composition=composition, sources=sources,
     )
 
 
 def _check_unresolved(
     model, population, *, compiled_operations=False, unredacted=False, anchors=None,
     document=None, population_bytes=None, admission=False, references=None,
+    composition=None, sources=None,
 ) -> dict[str, Any]:
     """``check`` with ``unredacted`` taken as given; for internal callers whose
     output the disclosure mode does not govern."""
@@ -675,6 +684,16 @@ def _check_unresolved(
         raise ValueError('compiled_operations cannot be combined with admission')
     _check_model_input(model)
     _check_population_input(population, name="population")
+    if (composition is None) != (sources is None):
+        raise ValueError("composition and sources must be supplied together")
+    if composition is not None and (
+        anchors is not None or document is not None or references is not None or compiled_operations
+        or admission or population_bytes is not None
+    ):
+        raise ValueError(
+            "composition cannot be combined with anchors, document, references, compiled_operations, "
+            "admission or population_bytes"
+        )
     return _run_check(
         model,
         population,
@@ -685,6 +704,7 @@ def _check_unresolved(
         population_bytes=population_bytes,
         admission=admission,
         references=references,
+        **({"composition": composition, "sources": sources} if composition is not None else {}),
     ).payload
 
 
@@ -897,6 +917,43 @@ def _rule_verbalization_refusal(message: str) -> dict[str, Any]:
         "schema": _RULE_VERBALIZATION_SCHEMA,
         "exit_code": 3,
         "error": {"kind": "input", "message": message},
+    }
+
+
+def compose(
+    model: str | os.PathLike[str],
+    directory: str | os.PathLike[str],
+) -> dict[str, Any]:
+    """Compose a composition directory's sources into one population (CT2).
+
+    Returns the composed population and its value-free record; writes
+    nothing. An invalid input returns ``exit_code`` 3 with a message that
+    names sources and indexes, never values.
+    """
+    from gnd.anchors import MAX_DOCUMENT_BYTES, read_regular_path
+    from gnd.composition import CompositionError
+    from gnd.composition import compose as compose_sources
+
+    if not isinstance(model, (str, os.PathLike)) or not isinstance(directory, (str, os.PathLike)):
+        raise TypeError("compose takes a model path and a directory path")
+    try:
+        raw = read_regular_path(model, label="model", max_bytes=MAX_DOCUMENT_BYTES)
+    except Exception:  # noqa: BLE001 -- a read failure is not an invalid model (close review)
+        return {"schema": "gnd-compose/1", "exit_code": 3,
+                "error": {"kind": "input", "message": "model could not be read safely"}}
+    try:
+        selected = model_module.load_model_bytes(raw, source=model)
+    except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
+        return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}
+    try:
+        composed = compose_sources(selected, raw, directory)
+    except CompositionError as error:
+        return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": str(error)}}
+    return {
+        "schema": "gnd-compose/1",
+        "exit_code": 0,
+        "population": json.loads(composed.population_bytes),
+        "record": composed.record,
     }
 
 

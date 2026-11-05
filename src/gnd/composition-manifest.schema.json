@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/composition-manifest.schema.json",
+  "title": "GND composition manifest",
+  "description": "Describes DIR/manifest.json for gnd compose. The parser gnd.composition.parse_manifest is the authority; it also refuses repeated renamings, renamings or tags naming a source the manifest does not list, a from/to pair of different JSON types, and the strict-JSON cases the anchor sidecar parser refuses. gnd compose further refuses a renaming that names an undeclared fact type or role or matches no row.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "sources",
+    "renamings",
+    "deduplications",
+    "scope_tags"
+  ],
+  "properties": {
+    "schema": {
+      "const": "gnd-composition-manifest/1"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+      }
+    },
+    "renamings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "fact_type",
+          "role",
+          "from",
+          "to"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "fact_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from": {
+            "type": [
+              "string",
+              "boolean",
+              "integer",
+              "number"
+            ]
+          },
+          "to": {
+            "type": [
+              "string",
+              "boolean",
+              "integer",
+              "number"
+            ]
+          }
+        }
+      }
+    },
+    "deduplications": {
+      "const": "identical-rows"
+    },
+    "scope_tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "tag"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+          },
+          "tag": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      }
+    }
+  }
+}

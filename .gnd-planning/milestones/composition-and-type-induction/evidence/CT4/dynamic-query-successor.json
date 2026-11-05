@@ -1,0 +1,198 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/composition-and-type-induction/evidence/CT3/dynamic-query-successor.json",
+ "predecessor_sha256": "b91632850188468ad56997754a1bdd51037e6c0945b27753ef47d58b4a731ab9",
+ "reason": "composition-and-type-induction CT4 (2026-11-04): gnd.discover.types (new, lane discover) groups a declared generic fact type's rows and proposes binary fact types; gnd.discover.service and gnd.commands.discover wire the opt-in fact-type family, --min-support and --show-values. Parameter, return and local annotations and local dictionary reads only; model reads through ModelIndex; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/disclosure.py",
+   "Surface",
+   "Literal['declared', 'view', 'option']",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "TypeProposals",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "TypeProposals",
+   "list[EvolutionOperation]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "_kind",
+   "{'String': 'string', 'Integer': 'number', 'Number': 'number', 'Float': 'number', 'Boolean': 'boolean', 'Date': 'date', 'DateTime': 'datetime'}.get(primitive or '')",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "_primitive_of",
+   "_PRIMITIVE_FOR_KIND.get(kind, 'String')",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "_primitive_of",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "_primitive_of",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "_primitive_of",
+   "view.roles[generic_id]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "generic_declarations",
+   "dict[str, dict[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "generic_declarations",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "generic_declarations",
+   "generic[key]",
+   3
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "generic_declarations",
+   "view.roles.get(fact_id, [])",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "dict[Any, dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "existing.get(role_player_signature(players))",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "frozenset[tuple[str, str]]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "multiple[:32]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "objects[entity_role.object_type]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "objects[value_type]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "roles[spec['attribute']]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "roles[spec['entity']]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "roles[spec['value']]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "row.get(spec['attribute'])",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "row.get(spec['entity'])",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "row.get(spec['value'])",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "row[spec['attribute']]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "single[:256]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "view.roles[generic_id]",
+   1
+  ]
+ ],
+ "removed": [
+  [
+   "src/gnd/disclosure.py",
+   "Surface",
+   "Literal['declared', 'view']",
+   1
+  ]
+ ],
+ "result_distinct_rows": 7086,
+ "result_occurrences": 8849
+}

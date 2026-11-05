@@ -242,6 +242,8 @@ def _cmd_check(
     document_path: str | None = None,
     admission: bool = False,
     compiled_operations: bool = False,
+    composition: str | None = None,
+    sources: str | None = None,
 ) -> int:
     result = api_module._run_check(
         model_path,
@@ -252,6 +254,7 @@ def _cmd_check(
         document=document_path,
         admission=admission,
         **({"compiled_operations": True} if compiled_operations else {}),
+        **({"composition": composition, "sources": sources} if composition is not None else {}),
     )
     if output_format == "json":
         if result.execution is not None:
@@ -265,6 +268,7 @@ def _cmd_check(
         _print_projected_text(mechanical_payload)
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
+        _print_lineage(result.payload)
         return result.exit_code
     if result.report is not None:
         for warning in result.warnings:
@@ -272,6 +276,7 @@ def _cmd_check(
         _print_report(result.report)
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
+        _print_lineage(result.payload)
         return result.exit_code
     for warning in result.warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
@@ -281,6 +286,12 @@ def _cmd_check(
         prefix = "INTERNAL ERROR" if result.exit_code == EXIT_INTERNAL else "ERROR"
         print(f"{prefix}: {result.error}")
     return result.exit_code
+
+def _print_lineage(payload: dict) -> None:
+    for fact in (payload.get("composition") or {}).get("lineage", []):
+        sources = ", ".join(f"{item['source']}:{item['fact_type']}#{item['fact_index']}" for item in fact["sources"])
+        print(f"lineage {fact['fact_type']}#{fact['index']}: {sources}")
+
 
 def _cmd_verbalize_population(
     model_path: str, population_path: str, output_format: str, *,
@@ -697,6 +708,12 @@ def _register_check(subparsers):
     check_parser.add_argument("--anchors", help="bound source anchor sidecar for snapshot checks")
     check_parser.add_argument("--document", help="source document for anchor spans")
     check_parser.add_argument(
+        "--composition", help="composition record of a composed population; needs --sources",
+    )
+    check_parser.add_argument(
+        "--sources", help="composition directory the record was composed from",
+    )
+    check_parser.add_argument(
         "--admission",
         action="store_true",
         help="include the occurrence admission partition in the check report",
@@ -705,6 +722,103 @@ def _register_check(subparsers):
     _add_unredacted_argument(check_parser)
 
     return {'check_parser': check_parser}
+
+
+def _register_compose(subparsers):
+    compose_parser = subparsers.add_parser(
+        "compose",
+        help="compose several anchored populations into one, with a lineage record",
+        description=(
+            "Read DIR/manifest.json and, for each source id it lists, "
+            "DIR/<id>/population.json, its adjacent anchor sidecar and "
+            "DIR/<id>/document.txt. Bind every sidecar, apply the manifest's "
+            "renamings, collapse identical rows, and write the composed "
+            "population and a value-free composition record. Nothing is merged "
+            "that the manifest does not list. Check the result with gnd check "
+            "--composition RECORD --sources DIR."
+        ),
+    )
+    compose_parser.add_argument("model", help="path to the model file")
+    compose_parser.add_argument("directory", help="composition directory")
+    compose_parser.add_argument("--out", required=True, help="path of the composed population to write")
+    compose_parser.add_argument("--record", required=True, help="path of the composition record to write")
+    return {'compose_parser': compose_parser}
+
+
+def _cmd_compose(model_path: str, directory: str, out: str, record: str) -> int:
+    from gnd import api
+
+    result = api.compose(model_path, directory)
+    if result["exit_code"]:
+        print(f"ERROR: {result['error']['message']}", file=sys.stderr)
+        return result["exit_code"]
+    from gnd.artifacts import canonical_json_bytes
+
+    targets = [Path(out).resolve(), Path(record).resolve()]
+    inputs = Path(directory).resolve()
+    model = Path(model_path).resolve()
+    if (_same_file(targets[0], targets[1]) or any(_same_file(model, target) for target in targets)
+            or any(_within(target, inputs) for target in targets)):
+        print("ERROR: --out and --record must be two different paths, neither the model nor inside the composition directory",
+              file=sys.stderr)
+        return 64
+    # Refuse before staging so a failure cannot leave one output replaced
+    # and the other not (close review).
+    if any(target.is_dir() for target in targets):
+        print("ERROR: could not write composition output: Is a directory", file=sys.stderr)
+        return 74
+    try:
+        _atomic_write_all([(Path(out), canonical_json_bytes(result["population"])),
+                           (Path(record), canonical_json_bytes(result["record"]))])
+    except OSError as error:
+        print(f"ERROR: could not write composition output: {error.strerror or 'write failed'}", file=sys.stderr)
+        return 74
+    facts = len(result["record"]["facts"])
+    print(f"Composed {facts} fact(s) from {len(result['record']['sources'])} source(s).")
+    return 0
+
+
+def _same_file(first: Path, second: Path) -> bool:
+    """Whether two paths name one file, also on a case-insensitive filesystem (close review)."""
+    import os
+
+    if first.exists() and second.exists():
+        return os.path.samefile(first, second)
+    return (first.name.casefold() == second.name.casefold()
+            and (first.parent == second.parent
+                 or (first.parent.exists() and second.parent.exists() and os.path.samefile(first.parent, second.parent))))
+
+
+def _within(target: Path, directory: Path) -> bool:
+    """Whether ``target`` is ``directory`` or lies below it, compared by identity."""
+    import os
+
+    if not directory.exists():
+        return directory == target or directory in target.parents
+    return any(candidate.exists() and os.path.samefile(candidate, directory) for candidate in (target, *target.parents))
+
+
+def _atomic_write_all(outputs: list[tuple[Path, bytes]]) -> None:
+    """Stage every output first, then rename each into place."""
+    import os
+    import tempfile
+
+    staged: list[tuple[str, Path]] = []
+    umask = os.umask(0)
+    os.umask(umask)
+    try:
+        for target, data in outputs:
+            fd, temporary = tempfile.mkstemp(prefix=".compose-", dir=target.parent if str(target.parent) else ".")
+            staged.append((temporary, target))
+            with os.fdopen(fd, "wb") as stream:
+                stream.write(data)
+            # mkstemp creates 0600; give the outputs the ordinary umask mode.
+            os.chmod(temporary, 0o666 & ~umask)
+        for temporary, target in staged:
+            os.replace(temporary, target)
+    finally:
+        for temporary, _ in staged:
+            Path(temporary).unlink(missing_ok=True)
 
 
 def _register_verbalize(subparsers):
@@ -749,6 +863,10 @@ def add_parsers(subparsers, *, command: str | None = None):
         selected = _register_check(subparsers)
         parsers.update(selected)
         selected['check_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
+    if command is None or command == 'compose':
+        selected = _register_compose(subparsers)
+        parsers.update(selected)
+        selected['compose_parser'].set_defaults(handler=lambda args, selected=selected: handle(args, selected))
     if command is None or command == 'verbalize':
         selected = _register_verbalize(subparsers)
         parsers.update(selected)
@@ -814,7 +932,21 @@ def handle(args, parsers) -> int:
             unredacted=args.unredacted,
         )
 
+    if args.command == "compose":
+        return _cmd_compose(args.model, args.directory, args.out, args.record)
+
     if args.command == "check":
+        if (args.composition is None) != (args.sources is None):
+            check_parser.error("--composition and --sources must be supplied together")
+        if args.composition is not None and (
+            args.anchors is not None or args.document is not None or args.compiled_operations
+            or args.admission or args.populations is not None or args.pre is not None or args.steps is not None
+            or args.post is not None
+        ):
+            check_parser.error(
+                "--composition checks one composed snapshot; it excludes --anchors, "
+                "--document, --compiled-operations, --admission, --populations and the transition arm"
+            )
         if (args.anchors is None) != (args.document is None):
             check_parser.error("--anchors and --document must be supplied together")
         if (args.anchors is not None or args.document is not None) and (
@@ -901,5 +1033,7 @@ def handle(args, parsers) -> int:
         document_path=args.document,
         admission=args.admission,
         compiled_operations=args.compiled_operations,
+        composition=args.composition,
+        sources=args.sources,
     )
 

@@ -1908,15 +1908,18 @@ def _anchored_verdicts(
     if not obligations:
         return {}
     source = None if document_bytes is None else canonical_document_text(document_bytes)
+    # A version-2 sidecar may hold several anchors per fact role; each one is
+    # a claim, so the role passes only when every anchor binds (CT-D2).
     records = {}
     if anchors is not None:
         for record in anchors.anchors:
             key = (record["fact_key"]["fact_type"],
                    tuple((name, type(value).__name__, repr(value)) for name, value in sorted(record["fact_key"]["roles"].items())),
                    record["role"])
-            records[key] = record
+            records.setdefault(key, []).append(record)
+    every_record = [record for group in records.values() for record in group]
     lexical_wanted: dict[str, set[int]] = {}
-    for record in records.values():
+    for record in every_record:
         value = record["fact_key"]["roles"][record["role"]]
         if isinstance(value, str):
             lexical_wanted.setdefault(anchor_normalize(value), set()).add(record["occurrence"])
@@ -1933,7 +1936,7 @@ def _anchored_verdicts(
             key = (str(fact_type["id"]), str(constraint["role"]))
             recognisers_by_role.setdefault(key, set()).update(constraint["recognise"])
     recognition_limits: dict[str, dict[Any, int]] = {}
-    for record in records.values():
+    for record in every_record:
         fact_type = record["fact_key"]["fact_type"]
         role = record["role"]
         value = record["fact_key"]["roles"][role]
@@ -1978,12 +1981,11 @@ def _anchored_verdicts(
                         continue
                     value = row[role_name]
                     key = (fact_id, tuple((name, type(item).__name__, repr(item)) for name, item in sorted(row.items())), role_name)
-                    record = records.get(key)
-                    if record is None:
+                    role_records = records.get(key)
+                    if role_records is None:
                         failed.append({"fact_type": fact_id, "roles": row})
                         failed_refs.add(row_index)
                         continue
-                    span = record["span"]
                     recognisers = constraint.get("recognise") or []
                     if recognisers:
                         cache_key = (tuple(recognisers), type(value).__name__, repr(value))
@@ -1999,14 +2001,17 @@ def _anchored_verdicts(
                     else:
                         uncertain = True
                         continue
-                    occurrence = record["occurrence"]
-                    selected_range = (
-                        ranges.get(occurrence) if isinstance(ranges, dict)
-                        else ranges[occurrence] if occurrence < len(ranges) else None
-                    )
-                    if selected_range is None or not (span["start"] <= selected_range[0] and selected_range[1] <= span["end"]):
-                        failed.append({"fact_type": fact_id, "roles": row})
-                        failed_refs.add(row_index)
+                    for record in role_records:
+                        span = record["span"]
+                        occurrence = record["occurrence"]
+                        selected_range = (
+                            ranges.get(occurrence) if isinstance(ranges, dict)
+                            else ranges[occurrence] if occurrence < len(ranges) else None
+                        )
+                        if selected_range is None or not (span["start"] <= selected_range[0] and selected_range[1] <= span["end"]):
+                            failed.append({"fact_type": fact_id, "roles": row})
+                            failed_refs.add(row_index)
+                            break
             if failed:
                 verdict = "warning" if constraint.get("modality") == "deontic" else "fail"
                 event, reason = "violated", None
@@ -2042,6 +2047,83 @@ def check_with_anchors(
 ) -> CheckReport:
     report = _check_dispatch(model, population)
     replacements = _anchored_verdicts(model, population, anchors, document_bytes)
+    if not replacements:
+        return report
+    return report.model_copy(update={
+        "verdicts": [replacements.get(row.constraint_ref, row) for row in report.verdicts],
+        "snapshot_projection": None,
+        "admission_projection": report.snapshot_projection,
+    })
+
+
+def check_with_composed_anchors(
+    model: Model,
+    population: Population,
+    *,
+    sources: Any,
+    lineage: dict[Any, Any],
+) -> CheckReport:
+    """Check a composed population, each anchored value against its own source (CT2).
+
+    Every source is evaluated once by ``_anchored_verdicts`` over its own
+    population, sidecar and document, so a value is matched before renaming
+    against the span its own sidecar names. A composed fact fails when any of
+    its lineage source facts fails.
+    """
+    report = _check_dispatch(model, population)
+    per_source = {
+        source.id: _anchored_verdicts(model, source.population, source.sidecar, source.document_bytes)
+        for source in sources
+    }
+    order = [source.id for source in sources]
+    replacements = {}
+    obligations = [
+        (declared, position, item)
+        for declared in ModelIndex.for_model(model).iter_fact_types_shared()
+        for position, item in enumerate(declared.get("constraints") or [])
+        if item.get("type") == "anchored"
+    ]
+    for fact_type, index, constraint in obligations:
+        fact_id = str(fact_type["id"])
+        reference = positional_constraint_ref(fact_id, index)
+        variant = "role" if constraint.get("role") is not None else "all"
+        failing = {
+            (source_id, fact_id, ref["index"])
+            for source_id, verdicts in per_source.items()
+            if reference in verdicts and verdicts[reference].verdict in {"fail", "warning"}
+            for ref in verdicts[reference].fact_refs
+        }
+        rows = population.facts.get(fact_id, [])
+        # A row with no lineage has no source to bind it, so it fails.
+        failed_refs = [
+            row_index for row_index in range(len(rows))
+            if not lineage.get((fact_id, row_index))
+            or any((entry["source"], entry["fact_type"], entry["fact_index"]) in failing
+                   for entry in lineage.get((fact_id, row_index), ()))
+        ]
+        unchecked = next((
+            per_source[source_id][reference] for source_id in order
+            if reference in per_source[source_id] and per_source[source_id][reference].verdict == "unchecked"
+        ), None)
+        if failed_refs:
+            verdict = "warning" if constraint.get("modality") == "deontic" else "fail"
+            scope = f"snapshot:anchored:{variant}:violated:{constraint.get('modality', 'alethic')}"
+            reason = None
+        elif unchecked is not None:
+            verdict, scope, reason = "unchecked", unchecked.scope_id, unchecked.reason_code
+        elif not rows:
+            verdict, scope, reason = "vacuous", f"snapshot:anchored:{variant}:vacuous", None
+        else:
+            verdict, scope, reason = "pass", f"snapshot:anchored:{variant}:clean", None
+        replacements[reference] = ConstraintVerdict(
+            scope_id=scope, constraint_ref=reference, constraint_type="anchored",
+            modality=str(constraint.get("modality", "alethic")),
+            source=str(constraint["source"]), status=str(constraint["status"]),
+            verdict=verdict, reason_code=reason,
+            message=f"Source anchor {verdict} for {fact_id}.",
+            offending_facts=[{"fact_type": fact_id, "roles": rows[row_index]} for row_index in failed_refs],
+            fact_refs=[{"fact_type": fact_id, "index": row_index} for row_index in failed_refs],
+        )
     if not replacements:
         return report
     return report.model_copy(update={

@@ -210,6 +210,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'why-not': [root / 'docs/how-to/repair-a-missing-claim.md'],
         'disclosure': [root / 'docs/how-to/disclosure-mode.md', root / 'docs/reference/disclosure.md'],
         'growth': [root / 'docs/how-to/grow-a-model.md'],
+        'compose': [root / 'docs/how-to/compose-documents.md'],
         'agent-install': [root / 'docs/agents/install.md'],
         'agent-plans': [root / 'docs/agents/plans.md'],
         'agent-model': [root / 'docs/agents/model-from-text.md'],

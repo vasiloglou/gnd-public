@@ -20,7 +20,7 @@ from typing import Any
 from gnd import resolve_version
 from gnd.artifacts import ArtifactError
 from gnd.checker import check
-from gnd.discover import output
+from gnd.discover import output, types
 from gnd.discover.candidates import (
     CATALOGUE,
     FAMILIES,
@@ -169,6 +169,27 @@ def _within_budget(
     return kept, len(survivors) - len(kept)
 
 
+def _proposal_bytes(
+    result: dict[str, Any], actor: str, requested_at: str, population_path: Path
+) -> tuple[bytes, bool]:
+    """The written proposal, and whether it and its candidate model fit their caps."""
+    ops = output.operations(result["final"]) + result["type_operations"]
+    document = output.candidate_document(result["document"], ops)
+    model_fits = len(output.candidate_text(document).encode("utf-8")) <= MAX_MODEL_BYTES
+    built = output.proposal(
+        model_bytes=result["model_bytes"],
+        document=document,
+        ops=ops,
+        actor=actor,
+        requested_at=requested_at,
+        population_name=population_path.name,
+        **({"rationale": f"gnd discover: {len(ops)} candidate operations observed in "
+                         f"{population_path.name}"} if result["type_operations"] else {}),
+    )
+    raw = output.canonical_bytes(built.model_dump(mode="json"))
+    return raw, model_fits and len(raw) <= MAX_EVOLUTION_PROPOSAL_BYTES
+
+
 def discover(
     model_path: Path,
     population_path: Path,
@@ -176,6 +197,9 @@ def discover(
     families: tuple[str, ...],
     max_values: int,
     max_pairs: int,
+    min_support: int = 20,
+    show_values: bool = False,
+    show_digests: bool = True,
 ) -> dict[str, Any]:
     """Run discovery; return the report fields plus private build inputs."""
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, ModelLoadError, "model")
@@ -194,6 +218,8 @@ def discover(
     work = Work()
     view = PopulationView(model, population, work)
     eligible, skipped_fact_types = _eligible(view, document)
+    if types.FAMILY in families:
+        types.generic_declarations(view)  # an invalid declaration refuses first
     generated = generate(
         view, families=families, fact_types=eligible, max_values=max_values,
         max_pairs=max_pairs,
@@ -275,10 +301,25 @@ def discover(
     ceiling = work_ceiling(view, eligible, generated.pairs_compared)
     if sum(work.counts.values()) > ceiling:
         raise DiscoveryDefect("discovery work exceeded its stated ceiling")
+    type_proposals = None
+    if types.FAMILY in families:
+        envelope = {"inducer": {"name": output.INDUCER, "version": version}, "method": output.INDUCER,
+                    "manifest_sha256": digest, "evidence": [{"ref": basename, "sha256": digest}]}
+        spent = 3 * sum(len(output.candidate_text(constraint).encode("utf-8")) for _, constraint in final)
+        budget = (min(MAX_MODEL_BYTES, MAX_EVOLUTION_PROPOSAL_BYTES) - BUDGET_MARGIN
+                  - 2 * len(output.candidate_text(document).encode("utf-8")) - spent)
+        type_proposals = types.propose(
+            view, eligible, min_support=min_support, show_values=show_values, show_digests=show_digests,
+            redacted=RedactionPolicy.from_model(model).effective_roles, envelope=envelope,
+            budget=budget,
+        )
+    fields_extra = {} if type_proposals is None else {"fact_type_proposals": type_proposals.report}
     return {
         "model_bytes": model_bytes,
         "document": document,
         "final": final,
+        "type_operations": () if type_proposals is None else tuple(type_proposals.operations),
+        "type_proposals": type_proposals,
         "fields": {
             "schema_version": output.REPORT_SCHEMA_VERSION,
             "tool": "gnd",
@@ -287,7 +328,7 @@ def discover(
             "model": {"path": str(model_path), "sha256": hashlib.sha256(model_bytes).hexdigest()},
             "population": {"path": str(population_path), "sha256": digest},
             "bounds": {
-                "families": [f for f in FAMILIES if f in families],
+                "families": [f for f in (*FAMILIES, types.FAMILY) if f in families],
                 "max_values": max_values,
                 "max_pairs": max_pairs,
                 "max_key_arity": 4,
@@ -311,6 +352,7 @@ def discover(
             ],
             "near_misses": near_misses,
             "work": work.report(ceiling),
+            **fields_extra,
         },
     }
 
@@ -327,6 +369,9 @@ def _cmd_discover(
     max_values: int,
     max_pairs: int,
     output_format: str,
+    min_support: int = 20,
+    show_values: bool = False,
+    show_digests: bool = True,
 ) -> int:
     model_path, population_path = Path(model), Path(population)
     out_path, report_path = Path(out), Path(report)
@@ -351,8 +396,10 @@ def _cmd_discover(
         result = discover(
             model_path, population_path,
             families=families, max_values=max_values, max_pairs=max_pairs,
+            min_support=min_support, show_values=show_values, show_digests=show_digests,
         )
-    except (ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError) as error:
+    except (ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError,
+            types.GenericDeclarationError) as error:
         _stderr(str(error))
         return EXIT_ILL_FORMED
     except ArtifactError as error:
@@ -373,18 +420,25 @@ def _cmd_discover(
         return EXIT_IO
     fields = result["fields"]
     try:
-        if result["final"]:
-            ops = output.operations(result["final"])
-            built = output.proposal(
-                model_bytes=result["model_bytes"],
-                document=output.candidate_document(result["document"], ops),
-                ops=ops,
-                actor=actor,
-                requested_at=requested_at,
-                population_name=population_path.name,
-            )
-            output.write(out_path, output.canonical_bytes(built.model_dump(mode="json")))
-            fields["proposal"] = str(out_path)
+        if result["final"] or result["type_operations"]:
+            proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
+            types_ = result["type_proposals"]
+            # The size estimate is a pre-filter; the written bytes decide
+            # (close review): drop type groups from the tail, in steps, until
+            # both caps hold. The other families keep their own estimate, so
+            # without type groups the proposal is written as before.
+            while not fits and types_ is not None and types_.group_sizes:
+                types_.drop_last(max(1, len(types_.group_sizes) // 16))
+                result["type_operations"] = tuple(types_.operations)
+                if not (result["final"] or result["type_operations"]):
+                    proposal_bytes = None
+                    break
+                proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
+            if proposal_bytes is not None:
+                output.write(out_path, proposal_bytes)
+                fields["proposal"] = str(out_path)
+            else:
+                fields["proposal"] = None
         else:
             fields["proposal"] = None
         output.write(report_path, output.canonical_bytes(fields))

@@ -6,8 +6,8 @@ returns ordinary dictionaries; your application decides how to display a
 finding and what action to take.
 
 The supported functions are `validate`, `check`, `check_with_receipt`, `transition`,
-`verbalize`, `verbalize_rules`, `diff`, `witness`, `replay` and `why_not`: ten
-functions, the one count other pages refer to. The opt-in `EvaluationSession`
+`verbalize`, `verbalize_rules`, `diff`, `witness`, `replay`, `why_not` and
+`compose`: eleven functions, the one count other pages refer to. The opt-in `EvaluationSession`
 class reuses eligible work between calls. Code generation, experiment
 orchestration, and model evolution have CLI and skill workflows described in
 the [task guides](../advanced.md).
@@ -66,9 +66,10 @@ assert repaired["exit_code"] == 0, repaired
 print("The repaired shipping facts satisfy the checked rules.")
 ```
 
-`check(model, population, *, unredacted=False, anchors=None, document=None,
-population_bytes=None, admission=False, references=None)` accepts paths or
-loaded `Model`/`Population` objects. It returns the same payload as the CLI's
+`check(model, population, *, compiled_operations=False, unredacted=False,
+anchors=None, document=None, population_bytes=None, admission=False,
+references=None, composition=None, sources=None)` accepts paths or loaded
+`Model`/`Population` objects. It returns the same payload as the CLI's
 JSON check. The admission option also reports which asserted fact occurrences
 are admitted or blocked; it does not edit or remove any facts.
 
@@ -79,7 +80,13 @@ Precedence when several conditions occur is `3 > 1 > 4 > 2 > 0`.
 
 Anchors connect values to source document spans. Supply `anchors` and
 `document` together; if using an in-memory population, supply its original
-`population_bytes` so the source binding can be checked. The optional
+`population_bytes` so the source binding can be checked. A sidecar may be
+version 1 or version 2 (several anchors per fact role, each of which must
+hold); see [anchor sidecars](anchors.md). `composition` (a record path or the
+record from `compose`) and `sources` (the composition directory) go together
+and check a composed population against each source; they are refused with
+`anchors`, `document`, `references`, `compiled_operations`, `admission` or
+`population_bytes` (see [composition](composition.md)). The optional
 `references` argument is a `BoundReferenceContext` for applications that
 already manage fixed-reference binding. Path-based examples resolve declared
 references beside the model automatically.
@@ -126,6 +133,16 @@ the question it was written for without keeping its own renderer. A rule
 written as prose comes back as `unsupported` with reason `prose-rule`. The
 payload and its rules are in the
 [rule verbalization reference](rule-verbalization.md).
+
+## `compose`: one population from several documents
+
+`compose(model, directory)` reads a composition directory (a manifest and,
+per source, a population, its anchor sidecar and its document), and returns
+the composed population and a value-free record of each composed fact's
+source facts. It writes nothing. `check(model, population,
+composition=RECORD, sources=DIRECTORY)` re-derives the composition first and
+names each offending composed fact's sources. The layout, the manifest and
+the record are in the [composition reference](composition.md).
 
 ## `diff`: compare rules over the same vocabulary
 
@@ -289,8 +306,10 @@ Path("route-certificate.json").write_text(json.dumps(result["certificate"]))
 print("The requested route has a finite derivation witness.")
 ```
 
-`witness(model_path, population_path, targets_path, *, reference_root=None)`
-uses file paths. It returns `exit_code`, per-target `results`, `certificate`,
+`witness(model_path, population_path, targets_path, *, reference_root=None,
+composition=None)` uses file paths; `composition=` names the record of a
+composed population and yields a version-2 certificate
+([composition](composition.md#trace-a-derived-fact-back-to-its-sources)). It returns `exit_code`, per-target `results`, `certificate`,
 `reason`, and bounded `work` information. With no disclosure mode set, the Python result contains raw values
 in the certificate; the CLI's default witness view removes them. Under
 `GND_DISCLOSURE=customer` the result is the default view with no
@@ -314,7 +333,7 @@ print("The route proof replayed against the bound inputs.")
 ```
 
 `replay(model_path, population_path, certificate_path, *,
-reference_root=None)` checks a raw finite certificate with an independent
+reference_root=None, composition=None)` checks a raw finite certificate with an independent
 inference kernel and returns the same witness-result envelope. The certificate
 binds the model, candidate, and fixed references; changed inputs can invalidate
 that binding. The witness/replay bands have their own meaning: `0` all targets

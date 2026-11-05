@@ -654,6 +654,7 @@ def main(argv: list[str] | None = None) -> int:
     _group_checking.add_parsers(subparsers, command='coverage')
     _group_checking.add_parsers(subparsers, command='check')
     _group_checking.add_parsers(subparsers, command='verbalize')
+    _group_checking.add_parsers(subparsers, command='compose')
     _group_verify.add_parsers(subparsers, command='verify')
     _group_synth.add_parsers(subparsers, command='synth')
     _group_measure.add_parsers(subparsers, command='measure')

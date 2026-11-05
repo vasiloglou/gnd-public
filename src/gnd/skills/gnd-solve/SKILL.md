@@ -139,7 +139,9 @@ staged transaction, obtain acceptance, then apply it through that skill. It
 emits separate proposal, blast-radius, model-CAS, conformance-envelope, and
 immutable change-record claims. After an accepted evolution, deliberately
 return to Station 2 or 3. A proposal may also come from `gnd discover`, which
-suggests induced, advisory constraints observed in one population, or from
+suggests induced, advisory constraints observed in one population (and, with
+the opt-in `--families fact-type`, fact types for a generic fact type's
+recurring attributes), or from
 `gnd import ilp-rules`, which brings an ILP learner's rules back as induced,
 advisory constraints, or from `gnd import mined-rules`, which brings back a rule
 miner's rules that hold on a population; review each here like any other.

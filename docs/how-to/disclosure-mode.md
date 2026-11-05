@@ -217,7 +217,9 @@ DisclosureRefused unredacted=True is refused in customer disclosure mode
 
 ## What the mode does not change
 
-- `gnd exp run` session feedback, `gnd discover`, `gnd export ilp`,
+- `gnd exp run` session feedback, `gnd discover` (apart from its
+  fact-type family, whose `--show-values` option the mode governs and whose
+  attribute digests `customer` omits), `gnd export ilp`,
   `gnd fidelity` and `gnd doccheck` behave the same in every mode. Do not
   route their output to a customer.
 - Values in check messages for roles you have not declared with `redact: true`

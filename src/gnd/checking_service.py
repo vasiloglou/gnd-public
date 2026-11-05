@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import os
 from collections.abc import Callable
 from dataclasses import dataclass, replace
@@ -31,7 +32,12 @@ from gnd.model import (
     structured_derivation_ids,
 )
 from gnd.model_index import scoped as _index_scoped
-from gnd.population import Population, PopulationValidationError, load_population
+from gnd.population import (
+    Population,
+    PopulationValidationError,
+    load_population,
+    load_population_bytes,
+)
 from gnd.references import BoundReferenceContext
 from gnd.semantic_registry import capture_branches
 from gnd.terms import uses_temporal
@@ -134,6 +140,80 @@ def _certify_assurance(
         return AssuranceBlockV1(semantic_decision_for_band(band)), None
 
 
+def _composition_view(model, model_coordinate, population_coordinate, population_bytes, composition, sources, verify):
+    """Re-bind, re-derive and compare a composition before checking it (CT2)."""
+    from gnd.anchors import MAX_DOCUMENT_BYTES, read_regular_path
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.composition import MAX_RECORD_BYTES, CompositionError, lineage_index, parse_record
+
+    if sources is None:
+        raise CompositionError("a composition check needs its sources directory")
+    if model_coordinate is None or population_coordinate is None:
+        raise CompositionError("a composition check needs model and population paths")
+
+    def read(path, label, cap):
+        try:
+            return read_regular_path(path, label=label, max_bytes=cap)
+        except Exception as error:
+            raise CompositionError(f"{label} could not be read safely") from error
+
+    model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
+    population_raw = population_bytes if population_bytes is not None else read(
+        population_coordinate, "composed population", MAX_DOCUMENT_BYTES)
+    if isinstance(composition, dict):
+        try:
+            encoded = canonical_json_bytes(composition)
+        except (TypeError, ValueError) as error:
+            raise CompositionError("the composition record is not JSON") from error
+        record = parse_record(encoded)
+    else:
+        record = parse_record(read(composition, "composition record", MAX_RECORD_BYTES))
+    derived = verify(model, model_raw, population_raw, record, sources)
+    return derived, lineage_index(record)
+
+
+def _composition_block(composed, population, checked) -> dict[str, Any]:
+    """Name the lineage of every offending composed fact; ids and indexes only."""
+    derived, lineage = composed
+    positions = {
+        fact_type: {
+            tuple((name, type(value).__name__, repr(value)) for name, value in sorted(row.items())): index
+            for index, row in enumerate(rows)
+        }
+        for fact_type, rows in population.facts.items()
+    }
+    named = set()
+    for verdict in checked.verdicts:
+        # A fact-type constraint offends rows of its own fact type only; a
+        # model-level constraint can span fact types.
+        owner = verdict.constraint_ref.split("]", 1)[0].removeprefix("fact_types[") if verdict.constraint_ref.startswith("fact_types[") else None
+        for fact in verdict.offending_facts or []:
+            if not isinstance(fact, dict):
+                continue
+            # Anchored verdicts name {fact_type, roles}; the other families name
+            # the row itself, which identifies one fact in each fact type holding it.
+            if set(fact) == {"fact_type", "roles"}:
+                # Sorted keys: ("fact_type", name), ("roles", row).
+                (_, declared), (_, row) = sorted(fact.items())
+                candidates = [str(declared)]
+                if not isinstance(row, dict):
+                    continue
+            else:
+                candidates, row = ([owner] if owner is not None else list(positions)), fact
+            key = tuple((name, type(value).__name__, repr(value)) for name, value in sorted(row.items()))
+            for fact_type in candidates:
+                index = positions.get(fact_type, {}).get(key)
+                if index is not None:
+                    named.add((fact_type, index))
+    return {
+        "record_sha256": hashlib.sha256(derived.record_bytes).hexdigest(),
+        "lineage": [
+            {"fact_type": fact_type, "index": index, "sources": lineage.get((fact_type, index), [])}
+            for fact_type, index in sorted(named)
+        ],
+    }
+
+
 def _run_check_raw(
     model_input: str | os.PathLike[str] | Model,
     population_input: str | os.PathLike[str] | Population,
@@ -145,6 +225,8 @@ def _run_check_raw(
     population_bytes: bytes | None = None,
     admission: bool = False,
     references: BoundReferenceContext | None = None,
+    composition: Any = None,
+    sources: str | os.PathLike[str] | None = None,
 ) -> _RunResult:
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
     population_coordinate = (
@@ -242,6 +324,29 @@ def _run_check_raw(
             error=error,
         )
 
+    composed = None
+    if composition is not None:
+        from gnd.composition import CompositionError, verify_composition
+
+        try:
+            composed = _composition_view(
+                model, model_coordinate, population_coordinate, population_bytes, composition, sources,
+                verify_composition,
+            )
+            # Check exactly the bytes that were verified, not a separately read object.
+            population = load_population_bytes(
+                composed[0].population_bytes, source="composed.population.json", model=model,
+            )
+        except CompositionError as error:
+            return _finalize(
+                build(3, error=error),
+                exit_code=3,
+                fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+                model=model,
+                populations=(population,),
+                error=error,
+            )
+
     try:
         with capture_branches() as semantic_trace:
             from gnd.anchors import (
@@ -290,7 +395,11 @@ def _run_check_raw(
             from gnd.extension_preparation import calculation_scope
 
             with calculation_scope(model, population):
-                if selected_anchors is not None or any(
+                if composed is not None:
+                    checked = checker_module.check_with_composed_anchors(
+                        model, population, sources=composed[0].sources, lineage=composed[1],
+                    )
+                elif selected_anchors is not None or any(
                     c.get("type") == "anchored"
                     for ft in model.fact_types
                     for c in ft.get("constraints") or []
@@ -342,6 +451,8 @@ def _run_check_raw(
             model, [population], checked, exit_code, semantic_trace | projection_trace,
         )
     payload["assurance"] = assurance.as_dict()
+    if composed is not None:
+        payload["composition"] = _composition_block(composed, population, checked)
     return _finalize(
         payload,
         exit_code=exit_code,
@@ -565,6 +676,8 @@ def _run_check(
     population_bytes: bytes | None = None,
     admission: bool = False,
     references: BoundReferenceContext | None = None,
+    composition: Any = None,
+    sources: str | os.PathLike[str] | None = None,
 ) -> _RunResult:
     if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
@@ -580,6 +693,8 @@ def _run_check(
         population_bytes=population_bytes,
         admission=admission,
         references=references,
+        composition=composition,
+        sources=sources,
     )
     if admission:
         from gnd.admission import build_admission, wire_verdicts

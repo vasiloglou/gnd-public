@@ -61,6 +61,7 @@
     "coverage",
     "check",
     "verbalize",
+    "compose",
     "verify",
     "synth",
     "measure",
@@ -235,6 +236,36 @@
     },
     {
      "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "composition",
+     "help": "composition record of a composed population; needs --sources",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--composition"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "sources",
+     "help": "composition directory the record was composed from",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--sources"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
      "class": "_StoreTrueAction",
      "const": true,
      "default": false,
@@ -358,6 +389,89 @@
    "listed_help": "emit a plain-Python agent project derived from the model (GEN-01)",
    "parser_class": "gnd.cli._BandSafeParser",
    "prog": "gnd codegen",
+   "subcommands": {}
+  },
+  "compose": {
+   "actions": [
+    {
+     "choices": null,
+     "class": "_HelpAction",
+     "const": null,
+     "default": "==SUPPRESS==",
+     "dest": "help",
+     "help": "show this help message and exit",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "-h",
+      "--help"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "model",
+     "help": "path to the model file",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "directory",
+     "help": "composition directory",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "out",
+     "help": "path of the composed population to write",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--out"
+     ],
+     "required": true,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "record",
+     "help": "path of the composition record to write",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--record"
+     ],
+     "required": true,
+     "type": null
+    }
+   ],
+   "description": "Read DIR/manifest.json and, for each source id it lists, DIR/<id>/population.json, its adjacent anchor sidecar and DIR/<id>/document.txt. Bind every sidecar, apply the manifest's renamings, collapse identical rows, and write the composed population and a value-free composition record. Nothing is merged that the manifest does not list. Check the result with gnd check --composition RECORD --sources DIR.",
+   "epilog": null,
+   "formatter_class": "argparse.HelpFormatter",
+   "listed_help": "compose several anchored populations into one, with a lineage record",
+   "parser_class": "gnd.cli._BandSafeParser",
+   "prog": "gnd compose",
    "subcommands": {}
   },
   "conformance": {
@@ -790,7 +904,7 @@
      "const": null,
      "default": "('uniqueness', 'mandatory', 'value', 'frequency', 'subset', 'equality', 'exclusion')",
      "dest": "families",
-     "help": "comma-separated subset of the seven families (default: all)",
+     "help": "comma-separated subset of the seven families (default: all seven); add fact-type to opt in to fact-type proposals",
      "metavar": null,
      "nargs": null,
      "option_strings": [
@@ -828,6 +942,36 @@
      ],
      "required": false,
      "type": "gnd.commands.discover._at_least.<locals>.parse"
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "min_support",
+     "help": "fact-type family: fewest distinct entities for a proposal (default 20)",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--min-support"
+     ],
+     "required": false,
+     "type": "gnd.commands.discover._at_least.<locals>.parse"
+    },
+    {
+     "choices": null,
+     "class": "_StoreTrueAction",
+     "const": true,
+     "default": false,
+     "dest": "show_values",
+     "help": "fact-type family: also report each attribute value as text (disclosure mode decides)",
+     "metavar": null,
+     "nargs": 0,
+     "option_strings": [
+      "--show-values"
+     ],
+     "required": false,
+     "type": null
     },
     {
      "choices": [
@@ -4338,6 +4482,21 @@
     },
     {
      "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "composition",
+     "help": "composition record a version-2 witness binds",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--composition"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
      "class": "_StoreTrueAction",
      "const": true,
      "default": false,
@@ -5760,6 +5919,21 @@
      "nargs": null,
      "option_strings": [
       "--out"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "composition",
+     "help": "composition record of a composed population: writes a version-2 witness",
+     "metavar": null,
+     "nargs": null,
+     "option_strings": [
+      "--composition"
      ],
      "required": false,
      "type": null

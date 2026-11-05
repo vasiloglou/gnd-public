@@ -1,0 +1,425 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/close/dynamic-query-successor.json",
+ "predecessor_sha256": "9cccff8542d47a3bd2c6c84d167c7e2e4b299ecb10af4d1459f108a699b5c1ee",
+ "reason": "composition-and-type-induction CT2 (2026-11-04): gnd.composition (new, layer model) composes anchored sources; gnd.checker check_with_composed_anchors evaluates anchored constraints per source; gnd.checking_service gains the composition view and lineage block; gnd.api gains compose and composition/sources keywords on check. Parameter, return and local annotations and local dictionary reads only; no model-query exception widening.",
+ "added": [
+  [
+   "src/gnd/api.py",
+   "check",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/api.py",
+   "check",
+   "os.PathLike[str]",
+   2
+  ],
+  [
+   "src/gnd/api.py",
+   "compose",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/api.py",
+   "compose",
+   "os.PathLike[str]",
+   2
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "dict[Any, Any]",
+   1
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "lineage.get((fact_id, row_index))",
+   1
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "lineage.get((fact_id, row_index), ())",
+   1
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "per_source[source_id]",
+   3
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "per_source[source_id][reference]",
+   2
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "population.facts.get(fact_id, [])",
+   1
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "replacements.get(row.constraint_ref, row)",
+   1
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "rows[row_index]",
+   1
+  ],
+  [
+   "src/gnd/checker/_core.py",
+   "check_with_composed_anchors",
+   "verdicts[reference]",
+   2
+  ],
+  [
+   "src/gnd/checking_service.py",
+   "_composition_block",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/checking_service.py",
+   "_composition_block",
+   "lineage.get((fact_type, index), [])",
+   1
+  ],
+  [
+   "src/gnd/checking_service.py",
+   "_composition_block",
+   "positions.get(fact_type, {})",
+   1
+  ],
+  [
+   "src/gnd/checking_service.py",
+   "_composition_block",
+   "positions.get(fact_type, {}).get(key)",
+   1
+  ],
+  [
+   "src/gnd/checking_service.py",
+   "_run_check",
+   "os.PathLike[str]",
+   1
+  ],
+  [
+   "src/gnd/checking_service.py",
+   "_run_check_raw",
+   "os.PathLike[str]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_atomic_write_all",
+   "list[tuple[Path, bytes]]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_atomic_write_all",
+   "list[tuple[str, Path]]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_atomic_write_all",
+   "tuple[Path, bytes]",
+   1
+  ],
+  [
+   "src/gnd/commands/checking.py",
+   "_atomic_write_all",
+   "tuple[str, Path]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Composition",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Composition",
+   "tuple[Source, ...]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Manifest",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Manifest",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Manifest",
+   "tuple[dict[str, Any], ...]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Manifest",
+   "tuple[dict[str, str], ...]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Manifest",
+   "tuple[str, ...]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "Source",
+   "dict[str, str]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "_keys",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "_keys",
+   "set[str]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "_lineage_entry",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "_row_key",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "_row_key",
+   "tuple[Any, ...]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[str, Any]",
+   4
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[str, dict[tuple[Any, ...], int]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[str, dict[tuple[str, str], Any]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[str, list[dict[str, Any]]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[tuple[Any, ...], int]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[tuple[Any, ...], tuple[int, Any]]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[tuple[str, int], dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "dict[tuple[str, str], Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "facts[fact_type]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "index.get(key)",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "instance_renamings.get((source.id, object_type, type(value).__name__, repr(value)))",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "lineage[fact_type, position]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "list[str]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "positions.get(fact_type)",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "renamings.get((source.id, fact_type, role, type(value).__name__, repr(value)))",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "roles.get(renaming['fact_type'], set())",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "set[int]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[Any, ...]",
+   3
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[int, Any]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[str, int]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[str, str]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "lineage_index",
+   "dict[str, Any]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "lineage_index",
+   "dict[tuple[str, int], list[dict[str, Any]]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "lineage_index",
+   "list[dict[str, Any]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "lineage_index",
+   "tuple[str, int]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "parse_manifest",
+   "renaming[key]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "parse_record",
+   "data[key]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "parse_record",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "parse_record",
+   "source[key]",
+   2
+  ],
+  [
+   "src/gnd/composition.py",
+   "verify_composition",
+   "derived.record[key]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "verify_composition",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "verify_composition",
+   "record[key]",
+   1
+  ]
+ ],
+ "removed": [],
+ "result_distinct_rows": 7053,
+ "result_occurrences": 8813
+}

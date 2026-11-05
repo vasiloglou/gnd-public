@@ -1,0 +1,60 @@
+{
+ "schema_version": 1,
+ "predecessor": ".gnd-planning/milestones/composition-and-type-induction/evidence/CT4/dynamic-query-successor.json",
+ "predecessor_sha256": "32a4351de30079a17f54b7923c61838bb27fe5a45c5cf6f98de02d4b14e3388c",
+ "reason": "milestone close fixes: composition renaming refusals and output identity, canonical record check, discover written-cap trim and distinct values, witness source id form",
+ "added": [
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "instance_renamings.get(instance_key)",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "set[tuple[Any, ...]]",
+   1
+  ],
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "tuple[Any, ...]",
+   1
+  ],
+  [
+   "src/gnd/discover/service.py",
+   "_proposal_bytes",
+   "dict[str, Any]",
+   1
+  ],
+  [
+   "src/gnd/discover/service.py",
+   "_proposal_bytes",
+   "tuple[bytes, bool]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "TypeProposals",
+   "list[int]",
+   1
+  ],
+  [
+   "src/gnd/discover/types.py",
+   "propose",
+   "list[str]",
+   1
+  ]
+ ],
+ "removed": [
+  [
+   "src/gnd/composition.py",
+   "compose",
+   "instance_renamings.get((source.id, object_type, type(value).__name__, repr(value)))",
+   1
+  ]
+ ],
+ "result_distinct_rows": 7090,
+ "result_occurrences": 8855
+}

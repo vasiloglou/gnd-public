@@ -3,6 +3,41 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: composition and type induction
+
+One checked answer from several documents, traced back to a passage in each.
+Walk through it in [From several documents to one checked answer](how-to/compose-documents.md).
+
+- **Several anchors per fact role** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
+  An anchor sidecar at `schema_version: 2` may hold several anchors for one
+  fact role, and the role passes only when every one binds. A repeated
+  anchor (same fact, role, span and occurrence) is refused. Version-1
+  sidecars check as before. The format is in the new
+  [anchor sidecar reference](reference/anchors.md), with a published
+  `anchor-sidecar.schema.json`.
+- **Composition** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
+  `gnd compose MODEL DIR --out COMPOSED --record RECORD` and
+  `gnd.api.compose` build one population from several anchored sources under
+  a manifest of renamings, identical-row deduplication and scope tags, and
+  write a value-free record of each composed fact's source facts.
+  `gnd check --composition RECORD --sources DIR` re-derives the composition,
+  checks each anchored value against its own source, and names the sources
+  of every offending fact. `gnd.api.__all__` gains `compose`; see the
+  [composition reference](reference/composition.md).
+- **Witness lineage** ([#73](https://github.com/vasiloglou/gnd-public/issues/73)).
+  `gnd witness --composition RECORD` writes a version-2 witness whose base
+  facts name their source facts, and so, through each source's sidecar,
+  their spans in each document. `gnd replay --composition` checks that
+  lineage against the record. Version-1 witnesses are unchanged.
+- **Fact-type proposals** ([#77](https://github.com/vasiloglou/gnd-public/issues/77)).
+  `gnd discover --families fact-type` proposes a binary fact type for each
+  attribute of a declared generic fact type that reaches `--min-support`
+  distinct entities with one value type, as an additive evolve proposal.
+  The report lists the rows that would migrate by opaque id and the
+  attribute by digest; `--show-values` follows the disclosure mode. The
+  default seven families are unchanged; see
+  [constraint discovery](reference/discover.md#proposing-fact-types-from-generic-rows).
+
 ## Unreleased: model growth guardrails (2026-11-04)
 
 For a model that a program grows round by round, without a person in the

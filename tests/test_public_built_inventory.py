@@ -271,6 +271,7 @@ VENDORED_SCHEMAS = (
     "gnd/composition-manifest.schema.json",
     "gnd/composition.schema.json",
     "gnd/type-evidence.schema.json",
+    "gnd/type-judgements.schema.json",
 )
 
 

@@ -17,6 +17,7 @@ and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 - [TS1 spec (r2, approved)](notes/phase-TS1-spec.md)
 - [TS1 record](002-phase-TS1.md)
 - [TS2 spec (r1, approved)](notes/phase-TS2-spec.md)
+- [TS2 record](003-phase-TS2.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -39,4 +40,6 @@ DateTime kind, plan repairs) are in the record. PR #88 merged as
 ahead"; it records two refuted plan premises (P1, the judgement record
 cannot sit on an induced constraint; P2, a `functional` shapes verdict can
 never be accepted). TS2 spec r1 approved by the owner `(a2)` 2026-11-05 (prose, D1–D10 as
-proposed). Next action: TS2 implementation, on the owner's go-ahead.
+proposed). TS2 implemented and recorded ([record](003-phase-TS2.md)); one
+review, five findings fixed, 31 of 31 mutations killed. Next action: the TS3
+spec, on the owner's selection.

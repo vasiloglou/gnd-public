@@ -223,4 +223,6 @@ Names bound in `gnd.api` that are library types or helpers (`Model`,
 
 `gnd discover --type-evidence` is a further output of the same command and
 follows the same rule: attribute values only where `--show-values` is
-allowed, and no attribute digest under `customer`.
+allowed, and no attribute digest under `customer`. Its judgement inputs follow it too: a
+rationale naming a value the mode hides is refused, and under `customer` a
+judged fact type records no attribute digest.

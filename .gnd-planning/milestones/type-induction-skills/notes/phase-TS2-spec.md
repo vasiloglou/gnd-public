@@ -464,4 +464,66 @@ omitted unless asked for.
 
 ## 12. Implementation findings
 
-None yet.
+Recorded as found, 2026-11-05. The approved bytes are those whose SHA-256
+§1 gives; this section was added after approval and carries no owner ruling.
+
+- **I1, the shared JSON intake's scalar cap.** `gnd.json_input.bounded_json`,
+  which the reader reuses for totality, refuses any string over 4,096 UTF-8
+  bytes. A 2,000-character rationale in a script that takes three or four
+  bytes per character can pass that, and is refused (3) like an over-long
+  one. The schema's 2,000-character bound is kept; the intake's byte cap
+  binds first for such text.
+- **I2, a judged group costs more of the budget.** Its fact type carries
+  `provenance` (about 400 bytes, counted three times like every addition),
+  so a group that fitted without judgement may be `over_budget` under it.
+  T10 states this instead of assuming the same split.
+- **I3, numbers and booleans in the rationale scan.** §6.5 scans the text
+  form of every value. A numeric value such as `24` matches the whole token
+  `24`, so a rationale that quotes a count equal to a hidden value is
+  refused. This follows the rule as approved (conservative); the docs say a
+  judge must not quote values, and a refused judge rephrases.
+- **I4, report keys under judgement.** `skipped.judged_skip` and
+  `judgements` are present whenever a judgements option is given, even when
+  only one kind is; the absent kind's digest is `null`.
+- **I5, internal status of a `skip` group.** Its in-memory record keeps
+  status `multi_valued`; under judgement no evidence is written, so the
+  status is never emitted.
+- **I6, the TS1 usage assertion.** The family-flags message now names the
+  judgement options, so TS1's test of that message was relaxed to the
+  option it owns plus "need --families fact-type".
+- **I7, RF1.** The `discover` help, exit and tree-subtree goldens, the
+  manifest and its digest, re-pinned as TS1 did (TS1 I9). The captured tree
+  also differs in a `gnd check` option that predates this phase; that
+  subtree is left as pinned.
+- **I8, RF6.** The live query policy is unchanged. The dynamic-read
+  inventory grows with the new module and the verdict hook; recorded as the
+  successor `evidence/TS2/dynamic-query-successor.json`.
+- **I9, the proposal's rationale** names the judgements files by base name,
+  as it names the population.
+- **I10, D4 over the whole model (review F1).** §6.3 checked D4 against
+  the candidates the evidence lists. Past the evidence cap a group lists
+  none, so an already-induced attribute could be judged `distinct` again.
+  The service now indexes every fact type's `induced_from` and passes, per
+  group, the fact types that name its attribute; the listed candidates are
+  still checked too.
+- **I11, `judge.skill` is scanned (review F2).** It is copied into the
+  model's `provenance.judgement`, and its schema pattern admits an
+  attribute-like text, so §6.5's scan covers it as it covers `agent`.
+- **I12, the boundary rule by character (review F3).** The first build
+  matched single punctuation tokens even beside a letter (`?` in
+  `type?`). Non-word tokens are now tagged with whether a word character
+  touches them on each side, so a token match holds exactly where §6.5's
+  character rule holds, except that a run of whitespace counts as one space
+  (a deliberate, refuse-side leniency, now documented). A 60,000-case
+  comparison against a literal implementation gives 0 misses and 4
+  over-refusals, all whitespace runs.
+- **I13, a judged clash names its suffix in the reading (review F4).** A
+  `distinct` group may take a clashing id where the signature match stopped
+  it before, and §6.4's "same placeholder reading" then repeated an existing
+  reading exactly. Under judgement the reading uses the id's suffix
+  (`attribute 0_1`). Runs without judgement are unchanged.
+- **I14, coverage (review F5).** Tests added for the evidence-file cap,
+  the `model_sha256` message, an origin of another generic, the D10
+  exemption end to end, non-JSON evidence, and the judged path's 70 and 74
+  exits. T26 is a test of absent keys plus the recorded byte parity
+  (`evidence/TS2/fixture-parity-*.json`), not a pytest byte comparison.

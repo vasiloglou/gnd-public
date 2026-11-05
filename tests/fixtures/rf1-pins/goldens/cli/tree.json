@@ -989,6 +989,51 @@
      "type": null
     },
     {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "type_evidence_in",
+     "help": "fact-type family: the evidence file the judgements bind",
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--type-evidence-in"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "duplicate_judgements",
+     "help": "fact-type family: read duplicate verdicts (needs --type-evidence-in)",
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--duplicate-judgements"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
+     "choices": null,
+     "class": "_StoreAction",
+     "const": null,
+     "default": null,
+     "dest": "shape_judgements",
+     "help": "fact-type family: read multi-valued shape verdicts (needs --type-evidence-in)",
+     "metavar": "PATH",
+     "nargs": null,
+     "option_strings": [
+      "--shape-judgements"
+     ],
+     "required": false,
+     "type": null
+    },
+    {
      "choices": [
       "text",
       "json"

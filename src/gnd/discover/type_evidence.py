@@ -65,7 +65,7 @@ def _pairs_comparable(facts: dict[str, Any], kind: str | None) -> bool:
         return False
     if facts["kinds"]:
         return facts["kinds"] == {kind}
-    return types._kind(facts["value_primitive"]) == kind
+    return types.primitive_kind(facts["value_primitive"]) == kind
 
 
 def _candidate_facts(view: PopulationView, fact_id: str, object_type: str,

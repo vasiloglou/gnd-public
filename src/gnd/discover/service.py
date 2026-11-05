@@ -17,11 +17,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd import resolve_version
 from gnd.artifacts import ArtifactError
 from gnd.checker import check
 from gnd.discover import output, types
 from gnd.discover import type_evidence as evidence
+from gnd.discover import type_judgements as judgements
 from gnd.discover.candidates import (
     CATALOGUE,
     FAMILIES,
@@ -185,7 +187,8 @@ def _proposal_bytes(
         requested_at=requested_at,
         population_name=population_path.name,
         **({"rationale": f"gnd discover: {len(ops)} candidate operations observed in "
-                         f"{population_path.name}"} if result["type_operations"] else {}),
+                         f"{population_path.name}" + result.get("judged_from", "")}
+           if result["type_operations"] else {}),
     )
     raw = output.canonical_bytes(built.model_dump(mode="json"))
     return raw, model_fits and len(raw) <= MAX_EVOLUTION_PROPOSAL_BYTES
@@ -309,11 +312,12 @@ def discover(
         spent = 3 * sum(len(output.candidate_text(constraint).encode("utf-8")) for _, constraint in final)
         budget = (min(MAX_MODEL_BYTES, MAX_EVOLUTION_PROPOSAL_BYTES) - BUDGET_MARGIN
                   - 2 * len(output.candidate_text(document).encode("utf-8")) - spent)
-        type_proposals = types.propose(
-            view, eligible, min_support=min_support, show_values=show_values, show_digests=show_digests,
-            redacted=RedactionPolicy.from_model(model).effective_roles, envelope=envelope,
-            budget=budget,
-        )
+        type_arguments = {
+            "view": view, "eligible": eligible, "min_support": min_support, "show_values": show_values,
+            "show_digests": show_digests, "redacted": RedactionPolicy.from_model(model).effective_roles,
+            "envelope": envelope, "budget": budget,
+        }
+        type_proposals = types.propose(**type_arguments)
     fields_extra = {} if type_proposals is None else {"fact_type_proposals": type_proposals.report}
     return {
         "model_bytes": model_bytes,
@@ -321,6 +325,8 @@ def discover(
         "final": final,
         "type_operations": () if type_proposals is None else tuple(type_proposals.operations),
         "type_proposals": type_proposals,
+        # So a judged run re-proposes with the same inputs (TS2).
+        "type_arguments": None if type_proposals is None else type_arguments,
         "view": view,
         "fields": {
             "schema_version": output.REPORT_SCHEMA_VERSION,
@@ -359,6 +365,66 @@ def discover(
     }
 
 
+def _trimmed_proposal(
+    result: dict[str, Any], actor: str, requested_at: datetime, population_path: Path
+) -> bytes | None:
+    """The proposal bytes to write, or None when nothing is emitted."""
+    if not (result["final"] or result["type_operations"]):
+        return None
+    proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
+    types_ = result["type_proposals"]
+    # The size estimate is a pre-filter; the written bytes decide
+    # (close review): drop type groups from the tail, in steps, until
+    # both caps hold. The other families keep their own estimate, so
+    # without type groups the proposal is written as before.
+    while not fits and types_ is not None and types_.group_sizes:
+        types_.drop_last(max(1, len(types_.group_sizes) // 16))
+        result["type_operations"] = tuple(types_.operations)
+        if not (result["final"] or result["type_operations"]):
+            return None
+        proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
+    return proposal_bytes
+
+
+def _evidence(result: dict[str, Any], min_support: int, show_values: bool, show_digests: bool) -> dict[str, Any]:
+    fields = result["fields"]
+    return evidence.build_evidence(
+        result["view"], result["type_proposals"],
+        model_sha256=fields["model"]["sha256"], population_sha256=fields["population"]["sha256"],
+        min_support=min_support, show_values=show_values, show_digests=show_digests,
+        redacted_generics=result["type_proposals"].redacted_generics,
+        redacted_roles=RedactionPolicy.from_model(result["view"].model).effective_roles,
+    )
+
+
+def _induced(view: PopulationView, proposals: types.TypeProposals) -> dict[int, list[str]]:
+    """Per group position, the fact types whose induced_from names its attribute (D4)."""
+    by_origin: dict[tuple[str, str], list[str]] = {}
+    for fact_id, origin in evidence.origins(view).items():
+        if origin is not None:
+            by_origin.setdefault((origin["generic"], origin["attribute_sha256"]), []).append(fact_id)
+    return {number: by_origin[record.generic, record.attribute_sha256]
+            for number, record in enumerate(proposals.groups)
+            if (record.generic, record.attribute_sha256) in by_origin}
+
+
+_BOUND_KEYS = ("model_sha256", "population_sha256", "min_support", "show_values", "show_digests")
+
+
+def _first_difference(given: bytes, recomputed: bytes) -> str:
+    """Which bound setting differs, by key only: the evidence may hold values."""
+    try:
+        old = _rf7_input.loads(given)
+    except (ValueError, RecursionError):
+        return "the evidence is not this run's evidence"
+    new = _rf7_input.loads(recomputed)
+    if isinstance(old, dict):
+        for key in _BOUND_KEYS:
+            if old.get(key) != new[key]:
+                return f"{key} differs from this run's; the evidence does not bind this model, population and settings"
+    return "groups differ from this run's; the evidence does not bind this model, population and settings"
+
+
 def _cmd_discover(
     model: str,
     population: str,
@@ -375,24 +441,42 @@ def _cmd_discover(
     show_values: bool = False,
     show_digests: bool = True,
     type_evidence: str | None = None,
+    type_evidence_in: str | None = None,
+    duplicate_judgements: str | None = None,
+    shape_judgements: str | None = None,
 ) -> int:
     model_path, population_path = Path(model), Path(population)
     out_path, report_path = Path(out), Path(report)
     evidence_path = None if type_evidence is None else Path(type_evidence)
-    if evidence_path is not None and types.FAMILY not in families:
-        _stderr("--type-evidence needs --families fact-type")
+    evidence_in = None if type_evidence_in is None else Path(type_evidence_in)
+    judgement_paths = {kind: Path(path) for kind, path in
+                       (("duplicates", duplicate_judgements), ("shapes", shape_judgements)) if path is not None}
+    judging = evidence_in is not None or bool(judgement_paths)
+    if (evidence_path is not None or judging) and types.FAMILY not in families:
+        _stderr("--type-evidence, --type-evidence-in and the judgements options need --families fact-type")
+        return EXIT_USAGE
+    if judging and (evidence_in is None or not judgement_paths):
+        _stderr("--duplicate-judgements and --shape-judgements need --type-evidence-in, and it needs one of them")
+        return EXIT_USAGE
+    if judging and evidence_path is not None:
+        _stderr("--type-evidence cannot be combined with --type-evidence-in")
         return EXIT_USAGE
     outputs = (out_path, report_path) + (() if evidence_path is None else (evidence_path,))
-    resolved = [p.resolve() for p in (*outputs, model_path, population_path)]
+    inputs = (model_path, population_path) + (() if evidence_in is None else (evidence_in,)) + tuple(
+        judgement_paths.values())
+    resolved = [p.resolve() for p in (*outputs, *inputs)]
     if len(set(resolved)) != len(resolved):
         # --out, --report and the two inputs must be four different files (R9);
-        # with --type-evidence, five (TS1).
-        if evidence_path is None:
+        # with --type-evidence, five (TS1); with judgements, every path (TS2).
+        if judging:
+            _stderr("--out, --report, MODEL, POPULATION, --type-evidence-in and the judgements files "
+                    "must be different paths")
+        elif evidence_path is None:
             _stderr("--out, --report, MODEL and POPULATION must be four different paths")
         else:
             _stderr("--out, --report, --type-evidence, MODEL and POPULATION must be five different paths")
         return EXIT_USAGE
-    for path in (model_path, population_path):
+    for path in inputs:
         if not path.is_file():
             _stderr(f"input {path} does not exist")
             return EXIT_NO_INPUT
@@ -410,6 +494,26 @@ def _cmd_discover(
     if evidence_path is not None and evidence_path.exists():
         _stderr(f"--type-evidence {evidence_path} already exists; nothing was written")
         return EXIT_COLLISION
+    evidence_raw, documents, digests = b"", {}, {}
+    if judging:
+        # The judgements and their binding are checked before the model or
+        # the population is read, so a wrong file refuses cheaply (TS2 §6.1).
+        try:
+            with evidence_in.open("rb") as handle:
+                evidence_raw = handle.read(evidence.MAX_EVIDENCE_BYTES + 1)
+            if len(evidence_raw) > evidence.MAX_EVIDENCE_BYTES:
+                raise judgements.TypeJudgementError(
+                    f"--type-evidence-in: the file exceeds {evidence.MAX_EVIDENCE_BYTES} bytes")
+            evidence_sha256 = hashlib.sha256(evidence_raw).hexdigest()
+            for kind, path in judgement_paths.items():
+                documents[kind], digests[kind] = judgements.read(path, kind=kind)
+                judgements.check_binding(documents[kind], kind=kind, evidence_sha256=evidence_sha256)
+        except judgements.TypeJudgementError as error:
+            _stderr(str(error))
+            return EXIT_ILL_FORMED
+        except OSError as error:
+            _stderr(f"could not read input: {error}")
+            return EXIT_IO
     try:
         result = discover(
             model_path, population_path,
@@ -437,38 +541,56 @@ def _cmd_discover(
         _stderr(f"could not read input: {error}")
         return EXIT_IO
     fields = result["fields"]
-    proposal_bytes = None
     try:
-        if result["final"] or result["type_operations"]:
-            proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
-            types_ = result["type_proposals"]
-            # The size estimate is a pre-filter; the written bytes decide
-            # (close review): drop type groups from the tail, in steps, until
-            # both caps hold. The other families keep their own estimate, so
-            # without type groups the proposal is written as before.
-            while not fits and types_ is not None and types_.group_sizes:
-                types_.drop_last(max(1, len(types_.group_sizes) // 16))
-                result["type_operations"] = tuple(types_.operations)
-                if not (result["final"] or result["type_operations"]):
-                    proposal_bytes = None
-                    break
-                proposal_bytes, fits = _proposal_bytes(result, actor, requested_at, population_path)
+        proposal_bytes = _trimmed_proposal(result, actor, requested_at, population_path)
     except OSError as error:
         _stderr(f"could not write output: {error}")
         return EXIT_IO
+    if judging:
+        # TS2: the evidence must be what this run would write without
+        # judgement, statuses final; then the verdicts are bound and the
+        # family proposes again with them.
+        try:
+            recomputed = evidence.evidence_bytes(_evidence(result, min_support, show_values, show_digests))
+            if recomputed != evidence_raw:
+                raise judgements.TypeJudgementError(
+                    f"--type-evidence-in: {_first_difference(evidence_raw, recomputed)}")
+            verdicts = judgements.bind(_rf7_input.loads(recomputed), documents,
+                                       induced=_induced(result["view"], result["type_proposals"]))
+            if not show_values:
+                hidden = [text for record in result["type_proposals"].groups
+                          for text in (types.cell_text(record.attribute), *record.values,
+                                       *(() if show_digests else (record.attribute_sha256,)))]
+                judgements.scan_free_text(documents, hidden, result["model_bytes"].decode("utf-8"))
+        except (evidence.TypeEvidenceError, judgements.TypeJudgementError) as error:
+            _stderr(str(error))
+            return EXIT_ILL_FORMED
+        except evidence.TypeEvidenceOverflow as error:
+            _stderr(f"internal: {error}")
+            return EXIT_INTERNAL
+        judged = types.propose(**result["type_arguments"], verdicts=verdicts, judgement={
+            "evidence_sha256": hashlib.sha256(evidence_raw).hexdigest(),
+            **{kind: (None if kind not in documents else
+                      {"sha256": digests[kind], "skill": documents[kind]["judge"]["skill"]})
+               for kind in ("duplicates", "shapes")},
+        })
+        result["type_proposals"] = judged
+        result["type_operations"] = tuple(judged.operations)
+        result["judged_from"] = "; fact-type verdicts from " + ", ".join(
+            judgement_paths[kind].name for kind in ("duplicates", "shapes") if kind in documents)
+        fields["fact_type_proposals"] = judged.report
+        try:
+            proposal_bytes = _trimmed_proposal(result, actor, requested_at, population_path)
+        except OSError as error:
+            _stderr(f"could not write output: {error}")
+            return EXIT_IO
     fields["proposal"] = None if proposal_bytes is None else str(out_path)
     evidence_bytes = None
     if evidence_path is not None:
         # Built after the written-bytes trim, so every status is final, and
         # before any write, so a malformed induced_from writes nothing (TS1).
         try:
-            evidence_bytes = evidence.evidence_bytes(evidence.build_evidence(
-                result["view"], result["type_proposals"],
-                model_sha256=fields["model"]["sha256"], population_sha256=fields["population"]["sha256"],
-                min_support=min_support, show_values=show_values, show_digests=show_digests,
-                redacted_generics=result["type_proposals"].redacted_generics,
-                redacted_roles=RedactionPolicy.from_model(result["view"].model).effective_roles,
-            ))
+            evidence_bytes = evidence.evidence_bytes(_evidence(result, min_support, show_values, show_digests))
         except evidence.TypeEvidenceError as error:
             _stderr(str(error))
             return EXIT_ILL_FORMED

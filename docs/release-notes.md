@@ -42,6 +42,14 @@ Walk through it in [From several documents to one checked answer](how-to/compose
   fact types its entity type already plays, for a judgement skill to read;
   the other outputs are unchanged. See
   [type evidence](reference/discover.md#type-evidence).
+- **Type judgements** (type-induction-skills TS2). `gnd discover
+  --type-evidence-in EVIDENCE --duplicate-judgements J --shape-judgements S`
+  reads verdicts bound to one evidence file: a group judged `distinct` is
+  proposed even when its signature matches, one judged `duplicate` is
+  reported against the named fact type, and a multi-valued group judged
+  `many-to-many` is proposed with a uniqueness spanning both roles. Stale,
+  incomplete or contradicted verdicts exit 3. See
+  [type judgements](reference/discover.md#type-judgements).
 
 ## Unreleased: model growth guardrails (2026-11-04)
 

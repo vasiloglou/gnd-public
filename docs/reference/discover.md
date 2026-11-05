@@ -150,8 +150,9 @@ attribute role is skipped and counted. Every group from one generic fact type
 has the same role players, so once one induced fact type is applied, every
 later group from that generic fact type is reported as a shape match against
 it rather than proposed; rename or retype the applied fact type, or review
-the shape matches, to go on. Groups proposed in one run are not compared with
-each other.
+the shape matches, to go on, or judge the groups
+([type judgements](#type-judgements)). Groups proposed in one run are not
+compared with each other.
 
 The report's `fact_type_proposals` key lists, per proposed fact type, the
 opaque ids of the rows that would migrate (`ft<k>#<index>`) and the
@@ -168,8 +169,9 @@ family's row visits are reported as `row_visits` in its own key, not in the
 report's `work` totals, so those totals mean what they meant before; the
 work ceiling does not bound them, and the family is bounded instead by the
 population's own size cap.
-`--min-support`, `--show-values` and `--type-evidence` without
-`--families fact-type` are usage errors (64).
+`--min-support`, `--show-values`, `--type-evidence` and the
+[judgement options](#type-judgements) without `--families fact-type` are
+usage errors (64).
 
 ### Type evidence
 
@@ -218,6 +220,75 @@ without the option.
   It must be a fifth distinct path (64). An existing file is refused (11)
   and a symbolic link (74), both before anything is read.
 
+### Type judgements
+
+A judgement skill reads one evidence file and writes its verdicts in a
+judgements file, format `gnd-type-judgements/1`, schema
+[`type-judgements.schema.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/type-judgements.schema.json).
+`gnd discover` reads it back, checks it, and renders the verdicts. It never
+chooses one:
+
+```sh
+gnd discover model.orm.yaml items.population.json --families fact-type \
+  --type-evidence-in evidence.json --duplicate-judgements duplicates.json \
+  --shape-judgements shapes.json \
+  --out proposal.json --report report.json --actor you --requested-at 2026-11-05T00:00:00+00:00
+```
+
+- **Two kinds.** A `duplicates` file gives `distinct`, or `duplicate` with
+  `of` naming a candidate, for every group with status `proposed`,
+  `shape_match` or `over_budget`. A `shapes` file gives `many-to-many` or
+  `skip` for every `multi_valued` group. Each verdict names its `group`
+  (`g<n>`), the group's `generic` and a `rationale` of at most 2,000
+  characters; `judge` names the skill and, in free text, the agent.
+- **Binding.** `evidence_sha256` is the SHA-256 of the evidence file's raw
+  bytes, given as `--type-evidence-in`. The run computes the evidence again,
+  as `--type-evidence` would write it for this model, population,
+  `min_support` and disclosure mode, and refuses when the bytes differ; the
+  message names the setting that differs. `--type-evidence` cannot be given
+  with `--type-evidence-in`.
+- **What is refused (3, nothing written).** A file that is not schema-valid
+  JSON under 10 MiB; a `kind` that does not match its option; a group that
+  is missing, extra, repeated, of another generic or not of that kind; a
+  verdict of the other kind (there is no `functional`); `of` on anything but
+  a duplicate, or naming a fact type that is not a candidate of the group in
+  the evidence; `distinct` or `many-to-many` on a group whose attribute
+  some fact type's `induced_from` already names for the same generic fact
+  type, whether or not the evidence lists that fact type as a candidate,
+  because that attribute was already induced; evidence that left groups out
+  (`truncated_groups` above 0).
+- **Rendering.** `distinct` proposes the group as above, whatever its
+  signature matches; when its id takes a clash suffix, its reading names the
+  suffix too (`attribute 0_1`), so it never repeats an existing reading.
+  `duplicate` lists it under `shape_matches` against
+  `of`, with `judged: true`. `many-to-many` proposes the binary fact type
+  with a uniqueness spanning both roles: its support is distinct (entity,
+  value) pairs over rows, and the rows that repeat a pair are its
+  counterexamples. The spanning uniqueness says each pair is recorded once;
+  it states nothing functional. `skip` counts the group in
+  `skipped.judged_skip`. The size budget, the id rule and redaction apply as
+  to any group, and every constraint stays induced, proposed and deontic.
+- **Provenance.** Each judged fact type records, in its own `provenance`,
+  `judgement` (the evidence and judgements digests, the kind, the verdict
+  and the skill) and, except under `customer`, `induced_from: {generic,
+  attribute_sha256}`. Once applied, that origin is what the next evidence
+  file reports. Under `customer` no attribute digest enters the model, so
+  the next evidence shows no origin for that fact type.
+- **The report** gains `judged: true` on judged entries, `shape:
+  many-to-many`, `skipped.judged_skip` and `judgements` (the three
+  digests). They appear only under judgement; without these options the
+  outputs are as before.
+- **Free text.** When values are not allowed (the mode is unset without
+  `--show-values`, or `customer`), each `rationale`, `judge.agent` and
+  `judge.skill` is checked for the text of any attribute or value the
+  population holds, and under `customer` for any attribute digest. A match
+  ignores case, counts a run of whitespace as one space, and needs the
+  characters on either side not to be letters, digits or `_`; it exits 3
+  naming the field, not the text. A text that is
+  also a token of the model file is allowed, since the judge reads the model.
+  The check catches exact text only, not a paraphrase or an encoding; the
+  skills' own rule not to quote values is the main control.
+
 ## Outputs
 
 - **`--report`:** always written. Format `gnd-discover/1`, schema
@@ -232,6 +303,8 @@ without the option.
   proposal of ADD constraint operations; preview it with `gnd evolve preview`.
 - **`--type-evidence`:** optional, with the `fact-type` family; see
   [type evidence](#type-evidence).
+- **`--type-evidence-in`, `--duplicate-judgements`, `--shape-judgements`:**
+  inputs, with the `fact-type` family; see [type judgements](#type-judgements).
 
 **What is skipped.** Everything skipped is counted in the report, never dropped
 silently:
@@ -251,7 +324,7 @@ silently:
 |---|---|
 | 0 | done, including when nothing was emitted (report only) |
 | 11 | `--out` already exists; nothing was written |
-| 3 | invalid model or population: over 10 MiB, written for another model, or a file name that cannot be an evidence ref |
+| 3 | invalid model or population: over 10 MiB, written for another model, or a file name that cannot be an evidence ref; or a judgements file that is unbound, incomplete or contradicted |
 | 64 | usage error |
 | 66 | a missing input file, or a missing reference population file the model declares |
 | 70 | internal defect |

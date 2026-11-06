@@ -326,3 +326,11 @@ D5's successor answers for RC1's corpus.
   bodies get RF6b successor rows. `test_rf6_packages.py` joins V4. A fourth
   failure, `test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout`,
   passes locally and is checked again in the final run.
+- **I7 (full suite, run at b199b851).** One failure over the base:
+  `tests/test_public_registry_runtime.py` requires one `CorrespondedFinding`
+  construction site in `gnd/correspondence.py`, and the moved
+  `acyclic_extents` built a synthetic finding only to reuse its row
+  projection. The projection loop moves unchanged out of `project_finding`
+  into `project_witness`, which `project_finding` and `acyclic_extents` both
+  call; no synthetic finding remains. The test joins V4. The session-driver
+  timeout failure of the first run did not recur.

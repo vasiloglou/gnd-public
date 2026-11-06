@@ -354,9 +354,10 @@ Authoritative Phase 3 snapshot decision and public-value projection.
 | `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1053 | (no docstring) |
 | `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1117 | (no docstring) |
 | `project_finding(finding, observation) -> ProjectedFinding` | function | 1132 | (no docstring) |
-| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1190 | (no docstring) |
-| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1210 | (no docstring) |
-| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1237 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
+| `project_witness(observation, index, *, scope_id, constraint_id, family, witness, witness_keys) -> t…` | function | 1168 | Each witness row with its scalars replaced by their admitted public values. |
+| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1208 | (no docstring) |
+| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1228 | (no docstring) |
+| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1255 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
 
 ## gnd.coverage — `src/gnd/coverage.py`
 Components: check.element_coverage

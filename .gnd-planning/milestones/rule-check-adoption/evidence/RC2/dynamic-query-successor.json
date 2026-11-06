@@ -2,7 +2,7 @@
   "schema_version": 1,
   "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC1/dynamic-query-successor.json",
   "predecessor_sha256": "c2f734394d2dc3990c2ba6b4d7c9724c636252b063576ff1ef68a1b9d460588d",
-  "reason": "rule-check-adoption RC2 (acyclic extent, report version 15; spec 27258a9e, corpus 9130e93d): the three strongly-connected-component walks (pyrel_rules._strata, model._validation._derivation_components and _derivation_cycles) move onto gnd.graphs.strongly_connected_components; semantic_spec.ring_pairs takes ring_result's pair extraction unchanged; new syntax candidates are the SCC walk's own index/low/work subscripts, acyclic_extent's group lookups keyed by NS-IDENT-1 identity, and type annotations of the version-15 extent map (correspondence.acyclic_extents, payloads, checking_service) and of the text map that now carries the message. Syntax census only; the exact query policy changes only by the moved ring read.",
+  "reason": "rule-check-adoption RC2 (acyclic extent, report version 15; spec 27258a9e, corpus 9130e93d): the three strongly-connected-component walks (pyrel_rules._strata, model._validation._derivation_components and _derivation_cycles) move onto gnd.graphs.strongly_connected_components; semantic_spec.ring_pairs takes ring_result's pair extraction unchanged; new syntax candidates are the SCC walk's own index/low/work subscripts, acyclic_extent's group lookups keyed by NS-IDENT-1 identity, and type annotations of the version-15 extent map (correspondence.acyclic_extents, payloads, checking_service) and of the text map that now carries the message. Syntax census only; the exact query policy changes only by the moved ring read. The witness row projection moves unchanged from correspondence.project_finding into correspondence.project_witness, which project_finding and the extent both call, so its subscripts move with it.",
   "removed": [
     [
       "src/gnd/commands/checking.py",
@@ -14,6 +14,42 @@
       "src/gnd/commands/checking.py",
       "_declared_from_payload",
       "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_finding",
+      "dict(observation.constraint_subject_types).get(finding.constraint_id, ())",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_finding",
+      "finding.witness_keys[position]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_finding",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_finding",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_finding",
+      "list[PublicScalar]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_finding",
+      "set[int]",
       1
     ],
     [
@@ -197,6 +233,66 @@
       "acyclic_extents",
       "tuple[list[list[Any]], str]",
       2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "Sequence[tuple[Scalar, ...]]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "dict(observation.constraint_subject_types).get(constraint_id, ())",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "list[PublicScalar]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "set[int]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "tuple[Any, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "tuple[Scalar, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "project_witness",
+      "witness_keys[position]",
+      1
     ],
     [
       "src/gnd/graphs.py",
@@ -487,6 +583,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7252,
-  "result_occurrences": 9063
+  "result_distinct_rows": 7256,
+  "result_occurrences": 9067
 }

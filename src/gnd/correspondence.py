@@ -1144,36 +1144,6 @@ def project_finding(
         coordinates.update(_subject_occurrences(finding.constraint_id, observation))
     elif finding.verdict in {"fail", "warning"}:
         coordinates.update(index.coordinates(finding.witness))
-    rows: list[Any] = []
-    used_origins: set[int] = set()
-    scope: frozenset[str] = frozenset()
-    if not finding.witness_keys:
-        scope = frozenset(dict(observation.constraint_subject_types).get(finding.constraint_id, ()))
-    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins, scope=scope))
-    try:
-        for row in finding.witness:
-            projected: list[PublicScalar] = []
-            for position, scalar in enumerate(row):
-                witness_key = (
-                    finding.witness_keys[position] if position < len(finding.witness_keys) else None
-                )
-                value = _origin_value(
-                    scalar,
-                    observation.origins,
-                    used_origins,
-                    witness_key=witness_key,
-                )
-                if value is _MISSING:
-                    raise ValueError(
-                        f"witness for {finding.scope_id!r} has no admissible origin"
-                    )
-                projected.append(value)
-            if finding.family == "guarded" or finding.witness_keys:
-                rows.append(dict(zip(finding.witness_keys, projected, strict=True)))
-            else:
-                rows.append(tuple(projected))
-    finally:
-        _ORIGIN_SELECTION.reset(token)
     return ProjectedFinding(
         finding.scope_id,
         finding.constraint_id,
@@ -1181,10 +1151,58 @@ def project_finding(
         finding.modality,
         finding.verdict,
         finding.reason_code,
-        tuple(rows),
+        project_witness(
+            observation,
+            index,
+            scope_id=finding.scope_id,
+            constraint_id=finding.constraint_id,
+            family=finding.family,
+            witness=finding.witness,
+            witness_keys=finding.witness_keys,
+        ),
         finding.applicable_scope_ids,
         tuple(sorted(coordinates)),
     )
+
+
+def project_witness(
+    observation: SnapshotObservation,
+    index: OriginIndex,
+    *,
+    scope_id: str,
+    constraint_id: str,
+    family: str,
+    witness: Sequence[tuple[Scalar, ...]],
+    witness_keys: tuple[str, ...],
+) -> tuple[Any, ...]:
+    """Each witness row with its scalars replaced by their admitted public values."""
+    rows: list[Any] = []
+    used_origins: set[int] = set()
+    scope: frozenset[str] = frozenset()
+    if not witness_keys:
+        scope = frozenset(dict(observation.constraint_subject_types).get(constraint_id, ()))
+    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins, scope=scope))
+    try:
+        for row in witness:
+            projected: list[PublicScalar] = []
+            for position, scalar in enumerate(row):
+                witness_key = witness_keys[position] if position < len(witness_keys) else None
+                value = _origin_value(
+                    scalar,
+                    observation.origins,
+                    used_origins,
+                    witness_key=witness_key,
+                )
+                if value is _MISSING:
+                    raise ValueError(f"witness for {scope_id!r} has no admissible origin")
+                projected.append(value)
+            if family == "guarded" or witness_keys:
+                rows.append(dict(zip(witness_keys, projected, strict=True)))
+            else:
+                rows.append(tuple(projected))
+    finally:
+        _ORIGIN_SELECTION.reset(token)
+    return tuple(rows)
 
 
 def project_snapshot(
@@ -1278,14 +1296,15 @@ def acyclic_extents(
         if not rows:
             continue
         others = ring_component_witness("intransitive", pairs) if constraint.variant != "acyclic" else []
-        projected = project_finding(
-            CorrespondedFinding(
-                scope_id=constraint.ref, constraint_id=constraint.ref, family="ring",
-                modality=constraint.modality, verdict="fail", reason_code=None,
-                witness=(*rows, *others), witness_keys=(), applicable_scope_ids=(),
-            ),
+        projected = project_witness(
             adapted.observation,
-        ).witness
+            OriginIndex(adapted.observation.origins),
+            scope_id=constraint.ref,
+            constraint_id=constraint.ref,
+            family="ring",
+            witness=(*rows, *others),
+            witness_keys=(),
+        )
         message = verbalize.ring_extent_message(
             constraint.variant, constraint.fact_type, sizes, len(rows),
             [tuple(row) for row in projected[len(rows):]],

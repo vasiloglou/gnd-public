@@ -350,11 +350,12 @@ Authoritative Phase 3 snapshot decision and public-value projection.
 | `ReferenceJoinLimit` | class(ValueError) | 387 | Attempted reference-lane join work exceeded its invocation budget. |
 | `ReferenceJoinWork` | class | 392 | (no docstring) |
 | `ReferenceJoinWork.charge(self) -> None` | method | 395 | (no docstring) |
-| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1050 | (no docstring) |
-| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1114 | (no docstring) |
-| `project_finding(finding, observation) -> ProjectedFinding` | function | 1129 | (no docstring) |
-| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1187 | (no docstring) |
-| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1207 | (no docstring) |
+| `evaluation_snapshot(snapshot, family) -> SnapshotIR` | function | 842 | The snapshot a constraint of ``family`` is evaluated over. |
+| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1053 | (no docstring) |
+| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1117 | (no docstring) |
+| `project_finding(finding, observation) -> ProjectedFinding` | function | 1132 | (no docstring) |
+| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1190 | (no docstring) |
+| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1210 | (no docstring) |
 
 ## gnd.coverage — `src/gnd/coverage.py`
 Components: check.element_coverage
@@ -1050,56 +1051,56 @@ Executable v6 snapshot specifications, separate from production correspondence.
 | `ring_cycle_witness(pairs) -> list[Scalar]` | function | 1306 | NF-RING-ACYCLIC-1 deterministic forward cycle, or empty when acyclic. |
 | `ring_component_witness(component, pairs) -> list[tuple[Scalar, ...]]` | function | 1382 | Exhaustive primitive ring witnesses, except one sound acyclic cycle. |
 | `ring_pairs(constraint, snapshot) -> list[tuple[Scalar, ...]] \| None` | function | 1433 | The distinct pairs a ring constraint judges, in canonical order, or None when it cannot be judged. |
-| `acyclic_extent(pairs) -> tuple[list[tuple[Scalar, ...]], list[int]]` | function | 1454 | Every pair inside a strongly connected group, in ``pairs`` order, and the group sizes, largest first. |
-| `ring_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1481 | NF-RING primitive and NF-RING-SHAPE-2 combined result. |
-| `ring_state(constraint, snapshot) -> int` | function | 1528 | (no docstring) |
-| `ring_holds(constraint, snapshot) -> bool` | function | 1532 | (no docstring) |
-| `ring_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1536 | (no docstring) |
-| `guarded_name_index(names, variable) -> int` | function | 1540 | Return a guarded variable's first-introduction position. |
-| `guarded_variable_names(constraint) -> tuple[str, ...]` | function | 1550 | NF-GUARDED-1 variable order from antecedent first introduction. |
-| `guarded_bindings(constraint, snapshot) -> tuple[bool, tuple[str, ...], list[tuple[Scalar, ...]]]` | function | 1565 | Conjunctively join antecedent atoms by exact variable identity. |
-| `guarded_operand_value(operand, names, binding) -> Scalar \| None` | function | 1632 | Ground one comparison operand from a complete binding. |
-| `guarded_atom_state(atom, names, binding, snapshot) -> int` | function | 1653 | Return whether one fully grounded consequent atom is present. |
-| `guarded_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1697 | NF-GUARDED result with unknown precedence and exhaustive bindings. |
-| `guarded_state(constraint, snapshot) -> int` | function | 1756 | (no docstring) |
-| `guarded_holds(constraint, snapshot) -> bool` | function | 1760 | (no docstring) |
-| `guarded_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1764 | (no docstring) |
-| `comparison_pair_state(left, right, operator) -> int` | function | 1768 | NF-VC-1/NS-ORDER-2: -1 unknown, 0 violates, 1 satisfies. |
-| `value_comparison_pairs(constraint, snapshot) -> tuple[bool, list[tuple[Scalar, Scalar]]]` | function | 1788 | Resolve NF-VC-1 inline, cross-same or connected cross-joined pairs. |
-| `value_comparison_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1876 | NF-VC-1 result with incomparability before violation. |
-| `value_comparison_state(constraint, snapshot) -> int` | function | 1909 | (no docstring) |
-| `value_comparison_holds(constraint, snapshot) -> bool` | function | 1913 | (no docstring) |
-| `value_comparison_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1917 | (no docstring) |
-| `pack_witness_row(values) -> list[list[Scalar]]` | function | 1921 | Wrap collected members in one aggregate row, including an empty row. |
-| `decision_of(band) -> str` | function | 1930 | NS-DECISION-2: the empty token means no semantic decision. |
-| `assurance_of(applicable, current, in_scope) -> str` | function | 1941 | NS-DECISION-2: counts of independently established applicable/current ids. |
-| `assurance_for_route(applicable, current, in_scope, admitted, currency_valid, extraction_required, a…` | function | 1950 | r2 A2/A6: suppress assurance if any external eligibility gate fails. |
-| `band_of(verdicts) -> int` | function | 1969 | NS-BAND-1: alethic fail > alethic unchecked > any vacuity > clean. |
-| `optional_identical(value, other) -> bool` | function | 1985 | (no docstring) |
-| `optional_range_state(value, minimum, maximum, min_inclusive, max_inclusive) -> int` | function | 1991 | (no docstring) |
-| `append_value_witness(witness, value) -> None` | function | 2057 | Append one selected occurrence while preserving the witness prefix. |
-| `value_cursor(constraint, snapshot) -> tuple[int, int, int]` | function | 2062 | Resolve one immutable subject cursor: kind, source position, column. |
-| `value_occurrence_count(cursor, snapshot) -> int` | function | 2085 | Return the immutable cursor length, or -1 for an invalid cursor. |
-| `value_occurrence_scalar(cursor, snapshot, index) -> Scalar \| None` | function | 2094 | Read one occurrence without allocating a projected subject sequence. |
-| `value_occurrence_state(cursor, constraint, snapshot, index) -> int` | function | 2116 | Classify one cursor occurrence; malformed or absent cells are unknown. |
-| `value_violation_count(cursor, constraint, snapshot, end) -> int` | function | 2129 | Mathematical prefix rank used to specify ordered witness multiplicity. |
-| `value_cursor_state(cursor, constraint, snapshot) -> int` | function | 2143 | Evaluate an immutable cursor without intermediate subject or state lists. |
-| `value_cursor_witness(cursor, constraint, snapshot) -> list[Scalar]` | function | 2162 | Collect every violating cursor occurrence in source order. |
-| `value_state(constraint, snapshot) -> int` | function | 2180 | Evaluate all selected value occurrences: -1 unknown, 0 violated, 1 satisfied. |
-| `value_holds(constraint, snapshot) -> bool` | function | 2189 | True exactly when the value family is evaluated and satisfied. |
-| `value_witness(constraint, snapshot) -> list[Scalar]` | function | 2194 | Return the exhaustive, ordered flat witness for a decided violation. |
-| `value_verdict(constraint, snapshot) -> str` | function | 2202 | Compose value-family state, modality, refusal, and vacuity into a verdict. |
-| `value_reason(constraint, snapshot) -> str` | function | 2227 | Return the frozen reason token for unchecked and vacuous value outcomes. |
-| `relation_empty_state(snapshot, fact_type) -> int` | function | 2250 | Return -1 for absent, 0 for populated, and 1 for empty relations. |
-| `sequence_join_reason(sequence, snapshot) -> str` | function | 2260 | Classify connectedness and anchor ambiguity for one role sequence. |
-| `join_refusal_of(constraint, snapshot) -> str` | function | 2323 | Return the closed join refusal before family evaluation. |
-| `subject_slots_opaque(constraint, snapshot) -> bool` | function | 2386 | True when a resolved single-subject rule is stopped only by an opaque cell. |
-| `unchecked_reason_of(constraint, snapshot) -> str` | function | 2428 | Map an unevaluable IR constraint to the closed reason vocabulary. |
-| `snapshot_family_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 2473 | Select one family provider from the shared registry. |
-| `sequence_spans_facts(sequence) -> bool` | function | 2483 | True when a role sequence names at least two fact types. |
-| `joined_pass_is_empty(constraint, snapshot) -> bool` | function | 2494 | NS-VACUITY-4 pass-only empty joined-universe classification. |
-| `applicability_of(constraint, snapshot) -> str` | function | 2512 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
-| `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2571 | Compose applicability, one family result, modality and pass-only vacuity. |
+| `acyclic_extent(pairs) -> tuple[list[tuple[Scalar, ...]], list[int]]` | function | 1455 | Every pair inside a strongly connected group, in ``pairs`` order, and the group sizes, largest first. |
+| `ring_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1482 | NF-RING primitive and NF-RING-SHAPE-2 combined result. |
+| `ring_state(constraint, snapshot) -> int` | function | 1529 | (no docstring) |
+| `ring_holds(constraint, snapshot) -> bool` | function | 1533 | (no docstring) |
+| `ring_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1537 | (no docstring) |
+| `guarded_name_index(names, variable) -> int` | function | 1541 | Return a guarded variable's first-introduction position. |
+| `guarded_variable_names(constraint) -> tuple[str, ...]` | function | 1551 | NF-GUARDED-1 variable order from antecedent first introduction. |
+| `guarded_bindings(constraint, snapshot) -> tuple[bool, tuple[str, ...], list[tuple[Scalar, ...]]]` | function | 1566 | Conjunctively join antecedent atoms by exact variable identity. |
+| `guarded_operand_value(operand, names, binding) -> Scalar \| None` | function | 1633 | Ground one comparison operand from a complete binding. |
+| `guarded_atom_state(atom, names, binding, snapshot) -> int` | function | 1654 | Return whether one fully grounded consequent atom is present. |
+| `guarded_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1698 | NF-GUARDED result with unknown precedence and exhaustive bindings. |
+| `guarded_state(constraint, snapshot) -> int` | function | 1757 | (no docstring) |
+| `guarded_holds(constraint, snapshot) -> bool` | function | 1761 | (no docstring) |
+| `guarded_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1765 | (no docstring) |
+| `comparison_pair_state(left, right, operator) -> int` | function | 1769 | NF-VC-1/NS-ORDER-2: -1 unknown, 0 violates, 1 satisfies. |
+| `value_comparison_pairs(constraint, snapshot) -> tuple[bool, list[tuple[Scalar, Scalar]]]` | function | 1789 | Resolve NF-VC-1 inline, cross-same or connected cross-joined pairs. |
+| `value_comparison_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1877 | NF-VC-1 result with incomparability before violation. |
+| `value_comparison_state(constraint, snapshot) -> int` | function | 1910 | (no docstring) |
+| `value_comparison_holds(constraint, snapshot) -> bool` | function | 1914 | (no docstring) |
+| `value_comparison_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1918 | (no docstring) |
+| `pack_witness_row(values) -> list[list[Scalar]]` | function | 1922 | Wrap collected members in one aggregate row, including an empty row. |
+| `decision_of(band) -> str` | function | 1931 | NS-DECISION-2: the empty token means no semantic decision. |
+| `assurance_of(applicable, current, in_scope) -> str` | function | 1942 | NS-DECISION-2: counts of independently established applicable/current ids. |
+| `assurance_for_route(applicable, current, in_scope, admitted, currency_valid, extraction_required, a…` | function | 1951 | r2 A2/A6: suppress assurance if any external eligibility gate fails. |
+| `band_of(verdicts) -> int` | function | 1970 | NS-BAND-1: alethic fail > alethic unchecked > any vacuity > clean. |
+| `optional_identical(value, other) -> bool` | function | 1986 | (no docstring) |
+| `optional_range_state(value, minimum, maximum, min_inclusive, max_inclusive) -> int` | function | 1992 | (no docstring) |
+| `append_value_witness(witness, value) -> None` | function | 2058 | Append one selected occurrence while preserving the witness prefix. |
+| `value_cursor(constraint, snapshot) -> tuple[int, int, int]` | function | 2063 | Resolve one immutable subject cursor: kind, source position, column. |
+| `value_occurrence_count(cursor, snapshot) -> int` | function | 2086 | Return the immutable cursor length, or -1 for an invalid cursor. |
+| `value_occurrence_scalar(cursor, snapshot, index) -> Scalar \| None` | function | 2095 | Read one occurrence without allocating a projected subject sequence. |
+| `value_occurrence_state(cursor, constraint, snapshot, index) -> int` | function | 2117 | Classify one cursor occurrence; malformed or absent cells are unknown. |
+| `value_violation_count(cursor, constraint, snapshot, end) -> int` | function | 2130 | Mathematical prefix rank used to specify ordered witness multiplicity. |
+| `value_cursor_state(cursor, constraint, snapshot) -> int` | function | 2144 | Evaluate an immutable cursor without intermediate subject or state lists. |
+| `value_cursor_witness(cursor, constraint, snapshot) -> list[Scalar]` | function | 2163 | Collect every violating cursor occurrence in source order. |
+| `value_state(constraint, snapshot) -> int` | function | 2181 | Evaluate all selected value occurrences: -1 unknown, 0 violated, 1 satisfied. |
+| `value_holds(constraint, snapshot) -> bool` | function | 2190 | True exactly when the value family is evaluated and satisfied. |
+| `value_witness(constraint, snapshot) -> list[Scalar]` | function | 2195 | Return the exhaustive, ordered flat witness for a decided violation. |
+| `value_verdict(constraint, snapshot) -> str` | function | 2203 | Compose value-family state, modality, refusal, and vacuity into a verdict. |
+| `value_reason(constraint, snapshot) -> str` | function | 2228 | Return the frozen reason token for unchecked and vacuous value outcomes. |
+| `relation_empty_state(snapshot, fact_type) -> int` | function | 2251 | Return -1 for absent, 0 for populated, and 1 for empty relations. |
+| `sequence_join_reason(sequence, snapshot) -> str` | function | 2261 | Classify connectedness and anchor ambiguity for one role sequence. |
+| `join_refusal_of(constraint, snapshot) -> str` | function | 2324 | Return the closed join refusal before family evaluation. |
+| `subject_slots_opaque(constraint, snapshot) -> bool` | function | 2387 | True when a resolved single-subject rule is stopped only by an opaque cell. |
+| `unchecked_reason_of(constraint, snapshot) -> str` | function | 2429 | Map an unevaluable IR constraint to the closed reason vocabulary. |
+| `snapshot_family_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 2474 | Select one family provider from the shared registry. |
+| `sequence_spans_facts(sequence) -> bool` | function | 2484 | True when a role sequence names at least two fact types. |
+| `joined_pass_is_empty(constraint, snapshot) -> bool` | function | 2495 | NS-VACUITY-4 pass-only empty joined-universe classification. |
+| `applicability_of(constraint, snapshot) -> str` | function | 2513 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
+| `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2572 | Compose applicability, one family result, modality and pass-only vacuity. |
 
 ## gnd.solve — `src/gnd/solve.py`
 Components: agent.solve

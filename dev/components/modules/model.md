@@ -78,5 +78,5 @@ Model loading with two-layer validation.
 | `DerivationClassification` | class | 3410 | One structured fact type's stability under the declared operations. |
 | `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3423 | Return asserted leaves beneath one structured head, failing closed. |
 | `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3514 | Classify every structured fact type against every operation touch. |
-| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3640 | SCC-condensed, dependency-first deterministic structured strata. |
-| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4712 | Run every layer-2 semantic rule over a parsed model document. |
+| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3641 | SCC-condensed, dependency-first deterministic structured strata. |
+| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4713 | Run every layer-2 semantic rule over a parsed model document. |

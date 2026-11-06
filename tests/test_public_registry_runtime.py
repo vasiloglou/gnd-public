@@ -88,7 +88,8 @@ def test_every_correspondence_finding_site_requires_an_explicit_scope():
     assert len(sites) == 1
     assert all(any(key.arg == "scope_id" for key in site.keywords) for site in sites)
     paths = set((root / "src/gnd/checker").rglob("*.py"))
-    assert {p.name for p in paths} == {"__init__.py", "_core.py", "_reports.py"}
+    # _composed.py: the CT2 composed-anchor check, split out of _core at the RF6 size ceiling.
+    assert {p.name for p in paths} == {"__init__.py", "_core.py", "_reports.py", "_composed.py"}
     checker = ast.Module(body=[node for path in paths for node in ast.parse(path.read_text()).body], type_ignores=[])
     assert not any(
         isinstance(node, ast.FunctionDef) and node.name == "result"

@@ -92,7 +92,9 @@ sidecar; the extractor does, whether that is you, an agent, or your own
 tooling, and `gnd.anchors.write_anchor_sidecar` publishes one that the
 parser accepts. This example's sidecars come from
 [`tools/build_composition_example.py`](https://github.com/vasiloglou/gnd-public/blob/main/tools/build_composition_example.py),
-which computes every digest and range from the files. An anchor binds one role value of one fact to a range of the
+which computes every digest and range from the files.
+
+An anchor binds one role value of one fact to a range of the
 document's text; the value's chosen occurrence must lie inside that range.
 That is all an anchor claims. It does not say the passage entails the fact,
 and GND does not say so either.
@@ -115,7 +117,9 @@ city 0 'The supplier, Acme Corp., is based in Lyon.'
 
 Every anchor on a role must hold for the role to pass. Two anchors are two
 claims about the document, and one wrong claim fails the fact even when the
-other is right. The sidecar also carries three digests (fingerprints of exact
+other is right.
+
+The sidecar also carries three digests (fingerprints of exact
 content): of the population's bytes, of the document's bytes, and of the
 model's vocabulary, meaning its object types, fact types and roles but not its
 constraints, rules or descriptions. If the population, the document or that
@@ -189,7 +193,9 @@ A renaming names one source, one fact type, one role, and the exact value to
 rewrite. It is the only way composition changes a value. GND will not match
 "ACME CORP." to "Acme Corp." by case, by edit distance or by any other guess,
 because a program that guesses once will guess wrong once, silently, in a
-population that then looks checked. A renaming that matches no row is refused,
+population that then looks checked.
+
+A renaming that matches no row is refused,
 so a manifest cannot carry a stale rule. The scope tags label each source in
 the record and change nothing in the population.
 
@@ -265,7 +271,7 @@ COVERAGE
   contract_is_in_city: declared, facts=2
 ```
 
-**GND says.** *Clean, exit 0.* Before it checks anything, the checker does two
+**GND says.** *Clean.* Before it checks anything, the checker does two
 things the record makes possible. It compares the model's and the composed
 population's digests with the record, so a population edited after
 composition is refused. Then it composes again from the sources directory,
@@ -348,7 +354,7 @@ lineage party_is_based_in_city#0: contract-a:party_is_based_in_city#0
 lineage party_is_based_in_city#1: contract-b:party_is_based_in_city#0
 ```
 
-**GND says.** *Two failures, exit 1, and where each side came from.* The
+**GND says.** *Two failures, and where each side came from.* The
 uniqueness fails because the composed population now holds two seats for one
 party. The two `lineage` lines name the offending facts' sources: row 0 is
 the agreement's fact, row 1 is the addendum's. A person can open the two
@@ -359,7 +365,9 @@ was extracted wrongly. The two documents disagree.
 The derivation failure shows why a conflict is never quietly tolerated. With
 two seats for Acme Corp., the rule derives a second city for each contract:
 "C-1 is in Zurich", though the agreement never mentions Zurich, and "C-2 is
-in Lyon" beside "C-2 is in Zurich". The derived extension is every row the rule
+in Lyon" beside "C-2 is in Zurich".
+
+The derived extension is every row the rule
 produces; the check names only the first one the extractions did not state; the others are missing in the same way.
 Whichever seat is wrong, it changes the answer for a contract its document
 does not even name. The `lineage` lines are in the JSON report too, as the
@@ -434,7 +442,7 @@ in the right direction: from the composed answer, through the record, to the
 spelling each document actually uses.
 
 A witness can be replayed later against the same population and record.
-`gnd replay` checks the binding digests, then that every base node's sources
+`gnd replay` checks the digests the witness binds, then that every base node's sources
 are what the record says, then the proof itself:
 
 <!-- gnd-run expect=0 output=stdout -->
@@ -478,8 +486,9 @@ rule, and names the passages those facts were read from.
 None of it establishes that the contracts are right. An anchor binds a value
 to a range of text, nothing more; a document can state a false seat, and an
 extraction can read a true document wrongly in a way the anchors do not catch.
-The renaming is a human decision recorded in a manifest, not a finding. What
-GND adds is that every step is explicit, re-derivable, and refused when its
+The renaming is a human decision recorded in a manifest, not a finding.
+
+What GND adds is that every step is explicit, re-derivable, and refused when its
 inputs change, so that the decisions a person did make, the renaming and the
 choice of sources, are stated where anyone can check them.
 

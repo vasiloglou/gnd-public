@@ -202,7 +202,8 @@ def test_duckdb_is_exact_pinned_and_absent_from_production() -> None:
     assert '"duckdb==1.5.5"' in project
     assert "not derivation_oracle" in project
     paths = set((REPO_ROOT / "src/gnd/checker").rglob("*.py"))
-    assert {p.name for p in paths} == {"__init__.py", "_core.py", "_reports.py"}
+    # _composed.py: the CT2 composed-anchor check, split out of _core at the RF6 size ceiling.
+    assert {p.name for p in paths} == {"__init__.py", "_core.py", "_reports.py", "_composed.py"}
     checker_source = "\n".join(p.read_text(encoding="utf-8") for p in paths)
     assert "import duckdb" not in checker_source
 

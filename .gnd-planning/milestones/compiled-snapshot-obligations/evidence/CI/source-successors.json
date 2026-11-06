@@ -24,11 +24,12 @@
         ]
       },
       "after": {
-        "raw_sha256": "b0d83c5f9cad626bb3762f13f738f0f33419b52deece9f93d64c59a2365fa11f",
-        "algorithm_sha256": "19e8413c80180da753cf019f8b038ecbe4b52c896b87c1f1c930b9f57e446baf",
+        "raw_sha256": "1db79526632e91803ca38766131b5cc7ff743f393fbb920780de592cc7d4aac0",
+        "algorithm_sha256": "f1d2e9e295428c1094508beef506ef54674581e925ffa5d98b2a986df3ebed88",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
+          "CompositionError",
           "MAX_DOCUMENT_BYTES",
           "bind_anchors",
           "bind_population",
@@ -37,10 +38,11 @@
           "read_anchor_sidecar",
           "read_regular_path",
           "resolve_context",
-          "validate_anchor_sidecar"
+          "validate_anchor_sidecar",
+          "verify_composition"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates)."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged."
     },
     {
       "kind": "RF4",
@@ -57,14 +59,14 @@
         ]
       },
       "after": {
-        "raw_sha256": "12b539188ada0b3923f83d4ffadc7e001c5919e3821c1f29d3cc2c28e1c81630",
-        "algorithm_sha256": "56f9a144da4a711d09188af1587fb426e52ff666115f0aef5ca16b58fe19a1cb",
+        "raw_sha256": "cbe3ebb5c96ef15f69330eb22ea6b01664382d5b0f4b7c18663632dc2638363b",
+        "algorithm_sha256": "7e075063905520241f2acca76dc4509bf06ecbcca29e71113c99e7548eec1dbc",
         "imports": [
           "build_admission",
           "wire_verdicts"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged. Then composition-and-type-induction CT2 (2c25ba4d): passes the optional composition and sources keywords through to _run_check_raw; the default (None) is unchanged."
     },
     {
       "kind": "RF5",
@@ -76,10 +78,10 @@
         "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
       },
       "after": {
-        "raw_sha256": "21aaf53531d80ae8894cc4aac130ca955ea153a51f6cd41217aa2c873afdcf2e",
-        "algorithm_sha256": "0055d26439ce60b60b7849af2565799f28b2ea226766b688d4fd585bf5222954"
+        "raw_sha256": "132b482b1c161903a1986de5859cd770b09222c18123b5ef953c1eaf48701fe4",
+        "algorithm_sha256": "5ba0d33e3a2bb2853efbfc5fac0ca15aa3bf2d35cd25de33331e060b59a84337"
       },
-      "reason": "Approved CS1 single/batch CLI opt-in forwarding."
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged."
     },
     {
       "kind": "RF5",
@@ -180,8 +182,8 @@
       "name": "_anchored_verdicts",
       "home": "gnd.checker._core",
       "before": "c167aa37e600a6c554c28753abad0898c50ad52cf82e9b8dd13889c2b5219bca",
-      "after": "4aeb9a35ac1b2b1139b563b5d45d080ccfe2fd2a525b64385bb8a9e96e3bccad",
-      "reason": "Approved transition-check-performance TP2: reads fact types through the non-copying internal ModelIndex accessor; results unchanged."
+      "after": "69e808c6f3ebbdd23845872b2880b50cff6c6b7cd4bcf258dae5db2d4decdfd4",
+      "reason": "Approved transition-check-performance TP2: reads fact types through the non-copying internal ModelIndex accessor; results unchanged. Then composition-and-type-induction CT1 (f20f5c38): a version-2 sidecar may hold several anchors per fact role and the role passes only when every anchor binds; one anchor per role evaluates as before."
     },
     {
       "kind": "RF6b",
@@ -400,7 +402,7 @@
       "name": "witness",
       "home": "gnd.witness.service",
       "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
-      "reason": "why-not-near-misses NM2 (D1 b): the public function applies the disclosure mode (customer returns the CLI's default view); the unchanged raw body moved to witness_result, which the CLI calls.",
+      "reason": "why-not-near-misses NM2 (D1 b): the public function applies the disclosure mode (customer returns the CLI's default view); the unchanged raw body moved to witness_result, which the CLI calls. Then composition-and-type-induction CT3 (4584415f): an optional composition keyword routes to the composed witness and is refused together with reference_root; composition=None is the unchanged path.",
       "before": {
         "raw_sha256": "a3a37853622c9f276b942ae29c4fc48a88264ebe3801011d65886444c8fdcc12",
         "algorithm_sha256": "c75fd8e0206111a02ade91a2200294d23b08ab3b4c70569cc6439a6a2af314ab",
@@ -412,8 +414,8 @@
         ]
       },
       "after": {
-        "raw_sha256": "214b370c376ad7d8a2c7e04282b09ff56f3ecd0b136579463db99c1d196b754f",
-        "algorithm_sha256": "03509a64978b45e31fcf737be6b5147ac25b112ca85fdc851b005d14cb0a9053",
+        "raw_sha256": "d80dd38c50c84bedafae3f0e6745a6f8a341ff846ccc3c9e15cdf239f35aa2b4",
+        "algorithm_sha256": "74c6c0a0e626d822bdc0a918aa9ce919567a5f96171e4394e1b219a01c40176d",
         "imports": []
       }
     },
@@ -423,7 +425,7 @@
       "name": "replay",
       "home": "gnd.witness.service",
       "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
-      "reason": "why-not-near-misses NM2 (D1 b): the public function applies the disclosure mode (customer returns the CLI's default view); the unchanged raw body moved to replay_result, which the CLI calls.",
+      "reason": "why-not-near-misses NM2 (D1 b): the public function applies the disclosure mode (customer returns the CLI's default view); the unchanged raw body moved to replay_result, which the CLI calls. Then composition-and-type-induction CT3 (4584415f): an optional composition keyword routes to the composed replay and is refused together with reference_root; composition=None is the unchanged path.",
       "before": {
         "raw_sha256": "97c865e778272baf0e3b0a3f1dd14540db5065084f5b56f1cac1d3a1a93f3003",
         "algorithm_sha256": "2b99c38822a21ea7e9bf6d35fe0d9289637ee90e5a41f75849ee8d741bb5a350",
@@ -435,8 +437,8 @@
         ]
       },
       "after": {
-        "raw_sha256": "363a39041b4af17ee3df2a196e41cdde1e5a01b4dab9ccae97c6b316f3f59adf",
-        "algorithm_sha256": "b6856b4859762d8b829c5b2de402c7a79de7e763eed8fa4ac99085bf32523c78",
+        "raw_sha256": "940f2777f6a073df07dcd9439b73d61029d403cbe9209000c31bf31621065ff3",
+        "algorithm_sha256": "150f7d03935b7ec9add7e5cb207b06a3d5185b4055055a9b28606655931603bb",
         "imports": []
       }
     },
@@ -493,6 +495,111 @@
         "algorithm_sha256": "fb66e8afef32efac6e1bf3b408816c9cd93c11dbb293a237fdb0264635695dd5",
         "imports": []
       }
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_validate",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "02486c99290f5323230adab3cdae352d5c547d72efe4f637254c4f804e100f76",
+        "algorithm_sha256": "754994aeecf03b996aae6636c37c608f9cd461bb360f0e3dcc92f4c0f9450687"
+      },
+      "after": {
+        "raw_sha256": "97576bdf7eb3bf4e3b55c8c0b73e7b8e00620bfd3f5ff433ae6fb70a87089024",
+        "algorithm_sha256": "f175acb0eed3fbaef9feea0439f531368e51ea6ef3d99785b9fe377094535ffb"
+      },
+      "reason": "model-growth-guardrails MG5 (7961119c): an optional documents keyword (gnd validate --document) re-hashes the model's source spans over the supplied documents after a clean validation; without it the handler is unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_extract",
+      "home": "gnd.extract.service",
+      "before": {
+        "raw_sha256": "889303f2ad6bb84e8be12cbef05e41da94d023fc41211f5eaf58bce9e2a4b156",
+        "algorithm_sha256": "abd0f8f856e9ad2c1c1cbcf90bbe04b451bc12f126506b07d97db08ed79a0e7e"
+      },
+      "after": {
+        "raw_sha256": "cc76281b8ffb6ee69ddad91984ee65744f3fc44de7baad1e05e1182c440f86d3",
+        "algorithm_sha256": "d663540924c590474b79328c9df7162b2b092e79347bfac757cb7dedb2c83068"
+      },
+      "reason": "model-growth-guardrails MG4 (9e36e70c): an optional guidelines keyword adds <stem>.guidelines.md to the bundle and its digest index; without it the bundle is byte-identical."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_evolve_apply",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "122cbe53dbd02038a6da71e21c5b18e57085ec666f66bf44183c2d74b9447910",
+        "algorithm_sha256": "13d38ed9e56f66ba0dbe40e91e42d9d50d3b70f9e0a86f7089f0f1a4780e8926"
+      },
+      "after": {
+        "raw_sha256": "6c882adc904f2b6f4f55a41d27bf06dd1b59abcbd0a902134690d7a61930b1f0",
+        "algorithm_sha256": "f654e1f15fd104291546bfed642a39e61d347b32e613f013c9ace2d27e645577"
+      },
+      "reason": "model-growth-guardrails MG2 (d8e8a3a7) and MG3 (41be0290): optional policy and populated keywords must equal the reviewed preview's and are passed to the re-preview, with the shape report requested when the reviewed preview carries one; without them the handler is unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_evolve_preview",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "19393755f9feb4024bdb7bac40867567d8a54768be7833e721f379661845e670",
+        "algorithm_sha256": "3616be80e57598a6023835eca10306b042faee994c99cec700077ab864a13af5"
+      },
+      "after": {
+        "raw_sha256": "f662961b08692eea281ca8b3eb9801b92d5b99136eebf8d81e724b581de8ece1",
+        "algorithm_sha256": "0f0cdc755794f81e13b1bca5931d8d09848f5f11811c16d90f495d9ab74795ba"
+      },
+      "reason": "model-growth-guardrails MG2 (d8e8a3a7) and MG3 (41be0290): optional policy, populated and shape_report keywords are passed to the preview; a preview with policy issues is still published and the handler then exits 3; without them the handler is unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_emit_claim",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "50d8c32a7a824d65024672fb31e8bef3629e089472887cf6068d7f30c1b93f16",
+        "algorithm_sha256": "3b7696b398b5555a9ac787e3278af340a37069a7667b28723bc66aa84ea7feef"
+      },
+      "after": {
+        "raw_sha256": "5a1f7c6fbcda590700caa5c4fb537a675711cde62aff4b844511d71d58f3d03d",
+        "algorithm_sha256": "b0741502bd8b6bd318f475952b7b136f456d677b2b66a872788baf7c9c1fcc1e"
+      },
+      "reason": "model-growth-guardrails MG2 (d8e8a3a7) and MG3 (41be0290): the text claim also prints the policy, populated and policy-issue lines when a policy is set and one shape-group line per duplicate-shape group; a claim with neither prints as before."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_error_exit",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "b3b6e18fcfa7425fab6ac7a8dbe24371152a14c103ba3dd060ad0171401de0fe",
+        "algorithm_sha256": "83af045a10c9a2f25c81eab24ee67309faa1ae7b0312803063b0bcc1eefca3e1"
+      },
+      "after": {
+        "raw_sha256": "6dde9b9d92729302755ce38da26f36a8cb9ddc7683611d5c1d7c1fe64216b16d",
+        "algorithm_sha256": "268e3378ca15973bd683570ae60677dab4ea698f9e79731d0b8c270a92ba8e67"
+      },
+      "reason": "model-growth-guardrails MG2 (d8e8a3a7): EvolutionPolicyRefusedError maps to exit 3; every other branch is unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_same_review_identity",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "4b7ba5d60b721c128c47e631fceb3511e1514b72ac7cce8d92c2ea48dbcd1c30",
+        "algorithm_sha256": "07532efa23b01357f7facb8445755d5780074aea0eb408ce896cacf382926838"
+      },
+      "after": {
+        "raw_sha256": "5accba22f6992582fb842cd969250ceffa51f2de49134013670a4ff0dbb40c68",
+        "algorithm_sha256": "b7483725d49db19929b8fb9e44cfa571b4bd558432c57d92aadf5c90676d9e7a"
+      },
+      "reason": "model-growth-guardrails MG3 (41be0290): shape_matches joins the fields excluded from the reviewed-versus-staged identity comparison; every other field still binds."
     }
   ]
 }

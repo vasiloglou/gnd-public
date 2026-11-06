@@ -341,6 +341,15 @@ every element, sample row and constraint (except `common-sense` ones, which
 cite a library entry) to cite its source text. See the
 [`gnd-model-from-text` skill's Unattended mode](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/SKILL.md).
 
+A program that proposes only fact types stops at the skill's Steps 1 and 2: its
+model fills with `String` value types and unrelated entity types, with no
+uniqueness, mandatory or subtype rule. The skill's
+[unattended growth procedure](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md)
+says what the program asks for at Steps 3 to 7, document by document, and when
+to run a consolidation round over the whole model. One consequence for this
+page's rounds: propose a fact type's constraints in the round that adds it, as
+round 2 above shows a later one is refused.
+
 ## Recap
 
 | Round | The document said | The program proposed | GND said | The model |

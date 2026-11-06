@@ -44,7 +44,7 @@ from gnd import cli, install
 
 #: The packaged tree ships 59 files across 15 skills — the same duplicated guard
 #: ``tests/test_install.py`` keeps, for the same reason.
-EXPECTED_SKILL_FILE_COUNT = 69  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued
+EXPECTED_SKILL_FILE_COUNT = 70  # TS3: gnd-judge-fact-types and the two vendored type schemas; TS4: gnd-model-multivalued
 
 #: The fifteen packaged skill directories, which is the artifact set in symlink
 #: mode: one link per skill. Named rather than counted so a removal that drops

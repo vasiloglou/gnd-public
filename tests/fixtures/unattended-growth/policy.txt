@@ -1,0 +1,4 @@
+Policy P-17 was issued by Northgate Insurance, as the insurer.
+Each policy has exactly one expiry date. Policy P-17 expires on 2025-12-31.
+The cover level of a policy is one of: basic, standard, premium. Policy P-17 has cover level standard.
+An insurer is a kind of party.

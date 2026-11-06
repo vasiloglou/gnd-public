@@ -43,6 +43,18 @@ than reading the preview's list. A preview stripped of every policy field and
 applied without `--policy` publishes as a policy-free preview: the guarantee
 is the caller's to repeat.
 
+## Subtypes
+
+The policy admits a new object type that declares `subtype_of` in the same
+operation, and a new supertype. It does not admit pointing an existing
+object type at a supertype: that adds `subtype_of` (and `inherits_reference`)
+to an existing element, an `object_types.modify` outside the admitted keys
+(`description` and `provenance.rationale`), refused whether or not any fact
+type is populated. A consolidation that makes existing entity types kinds of
+one another is therefore a reviewed proposal without `--policy additive`. The
+[unattended growth procedure](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/references/unattended-growth.md)
+describes when to run one.
+
 ## Exits
 
 | Exit | When |

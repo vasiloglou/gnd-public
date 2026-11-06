@@ -25,6 +25,9 @@ and ends with one compact review; it is the default for prototypes. **One-shot**
 the whole model from a rich description for you to review. **Unattended** is for a
 pipeline with nobody to review: the model says so (`source.mode: unattended`), confirms
 nothing, and cites a span of its source text for every claim, which `gnd validate` checks.
+Unattended mode covers Steps 3 to 7 too: the skill's `references/unattended-growth.md` says
+what text licenses a uniqueness, mandatory, value or subtype proposal, how a pipeline grows the
+model one document at a time, and the reply shape a host asks its model for.
 
 ## What the dialogue looks like
 

@@ -201,7 +201,7 @@
   },
   "install": {
     "exit": 0,
-    "stdout": "claude/global -> <case>/home/.claude/skills\n  placed 69 file(s)\n",
+    "stdout": "claude/global -> <case>/home/.claude/skills\n  placed 70 file(s)\n",
     "stderr": ""
   },
   "doctor": {

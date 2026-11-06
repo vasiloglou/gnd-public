@@ -1,0 +1,54 @@
+{
+  "document": "policy.txt",
+  "object_types": [
+    {"id": "policy", "name": "Policy", "kind": "entity",
+     "reference": {"mode": "popular", "value_type": "policy_no"}, "quote": "Policy P-17 was issued"},
+    {"id": "policy_no", "name": "PolicyNo", "kind": "value", "primitive": "String", "quote": "P-17 was issued"},
+    {"id": "party", "name": "Party", "kind": "entity",
+     "reference": {"mode": "popular", "value_type": "party_name"}, "quote": "a kind of party"},
+    {"id": "party_name", "name": "PartyName", "kind": "value", "primitive": "String", "quote": "Northgate Insurance"},
+    {"id": "insurer", "name": "Insurer", "kind": "entity", "quote": "as the insurer"},
+    {"id": "expiry_date", "name": "ExpiryDate", "kind": "value", "primitive": "Date", "quote": "expiry date"},
+    {"id": "cover_level", "name": "CoverLevel", "kind": "value", "primitive": "String", "quote": "The cover level of a policy"}
+  ],
+  "fact_types": [
+    {"id": "policy_issued_by_insurer", "reading": "{Policy} was issued by {Insurer}",
+     "roles": [{"object_type": "policy", "role_name": "policy"}, {"object_type": "insurer", "role_name": "insurer"}],
+     "quote": "Policy P-17 was issued by Northgate Insurance",
+     "rows": [{"values": {"policy": "P-17", "insurer": "Northgate Insurance"},
+               "quote": "Policy P-17 was issued by Northgate Insurance"}]},
+    {"id": "policy_expires_on_expiry_date", "reading": "{Policy} expires on {ExpiryDate}",
+     "roles": [{"object_type": "policy", "role_name": "policy"}, {"object_type": "expiry_date", "role_name": "expiry_date"}],
+     "quote": "Policy P-17 expires on 2025-12-31",
+     "rows": [{"values": {"policy": "P-17", "expiry_date": "2025-12-31"}, "quote": "Policy P-17 expires on 2025-12-31"}]},
+    {"id": "policy_has_cover_level", "reading": "{Policy} has {CoverLevel}",
+     "roles": [{"object_type": "policy", "role_name": "policy"}, {"object_type": "cover_level", "role_name": "cover_level"}],
+     "quote": "Policy P-17 has cover level standard",
+     "rows": [{"values": {"policy": "P-17", "cover_level": "standard"}, "quote": "Policy P-17 has cover level standard"}]}
+  ],
+  "subtype_links": [
+    {"subtype": "insurer", "supertype": "party", "inherits_reference": true,
+     "quote": "An insurer is a kind of party", "rationale": "A defined term naming a kind of party."}
+  ],
+  "constraints": [
+    {"host": "policy_expires_on_expiry_date", "basis": "text-cue",
+     "constraint": {"type": "uniqueness", "roles": ["policy"]},
+     "cue": "exactly one", "quote": "Each policy has exactly one expiry date",
+     "rationale": "The text gives each policy one expiry date."},
+    {"host": "policy_expires_on_expiry_date", "basis": "text-cue",
+     "constraint": {"type": "mandatory", "role": "policy"},
+     "cue": "Each policy has exactly one", "quote": "Each policy has exactly one expiry date",
+     "rationale": "The text gives each policy an expiry date."},
+    {"host": "model", "basis": "text-cue",
+     "constraint": {"type": "value", "object_type": "cover_level", "allowed": ["basic", "standard", "premium"]},
+     "cue": "one of: basic, standard, premium", "quote": "one of: basic, standard, premium",
+     "rationale": "The text lists the cover levels as a closed set."},
+    {"host": "model", "basis": "library", "library_entry": "date-contemporary",
+     "constraint": {"type": "value", "object_type": "expiry_date", "range": {"min": "1900-01-01"}},
+     "quote": "expiry date", "rationale": "Library entry date-contemporary: a reasonable contemporary date range."}
+  ],
+  "derived_fact_types": [],
+  "open_questions": [
+    {"step": 6, "note": "The text gives no limit on the cover period.", "quote": "expiry date"}
+  ]
+}

@@ -1,0 +1,9 @@
+BLOCKING (alethic)
+  [fail] fact_types[component_uses_component].constraints[0]: The relation 'component_uses_component' is acyclic — violated: cycle through 'core.base_types' -> 'core.identifiers' -> 'core.base_types'.
+  [fail] constraints[0]: Guarded comparison consequent evaluated over bindings=3 — violated by bindings: {'$c': 'cli', '$a': 'legacy'}.
+ADVISORY (deontic)
+  (none)
+pass=0 fail=2 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  component_uses_component: declared, facts=3
+  component_in_area: declared, facts=3

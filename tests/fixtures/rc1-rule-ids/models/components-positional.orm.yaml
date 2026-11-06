@@ -1,0 +1,37 @@
+version: 2
+model_id: urn:gnd-fixture:rc1-components-positional@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: component, name: Component, kind: entity, reference: { mode: popular, value_type: component_name } }
+  - { id: component_name, name: ComponentName, kind: value, primitive: String }
+  - { id: area, name: Area, kind: value, primitive: String }
+fact_types:
+  - id: component_uses_component
+    reading: "{Component} uses {Component}"
+    roles:
+      - { object_type: component, role_name: user }
+      - { object_type: component, role_name: used }
+    constraints:
+      - type: ring
+        variant: acyclic
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        rationale: "Import loops make components impossible to load or test alone."
+        provenance: { user_quote: "No component may import itself, directly or through others." }
+  - id: component_in_area
+    reading: "{Component} is in {Area}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: area, role_name: area }
+constraints:
+  - type: guarded
+    modality: alethic
+    source: user-supplied
+    status: confirmed
+    antecedent:
+      - { fact_type: component_in_area, bind: { component: "$c", area: "$a" } }
+    consequent:
+      comparison: { operator: "!=", left: "$a", right: legacy }
+    provenance: { user_quote: "No component may live in the legacy area." }
+rejected_proposals: []

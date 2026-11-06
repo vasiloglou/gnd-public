@@ -1,0 +1,1010 @@
+{
+  "schema_version": 1,
+  "run_sha256": "d4d6706fc965a796ecf366d386512e5128ac6fc91b87abadc56129d68ed5a487",
+  "summary": "Plan r2 of rule-check-adoption. Six of six reviewers succeeded (claude, qwen, kimi: revise; codex, gemini, glm: block). 44 concerns: 31 in 9 agreed groups, 13 divergent. The blocking themes are the RC3 key claim for id-less constraints (5 seats), RC4 recording --allow-vacuous outside version 15 (4 seats), the ungated freeze claim (3), the ungated and mis-cited redaction/temporal refusal (3), and unnumbered budgets (5 seats). The driving agent reproduced two code claims: redaction selects version 9 and temporal 11 (kimi), and two Tarjan SCC implementations exist (glm).",
+  "agreed_concerns": [
+    {
+      "group_id": "A",
+      "severity": "high",
+      "title": "RC3-C4 claims key stability that positional (id-less) constraints cannot have",
+      "summary": "Inserting a rule above an id-less constraint moves its positional address, so RC3-C4 contradicts RC-D4; within one run both populations share MODEL, so the rule-insertion half is vacuous there.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-c4-rule-insertion-vacuous"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-positional-key"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc3-key-positional-instability"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc3-key-instability"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc3c4-omits-declared-id-precondition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "B",
+      "severity": "high",
+      "title": "RC4's payload record of --allow-vacuous has no home and would change a frozen variant",
+      "summary": "RC4 is called independent of RC1 and run-wide, yet 'the payload records the option' while rule 7 forbids new keys outside version 15.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc4-option-record-home"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc4-frozen-version"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc4-allow-vacuous-record-home"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc4-option-recording-breaks-frozen-v7"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "C",
+      "severity": "high",
+      "title": "The versions 3-14 freeze claim is gated only by version-7 goldens",
+      "summary": "Section 5 and rule 7 claim every existing variant keeps its bytes, but only the 28 rf1 v7 goldens are named; other v7-emitting paths and versions 8-14 are ungated.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "frozen-claim-gated-on-v7-only"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "freeze-claim-v8-v14-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-04"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "D",
+      "severity": "medium",
+      "title": "Time bounds have no number, RC6 and close have no budget, no phase has a stop rule",
+      "summary": "RC2-C4 and RC3-C5 cannot fail as written; RC6 has no budget and an unresolved gate; there is no overrun rule.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unmeasurable-budgets-and-stops"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "phase-bounds"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "time-bounds-unnumbered"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc6-no-budget-no-gate"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc6-unbounded-execution"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-02"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "E",
+      "severity": "high",
+      "title": "The redaction/temporal refusal is uncriterioned, cites a non-existent decision and the wrong versions",
+      "summary": "'RC1 D3' does not exist in section 10; no criterion pins the refusal or its exit; redaction selects 9, temporal 11 (10/13 are admission and post-projection wires).",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "redaction-refusal-ungated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ruleids-redaction-refusal-uncriterioned"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-01"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "F",
+      "severity": "medium",
+      "title": "RC-D5's acceptance_ready: false at exit 0 breaks the D-08 invariant",
+      "summary": "payloads.py sets acceptance_ready = exit_code == 0 and the schema states it; RC3-C2 pins only the band.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc-d5-contradicts-d08"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-acceptance-ready"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "group_id": "G",
+      "severity": "medium",
+      "title": "--baseline combined with vacuous verdicts (with or without --allow-vacuous) is unspecified",
+      "summary": "RC3 and RC4 both edit band(); a vacuous head or base, and base-fail/head-vacuous, have no stated outcome.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-rc4-band-interaction"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-vacuous-base"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "baseline-allow-vacuous-interaction"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "H",
+      "severity": "low",
+      "title": "O16 and the section 3 address row misstate what exists",
+      "summary": "declared_constraint_address does not exist yet (it is a proposed rename of coverage._constraint_address); iter_constraints yields positional refs only; constraint_address already exists.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "o16-names"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "o16-false-reuse-claim"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-03"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "I",
+      "severity": "low",
+      "title": "RC5's one-home criterion contradicts the homes row, which omits extract/projection.py",
+      "summary": "Section 3 names two homes and leaves out the third spelling RC5-C2 must reduce.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc5-one-home-contradiction"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc5-homes-row-omits-projection-spelling"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rc3-rowless-fail-reads-as-no-new"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "rc3-undecided-alethic-only"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "v15-shape-changes"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rc3-derivations-unkeyed"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "v15-has-more-homes"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "rc2-c2-passes-today"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "o17-overstates-scc-absence"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "rc1-gate-inherited-failures"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "rc1-coverage-move-gate-gap"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "stated-behaviour-without-criterion"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gr-d1-remedy-null-gap"
+    },
+    {
+      "reviewer_id": "gemini",
+      "concern_id": "obligations-missing-sources"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "stale-r1-gate-refs"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "F1",
+      "rank": 1,
+      "title": "RC3-C4 claims key stability that positional (id-less) constraints cannot have",
+      "action": "Split RC3-C4: within one run the key is stable under fact insertion and reordering; across model revisions only declared-id keys are stable, and a test shows a positional key moves. Decide (new RC-D row) whether --baseline refuses or warns on id-less constraints.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-c4-rule-insertion-vacuous"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-positional-key"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc3-key-positional-instability"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc3-key-instability"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc3c4-omits-declared-id-precondition"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-c4-rule-insertion-vacuous",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-positional-key",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc3-key-positional-instability",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc3-key-instability",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc3c4-omits-declared-id-precondition",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F2",
+      "rank": 2,
+      "title": "The redaction/temporal refusal is uncriterioned, cites a non-existent decision and the wrong versions",
+      "action": "Phrase the refusal by model property, correct the version numbers, add RC1 and RC3 criteria with exit code and position in the rule-3 order, and qualify predicate 1.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "redaction-refusal-ungated"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ruleids-redaction-refusal-uncriterioned"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-01"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "redaction-refusal-ungated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "ruleids-redaction-refusal-uncriterioned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-01",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "fix_id": "F3",
+      "rank": 3,
+      "title": "RC4's payload record of --allow-vacuous has no home and would change a frozen variant",
+      "action": "Make --allow-vacuous record itself only in version 15 (imply --rule-ids, add RC1 -> RC4 to the graph), name the key in the version-15 shape, and add a criterion that existing-version bytes are unchanged.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc4-option-record-home"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc4-frozen-version"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc4-allow-vacuous-record-home"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc4-option-recording-breaks-frozen-v7"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc4-option-record-home",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc4-frozen-version",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc4-allow-vacuous-record-home",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc4-option-recording-breaks-frozen-v7",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F4",
+      "rank": 4,
+      "title": "The versions 3-14 freeze claim is gated only by version-7 goldens",
+      "action": "Name the existing suites that pin each variant (or one golden per variant) in RC1/RC2 gates, state the RC2 mechanism (checker computes both shapes, only the v15 builder reads the new one), or narrow the claim to what is gated.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "frozen-claim-gated-on-v7-only"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "freeze-claim-v8-v14-untested"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-04"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "frozen-claim-gated-on-v7-only",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "freeze-claim-v8-v14-untested",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-04",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "fix_id": "F5",
+      "rank": 5,
+      "title": "--baseline combined with vacuous verdicts (with or without --allow-vacuous) is unspecified",
+      "action": "State the combined outcomes in section 2.3/2.4, make RC4 follow RC3 (or say the later phase owns the combined test), and add criteria for vacuous head, vacuous base, and base-fail/head-vacuous.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-rc4-band-interaction"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-vacuous-base"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "baseline-allow-vacuous-interaction"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-rc4-band-interaction",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-vacuous-base",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "baseline-allow-vacuous-interaction",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F6",
+      "rank": 6,
+      "title": "RC-D5's acceptance_ready: false at exit 0 breaks the D-08 invariant",
+      "action": "Revise RC-D5 to keep D-08 or record a deliberate version-15 departure with its one home, and add a criterion pinning outcome and acceptance_ready for the standing-only case.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc-d5-contradicts-d08"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-acceptance-ready"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc-d5-contradicts-d08",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "rc3-acceptance-ready",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "F7",
+      "rank": 7,
+      "title": "Time bounds have no number, RC6 and close have no budget, no phase has a stop rule",
+      "action": "Give each time bound a seconds figure on a reproduced synthetic 209-component / 2,047-edge fixture (measured here, not O15's claim), give RC6 a budget and gate, and add a stop rule: return to the owner gate past 1.5x the estimate or on a failed survey.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unmeasurable-budgets-and-stops"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "phase-bounds"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "time-bounds-unnumbered"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc6-no-budget-no-gate"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc6-unbounded-execution"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-02"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "unmeasurable-budgets-and-stops",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "phase-bounds",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "time-bounds-unnumbered",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc6-no-budget-no-gate",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc6-unbounded-execution",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-02",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "gemini",
+        "kimi"
+      ]
+    },
+    {
+      "fix_id": "F8",
+      "rank": 8,
+      "title": "O16 and the section 3 address row misstate what exists",
+      "action": "Reword O16 and the row: iter_constraints is the reused walk, coverage._constraint_address is the reused mapping, moved to gnd.address under a new public name that wraps constraint_address.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "o16-names"
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "o16-false-reuse-claim"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-03"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "o16-names",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "o16-false-reuse-claim",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "rca-r2-03",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "gemini",
+        "kimi"
+      ]
+    },
+    {
+      "fix_id": "F9",
+      "rank": 9,
+      "title": "RC5's one-home criterion contradicts the homes row, which omits extract/projection.py",
+      "action": "Add extract/projection.py to the row, name the single normative home, and reword RC5-C2 so it can fail (one literal plus sync tests).",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc5-one-home-contradiction"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc5-homes-row-omits-projection-spelling"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc5-one-home-contradiction",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rc5-homes-row-omits-projection-spelling",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F10",
+      "rank": 10,
+      "title": "Decide novelty at verdict level too",
+      "action": "An alethic verdict failing in head and not in base is new even with zero rows (cardinality min over an empty universe); add the case to the RC3 family survey and a criterion that exits 1.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-rowless-fail-reads-as-no-new"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-rowless-fail-reads-as-no-new",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "F11",
+      "rank": 11,
+      "title": "Decide whether deontic unchecked verdicts block a no-new-violations claim",
+      "action": "Add an RC-D row; the plan currently mirrors band(), where deontic unchecked never affects the band.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc3-undecided-alethic-only"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "rc3-undecided-alethic-only",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "F12",
+      "rank": 12,
+      "title": "Fix the complete version-15 shape in RC1",
+      "action": "Define novelty and baseline fields (with their empty defaults) in RC1's version-15 schema so RC3 does not change a closed shape.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "v15-shape-changes"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "v15-shape-changes",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ]
+    },
+    {
+      "fix_id": "F13",
+      "rank": 13,
+      "title": "Decide how derivation failures take part in --baseline",
+      "action": "Add an RC-D row and an RC3 criterion for one standing and one new derivation failure.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-derivations-unkeyed"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc3-derivations-unkeyed",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "F14",
+      "rank": 14,
+      "title": "List payloads.py version gates and coverage intake as RC1 surfaces",
+      "action": "State whether gnd coverage accepts version-15 check reports.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "v15-has-more-homes"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "v15-has-more-homes",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "F15",
+      "rank": 15,
+      "title": "Replace RC2-C2 with a criterion today's code fails",
+      "action": "_find_cycle already sorts pairs; test that adding a disjoint cycle leaves existing in-group rows unchanged, and mark the problem figures as claims.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc2-c2-passes-today"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "rc2-c2-passes-today",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "F16",
+      "rank": 16,
+      "title": "Narrow O17 and point RC2 at the two existing Tarjan implementations",
+      "action": "model/_validation.py and export/pyrel_rules.py already implement SCC.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "o17-overstates-scc-absence"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "o17-overstates-scc-absence",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "F17",
+      "rank": 17,
+      "title": "Record RC1's gate at the merge base before changes",
+      "action": "Makes RC-D1's fallback attributable.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc1-gate-inherited-failures"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc1-gate-inherited-failures",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F18",
+      "rank": 18,
+      "title": "Add the coverage and address suites to RC1's gate",
+      "action": "tests/test_coverage_payload.py and tests/test_address.py exercise the moved function.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc1-coverage-move-gate-gap"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "rc1-coverage-move-gate-gap",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F19",
+      "rank": 19,
+      "title": "Add criteria for text output and the group message",
+      "action": "RC1 text output and RC2 message group counts.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stated-behaviour-without-criterion"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stated-behaviour-without-criterion",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    },
+    {
+      "fix_id": "F20",
+      "rank": 20,
+      "title": "State that remedy: null is the deliberate contract for models without it",
+      "action": "Or carry rationale too; record the choice.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gr-d1-remedy-null-gap"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gr-d1-remedy-null-gap",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ]
+    },
+    {
+      "fix_id": "F21",
+      "rank": 21,
+      "title": "Cite issue numbers in the O1-O6 evidence rows",
+      "action": "Traceability only.",
+      "concerns": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "obligations-missing-sources"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "gemini",
+          "concern_id": "obligations-missing-sources",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "gemini"
+      ]
+    },
+    {
+      "fix_id": "F22",
+      "rank": 22,
+      "title": "Point section 8 and RC-D0 at the current revision",
+      "action": "Wording.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-r1-gate-refs"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "stale-r1-gate-refs",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ]
+    }
+  ]
+}

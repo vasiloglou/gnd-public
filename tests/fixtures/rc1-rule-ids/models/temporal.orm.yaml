@@ -1,0 +1,22 @@
+version: 3
+model_id: urn:gnd-fixture:rc1-temporal@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: component, name: Component, kind: value, primitive: String }
+  - { id: build_time, name: BuildTime, kind: value, primitive: Duration }
+fact_types:
+  - id: component_build_time
+    reading: "{Component} builds in {BuildTime}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: build_time, role_name: time }
+    constraints:
+      - id: one_build_time
+        type: uniqueness
+        scope: internal
+        roles: [component]
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each component has one build time." }
+rejected_proposals: []

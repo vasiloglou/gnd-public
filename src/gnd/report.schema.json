@@ -310,6 +310,9 @@
           }
         }
       }
+    },
+    {
+      "$ref": "#/$defs/rule_ids_report"
     }
   ],
   "$defs": {
@@ -5016,6 +5019,434 @@
           }
         }
       ]
+    },
+    "verdict_v15": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_ref",
+        "address",
+        "addressing",
+        "remedy",
+        "constraint_type",
+        "modality",
+        "source",
+        "status",
+        "verdict",
+        "message",
+        "offending_facts",
+        "reason_code",
+        "novelty",
+        "row_novelty"
+      ],
+      "properties": {
+        "constraint_ref": {
+          "$ref": "#/$defs/verdict/properties/constraint_ref"
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The constraint's address: `constraint:<id>` when it declares an id, else its positional ref (`address.declared_constraint_address`)."
+        },
+        "addressing": {
+          "enum": [
+            "declared-id",
+            "positional"
+          ]
+        },
+        "remedy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The constraint's author-written `remedy` (bounded by the model meta-schema), copied verbatim; null when it declares none."
+        },
+        "constraint_type": {
+          "$ref": "#/$defs/verdict/properties/constraint_type"
+        },
+        "modality": {
+          "$ref": "#/$defs/verdict/properties/modality"
+        },
+        "source": {
+          "$ref": "#/$defs/verdict/properties/source"
+        },
+        "status": {
+          "$ref": "#/$defs/verdict/properties/status"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict/properties/verdict"
+        },
+        "message": {
+          "$ref": "#/$defs/verdict/properties/message"
+        },
+        "offending_facts": {
+          "$ref": "#/$defs/verdict/properties/offending_facts"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/verdict/properties/reason_code"
+        },
+        "novelty": {
+          "enum": [
+            "new",
+            "standing",
+            null
+          ],
+          "description": "Verdict-level novelty against a baseline; null without --baseline (RC3 fills it)."
+        },
+        "row_novelty": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "new",
+                  "standing"
+                ]
+              }
+            }
+          ],
+          "description": "Per offending row, aligned with `offending_facts`; null without --baseline."
+        }
+      }
+    },
+    "derivation_verdict_v15": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "derivation_ref",
+        "derivation",
+        "modality",
+        "verdict",
+        "message",
+        "findings",
+        "reason_code"
+      ],
+      "properties": {
+        "derivation_ref": {
+          "$ref": "#/$defs/derivation_verdict/properties/derivation_ref"
+        },
+        "derivation": {
+          "$ref": "#/$defs/derivation_verdict/properties/derivation"
+        },
+        "modality": {
+          "$ref": "#/$defs/derivation_verdict/properties/modality"
+        },
+        "verdict": {
+          "$ref": "#/$defs/derivation_verdict/properties/verdict"
+        },
+        "message": {
+          "$ref": "#/$defs/derivation_verdict/properties/message"
+        },
+        "findings": {
+          "$ref": "#/$defs/derivation_verdict/properties/findings"
+        },
+        "reason_code": {
+          "enum": [
+            null,
+            "derivation-not-covered",
+            "derivation-rule-opaque",
+            "opaque-value",
+            "derived-unknown",
+            "term:mod-zero",
+            "term:exact-value-too-wide",
+            "term:dependency-unavailable",
+            "term:div-zero",
+            "term:sqrt-negative",
+            "term:haversine-coordinate-range",
+            "term:float-overflow"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "pass"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "maxItems": 0
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "fail"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "minItems": 1
+              },
+              "reason_code": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "const": "unchecked"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "maxItems": 0
+              },
+              "reason_code": {
+                "enum": [
+                  "derivation-not-covered",
+                  "derivation-rule-opaque",
+                  "opaque-value",
+                  "derived-unknown",
+                  "term:mod-zero",
+                  "term:exact-value-too-wide",
+                  "term:dependency-unavailable",
+                  "term:div-zero",
+                  "term:sqrt-negative",
+                  "term:haversine-coordinate-range",
+                  "term:float-overflow"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "findings": {
+                "minItems": 2
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "then": {
+            "properties": {
+              "findings": {
+                "prefixItems": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "derived-extension-incomplete"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "derived-extension-unsound"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "baseline_v15": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "population",
+        "population_sha256",
+        "new",
+        "standing",
+        "resolved",
+        "positional_keyed",
+        "undecided"
+      ],
+      "properties": {
+        "population": {
+          "type": "string"
+        },
+        "population_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "new": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "standing": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resolved": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "positional_keyed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "undecided": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Obligations unchecked in either run, counted per verdict."
+        }
+      }
+    },
+    "rule_ids_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "tool",
+        "command",
+        "outcome",
+        "exit_code",
+        "acceptance_ready",
+        "model",
+        "model_digest",
+        "population",
+        "counts",
+        "verdicts",
+        "derivations",
+        "coverage",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "warnings",
+        "error",
+        "transition",
+        "assurance",
+        "baseline",
+        "allow_vacuous"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 15,
+          "description": "Report version 15 (`gnd check --rule-ids`): the version-7 snapshot shape whose verdicts also carry each constraint's declared address and remedy. Selected only on the plain snapshot arm."
+        },
+        "tool": {
+          "$ref": "#/$defs/legacy_reference_report/properties/tool"
+        },
+        "command": {
+          "const": "check"
+        },
+        "outcome": {
+          "$ref": "#/$defs/legacy_reference_report/properties/outcome"
+        },
+        "exit_code": {
+          "$ref": "#/$defs/legacy_reference_report/properties/exit_code"
+        },
+        "acceptance_ready": {
+          "$ref": "#/$defs/legacy_reference_report/properties/acceptance_ready"
+        },
+        "model": {
+          "$ref": "#/$defs/legacy_reference_report/properties/model"
+        },
+        "model_digest": {
+          "$ref": "#/$defs/legacy_reference_report/properties/model_digest"
+        },
+        "population": {
+          "$ref": "#/$defs/legacy_reference_report/properties/population"
+        },
+        "counts": {
+          "$ref": "#/$defs/legacy_reference_report/properties/counts"
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verdict_v15"
+          }
+        },
+        "derivations": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/derivation_verdict_v15"
+              }
+            }
+          ]
+        },
+        "coverage": {
+          "$ref": "#/$defs/legacy_reference_report/properties/coverage"
+        },
+        "extraction": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/extraction"
+            }
+          ],
+          "maxProperties": 0
+        },
+        "issues": {
+          "$ref": "#/$defs/legacy_reference_report/properties/issues"
+        },
+        "issues_total": {
+          "$ref": "#/$defs/legacy_reference_report/properties/issues_total"
+        },
+        "issues_truncated": {
+          "$ref": "#/$defs/legacy_reference_report/properties/issues_truncated"
+        },
+        "warnings": {
+          "$ref": "#/$defs/legacy_reference_report/properties/warnings"
+        },
+        "error": {
+          "$ref": "#/$defs/legacy_reference_report/properties/error"
+        },
+        "transition": {
+          "type": "null"
+        },
+        "assurance": {
+          "$ref": "#/$defs/legacy_reference_report/properties/assurance"
+        },
+        "baseline": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/baseline_v15"
+            }
+          ]
+        },
+        "allow_vacuous": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }

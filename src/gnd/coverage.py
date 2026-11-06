@@ -21,6 +21,7 @@ from gnd.address import (
     Addressing,
     ElementClass,
     constraint_address,
+    declared_constraint_address,
     derivation_address,
     fact_type_address,
     operation_address,
@@ -732,12 +733,9 @@ def _located(
         yield positional, address, addressing, constraint
 
 
-def _constraint_address(positional: str, constraint: dict[str, Any]) -> tuple[str, Addressing]:
-    """A constraint's census address: its declared id, else its positional ref."""
-    declared_id = constraint.get("id")
-    if declared_id is None:
-        return positional, "positional"
-    return constraint_address(str(declared_id)), "declared-id"
+#: Moved to :func:`gnd.address.declared_constraint_address` (rule-check-adoption RC1);
+#: retained as an identity alias for existing lookups.
+_constraint_address = declared_constraint_address
 
 
 def _fact_type_constraints(

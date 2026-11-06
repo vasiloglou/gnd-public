@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/maintenance/2026-11-06-main-ci-repair/dynamic-query-successor.json",
+  "predecessor_sha256": "f4fc982e237333bbc025e1bcec3991a2e795382bd7b56ba868f0518161c43fcb",
+  "reason": "rule-check-adoption RC1 (gnd check --rule-ids, report version 15): the census addressing helper moves from gnd.coverage._constraint_address to gnd.address.declared_constraint_address; new syntax candidates are type annotations of the declared-identity map and two lookups of that map by a verdict's constraint_ref (payloads._rule_ids_verdict, output._identified_verdict_lines), each keyed by a ref the same walk produced. Syntax census only; the exact query policy is unchanged.",
+  "removed": [
+    [
+      "src/gnd/coverage.py",
+      "_constraint_address",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_constraint_address",
+      "tuple[str, Addressing]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "<module>",
+      "Literal[3, 4, 5, 6, 7, 8, 9, 10, 11, 13]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/address.py",
+      "declared_constraint_address",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/address.py",
+      "declared_constraint_address",
+      "tuple[str, Addressing]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_declared_identities",
+      "dict[str, tuple[str, Addressing, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_declared_identities",
+      "tuple[str, Addressing, str | None]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "dict[str, tuple[str, Addressing, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "tuple[str, Addressing, str | None]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "dict[str, tuple[str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "Mapping[str, tuple[str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "declared[verdict.constraint_ref]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "Mapping[str, tuple[str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "<module>",
+      "Literal[3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "<module>",
+      "frozenset[int]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "Mapping[str, tuple[str, Addressing, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "declared[row['constraint_ref']]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "tuple[str, Addressing, str | None]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "Mapping[str, tuple[str, Addressing, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "tuple[str, Addressing, str | None]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7211,
+  "result_occurrences": 9009
+}

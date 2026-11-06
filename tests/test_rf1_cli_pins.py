@@ -22,6 +22,11 @@ EXPECTED_PARSERS = 58  # CT2 adds `gnd compose`; IK5 adds `gnd export ilp` and `
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
+# rule-check-adoption RC1 adds `check --rule-ids`; its help and exit probe supersede
+# the compiled successor's for `gnd check` and differ from them by that one option.
+RULE_IDS_SUCCESSOR = json.loads(
+    (Path(__file__).parent / 'fixtures/rule-ids-cli/expected.json').read_text()
+)
 
 
 class _Captured(Exception):
@@ -125,6 +130,9 @@ def test_cli_tree(tree):
     expected["subcommands"]["check"]["actions"].insert(
         COMPILED_SUCCESSOR["action_index"], copy.deepcopy(COMPILED_SUCCESSOR["action"])
     )
+    expected["subcommands"]["check"]["actions"].insert(
+        RULE_IDS_SUCCESSOR["action_index"], copy.deepcopy(RULE_IDS_SUCCESSOR["action"])
+    )
     _assert_successor("cli", "tree", tree[0], expected)
 
 
@@ -132,7 +140,7 @@ def test_cli_tree(tree):
 def test_cli_help(tree, path):
     if path == "gnd check":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
-                          {"path": path, "help": COMPILED_SUCCESSOR["help"]})
+                          {"path": path, "help": RULE_IDS_SUCCESSOR["help"]})
         return
     assert_golden("cli-help", path, {"path": path, "help": tree[2][path]})
 
@@ -152,7 +160,7 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        _assert_successor("cli-exit", path, observed, COMPILED_SUCCESSOR["exit_probe"])
+        _assert_successor("cli-exit", path, observed, RULE_IDS_SUCCESSOR["exit_probe"])
         return
     assert_golden(
         "cli-exit",

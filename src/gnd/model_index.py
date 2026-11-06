@@ -276,6 +276,21 @@ class ModelIndex:
     def primitive(self, identifier: str, *, variant: Literal['truthy', 'strict']) -> str | None:
         return primitive_for(identifier, self._objects, variant=variant)
 
+    def iter_constraints_shared(
+        self,
+    ) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] | None]]:
+        """Internal readers only: ``iter_constraints`` refs and order, rows not copied.
+
+        Callers must never mutate a row or anything inside it, for the reason
+        ``iter_fact_types_shared`` gives. One linear pass, with no per-constraint
+        copy of the containing fact type.
+        """
+        for fact_type in self._document.get('fact_types') or []:
+            for position, constraint in enumerate(fact_type.get('constraints') or []):
+                yield positional_constraint_ref(str(fact_type.get('id')), position), constraint, fact_type
+        for position, constraint in enumerate(self._document.get('constraints') or []):
+            yield positional_constraint_ref(None, position), constraint, None
+
     def iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] | None]]:
         for fact_type in self._document.get('fact_types') or []:
             for position, constraint in enumerate(fact_type.get('constraints') or []):

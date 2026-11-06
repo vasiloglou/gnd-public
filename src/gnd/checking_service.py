@@ -14,6 +14,7 @@ from gnd import model as model_module
 from gnd import payloads as report_module
 from gnd import redaction as redaction_module
 from gnd import transition as transition_module
+from gnd.address import Addressing, declared_constraint_address
 from gnd.assurance import (
     AssuranceBlockV1,
     _mint_execution,
@@ -31,6 +32,7 @@ from gnd.model import (
     load_model,
     structured_derivation_ids,
 )
+from gnd.model_index import ModelIndex
 from gnd.model_index import scoped as _index_scoped
 from gnd.population import (
     Population,
@@ -227,6 +229,7 @@ def _run_check_raw(
     references: BoundReferenceContext | None = None,
     composition: Any = None,
     sources: str | os.PathLike[str] | None = None,
+    rule_ids: bool = False,
 ) -> _RunResult:
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
     population_coordinate = (
@@ -238,6 +241,10 @@ def _run_check_raw(
     population: Population | None = None
     model_digest: str | None = None
     structured = False
+    # Version 15 (--rule-ids) until the model is refused; a refusal keeps version 7
+    # so the model's own projection (9, 11, the reference wrapper) still applies.
+    wire_version = 15 if rule_ids else 7
+    declared: dict[str, tuple[str, Addressing, str | None]] = {}
 
     def build(
         exit_code: int,
@@ -251,13 +258,29 @@ def _run_check_raw(
             exit_code,
             model_coordinate,
             population_coordinate,
-            schema_version=7,
+            schema_version=wire_version,
             model_digest=model_digest,
             structured=structured,
             report=report,
             issues=issues,
             warnings=warnings,
             error=error,
+            declared=declared if wire_version == 15 else None,
+        )
+
+    def refuse_rule_ids(refused: Model) -> _RunResult | None:
+        """The --rule-ids refusal for a model version 15 cannot describe, at version 7."""
+        nonlocal wire_version
+        refusal = _rule_ids_refusal(refused) if rule_ids else None
+        if refusal is None:
+            return None
+        wire_version = 7
+        return _finalize(
+            build(3, issues=[refusal]),
+            exit_code=3,
+            fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+            model=refused,
+            issues=(refusal,),
         )
 
     try:
@@ -272,11 +295,17 @@ def _run_check_raw(
             error=error,
         )
     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
+        attached = getattr(error, "model", None)
+        # A reference model can fail while binding its references; it is refused
+        # under --rule-ids all the same, before its report could be wrapped.
+        refused = refuse_rule_ids(attached) if isinstance(attached, Model) else None
+        if refused is not None:
+            return refused
         return _finalize(
             build(3, error=error),
             exit_code=3,
             fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
-            model=getattr(error, "model", None),
+            model=attached,
             error=error,
         )
 
@@ -286,6 +315,9 @@ def _run_check_raw(
     except Exception as error:
         if not model.reference_populations:
             raise
+        refused = refuse_rule_ids(model)
+        if refused is not None:
+            return refused
         return _finalize(
             build(3, error=ValueError("reference model identity is invalid")),
             exit_code=3,
@@ -293,6 +325,11 @@ def _run_check_raw(
             model=model,
             error=error,
         )
+    refused = refuse_rule_ids(model)
+    if refused is not None:
+        return refused
+    if rule_ids:
+        declared.update(_declared_identities(model))
     try:
         if model.reference_populations:
             from gnd.references import bind_population, resolve_context
@@ -663,6 +700,28 @@ def _reference_wrap(result: _RunResult) -> _RunResult:
     return replace(result, payload=wrapper, json_text=report_module.render_json(wrapper) + "\n")
 
 
+def _rule_ids_refusal(model: Model) -> ValidationIssue | None:
+    """Why version 15 cannot describe this model's report, or None when it can."""
+    if report_module.current_payload_schema_version(model) == 7 and not model.reference_populations:
+        return None
+    return ValidationIssue(
+        path="model",
+        message=(
+            "--rule-ids supports models whose check report is plain version 7; this model "
+            "uses temporal terms, an active redaction policy or reference populations"
+        ),
+        rule_id="check:rule-ids-unsupported",
+    )
+
+
+def _declared_identities(model: Model) -> dict[str, tuple[str, Addressing, str | None]]:
+    """Each constraint's positional ref -> (address, addressing, remedy), in one walk."""
+    return {
+        positional: (*declared_constraint_address(positional, constraint), constraint.get("remedy"))
+        for positional, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+    }
+
+
 @_index_scoped
 def _run_check(
     model_input: str | os.PathLike[str] | Model,
@@ -678,7 +737,10 @@ def _run_check(
     references: BoundReferenceContext | None = None,
     composition: Any = None,
     sources: str | os.PathLike[str] | None = None,
+    rule_ids: bool = False,
 ) -> _RunResult:
+    if rule_ids and (admission or compiled_operations):
+        raise ValueError("rule_ids applies to the plain snapshot check only")
     if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
     if compiled_operations and admission:
@@ -695,6 +757,7 @@ def _run_check(
         references=references,
         composition=composition,
         sources=sources,
+        rule_ids=rule_ids,
     )
     if admission:
         from gnd.admission import build_admission, wire_verdicts

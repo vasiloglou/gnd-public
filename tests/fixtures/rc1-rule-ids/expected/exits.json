@@ -1,0 +1,11 @@
+{
+  "declared-fail": 1,
+  "positional-pass": 0,
+  "derivation-plain": 0,
+  "derivation-mod-zero": 4,
+  "text-declared-fail": 1,
+  "refuse-redaction": 3,
+  "refuse-temporal": 3,
+  "refuse-reference": 3,
+  "conflict-populations": 64
+}

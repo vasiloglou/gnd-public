@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from typing import Any
 
 from gnd import checking_service as api_module
@@ -164,7 +165,33 @@ def _derivation_verdict_lines(
     )
     return lines
 
-def _print_report(report: CheckReport) -> None:
+def _identified_verdict_lines(
+    verdict: Any, declared: Mapping[str, tuple[str, str | None]] | None
+) -> list[str]:
+    """A constraint verdict line, named by its declared address and followed by its remedy.
+
+    ``declared`` maps a positional ref to (address, remedy) for ``check --rule-ids``;
+    without it, or for a constraint that declares no id, the line is the plain one.
+    """
+    if declared is None or verdict.constraint_ref not in declared:
+        return [_constraint_verdict_line(verdict)]
+    address, remedy = declared[verdict.constraint_ref]
+    if address == verdict.constraint_ref:
+        line = _constraint_verdict_line(verdict)
+    else:
+        line = (
+            f"  [{verdict.verdict}] {verbalize.path_segment(address)} "
+            f"({verbalize.path_segment(verdict.constraint_ref)}): "
+            f"{verbalize.line_text(verdict.message)}"
+        )
+    if remedy is None:
+        return [line]
+    return [line, f"    remedy: {verbalize.line_text(remedy)}"]
+
+
+def _print_report(
+    report: CheckReport, declared: Mapping[str, tuple[str, str | None]] | None = None
+) -> None:
     blocking = [
         verdict
         for verdict in report.verdicts
@@ -179,14 +206,14 @@ def _print_report(report: CheckReport) -> None:
     print("BLOCKING (alethic)")
     if blocking:
         for verdict in blocking:
-            print(_constraint_verdict_line(verdict))
+            print("\n".join(_identified_verdict_lines(verdict, declared)))
     else:
         print("  (none)")
 
     print("ADVISORY (deontic)")
     if advisory:
         for verdict in advisory:
-            print(_constraint_verdict_line(verdict))
+            print("\n".join(_identified_verdict_lines(verdict, declared)))
     else:
         print("  (none)")
 

@@ -7,8 +7,8 @@ runs `gnd check` as a CI gate over a project's component facts: GR-D1
 
 **Status: plan r6 approved by the owner on 2026-11-06, as written
 ([plan-gate record](005-plan.md)). Reviews ran over r2 (full panel) and r3
-to r5 (Codex); r6 itself was not reviewed (RC-D16). The RC1 spec is drafted
-and awaits its own owner gate; no code is written.**
+to r5 (Codex); r6 itself was not reviewed (RC-D16). RC1 is implemented and
+recorded ([phase record](006-phase-RC1.md)); not yet pushed or merged.**
 
 - [Canonical plan (r6, approved)](notes/rule-check-adoption-plan.md)
 - [Panel record over r2](001-panel.md)
@@ -16,7 +16,8 @@ and awaits its own owner gate; no code is written.**
 - [Re-check record over r4](003-review.md)
 - [Re-check record over r5](004-review.md)
 - [Plan-gate record](005-plan.md)
-- [RC1 spec (r7, awaiting its owner gate)](notes/phase-RC1-spec.md)
+- [RC1 spec (owner-approved)](notes/phase-RC1-spec.md)
+- [RC1 phase record](006-phase-RC1.md)
 
 Phases:
 - RC1: declared constraint id and `remedy` in each verdict, report version 15;
@@ -27,5 +28,6 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the RC1 spec owner gate (process-phase). RC-D1: RC1's gate
-waits for PR 99, or records the inherited failures at the merge base.
+Next action: the owner rules on RC1's size overrun (plan rule 8, an open
+question in the RC1 record), then the RC2 spec. Opening a PR for RC1 is the
+owner's call.

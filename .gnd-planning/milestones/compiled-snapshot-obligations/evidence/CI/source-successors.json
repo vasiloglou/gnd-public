@@ -24,8 +24,8 @@
         ]
       },
       "after": {
-        "raw_sha256": "1db79526632e91803ca38766131b5cc7ff743f393fbb920780de592cc7d4aac0",
-        "algorithm_sha256": "f1d2e9e295428c1094508beef506ef54674581e925ffa5d98b2a986df3ebed88",
+        "raw_sha256": "bc98194756c7eb15f5e90332500e555d823bba76590160f9b39f66e5bd5adfae",
+        "algorithm_sha256": "24274114f2f85dd74723dc5e5554e00aea7079a7861f371ab678ecbb878f43d5",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
@@ -42,7 +42,7 @@
           "verify_composition"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged."
     },
     {
       "kind": "RF4",
@@ -59,14 +59,14 @@
         ]
       },
       "after": {
-        "raw_sha256": "cbe3ebb5c96ef15f69330eb22ea6b01664382d5b0f4b7c18663632dc2638363b",
-        "algorithm_sha256": "7e075063905520241f2acca76dc4509bf06ecbcca29e71113c99e7548eec1dbc",
+        "raw_sha256": "87f100697ea45d2dfac084da134d9d4c6453b6b2894a9d66f33811bf0da0bb71",
+        "algorithm_sha256": "4974d1958e4ef84161628b4ce4fa0c40c3de9b943e21e507a2d1fca2725b2c17",
         "imports": [
           "build_admission",
           "wire_verdicts"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged. Then composition-and-type-induction CT2 (2c25ba4d): passes the optional composition and sources keywords through to _run_check_raw; the default (None) is unchanged."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged. Then composition-and-type-induction CT2 (2c25ba4d): passes the optional composition and sources keywords through to _run_check_raw; the default (None) is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): passes the optional rule_ids keyword through to _run_check_raw and refuses it with admission or compiled operations; the default (False) is unchanged."
     },
     {
       "kind": "RF5",
@@ -78,10 +78,10 @@
         "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
       },
       "after": {
-        "raw_sha256": "132b482b1c161903a1986de5859cd770b09222c18123b5ef953c1eaf48701fe4",
-        "algorithm_sha256": "5ba0d33e3a2bb2853efbfc5fac0ca15aa3bf2d35cd25de33331e060b59a84337"
+        "raw_sha256": "6582c6dab24253f3898877b0c800955e81a895fe16212be03033893cc2db3394",
+        "algorithm_sha256": "e8d1a9e430ebe8ee61a3b2fa57a774fbf7131af12697f9d330d7ab9ff389540b"
       },
-      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged."
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged."
     },
     {
       "kind": "RF5",
@@ -600,6 +600,57 @@
         "algorithm_sha256": "b7483725d49db19929b8fb9e44cfa571b4bd558432c57d92aadf5c90676d9e7a"
       },
       "reason": "model-growth-guardrails MG3 (41be0290): shape_matches joins the fields excluded from the reviewed-versus-staged identity comparison; every other field still binds."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.report",
+      "name": "build_check_payload",
+      "home": "gnd.payloads",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "before": {
+        "raw_sha256": "be70363961d86643a47e8bc5710dc1796e3a4431932c1491d0b063102d5438ca",
+        "algorithm_sha256": "39926c842dae8e32edc93d026c435e3fd3023ee26301aab2237d9d5b48581dc5",
+        "imports": []
+      },
+      "after": {
+        "raw_sha256": "7d5f6658856d3985df9901224c905d1a94f4befbeaa044c850119cdc9cdb812e",
+        "algorithm_sha256": "6fd7b09411581b56d8a55d7104c615820f773566172a05db87b10ef4ada4967d",
+        "imports": []
+      },
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): adds the optional declared keyword; for schema_version 15 each verdict gains its constraint's address, addressing and remedy, the empty novelty and row_novelty, and the report gains baseline and allow_vacuous; every other version is unchanged."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.report",
+      "name": "_base_payload",
+      "home": "gnd.payloads",
+      "base": "387aada2f5fad7289481bbc2e15c8dba629d8ce0",
+      "before": {
+        "raw_sha256": "b575227b4b161cbfb29da0d5ee51c0fd5e998971c8844019c7026af58b5931de",
+        "algorithm_sha256": "324aa75bf3df7948966c98f0eef82acf3282fde2f17fb5d53f67b73fe5caf5cd",
+        "imports": []
+      },
+      "after": {
+        "raw_sha256": "c046b95f846939a31e8b6ea29cbf056f3b9b0432cb9ada02cc98e3f0e6b986b6",
+        "algorithm_sha256": "d3af0947af7b509b178a3d2f4a9da1fc64d0b648835fc93c74a46a3d53e46e9d",
+        "imports": []
+      },
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): version 15 joins the assured snapshot versions (ASSURED_PAYLOAD_SCHEMA_VERSIONS = {7, 8, 15}) for the model digest and derivations keys; every other version is unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_report",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "5bf58f7ed09600c0da09e950edfe5db21d3100ba8a233841474763261eed87ce",
+        "algorithm_sha256": "3a5132bb92bff523c47b9783ec48bddc9c955f2f3a886e375cdb42bcd37e4701"
+      },
+      "after": {
+        "raw_sha256": "6a87feafe1b408947c2fd8680586c070621fe80f9a6dcac66dc72750af5ee5ff",
+        "algorithm_sha256": "f570ea0a4409c1925e8ab6890c45921370e30bb5400e8dc26066cb33e913be5a"
+      },
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged."
     }
   ]
 }

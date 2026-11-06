@@ -24,13 +24,14 @@
         ]
       },
       "after": {
-        "raw_sha256": "2f29fddf518472386467073057693913288deb87453520066e9300e23f030e8f",
-        "algorithm_sha256": "03531a43b58da88a4dfffbc0c7ab8e9770eb4b0757b21daa4957df2cb7f0e31f",
+        "raw_sha256": "8715ba0e537642645521579b8a006ffccd6c2aa8c4e7f3aedce70dd425273af6",
+        "algorithm_sha256": "1db43b0553122c76bf66a571a5a6cb05852c6444a03ed8ab2115e8000853970a",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
           "CompositionError",
           "MAX_DOCUMENT_BYTES",
+          "acyclic_extents",
           "bind_anchors",
           "bind_population",
           "calculation_scope",
@@ -651,6 +652,24 @@
         "algorithm_sha256": "157479326ca579daac76af96dccf05ef593633c65c305eaa2e4ced9310b97925"
       },
       "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the declared map carries the version-15 message, which the text line prints; without the map the output is unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "_derivation_components",
+      "home": "gnd.model._validation",
+      "before": "da860ad95d1fc65494dca353ac32446eb47103bd943d0362e7c8ed04f6372b76",
+      "after": "dbdfdaaa72f642043c5523ad8bb89d2cde06630f28cc53cf5fd8042d6bdd929e",
+      "reason": "rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d, review fix Q2): the iterative Kosaraju walk is replaced by gnd.graphs.strongly_connected_components, the one shared SCC home (RC-D10, D3); each component is still a sorted tuple, and its two callers depend only on membership (derivation_strata orders by content). The node set is built once."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "_derivation_cycles",
+      "home": "gnd.model._validation",
+      "before": "195096f8289d7b7cbf12cac7f07425018f4f31f16d46247d8943e7088472701a",
+      "after": "66094aea3a57d6e7f4dcfa2b22e485af884e0d787b7f77ae99ace1a4a9b20a68",
+      "reason": "rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the private iterative Tarjan is replaced by gnd.graphs.strongly_connected_components (RC-D10, D3); it returns the same sorted cycles (components of two or more heads, or a self-looping head)."
     }
   ]
 }

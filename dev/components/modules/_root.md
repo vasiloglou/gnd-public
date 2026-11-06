@@ -356,6 +356,7 @@ Authoritative Phase 3 snapshot decision and public-value projection.
 | `project_finding(finding, observation) -> ProjectedFinding` | function | 1132 | (no docstring) |
 | `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1190 | (no docstring) |
 | `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1210 | (no docstring) |
+| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1237 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
 
 ## gnd.coverage — `src/gnd/coverage.py`
 Components: check.element_coverage

@@ -204,7 +204,6 @@ from gnd.checker._core import _Wildcard as _Wildcard
 from gnd.checker._core import _witness as _witness
 from gnd.checker._core import _witness_charge as _witness_charge
 from gnd.checker._core import _witness_row as _witness_row
-from gnd.checker._core import acyclic_extents as acyclic_extents
 from gnd.checker._core import adapt_phase1_slice as adapt_phase1_slice
 from gnd.checker._core import analyze_declared_aggregate as analyze_declared_aggregate
 from gnd.checker._core import annotations as annotations

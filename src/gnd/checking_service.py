@@ -486,7 +486,9 @@ def _run_check_raw(
             if verdict.verdict == "fail" and verdict.constraint_type == "ring"
         ]
         if failing:
-            extents.update(checker_module.acyclic_extents(model, population, failing))
+            from gnd.correspondence import acyclic_extents
+
+            extents.update(acyclic_extents(model, population, failing))
     with capture_branches() as projection_trace:
         payload = build(exit_code, report=checked, warnings=warnings)
     if compiled_operations:

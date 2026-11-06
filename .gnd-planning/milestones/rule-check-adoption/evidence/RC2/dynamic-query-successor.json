@@ -2,7 +2,7 @@
   "schema_version": 1,
   "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC1/dynamic-query-successor.json",
   "predecessor_sha256": "c2f734394d2dc3990c2ba6b4d7c9724c636252b063576ff1ef68a1b9d460588d",
-  "reason": "rule-check-adoption RC2 (acyclic extent, report version 15; spec 27258a9e, corpus 9130e93d): the three strongly-connected-component walks (pyrel_rules._strata, model._validation._derivation_components and _derivation_cycles) move onto gnd.graphs.strongly_connected_components; semantic_spec.ring_pairs takes ring_result's pair extraction unchanged; new syntax candidates are the SCC walk's own index/low/work subscripts, acyclic_extent's group lookups keyed by NS-IDENT-1 identity, and type annotations of the version-15 extent map (checker.acyclic_extents, payloads, checking_service) and of the text map that now carries the message. Syntax census only; the exact query policy changes only by the moved ring read.",
+  "reason": "rule-check-adoption RC2 (acyclic extent, report version 15; spec 27258a9e, corpus 9130e93d): the three strongly-connected-component walks (pyrel_rules._strata, model._validation._derivation_components and _derivation_cycles) move onto gnd.graphs.strongly_connected_components; semantic_spec.ring_pairs takes ring_result's pair extraction unchanged; new syntax candidates are the SCC walk's own index/low/work subscripts, acyclic_extent's group lookups keyed by NS-IDENT-1 identity, and type annotations of the version-15 extent map (correspondence.acyclic_extents, payloads, checking_service) and of the text map that now carries the message. Syntax census only; the exact query policy changes only by the moved ring read.",
   "removed": [
     [
       "src/gnd/commands/checking.py",
@@ -127,42 +127,6 @@
   ],
   "added": [
     [
-      "src/gnd/checker/_core.py",
-      "acyclic_extents",
-      "Iterable[str]",
-      1
-    ],
-    [
-      "src/gnd/checker/_core.py",
-      "acyclic_extents",
-      "dict[str, tuple[list[list[Any]], str]]",
-      2
-    ],
-    [
-      "src/gnd/checker/_core.py",
-      "acyclic_extents",
-      "list[Any]",
-      2
-    ],
-    [
-      "src/gnd/checker/_core.py",
-      "acyclic_extents",
-      "list[list[Any]]",
-      2
-    ],
-    [
-      "src/gnd/checker/_core.py",
-      "acyclic_extents",
-      "projected[len(rows):]",
-      1
-    ],
-    [
-      "src/gnd/checker/_core.py",
-      "acyclic_extents",
-      "tuple[list[list[Any]], str]",
-      2
-    ],
-    [
       "src/gnd/checking_service.py",
       "_run_check_raw",
       "dict[str, tuple[list[list[Any]], str]]",
@@ -197,6 +161,42 @@
       "_declared_from_payload",
       "tuple[str, str | None, str]",
       1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "acyclic_extents",
+      "Iterable[str]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "acyclic_extents",
+      "dict[str, tuple[list[list[Any]], str]]",
+      2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "acyclic_extents",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "acyclic_extents",
+      "list[list[Any]]",
+      2
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "acyclic_extents",
+      "projected[len(rows):]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "acyclic_extents",
+      "tuple[list[list[Any]], str]",
+      2
     ],
     [
       "src/gnd/graphs.py",

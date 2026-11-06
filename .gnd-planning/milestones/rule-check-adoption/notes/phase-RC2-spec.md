@@ -316,3 +316,13 @@ D5's successor answers for RC1's corpus.
   query deltas are appended to their chains.
 - **I5.** The component index was stale against RC1 and main; regenerating
   it for `infra.graphs` also refreshed those generated rows.
+- **I6 (full suite, first run at cbcd0e86).** Three more guard failures
+  the impact closure had not selected: `tests/test_rf6_packages.py` pins the
+  original bodies of `_derivation_components` and `_derivation_cycles`, and a
+  2,400-line ceiling per `gnd.checker` file, which `acyclic_extents` pushed
+  `checker/_core.py` past (2,449). `acyclic_extents` moved to
+  `gnd.correspondence`, beside `evaluation_snapshot` and `project_finding`
+  that it uses, so `checker/_core.py` is byte-identical to the base; the two
+  bodies get RF6b successor rows. `test_rf6_packages.py` joins V4. A fourth
+  failure, `test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout`,
+  passes locally and is checked again in the final run.

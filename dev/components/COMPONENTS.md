@@ -14,7 +14,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd check, check population, validate population, constraint verdicts, snapshot check, evaluate constraints, report violations
 - status: canonical
 - components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, checker.reports
-- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +79 more (graph.md)
+- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +78 more (graph.md)
 - flow: cli.dispatch -> cli.checking_command -> cli.api -> check.service -> model.loading -> model.population_loading -> checker.evaluate -> check.admission -> checker.reports
 - notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation.
 
@@ -1771,7 +1771,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
 - status: canonical
 - modules: src/gnd/checker/__init__.py, src/gnd/checker/_core.py
-- uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice, semantics.snapshot_adapter, semantics.snapshot_spec
+- uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
 - used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, exp.acceptance, export.ilp_service, export.verification, infra.report_payloads, … +18 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_checker_families.py, tests/test_public_branch_runtime.py, tests/test_v62_phase5_checker.py, tests/test_anchor_sidecar_v2.py, tests/test_reference_population_corpus.py, tests/test_compiled_snapshot_obligations.py
@@ -2019,7 +2019,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
 - modules: src/gnd/checking_service.py
-- uses: assurance.evidence, assurance.policy, check.admission, check.branches, check.calculation_scope, check.compiled_obligations, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
+- uses: assurance.evidence, assurance.policy, check.admission, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
 - used_by: cli.api, infra.text_output, model.diff
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
@@ -2194,7 +2194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/extensions.py
 - uses: check.branches, check.calculation_scope, check.incremental_reuse, check.universe, infra.errors, infra.verdict_prose, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, model.validation
-- used_by: check.applicability, check.compiled_obligations, check.evaluation_feedback, checker.evaluate, checker.reports, examples.plan_apps, model.population_sentences, semantics.transitions
+- used_by: check.applicability, check.compiled_obligations, check.evaluation_feedback, check.snapshot_decision, checker.evaluate, checker.reports, examples.plan_apps, model.population_sentences, semantics.transitions
 - tests: tests/test_incremental_extensions.py, tests/test_incremental_extensions_review.py, tests/test_m3_extension_preparation.py, tests/test_rf3_core.py, tests/test_public_adapter_derivation.py, tests/test_public_derivation_evaluation_complete.py
 - checked: partial
 - notes: This is the defining calculation home below checker; historical checker names remain explicit aliases, and applicability consumes effective_view.
@@ -2233,8 +2233,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: SnapshotDecision and SnapshotProjection with findings, bands, counts, semantic decisions and fact coordinates
 - status: canonical
 - modules: src/gnd/correspondence.py
-- uses: check.branches, check.calculation_scope, check.constraint_families, check.incremental_reuse, model.document, model.population_loading, model.scalar_terms, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
-- used_by: assurance.policy, checker.evaluate
+- uses: check.branches, check.calculation_scope, check.constraint_families, check.incremental_reuse, infra.verdict_prose, model.document, model.population_loading, model.query_index, model.scalar_terms, semantics.extensions, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
+- used_by: assurance.policy, check.service, checker.evaluate
 - tests: tests/test_public_correspondence_runtime.py, tests/test_public_correspondence_projection.py, tests/test_public_evidence_origins.py, tests/test_guarded_corpus.py, tests/test_incremental_sessions.py
 - checked: partial
 - notes: Evaluation dispatch and origin-based projection share this home; assurance consumers use the resulting decision rather than granting assurance in this module.
@@ -2381,7 +2381,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.universe, checker.evaluate, cli.api, discover.candidates, discover.fact_types, … +20 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +21 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2591,7 +2591,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/semantic_adapter.py
 - uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, infra.input_policy, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_ir, semantics.snapshot_spec
-- used_by: check.admission, check.snapshot_decision, checker.evaluate, discover.population_view, semantics.temporal_guards, semantics.witness_origins
+- used_by: check.admission, check.snapshot_decision, discover.population_view, semantics.temporal_guards, semantics.witness_origins
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py, tests/test_public_adapter_derivation.py
 - checked: partial
 - notes: Explicit effective facts may carry derived observations; derived origins require dependency lineage.
@@ -2625,7 +2625,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/semantic_spec.py
 - uses: check.constraint_families, infra.graphs, semantics.snapshot_ir
-- used_by: assurance.policy, check.snapshot_decision, checker.evaluate, semantics.indexed_rows, semantics.snapshot_adapter, semantics.temporal_guards
+- used_by: assurance.policy, check.snapshot_decision, semantics.indexed_rows, semantics.snapshot_adapter, semantics.temporal_guards
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_ik4_indexed_set_families.py
 - checked: partial
 - notes: Executable reference semantics are distinct from production correspondence and the indexed row providers; this catalog reading establishes no current proof claim.
@@ -2719,7 +2719,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/verbalize.py
 - uses: (none)
-- used_by: check.population_structure, checker.evaluate, cli.checking_command, cli.dispatch, codegen.emit, conformance.report, extract.guidelines, fidelity.doccheck, fidelity.report, fidelity.service, infra.text_output, measure.report, … +5 more (graph.md)
+- used_by: check.population_structure, check.snapshot_decision, checker.evaluate, cli.checking_command, cli.dispatch, codegen.emit, conformance.report, extract.guidelines, fidelity.doccheck, fidelity.report, fidelity.service, infra.text_output, … +6 more (graph.md)
 - tests: tests/test_checker_families.py, tests/test_object_type_description.py, tests/test_popvalidate.py
 - checked: partial
 - notes: _neutralize caps individual rendered values at 512 characters; neutralize_text escapes descriptions without that cap. line_text escapes line/control structure without applying value quotation rules to trusted sentence syntax.

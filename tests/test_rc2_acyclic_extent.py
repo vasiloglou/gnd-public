@@ -238,12 +238,12 @@ def test_t8_no_scc_walk_left_outside_the_shared_home() -> None:
 
 
 def test_t9_version_7_never_computes_the_extent(monkeypatch) -> None:
-    from gnd import checker
+    from gnd import correspondence
 
     def refuse(*_args, **_kwargs):
         raise AssertionError("version 7 read the extent")
 
-    monkeypatch.setattr(checker, "acyclic_extents", refuse)
+    monkeypatch.setattr(correspondence, "acyclic_extents", refuse)
     result = _check("two-groups", "--format", "json")
     assert result.returncode == 1
     assert result.stdout == (EXPECTED / "two-groups.v7.json").read_bytes()
@@ -289,7 +289,7 @@ def test_q2_derivation_components_preparation_is_linear() -> None:
 def test_q3_no_extent_pass_without_an_acyclic_rule(monkeypatch) -> None:
     """A failing ring rule of another variant must not pay for a second snapshot."""
     import gnd.semantic_adapter as adapter
-    from gnd.checker import acyclic_extents
+    from gnd.correspondence import acyclic_extents
     from gnd.model import load_model_bytes
     from gnd.population import load_population_bytes
 

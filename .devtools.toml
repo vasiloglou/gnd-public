@@ -34,3 +34,26 @@ values = { planning_dir = ".gnd-planning" }
 source = "skills/milestone/start-milestone"
 dest = ".codex/skills/start-milestone"
 values = { planning_dir = ".gnd-planning" }
+
+# The component index: the skill in both discovery roots, and the script that builds it.
+[[sync]]
+source = "skills/components"
+dest = ".claude/skills/components"
+exclude = ["scripts/components_index.py"]
+
+[[sync]]
+source = "skills/components"
+dest = ".codex/skills/components"
+exclude = ["scripts/components_index.py"]
+
+[[sync]]
+source = "skills/components/scripts/components_index.py"
+dest = "scripts/components_index.py"
+
+[sync.settings."components_index.settings.json"]
+package_dir = "src/gnd"
+import_prefix = "gnd"
+extra_source_dirs = ["tools"]
+docs_dir = "dev/components"
+script_path = "scripts/components_index.py"
+verb_list = "shared"

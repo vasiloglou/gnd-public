@@ -304,3 +304,11 @@ before the shared one replaced it:
 - Preserve installer links, as well as PROJECT.md, other milestone records and
   unrelated user files.
 - Do not run native acceptance lanes merely to fill a plan.
+
+## Component index
+
+The index lives in `dev/components/` (not `docs/`, which the site publishes), and
+its script is `scripts/components_index.py` with settings beside it. Wherever the
+`components` skill says `docs/components/`, read `dev/components/`. The index
+changes in the same commit as the code; run
+`python3 scripts/components_index.py changed --base main --strict` before a PR.

@@ -7,10 +7,12 @@ date: 2026-11-05
 gate:
   command: "bash .gnd-planning/milestones/type-induction-skills/evidence/TS5/gate.sh"
   exit: 0
-  output: "16 tutorial blocks passed; strict build, no issues; 14646 links checked; 155 passed, 1 deselected; T4 scan clean; ruff clean"
+  output: "16 tutorial blocks passed; strict build, no issues; 14648 links checked; 155 passed, 1 deselected; anonymity 3 passed; no absolute paths; ruff clean"
   note: >-
-    Spec section 7 T1 to T4 over the phase tree after the review fixes,
-    verbatim in evidence/TS5/gate.txt.
+    Spec section 7 T1 to T4, verbatim in evidence/TS5/gate.txt. Rerun at
+    the close: the first gate.sh named the downstream applications in its
+    own scan pattern, which tests/test_why_not_anonymity.py refused; T4 now
+    runs that test.
 slow_cadence:
   command: "uv run python tools/run_tutorials.py (every group); the full default lane"
   trigger: "the milestone close"
@@ -23,9 +25,9 @@ evidence:
   - path: .gnd-planning/milestones/type-induction-skills/notes/TS5-dispositions.md
     sha256: 53583b7b53c2ff5d2a33edf3195ded7192d1f2dcef89c5384d2b77f4be1ca7f6
   - path: .gnd-planning/milestones/type-induction-skills/evidence/TS5/gate.sh
-    sha256: a38adacd017b23dfc05d72044158daca013c1cb44cca76b081669fd6ceaf6275
+    sha256: 23367dd463014fd98fb240404639cb7569ffe9ca73302acba9596b92b747734c
   - path: .gnd-planning/milestones/type-induction-skills/evidence/TS5/gate.txt
-    sha256: 4d1dc79d2f00731c9687b1c58504eb246db1161b402c0e0c1d8854507d82227c
+    sha256: e0723f76994091cea48ffddd3484be3b1b3e80e05d70d592fc15782b7dedfa68
   - path: .gnd-planning/milestones/type-induction-skills/evidence/TS5/regressions-red.txt
     sha256: df7d10ef9320e0792730f1cedaf293a24e95026636f45ab5492d66f73db5d749
   - path: docs/how-to/judge-induced-fact-types.md
@@ -92,13 +94,14 @@ $ uv run python tools/run_tutorials.py --group type-judgements
 16 tutorial blocks passed
 $ uv run --group docs zensical build --strict
 No issues found
-Build finished in 0.53s
+Build finished in 0.54s
 $ uv run python tools/check_docs.py site
-14646 local links/assets/anchors checked
+14648 local links/assets/anchors checked
 $ uv run pytest -q <T3: 6 files>
-155 passed, 1 deselected in 15.00s
-$ T4: anonymity and absolute-path scan of the new files
-no downstream names, no absolute paths
+155 passed, 1 deselected in 14.63s
+$ T4: the repository anonymity test over added files, and an absolute-path scan of the new files
+3 passed in 4.00s
+no absolute paths
 $ uv run ruff check tests/test_type_judgements_example.py
 All checks passed!
 ```

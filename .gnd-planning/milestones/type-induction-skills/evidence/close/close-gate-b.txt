@@ -1,0 +1,26 @@
+$ uv run pytest -q -m distribution tests/test_public_distribution.py tests/test_release_acceptance.py tests/test_public_built_inventory.py
+FAILED tests/test_public_distribution.py::test_artifact_and_installed_resource_sets
+FAILED tests/test_public_distribution.py::test_symlink_identity_survives_linux_mode
+FAILED tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[duplicate-wheel]
+FAILED tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[duplicate-sdist]
+FAILED tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[extra-wheel]
+FAILED tests/test_public_distribution.py::test_archive_members_refuse_hidden_content[extra-sdist]
+6 failed, 28 passed, 10 errors in 5.81s
+$ uv run python tools/run_tutorials.py
+303 tutorial blocks passed
+$ uv run --group docs zensical build --strict
+No issues found
+Build finished in 0.54s
+$ uv run python tools/check_docs.py site
+14648 local links/assets/anchors checked
+$ uv run gnd install --symlink --project --force (twice: idempotence)
+2
+link changes: 0
+$ uv run gnd doctor --project
+doctor exit 0
+$ uv run ruff check src/gnd/discover tools/record_judge_sessions.py tools/run_tutorials.py tests/test_discover_type_evidence.py tests/test_discover_type_judgements.py tests/test_judge_fact_types_skill.py tests/test_model_multivalued_skill.py tests/test_type_judgements_example.py
+All checks passed!
+$ uv run pytest -q <close-fix tests>
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[compose-documents.md]
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]
+2 failed, 503 passed in 62.00s (0:01:02)

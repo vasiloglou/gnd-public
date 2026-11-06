@@ -1,0 +1,36 @@
+# full default lane on beast-3 (macOS, git-archive snapshots with a one-commit history)
+## closing tree 3665e28f
+518 failed, 17050 passed, 794 deselected, 1 warning, 2 errors in 2389.92s (0:39:49)
+EXIT 1
+## main 1668a58e
+517 failed, 16945 passed, 794 deselected, 1 warning, 2 errors in 2481.57s (0:41:21)
+EXIT 1
+## failures only at 3665e28f (base ran with -rf, so its two ERROR lines are not listed; tests/test_public_optional.py errors identically at both, rerun below)
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[judge-induced-fact-types.md]
+## failures only at 1668a58e
+## shared failures by file
+ 424 tests/test_rf4_peripheral.py
+  44 tests/test_why_not_near_misses_public.py
+  10 tests/test_rf5_commands.py
+   9 tests/test_ik6_skill_census.py
+   8 tests/test_il6_skill_census.py
+   7 tests/test_rf9_ci_repairs.py
+   3 tests/test_why_not_anonymity.py
+   3 tests/test_plan_app_docs.py
+   2 tests/test_rf7_structure.py
+   2 tests/test_rf6_packages.py
+   2 tests/test_rf3_moves.py
+   2 tests/test_public_optional.py
+   1 tests/test_rf8_structure.py
+   1 tests/test_rf5_review_regressions.py
+   1 tests/test_rf5_handler_pins.py
+   1 tests/test_disclosure_mode.py
+## tests/test_public_optional.py at 1668a58e and 3665e28f on beast-3
+2 errors in 0.15s
+2 errors in 0.10s
+## the one new failure, fixed after the run: tests/test_plan_app_docs.py over the closing tree (local)
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[compose-documents.md]
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]
+2 failed, 67 passed in 0.33s

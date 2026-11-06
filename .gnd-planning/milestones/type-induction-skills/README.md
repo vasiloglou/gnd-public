@@ -6,11 +6,11 @@ CT-close-Q2 from the
 duplicate detection and multi-valued modelling for the `fact-type` discover
 family move to skills; the CLI stays deterministic and supplies evidence.
 
-**Status: plan r1 approved by the owner `(a1)` 2026-11-05, without plan
-review ([gate record](001-plan-gate.md)). TS1 spec r2 approved by the owner
-`(a1)` 2026-11-05 (prose instrument, D1–D7 as proposed). TS1 implemented
-and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
-(`9f87fa0`); the branch is rebased onto main at `b733b2a` (TS-D1 met).
+**Status: closed locally 2026-11-05 ([close record](007-milestone-close.md)),
+pending the owner's acceptance and merge.** TS1–TS3 merged (PRs #88–#90);
+TS4, TS5 and the close are on `claude/ts4-spec`. Open for the owner:
+TS-close-Q1 (predicate 6 as two folders) and TS-close-Q2 (an optional
+re-recording). The paragraphs after the links are the history as written.
 
 - [Plan gate record](001-plan-gate.md)
 - [Canonical plan (r1, approved)](notes/type-induction-skills-plan.md)
@@ -24,6 +24,7 @@ and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 - [TS4 record](005-phase-TS4.md)
 - [TS5 spec (r1, delegated approval)](notes/phase-TS5-spec.md)
 - [TS5 record](006-phase-TS5.md)
+- [Close record](007-milestone-close.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -35,8 +36,7 @@ Phases:
 - TS5: documentation and a how-to;
 - close.
 
-Still open: TS-D0 (quote the owner's rulings) and the §10 proposals TS-D2 to
-TS-D11, which the approval did not rule.
+(Superseded: the close record disposes TS-D0 to TS-D11.)
 
 TS1 spec r2 (2026-11-05) re-reads its lines on main `b733b2a`; the CT4-Q1
 ruling (008) omits digests under `customer`, so groups are keyed `g<n>`

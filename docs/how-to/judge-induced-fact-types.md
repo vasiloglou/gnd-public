@@ -3,7 +3,9 @@
 When extracted facts land in a generic fact type, "an item has an attribute
 with a value", `gnd discover --families fact-type` groups the rows by
 attribute and proposes a proper binary fact type for each attribute that
-recurs. It counts well. Two things it cannot decide by itself. Does a group
+recurs. It counts well.
+
+Two things it cannot decide by itself. Does a group
 mean the same as a fact type the model already has? The same role players say
 only that two fact types *could* hold the same facts. And how should an
 attribute be modelled when an item holds several values for it? The family
@@ -38,10 +40,13 @@ python -c "import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file_
 ```
 
 Both folders are round two of the same story: one induction was proposed,
-reviewed and applied, and now the generic fact type has filled up again. The
-attribute names in the populations are deliberately meaningless, so a judge
+reviewed and applied, and now the generic fact type has filled up again.
+
+The attribute names in the populations are deliberately meaningless, so a judge
 that reads only the evidence cannot see them, and this page does not print
-them. There are two folders rather than one evidence file because each
+them.
+
+There are two folders rather than one evidence file because each
 recorded judgements file is bound by digest to the evidence of its own
 folder, its own model and its own population; the two rounds have different
 models, so neither file could bind the other's evidence.
@@ -91,7 +96,9 @@ The evidence file is what the family knows and nothing more: for each group,
 its status, its counts and opaque row ids, and for every other fact type the
 item plays (the *candidates*), its readings and two overlaps: how many of the
 group's items play it, and how many of the group's (item, value) pairs it
-already holds. A candidate induced from this very attribute carries an
+already holds.
+
+A candidate induced from this very attribute carries an
 `origin`. No attribute name and no value appears in it; the two populations'
 and the model's digests do. The format is in the
 [type evidence](../reference/discover.md#type-evidence) reference.
@@ -130,14 +137,21 @@ evidence sit, the recorded session's first turn was exactly:
 
 **Claude Code does.** The skill checks the evidence before it judges: the
 format, that `model_sha256` is the digest of the model it was given, and that
-no group was left out. Then it applies four rules to each group, in order,
-and stops where they stop. In plain words: a candidate induced from this very
-attribute is the same fact type (R1); a candidate that already holds nearly
-all of the group's pairs is the same fact type under another name (R2); when
-every comparable candidate shares no pair at all, the group is distinct, and
-the skill says that this rests only on the absence of shared facts (R3);
-anything in between, a partial overlap, or no candidate it can compare, is a
-question for you (R4). Equal role players are evidence neither way.
+no group was left out.
+
+Then it applies four rules to each group, in order, and stops where they
+stop. In plain words:
+
+- **R1.** A candidate induced from this very attribute is the same fact type.
+- **R2.** A candidate that already holds nearly all of the group's pairs is
+  the same fact type under another name.
+- **R3.** When every comparable candidate shares no pair at all, the group is
+  distinct, and the skill says that this rests only on the absence of shared
+  facts.
+- **R4.** Anything in between is a question for you: a partial overlap, no
+  candidate it can compare, or a candidate whose pairs redaction hides.
+
+Equal role players are evidence neither way.
 
 The recorded agent (Sonnet 5.5) decided g0, g1 and g2 and asked about g3. Its
 reply began:
@@ -236,7 +250,9 @@ PROPOSAL items/duplicates/proposal.json
 **GND says.** Before rendering anything it computed the evidence again, byte
 for byte, and compared it with the file the judgements bind; had the
 population or the model changed, or the disclosure setting, it would have
-refused with exit 3 and named the setting that differs. It then checked every
+refused and named the setting that differs.
+
+It then checked every
 verdict against the evidence: a group may not be missing, repeated or of
 another kind; `of` must name a candidate of that group; and `distinct` is
 refused on a group whose attribute some fact type's `induced_from` already
@@ -359,17 +375,25 @@ g4 multi_valued rows 48 items 24 with several values 24 exact repeats 0 [('item_
 work: an attribute with several values per item is a junction table, one
 many-to-many fact type with a uniqueness over both roles, which says each
 (item, value) pair is recorded once and nothing about how many values an item
-may have. Its four rules, in plain words: a candidate induced from this very
-attribute already models it, so skip, and if that candidate's uniqueness
-covers the item alone the data has changed shape and that is a job for a
-reviewed model change, not a judgement (S1); a candidate that already holds
-nearly all the pairs covers it, so skip (S2); when nothing was truncated, no
-candidate shares a pair, and at least one item in ten holds several values,
-it is a junction table, many-to-many, and the rows that repeat a pair become
-the uniqueness's counterexamples (S3); anything else, including an attribute
-where only a few items hold several values, which may be entry errors, is a
-question for you (S4). A shapes file can say many-to-many or skip; it cannot
-declare an attribute single-valued.
+may have.
+
+Its four rules, in plain words:
+
+- **S1.** A candidate induced from this very attribute already models it, so
+  skip. If that candidate's uniqueness covers the item alone, the data has
+  changed shape, and that is a job for a reviewed model change, not a
+  judgement.
+- **S2.** A candidate that already holds nearly all the pairs covers it, so
+  skip.
+- **S3.** When nothing was truncated, no candidate shares a pair, and at least
+  one item in ten holds several values, it is a junction table,
+  many-to-many. The rows that repeat a pair become the uniqueness's
+  counterexamples.
+- **S4.** Anything else is a question for you, including an attribute where
+  only a few items hold several values, which may be entry errors.
+
+A shapes file can say many-to-many or skip; it cannot declare an attribute
+single-valued.
 
 The recorded agent decided g0, g1 and g2, and read the model to confirm that
 the applied fact type's uniqueness spans both roles before applying S1. It
@@ -382,6 +406,7 @@ and asked two questions:
 > - **g3 (S4, few multi-valued entities).** Only one item has two values; the other 23 have one. ... Is that second value a real second value, or an entry error?
 >   - If it's real, the verdict is `many-to-many`.
 >   - If it's an error, the verdict is `skip`. You would then correct the population and regenerate the evidence, because a shapes file can't declare an attribute single-valued.
+
 > - **g4 (S4, partial overlap).** `item_has_label` already holds 24 of the group's 48 distinct pairs, about half. Should this be:
 >   - `many-to-many`, kept as its own fact type even though half its pairs are already in `item_has_label`?
 >   - `skip`, because it's meant to be covered by `item_has_label`?
@@ -498,10 +523,13 @@ without the CLI ever choosing one: each verdict is checked against the
 evidence it was made from, each rendered fact type records the evidence and
 judgements digests that produced it, and the result is an ordinary additive
 proposal that review admits or overturns. A verdict is a proposal, not a
-change. The recorded sessions also show the skills stopping where their
+change.
+
+The recorded sessions also show the skills stopping where their
 rules stop and asking, writing nothing until every group had a verdict. The
 recorder checked that the file was written only after the question, that no
 `gnd evolve apply` was called and that no attribute name reached the file.
+
 It raised one false alarm. In the multi-valued recording, `results.json`
 still says `no_population_access: false`: the check matched the word
 "population" in text the agent wrote into its own file, not a read of the
@@ -510,14 +538,18 @@ kept streams it finds no read. The recording is kept as it ran, the
 milestone's TS4 phase record explains the false alarm, and a test pins the
 corrected check.
 
-Three limits. The CLI's free-text check catches the exact text of an
-attribute or value, ignoring case and whitespace; it does not catch a
+Three limits. The CLI's free-text check catches the exact text of a
+group's attribute or value, ignoring case and whitespace; it does not catch a
 paraphrase or an encoding, so the skills' own rule never to quote a value is
 the main control, and the digests in the file are what makes an audit
-possible, not a guarantee that the rationale is clean. There is one recorded
+possible, not a guarantee that the rationale is clean.
+
+There is one recorded
 run per skill over one small model; the rules were followed here, which says
 nothing about a model with a hundred candidates or an evidence file near its
-size cap. And the skills never read the population, which is the point of
+size cap.
+
+And the skills never read the population, which is the point of
 the evidence, but also means the duplicates round's `distinct` for g2 and the multi-valued
 round's `skip` for g3 rest on counts
 and your word; a synonym recorded for different items, or a second value

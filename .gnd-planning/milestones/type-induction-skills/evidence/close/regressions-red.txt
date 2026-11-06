@@ -1,0 +1,3 @@
+FAILED tests/test_judge_fact_types_skill.py::test_t14_the_manifest_binds_the_kept_files_and_their_sources
+FAILED tests/test_judge_fact_types_skill.py::test_review_each_rule_states_its_key_clause[close-R2-F1]
+2 failed, 50 passed in 2.23s

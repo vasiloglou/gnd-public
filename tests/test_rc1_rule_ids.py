@@ -261,3 +261,47 @@ def test_t15_a_remedy_edit_is_admitted_by_evolve() -> None:
 
     assert constraint_change("remedy", "a", "b") == constraint_change("rationale", "a", "b")
     assert constraint_change("remedy", "a", "b") == "admitted"
+
+
+# --- review regressions (notes/phase-RC1-codex-review.md) ----------------------
+
+
+def test_p1_reference_model_with_unreadable_references_is_refused(tmp_path) -> None:
+    """A reference model that fails while binding its references is still refused at v7."""
+    model = tmp_path / "model.orm.yaml"
+    model.write_bytes((CORPUS / "models" / "reference" / "model.orm.yaml").read_bytes())
+    result = run_main(
+        ["check", str(model), str(tmp_path / "absent.pop.yaml"), "--rule-ids", "--format", "json"]
+    )
+    assert result.returncode == 3
+    payload = json.loads(result.stdout)
+    Draft202012Validator(REPORT_SCHEMA).validate(payload)
+    assert payload["schema_version"] == 12
+    assert payload["report"]["schema_version"] == 7
+    assert [issue["rule_id"] for issue in payload["report"]["issues"]] == [
+        "check:rule-ids-unsupported"
+    ]
+
+
+def test_p2_identity_walk_reads_frozen_constraint_rows() -> None:
+    """The --rule-ids corpus runs with every shared constraint row refusing writes."""
+    import os
+    import subprocess
+    import sys
+
+    env = {**os.environ, "PYTHONPATH": str(REPO_ROOT / "tests")}
+    result = subprocess.run(
+        [sys.executable, "-m", "pytest", "-q", "-p", "_tp2_freeze_plugin", "-p", "no:cacheprovider",
+         "tests/test_rc1_rule_ids.py", "-k", "json_case or text_case or refusal"],
+        cwd=REPO_ROOT, env=env, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stdout[-2000:]
+    served = int(result.stdout.split("tp2-freeze-constraints: ")[1].split()[0])
+    assert served > 0
+
+
+def test_p3_unflagged_text_is_byte_identical_to_pre_rc1() -> None:
+    """Without --rule-ids the text report equals the pre-RC1 bytes (a remedy is never printed)."""
+    result = _run(FAIL[:-1])
+    assert result.returncode == 1
+    assert result.stdout == (CORPUS / "pre-rc1" / "declared-fail.txt").read_bytes()

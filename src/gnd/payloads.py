@@ -86,6 +86,11 @@ DERIVATION_PAYLOAD_SCHEMA_VERSIONS: frozenset[int] = frozenset(
     {DERIVATION_PAYLOAD_SCHEMA_VERSION, MODEL_BOUND_DERIVATION_PAYLOAD_SCHEMA_VERSION}
 )
 
+#: The assured snapshot wires: version 7, its transition successor 8, and
+#: version 15 (``check --rule-ids``), which is version 7 plus declared identity.
+#: Each carries a model digest, a derivations key and an assurance block.
+ASSURED_PAYLOAD_SCHEMA_VERSIONS: frozenset[int] = frozenset({7, 8, 15})
+
 #: Upper bound on the ``issues`` array. A 10 MB agent output with a
 #: systematically wrong role name would otherwise produce hundreds of thousands
 #: of records and a payload larger than its own input, killing the retry loop's
@@ -181,7 +186,7 @@ def _base_payload(
     requires_digest = schema_version in MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS
     if requires_digest and model_digest is None:
         raise ValueError(f"a version {schema_version} payload must name the model that produced it")
-    if not requires_digest and schema_version not in {7, 8, 15} and model_digest is not None:
+    if not requires_digest and schema_version not in ASSURED_PAYLOAD_SCHEMA_VERSIONS and model_digest is not None:
         raise ValueError(f"version {schema_version} is frozen and cannot carry a model digest")
     issue_records, issues_total, issues_truncated = _issue_records(issues)
     payload = {
@@ -196,7 +201,7 @@ def _base_payload(
     }
     # Immediately after `model`, so a reader meets the coordinate and the
     # identity together and the rebaseline delta from v3/v4 is exactly two keys.
-    if requires_digest or schema_version in {7, 8, 15}:
+    if requires_digest or schema_version in ASSURED_PAYLOAD_SCHEMA_VERSIONS:
         payload["model_digest"] = model_digest
     payload.update(
         {
@@ -207,7 +212,7 @@ def _base_payload(
     )
     if schema_version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS:
         payload["derivations"] = []
-    elif schema_version in {7, 8, 15}:
+    elif schema_version in ASSURED_PAYLOAD_SCHEMA_VERSIONS:
         payload["derivations"] = None
     payload.update(
         {
@@ -314,7 +319,7 @@ def build_check_payload(
     )
     if (
         schema_version not in DERIVATION_PAYLOAD_SCHEMA_VERSIONS
-        and schema_version not in {7, 8, 15}
+        and schema_version not in ASSURED_PAYLOAD_SCHEMA_VERSIONS
         and report is not None
         and report.derivations
     ):
@@ -338,7 +343,7 @@ def build_check_payload(
             record_branch("report:check:n-a:verdict-row")
             record_branch("report:check:n-a:coverage")
         if schema_version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS or (
-            schema_version in {7, 8, 15} and (structured or report.derivations)
+            schema_version in ASSURED_PAYLOAD_SCHEMA_VERSIONS and (structured or report.derivations)
         ):
             payload["derivations"] = []
             for verdict in report.derivations:
@@ -349,7 +354,7 @@ def build_check_payload(
                 record_branch("report:check:n-a:derivation-row")
     else:
         record_branch("report:check:n-a:envelope-only")
-    if schema_version in {7, 8, 15}:
+    if schema_version in ASSURED_PAYLOAD_SCHEMA_VERSIONS:
         decision = semantic_decision_for_band(exit_code)
         block = assurance if assurance is not None else AssuranceBlockV1(decision)
         if not isinstance(block, AssuranceBlockV1) or block.semantic_decision != decision:

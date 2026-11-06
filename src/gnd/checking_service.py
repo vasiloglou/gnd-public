@@ -268,6 +268,21 @@ def _run_check_raw(
             declared=declared if wire_version == 15 else None,
         )
 
+    def refuse_rule_ids(refused: Model) -> _RunResult | None:
+        """The --rule-ids refusal for a model version 15 cannot describe, at version 7."""
+        nonlocal wire_version
+        refusal = _rule_ids_refusal(refused) if rule_ids else None
+        if refusal is None:
+            return None
+        wire_version = 7
+        return _finalize(
+            build(3, issues=[refusal]),
+            exit_code=3,
+            fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+            model=refused,
+            issues=(refusal,),
+        )
+
     try:
         model, _ = _resolve_model(model_input)
     except ModelValidationError as error:
@@ -280,11 +295,17 @@ def _run_check_raw(
             error=error,
         )
     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
+        attached = getattr(error, "model", None)
+        # A reference model can fail while binding its references; it is refused
+        # under --rule-ids all the same, before its report could be wrapped.
+        refused = refuse_rule_ids(attached) if isinstance(attached, Model) else None
+        if refused is not None:
+            return refused
         return _finalize(
             build(3, error=error),
             exit_code=3,
             fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
-            model=getattr(error, "model", None),
+            model=attached,
             error=error,
         )
 
@@ -294,6 +315,9 @@ def _run_check_raw(
     except Exception as error:
         if not model.reference_populations:
             raise
+        refused = refuse_rule_ids(model)
+        if refused is not None:
+            return refused
         return _finalize(
             build(3, error=ValueError("reference model identity is invalid")),
             exit_code=3,
@@ -301,17 +325,10 @@ def _run_check_raw(
             model=model,
             error=error,
         )
+    refused = refuse_rule_ids(model)
+    if refused is not None:
+        return refused
     if rule_ids:
-        refusal = _rule_ids_refusal(model)
-        if refusal is not None:
-            wire_version = 7
-            return _finalize(
-                build(3, issues=[refusal]),
-                exit_code=3,
-                fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
-                model=model,
-                issues=(refusal,),
-            )
         declared.update(_declared_identities(model))
     try:
         if model.reference_populations:

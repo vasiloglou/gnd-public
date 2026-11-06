@@ -1,11 +1,13 @@
 # Rule-check adoption
 
-r5, 2026-11-06. **Draft, awaiting the owner's plan gate. r5 has not been
+r6, 2026-11-06. **Draft, awaiting the owner's plan gate. r6 has not been
 reviewed.** r2 (SHA-256 `526d2ff1…610d631f`) was reviewed by the full panel
 ([record](../001-panel.md)); r3 (`f00ffcf3…a59e`) by one reviewer, Codex
 ([record](../002-review.md)), per the owner's RC-D0 ruling; r4
 (`a69e3d3b…15f2`) re-checked by Codex ([record](../003-review.md)) per
-RC-D14. r5 repairs r4 and carries no review opinion. Milestone: `rule-check-adoption`.
+RC-D14; r5 (`e8a3a154…0a31`) re-checked by Codex
+([record](../004-review.md)) per RC-D15. r6 repairs r5 and carries no
+review opinion. Milestone: `rule-check-adoption`.
 Phase prefix `RC`.
 Sources: five owner-filed requests from 2026-11-06, GR-D1, GR-D2, GR-D3, GR-D5
 and GR-D6 (GitHub issues 92, 93, 94, 96 and 97). GR-D4 (issue 95, model
@@ -55,6 +57,16 @@ written. `auto=false`.
   unchanged, which also resolves S2. `producer` is retained by the loader
   (S3); `undecided` counts obligations, not rows (S4). This brings the plan
   back toward the requests: the requester's models have no derivations.
+  Re-checked by Codex (`block`, 2 findings T1-T2, both reproduced).
+- **r6:** repairs r5 from T1-T2 (dispositions in §14). Owner ruling
+  recorded: **RC-D15, 2026-11-06, "Codex re-check r5"**. Version-15
+  derivations get their own closed definition again, without novelty
+  fields: the version-7 properties and conditional rules, with the
+  `reason_code` set widened to every reason the checker emits (T1). While
+  reproducing T1 the driving agent found that today's version-7 report
+  already fails its own schema for such a model (O29); that is a
+  pre-existing defect outside this milestone (rule 7), recorded for the
+  owner.
 
 ## Problem and completion predicates
 
@@ -203,6 +215,7 @@ stated by the requester and not reproduced here.
 | O26 | a derivation reports only its first missing and first surplus row | `src/gnd/extensions.py:2465-2505` | observed (Codex S1, reproduced) | RC3 (refused, RC-D11) |
 | O27 | `Population` has no `producer` field; both constructors drop unknown header values | `src/gnd/population.py:123-139`, `453-464`, `485-495` | observed (Codex S3, reproduced) | RC5 |
 | O28 | a deontic `opaque-value` unchecked verdict has no rows | `src/gnd/correspondence.py:927-928` | observed (Codex S4, reproduced) | RC3 |
+| O29 | today's version-7 report fails its own schema when a derivation is unchecked with a `term:*` reason: the v7 branch types derivations as `derivation_verdict`, whose `reason_code` admits three values | probe 2026-11-06: `tests/fixtures/v62-phase3/models/exact-terms.orm.yaml` with `redact: true` removed, `gnd check --format json` → schema_version 7, exit 4, `term:mod-zero` derivations, 1 validation error, gone when those reasons are replaced | observed (Codex T1, reproduced) | out of scope (rule 7); RC1 avoids it in v15 |
 | O22 | reference-population models wrap the check report as version 12 (14 for admission), whose `report` admits only existing report shapes | `_reference_wrap`, `src/gnd/checking_service.py:594-663`; `report.schema.json:85-93` | observed (Codex R2, reproduced) | RC1 |
 | O23 | band 4 for `reference-join-work-limit` regardless of modality; reachable only with reference populations | `src/gnd/checker/_reports.py:159-163`; `src/gnd/checker/_core.py:2379` | observed (Codex R7, reproduced) | RC1 (refusal), RC3 |
 | O24 | `iter_constraints()` deep-copies the fact type per constraint | `src/gnd/model_index.py:279-285` | observed (Codex R8, reproduced) | RC1 |
@@ -221,8 +234,12 @@ stated by the requester and not reproduced here.
   no later phase changes a closed shape (F12). Its verdicts use a new
   closed definition, `verdict_v15`, that restates the version-7 properties,
   as `verdict_v10` does, rather than referencing the closed version-7
-  object (R1). Its derivations use the existing `derivation_verdict`
-  unchanged, conditional rules included (RC-D11, S2). Each verdict gains
+  object (R1). Its derivations use `derivation_verdict_v15`: the
+  version-7 `derivation_verdict` properties and pass/fail/unchecked
+  conditional rules restated, with `reason_code` admitting every reason the
+  checker emits (`DerivationReason`, `src/gnd/extensions.py:55-67`; the
+  same set `derivation_verdict_v10` admits), and no novelty field
+  (RC-D11, S2, T1). Each verdict gains
   `address` (`constraint:<id>`, else the positional ref), `addressing`
   (`declared-id` or `positional`, the census's existing spelling), `remedy`
   (string or null), `novelty` (verdict label: `new`, `standing` or null)
@@ -328,7 +345,7 @@ RC5 is independent.
 | Artifact | Home |
 |---|---|
 | `remedy` field | `src/gnd/schema/orm-meta.schema.json` + sync-pinned copy in `src/gnd/skills/gnd-orm-core/references/` |
-| version-15 shape (whole) | `src/gnd/report.schema.json` (`verdict_v15`, `baseline_v15`; derivations reuse `derivation_verdict`); `ReportSchemaVersion` and version gates in `src/gnd/payloads.py` |
+| version-15 shape (whole) | `src/gnd/report.schema.json` (`verdict_v15`, `derivation_verdict_v15`, `baseline_v15`); `ReportSchemaVersion` and version gates in `src/gnd/payloads.py` |
 | identity walk | `ModelIndex.iter_constraints_shared()`, `src/gnd/model_index.py` |
 | text rendering | `_print_report`, `src/gnd/output.py` |
 | declared address | `src/gnd/address.py`: a new public `declared_constraint_address`, which absorbs the private `coverage._constraint_address` (coverage calls it) and builds on the existing `constraint_address` |
@@ -349,8 +366,9 @@ gate machine, with the bound at about five times the planning measurement.
   2001-char values refused (exit 3).
 - RC1-C2: `--rule-ids` emits v15; every verdict has `address`,
   `addressing`, `remedy` (null when undeclared), `novelty: null` and
-  `row_novelty: null`; derivations of a structured model are unchanged
-  from version 7 and validate against `derivation_verdict`; the top level has
+  `row_novelty: null`; derivations of a structured model serialize as in
+  version 7 and validate against `derivation_verdict_v15`, including an
+  unchecked derivation with reason `term:mod-zero`; the top level has
   `baseline: null` and `allow_vacuous: false`; fact-type and top-level
   constraints both covered.
 - RC1-C3: without `--rule-ids`, the full suite matches the merge-base record
@@ -511,7 +529,8 @@ are run at the merge base and recorded verbatim, so inherited failures are
 told apart from regressions (RC-D1, R6). The new `tests/test_rc1_*.py` runs
 only after RC1 adds it. The plan-review bar is the maintained panel
 (project.md); it ran over r2. The owner waived it for r3 in favour of one
-reviewer (RC-D0); r4 is unreviewed.
+reviewer (RC-D0); Codex re-checked r4 (RC-D14) and r5 (RC-D15); r6 is
+unreviewed.
 
 ## 9. Per-phase verification story
 
@@ -560,7 +579,9 @@ All are proposals until ruled.
 | RC-D12 | `remedy: null` when undeclared, or fall back to `rationale`? | null: `rationale` says why the rule exists, not what to do; copying it would put the wrong text in the field |
 | RC-D13 | Does a deontic unchecked verdict block "no new violations"? | no, matching `band()` for every route version 15 can reach: deontic unchecked affects the band only through `reference-join-work-limit` (O23), which needs reference populations, and those models are refused (RC1-C6). The `baseline` block counts it in `undecided`, an obligation count (S4) |
 | RC-D14 | Review r4 before the plan gate? | **ruled 2026-11-06: "Codex re-check r4"** (done, [003-review](../003-review.md)) |
-| RC-D15 | Review r5 before the plan gate? | owner's call; r5's changes are confined to S1-S4 (§13) |
+| RC-D15 | Review r5 before the plan gate? | **ruled 2026-11-06: "Codex re-check r5"** (done, [004-review](../004-review.md)) |
+| RC-D16 | Review r6 before the plan gate? | owner's call; r6's changes are confined to T1-T2 (§14) |
+| RC-D17 | The pre-existing version-7 schema defect (O29) | file it as its own issue; fixing it changes the frozen version-7 contract, so it is not part of this milestone |
 
 ## 11. Panel fix dispositions (r2 → r3)
 
@@ -612,6 +633,13 @@ All are proposals until ruled.
 | Finding | Disposition |
 |---|---|
 | S1 first-row-only derivation findings | applied by refusal (owner's selection): RC-D11, §2.3, O26, RC3-C3b, §7; derivation novelty fields removed |
-| S2 derivation conditional rules | resolved by S1's fix: v15 derivations reuse `derivation_verdict` unchanged; RC1 spec M2, T4b |
+| S2 derivation conditional rules | resolved by S1's fix: v15 derivations reuse `derivation_verdict` unchanged; RC1 spec M2, T4b (r6: own definition keeping the rules, T1) |
 | S3 `producer` loader | applied: O27, RC5-C1 |
 | S4 `undecided` unit | applied: §2.3 obligation count, O28, RC3-C3, RC-D13 |
+
+## 14. Re-check dispositions (r5 → r6)
+
+| Finding | Disposition |
+|---|---|
+| T1 v15 derivation reasons too narrow | applied: §2.1 `derivation_verdict_v15` (v7 properties and conditional rules, full reason set), RC1-C2, O29, RC-D17; RC1 spec M2, T4c |
+| T2 stale labels | applied: §8; RC1 spec §1 |

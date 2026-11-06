@@ -108,8 +108,13 @@ and every ruling marked "delegated" below are **delegated approvals
 recordings of TS4 rest on the owner's own answer, "TS4 run + TS3 re-run
 (Recommended)". The owner answered checkpoint DC-TS5 "Looks good,
 continue". Close review instrument: four local readers, TS-D2 (a), ruled
-here as delegated. Not merged, released or certified; merge needs the
-owner.
+here as delegated. Not released or certified.
+
+**Owner ruling (2026-11-05).** Shown this close and PR #91, the owner
+answered "Merge, accept as is": the milestone is accepted, predicate 6 is
+accepted as two folders (TS-close-Q1), no third or re-recording is
+authorized (TS-close-Q2 stays a residual), and PR #91 is merged on that
+answer.
 
 ## Phase records
 
@@ -135,8 +140,8 @@ reviewer). The four close readers reviewed the committed tree at
 | 3 | `gnd-judge-fact-types` writes duplicates judgements, no population read, no forbidden value | holds for the recorded branches (`recording-2`, 10 of 10 checks, current bytes). The close added one R3 sentence (reader 2 F1), on a branch the fixture does not reach; the recording binds the skill minus that sentence, and T14 checks exactly that. One unset-mode run; no customer-mode run |
 | 4 | `gnd-model-multivalued` writes shapes judgements | holds for the recorded branches, with R1: the recording kept `no_population_access: false`, a false positive on written text; "no read" rests on the corrected check over the kept streams and on reading the transcript (reader 2 F4: the checks are lexical). Its manifest's recorder digest is stale by design, exempted in T14 (reader 2 F3, reader 3 F7; the TS4 record's sentence that both manifests bind current recorder bytes is wrong for TS4) |
 | 5 | without the three options, outputs byte-identical to the baseline | holds. With the family off: the IK4 chain `parity-b733b2a` = CT4 `parity-after`, TS1 and TS2 after-tables (only E6 stderr differs, a stated usage line). With the family on: reader 3 F1 found no recorded table against the pre-milestone baseline; captured at the close, `evidence/close/fixture-parity-{b733b2a,close}.json`, 18 cases without the new options, 0 differing; reader 1 also reproduced it over four inputs |
-| 6 | a how-to walks one generic fact type through two rounds with both skills; docs gates | **not met as written.** The page walks two folders, each round two of one generic fact type, one per skill (TS5 D2, delegated). A single walk needs a third paid recording, which was not authorized; P5 was a cost limit, not a refutation (reader 3 F2). Docs gates exit 0. TS-close-Q1 asks the owner |
-| 7 | focused gates, diff reviews, sweep, PR | holds: five phase gates, five diff reviews, four close readers, this gate, the sweep below and the PR. **Owner acceptance is separate and pending** |
+| 6 | a how-to walks one generic fact type through two rounds with both skills; docs gates | **not met as written.** The page walks two folders, each round two of one generic fact type, one per skill (TS5 D2, delegated). A single walk needs a third paid recording, which was not authorized; P5 was a cost limit, not a refutation (reader 3 F2). Docs gates exit 0. Accepted by the owner as two folders (TS-close-Q1) |
+| 7 | focused gates, diff reviews, sweep, PR | holds: five phase gates, five diff reviews, four close readers, this gate, the sweep below and the PR. Owner acceptance: "Merge, accept as is" (2026-11-05) |
 
 The predecessor's CT-close-Q1 (once per generic fact type) and CT-close-Q2
 (multi-valued attributes), handed to this milestone by the owner's rulings
@@ -227,14 +232,14 @@ are marked so; regression for reader 2 F1 red before the fix:
 | TS3-Q3 | re-record TS3 | resolved (`recording-2`) |
 | CT4 DateTime kind; malformed-YAML and UTF-16 tracebacks; `test_rf7_structure.py`, `test_rf4_peripheral.py` (5), `test_rf5_commands.py` (10) and `test_plan_app_docs.py` (two older how-tos) red at base | pre-existing | maintenance; not filed (outward-facing) |
 | distribution and release-acceptance lane red at `1668a58e` | pre-existing: the built archive carries example files the expected set omits; release candidates absent | maintenance; not filed |
-| TS-close-Q1 | accept predicate 6 as two folders, or authorize a third recording for one walk | owner |
-| TS-close-Q2 | a re-recording of `gnd-judge-fact-types` over the R3 sentence | owner (paid); the fixture does not reach the branch, so the run would show the same verdicts |
+| TS-close-Q1 | accept predicate 6 as two folders, or authorize a third recording for one walk | resolved by the owner: two folders accepted |
+| TS-close-Q2 | a re-recording of `gnd-judge-fact-types` over the R3 sentence | owner (paid): not authorized at acceptance; accepted residual (the fixture does not reach the branch, so the run would show the same verdicts) |
 | TS-close-Q3 | CLI hardening: scan or omit the judgements file name (R1-F1), reading clashes (R1-F3), `$` in the skill pattern (R1-F4), help exit text (R4-F1) | CLI owner, maintenance |
 | TS-close-Q4 | a retyped induced fact type: evidence `already_induced` per group, or a skill route (R2-F2) | CLI owner |
 | TS-close-Q5 | the IL6 census on a shallow clone | maintenance |
 | unowned limits | no customer-mode skill run; S3/R3 null-overlap, redacted-role and truncation branches and R1's other-generic case unrecorded; no fixture near the 90% line; `asked_before_writing` shows no file, not a question | accepted residuals, stated in the TS3 and TS4 boundaries and here |
 | CT carried | CT-close-Q3 to Q5, CT2-Q1, CT2-Q2 | stay with the CT owners (CT 008, 009) |
-| acceptance | milestone acceptance and merge | owner |
+| acceptance | milestone acceptance and merge | resolved by the owner: "Merge, accept as is" (2026-11-05) |
 
 ## Gate output
 

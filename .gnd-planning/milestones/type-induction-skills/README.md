@@ -6,11 +6,11 @@ CT-close-Q2 from the
 duplicate detection and multi-valued modelling for the `fact-type` discover
 family move to skills; the CLI stays deterministic and supplies evidence.
 
-**Status: closed locally 2026-11-05 ([close record](007-milestone-close.md)),
-pending the owner's acceptance and merge.** TS1–TS3 merged (PRs #88–#90);
-TS4, TS5 and the close are on `claude/ts4-spec`. Open for the owner:
-TS-close-Q1 (predicate 6 as two folders) and TS-close-Q2 (an optional
-re-recording). The paragraphs after the links are the history as written.
+**Status: closed 2026-11-05 ([close record](007-milestone-close.md)),
+accepted by the owner ("Merge, accept as is").** TS1–TS3 merged (PRs
+#88–#90); TS4, TS5 and the close merged as PR #91. Predicate 6 is accepted as
+two folders (TS-close-Q1); the optional re-recording (TS-close-Q2) was not
+authorized. The paragraphs after the links are the history as written.
 
 - [Plan gate record](001-plan-gate.md)
 - [Canonical plan (r1, approved)](notes/type-induction-skills-plan.md)

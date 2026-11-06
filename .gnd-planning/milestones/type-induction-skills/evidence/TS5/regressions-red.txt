@@ -1,0 +1,5 @@
+typed-turn: old check defects=0 (caught=False); new check caught=True
+indented-quote: old check defects=0 (caught=False); new check caught=True
+inserted-fragment: old check defects=0 (caught=False); new check caught=True
+cross-recording: old check caught=False; new check caught=True
+F2: the old test_a_paraphrased_quote_is_found reads no page, so no page change can fail it

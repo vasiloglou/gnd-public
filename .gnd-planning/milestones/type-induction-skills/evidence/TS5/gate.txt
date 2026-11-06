@@ -1,0 +1,13 @@
+$ uv run python tools/run_tutorials.py --group type-judgements
+16 tutorial blocks passed
+$ uv run --group docs zensical build --strict
+No issues found
+Build finished in 0.53s
+$ uv run python tools/check_docs.py site
+14646 local links/assets/anchors checked
+$ uv run pytest -q <T3: 6 files>
+155 passed, 1 deselected in 15.00s
+$ T4: anonymity and absolute-path scan of the new files
+no downstream names, no absolute paths
+$ uv run ruff check tests/test_type_judgements_example.py
+All checks passed!

@@ -2,8 +2,11 @@
 
 Scope: every Markdown page or packaged-skill file that
 `grep -rlE "families fact-type|fact-type family|shape_match|shape match|multi_valued|multi-valued|type-evidence|judgements" docs src/gnd/skills README.md`
-lists (14 files; `README.md` has no match), plus `docs/reference/capabilities.md`
-and `docs/how-to/compose-documents.md`, which name the family in other words.
+lists before this phase (14 files, `docs/how-to/compose-documents.md` among
+them; `README.md` has no match), plus `docs/reference/capabilities.md`, which
+names the family in other words, plus the plan's proposed
+`docs/reference/type-judgements.md` (refuted). Review F5 corrected this
+sentence, which had counted `compose-documents.md` twice.
 The new how-to, its figures, JSON schemas and the generated `site/` are out of
 scope. Packaged skills ship without the docs site, so their edits add no links.
 

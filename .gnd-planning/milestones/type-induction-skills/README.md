@@ -22,6 +22,8 @@ and recorded ([record](002-phase-TS1.md)).** `auto=false`. PR #86 merged
 - [TS3 record](004-phase-TS3.md)
 - [TS4 spec (r1, delegated approval)](notes/phase-TS4-spec.md)
 - [TS4 record](005-phase-TS4.md)
+- [TS5 spec (r1, delegated approval)](notes/phase-TS5-spec.md)
+- [TS5 record](006-phase-TS5.md)
 
 Phases:
 - TS1: type evidence (`--type-evidence`);
@@ -61,4 +63,8 @@ delegated approval `(d4)`; the owner separately authorized two paid Sonnet
 runs (TS4, and re-recording TS3). TS4 implemented and recorded
 ([record](005-phase-TS4.md)): one review, four findings fixed; the TS4
 recording matched its key (one recorder false positive, R1, corrected); the
-TS3 re-recording passed all ten checks (TS3-Q3 resolved). Next: TS5.
+TS3 re-recording passed all ten checks (TS3-Q3 resolved). TS5 spec r1
+recorded as delegated approval `(d5)`; the how-to was shown at checkpoint
+DC-TS5 and the owner answered "Looks good, continue". TS5 recorded
+([record](006-phase-TS5.md)): one review, five findings fixed. Next: the
+close.

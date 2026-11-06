@@ -161,7 +161,7 @@ Group g3 is a different attribute from every candidate: distinct. Write the file
 **You get.** The shipped `items/duplicates/duplicates.judgements.json` is the
 file the agent then wrote. Its reply began:
 
-> I wrote the judgements file to `...duplicates.judgements.json`. I haven't run `gnd` on it, so the CLI hasn't checked it yet.
+> I wrote the judgements file to `<workspace>/duplicates.judgements.json`. I haven't run `gnd` on it, so the CLI hasn't checked it yet.
 
 and it gave the two commands of the next section with placeholders for you to
 fill. The file binds the evidence by the SHA-256 of its raw bytes, which is
@@ -501,9 +501,14 @@ proposal that review admits or overturns. A verdict is a proposal, not a
 change. The recorded sessions also show the skills stopping where their
 rules stop and asking, writing nothing until every group had a verdict. The
 recorder checked that the file was written only after the question, that no
-`gnd evolve apply` was called and that no attribute name reached the file;
-its one false alarm, a "population" check that tripped on the word in a
-rationale the agent wrote rather than on a read, is noted in the recording.
+`gnd evolve apply` was called and that no attribute name reached the file.
+It raised one false alarm. In the multi-valued recording, `results.json`
+still says `no_population_access: false`: the check matched the word
+"population" in text the agent wrote into its own file, not a read of the
+population. The check now skips text an agent writes, and run again over the
+kept streams it finds no read. The recording is kept as it ran, the
+milestone's TS4 phase record explains the false alarm, and a test pins the
+corrected check.
 
 Three limits. The CLI's free-text check catches the exact text of an
 attribute or value, ignoring case and whitespace; it does not catch a

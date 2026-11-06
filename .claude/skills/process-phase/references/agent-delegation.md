@@ -24,6 +24,11 @@ Three corollaries:
   everything" when it did not.
 - **Delegation happens on the owner's go-ahead**, like every other step in this
   protocol. Fanning out is a real cost and the owner decides whether to spend it.
+  The go-ahead is asked once, when the phase is invoked and before step 0
+  begins, unless the request already carries it; `auto=true` delegates approval
+  rulings, not this spend. Without a go-ahead — none given, or none answered —
+  the default is one reader working through the same sources sequentially; a
+  missing go-ahead never blocks step 0.
 
 ## Step 0 — harvest: the natural fan-out
 
@@ -55,12 +60,12 @@ implementation that invents it.
 answer changes the design, and it is a search, not a judgement.
 
 **A duplicate-primitive scan.** Before the refactoring review, ask what this
-phase's new code re-implements. This has found a canonical-form helper
-re-derived at a second site, which review did not find.
+phase's new code re-implements. A helper re-derived at a second site is the
+kind of duplication review tends to miss.
 
 **A coverage audit against the branch table.** Give an agent the declared branch
 table and the test list and ask which branches have no case that can fail them.
-This is a mechanical cross-product, and it is the milestone's defining defect
+This is a mechanical cross-product, and it is the protocol's defining defect
 class — worth a dedicated pass rather than a glance.
 
 **A mutation sweep.** For each accepting fixture, does a one-token sibling exist
@@ -81,8 +86,8 @@ Step 4's reviewer runs in a **different harness**, with its own model, reading
 the diff rather than the conversation that produced it.
 
 A subagent of the same model, carrying the same context, is a second chance to
-make the same mistake — the identical reason the plan's design rules distrust a
-document written alongside its own implementation. The independence is the
+make the same mistake — the identical reason a document written alongside its
+own implementation is not independent evidence. The independence is the
 instrument; without it the review is a self-check wearing a reviewer's name.
 
 ## An independence pass, when a phase runs one
@@ -90,8 +95,7 @@ instrument; without it the review is a self-check wearing a reviewer's name.
 A blind pass measures whether the **shipped documents alone** determine the
 behaviour, so the bundle the agent receives is the load-bearing design decision:
 
-- It carries the normative documents, the model, and enough data to author
-  cases.
+- It carries the normative documents and enough data to author cases.
 - It carries **no implementation, no fixture case, and no expected result.**
   This is why a fixture corpus keeps its answer key in a separate file from its
   entry-point README — a corpus that explains itself in one file cannot be read

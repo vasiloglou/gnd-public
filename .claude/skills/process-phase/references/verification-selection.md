@@ -5,36 +5,35 @@ executing step 3. Its purpose is to make the repository health check
 proportional to the phase without turning an old green result into evidence for
 changed bytes.
 
-Certification and recertification are opt-in under the owner's 2026-09-28
-ruling. Do not add them as `run` or `cadence` merely because a source changed,
-a phase or milestone ended, or an older plan prescribed a recurring matrix.
+Opt-in gates ([`architect-overrides.md`](architect-overrides.md)) are opt-in
+here too. Do not add them as `run` or `cadence` merely because a source changed,
+a phase or milestone ended, or an older plan prescribed a recurring run.
 Only an explicit current owner request for a named subject and scope selects
 one. Record the owner ruling as the amendment when an older plan clause would
 otherwise mandate a run. This does not waive direct or affected-consumer tests;
-an old certificate continues to describe only its original bytes.
+earlier evidence continues to describe only its original bytes.
 
-## Focused public selection — imported owner ruling, 2026-09-29
+## Focused selection
 
 Ordinary phase verification uses a reduced selection: the phase's direct tests
-and focused downstream nodes selected by changed behavior, under the current target configuration. The original v6.3 source lane ledger
-and conftest are not imported in P1. P3 must establish target-local current
-controls and collection policy; missing historical inputs are not green skips.
-During P1, use `python -m pytest -q tests/test_development_scaffold.py
-tests/test_review_credential_launcher.py` in the declared scaffold environment. For example:
+and focused downstream tests selected by changed behavior, under the project's
+default test configuration, run with the project's test command
+(`references/project.md`). For example:
 
 ```bash
-python -m pytest -q tests/<phase-tests>.py tests/<affected-consumer-tests>.py --tb=short
+pytest tests/<phase-tests>.py tests/<affected-consumer-tests>.py
 ```
 
-Do not override `addopts` or use `-m` to bring the evidence, census, proof,
-distribution, external-oracle or other excluded lanes into an ordinary gate.
+Do not override the default test configuration to bring excluded lanes — broad
+evidence, census, historical or other special lanes the project sets apart —
+into an ordinary gate.
 If a necessary changed contract has only an excluded historical test, select
 a bounded current-behavior successor and record the old claim as unavailable
 on changed bytes. Explicitly requested special-lane work retains its own scope.
 The owner or a separately configured CI job must explicitly select a full
-default run, broad evidence/census run or exhaustive historical replay. Source
+default run, a broad-lane run or an exhaustive historical replay. Source
 changes, phase completion, milestone completion and old plan defaults do not
-select those runs. This ruling supersedes earlier automatic broad-run clauses.
+select those runs; this supersedes automatic broad-run clauses in older plans.
 
 ## Required selection ledger
 
@@ -55,7 +54,9 @@ what the phase is and is not claiming.
 ## Selection rules
 
 1. **Run plan-mandated gates verbatim unless the owner amends them.** Record an
-   explicit owner amendment at the original gate's site in the phase spec. If
+   explicit owner amendment at the original gate's site in the phase spec,
+   marked as [`spec-note-contract.md`](spec-note-contract.md) requires of a
+   change made in place after approval. If
    a mandated command is invalid, unavailable, or contradicts the phase,
    record a refuted premise and return to the owner gate. Do not silently
    substitute a narrower command.
@@ -68,8 +69,9 @@ what the phase is and is not claiming.
    contracts, not filename vintage.
 4. **Record the selected gate, not an implicit full-suite replay.** On each
    edit, run the direct tests and affected consumers. A phase record's `gate`
-   names the exact selected command and its exit. Use the reduced v6.3
-   selection above. A full default or broad `evidence or census` run requires
+   (or `gates`, when several were selected) names the exact selected command
+   and its exit. Use the reduced
+   selection above. A full default or broad-lane run requires
    explicit owner or separately configured CI selection. When impact cannot
    be bounded, report the missing assurance and the specific additional gate
    needed; do not automatically launch the broader lane. A phase that does not
@@ -78,38 +80,27 @@ what the phase is and is not claiming.
    exit. Collection-only checks establish selection, never a run outcome.
 5. **Review the claim before moving a test.** Runtime and age alone justify
    neither selection nor removal. Keep direct current-behavior checks in the
-   ordinary lane. Reserve `census` for exhaustive tracked-tree assertions and
-   `evidence` for historical bytes, fixed-commit replays, and retained-output
+   ordinary lane. Reserve the broad lanes for exhaustive tracked-tree
+   assertions, historical bytes, fixed-commit replays, and retained-output
    pins. A broad gate omitted from the phase must have a named `cadence`
    disposition, such as milestone close. If one of its tests covers an affected
    contract, include that relevant test in the phase's impact closure even
    when the remainder stays on its broader cadence. Delete or consolidate a
    redundant assertion only after identifying the surviving protective case.
 
-## Frozen v5.1 report-golden replay — explicit request only
+## Exhaustive historical replays — explicit request only
 
-The 664-row, 1,328-command replay is exhaustive historical work outside the
-reduced phase selection. Changes to CLI, API, report renderers, normalizers or
-population classifiers invalidate old evidence; they do not automatically
-select this replay. Run focused legacy/report controls from the reduced lane
-and state the limits of their current-byte claim. This frozen source replay is unavailable in the P1 target; neither its runner
-nor answer manifests are shipped. If later explicitly selected, first restore
-its exact reviewed dependency closure and amend the applicable spec. The original
-source command, retained as historical context only, was:
+An exhaustive historical replay is outside the reduced phase selection. Changes
+to its inputs invalidate old evidence; they do not automatically select the
+replay. Run focused current-behavior controls from the reduced selection and
+state the limits of their current-byte claim.
 
-```bash
-uv run python tools/run_v51_historical_replay.py --workers 8
-```
-
-This runner accepts exact frozen pytest-module and answer-manifest digests,
-runs all text/JSON observations in separate processes with at most eight
-children, and requires the pinned mismatch set. A digest refusal, census or
-model-binding change, missing/extra job, malformed observation or changed
-mismatch set fails that explicitly selected claim; do not silently substitute
-a subset. The reduced current-behavior gate is a different, narrower claim.
-Do not select the legacy 664-row serial pytest node for ordinary phase work.
-Run an expressly selected exhaustive replay in isolation and record worker
-count, elapsed time, row count, command count and exit separately.
+When a replay is expressly selected, run the whole of it: a refused digest, a
+missing or extra job, a malformed observation or a changed mismatch set fails
+that explicitly selected claim; do not silently substitute a subset. The
+reduced current-behavior gate is a different, narrower claim. Run the replay in
+isolation and record worker count, elapsed time, case count, command count and
+exit separately.
 
 ## Inheritance and invalidation
 
@@ -125,7 +116,7 @@ makes clear it is not part of phase acceptance.
 
 At minimum, reconsider the selection ledger when the phase changes:
 
-- global pytest configuration, markers, collection rules, plugins, or shared
+- global test configuration, markers, collection rules, plugins, or shared
   fixtures;
 - dependency locks, build backends, package manifests, generated-file rules, or
   supported runtime/toolchain identities;
@@ -143,8 +134,8 @@ of bounded impact by itself; uncertainty does not authorize a broad replay.
 Independent gates may run concurrently only when their state is isolated. Use
 separate clean checkouts, containers, or CI jobs for tests that can share fixed
 paths, caches, ports, mutable environment variables, or load-sensitive timing.
-Do not introduce `pytest-xdist` as a semantic change merely to make a health
-check faster.
+Do not introduce a parallel test runner as a semantic change merely to make a
+health check faster.
 
 Keep each gate's exact command, exit, output, duration, and evidence separate.
 Dependencies remain serial: a consumer gate cannot begin before the artifact it

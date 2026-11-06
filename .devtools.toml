@@ -1,0 +1,36 @@
+# What this repository takes from dev-tools: the three milestone-workflow skills,
+# delivered to both discovery roots so the copies stay byte-identical.
+# `python3 <dev-tools>/devtools/sync.py apply --project .` copies them and
+# `... check --project .` confirms them against .devtools-receipt.json.
+# The repository's own rules for these skills live in
+# <root>/skills/process-phase/references/project.md, which the sync never writes.
+
+[[sync]]
+source = "skills/milestone/process-milestone"
+dest = ".claude/skills/process-milestone"
+values = { planning_dir = ".gnd-planning" }
+
+[[sync]]
+source = "skills/milestone/process-milestone"
+dest = ".codex/skills/process-milestone"
+values = { planning_dir = ".gnd-planning" }
+
+[[sync]]
+source = "skills/milestone/process-phase"
+dest = ".claude/skills/process-phase"
+values = { planning_dir = ".gnd-planning" }
+
+[[sync]]
+source = "skills/milestone/process-phase"
+dest = ".codex/skills/process-phase"
+values = { planning_dir = ".gnd-planning" }
+
+[[sync]]
+source = "skills/milestone/start-milestone"
+dest = ".claude/skills/start-milestone"
+values = { planning_dir = ".gnd-planning" }
+
+[[sync]]
+source = "skills/milestone/start-milestone"
+dest = ".codex/skills/start-milestone"
+values = { planning_dir = ".gnd-planning" }

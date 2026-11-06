@@ -1,4 +1,4 @@
 interface:
-  display_name: "Process GND Milestone"
+  display_name: "Process Milestone"
   short_description: "Execute milestones with optional delegated approval"
-  default_prompt: "Use $process-milestone to execute pyrel-applications auto=true through its required gates."
+  default_prompt: "Use $process-milestone to execute <milestone> auto=true through its required gates."

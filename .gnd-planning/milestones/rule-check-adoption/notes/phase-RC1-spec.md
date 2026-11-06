@@ -432,3 +432,26 @@ written?" against the code at 8bfbe417:
 - **No requirement mandates contradictory content**: v7 bytes stay frozen
   while v15 is additive; the only pinned bytes that move are the help
   golden (T14), declared above.
+
+## Implementation findings (step 3, recorded as found)
+
+- **I1 (2026-11-06), full suite V3 vs V1.** Same 6-shard layout on beast-3
+  for both. Base 8bfbe417: 148 failing ids (143 failed + 5 errors). Final
+  dc592a89: 153. No base failure disappeared; five are new, all structural
+  guards, none behavioural:
+  - `test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.report:_base_payload]`
+    and `[gnd.report:build_check_payload]`: RF4 pins these bodies; RC1
+    changed them (M4) with no successor row.
+  - `test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_print_report]`:
+    RF5 pins `_print_report`; RC1 changed it (M6).
+  - `test_rf6_query_policy.py::test_dynamic_candidate_inventory_is_complete_and_live`
+    and `test_dynamic_duplicate_inventory_row_is_refused`: the RF6 dynamic
+    read inventory counts every subscription site, including annotations;
+    RC1 added about 22.
+  The repair is registry rows (`compiled-snapshot-obligations/evidence/CI/source-successors.json`
+  for the bodies; the RF6 dynamic inventory for the reads). PR 99, open,
+  edits that same registry and adds a dynamic-query successor file, and its
+  base already fails neighbouring rows (`_run_check_raw`, `_cmd_check`), so
+  the rows RC1 adds depend on PR 99's shape. Not a refuted premise of the
+  spec: the spec's V4 impact closure did not name these guard suites; that
+  omission is the finding.

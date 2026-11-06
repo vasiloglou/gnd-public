@@ -245,14 +245,17 @@ dot, and the model stays as round 1 left it:
 
 *Source: `growth/round-2.document.txt` and the refused preview above.*
 
-**GND says.** *Refused, exit 3.* The `policy-issue:` line names the operation
+**GND says.** *Refused.* The `policy-issue:` line names the operation
 (the first and only one), the cell of the policy that refused it,
-`constraint.populated.add`, and the constraint it would have added. A
-constraint is not an addition in the sense the policy means. The two sample
+`constraint.populated.add`, and the constraint it would have added.
+
+A constraint is not an addition in the sense the policy means. The two sample
 orders were accepted under a model that said nothing about customers being
 required; a rule added on top of them could reject them, or reject the next
 batch of facts extracted the same way, so every earlier round would mean
-something different from what it meant when it ran. The `populated:` line is
+something different from what it meant when it ran.
+
+The `populated:` line is
 the list the policy consulted, which is why naming extracted fact types with
 `--populated` matters: a fact type GND does not know to be populated would
 take the rule.

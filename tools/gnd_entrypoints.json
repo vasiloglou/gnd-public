@@ -273,6 +273,21 @@
       "source": "gnd.cli",
       "target": "gnd.disclosure",
       "reason": "NM2: the root --disclosure option and the one disclosure walk before dispatch."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.anchors",
+      "reason": "MG5: gnd validate --document reads each supplied document under the anchors document byte cap (the constant only); span re-hashing stays in gnd.model."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.artifacts",
+      "reason": "CT2: gnd compose writes the composed population and record as canonical JSON bytes; composition itself stays behind gnd.api.compose."
+    },
+    {
+      "source": "gnd.commands.discover",
+      "target": "gnd.disclosure",
+      "reason": "CT4: gnd discover --show-values resolves the disclosure mode at the command boundary before the discover service runs; no values are read here."
     }
   ],
   "service_bindings": {

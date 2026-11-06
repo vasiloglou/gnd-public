@@ -50,7 +50,7 @@ def _read_validate_documents(paths: list[str]) -> tuple[dict[str, bytes], int | 
 
 def _cmd_validate_documents(model_path: str, output_format: str, result: Any, paths: list[str]) -> int:
     """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue)."""
-    from gnd.model._validation import unattended_span_issues
+    from gnd.model import unattended_span_issues
 
     documents, exit_code, message = _read_validate_documents(paths)
     issues = []

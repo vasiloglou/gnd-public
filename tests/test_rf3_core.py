@@ -252,7 +252,8 @@ def test_remaining_document_moves_are_verbatim_and_aliased():
 
 def test_duplicate_checker_function_rebinding_is_absent():
     paths = set((ROOT / 'src/gnd/checker').rglob('*.py'))
-    assert paths == {ROOT / 'src/gnd/checker' / name for name in ('__init__.py', '_core.py', '_reports.py')}
+    assert paths == {ROOT / 'src/gnd/checker' / name for name in ('__init__.py', '_core.py', '_reports.py',
+                                                                 '_composed.py')}  # CT2 check, split at the RF6 ceiling
     names = [n.name for path in paths for n in ast.parse(path.read_text()).body if isinstance(n, ast.FunctionDef)]
     assert len(names) == len(set(names))
 

@@ -115,7 +115,11 @@ def split_homes():
         'model/_induction.py',
         # Evolve-loading follow-up r2 (2026-10-27): the shared JSON-value walk.
         'model/_documents.py',
-        'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py')}
+        # CI repair (2026-11-06): the MG5 unattended-source rules, split out at the size ceiling.
+        'model/_unattended.py',
+        'checker/__init__.py', 'checker/_reports.py', 'checker/_core.py',
+        # CI repair (2026-11-06): the CT2 composed-anchor check, split out at the size ceiling.
+        'checker/_composed.py')}
 
 
 def assert_complete_homes(actual):

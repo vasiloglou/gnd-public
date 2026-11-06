@@ -1,0 +1,22 @@
+DISPOSITION: block
+
+ID: T1
+SEVERITY: high
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §6 M2, line 118
+QUOTE: reuse the existing `$defs.derivation_verdict` (line 991) unchanged, with
+PROBLEM: §13 overstates S2’s resolution. Reuse preserves the conditional rules, but that definition permits only three non-null `reason_code` values (src/gnd/report.schema.json:1035-1041, 1103-1110). The checker can emit `term:mod-zero` for an unchecked exact-arithmetic derivation (src/gnd/extensions.py:2628-2649). A non-temporal model without active redaction still selects plain version 7 (src/gnd/payloads.py:735-745), so `--rule-ids` accepts it, yet its proposed v15 payload fails validation. T4b’s simple derivation case does not catch this.
+FIX: Give v15 a derivation definition that preserves the conditional rules and admits current checker reasons, without changing the frozen v7 definition. Add a non-redacted exact-arithmetic `term:mod-zero` validation case.
+
+ID: T2
+SEVERITY: low
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §8, line 514
+QUOTE: reviewer (RC-D0); r4 is unreviewed.
+PROBLEM: This now contradicts the plan’s r4 review record in lines 6-8 and 46-48. The RC1 spec’s §1 heading also still says “Draft r4” while describing r5.
+FIX: Update §8 to record the r4 re-check and label the spec Draft r5.
+
+CONFIRMED
+
+S1: The selected pre-population refusal covers structured derivation failures on the plain snapshot path; RC3-C3b makes it testable.
+S2: Reusing `derivation_verdict` does preserve its pass/fail/unchecked conditional rules. T1 is a separate schema-coverage defect in that reuse.
+S3: RC5-C1 now requires a retained `Population.producer`, passage through both constructors, and an assertion after loading.
+S4: The plan now defines `undecided` in obligations and pins a rowless deontic unchecked case to count 1 without changing the band.

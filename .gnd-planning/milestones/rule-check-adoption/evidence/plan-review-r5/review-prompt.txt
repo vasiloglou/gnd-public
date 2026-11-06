@@ -1,0 +1,29 @@
+You are an independent, adversarial reviewer re-checking a repaired milestone plan in the GND repository (current directory). The repository is read-only for you. Do not modify any file.
+
+Subject (commit 2a2625a7):
+- .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md  (plan r5)
+- .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md  (draft spec for the first phase, r5)
+
+Context:
+- r4 of both files is at commit 9696908a. `git diff 9696908a 2a2625a7 -- .gnd-planning/milestones/rule-check-adoption/notes` shows exactly what changed.
+- A previous re-check of r4 raised 4 findings S1-S4: .gnd-planning/milestones/rule-check-adoption/evidence/plan-review-r4/codex-output.txt. Its record is .gnd-planning/milestones/rule-check-adoption/003-review.md. For S1 the owner chose a narrower fix: --baseline refuses models with structured derivations (RC-D11) instead of comparing derivation findings; judge whether that refusal is complete and consistent, not whether the owner should have chosen it.
+- r5 claims, in the plan's §13 table, to have resolved every one of S1-S4.
+
+Your job is to REFUTE, not summarise:
+1. For each of S1-S4: is it actually resolved by r5, or only mentioned? Name any §13 disposition that is overstated.
+2. Did the r5 changes introduce new contradictions: between plan sections, between the plan and the RC1 spec, or between either and the code under src/gnd (report.schema.json, payloads.py, checking_service.py, model_index.py, output.py, commands/checking.py, checker/_reports.py, checker/_core.py, address.py)? Pay particular attention to the derivation refusal (structured_derivation_ids, check:baseline-unsupported, its place in the validation order), derivations reusing derivation_verdict in version 15, the producer field, the undecided count, and any leftover text that still assumes derivation novelty.
+3. Is every new or changed criterion falsifiable?
+Limit yourself to the changed text and anything it newly contradicts; do not re-raise earlier findings that r4 already resolved unless r5 broke them.
+
+Read the diff and the two subject files first. Consult code only to substantiate a concern. Do not run tests, builds, or network access.
+
+Output format, plain text:
+- First line: DISPOSITION: approve | revise | block
+- Then one block per finding:
+  ID: T<n>
+  SEVERITY: high | medium | low
+  LOCATION: <file> <section/line>
+  QUOTE: <verbatim text from the file>
+  PROBLEM: <what is false or missing, with code path:line where relevant>
+  FIX: <smallest change that resolves it>
+- Then a section CONFIRMED listing the S-ids and claims you checked and found correctly resolved.

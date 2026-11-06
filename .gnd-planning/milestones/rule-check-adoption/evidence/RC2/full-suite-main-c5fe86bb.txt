@@ -1,0 +1,9 @@
+shard0.out: 3079 passed, 108 deselected in 468.36s (0:07:48) | shard exit=0
+shard1.out: 3966 passed, 72 deselected in 764.68s (0:12:44) | shard exit=0
+shard2.out: 2115 passed, 297 deselected in 299.15s (0:04:59) | shard exit=0
+shard3.out: 2531 passed, 99 deselected, 1 warning, 2 errors in 764.78s (0:12:44) | shard exit=1
+shard4.out: 3065 passed, 66 deselected in 431.21s (0:07:11) | shard exit=0
+shard5.out: 2847 passed, 152 deselected in 691.39s (0:11:31) | shard exit=0
+
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid

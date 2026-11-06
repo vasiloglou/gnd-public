@@ -18,7 +18,8 @@ recorded ([phase record](006-phase-RC1.md)); not yet pushed or merged.**
 - [Plan-gate record](005-plan.md)
 - [RC1 spec (owner-approved)](notes/phase-RC1-spec.md)
 - [RC1 phase record](006-phase-RC1.md)
-- [RC2 spec (r1, awaiting its owner gate)](notes/phase-RC2-spec.md)
+- [RC2 spec (owner-approved)](notes/phase-RC2-spec.md)
+- [RC2 phase record](007-phase-RC2.md)
 
 Phases:
 - RC1: declared constraint id and `remedy` in each verdict, report version 15;
@@ -29,4 +30,5 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the RC2 spec owner gate (process-phase). RC1 is merged (PR 101).
+Next action: the owner rules on RC2's size overrun (plan rule 8, an open
+question in the RC2 record); then the RC2 PR, then the RC3 spec.

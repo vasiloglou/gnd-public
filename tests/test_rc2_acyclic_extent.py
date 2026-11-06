@@ -256,3 +256,67 @@ def test_t10_long_chain_and_long_cycle_need_no_recursion() -> None:
     ring = {index: [(index + 1) % size] for index in range(size)}
     (component,) = strongly_connected_components(range(size), ring)
     assert sorted(component) == list(range(size))
+
+
+# --- Review regressions (notes/phase-RC2-codex-review.md, Q1-Q4) -------------------
+
+
+def test_q1_extent_reads_the_coverage_the_checker_evaluates(tmp_path) -> None:
+    """Without a coverage assertion the ring is still judged, so its extent must be too."""
+    population = (CORPUS / "populations" / "two-groups.pop.yaml").read_text()
+    population = population.replace("covers: [uses]", "covers: []").replace(
+        "../models/graph.orm.yaml", str(CORPUS / "models" / "graph.orm.yaml")
+    )
+    (tmp_path / "uncovered.pop.yaml").write_text(population)
+    result = run_main(
+        ["check", "models/graph.orm.yaml", str(tmp_path / "uncovered.pop.yaml"), "--rule-ids", "--format", "json"],
+        cwd=CORPUS,
+    )
+    expected = json.loads((EXPECTED / "two-groups.json").read_text())["verdicts"][0]
+    verdict = json.loads(result.stdout)["verdicts"][0]
+    assert (verdict["offending_facts"], verdict["message"]) == (expected["offending_facts"], expected["message"])
+
+
+def test_q2_derivation_components_preparation_is_linear() -> None:
+    from gnd.model import _derivation_components
+
+    dependencies = {f"h{index}": set() for index in range(20_000)}
+    started = time.perf_counter()
+    assert len(_derivation_components(dependencies)) == 20_000
+    assert time.perf_counter() - started < 1.0
+
+
+def test_q3_no_extent_pass_without_an_acyclic_rule(monkeypatch) -> None:
+    """A failing ring rule of another variant must not pay for a second snapshot."""
+    import gnd.semantic_adapter as adapter
+    from gnd.checker import acyclic_extents
+    from gnd.model import load_model_bytes
+    from gnd.population import load_population_bytes
+
+    model_text = (CORPUS / "models" / "graph.orm.yaml").read_text().replace("variant: acyclic", "variant: asymmetric")
+    model = load_model_bytes(model_text.encode(), source=CORPUS / "models" / "graph.orm.yaml")
+    population = load_population_bytes(
+        (CORPUS / "populations" / "two-groups.pop.yaml").read_bytes(),
+        source=CORPUS / "populations" / "two-groups.pop.yaml", model=model,
+    )
+
+    def refuse(*_args, **_kwargs):
+        raise AssertionError("snapshot adapted for a non-acyclic rule")
+
+    monkeypatch.setattr(adapter, "adapt_snapshot_observed", refuse)
+    assert acyclic_extents(model, population, ["fact_types[uses].constraints[0]"]) == {}
+
+
+def test_q4_derivation_cycles_keeps_its_groups() -> None:
+    from gnd.model import _derivation_cycles
+
+    def head(name, reads):
+        return {
+            "id": name, "reading": f"{{Item}} {name}",
+            "roles": [{"object_type": "item", "role_name": "item"}],
+            "derivation": "derived",
+            "derivation_rule": {"head": {"item": "$x"}, "body": [{"fact_type": read, "bind": {"item": "$x"}} for read in reads]},
+        }
+
+    doc = {"fact_types": [head("p", ["q"]), head("q", ["p"]), head("r", ["r"]), head("s", ["p"])]}
+    assert _derivation_cycles(doc) == [["p", "q"], ["r"]]

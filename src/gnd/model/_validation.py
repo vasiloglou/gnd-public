@@ -3633,7 +3633,8 @@ def derivation_classifications(doc: Any) -> tuple[DerivationClassification, ...]
 
 def _derivation_components(dependencies: dict[str, set[str]]) -> tuple[tuple[str, ...], ...]:
     """All SCCs in a total, iterative graph walk."""
-    outgoing = {node: sorted(dependencies[node] & set(dependencies)) for node in sorted(dependencies)}
+    nodes = set(dependencies)
+    outgoing = {node: sorted(dependencies[node] & nodes) for node in sorted(nodes)}
     return tuple(tuple(sorted(component)) for component in strongly_connected_components(outgoing, outgoing))
 
 

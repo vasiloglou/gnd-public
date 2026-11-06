@@ -839,19 +839,22 @@ def _indexed_guarded_exists_verdict(
     return verdict, None, witness
 
 
+def evaluation_snapshot(snapshot: SnapshotIR, family: str) -> SnapshotIR:
+    """The snapshot a constraint of ``family`` is evaluated over.
+
+    `covers` is an epistemic input for mandatory participation.  The
+    production checker has always evaluated other declared families over
+    admitted facts even when a caller omitted the optional coverage
+    assertion.  Give the pure provider that same admitted relation view
+    without altering the observation or public coverage report.
+    """
+    if family in {"mandatory", "mandatory-disjunctive"}:
+        return snapshot
+    return replace(snapshot, covers=tuple(row.id for row in snapshot.fact_types))
+
+
 def _evaluate_constraint(adapted, constraint, aliases, reference_work):
-    semantic_snapshot = adapted.snapshot
-    if constraint.family not in {"mandatory", "mandatory-disjunctive"}:
-        # `covers` is an epistemic input for mandatory participation.  The
-        # production checker has always evaluated other declared families
-        # over admitted facts even when a caller omitted the optional
-        # coverage assertion.  Give the pure provider that same admitted
-        # relation view without altering the observation or public
-        # coverage report.
-        semantic_snapshot = replace(
-            adapted.snapshot,
-            covers=tuple(row.id for row in adapted.snapshot.fact_types),
-        )
+    semantic_snapshot = evaluation_snapshot(adapted.snapshot, constraint.family)
     from gnd.temporal_guarded import evaluate_temporal_guard
 
     temporal = evaluate_temporal_guard(constraint, semantic_snapshot)

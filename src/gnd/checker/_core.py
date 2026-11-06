@@ -340,11 +340,18 @@ def acyclic_extents(
     finding's witness. No version-7 path calls this. A ref whose pairs cannot
     be read, or that holds no group, is left out, so its version-7 row stands.
     """
-    from gnd.correspondence import CorrespondedFinding, project_finding
+    from gnd.correspondence import CorrespondedFinding, evaluation_snapshot, project_finding
     from gnd.semantic_adapter import adapt_snapshot_observed
     from gnd.semantic_spec import acyclic_extent, ring_component_witness, ring_pairs
 
-    wanted = set(refs)
+    asked = set(refs)
+    wanted = {
+        ref for ref, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+        if ref in asked and constraint.get("type") == "ring"
+        and constraint.get("variant") in ACYCLIC_EXTENT_VARIANTS
+    }
+    if not wanted:
+        return {}
     with extension_core.calculation_scope(model, population):
         extensions, _ = extension_core.evaluate_derivations(model, population)
         view: Population | extension_core.RuledFactView = population
@@ -360,7 +367,8 @@ def acyclic_extents(
     for constraint in adapted.snapshot.constraints:
         if constraint.ref not in wanted or constraint.variant not in ACYCLIC_EXTENT_VARIANTS:
             continue
-        pairs = ring_pairs(constraint, adapted.snapshot)
+        snapshot = evaluation_snapshot(adapted.snapshot, constraint.family)
+        pairs = ring_pairs(constraint, snapshot)
         rows, sizes = acyclic_extent(pairs) if pairs else ([], [])
         if not rows:
             continue

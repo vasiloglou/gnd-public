@@ -1,0 +1,43 @@
+DISPOSITION: block
+
+ID: S1
+SEVERITY: high
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §10 RC-D11, line 533
+QUOTE: `keyed by `derivation_ref` and canonical finding; reported in `novelty` / `finding_novelty`; a new derivation failure decides band 1, a standing one does not`
+PROBLEM: §12 overstates R4’s resolution. The new fields provide a place for labels, but the checker reports only the first missing or surplus witness of each kind (`src/gnd/extensions.py:2465-2505`). If base is missing row A and head is missing A plus a later-sorting row B, both reports contain the same finding. RC-D11 labels it standing and can return band 0 despite the new violation. RC3-C7 does not cover this case.
+FIX: Make version-15 derivation evidence expose every offending row for comparison, while preserving earlier report versions; gate the A → A+B case.
+
+ID: S2
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §6 M2, lines 115-120
+QUOTE: `New `$defs.derivation_verdict_v15`, built the same way from `derivation_verdict` (line 991), adds `novelty` (as above) and `finding_novelty` (null or an array aligned with `findings`);`
+PROBLEM: A separate closed definition must also preserve the existing derivation schema’s conditional rules: pass has no findings, fail has at least one, and unchecked has the required reason (`src/gnd/report.schema.json:1044-1149`). M2 specifies the added properties but does not require those rules in v15. T4b validates only a valid derivation, and T6’s negative cases cover only constraint verdicts. The “version-7 shape” claim can pass the stated gate while accepting inconsistent v15 derivations.
+FIX: Explicitly carry the derivation conditional rules into `derivation_verdict_v15` and add negative schema cases for pass, fail, and unchecked.
+
+ID: S3
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §4 RC5-C1, lines 410-413
+QUOTE: `the optional `producer` field (string, 1-200 characters, naming tool and revision) loads`
+PROBLEM: §12 overstates R9’s resolution. The length and source restriction are now testable, but the loader design is still absent. Today `Population` has no `producer` field (`src/gnd/population.py:123-139`), and both construction paths discard that header value (`src/gnd/population.py:453-464,485-495`). An exit-0 “loads” test could pass while losing the note.
+FIX: Name `producer` as a retained `Population` field, pass it through both constructors, and assert its value after loading in RC5-C1.
+
+ID: S4
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §10 RC-D13, line 535
+QUOTE: `The `baseline` block counts it as undecided`
+PROBLEM: The revised decision conflicts with §2.3’s definition of `undecided` as a count of rows (lines 277-279). A reachable deontic `opaque-value` unchecked verdict has an empty witness (`src/gnd/correspondence.py:927-928`), so it contributes no offending row. The plan does not say whether `undecided` counts rows or unchecked obligations, and RC3-C3 gives no expected count for this case. RC-D13’s band reasoning is correct for the refused reference route; its count claim is not yet falsifiable.
+FIX: Define `undecided` as an obligation count, or add a separate field, and pin the deontic unchecked case’s count and exit band.
+
+CONFIRMED
+
+R1: Separate closed v15 verdict definitions remove the closed-object `allOf` error.
+R2: Reference-population models are now explicitly refused before population loading.
+R3: Verdict `novelty` and aligned `row_novelty` are distinct; mixed and rowless cases have criteria.
+R5: RC3 now has the full-suite comparison gate.
+R6: The merge-base command uses only existing test files.
+R7: The work-limit band-4 route is excluded by the reference-population refusal.
+R8: The proposed shared iterator avoids per-constraint deep copies and has a many-constraints criterion.
+R10: The spec now names `_print_report` and passes identity data to the text path.
+R11: Migration of both SCC callers is an RC2 criterion.
+R12: RC2-C1 requires a self-loop edge.
+R13: RC3-C3a directly gates `--baseline` refusal for all three excluded model classes.

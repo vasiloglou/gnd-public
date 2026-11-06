@@ -8,12 +8,14 @@ runs `gnd check` as a CI gate over a project's component facts: GR-D1
 **Status: plan r4 drafted 2026-11-06. r2 was reviewed by the full panel
 ([record](001-panel.md)); r3 by one reviewer, Codex, per the owner's RC-D0
 ruling (`block`, 13 findings, all reproduced; [record](002-review.md)).
-r4 repairs those findings and has not been reviewed (RC-D14). The plan is
-unapproved; no code is written.**
+r4 repairs those findings; the owner ruled RC-D14 "Codex re-check r4", which
+returned `block` with 4 findings, all reproduced ([record](003-review.md)).
+The plan is unapproved; no code is written.**
 
 - [Canonical plan (r4, draft)](notes/rule-check-adoption-plan.md)
 - [Panel record over r2](001-panel.md)
 - [Single-reviewer record over r3](002-review.md)
+- [Re-check record over r4](003-review.md)
 - [RC1 spec (r4, draft, blocked on the plan gate)](notes/phase-RC1-spec.md)
 
 Phases:
@@ -25,5 +27,5 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the owner's RC-D14 ruling (review r4 or not), then the plan
-gate (§10 rulings, RC-D1 to RC-D14).
+Next action: repair r4 into r5 from S1-S4, then the owner's plan gate
+(§10 rulings).

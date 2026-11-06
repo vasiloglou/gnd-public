@@ -30,5 +30,4 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the owner rules on RC2's size overrun (plan rule 8, an open
-question in the RC2 record); then the RC2 PR, then the RC3 spec.
+Next action: the RC2 PR (owner's call), then the RC3 spec.

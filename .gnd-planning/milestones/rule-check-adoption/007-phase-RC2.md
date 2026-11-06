@@ -234,7 +234,8 @@ component index was stale before RC2 (spec I5).
   against 280 (pause at 420); fixtures 24 files, +262. Added source lines
   pass 1.5 times the estimate. Most of it is moving three SCC walks onto one
   home (-150 removed there) and the three extractions the review and guards
-  required. Target: owner, before RC3.
+  required. **Resolved 2026-11-06, owner ruling: "Accept overrun".** The
+  plan is not amended.
 - **Unused cycle helpers** in `checker/_core.py` (F2). Target: its own
   issue or the milestone close.
 - **Component index drift** (I5): adopt dev-tools' CI check here; upstream

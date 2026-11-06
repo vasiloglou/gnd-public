@@ -3,6 +3,38 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: type judgements by skill
+
+The `fact-type` discover family can now take a skill's verdicts: whether an
+induced group duplicates a fact type the model has, and whether a
+multi-valued attribute is a many-to-many fact type. The CLI still decides
+nothing semantic; it writes evidence, checks the verdicts against it and
+renders the proposals.
+
+- **Type evidence**. `gnd discover --families
+  fact-type --type-evidence EVIDENCE` also writes each group's counts and the
+  fact types its entity type already plays, for a judgement skill to read;
+  the other outputs are unchanged. See
+  [type evidence](reference/discover.md#type-evidence).
+- **Type judgements**. `gnd discover
+  --type-evidence-in EVIDENCE --duplicate-judgements J --shape-judgements S`
+  reads verdicts bound to one evidence file: a group judged `distinct` is
+  proposed even when its signature matches, one judged `duplicate` is
+  reported against the named fact type, and a multi-valued group judged
+  `many-to-many` is proposed with a uniqueness spanning both roles. Stale,
+  incomplete or contradicted verdicts exit 3. See
+  [type judgements](reference/discover.md#type-judgements).
+- **Two judgement skills**. The packaged
+  skills `gnd-judge-fact-types` and `gnd-model-multivalued` read one
+  evidence file and the model, never the population, and write the
+  `duplicates` and `shapes` judgements files: an induced group is judged a
+  duplicate of a fact type the model has, or distinct; a multi-valued
+  attribute is judged a many-to-many fact type with a uniqueness spanning
+  both roles, the junction-table convention of the `rai-orm-from-schema`
+  dialect, or skipped. When the evidence cannot decide, they ask. Neither
+  applies anything. Walk through both in
+  [Judge induced fact types with two skills](how-to/judge-induced-fact-types.md).
+
 ## Unreleased: composition and type induction
 
 One checked answer from several documents, traced back to a passage in each.
@@ -37,30 +69,6 @@ Walk through it in [From several documents to one checked answer](how-to/compose
   attribute by digest; `--show-values` follows the disclosure mode. The
   default seven families are unchanged; see
   [constraint discovery](reference/discover.md#proposing-fact-types-from-generic-rows).
-- **Type evidence** (type-induction-skills TS1). `gnd discover --families
-  fact-type --type-evidence EVIDENCE` also writes each group's counts and the
-  fact types its entity type already plays, for a judgement skill to read;
-  the other outputs are unchanged. See
-  [type evidence](reference/discover.md#type-evidence).
-- **Type judgements** (type-induction-skills TS2). `gnd discover
-  --type-evidence-in EVIDENCE --duplicate-judgements J --shape-judgements S`
-  reads verdicts bound to one evidence file: a group judged `distinct` is
-  proposed even when its signature matches, one judged `duplicate` is
-  reported against the named fact type, and a multi-valued group judged
-  `many-to-many` is proposed with a uniqueness spanning both roles. Stale,
-  incomplete or contradicted verdicts exit 3. See
-  [type judgements](reference/discover.md#type-judgements).
-- **Two judgement skills** (type-induction-skills TS3, TS4). The packaged
-  skills `gnd-judge-fact-types` and `gnd-model-multivalued` read one
-  evidence file and the model, never the population, and write the
-  `duplicates` and `shapes` judgements files: an induced group is judged a
-  duplicate of a fact type the model has, or distinct; a multi-valued
-  attribute is judged a many-to-many fact type with a uniqueness spanning
-  both roles, the junction-table convention of the `rai-orm-from-schema`
-  dialect, or skipped. When the evidence cannot decide, they ask. Neither
-  applies anything. Walk through both in
-  [Judge induced fact types with two skills](how-to/judge-induced-fact-types.md).
-
 ## Unreleased: model growth guardrails (2026-11-04)
 
 For a model that a program grows round by round, without a person in the

@@ -110,6 +110,9 @@ For each eligible group, look at its candidates:
   review is where that is caught. When the evidence's `truncated` is above 0,
   R3 does not apply: the last groups may have lost candidates to the size
   cap, so their absence proves nothing; ask instead.
+  A `null` overlap on a candidate whose other role is redacted in the model
+  also stops R3: redaction hides the pairs, and that candidate may hold them
+  all; ask instead.
 - **R4 — ask.** Anything else (a partial pair overlap, or only `null`
   overlaps so that no candidate is comparable): ask the user, and record the
   answer as the verdict.

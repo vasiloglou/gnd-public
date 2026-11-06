@@ -9,7 +9,7 @@ only that two fact types *could* hold the same facts. And how should an
 attribute be modelled when an item holds several values for it? The family
 counts such a group `multi_valued` and stops.
 
-Those two judgements belong to two packaged Claude Code skills,
+Those two judgements belong to two packaged skills, recorded here in Claude Code,
 `gnd-judge-fact-types` and `gnd-model-multivalued`. The CLI stays
 deterministic. It writes value-free evidence, reads back the skill's verdicts
 bound by digest to that evidence, checks them, and renders evolve proposals
@@ -518,7 +518,8 @@ possible, not a guarantee that the rationale is clean. There is one recorded
 run per skill over one small model; the rules were followed here, which says
 nothing about a model with a hundred candidates or an evidence file near its
 size cap. And the skills never read the population, which is the point of
-the evidence, but also means g2's `distinct` and g3's `skip` rest on counts
+the evidence, but also means the duplicates round's `distinct` for g2 and the multi-valued
+round's `skip` for g3 rest on counts
 and your word; a synonym recorded for different items, or a second value
 that was real, would pass the same way. Review is where those are caught.
 

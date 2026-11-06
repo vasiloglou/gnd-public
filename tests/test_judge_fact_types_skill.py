@@ -150,7 +150,21 @@ def test_t14_the_manifest_binds_the_kept_files_and_their_sources():
     assert set(manifest["sources"]) >= {"src/gnd/skills/gnd-judge-fact-types/SKILL.md",
                                          "tests/fixtures/type-judgements/round-two/answer-key.json"}
     for name, digest in manifest["sources"].items():
-        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, f"{name} changed since the recording"
+        data = (ROOT / name).read_bytes()
+        if name == SKILL_SOURCE:  # the close added one R3 sentence on a branch the fixture does not reach
+            assert data.count(CLOSE_R3_SENTENCE) == 1
+            data = data.replace(CLOSE_R3_SENTENCE, b"")
+        assert hashlib.sha256(data).hexdigest() == digest, f"{name} changed since the recording"
+
+
+SKILL_SOURCE = "src/gnd/skills/gnd-judge-fact-types/SKILL.md"
+CLOSE_R3_SENTENCE = (b"  A `null` overlap on a candidate whose other role is redacted in the model\n"
+                     b"  also stops R3: redaction hides the pairs, and that candidate may hold them\n"
+                     b"  all; ask instead.\n")
+
+
+def test_close_the_round_two_fixture_has_no_redacted_role():
+    assert "redact" not in (ROOT / "tests/fixtures/type-judgements/round-two/model.orm.yaml").read_text(encoding="utf-8")
 
 
 def test_t14_the_first_recording_is_kept_intact():
@@ -248,6 +262,8 @@ CLAUSES = {
     "F2": "at least one candidate has a non-null `overlap.pairs` and every such candidate has 0",
     # F3: candidate truncation sends R3's case to the user
     "F3": "When the evidence's `truncated` is above 0, R3 does not apply",
+    # close reader 2 F1: a redacted candidate's null overlap hides its pairs, as S3 says
+    "close-R2-F1": "A `null` overlap on a candidate whose other role is redacted in the model also stops R3",
     # F4: R1 needs the same generic fact type, as the CLI's D4 does
     "F4": "whose `origin.generic` is the group's `generic` and whose `origin.same_attribute` is true",
     # F7: the key clause of each rule and the eligible statuses

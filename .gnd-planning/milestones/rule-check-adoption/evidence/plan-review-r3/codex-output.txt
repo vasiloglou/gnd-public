@@ -1,0 +1,114 @@
+DISPOSITION: block
+
+ID: R1
+SEVERITY: high
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §6 M2, lines 89–101
+QUOTE: `$defs.verdict_v15`: `allOf` of `#/$defs/verdict` properties plus
+PROBLEM: As written, an `allOf` that references the existing verdict cannot accept the four added keys: `src/gnd/report.schema.json:1151–1165` closes that object with `additionalProperties: false`. Restating the thirteen keys in another `allOf` member does not reopen it. RC1-C5 would fail, so §11 overstates F12.
+FIX: Specify a separate closed v15 verdict definition that reuses individual property schemas, as `verdict_v10` does, without referencing the whole closed verdict.
+
+ID: R2
+SEVERITY: high
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §6 M5, lines 140–146
+QUOTE: `current_payload_schema_version(model)` (`src/gnd/payloads.py:735`) is not 7
+PROBLEM: That guard misses models with reference populations. Their model property can select 7, but `src/gnd/checking_service.py:594–663` wraps the plain check as outer version 12; the wrapper’s `report` accepts only the existing report definitions (`src/gnd/report.schema.json:85–93`). The proposed path would produce a wrapped v15 report that the schema rejects, while the plan promises v15 or a refusal.
+FIX: Refuse reference-population models before population load with a named issue and a test, or design and gate a compatible wrapper successor.
+
+ID: R3
+SEVERITY: high
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §2.3, lines 223–228
+QUOTE: `novelty` lists them aligned with `offending_facts`.
+PROBLEM: An array of row labels does not mark a failing verdict itself `new` or `standing`. A verdict with both kinds of row has no verdict-level label; the proposed one-element array for a row-less failure also breaks the stated alignment with its empty `offending_facts`. Completion predicate 3 is unmet, and §11 overstates F10.
+FIX: Define a separate verdict-level novelty field in the RC1 v15 shape, retain an aligned row-label array, and specify how mixed rows classify the verdict.
+
+ID: R4
+SEVERITY: high
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §10 RC-D11, line 470
+QUOTE: keyed like verdicts, by derivation address and canonical row; a new derivation failure decides band 1, a standing one does not
+PROBLEM: RC1 fixes v15 as a v7 report with only constraint `verdict_v15` extended. Derivation results live in a separate `derivations` array whose existing item schema is closed (`src/gnd/report.schema.json:991–1003`). Neither the plan nor RC1 M2 gives a derivation finding or verdict a place to report its computed novelty. The band could change without the promised per-verdict evidence. §11 overstates F13 and the “whole shape” claim in F12.
+FIX: Define the v15 derivation and finding novelty shape in RC1, then make RC3-C7 assert both the wire labels and band.
+
+ID: R5
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §9, line 439
+QUOTE: | RC3 | RC3 tests + RC1/RC2 tests + `tests/test_exp_bands.py` | band consumers |
+PROBLEM: RC3 changes the check path and `band()`, but its gate omits the full-suite comparison required for every such phase by rule 7 (lines 124–128). The risk control at line 397 likewise names RC1, RC2 and RC4, skipping RC3. §11’s F4 disposition claims a gate the phase does not have.
+FIX: Add the full suite against the merge-base record to RC3’s gate and risk control.
+
+ID: R6
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §8, lines 197–198
+QUOTE: Before any RC1 source change, the focused gate and the full suite run at
+the merge base and are recorded verbatim (plan §8, RC-D1).
+PROBLEM: The plan’s exact focused command includes `tests/test_rc1_*.py`, but no such file exists at this commit; the spec says RC1 will create `tests/test_rc1_rule_ids.py`. That command cannot establish a pre-change result for the new tests. Recording its missing-file failure as an inherited test failure would defeat F17’s attribution purpose.
+FIX: Name an existing-suite baseline command for the merge base, record it verbatim, and run the expanded focused command after RC1 tests are added.
+
+ID: R7
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §10 RC-D13, line 472
+QUOTE: no, matching `band()`, where deontic unchecked never affects the band
+PROBLEM: The claimed match is false. `src/gnd/checker/_reports.py:159–163` assigns band 4 to `reference-join-work-limit` regardless of modality; the snapshot projection has the same exception at `src/gnd/correspondence.py:1066–1069`. §11 overstates F11’s proposed answer for that route.
+FIX: State and test the work-limit exception, or explicitly exclude every model that can reach it from baseline mode.
+
+ID: R8
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §4 rule 2, lines 39–40
+QUOTE: M3 is one pass over the model's constraints
+PROBLEM: The specified pass is not necessarily linear. `ModelIndex.iter_constraints()` deep-copies the containing fact type for each constraint (`src/gnd/model_index.py:279–285`). With many constraints in one fact type, it repeatedly copies that growing constraint list, making this identity pass quadratic in constraint count. The plan’s linear-work assertion is therefore unsupported.
+FIX: Use an iterator or lookup that does not copy the whole fact type per constraint, and gate it on a many-constraints-in-one-fact-type case.
+
+ID: R9
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §4 RC5-C1, line 355
+QUOTE: the optional note is a bounded string.
+PROBLEM: No maximum is stated, so the bound cannot fail a named test. O14 calls for an optional note naming tool and revision, while RC-D8 proposes a `producer` note without defining that content or its schema, model and loader handling. O14 has a phase but no concrete failing gate.
+FIX: Define the exact optional field and maximum length in the population schema and loader design; test valid tool/revision text and over-limit rejection.
+
+ID: R10
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/phase-RC1-spec.md §6 M6, lines 148–154
+QUOTE: Text output under the
+flag prints `[fail] constraint:no_import_loops (fact_types[…].constraints[0]): …` and,
+when present, an indented `remedy:` line.
+PROBLEM: M4 adds identity and remedy only to serialized payload verdicts. The normal text path passes the unchanged `CheckReport` to `_print_report` (`src/gnd/commands/checking.py:273–276`), which prints its raw constraint verdicts in `src/gnd/output.py:167–189`. M6 names only `checking.py`; it does not pass the new fields to that renderer. RC1-C7 is a valid criterion, but the spec’s implementation cannot satisfy it as described.
+FIX: Name the text renderer as an RC1 surface and pass it the v15 identity/remedy data, with the existing unflagged rendering pinned.
+
+ID: R11
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §10 RC-D10, line 469
+QUOTE: moving the two existing callers onto it is RC2's refactoring review, not a criterion
+PROBLEM: The plan binds RC2 to one shared SCC home (lines 111–117), yet makes migration of its two existing callers advisory rather than a gate that can fail. Lifting one implementation while leaving the other at `src/gnd/export/pyrel_rules.py:681–714` still leaves two algorithm homes; adding a helper without removing either leaves three.
+FIX: Make both callers’ use of the shared home an RC2 criterion, with their existing behavior pinned.
+
+ID: R12
+SEVERITY: low
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §4 RC2-C1, lines 310–311
+QUOTE: two disjoint cycles both appear; a pair outside every group does
+not.
+PROBLEM: The criterion does not require a self-looping singleton to appear. It is an acyclic violation in the current checker (`src/gnd/checker/_core.py:1376–1378`), while an SCC implementation that filters groups to size greater than one could pass RC2-C1 and omit it.
+FIX: Add a one-node self-loop case to RC2-C1 and require its edge in v15 output.
+
+ID: R13
+SEVERITY: medium
+LOCATION: .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md §11 F2, line 479
+QUOTE: applied: §2.1 by model property, versions 9/11, RC1-C6, rule 3, predicate 1
+PROBLEM: The panel asked for RC1 and RC3 refusal criteria. RC1-C6 and spec T9 cover `--rule-ids`, but RC3 has no direct `--baseline` test for temporal or redaction-policy models, including refusal before either population load. The implication in prose does not gate the RC3 entry point, so F2’s disposition is overstated even apart from R2.
+FIX: Add an RC3 refusal criterion and focused cases for both model properties with `--baseline`.
+
+CONFIRMED
+
+F1: Positional-key instability is acknowledged; RC3-C4a/b distinguishes same-model and cross-revision behavior.
+F3: `--allow-vacuous` is assigned a v15 field and follows RC1.
+F5: Combined baseline and vacuity outcomes are stated and assigned to RC4-C4.
+F6: RC-D5 preserves `acceptance_ready == (exit_code == 0)`.
+F7: Numeric bounds, RC6 and close budgets, and a stop rule are present.
+F8: O16 and the address home now distinguish the existing helpers from the proposed public helper.
+F9: The source enum’s three spellings and a normative schema with a sync gate are named.
+F14: `payloads.py` version gates and coverage’s refusal of v15 are named and gated; R2 identifies an additional wrapper path.
+F15: RC2-C2 now addresses change under an added disjoint cycle, and the reported project figures are marked as claims.
+F16: Both existing Tarjan implementations are identified; R11 concerns the proposed migration gate.
+F18: The address and coverage suites are in RC1’s focused gate.
+F19: Text and group-message criteria were added; R10 concerns the RC1 text implementation.
+F20: `remedy: null` is recorded as a deliberate choice.
+F21: O1–O6 cite their issue numbers.
+F22: §8 and RC-D0 refer to r3.

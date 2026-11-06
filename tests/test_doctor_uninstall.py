@@ -195,6 +195,15 @@ LOCAL_SKILL_FILES: frozenset[str] = frozenset(
         ".codex/skills/process-milestone/agents/openai.yaml",
         ".codex/skills/start-milestone/SKILL.md",
         ".codex/skills/start-milestone/agents/openai.yaml",
+        # The dev-tools components skill (08fcfd0e) is the same kind.
+        ".claude/skills/components/SKILL.md",
+        ".claude/skills/components/references/build.md",
+        ".claude/skills/components/references/reader-brief.md",
+        ".claude/skills/components/references/review.md",
+        ".codex/skills/components/SKILL.md",
+        ".codex/skills/components/references/build.md",
+        ".codex/skills/components/references/reader-brief.md",
+        ".codex/skills/components/references/review.md",
     }
 )
 
@@ -203,7 +212,12 @@ LOCAL_SKILL_FILES: frozenset[str] = frozenset(
 #: two halves stay separately pinned so a change to one cannot be absorbed by the
 #: other.
 #: The repository-development skills those files belong to.
-LOCAL_SKILL_NAMES: tuple[str, ...] = ("process-phase", "process-milestone", "start-milestone")
+LOCAL_SKILL_NAMES: tuple[str, ...] = (
+    "process-phase",
+    "process-milestone",
+    "start-milestone",
+    "components",
+)
 
 UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
 
@@ -216,8 +230,12 @@ UNMANAGED_SKILL_FILES: frozenset[str] = COMPAT_SKILL_FILES | LOCAL_SKILL_FILES
 #: directory of real files the installer never wrote, never hashed, and must
 #: never adopt. ``process-phase`` is ours and equally unmanaged.
 UNMANAGED_ROOT_ENTRIES: dict[str, frozenset[str]] = {
-    ".claude/skills": frozenset({"plan-review-panel", "process-phase", "process-milestone", "start-milestone"}),
-    ".codex/skills": frozenset({"plan-review-panel", "process-phase", "process-milestone", "start-milestone"}),
+    ".claude/skills": frozenset(
+        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components"}
+    ),
+    ".codex/skills": frozenset(
+        {"plan-review-panel", "process-phase", "process-milestone", "start-milestone", "components"}
+    ),
 }
 
 #: A second real packaged skill, used wherever a divergence has to point at

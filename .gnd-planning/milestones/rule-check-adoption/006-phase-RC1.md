@@ -248,9 +248,9 @@ Tarjan copies (RC2 owns).
   `indent=2` formatting) against about 140 estimated for M2, and 213 lines
   of Python against about 100; tests +332/-4 against about 520; fixtures 23
   files, +690. Total source exceeds 1.5 times the 240-line estimate, so
-  rule 8's pause applies; the owner rules whether to accept (the overrun is
-  the schema's line formatting, not added behaviour) or amend. Target: owner,
-  before RC2.
+  rule 8's pause applies. **Resolved 2026-11-06, owner ruling: "Accept
+  overrun".** The plan is not amended; the estimate stands for later
+  phases.
 - **Model digest is `repr()`-based** (`values._model_digest`), a
   Python-specific identity a caller cannot reproduce. Pre-existing; RC1's
   corpus relies on it (C4). Target: its own issue.

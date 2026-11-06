@@ -16,7 +16,7 @@ and awaits its own owner gate; no code is written.**
 - [Re-check record over r4](003-review.md)
 - [Re-check record over r5](004-review.md)
 - [Plan-gate record](005-plan.md)
-- [RC1 spec (r6, draft, awaiting its owner gate)](notes/phase-RC1-spec.md)
+- [RC1 spec (r7, awaiting its owner gate)](notes/phase-RC1-spec.md)
 
 Phases:
 - RC1: declared constraint id and `remedy` in each verdict, report version 15;

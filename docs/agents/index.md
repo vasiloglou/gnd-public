@@ -40,6 +40,7 @@ locally on DuckDB; Snowflake execution is not yet supported by gnd export.
 | Extract facts from a document | `gnd-extract` | `extracted.population.json` + sidecar | `gnd verify` | 0–4 verdict bands |
 | Render a document from facts | `gnd-render-doc` | `document.md` + manifest | `gnd doccheck` | 0 obligations met |
 | Judge whether induced fact types duplicate existing ones | `gnd-judge-fact-types` | `duplicates` judgements file | `gnd discover --duplicate-judgements`, `gnd evolve preview` | 3 a refused verdict |
+| Model multi-valued induced attributes | `gnd-model-multivalued` | `shapes` judgements file | `gnd discover --shape-judgements`, `gnd evolve preview` | 3 a refused verdict |
 | Export to Soufflé or Lean, or build a witness | `gnd-export` | export bundle, witness certificate | `gnd export … -verify`, `gnd replay` | 0 replayed |
 | Get an independent multi-model review | `gnd-review-panel`, `gnd-review-panel-light` | `review-request.json`, `synthesis.json` | `gnd review panel`, `finalize` | 16 below quorum |
 | Walk the whole loop, station by station | `gnd-solve` | station records | `gnd solve` | 17 walk halted |

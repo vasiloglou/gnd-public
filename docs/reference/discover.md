@@ -132,8 +132,10 @@ reading naming the generic fact type
 reviewer to rename, a value type when the generic value type's primitive differs, and a
 uniqueness on the entity role carrying the induced, proposed, deontic
 envelope. A group in which any entity has several distinct values breaks that
-uniqueness, so it is counted (`multi_valued`) and not proposed; an exactly
-repeated row is one value. A new id never
+uniqueness, so by default it is counted (`multi_valued`) and not proposed;
+under a `shapes` judgement that calls it `many-to-many`, it is proposed with a
+uniqueness spanning both roles instead ([type judgements](#type-judgements)).
+An exactly repeated row is one value. A new id never
 reuses one the model already has; a clash takes the next suffix
 (`<generic>_induced_<n>_1`). A redacted entity or value role stays redacted
 in the new fact type. Proposals that would push the evolve proposal past its
@@ -148,10 +150,15 @@ When an existing fact type already has the same role players, the group is
 listed under `shape_matches` with that fact type and not proposed. A redacted
 attribute role is skipped and counted. Every group from one generic fact type
 has the same role players, so once one induced fact type is applied, every
-later group from that generic fact type is reported as a shape match against
-it rather than proposed; rename or retype the applied fact type, or review
-the shape matches, to go on, or judge the groups
-([type judgements](#type-judgements)). Groups proposed in one run are not
+later group from that generic fact type is reported, by default, as a shape
+match against it rather than proposed; rename or retype the applied fact
+type, or review the shape matches, to go on. Under a `duplicates` judgement
+the limit lifts: a group judged `distinct` is proposed whatever its
+signature matches, and one judged `duplicate` is listed against the fact
+type the judge named ([type judgements](#type-judgements)). The packaged
+skills `gnd-judge-fact-types` and `gnd-model-multivalued` write those
+judgements; [Judge induced fact types with two skills](../how-to/judge-induced-fact-types.md)
+walks both. Groups proposed in one run are not
 compared with each other.
 
 The report's `fact_type_proposals` key lists, per proposed fact type, the
@@ -259,7 +266,8 @@ gnd discover model.orm.yaml items.population.json --families fact-type \
   (`truncated_groups` above 0).
 - **Rendering.** `distinct` proposes the group as above, whatever its
   signature matches; when its id takes a clash suffix, its reading names the
-  suffix too (`attribute 0_1`), so it never repeats an existing reading.
+  suffix too (`attribute 0_1`). Only the id is checked for a clash, so a
+  fact type whose reading was edited to match can still share it.
   `duplicate` lists it under `shape_matches` against
   `of`, with `judged: true`. `many-to-many` proposes the binary fact type
   with a uniqueness spanning both roles: its support is distinct (entity,
@@ -280,8 +288,10 @@ gnd discover model.orm.yaml items.population.json --families fact-type \
   outputs are as before.
 - **Free text.** When values are not allowed (the mode is unset without
   `--show-values`, or `customer`), each `rationale`, `judge.agent` and
-  `judge.skill` is checked for the text of any attribute or value the
-  population holds, and under `customer` for any attribute digest. A match
+  `judge.skill` is checked for the text of each group's attribute and value
+  cells (not entity cells or other fact types' cells), and under `customer`
+  for any attribute digest. The judgements file's own name, which the
+  rationale of a judged proposal quotes, is not checked. A match
   ignores case, counts a run of whitespace as one space, and needs the
   characters on either side not to be letters, digits or `_`; it exits 3
   naming the field, not the text. A text that is
@@ -323,7 +333,7 @@ silently:
 | Exit | Meaning |
 |---|---|
 | 0 | done, including when nothing was emitted (report only) |
-| 11 | `--out` already exists; nothing was written |
+| 11 | `--out` or `--type-evidence` already exists; nothing was written |
 | 3 | invalid model or population: over 10 MiB, written for another model, or a file name that cannot be an evidence ref; or a judgements file that is unbound, incomplete or contradicted |
 | 64 | usage error |
 | 66 | a missing input file, or a missing reference population file the model declares |

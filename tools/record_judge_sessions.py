@@ -1,9 +1,10 @@
-"""Record Claude Code running a GND judgement skill over the TS3 fixture, every run kept.
+"""Record Claude Code running a GND judgement skill over its fixture, every run kept.
 
 One run is a short, scripted conversation over a workspace holding only the model and one type-evidence
-file: never the population, never the answer key. The user's turns are declared below, before any run.
-The tool refuses to start without --authorized-by naming the approved TS3 spec. It writes, under --out
-(a new directory):
+file: never the population, never the answer key. The user's turns are declared below, before any run,
+one entry per skill (TS3 gnd-judge-fact-types, TS4 gnd-model-multivalued). The tool refuses to start
+without --authorized-by naming an approved spec that entry accepts. It writes, under --out (a new
+directory):
 
     results.json            the run's turns and every check below, each true or false
     manifest.json           SHA-256 of every recorded file and of the sources that made them
@@ -13,7 +14,7 @@ The tool refuses to start without --authorized-by naming the approved TS3 spec. 
     run-1/discover.txt      gnd discover with the judgements over the real population
     run-1/preview.txt       gnd evolve preview --policy additive on its proposal
 
-The checks run outside the agent, after the conversation (spec TS3 section 6.6).
+The checks run outside the agent, after the conversation (spec TS3 section 6.6, TS4 section 6.6).
 """
 from __future__ import annotations
 
@@ -33,15 +34,27 @@ from record_skill_sessions import ROOT, TOOLS, kept_stream, leaks, redact, sha25
 
 FIXTURE = ROOT / "tests/fixtures/type-judgements/round-two"
 GND = str(ROOT / ".venv/bin/gnd")
-SKILLS = {   # declared before any run; the TS3 spec (D1) authorizes this one
+CANARIES = ("dim-k4p1", "hue-k4p2", "mass-k4p3", "tint-k4p4")   # the TS3 fixture's attribute names
+TS3_GATE = ("# Phase TS3 spec", "approved by the owner `(a3)`")
+TS4_GATE = ("# Phase TS4 spec", "delegated approval (auto=true) `(d4)`")   # its D1 quotes the owner's runs
+SKILLS = {   # declared before any run; the specs named in "gates" authorize them (TS3 D1, TS4 D1)
     "judge-fact-types": {
-        "option": "--duplicate-judgements",
+        "option": "--duplicate-judgements", "fixture": FIXTURE, "canaries": CANARIES,
+        "gates": (TS3_GATE, TS4_GATE),
         "turns": ["/gnd:gnd-judge-fact-types model.orm.yaml evidence.json",
                   "Group g3 is a different attribute from every candidate: distinct. Write the file."],
         "agree": "Yes, as you propose.",
     },
+    "model-multivalued": {
+        "option": "--shape-judgements", "fixture": ROOT / "tests/fixtures/type-judgements/multi-valued",
+        "canaries": ("tag-m5q1", "alias-m5q2", "role-m5q3", "code-m5q4", "note-m5q5"), "gates": (TS4_GATE,),
+        "turns": ["/gnd:gnd-model-multivalued model.orm.yaml evidence.json",
+                  ("In group g3 the one item's second value is an entry error: skip it, and the population "
+                   "will be fixed. Group g4 repeats labels the model already holds: skip it too. "
+                   "Write the file.")],
+        "agree": "Yes, as you propose.",
+    },
 }
-CANARIES = ("dim-k4p1", "hue-k4p2", "mass-k4p3", "tint-k4p4")   # the fixture's attribute names
 MAX_TURNS = 4
 TURN_SECONDS = 900
 COMMON = ["--families", "fact-type", "--actor", "recorder", "--requested-at", "2026-11-05T00:00:00+00:00"]
@@ -54,10 +67,10 @@ def _environment() -> dict[str, str]:
     return environment
 
 
-def build_evidence(directory: Path) -> Path:
+def build_evidence(directory: Path, fixture: Path = FIXTURE) -> Path:
     """The evidence the judge reads: unset disclosure, no --show-values, default --min-support (D6)."""
     for name in ("model.orm.yaml", "items.population.json"):
-        shutil.copyfile(FIXTURE / name, directory / name)
+        shutil.copyfile(fixture / name, directory / name)
     subprocess.run([GND, "discover", "model.orm.yaml", "items.population.json", *COMMON, "--type-evidence",
                     "evidence.json", "--out", "first.proposal.json", "--report", "first.report.json"],
                    cwd=directory, env=_environment(), capture_output=True, check=True, timeout=300)
@@ -81,6 +94,16 @@ def workspace_digests(workspace: Path) -> dict[str, str]:
     return {p.name: sha256(p.read_bytes()) for p in sorted(workspace.iterdir()) if p.is_file()}
 
 
+WRITTEN = ("content", "old_string", "new_string")   # text the agent writes, not a path it reaches
+
+
+def _reaching(arguments) -> str:
+    """A tool input as text, without the text it writes (TS4 recording finding R1)."""
+    if not isinstance(arguments, dict):
+        return json.dumps(arguments, ensure_ascii=False)
+    return json.dumps({k: v for k, v in arguments.items() if k not in WRITTEN}, ensure_ascii=False)
+
+
 def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
     """Tool inputs naming any needle, read from the raw streams before redaction hides paths (review F5)."""
     found = []
@@ -92,9 +115,40 @@ def forbidden_calls(streams: list[str], needles: list[str]) -> list[str]:
                 continue
             for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
                 if isinstance(part, dict) and part.get("type") == "tool_use":
-                    call = json.dumps(part.get("input"), ensure_ascii=False)
+                    call = _reaching(part.get("input"))
                     if any(needle in call for needle in needles):
                         found.append(call)
+    return found
+
+
+PATH_KEYS = ("file_path", "path", "notebook_path")
+
+
+def outside_calls(streams: list[str], allowed: list[Path]) -> list[str]:
+    """Tool inputs reaching outside the workspace and the plugin copy (TS4 review F4).
+
+    A path argument (Read, Glob, Grep, Edit, Write) must be relative or under an allowed root; any
+    input naming the repository or the home directory is flagged, so a Bash command is caught too.
+    """
+    roots = {str(root) for root in allowed} | {str(root).removeprefix("/private") for root in allowed}
+    needles = [str(ROOT), str(Path.home())]
+    found = []
+    for stream in streams:
+        for line in stream.splitlines():
+            try:
+                event = json.loads(line)
+            except ValueError:
+                continue
+            for part in (event.get("message") or {}).get("content") or [] if isinstance(event, dict) else []:
+                if not (isinstance(part, dict) and part.get("type") == "tool_use"):
+                    continue
+                arguments = part.get("input") if isinstance(part.get("input"), dict) else {}
+                call = _reaching(arguments)
+                paths = [str(arguments[key]) for key in PATH_KEYS if isinstance(arguments.get(key), str)]
+                astray = [p for p in paths if p.startswith(("/", "~"))
+                          and not any(p == root or p.startswith(root + "/") for root in roots)]
+                if astray or any(needle in call for needle in needles):
+                    found.append(call)
     return found
 
 
@@ -110,9 +164,9 @@ def tool_calls(target: Path) -> list[str]:
     return calls
 
 
-def check(target: Path, judgements: Path | None, evidence: Path, option: str) -> dict:
+def check(target: Path, judgements: Path | None, evidence: Path, option: str, fixture: Path = FIXTURE) -> dict:
     """The checks of spec section 6.6, run in a fresh directory with the real population."""
-    key = json.loads((FIXTURE / "answer-key.json").read_text(encoding="utf-8"))["groups"]
+    key = json.loads((fixture / "answer-key.json").read_text(encoding="utf-8"))["groups"]
     schema = json.loads((ROOT / "src/gnd/type-judgements.schema.json").read_text(encoding="utf-8"))
     result = {"written": judgements is not None, "schema_valid": False, "discover_exit": None,
               "verdicts_match_key": False, "preview_exit": None}
@@ -129,7 +183,7 @@ def check(target: Path, judgements: Path | None, evidence: Path, option: str) ->
     with tempfile.TemporaryDirectory(prefix="judge-check-") as directory:
         here = Path(directory).resolve()
         for name in ("model.orm.yaml", "items.population.json"):
-            shutil.copyfile(FIXTURE / name, here / name)
+            shutil.copyfile(fixture / name, here / name)
         shutil.copyfile(evidence, here / "evidence.json")
         shutil.copyfile(judgements, here / "judgements.json")
         run = subprocess.run([GND, "discover", "model.orm.yaml", "items.population.json", *COMMON,
@@ -150,6 +204,7 @@ def check(target: Path, judgements: Path | None, evidence: Path, option: str) ->
 
 def record_run(skill: str, model: str, out: Path) -> dict:
     plan = SKILLS[skill]
+    fixture = plan["fixture"]
     target = out / "run-1"
     target.mkdir(parents=True)
     session, started, turns = str(uuid.uuid4()), time.monotonic(), []
@@ -157,10 +212,10 @@ def record_run(skill: str, model: str, out: Path) -> dict:
             tempfile.TemporaryDirectory(prefix="judge-evidence-") as evidence_directory, \
             tempfile.TemporaryDirectory(prefix="skill-plugin-") as plugin_directory:
         workspace, plugin = Path(directory).resolve(), Path(plugin_directory).resolve()
-        evidence = build_evidence(Path(evidence_directory).resolve())
+        evidence = build_evidence(Path(evidence_directory).resolve(), fixture)
         shutil.copytree(ROOT / ".claude-plugin", plugin / ".claude-plugin")   # the plugin and its skills only
         shutil.copytree(ROOT / "src/gnd/skills", plugin / "src/gnd/skills")
-        shutil.copyfile(FIXTURE / "model.orm.yaml", workspace / "model.orm.yaml")
+        shutil.copyfile(fixture / "model.orm.yaml", workspace / "model.orm.yaml")
         shutil.copyfile(evidence, workspace / "evidence.json")
         before = workspace_digests(workspace)
         asked, raw = None, []
@@ -192,7 +247,7 @@ def record_run(skill: str, model: str, out: Path) -> dict:
                           "assistant_last": redact((result.get("result") or "")[-600:], workspace),
                           "judgements_after_turn": written is not None})
             if number == 1:
-                asked = written is None   # R4: the skill must ask about g3 before writing anything
+                asked = written is None   # R4 or S4: the skill must ask about g3 before writing anything
             if code != 0 or (written is not None and number >= len(plan["turns"])):
                 break
         written = judgements_in(workspace)
@@ -201,16 +256,17 @@ def record_run(skill: str, model: str, out: Path) -> dict:
                                                encoding="utf-8")
         if written is not None:
             shutil.copyfile(written, target / written.name)
-        checks = check(target, written, evidence, plan["option"])
+        checks = check(target, written, evidence, plan["option"], fixture)
         checks["asked_before_writing"] = asked
         new = sorted(set(after) - set(before))
         checks["only_judgements_new"] = new == ([written.name] if written else []) and all(
             after.get(name) == digest for name, digest in before.items())
         checks["no_apply_call"] = not forbidden_calls(raw, ["evolve apply"])
         checks["no_population_access"] = not forbidden_calls(
-            raw, ["population", "answer-key", str(FIXTURE), str(evidence.parent), str(ROOT / "tests")])
+            raw, ["population", "answer-key", str(fixture), str(evidence.parent), str(ROOT / "tests")]) \
+            and not outside_calls(raw, [workspace, plugin])
         kept = [p.read_text(encoding="utf-8", errors="replace") for p in sorted(target.rglob("*")) if p.is_file()]
-        checks["no_canary"] = not any(canary in text for canary in CANARIES for text in kept)
+        checks["no_canary"] = not any(canary in text for canary in plan["canaries"] for text in kept)
         return {"model": model, "turns": len(turns), "turn_log": turns, "judgements": written.name if written else None,
                 "checks": checks, "seconds": round(time.monotonic() - started, 1)}
 
@@ -221,7 +277,7 @@ def passed(checks: dict) -> bool:
                for name, value in checks.items())
 
 
-def finish(out: Path) -> int:
+def finish(out: Path, skill: str = "judge-fact-types") -> int:
     """The leak search, then the manifest. On a hit the run folder is removed and only results.json stays."""
     found = leaks(out)
     if found:
@@ -229,8 +285,9 @@ def finish(out: Path) -> int:
         print("refusing to keep the recording, and removed the run folder: a local path or key was in "
               + ", ".join(found), file=sys.stderr)
         return 1
-    sources = ["tools/record_judge_sessions.py", "src/gnd/skills/gnd-judge-fact-types/SKILL.md",
-               *(str((FIXTURE / name).relative_to(ROOT)) for name in ("model.orm.yaml", "items.population.json",
+    fixture = SKILLS[skill]["fixture"]
+    sources = ["tools/record_judge_sessions.py", f"src/gnd/skills/gnd-{skill}/SKILL.md",
+               *(str((fixture / name).relative_to(ROOT)) for name in ("model.orm.yaml", "items.population.json",
                                                                        "answer-key.json"))]
     manifest = {"files": {str(p.relative_to(out)): sha256(p.read_bytes()) for p in sorted(out.rglob("*"))
                           if p.is_file() and p.name not in ("README.md", "manifest.json")},
@@ -248,15 +305,16 @@ def main() -> int:
     args = parser.parse_args()
     gate = args.authorized_by.resolve()
     text = gate.read_text(encoding="utf-8") if gate.is_file() else ""
-    if "# Phase TS3 spec" not in text or "approved by the owner `(a3)`" not in text:
-        parser.error("--authorized-by must name the approved TS3 spec")
+    if not any(heading in text and mark in text for heading, mark in SKILLS[args.skill]["gates"]):
+        parser.error(f"--authorized-by must name a spec that authorizes the {args.skill} run")
     args.out.mkdir(parents=True)
     row = record_run(args.skill, args.model, args.out)
     (args.out / "results.json").write_text(json.dumps({
-        "gate": str(gate.relative_to(ROOT)), "skill": f"gnd-{args.skill}", "fixture": "round-two",
+        "gate": str(gate.relative_to(ROOT)), "skill": f"gnd-{args.skill}",
+        "fixture": SKILLS[args.skill]["fixture"].name,
         "user_turns": SKILLS[args.skill]["turns"] + [SKILLS[args.skill]["agree"]],
         "recorded": time.strftime("%Y-%m-%d"), "run": row}, indent=1) + "\n", encoding="utf-8")
-    if finish(args.out):
+    if finish(args.out, args.skill):
         return 1
     print(json.dumps(row["checks"], indent=1))
     return 0 if passed(row["checks"]) else 1

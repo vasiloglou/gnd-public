@@ -1,0 +1,27 @@
+version: 2
+model_id: urn:gnd-fixture:ts3-round-two@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: item, name: Item, kind: value, primitive: String}
+  - {id: attribute_name, name: AttributeName, kind: value, primitive: String}
+  - {id: attribute_value, name: AttributeValue, kind: value, primitive: String}
+  - {id: colour, name: Colour, kind: value, primitive: String}
+fact_types:
+  - id: item_has_attribute
+    reading: "{Item} has attribute {AttributeName} with value {AttributeValue}"
+    roles:
+      - {object_type: item, role_name: item}
+      - {object_type: attribute_name, role_name: name}
+      - {object_type: attribute_value, role_name: value}
+    provenance:
+      generic: {entity: item, attribute: name, value: value}
+  - id: item_has_attribute_induced_0
+    reading: "{Item} has dimension {AttributeValue}"
+    roles: [{object_type: item, role_name: entity}, {object_type: attribute_value, role_name: value}]
+    provenance:
+      induced_from: {generic: item_has_attribute, attribute_sha256: 06945bb2937bad3fbca3a311e43239f1c648f9a7a61456a8f1077bb23b9a8cb6}
+  - id: item_has_colour
+    reading: "{Item} has colour {Colour}"
+    roles: [{object_type: item, role_name: item}, {object_type: colour, role_name: colour}]
+constraints: []
+rejected_proposals: []

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 760" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">How a judgement travels between the CLI and a skill</title><desc id="desc">gnd discover reads the model and the population and writes evidence that holds counts, digests, opaque row ids and candidate readings, never a value. A skill reads the model and the evidence only, never the population, decides each group by its rules and asks you where the rules stop, then writes a judgements file bound to the evidence by SHA-256. gnd discover reads the judgements back, computes the evidence again, refuses on any difference, checks every verdict and renders an additive proposal. gnd evolve preview with the additive policy checks it; gnd evolve apply is your reviewed step.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:15px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:14px} .dash{stroke-dasharray:6 5} .green{fill:#1f7a4d;font-weight:700} .orange{fill:#b45309;font-weight:700} .muted{fill:#50657a}</style><rect width="640" height="760" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">One judgement round</text>
+<rect x="24" y="62" width="592" height="104" rx="12" fill="#eef5f8"/>
+<text x="40" y="90" class="strong">GND counts</text>
+<text x="40" y="114" class="mono">gnd discover ... --families fact-type --type-evidence evidence.json</text>
+<text x="40" y="138" class="small">reads the model and the population; groups rows by attribute</text>
+<text x="40" y="158" class="small">writes evidence: counts, digests, opaque row ids, candidate readings · <tspan class="orange">no value</tspan></text>
+<path class="edge" d="M320 166L320 194"/>
+<rect x="24" y="200" width="592" height="150" rx="12" fill="#fff"/>
+<text x="40" y="228" class="strong">A skill judges</text>
+<text x="40" y="252" class="mono">/gnd:gnd-judge-fact-types · /gnd:gnd-model-multivalued</text>
+<text x="40" y="276" class="small">reads the model and the evidence · <tspan class="orange">never the population</tspan></text>
+<text x="40" y="298" class="small">decides each group by its rules, R1–R4 or S1–S4, in order</text>
+<text x="40" y="320" class="small">asks you where the rules stop; writes nothing until every group has a verdict</text>
+<text x="40" y="342" class="small">writes the judgements file, bound to the evidence by its SHA-256</text>
+<path class="edge" d="M320 350L320 378"/>
+<rect x="24" y="384" width="592" height="150" rx="12" fill="#eef5f8"/>
+<text x="40" y="412" class="strong">GND checks and renders</text>
+<text x="40" y="436" class="mono" style="font-size:12px">gnd discover ... --type-evidence-in EVIDENCE --duplicate-judgements FILE</text>
+<text x="40" y="460" class="small">computes the evidence again; <tspan class="orange">refuses (3)</tspan> when a byte differs</text>
+<text x="40" y="482" class="small">checks every verdict against the evidence and the model's origins</text>
+<text x="40" y="504" class="small">renders: <tspan class="green">distinct</tspan> proposed · <tspan class="green">many-to-many</tspan> proposed, uniqueness over both roles</text>
+<text x="40" y="526" class="small"><tspan class="muted">duplicate</tspan> listed as a judged shape match · <tspan class="muted">skip</tspan> counted</text>
+<path class="edge" d="M320 534L320 562"/>
+<rect x="24" y="568" width="592" height="78" rx="12" fill="#e9f4ec"/>
+<text x="40" y="596" class="strong">GND previews the round</text>
+<text x="40" y="620" class="mono">gnd evolve preview MODEL proposal.json --policy additive</text>
+<text x="40" y="640" class="small">admitted: breaking false; every constraint induced, proposed, deontic</text>
+<path class="edge dash" d="M320 646L320 674"/>
+<rect x="24" y="680" width="592" height="60" rx="12" fill="#fff" class="dash"/>
+<text x="40" y="706" class="strong">You apply, after review</text>
+<text x="40" y="730" class="mono">gnd evolve apply ... --policy additive <tspan class="small muted" font-family="system-ui,sans-serif">· named on the page, not run</tspan></text>
+</svg>

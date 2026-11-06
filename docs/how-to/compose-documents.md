@@ -507,6 +507,9 @@ choice of sources, are stated where anyone can check them.
   `gnd discover --families fact-type` proposes proper
   fact types for recurring attributes, as a reviewed additive proposal:
   [proposing fact types from generic rows](../reference/discover.md#proposing-fact-types-from-generic-rows).
+  Whether an attribute repeats a fact type you already have, or holds
+  several values per item, is judged by two skills:
+  [judge induced fact types with two skills](judge-induced-fact-types.md).
 - The extraction half, one document at a time, is the `gnd-extract` skill in
   the [agent skill guide](../agents/index.md); a model that grows as documents
   arrive is [grow a model by additions](grow-a-model.md).

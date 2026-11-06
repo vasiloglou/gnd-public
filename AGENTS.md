@@ -43,6 +43,7 @@ stated scope; handoffs between skills require an explicit user selection.
 | gnd-model-evolve | [gnd-model-evolve](src/gnd/skills/gnd-model-evolve/SKILL.md) |
 | gnd-model-from-code | [gnd-model-from-code](src/gnd/skills/gnd-model-from-code/SKILL.md) |
 | gnd-model-from-text | [gnd-model-from-text](src/gnd/skills/gnd-model-from-text/SKILL.md) |
+| gnd-model-multivalued | [gnd-model-multivalued](src/gnd/skills/gnd-model-multivalued/SKILL.md) |
 | gnd-new-project | [gnd-new-project](src/gnd/skills/gnd-new-project/SKILL.md) |
 | gnd-orm-core | [gnd-orm-core](src/gnd/skills/gnd-orm-core/SKILL.md) |
 | gnd-render-doc | [gnd-render-doc](src/gnd/skills/gnd-render-doc/SKILL.md) |

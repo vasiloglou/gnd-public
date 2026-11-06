@@ -1,0 +1,45 @@
+{
+ "gate": ".gnd-planning/milestones/type-induction-skills/notes/phase-TS4-spec.md",
+ "skill": "gnd-model-multivalued",
+ "fixture": "multi-valued",
+ "user_turns": [
+  "/gnd:gnd-model-multivalued model.orm.yaml evidence.json",
+  "In group g3 the one item's second value is an entry error: skip it, and the population will be fixed. Group g4 repeats labels the model already holds: skip it too. Write the file.",
+  "Yes, as you propose."
+ ],
+ "recorded": "2026-11-05",
+ "run": {
+  "model": "sonnet",
+  "turns": 2,
+  "turn_log": [
+   {
+    "user": "/gnd:gnd-model-multivalued model.orm.yaml evidence.json",
+    "exit": 0,
+    "cost_usd": 0.1181364,
+    "assistant_last": " You would then correct the population and regenerate the evidence, because a shapes file can't declare an attribute single-valued.\n- **g4 (S4, partial overlap).** `item_has_label` already holds 24 of the group's 48 distinct pairs, about half. Should this be:\n  - `many-to-many`, kept as its own fact type even though half its pairs are already in `item_has_label`?\n  - `skip`, because it's meant to be covered by `item_has_label`?\n\nOnce you answer both, I'll write `shapes.judgements.json` beside the evidence (it doesn't exist yet) and give you the `gnd discover` and `gnd evolve preview` commands.",
+    "judgements_after_turn": false
+   },
+   {
+    "user": "In group g3 the one item's second value is an entry error: skip it, and the population will be fixed. Group g4 repeats labels the model already holds: skip it too. Write the file.",
+    "exit": 0,
+    "cost_usd": 0.15077490000000002,
+    "assistant_last": "t proposal.json --report report.json --actor ACTOR --requested-at TIMESTAMP\ngnd evolve preview model.orm.yaml proposal.json --workspace WORKSPACE --records RECORDS --out preview.json --policy additive\n```\n\nIf you correct the population first, run the `gnd discover` command that makes new evidence, then judge again before using these commands. If other groups need `gnd-judge-fact-types`, add its file with `--duplicate-judgements` to the first command.\n\nOnly g2 is rendered as a proposal, a binary fact type with a uniqueness over both roles. The four skips are counted under `skipped.judged_skip`.",
+    "judgements_after_turn": true
+   }
+  ],
+  "judgements": "shapes.judgements.json",
+  "checks": {
+   "written": true,
+   "schema_valid": true,
+   "discover_exit": 0,
+   "verdicts_match_key": true,
+   "preview_exit": 0,
+   "asked_before_writing": true,
+   "only_judgements_new": true,
+   "no_apply_call": true,
+   "no_population_access": false,
+   "no_canary": true
+  },
+  "seconds": 34.1
+ }
+}

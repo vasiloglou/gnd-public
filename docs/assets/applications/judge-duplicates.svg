@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-labelledby="title desc"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker></defs><title id="title">The four groups of the duplicates round and their verdicts</title><desc id="desc">Four groups of 24 rows each, g0 to g3, compared with two candidates, Item has dimension AttributeValue and Item has colour Colour. g0 shares every pair with has dimension, which was induced from the same attribute: duplicate by R1. g1 shares every pair with has colour: duplicate by R2. g2 shares no pair with either: distinct by R3, resting on the absence of shared facts. g3 shares half its pairs with has colour: R4, asked; you answered distinct. g2 and g3 are proposed as item_has_attribute_induced_2 and _3; g0 and g1 are listed as judged shape matches.</desc><style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:18px} .title{font-size:24px;font-weight:700} .small{font-size:15px} .tiny{font-size:13px} .strong{font-weight:700} .mid{text-anchor:middle} rect{stroke:#50657a;stroke-width:1.5} .edge{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)} .mono{font-family:ui-monospace,Menlo,monospace;font-size:14px} .track{fill:#fff;stroke:#50657a} .fill{fill:#50657a;stroke:none} .same{fill:#b45309;stroke:none} .green{fill:#1f7a4d;font-weight:700} .orange{fill:#b45309;font-weight:700} .muted{fill:#50657a} .line{stroke:#c9d4dc;stroke-width:1}</style><rect width="640" height="600" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">Duplicates: who already holds the pairs?</text>
+<text x="24" y="78" class="small strong">group</text>
+<text x="112" y="78" class="small strong">pairs in "has dimension"</text>
+<text x="300" y="78" class="small strong">pairs in "has colour"</text>
+<text x="472" y="78" class="small strong">rule</text>
+<text x="520" y="78" class="small strong">verdict</text>
+<path class="line" d="M24 86L616 86"/>
+<text x="24" y="124" class="mono strong">g0</text>
+<rect class="track" x="112" y="108" width="160" height="20" rx="4"/><rect class="same" x="112" y="108" width="160" height="20" rx="4"/>
+<text x="112" y="146" class="tiny orange">all 24 · same attribute</text>
+<rect class="track" x="300" y="108" width="160" height="20" rx="4"/>
+<text x="300" y="146" class="tiny muted">none</text>
+<text x="472" y="124" class="mono">R1</text>
+<text x="520" y="124" class="small muted strong">duplicate</text>
+<path class="line" d="M24 158L616 158"/>
+<text x="24" y="196" class="mono strong">g1</text>
+<rect class="track" x="112" y="180" width="160" height="20" rx="4"/>
+<text x="112" y="218" class="tiny muted">none</text>
+<rect class="track" x="300" y="180" width="160" height="20" rx="4"/><rect class="fill" x="300" y="180" width="160" height="20" rx="4"/>
+<text x="300" y="218" class="tiny muted">all 24 · already held</text>
+<text x="472" y="196" class="mono">R2</text>
+<text x="520" y="196" class="small muted strong">duplicate</text>
+<path class="line" d="M24 230L616 230"/>
+<text x="24" y="268" class="mono strong">g2</text>
+<rect class="track" x="112" y="252" width="160" height="20" rx="4"/>
+<text x="112" y="290" class="tiny muted">none</text>
+<rect class="track" x="300" y="252" width="160" height="20" rx="4"/>
+<text x="300" y="290" class="tiny muted">none · rests on absence of shared facts</text>
+<text x="472" y="268" class="mono">R3</text>
+<text x="520" y="268" class="small green">distinct</text>
+<path class="line" d="M24 302L616 302"/>
+<text x="24" y="340" class="mono strong">g3</text>
+<rect class="track" x="112" y="324" width="160" height="20" rx="4"/>
+<text x="112" y="362" class="tiny muted">none</text>
+<rect class="track" x="300" y="324" width="160" height="20" rx="4"/><rect class="fill" x="300" y="324" width="80" height="20" rx="4"/>
+<text x="300" y="362" class="tiny orange">12 of 24 · asked; you said distinct</text>
+<text x="472" y="340" class="mono">R4</text>
+<text x="520" y="340" class="small green">distinct</text>
+<path class="line" d="M24 374L616 374"/>
+<path class="edge" d="M320 380L320 408"/>
+<text x="24" y="440" class="strong">Rendered by gnd discover, admitted by gnd evolve preview</text>
+<rect x="24" y="456" width="288" height="60" rx="12" fill="#e9f4ec"/>
+<text x="40" y="482" class="mono green">item_has_attribute_induced_2</text>
+<text x="40" y="504" class="small">g2, proposed · uniqueness on the item</text>
+<rect x="328" y="456" width="288" height="60" rx="12" fill="#e9f4ec"/>
+<text x="344" y="482" class="mono green">item_has_attribute_induced_3</text>
+<text x="344" y="504" class="small">g3, proposed · uniqueness on the item</text>
+<rect x="24" y="528" width="288" height="60" rx="12" fill="#fff"/>
+<text x="40" y="554" class="mono muted" style="font-size:12px">g0 → item_has_attribute_induced_0</text>
+<text x="40" y="576" class="small muted">judged shape match, not proposed</text>
+<rect x="328" y="528" width="288" height="60" rx="12" fill="#fff"/>
+<text x="344" y="554" class="mono muted">g1 → item_has_colour</text>
+<text x="344" y="576" class="small muted">judged shape match, not proposed</text>
+</svg>

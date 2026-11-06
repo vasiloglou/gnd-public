@@ -302,7 +302,9 @@ and it must be named rather than left for the next reader to discover.
   reviewed status change of the existing proposed constraint.
 - A `gnd discover` proposal adds only such induced constraints, with population-bound support;
   with the opt-in `--families fact-type` it also adds a placeholder-named fact type (and a value
-  type when needed) per recurring attribute of a declared generic fact type, moving no rows.
+  type when needed) per recurring attribute of a declared generic fact type, moving no rows;
+  with judgements files from `gnd-judge-fact-types` or `gnd-model-multivalued` it renders their
+  verdicts, including many-to-many fact types with a spanning uniqueness.
   Preview it like any other proposal and confirm each rule separately.
 - A `gnd import ilp-rules` proposal adds only induced, advisory guarded constraints whose coverage
   GND re-checked against the labels; review it the same way.

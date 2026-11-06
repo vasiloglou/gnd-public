@@ -1,0 +1,421 @@
+526d2ff14940391fbefdab0a3536fcb6c51b80e529d85a081214c624610d631f  .gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md
+    return elements, positional_to_address
+
+
+def _located(
+    constraints: Sequence[dict[str, Any]], fact_type_id: str | None
+) -> Iterator[tuple[str, str, Addressing, dict[str, Any]]]:
+    """``(positional ref, address, addressing, constraint)`` for one list.
+
+    The one home of constraint addressing for the census and the induced view."""
+    for index, constraint in enumerate(constraints):
+        positional = positional_constraint_ref(fact_type_id, index)
+        address, addressing = _constraint_address(positional, constraint)
+        yield positional, address, addressing, constraint
+
+
+def _constraint_address(positional: str, constraint: dict[str, Any]) -> tuple[str, Addressing]:
+    """A constraint's census address: its declared id, else its positional ref."""
+    declared_id = constraint.get("id")
+    if declared_id is None:
+        return positional, "positional"
+    return constraint_address(str(declared_id)), "declared-id"
+
+
+def _fact_type_constraints(
+    fact_type: dict[str, Any],
+) -> Iterator[tuple[str, str, Addressing, dict[str, Any]]]:
+    return _located(fact_type.get("constraints") or [], str(fact_type["id"]))
+
+
+def _global_constraints(model: Model) -> Iterator[tuple[str, str, Addressing, dict[str, Any]]]:
+    return _located(model.constraints, None)
+
+
+def _induced_rows(model: Model) -> tuple[dict[str, Any], ...]:
+    """IK2-C3: the provenance view of every ``source: induced`` constraint.
+
+    Addresses come from ``_constraint_address``, as the census's do. Example ids, counterexample
+    ids and ``confidence`` are deliberately not copied: coverage shows who
+    induced a rule, how strongly it was supported and what evidence it is
+    bound to, not the host's example list."""
+    rows = []
+---
+        parents = {str(row.get('id')): [str(p) for p in row.get('subtype_of') or []]
+                   for row in self._document.get('object_types') or [] if isinstance(row, dict)}
+        seen: set[str] = set()
+        pending = list(parents.get(identifier, []))
+        while pending:
+            parent = pending.pop()
+            if parent not in seen:
+                seen.add(parent)
+                pending.extend(parents.get(parent, []))
+        return frozenset(seen)
+
+    def primitive(self, identifier: str, *, variant: Literal['truthy', 'strict']) -> str | None:
+        return primitive_for(identifier, self._objects, variant=variant)
+
+    def iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] | None]]:
+        for fact_type in self._document.get('fact_types') or []:
+            for position, constraint in enumerate(fact_type.get('constraints') or []):
+                yield (positional_constraint_ref(str(fact_type.get('id')), position),
+                       deepcopy(constraint), deepcopy(fact_type))
+        for position, constraint in enumerate(self._document.get('constraints') or []):
+            yield positional_constraint_ref(None, position), deepcopy(constraint), None
+        ) or any(verdict.verdict == "unchecked" for verdict in self.derivations)
+
+    def counts(self) -> dict[str, int]:
+        totals = {"pass": 0, "fail": 0, "warning": 0, "unchecked": 0, "vacuous": 0}
+        for verdict in self.verdicts:
+            totals[verdict.verdict] += 1
+        for verdict in self.derivations:
+            totals[verdict.verdict] += 1
+        return totals
+
+
+def band(report: CheckReport) -> int:
+    """Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08).
+
+    Band 3 (load/model-relative rejection) returns earlier from the CLI's load
+    arms, so it never reaches here. This is the ONE implementation of the exit-band
+    rule: the CLI router, the JSON emitter, and the Phase 2/4 measurement harness
+    all delegate to it, because a duplicated comprehension is how exit bands drift
+    apart (see :attr:`CheckReport.has_unevaluated_alethic`). Each predicate lives on
+    :class:`CheckReport`, never as a comprehension in a caller.
+    """
+    if report.snapshot_projection is not None:
+        result = int(report.snapshot_projection.band)
+        if any(row.verdict == "fail" for row in report.derivations):
+            result = 1
+        elif result != 1 and any(row.verdict == "unchecked" for row in report.derivations):
+            result = 4
+    elif report.has_alethic_fail:
+        result = 1
+    elif report.has_unevaluated_alethic or any(
+        row.verdict == "unchecked" and row.reason_code == "reference-join-work-limit"
+        for row in report.verdicts
+    ):
+        result = 4
+    elif report.has_vacuous:
+        result = 2
+    else:
+        result = 0
+    routes = ("n-a", "phase1") if report.phase1_trace is not None else ("n-a",)
+    for selected_route in routes:
+        prefix = f"composition:band:{selected_route}:"
+        event = {1: "alethic-fail", 4: "alethic-unchecked", 2: "vacuous", 0: "clean"}[result]
+        record_branch(prefix + event)
+        if result == 1 and report.has_unevaluated_alethic and report.has_vacuous:
+            record_branch(prefix + "fail-over-unchecked-over-vacuous")
+        if result == 4 and report.has_vacuous:
+            record_branch(prefix + "unchecked-over-vacuous")
+        if result == 2 and any(row.verdict == "pass" for row in report.verdicts):
+            record_branch(prefix + "vacuous-over-clean")
+        if any(row.modality == "deontic" and row.verdict == "warning" for row in report.verdicts):
+            record_branch(prefix + "deontic-warning-keeps-band")
+===
+5:  "description": "Draft 2020-12 schema for population files — the universal interchange for agent outputs, synthetic data, and eval fixtures (YAML or JSON, one loader: D-11). The `population` header carries declarative metadata: `model` (a reference the loader NEVER opens — T-01-05), `source`, optional `label`, optional `model_id`, and the declared fact-type `covers` used for vacuity detection (D-12). `model_id` (D-06) is the model's own top-level `model_id`, restated here so a population can say which model it was written for: when both the model and the population declare one and they DIFFER, the population is rejected at load (exit 3); when only the model declares one, the cross-check is skipped with a warning and acceptance is NOT withheld; when neither does, there is no check. It is compared as an opaque string and never dereferenced to a path or opened. `instances` holds optional explicit object-type rosters (closed-world extension); `facts` maps fact-type ids to arrays of role_name->value mappings.",
+13:      "required": ["model", "source"],
+18:        "source": { "enum": ["agent-output", "synthetic", "fixture"] },
+===
+        "properties": {
+            "population": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["model", "source"],
+                "properties": {
+                    "model": {"type": "string"},
+                    "model_id": {"type": "string"},
+                    "source": {"enum": ["agent-output", "synthetic", "fixture"]},
+                    "label": {"enum": ["conforming", "boundary", "violating"]},
+                    "covers": {"type": "array", "items": {"type": "string"}},
+                },
+            },
+            "instances": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": instance_properties,
+            },
+            "facts": {
+                "type": "object",
+                "additionalProperties": False,
+===
+    format_version: Literal[1, 2] = Field(default=1, exclude=True)
+    model: str
+    #: D-06: the ``model_id`` the population's author believed they were writing
+    #: against, restated from the model's own top-level field. Optional, opaque,
+    #: never dereferenced — see :func:`gnd.popvalidate._rule_model_id`.
+    model_id: str | None = None
+    source: Literal["agent-output", "synthetic", "fixture"]
+    label: Literal["conforming", "boundary", "violating"] | None = None
+    covers: list[str] = Field(default_factory=list)
+    instances: dict[str, list[Any]] = Field(default_factory=dict)
+    facts: dict[str, list[dict[str, Any]]] = Field(default_factory=dict)
+    #: Warning-severity layer-2 issues. Public and user-facing (unlike the
+    #: marker): they belong in the JSON payload, exactly as ``Model.warnings``
+    #: does for the model loader.
+    warnings: list[ValidationIssue] = Field(default_factory=list)
+
+===
+748:      "description": "The per-source provenance requirements, factored out of constraint_common so that operation-level obligations (preconditions, dynamic rules) and operations themselves carry the SAME rules by reference rather than by a second copy. Referenced in-place, so `unevaluatedProperties: false` on the referring envelope still sees every property this schema evaluates.",
+749-      "allOf": [
+750-        {
+751-          "if": {
+752-            "properties": {
+753-              "source": {
+754-                "const": "explicit"
+--
+1033:    "constraint_common": {
+1034-      "type": "object",
+1035-      "required": [
+1036-        "type",
+1037-        "source",
+1038-        "status",
+1039-        "modality"
+--
+1101:          "$ref": "#/$defs/constraint_common"
+1102-        },
+1103-        {
+1104-          "oneOf": [
+1105-            {
+1106-              "$ref": "#/$defs/uniqueness_internal"
+1107-            },
+--
+1135:          "$ref": "#/$defs/constraint_common"
+1136-        },
+1137-        {
+1138-          "oneOf": [
+1139-            {
+1140-              "$ref": "#/$defs/uniqueness_external"
+1141-            },
+    "constraint_common": {
+      "type": "object",
+      "required": [
+        "type",
+        "source",
+        "status",
+        "modality"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "type": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/source_kind"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "confirmed",
+            "rejected"
+          ]
+        },
+        "modality": {
+          "enum": [
+            "alethic",
+            "deontic"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "provenance": {
+          "type": "object"
+        },
+        "owner": {
+          "enum": [
+            "candidate",
+            "reference",
+            "host"
+          ]
+===
+            visiting.add(node)
+            for successor in graph.get(node, ()):
+                if successor in path:
+                    return path[path.index(successor) :] + [successor]
+                if successor not in visited:
+                    stack.append((successor, path + [successor]))
+            visited.add(node)
+    return None
+
+
+def _ring_component_violations(
+    component: str, pair_set: set[tuple], elements: set[Any]
+) -> list[tuple]:
+    """Offending witnesses for one primitive ring variant (Halpin semantics)."""
+    if component == "irreflexive":
+        return sorted(((a, b) for a, b in pair_set if a == b), key=repr)
+    if component == "asymmetric":
+        return sorted(((a, b) for a, b in pair_set if (b, a) in pair_set), key=repr)
+    if component == "antisymmetric":
+        return sorted(((a, b) for a, b in pair_set if a != b and (b, a) in pair_set), key=repr)
+    if component == "symmetric":
+        return sorted(((a, b) for a, b in pair_set if (b, a) not in pair_set), key=repr)
+    if component == "intransitive":
+        return sorted(
+            (
+                (a, b, c)
+                for a, b in pair_set
+                for b2, c in pair_set
+                if b2 == b and (a, c) in pair_set
+            ),
+            key=repr,
+        )
+    if component == "transitive":
+        return sorted(
+            (
+                (a, b, c)
+                for a, b in pair_set
+                for b2, c in pair_set
+                if b2 == b and (a, c) not in pair_set
+            ),
+            key=repr,
+        )
+    if component == "purely-reflexive":
+        return sorted(((a, b) for a, b in pair_set if a != b), key=repr)
+    if component == "reflexive":
+        return sorted(((a,) for a in elements if (a, a) not in pair_set), key=repr)
+    # acyclic
+    cycle = _find_cycle(sorted(pair_set, key=repr))
+    return [tuple(cycle)] if cycle else []
+
+
+_COMPARATORS = {
+    "<": lambda a, b: a < b,
+    "<=": lambda a, b: a <= b,
+    "=": lambda a, b: a == b,
+    ">=": lambda a, b: a >= b,
+
+    ``gnd.cli`` catches this and emits a payload-shaped ``internal_error``
+    record at exit 70 instead, so D-11's "a payload on every exit path" survives
+    the failure. It is deliberately a ``ValueError`` subclass: that is what
+    ``json.dumps(allow_nan=False)`` itself raises, so a caller need not know
+    which of the two produced it.
+    """
+
+
+def render_json(payload: Mapping[str, Any]) -> str:
+    """Return the one RFC-8259 rendering shared by API and CLI callers."""
+    try:
+        return json.dumps(payload, allow_nan=False)
+    except ValueError as error:  # includes json's own "Out of range float value"
+        raise NonJsonValueError(
+            f"the payload carries a value RFC 8259 cannot represent (NaN/Infinity): {error}"
+        ) from error
+
+
+def emit(payload: dict[str, Any]) -> None:
+    """Write one payload as a single JSON document to stdout.
+
+    ``allow_nan=False`` (CR-04): RFC 8259 §6 — "Numeric values that cannot be
+    represented … such as Infinity and NaN … are not permitted". Untrusted fact
+    values reach ``verdicts[].offending_facts`` verbatim, and a NaN there made
+    ``json.dumps`` write the bare token ``NaN``. The loader now rejects
+    non-finite values (``population:type-mismatch``), so this is the residual
+    guard for the D-05 path where a role's object type has no resolvable
+    primitive and no type check ever runs.
+    """
+    rendered = render_json(payload)
+    from gnd.assurance_transport import emit_receipt
+
+    emit_receipt((rendered + "\n").encode("utf-8"))
+    print(rendered)
+
+
+def legacy_report_projection(
+    payload: Mapping[str, Any], version: ReportSchemaVersion
+) -> dict[str, Any]:
+    """Project v7 to a frozen wire shape without authenticating any claims."""
+    if payload.get("schema_version") != 7 or version not in (3, 4, 5, 6):
+        raise ValueError("compatibility projection requires v7 and a frozen target")
+    derived = payload.get("derivations")
+    if (derived is not None) != (version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS):
+        raise ValueError("legacy target disagrees with the derivation class")
+    result = {key: value for key, value in payload.items() if key != "assurance"}
+    result["schema_version"] = version
+    if version not in DERIVATION_PAYLOAD_SCHEMA_VERSIONS:
+        result.pop("derivations", None)
+    if version not in MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS:
+        result.pop("model_digest", None)
+    elif result.get("model_digest") is None:
+        raise ValueError("model-bound legacy target requires admitted model identity")
+    return result
+
+
+class CurrentReportVersion(int):
+    """Current model-selected wire plus its legacy class for retained reads.
+
+    This declaration comes from the admitted model, never from report JSON.
+    A bare current integer authorizes only that wire; this additional coordinate permits
+    exact historical predecessor reads without letting the payload select one.
+    """
+
+    def __new__(cls, legacy_version: int, *, current_version: int = 7):
+        if legacy_version not in (5, 6):
+            raise ValueError("current report declaration requires an admitted model class")
+        if current_version not in (7, 9, 10, 11):
+            raise ValueError("current report version must be 7, 9, 10, or 11")
+        value = int.__new__(cls, current_version)
+        value.legacy_version = legacy_version
+        return value
+
+
+def current_payload_schema_version(model: Model) -> CurrentReportVersion:
+    from gnd.redaction import RedactionPolicy
+    from gnd.terms import uses_temporal
+
+    return CurrentReportVersion(
+        model_bound_payload_schema_version(model),
+        current_version=11
+        if uses_temporal(model)
+        else 9
+        if RedactionPolicy.from_model(model).active
+        else 7,
+    )
+
+
+def requested_check_schema_version(
+    model: Model | None,
+    *,
+    admission: bool,
+) -> ReportSchemaVersion:
+    """Select the check wire explicitly; admission uses v10 even before load."""
+    if admission:
+        from gnd.terms import uses_temporal
+
+        if model is not None and uses_temporal(model):
+            return 13
+        return 10
+    if model is None:
+        return 7
+    return current_payload_schema_version(model)
+
+_error_record.__module__ = 'gnd.report'
+_issue_records.__module__ = 'gnd.report'
+payload_schema_version.__module__ = 'gnd.report'
+model_bound_payload_schema_version.__module__ = 'gnd.report'
+_base_payload.__module__ = 'gnd.report'
+_plain_containers.__module__ = 'gnd.report'
+_serializable_verdicts.__module__ = 'gnd.report'
+build_check_payload.__module__ = 'gnd.report'
+build_verify_payload.__module__ = 'gnd.report'
+_serializable_transition_document.__module__ = 'gnd.report'
+build_transition_payload.__module__ = 'gnd.report'
+build_plan_transition_payload.__module__ = 'gnd.report'
+build_validate_payload.__module__ = 'gnd.report'
+NonJsonValueError.__module__ = 'gnd.report'
+render_json.__module__ = 'gnd.report'
+emit.__module__ = 'gnd.report'
+legacy_report_projection.__module__ = 'gnd.report'
+CurrentReportVersion.__module__ = 'gnd.report'
+current_payload_schema_version.__module__ = 'gnd.report'
+requested_check_schema_version.__module__ = 'gnd.report'
+
+# Public dependency and compatibility spellings; same predecessor objects.
+EMPTY_COUNTS = _EMPTY_COUNTS
+OUTCOMES = _OUTCOMES
+base_payload = _base_payload
+error_record = _error_record

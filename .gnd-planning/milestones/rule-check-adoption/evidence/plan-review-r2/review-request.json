@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "plan",
+  "plan": {"path": ".gnd-planning/milestones/rule-check-adoption/notes/rule-check-adoption-plan.md", "sha256": "526d2ff14940391fbefdab0a3536fcb6c51b80e529d85a081214c624610d631f", "media_type": "text/markdown"},
+  "rubric": {
+    "name": "rule-check-adoption milestone plan review r2",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. \"No concerns, and here is what I checked\" is a valid answer.",
+      "Cite one concrete location in the plan for every concern.",
+      "Check that every phase criterion is falsifiable: a run of the stated work could fail it.",
+      "Check the frozen-variant claim: existing report versions (3-14) keep their bytes, and new meaning lands only in report version 15. Verify against src/gnd/report.schema.json and src/gnd/payloads.py where needed.",
+      "Check the baseline (RC3) contract: the violation key is stable under rule and fact insertion, and no run that failed to judge can yield a 'no new violations' claim.",
+      "Check sequencing and dependencies (RC1 -> RC2 -> RC3; RC4, RC5 independent) and that the obligations table maps every source request (issues GR-D1, D2, D3, D5, D6) to a phase.",
+      "Check the reuse claims (O16, O17) against the cited code: src/gnd/address.py, src/gnd/coverage.py, src/gnd/model_index.py.",
+      "Reject unbounded execution: each phase needs measurable budgets and a stop condition.",
+      "Flag any plan statement that relies on an unverified claim without saying so."
+    ]
+  }
+}

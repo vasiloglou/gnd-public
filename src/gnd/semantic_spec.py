@@ -10,6 +10,7 @@ or production-branch coverage claims.
 from dataclasses import replace
 
 from gnd.constraint_families import FAMILIES, resolve_hook
+from gnd.graphs import strongly_connected_components
 from gnd.semantic_ir import IRConstraint, IRFactType, Scalar, SnapshotIR
 
 
@@ -1429,6 +1430,55 @@ def ring_component_witness(
     return violations
 
 
+def ring_pairs(constraint: IRConstraint, snapshot: SnapshotIR) -> list[tuple[Scalar, ...]] | None:
+    """The distinct pairs a ring constraint judges, in canonical order, or None when it cannot be judged."""
+    if constraint.refused != "" or constraint.fact_type not in snapshot.covers:
+        return None
+    fact_position = snapshot_fact_index(snapshot, constraint.fact_type)
+    relation_position = snapshot_relation_index(snapshot, constraint.fact_type)
+    if fact_position < 0 or relation_position < 0:
+        return None
+    if len(snapshot.fact_types[fact_position].roles) != 2:
+        return None
+    source_pairs: list[tuple[Scalar, ...]] = []
+    row_index = 0
+    while row_index < len(snapshot.relations[relation_position].rows):
+        row = snapshot.relations[relation_position].rows[row_index]
+        if len(row) != 2 or row[0] is None or row[1] is None:
+            return None
+        source_pairs.append((row[0], row[1]))
+        row_index += 1
+    pairs = canonical_distinct_rows(source_pairs)
+    return pairs
+
+
+def acyclic_extent(pairs: list[tuple[Scalar, ...]]) -> tuple[list[tuple[Scalar, ...]], list[int]]:
+    """Every pair inside a strongly connected group, in ``pairs`` order, and the group sizes, largest first.
+
+    A group is a component of two or more nodes, or one node that pairs with
+    itself. Report version 15 only; version 7 keeps ``ring_cycle_witness``.
+    """
+    def key(value: Scalar) -> tuple[str, str]:
+        return value.identity_kind, value.token  # NS-IDENT-1
+
+    successors: dict[tuple[str, str], list[tuple[str, str]]] = {}
+    for left, right in pairs:
+        successors.setdefault(key(left), []).append(key(right))
+        successors.setdefault(key(right), [])
+    group_of: dict[tuple[str, str], int] = {}
+    sizes: list[int] = []
+    for component in strongly_connected_components(successors, successors):
+        if len(component) > 1 or component[0] in successors[component[0]]:
+            for member in component:
+                group_of[member] = len(sizes)
+            sizes.append(len(component))
+    rows = [
+        pair for pair in pairs
+        if key(pair[0]) in group_of and group_of[key(pair[0])] == group_of.get(key(pair[1]))
+    ]
+    return rows, sorted(sizes, reverse=True)
+
+
 def ring_result(constraint: IRConstraint, snapshot: SnapshotIR) -> tuple[int, list[list[Scalar]]]:
     """NF-RING primitive and NF-RING-SHAPE-2 combined result."""
     witness: list[list[Scalar]] = []
@@ -1447,28 +1497,11 @@ def ring_result(constraint: IRConstraint, snapshot: SnapshotIR) -> tuple[int, li
         "symmetric-irreflexive",
         "symmetric-intransitive",
     )
-    if (
-        constraint.family != "ring"
-        or constraint.variant not in variants
-        or constraint.refused != ""
-        or constraint.fact_type not in snapshot.covers
-    ):
+    if constraint.family != "ring" or constraint.variant not in variants:
         return -1, witness
-    fact_position = snapshot_fact_index(snapshot, constraint.fact_type)
-    relation_position = snapshot_relation_index(snapshot, constraint.fact_type)
-    if fact_position < 0 or relation_position < 0:
+    pairs = ring_pairs(constraint, snapshot)
+    if pairs is None:
         return -1, witness
-    if len(snapshot.fact_types[fact_position].roles) != 2:
-        return -1, witness
-    source_pairs: list[tuple[Scalar, ...]] = []
-    row_index = 0
-    while row_index < len(snapshot.relations[relation_position].rows):
-        row = snapshot.relations[relation_position].rows[row_index]
-        if len(row) != 2 or row[0] is None or row[1] is None:
-            return -1, []
-        source_pairs.append((row[0], row[1]))
-        row_index += 1
-    pairs = canonical_distinct_rows(source_pairs)
     components = (
         ("asymmetric", "intransitive")
         if constraint.variant == "asymmetric-intransitive"

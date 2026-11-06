@@ -85,7 +85,7 @@ The additive policy for ``gnd evolve preview --policy additive`` (MG2).
 | `effective_populated(before, proposal, *, populated_args) -> frozenset[str]` | function | 71 | The fact types the policy treats as populated (plan MG-D4 (a)+(b)). |
 | `diff_paths(before, after) -> list[tuple[str, Any, Any]]` | function | 144 | (no docstring) |
 | `constraint_change(path, before, after, *, family) -> str` | function | 194 | The closed strengthening/weakening list (plan §2.2, MG-D3 (a), (p1) F). |
-| `additive_policy_issues(before, proposal, *, populated) -> tuple[PolicyIssue, ...]` | function | 302 | Every operation the additive policy refuses, in proposal order. |
+| `additive_policy_issues(before, proposal, *, populated) -> tuple[PolicyIssue, ...]` | function | 303 | Every operation the additive policy refuses, in proposal order. |
 
 ## gnd.evolve.service — `src/gnd/evolve/service.py`
 Components: evolve.service

@@ -60,6 +60,7 @@ from gnd.errors import (
     ValidationIssue,
     issues_from_validation_error,  # historical compatibility export
 )
+from gnd.graphs import strongly_connected_components
 from gnd.model._induction import (
     _induced_constraint_paths,
     _induction_strings,
@@ -3632,45 +3633,8 @@ def derivation_classifications(doc: Any) -> tuple[DerivationClassification, ...]
 
 def _derivation_components(dependencies: dict[str, set[str]]) -> tuple[tuple[str, ...], ...]:
     """All SCCs in a total, iterative graph walk."""
-    nodes = set(dependencies)
-    outgoing = {node: sorted(dependencies[node] & nodes) for node in nodes}
-    incoming: dict[str, list[str]] = {node: [] for node in nodes}
-    for node, children in outgoing.items():
-        for child in children:
-            incoming[child].append(node)
-    seen: set[str] = set()
-    finish: list[str] = []
-    for root in sorted(nodes):
-        if root in seen:
-            continue
-        seen.add(root)
-        stack = [(root, iter(outgoing[root]))]
-        while stack:
-            node, children = stack[-1]
-            child = next(children, None)
-            if child is None:
-                finish.append(node)
-                stack.pop()
-            elif child not in seen:
-                seen.add(child)
-                stack.append((child, iter(outgoing[child])))
-    seen.clear()
-    result = []
-    for root in reversed(finish):
-        if root in seen:
-            continue
-        component = []
-        pending = [root]
-        seen.add(root)
-        while pending:
-            node = pending.pop()
-            component.append(node)
-            for parent in incoming[node]:
-                if parent not in seen:
-                    seen.add(parent)
-                    pending.append(parent)
-        result.append(tuple(sorted(component)))
-    return tuple(result)
+    outgoing = {node: sorted(dependencies[node] & set(dependencies)) for node in sorted(dependencies)}
+    return tuple(tuple(sorted(component)) for component in strongly_connected_components(outgoing, outgoing))
 
 
 def derivation_strata(doc: Any) -> list[tuple[str, ...]]:
@@ -4506,56 +4470,11 @@ def _derivation_cycles(doc: Any) -> list[list[str]]:
     dependencies = derivation_dependencies(doc)
     derived = set(dependencies)
     edges = {head: sorted(dependencies[head] & derived) for head in sorted(derived)}
-    index: dict[str, int] = {}
-    low: dict[str, int] = {}
-    on_stack: set[str] = set()
-    stack: list[str] = []
-    components: list[list[str]] = []
-    counter = 0
-
-    def strongconnect(node: str) -> None:
-        nonlocal counter
-        # Iterative: a deep chain must not blow the Python stack in a validator
-        # that promises totality.
-        work: list[tuple[str, int]] = [(node, 0)]
-        while work:
-            current, child_index = work[-1]
-            if child_index == 0:
-                index[current] = low[current] = counter
-                counter += 1
-                stack.append(current)
-                on_stack.add(current)
-            recursed = False
-            for position in range(child_index, len(edges.get(current, []))):
-                child = edges[current][position]
-                if child not in index:
-                    work[-1] = (current, position + 1)
-                    work.append((child, 0))
-                    recursed = True
-                    break
-                if child in on_stack:
-                    low[current] = min(low[current], index[child])
-            if recursed:
-                continue
-            if low[current] == index[current]:
-                component: list[str] = []
-                while True:
-                    member = stack.pop()
-                    on_stack.discard(member)
-                    component.append(member)
-                    if member == current:
-                        break
-                if len(component) > 1 or current in edges.get(current, []):
-                    components.append(sorted(component))
-            work.pop()
-            if work:
-                parent, _ = work[-1]
-                low[parent] = min(low[parent], low[current])
-
-    for node in sorted(edges):
-        if node not in index:
-            strongconnect(node)
-    return sorted(components)
+    return sorted(
+        sorted(component)
+        for component in strongly_connected_components(edges, edges)
+        if len(component) > 1 or component[0] in edges[component[0]]
+    )
 
 
 def _rule_derivation_unstratified(doc: dict[str, Any]) -> list[ValidationIssue]:

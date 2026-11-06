@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC1/dynamic-query-successor.json",
+  "predecessor_sha256": "c2f734394d2dc3990c2ba6b4d7c9724c636252b063576ff1ef68a1b9d460588d",
+  "reason": "rule-check-adoption RC2 (acyclic extent, report version 15; spec 27258a9e, corpus 9130e93d): the three strongly-connected-component walks (pyrel_rules._strata, model._validation._derivation_components and _derivation_cycles) move onto gnd.graphs.strongly_connected_components; semantic_spec.ring_pairs takes ring_result's pair extraction unchanged; new syntax candidates are the SCC walk's own index/low/work subscripts, acyclic_extent's group lookups keyed by NS-IDENT-1 identity, and type annotations of the version-15 extent map (checker.acyclic_extents, payloads, checking_service) and of the text map that now carries the message. Syntax census only; the exact query policy changes only by the moved ring read.",
+  "removed": [
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "dict[str, tuple[str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "dict[str, int]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "index[node]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "index[nxt]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "list[str]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "low[node]",
+      3
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "low[parent]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "reads[node]",
+      2
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "reads[node][i]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_strata",
+      "work[-1]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "Mapping[str, tuple[str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "Mapping[str, tuple[str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "tuple[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_result",
+      "list[tuple[Scalar, ...]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_result",
+      "snapshot.fact_types[fact_position]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_result",
+      "snapshot.relations[relation_position]",
+      2
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_result",
+      "snapshot.relations[relation_position].rows[row_index]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_result",
+      "tuple[Scalar, ...]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/checker/_core.py",
+      "acyclic_extents",
+      "Iterable[str]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "acyclic_extents",
+      "dict[str, tuple[list[list[Any]], str]]",
+      2
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "acyclic_extents",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "acyclic_extents",
+      "list[list[Any]]",
+      2
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "acyclic_extents",
+      "projected[len(rows):]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "acyclic_extents",
+      "tuple[list[list[Any]], str]",
+      2
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "dict[str, tuple[list[list[Any]], str]]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "list[list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "tuple[list[list[Any]], str]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "dict[str, tuple[str, str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "tuple[str, str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "Iterable[N]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "Mapping[N, Sequence[N]]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "Sequence[N]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "children[position]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "dict[N, int]",
+      2
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "index[child]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "index[node]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "list[N]",
+      4
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "list[list[N]]",
+      2
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "list[tuple[N, int]]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "low[node]",
+      3
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "low[parent]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "set[N]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "successors.get(node, ())",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "tuple[N, int]",
+      1
+    ],
+    [
+      "src/gnd/graphs.py",
+      "strongly_connected_components",
+      "work[-1]",
+      2
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "Mapping[str, tuple[str, str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "tuple[str, str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "Mapping[str, tuple[str, str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "tuple[str, str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "Mapping[str, tuple[list[list[Any]], str]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "extents.get(row['constraint_ref'])",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "list[list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "tuple[list[list[Any]], str]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "Mapping[str, tuple[list[list[Any]], str]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "list[list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "tuple[list[list[Any]], str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "dict[tuple[str, str], int]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "dict[tuple[str, str], list[tuple[str, str]]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "group_of.get(key(pair[1]))",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "group_of[key(pair[0])]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "list[int]",
+      2
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "list[tuple[Scalar, ...]]",
+      2
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "successors[component[0]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "tuple[Scalar, ...]",
+      2
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "tuple[list[tuple[Scalar, ...]], list[int]]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "acyclic_extent",
+      "tuple[str, str]",
+      3
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "key",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_pairs",
+      "list[tuple[Scalar, ...]]",
+      2
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_pairs",
+      "snapshot.fact_types[fact_position]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_pairs",
+      "snapshot.relations[relation_position]",
+      2
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_pairs",
+      "snapshot.relations[relation_position].rows[row_index]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_pairs",
+      "tuple[Scalar, ...]",
+      2
+    ],
+    [
+      "src/gnd/verbalize.py",
+      "ring_extent_message",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/verbalize.py",
+      "ring_extent_message",
+      "list[tuple]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7252,
+  "result_occurrences": 9063
+}

@@ -2,13 +2,16 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
-owner ruled the step-2 asks over r1 (sha256 `846943be…e8cd`, commit
-27258a9e), answering "How do you rule on RC2's decisions D1-D7?" with
-"Approve all as proposed" (o, 2026-11-06). D1 is corpus-first, so no
-implementation file is created or edited until the owner approves the
-corpus. `auto=false`. Prior status (r1): "Draft, awaiting the owner gate
-(process-phase step 2)."
+**Owner-approved (2026-11-06): corpus and spec; implementation in
+progress.** The owner approved the RC2 corpus (commit 9130e93d) with the
+words "Approve, implement" (o, 2026-11-06), answering "Do you approve the
+RC2 corpus answers?". Prior status: "Owner-decided (2026-11-06); approval
+pending on the corpus (§11)."
+
+Earlier gate: the owner ruled the step-2 asks over r1 (sha256
+`846943be…e8cd`, commit 27258a9e), answering "How do you rule on RC2's
+decisions D1-D7?" with "Approve all as proposed" (o, 2026-11-06).
+`auto=false`.
 
 ## 2. Provenance
 
@@ -285,3 +288,31 @@ D5's successor answers for RC1's corpus.
   graph differs, the move keeps `_strata`'s order by construction (M1 is
   told the same root and successor order), and T8 fails rather than hides it.
 - No new dependency, flag, refusal or report version.
+
+## Implementation findings (step 3, recorded as found)
+
+- **I1 (M5 refined).** The checker does not evaluate rings in
+  `checker/_core.py`; `check_legacy` adapts a snapshot over the derivation
+  view and evaluates `semantic_spec.ring_result` through the correspondence
+  layer, then projects each witness value back to its public value through
+  the observation's origins. `checker.acyclic_extents` therefore rebuilds
+  that same snapshot (same derivation view, `adapt_snapshot_observed`) and
+  projects the extent rows through `correspondence.project_finding`, so a
+  row's values are the ones version 7 would print. A ref whose pairs cannot
+  be read, or that holds no group, keeps its version-7 row and message.
+- **I2.** Group membership is keyed by NS-IDENT-1 identity
+  (`identity_kind`, `token`), not by dataclass equality, matching how
+  `ring_result` treats two scalars as the same value.
+- **I3 (one test edited).** `tests/test_v6_phase2_ring.py` mutates the line
+  `pairs = canonical_distinct_rows(source_pairs)` inside a function named by
+  string; the line moved, text unchanged, into `ring_pairs`, so two of its
+  mutation cases now name `ring_pairs`. Every assertion is unchanged.
+- **I4 (guards, as RC1 I1).** The RF4 rows for `_run_check_raw` and
+  `build_check_payload` and the RF5 row for `_print_report` in
+  `compiled-snapshot-obligations/evidence/CI/source-successors.json` are
+  extended with an RC2 clause and their new digests; RC2's static
+  (`evidence/RC2/query-successor.json`: one read moved from `ring_result` to
+  `ring_pairs`) and dynamic (`evidence/RC2/dynamic-query-successor.json`)
+  query deltas are appended to their chains.
+- **I5.** The component index was stale against RC1 and main; regenerating
+  it for `infra.graphs` also refreshed those generated rows.

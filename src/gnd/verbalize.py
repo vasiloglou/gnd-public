@@ -455,6 +455,28 @@ def ring_message(
     return f"{head} — violated: {'; '.join(parts)}."
 
 
+def ring_extent_message(
+    variant: str,
+    fact_type_id: str,
+    sizes: list[int],
+    edges: int,
+    others: list[tuple],
+) -> str:
+    """Report version 15: an acyclic failure named by its strongly connected groups.
+
+    ``others`` are a composite variant's remaining witnesses, worded as
+    ``ring_message`` words them.
+    """
+    groups = len(sizes)
+    extent = (
+        f"{groups} strongly connected {'group' if groups == 1 else 'groups'} "
+        f"({'size' if groups == 1 else 'sizes'} {', '.join(str(size) for size in sizes)}) "
+        f"{'holds' if groups == 1 else 'hold'} {edges} {'edge' if edges == 1 else 'edges'}"
+    )
+    parts = [extent, *(f"{variant} broken by {_render_tuple(witness)}" for witness in others)]
+    return f"The relation {_quote(fact_type_id)} is {variant} — violated: {'; '.join(parts)}."
+
+
 def unresolved_role_message(role_name: str, fact_type_id: str) -> str:
     return (
         f"Constraint references role {_quote(role_name)}, which does not exist on "

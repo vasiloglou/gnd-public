@@ -32,6 +32,7 @@ from pathlib import Path
 from typing import Any
 
 from gnd.errors import ModelLoadError, ModelValidationError
+from gnd.graphs import strongly_connected_components
 from gnd.model import load_model_bytes
 from gnd.model_index import ModelIndex
 
@@ -681,37 +682,8 @@ def _rule_atoms(rule: dict[str, Any]) -> list[dict[str, Any]]:
 def _strata(heads: dict[str, dict[str, Any]]) -> list[str]:
     """Derived heads ordered so every head comes after the heads it reads (recursive groups stay together)."""
     reads = {h: [a["fact_type"] for a in _rule_atoms(f["derivation_rule"]) if a["fact_type"] in heads] for h, f in heads.items()}
-    order: list[str] = []
-    index: dict[str, int] = {}
-    low: dict[str, int] = {}
-    stack: list[str] = []
-    for root in heads:   # Tarjan's algorithm, iterative; components come out dependencies first
-        if root in index:
-            continue
-        work = [(root, 0)]
-        while work:
-            node, i = work.pop()
-            if i == 0:
-                index[node] = low[node] = len(index)
-                stack.append(node)
-            if i < len(reads[node]):
-                work.append((node, i + 1))
-                nxt = reads[node][i]
-                if nxt not in index:
-                    work.append((nxt, 0))
-                elif nxt in stack:
-                    low[node] = min(low[node], index[nxt])
-                continue
-            if low[node] == index[node]:
-                while True:
-                    member = stack.pop()
-                    order.append(member)
-                    if member == node:
-                        break
-            if work:
-                parent = work[-1][0]
-                low[parent] = min(low[parent], low[node])
-    return order
+    # Tarjan's completion order puts dependencies first; members keep stack-pop order.
+    return [member for component in strongly_connected_components(heads, reads) for member in component]
 
 
 def _unswap(model: _Model, atoms: list[Atom], seen_order: list[str] | tuple[str, ...] = ()) -> list[Atom]:

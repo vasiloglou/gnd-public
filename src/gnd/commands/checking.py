@@ -232,12 +232,13 @@ def _cmd_transition(
         print(f"{prefix}: {result.error}")
     return result.exit_code
 
-def _declared_from_payload(payload: dict) -> dict[str, tuple[str, str | None]] | None:
-    """(address, remedy) per positional ref, read back from a version-15 payload."""
+def _declared_from_payload(payload: dict) -> dict[str, tuple[str, str | None, str]] | None:
+    """(address, remedy, message) per positional ref, read back from a version-15 payload."""
     if payload.get("schema_version") != 15:
         return None
     return {
-        row["constraint_ref"]: (row["address"], row["remedy"]) for row in payload["verdicts"]
+        row["constraint_ref"]: (row["address"], row["remedy"], row["message"])
+        for row in payload["verdicts"]
     }
 
 

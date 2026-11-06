@@ -166,31 +166,29 @@ def _derivation_verdict_lines(
     return lines
 
 def _identified_verdict_lines(
-    verdict: Any, declared: Mapping[str, tuple[str, str | None]] | None
+    verdict: Any, declared: Mapping[str, tuple[str, str | None, str]] | None
 ) -> list[str]:
     """A constraint verdict line, named by its declared address and followed by its remedy.
 
-    ``declared`` maps a positional ref to (address, remedy) for ``check --rule-ids``;
-    without it, or for a constraint that declares no id, the line is the plain one.
+    ``declared`` maps a positional ref to (address, remedy, message) for
+    ``check --rule-ids``; the message is the version-15 one, which differs from
+    the report's for a failing acyclic rule (RC2). Without it, the line is the
+    plain one.
     """
     if declared is None or verdict.constraint_ref not in declared:
         return [_constraint_verdict_line(verdict)]
-    address, remedy = declared[verdict.constraint_ref]
-    if address == verdict.constraint_ref:
-        line = _constraint_verdict_line(verdict)
-    else:
-        line = (
-            f"  [{verdict.verdict}] {verbalize.path_segment(address)} "
-            f"({verbalize.path_segment(verdict.constraint_ref)}): "
-            f"{verbalize.line_text(verdict.message)}"
-        )
+    address, remedy, message = declared[verdict.constraint_ref]
+    named = verbalize.path_segment(verdict.constraint_ref)
+    if address != verdict.constraint_ref:
+        named = f"{verbalize.path_segment(address)} ({named})"
+    line = f"  [{verdict.verdict}] {named}: {verbalize.line_text(message)}"
     if remedy is None:
         return [line]
     return [line, f"    remedy: {verbalize.line_text(remedy)}"]
 
 
 def _print_report(
-    report: CheckReport, declared: Mapping[str, tuple[str, str | None]] | None = None
+    report: CheckReport, declared: Mapping[str, tuple[str, str | None, str]] | None = None
 ) -> None:
     blocking = [
         verdict

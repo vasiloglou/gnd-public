@@ -1,5 +1,5 @@
 BLOCKING (alethic)
-  [fail] constraint:no_import_loops (fact_types[component_uses_component].constraints[0]): The relation 'component_uses_component' is acyclic — violated: cycle through 'core.base_types' -> 'core.identifiers' -> 'core.base_types'.
+  [fail] constraint:no_import_loops (fact_types[component_uses_component].constraints[0]): The relation 'component_uses_component' is acyclic — violated: 1 strongly connected group (size 2) holds 2 edges.
     remedy: Break the loop: move the shared code into a lower component both can use.
   [fail] constraint:no_legacy_area (constraints[0]): Guarded comparison consequent evaluated over bindings=3 — violated by bindings: {'$c': 'cli', '$a': 'legacy'}.
     remedy: Move the component out of the legacy area, or retire it.

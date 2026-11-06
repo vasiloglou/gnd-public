@@ -1,0 +1,8 @@
+population: { model: ../models/graph-composite.orm.yaml, model_id: urn:gnd-fixture:rc2-graph-composite@1, source: fixture, covers: [uses] }
+facts:
+  uses:
+    - { user: p, used: q }
+    - { user: q, used: p }
+    - { user: r, used: s }
+    - { user: s, used: t }
+    - { user: r, used: t }

@@ -2,9 +2,13 @@
 
 ## 1. Status
 
-**r1, 2026-11-06. Draft, awaiting the owner gate (process-phase step 2).**
-No implementation file is created or edited before the owner approves this
-spec or its corpus (§11). `auto=false`.
+**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
+owner ruled the step-2 asks over r1 (sha256 `846943be…e8cd`, commit
+27258a9e), answering "How do you rule on RC2's decisions D1-D7?" with
+"Approve all as proposed" (o, 2026-11-06). D1 is corpus-first, so no
+implementation file is created or edited until the owner approves the
+corpus. `auto=false`. Prior status (r1): "Draft, awaiting the owner gate
+(process-phase step 2)."
 
 ## 2. Provenance
 
@@ -162,13 +166,13 @@ in memory; nothing large is committed.
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first**: RC2 changes a serialized format (version-15 rows and message), the shape the convergence reference defaults to a corpus |
-| D2 | Does the extent also apply to the `acyclic` part of `acyclic-intransitive`? | **yes**: its acyclic rows would otherwise stay unstable for RC3's baseline. Its intransitive rows are unchanged |
-| D3 | The third SCC implementation (F1) | **move all three** onto M1, so RC2-C6's "keep no Tarjan of their own" holds for every SCC in `src/gnd`, not only the two the plan named |
-| D4 | Home and name | `src/gnd/graphs.py`, `strongly_connected_components`, layer `infrastructure` (it imports nothing from `gnd`) |
-| D5 | RC1's approved goldens `expected/declared-fail.json` and `expected/declared-fail.txt` hold a version-15 acyclic verdict and will change: rows `[[core.base_types, core.identifiers], [core.identifiers, core.base_types]]`, message "1 strongly connected group (size 2) holds 2 edges" | **approve the successor** answers; the old answers stay in git history and the RC2 record cites both digests |
-| D6 | Text output under `--rule-ids` | prints the version-15 message (the extent), so text and JSON agree; without the flag text is unchanged |
-| D7 | Review over the spec bytes | none (as RC1) |
+| D1 | Approval instrument | **corpus-first**: RC2 changes a serialized format (version-15 rows and message), the shape the convergence reference defaults to a corpus **Ruled (o, 2026-11-06): as proposed.** |
+| D2 | Does the extent also apply to the `acyclic` part of `acyclic-intransitive`? | **yes**: its acyclic rows would otherwise stay unstable for RC3's baseline. Its intransitive rows are unchanged **Ruled (o, 2026-11-06): as proposed.** |
+| D3 | The third SCC implementation (F1) | **move all three** onto M1, so RC2-C6's "keep no Tarjan of their own" holds for every SCC in `src/gnd`, not only the two the plan named **Ruled (o, 2026-11-06): as proposed.** |
+| D4 | Home and name | `src/gnd/graphs.py`, `strongly_connected_components`, layer `infrastructure` (it imports nothing from `gnd`) **Ruled (o, 2026-11-06): as proposed.** |
+| D5 | RC1's approved goldens `expected/declared-fail.json` and `expected/declared-fail.txt` hold a version-15 acyclic verdict and will change: rows `[[core.base_types, core.identifiers], [core.identifiers, core.base_types]]`, message "1 strongly connected group (size 2) holds 2 edges" | **approve the successor** answers; the old answers stay in git history and the RC2 record cites both digests **Ruled (o, 2026-11-06): as proposed.** |
+| D6 | Text output under `--rule-ids` | prints the version-15 message (the extent), so text and JSON agree; without the flag text is unchanged **Ruled (o, 2026-11-06): as proposed.** |
+| D7 | Review over the spec bytes | none (as RC1) **Ruled (o, 2026-11-06): as proposed.** |
 
 ## 8. Tests and verification ledger
 
@@ -243,6 +247,31 @@ D5's successor answers for RC1's corpus.
   listed for the record's open questions.
 - **F3.** RC1's approved corpus contains a failing acyclic verdict under
   version 15, so RC2 changes approved answers (D5).
+
+## Corpus findings (recorded while authoring the corpus, 2026-11-06)
+
+- **C1 (corrects M4's wording).** Today's composite message does not say
+  `intransitive broken by`: the ring message hook passes the variant name
+  for every witness, so it reads `acyclic-intransitive broken by (…)` for
+  each row. The version-15 composite message keeps that existing wording
+  for the non-loop rows and replaces only the cycle part (corpus
+  `composite`).
+- **C2 (constrains M5).** The version-15 builder cannot tell a composite's
+  cycle row from its intransitive rows by shape (a 2-cycle path and a
+  triple both have three members). M5 therefore recomputes both parts from
+  `ring_pairs` (the loop extent, then the `intransitive` witnesses) rather
+  than editing the checker's rows.
+- **C3.** With the first disjoint loop tried (`x -> y -> z`), today's
+  report kept naming the old loop, so it showed nothing. The corpus uses
+  `A -> B -> C`, which sorts first, and today's report then drops the old
+  loop entirely; that is the defect RC2-C2 removes.
+- **C4.** The generator's graph is checked by the oracle: groups
+  `[90, 19, 13, 7, 3, 3, 2, 2]`, 780 of the 2,047 edges inside them. Plain
+  `gnd check` over it took 1.24 s wall clock (`/usr/bin/time`), as O21
+  measured.
+- Red at commit: 9 failing (the four failing `--rule-ids` cases, the text
+  case, RC2-C2, RC1's `declared-fail` JSON and text, and RC1's P2, which
+  reruns them); the v7 controls and `clean` pass.
 
 ## Implementability sweep (step 1, author inspection)
 

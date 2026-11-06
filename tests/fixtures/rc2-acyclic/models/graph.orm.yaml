@@ -1,0 +1,22 @@
+version: 2
+model_id: urn:gnd-fixture:rc2-graph@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: component, name: Component, kind: entity, reference: { mode: popular, value_type: component_name } }
+  - { id: component_name, name: ComponentName, kind: value, primitive: String }
+fact_types:
+  - id: uses
+    reading: "{Component} uses {Component}"
+    roles:
+      - { object_type: component, role_name: user }
+      - { object_type: component, role_name: used }
+    constraints:
+      - id: no_import_loops
+        type: ring
+        variant: acyclic
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        remedy: "Break each loop: move the shared code into a lower component."
+        provenance: { user_quote: "No component may import itself, directly or through others." }
+rejected_proposals: []

@@ -24,13 +24,14 @@
         ]
       },
       "after": {
-        "raw_sha256": "bc98194756c7eb15f5e90332500e555d823bba76590160f9b39f66e5bd5adfae",
-        "algorithm_sha256": "24274114f2f85dd74723dc5e5554e00aea7079a7861f371ab678ecbb878f43d5",
+        "raw_sha256": "8715ba0e537642645521579b8a006ffccd6c2aa8c4e7f3aedce70dd425273af6",
+        "algorithm_sha256": "1db43b0553122c76bf66a571a5a6cb05852c6444a03ed8ab2115e8000853970a",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
           "CompositionError",
           "MAX_DOCUMENT_BYTES",
+          "acyclic_extents",
           "bind_anchors",
           "bind_population",
           "calculation_scope",
@@ -42,7 +43,7 @@
           "verify_composition"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): at wire version 15 only, failing ring verdicts' acyclic extents are computed and forwarded to the payload."
     },
     {
       "kind": "RF4",
@@ -613,11 +614,11 @@
         "imports": []
       },
       "after": {
-        "raw_sha256": "7d5f6658856d3985df9901224c905d1a94f4befbeaa044c850119cdc9cdb812e",
-        "algorithm_sha256": "6fd7b09411581b56d8a55d7104c615820f773566172a05db87b10ef4ada4967d",
+        "raw_sha256": "049907a553e99c1992f09c1298c54ccc305da44b0336bc7d3c7a4e879477a1c3",
+        "algorithm_sha256": "62e329513fe95f8df4e69f83ff0fd5923b52df745dbeee79b7b5225335814660",
         "imports": []
       },
-      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): adds the optional declared keyword; for schema_version 15 each verdict gains its constraint's address, addressing and remedy, the empty novelty and row_novelty, and the report gains baseline and allow_vacuous; every other version is unchanged."
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): adds the optional declared keyword; for schema_version 15 each verdict gains its constraint's address, addressing and remedy, the empty novelty and row_novelty, and the report gains baseline and allow_vacuous; every other version is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the optional extents keyword replaces a failing acyclic verdict's rows and message under schema_version 15 only."
     },
     {
       "kind": "RF4",
@@ -647,10 +648,28 @@
         "algorithm_sha256": "3a5132bb92bff523c47b9783ec48bddc9c955f2f3a886e375cdb42bcd37e4701"
       },
       "after": {
-        "raw_sha256": "6a87feafe1b408947c2fd8680586c070621fe80f9a6dcac66dc72750af5ee5ff",
-        "algorithm_sha256": "f570ea0a4409c1925e8ab6890c45921370e30bb5400e8dc26066cb33e913be5a"
+        "raw_sha256": "1061a377a63f13785d3d6401d76aa8de4ff5164d7f40fb67c09641cdae87d9bd",
+        "algorithm_sha256": "157479326ca579daac76af96dccf05ef593633c65c305eaa2e4ced9310b97925"
       },
-      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged."
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the declared map carries the version-15 message, which the text line prints; without the map the output is unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "_derivation_components",
+      "home": "gnd.model._validation",
+      "before": "da860ad95d1fc65494dca353ac32446eb47103bd943d0362e7c8ed04f6372b76",
+      "after": "dbdfdaaa72f642043c5523ad8bb89d2cde06630f28cc53cf5fd8042d6bdd929e",
+      "reason": "rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d, review fix Q2): the iterative Kosaraju walk is replaced by gnd.graphs.strongly_connected_components, the one shared SCC home (RC-D10, D3); each component is still a sorted tuple, and its two callers depend only on membership (derivation_strata orders by content). The node set is built once."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "_derivation_cycles",
+      "home": "gnd.model._validation",
+      "before": "195096f8289d7b7cbf12cac7f07425018f4f31f16d46247d8943e7088472701a",
+      "after": "66094aea3a57d6e7f4dcfa2b22e485af884e0d787b7f77ae99ace1a4a9b20a68",
+      "reason": "rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the private iterative Tarjan is replaced by gnd.graphs.strongly_connected_components (RC-D10, D3); it returns the same sorted cycles (components of two or more heads, or a self-looping head)."
     }
   ]
 }

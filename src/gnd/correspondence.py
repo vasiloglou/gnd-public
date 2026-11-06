@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from contextvars import ContextVar
 from dataclasses import dataclass, fields, replace
 from fractions import Fraction
@@ -839,19 +839,22 @@ def _indexed_guarded_exists_verdict(
     return verdict, None, witness
 
 
+def evaluation_snapshot(snapshot: SnapshotIR, family: str) -> SnapshotIR:
+    """The snapshot a constraint of ``family`` is evaluated over.
+
+    `covers` is an epistemic input for mandatory participation.  The
+    production checker has always evaluated other declared families over
+    admitted facts even when a caller omitted the optional coverage
+    assertion.  Give the pure provider that same admitted relation view
+    without altering the observation or public coverage report.
+    """
+    if family in {"mandatory", "mandatory-disjunctive"}:
+        return snapshot
+    return replace(snapshot, covers=tuple(row.id for row in snapshot.fact_types))
+
+
 def _evaluate_constraint(adapted, constraint, aliases, reference_work):
-    semantic_snapshot = adapted.snapshot
-    if constraint.family not in {"mandatory", "mandatory-disjunctive"}:
-        # `covers` is an epistemic input for mandatory participation.  The
-        # production checker has always evaluated other declared families
-        # over admitted facts even when a caller omitted the optional
-        # coverage assertion.  Give the pure provider that same admitted
-        # relation view without altering the observation or public
-        # coverage report.
-        semantic_snapshot = replace(
-            adapted.snapshot,
-            covers=tuple(row.id for row in adapted.snapshot.fact_types),
-        )
+    semantic_snapshot = evaluation_snapshot(adapted.snapshot, constraint.family)
     from gnd.temporal_guarded import evaluate_temporal_guard
 
     temporal = evaluate_temporal_guard(constraint, semantic_snapshot)
@@ -1141,36 +1144,6 @@ def project_finding(
         coordinates.update(_subject_occurrences(finding.constraint_id, observation))
     elif finding.verdict in {"fail", "warning"}:
         coordinates.update(index.coordinates(finding.witness))
-    rows: list[Any] = []
-    used_origins: set[int] = set()
-    scope: frozenset[str] = frozenset()
-    if not finding.witness_keys:
-        scope = frozenset(dict(observation.constraint_subject_types).get(finding.constraint_id, ()))
-    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins, scope=scope))
-    try:
-        for row in finding.witness:
-            projected: list[PublicScalar] = []
-            for position, scalar in enumerate(row):
-                witness_key = (
-                    finding.witness_keys[position] if position < len(finding.witness_keys) else None
-                )
-                value = _origin_value(
-                    scalar,
-                    observation.origins,
-                    used_origins,
-                    witness_key=witness_key,
-                )
-                if value is _MISSING:
-                    raise ValueError(
-                        f"witness for {finding.scope_id!r} has no admissible origin"
-                    )
-                projected.append(value)
-            if finding.family == "guarded" or finding.witness_keys:
-                rows.append(dict(zip(finding.witness_keys, projected, strict=True)))
-            else:
-                rows.append(tuple(projected))
-    finally:
-        _ORIGIN_SELECTION.reset(token)
     return ProjectedFinding(
         finding.scope_id,
         finding.constraint_id,
@@ -1178,10 +1151,58 @@ def project_finding(
         finding.modality,
         finding.verdict,
         finding.reason_code,
-        tuple(rows),
+        project_witness(
+            observation,
+            index,
+            scope_id=finding.scope_id,
+            constraint_id=finding.constraint_id,
+            family=finding.family,
+            witness=finding.witness,
+            witness_keys=finding.witness_keys,
+        ),
         finding.applicable_scope_ids,
         tuple(sorted(coordinates)),
     )
+
+
+def project_witness(
+    observation: SnapshotObservation,
+    index: OriginIndex,
+    *,
+    scope_id: str,
+    constraint_id: str,
+    family: str,
+    witness: Sequence[tuple[Scalar, ...]],
+    witness_keys: tuple[str, ...],
+) -> tuple[Any, ...]:
+    """Each witness row with its scalars replaced by their admitted public values."""
+    rows: list[Any] = []
+    used_origins: set[int] = set()
+    scope: frozenset[str] = frozenset()
+    if not witness_keys:
+        scope = frozenset(dict(observation.constraint_subject_types).get(constraint_id, ()))
+    token = _ORIGIN_SELECTION.set(OriginSelection(index, used_origins, scope=scope))
+    try:
+        for row in witness:
+            projected: list[PublicScalar] = []
+            for position, scalar in enumerate(row):
+                witness_key = witness_keys[position] if position < len(witness_keys) else None
+                value = _origin_value(
+                    scalar,
+                    observation.origins,
+                    used_origins,
+                    witness_key=witness_key,
+                )
+                if value is _MISSING:
+                    raise ValueError(f"witness for {scope_id!r} has no admissible origin")
+                projected.append(value)
+            if family == "guarded" or witness_keys:
+                rows.append(dict(zip(witness_keys, projected, strict=True)))
+            else:
+                rows.append(tuple(projected))
+    finally:
+        _ORIGIN_SELECTION.reset(token)
+    return tuple(rows)
 
 
 def project_snapshot(
@@ -1226,3 +1247,67 @@ def correspond_snapshot(
         variant_aliases=variant_aliases,
         reference_work=ReferenceJoinWork() if model.reference_populations else None,
     )
+
+
+ACYCLIC_EXTENT_VARIANTS = frozenset({"acyclic", "acyclic-intransitive"})
+
+
+def acyclic_extents(
+    model: Model, population: Population, refs: Iterable[str]
+) -> dict[str, tuple[list[list[Any]], str]]:
+    """Report version 15 (RC2): each failing acyclic ref's in-group edges and message.
+
+    Reads the pairs ``check_legacy`` judges (the same derivation view and
+    snapshot) and projects the rows through the same origin projection as a
+    finding's witness. No version-7 path calls this. A ref whose pairs cannot
+    be read, or that holds no group, is left out, so its version-7 row stands.
+    """
+    from gnd import extensions as extension_core
+    from gnd import verbalize
+    from gnd.model_index import ModelIndex
+    from gnd.semantic_spec import acyclic_extent, ring_component_witness, ring_pairs
+
+    asked = set(refs)
+    wanted = {
+        ref for ref, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+        if ref in asked and constraint.get("type") == "ring"
+        and constraint.get("variant") in ACYCLIC_EXTENT_VARIANTS
+    }
+    if not wanted:
+        return {}
+    with extension_core.calculation_scope(model, population):
+        extensions, _ = extension_core.evaluate_derivations(model, population)
+        view: Any = population
+        if extensions:
+            view = extension_core.constraint_view(model, population, extensions)
+        adapted = adapt_snapshot_observed(
+            model,
+            population,
+            effective_facts=view.facts,
+            effective_lineage=view.lineages if isinstance(view, extension_core.RuledFactView) else None,
+        )
+    extents: dict[str, tuple[list[list[Any]], str]] = {}
+    for constraint in adapted.snapshot.constraints:
+        if constraint.ref not in wanted or constraint.variant not in ACYCLIC_EXTENT_VARIANTS:
+            continue
+        snapshot = evaluation_snapshot(adapted.snapshot, constraint.family)
+        pairs = ring_pairs(constraint, snapshot)
+        rows, sizes = acyclic_extent(pairs) if pairs else ([], [])
+        if not rows:
+            continue
+        others = ring_component_witness("intransitive", pairs) if constraint.variant != "acyclic" else []
+        projected = project_witness(
+            adapted.observation,
+            OriginIndex(adapted.observation.origins),
+            scope_id=constraint.ref,
+            constraint_id=constraint.ref,
+            family="ring",
+            witness=(*rows, *others),
+            witness_keys=(),
+        )
+        message = verbalize.ring_extent_message(
+            constraint.variant, constraint.fact_type, sizes, len(rows),
+            [tuple(row) for row in projected[len(rows):]],
+        )
+        extents[constraint.ref] = ([list(row) for row in projected], message)
+    return extents

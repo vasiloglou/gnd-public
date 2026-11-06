@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/model-growth-guardrails/evidence/MG2/query-successor.json",
+  "predecessor_sha256": "e614010b162b950af31fd143c57e3fdd66657b1de2bb7469402dbcb3ec406d2c",
+  "reason": "rule-check-adoption RC2 (acyclic extent, report version 15; spec 27258a9e, corpus 9130e93d): the ring pair extraction moves unchanged from semantic_spec.ring_result into semantic_spec.ring_pairs, which ring_result and the new acyclic_extent both call. The one counted read moves with it; no allow-list widening, ceiling and original metric unchanged. After review finding Q1, the coverage widening moves unchanged from correspondence._evaluate_constraint into correspondence.evaluation_snapshot, which the checker and the extent both call; its one counted read moves with it.",
+  "removed": [
+    [
+      "src/gnd/correspondence.py",
+      "_evaluate_constraint",
+      "adapted.snapshot.fact_types",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_result",
+      "snapshot.fact_types",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/correspondence.py",
+      "evaluation_snapshot",
+      "snapshot.fact_types",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "ring_pairs",
+      "snapshot.fact_types",
+      1
+    ]
+  ],
+  "result_distinct_rows": 296,
+  "result_occurrences": 364,
+  "original_metric_current": 309
+}

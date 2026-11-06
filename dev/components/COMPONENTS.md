@@ -330,7 +330,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: gnd-type-evidence/1 document and capped canonical bytes
 - status: canonical
 - modules: src/gnd/discover/type_evidence.py
-- uses: discover.fact_types, discover.population_view, infra.artifacts, model.query_index, model.reference_schemes
+- uses: discover.fact_types, discover.population_view, infra.artifacts, infra.input_policy, model.query_index, model.reference_schemes
 - used_by: discover.service
 - tests: tests/test_discover_type_evidence.py, tests/test_discover_type_judgements.py
 - notes: The evidence supplies observations for a semantic judge; it does not itself decide duplicate meaning.
@@ -514,7 +514,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/checking.py, src/gnd/commands/__init__.py
-- uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.rai_import, model.validation
+- uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.rai_import
 - used_by: cli.dispatch
 - part_of: subsystem.check
 - tests: tests/test_rf5_commands.py
@@ -1572,7 +1572,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Standalone Python program assembled from shared Requirement records and target-specific execution code.
 - status: canonical
 - modules: src/gnd/export/pyrel_rules.py
-- uses: export.pyrel_runtime, infra.artifacts, infra.errors, model.loading, model.query_index, semantics.transitions
+- uses: export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, semantics.transitions
 - used_by: examples.plan_apps, export.pyrel_emit
 - tests: tests/test_pyrel_rules.py, tests/test_pyrel_rules_calendar.py, tests/test_pyrel_rules_derivations.py, tests/test_pyrel_rules_families.py, tests/test_pyrel_rules_plans.py, tests/test_plan_apps.py
 - checked: partial
@@ -1731,8 +1731,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py
-- uses: check.universe, infra.errors, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.scalar_terms
-- used_by: cli.checking_command, model.loading, model.operation_obligations, semantics.extensions
+- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.atom_bindings, model.document, model.scalar_terms
+- used_by: model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
 - checked: partial
 - notes: The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
@@ -1766,7 +1766,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### checker.evaluate
 - does: Check validated populations with reference, opaque and source-anchor handling [check, check_partial, check_with_anchors].
-- verbs: check population, evaluate constraints, deterministic verdict, snapshot checking, check_partial, opaque facts, partial knowledge, exact term unavailable, reference populations, source anchors, composed anchors, derivation evaluation, constraint coverage, compiled operations, structured_extension_facts, offending facts, correspondence projection, vacuous constraint
+- verbs: check population, evaluate constraints, deterministic verdict, snapshot checking, check_partial, opaque facts, partial knowledge, exact term unavailable, reference populations, source anchors, composed anchors, derivation evaluation, constraint coverage, compiled operations, structured_extension_facts, offending facts, correspondence projection, vacuous constraint, acyclic_extents, version-15 acyclic extent
 - in: Model and population carrying its current validation marker; optional bound references, anchors, documents or composition lineage.
 - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
 - status: canonical
@@ -1905,7 +1905,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/address.py
 - uses: (none)
-- used_by: check.admission, check.applicability, check.element_coverage, checker.evaluate, measure.report, model.diff, model.query_index, semantics.extensions, semantics.snapshot_adapter, synth.assemble, synth.constructive, synth.mutations
+- used_by: check.admission, check.applicability, check.element_coverage, check.service, checker.evaluate, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, semantics.snapshot_adapter, synth.assemble, … +2 more (graph.md)
 - tests: tests/test_address.py
 
 
@@ -1942,7 +1942,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.population_sentences, model.validation, witness.service
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.population_sentences, witness.service
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2019,7 +2019,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
 - modules: src/gnd/checking_service.py
-- uses: assurance.evidence, assurance.policy, check.admission, check.branches, check.calculation_scope, check.compiled_obligations, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
+- uses: assurance.evidence, assurance.policy, check.admission, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
 - used_by: cli.api, infra.text_output, model.diff
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
@@ -2129,7 +2129,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +49 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +50 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2194,7 +2194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/extensions.py
 - uses: check.branches, check.calculation_scope, check.incremental_reuse, check.universe, infra.errors, infra.verdict_prose, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, model.validation
-- used_by: check.applicability, check.compiled_obligations, check.evaluation_feedback, checker.evaluate, checker.reports, examples.plan_apps, model.population_sentences, semantics.transitions
+- used_by: check.applicability, check.compiled_obligations, check.evaluation_feedback, check.snapshot_decision, checker.evaluate, checker.reports, examples.plan_apps, model.population_sentences, semantics.transitions
 - tests: tests/test_incremental_extensions.py, tests/test_incremental_extensions_review.py, tests/test_m3_extension_preparation.py, tests/test_rf3_core.py, tests/test_public_adapter_derivation.py, tests/test_public_derivation_evaluation_complete.py
 - checked: partial
 - notes: This is the defining calculation home below checker; historical checker names remain explicit aliases, and applicability consumes effective_view.
@@ -2233,8 +2233,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: SnapshotDecision and SnapshotProjection with findings, bands, counts, semantic decisions and fact coordinates
 - status: canonical
 - modules: src/gnd/correspondence.py
-- uses: check.branches, check.calculation_scope, check.constraint_families, check.incremental_reuse, model.document, model.population_loading, model.scalar_terms, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
-- used_by: assurance.policy, checker.evaluate
+- uses: check.branches, check.calculation_scope, check.constraint_families, check.incremental_reuse, infra.verdict_prose, model.document, model.population_loading, model.query_index, model.scalar_terms, semantics.extensions, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
+- used_by: assurance.policy, check.service, checker.evaluate
 - tests: tests/test_public_correspondence_runtime.py, tests/test_public_correspondence_projection.py, tests/test_public_evidence_origins.py, tests/test_guarded_corpus.py, tests/test_incremental_sessions.py
 - checked: partial
 - notes: Evaluation dispatch and origin-based projection share this home; assurance consumers use the resulting decision rather than granting assurance in this module.
@@ -2381,7 +2381,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.universe, checker.evaluate, cli.api, discover.candidates, discover.fact_types, … +20 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +21 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2499,7 +2499,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: JSON report, check payload, verify payload, validate payload, transition report, computed post, build_check_payload, schema version, assurance envelope, legacy projection, render_json, emit, report schema, nonfinite refusal
 - status: canonical
 - modules: src/gnd/payloads.py, src/gnd/report.py, src/gnd/report_schema.py
-- uses: assurance.policy, assurance.transport, check.branches, checker.evaluate, infra.errors, infra.input_policy, infra.report_redaction, model.document, model.loading, model.scalar_terms, semantics.transitions
+- uses: assurance.policy, assurance.transport, check.branches, checker.evaluate, infra.errors, infra.input_policy, infra.report_redaction, model.address, model.document, model.loading, model.scalar_terms, semantics.transitions
 - used_by: check.admission, check.element_coverage, check.service, cli.api, cli.checking_command, cli.dispatch, exp.acceptance, exp.service, exp.session_evidence, exp.session_profile, exp.session_replay, exp.session_store, … +4 more (graph.md)
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_public_construction_site_guards.py
 - checked: partial
@@ -2621,10 +2621,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### semantics.snapshot_spec
 - does: Evaluate snapshot constraint specifications with explicit applicability, witnesses, modality and exit-band rules.
-- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, guarded rule, value comparison, cardinality, subtype partition, assurance_of, band_of
+- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, value comparison, cardinality, subtype partition, assurance_of, band_of
 - status: canonical
 - modules: src/gnd/semantic_spec.py
-- uses: check.constraint_families, semantics.snapshot_ir
+- uses: check.constraint_families, infra.graphs, semantics.snapshot_ir
 - used_by: assurance.policy, check.snapshot_decision, semantics.indexed_rows, semantics.snapshot_adapter, semantics.temporal_guards
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_ik4_indexed_set_families.py
 - checked: partial
@@ -2713,13 +2713,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### infra.verdict_prose
 - does: Render controlled-language verdict messages and escape untrusted values, paths and text line boundaries.
-- verbs: verdict messages, controlled natural language, CNL templates, constraint prose, violation message, population issues, quoted values, escape controls, neutralize text, line forgery, path segments, description lines, elide long values, uniqueness message, mandatory message, value range message, line_text, neutralize_text
+- verbs: verdict messages, controlled natural language, CNL templates, constraint prose, violation message, population issues, quoted values, escape controls, neutralize text, line forgery, path segments, description lines, elide long values, uniqueness message, mandatory message, value range message, line_text, neutralize_text, ring_extent_message, strongly connected group message
 - in: Constraint family details, verdicts, offending values, identifiers, population issue details and object type descriptions.
 - out: Message strings, escaped text and paths, or ordered description label/text pairs.
 - status: canonical
 - modules: src/gnd/verbalize.py
 - uses: (none)
-- used_by: check.population_structure, checker.evaluate, cli.checking_command, cli.dispatch, codegen.emit, conformance.report, extract.guidelines, fidelity.doccheck, fidelity.report, fidelity.service, infra.text_output, measure.report, … +5 more (graph.md)
+- used_by: check.population_structure, check.snapshot_decision, checker.evaluate, cli.checking_command, cli.dispatch, codegen.emit, conformance.report, extract.guidelines, fidelity.doccheck, fidelity.report, fidelity.service, infra.text_output, … +6 more (graph.md)
 - tests: tests/test_checker_families.py, tests/test_object_type_description.py, tests/test_popvalidate.py
 - checked: partial
 - notes: _neutralize caps individual rendered values at 512 characters; neutralize_text escapes descriptions without that cap. line_text escapes line/control structure without applying value quotation rules to trusted sentence syntax.
@@ -2750,6 +2750,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - tests: tests/test_extract_vocabulary.py, tests/test_object_type_description.py
 - notes: Withholds constraint prose, modalities, provenance and operation obligations; composite identification still reads external reference identity. The pure re-export shim src/gnd/extract/vocabulary.py should be merged into this entry by the writer handling that module.
 
+
+### infra.graphs
+- does: Compute every strongly connected component of a directed graph in one iterative Tarjan walk, dependencies first.
+- verbs: strongly connected components, SCC, Tarjan, cycles, mutually reachable groups, recursive groups, strata, dependency order, condensation, acyclic extent
+- in: Nodes in root order and a successor list per node.
+- out: Components in completion order, members in stack-pop order, singletons included.
+- status: canonical
+- modules: src/gnd/graphs.py
+- uses: (none)
+- used_by: export.pyrel_rules, model.validation, semantics.snapshot_spec
+- tests: tests/test_rc2_acyclic_extent.py
+- checked: full
 
 ### infra.yaml_comments
 - does: Configure ruamel YAML scanners to bulk-scan string comments while preserving round-trip comments and stream fallback.

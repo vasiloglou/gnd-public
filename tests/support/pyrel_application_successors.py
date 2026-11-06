@@ -10,6 +10,7 @@ PHASES = ['PA1', 'PA2', 'PA3', 'PA4', 'PA5R']
 QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE3/query-successor.json',
     ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG2/query-successor.json',
+    ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC2/query-successor.json',
 ]
 
 
@@ -108,6 +109,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/type-induction-skills/evidence/TS2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/maintenance/2026-11-06-main-ci-repair/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC2/dynamic-query-successor.json',
 ]
 
 

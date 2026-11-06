@@ -23,13 +23,14 @@ Canonical production and parsing of GND model-element addresses.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Address` | class | 20 | One parsed element address. |
-| `operation_address(op_id) -> str` | function | 37 | Return the declared-id address for an operation. |
-| `fact_type_address(ft_id) -> str` | function | 43 | Return the declared-id address for a fact type. |
-| `constraint_address(constraint_id) -> str` | function | 49 | Return the declared-id address for a constraint. |
-| `derivation_address(fact_type_id) -> str` | function | 55 | Return the address for one derivation obligation (v5.0 r2 R2). |
-| `positional_constraint_ref(fact_type_id, index) -> str` | function | 66 | Return the legacy positional constraint reference emitted since v1.0. |
-| `parse_address(text) -> Address \| None` | function | 85 | Parse ``text`` as an element address; return ``None`` for anything else. |
+| `Address` | class | 21 | One parsed element address. |
+| `operation_address(op_id) -> str` | function | 38 | Return the declared-id address for an operation. |
+| `fact_type_address(ft_id) -> str` | function | 44 | Return the declared-id address for a fact type. |
+| `constraint_address(constraint_id) -> str` | function | 50 | Return the declared-id address for a constraint. |
+| `declared_constraint_address(positional, constraint) -> tuple[str, Addressing]` | function | 56 | A constraint's address: its declared id, else its positional ref. |
+| `derivation_address(fact_type_id) -> str` | function | 71 | Return the address for one derivation obligation (v5.0 r2 R2). |
+| `positional_constraint_ref(fact_type_id, index) -> str` | function | 82 | Return the legacy positional constraint reference emitted since v1.0. |
+| `parse_address(text) -> Address \| None` | function | 101 | Parse ``text`` as an element address; return ``None`` for anything else. |
 
 ## gnd.admission — `src/gnd/admission.py`
 Components: check.admission
@@ -349,11 +350,14 @@ Authoritative Phase 3 snapshot decision and public-value projection.
 | `ReferenceJoinLimit` | class(ValueError) | 387 | Attempted reference-lane join work exceeded its invocation budget. |
 | `ReferenceJoinWork` | class | 392 | (no docstring) |
 | `ReferenceJoinWork.charge(self) -> None` | method | 395 | (no docstring) |
-| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1050 | (no docstring) |
-| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1114 | (no docstring) |
-| `project_finding(finding, observation) -> ProjectedFinding` | function | 1129 | (no docstring) |
-| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1187 | (no docstring) |
-| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1207 | (no docstring) |
+| `evaluation_snapshot(snapshot, family) -> SnapshotIR` | function | 842 | The snapshot a constraint of ``family`` is evaluated over. |
+| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1053 | (no docstring) |
+| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1117 | (no docstring) |
+| `project_finding(finding, observation) -> ProjectedFinding` | function | 1132 | (no docstring) |
+| `project_witness(observation, index, *, scope_id, constraint_id, family, witness, witness_keys) -> t…` | function | 1168 | Each witness row with its scalars replaced by their admitted public values. |
+| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1208 | (no docstring) |
+| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1228 | (no docstring) |
+| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1255 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
 
 ## gnd.coverage — `src/gnd/coverage.py`
 Components: check.element_coverage
@@ -361,22 +365,22 @@ Read-only element coverage over models and previously emitted evidence.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SourceBindingGap` | class | 74 | One accepted check/verify source that never named its model. |
-| `SourceBindingGap.row(self) -> dict[str, Any]` | method | 82 | (no docstring) |
-| `SourceBindingGap.order(self) -> tuple[str, str]` | method | 90 | (no docstring) |
-| `Claim` | class | 95 | One covers row from one experiment. |
-| `Evidence` | class | 106 | One previously emitted payload row naming a model element. |
-| `ElementRow` | class | 115 | (no docstring) |
-| `CoverageResult` | class | 125 | (no docstring) |
-| `build_payload(result, *, gnd_version) -> dict[str, Any]` | function | 168 | Serialize a result into the closed coverage output contract. |
-| `render_coverage(payload) -> str` | function | 246 | Render the human element roadmap without an aggregate or grade. |
-| `CoverageInputError` | class(Exception) | 357 | A named source could not be consumed as the declared evidence kind. |
-| `CoverageMissingError` | class(Exception) | 361 | A path explicitly named by the caller does not exist. |
-| `CoveragePathError` | class(Exception) | 365 | A source path crossed a symlink or had a refused file type. |
-| `guard_named_source(path, *, directory) -> None` | function | 386 | Apply existence before the path guard for one argv-named source. |
-| `read_json_document(path, *, kind, payload_version) -> dict[str, Any]` | function | 457 | Read one evidence object, or raise :class:`CoverageInputError`. |
-| `read_evidence_document(path, *, kind, payload_version, census_model_digest) -> tuple[dict[str, Any]…` | function | 626 | Read and validate one document as exactly the evidence kind declared. |
-| `build_coverage(model, *, model_path, experiments, check, verify, conformance, transition) -> Covera…` | function | 945 | Build one coverage view by indexing sources, then walking elements once. |
+| `SourceBindingGap` | class | 75 | One accepted check/verify source that never named its model. |
+| `SourceBindingGap.row(self) -> dict[str, Any]` | method | 83 | (no docstring) |
+| `SourceBindingGap.order(self) -> tuple[str, str]` | method | 91 | (no docstring) |
+| `Claim` | class | 96 | One covers row from one experiment. |
+| `Evidence` | class | 107 | One previously emitted payload row naming a model element. |
+| `ElementRow` | class | 116 | (no docstring) |
+| `CoverageResult` | class | 126 | (no docstring) |
+| `build_payload(result, *, gnd_version) -> dict[str, Any]` | function | 169 | Serialize a result into the closed coverage output contract. |
+| `render_coverage(payload) -> str` | function | 247 | Render the human element roadmap without an aggregate or grade. |
+| `CoverageInputError` | class(Exception) | 358 | A named source could not be consumed as the declared evidence kind. |
+| `CoverageMissingError` | class(Exception) | 362 | A path explicitly named by the caller does not exist. |
+| `CoveragePathError` | class(Exception) | 366 | A source path crossed a symlink or had a refused file type. |
+| `guard_named_source(path, *, directory) -> None` | function | 387 | Apply existence before the path guard for one argv-named source. |
+| `read_json_document(path, *, kind, payload_version) -> dict[str, Any]` | function | 458 | Read one evidence object, or raise :class:`CoverageInputError`. |
+| `read_evidence_document(path, *, kind, payload_version, census_model_digest) -> tuple[dict[str, Any]…` | function | 627 | Read and validate one document as exactly the evidence kind declared. |
+| `build_coverage(model, *, model_path, experiments, check, verify, conformance, transition) -> Covera…` | function | 943 | Build one coverage view by indexing sources, then walking elements once. |
 
 ## gnd.declared_adapter — `src/gnd/declared_adapter.py`
 Components: agent.declared_adapter
@@ -504,6 +508,14 @@ One policy walk for document-extraction fact-type scope.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `fact_type_scope(model) -> dict[str, str \| None]` | function | 18 | Classify every fact type once; ``None`` means document-extractable. |
+
+## gnd.graphs — `src/gnd/graphs.py`
+Components: infra.graphs
+Graph algorithms shared across layers; imports nothing from gnd.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `strongly_connected_components(nodes, successors) -> list[list[N]]` | function | 11 | Every strongly connected component, in Tarjan completion order. |
 
 ## gnd.incremental_state — `src/gnd/incremental_state.py`
 Components: check.incremental_reuse
@@ -666,7 +678,8 @@ Detached model query snapshots with a bounded, content-keyed cache.
 | `ModelIndex.role_object_type(self, fact_type_id, role_name) -> str \| None` | method | 257 | (no docstring) |
 | `ModelIndex.supertype_closure(self, identifier) -> frozenset[str]` | method | 264 | (no docstring) |
 | `ModelIndex.primitive(self, identifier, *, variant) -> str \| None` | method | 276 | (no docstring) |
-| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 279 | (no docstring) |
+| `ModelIndex.iter_constraints_shared(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| No…` | method | 279 | Internal readers only: ``iter_constraints`` refs and order, rows not copied. |
+| `ModelIndex.iter_constraints(self) -> Iterator[tuple[str, dict[str, Any], dict[str, Any] \| None]]` | method | 294 | (no docstring) |
 
 ## gnd.model_queries — `src/gnd/model_queries.py`
 Components: model.reference_resolution
@@ -714,20 +727,20 @@ Machine-readable check/validate payload assembly (D-10, D-11, D-12).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `payload_schema_version(model) -> ReportSchemaVersion` | function | 131 | Select the FROZEN report variant for this model's derivation class. |
-| `model_bound_payload_schema_version(model) -> ReportSchemaVersion` | function | 146 | Select the MODEL-BOUND report variant after successful model load. |
-| `build_check_payload(exit_code, model_path, population_path, *, schema_version, model_digest, assura…` | function | 279 | Assemble the ``check`` payload from the objects the text path consumes. |
-| `build_verify_payload(exit_code, model_path, population_path, *, extraction, schema_version, model_d…` | function | 362 | Project a completed or refused verify route from the check payload. |
-| `build_transition_payload(exit_code, model_path, *, evaluated, schema_version, model_digest, assuran…` | function | 474 | The ``check`` payload for a TRANSITION run. |
-| `build_plan_transition_payload(exit_code, model_path, *, evaluated, model_digest, structured, suppli…` | function | 568 | Project the v8 computed-post transition variant. |
-| `build_validate_payload(exit_code, model_path, *, schema_version, issues, warnings, error) -> dict[s…` | function | 623 | Assemble the ``validate`` payload. ``population`` is always ``null``. |
-| `NonJsonValueError` | class(ValueError) | 650 | A payload carried a value RFC 8259 cannot represent (CR-04). |
-| `render_json(payload) -> str` | function | 669 | Return the one RFC-8259 rendering shared by API and CLI callers. |
-| `emit(payload) -> None` | function | 679 | Write one payload as a single JSON document to stdout. |
-| `legacy_report_projection(payload, version) -> dict[str, Any]` | function | 697 | Project v7 to a frozen wire shape without authenticating any claims. |
-| `CurrentReportVersion` | class(int) | 717 | Current model-selected wire plus its legacy class for retained reads. |
-| `current_payload_schema_version(model) -> CurrentReportVersion` | function | 735 | (no docstring) |
-| `requested_check_schema_version(model, *, admission) -> ReportSchemaVersion` | function | 749 | Select the check wire explicitly; admission uses v10 even before load. |
+| `payload_schema_version(model) -> ReportSchemaVersion` | function | 137 | Select the FROZEN report variant for this model's derivation class. |
+| `model_bound_payload_schema_version(model) -> ReportSchemaVersion` | function | 152 | Select the MODEL-BOUND report variant after successful model load. |
+| `build_check_payload(exit_code, model_path, population_path, *, schema_version, model_digest, assura…` | function | 285 | Assemble the ``check`` payload from the objects the text path consumes. |
+| `build_verify_payload(exit_code, model_path, population_path, *, extraction, schema_version, model_d…` | function | 404 | Project a completed or refused verify route from the check payload. |
+| `build_transition_payload(exit_code, model_path, *, evaluated, schema_version, model_digest, assuran…` | function | 516 | The ``check`` payload for a TRANSITION run. |
+| `build_plan_transition_payload(exit_code, model_path, *, evaluated, model_digest, structured, suppli…` | function | 610 | Project the v8 computed-post transition variant. |
+| `build_validate_payload(exit_code, model_path, *, schema_version, issues, warnings, error) -> dict[s…` | function | 665 | Assemble the ``validate`` payload. ``population`` is always ``null``. |
+| `NonJsonValueError` | class(ValueError) | 692 | A payload carried a value RFC 8259 cannot represent (CR-04). |
+| `render_json(payload) -> str` | function | 711 | Return the one RFC-8259 rendering shared by API and CLI callers. |
+| `emit(payload) -> None` | function | 721 | Write one payload as a single JSON document to stdout. |
+| `legacy_report_projection(payload, version) -> dict[str, Any]` | function | 739 | Project v7 to a frozen wire shape without authenticating any claims. |
+| `CurrentReportVersion` | class(int) | 759 | Current model-selected wire plus its legacy class for retained reads. |
+| `current_payload_schema_version(model) -> CurrentReportVersion` | function | 777 | (no docstring) |
+| `requested_check_schema_version(model, *, admission) -> ReportSchemaVersion` | function | 791 | Select the check wire explicitly; admission uses v10 even before load. |
 
 ## gnd.population — `src/gnd/population.py`
 Components: model.population_loading
@@ -966,128 +979,130 @@ Executable v6 snapshot specifications, separate from production correspondence.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `scalar_identical(left, right) -> bool` | function | 16 | NS-IDENT-1: temporal coordinates do not change raw string identity. |
-| `scalar_order(left, right) -> int` | function | 21 | NS-ORDER-2: -2 denotes incomparable, otherwise -1, 0 or 1. |
-| `scalar_member(value, values) -> bool` | function | 43 | NS-IDENT-1 membership, independent of scalar ordering coordinates. |
-| `scalar_range_state(value, minimum, maximum, min_inclusive, max_inclusive) -> int` | function | 53 | NF-VALUE-RANGE-1: -1 undecided, 0 outside, 1 inside the range. |
-| `scalar_ranges_state(value, ranges) -> int` | function | 80 | NF-VALUE-RANGES-1: a deciding inclusion outranks an undecided range. |
-| `value_cell_state(value, constraint) -> int` | function | 102 | NF-VALUE-ENUM/RANGE/RANGES-1: classify one represented occurrence. |
-| `snapshot_roster_index(snapshot, object_type) -> int` | function | 120 | Return the first matching IR position, or -1 when absent. |
-| `snapshot_fact_index(snapshot, fact_type) -> int` | function | 130 | Return the first matching IR position, or -1 when absent. |
-| `snapshot_relation_index(snapshot, fact_type) -> int` | function | 140 | Return the first matching IR position, or -1 when absent. |
-| `fact_role_index(fact, role) -> int` | function | 150 | Return the first matching IR position, or -1 when absent. |
-| `append_projected_cell(values, rows, column, index) -> None` | function | 160 | Extend an owned projection prefix by its next represented occurrence. |
-| `project_optional_column(rows, column) -> tuple[bool, list[Scalar \| None]]` | function | 170 | Project every occurrence; retain None cells and refuse malformed rows. |
-| `scalar_member_before(value, values, end) -> bool` | function | 187 | Identity membership before an exclusive index; outlying ends are clipped. |
-| `row_identical(left, right) -> bool` | function | 197 | NS-IDENT-1 lifted to tuples, preserving arity and component order. |
-| `row_member(row, rows) -> bool` | function | 209 | Identity membership of a complete tuple, including the empty tuple. |
-| `scalar_list_member(value, values) -> bool` | function | 219 | Identity membership in an owned list without changing its contents. |
-| `append_absent_value(result, value, players, universe, index) -> None` | function | 229 | Append a missing identity, preserving already-established input coverage. |
-| `advance_missing_prefix(index, universe, players, result) -> int` | function | 244 | Advance after handling the current identity; the proof checks coverage. |
-| `missing_identities(universe, players) -> list[Scalar]` | function | 254 | NF-MAND-1 set difference, retaining first occurrence before sorting. |
-| `scalar_canonical_rank(value) -> int` | function | 271 | NS-CANON-2 scalar kind order: boolean, number, string, null. |
-| `scalar_canonical_less(left, right) -> bool` | function | 284 | Strict NS-CANON-2 order over represented scalar identities. |
-| `canonical_insert(values, value) -> None` | function | 297 | Insert one distinct identity into an already canonical owned list. |
-| `canonical_distinct(values) -> list[Scalar]` | function | 305 | Return one representative per identity in NS-CANON-2 order. |
-| `mandatory_cursor(constraint, snapshot) -> tuple[int, int, int, int]` | function | 316 | Resolve host fact, role column, relation and transitive roster positions. |
-| `mandatory_state(constraint, snapshot) -> int` | function | 340 | NF-MAND-1: -1 unchecked, 0 violated, 1 satisfied. |
-| `mandatory_holds(constraint, snapshot) -> bool` | function | 371 | True exactly when the admitted, covered mandatory predicate is satisfied. |
-| `mandatory_witness(constraint, snapshot) -> list[Scalar]` | function | 376 | Every distinct missing player in NS-CANON-2 order, else no witness. |
-| `mandatory_disjunctive_cursor(constraint, snapshot) -> tuple[str, int, list[tuple[int, int]]]` | function | 406 | Resolve one shared subject roster and every covered role population. |
-| `mandatory_disjunctive_state(constraint, snapshot) -> int` | function | 448 | NF-MAND-DISJ-1: -1 unchecked, 0 violated, 1 inclusive-or satisfied. |
-| `mandatory_disjunctive_holds(constraint, snapshot) -> bool` | function | 482 | True exactly when every shared-type member plays at least one named role. |
-| `mandatory_disjunctive_witness(constraint, snapshot) -> list[Scalar]` | function | 487 | Every member playing none of the named roles, in NS-CANON-2 order. |
-| `row_list_member(row, rows) -> bool` | function | 520 | NS-IDENT-1 membership in an owned row list. |
-| `row_canonical_less(left, right) -> bool` | function | 530 | Lexicographic NS-CANON-2 order, with a shorter equal prefix first. |
-| `canonical_distinct_rows(values) -> list[tuple[Scalar, ...]]` | function | 542 | Return one representative per row identity in canonical order. |
-| `role_sequence_rows(sequence, snapshot) -> tuple[bool, list[tuple[Scalar, ...]]]` | function | 557 | NS-JOIN-1 projection or natural join for one role sequence. |
-| `set_family_rows(constraint, snapshot, family) -> tuple[bool, list[tuple[Scalar, ...]], list[tuple[S…` | function | 718 | Resolve the two sequences shared by subset, equality and exclusion. |
-| `subset_state(constraint, snapshot) -> int` | function | 751 | NF-SUBSET-1: -1 unchecked, 0 violated, 1 subset. |
-| `subset_holds(constraint, snapshot) -> bool` | function | 764 | (no docstring) |
-| `subset_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 768 | (no docstring) |
-| `equality_state(constraint, snapshot) -> int` | function | 781 | NF-EQUALITY-1: -1 unchecked, 0 unequal, 1 equal. |
-| `equality_holds(constraint, snapshot) -> bool` | function | 799 | (no docstring) |
-| `equality_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 803 | (no docstring) |
-| `exclusion_state(constraint, snapshot) -> int` | function | 821 | NF-EXCLUSION-1: -1 unchecked, 0 overlapping, 1 disjoint. |
-| `exclusion_holds(constraint, snapshot) -> bool` | function | 834 | (no docstring) |
-| `exclusion_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 838 | (no docstring) |
-| `exclusive_or_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 851 | NF-XOR-SINGLE/MULTI-1 state and exact ordered witness. |
-| `exclusive_or_state(constraint, snapshot) -> int` | function | 953 | (no docstring) |
-| `exclusive_or_holds(constraint, snapshot) -> bool` | function | 957 | (no docstring) |
-| `exclusive_or_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 961 | (no docstring) |
-| `count_bound_integer(bound) -> int` | function | 965 | Return -2 for absent, -1 for invalid, or a nonnegative integer bound. |
-| `count_interval_state(count, minimum, maximum) -> int` | function | 980 | Classify one finite count against optional inclusive integral bounds. |
-| `fact_projection_rows(fact_type, roles, snapshot) -> tuple[bool, list[tuple[Scalar, ...]], list[tupl…` | function | 993 | Project complete covered facts while retaining their full source rows. |
-| `counting_projection_rows(constraint, snapshot, family) -> tuple[bool, list[tuple[Scalar, ...]], lis…` | function | 1038 | Resolve inline/internal or external counting inputs with multiplicity. |
-| `uniqueness_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1054 | NF-UC-INTERNAL/EXTERNAL-1 state and exhaustive witness. |
-| `uniqueness_state(constraint, snapshot) -> int` | function | 1086 | (no docstring) |
-| `uniqueness_holds(constraint, snapshot) -> bool` | function | 1090 | (no docstring) |
-| `uniqueness_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1094 | (no docstring) |
-| `frequency_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1098 | NF-FREQ-INTERNAL/EXTERNAL-1 over occurring duplicate-preserving groups. |
-| `frequency_state(constraint, snapshot) -> int` | function | 1123 | (no docstring) |
-| `frequency_holds(constraint, snapshot) -> bool` | function | 1127 | (no docstring) |
-| `frequency_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1131 | (no docstring) |
-| `cardinality_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1135 | NF-CARD-OBJECT/ROLE-1 distinct count and counted-member witness. |
-| `cardinality_state(constraint, snapshot) -> int` | function | 1172 | (no docstring) |
-| `cardinality_holds(constraint, snapshot) -> bool` | function | 1176 | (no docstring) |
-| `cardinality_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1180 | (no docstring) |
-| `snapshot_object_type_index(snapshot, object_type) -> int` | function | 1184 | Return the first matching object-type declaration position, or -1. |
-| `subtype_partition_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1194 | NF-PARTITION-2/4/5 state and ordered exhaustive witness. |
-| `subtype_partition_state(constraint, snapshot) -> int` | function | 1288 | (no docstring) |
-| `subtype_partition_holds(constraint, snapshot) -> bool` | function | 1292 | (no docstring) |
-| `subtype_partition_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1296 | (no docstring) |
-| `ring_pair_member(pair, pairs) -> bool` | function | 1300 | Exact identity membership in a ring pair set. |
-| `ring_cycle_witness(pairs) -> list[Scalar]` | function | 1305 | NF-RING-ACYCLIC-1 deterministic forward cycle, or empty when acyclic. |
-| `ring_component_witness(component, pairs) -> list[tuple[Scalar, ...]]` | function | 1381 | Exhaustive primitive ring witnesses, except one sound acyclic cycle. |
-| `ring_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1432 | NF-RING primitive and NF-RING-SHAPE-2 combined result. |
-| `ring_state(constraint, snapshot) -> int` | function | 1496 | (no docstring) |
-| `ring_holds(constraint, snapshot) -> bool` | function | 1500 | (no docstring) |
-| `ring_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1504 | (no docstring) |
-| `guarded_name_index(names, variable) -> int` | function | 1508 | Return a guarded variable's first-introduction position. |
-| `guarded_variable_names(constraint) -> tuple[str, ...]` | function | 1518 | NF-GUARDED-1 variable order from antecedent first introduction. |
-| `guarded_bindings(constraint, snapshot) -> tuple[bool, tuple[str, ...], list[tuple[Scalar, ...]]]` | function | 1533 | Conjunctively join antecedent atoms by exact variable identity. |
-| `guarded_operand_value(operand, names, binding) -> Scalar \| None` | function | 1600 | Ground one comparison operand from a complete binding. |
-| `guarded_atom_state(atom, names, binding, snapshot) -> int` | function | 1621 | Return whether one fully grounded consequent atom is present. |
-| `guarded_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1665 | NF-GUARDED result with unknown precedence and exhaustive bindings. |
-| `guarded_state(constraint, snapshot) -> int` | function | 1724 | (no docstring) |
-| `guarded_holds(constraint, snapshot) -> bool` | function | 1728 | (no docstring) |
-| `guarded_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1732 | (no docstring) |
-| `comparison_pair_state(left, right, operator) -> int` | function | 1736 | NF-VC-1/NS-ORDER-2: -1 unknown, 0 violates, 1 satisfies. |
-| `value_comparison_pairs(constraint, snapshot) -> tuple[bool, list[tuple[Scalar, Scalar]]]` | function | 1756 | Resolve NF-VC-1 inline, cross-same or connected cross-joined pairs. |
-| `value_comparison_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1844 | NF-VC-1 result with incomparability before violation. |
-| `value_comparison_state(constraint, snapshot) -> int` | function | 1877 | (no docstring) |
-| `value_comparison_holds(constraint, snapshot) -> bool` | function | 1881 | (no docstring) |
-| `value_comparison_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1885 | (no docstring) |
-| `pack_witness_row(values) -> list[list[Scalar]]` | function | 1889 | Wrap collected members in one aggregate row, including an empty row. |
-| `decision_of(band) -> str` | function | 1898 | NS-DECISION-2: the empty token means no semantic decision. |
-| `assurance_of(applicable, current, in_scope) -> str` | function | 1909 | NS-DECISION-2: counts of independently established applicable/current ids. |
-| `assurance_for_route(applicable, current, in_scope, admitted, currency_valid, extraction_required, a…` | function | 1918 | r2 A2/A6: suppress assurance if any external eligibility gate fails. |
-| `band_of(verdicts) -> int` | function | 1937 | NS-BAND-1: alethic fail > alethic unchecked > any vacuity > clean. |
-| `optional_identical(value, other) -> bool` | function | 1953 | (no docstring) |
-| `optional_range_state(value, minimum, maximum, min_inclusive, max_inclusive) -> int` | function | 1959 | (no docstring) |
-| `append_value_witness(witness, value) -> None` | function | 2025 | Append one selected occurrence while preserving the witness prefix. |
-| `value_cursor(constraint, snapshot) -> tuple[int, int, int]` | function | 2030 | Resolve one immutable subject cursor: kind, source position, column. |
-| `value_occurrence_count(cursor, snapshot) -> int` | function | 2053 | Return the immutable cursor length, or -1 for an invalid cursor. |
-| `value_occurrence_scalar(cursor, snapshot, index) -> Scalar \| None` | function | 2062 | Read one occurrence without allocating a projected subject sequence. |
-| `value_occurrence_state(cursor, constraint, snapshot, index) -> int` | function | 2084 | Classify one cursor occurrence; malformed or absent cells are unknown. |
-| `value_violation_count(cursor, constraint, snapshot, end) -> int` | function | 2097 | Mathematical prefix rank used to specify ordered witness multiplicity. |
-| `value_cursor_state(cursor, constraint, snapshot) -> int` | function | 2111 | Evaluate an immutable cursor without intermediate subject or state lists. |
-| `value_cursor_witness(cursor, constraint, snapshot) -> list[Scalar]` | function | 2130 | Collect every violating cursor occurrence in source order. |
-| `value_state(constraint, snapshot) -> int` | function | 2148 | Evaluate all selected value occurrences: -1 unknown, 0 violated, 1 satisfied. |
-| `value_holds(constraint, snapshot) -> bool` | function | 2157 | True exactly when the value family is evaluated and satisfied. |
-| `value_witness(constraint, snapshot) -> list[Scalar]` | function | 2162 | Return the exhaustive, ordered flat witness for a decided violation. |
-| `value_verdict(constraint, snapshot) -> str` | function | 2170 | Compose value-family state, modality, refusal, and vacuity into a verdict. |
-| `value_reason(constraint, snapshot) -> str` | function | 2195 | Return the frozen reason token for unchecked and vacuous value outcomes. |
-| `relation_empty_state(snapshot, fact_type) -> int` | function | 2218 | Return -1 for absent, 0 for populated, and 1 for empty relations. |
-| `sequence_join_reason(sequence, snapshot) -> str` | function | 2228 | Classify connectedness and anchor ambiguity for one role sequence. |
-| `join_refusal_of(constraint, snapshot) -> str` | function | 2291 | Return the closed join refusal before family evaluation. |
-| `subject_slots_opaque(constraint, snapshot) -> bool` | function | 2354 | True when a resolved single-subject rule is stopped only by an opaque cell. |
-| `unchecked_reason_of(constraint, snapshot) -> str` | function | 2396 | Map an unevaluable IR constraint to the closed reason vocabulary. |
-| `snapshot_family_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 2441 | Select one family provider from the shared registry. |
-| `sequence_spans_facts(sequence) -> bool` | function | 2451 | True when a role sequence names at least two fact types. |
-| `joined_pass_is_empty(constraint, snapshot) -> bool` | function | 2462 | NS-VACUITY-4 pass-only empty joined-universe classification. |
-| `applicability_of(constraint, snapshot) -> str` | function | 2480 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
-| `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2539 | Compose applicability, one family result, modality and pass-only vacuity. |
+| `scalar_identical(left, right) -> bool` | function | 17 | NS-IDENT-1: temporal coordinates do not change raw string identity. |
+| `scalar_order(left, right) -> int` | function | 22 | NS-ORDER-2: -2 denotes incomparable, otherwise -1, 0 or 1. |
+| `scalar_member(value, values) -> bool` | function | 44 | NS-IDENT-1 membership, independent of scalar ordering coordinates. |
+| `scalar_range_state(value, minimum, maximum, min_inclusive, max_inclusive) -> int` | function | 54 | NF-VALUE-RANGE-1: -1 undecided, 0 outside, 1 inside the range. |
+| `scalar_ranges_state(value, ranges) -> int` | function | 81 | NF-VALUE-RANGES-1: a deciding inclusion outranks an undecided range. |
+| `value_cell_state(value, constraint) -> int` | function | 103 | NF-VALUE-ENUM/RANGE/RANGES-1: classify one represented occurrence. |
+| `snapshot_roster_index(snapshot, object_type) -> int` | function | 121 | Return the first matching IR position, or -1 when absent. |
+| `snapshot_fact_index(snapshot, fact_type) -> int` | function | 131 | Return the first matching IR position, or -1 when absent. |
+| `snapshot_relation_index(snapshot, fact_type) -> int` | function | 141 | Return the first matching IR position, or -1 when absent. |
+| `fact_role_index(fact, role) -> int` | function | 151 | Return the first matching IR position, or -1 when absent. |
+| `append_projected_cell(values, rows, column, index) -> None` | function | 161 | Extend an owned projection prefix by its next represented occurrence. |
+| `project_optional_column(rows, column) -> tuple[bool, list[Scalar \| None]]` | function | 171 | Project every occurrence; retain None cells and refuse malformed rows. |
+| `scalar_member_before(value, values, end) -> bool` | function | 188 | Identity membership before an exclusive index; outlying ends are clipped. |
+| `row_identical(left, right) -> bool` | function | 198 | NS-IDENT-1 lifted to tuples, preserving arity and component order. |
+| `row_member(row, rows) -> bool` | function | 210 | Identity membership of a complete tuple, including the empty tuple. |
+| `scalar_list_member(value, values) -> bool` | function | 220 | Identity membership in an owned list without changing its contents. |
+| `append_absent_value(result, value, players, universe, index) -> None` | function | 230 | Append a missing identity, preserving already-established input coverage. |
+| `advance_missing_prefix(index, universe, players, result) -> int` | function | 245 | Advance after handling the current identity; the proof checks coverage. |
+| `missing_identities(universe, players) -> list[Scalar]` | function | 255 | NF-MAND-1 set difference, retaining first occurrence before sorting. |
+| `scalar_canonical_rank(value) -> int` | function | 272 | NS-CANON-2 scalar kind order: boolean, number, string, null. |
+| `scalar_canonical_less(left, right) -> bool` | function | 285 | Strict NS-CANON-2 order over represented scalar identities. |
+| `canonical_insert(values, value) -> None` | function | 298 | Insert one distinct identity into an already canonical owned list. |
+| `canonical_distinct(values) -> list[Scalar]` | function | 306 | Return one representative per identity in NS-CANON-2 order. |
+| `mandatory_cursor(constraint, snapshot) -> tuple[int, int, int, int]` | function | 317 | Resolve host fact, role column, relation and transitive roster positions. |
+| `mandatory_state(constraint, snapshot) -> int` | function | 341 | NF-MAND-1: -1 unchecked, 0 violated, 1 satisfied. |
+| `mandatory_holds(constraint, snapshot) -> bool` | function | 372 | True exactly when the admitted, covered mandatory predicate is satisfied. |
+| `mandatory_witness(constraint, snapshot) -> list[Scalar]` | function | 377 | Every distinct missing player in NS-CANON-2 order, else no witness. |
+| `mandatory_disjunctive_cursor(constraint, snapshot) -> tuple[str, int, list[tuple[int, int]]]` | function | 407 | Resolve one shared subject roster and every covered role population. |
+| `mandatory_disjunctive_state(constraint, snapshot) -> int` | function | 449 | NF-MAND-DISJ-1: -1 unchecked, 0 violated, 1 inclusive-or satisfied. |
+| `mandatory_disjunctive_holds(constraint, snapshot) -> bool` | function | 483 | True exactly when every shared-type member plays at least one named role. |
+| `mandatory_disjunctive_witness(constraint, snapshot) -> list[Scalar]` | function | 488 | Every member playing none of the named roles, in NS-CANON-2 order. |
+| `row_list_member(row, rows) -> bool` | function | 521 | NS-IDENT-1 membership in an owned row list. |
+| `row_canonical_less(left, right) -> bool` | function | 531 | Lexicographic NS-CANON-2 order, with a shorter equal prefix first. |
+| `canonical_distinct_rows(values) -> list[tuple[Scalar, ...]]` | function | 543 | Return one representative per row identity in canonical order. |
+| `role_sequence_rows(sequence, snapshot) -> tuple[bool, list[tuple[Scalar, ...]]]` | function | 558 | NS-JOIN-1 projection or natural join for one role sequence. |
+| `set_family_rows(constraint, snapshot, family) -> tuple[bool, list[tuple[Scalar, ...]], list[tuple[S…` | function | 719 | Resolve the two sequences shared by subset, equality and exclusion. |
+| `subset_state(constraint, snapshot) -> int` | function | 752 | NF-SUBSET-1: -1 unchecked, 0 violated, 1 subset. |
+| `subset_holds(constraint, snapshot) -> bool` | function | 765 | (no docstring) |
+| `subset_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 769 | (no docstring) |
+| `equality_state(constraint, snapshot) -> int` | function | 782 | NF-EQUALITY-1: -1 unchecked, 0 unequal, 1 equal. |
+| `equality_holds(constraint, snapshot) -> bool` | function | 800 | (no docstring) |
+| `equality_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 804 | (no docstring) |
+| `exclusion_state(constraint, snapshot) -> int` | function | 822 | NF-EXCLUSION-1: -1 unchecked, 0 overlapping, 1 disjoint. |
+| `exclusion_holds(constraint, snapshot) -> bool` | function | 835 | (no docstring) |
+| `exclusion_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 839 | (no docstring) |
+| `exclusive_or_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 852 | NF-XOR-SINGLE/MULTI-1 state and exact ordered witness. |
+| `exclusive_or_state(constraint, snapshot) -> int` | function | 954 | (no docstring) |
+| `exclusive_or_holds(constraint, snapshot) -> bool` | function | 958 | (no docstring) |
+| `exclusive_or_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 962 | (no docstring) |
+| `count_bound_integer(bound) -> int` | function | 966 | Return -2 for absent, -1 for invalid, or a nonnegative integer bound. |
+| `count_interval_state(count, minimum, maximum) -> int` | function | 981 | Classify one finite count against optional inclusive integral bounds. |
+| `fact_projection_rows(fact_type, roles, snapshot) -> tuple[bool, list[tuple[Scalar, ...]], list[tupl…` | function | 994 | Project complete covered facts while retaining their full source rows. |
+| `counting_projection_rows(constraint, snapshot, family) -> tuple[bool, list[tuple[Scalar, ...]], lis…` | function | 1039 | Resolve inline/internal or external counting inputs with multiplicity. |
+| `uniqueness_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1055 | NF-UC-INTERNAL/EXTERNAL-1 state and exhaustive witness. |
+| `uniqueness_state(constraint, snapshot) -> int` | function | 1087 | (no docstring) |
+| `uniqueness_holds(constraint, snapshot) -> bool` | function | 1091 | (no docstring) |
+| `uniqueness_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1095 | (no docstring) |
+| `frequency_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1099 | NF-FREQ-INTERNAL/EXTERNAL-1 over occurring duplicate-preserving groups. |
+| `frequency_state(constraint, snapshot) -> int` | function | 1124 | (no docstring) |
+| `frequency_holds(constraint, snapshot) -> bool` | function | 1128 | (no docstring) |
+| `frequency_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1132 | (no docstring) |
+| `cardinality_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1136 | NF-CARD-OBJECT/ROLE-1 distinct count and counted-member witness. |
+| `cardinality_state(constraint, snapshot) -> int` | function | 1173 | (no docstring) |
+| `cardinality_holds(constraint, snapshot) -> bool` | function | 1177 | (no docstring) |
+| `cardinality_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1181 | (no docstring) |
+| `snapshot_object_type_index(snapshot, object_type) -> int` | function | 1185 | Return the first matching object-type declaration position, or -1. |
+| `subtype_partition_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1195 | NF-PARTITION-2/4/5 state and ordered exhaustive witness. |
+| `subtype_partition_state(constraint, snapshot) -> int` | function | 1289 | (no docstring) |
+| `subtype_partition_holds(constraint, snapshot) -> bool` | function | 1293 | (no docstring) |
+| `subtype_partition_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1297 | (no docstring) |
+| `ring_pair_member(pair, pairs) -> bool` | function | 1301 | Exact identity membership in a ring pair set. |
+| `ring_cycle_witness(pairs) -> list[Scalar]` | function | 1306 | NF-RING-ACYCLIC-1 deterministic forward cycle, or empty when acyclic. |
+| `ring_component_witness(component, pairs) -> list[tuple[Scalar, ...]]` | function | 1382 | Exhaustive primitive ring witnesses, except one sound acyclic cycle. |
+| `ring_pairs(constraint, snapshot) -> list[tuple[Scalar, ...]] \| None` | function | 1433 | The distinct pairs a ring constraint judges, in canonical order, or None when it cannot be judged. |
+| `acyclic_extent(pairs) -> tuple[list[tuple[Scalar, ...]], list[int]]` | function | 1455 | Every pair inside a strongly connected group, in ``pairs`` order, and the group sizes, largest first. |
+| `ring_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1482 | NF-RING primitive and NF-RING-SHAPE-2 combined result. |
+| `ring_state(constraint, snapshot) -> int` | function | 1529 | (no docstring) |
+| `ring_holds(constraint, snapshot) -> bool` | function | 1533 | (no docstring) |
+| `ring_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1537 | (no docstring) |
+| `guarded_name_index(names, variable) -> int` | function | 1541 | Return a guarded variable's first-introduction position. |
+| `guarded_variable_names(constraint) -> tuple[str, ...]` | function | 1551 | NF-GUARDED-1 variable order from antecedent first introduction. |
+| `guarded_bindings(constraint, snapshot) -> tuple[bool, tuple[str, ...], list[tuple[Scalar, ...]]]` | function | 1566 | Conjunctively join antecedent atoms by exact variable identity. |
+| `guarded_operand_value(operand, names, binding) -> Scalar \| None` | function | 1633 | Ground one comparison operand from a complete binding. |
+| `guarded_atom_state(atom, names, binding, snapshot) -> int` | function | 1654 | Return whether one fully grounded consequent atom is present. |
+| `guarded_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1698 | NF-GUARDED result with unknown precedence and exhaustive bindings. |
+| `guarded_state(constraint, snapshot) -> int` | function | 1757 | (no docstring) |
+| `guarded_holds(constraint, snapshot) -> bool` | function | 1761 | (no docstring) |
+| `guarded_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1765 | (no docstring) |
+| `comparison_pair_state(left, right, operator) -> int` | function | 1769 | NF-VC-1/NS-ORDER-2: -1 unknown, 0 violates, 1 satisfies. |
+| `value_comparison_pairs(constraint, snapshot) -> tuple[bool, list[tuple[Scalar, Scalar]]]` | function | 1789 | Resolve NF-VC-1 inline, cross-same or connected cross-joined pairs. |
+| `value_comparison_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 1877 | NF-VC-1 result with incomparability before violation. |
+| `value_comparison_state(constraint, snapshot) -> int` | function | 1910 | (no docstring) |
+| `value_comparison_holds(constraint, snapshot) -> bool` | function | 1914 | (no docstring) |
+| `value_comparison_witness(constraint, snapshot) -> list[list[Scalar]]` | function | 1918 | (no docstring) |
+| `pack_witness_row(values) -> list[list[Scalar]]` | function | 1922 | Wrap collected members in one aggregate row, including an empty row. |
+| `decision_of(band) -> str` | function | 1931 | NS-DECISION-2: the empty token means no semantic decision. |
+| `assurance_of(applicable, current, in_scope) -> str` | function | 1942 | NS-DECISION-2: counts of independently established applicable/current ids. |
+| `assurance_for_route(applicable, current, in_scope, admitted, currency_valid, extraction_required, a…` | function | 1951 | r2 A2/A6: suppress assurance if any external eligibility gate fails. |
+| `band_of(verdicts) -> int` | function | 1970 | NS-BAND-1: alethic fail > alethic unchecked > any vacuity > clean. |
+| `optional_identical(value, other) -> bool` | function | 1986 | (no docstring) |
+| `optional_range_state(value, minimum, maximum, min_inclusive, max_inclusive) -> int` | function | 1992 | (no docstring) |
+| `append_value_witness(witness, value) -> None` | function | 2058 | Append one selected occurrence while preserving the witness prefix. |
+| `value_cursor(constraint, snapshot) -> tuple[int, int, int]` | function | 2063 | Resolve one immutable subject cursor: kind, source position, column. |
+| `value_occurrence_count(cursor, snapshot) -> int` | function | 2086 | Return the immutable cursor length, or -1 for an invalid cursor. |
+| `value_occurrence_scalar(cursor, snapshot, index) -> Scalar \| None` | function | 2095 | Read one occurrence without allocating a projected subject sequence. |
+| `value_occurrence_state(cursor, constraint, snapshot, index) -> int` | function | 2117 | Classify one cursor occurrence; malformed or absent cells are unknown. |
+| `value_violation_count(cursor, constraint, snapshot, end) -> int` | function | 2130 | Mathematical prefix rank used to specify ordered witness multiplicity. |
+| `value_cursor_state(cursor, constraint, snapshot) -> int` | function | 2144 | Evaluate an immutable cursor without intermediate subject or state lists. |
+| `value_cursor_witness(cursor, constraint, snapshot) -> list[Scalar]` | function | 2163 | Collect every violating cursor occurrence in source order. |
+| `value_state(constraint, snapshot) -> int` | function | 2181 | Evaluate all selected value occurrences: -1 unknown, 0 violated, 1 satisfied. |
+| `value_holds(constraint, snapshot) -> bool` | function | 2190 | True exactly when the value family is evaluated and satisfied. |
+| `value_witness(constraint, snapshot) -> list[Scalar]` | function | 2195 | Return the exhaustive, ordered flat witness for a decided violation. |
+| `value_verdict(constraint, snapshot) -> str` | function | 2203 | Compose value-family state, modality, refusal, and vacuity into a verdict. |
+| `value_reason(constraint, snapshot) -> str` | function | 2228 | Return the frozen reason token for unchecked and vacuous value outcomes. |
+| `relation_empty_state(snapshot, fact_type) -> int` | function | 2251 | Return -1 for absent, 0 for populated, and 1 for empty relations. |
+| `sequence_join_reason(sequence, snapshot) -> str` | function | 2261 | Classify connectedness and anchor ambiguity for one role sequence. |
+| `join_refusal_of(constraint, snapshot) -> str` | function | 2324 | Return the closed join refusal before family evaluation. |
+| `subject_slots_opaque(constraint, snapshot) -> bool` | function | 2387 | True when a resolved single-subject rule is stopped only by an opaque cell. |
+| `unchecked_reason_of(constraint, snapshot) -> str` | function | 2429 | Map an unevaluable IR constraint to the closed reason vocabulary. |
+| `snapshot_family_result(constraint, snapshot) -> tuple[int, list[list[Scalar]]]` | function | 2474 | Select one family provider from the shared registry. |
+| `sequence_spans_facts(sequence) -> bool` | function | 2484 | True when a role sequence names at least two fact types. |
+| `joined_pass_is_empty(constraint, snapshot) -> bool` | function | 2495 | NS-VACUITY-4 pass-only empty joined-universe classification. |
+| `applicability_of(constraint, snapshot) -> str` | function | 2513 | Classify the pre-evaluation stages of NS-ORDER-OF-RESOLUTION-1. |
+| `verdict_of(constraint, snapshot) -> tuple[str, str \| None, tuple[tuple[Scalar, ...], ...]]` | function | 2572 | Compose applicability, one family result, modality and pass-only vacuity. |
 
 ## gnd.solve — `src/gnd/solve.py`
 Components: agent.solve
@@ -1244,46 +1259,47 @@ CNL verbalization templates for checker verdict messages.
 | `cardinality_message(subject, minimum, maximum, count, violated) -> str` | function | 391 | (no docstring) |
 | `value_ranges_message(object_type_id, ranges, offending, *, role_ref) -> str` | function | 410 | (no docstring) |
 | `ring_message(variant, fact_type_id, violations) -> str` | function | 440 | (no docstring) |
-| `unresolved_role_message(role_name, fact_type_id) -> str` | function | 458 | (no docstring) |
-| `join_disconnected_message(fact_type_ids) -> str` | function | 466 | (no docstring) |
-| `join_ambiguous_message(fact_type_id, object_type_id, role_names) -> str` | function | 477 | (no docstring) |
-| `ring_not_binary_message(variant, fact_type_id, role_count) -> str` | function | 486 | (no docstring) |
-| `value_comparison_message(label_a, operator, label_b, offending) -> str` | function | 504 | (no docstring) |
-| `values_not_comparable_message(label_a, operator, label_b, undecidable, offending) -> str` | function | 528 | D-14: an ordering comparison whose operands admit no order. |
-| `bound_type_mismatch_message(object_type_id, ranges, undecidable, offending) -> str` | function | 559 | D-13 clause 4: a value that cannot be ordered against its range bound. |
-| `value_comparison_unchecked_message(operand) -> str` | function | 587 | (no docstring) |
-| `value_comparison_literal_unchecked_message(literal, primitive) -> str` | function | 594 | (no docstring) |
-| `guarded_message(consequent_kind, binding_count, offending) -> str` | function | 610 | Summarize a decided guarded consequent without exposing raw fact text. |
-| `guarded_zero_bindings_message(consequent_kind) -> str` | function | 623 | (no docstring) |
-| `guarded_not_comparable_message(operator, binding_count, undecidable, offending) -> str` | function | 630 | (no docstring) |
-| `guarded_literal_unchecked_message(literal, primitive, binding_count) -> str` | function | 651 | (no docstring) |
-| `subtype_partition_message(supertype, subtypes, both, neither) -> str` | function | 661 | (no docstring) |
-| `subtype_partition_no_assertion_message(supertype, subtypes) -> str` | function | 679 | CR-02: a ``subtype-partition`` asserting neither exclusion nor totality. |
-| `partition_asserts_nothing_message(supertype, subtypes) -> str` | function | 704 | semantic:partition-asserts-nothing (CR-02) — the AUTHORING-time twin. |
-| `subtype_partition_unchecked_message(subtype, derivation_rule) -> str` | function | 724 | (no docstring) |
-| `textual_unchecked_message(expression) -> str` | function | 732 | (no docstring) |
-| `unchecked_message(constraint_type) -> str` | function | 740 | (no docstring) |
-| `vacuous_message(fact_type_ids) -> str` | function | 747 | (no docstring) |
-| `no_observable_subjects_message(object_type_id) -> str` | function | 755 | The other empty-subject shape (F-02): the constraint's object type has no |
-| `no_joined_rows_message(seq_labels) -> str` | function | 770 | The third empty-subject shape (F-05): a join-scoped constraint whose subject |
-| `role_seq_arity_message(constraint_type, lengths) -> str` | function | 798 | semantic:role-seq-arity — set-comparison sequences of unequal length. |
-| `role_seq_type_compat_message(constraint_type, position, ref_a, ref_b) -> str` | function | 817 | semantic:role-seq-type-compat — position-wise incompatible sequences. |
-| `textual_alethic_message(constraint_type, expression) -> str` | function | 840 | semantic:textual-alethic (D-20) — WARNING severity, never error. |
-| `population_unknown_fact_type_message(fact_type_id, declared) -> str` | function | 876 | (no docstring) |
-| `population_unknown_object_type_message(object_type_id) -> str` | function | 885 | (no docstring) |
-| `population_unknown_covers_message(fact_type_id) -> str` | function | 893 | (no docstring) |
-| `population_duplicate_covers_message(fact_type_id, first_index) -> str` | function | 901 | (no docstring) |
-| `population_uncovered_structured_derived_facts_message(fact_type_id, fact_count) -> str` | function | 909 | (no docstring) |
-| `population_missing_role_message(fact_type_id, fact_index, role_name, declared_roles) -> str` | function | 922 | (no docstring) |
-| `population_extra_role_message(fact_type_id, fact_index, role_name, declared_roles) -> str` | function | 937 | (no docstring) |
-| `population_type_mismatch_message(fact_type_id, fact_index, role_name, object_type_id, primitive, va…` | function | 969 | (no docstring) |
-| `population_roster_type_mismatch_message(object_type_id, index, primitive, value) -> str` | function | 986 | (no docstring) |
-| `population_model_id_mismatch_message(population_model_id, model_model_id) -> str` | function | 1001 | (no docstring) |
-| `population_model_id_absent_message(model_model_id) -> str` | function | 1009 | (no docstring) |
-| `coverage_omission_message(omitted_fact_type_ids) -> str` | function | 1017 | (no docstring) |
-| `derivation_incomplete_message(fact_type, witness) -> str` | function | 1026 | Render the one normative incomplete-extension finding. |
-| `derivation_unsound_message(fact_type, witness) -> str` | function | 1032 | Render the one normative unsound-extension finding. |
-| `temporal_guarded_message(consequent_kind, offending) -> str` | function | 1038 | Render a temporal decision without repeating the bounded join. |
+| `ring_extent_message(variant, fact_type_id, sizes, edges, others) -> str` | function | 458 | Report version 15: an acyclic failure named by its strongly connected groups. |
+| `unresolved_role_message(role_name, fact_type_id) -> str` | function | 480 | (no docstring) |
+| `join_disconnected_message(fact_type_ids) -> str` | function | 488 | (no docstring) |
+| `join_ambiguous_message(fact_type_id, object_type_id, role_names) -> str` | function | 499 | (no docstring) |
+| `ring_not_binary_message(variant, fact_type_id, role_count) -> str` | function | 508 | (no docstring) |
+| `value_comparison_message(label_a, operator, label_b, offending) -> str` | function | 526 | (no docstring) |
+| `values_not_comparable_message(label_a, operator, label_b, undecidable, offending) -> str` | function | 550 | D-14: an ordering comparison whose operands admit no order. |
+| `bound_type_mismatch_message(object_type_id, ranges, undecidable, offending) -> str` | function | 581 | D-13 clause 4: a value that cannot be ordered against its range bound. |
+| `value_comparison_unchecked_message(operand) -> str` | function | 609 | (no docstring) |
+| `value_comparison_literal_unchecked_message(literal, primitive) -> str` | function | 616 | (no docstring) |
+| `guarded_message(consequent_kind, binding_count, offending) -> str` | function | 632 | Summarize a decided guarded consequent without exposing raw fact text. |
+| `guarded_zero_bindings_message(consequent_kind) -> str` | function | 645 | (no docstring) |
+| `guarded_not_comparable_message(operator, binding_count, undecidable, offending) -> str` | function | 652 | (no docstring) |
+| `guarded_literal_unchecked_message(literal, primitive, binding_count) -> str` | function | 673 | (no docstring) |
+| `subtype_partition_message(supertype, subtypes, both, neither) -> str` | function | 683 | (no docstring) |
+| `subtype_partition_no_assertion_message(supertype, subtypes) -> str` | function | 701 | CR-02: a ``subtype-partition`` asserting neither exclusion nor totality. |
+| `partition_asserts_nothing_message(supertype, subtypes) -> str` | function | 726 | semantic:partition-asserts-nothing (CR-02) — the AUTHORING-time twin. |
+| `subtype_partition_unchecked_message(subtype, derivation_rule) -> str` | function | 746 | (no docstring) |
+| `textual_unchecked_message(expression) -> str` | function | 754 | (no docstring) |
+| `unchecked_message(constraint_type) -> str` | function | 762 | (no docstring) |
+| `vacuous_message(fact_type_ids) -> str` | function | 769 | (no docstring) |
+| `no_observable_subjects_message(object_type_id) -> str` | function | 777 | The other empty-subject shape (F-02): the constraint's object type has no |
+| `no_joined_rows_message(seq_labels) -> str` | function | 792 | The third empty-subject shape (F-05): a join-scoped constraint whose subject |
+| `role_seq_arity_message(constraint_type, lengths) -> str` | function | 820 | semantic:role-seq-arity — set-comparison sequences of unequal length. |
+| `role_seq_type_compat_message(constraint_type, position, ref_a, ref_b) -> str` | function | 839 | semantic:role-seq-type-compat — position-wise incompatible sequences. |
+| `textual_alethic_message(constraint_type, expression) -> str` | function | 862 | semantic:textual-alethic (D-20) — WARNING severity, never error. |
+| `population_unknown_fact_type_message(fact_type_id, declared) -> str` | function | 898 | (no docstring) |
+| `population_unknown_object_type_message(object_type_id) -> str` | function | 907 | (no docstring) |
+| `population_unknown_covers_message(fact_type_id) -> str` | function | 915 | (no docstring) |
+| `population_duplicate_covers_message(fact_type_id, first_index) -> str` | function | 923 | (no docstring) |
+| `population_uncovered_structured_derived_facts_message(fact_type_id, fact_count) -> str` | function | 931 | (no docstring) |
+| `population_missing_role_message(fact_type_id, fact_index, role_name, declared_roles) -> str` | function | 944 | (no docstring) |
+| `population_extra_role_message(fact_type_id, fact_index, role_name, declared_roles) -> str` | function | 959 | (no docstring) |
+| `population_type_mismatch_message(fact_type_id, fact_index, role_name, object_type_id, primitive, va…` | function | 991 | (no docstring) |
+| `population_roster_type_mismatch_message(object_type_id, index, primitive, value) -> str` | function | 1008 | (no docstring) |
+| `population_model_id_mismatch_message(population_model_id, model_model_id) -> str` | function | 1023 | (no docstring) |
+| `population_model_id_absent_message(model_model_id) -> str` | function | 1031 | (no docstring) |
+| `coverage_omission_message(omitted_fact_type_ids) -> str` | function | 1039 | (no docstring) |
+| `derivation_incomplete_message(fact_type, witness) -> str` | function | 1048 | Render the one normative incomplete-extension finding. |
+| `derivation_unsound_message(fact_type, witness) -> str` | function | 1054 | Render the one normative unsound-extension finding. |
+| `temporal_guarded_message(consequent_kind, offending) -> str` | function | 1060 | Render a temporal decision without repeating the bounded join. |
 
 ## gnd.verbalize_population — `src/gnd/verbalize_population.py`
 Components: model.population_sentences

@@ -625,6 +625,9 @@
       "lane": "fidelity",
       "layer": "lanes"
     },
+    "gnd.graphs": {
+      "layer": "infrastructure"
+    },
     "gnd.install": {
       "layer": "infrastructure"
     },

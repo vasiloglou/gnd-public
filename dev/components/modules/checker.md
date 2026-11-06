@@ -9,6 +9,14 @@ Deterministic constraint checker with the 5-state verdict lattice.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 
+## gnd.checker._composed — `src/gnd/checker/_composed.py`
+Components: unassigned
+CT2 composed-anchor checking (composition-and-type-induction milestone).
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `check_with_composed_anchors(model, population, *, sources, lineage) -> CheckReport` | function | 20 | Check a composed population, each anchored value against its own source (CT2). |
+
 ## gnd.checker._core — `src/gnd/checker/_core.py`
 Components: checker.evaluate
 Deterministic constraint checker with the 5-state verdict lattice.
@@ -19,10 +27,9 @@ Deterministic constraint checker with the 5-state verdict lattice.
 | `JoinAmbiguousError` | class(Exception) | 1061 | A fact type offers multiple same-type candidates for one join anchor. |
 | `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1509 | Return the computed structured extensions as fact-shaped rows. |
 | `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2041 | (no docstring) |
-| `check_with_composed_anchors(model, population, *, sources, lineage) -> CheckReport` | function | 2059 | Check a composed population, each anchored value against its own source (CT2). |
-| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 2136 | (no docstring) |
-| `check_partial(model, population) -> CheckReport` | function | 2161 | Evaluate opaque input with the three-valued internal extension view. |
-| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2170 | Use the same opaque semantics when an anchored check is requested. |
+| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 2059 | (no docstring) |
+| `check_partial(model, population) -> CheckReport` | function | 2084 | Evaluate opaque input with the three-valued internal extension view. |
+| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2093 | Use the same opaque semantics when an anchored check is requested. |
 
 ## gnd.checker._reports — `src/gnd/checker/_reports.py`
 Components: checker.reports

@@ -1,0 +1,22 @@
+version: 2
+model_id: urn:gnd-fixture:rc2-graph-composite@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: component, name: Component, kind: entity, reference: { mode: popular, value_type: component_name } }
+  - { id: component_name, name: ComponentName, kind: value, primitive: String }
+fact_types:
+  - id: uses
+    reading: "{Component} uses {Component}"
+    roles:
+      - { object_type: component, role_name: user }
+      - { object_type: component, role_name: used }
+    constraints:
+      - id: layered_imports
+        type: ring
+        variant: acyclic-intransitive
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        remedy: "Break each loop, and drop each import already reached through another."
+        provenance: { user_quote: "No import loops, and no import that skips a layer." }
+rejected_proposals: []

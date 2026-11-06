@@ -245,6 +245,7 @@ def _run_check_raw(
     # so the model's own projection (9, 11, the reference wrapper) still applies.
     wire_version = 15 if rule_ids else 7
     declared: dict[str, tuple[str, Addressing, str | None]] = {}
+    extents: dict[str, tuple[list[list[Any]], str]] = {}
 
     def build(
         exit_code: int,
@@ -266,6 +267,7 @@ def _run_check_raw(
             warnings=warnings,
             error=error,
             declared=declared if wire_version == 15 else None,
+            extents=extents if wire_version == 15 else None,
         )
 
     def refuse_rule_ids(refused: Model) -> _RunResult | None:
@@ -478,6 +480,15 @@ def _run_check_raw(
         )
 
     warnings = [*model.warnings, *population.warnings]
+    if wire_version == 15:
+        failing = [
+            verdict.constraint_ref for verdict in checked.verdicts
+            if verdict.verdict == "fail" and verdict.constraint_type == "ring"
+        ]
+        if failing:
+            from gnd.correspondence import acyclic_extents
+
+            extents.update(acyclic_extents(model, population, failing))
     with capture_branches() as projection_trace:
         payload = build(exit_code, report=checked, warnings=warnings)
     if compiled_operations:

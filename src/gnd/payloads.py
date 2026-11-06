@@ -297,12 +297,15 @@ def build_check_payload(
     warnings: list[ValidationIssue] | None = None,
     error: BaseException | None = None,
     declared: Mapping[str, tuple[str, Addressing, str | None]] | None = None,
+    extents: Mapping[str, tuple[list[list[Any]], str]] | None = None,
 ) -> dict[str, Any]:
     """Assemble the ``check`` payload from the objects the text path consumes.
 
     Version 15 (``gnd check --rule-ids``) is version 7 plus each verdict's
     declared identity from ``declared`` (positional ref -> address,
-    addressing, remedy) and the baseline keys, which stay empty here.
+    addressing, remedy) and the baseline keys, which stay empty here. A failing
+    acyclic verdict named in ``extents`` (ref -> rows, message) lists every
+    in-group edge instead of one cycle (RC2).
     """
     if schema_version == 15 and declared is None:
         raise ValueError("a version 15 check payload needs the declared constraint identities")
@@ -371,20 +374,27 @@ def build_check_payload(
     elif assurance is not None:
         raise ValueError("legacy report cannot carry assurance")
     if schema_version == 15:
-        payload["verdicts"] = [_rule_ids_verdict(row, declared) for row in payload["verdicts"]]
+        payload["verdicts"] = [_rule_ids_verdict(row, declared, extents or {}) for row in payload["verdicts"]]
         payload["baseline"] = None
         payload["allow_vacuous"] = False
     return payload
 
 
 def _rule_ids_verdict(
-    row: Mapping[str, Any], declared: Mapping[str, tuple[str, Addressing, str | None]]
+    row: Mapping[str, Any],
+    declared: Mapping[str, tuple[str, Addressing, str | None]],
+    extents: Mapping[str, tuple[list[list[Any]], str]],
 ) -> dict[str, Any]:
     """One version-15 verdict: the version-7 row with its constraint's identity."""
     address, addressing, remedy = declared[row["constraint_ref"]]
+    extent = extents.get(row["constraint_ref"]) if row["verdict"] == "fail" else None
     projected: dict[str, Any] = {}
     for key, value in row.items():
         projected[key] = value
+        if extent is not None and key == "offending_facts":
+            projected[key] = extent[0]
+        if extent is not None and key == "message":
+            projected[key] = extent[1]
         if key == "constraint_ref":
             projected.update(address=address, addressing=addressing, remedy=remedy)
     projected.update(novelty=None, row_novelty=None)

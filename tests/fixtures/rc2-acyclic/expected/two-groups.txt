@@ -1,0 +1,8 @@
+BLOCKING (alethic)
+  [fail] constraint:no_import_loops (fact_types[uses].constraints[0]): The relation 'uses' is acyclic — violated: 2 strongly connected groups (sizes 2, 2) hold 4 edges.
+    remedy: Break each loop: move the shared code into a lower component.
+ADVISORY (deontic)
+  (none)
+pass=0 fail=1 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  uses: declared, facts=6

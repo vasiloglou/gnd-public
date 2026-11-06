@@ -44,7 +44,7 @@ def test_duplicate_facts_collapse_at_pair_set_formation(tmp_path: Path) -> None:
     row = snapshot.relations[position].rows[0]
     duplicated = _with_rows(constraint, snapshot, (row, row, row))
     assert spec.ring_result(constraint, duplicated) == spec.ring_result(constraint, snapshot)
-    mutant = _mutant(tmp_path, 'ring_result', 'pairs = canonical_distinct_rows(source_pairs)', 'pairs = source_pairs')
+    mutant = _mutant(tmp_path, 'ring_pairs', 'pairs = canonical_distinct_rows(source_pairs)', 'pairs = source_pairs')
     assert mutant['ring_result'](constraint, duplicated) != spec.ring_result(constraint, duplicated)
 
 def test_ring_pair_input_is_canonicalized_before_component_evaluation(tmp_path: Path) -> None:
@@ -54,7 +54,7 @@ def test_ring_pair_input_is_canonicalized_before_component_evaluation(tmp_path: 
     reversed_input = _with_rows(constraint, snapshot, rows)
     expected = spec.ring_witness(constraint, snapshot)
     assert spec.ring_witness(constraint, reversed_input) == expected
-    mutant = _mutant(tmp_path, 'ring_result', 'pairs = canonical_distinct_rows(source_pairs)', 'pairs = source_pairs')
+    mutant = _mutant(tmp_path, 'ring_pairs', 'pairs = canonical_distinct_rows(source_pairs)', 'pairs = source_pairs')
     assert mutant['ring_witness'](constraint, reversed_input) != expected
 
 def test_combined_variant_retains_both_components_in_order(tmp_path: Path) -> None:

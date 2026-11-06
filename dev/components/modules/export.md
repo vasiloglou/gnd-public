@@ -231,16 +231,16 @@ Render a model's rules as a readable PyRel program, as requirements.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Atom` | class | 59 | (no docstring) |
-| `Count` | class | 65 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
-| `Compare` | class | 72 | (no docstring) |
-| `Check` | class | 79 | (no docstring) |
-| `Requirement` | class | 87 | (no docstring) |
-| `spanning_uniqueness(doc) -> list[str]` | function | 614 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
-| `requirements(doc, model) -> list[Requirement]` | function | 780 | Lower every supported constraint to requirements, in model order. One walk for all families. |
-| `require_text(req, names, model) -> str` | function | 1006 | (no docstring) |
-| `denial_text(req, names, model) -> str` | function | 1018 | (no docstring) |
-| `render(model_path, target) -> str` | function | 2289 | (no docstring) |
+| `Atom` | class | 60 | (no docstring) |
+| `Count` | class | 66 | ``aggregates.count(*of)``, grouped ``.per(*per)`` when ``per`` is given. |
+| `Compare` | class | 73 | (no docstring) |
+| `Check` | class | 80 | (no docstring) |
+| `Requirement` | class | 88 | (no docstring) |
+| `spanning_uniqueness(doc) -> list[str]` | function | 615 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
+| `requirements(doc, model) -> list[Requirement]` | function | 752 | Lower every supported constraint to requirements, in model order. One walk for all families. |
+| `require_text(req, names, model) -> str` | function | 978 | (no docstring) |
+| `denial_text(req, names, model) -> str` | function | 990 | (no docstring) |
+| `render(model_path, target) -> str` | function | 2261 | (no docstring) |
 
 ## gnd.export.pyrel_runtime — `src/gnd/export/pyrel_runtime.py`
 Components: export.pyrel_runtime

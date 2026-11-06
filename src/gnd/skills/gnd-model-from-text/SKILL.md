@@ -109,6 +109,27 @@ A host pipeline that runs this skill without a person to answer (an LLM proposin
 
 The rules, span units and refusals are in [representation-format.md](../gnd-orm-core/references/representation-format.md) ("Unattended source").
 
+**Unattended runs all of Steps 1 to 7, not Steps 1 and 2.** Steps 3 to 7 are written above as
+questions; with nobody to ask, [references/unattended-growth.md](references/unattended-growth.md)
+gives for each the text that licenses a proposal (uniqueness from "exactly one", mandatory from
+"each … must", a closed list as a value constraint, a defined term naming a kind of another as a
+subtype, typed primitives through the 6a library), always cited and always `proposed` and
+`deontic`. It also defines:
+
+- **one round** (one document: Steps 1 and 2, then Steps 3 to 6 on that round's new types) and a
+  periodic **consolidation round** over the whole model;
+- the checks a model built from many documents needs (no-overlap, not-a-property-group, hidden
+  intermediate type, subtype completeness, subtype or subset, irreducibility, minimum key span,
+  enumeration or subtype);
+- one **reply shape** a host asks the model for, covering fact types, subtype links, constraints
+  and derived fact types, each with its quote;
+- the timing rule: **propose a fact type's constraints in the round that adds it**, since
+  `--policy additive` refuses a new constraint over a fact type that already holds facts, and it
+  refuses adding `subtype_of` to an existing entity type, so a consolidation round is a reviewed
+  non-additive proposal.
+
+A host whose request or reply schema covers fact types only has stopped at Step 2.
+
 In Guided mode CSDP pauses at three pivot points (Step 0 itself, Step 6d's LLM spot-check, Step 7's six substeps). In One-shot mode those pauses collapse — library-tier proposals auto-confirm; LLM-tier proposals stay `proposed` (and therefore `deontic`) for the user to review by editing the YAML.
 
 **MVP-fast mode** keeps the dialogue and drops the ceremony:
@@ -316,6 +337,7 @@ The `csdp_step + dialogue_turn + user_quote` triple makes the YAML auditable in 
 | File | When to load |
 |---|---|
 | [`references/csdp-workflow.md`](references/csdp-workflow.md) | Detailed mechanics for any CSDP step — substeps, prompts, edge cases. Load when a step's summary above isn't enough. |
+| [`references/unattended-growth.md`](references/unattended-growth.md) | Unattended mode only: Steps 3 to 7 without a user, a document-by-document round and the consolidation round, the many-document checks, the host reply shape, and what `--policy additive` admits. Load before the first unattended round. |
 | [`references/dialogue-patterns.md`](references/dialogue-patterns.md) | Conversational patterns — eliciting examples, asking for reference schemes, handling thin answers, pushing back on premature subtyping. Load at Steps 1 / 3 / 6 (subtype check) / 7d. |
 | [`../gnd-orm-core/references/halpin-posture.md`](../gnd-orm-core/references/halpin-posture.md) | The underlying mindset — atomic facts, no attributes, populate-then-constrain. Load before running CSDP for the first time. |
 | [`../gnd-orm-core/references/representation-format.md`](../gnd-orm-core/references/representation-format.md) | The `model.orm.yaml` spec (structure, placement, two-layer validation). Load at Steps 2 and 7f. |

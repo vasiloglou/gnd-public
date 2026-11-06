@@ -3,6 +3,29 @@
 The development package version remains 0.1.0. Publishing these unreleased
 changes requires a separate release decision.
 
+## Unreleased: unattended growth procedure (2026-11-06)
+
+The `gnd-model-from-text` skill's Unattended mode used to say how to record
+evidence and stop there; a host that followed it produced elementary fact types
+and nothing else ([issue #104](https://github.com/vasiloglou/gnd-public/issues/104)).
+It now covers Steps 3 to 7. Skill prose only: no command, option, exit or schema
+changes.
+
+- **Steps 3 to 7 without a user**. A new reference,
+  `references/unattended-growth.md`, gives for each step the text that licenses a
+  proposal, with a cited span and `proposed` + `deontic`.
+- **Rounds and consolidation**. One document is one round; a periodic
+  consolidation round runs over the whole model. `--policy additive` admits a
+  new supertype but refuses pointing an existing object type at it, so
+  consolidation is a reviewed non-additive proposal; see
+  [subtypes under the policy](reference/evolve-policy.md#subtypes).
+- **Checks for many documents** and **one reply shape** for a host's model,
+  covering fact types, subtype links, constraints and derived fact types.
+- **Constraints with their fact type**. A fact type's constraints are proposed in
+  the round that adds it, since the additive policy refuses them afterwards.
+  There is no policy that admits a `proposed` + `deontic` constraint over a
+  populated fact type when `gnd check` is clean; that remains open.
+
 ## Unreleased: type judgements by skill
 
 The `fact-type` discover family can now take a skill's verdicts: whether an

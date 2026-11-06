@@ -400,6 +400,12 @@ Emission and validation require no additional user interaction.
 | 7e | Interactive review of D-03 assignments | D-03 defaults applied mechanically; every constraint still carries explicit modality |
 | 7f | Standard write + validation gate | Standard write + validation gate |
 
+### Unattended mode
+
+With no one to answer, Steps 3 to 7 run on textual evidence instead of questions, one document
+per round, with a periodic consolidation round over the whole model. See
+[`unattended-growth.md`](unattended-growth.md).
+
 ## Inputs / outputs at a glance
 
 | Step | Input | Output | User interaction? |

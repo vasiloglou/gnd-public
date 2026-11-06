@@ -1,0 +1,10 @@
+{
+  "docs_dir": "dev/components",
+  "extra_source_dirs": [
+    "tools"
+  ],
+  "import_prefix": "gnd",
+  "package_dir": "src/gnd",
+  "script_path": "scripts/components_index.py",
+  "verb_list": "shared"
+}

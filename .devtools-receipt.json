@@ -1,5 +1,25 @@
 {
   "files": {
+    ".claude/skills/components/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/components/SKILL.md",
+      "sha256": "9109327147e09914031c1b8e08980173ef5a79743372f1f2f04a2ee783945a0f"
+    },
+    ".claude/skills/components/references/build.md": {
+      "mode": "0o644",
+      "origin": "skills/components/references/build.md",
+      "sha256": "546e3806614fdb9a25ff2d37166f92e87852c73c0aad93b0876ef150d9435262"
+    },
+    ".claude/skills/components/references/reader-brief.md": {
+      "mode": "0o644",
+      "origin": "skills/components/references/reader-brief.md",
+      "sha256": "178981bfbcb93d394e17f5efb8e628f38180113bc9c947ff68cb06a3cf90adea"
+    },
+    ".claude/skills/components/references/review.md": {
+      "mode": "0o644",
+      "origin": "skills/components/references/review.md",
+      "sha256": "b9166154392cefb656849f41770238f746cdba42c145b2b95af30a6b1a00fee1"
+    },
     ".claude/skills/process-milestone/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-milestone/SKILL.md",
@@ -65,6 +85,26 @@
       "origin": "skills/milestone/start-milestone/agents/openai.yaml",
       "sha256": "7f96fa3d1e4c5c590b9d7f14331ad7d71dc7dbf160ce5ff85ab0136bfdc0e3b1"
     },
+    ".codex/skills/components/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/components/SKILL.md",
+      "sha256": "9109327147e09914031c1b8e08980173ef5a79743372f1f2f04a2ee783945a0f"
+    },
+    ".codex/skills/components/references/build.md": {
+      "mode": "0o644",
+      "origin": "skills/components/references/build.md",
+      "sha256": "546e3806614fdb9a25ff2d37166f92e87852c73c0aad93b0876ef150d9435262"
+    },
+    ".codex/skills/components/references/reader-brief.md": {
+      "mode": "0o644",
+      "origin": "skills/components/references/reader-brief.md",
+      "sha256": "178981bfbcb93d394e17f5efb8e628f38180113bc9c947ff68cb06a3cf90adea"
+    },
+    ".codex/skills/components/references/review.md": {
+      "mode": "0o644",
+      "origin": "skills/components/references/review.md",
+      "sha256": "b9166154392cefb656849f41770238f746cdba42c145b2b95af30a6b1a00fee1"
+    },
     ".codex/skills/process-milestone/SKILL.md": {
       "mode": "0o644",
       "origin": "skills/milestone/process-milestone/SKILL.md",
@@ -129,6 +169,16 @@
       "mode": "0o644",
       "origin": "skills/milestone/start-milestone/agents/openai.yaml",
       "sha256": "7f96fa3d1e4c5c590b9d7f14331ad7d71dc7dbf160ce5ff85ab0136bfdc0e3b1"
+    },
+    "scripts/components_index.py": {
+      "mode": "0o644",
+      "origin": "skills/components/scripts/components_index.py",
+      "sha256": "2400148a263d97345e763f0b8742341d2477078427825562a6f307edc45416da"
+    },
+    "scripts/components_index.settings.json": {
+      "mode": "0o644",
+      "origin": "settings",
+      "sha256": "6709d595912c0983dd74f7b0f33f845402e2c885c0e2ad72b18c0e1b2beb8a8a"
     }
   },
   "source": {

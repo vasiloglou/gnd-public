@@ -1,0 +1,8 @@
+population: { model: ../models/components-positional.orm.yaml, model_id: urn:gnd-fixture:rc1-components-positional@1, source: fixture, covers: [component_uses_component, component_in_area] }
+facts:
+  component_uses_component:
+    - { user: cli, used: core.base_types }
+    - { user: core.identifiers, used: core.base_types }
+  component_in_area:
+    - { component: core.base_types, area: core }
+    - { component: cli, area: tools }

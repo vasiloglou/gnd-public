@@ -2,12 +2,21 @@
 
 ## 1. Status
 
-**Awaiting owner review (step 2), 2026-11-06.** Spec r7: the step-1
-completion of the r6 draft under the phase contract. The plan (r6) is
-approved ([005-plan.md](../005-plan.md)); this spec is not. No
-implementation file is created or edited before the owner gate clears.
-The focused gate's timing is governed by RC-D1 (PR 99 is open at
-2026-11-06; §8 V1 records the merge base first).
+**Owner-decided (2026-11-06), approval pending on the corpus (§11).** The
+owner ruled the step-2 asks over r7 (sha256 `21ca59f9…85d2`, commit
+6916066f); see §7 D8-D11 and the gate notes below. Approval of the design
+is given by reading the corpus (corpus-first); no implementation file is
+created or edited until the owner approves the corpus. Prior status (r7):
+"Awaiting owner review (step 2), 2026-11-06."
+
+Gate notes (o), 2026-11-06, the owner's answers verbatim:
+- Approval instrument (D11): "Corpus-first (Recommended)".
+- Review over the spec bytes: "No review (Recommended)".
+- D8-D10: "Approve all as proposed (Recommended)".
+- RC-D1 timing: "Start now (Recommended)": the merge base is recorded
+  first (V1) while PR 99 is open.
+- D1-D7 were not asked one by one at this gate; they are put to the owner
+  with the corpus, whose cases exercise each of them.
 
 ## 2. Provenance
 
@@ -255,6 +264,15 @@ with no semantic effect (D10).
 `tests/test_public_branch_runtime.py` and `tests/test_v6_phase2_registry.py`
 stay complete (V4).
 
+**M9 amended (r8, corpus finding C1).** No new branch row. A version-7
+report's `assurance.uncovered_applicable_scope_ids` lists the applicable
+`report:check:n-a:*` projection rows (probe 2026-11-06: 10 `report:` ids
+among 65), so a new row in that family would enter every version-7
+report's assurance block and move frozen bytes (plan rule 7). The
+version-15 projection records only the existing `report:check:n-a:*`
+events, and the refusal records no new event. The corpus pins this: its
+version-15 goldens carry the version-7 assurance block unchanged.
+
 ## 7. Decisions
 
 | ID | Question | Readings and cost | Proposal |
@@ -266,10 +284,10 @@ stay complete (V4).
 | D5 | Does `remedy` change the model digest? | it is model content | yes; T8 shows remedy-free models unchanged |
 | D6 | Bare `constraint_id` or `address` + `addressing`? | bare id needs a rule for id-less constraints | `address` + `addressing` |
 | D7 | Undeclared `remedy` | plan RC-D12 (ruled) | null (T4) |
-| D8 (r7) | Which `schema_version` does the exit-3 refusal payload carry? | 15 (but the model is one v15 cannot describe) vs the version the model selects without the flag (9, 11, or the reference wrapper's 12) | the model's own version, so the payload validates against an existing branch; T9 validates it |
-| D9 (r7) | `--rule-ids` with `--unredacted` | refuse (64) vs accept as a no-op | accept: redaction models are refused anyway, and a 64 adds a branch with no behaviour |
-| D10 (r7) | A `remedy` edit under `gnd evolve` | admitted like `rationale` vs `_NEITHER` (today's default for an unknown path, which demands review) | admitted |
-| D11 (r7) | Approval instrument (§11) | prose vs corpus-first | corpus-first, the default for a serialized format and an exit-code contract |
+| D8 (r7) | Which `schema_version` does the exit-3 refusal payload carry? | 15 (but the model is one v15 cannot describe) vs the version the model selects without the flag (9, 11, or the reference wrapper's 12) | the model's own version, so the payload validates against an existing branch; T9 validates it. **(o) 2026-11-06: approved as proposed** |
+| D9 (r7) | `--rule-ids` with `--unredacted` | refuse (64) vs accept as a no-op | accept: redaction models are refused anyway, and a 64 adds a branch with no behaviour. **(o) 2026-11-06: approved as proposed** |
+| D10 (r7) | A `remedy` edit under `gnd evolve` | admitted like `rationale` vs `_NEITHER` (today's default for an unknown path, which demands review) | admitted. **(o) 2026-11-06: approved as proposed** |
+| D11 (r7) | Approval instrument (§11) | prose vs corpus-first | corpus-first, the default for a serialized format and an exit-code contract. **(o) 2026-11-06: corpus-first** |
 
 ## 8. Tests and verification ledger
 
@@ -349,6 +367,33 @@ The owner approves by reading the README stories and the goldens; the
 harness in `tests/test_rc1_rule_ids.py` runs every case and is red until M1-M9
 land. If the owner chooses prose instead, this section becomes "this prose"
 and the goldens are written during implementation.
+
+## Corpus findings (r8, recorded while authoring the corpus)
+
+- **C1.** The branch registry feeds the version-7 assurance block; M9
+  amended above.
+- **C2.** The CLI writes JSON with `ensure_ascii=True` (checked by
+  re-encoding four of today's reports byte for byte); the goldens use the
+  same encoding.
+- **C3.** Today's refusal-path versions for the three refused model kinds,
+  with a missing population: redaction 9, temporal 11, reference wrapper 12
+  around an inner version-7 report (probe 2026-11-06). D8 keeps these.
+- **C4.** The model digest of a model with `remedy` was computed with
+  `gnd.values.model_digest` over the loaded model with the `remedy` keys
+  restored in source order; the method reproduced a known digest first.
+- **C5.** For a positional verdict under `--rule-ids`, the text line is
+  unchanged (address equals the ref, so it is not printed twice). The
+  corpus's text case has declared ids only; the positional text line is a
+  direct test (T10).
+
+- **C6.** The usage-error case already exits 64 today, because
+  `--rule-ids` is an unknown flag. The harness also requires the error to
+  name `--rule-ids` and not be "unrecognized arguments", so it fails until
+  the deliberate conflict check exists.
+- **C7.** Corpus RED run, 2026-11-06, before any source change:
+  `uv run pytest -q tests/test_rc1_rule_ids.py --tb=no` → 9 failed, 1
+  passed (the passing test checks only that the corpus lists every case
+  once and that `populations/absent.pop.yaml` does not exist).
 
 ## Implementability sweep (step 1, author inspection)
 

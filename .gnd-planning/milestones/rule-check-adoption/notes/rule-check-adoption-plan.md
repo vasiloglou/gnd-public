@@ -1,6 +1,6 @@
 # Rule-check adoption
 
-r1, 2026-11-06. **Draft, awaiting the owner's plan gate. No plan review has
+r2, 2026-11-06. **Draft, awaiting the owner's plan gate. No plan review has
 run over these bytes** (§8 names the bar; whether to run it or waive it is
 RC-D0). Milestone: `rule-check-adoption`. Phase prefix `RC`.
 Sources: five owner-filed requests from 2026-11-06, GR-D1, GR-D2, GR-D3, GR-D5
@@ -17,6 +17,11 @@ written. `auto=false`.
 **Revision history and owner rulings.**
 
 - **r1:** first draft. No review has run over it.
+- **r2:** after merging `origin/main` 8bfbe417 (PR 100, the component index
+  and the project rule that requires searching it). Reuse findings O16-O17;
+  version-15 verdicts carry `address` + `addressing` (existing census scheme)
+  instead of a bare `constraint_id`; RC-D4 is answered by that scheme. No
+  review has run over r2.
 
 ## Problem and completion predicates
 
@@ -41,7 +46,7 @@ stop it from being a CI gate a project can switch on:
 The milestone is complete when, on the main branch after merge:
 
 1. `gnd check MODEL POP --rule-ids --format json` emits report version 15,
-   whose verdicts carry `constraint_id` and `remedy` (RC1). Version 7 bytes
+   whose verdicts carry `address`, `addressing` and `remedy` (RC1). Version 7 bytes
    are unchanged for every existing input.
 2. Under version 15, an `acyclic` failure lists every fact that lies inside a
    strongly connected group, independent of traversal order (RC2).
@@ -74,7 +79,7 @@ bind every phase. Bound to this milestone:
    model load (3), head population load (3), base population load (3, naming
    the base), then evaluation. Pinned by a source-order test (RC3).
 4. **One walk.** Declared identity is attached by one walk over the model's
-   constraints keyed by `constraint_ref`, not by threading a field through the
+   constraints (`ModelIndex.iter_constraints()`) keyed by `constraint_ref`, not by threading a field through the
    seven `ConstraintVerdict(...)` construction sites (RC1). The baseline key
    is one function over every family's offending row (RC3).
 5. **One home.** The version-15 shape has one home, `src/gnd/report.schema.json`;
@@ -123,6 +128,8 @@ requester and not reproduced here.
 | O12 | vacuous acceptance reported, not hidden | issue 96 | claim | RC4 |
 | O13 | source enum is `agent-output`, `synthetic`, `fixture` | `src/gnd/schema/population.schema.json:18`, `src/gnd/population.py:131`, `src/gnd/extract/projection.py:278` | observed | RC5 |
 | O14 | optional note naming tool and revision | issue 97 | claim | RC5 |
+| O16 | declared-id-else-positional addressing already exists | `model.address` (`Addressing`, `constraint_address`, `src/gnd/address.py`); `coverage._constraint_address` (`src/gnd/coverage.py:735`); `ModelIndex.iter_constraints()` (`src/gnd/model_index.py:279`) | observed (index search) | RC1 |
+| O17 | no strongly-connected-group or two-report comparison exists | index searches `strongly connected graph cycle`, `compare two check reports baseline`, `diff violations between populations`: only `model.diff` (two models, not two populations) | observed (index search) | RC2, RC3 (new) |
 | O15 | 2,047 edges / 209 components checked in 2.5 s | issue 94/92 | claim | RC2, RC3 time bounds |
 
 ## 2. Contract proposal and product behavior
@@ -132,9 +139,10 @@ requester and not reproduced here.
 - New optional constraint field `remedy` (string) in `constraint_common`.
   It is author text saying what to do; `rationale` stays the reason the rule
   exists.
-- New report version 15: the version-7 snapshot shape, with two more required
-  verdict keys, `constraint_id` (string or null) and `remedy` (string or
-  null). Selected by `--rule-ids` on the plain snapshot arm.
+- New report version 15: the version-7 snapshot shape, with three more
+  required verdict keys: `address` (`constraint:<id>`, else the positional
+  ref), `addressing` (`declared-id` or `positional`, the census's existing
+  spelling) and `remedy` (string or null). Selected by `--rule-ids` on the plain snapshot arm.
 - Text output under `--rule-ids` prints the id before the positional ref.
 - Models with an active redaction policy or temporal terms re-project to
   versions 10/13 (`_project_result` in `src/gnd/checking_service.py`);
@@ -153,7 +161,8 @@ single cycle (rule 7). Row shape is RC-D3.
 
 `gnd check MODEL HEAD --baseline BASE` (implies `--rule-ids`). Both
 populations are judged under MODEL. A violation key is
-`(constraint_id or constraint_ref, canonical JSON of the offending row)`.
+`(address, canonical JSON of the offending row)`; a positional address is
+flagged by its `addressing`.
 Each version-15 verdict gains an aligned `novelty` list (`new` or
 `standing`); a top-level block names the baseline and counts new, standing
 and resolved rows. Band 1 needs a new alethic row. Exact band and outcome
@@ -188,7 +197,7 @@ independent and may run in any order.
 |---|---|
 | `remedy` field | `src/gnd/schema/orm-meta.schema.json` + sync-pinned copy in `src/gnd/skills/gnd-orm-core/references/` |
 | version-15 shape | `src/gnd/report.schema.json` |
-| declared-identity walk | `src/gnd/checker/` (exact module in RC1 spec) |
+| declared address | `src/gnd/address.py` (`declared_constraint_address`, moved from `coverage.py`) |
 | group computation | `src/gnd/checker/_core.py`, beside `_find_cycle` |
 | baseline comparison | new module under `src/gnd/checker/` (RC3 spec), layered per `tools/gnd_layers.json` |
 | CLI flags | `src/gnd/commands/checking.py` |
@@ -199,8 +208,8 @@ independent and may run in any order.
 ### RC1: Declared identity, report version 15 (about 180 source, 350 test lines)
 
 - RC1-C1: `remedy` accepted by `gnd validate`; non-string refused (exit 3).
-- RC1-C2: `--rule-ids` emits v15; every verdict has `constraint_id` and
-  `remedy`, null when undeclared; fact-type and top-level constraints both
+- RC1-C2: `--rule-ids` emits v15; every verdict has `address`,
+  `addressing` and `remedy` (null when undeclared); fact-type and top-level constraints both
   covered.
 - RC1-C3: without `--rule-ids`, output bytes for the rf1 sem-check goldens are
   unchanged.
@@ -253,7 +262,7 @@ bar per §8.
 
 ### Obligation-to-phase map
 
-O1-O4 → RC1; O5-O6 → RC2; O7-O10 → RC3; O11-O12 → RC4; O13-O14 → RC5;
+O1-O4, O16 → RC1; O17 → RC2, RC3; O5-O6 → RC2; O7-O10 → RC3; O11-O12 → RC4; O13-O14 → RC5;
 O15 → RC2 and RC3 time bounds. Every row has an owner.
 
 ## 5. Documentation, skill and compatibility surfaces
@@ -320,7 +329,7 @@ All are proposals until ruled.
 | RC-D1 | RC1 gate before or after PR 99 merges? | after; otherwise name the 24 inherited failures |
 | RC-D2 | New version 15 behind a flag, or put the new keys in v7? | v15 behind `--rule-ids`; v7 is closed and frozen |
 | RC-D3 | Acyclic rows: one per group, or one per in-group edge? | per edge: matches other ring variants and gives a finer baseline key; groups go in the message |
-| RC-D4 | Constraint without an id under `--baseline` | key by `constraint_ref` and mark the key positional in the row |
+| RC-D4 | Constraint without an id under `--baseline` | answered by the reused scheme: key by positional address, `addressing: positional` tells the caller it is unstable |
 | RC-D5 | Band and outcome when only standing violations remain | exit 0, outcome `accepted`, `acceptance_ready: false`, counts show standing |
 | RC-D6 | Outcome when either run leaves an alethic constraint unchecked | exit 4; no novelty claim for that constraint |
 | RC-D7 | Vacuous control: run-wide flag, per-constraint field, or both | flag only: a CI adoption choice, not a domain fact |

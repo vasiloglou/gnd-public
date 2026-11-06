@@ -1,0 +1,21 @@
+population: { model: ../models/graph.orm.yaml, model_id: urn:gnd-fixture:rc3-graph@1, source: fixture, covers: [uses, component_in_area, component_has_owner, component_in_release] }
+facts:
+  uses:
+    - { user: a, used: b }
+    - { user: b, used: a }
+    - { user: x, used: y }
+    - { user: y, used: x }
+  component_in_area:
+    - { component: a, area: core }
+    - { component: b, area: core }
+    - { component: x, area: core }
+    - { component: y, area: core }
+    - { component: old, area: legacy }
+  component_has_owner:
+    - { component: a, owner: team }
+    - { component: b, owner: team }
+    - { component: old, owner: team }
+    - { component: x, owner: team }
+    - { component: y, owner: team }
+  component_in_release:
+    - { component: a, release: r1 }

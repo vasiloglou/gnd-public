@@ -2,9 +2,13 @@
 
 ## 1. Status
 
-**r1, 2026-11-06. Draft, awaiting the owner gate (process-phase step 2).**
-No implementation file is created or edited before the owner approves this
-spec or its corpus (§11). `auto=false`.
+**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
+owner ruled the step-2 asks over r1 (sha256 `30bd7157…bc13c`, commit
+0e74261e), answering "How do you rule on RC3's decisions D1-D7?" with
+"Approve all as proposed" (o, 2026-11-06). D1 is corpus-first, so no
+implementation file is created or edited until the owner approves the
+corpus. `auto=false`. Prior status (r1): "Draft, awaiting the owner gate
+(process-phase step 2)."
 
 ## 2. Provenance
 
@@ -156,13 +160,13 @@ counts and, when `positional_keyed > 0`, the RC-D9 warning:
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first** (exit-code contract and serialized format) |
-| D2 | Row-less failing verdict's key | `(address, None)`: one key per verdict, so RC3-C6 holds |
-| D3 | How an ill-formed base is reported | exit 3, version 15, the base's own issues with paths prefixed `baseline:`; `population` stays the head path |
-| D4 | Warning verdicts (deontic fail) | compared like failures (novelty shown, counted), but as today they never decide the band |
-| D5 | Assurance under `--baseline` | uncertified block for the baseline band, level `none` (M5) |
-| D6 | Text output | novelty on each non-pass line; a `BASELINE` block with the counts and the RC-D9 warning |
-| D7 | Review over the spec bytes | none |
+| D1 | Approval instrument | **corpus-first** (exit-code contract and serialized format) **Ruled (o, 2026-11-06): as proposed.** |
+| D2 | Row-less failing verdict's key | `(address, None)`: one key per verdict, so RC3-C6 holds **Ruled (o, 2026-11-06): as proposed.** |
+| D3 | How an ill-formed base is reported | exit 3, version 15, the base's own issues with paths prefixed `baseline:`; `population` stays the head path **Ruled (o, 2026-11-06): as proposed.** |
+| D4 | Warning verdicts (deontic fail) | compared like failures (novelty shown, counted), but as today they never decide the band **Ruled (o, 2026-11-06): as proposed.** |
+| D5 | Assurance under `--baseline` | uncertified block for the baseline band, level `none` (M5) **Ruled (o, 2026-11-06): as proposed.** |
+| D6 | Text output | novelty on each non-pass line; a `BASELINE` block with the counts and the RC-D9 warning **Ruled (o, 2026-11-06): as proposed.** |
+| D7 | Review over the spec bytes | none **Ruled (o, 2026-11-06): as proposed.** |
 
 ## 8. Tests and verification ledger
 
@@ -250,3 +254,17 @@ golden:
   as the head's; the cost is one extra check run (about 1 s on the
   2,047-edge fixture, O21).
 - No new dependency or report version.
+
+## Corpus findings (recorded while authoring the corpus, 2026-11-06)
+
+- **C1.** An unreadable value needs `format_version: 2` in the population
+  document; without it the loader refuses `{ "$opaque": … }` at exit 3
+  (`jsonschema:type`). The `base-unchecked` base declares it.
+- **C2.** The corpus model needs no derivations, so the refusal case uses a
+  copy of RC1's `exact-terms` model (`models/derivations.orm.yaml`), whose
+  plain report is version 7: the `check:baseline-unsupported` refusal is
+  reported at version 7, as RC1's D8 does for its own refusal.
+- **C3.** Every answer was computed by an oracle script from the head's and
+  base's `--rule-ids` reports at eac81cf8, applying the spec's rules; none
+  was read from an implementation.
+- Red at commit: 10 failing (every case), 1 passing (the case list).

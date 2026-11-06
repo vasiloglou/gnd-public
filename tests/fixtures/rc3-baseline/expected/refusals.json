@@ -1,0 +1,34 @@
+{
+  "bad-base": {
+    "schema_version": 15,
+    "outcome": "ill_formed",
+    "exit_code": 3,
+    "population": "populations/bad-base.head.pop.yaml",
+    "issues": [
+      [
+        "baseline:$.facts.uses[0]",
+        "population:missing-role"
+      ],
+      [
+        "baseline:$.facts.uses[0].depends_on",
+        "population:extra-role"
+      ]
+    ]
+  },
+  "refuse-derivation": {
+    "schema_version": 7,
+    "outcome": "ill_formed",
+    "exit_code": 3,
+    "issue_rule_ids": [
+      "check:baseline-unsupported"
+    ]
+  },
+  "refuse-temporal": {
+    "schema_version": 11,
+    "outcome": "ill_formed",
+    "exit_code": 3,
+    "issue_rule_ids": [
+      "check:rule-ids-unsupported"
+    ]
+  }
+}

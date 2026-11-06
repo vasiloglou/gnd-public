@@ -1,0 +1,12 @@
+{
+  "standing-only": 0,
+  "mixed": 1,
+  "rowless-new": 1,
+  "head-vacuous": 2,
+  "base-unchecked": 4,
+  "text-mixed": 1,
+  "bad-base": 3,
+  "refuse-derivation": 3,
+  "refuse-temporal": 3,
+  "conflict-populations": 64
+}

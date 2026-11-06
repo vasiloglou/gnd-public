@@ -36,6 +36,7 @@ from gnd.model._operations import _has_literal as _has_literal
 from gnd.model._operations import _roles_by_variable as _roles_by_variable
 from gnd.model._operations import _variables_in as _variables_in
 from gnd.model._operations import compile_operation as compile_operation
+from gnd.model._unattended import unattended_span_issues as unattended_span_issues
 from gnd.model._validation import _DERIVATION_ARM_KEYS as _DERIVATION_ARM_KEYS
 from gnd.model._validation import _DERIVATION_RULE_KEYS as _DERIVATION_RULE_KEYS
 from gnd.model._validation import _DERIVATION_TERM_CACHE as _DERIVATION_TERM_CACHE

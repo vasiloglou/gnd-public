@@ -17,6 +17,7 @@ facts, extended by the explicit ``instances[T]`` roster.
 Every verdict message is rendered from the CNL templates in
 :mod:`gnd.verbalize`.
 """
+from gnd.checker._composed import check_with_composed_anchors as check_with_composed_anchors
 from gnd.checker._core import _COMPARATORS as _COMPARATORS
 from gnd.checker._core import _INVALID_LITERAL as _INVALID_LITERAL
 from gnd.checker._core import _JOIN_SUBJECT_SEQS as _JOIN_SUBJECT_SEQS
@@ -215,7 +216,6 @@ from gnd.checker._core import check_legacy as check_legacy
 from gnd.checker._core import check_partial as check_partial
 from gnd.checker._core import check_with_anchors as check_with_anchors
 from gnd.checker._core import check_with_anchors_partial as check_with_anchors_partial
-from gnd.checker._core import check_with_composed_anchors as check_with_composed_anchors
 from gnd.checker._core import compare_terms as compare_terms
 from gnd.checker._core import constraint_variant as constraint_variant
 from gnd.checker._core import constraint_view_legacy as constraint_view_legacy

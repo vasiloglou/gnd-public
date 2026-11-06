@@ -152,6 +152,9 @@
     "gnd.checker": {
       "layer": "checking"
     },
+    "gnd.checker._composed": {
+      "layer": "checking"
+    },
     "gnd.checker._core": {
       "layer": "checking"
     },
@@ -680,6 +683,9 @@
       "layer": "model"
     },
     "gnd.model._operations": {
+      "layer": "model"
+    },
+    "gnd.model._unattended": {
       "layer": "model"
     },
     "gnd.model._validation": {

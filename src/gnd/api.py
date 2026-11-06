@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import copy
-import json
+import json  # noqa: F401 -- historical compatibility binding
 import os
 from collections.abc import Callable, Mapping  # noqa: F401 -- historical compatibility binding
 from dataclasses import (  # noqa: F401 -- historical compatibility binding  # noqa: F401 -- historical compatibility binding
@@ -952,7 +952,7 @@ def compose(
     return {
         "schema": "gnd-compose/1",
         "exit_code": 0,
-        "population": json.loads(composed.population_bytes),
+        "population": _rf7_input.loads(composed.population_bytes),
         "record": composed.record,
     }
 

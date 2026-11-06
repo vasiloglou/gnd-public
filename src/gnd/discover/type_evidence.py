@@ -11,10 +11,10 @@ attribute digest unless ``show_digests``.
 
 from __future__ import annotations
 
-import json
 import re
 from typing import Any
 
+from gnd import input_policy as _rf7_input
 from gnd.artifacts import canonical_json_bytes
 from gnd.discover import types
 from gnd.discover.support import PopulationView, identity
@@ -187,7 +187,7 @@ def build_evidence(
         kinds = {value[0] for _, value in record.pairs}
         kind = next(iter(kinds)) if len(kinds) == 1 else None
         own_entities = {entity for entity, _ in record.pairs}
-        own_signature = None if record.signature is None else json.loads(record.signature)
+        own_signature = None if record.signature is None else _rf7_input.loads(record.signature)
         for position, fact_id in enumerate(candidates):
             key = (fact_id, record.entity_object_type)
             if key not in cache:

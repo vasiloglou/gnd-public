@@ -32,7 +32,11 @@ BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operation
                   # close registers it (it reads no bind).
                   "model/_induction.py",
                   # The evolve-loading follow-up's JSON-value walk (it reads no bind).
-                  "model/_documents.py")
+                  "model/_documents.py",
+                  # The MG5 unattended-source rules, split out of _validation (it reads no bind).
+                  "model/_unattended.py",
+                  # The CT2 composed-anchor check, split out of checker/_core (it reads no bind).
+                  "checker/_composed.py")
 
 #: `patterns.py` keeps the 28th raw read. It imports NOTHING from `gnd` -- a
 #: boundary two reviewers enforced against an earlier draft and

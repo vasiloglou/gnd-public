@@ -6,8 +6,10 @@ Steps 4, 5 and 6 of the protocol.
 
 ### Invocation
 
-One reviewer at high reasoning effort, reading the diff with the repository
-read-only, prompt on **stdin** rather than argv:
+Use the project's review instrument (`references/project.md`) where it defines
+one for a phase diff. Where none is defined: one reviewer in a different tool,
+at high reasoning effort, reading the diff with the repository read-only,
+prompt on **stdin** rather than argv:
 
 ```
 codex exec --ephemeral --model <model> \
@@ -15,9 +17,8 @@ codex exec --ephemeral --model <model> \
     --color never --skip-git-repo-check -  < review-prompt-pN.txt
 ```
 
-Prompt on stdin is not a style preference: routing reviewed-artifact bytes
-through argv is the transport this project already refused once, and it is why a
-fourth reviewer is absent from the panel roster.
+Prompt on stdin is not a style preference: argv exposes reviewed-artifact bytes
+to shell quoting, argument-length limits and the process list.
 
 ### What the prompt carries
 
@@ -35,7 +36,8 @@ where this claim is false" gets findings.
   red. Without that step a fix has no evidence it fixed anything.
 - **Retain the findings verbatim**, in `notes/phase-N-<reviewer>-review.md`.
 - **State that one reviewer is one reviewer.** The record says so in its boundary
-  section. A single-reviewer read mistaken for a panel is a named register risk.
+  section. A single-reviewer read mistaken for a multi-reviewer bar is a named
+  register risk.
 - **State what the reviewer could not do.** Under a read-only sandbox a reviewer
   typically cannot run the suite, so its verification of the tests is by reading.
   A review record that omits this overstates its own coverage.
@@ -44,7 +46,7 @@ where this claim is false" gets findings.
 
 Reviewer output routinely contains absolute paths from the machine it ran on.
 Committing it verbatim writes the operator's home directory into the milestone's
-evidence, and this repository has a guard that will refuse it. Sanitize to a
+evidence. Sanitize to a
 placeholder, and **say in the file's own header that it was edited** — retained-
 verbatim evidence that was modified must declare the modification.
 
@@ -56,9 +58,8 @@ for you:
 
 > **Audit your own coverage against the declared branch table, not against the
 > code.** A reviewer reads what is there; only the branch table shows what is
-> missing. This has found a declared finding class with no case that could fail
-> it — in the phase whose purpose was to remove exactly that defect, immediately
-> after an adversarial review that did not flag it.
+> missing, so a declared class with no case that could fail it survives an
+> adversarial review that did not flag it.
 
 ### Findings about your reasoning stand as written
 
@@ -77,8 +78,7 @@ One question, asked explicitly and answered in the record:
 Exactly two honest answers:
 
 1. **Refactors EXECUTED** — each named, each behavior-preserving, each landed
-   behind the same green gates as the phase's own work. Good candidates, from
-   experience:
+   behind the same green gates as the phase's own work. Good candidates:
    - the same question answered in two places at two moments (authoring time and
      evaluation time), which is how the two answers drift
    - a re-implemented primitive, usually found by a duplicate detector rather
@@ -99,32 +99,34 @@ refactor rather than a private import.
 
 ### Base contract
 
-The record follows the milestone-record contract shipped at
-`src/gnd/skills/gnd-orm-core/references/milestone-record-format.md` — append-only
+The record follows the milestone-record contract in
+[`milestone-record-format.md`](milestone-record-format.md) — append-only
 directory, `NNN-<scope>.md`, claim in the gate's vocabulary, verbatim gate output,
 mandatory boundary section, open questions, refuted premises, digests computed
 from bytes on disk with `shasum -a 256`.
 
 ### The phase extensions
 
-A phase of a milestone plan is **not** a `gnd-solve` station over a domain model,
-and the record says so rather than leaving the field blank:
+A phase of a milestone plan is repository development, **not** a run of one of
+the project's own workflow skills, and the record says so rather than leaving
+the field blank:
 
 ```yaml
 ---
 milestone: <milestone>
 station: "phase-N"
-skill: "n/a -- repository development, not a gnd-solve station over a domain model"
+skill: "n/a -- repository development, not a run of a project workflow skill"
 scope: phase-N
 date: <YYYY-MM-DD>
 gate:
-  command: "uv run pytest -q tests/<selected-test-file>.py"
+  command: "pytest tests/<selected-test-file>.py"
   exit: 0
-  output: "<verbatim pytest summary line>"
+  output: "<verbatim test summary line>"
   note: >-
-    The selected direct and downstream controls; list additional commands in the body.
+    The selected direct and downstream controls. Several selected gates: use
+    `gates`, one entry per gate with its own exit (base contract).
 slow_cadence:
-  command: 'uv run pytest -q -m "evidence or census"'
+  command: "<the project's broad-lane command>"
   trigger: "explicit owner request or separately scoped CI selection"
   reason: "the unchanged broad controls are outside this phase's impact closure"
 evidence:
@@ -135,25 +137,29 @@ evidence:
 
 Every phase record carries `gate` and exactly one of `slow_gate` or
 `slow_cadence`. `gate` records the focused command actually executed, with
-its exit and a verbatim output summary. Use `slow_gate` with the exact command,
+its exit and a verbatim output summary; a verification selection with several
+gates takes the base contract's `gates` list instead. Use `slow_gate` with the exact command,
 exit, and a verbatim output summary when the broad lane ran; use `slow_cadence`
 with a concrete trigger and reason
 when it did not. A collection-only check never counts as a `slow_gate` result.
 The full default lane and broad historical lane run only on explicit owner or
 separately configured CI selection under the verification-selection reference.
-Ordinary phase and milestone work uses the reduced v6.3 selection; changed
-behavior receives focused current-behavior controls.
+Ordinary phase and milestone work uses the reduced selection; changed
+behavior receives focused current-behavior controls. Any further record fields
+the project defines are in `references/project.md`.
 
 > **A known red is proven, not asserted.** If the suite exits non-zero for a
 > reason that predates the phase, verify it in a throwaway worktree at the commit
 > the phase began from and say that you verified it there. "This was already
-> failing" is a claim like any other.
+> failing" is a claim like any other. The proof is owed when the red is first
+> met -- normally step 3, before the phase builds on it -- not when the record
+> is written.
 
 Body sections, beyond the base contract:
 
 - **What shipped** — module by module, with the design decisions that survived.
 - **Gate output (verbatim)** — the exact commands and their exact output,
-  including the lint gate.
+  including the project's lint command where `references/project.md` names one.
 - **Any criterion that was measured** — with the measurement, the threshold, and,
   if the threshold moved, the arithmetic that moved it.
 - **`Refactoring review`** — step 5's output, executed and deferred halves both.
@@ -177,7 +183,9 @@ obligation does not retroactively widen what the phase established.
 
 ### The commit
 
-GND grammar with a phase scope token: `feat(v2-p3): ...`, and `test(...)`,
+The record contract's grammar with the phase scope token that contract defines
+([`milestone-record-format.md`](milestone-record-format.md), Scope tokens):
+`feat(phase-N): ...`, and `test(...)`,
 `fix(...)`, `docs(...)` for the same phase as the work warrants — a phase is
 normally several commits, each naming what it turned green.
 
@@ -186,5 +194,5 @@ normally several commits, each naming what it turned green.
   and the record path on its own closing line
 - `--` rather than em-dashes
 - **No backticks anywhere in the message** — shells perform command substitution
-  on them, and a real commit in this repository's history was garbled that way
+  on them, which garbles the message
 - Stage by explicit path. Never `git add -A`, never `git add .`

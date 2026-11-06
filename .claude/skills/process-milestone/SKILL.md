@@ -1,6 +1,6 @@
 ---
 name: process-milestone
-description: Execute or resume a named GND development milestone through its phases, required reviews and closure evidence. Supports auto=true for explicitly delegated milestone approval gates. Use for whole-milestone execution; use process-phase for a single phase and start-milestone for planning only.
+description: Execute or resume a named development milestone through its phases, required reviews and closure evidence. Supports auto=true for explicitly delegated milestone approval gates. Use for whole-milestone execution; use process-phase for a single phase and start-milestone for planning only.
 ---
 
 # Process Milestone
@@ -8,8 +8,13 @@ description: Execute or resume a named GND development milestone through its pha
 Coordinate a whole milestone using [process-phase](../process-phase/SKILL.md).
 The phase skill remains the normative execution protocol; this skill selects
 ready phases, preserves milestone-wide authorization and owns the final question
-sweep and close record. This is a source-owned development skill in both real
-discovery roots, not a `gnd` command or installer-managed packaged skill.
+sweep and close record. This is a development-process skill, not a product
+command.
+
+**Project hook.** If `references/project.md` exists in the process-phase skill
+directory, read it first. The project owns it; it names the project's review
+instrument, test and gate commands, standing design rules and any
+project-specific record fields, and it governs project-specific matters.
 
 ## Invocation and authority
 
@@ -21,7 +26,8 @@ to `auto=false`. A request to create/install this skill does not invoke it.
 Resolve the named scope from the user's request and existing conversation. A
 whole-milestone execution request selects this coordinator and process-phase
 for that milestone; no further sibling handoff permission is needed between its
-phases. It does not select a paid review panel or authorize reviewer subagents.
+phases. It does not select a paid review instrument or authorize reviewer
+subagents.
 
 With `auto=false`, prepare concrete artifacts and stop at outstanding owner
 gates required by the effective plan or process-phase. Honor already recorded
@@ -38,24 +44,28 @@ milestone's delegation never transfers.
 
 Auto advances through satisfied owner gates; it does not manufacture evidence,
 skip required reviews, waive stricter scope limits or authorize paid calls,
-reserved data, broad historical suites, publication, certification or PR merge.
-Follow [AGENTS.md](../../../AGENTS.md) and
-[CONTRIBUTING.md](../../../CONTRIBUTING.md). Certification/recertification needs
+reserved data, broad historical suites, publication, opt-in gates or PR merge.
+Follow the repository's `AGENTS.md` and `CONTRIBUTING.md` where present. An
+[opt-in gate](../process-phase/references/architect-overrides.md) needs
 its own explicit current owner request for subject and scope.
 
 ## Resolve readiness before execution
 
 Read `.gnd-planning/PROJECT.md`, the whole effective canonical milestone plan,
-amendments, plan review/gate records, applicable question registers and prior
+amendments, the plan-gate record
+([milestone record format](../process-phase/references/milestone-record-format.md))
+and any retained plan-review notes, applicable question registers and prior
 phase/close records. Resolve all output beneath
 `.gnd-planning/milestones/<milestone>/`; reject paths escaping the repository or
 symlinks redirecting planning elsewhere. Preserve canonical plan paths and IDs.
 
 If the plan or scaffold is missing, report the prerequisite and offer
-[start-milestone](../start-milestone/SKILL.md) or the packaged `gnd-new-project`
-workflow. Do not invent a plan or invoke planning/model skills automatically.
+[start-milestone](../start-milestone/SKILL.md) or, for a missing scaffold, the
+project's own scaffold workflow (`references/project.md`). Do not invent a plan
+or invoke planning or other workflow skills automatically.
 A draft plan may be prepared for its required review and owner/delegated gate;
-implementation cannot begin before that gate is satisfied.
+implementation cannot begin before that gate is satisfied. Once ruled, the gate
+is recorded as that format's plan-gate record.
 
 Build a phase readiness table from records: phase ID, dependencies, approved
 spec/gate, completed criteria, review/record evidence and next action. Completion
@@ -63,13 +73,15 @@ labels alone do not establish readiness. Verify cited artifacts/digests; changed
 bytes invalidate only affected claims and controls. Preserve historical records
 and make missing/stale evidence explicit instead of silently replacing it.
 
-Check the plan's required plan/close review instrument. The four-reviewer bar
-remains binding where required by this repository's protocol. Explicitly selected
-review tools/delegation can be used within their scope and credential contract.
+Check the plan's required plan/close review instrument. The project's
+plan-review bar (`references/project.md`; default: one independent reviewer in
+a different tool) remains binding where the plan or protocol requires it.
+Explicitly selected review tools/delegation can be used within their scope and
+credential contract.
 If no instrument is selected, finish reviewable preparation and request that
 specific missing choice; auto is not a tool selection. Follow the
 [review convergence rules](../process-phase/references/review-convergence.md)
-and never relabel one reviewer as a panel.
+and never relabel one reviewer as a multi-reviewer review.
 
 ## Run the ready phases
 
@@ -86,7 +98,7 @@ For each phase, use `process-phase PHASE MILESTONE` with the effective auto sett
 2. Prepare the spec and implementability sweep before its owner/delegated gate.
 3. Implement, run focused affected gates, review the diff independently, review
    refactoring, and record/commit under process-phase's contracts.
-4. Audit every criterion against measured evidence. Native skipped lanes,
+4. Audit every criterion against measured evidence. Skipped lanes,
    collection-only checks and missing reviewer results are not completed gates.
 5. Recompute readiness and proceed to the next phase without another permission
    request when the existing authorization covers it.
@@ -115,8 +127,16 @@ Record missing acceptance evidence honestly; a successful sequence of activities
 does not establish closure. A separately required human acceptance or external
 prerequisite remains pending unless the effective authorization satisfies it.
 
-Write the next numbered milestone close record using the packaged
-`src/gnd/skills/gnd-orm-core/references/milestone-record-format.md`. Include phase
+Repair the plan. Phases defer plan repairs to this point: for every refuted
+premise or open-questions row in which a phase record names a plan repair,
+amend the canonical plan with provenance (the raising record's path, the date,
+the prior wording retained), or disposition the row in the sweep as carried or
+retired with its reason. A repair is a plan amendment and falls under the close
+ruling; the close record cites the amended plan's SHA-256.
+
+Write the next numbered milestone close record using the
+[milestone record format](../process-phase/references/milestone-record-format.md).
+Include phase
 record references, exact exit-gate commands/results, artifact SHA-256s, review
 scope/findings/dispositions, refuted premises, question sweep, residuals and
 boundaries. Record the owner or delegated close ruling distinctly from tests and

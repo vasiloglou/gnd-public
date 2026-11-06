@@ -1,0 +1,138 @@
+{
+  "files": {
+    ".claude/skills/process-milestone/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-milestone/SKILL.md",
+      "sha256": "01f7097d6c93c049b638b0ddfebd4765dcf8e969f776b255f1aaace65ca520ae"
+    },
+    ".claude/skills/process-milestone/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-milestone/agents/openai.yaml",
+      "sha256": "a80adc0291dee82fa5bdf1389a1db6cf7dd4e98c16f0e5b72f2327c1e043744d"
+    },
+    ".claude/skills/process-phase/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/SKILL.md",
+      "sha256": "39d51e110f5ef2e1e66f81affd82f3818f81345f9654a9b2d0ee0ae5f6afb34e"
+    },
+    ".claude/skills/process-phase/references/agent-delegation.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/agent-delegation.md",
+      "sha256": "999c72a5c68689eff0ad2ef371c3e1b337a08f06c3b752ebb30b4b577e5fbf0d"
+    },
+    ".claude/skills/process-phase/references/architect-overrides.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/architect-overrides.md",
+      "sha256": "a8ace3b912e23e268162a85930af1e201bdb24813fecdb4eedcf1aa74c8d3bf0"
+    },
+    ".claude/skills/process-phase/references/milestone-record-format.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/milestone-record-format.md",
+      "sha256": "3506b6e4358cecb37d7936a703c5acc6975c4d2bdfef9662dff5d96b0c1545e4"
+    },
+    ".claude/skills/process-phase/references/review-and-record.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/review-and-record.md",
+      "sha256": "242431779585fa3158d92e223c7bbe7b1ca13c5f41d4b794ee58309fd2e92b09"
+    },
+    ".claude/skills/process-phase/references/review-convergence.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/review-convergence.md",
+      "sha256": "6a7bbf58729302332db99aba16fc4cb20ac5777ca08410fc993e482a01db387e"
+    },
+    ".claude/skills/process-phase/references/spec-note-contract.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/spec-note-contract.md",
+      "sha256": "6ad61bfc1120656bd980769580f3615519488244d6af15b45fa39bdef02bb989"
+    },
+    ".claude/skills/process-phase/references/standing-rules.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/standing-rules.md",
+      "sha256": "b749e864a34bc392cf505b6b0738d9f367efa7a85f16c7c8595bdd4a06c3baf4"
+    },
+    ".claude/skills/process-phase/references/verification-selection.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/verification-selection.md",
+      "sha256": "0f8547f879aa0b21577037e70c57ea1debcd5e353ef3e33a35c2601b307ff5f1"
+    },
+    ".claude/skills/start-milestone/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/start-milestone/SKILL.md",
+      "sha256": "4963d6433fc14d71f848df60a8c675603bb13b07c6ee5cec8746c0928e28c7e1"
+    },
+    ".claude/skills/start-milestone/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/milestone/start-milestone/agents/openai.yaml",
+      "sha256": "7f96fa3d1e4c5c590b9d7f14331ad7d71dc7dbf160ce5ff85ab0136bfdc0e3b1"
+    },
+    ".codex/skills/process-milestone/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-milestone/SKILL.md",
+      "sha256": "01f7097d6c93c049b638b0ddfebd4765dcf8e969f776b255f1aaace65ca520ae"
+    },
+    ".codex/skills/process-milestone/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-milestone/agents/openai.yaml",
+      "sha256": "a80adc0291dee82fa5bdf1389a1db6cf7dd4e98c16f0e5b72f2327c1e043744d"
+    },
+    ".codex/skills/process-phase/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/SKILL.md",
+      "sha256": "39d51e110f5ef2e1e66f81affd82f3818f81345f9654a9b2d0ee0ae5f6afb34e"
+    },
+    ".codex/skills/process-phase/references/agent-delegation.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/agent-delegation.md",
+      "sha256": "999c72a5c68689eff0ad2ef371c3e1b337a08f06c3b752ebb30b4b577e5fbf0d"
+    },
+    ".codex/skills/process-phase/references/architect-overrides.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/architect-overrides.md",
+      "sha256": "a8ace3b912e23e268162a85930af1e201bdb24813fecdb4eedcf1aa74c8d3bf0"
+    },
+    ".codex/skills/process-phase/references/milestone-record-format.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/milestone-record-format.md",
+      "sha256": "3506b6e4358cecb37d7936a703c5acc6975c4d2bdfef9662dff5d96b0c1545e4"
+    },
+    ".codex/skills/process-phase/references/review-and-record.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/review-and-record.md",
+      "sha256": "242431779585fa3158d92e223c7bbe7b1ca13c5f41d4b794ee58309fd2e92b09"
+    },
+    ".codex/skills/process-phase/references/review-convergence.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/review-convergence.md",
+      "sha256": "6a7bbf58729302332db99aba16fc4cb20ac5777ca08410fc993e482a01db387e"
+    },
+    ".codex/skills/process-phase/references/spec-note-contract.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/spec-note-contract.md",
+      "sha256": "6ad61bfc1120656bd980769580f3615519488244d6af15b45fa39bdef02bb989"
+    },
+    ".codex/skills/process-phase/references/standing-rules.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/standing-rules.md",
+      "sha256": "b749e864a34bc392cf505b6b0738d9f367efa7a85f16c7c8595bdd4a06c3baf4"
+    },
+    ".codex/skills/process-phase/references/verification-selection.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/process-phase/references/verification-selection.md",
+      "sha256": "0f8547f879aa0b21577037e70c57ea1debcd5e353ef3e33a35c2601b307ff5f1"
+    },
+    ".codex/skills/start-milestone/SKILL.md": {
+      "mode": "0o644",
+      "origin": "skills/milestone/start-milestone/SKILL.md",
+      "sha256": "4963d6433fc14d71f848df60a8c675603bb13b07c6ee5cec8746c0928e28c7e1"
+    },
+    ".codex/skills/start-milestone/agents/openai.yaml": {
+      "mode": "0o644",
+      "origin": "skills/milestone/start-milestone/agents/openai.yaml",
+      "sha256": "7f96fa3d1e4c5c590b9d7f14331ad7d71dc7dbf160ce5ff85ab0136bfdc0e3b1"
+    }
+  },
+  "source": {
+    "commit": "2c2b0a137f2329c8d198e312dd7b8e0b0b4feb3b",
+    "dirty": false
+  }
+}

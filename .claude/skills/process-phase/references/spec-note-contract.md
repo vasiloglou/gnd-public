@@ -17,12 +17,12 @@ against by accident.
 ### 2. Provenance
 
 Where this spec derives from, by name and by revision — which plan section, which
-prior phase records, which review rounds have run over which bytes. If a panel
+prior phase records, which review rounds have run over which bytes. If a review
 ran, state the reviewed digest and say plainly whether the current bytes are that
-artifact. **Repaired bytes carry no panel opinion of their own** and the spec says
-so rather than implying the review covered them.
+artifact. **Repaired bytes carry no review opinion of their own** and the spec
+says so rather than implying the review covered them.
 
-Mark applied changes at their site with a short tag (`(p2)` for a first panel
+Mark applied changes at their site with a short tag (`(r1)` for a first review
 round, `(o)` for an owner decision, and so on) so a later reader can tell a
 reviewed sentence from an unreviewed one.
 
@@ -37,10 +37,10 @@ column is an open item, not a completed harvest.
 
 ### 4. The standing rules, bound to this phase
 
-Each of the plan's section 0 rules, bound to this phase's work **by name** — the
-specific loader that must be total, the specific layer that gets a time-bound
-test, the specific policy walk that must not sprout per-kind copies — or argued
-inapplicable in one sentence. See
+Each of the plan's section 0 rules and the project's standing design rules
+(`references/project.md`), bound to this phase's work **by name** — the
+specific function, layer or document the rule constrains here, and the test
+that shows it — or argued inapplicable in one sentence. See
 [`standing-rules.md`](standing-rules.md).
 
 ### 5. Goal
@@ -49,6 +49,13 @@ One paragraph, in the vocabulary of the gate that will judge it. Exit codes and
 bands, never adjectives: "exits 0", not "passes".
 
 ### 6. Design
+
+In a project with a component index, open with a reuse table, one row per
+capability the phase builds: the capability in plain words, the searches run
+(`components_index.py search <words>`, twice with different words, plus the
+`git grep` when the search missed), what was found, and the decision: `reuse`,
+`adapt`, or `new` with the reason nothing existing fits. New code beside a
+`canonical` component needs that reason on the page.
 
 Module by module. For each: the path, an honest line estimate, and the **exact**
 surface — function signatures with keyword-only markers where they matter, schema
@@ -84,10 +91,11 @@ criterion harvested at step 0 maps to at least one entry; every entry maps back.
 Two rules the list is checked against before the spec is submitted:
 
 - **Every declared branch has a case that can fail it.** Walk the branch table,
-  not the code. This is the milestone's defining defect class.
+  not the code. This is the protocol's defining defect class.
 - **Coverage is counted per branch, not per class.** A class whose second half
-  is unreachable with the chosen fixture model is half-covered — and reachability
-  is a property of the fixture, so closing it may mean editing the fixture model.
+  is unreachable with the chosen fixtures is half-covered — and reachability
+  is a property of the fixture, so closing it may mean editing the fixtures
+  themselves.
 
 ### 9. Out of scope for this phase
 
@@ -111,8 +119,22 @@ answers.
 
 ## Sections that appear once the phase is running
 
-These are appended during step 3. The spec is otherwise treated as append-only
-after approval — a reviewed sentence is not rewritten in place.
+These are appended during step 3. After approval the spec is append-only — a
+reviewed sentence is not rewritten in place — with four exceptions that change
+**at their own site**, because that is where a reader looks for them:
+
+- the **status line** (section 1), replaced outright with the current state and
+  its date;
+- a **decision row's ruling** (section 7), written into the row with the owner
+  mark and date;
+- an **owner amendment** to an approved gate or requirement;
+- a **correction to an argument** that a reproduced review finding refuted
+  ([`review-and-record.md`](review-and-record.md)).
+
+Each carries its provenance tag (section 2) and a date. An amendment, a
+correction and a ruling that replaces an earlier ruling keep the prior wording
+beside the new. Everything else — findings, experiments,
+measurements, refuted premises — is appended in the sections below.
 
 ### Implementation findings, recorded as they were found
 

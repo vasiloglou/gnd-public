@@ -1,4 +1,4 @@
-"""pytest plugin (TP2): every iter_fact_types_shared row refuses writes for the whole session.
+"""pytest plugin (TP2): every shared index row (fact types, constraints) refuses writes for the session.
 
 Used by tests/test_tp2_shared_fact_types.py::test_review_f1_frozen_rows_on_anchored_and_partial_paths
 to cover readers the TP2 workloads never reach."""
@@ -38,6 +38,17 @@ def _frozen(self):
 
 
 ModelIndex.iter_fact_types_shared = _frozen
+
+_original_constraints = ModelIndex.iter_constraints_shared
+
+
+def _frozen_constraints(self):
+    for ref, constraint, fact_type in _original_constraints(self):
+        hits["rows"] += 1
+        yield ref, freeze(constraint), None if fact_type is None else freeze(fact_type)
+
+
+ModelIndex.iter_constraints_shared = _frozen_constraints
 
 
 def pytest_terminal_summary(terminalreporter):

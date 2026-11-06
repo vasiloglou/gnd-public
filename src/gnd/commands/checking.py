@@ -232,6 +232,15 @@ def _cmd_transition(
         print(f"{prefix}: {result.error}")
     return result.exit_code
 
+def _declared_from_payload(payload: dict) -> dict[str, tuple[str, str | None]] | None:
+    """(address, remedy) per positional ref, read back from a version-15 payload."""
+    if payload.get("schema_version") != 15:
+        return None
+    return {
+        row["constraint_ref"]: (row["address"], row["remedy"]) for row in payload["verdicts"]
+    }
+
+
 def _cmd_check(
     model_path: str,
     population_path: str,
@@ -244,6 +253,7 @@ def _cmd_check(
     compiled_operations: bool = False,
     composition: str | None = None,
     sources: str | None = None,
+    rule_ids: bool = False,
 ) -> int:
     result = api_module._run_check(
         model_path,
@@ -255,6 +265,7 @@ def _cmd_check(
         admission=admission,
         **({"compiled_operations": True} if compiled_operations else {}),
         **({"composition": composition, "sources": sources} if composition is not None else {}),
+        **({"rule_ids": True} if rule_ids else {}),
     )
     if output_format == "json":
         if result.execution is not None:
@@ -273,7 +284,7 @@ def _cmd_check(
     if result.report is not None:
         for warning in result.warnings:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
-        _print_report(result.report)
+        _print_report(result.report, _declared_from_payload(result.payload))
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)
@@ -718,6 +729,11 @@ def _register_check(subparsers):
         action="store_true",
         help="include the occurrence admission partition in the check report",
     )
+    check_parser.add_argument(
+        "--rule-ids",
+        action="store_true",
+        help="report version 15: each verdict carries the constraint's declared id and remedy",
+    )
     _add_format_argument(check_parser)
     _add_unredacted_argument(check_parser)
 
@@ -936,6 +952,23 @@ def handle(args, parsers) -> int:
         return _cmd_compose(args.model, args.directory, args.out, args.record)
 
     if args.command == "check":
+        if args.rule_ids:
+            conflicting = [
+                flag
+                for flag, value in (
+                    ("--populations", args.populations), ("--pre", args.pre),
+                    ("--steps", args.steps), ("--post", args.post),
+                    ("--anchors", args.anchors), ("--document", args.document),
+                    ("--composition", args.composition), ("--sources", args.sources),
+                    ("--admission", args.admission or None),
+                    ("--compiled-operations", args.compiled_operations or None),
+                )
+                if value is not None
+            ]
+            if conflicting:
+                check_parser.error(
+                    f"--rule-ids applies to one plain snapshot check; it excludes {', '.join(conflicting)}"
+                )
         if (args.composition is None) != (args.sources is None):
             check_parser.error("--composition and --sources must be supplied together")
         if args.composition is not None and (
@@ -1035,5 +1068,6 @@ def handle(args, parsers) -> int:
         compiled_operations=args.compiled_operations,
         composition=args.composition,
         sources=args.sources,
+        rule_ids=args.rule_ids,
     )
 

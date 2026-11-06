@@ -203,7 +203,8 @@ def constraint_change(path: str, before: Any, after: Any, *, family: Any = None)
     leaf = path.rsplit(".", 1)[-1]
     parent = path.rsplit(".", 1)[0] if "." in path else ""
     parent_leaf = parent.rsplit(".", 1)[-1].split("[", 1)[0] if parent else ""
-    if path == "rationale":
+    if path in {"rationale", "remedy"}:
+        # Author text: why the rule exists, what to do about a violation.
         return _ADMITTED
     if path == "provenance.reviewed_in":
         # The audit key D-12 strips from a reviewed status change

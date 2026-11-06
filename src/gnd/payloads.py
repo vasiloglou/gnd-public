@@ -46,6 +46,7 @@ from typing import Any, Literal
 from pydantic import TypeAdapter
 
 from gnd import transition_kernel
+from gnd.address import Addressing
 from gnd.assurance import AssuranceBlockV1, semantic_decision_for_band
 from gnd.branches import record_branch
 from gnd.checker import CheckReport
@@ -73,7 +74,7 @@ DERIVATION_PAYLOAD_SCHEMA_VERSION = 4
 MODEL_BOUND_BASE_PAYLOAD_SCHEMA_VERSION = 5
 MODEL_BOUND_DERIVATION_PAYLOAD_SCHEMA_VERSION = 6
 PAYLOAD_SCHEMA_VERSION = BASE_PAYLOAD_SCHEMA_VERSION
-ReportSchemaVersion = Literal[3, 4, 5, 6, 7, 8, 9, 10, 11, 13]
+ReportSchemaVersion = Literal[3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15]
 
 #: The pairing, as two membership tests rather than four inequalities repeated
 #: at every site. `schema_version` selects a POINT on both axes: whether the
@@ -180,7 +181,7 @@ def _base_payload(
     requires_digest = schema_version in MODEL_BOUND_PAYLOAD_SCHEMA_VERSIONS
     if requires_digest and model_digest is None:
         raise ValueError(f"a version {schema_version} payload must name the model that produced it")
-    if not requires_digest and schema_version not in {7, 8} and model_digest is not None:
+    if not requires_digest and schema_version not in {7, 8, 15} and model_digest is not None:
         raise ValueError(f"version {schema_version} is frozen and cannot carry a model digest")
     issue_records, issues_total, issues_truncated = _issue_records(issues)
     payload = {
@@ -195,7 +196,7 @@ def _base_payload(
     }
     # Immediately after `model`, so a reader meets the coordinate and the
     # identity together and the rebaseline delta from v3/v4 is exactly two keys.
-    if requires_digest or schema_version in {7, 8}:
+    if requires_digest or schema_version in {7, 8, 15}:
         payload["model_digest"] = model_digest
     payload.update(
         {
@@ -206,7 +207,7 @@ def _base_payload(
     )
     if schema_version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS:
         payload["derivations"] = []
-    elif schema_version in {7, 8}:
+    elif schema_version in {7, 8, 15}:
         payload["derivations"] = None
     payload.update(
         {
@@ -290,8 +291,16 @@ def build_check_payload(
     issues: list[ValidationIssue] | None = None,
     warnings: list[ValidationIssue] | None = None,
     error: BaseException | None = None,
+    declared: Mapping[str, tuple[str, Addressing, str | None]] | None = None,
 ) -> dict[str, Any]:
-    """Assemble the ``check`` payload from the objects the text path consumes."""
+    """Assemble the ``check`` payload from the objects the text path consumes.
+
+    Version 15 (``gnd check --rule-ids``) is version 7 plus each verdict's
+    declared identity from ``declared`` (positional ref -> address,
+    addressing, remedy) and the baseline keys, which stay empty here.
+    """
+    if schema_version == 15 and declared is None:
+        raise ValueError("a version 15 check payload needs the declared constraint identities")
     payload = _base_payload(
         "check",
         exit_code,
@@ -305,7 +314,7 @@ def build_check_payload(
     )
     if (
         schema_version not in DERIVATION_PAYLOAD_SCHEMA_VERSIONS
-        and schema_version not in {7, 8}
+        and schema_version not in {7, 8, 15}
         and report is not None
         and report.derivations
     ):
@@ -329,7 +338,7 @@ def build_check_payload(
             record_branch("report:check:n-a:verdict-row")
             record_branch("report:check:n-a:coverage")
         if schema_version in DERIVATION_PAYLOAD_SCHEMA_VERSIONS or (
-            schema_version in {7, 8} and (structured or report.derivations)
+            schema_version in {7, 8, 15} and (structured or report.derivations)
         ):
             payload["derivations"] = []
             for verdict in report.derivations:
@@ -340,7 +349,7 @@ def build_check_payload(
                 record_branch("report:check:n-a:derivation-row")
     else:
         record_branch("report:check:n-a:envelope-only")
-    if schema_version in {7, 8}:
+    if schema_version in {7, 8, 15}:
         decision = semantic_decision_for_band(exit_code)
         block = assurance if assurance is not None else AssuranceBlockV1(decision)
         if not isinstance(block, AssuranceBlockV1) or block.semantic_decision != decision:
@@ -356,7 +365,25 @@ def build_check_payload(
             payload["derivations"] = []
     elif assurance is not None:
         raise ValueError("legacy report cannot carry assurance")
+    if schema_version == 15:
+        payload["verdicts"] = [_rule_ids_verdict(row, declared) for row in payload["verdicts"]]
+        payload["baseline"] = None
+        payload["allow_vacuous"] = False
     return payload
+
+
+def _rule_ids_verdict(
+    row: Mapping[str, Any], declared: Mapping[str, tuple[str, Addressing, str | None]]
+) -> dict[str, Any]:
+    """One version-15 verdict: the version-7 row with its constraint's identity."""
+    address, addressing, remedy = declared[row["constraint_ref"]]
+    projected: dict[str, Any] = {}
+    for key, value in row.items():
+        projected[key] = value
+        if key == "constraint_ref":
+            projected.update(address=address, addressing=addressing, remedy=remedy)
+    projected.update(novelty=None, row_novelty=None)
+    return projected
 
 
 def build_verify_payload(

@@ -9,8 +9,9 @@ legacy, unstable form.
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Literal
+from typing import Any, Literal
 
 ElementClass = Literal["operation", "fact_type", "constraint", "derivation"]
 Addressing = Literal["declared-id", "positional"]
@@ -50,6 +51,21 @@ def constraint_address(constraint_id: str) -> str:
     """Return the declared-id address for a constraint."""
 
     return f"constraint:{constraint_id}"
+
+
+def declared_constraint_address(
+    positional: str, constraint: Mapping[str, Any]
+) -> tuple[str, Addressing]:
+    """A constraint's address: its declared id, else its positional ref.
+
+    The one home of constraint addressing for the census, the induced view and
+    the version-15 check report.
+    """
+
+    declared_id = constraint.get("id")
+    if declared_id is None:
+        return positional, "positional"
+    return constraint_address(str(declared_id)), "declared-id"
 
 
 def derivation_address(fact_type_id: str) -> str:

@@ -2,7 +2,13 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-06), approval pending on the corpus (§11).** The
+**Owner-approved (2026-11-06): corpus and spec r8; implementation in
+progress.** The owner approved the RC1 corpus (commit 8b2d403a) and
+decisions D1-D7 with the words "Approve, implement" on 2026-11-06. Prior
+status (r8): "Owner-decided (2026-11-06), approval pending on the corpus
+(§11)."
+
+Earlier gate (r7 → r8): The
 owner ruled the step-2 asks over r7 (sha256 `21ca59f9…85d2`, commit
 6916066f); see §7 D8-D11 and the gate notes below. Approval of the design
 is given by reading the corpus (corpus-first); no implementation file is
@@ -277,13 +283,13 @@ version-15 goldens carry the version-7 assurance block unchanged.
 
 | ID | Question | Readings and cost | Proposal |
 |---|---|---|---|
-| D1 | Field name: `remedy` or `message`? | `message` collides with the verdict's own `message` key | `remedy` |
-| D2 | Flag name | `--rule-ids` vs `--report-version 15` (a general selector; widens every arm's contract) | `--rule-ids` |
-| D3 | Redaction (v9), temporal (v11), reference-population (v12) models | refuse (exit 3) vs build successors now (doubles the phase) | refuse; plan §7 |
-| D4 | `remedy` in `gnd verbalize`? | yes moves verbalization goldens | no in RC1; RC6 decides |
-| D5 | Does `remedy` change the model digest? | it is model content | yes; T8 shows remedy-free models unchanged |
-| D6 | Bare `constraint_id` or `address` + `addressing`? | bare id needs a rule for id-less constraints | `address` + `addressing` |
-| D7 | Undeclared `remedy` | plan RC-D12 (ruled) | null (T4) |
+| D1 | Field name: `remedy` or `message`? | `message` collides with the verdict's own `message` key | `remedy` **(o) 2026-11-06: approved with the corpus** |
+| D2 | Flag name | `--rule-ids` vs `--report-version 15` (a general selector; widens every arm's contract) | `--rule-ids` **(o) 2026-11-06: approved with the corpus** |
+| D3 | Redaction (v9), temporal (v11), reference-population (v12) models | refuse (exit 3) vs build successors now (doubles the phase) | refuse; plan §7 **(o) 2026-11-06: approved with the corpus** |
+| D4 | `remedy` in `gnd verbalize`? | yes moves verbalization goldens | no in RC1; RC6 decides **(o) 2026-11-06: approved with the corpus** |
+| D5 | Does `remedy` change the model digest? | it is model content | yes; T8 shows remedy-free models unchanged **(o) 2026-11-06: approved with the corpus** |
+| D6 | Bare `constraint_id` or `address` + `addressing`? | bare id needs a rule for id-less constraints | `address` + `addressing` **(o) 2026-11-06: approved with the corpus** |
+| D7 | Undeclared `remedy` | plan RC-D12 (ruled) | null (T4) **(o) 2026-11-06: approved with the corpus** |
 | D8 (r7) | Which `schema_version` does the exit-3 refusal payload carry? | 15 (but the model is one v15 cannot describe) vs the version the model selects without the flag (9, 11, or the reference wrapper's 12) | the model's own version, so the payload validates against an existing branch; T9 validates it. **(o) 2026-11-06: approved as proposed** |
 | D9 (r7) | `--rule-ids` with `--unredacted` | refuse (64) vs accept as a no-op | accept: redaction models are refused anyway, and a 64 adds a branch with no behaviour. **(o) 2026-11-06: approved as proposed** |
 | D10 (r7) | A `remedy` edit under `gnd evolve` | admitted like `rationale` vs `_NEITHER` (today's default for an unknown path, which demands review) | admitted. **(o) 2026-11-06: approved as proposed** |

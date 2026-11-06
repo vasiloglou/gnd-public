@@ -1,10 +1,11 @@
 # Rule-check adoption
 
-r4, 2026-11-06. **Draft, awaiting the owner's plan gate. r4 has not been
+r5, 2026-11-06. **Draft, awaiting the owner's plan gate. r5 has not been
 reviewed.** r2 (SHA-256 `526d2ff1…610d631f`) was reviewed by the full panel
 ([record](../001-panel.md)); r3 (`f00ffcf3…a59e`) by one reviewer, Codex
-([record](../002-review.md)), per the owner's RC-D0 ruling. r4 repairs r3
-and carries no review opinion. Milestone: `rule-check-adoption`.
+([record](../002-review.md)), per the owner's RC-D0 ruling; r4
+(`a69e3d3b…15f2`) re-checked by Codex ([record](../003-review.md)) per
+RC-D14. r5 repairs r4 and carries no review opinion. Milestone: `rule-check-adoption`.
 Phase prefix `RC`.
 Sources: five owner-filed requests from 2026-11-06, GR-D1, GR-D2, GR-D3, GR-D5
 and GR-D6 (GitHub issues 92, 93, 94, 96 and 97). GR-D4 (issue 95, model
@@ -42,7 +43,18 @@ written. `auto=false`.
   split into a verdict-level label and a row-aligned list, and derivations
   get both (R3, R4); the identity walk does not copy (R8); RC2 moves both
   existing SCC callers to the shared home as a criterion (R11). Owner ruling
-  recorded: **RC-D0, 2026-11-06, "One reviewer on r3"**.
+  recorded: **RC-D0, 2026-11-06, "One reviewer on r3"**. Re-checked by
+  Codex (`block`, 4 findings S1-S4, all reproduced; 11 of 13 R findings
+  confirmed resolved).
+- **r5:** repairs r4 from S1-S4 (dispositions in §13). Owner ruling
+  recorded: **RC-D14, 2026-11-06, "Codex re-check r4"**; and on
+  2026-11-06, choosing "Commit, r5 with refusal", the owner selected the
+  narrower fix for S1: `--baseline` refuses models with structured
+  derivations instead of comparing derivation findings (RC-D11). Version-15
+  derivations therefore keep the existing `derivation_verdict` definition
+  unchanged, which also resolves S2. `producer` is retained by the loader
+  (S3); `undecided` counts obligations, not rows (S4). This brings the plan
+  back toward the requests: the requester's models have no derivations.
 
 ## Problem and completion predicates
 
@@ -83,9 +95,10 @@ The milestone is complete when, on the main branch after merge:
    strongly connected group, and adding a disjoint cycle leaves the existing
    rows unchanged (RC2).
 3. `gnd check MODEL HEAD --baseline BASE` marks every offending row, every
-   failing verdict and every failing derivation `new` or `standing`, decides the band from new ones only,
+   failing verdict `new` or `standing`, decides the band from new ones only,
    and refuses to claim "no new violations" when either run is ill-formed or
-   leaves an alethic constraint undecided (RC3).
+   leaves an alethic constraint undecided (RC3). Models with structured
+   derivations are refused under `--baseline` with a named rule id.
 4. `gnd check ... --allow-vacuous` exits 0 when the only shortfall is vacuous
    verdicts, still lists them, and records the option in version 15 (RC4).
 5. A population may declare a source for deterministic tool output (RC5).
@@ -111,7 +124,9 @@ bind every phase. Bound to this milestone:
    is linear in constraints. Each ships a test with the numbers in §4.
 3. **Validation order.** With `--rule-ids` or `--baseline`, the order is:
    arguments (64), model load (3), model refusal `check:rule-ids-unsupported`
-   (3; temporal, redaction-policy or reference-population models), head
+   (3; temporal, redaction-policy or reference-population models), with
+   `--baseline` only the refusal `check:baseline-unsupported` (3; models
+   with structured derivations), head
    population load (3), base population load (3, naming the base),
    then evaluation. Pinned by a source-order test (RC1 for the first four
    steps, RC3 for the base).
@@ -184,7 +199,10 @@ stated by the requester and not reproduced here.
 | O17 | no two-population comparison exists; strongly connected components are computed twice already | index searches `compare two check reports baseline`, `diff violations between populations`: only `model.diff` (two models). SCC: iterative Tarjan in `src/gnd/model/_validation.py:4499` and `src/gnd/export/pyrel_rules.py:688` | observed (index search, read) | RC2 (reuse), RC3 (new) |
 | O18 | report-version gates that a new version must pass | `ReportSchemaVersion = Literal[3, …, 11, 13]` (`src/gnd/payloads.py:76`); `schema_version in {7, 8}` branches in `payloads.py`; `coverage._accepted_schema_versions` (`src/gnd/coverage.py:436`) accepts 7, 9, 10 for check evidence | observed | RC1 |
 | O19 | `acceptance_ready` is true exactly when exit code is 0 (D-08) | `report.schema.json` description; `payloads.py` sets `exit_code == 0` | observed | RC3 |
-| O20 | derivation failures decide band 1 alongside alethic verdicts | `has_alethic_fail`, `src/gnd/checker/_reports.py:110-113` | observed | RC3 |
+| O20 | derivation failures decide band 1 alongside alethic verdicts | `has_alethic_fail`, `src/gnd/checker/_reports.py:110-113` | observed | RC3 (refused, RC-D11) |
+| O26 | a derivation reports only its first missing and first surplus row | `src/gnd/extensions.py:2465-2505` | observed (Codex S1, reproduced) | RC3 (refused, RC-D11) |
+| O27 | `Population` has no `producer` field; both constructors drop unknown header values | `src/gnd/population.py:123-139`, `453-464`, `485-495` | observed (Codex S3, reproduced) | RC5 |
+| O28 | a deontic `opaque-value` unchecked verdict has no rows | `src/gnd/correspondence.py:927-928` | observed (Codex S4, reproduced) | RC3 |
 | O22 | reference-population models wrap the check report as version 12 (14 for admission), whose `report` admits only existing report shapes | `_reference_wrap`, `src/gnd/checking_service.py:594-663`; `report.schema.json:85-93` | observed (Codex R2, reproduced) | RC1 |
 | O23 | band 4 for `reference-join-work-limit` regardless of modality; reachable only with reference populations | `src/gnd/checker/_reports.py:159-163`; `src/gnd/checker/_core.py:2379` | observed (Codex R7, reproduced) | RC1 (refusal), RC3 |
 | O24 | `iter_constraints()` deep-copies the fact type per constraint | `src/gnd/model_index.py:279-285` | observed (Codex R8, reproduced) | RC1 |
@@ -200,18 +218,16 @@ stated by the requester and not reproduced here.
   the reason the rule exists. A constraint without `remedy` yields
   `remedy: null`; `rationale` is not copied in its place (RC-D12).
 - New report version 15: the version-7 snapshot shape, fixed whole in RC1 so
-  no later phase changes a closed shape (F12). Its verdicts and derivations
-  use new closed definitions (`verdict_v15`, `derivation_verdict_v15`) that
-  restate the version-7 properties, as `verdict_v10` does, rather than
-  referencing the closed version-7 objects (R1). Each verdict gains
+  no later phase changes a closed shape (F12). Its verdicts use a new
+  closed definition, `verdict_v15`, that restates the version-7 properties,
+  as `verdict_v10` does, rather than referencing the closed version-7
+  object (R1). Its derivations use the existing `derivation_verdict`
+  unchanged, conditional rules included (RC-D11, S2). Each verdict gains
   `address` (`constraint:<id>`, else the positional ref), `addressing`
   (`declared-id` or `positional`, the census's existing spelling), `remedy`
   (string or null), `novelty` (verdict label: `new`, `standing` or null)
   and `row_novelty` (null, or a list aligned one-to-one with
-  `offending_facts`). Each derivation gains `novelty` and `finding_novelty`
-  (aligned with `findings`) the same way; its existing `derivation_ref`
-  (`derivation:<fact type id>`, `address.derivation_address`) is already a
-  stable address (R3, R4). The top
+  `offending_facts`) (R3). The top
   level gains `baseline` (`null` without `--baseline`) and `allow_vacuous`
   (boolean). Without `--baseline` every novelty field is null. RC3 and RC4
   fill values; they add no key.
@@ -260,10 +276,14 @@ populations are judged under MODEL. A violation key is
   (for example a cardinality minimum over an empty universe), when the same
   address did not fail in base; otherwise `standing`. A verdict with mixed
   rows is therefore `new`. Passing verdicts carry `novelty: null`.
-- **Derivations (F13, R4).** RC-D11, reported in `novelty` and
-  `finding_novelty` on each derivation.
-- **Band.** Band 1 needs a failing alethic verdict or derivation whose
-  `novelty` is `new`. Standing-only: RC-D5.
+- **Derivations (F13, R4, S1).** `--baseline` refuses a model with
+  structured derivations (`structured_derivation_ids(model)` non-empty,
+  `src/gnd/documents.py:85`) at exit 3 with `check:baseline-unsupported`,
+  after model load and before either population load (RC-D11). A derivation
+  reports only its first missing and first surplus row (O26), so comparing
+  findings could call a grown violation standing.
+- **Band.** Band 1 needs a failing alethic verdict whose `novelty` is
+  `new`. Standing-only: RC-D5.
 - **Undecided.** An alethic constraint unchecked in either run: RC-D6.
   Deontic unchecked: RC-D13.
 - **Vacuous (F5).** Vacuity is judged on head. A head verdict that is
@@ -275,8 +295,9 @@ populations are judged under MODEL. A violation key is
   is stable within one model revision but moves when a constraint is
   inserted above them. RC-D9 decides refuse vs warn.
 - The top-level `baseline` block names the base population and its digest
-  and counts new, standing, resolved, positional-keyed and undecided rows
-  (shape fixed in RC1).
+  and counts new, standing, resolved and positional-keyed rows, and
+  `undecided` obligations: verdicts unchecked in either run, whatever their
+  modality and whether or not they carry rows (S4). Shape fixed in RC1.
 
 ### 2.4 Vacuous acceptance (RC4)
 
@@ -307,7 +328,7 @@ RC5 is independent.
 | Artifact | Home |
 |---|---|
 | `remedy` field | `src/gnd/schema/orm-meta.schema.json` + sync-pinned copy in `src/gnd/skills/gnd-orm-core/references/` |
-| version-15 shape (whole) | `src/gnd/report.schema.json` (`verdict_v15`, `derivation_verdict_v15`, `baseline_v15`); `ReportSchemaVersion` and version gates in `src/gnd/payloads.py` |
+| version-15 shape (whole) | `src/gnd/report.schema.json` (`verdict_v15`, `baseline_v15`; derivations reuse `derivation_verdict`); `ReportSchemaVersion` and version gates in `src/gnd/payloads.py` |
 | identity walk | `ModelIndex.iter_constraints_shared()`, `src/gnd/model_index.py` |
 | text rendering | `_print_report`, `src/gnd/output.py` |
 | declared address | `src/gnd/address.py`: a new public `declared_constraint_address`, which absorbs the private `coverage._constraint_address` (coverage calls it) and builds on the existing `constraint_address` |
@@ -328,8 +349,8 @@ gate machine, with the bound at about five times the planning measurement.
   2001-char values refused (exit 3).
 - RC1-C2: `--rule-ids` emits v15; every verdict has `address`,
   `addressing`, `remedy` (null when undeclared), `novelty: null` and
-  `row_novelty: null`; every derivation of a structured model has
-  `novelty: null` and `finding_novelty: null`; the top level has
+  `row_novelty: null`; derivations of a structured model are unchanged
+  from version 7 and validate against `derivation_verdict`; the top level has
   `baseline: null` and `allow_vacuous: false`; fact-type and top-level
   constraints both covered.
 - RC1-C3: without `--rule-ids`, the full suite matches the merge-base record
@@ -374,9 +395,13 @@ gate machine, with the bound at about five times the planning measurement.
 - RC3-C3a: `--baseline` with a temporal, redaction-policy or
   reference-population model exits 3 with `check:rule-ids-unsupported`
   before either population loads (R13).
+- RC3-C3b: `--baseline` with a model that has a structured derivation exits
+  3 with `check:baseline-unsupported` before either population loads; the
+  same model with `--rule-ids` alone is accepted (RC-D11).
 - RC3-C3: base ill-formed exits 3 naming the base; an alethic verdict
-  unchecked in either run never yields "no new violations" (RC-D6); deontic
-  per RC-D13.
+  unchecked in either run never yields "no new violations" (RC-D6); a
+  deontic `opaque-value` unchecked verdict with no rows leaves the band
+  unchanged and makes `undecided` 1 (RC-D13, S4).
 - RC3-C4a: within one model revision, the key survives inserting and
   reordering facts in either population.
 - RC3-C4b: across model revisions, a declared-id key survives inserting a
@@ -388,9 +413,6 @@ gate machine, with the bound at about five times the planning measurement.
   `novelty: new` and `row_novelty: []`; a verdict with one standing and one
   new row has `novelty: new`; a verdict with only standing rows has
   `novelty: standing` and does not exit 1.
-- RC3-C7: one standing and one new derivation failure carry `novelty`
-  `standing` and `new` and aligned `finding_novelty`; only the new one
-  decides band 1 (RC-D11).
 - Harvest item for the RC3 spec: survey every snapshot family's v7
   offending-row shape and confirm each is values only (rule 8 applies).
 
@@ -408,9 +430,10 @@ gate machine, with the bound at about five times the planning measurement.
 ### RC5: Tool-output source (about 30 source, 80 test lines)
 
 - RC5-C1: the new value loads; the optional `producer` field (string,
-  1-200 characters, naming tool and revision) loads, and an empty or
-  201-character `producer`, or `producer` on another source, is refused
-  (exit 3).
+  1-200 characters, naming tool and revision) is a retained `Population`
+  field, passed through both constructors (O27), and its value is asserted
+  after loading; an empty or 201-character `producer`, or `producer` on
+  another source, is refused (exit 3).
 - RC5-C2: the schema is the one normative spelling; a test fails if
   `population.py` or `extract/projection.py` disagrees with it.
 
@@ -456,6 +479,7 @@ bounds. Every row has an owner.
 | Baseline key unstable for some family | RC3 family survey; RC3-C4a/b; rule 8 |
 | Id-less constraints give unstable keys across revisions | RC-D9; `addressing` in each verdict; count in the baseline block |
 | "No new violations" read from a run that did not judge | RC3-C3, RC-D6, RC-D13 |
+| A grown derivation violation read as standing | `--baseline` refuses derivation models (RC3-C3b, RC-D11) |
 | Band rule duplicated in a new caller | RC3 then RC4 extend `band()`, the one implementation, in that order |
 | Allow-vacuous hides a rule that should bite | RC4-C3; option recorded in v15 |
 | Enum spellings diverge | RC5-C2 |
@@ -468,6 +492,8 @@ bounds. Every row has an owner.
 - GR-D4 model composition (issue 95): its own milestone.
 - Version-15 variants for batch, transition, anchors, composition, admission,
   redaction-policy, temporal and reference-population models.
+- `--baseline` over models with structured derivations (RC-D11); `--rule-ids`
+  alone still covers them.
 - `gnd coverage` intake of version-15 reports.
 - Per-constraint vacuous control, unless RC-D7 rules it in.
 - Changing `gnd extract` or any packaged skill's workflow.
@@ -530,10 +556,11 @@ All are proposals until ruled.
 | RC-D8 | Spelling of the new source value | `tool-output`, with an optional `producer` string (1-200 characters, naming tool and revision) allowed only with it; avoid `extracted` |
 | RC-D9 | `--baseline` over a model with id-less constraints | proceed; mark each row's `addressing`, count positional-keyed rows in the `baseline` block, and print a warning in text output. Alternative: refuse at exit 3 |
 | RC-D10 | Home for strongly connected groups | lift one existing iterative Tarjan into a shared lower-layer home; RC2 moves both existing callers onto it (RC2-C6), so one implementation remains |
-| RC-D11 | Derivation failures under `--baseline` | keyed by `derivation_ref` and canonical finding; reported in `novelty` / `finding_novelty`; a new derivation failure decides band 1, a standing one does not |
+| RC-D11 | Derivation failures under `--baseline` | **owner selected 2026-11-06 ("Commit, r5 with refusal")**: refuse models with structured derivations at exit 3, `check:baseline-unsupported`. Comparing findings would need every offending derivation row (O26); that is follow-up work if a caller needs it |
 | RC-D12 | `remedy: null` when undeclared, or fall back to `rationale`? | null: `rationale` says why the rule exists, not what to do; copying it would put the wrong text in the field |
-| RC-D13 | Does a deontic unchecked verdict block "no new violations"? | no, matching `band()` for every route version 15 can reach: deontic unchecked affects the band only through `reference-join-work-limit` (O23), which needs reference populations, and those models are refused (RC1-C6). The `baseline` block counts it as undecided |
-| RC-D14 | Review r4 before the plan gate? | owner's call; r4's changes are confined to the 13 findings (§12) |
+| RC-D13 | Does a deontic unchecked verdict block "no new violations"? | no, matching `band()` for every route version 15 can reach: deontic unchecked affects the band only through `reference-join-work-limit` (O23), which needs reference populations, and those models are refused (RC1-C6). The `baseline` block counts it in `undecided`, an obligation count (S4) |
+| RC-D14 | Review r4 before the plan gate? | **ruled 2026-11-06: "Codex re-check r4"** (done, [003-review](../003-review.md)) |
+| RC-D15 | Review r5 before the plan gate? | owner's call; r5's changes are confined to S1-S4 (§13) |
 
 ## 11. Panel fix dispositions (r2 → r3)
 
@@ -551,7 +578,7 @@ All are proposals until ruled.
 | F10 verdict-level novelty | applied: §2.3, RC3-C6 |
 | F11 deontic unchecked | applied: RC-D13 |
 | F12 full v15 shape in RC1 | applied: §2.1, RC1-C2 |
-| F13 derivations | applied: RC-D11, RC3-C7, O20 |
+| F13 derivations | applied: RC-D11, RC3-C7, O20 (r5: superseded by the refusal, RC3-C3b) |
 | F14 version gates and coverage | applied: O18, §2.1, RC1-C8, §7 |
 | F15 RC2-C2 | applied: problem item 3, RC2-C2 |
 | F16 existing Tarjan | applied: O17, RC-D10 |
@@ -566,10 +593,10 @@ All are proposals until ruled.
 
 | Finding | Disposition |
 |---|---|
-| R1 `allOf` over closed verdict | applied: §2.1 separate closed `verdict_v15` / `derivation_verdict_v15`; RC1 spec M2 |
+| R1 `allOf` over closed verdict | applied: §2.1 separate closed `verdict_v15` / `derivation_verdict_v15`; RC1 spec M2 (r5: derivations reuse `derivation_verdict`) |
 | R2 reference-population wrapper | applied: §2.1 refusal, O22, rule 3, RC1-C6, predicate 1 |
 | R3 verdict-level novelty | applied: §2.1 `novelty` + `row_novelty`, §2.3, RC3-C6 |
-| R4 derivation novelty | applied: §2.1 derivation fields, RC-D11, RC3-C7 |
+| R4 derivation novelty | applied: §2.1 derivation fields, RC-D11, RC3-C7 (r5: replaced by the refusal; S1) |
 | R5 RC3 full suite | applied: rule 7, §6, §9 |
 | R6 merge-base command | applied: §8 existing-suite command; RC1 spec §8 |
 | R7 work-limit band route | applied: O23, RC-D13 (unreachable under the R2 refusal) |
@@ -579,3 +606,12 @@ All are proposals until ruled.
 | R11 SCC migration criterion | applied: RC2-C6, RC-D10 |
 | R12 self-loop | applied: RC2-C1 |
 | R13 RC3 refusal criterion | applied: RC3-C3a |
+
+## 13. Re-check dispositions (r4 → r5)
+
+| Finding | Disposition |
+|---|---|
+| S1 first-row-only derivation findings | applied by refusal (owner's selection): RC-D11, §2.3, O26, RC3-C3b, §7; derivation novelty fields removed |
+| S2 derivation conditional rules | resolved by S1's fix: v15 derivations reuse `derivation_verdict` unchanged; RC1 spec M2, T4b |
+| S3 `producer` loader | applied: O27, RC5-C1 |
+| S4 `undecided` unit | applied: §2.3 obligation count, O28, RC3-C3, RC-D13 |

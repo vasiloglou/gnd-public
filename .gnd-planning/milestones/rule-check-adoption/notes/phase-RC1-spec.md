@@ -4,19 +4,22 @@
 
 **Draft r4, 2026-11-06 (r2: component-index reuse, D6; r3: follows plan r3,
 the whole version-15 shape, refusal by model property; r4: follows plan r4,
-Codex findings R1, R2, R3, R4, R6, R8, R10). Blocked on the plan gate** (the plan is unapproved) and on RC-D1 (PR 99). Not approved; no code
+Codex findings R1, R2, R3, R4, R6, R8, R10; r5: follows plan r5, version-15
+derivations reuse `derivation_verdict` unchanged, S1/S2). Blocked on the
+plan gate** (the plan is unapproved) and on RC-D1 (PR 99). Not approved; no code
 written.
 
 ## 2. Provenance
 
-- Plan: [rule-check-adoption-plan.md](rule-check-adoption-plan.md) r4, §2.1,
+- Plan: [rule-check-adoption-plan.md](rule-check-adoption-plan.md) r5, §2.1,
   §4 RC1, §10 RC-D1/RC-D2/RC-D12.
 - Request: GR-D1, GitHub issue 92.
 - Inspection baseline: main `33d1db49`; reuse table re-read after merging
   `origin/main` 8bfbe417 (PR 100, the component index) on 2026-11-06.
 - The panel over plan r2 shaped r3 (fixes F2, F12, F14, F17-F20 land here).
   One reviewer (Codex) read spec r3 with plan r3
-  ([record](../002-review.md)); r4 carries no review opinion.
+  ([record](../002-review.md)); Codex re-checked r4
+  ([record](../003-review.md)); r5 carries no review opinion.
 
 ## 3. Obligations
 
@@ -63,8 +66,7 @@ written.
 `gnd check MODEL POP --rule-ids --format json` exits with the same band as
 without the flag, emits `schema_version: 15`, and every verdict carries
 `address`, `addressing`, `remedy`, `novelty: null` and `row_novelty: null`,
-every derivation carries `novelty: null` and `finding_novelty: null`, and
-the top level carries `baseline: null` and `allow_vacuous: false`. Without `--rule-ids`,
+derivations are serialized exactly as in version 7, and the top level carries `baseline: null` and `allow_vacuous: false`. Without `--rule-ids`,
 the full suite matches the merge-base record and the 28 rf1 sem-check
 goldens are byte-identical. `--rule-ids` with any other arm exits 64; with a
 model whose plain report is not an unwrapped version 7 (temporal terms: 11;
@@ -112,21 +114,21 @@ new key, R1). Added properties:
                  { "type": "array", "items": { "enum": ["new", "standing"] } } ] }
 ```
 
-All fourteen keys required, `additionalProperties: false`. New
-`$defs.derivation_verdict_v15`, built the same way from
-`derivation_verdict` (line 991), adds `novelty` (as above) and
-`finding_novelty` (null or an array aligned with `findings`); its
-`derivation_ref` is already the derivation's stable address. RC1 always
-emits null for every novelty field.
+All fourteen keys required, `additionalProperties: false`. Derivations
+reuse the existing `$defs.derivation_verdict` (line 991) unchanged, with
+its pass/fail/unchecked conditional rules (lines 1044-1149): `--baseline`
+refuses derivation models (plan RC-D11), so they need no novelty field.
+RC1 always emits null for every novelty field.
 `address` is `constraint:<id>` when the constraint declares an id, else its
 positional ref; `addressing` says which, spelled as `coverage.schema.json`
 and `address.Addressing` already spell it (D6).
 New top-level `oneOf` branch `rule_ids_report`: the version-7 key set with
 `schema_version: {"const": 15}`, `verdicts.items: verdict_v15`,
-`derivations.items: derivation_verdict_v15`, and two more
+`derivations.items: derivation_verdict` (the existing definition), and two more
 required keys: `baseline` (`null`, or the RC3 block `$defs.baseline_v15`
 defined now: `population`, `population_sha256`, and integer counts `new`,
-`standing`, `resolved`, `positional_keyed`, `undecided`) and
+`standing`, `resolved`, `positional_keyed` (rows) and `undecided`
+(obligations: verdicts unchecked in either run, plan §2.3)) and
 `allow_vacuous` (boolean). RC1 always emits `baseline: null` and
 `allow_vacuous: false`.
 `ReportSchemaVersion` in `src/gnd/payloads.py` gains `15`.
@@ -155,8 +157,8 @@ unchanged (rule 4; T13).
 declared: Mapping[str, tuple[str, Addressing, str | None]] | None = None)`. When
 `schema_version == 15`, each serialized verdict gets `address`,
 `addressing` and `remedy` from `declared`, inserted after `constraint_ref`,
-then `novelty: null` and `row_novelty: null`; each derivation gets
-`novelty: null` and `finding_novelty: null`.
+then `novelty: null` and `row_novelty: null`. Derivations are serialized
+as in version 7.
 `schema_version == 15` with `declared is None` raises `ValueError` (a
 programming error, not a user path). Each `schema_version in {7, 8}` branch
 in `payloads.py` is read: where version 15 extends version 7 it becomes
@@ -214,7 +216,7 @@ complete.
 | T2 | `remedy: 7`, `remedy: ""`, 2001-char remedy | exit 3, `jsonschema:*` issue |
 | T3 | `--rule-ids --format json` on a failing ring rule with id | exit 1, v15, `address == "constraint:no_import_loops"`, `addressing == "declared-id"` |
 | T4 | constraint without id / without remedy (with a `rationale`) | `address` equals `constraint_ref`, `addressing == "positional"`; `remedy` null; `novelty` and `row_novelty` null; top level `baseline: null`, `allow_vacuous: false` |
-| T4b | structured model with a derivation, `--rule-ids` | each derivation has `novelty: null`, `finding_novelty: null`; payload validates |
+| T4b | structured model with a derivation, `--rule-ids` | accepted; each derivation is byte-identical to its version-7 serialization; payload validates; a v15 payload with a passing derivation that has a finding fails validation |
 | T5 | ids for fact-type constraints and top-level constraints both resolve | correct ids |
 | T6 | v15 payloads validate; a v7 payload with `address` added fails validation; a v15 verdict missing `row_novelty` or with an extra key fails | as stated |
 | T7 | `--rule-ids` with each conflicting flag | exit 64, no payload; parser order before model load |

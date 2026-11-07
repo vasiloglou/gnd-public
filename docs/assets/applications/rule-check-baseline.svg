@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 520" role="img" aria-labelledby="title desc">
+<defs><marker id="a-plain" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#94a3b8"/></marker><marker id="a-standing" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#334155"/></marker><marker id="a-new" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#b45309"/></marker><marker id="a-resolved" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="#15803d"/></marker></defs>
+<title id="title">The change under review, against main</title>
+<desc id="desc">Part of the component graph of the change under review; cache, admin and four imports that break no rule are left out. The import loop between api and auth was already on main: its two rows are standing. The change adds a loop between search and util: its two rows are new. The loop between reports and billing on main is gone, because billing no longer imports reports; reports still imports billing, outside any loop, so both rows the loop gave on main are resolved. The component legacy_ui, in the legacy area, and metrics, which has no owner, were already like this on main: standing.</desc>
+<style>text{font-family:system-ui,sans-serif;fill:#172b3a;font-size:16px} .title{font-size:22px;font-weight:700} .small{font-size:14px} .mid{text-anchor:middle} .mono{font-family:ui-monospace,Menlo,monospace;font-size:15px} rect.node{fill:#eef5f8;stroke:#50657a;stroke-width:1.5} rect.flag{fill:#fff;stroke:#334155;stroke-width:2.5} .plain{stroke:#94a3b8;stroke-width:1.5;marker-end:url(#a-plain)} .standing{stroke:#334155;stroke-width:3;marker-end:url(#a-standing)} .new{stroke:#b45309;stroke-width:3;marker-end:url(#a-new)} .resolved{stroke:#15803d;stroke-width:2.5;stroke-dasharray:7 5;marker-end:url(#a-resolved)} .tnew{fill:#b45309;font-weight:700} .tstanding{fill:#334155;font-weight:700} .tresolved{fill:#15803d;font-weight:700}</style>
+<rect width="780" height="520" fill="#fff" stroke="none"/>
+<text x="24" y="40" class="title">What the change adds, keeps and fixes</text>
+<line x1="164.0" y1="110.0" x2="246.0" y2="110.0" class="plain"/>
+<line x1="100.0" y1="134.0" x2="100.0" y2="226.0" class="plain"/>
+<line x1="310.0" y1="134.0" x2="310.0" y2="226.0" class="plain"/>
+<line x1="164.0" y1="250.0" x2="246.0" y2="250.0" class="plain"/>
+<line x1="456.0" y1="250.0" x2="374.0" y2="250.0" class="plain"/>
+<line x1="520.0" y1="366.0" x2="520.0" y2="274.0" class="plain"/>
+<line x1="374.0" y1="116.0" x2="456.0" y2="116.0" class="standing"/>
+<line x1="456.0" y1="104.0" x2="374.0" y2="104.0" class="standing"/>
+<line x1="94.0" y1="274.0" x2="94.0" y2="366.0" class="new"/>
+<line x1="106.0" y1="366.0" x2="106.0" y2="274.0" class="new"/>
+<line x1="506.0" y1="274.0" x2="506.0" y2="366.0" class="resolved"/>
+<rect x="40" y="90" width="120" height="40" rx="6" class="node"/><text x="100.0" y="116" class="mono mid">web</text>
+<rect x="250" y="90" width="120" height="40" rx="6" class="node"/><text x="310.0" y="116" class="mono mid">api</text>
+<rect x="460" y="90" width="120" height="40" rx="6" class="node"/><text x="520.0" y="116" class="mono mid">auth</text>
+<rect x="40" y="230" width="120" height="40" rx="6" class="node"/><text x="100.0" y="256" class="mono mid">search</text>
+<rect x="250" y="230" width="120" height="40" rx="6" class="node"/><text x="310.0" y="256" class="mono mid">db</text>
+<rect x="460" y="230" width="120" height="40" rx="6" class="node"/><text x="520.0" y="256" class="mono mid">billing</text>
+<rect x="40" y="370" width="120" height="40" rx="6" class="node"/><text x="100.0" y="396" class="mono mid">util</text>
+<rect x="460" y="370" width="120" height="40" rx="6" class="node"/><text x="520.0" y="396" class="mono mid">reports</text>
+<rect x="630" y="90" width="120" height="40" rx="6" class="flag"/><text x="690.0" y="116" class="mono mid">legacy_ui</text>
+<rect x="630" y="230" width="120" height="40" rx="6" class="flag"/><text x="690.0" y="256" class="mono mid">metrics</text>
+<text x="370" y="82" class="small mid tstanding">standing loop</text>
+<text x="122" y="318" class="small tnew">new loop</text>
+<text x="590" y="318" class="small mid tresolved">resolved</text>
+<text x="690" y="150" class="small mid tstanding">legacy area</text>
+<text x="690" y="168" class="small mid tstanding">standing</text>
+<text x="690" y="290" class="small mid tstanding">no owner</text>
+<text x="690" y="308" class="small mid tstanding">standing</text>
+<line x1="40" y1="460" x2="90" y2="460" class="new"/><text x="100" y="465" class="small">new: only in the change</text>
+<line x1="290" y1="460" x2="340" y2="460" class="standing"/><text x="350" y="465" class="small">standing: also on main</text>
+<line x1="540" y1="460" x2="590" y2="460" class="resolved"/><text x="600" y="465" class="small">resolved: on main only</text>
+<text x="40" y="500" class="small">Grey arrows break no rule (some are left out). Dashed: billing → reports, which the change removed.</text>
+</svg>

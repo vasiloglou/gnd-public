@@ -1,0 +1,17 @@
+shard0.out: 1 failed, 2726 passed, 168 deselected in 227.19s (0:03:47) | shard exit=1
+shard1.out: 3408 passed, 71 deselected in 778.04s (0:12:58) | shard exit=0
+shard2.out: 2540 passed, 249 deselected in 397.48s (0:06:37) | shard exit=0
+shard3.out: 2122 passed, 100 deselected, 1 warning, 2 errors in 568.79s (0:09:28) | shard exit=1
+shard4.out: 3205 passed, 54 deselected in 516.64s (0:08:36) | shard exit=0
+shard5.out: 3748 passed, 152 deselected in 691.13s (0:11:31) | shard exit=0
+
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_v51_phase2_extraction_scope.py::test_scope_walk_scales_linearly
+
+
+Isolated rerun at 8da3b3f7 on beast-3 (three times, each run of both tests):
+uv run pytest -q -p no:cacheprovider tests/test_v51_phase2_extraction_scope.py::test_scope_walk_scales_linearly tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout
+2 passed in 12.84s
+2 passed in 3.19s
+2 passed in 3.20s

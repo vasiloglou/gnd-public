@@ -17,6 +17,10 @@ Violated alethic constraints produce verdict `fail`; violated deontic constraint
 
 On a version-2 population, an opaque value in a role that a constraint reads yields `unchecked` with `opaque-value`; an opaque value in an unselected role does not itself change that constraint's verdict. Its label never appears as a witness. When admission is requested, the version-10 report partitions asserted fact occurrences into `admitted` and `blocked` using their `fact_type` and zero-based `index`. Typed verdict references identify asserted occurrences only; a computed derived tuple's relation position is not an asserted occurrence address. Alethic failures and unchecked verdicts block directly implicated occurrences and their typed-reference or `depends_on` descendants. An occurrence join uses only a value type named by an entity reference scheme; matching values in ordinary nonidentifying roles do not create an edge. Deontic warnings alone do not block. Admitted rows list opaque dependency locations as fact references and role names, without labels. A global unchecked verdict without a fact reference keeps its original exit band and leaves the occurrence partition unblocked. This is a report projection; it does not rewrite facts or verdicts.
 
+## Rule identity and remedy
+
+Every constraint may declare an `id`, unique across the model, and a `remedy`: a string of 1-2000 characters telling a reader what to do when the rule fails. `rationale` says why the rule exists; `remedy` says how to fix a violation, and neither stands in for the other. `gnd check --rule-ids` (report version 15) names each verdict by `constraint:<id>`, or by its position when no `id` is declared, and copies the `remedy` into the verdict and the text output. A positional address moves when a constraint is inserted above it, so a rule a CI baseline compares (`gnd check --baseline`) should declare an `id`. See [the rule-check report reference](https://github.com/vasiloglou/gnd-public/blob/main/docs/reference/rule-check-report.md).
+
 ## Quick reference
 
 | Constraint family | Placement | Checkable by gnd checker |

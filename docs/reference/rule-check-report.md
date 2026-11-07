@@ -1,0 +1,124 @@
+# Rule-check report (version 15)
+
+`gnd check MODEL POPULATION` with `--rule-ids`, `--baseline BASE` or
+`--allow-vacuous` writes report version 15. It is the version-7 snapshot
+report with a rule's own identity in every verdict and room for a baseline.
+Without those flags nothing changes: the check writes the version its model
+gets today. The how-to [Adopt rules on a project that already breaks
+them](../how-to/adopt-rules-with-a-baseline.md) works through every field on
+a small example. The closed schema is the `rule_ids_report` branch of
+[`report.schema.json`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/report.schema.json).
+
+## Flags
+
+| Flag | Does | Implies |
+|---|---|---|
+| `--rule-ids` | report version 15 | — |
+| `--baseline BASE` | judges the population BASE under the same model and marks each violation new or standing | `--rule-ids` |
+| `--allow-vacuous` | exits 0 when vacuous rules are the only shortfall | `--rule-ids` |
+
+All three apply to one plain snapshot check. With `--populations`, the
+transition arm (`--pre`, `--steps`, `--post`), `--anchors`, `--document`,
+`--composition`, `--sources`, `--admission` or `--compiled-operations`, the
+command exits 64 before reading the model.
+
+## Refusals
+
+Version 15 describes a plain version-7 model only. Each refusal exits 3,
+before either population is read, and reports at the version the model gets
+without the flags:
+
+| Rule id | Model |
+|---|---|
+| `check:rule-ids-unsupported` | uses temporal terms (version 11), has an active redaction policy (version 9), or declares reference populations (wrapped as version 12) |
+| `check:baseline-unsupported` | has structured derivations, under `--baseline` only; `--rule-ids` alone accepts it |
+
+An ill-formed base exits 3 with the base's own issues, each path prefixed
+`baseline:`; the base's warnings are prefixed the same way.
+
+## Fields added to each verdict
+
+| Field | Value |
+|---|---|
+| `address` | `constraint:<id>` when the rule declares an `id`, else its position, `fact_types[<fact type>].constraints[<n>]` or `constraints[<n>]` |
+| `addressing` | `declared-id` or `positional` |
+| `remedy` | the rule's `remedy` text, or `null`; `rationale` is never copied in its place |
+| `novelty` | under `--baseline`, for a failing or warning verdict: `new` when any of its offending rows is new (or, with no rows, when the rule did not fail in the base), else `standing`; otherwise `null` |
+| `row_novelty` | under `--baseline`, a list aligned one to one with `offending_facts`, each `new` or `standing` (`[]` for a failure without rows); otherwise `null` |
+
+Every version-7 verdict field is unchanged, with one exception for `acyclic`
+rules.
+
+**Acyclic rules list every loop edge.** A failing `acyclic` rule (and the
+loop part of `acyclic-intransitive`) lists one `[from, to]` row for every
+edge inside a strongly connected group, instead of version 7's single cycle,
+and its message names the groups: `2 strongly connected groups (sizes 2, 2)
+hold 4 edges`. Adding a separate loop does not change the values of an
+existing loop's rows (their position in the list may shift), which is what
+makes them usable as baseline keys: matching ignores row order.
+
+Derivation findings keep the version-7 shape.
+
+## Fields added to the report
+
+| Field | Value |
+|---|---|
+| `baseline` | `null` without `--baseline`; otherwise the block below |
+| `allow_vacuous` | `true` when `--allow-vacuous` was given |
+
+The `baseline` block:
+
+| Field | Counts |
+|---|---|
+| `population`, `population_sha256` | the base path as given and the sha256 of the exact bytes read |
+| `new` | head offending rows (or row-less failures) not in the base |
+| `standing` | those also in the base |
+| `resolved` | base ones not in the head |
+| `positional_keyed` | head keys that use a positional address; they move when a rule is inserted above, and the text output warns when there are any |
+| `undecided` | distinct rules unchecked in the head or the base, of either modality; a rule unchecked in both counts once |
+
+A key is a rule's address plus the canonical JSON of one offending row, with
+numbers compared by value (`1` and `1.0` are one key). Warnings (advisory
+rules) are marked and counted like failures but, as without a baseline,
+never decide the exit code.
+
+## Exit codes
+
+Once the model and the populations have loaded (a load failure or refusal
+returns 3 first), the precedence is 1 > 4 > 2 > 0, as for every check.
+
+| Exit | Without `--baseline` | With `--baseline` |
+|---|---|---|
+| 1 | a must-hold rule fails | a must-hold rule fails with a new row |
+| 4 | a must-hold rule is unchecked | a must-hold rule is unchecked in the head or the base |
+| 2 | a rule is vacuous (either modality) | a rule is vacuous in the head (either modality) |
+| 0 | none of the above | none of the above |
+
+`--allow-vacuous` turns a 2 into 0, and nothing else. `outcome` and
+`acceptance_ready` follow the exit code. When `--baseline` is given, or when
+`--allow-vacuous` accepted a vacuous run, the `assurance` block is the
+uncertified one for that exit code (`assurance_level: none`): the certified
+path attests the plain check's decision, which these runs do not report.
+
+## Text output
+
+With any of the three flags, each verdict line names the rule by its
+declared address, with its position in brackets, and prints `remedy:` on the
+next line when the rule has one. Under `--baseline` the outcome reads
+`[fail, new]` or `[fail, standing]`, and a closing `BASELINE` block prints
+the base path and the counts. Under `--allow-vacuous`, a last line counts the
+vacuous rules the option covers; it is printed whenever the option is on and
+a rule is vacuous, including in a run that fails for another reason, so the
+exit code is the verdict.
+
+## Other consumers
+
+`gnd coverage` does not accept version-15 reports; it refuses them with its
+existing version message.
+
+## Related formats
+
+- `remedy` is a constraint field: see the [constraint
+  reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
+- `source: tool-output` and `producer` are population header fields: see the
+  [population format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/population-format.md).

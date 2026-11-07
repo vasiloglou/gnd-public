@@ -1,0 +1,76 @@
+# A project's component catalog, as a CI rule check sees it: which component
+# imports which, where each one lives, who owns it, and which release it ships
+# in. Every rule has an id and a remedy, so a failing check says what to do.
+version: 2
+model_id: urn:gnd-example:rule-check@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: component, name: Component, kind: entity, reference: { mode: popular, value_type: component_name } }
+  - { id: component_name, name: ComponentName, kind: value, primitive: String }
+  - { id: area, name: Area, kind: value, primitive: String }
+  - { id: owner, name: Owner, kind: value, primitive: String }
+  - { id: release, name: Release, kind: value, primitive: String }
+fact_types:
+  - id: component_imports_component
+    reading: "{Component} imports {Component}"
+    roles:
+      - { object_type: component, role_name: importer }
+      - { object_type: component, role_name: imported }
+    constraints:
+      - id: no_import_loops
+        type: ring
+        variant: acyclic
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        rationale: "A loop means no component in it can be built or tested alone."
+        remedy: "Break the loop: move the shared code into a lower component both can import."
+        provenance: { user_quote: "No component may import itself, directly or through others." }
+  - id: component_is_in_area
+    reading: "{Component} is in {Area}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: area, role_name: area }
+  - id: component_has_owner
+    reading: "{Component} has owner {Owner}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: owner, role_name: owner }
+    constraints:
+      - id: every_component_has_an_owner
+        type: mandatory
+        role: component
+        source: user-supplied
+        status: confirmed
+        modality: deontic
+        remedy: "Add the owning team to the component's catalog entry."
+        provenance: { user_quote: "Every component should have an owning team." }
+  - id: component_ships_in_release
+    reading: "{Component} ships in {Release}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: release, role_name: release }
+constraints:
+  - id: no_legacy_components
+    type: guarded
+    modality: alethic
+    source: user-supplied
+    status: confirmed
+    remedy: "Move the component out of the legacy area, or retire it."
+    antecedent:
+      - { fact_type: component_is_in_area, bind: { component: "$c", area: "$a" } }
+    consequent:
+      comparison: { operator: "!=", left: "$a", right: legacy }
+    provenance: { user_quote: "No component may live in the legacy area." }
+  - id: no_draft_releases
+    type: guarded
+    modality: alethic
+    source: user-supplied
+    status: confirmed
+    remedy: "Ship the component in a numbered release, not a draft."
+    antecedent:
+      - { fact_type: component_ships_in_release, bind: { component: "$c", release: "$r" } }
+    consequent:
+      comparison: { operator: "!=", left: "$r", right: draft }
+    provenance: { user_quote: "Nothing ships in a draft release." }
+rejected_proposals: []

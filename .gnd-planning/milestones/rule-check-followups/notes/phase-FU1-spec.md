@@ -2,9 +2,12 @@
 
 ## 1. Status
 
-**Draft r1, awaiting the owner gate (process-phase step 2).** The plan r3
-is approved ([001-plan.md](../001-plan.md)); FD3 is ruled. `auto=false`. No
-code before this spec's owner gate.
+**Owner-decided (2026-11-07); approval pending on the corpus.** The owner
+ruled D1 and D3 over r1 (sha256 `55c9a2ad…`, commit 476c36ed) with
+"Approve as proposed". D1 makes the corpus the approval instrument: it lands
+red before any schema edit, and implementation waits for the owner's
+approval of it. `auto=false`. Prior status (r1): "Draft r1, awaiting the
+owner gate."
 
 ## 2. Provenance
 
@@ -63,9 +66,9 @@ already lists that it lacks (FD3): `derived-unknown`, `term:mod-zero`,
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first** (a serialized format): one model and one population per reason the version-7 route can emit, with the expected `reason_code` and "validates" |
+| D1 | Approval instrument | **corpus-first** (a serialized format): one model and one population per reason the version-7 route can emit, with the expected `reason_code` and "validates" **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU1's decisions D1 and D3?"). |
 | D2 | FD3 (plan) | version 15's set **Ruled at the plan level (o, 2026-11-07): FD3 as proposed.** |
-| D3 | Review over the spec bytes | none |
+| D3 | Review over the spec bytes | none **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU1's decisions D1 and D3?"). |
 
 ## 8. Tests and verification ledger
 
@@ -95,3 +98,23 @@ Plan estimate: about 15 schema and 60 test lines, plus the corpus.
 - M1 is additive, so no existing valid report becomes invalid (rule 1).
 - Which `term:*` reasons the version-7 route can emit is measured while
   authoring the corpus, not assumed.
+
+## Corpus findings (recorded while authoring the corpus, 2026-11-07)
+
+- **C1.** Six of version 15's eight added reasons reach a plain version-7
+  derivation, each measured with its own population (`mod`, `div`, `sqrt`,
+  `haversine`, a float overflow from 10^400, an exact product past 65,536
+  bits): exit 4, schema_version 7, exactly one schema error each.
+- **C2.** `term:dependency-unavailable` does not reach a version-7
+  derivation: a derivation over an unchecked derivation carries the original
+  reason (probe: `twice_mod` over `out_mod` reports `term:mod-zero`).
+  `derived-unknown` is a constraint reason on the anchored route
+  (`checker/_core.py:1768`). Both are covered by direct schema cases only.
+- **C3.** T2 validates a derivation row against `derivation_verdict` and
+  `derivation_verdict_v9` directly; `legacy_reference_report` and
+  `temporal_admission_report` are checked to reference one of them for their
+  derivation rows.
+- Red at commit: 38 failing (6 CLI cases, 32 schema cases), 25 passing (the
+  three older reasons on each branch, the version-15 non-regression cases,
+  the two refusals). Answers were derived from the reports at 6651e5a4 and
+  FD3's set, not from an implementation.

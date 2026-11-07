@@ -20,6 +20,7 @@ from gnd.commands._output import (
     _print_trace,
     _print_transition,
     print_baseline,
+    print_vacuous_acceptance,
 )
 from gnd.exits import EXIT_COLLISION, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_USAGE
 from gnd.model import ModelValidationError, load_model
@@ -260,6 +261,7 @@ def _cmd_check(
     sources: str | None = None,
     rule_ids: bool = False,
     baseline: str | None = None,
+    allow_vacuous: bool = False,
 ) -> int:
     result = api_module._run_check(
         model_path,
@@ -273,6 +275,7 @@ def _cmd_check(
         **({"composition": composition, "sources": sources} if composition is not None else {}),
         **({"rule_ids": True} if rule_ids else {}),
         **({"baseline": baseline} if baseline is not None else {}),
+        **({"allow_vacuous": True} if allow_vacuous else {}),
     )
     if output_format == "json":
         if result.execution is not None:
@@ -293,6 +296,7 @@ def _cmd_check(
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         _print_report(result.report, _declared_from_payload(result.payload))
         print_baseline(result.payload.get("baseline"))
+        print_vacuous_acceptance(result.payload)
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)
@@ -747,6 +751,11 @@ def _register_check(subparsers):
         metavar="BASE",
         help="mark each violation new or standing against the population BASE; implies --rule-ids",
     )
+    check_parser.add_argument(
+        "--allow-vacuous",
+        action="store_true",
+        help="exit 0 when vacuous rules are the only shortfall; implies --rule-ids",
+    )
     _add_format_argument(check_parser)
     _add_unredacted_argument(check_parser)
 
@@ -965,7 +974,7 @@ def handle(args, parsers) -> int:
         return _cmd_compose(args.model, args.directory, args.out, args.record)
 
     if args.command == "check":
-        if args.rule_ids or args.baseline is not None:
+        if args.rule_ids or args.baseline is not None or args.allow_vacuous:
             conflicting = [
                 flag
                 for flag, value in (
@@ -980,7 +989,7 @@ def handle(args, parsers) -> int:
             ]
             if conflicting:
                 check_parser.error(
-                    f"{'--baseline' if args.baseline is not None else '--rule-ids'} applies to one "
+                    f"{'--baseline' if args.baseline is not None else '--allow-vacuous' if args.allow_vacuous else '--rule-ids'} applies to one "
                     f"plain snapshot check; it excludes {', '.join(conflicting)}"
                 )
         if (args.composition is None) != (args.sources is None):
@@ -1084,5 +1093,6 @@ def handle(args, parsers) -> int:
         sources=args.sources,
         rule_ids=args.rule_ids,
         baseline=args.baseline,
+        allow_vacuous=args.allow_vacuous,
     )
 

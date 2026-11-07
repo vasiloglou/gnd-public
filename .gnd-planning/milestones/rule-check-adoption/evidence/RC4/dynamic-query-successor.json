@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC3/dynamic-query-successor.json",
+  "predecessor_sha256": "06b84d2900eadc39a9edb07bdddb15f05ab127c41d459d4799fff3bda4d12417",
+  "reason": "rule-check-adoption RC4 (gnd check --allow-vacuous; spec 509b721d, corpus 938716c9): one new syntax candidate, the Mapping[str, Any] annotation of output.print_vacuous_acceptance's payload argument. Syntax census only; the exact query policy is unchanged.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/output.py",
+      "print_vacuous_acceptance",
+      "Mapping[str, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7285,
+  "result_occurrences": 9101
+}

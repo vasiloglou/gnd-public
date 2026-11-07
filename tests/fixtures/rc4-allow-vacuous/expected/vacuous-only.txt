@@ -1,0 +1,11 @@
+BLOCKING (alethic)
+  [vacuous] constraints[0]: Fact type(s) 'component_in_area' contain no facts in this population — constraint is vacuous, not evaluated.
+ADVISORY (deontic)
+  (none)
+pass=3 fail=0 warning=0 unchecked=0 vacuous=1
+COVERAGE
+  uses: declared, facts=1
+  component_in_area: declared, facts=0
+  component_has_owner: declared, facts=2
+  component_in_release: declared, facts=1
+vacuous accepted: 1 rules have nothing to judge yet (--allow-vacuous).

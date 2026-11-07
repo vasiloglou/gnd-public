@@ -1,0 +1,202 @@
+# Phase UG1: Acceptance replay and issue disposition
+
+## 1. Status line
+
+**Draft r1, 2026-11-07, awaiting owner review.** Not approved. Implementable
+only after the owner approves plan r1's gate and this spec's gate. No code
+written. `auto=false`. No review has run over these bytes.
+
+## 2. Provenance
+
+Derived from [the plan](unattended-model-growth-plan.md) r1 (unreviewed,
+unapproved), sections 2.1 and 4 (UG1), the obligations harvested there, and the
+planning-time probes described in its opening section. Baseline `12daa5b7`.
+Nothing here is marked `(o)` or `(p)`: no owner decision and no review round
+exists. When a ruling arrives it is written at its site with a tag and date.
+
+## 3. Obligations (the step 0 harvest)
+
+| Row | Obligation (source) | Discharged in this spec |
+|---|---|---|
+| O1 | Steps 3 to 7 unattended, cited, `proposed`, `deontic` (104-1; plan O1) | T1 (round 1 carries uniqueness, mandatory, value type `Date`, all `proposed`/`deontic`); matrix row 104-1 |
+| O2 | Round, consolidation round, what additive admits (104-2) | T1 round 3 (new subtype admitted); T6 (link on an existing type refused); matrix |
+| O3 | Many-document checks, prose (104-3) | matrix row marked **inspected, not executable** (§6.3) |
+| O4 | One reply shape (104-4) | matrix row: **inspected**; the shape's executable guard is `tests/test_unattended_growth_guidance.py`, re-run in the gate |
+| O5 | Constraints travel with their fact type (104-5 first option) | T1 round 1; T4 control |
+| O6 | Item 5 second option | matrix row **open**, routed to UG-D2; a case that shows the refusal today is T4 |
+| O7 | Span on every fact and constraint (74) | T1 final `validate --document`; T9, T10; deviation row for `common-sense` (T8c) |
+| O8 | Nothing auto-confirmed (74) | T8a, T8b |
+| O9 | Header records mode, no human, digests (74) | T8d (header rule), T1 |
+| O10 | Validation rejects `confirmed`/`user-supplied` (74) | T8a, T8b |
+| O11 | `--policy additive` refusals (75) | T2 to T7 |
+| O12 | Refusal named in the preview, apply cannot publish (75) | T2 (preview names; apply exits 3, model bytes unchanged) |
+| O13 | Structural duplicate-shape report (76) | T1 round 2; T11 |
+| O17 | Shape-match handling is the host's (76) | out of this phase; UG4 |
+| O18 | Issue dispositions are the owner's | §6.4 drafts, not posted |
+| O20 | Document declaration across rounds | T12 (both directions) |
+| UG-R1 | Defaults do not move | T13 |
+
+## 4. The standing rules, bound to this phase
+
+| Rule | Discharge |
+|---|---|
+| UG-R1 defaults do not move | UG1 changes no source file; T13 shows the same proposal exits differently only because of `--policy`; a source diff in this phase is a failure of UG1-C5 |
+| UG-R2 nothing confirms | T8a/T8b show the refusals; UG1 adds no writer of provenance |
+| UG-R3 evidence licenses, a human admits | not applicable: no admission path is added |
+| UG-R4 one walk, one home | the tests exercise `additive_policy_issues` through the CLI only; they restate no matrix cell: each asserts the cell name the contract gives, citing the contract section in a comment, not copying a table |
+| UG-R5 digest-bound | not applicable: no new digest. T7 exercises the existing option-mismatch exit |
+| UG-R6 disclosure | T14 asserts no document text and no sample value in any refusal message the replay triggers |
+| UG-R7 totality, cost | the new test file adds no consumer of untrusted input; it calls shipped, already-total commands. Time-bound test not applicable (no new algorithm) |
+| UG-R8 layering, query policy | tests only; `tools/gnd_layers.json` untouched; the layering and RF6 tests are in the gate to show it |
+| UG-R9 installer links | not applicable: no packaged skill changes |
+| UG-R10 anonymity | fixture documents use a neutral equipment-loan domain; T-anon is the record-time scan |
+| UG-R11 approval and protection | spec gate precedes code; PR; no merge |
+| Project rule 1 totality | the test helpers read fixture bytes the test authored; argued inapplicable |
+| Project rule 2 cap bounds the document, not the algorithm | no new algorithm; the existing time-bound test for the unattended rules stays in the gate |
+| Project rule 3 validation order | T11 pins the order `validate` states: model issues first, documents read only after the model validates; and the exit-18-before-policy order stays covered by the existing `test_t1c` |
+| Project rule 4 one walk for N kinds | T2 (rename) and T3 (delete) run over **both** object types and fact types, and T5 over a spanning constraint, so a per-kind copy would show as a missing case |
+| Project rule 5 prose has one home | the matrix cites the contract; it restates no normative sentence |
+| Project rule 6 measure, do not argue | the whole phase: the issues' asks are measured on shipped bytes |
+| Fixtures discriminate (project failure class) | T5 puts one populated and one new fact type under one spanning constraint, which separates "any subject populated" from "every subject populated"; T6 uses an *unpopulated* existing type, so a refusal cannot be blamed on population |
+
+## 5. Goal
+
+On shipped bytes at the phase's base commit, a three-round, three-document
+replay through the CLI exits 0 at each `validate --document`, each
+`evolve preview --policy additive --shape-report` and each `evolve apply`; every
+refusal case exits as stated in §8 and names the cell or rule the contract
+gives it; each of the plan's acceptance-matrix rows has a verdict backed by a
+test result, an inspection marked as such, or the word **open**; no file under
+`src/` or `tools/` changes.
+
+## 6. Design
+
+### 6.1 Reuse
+
+No component index exists in this repository (`project.md`). Reuse by reading:
+
+| Capability | Found | Decision |
+|---|---|---|
+| Build a service, a proposal, an additive preview | `tests/test_evolve_additive_policy.py` (`_service`, `_proposal`, `_preview`, `_op`, `_element`), `tests/test_model_evolution.py::_service` | reuse by import, as `test_unattended_growth_guidance.py` already does with `import test_evolve_additive_policy as policy` |
+| Quote to span translator for a reply | `tests/test_unattended_growth_guidance.py` (`_span`, `_translate`) | reuse; if importing leaks pytest collection of that module's tests, move the two helpers to `tests/support/unattended_spans.py` (UG1-D1) |
+| A CLI invocation with exit code and stdout | `tests/support/cli_runner.py::run_main` | reuse |
+| Conforming unattended model | `tests/fixtures/unattended/conforming.orm.yaml` | reuse as the seed for the replay's first round |
+| Tutorial-style growth example | `src/gnd/examples/growth/`, `tools/build_growth_example.py` | not reused: it is not an unattended model and has two rounds; recorded so a reader does not think the replay duplicates it |
+
+### 6.2 Module by module
+
+**`tests/test_unattended_model_growth_acceptance.py`** (new, about 400 lines).
+Exact surface:
+
+- fixtures dir `tests/fixtures/unattended-model-growth/` with three plain
+  UTF-8 documents `round-1.txt`, `round-2.txt`, `round-3.txt` (neutral
+  equipment-loan prose: a due-date sentence with "exactly one", a borrower
+  holding a laptop, "a staff borrower is a kind of borrower"). No generated
+  digests are committed; the test computes them.
+- `_declare(model_path, raw, label)`: appends `{sha256, label}` to
+  `source.documents` **in the model file**, outside `evolve`, the O20
+  workaround, named so the dependence is visible.
+- `_round(tmp_path, ops, doc, *, populated=())`: builds a proposal with the
+  shared helpers, runs `evolve preview --policy additive --shape-report`
+  through `run_main`, returns preview path and exit code.
+- tests T1 to T14 of §8.
+
+No new public function, no source module. Estimated 0 source lines, 400 test
+lines, about 40 fixture lines.
+
+### 6.3 The acceptance matrix and the drafted dispositions
+
+Written into the phase record `NNN-phase-UG1.md` at record time (not before
+the tests run), one row per ask: ask, issue and item, verdict
+(`met` / `met with deviation` / `open` / `inspected`), evidence (a test node id
+and its result, or the file and section inspected), and the deviation or gap
+in a sentence. A verdict `met` without a test node id is refused by the
+reviewer. Prose-only items (104-3 the checks table, 104-4 the reply shape's
+prose) are `inspected` and say they cannot fail.
+
+Drafted dispositions, one per issue 74, 75, 76, 104, are written to
+`notes/ug1-issue-dispositions.md`: a short comment citing the matrix, naming
+what is met, what is open and which milestone phase owns it. They are text for
+the owner to post. UG1 posts nothing and closes nothing. They name no
+downstream application.
+
+## 7. Decisions
+
+| ID | Question | Readings and cost | Ruling |
+|---|---|---|---|
+| UG1-D1 | Where the shared helpers live | (a) import from the two existing test modules (no churn; couples the new file to their private names); (b) move `_span`/`_translate` to `tests/support/`: touches an existing test, but a cleaner import | open; proposal (a), (b) only if collection leaks |
+| UG1-D2 | CLI or service level | CLI (`run_main`) for every case that asserts an exit code, because the exit is the claim; service level only for O20's second probe (apply then finalize), whose CLI form `apply` already finalizes | open; proposal as stated |
+| UG1-D3 | A failing replay case | (a) record it as an implementation finding, route it to the owner, change no source in UG1; (b) fix in UG1: breaks UG1-C5 and hides a shipped defect inside an acceptance phase | open; proposal (a) |
+| UG1-D4 | Whether T12 pins the refusal text | (a) pin exit 3 and the message `declared operations do not equal the canonical candidate model`: a later improvement (UG3 (i)) must then edit this test knowingly; (b) pin only exit 3 | open; proposal (a), with a comment naming UG-D9 |
+
+## 8. Tests
+
+File `tests/test_unattended_model_growth_acceptance.py`, all through the CLI
+unless marked service level. "Exit" is the process exit. The cell names are the
+ones in the evolution contract "Additive policy" and the rule ids are the
+ones in `representation-format.md` "Unattended source".
+
+| ID | Case | Expected |
+|---|---|---|
+| T1 | Three rounds. Round 1 (doc 1): add `laptop`, `borrower`, `loan` object types, value type `due_date` (`Date`), fact type `loan_has_due_date` with `uniqueness` and `mandatory`, a closed-list value constraint, all `proposed`/`deontic`, each citing a span. Round 2 (doc 2, declared first): add `borrower_holds_laptop` over the same role players as an existing fact type. Round 3 (doc 3, declared first): add `staff_borrower` with `subtype_of: borrower`. Each round: `validate --document`, `preview --policy additive --shape-report`, `apply`. After round 3, `validate` with all three documents | every step exit 0; round 2's preview has a non-empty `shape_matches` group naming the existing fact type; round 3 has none for the subtype; no `policy_issues` anywhere |
+| T2 | Rename an object type and, separately, a fact type (a populated one via `--populated` and an unpopulated one) | exit 3 each; `policy_issues` names operation index and `object_types.rename` / `fact_types.rename`; the preview file is still written; `apply` with that preview exits 3 and the model bytes are unchanged |
+| T3 | Delete an object type; delete a fact type | exit 3; `object_types.delete`, `fact_types.delete` |
+| T4 | Add a `uniqueness` to `loan_has_due_date` after it is `--populated` (and once with `sample_population` rows) | exit 3, `constraint.populated.add`. Control: the same constraint on a fact type the same proposal adds | refusal exit 3; control exit 0 |
+| T5 | A `subset` constraint spanning one populated fact type and one new fact type, then one spanning two new ones | first exit 3 (`constraint.populated.add`), second exit 0 |
+| T6 | Set `subtype_of` on an existing, *unpopulated* object type | exit 3, `object_types.modify`; the contract's statement that a link over existing types is a reviewed non-additive proposal; the same proposal without `--policy` exits 0 |
+| T7 | `apply` repeating a different `--policy` / omitting `--populated` | exit 3 in both directions (option mismatch) |
+| T8a | Unattended model whose constraint has `status: confirmed` | `validate` exit 3, rule `semantic:unattended-u2` |
+| T8b | Constraint with `source: user-supplied` (and one `explicit`) | exit 3, `semantic:unattended-u3` |
+| T8c | `common-sense` constraint with `library_entry` and no span, alongside a `llm-inferred` one with no span | the first passes, the second exits 3 `semantic:unattended-u5`: the documented deviation, pinned |
+| T8d | Header with `reviewer` not `none`; empty `documents` | exit 3, `semantic:unattended-u1` |
+| T9 | A span whose excerpt bytes were altered | `validate --document` exit 3, `unattended:excerpt-mismatch` |
+| T10 | A span naming an undeclared document | exit 3, `semantic:unattended-u7` |
+| T11 | An invalid model plus a document that would also be refused | exit 3 reporting the model's issue; no `unattended:*` document issue in the output |
+| T12 | O20: (a) round candidate appends a new document to `source.documents` **and** adds an element citing it; (b) the same element addition with the document declared in the model before the round, after an earlier round was applied and finalized (service level for the finalize) | (a) exit 3, message `declared operations do not equal the canonical candidate model`; (b) preview exits 0 with no issues |
+| T13 | The T2 rename proposal previewed without `--policy` | exit 0 (or the breaking-acceptance band the contract gives a rename: assert the contract's exit, not an assumed one); with `--policy additive` exit 3. Spec states the band is resolved by running it first (UG1-Q1) |
+| T14 | Disclosure: grep every refusal message and preview field produced above for the document text and for sample values | none present |
+| T-anon | A one-time scan of the phase's changed files for the downstream application names the maintainer holds (a reviewer scan at record time, not a committed test: a test would have to contain the names) | none found; the scan command and its zero count go in the record |
+| T-src | `git diff --name-only <base>...HEAD -- src tools` | empty |
+
+Every declared branch has a case that can fail it: each exit-3 row has a
+control that exits 0 (T4, T5, T6, T8c, T13), so a policy that refuses
+everything fails a control, and a policy that admits everything fails a
+refusal. Coverage is counted per branch: T2 and T3 each cover both object-type
+and fact-type locators; T8a to T8d cover U1, U2, U3, U5 and U7, while U4, U6
+and U8 are covered by `tests/test_unattended_mode.py`, which is in the gate.
+U4, U6 and U8 are not re-proved here (stated, not hidden).
+
+Open item **UG1-Q1**: T13's exact exit for a rename without `--policy` is
+unknown to the author; it is measured first and the spec amended before
+approval is claimed.
+
+## 9. Out of scope for this phase
+
+Any change under `src/` or `tools/`; the population-checked admission (UG2);
+declaring a document inside a proposal (UG3); fail-closed span coverage (UG3);
+documentation edits (UG4); posting or closing any issue; reproducing
+`tests/test_unattended_mode.py` and `tests/test_evolve_additive_policy.py`
+cases that already pass; any live or paid model call; issues 73, 77, 78, 95.
+
+## 10. Size
+
+Estimate at write time: 0 source lines; about 400 test lines; about 40 fixture
+lines; two drafted-disposition notes of about 60 lines. Measured at record
+time.
+
+## 11. Approval instrument
+
+This prose. No corpus authored first. The owner's gate is on §5 (goal), §8
+(cases and exits) and §7 (decisions). Review instrument for the phase diff:
+one reviewer in a different tool, prompt on stdin, per `project.md`; a single
+reviewer is not called a panel.
+
+Focused gate (proposed, to be fixed when the spec is approved):
+
+```bash
+uv run pytest -q tests/test_unattended_model_growth_acceptance.py tests/test_unattended_mode.py tests/test_unattended_growth_guidance.py tests/test_evolve_additive_policy.py tests/test_evolve_shape_matches.py tests/test_growth_example.py tests/test_rf1_layering.py tests/test_rf6_query_policy.py --tb=short
+uv run ruff check tests/test_unattended_model_growth_acceptance.py
+```
+
+Whether a census pins the `tests/` listing (UG-Q4) is checked first with a
+grep, and any literal moved is recorded.

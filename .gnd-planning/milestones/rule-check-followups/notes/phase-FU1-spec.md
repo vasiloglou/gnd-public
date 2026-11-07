@@ -2,12 +2,11 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-07); approval pending on the corpus.** The owner
-ruled D1 and D3 over r1 (sha256 `55c9a2ad…`, commit 476c36ed) with
-"Approve as proposed". D1 makes the corpus the approval instrument: it lands
-red before any schema edit, and implementation waits for the owner's
-approval of it. `auto=false`. Prior status (r1): "Draft r1, awaiting the
-owner gate."
+**Approved (2026-11-07); implemented.** The owner approved the corpus
+(commit 08167666) with "Approve, implement", answering "Do you approve the
+FU1 corpus answers?". D1 and D3 were ruled over r1 (sha256 `55c9a2ad…`,
+commit 476c36ed) with "Approve as proposed". `auto=false`. Prior status:
+"Owner-decided (2026-11-07); approval pending on the corpus."
 
 ## 2. Provenance
 

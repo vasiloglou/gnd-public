@@ -1040,6 +1040,14 @@
             "derivation-not-covered",
             "derivation-rule-opaque",
             "opaque-value",
+            "derived-unknown",
+            "term:mod-zero",
+            "term:exact-value-too-wide",
+            "term:dependency-unavailable",
+            "term:div-zero",
+            "term:sqrt-negative",
+            "term:haversine-coordinate-range",
+            "term:float-overflow",
             null
           ]
         }
@@ -1109,7 +1117,15 @@
                 "enum": [
                   "derivation-not-covered",
                   "derivation-rule-opaque",
-                  "opaque-value"
+                  "opaque-value",
+                  "derived-unknown",
+                  "term:mod-zero",
+                  "term:exact-value-too-wide",
+                  "term:dependency-unavailable",
+                  "term:div-zero",
+                  "term:sqrt-negative",
+                  "term:haversine-coordinate-range",
+                  "term:float-overflow"
                 ]
               }
             }

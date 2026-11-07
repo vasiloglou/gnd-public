@@ -167,7 +167,7 @@ class Population(BaseModel):
             raise ValueError("producer must be 1 to 200 characters")
         return self
 
-    def model_copy(self, *, update: Mapping[str, Any] | None = None, deep: bool = False) -> Population:
+    def model_copy(self, *, update: Mapping | None = None, deep: bool = False) -> Population:
         """Copy, keeping the producer invariant that ``update`` would otherwise skip (issue 115).
 
         Pydantic's ``model_copy`` runs no validator, so the copy re-runs the one

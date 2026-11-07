@@ -192,3 +192,12 @@ untouched.
   unaffected: pydantic already types the field.
 - **I3.** The component index named `model.population_loading` and
   `model.loading` for reread; both entries now list the FU2 tests and verbs.
+- **I4 (full suite at 10265ddf).** Three guard failures beyond the base's
+  two uv-pin errors, all reproduced locally: the RF6 verbatim-body pin of
+  `gnd.model.bind_population` (M2 changes its body; the plan's digest
+  survey did not name this guard), and two RF6 query-policy inventory
+  tests, which counted M1's `Mapping[str, Any]` annotation as a dynamic
+  subscript. Repairs: the existing RC5 successor row for `bind_population`
+  in `compiled-snapshot-obligations/evidence/CI/source-successors.json` is
+  chained to the new body with the FU2 reason (as RC5 did); the annotation
+  is `Mapping | None`. All `tests/test_rf*.py`: 2396 passed.

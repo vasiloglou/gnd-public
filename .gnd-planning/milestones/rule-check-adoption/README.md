@@ -24,7 +24,8 @@ recorded ([phase record](006-phase-RC1.md)); not yet pushed or merged.**
 - [RC3 phase record](008-phase-RC3.md)
 - [RC4 spec (owner-approved)](notes/phase-RC4-spec.md)
 - [RC4 phase record](009-phase-RC4.md)
-- [RC5 spec (r1, awaiting its owner gate)](notes/phase-RC5-spec.md)
+- [RC5 spec (owner-approved)](notes/phase-RC5-spec.md)
+- [RC5 phase record](010-phase-RC5.md)
 
 Phases:
 - RC1: declared constraint id and `remedy` in each verdict, report version 15;
@@ -35,4 +36,4 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the RC5 spec owner gate (process-phase). RC4 is merged (PR 108).
+Next action: the owner rules on RC5's size overrun (plan rule 8); then the RC5 PR and the RC6 spec.

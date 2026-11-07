@@ -2,12 +2,14 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
-owner ruled the step-2 asks over r1 (sha256 `ba55ed5f…`, commit 509b721d), answering "How do you
-rule on RC4's decisions D1-D4?" with "Approve all as proposed" (o,
-2026-11-06). D1 is corpus-first, so no implementation file is created or
-edited until the owner approves the corpus. `auto=false`. Prior status (r1):
-"Draft, awaiting the owner gate (process-phase step 2)."
+**Owner-approved (2026-11-06): corpus and spec; implementation in
+progress.** The owner approved the RC4 corpus (commit 938716c9) with the
+words "Approve, implement" (o, 2026-11-06), answering "Do you approve the
+RC4 corpus answers?". Prior status: "Owner-decided (2026-11-06); approval
+pending on the corpus (§11)."
+
+Earlier gate: the owner ruled D1-D4 over r1 (sha256 `ba55ed5f…`, commit
+509b721d) with "Approve all as proposed" (o, 2026-11-06). `auto=false`.
 
 ## 2. Provenance
 
@@ -166,3 +168,21 @@ code:
   (`allow_vacuous: true`; band 2 → 0 with the uncertified accept block);
   none was read from an implementation.
 - Red at commit: 7 failing; the plain control and the case list pass.
+
+## Implementation findings (step 3, recorded as found)
+
+- **I1.** `band()` turns 2 into 0 after its branch events are recorded, so
+  the branch registry still records the vacuous event; only the returned
+  band changes.
+- **I2.** The certified assurance path is skipped exactly when the option
+  accepted a vacuous run (`has_vacuous` and band 0); a run the option did
+  not change keeps its block (corpus `fail-and-vacuous`,
+  `unchecked-and-vacuous`).
+- **I3 (guards).** RF4 rows `_run_check_raw`, `_run_check`,
+  `build_check_payload`; RF5 row `_cmd_check`; the RF6b `band` row extended;
+  RC4 dynamic query delta (one annotation); CLI help successor
+  `tests/fixtures/allow-vacuous-cli/expected.json` (one added option, diff
+  checked); the closing line reaches the CLI through `commands/_output.py`.
+- **I4.** A whole-tree `ruff --fix` edited an unrelated generated example
+  (`src/gnd/examples/expense/project/cli/expense_cli.py`); the edit was
+  reverted before commit. Lint runs on the changed files only.

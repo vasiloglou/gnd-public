@@ -1781,7 +1781,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### checker.reports
 - does: Represent five-state constraint verdicts, count results and select the checker exit band [CheckReport, band].
-- verbs: CheckReport, ConstraintVerdict, CoverageEntry, Phase1Trace, verdict lattice, verdict counts, exit band, band precedence, alethic failure, unevaluated alethic, vacuous result, deontic warning, registered branch, reason code, snapshot projection, derivation verdict, baseline band, band with baseline
+- verbs: CheckReport, ConstraintVerdict, CoverageEntry, Phase1Trace, verdict lattice, verdict counts, exit band, band precedence, alethic failure, unevaluated alethic, vacuous result, deontic warning, registered branch, reason code, snapshot projection, derivation verdict, baseline band, band with baseline, allow vacuous, accept vacuous rules
 - in: Registered branch-addressed constraint verdicts, derivation verdicts, coverage and optional internal semantic projection.
 - out: Validated report objects, five-state counts and band 0, 1, 2 or 4 with recorded composition branches.
 - status: canonical
@@ -2520,7 +2520,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### infra.text_output
 - does: Print validation issues, snapshot verdicts, transition traces and projected report text.
-- verbs: text report, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance
+- verbs: text report, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance
 - status: canonical
 - modules: src/gnd/output.py
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, semantics.transitions

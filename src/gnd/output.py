@@ -205,6 +205,13 @@ def print_baseline(block: Mapping[str, Any] | None) -> None:
         )
 
 
+def print_vacuous_acceptance(payload: Mapping[str, Any]) -> None:
+    """The ``--allow-vacuous`` closing line, when the option accepted a vacuous rule."""
+    vacuous = payload.get("counts", {}).get("vacuous", 0)
+    if payload.get("allow_vacuous") and vacuous:
+        print(f"vacuous accepted: {vacuous} rules have nothing to judge yet (--allow-vacuous).")
+
+
 def _print_report(
     report: CheckReport,
     declared: Mapping[str, tuple[str, str | None, str, str | None]] | None = None,

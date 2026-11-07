@@ -299,6 +299,7 @@ def build_check_payload(
     declared: Mapping[str, tuple[str, Addressing, str | None]] | None = None,
     extents: Mapping[str, tuple[list[list[Any]], str]] | None = None,
     baseline: tuple[str, str, Any] | None = None,
+    allow_vacuous: bool = False,
 ) -> dict[str, Any]:
     """Assemble the ``check`` payload from the objects the text path consumes.
 
@@ -385,7 +386,7 @@ def build_check_payload(
         payload["baseline"] = None if baseline is None else {
             "population": baseline[0], "population_sha256": baseline[1], **baseline[2].counts,
         }
-        payload["allow_vacuous"] = False
+        payload["allow_vacuous"] = allow_vacuous
     return payload
 
 

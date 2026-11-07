@@ -138,7 +138,7 @@ class CheckReport(BaseModel):
         return totals
 
 
-def band(report: CheckReport, baseline: Any = None) -> int:
+def band(report: CheckReport, baseline: Any = None, allow_vacuous: bool = False) -> int:
     """Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08).
 
     Band 3 (load/model-relative rejection) returns earlier from the CLI's load
@@ -151,6 +151,8 @@ def band(report: CheckReport, baseline: Any = None) -> int:
     ``baseline`` (``gnd check --baseline``, a ``gnd.baseline.Comparison``)
     decides 1 from new alethic failures only and 4 from an alethic verdict
     left unchecked in either run; the head's vacuous verdicts still give 2.
+    ``allow_vacuous`` (``--allow-vacuous``) then turns a 2 into 0: by the
+    precedence, a 2 means vacuous verdicts are the only shortfall.
     """
     if baseline is not None:
         if baseline.new_alethic_fail:
@@ -193,7 +195,7 @@ def band(report: CheckReport, baseline: Any = None) -> int:
             record_branch(prefix + "deontic-warning-keeps-band")
         if any(row.modality == "deontic" and row.verdict == "unchecked" for row in report.verdicts):
             record_branch(prefix + "deontic-unchecked-keeps-band")
-    return result
+    return 0 if allow_vacuous and result == 2 else result
 
 
 

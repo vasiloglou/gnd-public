@@ -45,4 +45,4 @@ Existing checker reports section; historical facade retained.
 | `CheckReport.has_vacuous(self) -> bool` | method | 116 | (no docstring) |
 | `CheckReport.has_unevaluated_alethic(self) -> bool` | method | 120 | (no docstring) |
 | `CheckReport.counts(self) -> dict[str, int]` | method | 132 | (no docstring) |
-| `band(report, baseline) -> int` | function | 141 | Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08). |
+| `band(report, baseline, allow_vacuous) -> int` | function | 141 | Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08). |

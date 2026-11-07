@@ -232,8 +232,9 @@ def _run_check_raw(
     sources: str | os.PathLike[str] | None = None,
     rule_ids: bool = False,
     baseline: str | os.PathLike[str] | None = None,
+    allow_vacuous: bool = False,
 ) -> _RunResult:
-    rule_ids = rule_ids or baseline is not None
+    rule_ids = rule_ids or baseline is not None or allow_vacuous
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
     population_coordinate = (
         None
@@ -273,6 +274,7 @@ def _run_check_raw(
             declared=declared if wire_version == 15 else None,
             extents=extents if wire_version == 15 else None,
             baseline=compared if wire_version == 15 else None,
+            allow_vacuous=allow_vacuous and wire_version == 15,
         )
 
     def refuse_rule_ids(refused: Model) -> _RunResult | None:
@@ -497,7 +499,7 @@ def _run_check_raw(
                 if compiled_operations:
                     from gnd.compiled_obligations import compose
                     checked = compose(model, population, checked)
-            exit_code = checker_module.band(checked)
+            exit_code = checker_module.band(checked, allow_vacuous=allow_vacuous)
     except AnchorError as error:
         return _finalize(
             build(3, error=error),
@@ -554,12 +556,13 @@ def _run_check_raw(
                 populations=(population, base_population),
                 error=error,
             )
-        exit_code = checker_module.band(checked, comparison)
+        exit_code = checker_module.band(checked, comparison, allow_vacuous=allow_vacuous)
         compared = (str(base_coordinate), hashlib.sha256(base_bytes).hexdigest(), comparison)
     with capture_branches() as projection_trace:
         payload = build(exit_code, report=checked, warnings=warnings)
-    if compiled_operations or baseline is not None:
-        # A baseline band is a different claim from the plain one; it is not certified.
+    if compiled_operations or baseline is not None or (allow_vacuous and checked.has_vacuous and exit_code == 0):
+        # A baseline band, or a vacuous run accepted by --allow-vacuous, is a different
+        # claim from the plain one; it is not certified.
         assurance = AssuranceBlockV1(semantic_decision_for_band(exit_code))
         execution = None
     else:
@@ -823,8 +826,9 @@ def _run_check(
     sources: str | os.PathLike[str] | None = None,
     rule_ids: bool = False,
     baseline: str | os.PathLike[str] | None = None,
+    allow_vacuous: bool = False,
 ) -> _RunResult:
-    if (rule_ids or baseline is not None) and (admission or compiled_operations):
+    if (rule_ids or baseline is not None or allow_vacuous) and (admission or compiled_operations):
         raise ValueError("rule_ids applies to the plain snapshot check only")
     if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
@@ -844,6 +848,7 @@ def _run_check(
         sources=sources,
         rule_ids=rule_ids,
         **({"baseline": baseline} if baseline is not None else {}),
+        **({"allow_vacuous": True} if allow_vacuous else {}),
     )
     if admission:
         from gnd.admission import build_admission, wire_verdicts

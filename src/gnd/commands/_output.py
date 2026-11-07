@@ -67,6 +67,9 @@ from gnd.output import (
 )
 from gnd.output import print_baseline as print_baseline  # noqa: PLC0414 -- RC3 --baseline summary
 from gnd.output import (
+    print_vacuous_acceptance as print_vacuous_acceptance,  # noqa: PLC0414 -- RC4 --allow-vacuous line
+)
+from gnd.output import (
     report_module as report_module,  # noqa: PLC0414 -- compatibility binding
 )
 from gnd.output import (

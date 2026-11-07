@@ -58,3 +58,56 @@ def test_allow_vacuous_with_another_arm_is_a_usage_error() -> None:
     assert result.returncode == _exits()["conflict-populations"]
     assert result.stdout == b""
     assert b"unrecognized arguments" not in result.stderr
+
+
+# --- Direct tests (spec §8) -----------------------------------------------------------
+
+
+@pytest.mark.parametrize("verdicts", [
+    (), ("fail",), ("unchecked",), ("vacuous",), ("fail", "vacuous"), ("unchecked", "vacuous"),
+    ("fail", "unchecked", "vacuous"),
+])
+@pytest.mark.parametrize("compared", [False, True])
+def test_t1_the_option_turns_only_a_two_into_a_zero(verdicts, compared) -> None:
+    from types import SimpleNamespace
+
+    from gnd.checker import CheckReport, ConstraintVerdict, band
+
+    # A truth table over band() alone: rows built without the checker's validation.
+    rows = [
+        ConstraintVerdict.model_construct(
+            constraint_ref=f"constraints[{index}]", modality="alethic", verdict=verdict,
+            reason_code="opaque-value" if verdict == "unchecked" else None,
+        )
+        for index, verdict in enumerate(verdicts)
+    ]
+    report = CheckReport.model_construct(
+        verdicts=rows, derivations=[], snapshot_projection=None, phase1_trace=None, coverage={},
+    )
+    baseline = (
+        SimpleNamespace(new_alethic_fail="fail" in verdicts, undecided_alethic="unchecked" in verdicts)
+        if compared else None
+    )
+    plain = band(report, baseline)
+    allowed = band(report, baseline, allow_vacuous=True)
+    assert allowed == (0 if plain == 2 else plain)
+
+
+@pytest.mark.parametrize("arm", [
+    ["--populations", "populations"], ["--pre", "x", "--steps", "y", "--post", "z"],
+    ["--anchors", "x", "--document", "y"], ["--composition", "x", "--sources", "y"],
+    ["--admission"], ["--compiled-operations"],
+])
+def test_t2_allow_vacuous_excludes_every_other_arm(arm) -> None:
+    result = run_main(["check", "missing.orm.yaml", "missing.pop.yaml", *arm, "--allow-vacuous"], cwd=CORPUS)
+    assert result.returncode == 64
+    assert result.stdout == b""
+    assert b"--allow-vacuous applies to one plain snapshot check" in result.stderr
+
+
+def test_t3_the_option_without_vacuous_verdicts_changes_only_its_own_key() -> None:
+    plain = json.loads(run_main(["check", MODEL, "populations/fail-and-vacuous.pop.yaml", "--rule-ids",
+                                 "--format", "json"], cwd=CORPUS).stdout)
+    allowed = json.loads(run_main(["check", *CASES["fail-and-vacuous"], "--format", "json"], cwd=CORPUS).stdout)
+    assert allowed.pop("allow_vacuous") is True and plain.pop("allow_vacuous") is False
+    assert allowed == plain

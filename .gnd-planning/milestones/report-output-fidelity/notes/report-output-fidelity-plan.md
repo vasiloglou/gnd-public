@@ -1,11 +1,14 @@
 # Report output fidelity
 
-**Status: r2, proposed; decisions ruled, plan not yet approved.** The owner
+**Status: r3, proposed; decisions ruled, plan not yet approved.** The owner
 ruled RF-D0 and D1-D6 "as proposed" on 2026-11-07 (section 10). That is a
 ruling on those decisions, not approval of the plan: no plan-gate record
-exists, and the plan gate ("Approve r2?") is still open. RF-D0 selects one
-Codex review over r2; it has not run as of this revision (its status is
-recorded below when it does). `auto=false`.
+exists, and the plan gate ("Approve r3?") is still open. RF-D0's one Codex
+review ran over r2 (plan sha256 `dfc559bc…`, commit f5ad4290), disposition
+`block`, 10 findings, triaged and applied in this revision:
+[evidence/plan-review-r2/](../evidence/plan-review-r2/). **r3 itself was not
+re-reviewed**; its repairs carry no review opinion. D7 is new in r3 and open.
+`auto=false`.
 
 Two issues that the `rule-check-followups` plan split out by owner ruling
 (FD1, FD2 in [that plan](../../rule-check-followups/notes/rule-check-followups-plan.md)):
@@ -23,27 +26,37 @@ checker*. Neither changes a verdict, a band or an exit code.
 The milestone is complete when, on main after merge:
 
 1. `gnd check`, `gnd validate`, `gnd transition` (full and plan) and the
-   export verification route, with `--format text`, print verdict lines (the
-   plain snapshot report's layout) for a model with an active redaction policy
-   or temporal terms, with and without `--unredacted`, rendered **from the
-   projected tree only**; a canary secret in a population never appears
-   (ROF1, ROF2; issue 112).
-2. A caller outside GND can recompute a model's identity: a normative
+   export verification route, with `--format text`, print the layout their
+   plain route prints (verdict lines for check; `OK:`/issue lines for
+   validate; PRE-STATE/STEP/FRAME/POST-STATE for transition; the extraction
+   line for verification) for a model with an active redaction policy or
+   temporal terms, with and without `--unredacted`, the verdict body rendered
+   **from the projected tree only**; a canary secret in a population never
+   appears (ROF1, ROF2; issue 112). `validate --trace` and
+   `validate --document` print from the model, not the projected tree; their
+   boundary is stated and canary-tested (review P10).
+2. A caller outside GND can recompute a model's identity (for a model
+   without reference populations; a reference-bearing model already has a
+   canonical version-1 identity): a normative
    canonical-JSON definition has one home, a shipped producer prints the
    canonical document and its digest, and a differential test proves the
    producer's digest equals an independent re-implementation of the definition
    in the test file (ROF3; issue 111).
-3. Every comparison site that today accepts a supplied model digest accepts
-   the legacy identity **and** the canonical one, through one helper; no
-   recorded digest is rewritten, and every pre-milestone digest-bound artifact
-   still verifies (ROF4; issue 111).
-4. The owner has ruled whether, and in which report versions, reports emit the
-   canonical identity (D3); if the ruling is "emit", ROF5 is specified and
-   delivered, otherwise ROF5 is withdrawn with the reason recorded.
+3. Every site that matches a supplied model identity against a loaded model
+   (classified in section 1) accepts the legacy identity **and** the canonical
+   one, through one helper; exact-coherence and copy sites stay exact; no
+   recorded digest is rewritten, and every pre-milestone digest-bound
+   artifact still verifies (ROF4; issue 111).
+4. The owner's D3 ruling (2026-11-07: no emission in this milestone, to be
+   re-asked after ROF4) is honoured: ROF5 is withdrawn with the reason
+   recorded, or, if D3 is re-ruled to "emit", specified and delivered.
+   **Issue 111 stays open as partially addressed unless ROF5 delivers**
+   (review P1): a caller can recompute the identity and GND accepts it, but a
+   caller still cannot recompute the `model_digest` printed in a report.
 5. Each phase has an approved spec, a record with verbatim focused-gate output
    and one independent reviewer; the close record disposes every open question
-   and closes issues 111 and 112 (or states what remains of 111 if D3 defers
-   emission).
+   and closes issue 112; issue 111 closes only if ROF5 delivers, otherwise
+   the close record keeps it open and states the remaining gap.
 
 ## 0. Binding design rules
 
@@ -79,8 +92,8 @@ Probes at main `12daa5b7` (2026-11-07), read-only.
 | 112, pins | 4 files under `tests/fixtures/rf1-pins/goldens/sem-check/` (the dispatch and release example models, both temporal: stdout is `REDACTION applied: ` plus JSON) and `tests/fixtures/public-emitter21/answers.json` (`exact_text_prefixes`) record the JSON-as-text bytes. Changing the text changes those goldens. |
 | 111, definition | `values._model_digest` is `sha256(repr(model.model_dump(exclude={warnings, operations, reference_populations})))` (`values.py:179-192`). For a model with `reference_populations` it already returns `reference_model_digest`, a canonical-JSON digest over `{identity_version: 1, model, reference_populations}` (`values.py:201-215`). `transition.operations_digest` beside it is already canonical JSON "for exactly this reason" (`transition.py:94-111`). project.md names the class: "An interchange field defined in Python-only terms". |
 | 111, stability | The digest is stable across `PYTHONHASHSEED` (2 seeds, same value), so the defect is reproducibility by a non-Python caller and exposure to Python/pydantic `repr` changes, not in-process flakiness. Python 3.11.15, pydantic 2.13.4. |
-| 111, consumers | Cross-process comparisons of a supplied model digest: `transition.verify_digests` (`transition:model-digest-mismatch`), `admission_validation` (two sites), `assurance/transport.py:115`, `coverage.py:689`, `export/pyrel_rules.py:1609` (plans embed `MODEL_DIGEST = '…'`), `witness/io.py`, `export/souffle_runtime.py:513`, `measure/service.py:170` and `measure/report.py:218` (sidecars via `synth.provenance.validated_model_sha256`), `model/__init__.py:627` (in-process). In-process only: `Population._validated_model_digest` (`population.py:205`). Distinct things that share the word and are **not** this digest: `batch.py` and `conformance/currency.py` (raw file bytes). |
-| 111, recorded values | Script over `git ls-files` (2026-11-07): 371 model files, 306 load, 273 distinct digests; **167 tracked files record at least one of 58 model digests** (140 under `tests/fixtures`, 15 under `src/gnd/examples/approvals` (shipped `steps.json` pins and recordings), 12 historical `.gnd-planning` evidence files). An undercount: it misses models built inside tests and reference-population digests. |
+| 111, consumers | Classified by contract (review P3, P4). **Match a supplied model identity against the loaded model (accept-both applies):** `transition.verify_digests` (`transition:model-digest-mismatch`); `admission_validation.py:59` and `:130`; `coverage.py:689`; `measure/service.py:170` (sidecar vs `validated_model_sha256`); `witness/kernel.py:305-314` (replay compares the **whole binding dictionary**, `binding != identity(model, candidate, reference_inputs)`; `model_digest` is one field, so only that field goes through the helper and the others stay exact). **Exact coherence between two artifacts of one run (stays exact):** `assurance/transport.py:115` (a receipt's `model_digest` must equal the digest in the very report it authenticates); `model/__init__.py:627` (in-process bound context). **Copy, not compare:** `export/souffle_runtime.py:513`, `witness/io.py:282`. **Corpus aggregation:** `measure/report.py:218-231` counts distinct sidecar digest strings and refuses a corpus with two, and emits the sidecar's spelling at `:308`; a corpus mixing the legacy and canonical spelling of one model would be refused though both are valid. **Standalone generated code:** `export/pyrel_rules.py:1609, 2212` generates a plan with an embedded `MODEL_DIGEST = '…'` and a comparison inside the generated file, which cannot call a GND runtime helper (D7). In-process only: `Population._validated_model_digest` (`population.py:205`). Not this digest (raw file bytes): `batch.py:153`, `conformance/currency.py`, `codegen/manifest.py:257`. |
+| 111, recorded values | The census script and its rosters are committed under [evidence/census-r2/](../evidence/census-r2/) so the figures are checkable (review P9). Script over `git ls-files` (2026-11-07): 371 model files, 306 load, 273 distinct digests; **167 tracked files record at least one of 58 model digests** (140 under `tests/fixtures`, 15 under `src/gnd/examples/approvals` (shipped `steps.json` pins and recordings), 12 historical `.gnd-planning` evidence files). An undercount: it misses models built inside tests and reference-population digests. |
 | 111, feasibility | Canonical JSON over the same `model_dump` (via the existing `values.canonical` walk and `artifacts.canonical_json_bytes`): **total on all 306 loadable models** (0 refusals), and a bijection with the legacy digest on that set (273 classes both ways). Totality over hostile input is not shown; ROF3 owns it. |
 
 Authority: the owner's request (2026-11-07); issues 111 and 112; FD1, FD2 of
@@ -101,20 +114,38 @@ rule-check-followups.
 - Remedy and `--rule-ids` lines are not rendered for projected routes:
   `--rule-ids` is refused there, so the text of the refusal is an `ERROR` line
   from the payload's `issues`.
-- Transition (full and plan), `--admission` and the export verification route
-  follow in ROF2 with the same renderer.
+- Transition (full and plan), `--admission` and the export verification
+  route follow in ROF2. They are **not** served by the check row renderer:
+  the plain transition text has PRE-STATE, STEP, FRAME and POST-STATE
+  sections (`output.py:273-310`) and verification prints an extraction line
+  (`export/verification_service.py:526-533`); ROF2 designs rows for those
+  (review P5). Until ROF2, those routes keep the existing
+  `_print_projected_text` unchanged.
+- **Routes that print from the model, not the projected tree** (review P10):
+  `validate --trace` prints the model's structure (operations, derivations,
+  frame modalities; no population value) before the projected text;
+  `validate --document` can return early and print warnings and newly built
+  issues without a projected payload. Both are pre-existing and not leak
+  surfaces for population values; ROF1 states that boundary in the spec and
+  pins it with canaries, and does not claim "projected tree only" for them.
 
 ### Issue 111, identity
 
-- **Identity version 2** (proposed name; D4): `sha256` over
+- **Identity version 2** (D4, ruled): `sha256` over
   `canonical_json_bytes({"identity_version": 2, "model": canonical(model_dump
-  minus the same excluded fields), "reference_populations": sorted
-  declarations})`. This is the shape `reference_model_digest` already uses
-  (version 1), extended to every model; for a model without reference
-  populations the declaration list is `[]`.
-- The legacy identity stays exactly as it is, named **legacy-repr**. For a
-  model with `reference_populations` the legacy function already returns the
-  version-1 canonical digest; that value keeps its meaning.
+  excluding warnings, operations and reference_populations)})`, defined **only
+  for a model without `reference_populations`** (review P2). It borrows the
+  version-1 envelope's idea (canonical JSON of the dumped model) but is not
+  "the same exclusions": version 1 includes `operations` and has no separate
+  operations digest in its wrapper, and extending version 2 to such a model
+  would weaken that binding on an operations-only change.
+- A model **with** `reference_populations` keeps its existing version-1
+  canonical identity, which is already reproducible; it has no version 2, and
+  the accepting helper returns exactly that one identity for it. ROF3 tests
+  an operations-only mutation of a reference-bearing model (version 1 moves)
+  and the helper's refusal of a version-2 string for it.
+- The legacy identity stays exactly as it is, named **legacy-repr**, for a
+  model without reference populations.
 - **Normative home** (rule 3): a new subsection of
   `src/gnd/skills/gnd-orm-core/references/representation-format.md` beside "What
   `population._model_digest` covers (A8)", which every other text cites. The
@@ -141,8 +172,9 @@ rule-check-followups.
    Consequence, stated plainly: after ROF3 and ROF4 a caller can *author* a
    pin (a `steps.json`, a sidecar, a plan) with the canonical identity and
    have GND accept it, but a caller comparing a *report's* `model_digest` to
-   their own computed value still sees the legacy one until D3 rules on
-   emission.
+   their own computed value still sees the legacy one until emission is
+   decided (D3). **This is why issue 111 stays open as partially addressed**
+   unless ROF5 delivers (review P1).
 3. **Emission needs a report version.** Ruling D3 decides among: (a) no
    emission in this milestone (ROF5 withdrawn; issue 111 closes on "a caller
    can recompute and GND accepts it", with the report-side gap recorded);
@@ -165,7 +197,23 @@ rule-check-followups.
    it), and changing them buys a cost (a canonical walk per validation) with
    no benefit. ROF3 measures the cost of the new function under a
    time-bound test (design rule 2) before any caller adopts it.
-8. **Failure mode of the new function.** Unlike `repr`, the canonical walk is
+8. **Sites differ by contract** (review P3, P4). The helper serves only the
+   "match a supplied identity against the loaded model" sites listed in
+   section 1; exact-coherence sites (`assurance/transport.py:115`,
+   `model/__init__.py:627`) and copy sites are not widened, and a source scan
+   pins that classification. The witness replay widens only the
+   `model_digest` field of its binding; the measure corpus check normalizes
+   each sidecar's accepted identity to the model's legacy form before
+   counting distinct digests, and the emitted `model_digest` is pinned to the
+   legacy spelling (rule 1).
+9. **Generated Pyrel plans (D7).** A plan embeds one `MODEL_DIGEST` constant
+   and compares inside generated code. Proposal: plans keep the legacy
+   constant and stay byte-identical (24 recorded plan fixtures), so a
+   `steps.json` pinned with the canonical identity is accepted by GND's
+   verifier but **refused by a generated plan** with the existing
+   `transition:model-digest-mismatch`, documented as a limitation. The
+   alternative, embedding both, moves every recorded plan's bytes.
+10. **Failure mode of the new function.** Unlike `repr`, the canonical walk is
    not total (a non-string key or an unrepresentable value is refused). The
    verifier must therefore **not** turn that refusal into a mismatch: a model
    the canonical identity cannot represent matches only by the legacy
@@ -196,9 +244,13 @@ ROF5 is conditional on D3 and cannot supply a prerequisite to the close
 
 ### ROF1: projected text for `check` and `validate` (issue 112; about 120 source, 250 test lines)
 - ROF1-C1: for a redaction-bearing model and for a temporal model,
-  `check --format text` and `validate --format text` (with and without
-  `--unredacted`, with and without `--rule-ids`) print verdict lines; no
-  JSON line; exit codes unchanged.
+  `check --format text` (with and without `--unredacted`, with and without
+  `--rule-ids`) prints verdict lines, and `validate --format text` (with and
+  without `--unredacted`; `validate` has no `--rule-ids`, review P6) prints
+  its plain layout (`OK: … is a valid GND ORM model` on success, `ERROR at`
+  lines on refusal); no JSON line; exit codes unchanged. The dispatch change
+  is limited to `_cmd_check` and `_cmd_validate`; `transition` and
+  verification keep their current renderer until ROF2 (review P5).
 - ROF1-C2: leak canary: a secret value in a population appears in no line of
   any text output of a redaction-bearing model in `applied` mode; it does
   appear (as today) in `--unredacted` JSON-path-equivalent lines only where
@@ -210,10 +262,11 @@ ROF5 is conditional on D3 and cannot supply a prerequisite to the close
   by a list of changed files, written **before** code (rule 1), each with its
   new bytes derived from the report, not from the implementation.
 
-### ROF2: projected text for the remaining routes (issue 112; about 80 source, 150 test lines)
+### ROF2: projected text for the remaining routes (issue 112; about 140 source, 220 test lines; raised from 80/150, review P5)
 - ROF2-C1: `transition` (full and plan), `check --admission`, and the export
-  verification route print their usual text for projected payloads; the
-  existing `STEP` derived-change summary is kept, not duplicated.
+  verification route print their plain route's layout for projected
+  payloads, including PRE-STATE, STEP, FRAME, POST-STATE and the extraction
+  line; the existing `STEP` derived-change summary is kept, not duplicated.
 - ROF2-C2: the ROF1 canary extended to those routes.
 - ROF2-C3: `validate --trace` on a redaction-bearing model keeps its trace
   block (today printed before `_print_projected_text`).
@@ -234,12 +287,20 @@ ROF5 is conditional on D3 and cannot supply a prerequisite to the close
 
 ### ROF4: accept both identities (issue 111; about 150 source, 300 test lines)
 - ROF4-C1: one helper `model_identity_matches(supplied, model)` (returns which
-  version matched or `None`); every site in section 1 "consumers" calls it
-  (source scan: no remaining `!= …model_digest` / `!= transition_model_identity`
-  comparison outside the helper).
-- ROF4-C2: for each site, three cases: legacy pin accepted; canonical pin
-  accepted; a wrong pin refused with a message naming both expected values.
-- ROF4-C3: all 167 recorded files verify unchanged (T-ship; full suite).
+  version matched or `None`); every "match a supplied identity" site in
+  section 1 calls it, the exact-coherence and copy sites do not (a source
+  scan pins the classification).
+- ROF4-C2: for each matching site, three cases: legacy pin accepted;
+  canonical pin accepted; a wrong pin refused with a message naming the
+  expected values. Witness replay: whole-binding equality with only the model
+  field widened (a wrong candidate digest still refuses). Measure: a corpus
+  mixing both spellings of one model is accepted and the report keeps the
+  legacy spelling. Reference-bearing model: only its version-1 identity.
+  Generated Pyrel plan: per D7.
+- ROF4-C3: compatibility gates by artifact class (review P9): the 15 shipped
+  `src/gnd/examples/approvals/**` files verify (executable); the 140 fixture
+  files pass the full suite; the 12 historical `.gnd-planning` evidence files
+  are byte-preservation checks (`git diff` empty), not verifier inputs.
 - ROF4-C4: documentation: `docs/reference/formats.md`,
   `docs/guides/data-and-transitions.md`, the `steps.schema.json` description
   and the gnd-orm-core `representation-format.md` row say "either identity".
@@ -263,8 +324,11 @@ change to station skill procedure text beyond the digest sentence.
 
 | Risk | Control |
 |---|---|
-| A recorded digest stops verifying (the headline risk of 111) | accept-both (section 2.1); T-ship over the 167 files; legacy retirement excluded |
+| A recorded digest stops verifying (the headline risk of 111) | accept-both (section 2.1); ROF4-C3 by artifact class; legacy retirement excluded |
+| Accept-both widens a binding that must stay exact | section 1 classification; source scan; coherence and copy sites unchanged |
+| Version 2 weakens a reference-bearing model's binding | version 2 defined only without `reference_populations`; operations-only mutation test |
 | A leak through the new text path | render from the projected tree only; canary tests per route; no import of the unprojected report into the projected renderer (source assertion) |
+| ROF1 changes routes owned by ROF2 | dispatch limited to `_cmd_check`/`_cmd_validate`; the existing renderer is untouched until ROF2 |
 | Plain text bytes move | the plain route adapts into the shared renderer; goldens byte-identical |
 | The canonical walk refuses a model the legacy accepted | section 2.8; hostile-input cases; matched by legacy only, never reported as a mismatch |
 | Canonical identity costs more than `repr` | ROF3-C3 time-bound test before any caller adopts it; in-process markers keep legacy |
@@ -311,6 +375,7 @@ merge-base run on beast-3 precedes the first code change.
 | D1 | Phase order | 112 chain first (smaller, no wire risk), then 111 **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D2 | Temporal-only route (no redaction declaration): print the `REDACTION applied:` header with an empty list, or omit it? | omit: it describes a policy that does not exist. Costs a text byte change on a route that already prints JSON, so no recorded text changes beyond ROF1-C4's list **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D3 | Does this milestone emit the canonical identity in reports? | (a) no: accept-both and the producer close issue 111's core; revisit after ROF4. (b)/(c) cost a report version across the ladder, a separate spec and likely a milestone of its own **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
-| D4 | Name and shape of the new identity | `identity_version: 2` over the version-1 envelope extended to all models; legacy named `legacy-repr`. Alternative: a different envelope for plain models, which costs a second canonical shape **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D4 | Name and shape of the new identity | `identity_version: 2` over the version-1 envelope extended to all models (**narrowed in r3 by review P2**: version 2 is defined only for a model without `reference_populations`; the owner's ruling covered the wording above, so the narrowing is flagged for the plan gate); legacy named `legacy-repr`. Alternative: a different envelope for plain models, which costs a second canonical shape **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D5 | The shipped producer surface | decided in the ROF3 spec; options are an extra `validate --trace` line (moves the trace goldens), a flag, a subcommand **Ruled (o, 2026-11-07): as proposed**, i.e. deferred to the ROF3 spec ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D6 | Index review | `components_index.py review` printed 180 leads in 10 groups ("a place to look, not a finding") and names `output.py` among them. The plan does not rely on the index for the renderer's boundaries beyond component ids; the owner may call for the index's Review mode **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D7 | Generated Pyrel plans (new in r3, review P3) | the plan's embedded `MODEL_DIGEST` and its in-file comparison cannot call a GND helper. (a) keep the legacy constant: plans stay byte-identical, canonical pins are refused by generated plans (proposal). (b) embed both: 24 recorded plan fixtures change bytes (rule 1) **Open** |

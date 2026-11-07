@@ -2,20 +2,24 @@
 
 ## 1. Status
 
-**Draft r1 (2026-11-07). Blocked on the plan gate** (the plan is proposed, not
+**Draft r2 (2026-11-07). Blocked on the plan gate** (plan r3 is proposed, not
 approved) **and awaiting owner review.** Not implementable. The approval
 instrument (a corpus, section 11) is not yet authored. `auto=false`.
 
 ## 2. Provenance
 
-- Plan r1 §4 ROF1, completion predicate 1; design rules 1-5.
+- Plan r3 §4 ROF1, completion predicate 1; design rules 1-5. Plan r3 is the
+  governing plan; r2 was the plan the Codex review read.
 - Issue 112; rule-check-adoption RC1 open questions; FD2 of
   rule-check-followups ("the JSON-only text is a deliberate no-leak design;
   rendering verdict lines from the projected tree needs its own design and a
   leak review").
 - Base: main `12daa5b7`.
-- No review has run over these bytes. Nothing in this spec carries a review
-  opinion.
+- Codex reviewed r1 bytes of this spec (sha256 `f576b349…`, commit f5ad4290)
+  together with plan r2: `block`, findings P5-P8 and P10 concern this spec
+  ([plan-review-r2](../evidence/plan-review-r2/)). **This r2 is repaired
+  bytes: it carries no review opinion of its own.** Marks: `(r1)` a repair
+  applied for that review, `(o)` an owner decision.
 
 ## 3. Obligations (step 0 harvest)
 
@@ -25,8 +29,8 @@ instrument (a corpus, section 11) is not yet authored. `auto=false`.
 | plan ROF1-C2 | leak canary | T5 |
 | plan ROF1-C3 | plain text byte-identical; one shared row renderer | T6, T7 |
 | plan ROF1-C4 | changed goldens listed before code | section 11, M5 |
-| plan rule 5 | render from the projected tree only | M1, T8 |
-| plan D2 | temporal-only header | D2 here, T3 |
+| plan rule 5 | render the verdict body from the projected tree only; state the boundary for `--trace`/`--document` (r1) | M1, section 6 boundary, T8, T13, T14 |
+| plan D2 (ruled (o) 2026-11-07: omit the empty header) | temporal-only header | D2 here, T3 |
 | `output.py:113` docstring | "render only the already-projected tree on declaration-bearing routes" | M1, T8 |
 | issue 112 | with or without `--rule-ids` | T4 |
 | AGENTS.md | `tools/gnd_layers.json` homes; model-query/family rules | V4 |
@@ -70,33 +74,48 @@ removed.
 | projected tree | `checking_service._project_result`, `redaction.project_output` | **reuse**, unchanged; the renderer is downstream of it |
 | a generic payload-to-text renderer | none (`fidelity.report.render_fidelity` and `measure.report.render_measurement` are for other payloads) | **new** `render_check_rows` |
 
-**M1. `src/gnd/output.py`, about 90 lines.**
+**M1. `src/gnd/output.py`, about 100 lines.** (r1: a new entry point; the
+shared `_print_projected_text` is **not** changed in this phase.)
 
 ```python
 def render_check_rows(payload: Mapping[str, Any]) -> list[str]:
-    """Lines of check text from a payload's rows. Total over any mapping."""
+    # Lines of check text from a payload's rows. Total over any mapping.
 
-def _print_projected_text(payload: dict[str, Any]) -> None:
-    """Header (if any), STEP summaries (unchanged), then render_check_rows(payload)."""
+def _print_projected_check_text(payload: dict[str, Any]) -> None:
+    # Header (if any), then render_check_rows(payload). check/validate only.
 ```
 
+`_print_projected_text` stays exactly as it is for `transition`, `check
+--admission`'s transition body and the export verification route (ROF2
+owns them; Codex P5: they have PRE-STATE/STEP/FRAME/POST-STATE sections and an
+extraction line a snapshot row renderer cannot reproduce).
 `render_check_rows` reads only `payload["verdicts"]`, `["derivations"]`,
-`["counts"]`, `["coverage"]`, `["issues"]`, `["warnings"]`, `["error"]`,
-and never imports or receives a `CheckReport`. Layout, in order:
+`["counts"]`, `["coverage"]`, `["issues"]`, `["warnings"]`, `["error"]` and
+`["exit_code"]`, and never imports or receives a `CheckReport`. Layout:
 
-1. warnings: `WARNING at {path}: {message} [{rule_id}]` (as `_cmd_check`
-   prints them today for the plain route);
-2. if `issues`: `ERROR at {path}: {message} [{rule_id}]` lines (capped), then
-   stop (the plain route returns after issues; counts of an ill-formed run are
-   zeros and carry no information);
-3. `error` set and no issues: `ERROR: {error}` / `INTERNAL ERROR: {error}`
-   by `exit_code` (the `_cmd_validate` rule);
-4. `BLOCKING (alethic)` / `ADVISORY (deontic)` / `DERIVATIONS (alethic)` /
-   `pass=… fail=… warning=… unchecked=… vacuous=…` / `COVERAGE` exactly as
-   `_print_report` prints them.
+1. warnings: `WARNING at {path}: {message} [{rule_id}]`;
+2. if `issues`: `ERROR at {path}: {message} [{rule_id}]` lines (capped by
+   `report_module.MAX_POPULATION_ISSUES`, with the elision line `_print_issues`
+   prints) and stop;
+3. `error` set and no issues: `ERROR: {error}` or `INTERNAL ERROR: {error}`
+   when `exit_code` is 70 (the `_cmd_validate` rule);
+4. **validate success** (command `validate`, exit 0, no verdict rows):
+   `OK: {model} is a valid GND ORM model` (r1, Codex P6: a validate payload
+   has empty verdicts/counts, so the check layout does not apply);
+5. otherwise, check layout, as `_print_report` prints it: `BLOCKING
+   (alethic)` / `ADVISORY (deontic)` / `DERIVATIONS (alethic)` / `pass=…
+   fail=… warning=… unchecked=… vacuous=…` / `COVERAGE`.
 
-For a route with a transition block the existing `STEP` summaries stay in
-`_print_projected_text` (ROF2 owns the transition body).
+**Boundary for routes that print from the model (r1, Codex P10).** The claim
+"rendered from the projected tree only" covers the verdict body. Two
+pre-existing paths print from other sources and are **unchanged and
+explicitly outside it**: `validate --trace` prints the model's structure
+(operations, derivations, frame modalities, from `_print_trace(result.model)`)
+before the projected text, and `validate --document` can return early and
+print `result.warnings` and newly built span issues without a projected
+payload. Neither prints a population value; T13 and T14 pin that with
+canaries rather than the source assertion T8, which covers only the
+projected branches.
 
 **M2. `_print_report(report, declared)`** becomes an adapter: build the rows
 from the `CheckReport` (`verdict.model_dump()` per row, `counts()`, coverage as
@@ -106,19 +125,23 @@ from the `CheckReport` (`verdict.model_dump()` per row, `counts()`, coverage as
 (`--rule-ids` is refused on every projected route, so the projected rows never
 carry them). Plain bytes unchanged (T6).
 
-**M3. `src/gnd/commands/checking.py`.** Two call sites change from "print
-header then JSON" to the renderer: `_cmd_check` and `_cmd_validate` (the
-`--trace` block before it is kept). `_print_admission_text` and
-`_print_lineage` follow unchanged for `--admission` (ROF2 verifies them).
+**M3. `src/gnd/commands/checking.py`.** Two call sites change, `_cmd_check`
+and `_cmd_validate`, from `_print_projected_text` to
+`_print_projected_check_text` (the `--trace` block before the latter is kept).
+`_cmd_transition` and the export verification service still call
+`_print_projected_text`. `_print_admission_text` and `_print_lineage` follow
+unchanged for `--admission`.
 
-**M4. `src/gnd/redaction.py` `render_text_header` (D2).** Returns `None` when
-`declarations` is empty; `_print_projected_text` then prints no header (today
-it raises `ValueError`; the guard becomes "payload lacks redaction metadata
-entirely").
+**M4. `src/gnd/redaction.py` `render_text_header` (D2, ruled).** Returns
+`None` when `declarations` is empty; `_print_projected_check_text` then prints
+no header. The old `_print_projected_text` is unchanged, so on the routes
+ROF2 owns the empty-header behaviour is unchanged until ROF2 (a header
+returning `None` there would otherwise raise its existing `ValueError`; ROF2
+resolves it).
 
 **M5. Goldens.** Section 11's list, regenerated from the reports.
 
-Estimated: about 120 source lines (M1 90, M2 20, M3 6, M4 4), 250 test lines.
+Estimated: about 130 source lines (M1 100, M2 20, M3 6, M4 4), 300 test lines.
 
 ### Normative order and home
 
@@ -131,41 +154,58 @@ stays in `render_text_header`.
 | D | Question | Readings and cost |
 |---|---|---|
 | D1 | Approval instrument | **corpus-first**: one model/population/expected-text triple per case (section 11). Alternative: prose-only, which cannot be re-read blind. Proposed: corpus **Open** |
-| D2 | Header on the temporal-only route | (a) omit it: it describes no policy (proposal); changes the 4 `rf1-pins` goldens' first line as well as their body. (b) keep `REDACTION applied: ` (empty list): a line saying nothing, but one fewer byte-class to change. Differs in text only, not in exit code **Open** |
+| D2 | Header on the temporal-only route | **Ruled (o, 2026-11-07), at plan level: omit the empty header** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). Changes the 4 `rf1-pins` goldens' first line as well as their body; no exit-code difference. (r1, Codex P8: the spec's row carries the plan's ruling.) |
 | D3 | Under `--unredacted`, the header says `unredacted`; the verdict lines are the projected `unredacted`-mode tree (the actual values). Print them? | yes: that is what `--unredacted` asks for and what the JSON route prints; the canary test T5b pins the values appear **only** in unredacted mode **Open** |
 | D4 | Review over the spec bytes | none, per the pattern of rule-check-followups D3; the diff review covers the leak surface (plan §8) **Open** |
 
 ## 8. Tests
 
+Expected exits are the exit of the same invocation's `--format json` run at
+`12daa5b7`; the numbers below are the band the corpus answer key pins, read
+from the report, not from an implementation.
+
 | T | File | Case | Expected |
 |---|---|---|---|
-| T1 | `tests/test_rof1_projected_text.py` | `src/gnd/examples/disclosure` model + population, `check --format text` | exit 1; stdout starts `REDACTION applied: has_email.email`, then `BLOCKING (alethic)` with one `[fail] fact_types[has_email].constraints[0]: [REDACTED INSTANCE DETAIL]` line; no line starts with `{` |
-| T2 | same | same with `--unredacted` | exit 1; header `REDACTION unredacted: …`; verdict lines; the fact value appears (D3) |
-| T3 | same | temporal model + valid population, `check --format text` | exit 0 or 1 as the report; no JSON line; header per D2 |
-| T4 | same | disclosure model + `--rule-ids` | exit 3; an `ERROR at …` line ending `[check:rule-ids-unsupported]` (path read from the report); no JSON line |
-| T5a | same | canary secret in a redacted role and a different canary in an unredacted role, `applied` | the redacted canary appears in no stdout line; the other appears wherever the plain route would print it |
-| T5b | same | same, `--unredacted` | both canaries may appear |
-| T6 | `tests/test_rof1_projected_text.py` + existing golden suites | every plain-route text golden | byte-identical |
+| T1 | `tests/test_rof1_projected_text.py` | `src/gnd/examples/disclosure`, `check --format text` | exit 1; first line `REDACTION applied: has_email.email`; `BLOCKING (alethic)` with one `[fail] fact_types[has_email].constraints[0]: [REDACTED INSTANCE DETAIL]` line; `ADVISORY (deontic)` shows `(none)`; no line starts with `{` |
+| T2 | same | same, `--unredacted` | exit 1; header `REDACTION unredacted: has_email.email`; verdict lines; the fact value appears in the lines the unprojected route would print it (D3) |
+| T3 | same | temporal model + valid population (corpus), `check --format text` | exit 0 (all pass); no header (D2); `BLOCKING (alethic)`/`(none)`, `pass=N fail=0 …`, `COVERAGE` |
+| T3b | same | temporal model + population violating a deontic constraint | exit 2; `ADVISORY (deontic)` lists one `[warning]` line |
+| T3c | same | temporal model + population whose derivation is unchecked | exit 4; `DERIVATIONS (alethic)` lists the `[unchecked]` row and its `[finding]` line; the `unchecked=` count is non-zero |
+| T4 | same | disclosure model, `check --rule-ids` | exit 3; one `ERROR at …` line ending `[check:rule-ids-unsupported]` (path read from the report); no JSON line; no `BLOCKING` header |
+| T4b | same | disclosure model with a population that fails load (type mismatch) | exit 3; `ERROR at …` lines; no verdict sections |
+| T4c | same | a check run with a warning and a passing verdict | exit 0; `WARNING at …` line precedes `BLOCKING` |
+| T5a | same | a canary secret in a redacted role and a different canary in an unredacted role, `applied` | exit 1; the redacted canary appears in no stdout line; the other appears where the plain route would print it |
+| T5b | same | same population, `--unredacted` | exit 1; **both** canaries appear (D3) |
+| T6 | same + existing golden suites | every plain-route check/validate text golden | byte-identical; exit as before |
 | T7 | same | source assertion | `_print_report` calls `render_check_rows`; `render_check_rows` has no `CheckReport` parameter or import |
-| T8 | same | source assertion | `_print_projected_text` and `render_check_rows` read only the payload (no `result.report` in the projected branches of `_cmd_check`/`_cmd_validate`) |
-| T9 | same | hostile payloads: `verdicts: null`, missing keys, non-string messages, 1,000 issues | bounded output, no traceback |
-| T10 | same | 50,000 verdict rows | under a ceiling measured on the dev machine and 6x margin recorded in the spec before it runs |
-| T11 | existing JSON suites | `--format json` for the disclosure and temporal cases | byte-identical |
+| T8 | same | source assertion | the projected branches of `_cmd_check` and `_cmd_validate` call only `_print_projected_check_text`, which reads only the payload |
+| T9 | same | hostile payloads: `verdicts: null`, missing keys, non-string messages, 1,000 issues | bounded output, no traceback; the issue elision line appears |
+| T10 | same | 50,000 verdict rows | under a ceiling measured on the dev machine with a 6x margin, recorded in the spec before it runs |
+| T11 | existing JSON suites | `--format json` for the disclosure and temporal cases | byte-identical; exits as before |
 | T12 | `tests/test_rf1_helper_pins.py` et al. | the changed goldens (section 11) | equal the corpus's new text |
+| T13 | same | `validate --trace` on a redaction-bearing model with a canary in a population | exit 0; trace block present; canary absent (the trace never sees a population); `OK:` line last |
+| T14 | same | `validate --document` with a span-hash failure on a redaction-bearing model | exit 3; `ERROR` lines from the early return; canary absent |
+| T15 | same | `validate --format text`, redaction-bearing model, valid | exit 0; `OK: … is a valid GND ORM model`; no JSON line |
+| T16 | same | `validate --format text`, redaction-bearing model, invalid | exit 3; `ERROR at …` lines; no JSON line |
+| T17 | same | `transition` and export verification, redaction-bearing | unchanged from today (still JSON text); pins that ROF1 did not touch ROF2's routes |
 
-Every declared layout branch (warnings, issues, error, blocking, advisory,
-derivations, counts, coverage; applied, unredacted, temporal-only, refusal) has
-a case that fails it.
+Every declared layout branch (warnings, issues, error, validate success,
+blocking, advisory, derivations, counts, coverage; applied, unredacted,
+temporal-only, refusal) has a case that fails it: T4c warnings, T4/T4b
+issues, T1 blocking, T3b advisory, T3c derivations, T3 counts and coverage,
+T15 validate success, T9 error-only envelope.
 
 ## 9. Out of scope for this phase
 
-`transition`, `--admission`, and the export verification route (ROF2); any
-change to what is redacted; `--format json`; `validate --trace` content;
-issue 111.
+`transition`, `check --admission`'s transition body, and the export
+verification route (ROF2: their PRE-STATE/STEP/FRAME/POST-STATE sections and
+extraction line); any change to what is redacted; `--format json`;
+`validate --trace` content and `validate --document` behaviour (boundary only,
+section 6); issue 111.
 
 ## 10. Size
 
-Estimate: about 120 source and 250 test lines, plus the corpus. Stop at 1.5x.
+Estimate: about 130 source and 300 test lines, plus the corpus. Stop at 1.5x.
 
 ## 11. Approval instrument
 

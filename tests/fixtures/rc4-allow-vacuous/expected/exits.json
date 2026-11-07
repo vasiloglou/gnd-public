@@ -1,0 +1,10 @@
+{
+  "vacuous-only": 0,
+  "vacuous-only-plain": 2,
+  "fail-and-vacuous": 1,
+  "unchecked-and-vacuous": 4,
+  "baseline-head-vacuous": 0,
+  "baseline-base-vacuous": 0,
+  "text-vacuous-only": 0,
+  "conflict-populations": 64
+}

@@ -2,9 +2,12 @@
 
 ## 1. Status
 
-**r1, 2026-11-06. Draft, awaiting the owner gate (process-phase step 2).**
-No implementation file is created or edited before the owner approves this
-spec or its corpus (§11). `auto=false`.
+**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
+owner ruled the step-2 asks over r1 (sha256 `ba55ed5f…`, commit 509b721d), answering "How do you
+rule on RC4's decisions D1-D4?" with "Approve all as proposed" (o,
+2026-11-06). D1 is corpus-first, so no implementation file is created or
+edited until the owner approves the corpus. `auto=false`. Prior status (r1):
+"Draft, awaiting the owner gate (process-phase step 2)."
 
 ## 2. Provenance
 
@@ -84,10 +87,10 @@ with N the vacuous count, printed only when N > 0.
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first** (an exit-code contract) |
-| D2 | Assurance when the flag changed the band | uncertified block for band 0, level `none` (RC3 D5's rule) |
-| D3 | Text output | one closing line naming the vacuous count and the option, only when the option is given and a verdict is vacuous |
-| D4 | Review over the spec bytes | none |
+| D1 | Approval instrument | **corpus-first** (an exit-code contract) **Ruled (o, 2026-11-06): as proposed.** |
+| D2 | Assurance when the flag changed the band | uncertified block for band 0, level `none` (RC3 D5's rule) **Ruled (o, 2026-11-06): as proposed.** |
+| D3 | Text output | one closing line naming the vacuous count and the option, only when the option is given and a verdict is vacuous **Ruled (o, 2026-11-06): as proposed.** |
+| D4 | Review over the spec bytes | none **Ruled (o, 2026-11-06): as proposed.** |
 
 ## 8. Tests and verification ledger
 
@@ -150,3 +153,16 @@ code:
 - `band()`'s precedence makes "2 → 0" exactly "vacuous is the only
   shortfall"; T1 checks the full table.
 - No new dependency, key or report version.
+
+## Corpus findings (recorded while authoring the corpus, 2026-11-06)
+
+- **C1.** An unreadable value in `uses` leaves both the loop rule and the
+  advisory owner rule unchecked (`opaque-value`); the alethic one decides
+  band 4, which `--allow-vacuous` does not touch.
+- **C2.** `baseline-base-vacuous` exits 0 with or without the option (the
+  head is clean); it pins that a vacuous base contributes no rows. Its
+  assurance block is the baseline's uncertified one, not D2's.
+- **C3.** Every answer was derived from the reports at 4713fc8a by rule
+  (`allow_vacuous: true`; band 2 → 0 with the uncertified accept block);
+  none was read from an implementation.
+- Red at commit: 7 failing; the plain control and the case list pass.

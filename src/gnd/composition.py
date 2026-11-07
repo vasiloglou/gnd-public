@@ -319,6 +319,8 @@ def compose(model: Model, model_raw: bytes, directory: str | Path) -> Compositio
     header: dict[str, Any] = {"model": first.model, "source": first.source, "covers": covers}
     if first.model_id is not None:
         header["model_id"] = first.model_id
+    if first.producer is not None:
+        header["producer"] = first.producer
     document: dict[str, Any] = {
         "population": header,
         "instances": {key: list(bucket.values()) for key, bucket in instances.items()},

@@ -166,9 +166,6 @@ def _content_digest(population: Population) -> str:
     conservative direction.
     """
     payload = population.model_dump(exclude={"warnings"})
-    # A population without a producer keeps its pre-RC5 digest byte for byte.
-    if payload.get("producer") is None:
-        payload.pop("producer", None)
     # Keep the historical v1 marker byte-identical while binding v2's changed
     # role-value grammar to the validation stamp.
     if population.format_version != 1:

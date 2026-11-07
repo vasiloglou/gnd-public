@@ -434,7 +434,7 @@ def support_closure(model, targets):
 def population_wire(pop):
     metadata = {
         k: getattr(pop, k)
-        for k in ("model", "model_id", "source", "label", "covers")
+        for k in ("model", "model_id", "source", "producer", "label", "covers")
         if getattr(pop, k) is not None
     }
     return {

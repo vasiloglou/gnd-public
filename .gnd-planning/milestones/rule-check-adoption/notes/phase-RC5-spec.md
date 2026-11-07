@@ -190,3 +190,8 @@ an expected exit and issue rule id:
   RF6b successor row.
 - **I4 (guards).** RF6b `bind_population`; RC5 dynamic query delta (the
   `Literal` annotation); the static policy is unchanged.
+- **I5 (review T1, full suite).** I2's digest fix was too narrow: every
+  `model_dump()` consumer (witness identity, assurance) saw the new
+  `producer: None`, and the first full run failed 32 tests. `producer` is
+  now excluded from every dump when unset, at the field; `values.py` is back
+  to its base bytes.

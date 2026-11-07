@@ -130,7 +130,9 @@ class Population(BaseModel):
     model_id: str | None = None
     source: Literal["agent-output", "synthetic", "fixture", "tool-output"]
     #: The tool and revision that wrote a ``tool-output`` population (1-200 characters).
-    producer: str | None = None
+    #: Absent from every dump when unset, so a population without one serializes,
+    #: and is digested, exactly as before RC5.
+    producer: str | None = Field(default=None, exclude_if=lambda value: value is None)
     label: Literal["conforming", "boundary", "violating"] | None = None
     covers: list[str] = Field(default_factory=list)
     instances: dict[str, list[Any]] = Field(default_factory=dict)

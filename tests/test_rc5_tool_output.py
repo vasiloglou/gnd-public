@@ -133,3 +133,55 @@ def test_t6_the_loader_fast_path_agrees_with_draft_on_the_producer(header, valid
     draft = not list(Draft202012Validator(schema).iter_errors(doc))
     assert draft is valid
     assert accepts_shape(doc, schema) is valid
+
+
+# --- Review regressions (notes/phase-RC5-codex-review.md, T1-T3, T6) ----------------
+
+
+def _loaded(case: str):
+    from gnd.model import load_model
+    from gnd.population import load_population
+
+    model = load_model(CORPUS / "models" / "catalog.orm.yaml")
+    return model, load_population(CORPUS / "populations" / f"{case}.pop.yaml", model=model)
+
+
+def test_t1_a_population_without_producer_dumps_as_before() -> None:
+    """Every model_dump consumer (witness identity, assurance) sees pre-RC5 bytes."""
+    import hashlib
+
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.witness.io import identity
+
+    model, population = _loaded("fixture-control")
+    assert "producer" not in population.model_dump()
+    assert "producer" not in population.model_dump(mode="json")
+    legacy = {key: value for key, value in population.model_dump(mode="json").items()}
+    assert identity(model, population, [])["candidate_digest"] == (
+        "sha256:" + hashlib.sha256(canonical_json_bytes(legacy)).hexdigest()
+    )
+    _, produced = _loaded("tool-output-producer")
+    assert produced.model_dump()["producer"] == ANSWERS["tool-output-producer"]["producer"]
+
+
+def test_t2_the_witness_wire_keeps_the_producer() -> None:
+    from gnd.witness.io import population_wire
+
+    _, population = _loaded("tool-output-producer")
+    assert population_wire(population)["population"]["producer"] == ANSWERS["tool-output-producer"]["producer"]
+
+
+def test_t3_composition_keeps_the_first_sources_producer() -> None:
+    import inspect
+
+    from gnd import composition
+
+    source = inspect.getsource(composition)
+    assert 'header["producer"] = first.producer' in source
+
+
+def test_t6_the_reference_and_schema_describe_tool_output() -> None:
+    reference = (REPO_ROOT / "src/gnd/skills/gnd-orm-core/references/population-format.md").read_text()
+    assert "tool output" in reference.split("\n\n", 2)[1]
+    schema = json.loads((REPO_ROOT / "src/gnd/schema/population.schema.json").read_text())
+    assert "tool-output" in schema["description"] and "producer" in schema["description"]

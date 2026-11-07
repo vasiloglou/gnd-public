@@ -1,6 +1,6 @@
 # Population Format
 
-**The normative spec** for GND population files (CORE-02) — the universal interchange every population flows through, whether it is an **agent output**, a **synthetic dataset**, or an **eval fixture**. One format, one loader, one checker.
+**The normative spec** for GND population files (CORE-02) — the universal interchange every population flows through, whether it is an **agent output**, a **synthetic dataset**, an **eval fixture**, or deterministic **tool output** (facts a program read, for example from a codebase). One format, one loader, one checker.
 
 Normative machine spec: [`population.schema.json`](population.schema.json) in this skill's references directory (vendored byte-identically in the `gnd` package at `src/gnd/schema/population.schema.json`, sync-tested). The prose here is explanatory; where prose and schema disagree, the schema wins.
 

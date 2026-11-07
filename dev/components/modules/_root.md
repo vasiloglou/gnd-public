@@ -720,7 +720,7 @@ Components: infra.text_output
 | --- | --- | --- | --- |
 | `print_baseline(block) -> None` | function | 205 | The ``--baseline`` summary, with the warning for keys that move when rules are inserted. |
 | `print_vacuous_acceptance(payload) -> None` | function | 221 | The ``--allow-vacuous`` closing line, when the option accepted a vacuous rule. |
-| `render_check_rows(payload, declared) -> list[str]` | function | 262 | The check layout from a payload's rows: the one home of this text. |
+| `render_check_rows(payload, declared, *, show_reason) -> list[str]` | function | 298 | The check layout from a payload's rows: the one home of this text. |
 
 ## gnd.patterns — `src/gnd/patterns.py`
 Components: semantics.ground_atoms

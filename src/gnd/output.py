@@ -230,6 +230,26 @@ def _rows(value: Any) -> list[Any]:
     return value if isinstance(value, list) else []
 
 
+def _text(value: Any) -> str:
+    """Printable text for a payload value, total and bounded: only scalars are rendered.
+
+    A string is itself; a number is its decimal text (a number past the
+    interpreter's digit limit prints a placeholder instead of raising); anything
+    else, including a container of any depth, is a placeholder. Never ``str()`` of
+    an arbitrary payload value: that is where a deep or hostile value raises.
+    """
+    if isinstance(value, str):
+        return value
+    if value is None:
+        return ""
+    if isinstance(value, (bool, int, float)):
+        try:
+            return str(value)
+        except ValueError:
+            return "<number>"
+    return "<non-text>"
+
+
 def _row_views(rows: Any) -> list[SimpleNamespace]:
     """Verdict rows as attribute views, total over any payload value.
 
@@ -242,18 +262,21 @@ def _row_views(rows: Any) -> list[SimpleNamespace]:
         if not isinstance(row, Mapping):
             continue
         findings = [
-            SimpleNamespace(kind=str(f.get("kind", "")), message=str(f.get("message", "")))
+            SimpleNamespace(kind=_text(f.get("kind")), message=_text(f.get("message")))
             for f in _rows(row.get("findings"))
             if isinstance(f, Mapping)
         ]
+        ref = row.get("constraint_ref", "")
         views.append(
             SimpleNamespace(
-                verdict=str(row.get("verdict", "")),
-                modality=str(row.get("modality", "")),
-                constraint_ref=str(row.get("constraint_ref", "")),
-                derivation_ref=str(row.get("derivation_ref", "")),
-                message=str(row.get("message", "")),
-                reason_code=row.get("reason_code") if isinstance(row.get("reason_code"), str) else "",
+                verdict=_text(row.get("verdict")),
+                modality=_text(row.get("modality")),
+                # Kept as supplied when it is a plain key, so a ``declared`` lookup
+                # by the caller's own reference still finds its entry.
+                constraint_ref=ref if isinstance(ref, (str, int)) else _text(ref),
+                derivation_ref=_text(row.get("derivation_ref")),
+                message=_text(row.get("message")),
+                reason_code=_text(row.get("reason_code")),
                 findings=findings,
             )
         )
@@ -268,7 +291,7 @@ def _with_reason(lines: list[str], view: SimpleNamespace, show_reason: bool) -> 
     only place the cause survives; the projected routes show it.
     """
     if show_reason and view.reason_code and view.reason_code not in view.message:
-        lines = [f"{lines[0]} [reason: {view.reason_code}]", *lines[1:]]
+        lines = [f"{lines[0]} [reason: {verbalize.line_text(view.reason_code)}]", *lines[1:]]
     return lines
 
 
@@ -306,10 +329,10 @@ def render_check_rows(
             lines.extend(_with_reason(_derivation_verdict_lines(verdict), verdict, show_reason))
     counts = payload.get("counts")
     counts = counts if isinstance(counts, Mapping) else {}
+    count = {key: _text(counts.get(key, 0)) for key in ("pass", "fail", "warning", "unchecked", "vacuous")}
     lines.append(
-        f"pass={counts.get('pass', 0)} fail={counts.get('fail', 0)} "
-        f"warning={counts.get('warning', 0)} unchecked={counts.get('unchecked', 0)} "
-        f"vacuous={counts.get('vacuous', 0)}"
+        f"pass={count['pass']} fail={count['fail']} warning={count['warning']} "
+        f"unchecked={count['unchecked']} vacuous={count['vacuous']}"
     )
     coverage = payload.get("coverage")
     if isinstance(coverage, Mapping) and coverage:
@@ -318,7 +341,7 @@ def render_check_rows(
             entry = entry if isinstance(entry, Mapping) else {}
             lines.append(
                 f"  {verbalize.path_segment(fact_type_id)}: "
-                f"{entry.get('declared')}, facts={entry.get('facts')}"
+                f"{_text(entry.get('declared'))}, facts={_text(entry.get('facts'))}"
             )
     return lines
 
@@ -347,27 +370,36 @@ def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
     an error with no issues; a validate success; otherwise the check layout.
     """
     lines = []
-    for warning in _rows(payload.get("warnings")):
+    for warning in _rows(payload.get("warnings"))[: report_module.MAX_POPULATION_ISSUES]:
         if isinstance(warning, Mapping):
             lines.append(
-                f"WARNING at {warning.get('path')}: {warning.get('message')} "
-                f"[{warning.get('rule_id')}]"
+                f"WARNING at {_text(warning.get('path'))}: {_text(warning.get('message'))} "
+                f"[{_text(warning.get('rule_id'))}]"
             )
-    issues = [
-        SimpleNamespace(path=row.get("path"), message=row.get("message"), rule_id=row.get("rule_id"))
-        for row in _rows(payload.get("issues"))
-        if isinstance(row, Mapping)
-    ]
-    if issues:
+    # The cap is applied to the read: rows past it are never turned into views.
+    rows = [row for row in _rows(payload.get("issues")) if isinstance(row, Mapping)]
+    if rows:
         total = payload.get("issues_total")
-        return lines + _issue_lines(issues, total if isinstance(total, int) else None)
+        issues = [
+            SimpleNamespace(
+                path=_text(row.get("path")),
+                message=_text(row.get("message")),
+                rule_id=_text(row.get("rule_id")),
+            )
+            for row in rows[: report_module.MAX_POPULATION_ISSUES]
+        ]
+        shown = _issue_lines(issues, max(len(rows), total if isinstance(total, int) else 0))
+        return lines + shown
     error = payload.get("error")
+    exit_code = payload.get("exit_code")
     if error:
         message = error.get("message") if isinstance(error, Mapping) else error
-        prefix = "INTERNAL ERROR" if payload.get("exit_code") == 70 else "ERROR"
-        return [*lines, f"{prefix}: {message}"]
+        prefix = "INTERNAL ERROR" if exit_code == 70 else "ERROR"
+        return [*lines, f"{prefix}: {_text(message)}"]
     if payload.get("command") == "validate":
-        return [*lines, f"OK: {payload.get('model')} is a valid GND ORM model"]
+        if exit_code != 0:
+            return [*lines, f"ERROR: validate exited {_text(exit_code)} without a reported cause"]
+        return [*lines, f"OK: {_text(payload.get('model'))} is a valid GND ORM model"]
     return lines + render_check_rows(payload, show_reason=True)
 
 

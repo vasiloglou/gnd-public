@@ -2527,7 +2527,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, semantics.transitions
 - used_by: codegen.service, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py
-- notes: check and validate text for a declaration-bearing or temporal route is rendered from the projected payload only (render_check_rows is shared with the plain route); transition and export verification still print projected JSON until the successor phase. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
+- notes: check and validate text for a declaration-bearing or temporal route is rendered from the projected payload only (render_check_rows is shared with the plain route); transition, `check --admission` and export verification still print projected JSON until the successor phase. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
 
 
 ### semantics.ground_atoms

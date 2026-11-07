@@ -45,7 +45,19 @@
     [
       "src/gnd/output.py",
       "_projected_check_lines",
+      "_rows(payload.get('warnings'))[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_check_lines",
       "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_check_lines",
+      "rows[:report_module.MAX_POPULATION_ISSUES]",
       1
     ],
     [
@@ -87,6 +99,12 @@
     [
       "src/gnd/output.py",
       "render_check_rows",
+      "counts.get(key, 0)",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render_check_rows",
       "list[str]",
       1
     ],
@@ -97,6 +115,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7298,
-  "result_occurrences": 9115
+  "result_distinct_rows": 7301,
+  "result_occurrences": 9118
 }

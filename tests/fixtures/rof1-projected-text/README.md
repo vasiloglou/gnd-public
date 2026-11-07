@@ -19,6 +19,9 @@ its projected JSON for `--format text`. The phase makes `check` and
   uniqueness rules (one email per customer; one customer per email).
   `has_nickname` is not redacted and has a deontic rule (a customer should
   have at most one nickname).
+- `models/directory-redacted.orm.yaml`: the email role is redacted; the
+  nickname role is not, and an alethic rule says a nickname belongs to at
+  most one customer.
 - `models/contacts-invalid.orm.yaml`: the same model with a rule that names
   a role that does not exist, so it does not load.
 - `models/service-temporal.orm.yaml`: customers with a service level and a
@@ -33,6 +36,8 @@ its projected JSON for `--format text`. The phase makes `check` and
   `SECRET-EMAIL-271828` belongs to two customers, so both `has_email` rules
   fail; `c-1` also has two nicknames (`OPEN-NICK-…` values), a deontic
   shortfall.
+- `directory-fail`: two customers share the nickname `OPEN-NICK-777777`; their
+  emails are `SECRET-EMAIL-…` values.
 - `contacts-pass`: one fact of each kind; everything holds.
 - `contacts-ill-formed`: an integer where an email string is expected.
 - `service-pass`: one fact of each kind; everything holds.
@@ -65,5 +70,9 @@ every case.
     control; temporal terms alone do not change `validate`'s output today.
 12. **validate-invalid.** `validate models/contacts-invalid.orm.yaml`: a
     control; a model that does not load has no redaction policy to project.
+
+13. **redacted-visible-canary.** `check` of `directory-redacted` over
+    `directory-fail`: a rule over the unredacted role fails, and the value it
+    names is public.
 
 Controls 11 and 12 pass today and must keep passing.

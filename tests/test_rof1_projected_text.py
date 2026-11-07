@@ -87,10 +87,13 @@ def test_t8_projected_branches_read_only_the_payload() -> None:
         text = _source(function)
         assert "CheckReport" not in text
         assert ".report" not in text
-    for command in (checking._cmd_check, checking._cmd_validate):
-        text = _source(command)
-        assert "_print_projected_check_text(mechanical_payload)" in text
-        assert "_print_projected_text(" not in text
+    validate = _source(checking._cmd_validate)
+    assert "_print_projected_check_text(mechanical_payload)" in validate
+    assert "_print_projected_text(" not in validate
+    check = _source(checking._cmd_check)
+    assert "_print_projected_check_text" in check
+    # ``--admission`` is ROF2's: it keeps the shared projected-JSON text.
+    assert "_print_projected_text if admission else _print_projected_check_text" in check
 
 
 def test_t17_other_projected_routes_still_use_the_shared_json_text() -> None:
@@ -193,3 +196,153 @@ def test_t18_projected_text_keeps_a_reason_the_projection_removed_from_the_messa
     assert "  [unchecked] c[0]: failed: term:mod-zero" in again
     plain = output.render_check_rows(payload)
     assert "[reason:" not in "\n".join(plain)
+
+
+# --- review findings (Codex, ROF1 diff review) ----------------------------------------------
+
+
+def test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase() -> None:
+    result = run_main(
+        [
+            "check",
+            "models/contacts-redacted.orm.yaml",
+            "populations/contacts-pass.pop.yaml",
+            "--admission",
+        ],
+        cwd=CORPUS,
+    )
+    lines = result.stdout.decode().splitlines()
+    assert result.returncode == 0
+    assert lines[0] == "REDACTION applied: has_email.email"
+    assert lines[1].startswith('{"schema_version": 10')
+    assert lines[2:] == ["ADMITTED has_email[0]", "ADMITTED has_nickname[0]"]
+
+
+def test_t17_transition_keeps_the_shared_projected_text(tmp_path) -> None:
+    from support.v62_phase6_corpus import document, population_document, write_case
+
+    from gnd import transition
+    from gnd.model import load_model
+
+    model = document()
+    model["operations"] = [
+        {
+            "id": "reassert_sample",
+            "reading": "Record {Sample}",
+            "parameters": [
+                {"name": "sample", "object_type": "sample"},
+                {"name": "monitor", "object_type": "monitor"},
+                {"name": "pci", "object_type": "integer"},
+                {"name": "token", "object_type": "token"},
+            ],
+            "effects": [
+                {
+                    "assert": {
+                        "fact_type": "radio_sample",
+                        "bind": {
+                            "sample": "$sample",
+                            "monitor": "$monitor",
+                            "pci": "$pci",
+                            "token": "$token",
+                        },
+                    }
+                }
+            ],
+            "frame": {"modality": "alethic"},
+            "source": "explicit",
+            "status": "confirmed",
+            "provenance": {"user_quote": "Reasserting a sample preserves its declared values."},
+        }
+    ]
+    population = population_document()
+    model_file, pre_file = write_case(tmp_path, model, population)
+    loaded = load_model(model_file)
+    steps = tmp_path / "steps.json"
+    steps.write_text(
+        json.dumps(
+            {
+                "steps_schema": 1,
+                "model": loaded.model_id,
+                "model_digest": transition.model_digest(loaded),
+                "operations_digest": transition.operations_digest(loaded.operations),
+                "steps": [
+                    {
+                        "op": "reassert_sample",
+                        "bindings": {
+                            "sample": "alpha-1",
+                            "monitor": "alice",
+                            "pci": 29,
+                            "token": "TOKEN-ALPHA-9",
+                        },
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    result = run_main(["check", str(model_file), "--pre", str(pre_file), "--steps", str(steps)])
+    lines = result.stdout.decode().splitlines()
+    assert lines[0].startswith("REDACTION applied: ")
+    assert lines[1].startswith('{"schema_version"')
+    assert "TOKEN-ALPHA-9" not in result.stdout.decode()
+
+
+def test_p2_issue_rows_past_the_cap_are_never_turned_into_views(monkeypatch) -> None:
+    built = []
+    real = output.SimpleNamespace
+    monkeypatch.setattr(output, "SimpleNamespace", lambda **kw: built.append(1) or real(**kw))
+    cap = payloads.MAX_POPULATION_ISSUES
+    rows = [{"path": "p", "message": "m", "rule_id": "r"}] * (cap * 20)
+    output._projected_check_lines({"issues": rows, "issues_total": len(rows)})
+    assert len(built) <= cap
+
+
+def test_p3_numbers_and_nesting_past_the_interpreter_limits_do_not_raise() -> None:
+    deep: object = "x"
+    for _ in range(5000):
+        deep = [deep]
+    payload = {
+        "counts": {"pass": 10**5000},
+        "verdicts": [
+            {"verdict": "fail", "modality": "alethic", "message": deep, "constraint_ref": deep}
+        ],
+        "coverage": {"f": {"declared": deep, "facts": 10**5000}},
+    }
+    lines = output._projected_check_lines(payload)
+    assert "pass=<number>" in "\n".join(lines)
+
+
+def test_p4_a_failed_validate_envelope_never_prints_ok() -> None:
+    lines = output._projected_check_lines({"command": "validate", "exit_code": 70, "error": {}})
+    assert not any(line.startswith("OK:") for line in lines)
+    assert lines == ["ERROR: validate exited 70 without a reported cause"]
+
+
+def test_p5_a_declared_lookup_uses_the_callers_own_reference() -> None:
+    row = {"constraint_ref": 7, "modality": "alethic", "verdict": "fail", "message": "m"}
+    declared = {7: ("R7", None, "declared message", None)}
+    lines = output.render_check_rows({"verdicts": [row]}, declared)
+    assert "  [fail] R7 (7): declared message" in lines
+
+
+def test_p6_a_reason_cannot_forge_a_line() -> None:
+    row = {
+        "constraint_ref": "c",
+        "modality": "alethic",
+        "verdict": "unchecked",
+        "message": "[REDACTED INSTANCE DETAIL]",
+        "reason_code": "x\nOK: forged",
+    }
+    physical = "\n".join(output._projected_check_lines({"verdicts": [row]})).splitlines()
+    assert not any(line.startswith("OK:") for line in physical)
+
+
+def test_p7_a_public_value_survives_applied_mode_and_the_secret_does_not() -> None:
+    text = _run("redacted-visible-canary", "text").stdout.decode()
+    assert "OPEN-NICK-777777" in text
+    assert "SECRET-EMAIL" not in text
+
+
+def test_p8_an_error_envelope_prints_its_message_and_no_layout() -> None:
+    payload = {"command": "check", "exit_code": 70, "error": {"type": "X", "message": "boom"}}
+    assert output._projected_check_lines(payload) == ["INTERNAL ERROR: boom"]

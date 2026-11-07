@@ -81,8 +81,8 @@
         "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
       },
       "after": {
-        "raw_sha256": "4d45820eeaccc6887947cd67c0c461475e674a4a808b9052335ea6a829457586",
-        "algorithm_sha256": "60385328c32f4ece7a124c571c46f5dc73eb570ad099e99a14577af0eee16fb7"
+        "raw_sha256": "55fe8b02f16f32fc18696e2f9505dff870d0ba84fa2b0d7902d8eb9b8c21e2bb",
+        "algorithm_sha256": "d91acbc4edeb43399c86227d56663dd775b00df7ab4e561ea3db05218b4dcc69"
       },
       "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards --baseline and prints the BASELINE summary after the report. Then rule-check-adoption RC4 (spec 509b721d, corpus 938716c9): forwards --allow-vacuous and prints its closing line after the report. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing (redaction or temporal) text route calls _print_projected_check_text, which prints check verdict lines from the projected payload instead of its JSON."
     },

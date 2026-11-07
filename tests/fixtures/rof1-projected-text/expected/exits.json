@@ -18,6 +18,15 @@
     "exit": 1,
     "schema_version": 9
   },
+  "redacted-visible-canary": {
+    "argv": [
+      "check",
+      "models/directory-redacted.orm.yaml",
+      "populations/directory-fail.pop.yaml"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
   "redacted-pass": {
     "argv": [
       "check",

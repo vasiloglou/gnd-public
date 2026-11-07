@@ -24,6 +24,7 @@ from gnd import output
 CASES = {
     "redacted-fail": ["check", "models/contacts-redacted.orm.yaml", "populations/contacts-fail.pop.yaml"],
     "redacted-fail-unredacted": ["check", "models/contacts-redacted.orm.yaml", "populations/contacts-fail.pop.yaml", "--unredacted"],
+    "redacted-visible-canary": ["check", "models/directory-redacted.orm.yaml", "populations/directory-fail.pop.yaml"],
     "redacted-pass": ["check", "models/contacts-redacted.orm.yaml", "populations/contacts-pass.pop.yaml"],
     "redacted-rule-ids": ["check", "models/contacts-redacted.orm.yaml", "populations/contacts-pass.pop.yaml", "--rule-ids"],
     "redacted-ill-formed": ["check", "models/contacts-redacted.orm.yaml", "populations/contacts-ill-formed.pop.yaml"],

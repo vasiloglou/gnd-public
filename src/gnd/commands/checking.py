@@ -287,7 +287,8 @@ def _cmd_check(
         return result.exit_code
     mechanical_payload = result.payload.get("report", result.payload)
     if "redaction" in mechanical_payload:
-        _print_projected_check_text(mechanical_payload)
+        # ``--admission`` keeps the shared projected-JSON text until its own phase.
+        (_print_projected_text if admission else _print_projected_check_text)(mechanical_payload)
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)

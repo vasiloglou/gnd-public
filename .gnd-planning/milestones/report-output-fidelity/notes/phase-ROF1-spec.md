@@ -284,3 +284,37 @@ Ceiling: 0.6 s, written into `test_t10_renderer_is_linear_in_rows`.
 - **I4.** T9 found two totality defects in the first renderer (a non-list
   `issues` or `findings` value raised `TypeError`); observed red, fixed with
   one `_rows` guard.
+- **I5.** `reason_code` is shown. The first renderer dropped a projected row's
+  `reason_code` because the message is replaced; the pre-existing answer E34
+  (`tests/test_v62_phase6_redaction.py`, `dependency_reason_visible`) requires
+  `term:mod-zero` to be visible in the redacted text. Projected rows now append
+  ` [reason: <code>]` when the code is not already in the message (`show_reason`
+  is set only by the projected route; plain bytes are unchanged). This adds one
+  suffix to the approved layout; the corpus has no case that exercises it
+  (T18 pins it). **Flagged for the owner:** the alternative is to change E34.
+- **I6 (Codex review of 204be6dd, `block`, 8 findings, retained verbatim in
+  `evidence/ROF1/`).** Verified by reading and by running the new tests against
+  the reviewed bytes (6 red: T8, P1-P5; P6 red after the test was made to split
+  physical lines). Applied: P1 `check --admission` kept on the shared
+  projected-JSON text (plan ROF2 owns it); P2 issue rows are sliced to the cap
+  before views are built; P3 every payload scalar goes through `_text` (a number
+  past the digit limit or a deep container prints a placeholder instead of
+  raising); P4 a `validate` envelope prints `OK:` only for exit 0; P5 the
+  caller's own constraint reference is kept for a `declared` lookup; P6 the
+  reason suffix is escaped with `line_text` (**the reviewer's fix, removing the
+  suffix, was not taken: see I5**); P7 a new corpus case,
+  `redacted-visible-canary`, whose public value must appear and whose secret
+  must not (new files only; no approved answer changed); P8 an exact
+  error-envelope test and executable pins for admission and for transition
+  (`check --pre --steps`). The repairs were not re-reviewed.
+- **I7.** Changed bytes, final list: the four `rf1-pins` temporal goldens
+  (`cli_text.stdout` only, derived from the base renderer over the golden's own
+  JSON rows) and `goldens.sha256` with its pinned digest in
+  `tests/test_rf1_pin_harness.py`. `public-emitter21` and
+  `test_public_redaction_reports` did not move (full suite). Successor rows:
+  RF5 bodies `_print_report`, `_print_issues`, `_cmd_check`, `_cmd_validate`
+  in `source-successors.json`; a dynamic-query successor
+  (`evidence/ROF1/dynamic-query-successor.json`, chained after RC5 in
+  `tests/support/pyrel_application_successors.py`). Another branch that also
+  appends to that list will conflict at the tail.
+

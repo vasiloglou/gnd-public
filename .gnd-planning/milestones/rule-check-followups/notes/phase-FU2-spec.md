@@ -2,12 +2,11 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-07); approval pending on the red tests.** The
-owner ruled D1-D4 over r1 (commit 1842579c) with "Approve as proposed",
-answering "How do you rule on FU2's decisions D1–D4?". Under D1 the test
-file lands red before any source edit, and implementation waits for the
-owner's approval of it. `auto=false`. Prior status (r1): "Draft r1,
-awaiting the owner gate."
+**Approved (2026-11-07); implemented.** The owner approved the red tests
+(commit e3a0ec54) with "Approve, implement", answering "Do you approve the
+FU2 red tests?". D1-D4 were ruled over r1 (commit 1842579c) with "Approve
+as proposed". `auto=false`. Prior status: "Owner-decided (2026-11-07);
+approval pending on the red tests."
 
 ## 2. Provenance
 

@@ -40,6 +40,7 @@ import hashlib  # noqa: F401 -- compatibility export
 import io
 import json  # noqa: F401 -- historical compatibility binding
 import os
+from collections.abc import Mapping
 from importlib.resources import files
 from pathlib import Path
 from typing import Any, Literal
@@ -163,6 +164,18 @@ class Population(BaseModel):
         if self.producer is not None and not 1 <= len(self.producer) <= 200:
             raise ValueError("producer must be 1 to 200 characters")
         return self
+
+    def model_copy(self, *, update: Mapping[str, Any] | None = None, deep: bool = False) -> Population:
+        """Copy, keeping the producer invariant that ``update`` would otherwise skip (issue 115).
+
+        Pydantic's ``model_copy`` runs no validator, so the copy re-runs the one
+        model validator when fields are replaced. ``model_construct`` stays
+        unvalidated by design; ``check`` refuses its output (no marker).
+        """
+        copy = super().model_copy(update=update, deep=deep)
+        if update:
+            copy._producer_names_tool_output()
+        return copy
 
     @property
     def validated_against(self) -> Model | None:
@@ -503,6 +516,7 @@ def _combine_validated_populations(
         model_id=header.get("model_id"),
         source=header["source"],
         producer=header.get("producer"),
+        label=header.get("label"),
         covers=header["covers"],
         instances=document["instances"],
         facts=document["facts"],

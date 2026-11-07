@@ -1,4 +1,6 @@
-"""How expected/*.txt were derived (run from the corpus directory, repo src on PYTHONPATH).
+"""How expected/*.txt were derived (run from the corpus directory with PYTHONPATH set to the
+source of main 12daa5b7: it needs the plain renderer as it was, because ROF1 turns
+``_print_report`` into an adapter over the new row renderer).
 
 For each case: run the JSON route (today's code, main 12daa5b7), keep the
 report under reports/, then render the report's rows with the PLAIN route's

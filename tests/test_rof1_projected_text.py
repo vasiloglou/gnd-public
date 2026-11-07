@@ -8,11 +8,17 @@ text cases fail until ROF1 lands, the JSON pins and the two controls pass now.
 
 from __future__ import annotations
 
+import inspect
 import json
+import time
 
 import pytest
 from support.cli_runner import run_main
 from support.repository import REPO_ROOT
+
+from gnd import output, payloads
+from gnd.commands import checking
+from gnd.export import verification_service
 
 CORPUS = REPO_ROOT / "tests" / "fixtures" / "rof1-projected-text"
 EXPECTED = CORPUS / "expected"
@@ -60,3 +66,130 @@ def test_corpus_lists_every_case_once() -> None:
     stems = {path.stem for path in EXPECTED.glob("*.txt")}
     assert stems == set(CASES)
     assert {path.stem for path in (EXPECTED / "reports").glob("*.json")} == set(CASES)
+
+
+# --- the rest of the spec's section 8 (written with the implementation) -------------------
+
+
+def _source(function) -> str:
+    return inspect.getsource(function)
+
+
+def test_t7_plain_and_projected_routes_share_one_row_renderer() -> None:
+    assert "render_check_rows(" in _source(output._print_report)
+    assert "render_check_rows(" in _source(output._projected_check_lines)
+    assert "CheckReport" not in _source(output.render_check_rows)
+    assert "report" not in inspect.signature(output.render_check_rows).parameters
+
+
+def test_t8_projected_branches_read_only_the_payload() -> None:
+    for function in (output._projected_check_lines, output._print_projected_check_text):
+        text = _source(function)
+        assert "CheckReport" not in text
+        assert ".report" not in text
+    for command in (checking._cmd_check, checking._cmd_validate):
+        text = _source(command)
+        assert "_print_projected_check_text(mechanical_payload)" in text
+        assert "_print_projected_text(" not in text
+
+
+def test_t17_other_projected_routes_still_use_the_shared_json_text() -> None:
+    assert "_print_projected_text(mechanical_payload)" in _source(checking._cmd_transition)
+    assert "_print_projected_text(payload)" in inspect.getsource(verification_service)
+
+
+def test_t4c_warnings_precede_the_layout() -> None:
+    payload = {
+        "command": "check",
+        "warnings": [{"path": "model", "message": "careful", "rule_id": "w:one"}],
+        "issues": [],
+        "verdicts": [],
+        "counts": {},
+        "coverage": {},
+    }
+    lines = output._projected_check_lines(payload)
+    assert lines[0] == "WARNING at model: careful [w:one]"
+    assert lines[1] == "BLOCKING (alethic)"
+
+
+HOSTILE = [
+    {},
+    {"verdicts": None, "derivations": "x", "counts": None, "coverage": [1], "issues": 7},
+    {"verdicts": [1, "x", None, {"verdict": 5, "modality": None, "message": {"a": 1}}]},
+    {"derivations": [{"findings": 3}, {"findings": [None, {"kind": 1}]}], "coverage": {"f": 5}},
+    {"warnings": [None, "x"], "error": {"message": ["m"]}, "exit_code": 70},
+    {"command": "validate", "model": None},
+]
+
+
+@pytest.mark.parametrize("payload", HOSTILE)
+def test_t9_renderer_is_total_over_hostile_payloads(payload: dict) -> None:
+    lines = output._projected_check_lines(payload)
+    assert lines and all(isinstance(line, str) for line in lines)
+
+
+def test_t9_issue_flood_is_capped_and_elision_is_reported() -> None:
+    cap = payloads.MAX_POPULATION_ISSUES
+    rows = [{"path": f"$.p{i}", "message": "m", "rule_id": "r"} for i in range(cap + 500)]
+    lines = output._projected_check_lines({"issues": rows, "issues_total": cap + 900})
+    assert len(lines) == cap + 1
+    assert "400 further issue(s) elided".replace("400", "900") in lines[-1]
+
+
+def test_t10_renderer_is_linear_in_rows() -> None:
+    rows = [
+        {"constraint_ref": f"c[{i}]", "modality": "alethic", "verdict": "fail", "message": "m" * 40}
+        for i in range(50_000)
+    ]
+    payload = {"command": "check", "verdicts": rows, "counts": {"fail": 50_000}}
+    started = time.perf_counter()
+    lines = output._projected_check_lines(payload)
+    elapsed = time.perf_counter() - started
+    assert len(lines) > 50_000
+    # Measured 0.09-0.10 s on the dev machine (spec, "An experiment"); ceiling is 6x.
+    assert elapsed < 0.6
+
+
+def test_t13_validate_trace_keeps_its_block_before_the_projected_text() -> None:
+    result = run_main(["validate", "models/contacts-redacted.orm.yaml", "--trace"], cwd=CORPUS)
+    text = result.stdout.decode()
+    assert result.returncode == 0
+    assert "DERIVATION STABILITY" in text
+    assert text.index("DERIVATION STABILITY") < text.index("REDACTION applied:")
+    assert text.rstrip().endswith("is a valid GND ORM model")
+    assert SECRET not in text
+
+
+def test_t14_validate_document_early_return_names_digests_not_text() -> None:
+    result = run_main(
+        [
+            "validate",
+            "models/contacts-redacted.orm.yaml",
+            "--document",
+            "populations/contacts-fail.pop.yaml",
+        ],
+        cwd=CORPUS,
+    )
+    text = result.stdout.decode()
+    assert result.returncode == 3
+    assert "[unattended:document-undeclared]" in text
+    assert not any(line.startswith("{") for line in text.splitlines())
+    assert SECRET not in text
+
+
+def test_t18_projected_text_keeps_a_reason_the_projection_removed_from_the_message() -> None:
+    row = {
+        "constraint_ref": "c[0]",
+        "modality": "alethic",
+        "verdict": "unchecked",
+        "message": "[REDACTED INSTANCE DETAIL]",
+        "reason_code": "term:mod-zero",
+    }
+    payload = {"command": "check", "verdicts": [row], "counts": {"unchecked": 1}}
+    lines = output._projected_check_lines(payload)
+    assert "  [unchecked] c[0]: [REDACTED INSTANCE DETAIL] [reason: term:mod-zero]" in lines
+    carried = {**row, "message": "failed: term:mod-zero"}
+    again = output._projected_check_lines({**payload, "verdicts": [carried]})
+    assert "  [unchecked] c[0]: failed: term:mod-zero" in again
+    plain = output.render_check_rows(payload)
+    assert "[reason:" not in "\n".join(plain)

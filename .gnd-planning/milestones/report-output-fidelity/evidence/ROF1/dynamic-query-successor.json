@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC5/dynamic-query-successor.json",
+  "predecessor_sha256": "8159231d9b95e413ce83d967a38e3420327c572e0d1c164185f4d85c86ed972b",
+  "reason": "report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): projected check/validate text is rendered from a payload's rows (render_check_rows, _projected_check_lines, _print_projected_check_text, _issue_lines, _row_views, _rows, _with_reason in gnd.output). Syntax census only; the exact query policy is unchanged.",
+  "removed": [
+    [
+      "src/gnd/output.py",
+      "_print_issues",
+      "issues[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/output.py",
+      "_issue_lines",
+      "Sequence[Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_issue_lines",
+      "issues[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_issue_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_projected_check_text",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_check_lines",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_check_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_row_views",
+      "list[SimpleNamespace]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_rows",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_with_reason",
+      "lines[1:]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_with_reason",
+      "list[str]",
+      2
+    ],
+    [
+      "src/gnd/output.py",
+      "render_check_rows",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render_check_rows",
+      "Mapping[str, tuple[str, str | None, str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render_check_rows",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render_check_rows",
+      "tuple[str, str | None, str, str | None]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7298,
+  "result_occurrences": 9115
+}

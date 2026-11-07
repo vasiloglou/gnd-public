@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import json
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
+from types import SimpleNamespace
 from typing import Any
 
 from gnd import checking_service as api_module
@@ -24,15 +25,27 @@ def _print_issues(issues: list[ValidationIssue]) -> None:
     file cap. Bound every untrusted-input-proportional resource where it is
     PRODUCED, not only where it is serialized. The elision is reported, never
     silent, exactly as ``issues_truncated`` is in the payload."""
+    for line in _issue_lines(issues):
+        print(line)
+
+
+def _issue_lines(issues: Sequence[Any], total: int | None = None) -> list[str]:
+    """The ``ERROR at`` lines for ``issues`` (objects with path, message and rule_id).
+
+    The one home of the cap and the elision line, shared by the object route
+    (``_print_issues``) and the projected-payload route; ``total`` is the
+    payload's ``issues_total`` when the rows were already capped upstream.
+    """
     shown = issues[: report_module.MAX_POPULATION_ISSUES]
-    for issue in shown:
-        print(f"ERROR at {issue.path}: {issue.message} [{issue.rule_id}]")
-    if len(issues) > len(shown):
-        print(
-            f"... and {len(issues) - len(shown)} further issue(s) elided "
+    lines = [f"ERROR at {issue.path}: {issue.message} [{issue.rule_id}]" for issue in shown]
+    elided = max(len(issues), total or 0) - len(shown)
+    if elided > 0:
+        lines.append(
+            f"... and {elided} further issue(s) elided "
             f"(cap {report_module.MAX_POPULATION_ISSUES}); use --format json for "
             f"the machine-readable payload, which reports issues_total."
         )
+    return lines
 
 def _print_trace(model: Model, model_path: str) -> None:
     """What a transition run WOULD evaluate. Reporting only (D6).
@@ -212,53 +225,168 @@ def print_vacuous_acceptance(payload: Mapping[str, Any]) -> None:
         print(f"vacuous accepted: {vacuous} rules have nothing to judge yet (--allow-vacuous).")
 
 
+def _rows(value: Any) -> list[Any]:
+    """``value`` if it is a list, else no rows: a payload value of any other shape is skipped."""
+    return value if isinstance(value, list) else []
+
+
+def _row_views(rows: Any) -> list[SimpleNamespace]:
+    """Verdict rows as attribute views, total over any payload value.
+
+    The line formatters read attributes; a payload row is a mapping that may be
+    missing keys or carry non-text values (the renderer is total over any
+    mapping, design rule 1). Anything that is not a mapping is skipped.
+    """
+    views = []
+    for row in _rows(rows):
+        if not isinstance(row, Mapping):
+            continue
+        findings = [
+            SimpleNamespace(kind=str(f.get("kind", "")), message=str(f.get("message", "")))
+            for f in _rows(row.get("findings"))
+            if isinstance(f, Mapping)
+        ]
+        views.append(
+            SimpleNamespace(
+                verdict=str(row.get("verdict", "")),
+                modality=str(row.get("modality", "")),
+                constraint_ref=str(row.get("constraint_ref", "")),
+                derivation_ref=str(row.get("derivation_ref", "")),
+                message=str(row.get("message", "")),
+                reason_code=row.get("reason_code") if isinstance(row.get("reason_code"), str) else "",
+                findings=findings,
+            )
+        )
+    return views
+
+
+def _with_reason(lines: list[str], view: SimpleNamespace, show_reason: bool) -> list[str]:
+    """Append the row's reason code to its first line when the message does not carry it.
+
+    A projection replaces a message that would show instance detail, and the
+    row's ``reason_code`` (a rule identity, never instance detail) is then the
+    only place the cause survives; the projected routes show it.
+    """
+    if show_reason and view.reason_code and view.reason_code not in view.message:
+        lines = [f"{lines[0]} [reason: {view.reason_code}]", *lines[1:]]
+    return lines
+
+
+def render_check_rows(
+    payload: Mapping[str, Any],
+    declared: Mapping[str, tuple[str, str | None, str, str | None]] | None = None,
+    *,
+    show_reason: bool = False,
+) -> list[str]:
+    """The check layout from a payload's rows: the one home of this text.
+
+    Both the plain route (``_print_report``, which adapts its report object into
+    rows) and the projected routes (``_projected_check_lines``) render through
+    here, so the two layouts cannot drift. It reads ``verdicts``, ``derivations``,
+    ``counts`` and ``coverage`` and nothing else, never the unprojected report
+    object, and is total over any mapping.
+    """
+    views = _row_views(payload.get("verdicts"))
+    blocking = [v for v in views if v.modality == "alethic" and v.verdict != "pass"]
+    advisory = [v for v in views if v.modality == "deontic" and v.verdict != "pass"]
+    lines = ["BLOCKING (alethic)"]
+    for verdict in blocking:
+        lines.extend(_with_reason(_identified_verdict_lines(verdict, declared), verdict, show_reason))
+    if not blocking:
+        lines.append("  (none)")
+    lines.append("ADVISORY (deontic)")
+    for verdict in advisory:
+        lines.extend(_with_reason(_identified_verdict_lines(verdict, declared), verdict, show_reason))
+    if not advisory:
+        lines.append("  (none)")
+    derivations = _row_views(payload.get("derivations"))
+    if derivations:
+        lines.append("DERIVATIONS (alethic)")
+        for verdict in derivations:
+            lines.extend(_with_reason(_derivation_verdict_lines(verdict), verdict, show_reason))
+    counts = payload.get("counts")
+    counts = counts if isinstance(counts, Mapping) else {}
+    lines.append(
+        f"pass={counts.get('pass', 0)} fail={counts.get('fail', 0)} "
+        f"warning={counts.get('warning', 0)} unchecked={counts.get('unchecked', 0)} "
+        f"vacuous={counts.get('vacuous', 0)}"
+    )
+    coverage = payload.get("coverage")
+    if isinstance(coverage, Mapping) and coverage:
+        lines.append("COVERAGE")
+        for fact_type_id, entry in coverage.items():
+            entry = entry if isinstance(entry, Mapping) else {}
+            lines.append(
+                f"  {verbalize.path_segment(fact_type_id)}: "
+                f"{entry.get('declared')}, facts={entry.get('facts')}"
+            )
+    return lines
+
+
 def _print_report(
     report: CheckReport,
     declared: Mapping[str, tuple[str, str | None, str, str | None]] | None = None,
 ) -> None:
-    blocking = [
-        verdict
-        for verdict in report.verdicts
-        if verdict.modality == "alethic" and verdict.verdict != "pass"
-    ]
-    advisory = [
-        verdict
-        for verdict in report.verdicts
-        if verdict.modality == "deontic" and verdict.verdict != "pass"
-    ]
+    rows = {
+        "verdicts": [verdict.model_dump() for verdict in report.verdicts],
+        "derivations": [verdict.model_dump() for verdict in report.derivations],
+        "counts": report.counts(),
+        "coverage": {
+            fact_type_id: {"declared": entry.declared, "facts": entry.facts}
+            for fact_type_id, entry in report.coverage.items()
+        },
+    }
+    print("\n".join(render_check_rows(rows, declared)))
 
-    print("BLOCKING (alethic)")
-    if blocking:
-        for verdict in blocking:
-            print("\n".join(_identified_verdict_lines(verdict, declared)))
-    else:
-        print("  (none)")
 
-    print("ADVISORY (deontic)")
-    if advisory:
-        for verdict in advisory:
-            print("\n".join(_identified_verdict_lines(verdict, declared)))
-    else:
-        print("  (none)")
+def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a check or validate payload that was already projected.
 
-    if report.derivations:
-        print("DERIVATIONS (alethic)")
-        for verdict in report.derivations:
-            for line in _derivation_verdict_lines(verdict):
-                print(line)
-
-    counts = report.counts()
-    print(
-        f"pass={counts['pass']} fail={counts['fail']} warning={counts['warning']} "
-        f"unchecked={counts['unchecked']} vacuous={counts['vacuous']}"
-    )
-
-    if report.coverage:
-        print("COVERAGE")
-        for fact_type_id, entry in report.coverage.items():
-            print(
-                f"  {verbalize.path_segment(fact_type_id)}: {entry.declared}, facts={entry.facts}"
+    Reads only the payload (never the unprojected report), so what the projection
+    removed cannot come back. Order: warnings; issues, which end the output;
+    an error with no issues; a validate success; otherwise the check layout.
+    """
+    lines = []
+    for warning in _rows(payload.get("warnings")):
+        if isinstance(warning, Mapping):
+            lines.append(
+                f"WARNING at {warning.get('path')}: {warning.get('message')} "
+                f"[{warning.get('rule_id')}]"
             )
+    issues = [
+        SimpleNamespace(path=row.get("path"), message=row.get("message"), rule_id=row.get("rule_id"))
+        for row in _rows(payload.get("issues"))
+        if isinstance(row, Mapping)
+    ]
+    if issues:
+        total = payload.get("issues_total")
+        return lines + _issue_lines(issues, total if isinstance(total, int) else None)
+    error = payload.get("error")
+    if error:
+        message = error.get("message") if isinstance(error, Mapping) else error
+        prefix = "INTERNAL ERROR" if payload.get("exit_code") == 70 else "ERROR"
+        return [*lines, f"{prefix}: {message}"]
+    if payload.get("command") == "validate":
+        return [*lines, f"OK: {payload.get('model')} is a valid GND ORM model"]
+    return lines + render_check_rows(payload, show_reason=True)
+
+
+def _print_projected_check_text(payload: dict[str, Any]) -> None:
+    """``check``/``validate`` text on a declaration-bearing or temporal route.
+
+    The header names the redacted coordinates and is omitted when there are none
+    (the temporal-only route has no policy to describe). The other projected
+    routes keep ``_print_projected_text`` until the phase that renders them.
+    """
+
+    from gnd.redaction import render_text_header
+
+    metadata = payload.get("redaction")
+    if isinstance(metadata, Mapping) and metadata.get("declarations"):
+        header = render_text_header(payload)
+        if header is not None:
+            print(header)
+    print("\n".join(_projected_check_lines(payload)))
 
 def _band(report: CheckReport) -> int:
     """Delegate to :func:`gnd.checker.band` — the ONE owner of the exit-band rule.

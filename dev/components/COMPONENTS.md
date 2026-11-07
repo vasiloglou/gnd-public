@@ -2520,14 +2520,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.text_output
-- does: Print validation issues, snapshot verdicts, transition traces and projected report text.
-- verbs: text report, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance
+- does: Print validation issues, snapshot verdicts, transition traces and projected report text; render check and validate text from a payload's rows, plain or projected.
+- verbs: text report, projected check text, row renderer, issue lines, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance
 - status: canonical
 - modules: src/gnd/output.py
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, semantics.transitions
 - used_by: codegen.service, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
-- tests: tests/test_report_json.py, tests/test_transition_report.py
-- notes: The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
+- tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py
+- notes: check and validate text for a declaration-bearing or temporal route is rendered from the projected payload only (render_check_rows is shared with the plain route); transition and export verification still print projected JSON until the successor phase. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
 
 
 ### semantics.ground_atoms

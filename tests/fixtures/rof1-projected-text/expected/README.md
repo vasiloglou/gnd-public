@@ -11,7 +11,9 @@ can work out the answers from the stories alone.
 - `<case>.txt` is the report's rows rendered with the **plain** route's own
   renderer (`gnd.output._print_report`), preceded by the header and followed
   or replaced by issue and `OK:` lines per the spec's section 6 layout.
-  `derive_answers.py` is the script; nothing in it calls code this phase adds.
+  `derive_answers.py` is the script; it must run against the source of main
+  `12daa5b7` (PYTHONPATH), where the plain renderer predates this phase, so
+  nothing in it calls code this phase adds.
 - The header `REDACTION <mode>: <fact_type.role>, …` is printed when the
   report carries redaction declarations, and omitted for the temporal-only
   route (plan decision D2, ruled 2026-11-07).

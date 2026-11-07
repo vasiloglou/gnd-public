@@ -2,11 +2,11 @@
 
 ## 1. Status
 
-**Draft r3 (2026-11-07). Awaiting owner review at the spec gate.** Plan r3 was
-approved at the plan gate on 2026-11-07 ([record](../001-plan.md)). The
-approval corpus (section 11) is authored and committed; it fails (20 cases
-red) until the phase lands. Not implementable before the owner's approval of
-the corpus and this spec. `auto=false`.
+**Approved (2026-11-07); implemented.** The owner approved the corpus and
+spec r3 with "Approve, implement", answering "Approve the ROF1 corpus and spec
+r3, so implementation can start?". Plan r3 was approved at the plan gate the
+same day ([record](../001-plan.md)). Prior status: "Draft r3. Awaiting owner
+review at the spec gate." `auto=false`.
 
 ## 2. Provenance
 
@@ -156,10 +156,10 @@ stays in `render_text_header`.
 
 | D | Question | Readings and cost |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first**: one model/population/expected-text triple per case (section 11). Alternative: prose-only, which cannot be re-read blind. Proposed: corpus **Open** |
+| D1 | Approval instrument | **Ruled (o, 2026-11-07): corpus-first, as proposed** ("Approve, implement"). **corpus-first**: one model/population/expected-text triple per case (section 11). Alternative: prose-only, which cannot be re-read blind. Proposed: corpus **Open** |
 | D2 | Header on the temporal-only route | **Ruled (o, 2026-11-07), at plan level: omit the empty header** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). Changes the 4 `rf1-pins` goldens' first line as well as their body; no exit-code difference. (r1, Codex P8: the spec's row carries the plan's ruling.) |
-| D3 | Under `--unredacted`, the header says `unredacted`; the verdict lines are the projected `unredacted`-mode tree (the actual values). Print them? | yes: that is what `--unredacted` asks for and what the JSON route prints; the canary test T5b pins the values appear **only** in unredacted mode **Open** |
-| D4 | Review over the spec bytes | none, per the pattern of rule-check-followups D3; the diff review covers the leak surface (plan §8) **Open** |
+| D3 | **Ruled (o, 2026-11-07): yes, as proposed** ("Approve, implement"). Under `--unredacted`, the header says `unredacted`; the verdict lines are the projected `unredacted`-mode tree (the actual values). Print them? | yes: that is what `--unredacted` asks for and what the JSON route prints; the canary test T5b pins the values appear **only** in unredacted mode **Open** |
+| D4 | Review over the spec bytes | **Ruled (o, 2026-11-07): none, as proposed.** none, per the pattern of rule-check-followups D3; the diff review covers the leak surface (plan §8) **Open** |
 
 ## 8. Tests
 
@@ -251,3 +251,36 @@ fixtures are new and move no recorded byte.
 | V4 | layers and homes | run | `tools/gnd_layers.json` import check; allowance count stays zero |
 | V5 | full suite vs base | run on beast-3 | failure set equal to the base's |
 | V6 | component index | run at record time | `python3 scripts/components_index.py changed --base 12daa5b7 --strict` |
+
+## An experiment, recorded before it runs (T10, 2026-11-07)
+
+Measures: wall time of `_projected_check_lines` over a payload of 50,000
+verdict rows (40-character messages) and 5,000 coverage entries, three runs,
+on the development machine, and the same over 5,000 rows. Cannot measure:
+other machines, or the cost of printing. Liveness: a quadratic renderer takes
+minutes at 50,000 rows, far over any ceiling here. Ceiling rule: 6x the
+slowest measured run, rounded up.
+
+Result: 0.103, 0.087, 0.100 s at 50,000 rows; 0.011 s at 5,000 rows (linear).
+Ceiling: 0.6 s, written into `test_t10_renderer_is_linear_in_rows`.
+
+## Implementation findings (2026-11-07)
+
+- **I1.** A test run from this worktree imports the *main checkout's*
+  editable `gnd` unless `PYTHONPATH=<worktree>/src` is set. Every gate below
+  sets it. The corpus "20 red" count at commit 3c2de239 was therefore
+  measured against main's code, which is the base (valid as the base
+  measurement); it is not a measurement of this branch.
+- **I2.** `render_check_rows` renders the body only (BLOCKING through
+  COVERAGE) because the plain route shares it; the preamble of M1 items 1-4
+  (warnings, issues, error, validate success) lives in `_projected_check_lines`.
+  The shared issue cap and elision line were extracted as `_issue_lines`, used
+  by `_print_issues` as well.
+- **I3.** M4 as written (return `None` from `render_text_header` when there
+  are no declarations) would have made the routes ROF2 owns raise their
+  existing `ValueError` on a temporal-only payload. The header omission lives
+  in `_print_projected_check_text` instead and `render_text_header` is
+  unchanged.
+- **I4.** T9 found two totality defects in the first renderer (a non-list
+  `issues` or `findings` value raised `TypeError`); observed red, fixed with
+  one `_rows` guard.

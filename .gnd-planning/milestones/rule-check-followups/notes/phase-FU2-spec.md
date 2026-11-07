@@ -201,3 +201,10 @@ untouched.
   in `compiled-snapshot-obligations/evidence/CI/source-successors.json` is
   chained to the new body with the FU2 reason (as RC5 did); the annotation
   is `Mapping | None`. All `tests/test_rf*.py`: 2396 passed.
+- **I5 (size, plan §0 rule 5).** The test file is 194 lines (192 at the
+  approved commit e3a0ec54) against the stop line of 120 in §10; source is
+  18 lines, under 30. The rule says to pause for the owner past 1.5 times
+  the estimate. The red-test gate presented the file without naming its
+  size, so the pause did not happen. Recorded here and put to the owner
+  with the PR; the excess is fixtures and pinned values (two digest pins,
+  the relabelled-reference helper), not extra scope.

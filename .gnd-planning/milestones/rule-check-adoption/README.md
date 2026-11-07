@@ -7,8 +7,8 @@ runs `gnd check` as a CI gate over a project's component facts: GR-D1
 
 **Status: plan r6 approved by the owner on 2026-11-06, as written
 ([plan-gate record](005-plan.md)). Reviews ran over r2 (full panel) and r3
-to r5 (Codex); r6 itself was not reviewed (RC-D16). RC1 is implemented and
-recorded ([phase record](006-phase-RC1.md)); not yet pushed or merged.**
+to r5 (Codex); r6 itself was not reviewed (RC-D16). RC1-RC5 are merged (PRs 101, 103, 107, 108, 109); RC6 is implemented and
+recorded ([phase record](011-phase-RC6.md)), not yet merged.**
 
 - [Canonical plan (r6, approved)](notes/rule-check-adoption-plan.md)
 - [Panel record over r2](001-panel.md)
@@ -26,7 +26,8 @@ recorded ([phase record](006-phase-RC1.md)); not yet pushed or merged.**
 - [RC4 phase record](009-phase-RC4.md)
 - [RC5 spec (owner-approved)](notes/phase-RC5-spec.md)
 - [RC5 phase record](010-phase-RC5.md)
-- [RC6 spec (r1, awaiting its owner gate)](notes/phase-RC6-spec.md)
+- [RC6 spec (owner-approved)](notes/phase-RC6-spec.md)
+- [RC6 phase record](011-phase-RC6.md)
 
 Phases:
 - RC1: declared constraint id and `remedy` in each verdict, report version 15;
@@ -37,4 +38,5 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the RC6 spec owner gate (process-phase). RC5 is merged (PR 109).
+Next action: the owner's ruling on RC6's size and D12, the RC6 PR, then the
+milestone close.

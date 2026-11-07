@@ -2,8 +2,12 @@
 
 ## 1. Status
 
-**Draft r1, awaiting the owner gate.** `auto=false`. No code before the
-owner rules D1-D4 below.
+**Owner-decided (2026-11-07); approval pending on the red tests.** The
+owner ruled D1-D4 over r1 (commit 1842579c) with "Approve as proposed",
+answering "How do you rule on FU2's decisions D1–D4?". Under D1 the test
+file lands red before any source edit, and implementation waits for the
+owner's approval of it. `auto=false`. Prior status (r1): "Draft r1,
+awaiting the owner gate."
 
 ## 2. Provenance
 
@@ -114,10 +118,10 @@ when unset). Effects:
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **tests-first, red**: the case table in §8 lands as a committed red test file before any source edit, and the owner approves it, as FU1's corpus was approved. FU2 is a validation predicate, so prose alone is not proposed; there is no serialized format to put in a fixture corpus beyond the existing reference fixture |
-| D2 | How does a copy keep the invariant? | **(a) re-run the invariant on every `model_copy` with `update`** (M1): one statement of the rule, any field update covered. (b) refuse `update` keys `source` and `producer`: narrower, still allows nothing bad, but a second rule to keep in step |
-| D3 | `model_construct` | **out of scope**, with a case: it is pydantic's documented unvalidated constructor, and T3 pins that a population built this way with a bad pair has no validation marker and `check` refuses it. Overriding it would change a pydantic contract other code may rely on |
-| D4 | Review over the spec bytes | none; the diff gets the Codex review |
+| D1 | Approval instrument | **tests-first, red**: the case table in §8 lands as a committed red test file before any source edit, and the owner approves it, as FU1's corpus was approved. FU2 is a validation predicate, so prose alone is not proposed; there is no serialized format to put in a fixture corpus beyond the existing reference fixture **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU2's decisions D1–D4?"). |
+| D2 | How does a copy keep the invariant? | **(a) re-run the invariant on every `model_copy` with `update`** (M1): one statement of the rule, any field update covered. (b) refuse `update` keys `source` and `producer`: narrower, still allows nothing bad, but a second rule to keep in step **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU2's decisions D1–D4?"). |
+| D3 | `model_construct` | **out of scope**, with a case: it is pydantic's documented unvalidated constructor, and T3 pins that a population built this way with a bad pair has no validation marker and `check` refuses it. Overriding it would change a pydantic contract other code may rely on **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU2's decisions D1–D4?"). |
+| D4 | Review over the spec bytes | none; the diff gets the Codex review **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU2's decisions D1–D4?"). |
 
 ## 8. Tests and verification ledger
 
@@ -166,3 +170,15 @@ source lines (M1 10, M2 4) and about 100 test lines. Stop rule: pause past
 - M2: the binder already conditionally adds `producer`; `label` follows the
   same shape. `_combine_validated_populations` has one caller.
 - T7: `witness_input_identity` is importable and computed before binding.
+
+## Red tests (2026-11-07, at `12daa5b7` plus this file)
+
+`tests/test_fu2_population_header.py`, 12 cases: **8 failed, 4 passed**,
+exactly as §8's "red before code?" column says. Failing: T1 (a)-(d)
+("DID NOT RAISE"), T4 and T5 candidate-wins (`combined.label` is `None`),
+T6 (the labelled combined digest equals the unlabelled one, `da473037…`),
+T8. Passing: T2, T3, T5 unset-candidate, T7. The two pinned values (the
+unlabelled combined digest and the labelled candidate's witness identity)
+were measured at `12daa5b7`. T5 relabels a copy of the dispatch reference
+in `tmp_path` and updates its declared sha256; the committed fixture is
+untouched.

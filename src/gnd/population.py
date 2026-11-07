@@ -45,7 +45,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from jsonschema import Draft202012Validator
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
 from ruamel.yaml import YAML
 
 from gnd import input_policy as _rf7_input
@@ -128,7 +128,11 @@ class Population(BaseModel):
     #: against, restated from the model's own top-level field. Optional, opaque,
     #: never dereferenced — see :func:`gnd.popvalidate._rule_model_id`.
     model_id: str | None = None
-    source: Literal["agent-output", "synthetic", "fixture"]
+    source: Literal["agent-output", "synthetic", "fixture", "tool-output"]
+    #: The tool and revision that wrote a ``tool-output`` population (1-200 characters).
+    #: Absent from every dump when unset, so a population without one serializes,
+    #: and is digested, exactly as before RC5.
+    producer: str | None = Field(default=None, exclude_if=lambda value: value is None)
     label: Literal["conforming", "boundary", "violating"] | None = None
     covers: list[str] = Field(default_factory=list)
     instances: dict[str, list[Any]] = Field(default_factory=dict)
@@ -150,6 +154,15 @@ class Population(BaseModel):
     #: Digest of the validation-relevant model content at the moment layer 2
     #: passed. Model identity alone cannot detect mutations to nested fields.
     _validated_model_digest: str | None = PrivateAttr(default=None)
+
+    @model_validator(mode="after")
+    def _producer_names_tool_output(self) -> Population:
+        """A producer names the tool behind ``tool-output``; no other source has one."""
+        if self.producer is not None and self.source != "tool-output":
+            raise ValueError("producer is allowed only with source tool-output")
+        if self.producer is not None and not 1 <= len(self.producer) <= 200:
+            raise ValueError("producer must be 1 to 200 characters")
+        return self
 
     @property
     def validated_against(self) -> Model | None:
@@ -257,10 +270,10 @@ def _prepared_population_schema(schema: Any) -> Any:
     ):
         return schema
     work = [0]
-    maps = {"properties", "$defs"}
+    maps = {"properties", "$defs", "dependentSchemas"}
     sequences = {"anyOf", "allOf"}
     children = {"items", "additionalProperties", "if", "else"}
-    literals = {"type", "required", "enum", "const", "title", "description", "minLength"}
+    literals = {"type", "required", "enum", "const", "title", "description", "minLength", "maxLength"}
 
     def expand(node: Any, active: tuple[str, ...], depth: int) -> Any:
         work[0] += 1
@@ -456,6 +469,7 @@ def _build_population(
         model=header["model"],
         model_id=header.get("model_id"),
         source=header["source"],
+        producer=header.get("producer"),
         label=header.get("label"),
         covers=list(header.get("covers") or []),
         instances={k: list(v) for k, v in (doc.get("instances") or {}).items()},
@@ -488,6 +502,7 @@ def _combine_validated_populations(
         model=header["model"],
         model_id=header.get("model_id"),
         source=header["source"],
+        producer=header.get("producer"),
         covers=header["covers"],
         instances=document["instances"],
         facts=document["facts"],

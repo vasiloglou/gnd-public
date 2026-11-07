@@ -1,6 +1,6 @@
 # Population Format
 
-**The normative spec** for GND population files (CORE-02) — the universal interchange every population flows through, whether it is an **agent output**, a **synthetic dataset**, or an **eval fixture**. One format, one loader, one checker.
+**The normative spec** for GND population files (CORE-02) — the universal interchange every population flows through, whether it is an **agent output**, a **synthetic dataset**, an **eval fixture**, or deterministic **tool output** (facts a program read, for example from a codebase). One format, one loader, one checker.
 
 Normative machine spec: [`population.schema.json`](population.schema.json) in this skill's references directory (vendored byte-identically in the `gnd` package at `src/gnd/schema/population.schema.json`, sync-tested). The prose here is explanatory; where prose and schema disagree, the schema wins.
 
@@ -19,7 +19,7 @@ A population file is YAML or JSON with three parts: a `population` header, an op
 population:
   model: model.orm.yaml            # reference to the model this population belongs to
   model_id: urn:example:movies@3   # optional: the model's own model_id, cross-checked
-  source: synthetic                # agent-output | synthetic | fixture  (REQUIRED)
+  source: synthetic                # agent-output | synthetic | fixture | tool-output  (REQUIRED)
   label: violating                 # optional: conforming | boundary | violating
   covers: [movie_has_title, movie_directed_by_director]   # declared fact-type coverage
 
@@ -42,7 +42,8 @@ facts:                             # keyed by fact_type id; each fact keyed by r
   - **neither** declares one → no check at all. (A population that declares an id against a model that declares none is also no check: there is no model identity for the claim to disagree with.)
 
   This is belt-and-braces. The load-bearing guarantee that a population was validated against *this* model is a runtime marker the loader stamps and the checker demands — an id an agent writes into its own output can always be made to match.
-- **`source`** (required): `agent-output` | `synthetic` | `fixture`. All three producers use this same format and the same loader — the field records which producer wrote the file, nothing more. No format behavior varies by source.
+- **`source`** (required): `agent-output` | `synthetic` | `fixture` | `tool-output`. `tool-output` is for facts a deterministic program produced, for example a script that read a codebase. All producers use this same format and the same loader — the field records which producer wrote the file, nothing more. No format behavior varies by source.
+- **`producer`** (optional, only with `source: tool-output`): 1-200 characters naming the tool and the revision it read, for example `components-scan 1.4.0 @ 9f3c2a1`. Any other source with a `producer` is refused at load.
 - **`label`** (optional): `conforming` | `boundary` | `violating`. The expected-outcome class for labeled datasets (synthetic generation and verifier evaluation use it; agent outputs normally omit it).
 - **`covers`** (optional list): the fact-type ids the population **claims completeness for**. Declaring a fact type in `covers` means "this file is asserting the full population of that fact type" — which is what makes vacuity detectable (see below). An omitted `covers` claims completeness for nothing.
 

@@ -681,6 +681,15 @@
       "before": "3f8fe0f006b141f884fab614acb317e03f7e2c5211f10fa385b08d5b7d2e97d9",
       "after": "f7b868e8e4eb39f511b5061635e7cf8fd8ced70f50133296a8ecd11308196aa8",
       "reason": "rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the optional baseline argument (gnd check --baseline) decides band 1 from new alethic failures only and 4 from an alethic verdict unchecked in either run, before the snapshot shortcut; without it every branch and the precedence are unchanged. Still the one band implementation (plan rule 5). Then rule-check-adoption RC4 (spec 509b721d, corpus 938716c9): the optional allow_vacuous argument (gnd check --allow-vacuous) turns a 2 into 0 after the computation and its branch events; every other band is unchanged."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "bind_population",
+      "home": "gnd.model",
+      "before": "f394f0010617dcbf7f8a67eae0581338cf48d237b3f8b31f1e97ea7d95b20fbb",
+      "after": "05927b85996f2e316d1e5aca24df5657a90a24f10013dc7fcbb08b11af0009fe",
+      "reason": "rule-check-adoption RC5 (spec a29931c2, corpus 6b45985b): the combined reference population header carries the candidate's optional producer (source tool-output), so a reference-bound tool-output population keeps it; every other header field and step is unchanged."
     }
   ]
 }

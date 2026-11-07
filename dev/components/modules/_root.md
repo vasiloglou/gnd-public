@@ -763,11 +763,11 @@ Population loading — the ONE shared code path (D-11).
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `Population` | class(BaseModel) | 81 | A loaded population: facts keyed by fact-type id, facts keyed by role_name. |
-| `Population.validated_against(self) -> Model \| None` | method | 155 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
-| `Population.matches_validation_marker(self, model) -> bool` | method | 170 | Whether THIS content passed layer 2 against THIS model object (D-02). |
-| `load_population_bytes(data, *, source, model) -> Population` | function | 501 | Load already-opened population bytes through the normal validation path. |
-| `load_population(path, *, model) -> Population` | function | 518 | Load a population file (YAML or JSON) through the single shared code path. |
-| `read_population_bytes(path) -> bytes` | function | 548 | The bytes of one regular population file, refused past the size cap. |
+| `Population.validated_against(self) -> Model \| None` | method | 166 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
+| `Population.matches_validation_marker(self, model) -> bool` | method | 181 | Whether THIS content passed layer 2 against THIS model object (D-02). |
+| `load_population_bytes(data, *, source, model) -> Population` | function | 514 | Load already-opened population bytes through the normal validation path. |
+| `load_population(path, *, model) -> Population` | function | 531 | Load a population file (YAML or JSON) through the single shared code path. |
+| `read_population_bytes(path) -> bytes` | function | 561 | The bytes of one regular population file, refused past the size cap. |
 
 ## gnd.population_shape — `src/gnd/population_shape.py`
 Components: model.population_shape
@@ -775,7 +775,7 @@ Bounded positive-only compilation of population interchange shape policy.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `accepts_shape(doc, schema) -> bool` | function | 303 | Accept only supported positive cases; every other case uses Draft. |
+| `accepts_shape(doc, schema) -> bool` | function | 324 | Accept only supported positive cases; every other case uses Draft. |
 
 ## gnd.popvalidate — `src/gnd/popvalidate.py`
 Components: check.population_structure
@@ -1244,7 +1244,7 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 201 | (no docstring) |
+| `reference_model_digest(model) -> str` | function | 204 | (no docstring) |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

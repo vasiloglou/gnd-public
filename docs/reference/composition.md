@@ -79,7 +79,7 @@ model, binds the sidecar to the population and the document, and applies the
 renamings. Rows are then appended per fact type in source order, then row
 order; a row identical to an earlier one becomes part of that fact's lineage
 instead. Instances and `covers` are unioned. The composed population takes
-its header (`model`, `model_id`, `source`) from the first source and is written as canonical JSON, so
+its header (`model`, `model_id`, `source`, and `producer` when the first source has one) from the first source and is written as canonical JSON, so
 composing the same inputs twice gives the same bytes.
 
 `--out` and `--record` must be two different files outside `DIR`, and neither

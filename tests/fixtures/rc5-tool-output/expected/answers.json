@@ -1,0 +1,43 @@
+{
+  "tool-output": {
+    "exit": 0,
+    "issues": []
+  },
+  "tool-output-producer": {
+    "exit": 0,
+    "issues": [],
+    "producer": "components-scan 1.4.0 @ 9f3c2a1"
+  },
+  "producer-200": {
+    "exit": 0,
+    "issues": [],
+    "producer_length": 200
+  },
+  "producer-on-fixture": {
+    "exit": 3,
+    "issues": [
+      [
+        "jsonschema:const",
+        "$.population.source"
+      ]
+    ]
+  },
+  "producer-empty": {
+    "exit": 3,
+    "issues": [
+      [
+        "jsonschema:minLength",
+        "$.population.producer"
+      ]
+    ]
+  },
+  "producer-too-long": {
+    "exit": 3,
+    "issues": [
+      [
+        "jsonschema:maxLength",
+        "$.population.producer"
+      ]
+    ]
+  }
+}

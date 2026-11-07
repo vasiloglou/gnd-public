@@ -736,3 +736,94 @@ def test_v4_derivation_invariants_are_schema_enforced(validator):
     unchecked_with_findings["derivations"][0]["verdict"] = "unchecked"
     unchecked_with_findings["derivations"][0]["reason_code"] = "derivation-not-covered"
     assert list(validator.iter_errors(unchecked_with_findings))
+
+
+# --- exact-arithmetic derivation reasons on the current check wires ---
+
+TERMS = Path(__file__).parent / "fixtures" / "v62-phase3"
+TERM_REASONS = {
+    "term:mod-zero",
+    "term:exact-value-too-wide",
+    "term:dependency-unavailable",
+    "term:div-zero",
+    "term:sqrt-negative",
+    "term:haversine-coordinate-range",
+    "term:float-overflow",
+}
+
+
+def _term_case(tmp_path: Path, variant: str) -> tuple[Path, Path]:
+    """Write the exact-terms fixture so `gnd check` selects one wire.
+
+    The committed model redacts a role, which selects version 9; dropping the
+    redaction selects version 7, and a Duration value type selects version 11.
+    """
+    text = (TERMS / "models" / "exact-terms.orm.yaml").read_text(encoding="utf-8")
+    if variant != "redacted":
+        text = text.replace(", redact: true", "")
+    if variant == "temporal":
+        text = text.replace("version: 2\n", "version: 3\n", 1).replace(
+            "  - { id: status, name: Status, kind: value, primitive: String }\n",
+            "  - { id: status, name: Status, kind: value, primitive: String }\n"
+            "  - { id: span, name: Span, kind: value, primitive: Duration }\n",
+        )
+    (tmp_path / "models").mkdir()
+    (tmp_path / "populations").mkdir()
+    model = tmp_path / "models" / "exact-terms.orm.yaml"
+    model.write_text(text, encoding="utf-8")
+    population = tmp_path / "populations" / "term-input.pop.yaml"
+    population.write_text(
+        (TERMS / "populations" / "term-input.pop.yaml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    return model, population
+
+
+@pytest.mark.parametrize(
+    ("variant", "schema_version"),
+    [("plain", 7), ("redacted", 9), ("temporal", 11)],
+)
+def test_unchecked_term_derivations_validate_on_the_selected_wire(
+    tmp_path, validator, variant, schema_version
+):
+    model, population = _term_case(tmp_path, variant)
+    payload, returncode = _payload("check", str(model), str(population))
+
+    assert (returncode, payload["schema_version"]) == (4, schema_version)
+    assert {row["reason_code"] for row in payload["derivations"]} == {"term:mod-zero"}
+    errors = [
+        f"{leaf.json_path}: {leaf.message}"
+        for error in validator.iter_errors(payload)
+        for leaf in (error.context or [error])
+        if "reason_code" in leaf.json_path
+    ]
+    assert not list(validator.iter_errors(payload)), errors[:3]
+
+    # Every exact-arithmetic reason the checker can emit is admitted, but the
+    # unresolved-derivation reason stays on the admission wire that carries
+    # its `derived-extension-unresolved` finding.
+    for reason in sorted(TERM_REASONS):
+        candidate = json.loads(json.dumps(payload))
+        candidate["derivations"][0]["reason_code"] = reason
+        assert not list(validator.iter_errors(candidate)), reason
+    unresolved = json.loads(json.dumps(payload))
+    unresolved["derivations"][0]["reason_code"] = "derived-unknown"
+    assert list(validator.iter_errors(unresolved))
+
+
+@pytest.mark.parametrize("version", [4, 6])
+def test_legacy_projection_of_term_derivations_validates(tmp_path, validator, version):
+    from gnd.report import legacy_report_projection
+
+    model, population = _term_case(tmp_path, "plain")
+    payload, _ = _payload("check", str(model), str(population))
+    projected = legacy_report_projection(payload, version)
+
+    assert projected["schema_version"] == version
+    assert not list(validator.iter_errors(projected))
+
+
+def test_term_reasons_name_every_exact_arithmetic_derivation_reason():
+    from gnd.extensions import EXACT_DERIVATION_REASON_CODES
+
+    assert set(EXACT_DERIVATION_REASON_CODES) - {"derived-unknown"} == TERM_REASONS

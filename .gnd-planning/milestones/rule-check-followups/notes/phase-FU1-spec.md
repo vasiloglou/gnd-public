@@ -134,3 +134,11 @@ Plan estimate: about 15 schema and 60 test lines, plus the corpus.
   route emits `derived-unknown` on a derivation row (C2), so this is an
   unreachable, pre-existing mismatch, recorded as an open question. The
   `derived-unknown` cases establish only that the enum admits the value.
+- **I4 (merge with main, owner ruling).** Main gained PR 122 (9c39a5e2),
+  which widened the same two enums by the seven `term:*` reasons and kept
+  `derived-unknown` off version 7, with a test requiring its refusal. The
+  owner ruled "Take main's" (2026-11-07), answering "How should the merge
+  resolve it?". The schema is main's; the corpus answer for
+  `derived-unknown` changed from accepted to refused on version 7 (the old
+  answer is kept in `answers.json` under `superseded_answers`). This amends
+  FD3 for `derived-unknown` only and resolves I3.

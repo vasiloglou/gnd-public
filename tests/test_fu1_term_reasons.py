@@ -90,7 +90,7 @@ def test_every_branch_accepts_each_reason(branch: str, reason: str) -> None:
         assert not errors, (definition, errors)
 
 
-@pytest.mark.parametrize("reason", ANSWERS["schema_reasons"] + ANSWERS["pre_existing_reasons"])
+@pytest.mark.parametrize("reason", ANSWERS["version_15_reasons"] + ANSWERS["pre_existing_reasons"])
 def test_version_15_rows_still_validate(reason: str) -> None:
     errors = [e.message for e in _validator(ANSWERS["non_regression"]).iter_errors(_row(reason))]
     assert not errors, errors
@@ -99,3 +99,10 @@ def test_version_15_rows_still_validate(reason: str) -> None:
 @pytest.mark.parametrize("definition", ["derivation_verdict", ANSWERS["non_regression"]])
 def test_an_unknown_reason_is_refused(definition: str) -> None:
     assert list(_validator(definition).iter_errors(_row(ANSWERS["refused_reason"])))
+
+
+@pytest.mark.parametrize("branch", ANSWERS["branches"])
+@pytest.mark.parametrize("reason", ANSWERS["refused_on_version_7"])
+def test_a_version_15_only_reason_stays_refused(branch: str, reason: str) -> None:
+    for definition in _derivation_definitions(branch):
+        assert list(_validator(definition).iter_errors(_row(reason))), definition

@@ -44,7 +44,6 @@
     }
   },
   "schema_reasons": [
-    "derived-unknown",
     "term:mod-zero",
     "term:exact-value-too-wide",
     "term:dependency-unavailable",
@@ -65,5 +64,21 @@
     "legacy_reference_report",
     "temporal_admission_report"
   ],
-  "non_regression": "derivation_verdict_v15"
+  "non_regression": "derivation_verdict_v15",
+  "refused_on_version_7": [
+    "derived-unknown"
+  ],
+  "superseded_answers": {
+    "derived-unknown": "accepted on every branch (approved 08167666); amended 2026-11-07 by owner ruling to refused on version 7, following PR 122"
+  },
+  "version_15_reasons": [
+    "derived-unknown",
+    "term:mod-zero",
+    "term:exact-value-too-wide",
+    "term:dependency-unavailable",
+    "term:div-zero",
+    "term:sqrt-negative",
+    "term:haversine-coordinate-range",
+    "term:float-overflow"
+  ]
 }

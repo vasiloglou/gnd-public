@@ -14,17 +14,17 @@ gate:
     default suite against main 6651e5a4 (V1/V3) are in the body.
 evidence:
   - path: src/gnd/report.schema.json
-    sha256: 6820a27a6344ce5ee9d2eeba7e2ae83812186a4b7a3e4e09109082867f7d7eac
+    sha256: d2ac38dafb978c7a16f6e80e526e3c83c438f23245366430a359b6d462c8b5ac
   - path: tests/test_fu1_term_reasons.py
-    sha256: d260bc3da05bcbb3e6d14cf9b09d0a3ce52f10cc0fb60d93eb6a0508169e60e3
+    sha256: 2080991393e45e964e6c7fc600f5f8dccd1596673723d0cff27f766e6683b93b
   - path: tests/fixtures/fu1-term-reasons/expected/answers.json
-    sha256: b8ac940bafb8880d16104d471aab25ffc7630529ca4907c3b54a954aa52887fd
+    sha256: 0f59d80c14f0cfc71c76f71ff264f6d1998231e4a85a8e4bba70cf33b1bbec79
   - path: tests/fixtures/fu1-term-reasons/README.md
-    sha256: d14f3d00920b86637ef44d9df282535043dffca0a7f3ca77e5cb56c4c7c9e538
+    sha256: c2e38840fffaca9a95260d3c1c4e951a840a5c134749ef83da25d2c4b9606fe1
   - path: tests/fixtures/fu1-term-reasons/models/terms.orm.yaml
     sha256: 4779e89b61473fbbc6cf3db38f7a8de7b7247a27f925eb68a3df4d51bc1da529
   - path: .gnd-planning/milestones/rule-check-followups/notes/phase-FU1-spec.md
-    sha256: 99c0e4afd3928488564c23a6ab90612fc0808e5f50097d85f080333e242e0fa0
+    sha256: 3afc3fd9a4cb1063e4a4c6b28adce3e0f8f13259a9756e27077b9fba79d2aaff
   - path: .gnd-planning/milestones/rule-check-followups/notes/phase-FU1-codex-review.md
     sha256: 291e3354b634edea119be3d2b3c08778341ee3dfbc9a67b1b8e6e6d3f784c19b
   - path: .gnd-planning/milestones/rule-check-followups/evidence/FU1/full-suite-main-6651e5a4.txt
@@ -142,4 +142,27 @@ duplication is deliberate.
 
 | Row | Question | Owner / target |
 |---|---|---|
-| FU1-O1 (R2) | `DerivationVerdict` accepts `derived-unknown` only with one `derived-extension-unresolved` finding (`extensions.py:133-140`); the schema (`derivation_verdict` and `_v15`) refuses that finding kind and any unchecked finding. No route emits it on a derivation row today. Narrow the model, or widen the schema? | owner; file as its own issue at the milestone close |
+| FU1-O1 (R2) | `DerivationVerdict` accepts `derived-unknown` only with one `derived-extension-unresolved` finding (`extensions.py:133-140`); the schema (`derivation_verdict` and `_v15`) refuses that finding kind and any unchecked finding. **Resolved for version 7 by the merge amendment below** (refused there). `derivation_verdict_v15` still admits it with no findings; whether that should change is left to the milestone close | owner; milestone close |
+
+## Amendment: merge with main (2026-11-07)
+
+While PR 121 was open, main gained PR 122 (9c39a5e2, merged as 7cb98a99),
+which fixed issue 113 independently: the same two enums gained the seven
+`term:*` reasons, and `derived-unknown` stayed off version 7, with a test
+(`test_unchecked_term_derivations_validate_on_the_selected_wire`) requiring
+its refusal. The merge conflicted on that one value. The owner ruled "Take
+main's", answering "How should the merge resolve it?".
+
+- The schema is now byte-identical to main's 7cb98a99; FU1's M1 survives
+  only as the seven `term:*` values both sides added.
+- The corpus answer for `derived-unknown` changed from accepted to refused
+  on the four version-7 branches (`refused_on_version_7`); the approved
+  answer is retained under `superseded_answers`. It stays accepted on
+  version 15. A new case, `test_a_version_15_only_reason_stays_refused`,
+  leaves 4 red against FU1's earlier schema (73e55ea2) and passes on main's.
+- On the merged tree: V2 plus the scaffold test, 171 passed; the 48 schema
+  impact files, 1607 passed. The full suite above ran at 9f938f48, whose
+  schema differs from the merged tree by `derived-unknown` alone; it was
+  not rerun.
+- Claim above, read with this amendment: version 7 admits the seven
+  `term:*` reasons, not `derived-unknown`.

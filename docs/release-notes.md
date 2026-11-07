@@ -26,6 +26,19 @@ changes.
   There is no policy that admits a `proposed` + `deontic` constraint over a
   populated fact type when `gnd check` is clean; that remains open.
 
+## Unreleased: report schema correction for exact-arithmetic reasons
+
+`gnd check --format json` has always written a `term:*` reason, such as
+`term:mod-zero`, on a derivation it could not evaluate because exact
+arithmetic failed. The report schema did not admit those reasons on report
+versions 7, 9 and 11, or on the version 4 and 6 projections of those
+reports, so such a report failed validation against
+`src/gnd/report.schema.json`. The schema now admits the seven `term:*`
+reasons on those versions. This is a correction, not a new version: the
+reports `gnd` writes are unchanged, no report that validated before is now
+refused, and `derived-unknown` stays on the admission versions (10 and 13),
+whose derivation rows carry the finding it needs.
+
 ## Unreleased: type judgements by skill
 
 The `fact-type` discover family can now take a skill's verdicts: whether an

@@ -37,10 +37,17 @@ Two of version 15's reasons cannot reach a version-7 derivation, measured
 while authoring this corpus: `term:dependency-unavailable` (a derivation over
 an unchecked derivation reports the original reason instead) and
 `derived-unknown` (a constraint reason on the anchored route). The harness
-validates a derivation row carrying each of the eight reasons directly
-against every schema branch whose reason enum comes from
+validates a derivation row carrying each of the seven `term:*` reasons
+directly against every schema branch whose reason enum comes from
 `derivation_verdict`: `derivation_verdict`, `derivation_verdict_v9`, and the
 derivation rows of `legacy_reference_report` and
 `temporal_admission_report`. The three older reasons stay valid,
 `derivation_verdict_v15` stays valid (non-regression), and an unknown
 reason, `term:not-a-reason`, stays refused.
+
+`derived-unknown` stays **refused** on those branches. The corpus first
+answered "accepted" (approved at 08167666); the owner amended it on
+2026-11-07 when merging main, which had made the same fix in PR 122 and
+kept `derived-unknown` on the admission versions only: the runtime builds
+it with a `derived-extension-unresolved` finding that a version-7 row
+cannot hold.

@@ -173,8 +173,8 @@ spec F2).
   (population 19, population_shape 25, composition 2, model 1, witness 1)
   against the 30-line estimate (pause past 45); tests +188 against 80 (pause
   past 120); plus schema, reference and doc lines. The overrun is the
-  loader fast path (finding I1) and the review regressions. Target: owner,
-  before RC6.
+  loader fast path (finding I1) and the review regressions. **Resolved
+  2026-11-06, owner ruling: "Accept overrun".** The plan is not amended.
 - **T5**: validate the producer invariant on copies, if a caller ever
   updates `source` or `producer` through `model_copy`. Target: its own issue.
 - **`label` dropped by the reference binder** (F2). Target: its own issue.

@@ -151,3 +151,20 @@ report reference before the phase record.
   shown output, with the run directory normalized (`tools/run_tutorials.py`).
 - A shipped example is already the pattern (`composition`, `growth`), with
   an installed-docs check that lists example domains.
+
+## Checkpoint (D4)
+
+The how-to and the report reference were built (`zensical build --strict`),
+served locally and shown rendered to the owner, with the figure, at
+3f47cf01. The owner answered "Do the rendered RC6 pages look right?" with
+"Looks good, continue" (o, 2026-11-06).
+
+## Implementation findings (step 3, recorded as found)
+
+- **I1.** The tutorial runner runs blocks under `pipefail`, so the JSON
+  block piped through a filter exits with `gnd`'s code (1), not the
+  filter's; the page says so.
+- **I2.** `tests/test_plan_app_docs.py` holds how-to pages to at most 90
+  words per paragraph; the introduction was split.
+- **I3.** The page is a new runner group, `rule-check`, in
+  `tools/run_tutorials.py`.

@@ -143,6 +143,9 @@
     "gnd.atoms": {
       "layer": "infrastructure"
     },
+    "gnd.baseline": {
+      "layer": "checking"
+    },
     "gnd.batch": {
       "layer": "entry"
     },

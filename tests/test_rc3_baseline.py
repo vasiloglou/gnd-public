@@ -6,12 +6,16 @@ instrument; its README tells each case and expected/ holds the answers.
 
 from __future__ import annotations
 
+import ast
 import json
+import time
 
 import pytest
 from jsonschema import Draft202012Validator
 from support.cli_runner import run_main
 from support.repository import REPO_ROOT
+
+from gnd.baseline import VerdictView, compare
 
 CORPUS = REPO_ROOT / "tests" / "fixtures" / "rc3-baseline"
 EXPECTED = CORPUS / "expected"
@@ -91,3 +95,129 @@ def test_baseline_with_another_arm_is_a_usage_error() -> None:
     assert result.returncode == _exits()["conflict-populations"]
     assert result.stdout == b""
     assert b"unrecognized arguments" not in result.stderr
+
+
+# --- Direct tests (spec §8) -----------------------------------------------------------
+
+ADDRESSES = {"r1": ("constraint:loops", "declared-id"), "r2": ("constraints[0]", "positional")}
+
+
+def test_t1_standing_new_and_resolved() -> None:
+    head = [VerdictView("r1", "fail", "alethic", [["a", "b"], ["c", "d"]])]
+    base = [VerdictView("r1", "fail", "alethic", [["a", "b"], ["x", "y"]])]
+    result = compare(head, base, ADDRESSES)
+    assert result.novelty["r1"] == ("new", ["standing", "new"])
+    assert dict(result.counts) == {"new": 1, "standing": 1, "resolved": 1, "positional_keyed": 0, "undecided": 0}
+    assert result.new_alethic_fail and not result.undecided_alethic
+
+
+def test_t1_deontic_warnings_are_marked_but_never_fail() -> None:
+    head = [VerdictView("r2", "warning", "deontic", ["a"])]
+    result = compare(head, [], ADDRESSES)
+    assert result.novelty["r2"] == ("new", ["new"])
+    assert not result.new_alethic_fail
+    assert result.counts["positional_keyed"] == 1
+
+
+def test_t5_a_new_alethic_failure_outranks_a_base_left_unchecked(tmp_path) -> None:
+    head = (CORPUS / "populations" / "mixed.head.pop.yaml").read_text().replace(
+        "../models/graph.orm.yaml", str(CORPUS / "models" / "graph.orm.yaml"))
+    (tmp_path / "head.pop.yaml").write_text(head)
+    result = run_main(
+        ["check", "models/graph.orm.yaml", str(tmp_path / "head.pop.yaml"),
+         "--baseline", "populations/base-unchecked.base.pop.yaml", "--format", "json"],
+        cwd=CORPUS,
+    )
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["baseline"]["undecided"] == 1
+
+
+def test_t6_keys_survive_reordering_and_unrelated_facts(tmp_path) -> None:
+    lines = (CORPUS / "populations" / "mixed.head.pop.yaml").read_text().splitlines()
+    header, body = lines[:3], lines[3:]
+    uses = [line for line in body if line.startswith("    - { user")]
+    rest = [line for line in body if not line.startswith("    - { user")]
+    reordered = "\n".join([*header, *reversed(uses), "    - { user: q, used: r }", *rest]) + "\n"
+    reordered = reordered.replace("../models/graph.orm.yaml", str(CORPUS / "models" / "graph.orm.yaml"))
+    (tmp_path / "head.pop.yaml").write_text(reordered)
+    shuffled = json.loads(run_main(
+        ["check", "models/graph.orm.yaml", str(tmp_path / "head.pop.yaml"),
+         "--baseline", "populations/mixed.base.pop.yaml", "--format", "json"], cwd=CORPUS).stdout)
+    expected = json.loads((EXPECTED / "mixed.json").read_text())
+    def marks(payload):
+        return {
+            (v["address"], json.dumps(row, sort_keys=True)): mark
+            for v in payload["verdicts"] if v["row_novelty"]
+            for row, mark in zip(v["offending_facts"], v["row_novelty"], strict=True)
+        }
+    # The inserted edge's two components have no owner, which adds advisory rows of
+    # its own; the loop and legacy rows must be judged exactly as in the corpus case.
+    judged = {key: mark for key, mark in marks(shuffled).items() if key[0] != "constraint:should_have_owner"}
+    assert judged == marks(expected)
+
+
+def test_t7_declared_keys_survive_an_inserted_rule_positional_keys_move() -> None:
+    before = {"r1": ("constraint:loops", "declared-id"), "r2": ("constraints[0]", "positional")}
+    after = {"r1": ("constraint:loops", "declared-id"), "r2": ("constraints[1]", "positional")}
+    row = [{"$c": "old", "$a": "legacy"}]
+    base = [VerdictView("r1", "fail", "alethic", [["a", "b"]]), VerdictView("r2", "fail", "alethic", row)]
+    from gnd.baseline import baseline_key
+    base_keys = {baseline_key(before[v.ref][0], r) for v in base for r in v.rows}
+    assert baseline_key(after["r1"][0], ["a", "b"]) in base_keys
+    assert baseline_key(after["r2"][0], row[0]) not in base_keys
+
+
+def test_t8_validation_order_is_pinned_in_source() -> None:
+    source = (REPO_ROOT / "src" / "gnd" / "checking_service.py").read_text()
+    function = next(node for node in ast.walk(ast.parse(source))
+                    if isinstance(node, ast.FunctionDef) and node.name == "_run_check_raw")
+    body = ast.get_source_segment(source, function)
+    steps = [
+        "_resolve_model(model_input)",
+        "refused = refuse_rule_ids(model)\n    if refused is not None:\n        return refused\n    if rule_ids:",
+        '_resolve_population(population_input, model=model, name="population")',
+        "read_population_bytes(base_coordinate)",
+        "(evaluator or checker_module.check)(model, population)",
+        "(evaluator or checker_module.check)(model, base_population)",
+    ]
+    refusal = body[body.index("def refuse_rule_ids("):body.index("_resolve_model(model_input)")]
+    assert refusal.index("_rule_ids_refusal(refused)") < refusal.index("check:baseline-unsupported")
+    positions = [body.index(step) for step in steps]
+    assert positions == sorted(positions)
+
+
+def test_t9_two_thousand_rows_a_side_compare_within_bound() -> None:
+    head = [VerdictView("r1", "fail", "alethic", [[f"h{i}", f"n{i}"] for i in range(2000)])]
+    base = [VerdictView("r1", "fail", "alethic", [[f"h{i}", f"n{i}"] for i in range(1000, 3000)])]
+    started = time.perf_counter()
+    result = compare(head, base, ADDRESSES)
+    assert time.perf_counter() - started < 0.5
+    assert dict(result.counts)["standing"] == 1000
+
+
+def test_t10_every_family_reports_rows_of_values_only() -> None:
+    from gnd.constraint_families import FAMILIES
+
+    hooks = {entry.witness for entry in FAMILIES.values()}
+    assert hooks == {"_row_projected_witness", "_flat_projected_witness"}
+    from gnd.checker import _core
+
+    assert _core._row_projected_witness([("a", 1)]) == [["a", 1]]
+    assert _core._row_projected_witness([{"$c": "a"}]) == [{"$c": "a"}]
+    assert _core._flat_projected_witness([("a",)]) == ["a"]
+
+
+@pytest.mark.parametrize("arm", [
+    ["--populations", "populations"], ["--pre", "x", "--steps", "y", "--post", "z"],
+    ["--anchors", "x", "--document", "y"], ["--composition", "x", "--sources", "y"],
+    ["--admission"], ["--compiled-operations"],
+])
+def test_t11_baseline_excludes_every_other_arm(arm) -> None:
+    result = run_main(
+        ["check", "missing.orm.yaml", "missing.pop.yaml", *arm, "--baseline", "missing.pop.yaml"],
+        cwd=CORPUS,
+    )
+    assert result.returncode == 64
+    assert result.stdout == b""
+    assert b"--baseline applies to one plain snapshot check" in result.stderr

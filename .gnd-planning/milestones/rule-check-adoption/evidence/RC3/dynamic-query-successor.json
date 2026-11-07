@@ -1,0 +1,258 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC2/dynamic-query-successor.json",
+  "predecessor_sha256": "8a8e1ae3a856a8ffc43feacf3c4067bfb8743b18e793123f246b26b308e94b83",
+  "reason": "rule-check-adoption RC3 (gnd check --baseline; spec 0e74261e, corpus 5f860cb4): new syntax candidates are gnd.baseline's comparison (key sets, the ref-to-address map lookups, Comparison and VerdictView annotations), payloads.baseline_views and the baseline tuple the payload builder unpacks, the service's identity map slice and base extents, and the novelty element the text map carries; load_population's read moves unchanged into read_population_bytes. Syntax census only.",
+  "removed": [
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "dict[str, tuple[str, str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "tuple[str, str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "Mapping[str, tuple[str, str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "tuple[str, str | None, str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "Mapping[str, tuple[str, str | None, str]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "tuple[str, str | None, str]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/baseline.py",
+      "<module>",
+      "tuple[str, bytes | None]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "Comparison",
+      "Mapping[str, int]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "Comparison",
+      "Mapping[str, tuple[str, list[str]]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "Comparison",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "Comparison",
+      "tuple[str, list[str]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "VerdictView",
+      "Sequence[Any]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_keys",
+      "list[Key]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "Mapping[str, tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "Sequence[VerdictView]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "addresses[view.ref]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "dict[str, tuple[str, list[str]]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "set[Key]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "tuple[str, list[str]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check",
+      "os.PathLike[str]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "identity[:2]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "os.PathLike[str]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "_run_check_raw",
+      "tuple[str, str, Any]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "dict[str, tuple[str, str | None, str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_declared_from_payload",
+      "tuple[str, str | None, str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "Mapping[str, tuple[str, str | None, str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_identified_verdict_lines",
+      "tuple[str, str | None, str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "Mapping[str, tuple[str, str | None, str, str | None]]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_report",
+      "tuple[str, str | None, str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "print_baseline",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "_rule_ids_verdict",
+      "tuple[str, list[str]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "baseline_views",
+      "Mapping[str, tuple[list[list[Any]], str]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "baseline_views",
+      "extents.get(row['constraint_ref'])",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "baseline_views",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/payloads.py",
+      "baseline_views",
+      "list[list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "baseline_views",
+      "tuple[list[list[Any]], str]",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "novelty.get(row['constraint_ref'])",
+      1
+    ],
+    [
+      "src/gnd/payloads.py",
+      "build_check_payload",
+      "tuple[str, str, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7283,
+  "result_occurrences": 9099
+}

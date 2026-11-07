@@ -24,17 +24,19 @@
         ]
       },
       "after": {
-        "raw_sha256": "8715ba0e537642645521579b8a006ffccd6c2aa8c4e7f3aedce70dd425273af6",
-        "algorithm_sha256": "1db43b0553122c76bf66a571a5a6cb05852c6444a03ed8ab2115e8000853970a",
+        "raw_sha256": "8d01afe7a9b0b5e3d84048e0b15540a168b9d052b9118dd95aaba5097c1cc82a",
+        "algorithm_sha256": "fa004341b03ee9902b52fad33930d56f305fc92707bff94474b45a5830cbdee3",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
           "CompositionError",
           "MAX_DOCUMENT_BYTES",
           "acyclic_extents",
+          "acyclic_extents",
           "bind_anchors",
           "bind_population",
           "calculation_scope",
+          "compare",
           "compose",
           "read_anchor_sidecar",
           "read_regular_path",
@@ -43,7 +45,7 @@
           "verify_composition"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): at wire version 15 only, failing ring verdicts' acyclic extents are computed and forwarded to the payload."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): at wire version 15 only, failing ring verdicts' acyclic extents are computed and forwarded to the payload. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the optional baseline keyword implies rule_ids, refuses structured-derivation models (check:baseline-unsupported), reads and digests the base once, checks it with the same evaluator, compares, and takes the band from the comparison; the payload carries an uncertified assurance block for that band."
     },
     {
       "kind": "RF4",
@@ -60,14 +62,14 @@
         ]
       },
       "after": {
-        "raw_sha256": "87f100697ea45d2dfac084da134d9d4c6453b6b2894a9d66f33811bf0da0bb71",
-        "algorithm_sha256": "4974d1958e4ef84161628b4ce4fa0c40c3de9b943e21e507a2d1fca2725b2c17",
+        "raw_sha256": "ecb36426d2d8ba4daf327927afb598511bb0bfca0e34d2a824ba77400140c684",
+        "algorithm_sha256": "12ba7684ff2fb4b0ebebd92c37568485b681157d859c259ade77cd9ae5e32f80",
         "imports": [
           "build_admission",
           "wire_verdicts"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged. Then composition-and-type-induction CT2 (2c25ba4d): passes the optional composition and sources keywords through to _run_check_raw; the default (None) is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): passes the optional rule_ids keyword through to _run_check_raw and refuses it with admission or compiled operations; the default (False) is unchanged."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then approved transition-check-performance TP1: one ModelIndex key per public call through the per-call scope decorator; results unchanged. Then composition-and-type-induction CT2 (2c25ba4d): passes the optional composition and sources keywords through to _run_check_raw; the default (None) is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): passes the optional rule_ids keyword through to _run_check_raw and refuses it with admission or compiled operations; the default (False) is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards the optional baseline keyword, which like rule_ids excludes admission and compiled operations."
     },
     {
       "kind": "RF5",
@@ -79,10 +81,10 @@
         "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
       },
       "after": {
-        "raw_sha256": "6582c6dab24253f3898877b0c800955e81a895fe16212be03033893cc2db3394",
-        "algorithm_sha256": "e8d1a9e430ebe8ee61a3b2fa57a774fbf7131af12697f9d330d7ab9ff389540b"
+        "raw_sha256": "8e8976c4097bebf32f470944ac3a1361b235b3f7db5048fa4667beea04c3214d",
+        "algorithm_sha256": "eced35e9162dce46b6074ecd213303c61425e1c9a1ad082dff041a2e7b08020a"
       },
-      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged."
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards --baseline and prints the BASELINE summary after the report."
     },
     {
       "kind": "RF5",
@@ -614,11 +616,11 @@
         "imports": []
       },
       "after": {
-        "raw_sha256": "049907a553e99c1992f09c1298c54ccc305da44b0336bc7d3c7a4e879477a1c3",
-        "algorithm_sha256": "62e329513fe95f8df4e69f83ff0fd5923b52df745dbeee79b7b5225335814660",
+        "raw_sha256": "f5c5014a04aedff725a06b17ceaa5a0e40a540640275d2aceb9e65a628c73add",
+        "algorithm_sha256": "8d163cf151b28e25b8c86aede5ce6ff5ec50cf63dde1dcd7efe64ac95de58137",
         "imports": []
       },
-      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): adds the optional declared keyword; for schema_version 15 each verdict gains its constraint's address, addressing and remedy, the empty novelty and row_novelty, and the report gains baseline and allow_vacuous; every other version is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the optional extents keyword replaces a failing acyclic verdict's rows and message under schema_version 15 only."
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): adds the optional declared keyword; for schema_version 15 each verdict gains its constraint's address, addressing and remedy, the empty novelty and row_novelty, and the report gains baseline and allow_vacuous; every other version is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the optional extents keyword replaces a failing acyclic verdict's rows and message under schema_version 15 only. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the optional baseline keyword (base path, digest, comparison) fills each version-15 verdict's novelty and row_novelty and the baseline block; every other version and call is unchanged."
     },
     {
       "kind": "RF4",
@@ -648,10 +650,10 @@
         "algorithm_sha256": "3a5132bb92bff523c47b9783ec48bddc9c955f2f3a886e375cdb42bcd37e4701"
       },
       "after": {
-        "raw_sha256": "1061a377a63f13785d3d6401d76aa8de4ff5164d7f40fb67c09641cdae87d9bd",
-        "algorithm_sha256": "157479326ca579daac76af96dccf05ef593633c65c305eaa2e4ced9310b97925"
+        "raw_sha256": "68edce1ec5fe514d1054c1589c70874b0d0e31b0c58eaafe9c86de8193147139",
+        "algorithm_sha256": "8c6960ed1dc0f26cf5dc14ddb213095e187484251c85c96aaa7aa8ccc704a14a"
       },
-      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the declared map carries the version-15 message, which the text line prints; without the map the output is unchanged."
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the declared map carries the version-15 message, which the text line prints; without the map the output is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the declared map also carries each verdict's novelty, printed as [fail, new] or [fail, standing]; without the map the output is unchanged."
     },
     {
       "kind": "RF6b",
@@ -670,6 +672,15 @@
       "before": "195096f8289d7b7cbf12cac7f07425018f4f31f16d46247d8943e7088472701a",
       "after": "66094aea3a57d6e7f4dcfa2b22e485af884e0d787b7f77ae99ace1a4a9b20a68",
       "reason": "rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the private iterative Tarjan is replaced by gnd.graphs.strongly_connected_components (RC-D10, D3); it returns the same sorted cycles (components of two or more heads, or a self-looping head)."
+    },
+    {
+      "kind": "RF6b",
+      "module": "gnd.checker",
+      "name": "band",
+      "home": "gnd.checker._reports",
+      "before": "3f8fe0f006b141f884fab614acb317e03f7e2c5211f10fa385b08d5b7d2e97d9",
+      "after": "012441ee10d514b9299a2f83d7eabb2016a77a9506953833fa2f9e6b9e22195f",
+      "reason": "rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the optional baseline argument (gnd check --baseline) decides band 1 from new alethic failures only and 4 from an alethic verdict unchecked in either run, before the snapshot shortcut; without it every branch and the precedence are unchanged. Still the one band implementation (plan rule 5)."
     }
   ]
 }

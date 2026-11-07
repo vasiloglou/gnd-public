@@ -27,6 +27,11 @@ COMPILED_SUCCESSOR = json.loads(
 RULE_IDS_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/rule-ids-cli/expected.json').read_text()
 )
+# RC3 adds `check --baseline`; its help and exit probe supersede RC1's for `gnd check`
+# and differ from them by that one option.
+BASELINE_SUCCESSOR = json.loads(
+    (Path(__file__).parent / 'fixtures/baseline-cli/expected.json').read_text()
+)
 
 
 class _Captured(Exception):
@@ -133,6 +138,9 @@ def test_cli_tree(tree):
     expected["subcommands"]["check"]["actions"].insert(
         RULE_IDS_SUCCESSOR["action_index"], copy.deepcopy(RULE_IDS_SUCCESSOR["action"])
     )
+    expected["subcommands"]["check"]["actions"].insert(
+        BASELINE_SUCCESSOR["action_index"], copy.deepcopy(BASELINE_SUCCESSOR["action"])
+    )
     _assert_successor("cli", "tree", tree[0], expected)
 
 
@@ -140,7 +148,7 @@ def test_cli_tree(tree):
 def test_cli_help(tree, path):
     if path == "gnd check":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
-                          {"path": path, "help": RULE_IDS_SUCCESSOR["help"]})
+                          {"path": path, "help": BASELINE_SUCCESSOR["help"]})
         return
     assert_golden("cli-help", path, {"path": path, "help": tree[2][path]})
 
@@ -160,7 +168,7 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        _assert_successor("cli-exit", path, observed, RULE_IDS_SUCCESSOR["exit_probe"])
+        _assert_successor("cli-exit", path, observed, BASELINE_SUCCESSOR["exit_probe"])
         return
     assert_golden(
         "cli-exit",

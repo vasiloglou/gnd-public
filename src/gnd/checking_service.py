@@ -39,6 +39,7 @@ from gnd.population import (
     PopulationValidationError,
     load_population,
     load_population_bytes,
+    read_population_bytes,
 )
 from gnd.references import BoundReferenceContext
 from gnd.semantic_registry import capture_branches
@@ -230,7 +231,9 @@ def _run_check_raw(
     composition: Any = None,
     sources: str | os.PathLike[str] | None = None,
     rule_ids: bool = False,
+    baseline: str | os.PathLike[str] | None = None,
 ) -> _RunResult:
+    rule_ids = rule_ids or baseline is not None
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
     population_coordinate = (
         None
@@ -246,6 +249,7 @@ def _run_check_raw(
     wire_version = 15 if rule_ids else 7
     declared: dict[str, tuple[str, Addressing, str | None]] = {}
     extents: dict[str, tuple[list[list[Any]], str]] = {}
+    compared: tuple[str, str, Any] | None = None
 
     def build(
         exit_code: int,
@@ -268,12 +272,22 @@ def _run_check_raw(
             error=error,
             declared=declared if wire_version == 15 else None,
             extents=extents if wire_version == 15 else None,
+            baseline=compared if wire_version == 15 else None,
         )
 
     def refuse_rule_ids(refused: Model) -> _RunResult | None:
         """The --rule-ids refusal for a model version 15 cannot describe, at version 7."""
         nonlocal wire_version
         refusal = _rule_ids_refusal(refused) if rule_ids else None
+        if refusal is None and baseline is not None and structured_derivation_ids(refused):
+            refusal = ValidationIssue(
+                path="model",
+                message=(
+                    "--baseline compares rule violations; this model has structured derivations, "
+                    "whose findings it cannot compare"
+                ),
+                rule_id="check:baseline-unsupported",
+            )
         if refusal is None:
             return None
         wire_version = 7
@@ -362,6 +376,30 @@ def _run_check_raw(
             model=model,
             error=error,
         )
+    if baseline is not None:
+        # The base is read once: the digest covers exactly the bytes the loader parsed.
+        try:
+            base_coordinate = _path(baseline, name="baseline")
+            base_bytes = read_population_bytes(base_coordinate)
+            base_population = load_population_bytes(base_bytes, source=base_coordinate, model=model)
+        except PopulationValidationError as error:
+            issues = [issue.model_copy(update={"path": f"baseline:{issue.path}"}) for issue in error.issues]
+            return _finalize(
+                build(3, issues=issues, warnings=[*model.warnings, *error.warnings]),
+                exit_code=3,
+                fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+                model=model,
+                issues=tuple(issues),
+                error=error,
+            )
+        except Exception as error:  # noqa: BLE001 -- the base is reported as ill-formed, as the head is
+            return _finalize(
+                build(3, error=ValueError(f"baseline: {error}")),
+                exit_code=3,
+                fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+                model=model,
+                error=error,
+            )
 
     composed = None
     if composition is not None:
@@ -489,9 +527,27 @@ def _run_check_raw(
             from gnd.correspondence import acyclic_extents
 
             extents.update(acyclic_extents(model, population, failing))
+    if baseline is not None:
+        from gnd.baseline import compare
+        from gnd.correspondence import acyclic_extents
+
+        base_checked = (evaluator or checker_module.check)(model, base_population)
+        base_failing = [
+            verdict.constraint_ref for verdict in base_checked.verdicts
+            if verdict.verdict == "fail" and verdict.constraint_type == "ring"
+        ]
+        base_extents = acyclic_extents(model, base_population, base_failing) if base_failing else {}
+        comparison = compare(
+            report_module.baseline_views(checked, extents),
+            report_module.baseline_views(base_checked, base_extents),
+            {ref: identity[:2] for ref, identity in declared.items()},
+        )
+        exit_code = checker_module.band(checked, comparison)
+        compared = (str(base_coordinate), hashlib.sha256(base_bytes).hexdigest(), comparison)
     with capture_branches() as projection_trace:
         payload = build(exit_code, report=checked, warnings=warnings)
-    if compiled_operations:
+    if compiled_operations or baseline is not None:
+        # A baseline band is a different claim from the plain one; it is not certified.
         assurance = AssuranceBlockV1(semantic_decision_for_band(exit_code))
         execution = None
     else:
@@ -749,8 +805,9 @@ def _run_check(
     composition: Any = None,
     sources: str | os.PathLike[str] | None = None,
     rule_ids: bool = False,
+    baseline: str | os.PathLike[str] | None = None,
 ) -> _RunResult:
-    if rule_ids and (admission or compiled_operations):
+    if (rule_ids or baseline is not None) and (admission or compiled_operations):
         raise ValueError("rule_ids applies to the plain snapshot check only")
     if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
@@ -769,6 +826,7 @@ def _run_check(
         composition=composition,
         sources=sources,
         rule_ids=rule_ids,
+        **({"baseline": baseline} if baseline is not None else {}),
     )
     if admission:
         from gnd.admission import build_admission, wire_verdicts

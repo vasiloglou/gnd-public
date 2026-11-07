@@ -2,13 +2,16 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
-owner ruled the step-2 asks over r1 (sha256 `30bd7157…bc13c`, commit
-0e74261e), answering "How do you rule on RC3's decisions D1-D7?" with
-"Approve all as proposed" (o, 2026-11-06). D1 is corpus-first, so no
-implementation file is created or edited until the owner approves the
-corpus. `auto=false`. Prior status (r1): "Draft, awaiting the owner gate
-(process-phase step 2)."
+**Owner-approved (2026-11-06): corpus and spec; implementation in
+progress.** The owner approved the RC3 corpus (commit 5f860cb4) with the
+words "Approve, implement" (o, 2026-11-06), answering "Do you approve the
+RC3 corpus answers?". Prior status: "Owner-decided (2026-11-06); approval
+pending on the corpus (§11)."
+
+Earlier gate: the owner ruled the step-2 asks over r1 (sha256
+`30bd7157…bc13c`, commit 0e74261e), answering "How do you rule on RC3's
+decisions D1-D7?" with "Approve all as proposed" (o, 2026-11-06).
+`auto=false`.
 
 ## 2. Provenance
 
@@ -268,3 +271,33 @@ golden:
   base's `--rule-ids` reports at eac81cf8, applying the spec's rules; none
   was read from an implementation.
 - Red at commit: 10 failing (every case), 1 passing (the case list).
+
+## Implementation findings (step 3, recorded as found)
+
+- **I1 (home).** The comparison lives in `src/gnd/baseline.py` (layer
+  `checking`), not under `src/gnd/checker/` as plan §3 put it:
+  `tests/test_public_registry_runtime.py` pins the checker package to exactly
+  four files. Component index entry `check.baseline`.
+- **I2 (one read of the base).** `load_population`'s file read moves
+  unchanged into `population.read_population_bytes`; the service reads the
+  base once, digests those bytes and loads them with
+  `load_population_bytes`, so `population_sha256` covers exactly what was
+  parsed.
+- **I3 (rows compared).** The base needs RC2's extent rows too, or a
+  standing loop would compare a cycle row with edge rows. Both runs'
+  verdicts are compared as version 15 reports them
+  (`payloads.baseline_views`, the payload's own row serialization plus the
+  extents).
+- **I4 (entry-point rule).** `commands/checking.py` may not import a new
+  module; `print_baseline` reaches it through the existing
+  `commands/_output.py` binding list.
+- **I5 (guards).** RF4 rows `_run_check_raw`, `_run_check`,
+  `build_check_payload`; RF5 rows `_cmd_check`, `_print_report`; an RF6b row
+  for `band`; the RC3 dynamic query delta (the static policy is unchanged);
+  the CLI help successor `tests/fixtures/baseline-cli/expected.json`, which
+  differs from RC1's by the one added option (diff checked).
+- **I6 (tests).** T6 first failed because its inserted edge added two
+  components with no owner, which correctly produced new advisory rows; the
+  test now compares the loop and legacy rows only. T8 first read the nested
+  refusal helper's definition as a step; it now pins call order and checks
+  the two refusals' order inside the helper.

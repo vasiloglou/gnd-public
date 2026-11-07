@@ -248,6 +248,17 @@ The ONE reader for an atom's role bindings.
 | `atom_bind(atom) -> dict[str, Any]` | function | 30 | The atom's role bindings as ``{role_name: term}`` -- total, never raises. |
 | `atom_has_bind(atom) -> bool` | function | 46 | Whether the atom carries a well-formed ``bind`` MAPPING at all. |
 
+## gnd.baseline — `src/gnd/baseline.py`
+Components: check.baseline
+Compare a head check with a baseline check (``gnd check --baseline``).
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `VerdictView` | class | 22 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
+| `Comparison` | class | 32 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
+| `baseline_key(address, row) -> Key` | function | 41 | The one key every family's offending row is compared by. |
+| `compare(head, base, addresses) -> Comparison` | function | 52 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
+
 ## gnd.batch — `src/gnd/batch.py`
 Components: check.batch
 (no docstring)
@@ -707,6 +718,7 @@ Components: infra.text_output
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
+| `print_baseline(block) -> None` | function | 192 | The ``--baseline`` summary, with the warning for keys that move when rules are inserted. |
 
 ## gnd.patterns — `src/gnd/patterns.py`
 Components: semantics.ground_atoms
@@ -730,17 +742,18 @@ Machine-readable check/validate payload assembly (D-10, D-11, D-12).
 | `payload_schema_version(model) -> ReportSchemaVersion` | function | 137 | Select the FROZEN report variant for this model's derivation class. |
 | `model_bound_payload_schema_version(model) -> ReportSchemaVersion` | function | 152 | Select the MODEL-BOUND report variant after successful model load. |
 | `build_check_payload(exit_code, model_path, population_path, *, schema_version, model_digest, assura…` | function | 285 | Assemble the ``check`` payload from the objects the text path consumes. |
-| `build_verify_payload(exit_code, model_path, population_path, *, extraction, schema_version, model_d…` | function | 404 | Project a completed or refused verify route from the check payload. |
-| `build_transition_payload(exit_code, model_path, *, evaluated, schema_version, model_digest, assuran…` | function | 516 | The ``check`` payload for a TRANSITION run. |
-| `build_plan_transition_payload(exit_code, model_path, *, evaluated, model_digest, structured, suppli…` | function | 610 | Project the v8 computed-post transition variant. |
-| `build_validate_payload(exit_code, model_path, *, schema_version, issues, warnings, error) -> dict[s…` | function | 665 | Assemble the ``validate`` payload. ``population`` is always ``null``. |
-| `NonJsonValueError` | class(ValueError) | 692 | A payload carried a value RFC 8259 cannot represent (CR-04). |
-| `render_json(payload) -> str` | function | 711 | Return the one RFC-8259 rendering shared by API and CLI callers. |
-| `emit(payload) -> None` | function | 721 | Write one payload as a single JSON document to stdout. |
-| `legacy_report_projection(payload, version) -> dict[str, Any]` | function | 739 | Project v7 to a frozen wire shape without authenticating any claims. |
-| `CurrentReportVersion` | class(int) | 759 | Current model-selected wire plus its legacy class for retained reads. |
-| `current_payload_schema_version(model) -> CurrentReportVersion` | function | 777 | (no docstring) |
-| `requested_check_schema_version(model, *, admission) -> ReportSchemaVersion` | function | 791 | Select the check wire explicitly; admission uses v10 even before load. |
+| `baseline_views(report, extents) -> list[Any]` | function | 392 | Each verdict with the rows version 15 reports for it, for ``gnd.baseline.compare``. |
+| `build_verify_payload(exit_code, model_path, population_path, *, extraction, schema_version, model_d…` | function | 431 | Project a completed or refused verify route from the check payload. |
+| `build_transition_payload(exit_code, model_path, *, evaluated, schema_version, model_digest, assuran…` | function | 543 | The ``check`` payload for a TRANSITION run. |
+| `build_plan_transition_payload(exit_code, model_path, *, evaluated, model_digest, structured, suppli…` | function | 637 | Project the v8 computed-post transition variant. |
+| `build_validate_payload(exit_code, model_path, *, schema_version, issues, warnings, error) -> dict[s…` | function | 692 | Assemble the ``validate`` payload. ``population`` is always ``null``. |
+| `NonJsonValueError` | class(ValueError) | 719 | A payload carried a value RFC 8259 cannot represent (CR-04). |
+| `render_json(payload) -> str` | function | 738 | Return the one RFC-8259 rendering shared by API and CLI callers. |
+| `emit(payload) -> None` | function | 748 | Write one payload as a single JSON document to stdout. |
+| `legacy_report_projection(payload, version) -> dict[str, Any]` | function | 766 | Project v7 to a frozen wire shape without authenticating any claims. |
+| `CurrentReportVersion` | class(int) | 786 | Current model-selected wire plus its legacy class for retained reads. |
+| `current_payload_schema_version(model) -> CurrentReportVersion` | function | 804 | (no docstring) |
+| `requested_check_schema_version(model, *, admission) -> ReportSchemaVersion` | function | 818 | Select the check wire explicitly; admission uses v10 even before load. |
 
 ## gnd.population — `src/gnd/population.py`
 Components: model.population_loading
@@ -753,6 +766,7 @@ Population loading — the ONE shared code path (D-11).
 | `Population.matches_validation_marker(self, model) -> bool` | method | 170 | Whether THIS content passed layer 2 against THIS model object (D-02). |
 | `load_population_bytes(data, *, source, model) -> Population` | function | 501 | Load already-opened population bytes through the normal validation path. |
 | `load_population(path, *, model) -> Population` | function | 518 | Load a population file (YAML or JSON) through the single shared code path. |
+| `read_population_bytes(path) -> bytes` | function | 548 | The bytes of one regular population file, refused past the size cap. |
 
 ## gnd.population_shape — `src/gnd/population_shape.py`
 Components: model.population_shape

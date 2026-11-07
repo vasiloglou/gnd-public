@@ -541,10 +541,15 @@ def load_population(path: str | Path, *, model: Model | None = None) -> Populati
     header remains declarative metadata that this loader never opens (T-01-05);
     layer 2 reads it as opaque data and the model object comes from the caller.
     """
+    path = Path(path)
+    return load_population_bytes(read_population_bytes(path), source=path, model=model)
+
+
+def read_population_bytes(path: str | Path) -> bytes:
+    """The bytes of one regular population file, refused past the size cap."""
     from gnd.safefs import NotRegularFileError, open_regular
 
     path = Path(path)
-
     # Non-blocking, so a FIFO is refused by name instead of hanging in open().
     try:
         descriptor = open_regular(path)
@@ -557,5 +562,4 @@ def load_population(path: str | Path, *, model: Model | None = None) -> Populati
                 f"population file '{path}' is {size} bytes, exceeding the "
                 f"{MAX_POPULATION_BYTES}-byte cap for untrusted population input"
             )
-        data = stream.read(MAX_POPULATION_BYTES + 1)
-    return load_population_bytes(data, source=path, model=model)
+        return stream.read(MAX_POPULATION_BYTES + 1)

@@ -14,7 +14,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd check, check population, validate population, constraint verdicts, snapshot check, evaluate constraints, report violations
 - status: canonical
 - components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, checker.reports
-- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +78 more (graph.md)
+- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.baseline, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, … +79 more (graph.md)
 - flow: cli.dispatch -> cli.checking_command -> cli.api -> check.service -> model.loading -> model.population_loading -> checker.evaluate -> check.admission -> checker.reports
 - notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation.
 
@@ -1781,7 +1781,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### checker.reports
 - does: Represent five-state constraint verdicts, count results and select the checker exit band [CheckReport, band].
-- verbs: CheckReport, ConstraintVerdict, CoverageEntry, Phase1Trace, verdict lattice, verdict counts, exit band, band precedence, alethic failure, unevaluated alethic, vacuous result, deontic warning, registered branch, reason code, snapshot projection, derivation verdict
+- verbs: CheckReport, ConstraintVerdict, CoverageEntry, Phase1Trace, verdict lattice, verdict counts, exit band, band precedence, alethic failure, unevaluated alethic, vacuous result, deontic warning, registered branch, reason code, snapshot projection, derivation verdict, baseline band, band with baseline
 - in: Registered branch-addressed constraint verdicts, derivation verdicts, coverage and optional internal semantic projection.
 - out: Validated report objects, five-state counts and band 0, 1, 2 or 4 with recorded composition branches.
 - status: canonical
@@ -1879,7 +1879,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, cli.exp_command, … +57 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +58 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1960,6 +1960,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - notes: agent_cli.py is a compatibility re-export of agents.py and process.py; neutral process mechanics remain owned by the process component.
 
 
+### check.baseline
+- does: Compare a head check with a baseline check by rule address and canonical offending row, marking violations new, standing or resolved [compare].
+- verbs: baseline, new violations, standing violations, resolved violations, novelty, row novelty, compare two checks, diff violations between populations, CI gate adoption, baseline_key, positional keys
+- in: Version-15 verdict views (ref, verdict, modality, rows) of head and base, and each ref's address and addressing.
+- out: Per-verdict novelty and row novelty, the baseline block's counts, and the two flags the exit band reads.
+- status: canonical
+- modules: src/gnd/baseline.py
+- uses: infra.artifacts
+- used_by: check.service, infra.report_payloads
+- tests: tests/test_rc3_baseline.py
+- checked: full
+
 ### check.admission
 - does: Project and validate admitted or blocked fact occurrences by propagating verdict blockers and opaque dependencies.
 - verbs: build_admission, wire_verdicts, validate_admission_payload, validate_reference_transport, constraint_annotations, admit facts, blocked occurrences, admission partition, propagate blockers, opaque dependencies, typed joins, reference binding, occurrence provenance, admitted unique count
@@ -2019,7 +2031,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
 - modules: src/gnd/checking_service.py
-- uses: assurance.evidence, assurance.policy, check.admission, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
+- uses: assurance.evidence, assurance.policy, check.admission, check.baseline, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
 - used_by: cli.api, infra.text_output, model.diff
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
@@ -2363,7 +2375,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.population_loading
 - does: Load YAML or JSON populations through shape and optional model validation [load_population].
-- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys
+- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys, read_population_bytes, read population file once
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
@@ -2499,7 +2511,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: JSON report, check payload, verify payload, validate payload, transition report, computed post, build_check_payload, schema version, assurance envelope, legacy projection, render_json, emit, report schema, nonfinite refusal
 - status: canonical
 - modules: src/gnd/payloads.py, src/gnd/report.py, src/gnd/report_schema.py
-- uses: assurance.policy, assurance.transport, check.branches, checker.evaluate, infra.errors, infra.input_policy, infra.report_redaction, model.address, model.document, model.loading, model.scalar_terms, semantics.transitions
+- uses: assurance.policy, assurance.transport, check.baseline, check.branches, checker.evaluate, infra.errors, infra.input_policy, infra.report_redaction, model.address, model.document, model.loading, model.scalar_terms, semantics.transitions
 - used_by: check.admission, check.element_coverage, check.service, cli.api, cli.checking_command, cli.dispatch, exp.acceptance, exp.service, exp.session_evidence, exp.session_profile, exp.session_replay, exp.session_store, … +4 more (graph.md)
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_public_construction_site_guards.py
 - checked: partial

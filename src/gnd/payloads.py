@@ -298,6 +298,7 @@ def build_check_payload(
     error: BaseException | None = None,
     declared: Mapping[str, tuple[str, Addressing, str | None]] | None = None,
     extents: Mapping[str, tuple[list[list[Any]], str]] | None = None,
+    baseline: tuple[str, str, Any] | None = None,
 ) -> dict[str, Any]:
     """Assemble the ``check`` payload from the objects the text path consumes.
 
@@ -305,7 +306,9 @@ def build_check_payload(
     declared identity from ``declared`` (positional ref -> address,
     addressing, remedy) and the baseline keys, which stay empty here. A failing
     acyclic verdict named in ``extents`` (ref -> rows, message) lists every
-    in-group edge instead of one cycle (RC2).
+    in-group edge instead of one cycle (RC2). ``baseline`` (base path, its
+    sha256, a ``gnd.baseline.Comparison``) fills each verdict's novelty and the
+    ``baseline`` block (RC3); ``exit_code`` is then the baseline band.
     """
     if schema_version == 15 and declared is None:
         raise ValueError("a version 15 check payload needs the declared constraint identities")
@@ -374,16 +377,37 @@ def build_check_payload(
     elif assurance is not None:
         raise ValueError("legacy report cannot carry assurance")
     if schema_version == 15:
-        payload["verdicts"] = [_rule_ids_verdict(row, declared, extents or {}) for row in payload["verdicts"]]
-        payload["baseline"] = None
+        novelty = baseline[2].novelty if baseline is not None else {}
+        payload["verdicts"] = [
+            _rule_ids_verdict(row, declared, extents or {}, novelty.get(row["constraint_ref"]))
+            for row in payload["verdicts"]
+        ]
+        payload["baseline"] = None if baseline is None else {
+            "population": baseline[0], "population_sha256": baseline[1], **baseline[2].counts,
+        }
         payload["allow_vacuous"] = False
     return payload
+
+
+def baseline_views(
+    report: CheckReport, extents: Mapping[str, tuple[list[list[Any]], str]]
+) -> list[Any]:
+    """Each verdict with the rows version 15 reports for it, for ``gnd.baseline.compare``."""
+    from gnd.baseline import VerdictView
+
+    views = []
+    for row in _serializable_verdicts(report.model_dump()["verdicts"]):
+        extent = extents.get(row["constraint_ref"]) if row["verdict"] == "fail" else None
+        rows = extent[0] if extent is not None else row["offending_facts"]
+        views.append(VerdictView(row["constraint_ref"], row["verdict"], row["modality"], rows))
+    return views
 
 
 def _rule_ids_verdict(
     row: Mapping[str, Any],
     declared: Mapping[str, tuple[str, Addressing, str | None]],
     extents: Mapping[str, tuple[list[list[Any]], str]],
+    novelty: tuple[str, list[str]] | None = None,
 ) -> dict[str, Any]:
     """One version-15 verdict: the version-7 row with its constraint's identity."""
     address, addressing, remedy = declared[row["constraint_ref"]]
@@ -397,7 +421,10 @@ def _rule_ids_verdict(
             projected[key] = extent[1]
         if key == "constraint_ref":
             projected.update(address=address, addressing=addressing, remedy=remedy)
-    projected.update(novelty=None, row_novelty=None)
+    projected.update(
+        novelty=None if novelty is None else novelty[0],
+        row_novelty=None if novelty is None else novelty[1],
+    )
     return projected
 
 

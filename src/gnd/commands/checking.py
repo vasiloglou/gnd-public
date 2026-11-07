@@ -19,11 +19,13 @@ from gnd.commands._output import (
     _print_report,
     _print_trace,
     _print_transition,
+    print_baseline,
 )
 from gnd.exits import EXIT_COLLISION, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_USAGE
 from gnd.model import ModelValidationError, load_model
 
 _DEFAULT_CHECK = check
+
 
 def _read_validate_documents(paths: list[str]) -> tuple[dict[str, bytes], int | None, str | None]:
     """The ``--document`` bytes by path, or the exit and message of the first unreadable one."""
@@ -232,12 +234,14 @@ def _cmd_transition(
         print(f"{prefix}: {result.error}")
     return result.exit_code
 
-def _declared_from_payload(payload: dict) -> dict[str, tuple[str, str | None, str]] | None:
-    """(address, remedy, message) per positional ref, read back from a version-15 payload."""
+def _declared_from_payload(
+    payload: dict,
+) -> dict[str, tuple[str, str | None, str, str | None]] | None:
+    """(address, remedy, message, novelty) per positional ref, read back from a version-15 payload."""
     if payload.get("schema_version") != 15:
         return None
     return {
-        row["constraint_ref"]: (row["address"], row["remedy"], row["message"])
+        row["constraint_ref"]: (row["address"], row["remedy"], row["message"], row["novelty"])
         for row in payload["verdicts"]
     }
 
@@ -255,6 +259,7 @@ def _cmd_check(
     composition: str | None = None,
     sources: str | None = None,
     rule_ids: bool = False,
+    baseline: str | None = None,
 ) -> int:
     result = api_module._run_check(
         model_path,
@@ -267,6 +272,7 @@ def _cmd_check(
         **({"compiled_operations": True} if compiled_operations else {}),
         **({"composition": composition, "sources": sources} if composition is not None else {}),
         **({"rule_ids": True} if rule_ids else {}),
+        **({"baseline": baseline} if baseline is not None else {}),
     )
     if output_format == "json":
         if result.execution is not None:
@@ -286,6 +292,7 @@ def _cmd_check(
         for warning in result.warnings:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         _print_report(result.report, _declared_from_payload(result.payload))
+        print_baseline(result.payload.get("baseline"))
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)
@@ -735,6 +742,11 @@ def _register_check(subparsers):
         action="store_true",
         help="report version 15: each verdict carries the constraint's declared id and remedy",
     )
+    check_parser.add_argument(
+        "--baseline",
+        metavar="BASE",
+        help="mark each violation new or standing against the population BASE; implies --rule-ids",
+    )
     _add_format_argument(check_parser)
     _add_unredacted_argument(check_parser)
 
@@ -953,7 +965,7 @@ def handle(args, parsers) -> int:
         return _cmd_compose(args.model, args.directory, args.out, args.record)
 
     if args.command == "check":
-        if args.rule_ids:
+        if args.rule_ids or args.baseline is not None:
             conflicting = [
                 flag
                 for flag, value in (
@@ -968,7 +980,8 @@ def handle(args, parsers) -> int:
             ]
             if conflicting:
                 check_parser.error(
-                    f"--rule-ids applies to one plain snapshot check; it excludes {', '.join(conflicting)}"
+                    f"{'--baseline' if args.baseline is not None else '--rule-ids'} applies to one "
+                    f"plain snapshot check; it excludes {', '.join(conflicting)}"
                 )
         if (args.composition is None) != (args.sources is None):
             check_parser.error("--composition and --sources must be supplied together")
@@ -1070,5 +1083,6 @@ def handle(args, parsers) -> int:
         composition=args.composition,
         sources=args.sources,
         rule_ids=args.rule_ids,
+        baseline=args.baseline,
     )
 

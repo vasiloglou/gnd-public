@@ -1,14 +1,13 @@
 # Report output fidelity
 
-**Status: r3, proposed; decisions ruled, plan not yet approved.** The owner
-ruled RF-D0 and D1-D6 "as proposed" on 2026-11-07 (section 10). That is a
-ruling on those decisions, not approval of the plan: no plan-gate record
-exists, and the plan gate ("Approve r3?") is still open. RF-D0's one Codex
-review ran over r2 (plan sha256 `dfc559bc…`, commit f5ad4290), disposition
-`block`, 10 findings, triaged and applied in this revision:
+**Status: r3, approved by the owner at the plan gate on 2026-11-07
+("Approve r3, D7 (a)"; [plan-gate record](../001-plan.md)).** The owner ruled
+RF-D0 and D1-D6 "as proposed" earlier the same day (section 10). RF-D0's one
+Codex review ran over r2 (plan sha256 `dfc559bc…`, commit f5ad4290),
+disposition `block`, 10 findings, all applied in r3:
 [evidence/plan-review-r2/](../evidence/plan-review-r2/). **r3 itself was not
-re-reviewed**; its repairs carry no review opinion. D7 is new in r3 and open.
-`auto=false`.
+re-reviewed**; its repairs carry no review opinion. The approval is of the
+plan only: no phase spec is approved. `auto=false`.
 
 Two issues that the `rule-check-followups` plan split out by owner ruling
 (FD1, FD2 in [that plan](../../rule-check-followups/notes/rule-check-followups-plan.md)):
@@ -378,4 +377,4 @@ merge-base run on beast-3 precedes the first code change.
 | D4 | Name and shape of the new identity | `identity_version: 2` over the version-1 envelope extended to all models (**narrowed in r3 by review P2**: version 2 is defined only for a model without `reference_populations`; the owner's ruling covered the wording above, so the narrowing is flagged for the plan gate); legacy named `legacy-repr`. Alternative: a different envelope for plain models, which costs a second canonical shape **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D5 | The shipped producer surface | decided in the ROF3 spec; options are an extra `validate --trace` line (moves the trace goldens), a flag, a subcommand **Ruled (o, 2026-11-07): as proposed**, i.e. deferred to the ROF3 spec ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D6 | Index review | `components_index.py review` printed 180 leads in 10 groups ("a place to look, not a finding") and names `output.py` among them. The plan does not rely on the index for the renderer's boundaries beyond component ids; the owner may call for the index's Review mode **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
-| D7 | Generated Pyrel plans (new in r3, review P3) | the plan's embedded `MODEL_DIGEST` and its in-file comparison cannot call a GND helper. (a) keep the legacy constant: plans stay byte-identical, canonical pins are refused by generated plans (proposal). (b) embed both: 24 recorded plan fixtures change bytes (rule 1) **Open** |
+| D7 | Generated Pyrel plans (new in r3, review P3) | the plan's embedded `MODEL_DIGEST` and its in-file comparison cannot call a GND helper. (a) keep the legacy constant: plans stay byte-identical, canonical pins are refused by generated plans (proposal). (b) embed both: 24 recorded plan fixtures change bytes (rule 1) **Ruled (o, 2026-11-07): (a)** ("Approve r3, D7 (a)", answering "Approve plan r3 at the plan gate?"). |

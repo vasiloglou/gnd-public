@@ -161,7 +161,9 @@ class Population(BaseModel):
         """A producer names the tool behind ``tool-output``; no other source has one."""
         if self.producer is not None and self.source != "tool-output":
             raise ValueError("producer is allowed only with source tool-output")
-        if self.producer is not None and not 1 <= len(self.producer) <= 200:
+        if self.producer is not None and not (
+            isinstance(self.producer, str) and 1 <= len(self.producer) <= 200
+        ):
             raise ValueError("producer must be 1 to 200 characters")
         return self
 

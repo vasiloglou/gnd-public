@@ -181,3 +181,14 @@ unlabelled combined digest and the labelled candidate's witness identity)
 were measured at `12daa5b7`. T5 relabels a copy of the dispatch reference
 in `tmp_path` and updates its declared sha256; the committed fixture is
 untouched.
+
+## Implementation findings (2026-11-07)
+
+- **I1.** M1 and M2 landed at 10265ddf: 12 passed. Mutants: M1 removed,
+  4 red; binder half alone, 4 red; combiner half alone, 3 red.
+- **I2 (review R1).** The reused validator checked a producer's length,
+  not its type, so a copy could set a one-element list. The validator now
+  requires a string; successor case T1 (e) was red first. Construction is
+  unaffected: pydantic already types the field.
+- **I3.** The component index named `model.population_loading` and
+  `model.loading` for reread; both entries now list the FU2 tests and verbs.

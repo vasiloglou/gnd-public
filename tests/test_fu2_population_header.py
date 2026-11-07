@@ -89,6 +89,8 @@ def _relabelled_reference_root(tmp_path: Path, label: str) -> Path:
                      id="b-producer-on-fixture"),
         pytest.param(_tool_output, {"producer": ""}, LENGTH_MESSAGE, id="c-empty-producer"),
         pytest.param(_tool_output, {"producer": "x" * 201}, LENGTH_MESSAGE, id="d-201-characters"),
+        # Review R1 (a successor case): the length check alone admits a one-element list.
+        pytest.param(_tool_output, {"producer": ["x"]}, LENGTH_MESSAGE, id="e-non-string-producer"),
     ],
 )
 def test_t1_a_copy_cannot_break_the_producer_invariant(make, update, message) -> None:

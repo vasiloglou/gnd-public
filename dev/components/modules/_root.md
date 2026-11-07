@@ -762,12 +762,13 @@ Population loading — the ONE shared code path (D-11).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Population` | class(BaseModel) | 81 | A loaded population: facts keyed by fact-type id, facts keyed by role_name. |
-| `Population.validated_against(self) -> Model \| None` | method | 168 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
-| `Population.matches_validation_marker(self, model) -> bool` | method | 183 | Whether THIS content passed layer 2 against THIS model object (D-02). |
-| `load_population_bytes(data, *, source, model) -> Population` | function | 516 | Load already-opened population bytes through the normal validation path. |
-| `load_population(path, *, model) -> Population` | function | 533 | Load a population file (YAML or JSON) through the single shared code path. |
-| `read_population_bytes(path) -> bytes` | function | 563 | The bytes of one regular population file, refused past the size cap. |
+| `Population` | class(BaseModel) | 82 | A loaded population: facts keyed by fact-type id, facts keyed by role_name. |
+| `Population.model_copy(self, *, update, deep) -> Population` | method | 168 | Copy, keeping the producer invariant that ``update`` would otherwise skip (issue 115). |
+| `Population.validated_against(self) -> Model \| None` | method | 181 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
+| `Population.matches_validation_marker(self, model) -> bool` | method | 196 | Whether THIS content passed layer 2 against THIS model object (D-02). |
+| `load_population_bytes(data, *, source, model) -> Population` | function | 530 | Load already-opened population bytes through the normal validation path. |
+| `load_population(path, *, model) -> Population` | function | 547 | Load a population file (YAML or JSON) through the single shared code path. |
+| `read_population_bytes(path) -> bytes` | function | 577 | The bytes of one regular population file, refused past the size cap. |
 
 ## gnd.population_shape — `src/gnd/population_shape.py`
 Components: model.population_shape

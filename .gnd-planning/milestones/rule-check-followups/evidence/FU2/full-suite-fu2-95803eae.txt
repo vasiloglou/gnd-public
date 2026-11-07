@@ -1,0 +1,11 @@
+# Full suite at 95803eae (FU2 final source), beast-3, six round-robin shards
+# command: ~/fu-shards/fu-shards.sh fu2b 95803eae
+shard0: 3123 passed, 53 deselected in 346.95s (0:05:46) shard exit=0 
+shard1: 3639 passed, 124 deselected in 457.26s (0:07:37) shard exit=0 
+shard2: 2642 passed, 193 deselected in 205.72s (0:03:25) shard exit=0 
+shard3: 3510 passed, 74 deselected, 1 warning in 650.84s (0:10:50) shard exit=0 
+shard4: 2770 passed, 225 deselected in 336.83s (0:05:36) shard exit=0 
+shard5: 2148 passed, 125 deselected, 2 errors in 595.40s (0:09:55) shard exit=1 
+# failing list (fu2b.fail), sha256 8261732b98e252d1e17e491a8480080bafd2434fbd17f8a503aad8390ea9c20a -- equal to the base list
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid

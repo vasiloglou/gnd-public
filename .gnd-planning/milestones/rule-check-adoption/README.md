@@ -7,8 +7,8 @@ runs `gnd check` as a CI gate over a project's component facts: GR-D1
 
 **Status: plan r6 approved by the owner on 2026-11-06, as written
 ([plan-gate record](005-plan.md)). Reviews ran over r2 (full panel) and r3
-to r5 (Codex); r6 itself was not reviewed (RC-D16). RC1-RC5 are merged (PRs 101, 103, 107, 108, 109); RC6 is implemented and
-recorded ([phase record](011-phase-RC6.md)), not yet merged.**
+to r5 (Codex); r6 itself was not reviewed (RC-D16). RC1-RC6 are merged (PRs 101, 103, 107, 108, 109, 110); the milestone close
+is recorded ([close record](012-milestone-close.md)), its PR pending.**
 
 - [Canonical plan (r6, approved)](notes/rule-check-adoption-plan.md)
 - [Panel record over r2](001-panel.md)
@@ -28,6 +28,7 @@ recorded ([phase record](011-phase-RC6.md)), not yet merged.**
 - [RC5 phase record](010-phase-RC5.md)
 - [RC6 spec (owner-approved)](notes/phase-RC6-spec.md)
 - [RC6 phase record](011-phase-RC6.md)
+- [Milestone close record](012-milestone-close.md)
 
 Phases:
 - RC1: declared constraint id and `remedy` in each verdict, report version 15;
@@ -38,5 +39,5 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the RC6 PR (size overrun accepted), the owner's ruling on D12, then the
-milestone close.
+Next action: the owner merges the close PR, which closes issues 92, 93, 94,
+96 and 97. GR-D4 (issue 95) is its own milestone.

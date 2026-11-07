@@ -13,10 +13,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Validate a model and check a population against it, producing a five-state verdict report with witnesses and exit band.
 - verbs: gnd check, check population, validate population, constraint verdicts, snapshot check, evaluate constraints, report violations
 - status: canonical
-- components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, checker.reports
-- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.baseline, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, … +79 more (graph.md)
+- components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, check.baseline, checker.reports
+- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +78 more (graph.md)
 - flow: cli.dispatch -> cli.checking_command -> cli.api -> check.service -> model.loading -> model.population_loading -> checker.evaluate -> check.admission -> checker.reports
-- notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation.
+- notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation. Under `--rule-ids` (report version 15) the service adds declared rule identity, remedies and acyclic extents; `--baseline` checks the base population too and compares the two in check.baseline, and the exit band then comes from `band(report, comparison, allow_vacuous=)`.
 
 ### subsystem.synth
 - does: Generate conforming and deliberately violating synthetic populations from a model with provenance sidecars.
@@ -509,7 +509,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.checking_command
 - does: Register and dispatch model validation, population checks, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, check population, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
+- verbs: validate model, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1898,8 +1898,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.address
-- does: Produce and parse declared model-element addresses and legacy positional constraint references [parse_address].
-- verbs: parse_address, operation_address, fact_type_address, constraint_address, derivation_address, positional_constraint_ref, element address, parse identifier, constraint locator, legacy reference, declared id, positional index
+- does: Produce and parse declared model-element addresses and legacy positional constraint references, including a constraint's declared id with a positional fallback [parse_address].
+- verbs: parse_address, declared_constraint_address, declared id or positional fallback, constraint addressing, operation_address, fact_type_address, constraint_address, derivation_address, positional_constraint_ref, element address, parse identifier, constraint locator, legacy reference, declared id, positional index
 - in: element identifiers or an address string
 - out: canonical address string or Address; None for malformed text
 - status: canonical
@@ -1969,6 +1969,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - modules: src/gnd/baseline.py
 - uses: infra.artifacts
 - used_by: check.service, infra.report_payloads
+- part_of: subsystem.check
 - tests: tests/test_rc3_baseline.py
 - checked: full
 
@@ -2025,8 +2026,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### check.service
-- does: Orchestrate population checks, anchor binding, admission, assurance and projected reports [run_check].
-- verbs: run_check, run_check_raw, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration
+- does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
+- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration
 - in: model and population paths or loaded objects; check options
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
@@ -2240,7 +2241,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.snapshot_decision
 - does: Evaluate adapted snapshot constraints into semantic decisions and project witnesses onto admitted public origins.
-- verbs: snapshot decision, constraint evaluation, correspondence, semantic verdict, acceptance ready, band composition, witness projection, public values, fact occurrences, origin selection, guarded constraints, indexed evaluation, reference join limit, branch evidence, correspond_snapshot, evaluate_snapshot, project_snapshot, project_finding
+- verbs: snapshot decision, constraint evaluation, correspondence, semantic verdict, acceptance ready, band composition, witness projection, public values, fact occurrences, origin selection, guarded constraints, indexed evaluation, reference join limit, branch evidence, correspond_snapshot, evaluate_snapshot, project_snapshot, project_finding, acyclic extents, acyclic_extents, in-group edges, project_witness, evaluation_snapshot
 - in: Model and validated population or adapted snapshot; effective facts, lineage and optional variant aliases
 - out: SnapshotDecision and SnapshotProjection with findings, bands, counts, semantic decisions and fact coordinates
 - status: canonical
@@ -2507,8 +2508,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.report_payloads
-- does: Assemble versioned JSON check, verify, validate and transition report payloads.
-- verbs: JSON report, check payload, verify payload, validate payload, transition report, computed post, build_check_payload, schema version, assurance envelope, legacy projection, render_json, emit, report schema, nonfinite refusal
+- does: Assemble versioned JSON check, verify, validate and transition report payloads, including report version 15 with rule ids, remedies, novelty and the baseline block.
+- verbs: JSON report, version 15, rule ids, remedy, baseline block, baseline_views, novelty, row novelty, check payload, verify payload, validate payload, transition report, computed post, build_check_payload, schema version, assurance envelope, legacy projection, render_json, emit, report schema, nonfinite refusal
 - status: canonical
 - modules: src/gnd/payloads.py, src/gnd/report.py, src/gnd/report_schema.py
 - uses: assurance.policy, assurance.transport, check.baseline, check.branches, checker.evaluate, infra.errors, infra.input_policy, infra.report_redaction, model.address, model.document, model.loading, model.scalar_terms, semantics.transitions
@@ -3287,9 +3288,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 <!-- verbs:begin -->
 ## Verbs
 
+- acyclic extents: check.service, check.snapshot_decision
+- acyclic_extents: check.snapshot_decision, checker.evaluate
 - adapter policy: cli.exp_command, cli.solve_command
 - additive policy: cli.evolve_command, evolve.policy
 - age appropriate: examples.book_recommendations, examples.book_rules
+- allow vacuous: check.service, checker.reports, cli.checking_command
 - anchor_normalize: extract.scalar_identity, model.anchor_identity
 - applicable set: cli.extract_command, extract.service, fidelity.doccheck, fidelity.service, model.reference_schemes
 - application launcher: examples.book_recommendations, examples.expense_application
@@ -3422,6 +3426,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - no extraction: cli.verify_command, export.verification
 - no subjects: measure.coverage, synth.frontier, synth.prediction
 - not derivable: synth.boundary, synth.mutations
+- novelty: check.baseline, infra.report_payloads
 - numeric equality: model.scalar_identity, synth.identity
 - object type sentence: extract.vocabulary, model.extraction_vocabulary
 - offending facts: checker.evaluate, examples.session_agents
@@ -3490,6 +3495,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - reviewer timeout: cli.review_command, review.command
 - role players: extract.guidelines, model.query_index
 - round trip: exp.frontmatter, infra.yaml_comments
+- row novelty: check.baseline, infra.report_payloads
+- rule ids: check.service, cli.checking_command, infra.report_payloads
 - rule witness: examples.book_rules, examples.expense_rules
 - run experiment: agent.solve, cli.exp_command
 - run_walk: agent.solve, cli.solve_command

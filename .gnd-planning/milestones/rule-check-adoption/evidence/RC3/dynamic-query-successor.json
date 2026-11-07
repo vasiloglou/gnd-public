@@ -134,6 +134,12 @@
     ],
     [
       "src/gnd/checking_service.py",
+      "_baseline_named",
+      "list[ValidationIssue]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
       "_run_check",
       "os.PathLike[str]",
       1
@@ -253,6 +259,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7283,
-  "result_occurrences": 9099
+  "result_distinct_rows": 7284,
+  "result_occurrences": 9100
 }

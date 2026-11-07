@@ -221,3 +221,53 @@ def test_t11_baseline_excludes_every_other_arm(arm) -> None:
     assert result.returncode == 64
     assert result.stdout == b""
     assert b"--baseline applies to one plain snapshot check" in result.stderr
+
+
+# --- Review regressions (notes/phase-RC3-codex-review.md, B1-B3) -------------------
+
+
+def test_b1_one_number_spelled_two_ways_is_one_key() -> None:
+    base = [VerdictView("r1", "fail", "alethic", [{"$i": "x", "$a": 1}])]
+    head = [VerdictView("r1", "fail", "alethic", [{"$i": "x", "$a": 1.0}])]
+    result = compare(head, base, ADDRESSES)
+    assert result.novelty["r1"] == ("standing", ["standing"])
+    assert dict(result.counts)["resolved"] == 0
+    # A string is never the number it spells, and a boolean is never 1.
+    for other in ("1", True):
+        assert compare([VerdictView("r1", "fail", "alethic", [other])],
+                       [VerdictView("r1", "fail", "alethic", [1])], ADDRESSES).novelty["r1"][0] == "new"
+
+
+def test_b2_base_warnings_are_reported_and_named(tmp_path) -> None:
+    base = (CORPUS / "populations" / "standing-only.base.pop.yaml").read_text()
+    base = base.replace(" model_id: urn:gnd-fixture:rc3-graph@1,", "").replace(
+        "../models/graph.orm.yaml", str(CORPUS / "models" / "graph.orm.yaml"))
+    (tmp_path / "base.pop.yaml").write_text(base)
+    result = run_main(
+        ["check", "models/graph.orm.yaml", "populations/standing-only.head.pop.yaml",
+         "--baseline", str(tmp_path / "base.pop.yaml"), "--format", "json"],
+        cwd=CORPUS,
+    )
+    warnings = json.loads(result.stdout)["warnings"]
+    assert [w["rule_id"] for w in warnings] == ["population:model-id-absent"]
+    assert warnings[0]["path"].startswith("baseline:")
+
+
+def test_b3_a_failing_base_evaluation_is_an_internal_error_payload() -> None:
+    from gnd import checker
+    from gnd.checking_service import _run_check_raw
+
+    calls = []
+
+    def evaluator(model, population):
+        calls.append(population)
+        if len(calls) == 2:
+            raise RuntimeError("base evaluation failed")
+        return checker.check(model, population)
+
+    result = _run_check_raw(
+        CORPUS / "models" / "graph.orm.yaml", CORPUS / "populations" / "standing-only.head.pop.yaml",
+        evaluator=evaluator, baseline=CORPUS / "populations" / "standing-only.base.pop.yaml",
+    )
+    assert result.exit_code == 70
+    assert result.payload["exit_code"] == 70

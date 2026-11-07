@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from fractions import Fraction
 from typing import Any
 
 from gnd.artifacts import canonical_json_bytes
@@ -38,9 +39,26 @@ class Comparison:
     undecided_alethic: bool
 
 
+def _identity(value: Any) -> Any:
+    """A row value by identity: one number however it is spelled (``1`` is ``1.0``).
+
+    Booleans and strings stay themselves, so ``True`` and ``"1"`` are never the number 1.
+    """
+    if isinstance(value, bool) or value is None or isinstance(value, str):
+        return value
+    if isinstance(value, (int, float)):
+        exact = Fraction(value)
+        return {"$number": f"{exact.numerator}/{exact.denominator}"}
+    if isinstance(value, Mapping):
+        return {key: _identity(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_identity(item) for item in value]
+    return value
+
+
 def baseline_key(address: str, row: Any | None) -> Key:
     """The one key every family's offending row is compared by."""
-    return address, None if row is None else canonical_json_bytes(row)
+    return address, None if row is None else canonical_json_bytes(_identity(row))
 
 
 def _keys(view: VerdictView, address: str) -> list[Key]:

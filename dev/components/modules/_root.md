@@ -254,10 +254,10 @@ Compare a head check with a baseline check (``gnd check --baseline``).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `VerdictView` | class | 22 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
-| `Comparison` | class | 32 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
-| `baseline_key(address, row) -> Key` | function | 41 | The one key every family's offending row is compared by. |
-| `compare(head, base, addresses) -> Comparison` | function | 52 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
+| `VerdictView` | class | 23 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
+| `Comparison` | class | 33 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
+| `baseline_key(address, row) -> Key` | function | 59 | The one key every family's offending row is compared by. |
+| `compare(head, base, addresses) -> Comparison` | function | 70 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
 
 ## gnd.batch — `src/gnd/batch.py`
 Components: check.batch

@@ -383,9 +383,9 @@ def _run_check_raw(
             base_bytes = read_population_bytes(base_coordinate)
             base_population = load_population_bytes(base_bytes, source=base_coordinate, model=model)
         except PopulationValidationError as error:
-            issues = [issue.model_copy(update={"path": f"baseline:{issue.path}"}) for issue in error.issues]
+            issues = _baseline_named(error.issues)
             return _finalize(
-                build(3, issues=issues, warnings=[*model.warnings, *error.warnings]),
+                build(3, issues=issues, warnings=[*model.warnings, *_baseline_named(error.warnings)]),
                 exit_code=3,
                 fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
                 model=model,
@@ -518,6 +518,8 @@ def _run_check_raw(
         )
 
     warnings = [*model.warnings, *population.warnings]
+    if baseline is not None:
+        warnings.extend(_baseline_named(base_population.warnings))
     if wire_version == 15:
         failing = [
             verdict.constraint_ref for verdict in checked.verdicts
@@ -531,17 +533,27 @@ def _run_check_raw(
         from gnd.baseline import compare
         from gnd.correspondence import acyclic_extents
 
-        base_checked = (evaluator or checker_module.check)(model, base_population)
-        base_failing = [
-            verdict.constraint_ref for verdict in base_checked.verdicts
-            if verdict.verdict == "fail" and verdict.constraint_type == "ring"
-        ]
-        base_extents = acyclic_extents(model, base_population, base_failing) if base_failing else {}
-        comparison = compare(
-            report_module.baseline_views(checked, extents),
-            report_module.baseline_views(base_checked, base_extents),
-            {ref: identity[:2] for ref, identity in declared.items()},
-        )
+        try:
+            base_checked = (evaluator or checker_module.check)(model, base_population)
+            base_failing = [
+                verdict.constraint_ref for verdict in base_checked.verdicts
+                if verdict.verdict == "fail" and verdict.constraint_type == "ring"
+            ]
+            base_extents = acyclic_extents(model, base_population, base_failing) if base_failing else {}
+            comparison = compare(
+                report_module.baseline_views(checked, extents),
+                report_module.baseline_views(base_checked, base_extents),
+                {ref: identity[:2] for ref, identity in declared.items()},
+            )
+        except Exception as error:  # noqa: BLE001 -- the base's evaluation fails as the head's does
+            return _finalize(
+                build(EXIT_INTERNAL, error=error),
+                exit_code=EXIT_INTERNAL,
+                fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+                model=model,
+                populations=(population, base_population),
+                error=error,
+            )
         exit_code = checker_module.band(checked, comparison)
         compared = (str(base_coordinate), hashlib.sha256(base_bytes).hexdigest(), comparison)
     with capture_branches() as projection_trace:
@@ -765,6 +777,11 @@ def _reference_wrap(result: _RunResult) -> _RunResult:
         "occurrence_origins": origins,
     }
     return replace(result, payload=wrapper, json_text=report_module.render_json(wrapper) + "\n")
+
+
+def _baseline_named(issues: Any) -> list[ValidationIssue]:
+    """The base population's issues or warnings, each path marked as the base's."""
+    return [issue.model_copy(update={"path": f"baseline:{issue.path}"}) for issue in issues]
 
 
 def _rule_ids_refusal(model: Model) -> ValidationIssue | None:

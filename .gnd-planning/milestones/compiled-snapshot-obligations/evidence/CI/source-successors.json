@@ -24,8 +24,8 @@
         ]
       },
       "after": {
-        "raw_sha256": "8d01afe7a9b0b5e3d84048e0b15540a168b9d052b9118dd95aaba5097c1cc82a",
-        "algorithm_sha256": "fa004341b03ee9902b52fad33930d56f305fc92707bff94474b45a5830cbdee3",
+        "raw_sha256": "eb35d6efa3488287fd1b06db815f7d30eb44132e4ded0ef5385cc7d594526625",
+        "algorithm_sha256": "b481b0338b6a2fb9afd46a1fcda54a458c0191e34fe0d0f22af8028a12730eb6",
         "imports": [
           "AnchorError",
           "AnchorSidecar",
@@ -45,7 +45,7 @@
           "verify_composition"
         ]
       },
-      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): at wire version 15 only, failing ring verdicts' acyclic extents are computed and forwarded to the payload. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the optional baseline keyword implies rule_ids, refuses structured-derivation models (check:baseline-unsupported), reads and digests the base once, checks it with the same evaluator, compares, and takes the band from the comparison; the payload carries an uncertified assurance block for that band."
+      "reason": "Approved CS1 opt-in service forwarding, admission refusal and unavailable assurance composition; default contracts retain their controls. Then analytics-m3-repairs phase 11 (512ed63): reuse of scoped full derivation preparation; results unchanged (that phase's parity gates). Then composition-and-type-induction CT2 (2c25ba4d): optional composition and sources keywords re-derive and verify a composition record before checking the composed bytes, check anchors per source and add the lineage block; with composition=None every path is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional rule_ids keyword selects report version 15 and its declared-identity map for a plain version-7 model, and refuses temporal, redaction-policy and reference-population models (check:rule-ids-unsupported) after model load and before population load; with rule_ids=False every path is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): at wire version 15 only, failing ring verdicts' acyclic extents are computed and forwarded to the payload. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the optional baseline keyword implies rule_ids, refuses structured-derivation models (check:baseline-unsupported), reads and digests the base once, checks it with the same evaluator, compares, and takes the band from the comparison; the payload carries an uncertified assurance block for that band. After RC3 review findings B2 and B3, the base's warnings are reported with baseline: paths, and a failing base evaluation returns the internal-error payload."
     },
     {
       "kind": "RF4",

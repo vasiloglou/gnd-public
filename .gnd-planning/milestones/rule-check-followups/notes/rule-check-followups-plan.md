@@ -1,7 +1,9 @@
 # Rule-check follow-ups
 
-**Status: draft r1, 2026-11-07, awaiting the owner's plan gate. Not
-reviewed** (no review instrument selected yet; RF-D0 below). `auto=false`.
+**Status: draft r2, 2026-11-07. The owner ruled RF-D0 and FD1-FD5 as
+proposed over r1 (commit 3efdd2cd, sha256 `3b37d379…`): one Codex review
+before the plan gate; issues 111 and 112 split out. Not yet reviewed; the
+plan gate follows the review.** `auto=false`.
 
 Eight small follow-ups that the rule-check-adoption milestone deferred at its
 close ([012-milestone-close.md](../../rule-check-adoption/012-milestone-close.md),
@@ -27,8 +29,8 @@ The milestone is complete when, on main after merge:
    loosening what they assert beyond what a ruling allows (FU4, issue 117).
 5. The unused cycle helpers are retired or explicitly kept, per RF-D5
    (FU5, issue 114).
-6. Issues 111 and 112 are each either delivered (FU6, FU7) or split out to a
-   named target by owner ruling (FD1, FD2).
+6. Issues 111 and 112 stay open, split out by owner ruling (FD1, FD2) to
+   milestones of their own; this milestone does not close them.
 7. Each phase has an approved spec, a record with verbatim focused-gate
    output and one independent reviewer; the close record disposes every open
    question and closes the delivered issues.
@@ -78,12 +80,12 @@ rule-check-adoption close record.
   makes the extent read the checker's pairs.
 - **FU4:** per FD4.
 - **FU5:** per FD5.
-- **FU6 (111), FU7 (112):** only if FD1 / FD2 keep them here.
+- Issues 111 and 112: split out (FD1, FD2).
 
 ## 3. Dependencies and artifact homes
 
 ```
-FU1   FU2   FU3   FU4   FU5   [FU6]  [FU7]   ──> close
+FU1   FU2   FU3   FU4   FU5   ──> close
 ```
 
 The phases are independent; the order is by size and risk. FU3 reuses the
@@ -129,8 +131,7 @@ exact-terms fixtures FU1 uses.
 ### FU5: cycle helpers (issue 114; about -90 source, -10 test lines)
 - FU5-C1: per FD5; the guard registries and metrics successors updated.
 
-### FU6: canonical model identity (issue 111) — only under FD1 (b)
-### FU7: text rendering of projected reports (issue 112) — only under FD2 (b)
+FU6 (issue 111) and FU7 (issue 112) are withdrawn: split out by FD1 and FD2.
 
 ### Close
 Close record; question sweep; full suite against the merge-base record.
@@ -138,7 +139,7 @@ Close record; question sweep; full suite against the merge-base record.
 ## 5. Documentation, skill and compatibility surfaces
 
 FU1 touches the report reference only if it lists reason codes per version.
-FU5 touches the shim inventory. No skill text changes unless FU7 runs.
+FU5 touches the shim inventory. No skill text changes.
 
 ## 6. Risks and required controls
 
@@ -178,9 +179,9 @@ The merge-base full suite is run on beast-3 before FU1 changes code.
 
 | ID | Question | Proposal |
 |---|---|---|
-| RF-D0 | Review this plan before the gate? | one reviewer (Codex), as for this milestone's predecessor's r3-r5; the panel is the project's bar |
-| FD1 | Issue 111 (repr model digest) | **(a) split out to its own milestone**: it is a cross-process identity with ~100 recorded values and a supplied-digest check in the transition arm; doing it right means a versioned identity accepted beside the old one, which is not small. (b) keep it here as FU6 |
-| FD2 | Issue 112 (projected JSON in text output) | **(a) split out**: the JSON-only text is a deliberate no-leak design; rendering verdict lines from the projected tree needs its own design and a leak review. (b) keep it here as FU7 |
-| FD3 | FU1: widen the version-7 enum to version 15's set, or only to the `term:*` values the version-7 route can emit? | version 15's set: one list, and a value the route cannot emit costs nothing |
-| FD4 | FU4: widen the bounds, or move both tests to a serial lane? | widen: the scope walk's ratio and ceiling, and the driver test's time margins, to values measured under the six-shard load (fixed in the FU4 spec), each checked against its mutant; a serial lane needs runner support the shard script lacks |
-| FD5 | FU5: retire the three helpers (RF-D5's later approved phase, after the first public release), or keep them? | retire `_dfs_cycle` and `_ring_component_violations`; keep `_find_cycle` only if a test outside the checker family needs it, else retire it and its test |
+| RF-D0 | Review this plan before the gate? | one reviewer (Codex), as for this milestone's predecessor's r3-r5; the panel is the project's bar **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
+| FD1 | Issue 111 (repr model digest) | **(a) split out to its own milestone**: it is a cross-process identity with ~100 recorded values and a supplied-digest check in the transition arm; doing it right means a versioned identity accepted beside the old one, which is not small. (b) keep it here as FU6 **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
+| FD2 | Issue 112 (projected JSON in text output) | **(a) split out**: the JSON-only text is a deliberate no-leak design; rendering verdict lines from the projected tree needs its own design and a leak review. (b) keep it here as FU7 **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
+| FD3 | FU1: widen the version-7 enum to version 15's set, or only to the `term:*` values the version-7 route can emit? | version 15's set: one list, and a value the route cannot emit costs nothing **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
+| FD4 | FU4: widen the bounds, or move both tests to a serial lane? | widen: the scope walk's ratio and ceiling, and the driver test's time margins, to values measured under the six-shard load (fixed in the FU4 spec), each checked against its mutant; a serial lane needs runner support the shard script lacks **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
+| FD5 | FU5: retire the three helpers (RF-D5's later approved phase, after the first public release), or keep them? | retire `_dfs_cycle` and `_ring_component_violations`; keep `_find_cycle` only if a test outside the checker family needs it, else retire it and its test **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |

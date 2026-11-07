@@ -3,8 +3,8 @@
 ## 1. Status
 
 **Draft, blocked on the plan gate.** The plan
-([rule-check-followups-plan.md](rule-check-followups-plan.md), r1) is not
-yet approved, and FD3 is not yet ruled. `auto=false`. No code before this
+([rule-check-followups-plan.md](rule-check-followups-plan.md)) is not yet
+approved (its review runs first, RF-D0); FD3 is ruled. `auto=false`. No code before this
 spec's owner gate.
 
 ## 2. Provenance
@@ -56,7 +56,7 @@ kept byte-identical (search at spec time).
 | D | Question | Proposal |
 |---|---|---|
 | D1 | Approval instrument | **corpus-first** (a serialized format): one model and one population per reason the version-7 route can emit, with the expected `reason_code` and "validates" |
-| D2 | FD3 (plan) | version 15's set |
+| D2 | FD3 (plan) | version 15's set **Ruled at the plan level (o, 2026-11-07): FD3 as proposed.** |
 | D3 | Review over the spec bytes | none |
 
 ## 8. Tests and verification ledger

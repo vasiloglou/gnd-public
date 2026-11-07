@@ -1,9 +1,11 @@
 # Report output fidelity
 
-**Status: r1, proposed. Not reviewed, not approved.** No plan review has run
-(RF-D0 below asks the owner which instrument reviews it); the plan-gate record
-does not exist yet. `auto=false`. Planning authorship is not approval: every
-ruling in section 10 is open.
+**Status: r2, proposed; decisions ruled, plan not yet approved.** The owner
+ruled RF-D0 and D1-D6 "as proposed" on 2026-11-07 (section 10). That is a
+ruling on those decisions, not approval of the plan: no plan-gate record
+exists, and the plan gate ("Approve r2?") is still open. RF-D0 selects one
+Codex review over r2; it has not run as of this revision (its status is
+recorded below when it does). `auto=false`.
 
 Two issues that the `rule-check-followups` plan split out by owner ruling
 (FD1, FD2 in [that plan](../../rule-check-followups/notes/rule-check-followups-plan.md)):
@@ -305,10 +307,10 @@ merge-base run on beast-3 precedes the first code change.
 
 | ID | Question | Proposal |
 |---|---|---|
-| RF-D0 | Review this plan before the gate, and with which instrument? | one reviewer (Codex), as for rule-check-followups; the maintained panel is the project's bar for plan review, so the plan says plainly that one reviewer is one reviewer **Open** |
-| D1 | Phase order | 112 chain first (smaller, no wire risk), then 111 **Open** |
-| D2 | Temporal-only route (no redaction declaration): print the `REDACTION applied:` header with an empty list, or omit it? | omit: it describes a policy that does not exist. Costs a text byte change on a route that already prints JSON, so no recorded text changes beyond ROF1-C4's list **Open** |
-| D3 | Does this milestone emit the canonical identity in reports? | (a) no: accept-both and the producer close issue 111's core; revisit after ROF4. (b)/(c) cost a report version across the ladder, a separate spec and likely a milestone of its own **Open** |
-| D4 | Name and shape of the new identity | `identity_version: 2` over the version-1 envelope extended to all models; legacy named `legacy-repr`. Alternative: a different envelope for plain models, which costs a second canonical shape **Open** |
-| D5 | The shipped producer surface | decided in the ROF3 spec; options are an extra `validate --trace` line (moves the trace goldens), a flag, a subcommand **Open (deferred to ROF3)** |
-| D6 | Index review | `components_index.py review` printed 180 leads in 10 groups ("a place to look, not a finding") and names `output.py` among them. The plan does not rely on the index for the renderer's boundaries beyond component ids; the owner may call for the index's Review mode **Open** |
+| RF-D0 | Review this plan before the gate, and with which instrument? | one reviewer (Codex), as for rule-check-followups; the maintained panel is the project's bar for plan review, so the plan says plainly that one reviewer is one reviewer **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D1 | Phase order | 112 chain first (smaller, no wire risk), then 111 **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D2 | Temporal-only route (no redaction declaration): print the `REDACTION applied:` header with an empty list, or omit it? | omit: it describes a policy that does not exist. Costs a text byte change on a route that already prints JSON, so no recorded text changes beyond ROF1-C4's list **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D3 | Does this milestone emit the canonical identity in reports? | (a) no: accept-both and the producer close issue 111's core; revisit after ROF4. (b)/(c) cost a report version across the ladder, a separate spec and likely a milestone of its own **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D4 | Name and shape of the new identity | `identity_version: 2` over the version-1 envelope extended to all models; legacy named `legacy-repr`. Alternative: a different envelope for plain models, which costs a second canonical shape **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D5 | The shipped producer surface | decided in the ROF3 spec; options are an extra `validate --trace` line (moves the trace goldens), a flag, a subcommand **Ruled (o, 2026-11-07): as proposed**, i.e. deferred to the ROF3 spec ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
+| D6 | Index review | `components_index.py review` printed 180 leads in 10 groups ("a place to look, not a finding") and names `output.py` among them. The plan does not rely on the index for the renderer's boundaries beyond component ids; the owner may call for the index's Review mode **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |

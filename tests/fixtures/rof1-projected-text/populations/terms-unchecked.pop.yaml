@@ -1,0 +1,27 @@
+population:
+  model: ../models/terms-temporal.orm.yaml
+  model_id: urn:gnd-fixture:rof1-terms-temporal@1
+  source: fixture
+  covers: [input, residue, doubled_residue, permitted, ticket_status, ticket_lead]
+facts:
+  input:
+    - { ticket: negative, value: -1, divisor: 30 }
+    - { ticket: negative-divisor, value: 1, divisor: -30 }
+    - { ticket: zero, value: 7, divisor: 0 }
+    - { ticket: ticket-open, value: 89, divisor: 30 }
+  residue:
+    - { ticket: negative, residue: 29 }
+    - { ticket: negative-divisor, residue: -29 }
+    - { ticket: ticket-open, residue: 29 }
+  doubled_residue:
+    - { ticket: negative, doubled: 58 }
+    - { ticket: negative-divisor, doubled: -58 }
+    - { ticket: ticket-open, doubled: 58 }
+  permitted:
+    - { ticket: negative }
+    - { ticket: negative-divisor }
+    - { ticket: ticket-open }
+  ticket_status: []
+  ticket_lead:
+    - { ticket: zero, lead: 3 }
+

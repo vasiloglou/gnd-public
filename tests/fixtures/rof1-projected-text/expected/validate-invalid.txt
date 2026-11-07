@@ -1,0 +1,1 @@
+ERROR at $.fact_types[id=has_email].constraints[1]: constraint references role 'no_such_role', which does not exist on fact type 'has_email' [semantic:string-ref]

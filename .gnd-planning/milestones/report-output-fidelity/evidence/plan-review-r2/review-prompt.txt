@@ -1,0 +1,21 @@
+You are an independent plan reviewer. Repository: GND (this working directory, read-only). Review the milestone plan
+.gnd-planning/milestones/report-output-fidelity/notes/report-output-fidelity-plan.md (r2) and the draft spec
+.gnd-planning/milestones/report-output-fidelity/notes/phase-ROF1-spec.md against the code at HEAD. Also read AGENTS.md,
+.codex/skills/start-milestone/SKILL.md, .codex/skills/process-phase/references/project.md and
+.gnd-planning/milestones/rule-check-followups/notes/rule-check-followups-plan.md (FD1, FD2).
+
+Your job is to REFUTE the plan's claims, not summarize. Try to find where each is false, unmeasurable, or unimplementable. In particular:
+1. Section 1 probes and citations (file:line, counts, the claim that projected messages are already redacted, the list of digest comparison sites, the claim that every site is covered, the 167/58/306 figures): check them against the code.
+2. The compatibility story for issue 111 (accept both identities; no recorded digest rewritten; reports keep the legacy digest). Is anything missed: a site that compares model digests, a closed schema that must change, a place where accept-both is unsound, a place where the canonical walk could raise where the repr digest does not, interaction with the reference_populations digest (identity_version 1), the population validation marker, codegen/conformance, the witness and measure sidecars, shipped examples?
+3. The phase partition: acyclic dependencies, falsifiable per-phase criteria, anything promised with no owning phase or gate, optional work supplying mandatory prerequisites.
+4. ROF1 spec: does it follow the spec-note contract (.codex/skills/process-phase/references/spec-note-contract.md)? Can the renderer design really avoid the unprojected CheckReport? Any route (validate --trace, --admission, lineage, warnings, extraction block, transition block) that would leak or break? Are the test cases able to fail each branch?
+5. Anything that contradicts project.md design rules or AGENTS.md.
+
+Output format, one block per finding:
+ID: P<n>
+SEVERITY: blocking | hardening | completeness
+LOCATION: path:line
+QUOTE: the plan text
+PROBLEM: what is false or missing, with evidence
+FIX: the smallest repair
+Start with a line "DISPOSITION: approve | revise | block". Then findings. If a claim checked out, list it under a final "CONFIRMED:" heading. You cannot run the test suite; say which claims you could only verify by reading.

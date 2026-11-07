@@ -1,0 +1,9 @@
+population: { model: ../models/contacts-redacted.orm.yaml, model_id: "urn:gnd-fixture:rof1-contacts-redacted@1", source: fixture, covers: [has_email, has_nickname] }
+facts:
+  has_email:
+    - { customer: c-1, email: SECRET-EMAIL-271828 }
+    - { customer: c-1, email: SECRET-EMAIL-161803 }
+    - { customer: c-2, email: SECRET-EMAIL-271828 }
+  has_nickname:
+    - { customer: c-1, nickname: OPEN-NICK-111111 }
+    - { customer: c-1, nickname: OPEN-NICK-222222 }

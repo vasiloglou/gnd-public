@@ -15,6 +15,7 @@ from gnd.checker import check
 from gnd.commands._output import (
     _print_admission_text,
     _print_issues,
+    _print_projected_check_text,
     _print_projected_text,
     _print_report,
     _print_trace,
@@ -108,7 +109,7 @@ def _cmd_validate(
     if "redaction" in mechanical_payload:
         if trace and result.model is not None and not result.issues and result.error is None:
             _print_trace(result.model, model_path)
-        _print_projected_text(mechanical_payload)
+        _print_projected_check_text(mechanical_payload)
         return result.exit_code
     for warning in result.warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
@@ -286,7 +287,8 @@ def _cmd_check(
         return result.exit_code
     mechanical_payload = result.payload.get("report", result.payload)
     if "redaction" in mechanical_payload:
-        _print_projected_text(mechanical_payload)
+        # ``--admission`` keeps the shared projected-JSON text until its own phase.
+        (_print_projected_text if admission else _print_projected_check_text)(mechanical_payload)
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)

@@ -1,0 +1,9 @@
+REDACTION applied: has_email.email
+BLOCKING (alethic)
+  [fail] fact_types[has_nickname].constraints[0]: Each nickname plays 'has_nickname' with at most one combination of the other roles — violated: nickname 'OPEN-NICK-777777' has 2 facts.
+ADVISORY (deontic)
+  (none)
+pass=1 fail=1 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  has_email: declared, facts=2
+  has_nickname: declared, facts=2

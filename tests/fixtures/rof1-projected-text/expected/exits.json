@@ -1,0 +1,118 @@
+{
+  "redacted-fail": {
+    "argv": [
+      "check",
+      "models/contacts-redacted.orm.yaml",
+      "populations/contacts-fail.pop.yaml"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "redacted-fail-unredacted": {
+    "argv": [
+      "check",
+      "models/contacts-redacted.orm.yaml",
+      "populations/contacts-fail.pop.yaml",
+      "--unredacted"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "redacted-visible-canary": {
+    "argv": [
+      "check",
+      "models/directory-redacted.orm.yaml",
+      "populations/directory-fail.pop.yaml"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "redacted-pass": {
+    "argv": [
+      "check",
+      "models/contacts-redacted.orm.yaml",
+      "populations/contacts-pass.pop.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "redacted-rule-ids": {
+    "argv": [
+      "check",
+      "models/contacts-redacted.orm.yaml",
+      "populations/contacts-pass.pop.yaml",
+      "--rule-ids"
+    ],
+    "exit": 3,
+    "schema_version": 9
+  },
+  "redacted-ill-formed": {
+    "argv": [
+      "check",
+      "models/contacts-redacted.orm.yaml",
+      "populations/contacts-ill-formed.pop.yaml"
+    ],
+    "exit": 3,
+    "schema_version": 9
+  },
+  "temporal-pass": {
+    "argv": [
+      "check",
+      "models/service-temporal.orm.yaml",
+      "populations/service-pass.pop.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 11
+  },
+  "temporal-advisory": {
+    "argv": [
+      "check",
+      "models/service-temporal.orm.yaml",
+      "populations/service-advisory.pop.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 11
+  },
+  "temporal-derivation": {
+    "argv": [
+      "check",
+      "models/terms-temporal.orm.yaml",
+      "populations/terms-unchecked.pop.yaml"
+    ],
+    "exit": 4,
+    "schema_version": 11
+  },
+  "validate-redacted": {
+    "argv": [
+      "validate",
+      "models/contacts-redacted.orm.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "validate-redacted-unredacted": {
+    "argv": [
+      "validate",
+      "models/contacts-redacted.orm.yaml",
+      "--unredacted"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "validate-temporal": {
+    "argv": [
+      "validate",
+      "models/service-temporal.orm.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 3
+  },
+  "validate-invalid": {
+    "argv": [
+      "validate",
+      "models/contacts-invalid.orm.yaml"
+    ],
+    "exit": 3,
+    "schema_version": 3
+  }
+}

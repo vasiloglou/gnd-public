@@ -2,9 +2,12 @@
 
 ## 1. Status
 
-**r1, 2026-11-06. Draft, awaiting the owner gate (process-phase step 2).**
-No documentation or example file is created or edited before the owner
-approves this spec. `auto=false`.
+**Owner-approved (2026-11-06); implementation in progress.** The owner
+ruled the step-2 asks over r1 (sha256 `722aa10f…`, commit f6e8a833),
+answering "How do you rule on RC6's decisions D1-D6?" with "Approve all as
+proposed" (o, 2026-11-06). D4: the approval instrument is this spec, then a
+rendered checkpoint before the record. `auto=false`. Prior status (r1):
+"Draft, awaiting the owner gate (process-phase step 2)."
 
 ## 2. Provenance
 
@@ -104,12 +107,12 @@ the reference page; `formats.md`: a link to the population format's
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Audience and form of the how-to | **a developer how-to with real commands and output**: the reader is someone wiring a CI gate (as the requester is), not a business reader, so the business-page rule (skill prompts, no commands) does not apply. The story and the figure lead; commands follow |
-| D2 | Where the example's files live | **shipped under `src/gnd/examples/rule_check/`**, copied by the page's first block, like the other how-tos (also checked by the installed-docs check) |
-| D3 | A figure | one SVG of the head graph with new / standing / resolved marked |
-| D4 | Approval instrument | **the spec, then a rendered checkpoint**: before the record, the page is rendered and shown to the owner (session memory: show user-visible work at a checkpoint); no corpus, since the runner already pins every command and output |
-| D5 | Who writes the page | the driving agent, in the house style of the existing how-tos; Fable is reserved for business tutorial pages (session memory), which this is not |
-| D6 | Review over the spec bytes | none; the phase review reads the page against the code |
+| D1 | Audience and form of the how-to | **a developer how-to with real commands and output**: the reader is someone wiring a CI gate (as the requester is), not a business reader, so the business-page rule (skill prompts, no commands) does not apply. The story and the figure lead; commands follow **Ruled (o, 2026-11-06): as proposed.** |
+| D2 | Where the example's files live | **shipped under `src/gnd/examples/rule_check/`**, copied by the page's first block, like the other how-tos (also checked by the installed-docs check) **Ruled (o, 2026-11-06): as proposed.** |
+| D3 | A figure | one SVG of the head graph with new / standing / resolved marked **Ruled (o, 2026-11-06): as proposed.** |
+| D4 | Approval instrument | **the spec, then a rendered checkpoint**: before the record, the page is rendered and shown to the owner (session memory: show user-visible work at a checkpoint); no corpus, since the runner already pins every command and output **Ruled (o, 2026-11-06): as proposed.** |
+| D5 | Who writes the page | the driving agent, in the house style of the existing how-tos; Fable is reserved for business tutorial pages (session memory), which this is not **Ruled (o, 2026-11-06): as proposed.** |
+| D6 | Review over the spec bytes | none; the phase review reads the page against the code **Ruled (o, 2026-11-06): as proposed.** |
 
 ## 8. Tests and verification ledger
 

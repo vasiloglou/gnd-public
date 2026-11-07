@@ -334,8 +334,8 @@ Compose several anchored populations into one population with lineage (CT2).
 | `parse_manifest(raw) -> Manifest` | function | 104 | (no docstring) |
 | `parse_record(raw) -> dict[str, Any]` | function | 151 | (no docstring) |
 | `compose(model, model_raw, directory) -> Composition` | function | 223 | Compose the sources a manifest names; refuse instead of guessing. |
-| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 356 | Re-derive a composition from its inputs and compare it with the record. |
-| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 373 | (no docstring) |
+| `verify_composition(model, model_raw, population_raw, record, directory) -> Composition` | function | 358 | Re-derive a composition from its inputs and compare it with the record. |
+| `lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]` | function | 375 | (no docstring) |
 
 ## gnd.constraint_families — `src/gnd/constraint_families.py`
 Components: check.constraint_families
@@ -763,11 +763,11 @@ Population loading — the ONE shared code path (D-11).
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `Population` | class(BaseModel) | 81 | A loaded population: facts keyed by fact-type id, facts keyed by role_name. |
-| `Population.validated_against(self) -> Model \| None` | method | 166 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
-| `Population.matches_validation_marker(self, model) -> bool` | method | 181 | Whether THIS content passed layer 2 against THIS model object (D-02). |
-| `load_population_bytes(data, *, source, model) -> Population` | function | 514 | Load already-opened population bytes through the normal validation path. |
-| `load_population(path, *, model) -> Population` | function | 531 | Load a population file (YAML or JSON) through the single shared code path. |
-| `read_population_bytes(path) -> bytes` | function | 561 | The bytes of one regular population file, refused past the size cap. |
+| `Population.validated_against(self) -> Model \| None` | method | 168 | The :class:`~gnd.model.Model` OBJECT this population passed layer-2 |
+| `Population.matches_validation_marker(self, model) -> bool` | method | 183 | Whether THIS content passed layer 2 against THIS model object (D-02). |
+| `load_population_bytes(data, *, source, model) -> Population` | function | 516 | Load already-opened population bytes through the normal validation path. |
+| `load_population(path, *, model) -> Population` | function | 533 | Load a population file (YAML or JSON) through the single shared code path. |
+| `read_population_bytes(path) -> bytes` | function | 563 | The bytes of one regular population file, refused past the size cap. |
 
 ## gnd.population_shape — `src/gnd/population_shape.py`
 Components: model.population_shape
@@ -1244,7 +1244,7 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 204 | (no docstring) |
+| `reference_model_digest(model) -> str` | function | 201 | (no docstring) |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

@@ -70,6 +70,9 @@ current without rerunning the step that produced it.
 Check JSON, a session outcome, a conformance report, a witness certificate,
 and a review synthesis are not interchangeable success records. Read the
 schema version and command family first, then its findings and bindings.
+Report version 15, written by `gnd check --rule-ids`, `--baseline` or
+`--allow-vacuous`, is described in the [rule-check report
+reference](rule-check-report.md).
 Reference-aware reports can wrap the mechanical report, while the base diff
 schema has its own shape. Use the [API examples](python-api.md) for concrete
 access patterns rather than reaching into private evaluator internals.

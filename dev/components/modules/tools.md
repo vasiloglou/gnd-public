@@ -432,4 +432,4 @@ Execute explicitly marked, trusted repository tutorial blocks as written.
 | `require_runtime(lane, python, env) -> dict` | function | 83 | (no docstring) |
 | `run_pages(pages, cwd, python, lane, *, receipts, group) -> int` | function | 122 | (no docstring) |
 | `groups(root) -> dict[str, list[Path]]` | function | 200 | (no docstring) |
-| `main()` | function | 230 | (no docstring) |
+| `main()` | function | 231 | (no docstring) |

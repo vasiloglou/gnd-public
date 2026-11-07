@@ -36,12 +36,35 @@ def _row(reason: str) -> dict:
 
 
 def _derivation_definitions(branch: str) -> list[str]:
-    """The definitions a branch's derivation rows are validated by."""
+    """The schema locations a branch's derivation rows are validated at.
+
+    The two row definitions are validated directly. A report branch is
+    validated at every location inside it whose items reference
+    derivation_verdict or derivation_verdict_v9, through the branch's own
+    JSON pointer, so a broken route inside the branch fails the case
+    (review R1).
+    """
     if branch in ("derivation_verdict", "derivation_verdict_v9"):
         return [branch]
-    text = json.dumps(SCHEMA["$defs"][branch])
-    assert '"#/$defs/derivation_verdict"' in text or '"#/$defs/derivation_verdict_v9"' in text, branch
-    return ["derivation_verdict"]
+    targets = {"#/$defs/derivation_verdict", "#/$defs/derivation_verdict_v9"}
+    found: list[str] = []
+
+    def walk(node: object, pointer: str) -> None:
+        if isinstance(node, dict):
+            if node.get("$ref") in targets:
+                # Validate at the enclosing items schema, so a narrowing
+                # wrapped around the reference is exercised too.
+                head, _, _ = pointer.rpartition("/items")
+                found.append(f"{head}/items" if head else pointer)
+            for key, value in node.items():
+                walk(value, f"{pointer}/{key}")
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                walk(value, f"{pointer}/{index}")
+
+    walk(SCHEMA["$defs"][branch], branch)
+    assert found, branch
+    return sorted(set(found))
 
 
 @pytest.mark.parametrize("case", sorted(ANSWERS["cli_cases"]))

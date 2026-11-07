@@ -117,3 +117,20 @@ Plan estimate: about 15 schema and 60 test lines, plus the corpus.
   three older reasons on each branch, the version-15 non-regression cases,
   the two refusals). Answers were derived from the reports at 6651e5a4 and
   FD3's set, not from an implementation.
+
+## Implementation findings (2026-11-07)
+
+- **I1.** M1 landed at 9f938f48. Widening either enum alone leaves 38
+  cases red (both one-enum mutants measured).
+- **I2 (review R1).** T2 validated a bare base row for the two report
+  branches, so a narrowing inside a branch went unseen (measured: a mutant
+  on `temporal_admission_report` passed all 63). T2 now validates at each
+  enclosing `items` location through the branch's own pointer; the mutant
+  leaves 7 red. No approved answer changed.
+- **I3 (review R2).** The `derived-unknown` rows in T2 have empty findings,
+  a shape `DerivationVerdict` (`extensions.py:133-140`) refuses; the shape
+  it accepts, one `derived-extension-unresolved` finding, is refused by the
+  schema in `derivation_verdict` and `derivation_verdict_v15` alike. No
+  route emits `derived-unknown` on a derivation row (C2), so this is an
+  unreachable, pre-existing mismatch, recorded as an open question. The
+  `derived-unknown` cases establish only that the enum admits the value.

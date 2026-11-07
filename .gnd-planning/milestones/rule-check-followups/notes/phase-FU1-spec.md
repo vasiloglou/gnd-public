@@ -2,10 +2,9 @@
 
 ## 1. Status
 
-**Draft, blocked on the plan gate.** The plan
-([rule-check-followups-plan.md](rule-check-followups-plan.md)) is not yet
-approved (its review runs first, RF-D0); FD3 is ruled. `auto=false`. No code before this
-spec's owner gate.
+**Draft r1, awaiting the owner gate (process-phase step 2).** The plan r3
+is approved ([001-plan.md](../001-plan.md)); FD3 is ruled. `auto=false`. No
+code before this spec's owner gate.
 
 ## 2. Provenance
 
@@ -40,8 +39,15 @@ schema_version 7, exit 4, derivations unchecked with `term:mod-zero`,
 
 ## 6. Design
 
-**Reuse table** (to be searched with `components_index.py search` before
-code: `report schema derivation reason`).
+**Reuse table** (searched 2026-11-07 at `6651e5a4`:
+`components_index.py search "report schema derivation reason code"`,
+`"report schema contract"`; `git ls-files | grep report.schema.json`).
+
+| Capability | Found | Decision |
+|---|---|---|
+| the reason set | `$defs.derivation_verdict_v15.properties.reason_code.enum` | **reuse** its values (FD3) |
+| the schema | `src/gnd/report.schema.json`, the only tracked copy; `tests/test_schema_sync.py` excludes it (review of r2) | **adapt** |
+| a report to validate | `tests/fixtures/v62-phase3/models/exact-terms.orm.yaml` and its populations | **reuse** as the corpus's source |
 
 **M1. `report.schema.json`, about 20 lines.** Both reason-code enums of
 `$defs.derivation_verdict` gain (review P1): the property enum and the
@@ -51,8 +57,7 @@ enum left the report invalid. Each gains the values `derivation_verdict_v15`
 already lists that it lacks (FD3): `derived-unknown`, `term:mod-zero`,
 `term:exact-value-too-wide`, `term:dependency-unavailable`, `term:div-zero`,
 `term:sqrt-negative`, `term:haversine-coordinate-range`,
-`term:float-overflow`. Additive only; the unchecked condition is kept. Any packaged copy of the schema is
-kept byte-identical (search at spec time).
+`term:float-overflow`. Additive only; the unchecked condition is kept. There is no packaged copy to keep in step.
 
 ## 7. Decisions (owner rules at step 2)
 

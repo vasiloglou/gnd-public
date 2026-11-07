@@ -3,15 +3,15 @@
 Planning opened 2026-11-07 for the eight follow-ups the rule-check-adoption
 close deferred: issues 111, 112, 113, 114, 115, 116, 117 and 119.
 
-**Status: plan r3: the owner ruled RF-D0 and FD1-FD5 as proposed; the
-Codex review of r2 (block, 6 findings) is applied in r3, which awaits the
-plan gate.** Issues 111 and 112 are split
-out.
+**Status: plan r3 approved by the owner on 2026-11-07
+([plan-gate record](001-plan.md)). FU1 spec drafted, awaiting its owner
+gate.** Issues 111 and 112 are split out.
 
-- [Plan (r3, draft)](notes/rule-check-followups-plan.md)
+- [Plan (r3, approved)](notes/rule-check-followups-plan.md)
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md)
-- [FU1 spec (draft, blocked on the plan gate)](notes/phase-FU1-spec.md)
+- [Plan-gate record](001-plan.md)
+- [FU1 spec (draft, awaiting its owner gate)](notes/phase-FU1-spec.md)
 
 Phases: FU1 (113), FU2 (115, 116), FU3 (119), FU4 (117), FU5 (114); close.
 
-Next action: the plan gate on r3.
+Next action: the FU1 spec owner gate (process-phase).

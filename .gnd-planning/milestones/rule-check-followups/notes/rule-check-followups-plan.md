@@ -1,11 +1,10 @@
 # Rule-check follow-ups
 
-**Status: draft r3, 2026-11-07.** r3 applies the Codex review of r2
-(P1-P6, [plan-review-r2](../evidence/plan-review-r2/codex-review.md)).
-**r2: The owner ruled RF-D0 and FD1-FD5 as
-proposed over r1 (commit 3efdd2cd, sha256 `3b37d379…`): one Codex review
-before the plan gate; issues 111 and 112 split out. r3 itself is not
-reviewed; the plan gate follows.** `auto=false`.
+**Status: r3, approved by the owner at the plan gate on 2026-11-07
+("Approve r3"; [plan-gate record](../001-plan.md)).** r3 applies the Codex
+review of r2 (P1-P6, [plan-review-r2](../evidence/plan-review-r2/codex-review.md));
+r3 itself was not re-reviewed. The owner ruled RF-D0 and FD1-FD5 as
+proposed over r1. `auto=false`.
 
 Eight small follow-ups that the rule-check-adoption milestone deferred at its
 close ([012-milestone-close.md](../../rule-check-adoption/012-milestone-close.md),

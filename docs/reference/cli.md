@@ -19,8 +19,8 @@ for a process. It is accepted only at the root.
 | `gnd validate MODEL --document DOC` | Also re-hash an unattended model's source spans over a declared document |
 | `gnd validate MODEL --trace` | Text report of transition digests and obligations, without evaluating a walk |
 | `gnd check MODEL POPULATION --format json` | Snapshot constraint and derivation findings |
-| `gnd check MODEL POPULATION --rule-ids --format json` | Report version 15: each verdict names its rule's declared id and remedy ([rule-check report](rule-check-report.md)) |
-| `gnd check MODEL POPULATION --baseline BASE --format json` | Marks each violation new or standing against BASE; fails only for new ones ([how-to](../how-to/adopt-rules-with-a-baseline.md)) |
+| `gnd check MODEL POPULATION --rule-ids --format json` | Report version 15: each verdict carries its rule's declared id and remedy when present, else its position and `null` ([rule-check report](rule-check-report.md)) |
+| `gnd check MODEL POPULATION --baseline BASE --format json` | Marks each violation new or standing against BASE; exit 1 only for new must-hold violations, while vacuous and undecided rules keep their own exits ([how-to](../how-to/adopt-rules-with-a-baseline.md)) |
 | `gnd check MODEL POPULATION --allow-vacuous --format json` | Exits 0 when vacuous rules are the only shortfall |
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |
 | `gnd check MODEL --populations DIR` | Batch checking of population files |

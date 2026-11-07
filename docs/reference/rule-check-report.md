@@ -53,8 +53,9 @@ rules.
 loop part of `acyclic-intransitive`) lists one `[from, to]` row for every
 edge inside a strongly connected group, instead of version 7's single cycle,
 and its message names the groups: `2 strongly connected groups (sizes 2, 2)
-hold 4 edges`. Adding a loop elsewhere does not move an existing loop's rows,
-which is what makes them usable as baseline keys.
+hold 4 edges`. Adding a separate loop does not change the values of an
+existing loop's rows (their position in the list may shift), which is what
+makes them usable as baseline keys: matching ignores row order.
 
 Derivation findings keep the version-7 shape.
 
@@ -74,7 +75,7 @@ The `baseline` block:
 | `standing` | those also in the base |
 | `resolved` | base ones not in the head |
 | `positional_keyed` | head keys that use a positional address; they move when a rule is inserted above, and the text output warns when there are any |
-| `undecided` | verdicts unchecked in the head or the base, of either modality |
+| `undecided` | distinct rules unchecked in the head or the base, of either modality; a rule unchecked in both counts once |
 
 A key is a rule's address plus the canonical JSON of one offending row, with
 numbers compared by value (`1` and `1.0` are one key). Warnings (advisory
@@ -83,13 +84,14 @@ never decide the exit code.
 
 ## Exit codes
 
-Precedence 1 > 4 > 2 > 0, as for every check.
+Once the model and the populations have loaded (a load failure or refusal
+returns 3 first), the precedence is 1 > 4 > 2 > 0, as for every check.
 
 | Exit | Without `--baseline` | With `--baseline` |
 |---|---|---|
 | 1 | a must-hold rule fails | a must-hold rule fails with a new row |
 | 4 | a must-hold rule is unchecked | a must-hold rule is unchecked in the head or the base |
-| 2 | a rule is vacuous | a rule is vacuous in the head |
+| 2 | a rule is vacuous (either modality) | a rule is vacuous in the head (either modality) |
 | 0 | none of the above | none of the above |
 
 `--allow-vacuous` turns a 2 into 0, and nothing else. `outcome` and
@@ -104,8 +106,10 @@ With any of the three flags, each verdict line names the rule by its
 declared address, with its position in brackets, and prints `remedy:` on the
 next line when the rule has one. Under `--baseline` the outcome reads
 `[fail, new]` or `[fail, standing]`, and a closing `BASELINE` block prints
-the base path and the counts. Under `--allow-vacuous`, a last line says how
-many vacuous rules it accepted.
+the base path and the counts. Under `--allow-vacuous`, a last line counts the
+vacuous rules the option covers; it is printed whenever the option is on and
+a rule is vacuous, including in a run that fails for another reason, so the
+exit code is the verdict.
 
 ## Other consumers
 

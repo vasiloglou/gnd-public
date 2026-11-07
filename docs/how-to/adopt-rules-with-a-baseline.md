@@ -7,10 +7,11 @@ judges them. The trouble is the first run. The project has broken some of
 these rules for years, so a plain check fails on every change, and a gate
 that always fails gets switched off.
 
-This how-to sets the gate up so that it fails only for what a change adds.
-GND judges the change and the saved state of `main` under the same rules,
-marks each violation **new** or **standing**, counts the ones the change
-fixed, and fails the run for new ones alone.
+This how-to sets the gate up so that violations a change adds fail it and
+old ones do not. GND judges the change and the saved state of `main` under
+the same rules, marks each violation **new** or **standing**, and counts the
+ones the change fixed. A rule with nothing to judge, or one GND could not
+decide, still stops the run, as described below.
 
 Along the way you will see each rule named by the id its author wrote, with
 the author's advice on what to do, every edge of every import loop, and a
@@ -18,10 +19,10 @@ rule accepted while the data it will judge does not exist yet.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="The change under review, against main">
 
-![The component graph of the change under review. The import loop between api and auth was already on main: its two edges are standing. The change adds a loop between search and util: its two edges are new. The loop between reports and billing on main is gone, because billing no longer imports reports: its two edges are resolved. The component legacy_ui, in the legacy area, and metrics, which has no owner, were already like this on main: standing.](../assets/applications/rule-check-baseline.svg)
+![Part of the component graph of the change under review (cache, admin and four imports that break no rule are left out). The import loop between api and auth was already on main: its two rows are standing. The change adds a loop between search and util: its two rows are new. The loop between reports and billing on main is gone, because billing no longer imports reports; reports still imports billing, but no longer inside a loop, so both rows the loop gave on main are resolved. The component legacy_ui, in the legacy area, and metrics, which has no owner, were already like this on main: standing.](../assets/applications/rule-check-baseline.svg)
 </div>
 
-*Source: `catalog/head.population.yaml` against `catalog/base.population.yaml` of the shipped example.*
+*Source: `catalog/head.population.yaml` against `catalog/base.population.yaml` of the shipped example; a selected view of the graph.*
 
 !!! info "Files on GitHub"
 
@@ -52,8 +53,8 @@ advice on what to do when the rule fails:
 | `every_component_has_an_owner` | every component should have an owning team | advisory |
 | `no_draft_releases` | nothing ships in a draft release | must hold |
 
-The facts come from a scanner, not from a person or an agent, and the
-population files say so in their header:
+In this scenario the facts come from a scanner that reads the code, not from
+a person or an agent, and the population files say so in their header:
 
 <!-- gnd-run expect=0 output=stdout -->
 ```sh
@@ -70,8 +71,9 @@ population:
   covers: [component_imports_component, component_is_in_area, component_has_owner, component_ships_in_release]
 ```
 
-`source: tool-output` marks facts a deterministic program produced;
-`producer` names the program and the revision it read.
+`source: tool-output` labels facts a deterministic program produced, and
+`producer` names the program and the revision it read. Both are labels the
+writer states; GND does not run or verify the scanner.
 
 ## One run is not enough
 
@@ -105,9 +107,9 @@ COVERAGE
 The check fails, and rightly: the change adds a loop between `search` and
 `util`. But it would fail just as hard if the change touched nothing, because
 `api` and `auth` have imported each other for a long time and `legacy_ui`
-still lives in the legacy area. The loop rule lists every edge inside every
-loop, one row per edge, and its message says how many loops there are and how
-big each one is.
+still lives in the legacy area. The loop rule's message says how many loops
+there are and how big each one is; the JSON report lists every edge inside
+them, one row per edge, as the next section shows.
 
 The release rule says `vacuous`: no component has a release recorded yet, so
 the rule has nothing to judge.
@@ -245,27 +247,31 @@ BASELINE catalog/base.population.yaml
 vacuous accepted: 1 rules have nothing to judge yet (--allow-vacuous).
 ```
 
-The run passes, the vacuous rule is still listed, and the last line says the
-option accepted it. A real violation, or a must-hold rule that could not be
-decided, still fails the run with the option on.
+The run passes, and the vacuous rule is still listed. The last line counts
+the vacuous rules the option covers; it is printed whenever the option is on
+and a rule is vacuous, so read the exit code for the verdict. With the option
+on, a new violation of a must-hold rule, or a must-hold rule that could not
+be decided, still stops the run.
 
 ## What CI runs
 
 One command per change, with the population of `main` saved as an artifact
-of the last merge:
+of the last merge. The paths below are placeholders for your pipeline's own
+files, not the example's:
 
-```sh
-gnd check model.orm.yaml head.population.yaml --baseline main.population.yaml --allow-vacuous --format json
+```text
+gnd check MODEL.orm.yaml HEAD.population.yaml --baseline MAIN.population.yaml --allow-vacuous --format json
 ```
 
 | Exit | Meaning under `--baseline` |
 |---|---|
 | 0 | no new violation; standing ones are counted, not failed |
 | 1 | at least one new violation of a must-hold rule |
-| 2 | a must-hold rule had nothing to judge (without `--allow-vacuous`) |
+| 2 | a rule had nothing to judge in the change, and `--allow-vacuous` is absent |
 | 3 | the model or either population is ill-formed, or the model is not supported (below) |
 | 4 | a must-hold rule could not be decided in either run, so "no new violations" cannot be claimed |
-| 64 | the flags conflict |
+| 64 | a usage error, such as conflicting flags |
+| 70 | an internal error |
 
 ## Limits
 

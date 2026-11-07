@@ -41,6 +41,10 @@ RETAINED_EXTERNAL_REFERENCES = {
     Path('.gnd-planning/milestones/ilp-learners/notes/phase-IL6-agent-review.md'): {
         'notes/phase-IL6-spec.md',
     },
+    # The RC6 reviewer's verbatim report quotes two docs/reference/cli.md rows.
+    Path('.gnd-planning/milestones/rule-check-adoption/notes/phase-RC6-codex-review.md'): {
+        'rule-check-report.md', '../how-to/adopt-rules-with-a-baseline.md',
+    },
     # The NM4 DC2 draft quotes new text for several docs pages, links as written.
     NM_HOME / 'checkpoints/DC2/changes.md': {
         'disclosure.md', 'disclosure.md#who-customer-mode-protects',

@@ -3,7 +3,7 @@
 ## 1. Status
 
 **Draft r2, 2026-11-07 (repairs after the Codex review of r1, which carry no review opinion). Blocked; not ready for an owner gate.** It cannot be
-approved until (a) the plan's gate has passed (RL-D1, the version, is ruled: 0.2.0), and (b) experiment E1 (§6) has run over the full default lane
+approved until (a) [done] the plan gate passed on 2026-11-07 (plan r2 approved) and RL-D1, the version, is ruled: 0.2.0, and (b) experiment E1 (§6) has run over the full default lane
 and §7 D2 carries its ruling. The numbers below that depend on RL-D1 use the
 ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
 

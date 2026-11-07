@@ -1,6 +1,7 @@
 # Rule-check release
 
-r2, 2026-11-07. **Draft, awaiting the owner's plan gate.** r1 (sha256
+r2, 2026-11-07. **Approved by the owner at the plan gate on 2026-11-07
+("Approve r2"; [plan-gate record](../001-plan.md)); approves no phase spec.** r1 (sha256
 `52797ddb…4f034`, commit dbf98447) was reviewed by one reviewer, Codex
 (disposition `revise`, 11 findings; [record](../evidence/plan-review-r1/codex-review.md));
 §11 disposes each. **r2 repairs r1 and carries no review opinion of its own**;

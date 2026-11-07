@@ -17,8 +17,9 @@ Phases: RR1 candidate content (version, lock, manifests, release notes);
 RR2 candidate build and installed acceptance; RR3 publication hand-over
 dossier; close.
 
-Pending owner decisions: RL-D0 (plan review), RL-D1 (version, 0.2.0
-proposed), RL-D2 (which main content the release carries, in particular
+Ruled: RL-D1, version 0.2.0 (owner, 2026-11-07).
+
+Pending owner decisions: RL-D0 (plan review), RL-D2 (which main content the release carries, in particular
 whether it waits for rule-check-followups FU2 and FU3), RL-D3 to RL-D9.
 
 Next action: the owner rules the plan's decisions and the plan gate; then

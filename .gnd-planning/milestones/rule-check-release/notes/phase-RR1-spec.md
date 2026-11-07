@@ -3,10 +3,9 @@
 ## 1. Status
 
 **Draft r1, 2026-11-07. Blocked; not ready for an owner gate.** It cannot be
-approved until (a) the owner rules RL-D1 (the version number) and the plan's
-gate has passed, and (b) experiment E1 (§6) has run over the full default lane
+approved until (a) the plan's gate has passed (RL-D1, the version, is ruled: 0.2.0), and (b) experiment E1 (§6) has run over the full default lane
 and §7 D2 carries its ruling. The numbers below that depend on RL-D1 use the
-proposed `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
+ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
 
 ## 2. Provenance
 
@@ -150,13 +149,13 @@ cite the reference pages for behavior.
 
 | ID | Question | Readings and cost | Status |
 |---|---|---|---|
-| D1 | The version (plan RL-D1) | `0.2.0` proposed; `0.1.1` understates; both change only M1-M3, M6-M8 | open |
+| D1 | The version (plan RL-D1) | `0.2.0` proposed; `0.1.1` understates; both change only M1-M3, M6-M8 | **Ruled (o, 2026-11-07): 0.2.0** ("0.2.0", answering "Which version should the release carry?") |
 | D2 | How E1's moved bytes are handled (plan RL-D9) | methods (a), (b), (c) above, possibly different per site | open, after E1 |
 | D3 | The unreleased notes' shape (plan RL-D3) | one version section with `###` subsections (proposed), or flat | open |
 | D4 | Pins stay at 0.1.0 until publication (plan RL-D4) | proposed; flipping now publishes a false instruction | open |
 | D5 | Release-notes wording of the opening: "prepared, not published" with a link to `docs/releasing.md` | proposed | open |
 
-At first write every row is open.
+At first write every row was open; D1 has since been ruled, the rest are open.
 
 ## 8. Tests
 

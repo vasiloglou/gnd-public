@@ -95,8 +95,9 @@ The 82 are 77 in `tests/test_public_tests_mode_corpus.py` plus 5 others
 (`test_rf1_session_pins`, `test_public_book_runtime`, `test_doctor_uninstall`);
 they fail identically on main in this environment and were not examined.
 Evidence: `evidence/ROF1/full-suite-*.txt` (shard summaries and sorted ids).
-The first head run (before the review repairs) had 23 head-only failures: the
-four goldens, 11 relocated-body pins, 2 query-inventory rows, a redaction
+The first head run (before the review repairs) had 24 head-only failures: the
+four goldens, 11 relocated-body pins (7 of them only through the worktree
+artifact), 2 query-inventory rows, a redaction
 answer (E34), and 6 transport tests that fail only when the child process
 imports a different source tree than the parent (a worktree artifact, I1).
 All were repaired or explained (spec I1-I7).

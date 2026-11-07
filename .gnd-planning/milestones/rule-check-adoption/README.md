@@ -38,5 +38,5 @@ Phases:
 - RC6: documentation and a how-to;
 - close.
 
-Next action: the owner's ruling on RC6's size and D12, the RC6 PR, then the
+Next action: the RC6 PR (size overrun accepted), the owner's ruling on D12, then the
 milestone close.

@@ -185,8 +185,9 @@ not match it.
   600); example data 237 lines (spec estimate about 80; a third population,
   `fixed`, was added for step 4, and each population lists every component
   in full); tests 0 new lines (the runner's own cases) against 60. Counting
-  the example as documentation, the total is 698, past the pause. **Owner
-  ruling pending.**
+  the example as documentation, the total is 698, past the pause. **Resolved
+  2026-11-06, owner ruling: "Accept, open PR"** (answering "Accept RC6's
+  size overrun and open the PR?"). The plan is not amended.
 - **D12** (review): the `--allow-vacuous` closing line is printed whenever
   the option is on and a rule is vacuous, even in a run that exits 1.
   Whether to print it only when the option changed the exit code changes

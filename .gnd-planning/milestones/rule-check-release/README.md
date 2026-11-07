@@ -17,10 +17,9 @@ Phases: RR1 candidate content (version, lock, manifests, release notes);
 RR2 candidate build and installed acceptance; RR3 publication hand-over
 dossier; close.
 
-Ruled: RL-D1, version 0.2.0 (owner, 2026-11-07).
+Ruled (owner, 2026-11-07): RL-D1, version 0.2.0; RL-D2, the release waits for rule-check-followups FU2 and FU3 (FU4 and FU5 do not gate).
 
-Pending owner decisions: RL-D0 (plan review), RL-D2 (which main content the release carries, in particular
-whether it waits for rule-check-followups FU2 and FU3), RL-D3 to RL-D9.
+Pending owner decisions: RL-D0 (plan review), RL-D3 to RL-D9.
 
 Next action: the owner rules the plan's decisions and the plan gate; then
 experiment E1 (the version bump over the full default lane on beast-3) and

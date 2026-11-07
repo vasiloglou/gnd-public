@@ -1,0 +1,2 @@
+REDACTION applied: has_email.email
+ERROR at model: --rule-ids supports models whose check report is plain version 7; this model uses temporal terms, an active redaction policy or reference populations [check:rule-ids-unsupported]

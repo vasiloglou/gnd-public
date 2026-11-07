@@ -1,0 +1,8 @@
+BLOCKING (alethic)
+  (none)
+ADVISORY (deontic)
+  (none)
+pass=2 fail=0 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  has_sla: declared, facts=1
+  has_window: declared, facts=1

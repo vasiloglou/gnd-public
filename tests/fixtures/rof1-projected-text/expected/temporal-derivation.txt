@@ -1,0 +1,17 @@
+BLOCKING (alethic)
+  [unchecked] fact_types[residue].constraints[0]: Constraint 'fact_types[residue].constraints[0]' is unavailable because exact term evaluation failed: term:mod-zero; binding={'ticket': 'zero', 'value': 7, 'divisor': 0}.
+  [unchecked] constraints[0]: Constraint 'constraints[0]' is unavailable because exact term evaluation failed: term:mod-zero; binding={'ticket': 'zero', 'value': 7, 'divisor': 0}.
+ADVISORY (deontic)
+  (none)
+DERIVATIONS (alethic)
+  [unchecked] derivation:residue: The derivation for 'residue' is unavailable: term:mod-zero; binding={'ticket': 'zero', 'value': 7, 'divisor': 0}.
+  [unchecked] derivation:doubled_residue: The derivation for 'doubled_residue' is unavailable: term:mod-zero; binding={'ticket': 'zero', 'value': 7, 'divisor': 0}.
+  [unchecked] derivation:permitted: The derivation for 'permitted' is unavailable: term:mod-zero; binding={'ticket': 'zero', 'value': 7, 'divisor': 0}.
+pass=0 fail=0 warning=0 unchecked=5 vacuous=0
+COVERAGE
+  input: declared, facts=4
+  residue: declared, facts=3
+  doubled_residue: declared, facts=3
+  permitted: declared, facts=3
+  ticket_lead: declared, facts=1
+  ticket_status: declared, facts=0

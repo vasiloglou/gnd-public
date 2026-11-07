@@ -1,0 +1,1 @@
+OK: models/service-temporal.orm.yaml is a valid GND ORM model

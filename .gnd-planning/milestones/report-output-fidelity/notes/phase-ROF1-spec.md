@@ -2,9 +2,11 @@
 
 ## 1. Status
 
-**Draft r2 (2026-11-07). Blocked on the plan gate** (plan r3 is proposed, not
-approved) **and awaiting owner review.** Not implementable. The approval
-instrument (a corpus, section 11) is not yet authored. `auto=false`.
+**Draft r3 (2026-11-07). Awaiting owner review at the spec gate.** Plan r3 was
+approved at the plan gate on 2026-11-07 ([record](../001-plan.md)). The
+approval corpus (section 11) is authored and committed; it fails (20 cases
+red) until the phase lands. Not implementable before the owner's approval of
+the corpus and this spec. `auto=false`.
 
 ## 2. Provenance
 
@@ -19,7 +21,8 @@ instrument (a corpus, section 11) is not yet authored. `auto=false`.
   together with plan r2: `block`, findings P5-P8 and P10 concern this spec
   ([plan-review-r2](../evidence/plan-review-r2/)). **This r2 is repaired
   bytes: it carries no review opinion of its own.** Marks: `(r1)` a repair
-  applied for that review, `(o)` an owner decision.
+  applied for that review, `(r3)` a correction made while authoring the
+  corpus (an observation refuted an expectation), `(o)` an owner decision.
 
 ## 3. Obligations (step 0 harvest)
 
@@ -169,11 +172,11 @@ from the report, not from an implementation.
 | T1 | `tests/test_rof1_projected_text.py` | `src/gnd/examples/disclosure`, `check --format text` | exit 1; first line `REDACTION applied: has_email.email`; `BLOCKING (alethic)` with one `[fail] fact_types[has_email].constraints[0]: [REDACTED INSTANCE DETAIL]` line; `ADVISORY (deontic)` shows `(none)`; no line starts with `{` |
 | T2 | same | same, `--unredacted` | exit 1; header `REDACTION unredacted: has_email.email`; verdict lines; the fact value appears in the lines the unprojected route would print it (D3) |
 | T3 | same | temporal model + valid population (corpus), `check --format text` | exit 0 (all pass); no header (D2); `BLOCKING (alethic)`/`(none)`, `pass=N fail=0 …`, `COVERAGE` |
-| T3b | same | temporal model + population violating a deontic constraint | exit 2; `ADVISORY (deontic)` lists one `[warning]` line |
-| T3c | same | temporal model + population whose derivation is unchecked | exit 4; `DERIVATIONS (alethic)` lists the `[unchecked]` row and its `[finding]` line; the `unchecked=` count is non-zero |
+| T3b | same | temporal model + population violating a deontic constraint (corpus `temporal-advisory`) | **exit 0** (r3: r2 said 2; the report's own exit for a deontic shortfall is 0, "accepted"); `ADVISORY (deontic)` lists one `[warning]` line |
+| T3c | same | temporal model + population whose derivation is unchecked (corpus `temporal-derivation`) | exit 4; `DERIVATIONS (alethic)` lists the `[unchecked]` rows; `unchecked=5` (r3: this corpus's derivations carry no finding lines; a `[finding]` line has no corpus case and is covered by T9-style payload rows) |
 | T4 | same | disclosure model, `check --rule-ids` | exit 3; one `ERROR at …` line ending `[check:rule-ids-unsupported]` (path read from the report); no JSON line; no `BLOCKING` header |
 | T4b | same | disclosure model with a population that fails load (type mismatch) | exit 3; `ERROR at …` lines; no verdict sections |
-| T4c | same | a check run with a warning and a passing verdict | exit 0; `WARNING at …` line precedes `BLOCKING` |
+| T4c | same | **payload level** (r3): a hand-built check payload with one `warnings` row and passing verdicts | the `WARNING at …` line precedes `BLOCKING`. No fixture model here produces a model warning, so the corpus cannot carry this branch |
 | T5a | same | a canary secret in a redacted role and a different canary in an unredacted role, `applied` | exit 1; the redacted canary appears in no stdout line; the other appears where the plain route would print it |
 | T5b | same | same population, `--unredacted` | exit 1; **both** canaries appear (D3) |
 | T6 | same + existing golden suites | every plain-route check/validate text golden | byte-identical; exit as before |
@@ -186,7 +189,7 @@ from the report, not from an implementation.
 | T13 | same | `validate --trace` on a redaction-bearing model with a canary in a population | exit 0; trace block present; canary absent (the trace never sees a population); `OK:` line last |
 | T14 | same | `validate --document` with a span-hash failure on a redaction-bearing model | exit 3; `ERROR` lines from the early return; canary absent |
 | T15 | same | `validate --format text`, redaction-bearing model, valid | exit 0; `OK: … is a valid GND ORM model`; no JSON line |
-| T16 | same | `validate --format text`, redaction-bearing model, invalid | exit 3; `ERROR at …` lines; no JSON line |
+| T16 | same | `validate --format text`, a redaction-bearing model that does not load (corpus `validate-invalid`) | exit 3; the plain `ERROR at …` line, unchanged (r3: a model that fails to load has no policy, so the projected route is unreachable; this is a control that must keep passing) |
 | T17 | same | `transition` and export verification, redaction-bearing | unchanged from today (still JSON text); pins that ROF1 did not touch ROF2's routes |
 
 Every declared layout branch (warnings, issues, error, validate success,
@@ -209,19 +212,34 @@ Estimate: about 130 source and 300 test lines, plus the corpus. Stop at 1.5x.
 
 ## 11. Approval instrument
 
-A fixture corpus, authored first: `tests/fixtures/rof1-projected-text/`, entry
-point `README.md` (cases and commands only), with the answer key in
-`expected/` split out, so a later blind pass cannot see answers from the
-entry point. Each answer is derived from the **report** (`--format json`) at
-`12daa5b7` and the layout in section 6, not from an implementation.
+A fixture corpus, authored first and committed (r3): `tests/fixtures/rof1-projected-text/`,
+entry point `README.md` (stories and commands only), answer key split out in
+`expected/` (with `README.md` saying how it was derived), runner
+`tests/test_rof1_projected_text.py`. Each answer is derived from the **report**
+(`--format json`) at `12daa5b7`, rendered with the plain route's own renderer
+over the report's rows (`expected/derive_answers.py`), not from an
+implementation.
 
-Changed-bytes list (to be completed before the owner gate, rule 1): the four
-`tests/fixtures/rf1-pins/goldens/sem-check/ex_{dispatch,release}_…json` stdout
-bodies; `tests/fixtures/public-emitter21/answers.json` `exact_text_prefixes`
-(the prefix `REDACTION applied: optional_code.code\n` is a prefix of the new
-text too; confirm); any `tests/test_public_redaction_reports.py` expectation
-that parses the JSON line out of stdout (to be enumerated by running the
-suite against a mutant renderer, per rule 6).
+Twelve cases: `redacted-fail`, `redacted-fail-unredacted`, `redacted-pass`,
+`redacted-rule-ids`, `redacted-ill-formed`, `temporal-pass`,
+`temporal-advisory`, `temporal-derivation`, `validate-redacted`,
+`validate-redacted-unredacted`, and the controls `validate-temporal` and
+`validate-invalid`. They map to T1-T5, T3-T3c, T4/T4b, T15, T16.
+
+State at commit: 37 corpus tests, **20 red** (10 answer-key cases and 10
+no-JSON-line cases, for the ten projected-route text cases), 17 green (the 12
+JSON-bytes pins, the two controls, the applied-mode canary, the unredacted
+canary, the corpus-lists-itself check). The canaries pass today because the
+JSON text holds the redaction; they are regression guards for the phase.
+
+Changed-bytes list (rule 1; still to be completed before implementation):
+the four `tests/fixtures/rf1-pins/goldens/sem-check/ex_{dispatch,release}_…json`
+stdout bodies; `tests/fixtures/public-emitter21/answers.json`
+`exact_text_prefixes` (confirm the prefix `REDACTION applied: optional_code.code\n`
+still prefixes the new text); any `tests/test_public_redaction_reports.py`
+expectation that parses the JSON line out of stdout (to be enumerated by
+running the suite against a mutant renderer, per rule 6). The corpus's own
+fixtures are new and move no recorded byte.
 
 ## Verification ledger
 

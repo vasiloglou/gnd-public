@@ -7,12 +7,13 @@ JSON for redaction and temporal models).
 
 **Status: plan r3 approved by the owner on 2026-11-07
 ([plan-gate record](001-plan.md)); D7 ruled (a). No phase spec is approved:
-ROF1's spec (r2) is a draft that still needs its approval corpus and its own
-owner gate.** `auto=false`. No code has changed.
+ROF1's spec (r3) is a draft with its approval corpus committed (20 cases
+red); it needs its own owner gate.** `auto=false`. No code has changed.
 
 - [Plan-gate record](001-plan.md)
 - [Plan (r3, approved)](notes/report-output-fidelity-plan.md)
-- [ROF1 spec (draft r2)](notes/phase-ROF1-spec.md)
+- [ROF1 spec (draft r3)](notes/phase-ROF1-spec.md)
+- ROF1 approval corpus: `tests/fixtures/rof1-projected-text/` (README = stories, `expected/` = answers), runner `tests/test_rof1_projected_text.py`
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md) and [triage](evidence/plan-review-r2/triage.md)
 - [Digest census](evidence/census-r2/README.md)
 
@@ -21,5 +22,4 @@ verification), ROF3 (111: canonical identity and producer), ROF4 (111: accept
 both identities at every matching site), ROF5 (111: report emission,
 blocked on D3), close.
 
-Next action: author ROF1's approval corpus, then its spec goes to its own
-owner gate (process-phase).
+Next action: the owner's gate on the ROF1 corpus and spec (process-phase).

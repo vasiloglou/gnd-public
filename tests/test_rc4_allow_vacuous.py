@@ -67,8 +67,9 @@ def test_allow_vacuous_with_another_arm_is_a_usage_error() -> None:
     (), ("fail",), ("unchecked",), ("vacuous",), ("fail", "vacuous"), ("unchecked", "vacuous"),
     ("fail", "unchecked", "vacuous"),
 ])
-@pytest.mark.parametrize("compared", [False, True])
+@pytest.mark.parametrize("compared", [None, (False, False), (True, False), (False, True), (True, True)])
 def test_t1_the_option_turns_only_a_two_into_a_zero(verdicts, compared) -> None:
+    """Every head mix, without a baseline and with each pair of comparison flags (V2)."""
     from types import SimpleNamespace
 
     from gnd.checker import CheckReport, ConstraintVerdict, band
@@ -85,8 +86,8 @@ def test_t1_the_option_turns_only_a_two_into_a_zero(verdicts, compared) -> None:
         verdicts=rows, derivations=[], snapshot_projection=None, phase1_trace=None, coverage={},
     )
     baseline = (
-        SimpleNamespace(new_alethic_fail="fail" in verdicts, undecided_alethic="unchecked" in verdicts)
-        if compared else None
+        None if compared is None
+        else SimpleNamespace(new_alethic_fail=compared[0], undecided_alethic=compared[1])
     )
     plain = band(report, baseline)
     allowed = band(report, baseline, allow_vacuous=True)
@@ -105,9 +106,13 @@ def test_t2_allow_vacuous_excludes_every_other_arm(arm) -> None:
     assert b"--allow-vacuous applies to one plain snapshot check" in result.stderr
 
 
-def test_t3_the_option_without_vacuous_verdicts_changes_only_its_own_key() -> None:
-    plain = json.loads(run_main(["check", MODEL, "populations/fail-and-vacuous.pop.yaml", "--rule-ids",
-                                 "--format", "json"], cwd=CORPUS).stdout)
-    allowed = json.loads(run_main(["check", *CASES["fail-and-vacuous"], "--format", "json"], cwd=CORPUS).stdout)
+@pytest.mark.parametrize("population", ["base-vacuous.head.pop.yaml", "fail-and-vacuous.pop.yaml"])
+def test_t3_the_option_changes_only_its_own_key_unless_it_accepts(population) -> None:
+    """A clean run and a failing run: the option changes nothing but its own key (V1)."""
+    def run(flag):
+        return json.loads(run_main(["check", MODEL, f"populations/{population}", flag, "--format", "json"],
+                                   cwd=CORPUS).stdout)
+    plain, allowed = run("--rule-ids"), run("--allow-vacuous")
+    assert plain["exit_code"] != 2
     assert allowed.pop("allow_vacuous") is True and plain.pop("allow_vacuous") is False
     assert allowed == plain

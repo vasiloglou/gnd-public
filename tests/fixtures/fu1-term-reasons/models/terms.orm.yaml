@@ -1,0 +1,103 @@
+version: 2
+model_id: urn:gnd-fixture:fu1-term-reasons@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+
+object_types:
+  - { id: ticket, name: Ticket, kind: value, primitive: String }
+  - { id: integer, name: Integer, kind: value, primitive: Integer }
+  - { id: amount, name: Amount, kind: value, primitive: Number }
+
+fact_types:
+  - id: in_mod
+    reading: "{Ticket} has mod a {Integer} and b {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: a }
+      - { object_type: integer, role_name: b }
+  - id: out_mod
+    reading: "{Ticket} has mod result {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: result }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: in_mod, bind: { ticket: "$ticket", a: "$a", b: "$b" } }
+      head:
+        ticket: "$ticket"
+        result: { fn: mod, args: ["$a", "$b"] }
+  - id: in_div
+    reading: "{Ticket} has div a {Integer} and b {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: a }
+      - { object_type: integer, role_name: b }
+  - id: out_div
+    reading: "{Ticket} has div result {Amount}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: amount, role_name: result }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: in_div, bind: { ticket: "$ticket", a: "$a", b: "$b" } }
+      head:
+        ticket: "$ticket"
+        result: { fn: round, args: [{ fn: div, args: ["$a", "$b"] }, 2] }
+  - id: in_sqrt
+    reading: "{Ticket} has sqrt a {Integer} and b {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: a }
+      - { object_type: integer, role_name: b }
+  - id: out_sqrt
+    reading: "{Ticket} has sqrt result {Amount}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: amount, role_name: result }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: in_sqrt, bind: { ticket: "$ticket", a: "$a", b: "$b" } }
+      head:
+        ticket: "$ticket"
+        result: { fn: round, args: [{ fn: sqrt, args: ["$a"] }, 2] }
+  - id: in_hav
+    reading: "{Ticket} has hav a {Integer} and b {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: a }
+      - { object_type: integer, role_name: b }
+  - id: out_hav
+    reading: "{Ticket} has hav result {Amount}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: amount, role_name: result }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: in_hav, bind: { ticket: "$ticket", a: "$a", b: "$b" } }
+      head:
+        ticket: "$ticket"
+        result: { fn: round, args: [{ fn: haversine, args: ["$a", "$b", 0, 0] }, 2] }
+  - id: in_wide
+    reading: "{Ticket} has wide a {Integer} and b {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: a }
+      - { object_type: integer, role_name: b }
+  - id: out_wide
+    reading: "{Ticket} has wide result {Integer}"
+    roles:
+      - { object_type: ticket, role_name: ticket }
+      - { object_type: integer, role_name: result }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: in_wide, bind: { ticket: "$ticket", a: "$a", b: "$b" } }
+      head:
+        ticket: "$ticket"
+        result: { fn: mul, args: ["$a", { fn: mul, args: ["$a", { fn: mul, args: ["$a", { fn: mul, args: ["$a", { fn: mul, args: ["$a", "$b"] }] }] }] }] }
+
+constraints: []
+rejected_proposals: []

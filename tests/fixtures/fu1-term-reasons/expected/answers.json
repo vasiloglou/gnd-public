@@ -1,0 +1,84 @@
+{
+  "cli_cases": {
+    "mod-zero": {
+      "exit": 4,
+      "schema_version": 7,
+      "unchecked_derivation": "derivation:out_mod",
+      "reason_code": "term:mod-zero",
+      "schema_valid": true
+    },
+    "div-zero": {
+      "exit": 4,
+      "schema_version": 7,
+      "unchecked_derivation": "derivation:out_div",
+      "reason_code": "term:div-zero",
+      "schema_valid": true
+    },
+    "sqrt-negative": {
+      "exit": 4,
+      "schema_version": 7,
+      "unchecked_derivation": "derivation:out_sqrt",
+      "reason_code": "term:sqrt-negative",
+      "schema_valid": true
+    },
+    "haversine-coordinate-range": {
+      "exit": 4,
+      "schema_version": 7,
+      "unchecked_derivation": "derivation:out_hav",
+      "reason_code": "term:haversine-coordinate-range",
+      "schema_valid": true
+    },
+    "float-overflow": {
+      "exit": 4,
+      "schema_version": 7,
+      "unchecked_derivation": "derivation:out_sqrt",
+      "reason_code": "term:float-overflow",
+      "schema_valid": true
+    },
+    "exact-value-too-wide": {
+      "exit": 4,
+      "schema_version": 7,
+      "unchecked_derivation": "derivation:out_wide",
+      "reason_code": "term:exact-value-too-wide",
+      "schema_valid": true
+    }
+  },
+  "schema_reasons": [
+    "term:mod-zero",
+    "term:exact-value-too-wide",
+    "term:dependency-unavailable",
+    "term:div-zero",
+    "term:sqrt-negative",
+    "term:haversine-coordinate-range",
+    "term:float-overflow"
+  ],
+  "pre_existing_reasons": [
+    "derivation-not-covered",
+    "derivation-rule-opaque",
+    "opaque-value"
+  ],
+  "refused_reason": "term:not-a-reason",
+  "branches": [
+    "derivation_verdict",
+    "derivation_verdict_v9",
+    "legacy_reference_report",
+    "temporal_admission_report"
+  ],
+  "non_regression": "derivation_verdict_v15",
+  "refused_on_version_7": [
+    "derived-unknown"
+  ],
+  "superseded_answers": {
+    "derived-unknown": "accepted on every branch (approved 08167666); amended 2026-11-07 by owner ruling to refused on version 7, following PR 122"
+  },
+  "version_15_reasons": [
+    "derived-unknown",
+    "term:mod-zero",
+    "term:exact-value-too-wide",
+    "term:dependency-unavailable",
+    "term:div-zero",
+    "term:sqrt-negative",
+    "term:haversine-coordinate-range",
+    "term:float-overflow"
+  ]
+}

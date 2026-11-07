@@ -138,7 +138,7 @@ class CheckReport(BaseModel):
         return totals
 
 
-def band(report: CheckReport) -> int:
+def band(report: CheckReport, baseline: Any = None) -> int:
     """Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08).
 
     Band 3 (load/model-relative rejection) returns earlier from the CLI's load
@@ -147,8 +147,21 @@ def band(report: CheckReport) -> int:
     all delegate to it, because a duplicated comprehension is how exit bands drift
     apart (see :attr:`CheckReport.has_unevaluated_alethic`). Each predicate lives on
     :class:`CheckReport`, never as a comprehension in a caller.
+
+    ``baseline`` (``gnd check --baseline``, a ``gnd.baseline.Comparison``)
+    decides 1 from new alethic failures only and 4 from an alethic verdict
+    left unchecked in either run; the head's vacuous verdicts still give 2.
     """
-    if report.snapshot_projection is not None:
+    if baseline is not None:
+        if baseline.new_alethic_fail:
+            result = 1
+        elif baseline.undecided_alethic:
+            result = 4
+        elif report.has_vacuous:
+            result = 2
+        else:
+            result = 0
+    elif report.snapshot_projection is not None:
         result = int(report.snapshot_projection.band)
         if any(row.verdict == "fail" for row in report.derivations):
             result = 1

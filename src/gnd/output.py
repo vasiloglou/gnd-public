@@ -166,29 +166,48 @@ def _derivation_verdict_lines(
     return lines
 
 def _identified_verdict_lines(
-    verdict: Any, declared: Mapping[str, tuple[str, str | None, str]] | None
+    verdict: Any, declared: Mapping[str, tuple[str, str | None, str, str | None]] | None
 ) -> list[str]:
     """A constraint verdict line, named by its declared address and followed by its remedy.
 
-    ``declared`` maps a positional ref to (address, remedy, message) for
-    ``check --rule-ids``; the message is the version-15 one, which differs from
-    the report's for a failing acyclic rule (RC2). Without it, the line is the
-    plain one.
+    ``declared`` maps a positional ref to (address, remedy, message, novelty)
+    for ``check --rule-ids``; the message is the version-15 one, which differs
+    from the report's for a failing acyclic rule (RC2), and the novelty is
+    ``new`` or ``standing`` under ``--baseline`` (RC3). Without it, the line is
+    the plain one.
     """
     if declared is None or verdict.constraint_ref not in declared:
         return [_constraint_verdict_line(verdict)]
-    address, remedy, message = declared[verdict.constraint_ref]
+    address, remedy, message, novelty = declared[verdict.constraint_ref]
     named = verbalize.path_segment(verdict.constraint_ref)
     if address != verdict.constraint_ref:
         named = f"{verbalize.path_segment(address)} ({named})"
-    line = f"  [{verdict.verdict}] {named}: {verbalize.line_text(message)}"
+    outcome = verdict.verdict if novelty is None else f"{verdict.verdict}, {novelty}"
+    line = f"  [{outcome}] {named}: {verbalize.line_text(message)}"
     if remedy is None:
         return [line]
     return [line, f"    remedy: {verbalize.line_text(remedy)}"]
 
 
+def print_baseline(block: Mapping[str, Any] | None) -> None:
+    """The ``--baseline`` summary, with the warning for keys that move when rules are inserted."""
+    if block is None:
+        return
+    print(f"BASELINE {verbalize.line_text(block['population'])}")
+    print(
+        f"  new={block['new']} standing={block['standing']} resolved={block['resolved']} "
+        f"positional_keyed={block['positional_keyed']} undecided={block['undecided']}"
+    )
+    if block["positional_keyed"]:
+        print(
+            f"warning: {block['positional_keyed']} baseline keys use positional addresses; "
+            "they move if a constraint is inserted above them."
+        )
+
+
 def _print_report(
-    report: CheckReport, declared: Mapping[str, tuple[str, str | None, str]] | None = None
+    report: CheckReport,
+    declared: Mapping[str, tuple[str, str | None, str, str | None]] | None = None,
 ) -> None:
     blocking = [
         verdict

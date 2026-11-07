@@ -1,0 +1,67 @@
+version: 2
+model_id: urn:gnd-fixture:rc3-graph@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: component, name: Component, kind: entity, reference: { mode: popular, value_type: component_name } }
+  - { id: component_name, name: ComponentName, kind: value, primitive: String }
+  - { id: area, name: Area, kind: value, primitive: String }
+  - { id: owner, name: Owner, kind: value, primitive: String }
+  - { id: release, name: Release, kind: value, primitive: String }
+fact_types:
+  - id: uses
+    reading: "{Component} uses {Component}"
+    roles:
+      - { object_type: component, role_name: user }
+      - { object_type: component, role_name: used }
+    constraints:
+      - id: no_import_loops
+        type: ring
+        variant: acyclic
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        remedy: "Break each loop: move the shared code into a lower component."
+        provenance: { user_quote: "No component may import itself, directly or through others." }
+  - id: component_in_area
+    reading: "{Component} is in {Area}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: area, role_name: area }
+  - id: component_has_owner
+    reading: "{Component} has owner {Owner}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: owner, role_name: owner }
+    constraints:
+      - id: should_have_owner
+        type: mandatory
+        role: component
+        source: user-supplied
+        status: confirmed
+        modality: deontic
+        provenance: { user_quote: "Every component should have an owner." }
+  - id: component_in_release
+    reading: "{Component} ships in {Release}"
+    roles:
+      - { object_type: component, role_name: component }
+      - { object_type: release, role_name: release }
+constraints:
+  - type: guarded
+    modality: alethic
+    source: user-supplied
+    status: confirmed
+    antecedent:
+      - { fact_type: component_in_area, bind: { component: "$c", area: "$a" } }
+    consequent:
+      comparison: { operator: "!=", left: "$a", right: legacy }
+    provenance: { user_quote: "No component may live in the legacy area." }
+  - id: has_release
+    type: cardinality
+    scope: object
+    object_type: release
+    bound: { min: 1 }
+    source: user-supplied
+    status: confirmed
+    modality: alethic
+    provenance: { user_quote: "At least one release exists." }
+rejected_proposals: []

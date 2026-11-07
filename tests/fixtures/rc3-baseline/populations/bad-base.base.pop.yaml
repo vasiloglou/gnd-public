@@ -1,0 +1,4 @@
+population: { model: ../models/graph.orm.yaml, model_id: urn:gnd-fixture:rc3-graph@1, source: fixture, covers: [uses, component_in_area, component_has_owner, component_in_release] }
+facts:
+  uses:
+    - { user: a, depends_on: b }

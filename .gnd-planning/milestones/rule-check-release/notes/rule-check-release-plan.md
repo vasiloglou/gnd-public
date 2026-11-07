@@ -1,8 +1,12 @@
 # Rule-check release
 
-r1, 2026-11-07. **Draft, awaiting the owner's plan gate. The plan review has
-not run** (RL-D0 asks the owner which instrument reviews it). No phase has a
-spec approval; no code is written. `auto=false`. Milestone:
+r2, 2026-11-07. **Draft, awaiting the owner's plan gate.** r1 (sha256
+`52797ddb…4f034`, commit dbf98447) was reviewed by one reviewer, Codex
+(disposition `revise`, 11 findings; [record](../evidence/plan-review-r1/codex-review.md));
+§11 disposes each. **r2 repairs r1 and carries no review opinion of its own**;
+it was not re-reviewed. The owner ruled every decision RL-D0 to RL-D9 as
+proposed (§10); that is not the plan gate. No phase has a spec approval; no
+code is written. `auto=false`. Milestone:
 `rule-check-release`. Phase prefix `RR`.
 
 Source: GitHub issue 118, GR-D7, "a release that carries the rule-check
@@ -24,9 +28,14 @@ The milestone is complete when, on main after merge:
 1. The source version is the number the owner ruled (RL-D1), written once in
    `pyproject.toml`; `uv.lock`, the three plugin manifests and the release
    notes agree with it, and a test fails if any of them drifts (RR1).
-2. Every artifact whose bytes move with the version is listed from a
-   measurement before code, and each is handled by a ruled method (RR1,
-   RL-D9).
+2. Every tracked file that names the old version, and every default-lane
+   test whose result moves with the version, is listed from a grep inventory
+   and a measurement before code, and each is classified (historical or stale)
+   and handled by a ruled method (RR1, RL-D9). The opt-in lanes (`evidence`,
+   `census`, `distribution`) are not measured by E1; the ones whose files
+   name the version (at least `tests/test_public_distribution.py`) are
+   selected by name in the RR1 spec, and any lane not selected is listed as an
+   exclusion in the record (review P2).
 3. A candidate wheel and sdist built from a named main commit install into a
    fresh environment outside the checkout and carry every item of issue 118:
    report version 15, `--rule-ids`, `--baseline`, `--allow-vacuous`, the
@@ -39,7 +48,16 @@ The milestone is complete when, on main after merge:
    not measured, and every owner action still needed before publication; the
    post-publication documentation patch is prepared and not applied (RR3).
 6. No workflow, environment, repository setting or PyPI configuration was
-   changed to enable publication, and nothing was uploaded (all phases).
+   changed to enable publication, and nothing was uploaded (all phases). What
+   the milestone can audit is stated: repository bytes by `git diff` of
+   `.github/` and `docs/releasing.md`'s procedure steps against the base;
+   remote state by dated read-only checks at the close (`gh api
+   repos/vasiloglou/gnd-public/environments`, `gh run list --workflow
+   release.yml`, `gh release list`, the public PyPI JSON listing of versions),
+   compared with the baseline of O3 and O5. They need an authenticated `gh`
+   with read access and public PyPI; PyPI account settings (publisher
+   registration) are not readable by them and are named as not audited
+   (review P6).
 7. Each phase has an approved spec, a record with verbatim focused-gate
    output and one independent reviewer; the close record disposes every open
    question and leaves issue 118 open with its reason.
@@ -102,7 +120,7 @@ a record, **P** proposed target.
 | O6 | `release.yml` prepares (build wheel and sdist, rebuild a comparison wheel from the sdist, SHA256SUMS, run `tests/test_release_acceptance.py` over the retained files) and, only with `publish=true` on main, uploads the retained files and then compares served files | O | `.github/workflows/release.yml` | RR2 reproduces the prepare steps locally |
 | O7 | The workflow rebuilds on its own runner, so the files a workflow publication uploads are not the local candidate's bytes | O | `release.yml` (`prepare` job feeds `publish` within one run) | RR2 states the limit; RL-D5 |
 | O8 | `docs/releasing.md` requires, before production enablement: package ownership and version availability, repository visibility and history review, target-only release authority, trusted-publishing identity, protected environment; after publication: compare served files, install, run the examples | I | `docs/releasing.md` | RR3 dossier |
-| O9 | The version is read live into artifacts (`resolve_version()` feeds `gnd_version` in extract, discover, synth, measure, fidelity, review, codegen and coverage outputs); 55 tracked files outside planning and the lock contain the string `0.1.0`: 16 rf1-pins goldens, 6 under `docs`, 3 under `tests`, plugin manifests, retained fixtures. **Pre-measurement (scratch copy, 2026-11-07):** with only the version set to 0.2.0 (pyproject and the three manifests) and the environment re-synced, 21 of the 656 test files, chosen because they read those fixtures (715 cases), gave 12 failures in four files (`test_object_type_description.py` 4, `test_fidelity_stub_gate.py` 1, `test_public_extract_controls.py` 5, `test_public_measurement_publication.py` 2); the same four files on the same copy at 0.1.0 passed 85 of 85. The other 635 files were not run | O | `grep`, `src/gnd`, scratch probe | RR1 experiment E1 (the full lane, to complete the list) |
+| O9 | The version is read live into artifacts (`resolve_version()` feeds `gnd_version` in extract, discover, synth, measure, fidelity, review, codegen and coverage outputs); 55 tracked files outside planning and the lock contain the string `0.1.0`: 16 rf1-pins goldens, 13 under `docs` (installation, index, marketplace-plugins, compatibility, development/candidate, pyrel-apps, three how-to and three tutorial pages; review P3), `README.md`, 3 under `tests`, plugin manifests, retained fixtures. **Pre-measurement (scratch copy, 2026-11-07):** with only the version set to 0.2.0 (pyproject and the three manifests) and the environment re-synced, 21 of the 656 test files, chosen because they read those fixtures (715 cases), gave 12 failures in four files (`test_object_type_description.py` 4, `test_fidelity_stub_gate.py` 1, `test_public_extract_controls.py` 5, `test_public_measurement_publication.py` 2); the same four files on the same copy at 0.1.0 passed 85 of 85. The other 635 files were not run | O | `grep`, `src/gnd`, scratch probe | RR1 experiment E1 (the full lane, to complete the list) |
 | O10 | Three test files assert the literal `0.1.0`: `tests/test_public_distribution.py` (lines 250, 255, 286, 331), `tests/test_induced_provenance.py`, `tests/test_fidelity_payload.py` | O | `grep tests` | RR1 (the last two to be classified by E1: a fixture's own value or the live one) |
 | O11 | `tests/test_marketplace_plugins.py` requires the Claude and Codex plugin manifests to carry `pyproject` version (mutation case `999.0.0`) | O | test file lines 22-29, 54-71 | RR1 |
 | O12 | `uv.lock` records `get-nick-done` as editable at `0.1.0` | O | `uv.lock` line 100 | RR1 |
@@ -121,7 +139,7 @@ a record, **P** proposed target.
 
 - **Inputs exist when a phase needs them.** RR1 needs only main. RR2 needs
   RR1 on main and a clean tracked checkout (`git archive HEAD`). RR3 needs
-  RR2's hashes. No phase needs PyPI write access or any credential.
+  RR2's hashes. No phase needs PyPI write access or a write credential; the read-only remote checks of predicate 6 use an authenticated `gh` and the public PyPI listing.
 - **Tools meet the rules.** `uv build` is used exactly as `release.yml` uses it
   (uv 0.10.10 is the pinned version; the local uv version is recorded by RR2
   and a difference is stated). The `distribution` lane is selected by the
@@ -142,7 +160,7 @@ a record, **P** proposed target.
 | ID | Clause A | Clause B | Proposed resolution | Ruling needed |
 |---|---|---|---|---|
 | C1 | `project.md`: no `addopts` override or `-m` to bring the distribution lane into an ordinary gate | `release.yml` and `docs/releasing.md`: acceptance is `pytest -o addopts='' tests/test_release_acceptance.py` over retained files | Release acceptance is not an ordinary phase gate; the owner's approval of the RR2 spec is the explicit selection of that one file and lane. Nothing else overrides `addopts` | RL-D8 |
-| C2 | `docs/compatibility.md`: confirm version availability "before candidate freeze" | Availability is time-dependent; PyPI could change before upload | Observe at plan time (O3) and again in the dossier on the publication day; the freeze records both | none (RR3) |
+| C2 | `docs/compatibility.md`: confirm version availability "before candidate freeze" | Availability is time-dependent; PyPI could change before upload | Observe at plan time (O3), again at the RR2 candidate freeze (RR2-C0) and in the dossier; the owner's later upload request requires one more check immediately before any upload | none (RR3) |
 
 ## 2. Contract proposal and product behavior
 
@@ -168,10 +186,19 @@ the milestone is the package a user installs.
   5. a population with `source: tool-output` and `producer` loads and checks,
      and `producer` without `tool-output` is refused.
   Expected values are copied from the rule-check-adoption phase records
-  (RC1-RC5) and the reference page, not from the output being tested. Each
-  probe is repeated against the PyPI 0.1.0 wheel and must differ (an unknown
-  option, a lower report version or a refusal), proving the probe can tell the
-  releases apart.
+  (RC1-RC5) and the reference page, not from the output being tested. Each of
+  the five probes has two controls, so it separates behavior from mere option
+  availability (review P5): (i) availability: on the PyPI 0.1.0 wheel the
+  option is refused (exit 2), which proves only that the flag is new; (ii)
+  behavior: a mutant of the candidate that reaches the same code with the
+  feature removed or changed (a model without a declared `remedy` or id gives
+  `null` and the position address; a baseline file that lists the violation
+  gives `standing` where an empty one gives `new`; a ring with a disjoint added
+  cycle leaves the extent rows unchanged; `producer` with `source: fixture` is
+  refused), and, where the 0.1.0 default output is comparable (report version
+  of a plain `gnd check`, population loading without `source`), a comparison
+  with it. Each field (`schema_version`, `address`, `addressing`, `remedy`,
+  `novelty`, extent edges) has its own expected value.
 - **Install forms.** The local form of dev-tools' `uvx --from
   get-nick-done==<version>` is `uvx --from ./get_nick_done-<v>-py3-none-any.whl
   gnd --version`. The index form cannot be tried before publication; the
@@ -210,14 +237,26 @@ Spec: [phase-RR1-spec.md](phase-RR1-spec.md), draft, blocked on RL-D1 and RL-D9.
 - RR1-C2: `tests/test_release_version.py` fails for each of four mutants
   (pyproject, lock entry, one manifest, release-notes heading) and passes on
   the tree.
-- RR1-C3: no test file names the old version as a literal of its own;
-  `tests/test_public_distribution.py` reads it from `pyproject.toml`.
-- RR1-C4: E1's measured list of moved artifacts is in the spec before code, and
-  each entry is handled by the ruled method; no recorded byte moves
-  unlisted.
-- RR1-C5: release notes read as in §2; no sentence says the version is
-  published; `docs/compatibility.md` and `docs/support.md` state what is true
-  (candidate, not signed off, profiles unmeasured).
+- RR1-C3: no test file names the old version as a literal of its own, except
+  the published-versions record `RELEASED` that `tests/test_release_version.py`
+  holds on purpose (historical data, exempt; RR3's patch updates it, review
+  P4); `tests/test_public_distribution.py` reads the version from
+  `pyproject.toml`.
+- RR1-C4: E1's measured list of moved default-lane results, plus the grep
+  inventory of tracked files naming the old version, is in the spec before
+  code; each entry is classified and handled by the ruled method. The claim is
+  scoped to what the inventory and E1 cover; unselected opt-in lanes are named
+  exclusions (review P2).
+- RR1-C5: release notes read as in §2; `docs/compatibility.md` and
+  `docs/support.md` state what is true (candidate, not signed off, profiles
+  unmeasured). A test, not a reading, gates it: while the version is not in
+  `RELEASED`, the version's notes heading contains "not published" and
+  `docs/compatibility.md` says so; a mutant heading without it fails (review
+  P10).
+- RR1-C8: `docs/marketplace-plugins.md` tells a plugin user, while the plugin
+  is newer than the published runtime, to install the runtime from the
+  repository at a commit (the route the tutorials already give) until
+  publication (review P11).
 - RR1-C6: the full default lane at the bumped tree has no failure the merge
   base lacks (beast-3, six shards).
 - RR1-C7: README and installation pins unchanged (rule 3), with a test or a
@@ -227,6 +266,11 @@ Spec: [phase-RR1-spec.md](phase-RR1-spec.md), draft, blocked on RL-D1 and RL-D9.
 
 Spec: outline only; written after RR1 merges and RL-D2 is ruled.
 
+- RR2-C0: before any build, the notes of every change merged since RR1
+  (FU2 and FU3 included) are reconciled into the version's section by a docs
+  commit, so the candidate commit carries no `Unreleased:` section for work the
+  candidate contains (review P1); the version's availability on PyPI is
+  rechecked at this freeze (review P7, C2).
 - RR2-C1: from `git archive` of the named main commit, the two `uv build`
   commands of `release.yml` produce wheel, sdist and comparison wheel;
   SHA256SUMS verifies; the tool versions are recorded.
@@ -234,8 +278,9 @@ Spec: outline only; written after RR1 merges and RL-D2 is ruled.
   measured; a difference is explained, RL-D7).
 - RR2-C3: `GND_CANDIDATE_DIR=... uv run pytest -q -o addopts=''
   tests/test_release_acceptance.py --tb=short`: verbatim summary line.
-- RR2-C4: the five "carries" probes of §2 from the installed wheel, each with
-  its 0.1.0 negative control; the probes live in
+- RR2-C4: the five "carries" probes of §2 from the installed wheel, each field
+  with its own expected value and each probe with both controls of §2 (a
+  0.1.0 availability control and a candidate-behavior mutant); the probes live in
   `tests/test_release_acceptance.py` so every later prepare run repeats them.
 - RR2-C5: `uvx --from <wheel>` form works; limits recorded.
 - RR2-C6: observed profile (OS, Python, uv) recorded; no other profile is
@@ -254,12 +299,24 @@ Outline only.
   evidence that it is still open (O3 to O5, O8, O15): ownership, version
   availability recheck, route (token as for 0.1.0, or Trusted Publisher with
   the `pypi` environment), tag and GitHub release, announcements.
-- RR3-C3: the post-publication patch (pins in README and installation,
-  compatibility sentence, release-notes status, support rows, `v0.1.0`
-  sentence in installation) exists as a patch file and is not applied.
+- RR3-C3: the post-publication patch exists as a patch file and is not
+  applied. It covers every instruction publication makes stale, found by a grep
+  at RR3 time for `0.1.0` and for "next release" / "newer than the 0.1.0
+  release" over `README.md` and `docs/` and classified hit by hit (historical
+  or stale): the pins in `README.md`, `docs/installation.md`, `docs/index.md`
+  and `docs/marketplace-plugins.md`; the checkout-until-next-release
+  instructions in `docs/pyrel-apps.md`, three tutorials and three how-to pages;
+  the compatibility sentence; the release-notes status; the support rows; the
+  `v0.1.0` sentence in installation; and the `RELEASED` record in
+  `tests/test_release_version.py`, with a mutant showing the pin test fails
+  without that edit (review P3, P4).
 - RR3-C4: `docs/releasing.md` has its stale phase wording ("After Phase 3
-  accepts...") replaced by the current procedure, without changing a
-  normative step; `tests/test_release_docs.py` passes.
+  accepts...") replaced by the current procedure and states the two
+  authorized routes conditionally (a token upload as for 0.1.0, or the
+  workflow with a validated Trusted Publisher and the `pypi` environment),
+  configuring and invoking neither. This is a normative edit and is proposed
+  for the RR3 spec's owner gate, not assumed (review P8);
+  `tests/test_release_docs.py` passes.
 - RR3-C5: the served-file check and the post-publication commands are listed
   once, citing the workflow's step rather than copying it.
 
@@ -296,19 +353,21 @@ this close.
   and are classified by E1, not edited by assumption.
 - Plugins: the manifests change in RR1 (O11). A user who installs the plugin
   from `main` sees plugin version 0.2.0 while PyPI still has 0.1.0; skills on
-  `main` already name options the 0.1.0 runtime lacks, so this widens no gap
-  that is not already there (risk R3).
+  `main` already name options the 0.1.0 runtime lacks, but the plugin-versus-
+  runtime version mismatch that `docs/marketplace-plugins.md` tells users to
+  avoid is new; RR1-C8 gives plugin users the repository-commit route until
+  publication (risk R3, review P11).
 
 ## 6. Risks and required controls
 
 | ID | Risk | Control |
 |---|---|---|
 | R1 | A bump moves retained or golden bytes (`gnd_version` in 16 goldens and other fixtures) and the suite goes red in places unrelated to the release | E1 measures first; RL-D9 chooses the method; RR1-C4 and C6 |
-| R2 | `docs/release-notes.md` conflicts with every sibling milestone that adds an `Unreleased:` section | RR1 rebases onto main immediately before its PR; after it merges, new work adds a fresh `Unreleased:` section above the version's section; the plan records this for sibling sessions |
+| R2 | `docs/release-notes.md` conflicts with every sibling milestone that adds an `Unreleased:` section | RR1 rebases onto main immediately before its PR; after it merges, sibling work adds a fresh `Unreleased:` section above the version's section, and RR2-C0 folds the sections of every change the candidate contains into the version's section before the build; the plan records this for sibling sessions |
 | R3 | Main carries version 0.2.0 and plugin manifests at 0.2.0 before PyPI has it | rule 3 keeps install text honest; release notes say "prepared, not published"; RL-D2 can shorten the gap |
 | R4 | The candidate's evidence is read as the published file's evidence | rule 4; O7 stated in the dossier; the served-file comparison after publication is the identity that counts |
 | R5 | The probes pass because they cannot distinguish releases | 0.1.0 negative control per probe (RR2-C4) |
-| R6 | A phase quietly enables publication (for example by editing the workflow to ease a test) | rule 1, rule 7; the close diffs `.github/`, `docs/releasing.md` procedure steps and settings against the base |
+| R6 | A phase quietly enables publication (for example by editing the workflow to ease a test) | rule 1, rule 7; the close diffs `.github/` and the procedure steps of `docs/releasing.md` against the base and runs the dated read-only remote checks of predicate 6; account-side publisher registration is not auditable and is said so |
 | R7 | The version is claimed free but is taken by publication day | C2 recheck in the dossier |
 | R8 | The sandboxed acceptance run cannot run on this machine | RR2 records the exact refusal; the run moves to beast-3 or the owner dispatches the prepare job (RL-D6) |
 
@@ -369,4 +428,30 @@ candidate's observed profile after RR2 (proposed yes, one row); whether the
 GitHub release for the new tag should attach the wheel and sdist as v0.1.0's
 did (the owner's call at publication).
 
-**Provenance of rulings:** RL-D0 to RL-D9 are ruled (o, 2026-11-07), quoted in their rows (RL-D3 to RL-D9 as one answer relayed by the session that started this one). They rule decisions; it is not the plan gate and approves no bytes. The plan gate itself has not been passed.
+**Provenance of rulings:** RL-D0 to RL-D9 are ruled (o, 2026-11-07), quoted in their rows (RL-D3 to RL-D9 as one answer relayed by the session that started this one). They rule decisions; they are not the plan gate and approve no bytes. The plan gate itself has not been passed.
+
+## 11. Review dispositions (r1 to r2)
+
+One reviewer, Codex, over r1 and the RR1 spec at dbf98447 (verbatim in
+[codex-review.md](../evidence/plan-review-r1/codex-review.md)). Each finding was
+checked against the repository before it was accepted; `git grep` reproduced
+P3 (13 `docs/` files name 0.1.0, plus `docs/index.md:144`,
+`docs/marketplace-plugins.md:10` and the checkout instructions at
+`docs/pyrel-apps.md:39-41`).
+
+| Finding | Disposition | Applied at |
+|---|---|---|
+| P1 notes reconciliation | accepted | R2, RR2-C0 |
+| P2 E1 cannot cover "every artifact" | accepted: claim narrowed, inventory added | predicate 2, RR1-C4 |
+| P3 patch list incomplete, count wrong | accepted, reproduced | O9, RR3-C3 |
+| P4 `RELEASED` literal vs RR1-C3 | accepted | RR1-C3, RR3-C3 |
+| P5 probes mask behavior | accepted | §2, RR2-C4 |
+| P6 git cannot audit remote state | accepted | predicate 6, R6, sweep |
+| P7 availability recheck timing | accepted | C2, RR2-C0 |
+| P8 `releasing.md` routes | accepted as a proposal for the RR3 gate | RR3-C4 |
+| P9 spec status, costs, surface | accepted | spec §6, §7 |
+| P10 RR1-C5 not gated | accepted | RR1-C5, spec T7 |
+| P11 plugin/runtime mismatch | accepted | §5, RR1-C8 |
+
+The reviewer's "checked and found true" list is retained with the record. r2's
+repairs have no review opinion; one reviewer is one reviewer.

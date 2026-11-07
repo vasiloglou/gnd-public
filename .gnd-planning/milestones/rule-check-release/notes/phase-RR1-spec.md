@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-07. Blocked; not ready for an owner gate.** It cannot be
+**Draft r2, 2026-11-07 (repairs after the Codex review of r1, which carry no review opinion). Blocked; not ready for an owner gate.** It cannot be
 approved until (a) the plan's gate has passed (RL-D1, the version, is ruled: 0.2.0), and (b) experiment E1 (§6) has run over the full default lane
 and §7 D2 carries its ruling. The numbers below that depend on RL-D1 use the
 ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
@@ -17,7 +17,7 @@ ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
   publisher").
 - Base: main `12daa5b7`. A scratch-copy probe of 2026-11-07 (plan O9) supplies
   the only measurement in this draft; it is partial and is not E1.
-- No review round has run over these bytes.
+- One reviewer (Codex) read r1 of this spec with the plan at dbf98447 ([record](../evidence/plan-review-r1/codex-review.md)); r2 repairs P4, P9, P10 and P11 and carries no review opinion.
 
 ## 3. Obligations (step 0 harvest)
 
@@ -25,11 +25,12 @@ ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
 |---|---|---|
 | plan RR1-C1 | `pyproject.toml` carries the ruled version; `uv lock --check`; three manifests | M1-M3, T1 |
 | RR1-C2 | a test fails for each of four drift mutants | T1 (M1..M4 mutants) |
-| RR1-C3 | no test names the old version as its own literal | M4, T2 |
-| RR1-C4 | moved bytes listed before code, each handled by the ruled method | §6 E1, D2, M5 |
-| RR1-C5 | release notes, compatibility and support text true and unpublished | M6, M7, M8, T1 |
+| RR1-C3 | no test names the old version as its own literal, except the `RELEASED` record | M4, T2, T3 |
+| RR1-C4 | E1 list plus grep inventory before code, each classified and handled by the ruled method; opt-in lanes named exclusions | §6 E1, D2, M5 |
+| RR1-C5 | release notes, compatibility and support text true and unpublished, gated by a test | M6, M7, M8, T7 |
 | RR1-C6 | full default lane, no failure the merge base lacks | V3 |
 | RR1-C7 | README and installation pins unchanged, visibly | M9, T3 |
+| RR1-C8 | plugin users get a route while the plugin is newer than the runtime | M10 |
 | plan rule 2 | version written once | M1, T1 |
 | plan rule 3 | no instruction names an unpublished version | M9, T3 |
 | plan rule 6 | measured before designed | §6 |
@@ -114,7 +115,8 @@ covered; if the owner wants them covered it asks for the lanes by name (the
 | M6 | `docs/release-notes.md` | opening paragraph replaced; one `## <V> (prepared, not published)` section whose first block is the rule-check items of issue 118 (report version 15 with `--rule-ids`, `remedy`, the acyclic extent; `--baseline`; `--allow-vacuous`; `source: tool-output` with `producer`), then the twelve existing `Unreleased:` sections demoted to `###` subsections with their dates, in order | about 200, mostly moves |
 | M7 | `docs/compatibility.md` | line 3: "Current 0.1.0 metadata is provisional" replaced by the state: 0.1.0 is published; `<V>` is prepared and not published; availability observed on 2026-11-07 | 3 |
 | M8 | `docs/support.md` | profile rows say the prepared package is not signed off and no profile is yet observed for it | 4 |
-| M9 | `README.md`, `docs/installation.md` | none. The `==0.1.0` pins stay | 0 |
+| M9 | `README.md`, `docs/installation.md`, `docs/index.md` | none. The `==0.1.0` pins stay | 0 |
+| M10 | `docs/marketplace-plugins.md` | one paragraph under "Updates": until `<V>` is published, install the runtime from the repository at a commit, as the tutorials say, because the plugin on `main` is newer than the PyPI runtime | about 6 |
 
 ### The new test, exact surface
 
@@ -122,6 +124,7 @@ covered; if the owner wants them covered it asks for the lanes by name (the
 
 ```python
 def declared_version() -> str: ...                 # tomllib over pyproject.toml
+def assert_versions_agree(declared: str, lock: str, manifests: dict[str, str], notes: list[str]) -> None: ...   # raises AssertionError on any disagreement; every drift test calls it
 def lock_version() -> str: ...                     # the get-nick-done entry of uv.lock
 def manifest_versions() -> dict[str, str]: ...     # the three manifest files
 def notes_headings() -> list[str]: ...             # '## ' lines of docs/release-notes.md
@@ -134,6 +137,7 @@ Tests:
 - `test_drift_is_refused[pyproject|lock|manifest|notes]`, each building the
   four values from a mutated copy (a tmp tree, not the real files) and
   asserting the agreement function refuses
+- `test_notes_and_compatibility_do_not_claim_publication`: while `declared_version()` is not in `RELEASED`, its notes heading contains "not published" and `docs/compatibility.md` contains "not published" (T7)
 - `test_install_pins_name_a_published_version`: every pin is `<=` the declared
   version and is in `RELEASED = {"0.1.0"}`, a tuple in this test file that the
   publication-day patch edits (so a pin can only move with the record of what
@@ -151,11 +155,11 @@ cite the reference pages for behavior.
 |---|---|---|---|
 | D1 | The version (plan RL-D1) | `0.2.0` proposed; `0.1.1` understates; both change only M1-M3, M6-M8 | **Ruled (o, 2026-11-07): 0.2.0** ("0.2.0", answering "Which version should the release carry?") |
 | D2 | How E1's moved bytes are handled (plan RL-D9) | methods (a), (b), (c) above, possibly different per site | open: RL-D9 "as proposed" defers it to after E1 (2026-11-07) |
-| D3 | The unreleased notes' shape (plan RL-D3) | one version section with `###` subsections, or flat | **Ruled (o, 2026-11-07): as proposed** (plan RL-D3, relayed by the session that started this one): one section |
-| D4 | Pins stay at 0.1.0 until publication (plan RL-D4) | flipping now publishes a false instruction | **Ruled (o, 2026-11-07): as proposed** (plan RL-D4, relayed by the session that started this one): pins stay at 0.1.0 |
-| D5 | Release-notes wording of the opening: "prepared, not published" with a link to `docs/releasing.md` | proposed | open |
+| D3 | The unreleased notes' shape (plan RL-D3) | one version section with `###` subsections gives readers one "what's new" at the cost of moving about 200 lines; renaming in place moves none but leaves twelve unrelated headings | **Ruled (o, 2026-11-07): as proposed** (plan RL-D3, relayed by the session that started this one): one section |
+| D4 | Pins stay at 0.1.0 until publication (plan RL-D4) | flipping the pins now tells users to install a file that does not exist; holding the flip until publication leaves the pins stale for the wait (a prepared patch bounds it) | **Ruled (o, 2026-11-07): as proposed** (plan RL-D4, relayed by the session that started this one): pins stay at 0.1.0 |
+| D5 | Release-notes wording of the opening: "prepared, not published" with a link to `docs/releasing.md` | readings: that wording, or a plain "not yet released"; neither changes an exit code, both are gated by T7 | open |
 
-At first write every row was open; D1 has since been ruled, the rest are open.
+At first write every row was open. D1, D3 and D4 are ruled (their rows); D2 is deferred to after E1 by RL-D9; D5 is open.
 
 ## 8. Tests
 
@@ -165,6 +169,7 @@ At first write every row was open; D1 has since been ruled, the rest are open.
 | T1m | `test_drift_is_refused` x4 (pyproject, lock entry, one manifest, notes heading each mutated to a different version) | each raises `AssertionError` from the agreement function; the control (no mutation) passes, proving the harness can pass |
 | T2 | `tests/test_public_distribution.py` (the four sites), run on the evidence lane with the opt-in command the file's own markers need, recorded in the spec when selected | exit 0; unchanged when `<V>` changes again (checked by changing `pyproject` in a tmp copy) |
 | T3 | `test_install_pins_name_a_published_version` | exit 0; a mutant pin `==<V>` fails it |
+| T7 | `test_notes_and_compatibility_do_not_claim_publication` and its mutant (a heading `## 0.2.0` without the status, a compatibility page saying "is published") | exit 0 on the tree; the mutant fails |
 | T4 | `tests/test_marketplace_plugins.py` (existing, including its `999.0.0` mutation) | exit 0 |
 | T5 | `tests/test_release_docs.py`, `tests/test_release_preparation.py` | exit 0 (links in the changed notes resolve; workflow shape untouched) |
 | T6 | the E1-listed tests | exit 0 after M5 |

@@ -4,13 +4,15 @@ Planning opened 2026-11-07 for GitHub issue 118 (GR-D7): a release of
 `get-nick-done` on PyPI that carries the rule-check flags, which are on main
 and in no release. The published version is still 0.1.0.
 
-**Status: plan r1 drafted, awaiting the owner's plan gate. The plan review has
-not run (RL-D0). RR1's spec is a blocked draft.** This milestone prepares a
+**Status: plan r2 drafted, awaiting the owner's plan gate. r1 was reviewed by one
+reviewer (Codex, `revise`, 11 findings, all accepted and applied in r2); r2 carries
+no review opinion. RR1's spec is a blocked draft.** This milestone prepares a
 release and does not publish one: no upload, tag, GitHub release, `pypi`
 environment or publisher registration, and issue 118 stays open until a
 published release is verified. `auto=false`.
 
-- [Plan (r1, draft)](notes/rule-check-release-plan.md)
+- [Plan (r2, draft)](notes/rule-check-release-plan.md)
+- [Codex review of r1](evidence/plan-review-r1/codex-review.md)
 - [RR1 spec (draft, blocked on the plan gate and experiment E1)](notes/phase-RR1-spec.md)
 
 Phases: RR1 candidate content (version, lock, manifests, release notes);

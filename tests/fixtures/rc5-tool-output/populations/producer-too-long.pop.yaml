@@ -1,0 +1,4 @@
+population: { model: ../models/catalog.orm.yaml, model_id: urn:gnd-fixture:rc5-catalog@1, source: tool-output, producer: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", covers: [uses] }
+facts:
+  uses:
+    - { user: cli, used: core }

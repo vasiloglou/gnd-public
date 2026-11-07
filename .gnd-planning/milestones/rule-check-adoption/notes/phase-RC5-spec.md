@@ -2,9 +2,13 @@
 
 ## 1. Status
 
-**r1, 2026-11-06. Draft, awaiting the owner gate (process-phase step 2).**
-No implementation file is created or edited before the owner approves this
-spec or its corpus (§11). `auto=false`.
+**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
+owner ruled the step-2 asks over r1 (sha256 `80601530…`, commit
+a29931c2), answering "How do you rule on RC5's decisions D1-D5?" with
+"Approve all as proposed" (o, 2026-11-06). D1 is corpus-first, so no
+implementation file is created or edited until the owner approves the
+corpus. `auto=false`. Prior status (r1): "Draft, awaiting the owner gate
+(process-phase step 2)."
 
 ## 2. Provenance
 
@@ -78,11 +82,11 @@ the `source` description, and a `producer` entry.
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first**, small: a validation predicate is one of the three shapes the convergence reference defaults to a corpus |
-| D2 | `extract/projection.py`'s enum | **keep its three values** and pin them by test as a subset of the schema's: it is the structured-output schema handed to an extraction agent, whose output is always `agent-output`, and its bytes are hashed into recorded `projection_sha256` values (fidelity reports and the examples' recordings), which a fourth value would move (F1). The plan's "disagrees" is read as "names a value the schema does not have" |
-| D3 | Where the "only with `tool-output`" rule lives | the schema (`dependentSchemas`, so the loader refuses it at layer 1), plus a model validator for direct construction |
-| D4 | Reference documentation in this phase | the population-format reference only (it describes the enum the sync-pinned schema copy changes); broader documentation stays RC6's |
-| D5 | Review over the spec bytes | none |
+| D1 | Approval instrument | **corpus-first**, small: a validation predicate is one of the three shapes the convergence reference defaults to a corpus **Ruled (o, 2026-11-06): as proposed.** |
+| D2 | `extract/projection.py`'s enum | **keep its three values** and pin them by test as a subset of the schema's: it is the structured-output schema handed to an extraction agent, whose output is always `agent-output`, and its bytes are hashed into recorded `projection_sha256` values (fidelity reports and the examples' recordings), which a fourth value would move (F1). The plan's "disagrees" is read as "names a value the schema does not have" **Ruled (o, 2026-11-06): as proposed.** |
+| D3 | Where the "only with `tool-output`" rule lives | the schema (`dependentSchemas`, so the loader refuses it at layer 1), plus a model validator for direct construction **Ruled (o, 2026-11-06): as proposed.** |
+| D4 | Reference documentation in this phase | the population-format reference only (it describes the enum the sync-pinned schema copy changes); broader documentation stays RC6's **Ruled (o, 2026-11-06): as proposed.** |
+| D5 | Review over the spec bytes | none **Ruled (o, 2026-11-06): as proposed.** |
 
 ## 8. Tests and verification ledger
 
@@ -153,3 +157,14 @@ an expected exit and issue rule id:
 - `dependentSchemas` is Draft 2020-12, the dialect the loader validates
   with.
 - No report, payload or CLI change; no new dependency.
+
+## Corpus findings (recorded while authoring the corpus, 2026-11-06)
+
+- **C1.** Today every case is refused at exit 3 (`jsonschema:enum` for the
+  source, `jsonschema:additionalProperties` for `producer`); the answers
+  name the keyword each refusal should report once RC5 lands: `const` for a
+  producer on another source, `minLength` and `maxLength` for its bounds.
+- **C2.** An accepted case is pinned against the `fixture` control byte for
+  byte (apart from the population path), so the label provably changes
+  nothing about the check.
+- Red at commit: 9 failing (every case); the control is not a case.

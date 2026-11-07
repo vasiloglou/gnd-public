@@ -1,0 +1,4 @@
+population: { model: ../models/catalog.orm.yaml, model_id: urn:gnd-fixture:rc5-catalog@1, source: fixture, producer: "components-scan 1.4.0 @ 9f3c2a1", covers: [uses] }
+facts:
+  uses:
+    - { user: cli, used: core }

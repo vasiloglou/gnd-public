@@ -9,7 +9,7 @@ spec's owner gate.
 
 ## 2. Provenance
 
-- Plan r1 §4 FU1, completion predicate 1; FD3.
+- Plan r3 §4 FU1, completion predicate 1; FD3.
 - Issue 113; rule-check-adoption plan O29 and RC-D17 ("file it as its own
   issue; fixing it changes the frozen version-7 contract").
 - Base: main `6651e5a4`.
@@ -43,12 +43,15 @@ schema_version 7, exit 4, derivations unchecked with `term:mod-zero`,
 **Reuse table** (to be searched with `components_index.py search` before
 code: `report schema derivation reason`).
 
-**M1. `report.schema.json`, about 10 lines.** `$defs.derivation_verdict
-.properties.reason_code.enum` gains the values `derivation_verdict_v15`
+**M1. `report.schema.json`, about 20 lines.** Both reason-code enums of
+`$defs.derivation_verdict` gain (review P1): the property enum and the
+unchecked branch's conditional `then.properties.reason_code.enum`
+(`report.schema.json:1108-1113`); a probe that widened only the property
+enum left the report invalid. Each gains the values `derivation_verdict_v15`
 already lists that it lacks (FD3): `derived-unknown`, `term:mod-zero`,
 `term:exact-value-too-wide`, `term:dependency-unavailable`, `term:div-zero`,
 `term:sqrt-negative`, `term:haversine-coordinate-range`,
-`term:float-overflow`. Additive only. Any packaged copy of the schema is
+`term:float-overflow`. Additive only; the unchecked condition is kept. Any packaged copy of the schema is
 kept byte-identical (search at spec time).
 
 ## 7. Decisions (owner rules at step 2)
@@ -63,8 +66,8 @@ kept byte-identical (search at spec time).
 
 | T | Case | Expected |
 |---|---|---|
-| T1 | each corpus case's version-7 report | validates; its `reason_code` is the case's; red before M1 |
-| T2 | the branches referencing `derivation_verdict` (v7, v9, legacy reference, temporal admission) | each validates a report with a `term:*` derivation, where the route can produce one; a branch that cannot is named |
+| T1 | each corpus case's version-7 report | validates; its `reason_code` is the case's; red before M1, and red if either enum is left narrow |
+| T2 | the branches whose reason-code enum comes from `derivation_verdict` (v7, v9, legacy reference, temporal admission) | a direct schema case for each validates a `term:*` derivation, whether or not a CLI route emits it; plus a version-15 non-regression case (review P2) |
 | T3 | an unknown reason (`term:not-a-reason`) | still refused |
 
 | # | Obligation | Disposition | Command or evidence |

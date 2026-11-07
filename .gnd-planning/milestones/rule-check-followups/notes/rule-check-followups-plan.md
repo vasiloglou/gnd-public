@@ -1,9 +1,11 @@
 # Rule-check follow-ups
 
-**Status: draft r2, 2026-11-07. The owner ruled RF-D0 and FD1-FD5 as
+**Status: draft r3, 2026-11-07.** r3 applies the Codex review of r2
+(P1-P6, [plan-review-r2](../evidence/plan-review-r2/codex-review.md)).
+**r2: The owner ruled RF-D0 and FD1-FD5 as
 proposed over r1 (commit 3efdd2cd, sha256 `3b37d379…`): one Codex review
-before the plan gate; issues 111 and 112 split out. Not yet reviewed; the
-plan gate follows the review.** `auto=false`.
+before the plan gate; issues 111 and 112 split out. r3 itself is not
+reviewed; the plan gate follows.** `auto=false`.
 
 Eight small follow-ups that the rule-check-adoption milestone deferred at its
 close ([012-milestone-close.md](../../rule-check-adoption/012-milestone-close.md),
@@ -69,8 +71,10 @@ rule-check-adoption close record.
 
 ## 2. Contract proposal and product behavior
 
-- **FU1:** widen `$defs.derivation_verdict.reason_code` to the same set as
-  `derivation_verdict_v15` (FD3). Reports are unchanged; only validation
+- **FU1:** widen both reason-code enums of `$defs.derivation_verdict` (the
+  property enum and the unchecked branch's conditional enum,
+  `report.schema.json:1108-1113`) to the same set as `derivation_verdict_v15`
+  (FD3; review P1). Reports are unchanged; only validation
   accepts them.
 - **FU2:** `label` passes through both constructors and the binder. A
   `Population` validates the producer invariant on copy as well as
@@ -105,14 +109,22 @@ exact-terms fixtures FU1 uses.
 - FU1-C1: the probe's report validates; a corpus case per `term:*` reason
   the checker can emit under version 7.
 - FU1-C2: no report variant's bytes move (full suite).
-- FU1-C3: every schema that references `derivation_verdict` is listed and
-  tested (v7, v9, legacy reference, temporal admission).
+- FU1-C3: every branch whose reason-code enum comes from
+  `derivation_verdict` (v7, v9, legacy reference, temporal admission) has a
+  direct schema case, whether or not a CLI route emits the reason; a
+  version-15 non-regression case, since `derivation_verdict_v15` reuses six of
+  its properties (review P2).
 
 ### FU2: population header integrity (issues 115, 116; about 20 source, 80 test lines)
-- FU2-C1: `model_copy` (and any other construction route the spec finds)
-  cannot produce a producer without `tool-output`.
+- FU2-C1: validated construction and `model_copy` cannot produce a
+  producer without `tool-output`. `model_construct` (unvalidated by design,
+  review P3) is in or out of scope by an FU2 spec decision, with a case
+  either way.
 - FU2-C2: `label` survives `_combine_validated_populations` and
-  `bind_population`.
+  `bind_population`, the candidate's label winning as its `source` and
+  `producer` do, with a conflicting-labels case; the combined population's
+  content digest change is pinned and the witness candidate binding (which
+  hashes the original candidate) is pinned unchanged (review P4).
 - FU2-C3: content and model digests of existing populations unchanged where
   `label` is unset; where it is set, the spec lists every recorded digest that
   moves before code (rule 1).
@@ -125,11 +137,22 @@ exact-terms fixtures FU1 uses.
   property for this route).
 
 ### FU4: timing tests (issue 117; about 20 test lines)
-- FU4-C1: per FD4; each test still fails against a mutant that breaks what
-  it guards (a quadratic walk; a leader-only kill).
+- FU4-C1: the spec first captures which assertion fails under load. The
+  driver test's survivor check (`pgrep -f "pathlib.Path"`, machine-wide,
+  `tests/test_public_session_driver.py:387-390`) is scoped to the spawned
+  process group before any margin is widened (review P5); then FD4's measured
+  margins. Each test still fails against a mutant that breaks what it guards
+  (a quadratic walk; a leader-only kill).
 
 ### FU5: cycle helpers (issue 114; about -90 source, -10 test lines)
-- FU5-C1: per FD5; the guard registries and metrics successors updated.
+- FU5-C1: per FD5. The spec names the live guards that bind the helpers:
+  `tests/test_rf6_packages.py` (historical checker bindings and RF6b
+  baselines), `tests/support/rf9_ci_sources.py` with
+  `compatibility-private-sites.json` (frozen import sites), and
+  `tests/test_checker_families.py:206`. Historical baselines and evidence
+  stay byte-identical; retirement is an explicit successor or exemption for
+  the three names, with a negative test that the retired imports fail
+  (review P6).
 
 FU6 (issue 111) and FU7 (issue 112) are withdrawn: split out by FD1 and FD2.
 

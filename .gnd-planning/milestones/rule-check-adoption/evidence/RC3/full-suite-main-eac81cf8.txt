@@ -1,0 +1,10 @@
+shard0.out: 2790 passed, 104 deselected in 287.42s (0:04:47) | shard exit=0
+shard1.out: 3230 passed, 76 deselected in 810.20s (0:13:30) | shard exit=0
+shard2.out: 3104 passed, 233 deselected in 410.89s (0:06:50) | shard exit=0
+shard3.out: 1 failed, 2006 passed, 164 deselected, 1 warning, 2 errors in 549.59s (0:09:09) | shard exit=1
+shard4.out: 3354 passed, 49 deselected in 553.92s (0:09:13) | shard exit=0
+shard5.out: 3153 passed, 168 deselected in 731.28s (0:12:11) | shard exit=0
+
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout

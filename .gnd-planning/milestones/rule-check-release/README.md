@@ -11,7 +11,7 @@ environment or publisher registration, and issue 118 stays open until a
 published release is verified. `auto=false`.
 
 - [Plan (r1, draft)](notes/rule-check-release-plan.md)
-- [RR1 spec (draft, blocked on RL-D1 and experiment E1)](notes/phase-RR1-spec.md)
+- [RR1 spec (draft, blocked on the plan gate and experiment E1)](notes/phase-RR1-spec.md)
 
 Phases: RR1 candidate content (version, lock, manifests, release notes);
 RR2 candidate build and installed acceptance; RR3 publication hand-over
@@ -19,7 +19,7 @@ dossier; close.
 
 Ruled (owner, 2026-11-07): RL-D1, version 0.2.0; RL-D2, the release waits for rule-check-followups FU2 and FU3 (FU4 and FU5 do not gate).
 
-Pending owner decisions: RL-D0 (plan review), RL-D3 to RL-D9.
+RL-D0 and RL-D3 to RL-D9 ruled as proposed (owner, 2026-11-07, relayed); RL-D9 stays deferred to after E1. The plan gate is not yet passed.
 
 Next action: the owner rules the plan's decisions and the plan gate; then
 experiment E1 (the version bump over the full default lane on beast-3) and

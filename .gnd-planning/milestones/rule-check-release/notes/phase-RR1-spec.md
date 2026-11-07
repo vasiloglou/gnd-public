@@ -150,9 +150,9 @@ cite the reference pages for behavior.
 | ID | Question | Readings and cost | Status |
 |---|---|---|---|
 | D1 | The version (plan RL-D1) | `0.2.0` proposed; `0.1.1` understates; both change only M1-M3, M6-M8 | **Ruled (o, 2026-11-07): 0.2.0** ("0.2.0", answering "Which version should the release carry?") |
-| D2 | How E1's moved bytes are handled (plan RL-D9) | methods (a), (b), (c) above, possibly different per site | open, after E1 |
-| D3 | The unreleased notes' shape (plan RL-D3) | one version section with `###` subsections (proposed), or flat | open |
-| D4 | Pins stay at 0.1.0 until publication (plan RL-D4) | proposed; flipping now publishes a false instruction | open |
+| D2 | How E1's moved bytes are handled (plan RL-D9) | methods (a), (b), (c) above, possibly different per site | open: RL-D9 "as proposed" defers it to after E1 (2026-11-07) |
+| D3 | The unreleased notes' shape (plan RL-D3) | one version section with `###` subsections, or flat | **Ruled (o, 2026-11-07): as proposed** (plan RL-D3, relayed by the session that started this one): one section |
+| D4 | Pins stay at 0.1.0 until publication (plan RL-D4) | flipping now publishes a false instruction | **Ruled (o, 2026-11-07): as proposed** (plan RL-D4, relayed by the session that started this one): pins stay at 0.1.0 |
 | D5 | Release-notes wording of the opening: "prepared, not published" with a link to `docs/releasing.md` | proposed | open |
 
 At first write every row was open; D1 has since been ruled, the rest are open.

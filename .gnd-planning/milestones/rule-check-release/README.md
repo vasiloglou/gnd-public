@@ -13,6 +13,7 @@ published release is verified. `auto=false`.
 
 - [Plan (r2, approved)](notes/rule-check-release-plan.md)
 - [Plan-gate record](001-plan.md)
+- [E1 results: the version bump moves 47 default-lane tests](evidence/e1/README.md)
 - [Codex review of r1](evidence/plan-review-r1/codex-review.md)
 - [RR1 spec (draft, blocked on experiment E1 and its own owner gate)](notes/phase-RR1-spec.md)
 
@@ -24,6 +25,6 @@ Ruled (owner, 2026-11-07): RL-D1, version 0.2.0; RL-D2, the release waits for ru
 
 RL-D0 and RL-D3 to RL-D9 ruled as proposed (owner, 2026-11-07, relayed); RL-D9 stays deferred to after E1.
 
-Next action: experiment E1 (the version bump over the full default lane on beast-3,
-plus the grep inventory), then the RR1 spec's owner gate (process-phase). RR2 waits for
+Next action: the owner rules D2 (how the 47 version-bearing results are handled) and
+whether to run the opt-in lanes on both refs; then the RR1 spec's owner gate (process-phase). RR2 waits for
 FU2 and FU3 on main.

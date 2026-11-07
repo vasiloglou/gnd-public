@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-**Draft r2, 2026-11-07 (repairs after the Codex review of r1, which carry no review opinion). Blocked; not ready for an owner gate.** It cannot be
-approved until (a) [done] the plan gate passed on 2026-11-07 (plan r2 approved) and RL-D1, the version, is ruled: 0.2.0, and (b) experiment E1 (§6) has run over the full default lane
+**Draft r2, 2026-11-07 (repairs after the Codex review of r1, which carry no review opinion); E1 results appended 2026-11-07 (§12). Still not ready for an owner gate: D2 (and the opt-in lane selection of V2) await a ruling.** It cannot be
+approved until (a) [done] the plan gate passed on 2026-11-07 (plan r2 approved) and RL-D1, the version, is ruled: 0.2.0, and (b) experiment E1 (§6) has run over the full default lane [done, §12]
 and §7 D2 carries its ruling. The numbers below that depend on RL-D1 use the
 ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
 
@@ -208,3 +208,78 @@ is not used: the checks are equalities over tracked files, and the answer
 - V4: `uv run ruff check`.
 - V5: `python3 scripts/components_index.py changed --base main --strict`.
 - V6: `git diff --stat origin/main -- .github` is empty.
+
+## 12. E1 results (2026-11-07, appended; the experiment is the one recorded in §6)
+
+Retained in [evidence/e1](../evidence/e1/README.md). Appended after the plan gate,
+before any code.
+
+**Measured.** Base `12daa5b7`: 17,819 passed, 0 failed, 2 errors (the known
+`tests/test_public_optional.py` pair). The same tree with exactly M1 to M3: 17,772
+passed, **47 failed**, the same 2 errors. Every failure is new at the bump. About
+11 minutes per run on beast-3 (six shards, the longest shard 11:05).
+
+**The 47, by file** (the failing node ids are in `failed-bumped.txt`):
+
+| File | Failures | What moves |
+|---|---|---|
+| `tests/test_rf1_semantic_pins.py` | 24 | extract and synth outputs compared byte for byte with the RF1 goldens (`tests/support/rf1_pins.py:166`, "RF1 pin changed"); the goldens record `"gnd_version": "0.1.0"` |
+| `tests/test_public_extract_controls.py` | 5 | pre-phase extract bundles, legacy codegen tree and set-family fidelity bytes |
+| `tests/test_object_type_description.py` | 4 | digests of outputs compared with the base commit |
+| `tests/test_public_coverage_goldens.py` | 3 | `gnd coverage` payload goldens |
+| `tests/test_public_measurement_publication.py` | 2 | committed measurement payloads (`gnd_version` at byte 4673) |
+| `tests/test_public_book_runtime.py`, `tests/test_public_book_skills.py` | 1 + 1 | the live conformance payload and walkthrough citations (`'0.2.0' == '0.1.0'`) |
+| `tests/test_tp2_shared_fact_types.py`, `tests/test_rf2_pre_move_pins.py`, `tests/test_public_measure_corpus.py`, `tests/test_public_legacy_codegen_pins.py`, `tests/test_public_expense_current.py`, `tests/test_ik6_walk.py`, `tests/test_fidelity_stub_gate.py` | 1 each | pinned output bytes or digests of one command's output |
+
+The cause is one: `resolve_version()` is written into the output of `extract`,
+`synth`, `measure`, `fidelity`, `coverage`, `codegen` and the conformance payload,
+and 32 committed fixture files plus several recorded digests hold the old string.
+This is a finding about the spec, not a defect: M1 to M3 alone leave the default
+lane red, so M5 is real work.
+
+**Two further findings.**
+
+1. `uv lock` (not `--check`) also removed an unrelated `zensical` wheel line
+   (`manylinux2014_armv7l`) from `uv.lock`. M3 is therefore a one-line edit of the
+   `get-nick-done` entry, verified by `uv lock --check`, not a regeneration.
+2. The inventory (57 files at the base) classifies as: **version sites** (M1 to M3:
+   `pyproject.toml`, three manifests); **stale on publication** (`README.md`;
+   `docs/installation.md`, `docs/index.md`, `docs/marketplace-plugins.md`;
+   `docs/pyrel-apps.md`, three tutorials and three how-to pages; `docs/compatibility.md`;
+   `docs/release-notes.md`) handled by M6 to M9 and RR3's patch; **tests that
+   hold the literal** (`tests/test_public_distribution.py` four sites, M4;
+   `tests/test_induced_provenance.py` and `tests/test_fidelity_payload.py`: their
+   `0.1.0` is a fixture's own value, not the live one, and neither failed at the
+   bump, so they stay); **committed fixtures that record `gnd_version`** (32 files,
+   the 47 failures' source, D2); **historical** (`docs/development/candidate.md`,
+   describing the 0.1.0 candidate); **unrelated**: `src/gnd/codegen/emit.py:818`
+   (the version a generated project gets), `tutorials/runtimes/uv.lock` and
+   `src/gnd/examples/release_governance/runtime-environment/uv.lock` (a third-party
+   `gravis 0.1.0`), and a recorded agent stdout under `src/gnd/examples/expense`.
+
+**What this changes for D2.** Method (c) (fix the version in the test
+environment) is not a small edit: `resolve_version` is imported by name into a
+dozen modules (`from gnd import resolve_version`), so a patch must reach every
+importer or add a test-only override of the single home, which rule 2 of the plan
+forbids as an addition. Methods (a) and (b) remain. The 47 split into two
+mechanisms, which may take different methods:
+
+- *Comparison against a frozen golden*: the 24 `test_rf1_semantic_pins.py`
+  failures go through one helper (`tests/support/rf1_pins.py:166`), so normalizing
+  the version there (a) is one edit, keeps the retained bytes, and stops pinning
+  the version. Whether the other pin-style failures (`test_object_type_description.py`,
+  `test_rf2_pre_move_pins.py`, `test_tp2_shared_fact_types.py`) share a helper was
+  not checked; `test_object_type_description.py` does not import `rf1_pins`, so
+  each needs its own look before D2 is ruled.
+- *Committed outputs of a command that must reproduce byte for byte* (coverage,
+  measurement, roundtrip artifacts, legacy codegen pins, expense current): the
+  recorded bytes are the claim, so regenerating them (b) moves every digest
+  recorded downstream; normalizing (a) weakens a claim that this release is
+  exactly what the bytes document.
+
+**Recommendation, not a ruling:** (a) in the one RF1 helper, (b) for the
+committed outputs whose purpose is that they equal the current command's output
+(listing each moved digest in the spec before code, as plan rule 6 requires), and
+no (c). D2 stays open for the owner. The opt-in lanes (`evidence`, `census`) are
+not measured: RR1's record names them as exclusions unless the owner asks for the
+`evidence or census` command of `project.md` to be run on both refs.

@@ -1,0 +1,17 @@
+BASE
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+
+      49
+base shard0: 3777 passed, 123 deselected in 435.90s (0:07:15)
+bumped shard0: 4 failed, 3773 passed, 123 deselected in 440.88s (0:07:20)
+base shard1: 2589 passed, 169 deselected in 196.26s (0:03:16)
+bumped shard1: 2 failed, 2587 passed, 169 deselected in 198.52s (0:03:18)
+base shard2: 3461 passed, 95 deselected in 661.87s (0:11:01)
+bumped shard2: 34 failed, 3427 passed, 95 deselected in 665.84s (0:11:05)
+base shard3: 2639 passed, 228 deselected, 1 warning in 296.87s (0:04:56)
+bumped shard3: 4 failed, 2635 passed, 228 deselected, 1 warning in 299.67s (0:04:59)
+base shard4: 2253 passed, 97 deselected, 2 errors in 518.94s (0:08:38)
+bumped shard4: 1 failed, 2252 passed, 97 deselected, 2 errors in 522.43s (0:08:42)
+base shard5: 3100 passed, 82 deselected in 496.73s (0:08:16)
+bumped shard5: 2 failed, 3098 passed, 82 deselected in 498.33s (0:08:18)

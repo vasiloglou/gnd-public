@@ -1,0 +1,13 @@
+shard0.out: 3804 passed, 103 deselected in 316.09s (0:05:16) | shard exit=0
+shard1.out: 2844 passed, 136 deselected in 650.49s (0:10:50) | shard exit=0
+shard2.out: 2651 passed, 233 deselected in 426.73s (0:07:06) | shard exit=0
+shard3.out: 1 failed, 2243 passed, 115 deselected, 1 warning, 2 errors in 606.47s (0:10:06) | shard exit=1
+shard4.out: 3 failed, 2904 passed, 50 deselected in 391.52s (0:06:31) | shard exit=1
+shard5.out: 3120 passed, 157 deselected in 746.14s (0:12:26) | shard exit=0
+
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.claude/skills]
+FAILED tests/test_doctor_uninstall.py::test_each_discovery_root_carries_exactly_its_pinned_links_and_foreign_entries[.codex/skills]
+FAILED tests/test_doctor_uninstall.py::test_the_repository_install_receipts_are_not_tracked_by_git
+FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout

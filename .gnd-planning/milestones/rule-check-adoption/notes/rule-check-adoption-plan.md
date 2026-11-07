@@ -643,3 +643,16 @@ All are proposals until ruled.
 |---|---|
 | T1 v15 derivation reasons too narrow | applied: §2.1 `derivation_verdict_v15` (v7 properties and conditional rules, full reason set), RC1-C2, O29, RC-D17; RC1 spec M2, T4c |
 | T2 stale labels | applied: §8; RC1 spec §1 |
+
+## 15. Close amendments (2026-11-06)
+
+Plan repairs owed by phase records, applied at the milestone close
+([012-milestone-close.md](../012-milestone-close.md)) under its ruling. Each
+keeps the prior wording; the sections above are not edited.
+
+| Clause | Prior wording | Amended | Raised by |
+|---|---|---|---|
+| O17 | "strongly connected components are computed twice already" | three implementations existed; RC2 moved all three onto `gnd.graphs` | [007-phase-RC2.md](../007-phase-RC2.md), refuted premise |
+| Implementability sweep, "No new dependency" | "SCC code exists twice (O17)" | three times; see O17 above | [007-phase-RC2.md](../007-phase-RC2.md), refuted premise |
+| §3, baseline comparison | "new module under `src/gnd/checker/` (RC3 spec)" | `src/gnd/baseline.py`: a guard pins `src/gnd/checker/` to four files | [008-phase-RC3.md](../008-phase-RC3.md), refuted premise |
+| RC5-C2 | "a test fails if `population.py` or `extract/projection.py` disagrees with it" | `population.py` equals the schema enum; the extraction projection is a pinned subset, since its bytes are hashed into recorded `projection_sha256` values and its output is always `agent-output` (RC5 D2) | [010-phase-RC5.md](../010-phase-RC5.md), refuted premise |

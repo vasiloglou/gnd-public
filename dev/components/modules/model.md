@@ -24,8 +24,8 @@ Model loading with two-layer validation.
 | `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 608 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
 | `resolve_context(model, references) -> BoundReferenceContext` | function | 617 | (no docstring) |
 | `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 649 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 723 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 727 | Recognize only a current combined population created by this binder. |
+| `candidate_fact_count(view) -> int` | function | 724 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 728 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document

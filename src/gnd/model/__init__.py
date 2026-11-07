@@ -700,6 +700,7 @@ def bind_population(
                 "model": candidate.model,
                 "model_id": candidate.model_id,
                 "source": candidate.source,
+                **({"producer": candidate.producer} if candidate.producer is not None else {}),
                 "covers": covers,
             },
             "facts": facts,

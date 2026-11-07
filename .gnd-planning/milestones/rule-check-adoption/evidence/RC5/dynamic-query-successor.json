@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC4/dynamic-query-successor.json",
+  "predecessor_sha256": "be6078874045ab7eba331410fc763cfa52d65065d3b060a213b9f45a7195e2c7",
+  "reason": "rule-check-adoption RC5 (population source tool-output; spec a29931c2, corpus 6b45985b): Population.source's Literal annotation gains tool-output, one syntax candidate replaced by its successor. Syntax census only; the exact query policy is unchanged.",
+  "removed": [
+    [
+      "src/gnd/population.py",
+      "Population",
+      "Literal['agent-output', 'synthetic', 'fixture']",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/population.py",
+      "Population",
+      "Literal['agent-output', 'synthetic', 'fixture', 'tool-output']",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7285,
+  "result_occurrences": 9101
+}

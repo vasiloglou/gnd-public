@@ -2,13 +2,14 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-06); approval pending on the corpus (§11).** The
-owner ruled the step-2 asks over r1 (sha256 `80601530…`, commit
-a29931c2), answering "How do you rule on RC5's decisions D1-D5?" with
-"Approve all as proposed" (o, 2026-11-06). D1 is corpus-first, so no
-implementation file is created or edited until the owner approves the
-corpus. `auto=false`. Prior status (r1): "Draft, awaiting the owner gate
-(process-phase step 2)."
+**Owner-approved (2026-11-06): corpus and spec; implementation in
+progress.** The owner approved the RC5 corpus (commit 6b45985b) with the
+words "Approve, implement" (o, 2026-11-06), answering "Do you approve the
+RC5 corpus answers?". Prior status: "Owner-decided (2026-11-06); approval
+pending on the corpus (§11)."
+
+Earlier gate: the owner ruled D1-D5 over r1 (commit a29931c2) with "Approve
+all as proposed" (o, 2026-11-06). `auto=false`.
 
 ## 2. Provenance
 
@@ -168,3 +169,24 @@ an expected exit and issue rule id:
   byte (apart from the population path), so the label provably changes
   nothing about the check.
 - Red at commit: 9 failing (every case); the control is not a case.
+
+## Implementation findings (step 3, recorded as found)
+
+- **I1 (loader fast path).** The population loader validates valid
+  documents through a positive-only fast path
+  (`population._prepared_population_schema` expands the schema;
+  `population_shape` compiles it), which knew neither `maxLength` nor
+  `dependentSchemas`; with them in the schema every population fell back to
+  the Draft validator, and the M3 performance tests failed. Both keywords
+  are now compiled (still failing closed on any operand they cannot
+  handle), and T6 pins the fast path to Draft on every producer case,
+  including code-point lengths (200 and 201 emoji).
+- **I2 (digest).** `values._content_digest` is a `repr` of `model_dump()`;
+  a `producer: None` key would have changed every existing population's
+  marker digest. A population without a producer keeps its pre-RC5 digest
+  (T5).
+- **I3.** The reference binder builds the combined population's header by
+  hand (`model.bind_population`); it now carries the producer (T3), with an
+  RF6b successor row.
+- **I4 (guards).** RF6b `bind_population`; RC5 dynamic query delta (the
+  `Literal` annotation); the static policy is unchanged.

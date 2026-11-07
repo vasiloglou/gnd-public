@@ -141,6 +141,7 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
         "additionalProperties",
         "items",
         "minLength",
+        "maxLength",
         "enum",
         "const",
         "anyOf",
@@ -148,6 +149,7 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
         "if",
         "then",
         "else",
+        "dependentSchemas",
     }
     if root:
         allowed |= {"$schema", "$id", "$defs"}
@@ -177,7 +179,7 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
     families = [
         ({"properties", "required", "additionalProperties"}, "object"),
         ({"items"}, "array"),
-        ({"minLength"}, "string"),
+        ({"minLength", "maxLength"}, "string"),
     ]
     selected = [expected for keywords, expected in families if keywords & set(schema)]
     if len(selected) > 1 or (selected and kind is not None and kind != selected[0]):
@@ -229,11 +231,15 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
         parts.append(
             core_schema.list_schema(_compile(item) if item is not None else None, strict=True)
         )
-    elif kind == "string" or "minLength" in schema:
+    elif kind == "string" or "minLength" in schema or "maxLength" in schema:
         minimum = schema.get("minLength", 0)
+        maximum = schema.get("maxLength")
         if type(minimum) is not int or minimum < 0:
             raise _Unsupported("string length")
-        parts.append(core_schema.str_schema(strict=True, min_length=minimum))
+        if maximum is not None and (type(maximum) is not int or maximum < minimum):
+            raise _Unsupported("string length")
+        # Both count code points, as JSON Schema does.
+        parts.append(core_schema.str_schema(strict=True, min_length=minimum, max_length=maximum))
     elif kind == "integer":
         parts.append(core_schema.int_schema(strict=True))
     elif kind == "number":
@@ -255,7 +261,7 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
         parts.append(core_schema.bool_schema(strict=True))
     # Keywords independently constrain the original input, including when type
     # is a union or another structural keyword has already selected a schema.
-    for keyword in ("items", "minLength", "properties", "required", "additionalProperties"):
+    for keyword in ("items", "minLength", "maxLength", "properties", "required", "additionalProperties"):
         if keyword in schema and isinstance(kind, list):
             raise _Unsupported("union sibling constraint")
     if "enum" in schema:
@@ -276,6 +282,21 @@ def _compile(schema: Any, *, root: bool = False) -> Any:
                 if keyword == "anyOf"
                 else _intersection(compiled)
             )
+    if "dependentSchemas" in schema:
+        dependents = schema["dependentSchemas"]
+        if not isinstance(dependents, dict) or not dependents or any(type(k) is not str for k in dependents):
+            raise _Unsupported("dependent schemas")
+        compiled_dependents = {name: SchemaValidator(_compile(child)) for name, child in dependents.items()}
+
+        def dependent(value: Any) -> Any:
+            # Applies only to objects that carry the named property, as in Draft 2020-12.
+            if type(value) is dict:
+                for name, validator in compiled_dependents.items():
+                    if name in value:
+                        validator.validate_python(value)
+            return value
+
+        parts.append(core_schema.no_info_plain_validator_function(dependent))
     if "if" in schema:
         predicate = _condition(schema["if"])
         then = SchemaValidator(_compile(schema["then"])) if "then" in schema else None

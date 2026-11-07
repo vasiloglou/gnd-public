@@ -2375,7 +2375,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.population_loading
 - does: Load YAML or JSON populations through shape and optional model validation [load_population].
-- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys, read_population_bytes, read population file once
+- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys, read_population_bytes, read population file once, tool-output source, producer, population source enum
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
@@ -2470,7 +2470,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.population_shape
 - does: Accept supported population schema shapes through a bounded compiled fast path [accepts_shape].
-- verbs: population shape, compile schema, accepts_shape, positive validation, fast validation, JSON schema, pydantic core, schema cache, unsupported schema, Draft fallback, conditional schema, bounded compilation
+- verbs: population shape, compile schema, accepts_shape, positive validation, fast validation, JSON schema, pydantic core, schema cache, unsupported schema, Draft fallback, conditional schema, bounded compilation, maxLength, dependentSchemas
 - status: canonical
 - modules: src/gnd/population_shape.py
 - uses: infra.input_policy

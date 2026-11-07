@@ -15,9 +15,13 @@
       "properties": {
         "model": { "type": "string", "minLength": 1 },
         "model_id": { "type": "string", "minLength": 1 },
-        "source": { "enum": ["agent-output", "synthetic", "fixture"] },
+        "source": { "enum": ["agent-output", "synthetic", "fixture", "tool-output"] },
+        "producer": { "type": "string", "minLength": 1, "maxLength": 200 },
         "label": { "enum": ["conforming", "boundary", "violating"] },
         "covers": { "type": "array", "items": { "type": "string" } }
+      },
+      "dependentSchemas": {
+        "producer": { "properties": { "source": { "const": "tool-output" } } }
       }
     },
     "instances": {

@@ -3,5 +3,6 @@
   "add-disjoint": 1,
   "asserted-only": 1,
   "derived-only": 1,
-  "mod-zero": 4
+  "mod-zero": 4,
+  "self-loop": 1
 }

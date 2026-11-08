@@ -171,3 +171,21 @@ Recorded while authoring the corpus (2026-11-07, `1e63aeb5`).
 - **C4 (size).** The test module is 115 lines (stop line 150); source 0.
   The corpus is 5 populations (73 lines), one model (33), two READMEs and
   the answer key.
+
+Recorded after the Codex review (2026-11-07; [review](phase-FU3-codex-review.md)).
+
+- **I1 (review R1, scope of C1).** C1 holds for the pairs. It does not make
+  every row an in-group edge for `acyclic-intransitive`: that variant's
+  extent appends the intransitivity witnesses after the in-group edges
+  (`correspondence.py:1298-1312`), as RC2's `composite` case pins for
+  asserted rings. FU3's claim is scoped to `acyclic`; the combined variant
+  over a derived fact type has no FU3 case (record boundary).
+- **I2 (review R2).** T2's oracle left out self-loops and used the same
+  `gnd.graphs` function as production. It is now plain reachability (an
+  edge `u -> v` is in a loop exactly when `v` reaches `u`), and a successor
+  case `self-loop` was added. Against the old oracle the new case was red
+  (1 failed, 19 passed); with the new one all 20 pass, and the C3 mutant
+  still turns the same 2 cases red. No approved answer changed.
+- **I3 (review R3, R4, R5).** The corpus README's "same six edges" claim
+  was wrong for `add-disjoint` and is corrected; the milestone README was
+  stale; the promised open-questions row FU3-O1 is in the record.

@@ -18,12 +18,10 @@ from jsonschema import Draft202012Validator
 from support.cli_runner import run_main
 from support.repository import REPO_ROOT
 
-from gnd.graphs import strongly_connected_components
-
 CORPUS = REPO_ROOT / "tests" / "fixtures" / "fu3-derived-ring"
 EXPECTED = CORPUS / "expected"
 REPORT_SCHEMA = json.loads((REPO_ROOT / "src" / "gnd" / "report.schema.json").read_text())
-CASES = ("agree", "add-disjoint", "asserted-only", "derived-only", "mod-zero")
+CASES = ("agree", "add-disjoint", "asserted-only", "derived-only", "mod-zero", "self-loop")
 
 
 def _exits() -> dict[str, int]:
@@ -62,20 +60,25 @@ def test_t1_rule_ids_case_matches_answer_key(case: str) -> None:
     Draft202012Validator(REPORT_SCHEMA).validate(json.loads(result.stdout))
 
 
-@pytest.mark.parametrize("case", ["agree", "add-disjoint", "asserted-only"])
+@pytest.mark.parametrize("case", ["agree", "add-disjoint", "asserted-only", "self-loop"])
 def test_t2_rows_are_the_in_group_edges_of_the_asserted_facts(case: str) -> None:
     edges = _asserted_edges(case)
-    nodes = sorted({node for edge in edges for node in edge})
-    successors = {node: [used for user, used in edges if user == node] for node in nodes}
-    group = {
-        node: number
-        for number, component in enumerate(strongly_connected_components(nodes, successors))
-        if len(component) > 1
-        for node in component
-    }
-    expected = [
-        [user, used] for user, used in edges if user in group and group[user] == group.get(used)
-    ]
+
+    # An edge u -> v lies inside a loop exactly when v reaches u (a self-loop
+    # included). Plain reachability, independent of gnd.graphs (review R2).
+    def reaches(start: int, goal: int) -> bool:
+        seen, frontier = {start}, [start]
+        while frontier:
+            node = frontier.pop()
+            if node == goal:
+                return True
+            for user, used in edges:
+                if user == node and used not in seen:
+                    seen.add(used)
+                    frontier.append(used)
+        return False
+
+    expected = [[user, used] for user, used in edges if reaches(used, user)]
     rows = _rows(case)
     assert rows == expected
     (cycle,) = json.loads(_check(case, "--format", "json").stdout)["verdicts"][0]["offending_facts"]

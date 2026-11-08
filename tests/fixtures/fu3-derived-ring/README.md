@@ -25,8 +25,10 @@ leads relation is `acyclic`.
 
 The checker judges the `leads` facts the population states. Whether those
 facts match what the rule derives is a separate verdict, on the derivation.
-In every case the hops derive the same six edges: `1 -> 2`, `2 -> 1`,
-`3 -> 4`, `4 -> 3`, `2 -> 3` and `5 -> 1` (only `mod-zero` differs).
+The hops derive the same six edges, `1 -> 2`, `2 -> 1`, `3 -> 4`,
+`4 -> 3`, `2 -> 3` and `5 -> 1`, in every case except three: `add-disjoint`
+derives two more (`20 -> 21`, `21 -> 20`), `self-loop` one more (`9 -> 9`),
+and `mod-zero` cannot be derived at all.
 
 ## The cases
 
@@ -50,5 +52,9 @@ In every case the hops derive the same six edges: `1 -> 2`, `2 -> 1`,
    computed. The population states the loop `1 <-> 2`. The rule is unchecked
    with reason `term:mod-zero` on both versions, and nothing is listed; exit
    4.
-6. **Without `--rule-ids`.** Every case above without the flag gives the
+6. **self-loop** (a successor case, added after review R2). As `agree`,
+   plus `9 -> 9`, derived and stated. The derivation passes. The self-use
+   is a loop of one node and is listed after the four edges of case 1:
+   `[9, 9]`.
+7. **Without `--rule-ids`.** Every case above without the flag gives the
    version-7 report in `expected/<case>.v7.json`.

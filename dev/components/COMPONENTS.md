@@ -2248,7 +2248,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - modules: src/gnd/correspondence.py
 - uses: check.branches, check.calculation_scope, check.constraint_families, check.incremental_reuse, infra.verdict_prose, model.document, model.population_loading, model.query_index, model.scalar_terms, semantics.extensions, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
 - used_by: assurance.policy, check.service, checker.evaluate
-- tests: tests/test_public_correspondence_runtime.py, tests/test_public_correspondence_projection.py, tests/test_public_evidence_origins.py, tests/test_guarded_corpus.py, tests/test_incremental_sessions.py
+- tests: tests/test_public_correspondence_runtime.py, tests/test_public_correspondence_projection.py, tests/test_public_evidence_origins.py, tests/test_guarded_corpus.py, tests/test_incremental_sessions.py, tests/test_rc2_acyclic_extent.py, tests/test_fu3_derived_ring.py
 - checked: partial
 - notes: Evaluation dispatch and origin-based projection share this home; assurance consumers use the resulting decision rather than granting assurance in this module.
 

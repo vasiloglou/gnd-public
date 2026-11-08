@@ -35,9 +35,9 @@ A folder with the registrar's rules, a model of them, and a bot that answers
 | The bot (any model behind a command) | proposes plans |
 | GND | checks each plan and names the rule that fails and the facts that break it |
 
-**Before you start.** These pages need a GND newer than the 0.1.0 release on
-PyPI, so until the next release install it from a checkout of the repository.
-After the `export` line, `python` and `gnd` mean that environment:
+**Before you start.** Install GND from PyPI as the [installation page](../installation.md)
+shows, or, to use unreleased work on `main`, from a checkout of the repository as
+below. After the `export` line, `python` and `gnd` mean that environment:
 
 ```sh
 git clone https://github.com/vasiloglou/gnd-public.git

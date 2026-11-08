@@ -36,9 +36,9 @@ Python environments. Run these setup commands once, in an empty folder, outside
 the tutorials. They need [uv](https://docs.astral.sh/uv/) and a network
 connection; uv fetches Python 3.13 if you do not have it.
 
-First, an environment where GND can be imported. These chapters need a GND
-newer than the 0.1.0 release on PyPI, so install it from a checkout of the
-repository until the next release:
+First, an environment where GND can be imported. Install GND from PyPI as the
+[installation page](installation.md) shows; to use unreleased work on `main`,
+install it from a checkout of the repository instead:
 
 ```sh
 git clone https://github.com/vasiloglou/gnd-public.git

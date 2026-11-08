@@ -1,12 +1,10 @@
 # Release notes and milestones
 
-Version 0.1.0 is the published release. Version 0.2.0 is prepared and not
-published: its package files, notes and tests are on `main`, and publishing it is
-a separate decision that follows the [release procedure](releasing.md). Until it
-is published, install commands in these documents name 0.1.0, and the changes
-listed here are in the repository only.
+Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
+first. Releases follow the [release procedure](releasing.md). Changes on `main`
+after a release are listed in an `Unreleased:` section until the next one.
 
-## 0.2.0 (prepared, not published)
+## 0.2.0 (2026-11-08)
 
 Everything in this section is on `main` after 0.1.0. The first block is the
 rule-check work; the blocks after it are the earlier changes that were waiting

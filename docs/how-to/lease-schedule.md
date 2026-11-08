@@ -18,8 +18,8 @@ outside them, and warns about a payment due in the last week.
 ## Before you start
 
 Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
-shows: these pages need a GND newer than the 0.1.0 release, installed from a
-checkout, and `python` must be that environment's Python.
+shows: GND from PyPI, or from a checkout for unreleased work on `main`, and
+`python` must be that environment's Python.
 
 <!-- gnd-run expect=0 -->
 ```sh

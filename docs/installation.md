@@ -10,7 +10,7 @@ With [uv](https://docs.astral.sh/uv/getting-started/installation/), install GND 
 a command-line tool:
 
 ```sh
-uv tool install get-nick-done==0.1.0
+uv tool install get-nick-done==0.2.0
 uv tool update-shell
 ```
 
@@ -22,7 +22,7 @@ Alternatively, use pip in a virtual environment:
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install get-nick-done==0.1.0
+python -m pip install get-nick-done==0.2.0
 gnd --help
 ```
 
@@ -62,9 +62,9 @@ expense approval policy and validate the result. Desktop clients with marketplac
 support can also install GND from the configured marketplace.
 
 The marketplace entries need to be present on repository `main`. While the
-repository is private, access requires GitHub authentication. The `v0.1.0` tag
-contains the Python release and predates plugin packaging, so the plugin commands
-use `main`. See [plugin installation and updates](marketplace-plugins.md) for
+repository is private, access requires GitHub authentication. The `v0.2.0` tag
+contains both the Python release and these marketplace entries; the plugin
+commands use `main`, which may hold unreleased changes. See [plugin installation and updates](marketplace-plugins.md) for
 switching from existing skill copies and managing plugin updates.
 
 ### Install skill files directly from the Python package
@@ -111,11 +111,11 @@ runtime versions aligned.
 ## Install a release artifact
 
 You can instead download the wheel and checksums from the
-[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+[v0.2.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
 Install it in an activated virtual environment:
 
 ```sh
-python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+python -m pip install /path/to/get_nick_done-0.2.0-py3-none-any.whl
 ```
 
 ## Contributor checkout

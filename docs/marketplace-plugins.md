@@ -6,13 +6,12 @@ marketplace commands below. Python 3.11 or newer is required.
 See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
 for the pip virtual-environment alternative.
 
-The command below installs the published runtime, 0.1.0. Until 0.2.0 is
-published, the plugin on `main` is newer than that runtime: to use the plugin
-from `main`, install the runtime from a checkout of the same commit instead, as
-[Updates](#updates) shows.
+The command below installs the published runtime. If your plugin comes from a
+`main` that has unreleased changes, install the runtime from a checkout of the
+same commit instead, as [Updates](#updates) shows.
 
 ```sh
-uv tool install get-nick-done==0.1.0
+uv tool install get-nick-done==0.2.0
 uv tool update-shell
 ```
 
@@ -51,8 +50,8 @@ it there if that client does not share the CLI installation.
 These commands use GND's repository marketplace. They do not submit GND to an
 Anthropic or OpenAI curated directory. Until the repository is public, GitHub
 access is required. The marketplace files must be merged into `main` before the
-commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
-Python release, not these marketplace entries.
+commands above work. The `v0.2.0` tag contains both the Python release and these
+marketplace entries; the commands above use `main`.
 
 ## Existing skill installations
 
@@ -69,11 +68,10 @@ Update the marketplace and plugin through your agent's plugin manager, and updat
 the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
 and runtime version aligned. Plugin users do not need `gnd install --sync`.
 
-Until 0.2.0 is published, the plugin on `main` is newer than the runtime on the
-package index (0.1.0), and `uv tool upgrade` would stay at 0.1.0. Install the
-runtime from a checkout of the commit your plugin came from (`main` if you
-added the marketplace from `main`), as the
-[course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
+If the plugin comes from a `main` that has unreleased changes, `uv tool upgrade`
+installs only the latest release. Install the runtime from a checkout of the
+commit your plugin came from (`main` if you added the marketplace from `main`),
+as the [course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
 
 ```sh
 git clone https://github.com/vasiloglou/gnd-public.git

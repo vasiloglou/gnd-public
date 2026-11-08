@@ -1,0 +1,120 @@
+{"test": "driver", "run": 0, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46161, 46189], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 1, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46190, 46213], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 2, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46214, 46248, 46250, 46251], "survivors": ["46242", "46247", "46249"], "detail": "46242 44512 44366 00:00 /bin/bash -euo pipefail -c python -c \"import gnd, pathlib, shutil; root = pathlib.Path(gnd.__file__).parent / 'examples'; shutil.copytree(root / 'refunds', '.', ignore=shutil.ignore_patterns('__pycache__'), dirs_exist_ok=True); shutil.copytree(root / 'staffing', 'staffing')\"\\012mkdir export\\012gnd validate model.orm.yaml\\012gnd validate staffing/model.orm.yaml\n46247 44521 44366 00:00 /bin/bash -euo pipefail -c python -c \"import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/refunds', '.', ignore=shutil.ignore_patterns('__pycache__'), dirs_exist_ok=True)\"\\012gnd validate model.orm.yaml\n46249 46247 44366 00:00 python -c import gnd, pathlib, shutil; shutil.copytree(pathlib.Path(gnd.__file__).parent / 'examples/refunds', '.', ignore=shutil.ignore_patterns('__pycache__'), dirs_exist_ok=True)\n", "own_group": [], "mine": [], "survivors_after_ps": ["46242", "46247", "46249"]}
+{"test": "driver", "run": 3, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [46252, 46305], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 4, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46306, 46372], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 5, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46375, 46458], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 6, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46459, 46500], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 7, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46501, 46507], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 8, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [46508, 46538], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 9, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46540, 46565], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 10, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46566, 46614], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 11, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [46615, 46649], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 12, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [46650, 46687], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 13, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46688, 46722], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 14, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46723, 46754], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 15, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46755, 46781], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 16, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46782, 46816], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 17, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46817, 46853], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 18, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [46854, 46879], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 19, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [46880, 46920], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 20, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46921, 46960], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 21, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [46961, 47080], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 22, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47081, 47130], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 23, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47131, 47264], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 24, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47265, 47396], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 25, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47397, 47434], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 26, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47435, 47475], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 27, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47476, 47518], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 28, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47519, 47553], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 29, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47554, 47564], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 30, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47565, 47615], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 31, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47616, 47679], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 32, "timed_out": true, "elapsed": 3.02, "marker": true, "leaders": [47680, 47710], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 33, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47711, 47742], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 34, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47744, 47773], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 35, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [47774, 47813], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 36, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47814, 47871], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 37, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47873, 47908], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 38, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47909, 47938], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 39, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47939, 47982], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 40, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [47983, 48040], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 41, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48041, 48085], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 42, "timed_out": true, "elapsed": 3.0, "marker": true, "leaders": [48086, 48190], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 43, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48192, 48266], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 44, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48267, 48326], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 45, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48327, 48345], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 46, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48346, 48403], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 47, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48404, 48407], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 48, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48408, 48431], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 49, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48433, 48473], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 50, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48474, 48539], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 51, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48540, 48585], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 52, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48586, 48625], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 53, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48626, 48685], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 54, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48686, 48751], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 55, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48752, 48807], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 56, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48808, 48864], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 57, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48865, 48925], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 58, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48926, 48980], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "driver", "run": 59, "timed_out": true, "elapsed": 3.01, "marker": true, "leaders": [48981, 49026], "survivors": [], "detail": "", "own_group": [], "mine": [], "survivors_after_ps": []}
+{"test": "scope", "run": 0, "small": 0.00039475003723055124, "large": 0.0019126670667901635, "ratio": 4.84526127016698}
+{"test": "scope", "run": 1, "small": 0.00039900001138448715, "large": 0.0019446250516921282, "ratio": 4.873746857661703}
+{"test": "scope", "run": 2, "small": 0.00039491604547947645, "large": 0.0018277909839525819, "ratio": 4.628302660463998}
+{"test": "scope", "run": 3, "small": 0.00038820807822048664, "large": 0.001791084068827331, "ratio": 4.613721788164509}
+{"test": "scope", "run": 4, "small": 0.00037158303894102573, "large": 0.001828333013691008, "ratio": 4.920388774744867}
+{"test": "scope", "run": 5, "small": 0.0004012079443782568, "large": 0.0017272080294787884, "ratio": 4.305019513398233}
+{"test": "scope", "run": 6, "small": 0.00037520797923207283, "large": 0.0018536669667810202, "ratio": 4.940371925391529}
+{"test": "scope", "run": 7, "small": 0.0003720000386238098, "large": 0.0019055419834330678, "ratio": 5.122424154799816}
+{"test": "scope", "run": 8, "small": 0.00039204093627631664, "large": 0.0020034159533679485, "ratio": 5.110221326366564}
+{"test": "scope", "run": 9, "small": 0.00042579101864248514, "large": 0.0018982079345732927, "ratio": 4.458074152491977}
+{"test": "scope", "run": 10, "small": 0.0003903749166056514, "large": 0.0019787080818787217, "ratio": 5.06873776390088}
+{"test": "scope", "run": 11, "small": 0.0004099999787285924, "large": 0.0019794590771198273, "ratio": 4.827949219066105}
+{"test": "scope", "run": 12, "small": 0.0003820420242846012, "large": 0.0018458339618518949, "ratio": 4.831494559553599}
+{"test": "scope", "run": 13, "small": 0.00039891700726002455, "large": 0.0018709579017013311, "ratio": 4.690093096185773}
+{"test": "scope", "run": 14, "small": 0.0004541249945759773, "large": 0.001806457992643118, "ratio": 3.9778871769210418}
+{"test": "scope", "run": 15, "small": 0.00038716604467481375, "large": 0.001919458038173616, "ratio": 4.957712755481427}
+{"test": "scope", "run": 16, "small": 0.000397083000279963, "large": 0.001831916975788772, "ratio": 4.613435917672579}
+{"test": "scope", "run": 17, "small": 0.00046374998055398464, "large": 0.0018609579419717193, "ratio": 4.012847482491888}
+{"test": "scope", "run": 18, "small": 0.0004230419872328639, "large": 0.0018246249528601766, "ratio": 4.3131060460337}
+{"test": "scope", "run": 19, "small": 0.0003903340548276901, "large": 0.0017961669946089387, "ratio": 4.601614879341856}
+{"test": "scope", "run": 20, "small": 0.0003864159807562828, "large": 0.0018121660687029362, "ratio": 4.689676822258267}
+{"test": "scope", "run": 21, "small": 0.00039179192390292883, "large": 0.0018474999815225601, "ratio": 4.715513181380177}
+{"test": "scope", "run": 22, "small": 0.0003935829736292362, "large": 0.0018741670064628124, "ratio": 4.76180915343233}
+{"test": "scope", "run": 23, "small": 0.0004069169517606497, "large": 0.0018593749264255166, "ratio": 4.569421151860022}
+{"test": "scope", "run": 24, "small": 0.0004072909941896796, "large": 0.0021547909127548337, "ratio": 5.290543968549732}
+{"test": "scope", "run": 25, "small": 0.00038591702468693256, "large": 0.0019181669922545552, "ratio": 4.970412989192766}
+{"test": "scope", "run": 26, "small": 0.0003968750825151801, "large": 0.0019733329536393285, "ratio": 4.972176487204511}
+{"test": "scope", "run": 27, "small": 0.00038724998012185097, "large": 0.0017979999538511038, "ratio": 4.6429956001168815}
+{"test": "scope", "run": 28, "small": 0.0003818750847131014, "large": 0.0018915419932454824, "ratio": 4.953300356493741}
+{"test": "scope", "run": 29, "small": 0.00039412500336766243, "large": 0.001964292023330927, "ratio": 4.9839315104262045}
+{"test": "scope", "run": 30, "small": 0.0003988329553976655, "large": 0.0019362079910933971, "ratio": 4.854684059803575}
+{"test": "scope", "run": 31, "small": 0.00040912500116974115, "large": 0.0018272500019520521, "ratio": 4.466238916535799}
+{"test": "scope", "run": 32, "small": 0.0003723340341821313, "large": 0.0018960420275107026, "ratio": 5.09231457090821}
+{"test": "scope", "run": 33, "small": 0.0003849160857498646, "large": 0.0018247909611091018, "ratio": 4.740750071679081}
+{"test": "scope", "run": 34, "small": 0.00038170802872627974, "large": 0.0018001249991357327, "ratio": 4.715973633414429}
+{"test": "scope", "run": 35, "small": 0.0003860420547425747, "large": 0.0019294589292258024, "ratio": 4.998053723738539}
+{"test": "scope", "run": 36, "small": 0.00040466594509780407, "large": 0.001848125015385449, "ratio": 4.567038659353393}
+{"test": "scope", "run": 37, "small": 0.0004017089959233999, "large": 0.0018685419345274568, "ratio": 4.651481429317457}
+{"test": "scope", "run": 38, "small": 0.0003992919810116291, "large": 0.001820291974581778, "ratio": 4.558799227497542}
+{"test": "scope", "run": 39, "small": 0.00041974999476224184, "large": 0.0017820830689743161, "ratio": 4.245582111284452}
+{"test": "scope", "run": 40, "small": 0.00038579199463129044, "large": 0.0018846250604838133, "ratio": 4.885080786305556}
+{"test": "scope", "run": 41, "small": 0.0004108329303562641, "large": 0.0018382919952273369, "ratio": 4.474548799272775}
+{"test": "scope", "run": 42, "small": 0.000411874963901937, "large": 0.0019874999998137355, "ratio": 4.825493593941626}
+{"test": "scope", "run": 43, "small": 0.0003981250338256359, "large": 0.0017998339608311653, "ratio": 4.520775655668581}
+{"test": "scope", "run": 44, "small": 0.0004148330772295594, "large": 0.0019076250027865171, "ratio": 4.598536393304239}
+{"test": "scope", "run": 45, "small": 0.00039245805237442255, "large": 0.001843124977312982, "ratio": 4.696361728755048}
+{"test": "scope", "run": 46, "small": 0.0003931670216843486, "large": 0.00179704197216779, "ratio": 4.570683381503275}
+{"test": "scope", "run": 47, "small": 0.0003863750025629997, "large": 0.0019308339105919003, "ratio": 4.9973054617503925}
+{"test": "scope", "run": 48, "small": 0.0003879580181092024, "large": 0.001802000100724399, "ratio": 4.644832730888867}
+{"test": "scope", "run": 49, "small": 0.00039537495467811823, "large": 0.0019413330592215061, "ratio": 4.910106308584923}
+{"test": "scope", "run": 50, "small": 0.0004325419431552291, "large": 0.0018102499889209867, "ratio": 4.185143238863498}
+{"test": "scope", "run": 51, "small": 0.00040270795579999685, "large": 0.0018951250240206718, "ratio": 4.705953773016288}
+{"test": "scope", "run": 52, "small": 0.00038370792753994465, "large": 0.001865625032223761, "ratio": 4.862096658218109}
+{"test": "scope", "run": 53, "small": 0.0003976669395342469, "large": 0.0018198330653831363, "ratio": 4.576274476109456}
+{"test": "scope", "run": 54, "small": 0.0003870408982038498, "large": 0.0017792920116335154, "ratio": 4.5971679476011955}
+{"test": "scope", "run": 55, "small": 0.00039787497371435165, "large": 0.0017727500526234508, "ratio": 4.455545509872079}
+{"test": "scope", "run": 56, "small": 0.00038370792753994465, "large": 0.0019076659809798002, "ratio": 4.9716616313099475}
+{"test": "scope", "run": 57, "small": 0.00039491697680205107, "large": 0.0019164170371368527, "ratio": 4.852708669694494}
+{"test": "scope", "run": 58, "small": 0.0004067090339958668, "large": 0.0018294169567525387, "ratio": 4.498097666478514}
+{"test": "scope", "run": 59, "small": 0.00040262495167553425, "large": 0.0018080419395118952, "ratio": 4.490635595205119}

@@ -198,3 +198,4 @@ successor, review R4); D3 asks for that figure as the new basis.
   negative-import test (43 lines against the 15 estimated: six literal
   from-imports, the per-module attribute cases and the re-bound case) and
   `live_baseline` in `test_rf6_packages.py`. Stopped for the owner.
+  **Accepted (o, 2026-11-08): "Accept, finish FU5".**

@@ -2,9 +2,12 @@
 
 ## 1. Status
 
-**Draft r1 (2026-11-08), blocked on D1.** `auto=false`. No file has been
-edited for this phase; §5's probe deleted the helpers in the working tree
-and was reverted.
+**Approved (2026-11-08): helpers kept until the release RF-D5 names.**
+The owner ruled D1 (b) over r1 (commit e311c829) with "Keep until
+release", answering "Keep the cycle helpers until the next release, or
+retire them now?". D2 and D3 are moot; D4 (no spec review) follows the
+proposal. `auto=false`. Prior status: "Draft r1, blocked on D1." §5's
+probe deleted the helpers in the working tree and was reverted.
 
 ## 2. Provenance
 
@@ -106,10 +109,10 @@ tests/test_rf*.py`; `compiled-snapshot-obligations/evidence/CI/`).
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | RF-D5's trigger (a public release after RF6) has not happened. Retire now, or keep the helpers until that release? | **(b) keep them until the release**: it is your standing rule, the gain is 91 dead lines, and retiring now costs a new retirement mechanism across 6 guard files for three private names. FU5 then records the kept helpers and their trigger, issue 114 stays open for the post-release retirement phase, and predicate 5 is met by "explicitly kept". (a) Retire now: waive RF-D5's release trigger for these three underscore-private names (a v0.1.0 user could import `_find_cycle`), with §6 as designed |
+| D1 | RF-D5's trigger (a public release after RF6) has not happened. Retire now, or keep the helpers until that release? | **(b) keep them until the release**: it is your standing rule, the gain is 91 dead lines, and retiring now costs a new retirement mechanism across 6 guard files for three private names. FU5 then records the kept helpers and their trigger, issue 114 stays open for the post-release retirement phase, and predicate 5 is met by "explicitly kept". (a) Retire now: waive RF-D5's release trigger for these three underscore-private names (a v0.1.0 user could import `_find_cycle`), with §6 as designed **Ruled (o, 2026-11-08): (b), keep until the release** ("Keep until release", answering "Keep the cycle helpers until the next release, or retire them now?"). |
 | D2 | If (a): where the retirement record lives | `compiled-snapshot-obligations/evidence/CI/retired-names.json`, beside the existing successor record |
 | D3 | If (a): the stop rule. The plan's -10 test lines did not foresee the retirement plumbing (about +45 support, net about +50 test-side lines) | accept the size as stated here; the stop line is measured against these numbers |
-| D4 | Review over the spec | none |
+| D4 | Review over the spec | none; no spec review was run (the owner's ruling named D1 only) |
 
 ## 8. Tests and verification ledger (if D1 is "retire")
 
@@ -144,3 +147,10 @@ new basis.
 
 - **FU5-O1 (refuted premise, P1).** FD5 assumed RF-D5's release trigger;
   it has not fired. Recorded for the close.
+
+- **I1 (D1 (b), 2026-11-08).** The phase edits planning text only. The
+  shim inventory needs no edit: its rows for the three names
+  (`code-refactoring/notes/shim-inventory.md:755-757`) already give
+  "RF-D5" as the retirement, and `tests/test_rf2_helpers.py` parses that
+  file, so it is left byte-identical. Issue 114 stays open, retargeted to
+  the first retirement phase after a public release.

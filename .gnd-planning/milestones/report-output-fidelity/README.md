@@ -35,6 +35,6 @@ text defect is fixed in code; the issue closes at the milestone close.
 
 ROF2-O1 ruled 2026-11-08: the error type stays in `--format json` only.
 
-ROF3 spec drafted (r1, awaiting the owner gate): [phase-ROF3-spec.md](notes/phase-ROF3-spec.md), on branch `claude/rof3-canonical-identity` (stacked on ROF2).
+ROF3 spec r2 ([phase-ROF3-spec.md](notes/phase-ROF3-spec.md)): D1-D7 ruled as proposed (2026-11-08); test-vector corpus `tests/fixtures/rof3-model-identity/` authored red. On branch `claude/rof3-canonical-identity` (stacked on ROF2).
 
-Next action: merge PR 124 then PR 127 (owner); rule ROF3 D1-D7 at the spec gate.
+Next action: merge PR 124 then PR 127 (owner); approve the ROF3 corpus and spec r2 to implement.

@@ -2,8 +2,12 @@
 
 ## 1. Status
 
-**Draft r1. Awaiting owner review at the spec gate.** No implementation file
-has been created or edited. `auto=false`.
+**r2: corpus authored (2026-11-08); awaiting owner approval to implement.**
+The owner ruled D1-D7 as proposed with "Approve, author corpus"; the corpus is
+committed red (section "Corpus" below). No implementation file has been
+created or edited. Prior statuses: "r1 decisions ruled (2026-11-08); corpus
+being authored."; "Draft r1. Awaiting owner review at the
+spec gate." `auto=false`.
 
 ## 2. Provenance
 
@@ -199,13 +203,13 @@ Its implementation: `values.model_identity_document` /
 
 | D | Question | Readings and cost |
 |---|---|---|
-| D1 | Approval instrument | **corpus of test vectors** (proposed): a handful of fixture models (copied, so they never move) with their expected identity documents and digests split out in `expected/`, derived by a script that uses only `json` and `hashlib` over the dumped model, not `gnd.values`; the owner approves by reading the spellings (floats, dates, non-ASCII, the version-1 case). Alternative: prose only. A serialized format is the shape the protocol defaults to corpus-first. **Open** |
-| D2 | The producer surface (plan D5) | (a) **`gnd validate --identity`** (proposed): prints the digest and the document; moves only the `gnd validate -h` golden; the document is printable, so a caller can hash it. (b) a `validate --trace` line: moves every trace pin (`test_public_transition_trace.py`, `test_v62_phase1_trace.py`, ROF1 T13) and cannot carry the document. (c) a new subcommand: moves the top-level help and the command tree golden. No exit-code difference between them. **Open** |
-| D3 | Number spelling in the canonical bytes | (a) **the existing `canonical_json_bytes` spelling** (proposed): Python's shortest round-trip float text (`1.0`, `-0.0`, `0.30000000000000004`, `1e+16`, `5e-324`), stated as an algorithm with vectors; the same bytes `operations_digest` and the version-1 identity already use, so one canonical form. The identity keeps `1` and `1.0` apart, as the legacy digest does. (b) RFC 8785 (JCS): a published standard with libraries, but `1.0` and `1` (and `-0.0` and `0`) hash alike, which merges models the legacy digest keeps apart (so the version-2 classes stop being a bijection with the legacy ones, which the plan's census measured), and a second canonical form beside `canonical_json_bytes`. **Open** |
-| D4 | Rule id of the refusal | (a) **`model:identity-unrepresentable`** (proposed): its own id and message. (b) the plan's wording, `transition:operations-digest-unrepresentable`, which is the walk's current id but says "operations digest" about a model. Flagged: (a) departs from plan §2's text, which named (b). No exit-code difference. **Open** |
-| D5 | Exit code of `--identity` on an unrepresentable document | **3** (proposed): the input cannot be given the identity, the same band as any other refused input. Alternative: 70, which would call a property of the input an internal error. **Open** |
-| D6 | Scope of the legacy pin (C3, "the 306-model digest list pinned") | (a) **the corpus's copied models pinned in the test, plus the full tracked-model census recorded once as evidence** (proposed): the pin never moves when an unrelated fixture changes. (b) the plan's literal list over all tracked files: any later fixture edit anywhere breaks it. The live differential (T1) still runs over every tracked model. **Open** |
-| D7 | Review over the spec bytes | none (proposed), as ROF1 and ROF2; the diff review covers the identity code. ROF4 (comparison sites) is where the plan asks for the owner's independent reviewer. **Open** |
+| D1 | Approval instrument | **Ruled (o, 2026-11-08): corpus of test vectors, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). **corpus of test vectors** (proposed): a handful of fixture models (copied, so they never move) with their expected identity documents and digests split out in `expected/`, derived by a script that uses only `json` and `hashlib` over the dumped model, not `gnd.values`; the owner approves by reading the spellings (floats, dates, non-ASCII, the version-1 case). Alternative: prose only. A serialized format is the shape the protocol defaults to corpus-first. **Open** |
+| D2 | The producer surface (plan D5) | **Ruled (o, 2026-11-08): (a) `gnd validate --identity`, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). (a) **`gnd validate --identity`** (proposed): prints the digest and the document; moves only the `gnd validate -h` golden; the document is printable, so a caller can hash it. (b) a `validate --trace` line: moves every trace pin (`test_public_transition_trace.py`, `test_v62_phase1_trace.py`, ROF1 T13) and cannot carry the document. (c) a new subcommand: moves the top-level help and the command tree golden. No exit-code difference between them. **Open** |
+| D3 | Number spelling in the canonical bytes | **Ruled (o, 2026-11-08): (a) the existing canonical byte form, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). (a) **the existing `canonical_json_bytes` spelling** (proposed): Python's shortest round-trip float text (`1.0`, `-0.0`, `0.30000000000000004`, `1e+16`, `5e-324`), stated as an algorithm with vectors; the same bytes `operations_digest` and the version-1 identity already use, so one canonical form. The identity keeps `1` and `1.0` apart, as the legacy digest does. (b) RFC 8785 (JCS): a published standard with libraries, but `1.0` and `1` (and `-0.0` and `0`) hash alike, which merges models the legacy digest keeps apart (so the version-2 classes stop being a bijection with the legacy ones, which the plan's census measured), and a second canonical form beside `canonical_json_bytes`. **Open** |
+| D4 | Rule id of the refusal | **Ruled (o, 2026-11-08): (a) `model:identity-unrepresentable`, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). (a) **`model:identity-unrepresentable`** (proposed): its own id and message. (b) the plan's wording, `transition:operations-digest-unrepresentable`, which is the walk's current id but says "operations digest" about a model. Flagged: (a) departs from plan §2's text, which named (b). No exit-code difference. **Open** |
+| D5 | Exit code of `--identity` on an unrepresentable document | **Ruled (o, 2026-11-08): 3, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). **3** (proposed): the input cannot be given the identity, the same band as any other refused input. Alternative: 70, which would call a property of the input an internal error. **Open** |
+| D6 | Scope of the legacy pin (C3, "the 306-model digest list pinned") | **Ruled (o, 2026-11-08): (a) corpus pin plus census evidence, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). (a) **the corpus's copied models pinned in the test, plus the full tracked-model census recorded once as evidence** (proposed): the pin never moves when an unrelated fixture changes. (b) the plan's literal list over all tracked files: any later fixture edit anywhere breaks it. The live differential (T1) still runs over every tracked model. **Open** |
+| D7 | Review over the spec bytes | **Ruled (o, 2026-11-08): none, as proposed** ("Approve, author corpus", answering "Approve ROF3 D1–D7 as proposed, so I author the test-vector corpus?"). none (proposed), as ROF1 and ROF2; the diff review covers the identity code. ROF4 (comparison sites) is where the plan asks for the owner's independent reviewer. **Open** |
 
 ## 8. Tests
 
@@ -278,3 +282,35 @@ No report, trace or JSON output moves.
 | V4 | layers and homes | run | `tools/gnd_layers.json` import check and the RF structure suites |
 | V5 | full default suite vs base | run (sharded, on a clean tree) | failure set ⊆ the base's |
 | V6 | component index | at record time | `scripts/components_index.py changed --base <base> --strict` |
+
+## Corpus (authored 2026-11-08, r2)
+
+`tests/fixtures/rof3-model-identity/`: entry point `README.md` (stories
+only), answers in `expected/` (`<case>.identity.json`, `<case>.digest`,
+`<case>.stdout.txt`, `<case>.legacy`, `vectors.json`, `README.md`,
+`derive_vectors.py`), runner `tests/test_rof3_model_identity.py`.
+
+Ten models, all copies: `plain-small`, `floats` (`1.0`, `200.0`),
+`float-spellings` (`0.30000000000000004`, `2.5`), `negative-zero` (`-0.0`),
+`dates-and-text` (an unquoted date, Greek text), `operations-a` /
+`operations-b` (twins differing only in an operation's reading),
+`reference` and `reference-operations` (version 1; the twin adds one
+operation), `surrogate` (refusal). Changes from the section 11 plan (r2): the
+floats case is three models, so each float spelling has its own vector, and
+the reference case has its operations-only twin.
+
+`derive_vectors.py` builds the envelope and bytes from the definition with
+`json` and `hashlib` only, over each loaded model's dump; a second run
+reproduced every file. Cross-check: the existing helpers
+(`values.canonical` + `artifacts.canonical_json_bytes`, and
+`values.reference_model_digest` for version 1) agree on all nine digests,
+which is the evidence that D3's byte form is the existing one.
+
+Observed in the vectors: the plain operations twins share one identity
+(`sha256:72bd4f2f…`); the reference twins differ (`fab46dd5…` vs
+`cc98b9ac…`); `-0.0`, `1.0`, `200.0` and `0.30000000000000004` keep those
+spellings; the date is `"2025-01-01"`; the Greek text is literal UTF-8.
+
+State at commit: 32 tests, **21 red** (9 vector cases, 9 producer cases, the
+surrogate refusal, the version rules, the twins through the function), 11
+green (10 legacy pins, the corpus self-check).

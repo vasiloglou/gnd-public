@@ -1,0 +1,45 @@
+version: 2
+model_id: urn:gnd-fixture:rof1-contacts-redacted@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: customer_code, name: CustomerCode, kind: value, primitive: String }
+  - { id: email_address, name: EmailAddress, kind: value, primitive: String }
+  - { id: nickname, name: Nickname, kind: value, primitive: String }
+fact_types:
+  - id: has_email
+    reading: "{CustomerCode} has email {EmailAddress}"
+    roles:
+      - { object_type: customer_code, role_name: customer }
+      - { object_type: email_address, role_name: email, redact: true }
+    constraints:
+      - id: one_email_per_customer
+        type: uniqueness
+        scope: internal
+        roles: [customer]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each customer has at most one email address." }
+      - id: email_identifies_customer
+        type: uniqueness
+        scope: internal
+        roles: [email]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "An email address belongs to at most one customer." }
+  - id: has_nickname
+    reading: "{CustomerCode} has nickname {Nickname}"
+    roles:
+      - { object_type: customer_code, role_name: customer }
+      - { object_type: nickname, role_name: nickname }
+    constraints:
+      - id: one_nickname_per_customer
+        type: uniqueness
+        scope: internal
+        roles: [customer]
+        source: explicit
+        status: confirmed
+        modality: deontic
+        provenance: { user_quote: "A customer should have at most one nickname." }
+rejected_proposals: []

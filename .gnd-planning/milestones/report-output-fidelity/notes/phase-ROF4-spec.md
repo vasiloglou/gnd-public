@@ -4,8 +4,9 @@
 
 **r1 approved 2026-11-08** (owner: "Approve, author corpus", answering
 "Approve ROF4 D1-D6 as proposed, so I author the pin corpus?"). D1-D6 ruled
-as proposed. The corpus is authored and red (section 12). Next: the owner's
-go-ahead to implement. No source code is written. `auto=false`.
+as proposed. The corpus is authored and red (section 12, commit `20cc7654`).
+**Implementation approved 2026-11-08** (owner: "Approve, implement", answering
+"Approve implementing ROF4 against this corpus?"). `auto=false`.
 
 ## 2. Provenance
 

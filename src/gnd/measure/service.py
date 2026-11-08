@@ -26,6 +26,7 @@ from gnd.synth.corpus_service import (
     _resolve_unique_index_entries,
     _validate_index_document,
 )
+from gnd.values import model_identity_matches
 
 
 def _cmd_measure(
@@ -99,7 +100,8 @@ def _cmd_measure(
     except IndexValidationError as error:
         return fail(3, str(error))
 
-    expected_model_digest = _prov.validated_model_sha256(model)
+    # One verdict per distinct sidecar digest: a corpus pays for each identity once.
+    identity_verdicts: dict[str, str | None] = {}
     expected_aggregate_disclosures = sorted(
         (
             f"derivation:{fact_type['id']}",
@@ -166,13 +168,18 @@ def _cmd_measure(
                 )
 
         # C6 (continued): recompute model_digest and pool_sha256 — the two digests
-        # read_sidecar cannot check without the model and pool objects.
-        if sidecar.model_digest != expected_model_digest:
+        # read_sidecar cannot check without the model and pool objects. The
+        # sidecar may name either identity of the model, in bare hex.
+        if sidecar.model_digest not in identity_verdicts:
+            identity_verdicts[sidecar.model_digest] = model_identity_matches(
+                sidecar.model_digest, model, prefixed=False
+            )
+        if identity_verdicts[sidecar.model_digest] is None:
             return fail(
                 3,
                 f"C6 sidecar binding failed for {pop_path}: model_digest "
                 f"{sidecar.model_digest!r} does not match this model "
-                f"({expected_model_digest!r}) — a wrong-model sidecar.",
+                f"({_prov.validated_model_sha256(model)!r}) — a wrong-model sidecar.",
             )
         try:
             pool_abs = _resolve_corpus_path(populations_dir, sidecar.pool_path)

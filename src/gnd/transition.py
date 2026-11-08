@@ -69,6 +69,7 @@ from gnd.population import Population, load_population_bytes
 from gnd.universe import descendant_closure as _descendant_closure
 from gnd.universe import resolve_primitive
 from gnd.values import ISO_TYPES as _ISO_TYPES  # noqa: F401 -- compatibility export
+from gnd.values import IdentityMatch, model_identity_matches
 from gnd.values import canonical as _canonical
 from gnd.values import identity_key as _identity_key
 from gnd.values import model_digest as _model_digest
@@ -244,12 +245,18 @@ def _supplied_digests(document: Any) -> dict[str, Any]:
     }
 
 
-def verify_digests(document: dict[str, Any], model: Model, pre_path: str | Path | None) -> None:
+def verify_digests(
+    document: dict[str, Any], model: Model, pre_path: str | Path | None
+) -> IdentityMatch | None:
     """Stage 2. Each mismatch has its own rule id, so a caller is never left
-    guessing WHICH claim about the world stopped being true."""
+    guessing WHICH claim about the world stopped being true.
+
+    Returns which identity of the model the walk's ``model_digest`` named
+    (either is accepted; a refusal names the legacy one)."""
     supplied = _supplied_digests(document)
-    expected_model = transition_model_identity(model)
-    if supplied["model_digest"] != expected_model:
+    matched = model_identity_matches(supplied["model_digest"], model)
+    if matched is None:
+        expected_model = transition_model_identity(model)
         _refuse(
             "$.model_digest",
             f"model_digest does not match this model: steps say "
@@ -257,6 +264,9 @@ def verify_digests(document: dict[str, Any], model: Model, pre_path: str | Path 
             "transition:model-digest-mismatch",
             supplied,
         )
+    if matched == "canonical-v2":
+        # Reports name the legacy identity (ROF4, D3): a later refusal does too.
+        supplied["model_digest"] = transition_model_identity(model)
     expected_ops = operations_digest(model.operations)
     if supplied["operations_digest"] != expected_ops:
         _refuse(
@@ -284,6 +294,7 @@ def verify_digests(document: dict[str, Any], model: Model, pre_path: str | Path 
                 "transition:pre-digest-mismatch",
                 supplied,
             )
+    return matched
 
 
 # --------------------------------------------------------------------------- #

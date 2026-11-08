@@ -80,6 +80,12 @@ Exit **0**. GND walked all three steps, found every precondition satisfied, and 
 the computed post-state, in which expense 41 is reimbursed. Only now does your
 application execute the plan.
 
+`plan-draft-2.canonical.steps.json` is the same plan pinned with the model's
+canonical identity (`gnd validate approvals/model.orm.yaml --identity`) instead
+of the legacy `model_digest`; `gnd check` accepts either identity and also exits
+0. A Pyrel rules program generated from the model checks plans against the
+legacy value only, so pin plans meant for it with the legacy `model_digest`.
+
 The same check from Python returns the report as a dictionary:
 
 <!-- gnd-run expect=0 -->

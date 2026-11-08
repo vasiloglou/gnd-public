@@ -42,6 +42,7 @@ from gnd.measure.truth import ExpectationMissingError, expectation_for, resolve_
 from gnd.model import Model
 from gnd.model_identity import stable_model_identifier
 from gnd.synth.provenance import Sidecar
+from gnd.values import model_digest, model_identity_matches
 
 __all__ = [
     "MEASUREMENT_SCHEMA_VERSION",
@@ -215,7 +216,13 @@ def build_measurement_report(
             "--populations at a directory with an index.json."
         )
 
-    model_digests = {mp.sidecar.model_digest for mp in populations}
+    # A sidecar may name either identity of the model (S5 admitted it); both
+    # spellings are one model, counted and emitted as the legacy bare digest.
+    legacy_digest = model_digest(model)
+    model_digests = {
+        legacy_digest if model_identity_matches(digest, model, prefixed=False) else digest
+        for digest in {mp.sidecar.model_digest for mp in populations}
+    }
     pool_sources = {mp.sidecar.pool_source for mp in populations}
     # WR-02: `pool_source` is a LABEL ("faker", "llm-proposed"), so checking it
     # alone lets a payload span two distinct pools while reading as one — which

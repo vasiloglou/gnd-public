@@ -166,6 +166,13 @@ def _comparable(case: dict, observed: dict) -> object:
         return observed
     if site in {"S1", "S6"}:
         return json.dumps(observed["payload"], sort_keys=True)
+    if site in {"S5", "S7"}:
+        # corpus[].sidecar_sha256 is the digest of the sidecar FILE, whose bytes
+        # the case rewrote; every other byte of the payload must agree.
+        payload = json.loads(observed["stdout"])
+        for row in payload["corpus"]:
+            row.pop("sidecar_sha256")
+        return json.dumps(payload, sort_keys=True)
     return observed["stdout"]
 
 

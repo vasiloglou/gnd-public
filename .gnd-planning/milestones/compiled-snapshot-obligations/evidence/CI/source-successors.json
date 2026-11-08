@@ -765,6 +765,21 @@
         "algorithm_sha256": "4e015bfbf65a2ac2480b127aa5d1e995d039c7f1c171cd23952303396fd11070"
       },
       "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): an adapter over render_transition_rows, shared with the projected walk route; output bytes are unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_measure",
+      "home": "gnd.measure.service",
+      "before": {
+        "raw_sha256": "bb29dee42e83755245d5c6d95cd0249df55fc66a567677cc2bf1f4742f43feea",
+        "algorithm_sha256": "38cf22dc75402003dff5e3368d8468d59fb00b2cdd6eb957b7c3a6a6ef073273"
+      },
+      "after": {
+        "raw_sha256": "1f637c6aef09dbeea7216fc09854c266f4649263da11f452ae61ef19f555f613",
+        "algorithm_sha256": "0e40e66384f907f19e84b92d343f64efdba706579c5bc7ad80c097f182549d38"
+      },
+      "reason": "report-output-fidelity ROF4 (issue 111, owner-approved 2026-11-08): the C6 sidecar binding accepts either identity of the model through gnd.values.model_identity_matches (bare hex), one verdict per distinct sidecar digest; a wrong-model sidecar is refused with the same message as before."
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/report-output-fidelity/evidence/ROF3/dynamic-query-successor.json",
+  "predecessor_sha256": "9a753b6938b9664045840964a5bf1f2e44604bf644bb13848c31818a55e8ab6a",
+  "reason": "report-output-fidelity ROF4 (issue 111, owner-approved 2026-11-08): the model-identity match (IdentityMatch, model_identity_matches, accepted_model_identities in gnd.values) and the measure sidecar check's per-digest verdict memo in _cmd_measure. Syntax census only; the exact query policy is unchanged.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/measure/service.py",
+      "_cmd_measure",
+      "dict[str, str | None]",
+      1
+    ],
+    [
+      "src/gnd/measure/service.py",
+      "_cmd_measure",
+      "identity_verdicts[sidecar.model_digest]",
+      1
+    ],
+    [
+      "src/gnd/values.py",
+      "<module>",
+      "Literal['legacy-repr', 'canonical-v1', 'canonical-v2']",
+      1
+    ],
+    [
+      "src/gnd/values.py",
+      "accepted_model_identities",
+      "tuple[str, ...]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7323,
+  "result_occurrences": 9141
+}

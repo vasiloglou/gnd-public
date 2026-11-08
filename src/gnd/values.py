@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from collections.abc import Set as AbstractSet
-from typing import Any
+from typing import Any, Literal
 
 
 def _identity_key(value: Any) -> tuple[Any, ...]:
@@ -296,6 +296,55 @@ def model_identity(model: Model, version: int | None = None) -> str:
     if version is not None and version != own:
         raise ModelIdentityError("$", f"identity version {version} is not defined for this model")
     return "sha256:" + hashlib.sha256(model_identity_bytes(model)).hexdigest()
+
+
+IdentityMatch = Literal["legacy-repr", "canonical-v1", "canonical-v2"]
+
+
+def model_identity_matches(
+    supplied: object, model: Model, *, prefixed: bool = True
+) -> IdentityMatch | None:
+    """Which identity of ``model`` the ``supplied`` value names, or None.
+
+    The one place that decides whether a supplied model identity is accepted
+    (the acceptance rule's home is the digest table of the gnd-orm-core
+    ``representation-format.md``). ``prefixed`` compares the ``sha256:<hex>``
+    spelling (steps, reports, certificates); ``prefixed=False`` compares bare
+    hex (measure sidecars). The legacy identity is compared first, so a legacy
+    pin never computes the canonical one. A reference-bearing model's legacy
+    value is its version-1 identity, its only one. A canonical identity the
+    model cannot have (:class:`ModelIdentityError`) is "not this identity":
+    None, never an exception. The legacy digest is computed as every caller
+    computed it before, failures included.
+    """
+    if not isinstance(supplied, str):
+        return None
+    prefix = "sha256:" if prefixed else ""
+    if supplied == prefix + _model_digest(model):
+        return "canonical-v1" if model.reference_populations else "legacy-repr"
+    if model.reference_populations:
+        return None
+    try:
+        canonical = model_identity(model)
+    except ModelIdentityError:
+        return None
+    return "canonical-v2" if supplied == prefix + canonical.removeprefix("sha256:") else None
+
+
+def accepted_model_identities(model: Model, *, prefixed: bool = True) -> tuple[str, ...]:
+    """The identities :func:`model_identity_matches` accepts, legacy first.
+
+    The version-2 identity is omitted when the model has none. For messages
+    and tests; acceptance is decided only by :func:`model_identity_matches`.
+    """
+    prefix = "sha256:" if prefixed else ""
+    accepted = [prefix + _model_digest(model)]
+    if not model.reference_populations:
+        try:
+            accepted.append(prefix + model_identity(model).removeprefix("sha256:"))
+        except ModelIdentityError:
+            pass
+    return tuple(accepted)
 
 
 from gnd.documents import Model

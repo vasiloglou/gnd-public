@@ -1,0 +1,58 @@
+{
+  "baseline_seed": null,
+  "boundary_side": null,
+  "case_kind": "conforming",
+  "class": "conforming",
+  "epsilon": null,
+  "expectations": {
+    "fact_types[expense_approved_by].constraints[0]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    },
+    "fact_types[expense_has_status].constraints[0]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    },
+    "fact_types[expense_has_status].constraints[1]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    },
+    "fact_types[expense_reimbursed].constraints[0]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    },
+    "fact_types[expense_submitted_to_workday].constraints[0]": {
+      "expected_verdict": "pass",
+      "ground_truth": "satisfied",
+      "reason": null
+    }
+  },
+  "generator_version": "gnd-synth/1",
+  "gnd_version": "0.2.0",
+  "isolating": null,
+  "isolation_verified": null,
+  "model": "model.orm.yaml",
+  "model_digest": "278b20b244428f78a095c7824b12b6ae9c120ce70a16a485f612f878a077588f",
+  "model_id": "urn:gnd-example:approvals",
+  "not_derivable": null,
+  "operator": null,
+  "pool_path": "conforming/pool.67d4bfaea03da2af.pool.json",
+  "pool_sha256": "67d4bfaea03da2afe17d79906e768f24f767ffddb495d57d0b30053dd9cd39ca",
+  "pool_size": 8,
+  "pool_source": "faker",
+  "population": "model.orm.conforming.seed7.json",
+  "population_sha256": "9f938c61ef358bf4c5962ba740bae7df89b2b58e12f9d92fb5ccd5390b774a94",
+  "predicted_verdict": null,
+  "prompt_version": null,
+  "proposer_model": null,
+  "schema_version": "gnd-sidecar/5",
+  "seed": 7,
+  "target": null,
+  "unmutated_derivations": [],
+  "violates": null,
+  "violates_target": null
+}

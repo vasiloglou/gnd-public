@@ -2,8 +2,10 @@
 
 ## 1. Status
 
-**Draft r1, 2026-11-08. Awaiting owner review at the spec gate.** No code is
-written. `auto=false`.
+**r1 approved 2026-11-08** (owner: "Approve, author corpus", answering
+"Approve ROF4 D1-D6 as proposed, so I author the pin corpus?"). D1-D6 ruled
+as proposed. The corpus is authored and red (section 12). Next: the owner's
+go-ahead to implement. No source code is written. `auto=false`.
 
 ## 2. Provenance
 
@@ -225,12 +227,12 @@ The identity: ROF3's subsection. The acceptance rule: the
 
 | D | Question | Readings and cost |
 |---|---|---|
-| D1 | Approval instrument | **corpus of pins** (proposed): for the approvals model (plain) and a reference-bearing model, a directory of supplied artifacts per site (a `steps.json`, a sidecar, a witness certificate, an admission payload, a coverage source) in three spellings (legacy, canonical, wrong), with the expected exit and refusal text split out in `expected/`; the owner approves by reading which are accepted. Alternative: prose only. An exit-code contract is a shape the protocol defaults to corpus-first. **Open** |
-| D2 | The refusal message on a wrong pin | (a) **unchanged bytes** (proposed): S1 still says "steps say X, model is Y" with Y the legacy value; plan rule 1 holds and no fixture moves. The departure: C2's "a message naming the expected values" is met only for the legacy value; a caller pinning the canonical identity reads it from `gnd validate --identity`. (b) **name both**: "… model is Y (or its canonical identity Z)" for S1, S4, S5; moves 3 fixtures (one an approved ROF2 corpus answer, which returns it to the owner) and the bytes of every existing refusal payload of those kinds, which rule 1 forbids. Exit codes are the same either way. **Open** |
-| D3 | The helper's return value | (a) **a name** (`"legacy-repr"`, `"canonical-v1"`, `"canonical-v2"`) (proposed): the plan's "returns which version matched"; no caller prints it in this phase (D2 (a)), tests read it. (b) a bool: simpler, loses "which matched". No exit-code difference. **Open** |
-| D4 | The shipped example | (a) **`plan-draft-2.canonical.steps.json`** (proposed): a passing walk, exit 0, the smallest change to the example set. (b) a canonical twin of `approve-41.steps.json` (exit 1, the frame catch): shows acceptance less plainly, since the walk then fails for another reason. **Open** |
-| D5 | Widening S2-S7, whose inputs GND writes with the legacy identity | (a) **widen all seven, as plan §1 classifies** (proposed): one rule for every matching site, and ROF5 (if D3 is re-ruled "emit") then needs no verifier change. (b) widen S1 only: smaller diff; a hand-edited canonical value in a report, sidecar or certificate is refused, which plan C1 says it must not be. Flagged because the cost of (a) buys nothing observable until a canonical value is emitted. **Open** |
-| D6 | Review | none over the spec bytes (proposed, as ROF1-ROF3); the diff gets the owner's independent reviewer (Codex), as plan §8 asks for ROF4. **Open** |
+| D1 | Approval instrument | **corpus of pins** (proposed): for the approvals model (plain) and a reference-bearing model, a directory of supplied artifacts per site (a `steps.json`, a sidecar, a witness certificate, an admission payload, a coverage source) in three spellings (legacy, canonical, wrong), with the expected exit and refusal text split out in `expected/`; the owner approves by reading which are accepted. Alternative: prose only. An exit-code contract is a shape the protocol defaults to corpus-first. **Ruled 2026-11-08: as proposed.** |
+| D2 | The refusal message on a wrong pin | (a) **unchanged bytes** (proposed): S1 still says "steps say X, model is Y" with Y the legacy value; plan rule 1 holds and no fixture moves. The departure: C2's "a message naming the expected values" is met only for the legacy value; a caller pinning the canonical identity reads it from `gnd validate --identity`. (b) **name both**: "… model is Y (or its canonical identity Z)" for S1, S4, S5; moves 3 fixtures (one an approved ROF2 corpus answer, which returns it to the owner) and the bytes of every existing refusal payload of those kinds, which rule 1 forbids. Exit codes are the same either way. **Ruled 2026-11-08: as proposed.** |
+| D3 | The helper's return value | (a) **a name** (`"legacy-repr"`, `"canonical-v1"`, `"canonical-v2"`) (proposed): the plan's "returns which version matched"; no caller prints it in this phase (D2 (a)), tests read it. (b) a bool: simpler, loses "which matched". No exit-code difference. **Ruled 2026-11-08: as proposed.** |
+| D4 | The shipped example | (a) **`plan-draft-2.canonical.steps.json`** (proposed): a passing walk, exit 0, the smallest change to the example set. (b) a canonical twin of `approve-41.steps.json` (exit 1, the frame catch): shows acceptance less plainly, since the walk then fails for another reason. **Ruled 2026-11-08: as proposed.** |
+| D5 | Widening S2-S7, whose inputs GND writes with the legacy identity | (a) **widen all seven, as plan §1 classifies** (proposed): one rule for every matching site, and ROF5 (if D3 is re-ruled "emit") then needs no verifier change. (b) widen S1 only: smaller diff; a hand-edited canonical value in a report, sidecar or certificate is refused, which plan C1 says it must not be. Flagged because the cost of (a) buys nothing observable until a canonical value is emitted. **Ruled 2026-11-08: as proposed.** |
+| D6 | Review | none over the spec bytes (proposed, as ROF1-ROF3); the diff gets the owner's independent reviewer (Codex), as plan §8 asks for ROF4. **Ruled 2026-11-08: as proposed.** |
 
 ## 8. Tests
 
@@ -288,6 +290,43 @@ the helper adds counted model reads; the component index entries for
 `values`, `transition`, `admission_validation`, `coverage`, `measure` and
 `witness`. Under D2 (a), no refusal message, report, payload or generated
 plan moves. A stub-and-diff census (as ROF2) confirms this list before code.
+
+## 12. The corpus as authored (2026-11-08)
+
+`tests/fixtures/rof4-accept-identities/`: four copied models (approvals, the
+ROF3 `reference-operations` model, the `public-binding-reports`
+`nonstructured` model, the shipped `release_governance/dependencies` model),
+one artifact per site pinned with the legacy identity, 30 cases in
+`expected/cases.json` and the identities in `expected/identities.json`.
+Choices made while authoring, within the approved design:
+
+- S4 uses the committed `current-v5-valid` check report, not a fresh
+  approvals report: `gnd coverage` on a fresh `gnd check --format json`
+  report of the approvals model crashes today (`TypeError` in
+  `_index_snapshot`, `derivations: null`). Not this phase; a follow-up.
+- S1 on the reference model runs with `--format json`: the text form of
+  `gnd check --pre --steps` on a reference-bearing model crashes today
+  (`KeyError: 'transition'` in `_cmd_transition`). Not this phase; a
+  follow-up.
+- S6 uses the `dependencies` model: the approvals model has no derivation to
+  witness. A changed binding key set is refused by the certificate shape
+  (`input-invalid`) before the binding comparison, today and after.
+- S5/S7 commit a `gnd synth --seed 7 --seeds 2` corpus of the approvals model
+  (about 8 KB).
+- T8 is marked `pyrel_oracle` (it needs the DuckDB runtime, absent on this
+  machine); `test_t12_the_generated_plan_keeps_the_legacy_constant` checks the
+  generated constant in the default lane.
+- T13 patches `values.model_identity` to count and refuse; it also asserts
+  the canonical case reaches the patch, so the test cannot pass vacuously.
+- T11 looks for the words "either identity" in the six documents, and in the
+  `model_digest` row of the representation-format digest table.
+
+Red run at `c08ac5f7` plus the corpus: 22 failed, 55 passed, 1 deselected
+(T8). The 22: the canonical case at S1, S3, S4, S5, S6 and the S7 mixed
+corpus (each refused exactly as a wrong pin is today); the four helper tests
+(the helper does not exist); two T1 scans; T13; the two tests of the new
+example; seven T11 documentation tests. Every legacy, wrong, reference and
+frozen-bytes case passes now.
 
 ## Verification ledger
 

@@ -7,9 +7,9 @@ JSON for redaction and temporal models).
 
 **Status: plan r3 approved (2026-11-07, [plan-gate record](001-plan.md)). ROF1
 ([record](002-phase-ROF1.md)) and ROF2 ([record](003-phase-ROF2.md)) merged to
-main (PR 124, PR 127). ROF3 implemented ([record](004-phase-ROF3.md)), on branch
-`claude/rof3-canonical-identity`, awaiting its PR and merge.** ROF4 onward are
-outlines. `auto=false`.
+main (PR 124, PR 127). ROF3 ([record](004-phase-ROF3.md)) merged (PR 132).
+ROF4 spec approved, corpus authored, awaiting the go-ahead to implement.**
+ROF5 onward are outlines. `auto=false`.
 
 - [Plan-gate record](001-plan.md)
 - [ROF1 record](002-phase-ROF1.md)
@@ -19,6 +19,8 @@ outlines. `auto=false`.
 - [ROF1 spec (approved, implemented)](notes/phase-ROF1-spec.md)
 - [ROF2 spec (approved, implemented)](notes/phase-ROF2-spec.md)
 - [ROF3 spec (approved, implemented)](notes/phase-ROF3-spec.md)
+- [ROF4 spec (approved)](notes/phase-ROF4-spec.md)
+- ROF4 approval corpus: `tests/fixtures/rof4-accept-identities/`, runner `tests/test_rof4_accept_identities.py`
 - ROF1 approval corpus: `tests/fixtures/rof1-projected-text/` (README = stories, `expected/` = answers), runner `tests/test_rof1_projected_text.py`
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md) and [triage](evidence/plan-review-r2/triage.md)
 - [Digest census](evidence/census-r2/README.md)
@@ -48,6 +50,8 @@ declaration key in `reference_model_digest`.
 
 ROF3 merged (PR 132, 6058c674).
 
-ROF4 spec drafted ([phase-ROF4-spec.md](notes/phase-ROF4-spec.md), r1), on
-branch `claude/rof4-accept-identities`. Next action: the owner's ruling on
-ROF4 D1-D6 at the spec gate.
+ROF4 spec r1 approved 2026-11-08 ([phase-ROF4-spec.md](notes/phase-ROF4-spec.md),
+D1-D6 as proposed), on branch `claude/rof4-accept-identities`. Corpus
+`tests/fixtures/rof4-accept-identities/` (README = stories, `expected/` =
+answers), runner `tests/test_rof4_accept_identities.py`, red: 22 failed, 55
+passed. Next action: the owner's go-ahead to implement.

@@ -1,0 +1,11 @@
+V1 at C = 7c0f4d0e (2026-11-08T05:12Z): '## Unreleased' headings: 0; pyproject version 0.2.0; PyPI releases ['0.1.0']; tree of C equals PR 125 head 86e5e1f1.
+Focused default gate at C:
+33 passed, 1 deselected in 0.21s
+
+B1 (this Mac) commands, run in ~/gnd-release/0.2.0/7c0f4d0e:
+mkdir src && git archive C | tar -x -C src; cd src && uv build --out-dir ../candidate/release; mkdir -p ../candidate/source && tar -xzf ../candidate/release/*.tar.gz -C ../candidate/source; uv build --wheel ../candidate/source/* --out-dir $PWD/../candidate/comparison; rm -f ../candidate/{release,comparison}/.gitignore; echo C > ../candidate/SOURCE_COMMIT; { python3 --version; uv --version; } > ../candidate/BUILD_PROFILE; cd ../candidate && shasum -a 256 release/* comparison/* > SHA256SUMS && shasum -a 256 -c SHA256SUMS
+shasum -c: all three OK. Host: macOS 26.6.2 arm64.
+
+V5: uvx --from ./release/get_nick_done-0.2.0-py3-none-any.whl gnd --version -> 'gnd 0.2.0', exit 0 (dependencies resolved from the index).
+
+V7 (2026-11-08T05:13Z): git diff 12daa5b7 C -- .github: 0 lines; environments ['github-pages']; release.yml runs: []; GitHub releases: only 'GND v0.1.0' (2026-10-12); PyPI releases ['0.1.0'].

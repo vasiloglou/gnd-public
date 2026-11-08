@@ -1,0 +1,33 @@
+version: 2
+model_id: urn:gnd-fixture:fu3-derived-ring@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: node, name: Node, kind: value, primitive: Integer }
+fact_types:
+  - id: hop
+    reading: "{Node} hops by {Node} modulo {Node}"
+    roles:
+      - { object_type: node, role_name: from }
+      - { object_type: node, role_name: a }
+      - { object_type: node, role_name: b }
+  - id: leads
+    reading: "{Node} leads to {Node}"
+    roles:
+      - { object_type: node, role_name: from }
+      - { object_type: node, role_name: to }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: hop, bind: { from: "$f", a: "$a", b: "$b" } }
+      head:
+        from: "$f"
+        to: { fn: mod, args: ["$a", "$b"] }
+    constraints:
+      - id: no_loops
+        type: ring
+        variant: acyclic
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "No node leads back to itself." }
+rejected_proposals: []

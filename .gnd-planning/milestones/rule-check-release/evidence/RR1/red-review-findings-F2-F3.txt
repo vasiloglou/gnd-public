@@ -1,0 +1,8 @@
+     +  and   b'{"gnd_version": "<V>", "prior_gnd_version": "<V>", "x": "a"}' = <function _version_blind at 0x108a868d0>(b'{"gnd_version": "0.1.0", "prior_gnd_version": "0.0.2", "x": "a"}')
+     +    where b'{"gnd_version": "0.1.0", "prior_gnd_version": "0.0.2", "x": "a"}' = <built-in method replace of bytes object at 0x108b11370>(b'0.0.1', b'0.0.2')
+     +      where <built-in method replace of bytes object at 0x108b11370> = b'{"gnd_version": "0.1.0", "prior_gnd_version": "0.0.1", "x": "a"}'.replace
+<home>/github-repos/gnd-public/.claude/worktrees/plan-rule-check-release-abb170/tests/test_rf1_pin_harness.py:405: assert b'{"gnd_version": "<V>", "prior_gnd_version": "<V>", "x": "a"}' != b'{"gnd_version": "<V>", "prior_gnd_version": "<V>", "x": "a"}'
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_publication_claim_mutants_are_refused[pypi-installable]
+FAILED tests/test_rf1_pin_harness.py::test_version_blind_compare_ignores_only_the_gnd_version_value
+2 failed, 56 passed in 6.74s

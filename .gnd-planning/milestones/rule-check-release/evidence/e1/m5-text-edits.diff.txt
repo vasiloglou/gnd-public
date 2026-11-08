@@ -1,0 +1,295 @@
+diff --git a/tests/fixtures/induced_knowledge/ik1-baseline.json b/tests/fixtures/induced_knowledge/ik1-baseline.json
+index 4edd6e4..e4c6045 100644
+--- a/tests/fixtures/induced_knowledge/ik1-baseline.json
++++ b/tests/fixtures/induced_knowledge/ik1-baseline.json
+@@ -60,32 +60,32 @@
+       "1": "c5d8d8ef8504cd916686f415e25d4ebe0e8ab2a0b6c87423d8d2d4d3efe99f34",
+       "2": "cf65777bc9a4386f9b22ee6073822774dd7df7050dbff657944597b68052cdfd",
+       "3": "ed4fc014deea101f9972d8c8ef396ca6220008cfd0404e570dfeeab1bb6b1b1b",
+-      "4": "8ed64954a293d4fb45a7a1d078d8a5a4a13ab422719e105c184a9a464c0ccb48",
+-      "5": "d71acfa587ee6e774d45c50c27d052a90f4daba70034362d5380771333bfd1e5",
++      "4": "2340214a39f7150b3dff9735b53d4a54831a25ea5dc29811d221b2b90eed7e37",
++      "5": "5f08f3b5b712e6666ce993aea91b06aee775942f47a68f157b85d5b53d05b5a9",
+       "6": "47dc138fccf6aa908af3bf4216381f5e2e21fe0b1d08c895f1df4fdc9bc5a321"
+     },
+     "keywords": {
+       "1": "0c3cc5550cb95f5a9948c501149a16d83f176908f610543eba5acd784765021d",
+       "2": "075cd2c02582bfd9fa3366cf41bd3c8ab366f7183d4cb1d38e941c2da09e35a0",
+       "3": "a7ebc8574ebe564401f1c090d38f109f474b7c5291e3a9f61f0cd1625e59d6e6",
+-      "4": "435a2598b7eef1cda14b86b00de358823651353d43fcebe29fd5d51753d921ff",
+-      "5": "ef78fa1978c9d7bf4ad9d3d1cd85e7d4a24a60240c5dccb60167d737188806fb",
++      "4": "b65dfecdb18a88fd69f83f9bc72c15bfb2ddb5f0d5c1822c13e56172be682cb8",
++      "5": "a8a3c758d541074bc314e6327e3e4fa60c4fb0ad04b095ae30c613346f574dc7",
+       "6": "a2021b7dae98bf75196151514b267d88f46a1c537c651f79b0e1126e4d9d941f"
+     },
+     "library": {
+       "1": "36d234a446da10cc5512a26a573e9e793ce31060d6fb928bb5f44b4782ac1e9d",
+       "2": "4cf9874be0b7ae0edf6aee5b9e2dc9d89ccff3bde111510b704bcce17ee420ea",
+       "3": "b82393b429ab2dc2da257cb778cf00a646c6a4f714fa32f381c90de7568df52d",
+-      "4": "23742a1b1ba5b5a94839c557c4af4e087c88a4a09a2886c619e6f14bf2ef870f",
+-      "5": "10c609d1d3cb210c4c4cb6b41a5c944f42605a9e459165ae9a5c2a7aa8e0a70b",
++      "4": "7d8c334d1a8a3fed687b2d0bd1b616fb5ab86d7abaee4054412a4a55a8e1ea91",
++      "5": "e27eaf99b5cd0bd249a9ef9530ea261d7fff36e36a8f45534da9c1d70c605092",
+       "6": "4f2bcbee4bd18a984a239a414d79ac9d41e9395e85d0c29a4f48568ed213155d"
+     },
+     "v2_worked_example": {
+       "1": "21d7c49cca1f0c7dfb1e9db6b325efef4c0ff635a86c31174ffc61a4248e3656",
+       "2": "5647a751a4817a4093d8018421697cc88724660635445abbc799a94c8a633230",
+       "3": "c2237ef5ff80aa899d599c810ae3460fc62cd14c68d9c7080d27322733b6fc68",
+-      "4": "96050610cc72e572761655d1d134c5f077aa12de7d07eb2632b45064b32292ca",
+-      "5": "f24a203aba945059900ca941661e080f6d542d37e3c563e080e40ea75d3aa8f8",
++      "4": "ebc5220c3d5abf4de60cc6d9bdd1299765277276212047ba8f2986229ba88482",
++      "5": "ecb2962a68d4f3833dc4b577aaeeacc89a08fa09424de9a75c42370a633d25e8",
+       "6": "9e40e87bdee70bc19165610747ae11da7bb9e502e09df0a1f12398ac68cbd583"
+     }
+   },
+diff --git a/tests/fixtures/induced_knowledge/ik6-walk/goldens.json b/tests/fixtures/induced_knowledge/ik6-walk/goldens.json
+index cfc7fdd..d87fe7c 100644
+--- a/tests/fixtures/induced_knowledge/ik6-walk/goldens.json
++++ b/tests/fixtures/induced_knowledge/ik6-walk/goldens.json
+@@ -1,14 +1,14 @@
+ {
+  "files": {
+-  "discover-report.json": "be84043451f7107e3c18786b56b6a0396055d65e6f5be79aae648a5e9e57a6ee",
+-  "discovered.json": "49ab9ad1e615dea67bdb8b010ad9601fb11d7402ebc9dbe95e49964069414156",
+-  "discovered.preview.json": "8b201466c97cb97ac074feca30bb37a3c304ffd0872b188dc96af52a75edeb42",
++  "discover-report.json": "0bc143e2d77a1ce29b606aa9eee4836341f94d48d661ff60f71b87284688a7b2",
++  "discovered.json": "74505f867e3ef08ff4dc6da92d5c29cbfc8417f6d7827cd99bbc483abfd965a2",
++  "discovered.preview.json": "7b46c8c4b2c5785fc3938ca0ad385864979436c1c0299da01ae15e22145475c8",
+   "ilp/export.json": "f758a077383a450ea0716ad9056802feb0b5083d185813da5227ed0711417f77",
+   "learned.preview.json": "d77e839cebf33cb212e1d363b8c5de5def772ec5032ed75273d2be016a1c5464",
+   "learned.proposal.json": "7e123a8028bf9c5c5f7ac5843c350bd51ce4a826e0c77cf59028db5d90e33602",
+   "learned/learned.clauses.json": "9871c945a651ef7a7c9f15d5d79955d20c3cae0d43883906f73a721164854cdb",
+   "learned/learned.run.json": "02ecb83e82d3737eadcb3f2dff2382f7198072f65a97233d891b7a14423a7d06",
+-  "measure.json": "237721c4161fb1da2cdc408377f592bc1e76a209a082c76e974189f9593797a7",
++  "measure.json": "9f3bfac4793d61c0f878662eb77c7e6aaebff51d58181e01e30b2d95a5823cf5",
+   "model.orm.yaml": "6e77ed5e045b0ef63c76a48e3484f24096517919e9b52808733282b4ba31d3a7",
+   "model.verbalization.txt": "e23c09953de225c1dedf8c0756b36017131e84e832cb07c585311fe11d413c7c"
+  },
+diff --git a/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.faker.json b/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.faker.json
+index 1de8939..5c05392 100644
+--- a/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.faker.json
++++ b/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.faker.json
+@@ -136,7 +136,7 @@
+     "wrong_attribution": 0
+   },
+   "generator_version": "gnd-synth/1",
+-  "gnd_version": "0.1.0",
++  "gnd_version": "0.2.0",
+   "lanes": {
+     "deterministic": "run",
+     "llm": "not-applicable-phase-2"
+diff --git a/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.llm-proposed.json b/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.llm-proposed.json
+index 85fa36b..f33b36e 100644
+--- a/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.llm-proposed.json
++++ b/tests/fixtures/public-launch-phase-3/measurement/measurements/movie.llm-proposed.json
+@@ -136,7 +136,7 @@
+     "wrong_attribution": 0
+   },
+   "generator_version": "gnd-synth/1",
+-  "gnd_version": "0.1.0",
++  "gnd_version": "0.2.0",
+   "lanes": {
+     "deterministic": "run",
+     "llm": "not-applicable-phase-2"
+diff --git a/tests/fixtures/rf1-pins/goldens.sha256 b/tests/fixtures/rf1-pins/goldens.sha256
+index 60c1280..d85d827 100644
+--- a/tests/fixtures/rf1-pins/goldens.sha256
++++ b/tests/fixtures/rf1-pins/goldens.sha256
+@@ -367,7 +367,7 @@ aa0bc68eb2b24d58aa7eea938b7213e7e27edd24d76558b5cb5af4cbaa1e7dfc  sem-oracle/fx_
+ e87ade0b19c4f47a6bb59ead0e02dd80009d2bda6af65d754404a3ae591a7396  sem-oracle/predict-violations_fx_checker_misc.orm.yaml.json
+ 1b76e21807cafd03ce0c0ad2de1761c2c444982b3d6e3f58d55ad6181e5fedbf  sem-oracle/predict-violations_fx_checker_ring.orm.yaml.json
+ f618606389b2b9cfd357b27666a78b3d19bcf094339cf877850cae3bfe60d17a  sem-oracle/predict-violations_fx_checker_setfam.orm.yaml.json
+-ae4e2cae6f3fcf7b5a4a777a0b363a4aa2e0d15c87ba92e8d907c2066b67ca9f  sem-synth/ex_approvals_model.orm.yaml.json
++35079aea3bd6006ef82ee459ae8631ce45ced611f832de00f2cd50d1426280a9  sem-synth/ex_approvals_model.orm.yaml.json
+ b5a8665e5b348177a28d113b840b7780524163ee8859e48bb2828531b3038798  sem-synth/ex_bookrec_complete.orm.yaml.json
+ 2386f826c1fcb5f66a29873a72e13f79bab4f17b08cbca7abf22ebb2df3fc0f6  sem-synth/ex_bookrec_model.orm.yaml.json
+ 094fb79e3c0e84d0f4528999d0528b98664c56d68799feabd8a6fdd50cd59454  sem-synth/ex_bookrec_strict.orm.yaml.json
+@@ -376,15 +376,15 @@ cc975ac3ba732e96dd4fa7ff22cb6da4106df832bedb8335045eac1a20eb999b  sem-synth/ex_e
+ 91e6302522939e5261814c235c716a8a24c7de854858e3a8dcfd172f42df28a6  sem-synth/ex_expense_model.orm.json.json
+ e9fe0c546f711926440f4ff6f3bb9099069915da7477862594322bcc479a4653  sem-synth/ex_release_model.orm.json.json
+ 32f4f2d3f1ea58064bef5bd38b9b23f372920c258d9a28a9e915d9d1c5e42866  sem-synth/fx_checker_misc.orm.yaml.json
+-f73fa2737d4e6aa623ce4f3bb3adbce6f16bee8eb4a73f7338de5bf2a65f8a73  sem-synth/fx_checker_ring.orm.yaml.json
+-4a5b3ee042a7658fb38e68a4763de9089a9b21a4e539291ed22dd269ed4b80bc  sem-synth/fx_checker_setfam.orm.yaml.json
+-10dee45a1a147ce8cc58f80ca87afeef293bb3ecf67695f187c16322eee595cc  sem-synth/fx_models_dispatch.orm.yaml.json
+-1373ff6e4d3005ae4d5c11238c3101a4d03f4f5bd31026ef3ddf6ccde117ad27  sem-synth/fx_models_full_vocabulary.orm.yaml.json
++1ecefe496e2447eaf26dc89bdfa9bb86d60e5c1f37b364af9fe0270fa0e12f84  sem-synth/fx_checker_ring.orm.yaml.json
++4b05f9b71b52376b60d6735c7f970022cbbb270590c852e2033ae8c3b5d8df9c  sem-synth/fx_checker_setfam.orm.yaml.json
++2068b0f480fe23f5d6a92730a819ef424d0965a7de14bad4e098acaa0fc33691  sem-synth/fx_models_dispatch.orm.yaml.json
++0c168744dfd39a64668864d6faaf0e738ffe74ad8ba2df9bcc5b9bc0b68ce32d  sem-synth/fx_models_full_vocabulary.orm.yaml.json
+ 37bd6bb9c3e5d1501eb86e57143b5a30ccfa68f430721c722080ef6dfe3f6fbe  sem-synth/fx_models_guarded_minimal.orm.yaml.json
+-7a7d3c27d167e26bea10e41c165afd24d58e0f8950cbe4182e16c4cf15227ed8  sem-synth/fx_models_keywords.orm.yaml.json
++586b725b1848b0d2abd60cd61423ec39dad763d2d85a644143b9ffc0ad4e59a7  sem-synth/fx_models_keywords.orm.yaml.json
+ cf50eee14ae3b1016f4fb2c09958dfa25a0b690e4aa4d2ec0591852bab0668f4  sem-synth/fx_models_library.orm.yaml.json
+-af20f1bce539794a9b5228fc1f6ac408bf340c7e679e096ef4bd2bd4d99f7475  sem-synth/fx_models_v2_operations.orm.yaml.json
+-84aab5389003ef17554cc66af3c0e97c8b52d8de1bc28f609eeda17452201d47  sem-synth/fx_models_v2_worked_example.orm.yaml.json
++e34224661a170518e1bfcb5860bc89c3609cd752e9e109fe99086f511c5f1b01  sem-synth/fx_models_v2_operations.orm.yaml.json
++da640a8fd14e0509e7bae58cb574d41713fa80f431ba0ce12018038e1e38e6e3  sem-synth/fx_models_v2_worked_example.orm.yaml.json
+ 0c89983bb3b1fcc29820ea80ccf094354808f759bb75e3f79030b6a974ea276e  sem-verbalize/ex_bookrec_complete.orm.yaml_ex_bookrec_complete.population.json.json
+ 43fc5e0abb320e37eb00626ddb0c2772028c7654b5549033d7c7a5175a3ec629  sem-verbalize/ex_bookrec_model.orm.yaml_ex_bookrec_adult-for-minor.population.json.json
+ f22caae5acb6b5d7d49eb36b160f0cb2caa9ba3b285b470cbe82cfe55fe06fa7  sem-verbalize/ex_bookrec_model.orm.yaml_ex_bookrec_already-read.population.json.json
+diff --git a/tests/fixtures/rf2-pins/measure-successor.json b/tests/fixtures/rf2-pins/measure-successor.json
+index 687a663..41353f8 100644
+--- a/tests/fixtures/rf2-pins/measure-successor.json
++++ b/tests/fixtures/rf2-pins/measure-successor.json
+@@ -4,8 +4,8 @@
+     "size_bytes": 64025
+   },
+   "after": {
+-    "sha256": "ff918ed0095eecde56e580e2961d6614c6bd348e8afecc7047ad26df3453d180",
++    "sha256": "5adc71d3cd88a357af31d8aaa9a359846f83258df31e3bb030bfdc0c98a10d26",
+     "size_bytes": 64085
+   },
+-  "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts and counts unchanged"
++  "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts and counts unchanged; release 0.2.0: the recorded gnd_version moves from 0.1.0 to 0.2.0 and nothing else"
+ }
+diff --git a/tests/fixtures/roundtrip/artifacts/setfam.artifacts.json b/tests/fixtures/roundtrip/artifacts/setfam.artifacts.json
+index 3b43da0..9c3a62e 100644
+--- a/tests/fixtures/roundtrip/artifacts/setfam.artifacts.json
++++ b/tests/fixtures/roundtrip/artifacts/setfam.artifacts.json
+@@ -10,7 +10,7 @@
+       "sha256": "9cdf8a0ab9bb6723b9b2630acccc9160ced7bedf2a64ae63ef39f6481eb15f9e"
+     }
+   },
+-  "gnd_version": "0.1.0",
++  "gnd_version": "0.2.0",
+   "header_template": {
+     "covers": [
+       "booking_by_person",
+diff --git a/tests/support/rf1_pins.py b/tests/support/rf1_pins.py
+index 1a6b6df..4719f5f 100644
+--- a/tests/support/rf1_pins.py
++++ b/tests/support/rf1_pins.py
+@@ -140,6 +140,14 @@ def golden_path(lane: str, key: str) -> Path | None:
+     raise AssertionError(f"RF1 golden missing: {lane}/{stem}.json")
+ 
+ 
++_GND_VERSION = re.compile(rb'(gnd_version\\?"\s*:\s*\\?")[^"\\]*')
++
++
++def _version_blind(data: bytes) -> bytes:
++    """Replace the value of every gnd_version field, so a release bump does not move a pin."""
++    return _GND_VERSION.sub(rb"\1<V>", data)
++
++
+ def assert_golden(lane: str, key: str, observed: Any) -> None:
+     """Compare an observation with its committed golden (never writes the fixture tree)."""
+     data = canonical(observed)
+@@ -155,7 +163,7 @@ def assert_golden(lane: str, key: str, observed: Any) -> None:
+     if path is None:
+         pytest.skip(f"no RF1 golden for {lane}/{key} under {minor_tag()} (decision D2)")
+     expected = path.read_bytes()
+-    if data != expected:
++    if _version_blind(data) != _version_blind(expected):
+         import difflib
+ 
+         diff = "".join(
+diff --git a/tests/test_public_book_runtime.py b/tests/test_public_book_runtime.py
+index 92364e8..347e6c0 100644
+--- a/tests/test_public_book_runtime.py
++++ b/tests/test_public_book_runtime.py
+@@ -31,7 +31,7 @@ def _workspace():
+     with fixture.open("rb") as stream:
+         compressed = stream.read(64 * 1024 + 1)
+     assert len(compressed) <= 64 * 1024
+-    assert _sha256(compressed) == '3a283c40932686e11aef8966a31f567c11f249d6af34a807cc6f90ae668ad172'
++    assert _sha256(compressed) == '38d5da120cb87529a766534c08db2a2251eae999c6982c325c3511d91faa3ee2'
+     with gzip.GzipFile(fileobj=io.BytesIO(compressed)) as stream:
+         expanded = stream.read(256 * 1024 + 1)
+     assert len(expanded) <= 256 * 1024
+diff --git a/tests/test_public_book_skills.py b/tests/test_public_book_skills.py
+index 01aba5d..5919bfe 100644
+--- a/tests/test_public_book_skills.py
++++ b/tests/test_public_book_skills.py
+@@ -25,7 +25,7 @@ def _install_fixtures():
+     fixture = Path(__file__).parent / "fixtures/public-book-skills/workspace.json.gz"
+     assert fixture.is_file() and not fixture.is_symlink()
+     raw = fixture.read_bytes()
+-    assert len(raw) <= 16384 and hashlib.sha256(raw).hexdigest() == '30f10b94fd8893494fc6874ee5ff8f144a198bf1b1f8fb0243f063b2b90a7813'
++    assert len(raw) <= 16384 and hashlib.sha256(raw).hexdigest() == 'b530b9603a0f7ac3e44c18f7b9c80a0967e4b9d47a8489a9dc73decfcf3bb5a3'
+     with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:
+         expanded = stream.read(65537)
+     assert len(expanded) <= 65536
+diff --git a/tests/test_public_coverage_goldens.py b/tests/test_public_coverage_goldens.py
+index 0c032fb..e7a8246 100644
+--- a/tests/test_public_coverage_goldens.py
++++ b/tests/test_public_coverage_goldens.py
+@@ -27,7 +27,7 @@ _PACK = Path(__file__).parent / "fixtures/public-coverage-goldens/corpus.json.gz
+ assert _PACK.is_file() and not _PACK.is_symlink()
+ with _PACK.open("rb") as _stream:
+     _wire = _stream.read(65537)
+-assert len(_wire) <= 65536 and hashlib.sha256(_wire).hexdigest() == '42bd4e2ffe52f182ff4e184cd45d4ed8763a7e741e3998b5dcc2f32e8f25cbe3'
++assert len(_wire) <= 65536 and hashlib.sha256(_wire).hexdigest() == '965a29cbc2dfa293608cb0a4640b8a677202fcd3aa4684eab641ab472521fbde'
+ with gzip.GzipFile(fileobj=io.BytesIO(_wire)) as _stream:
+     _expanded = _stream.read(524289)
+ assert len(_expanded) <= 524288
+diff --git a/tests/test_public_expense_current.py b/tests/test_public_expense_current.py
+index 2288f50..db84ded 100644
+--- a/tests/test_public_expense_current.py
++++ b/tests/test_public_expense_current.py
+@@ -22,7 +22,7 @@ def _public_expense_workspace():
+     path = Path(__file__).parent / "fixtures/public-expense-current/workspace.json.gz"
+     assert path.is_file() and not path.is_symlink()
+     with path.open("rb") as stream: packed = stream.read(128 * 1024 + 1)
+-    assert len(packed) <= 128 * 1024 and hashlib.sha256(packed).hexdigest() == '438a305a97f476a266c5c94a3953fd667ee6e892b2a1a49ca6bbad767e5366de'
++    assert len(packed) <= 128 * 1024 and hashlib.sha256(packed).hexdigest() == '33bcf3ed3f570547bf1af9e90c4a765aa36be28528262663f74a0b2d623a4498'
+     with gzip.GzipFile(fileobj=io.BytesIO(packed)) as stream: expanded = stream.read(256 * 1024 + 1)
+     assert len(expanded) <= 256 * 1024
+     doc = json.loads(expanded)
+diff --git a/tests/test_public_extract_controls.py b/tests/test_public_extract_controls.py
+index 2b7aa2a..56d8b83 100644
+--- a/tests/test_public_extract_controls.py
++++ b/tests/test_public_extract_controls.py
+@@ -19,7 +19,7 @@ def _workspace():
+     fixture = Path(__file__).parent / "fixtures/public-extract-controls/workspace.json.gz"
+     assert fixture.is_file() and not fixture.is_symlink()
+     raw = fixture.read_bytes()
+-    assert len(raw) <= 32768 and hashlib.sha256(raw).hexdigest() == 'a6bc0f1bf35016ac8a72c49b125de9792a9a842e5562b5aee4d1dacd389aa00e'
++    assert len(raw) <= 32768 and hashlib.sha256(raw).hexdigest() == '9e9f3c1688060253297b4627585cf23da801304eb0ab06b484485d70e85a178c'
+     with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:
+         expanded = stream.read(131073)
+     assert len(expanded) <= 131072
+diff --git a/tests/test_public_legacy_codegen_pins.py b/tests/test_public_legacy_codegen_pins.py
+index 43ca126..dd040d7 100644
+--- a/tests/test_public_legacy_codegen_pins.py
++++ b/tests/test_public_legacy_codegen_pins.py
+@@ -15,11 +15,11 @@ from gnd.cli import main
+ def _public_legacy_codegen():
+     packed=(Path(__file__).parent/"fixtures/public-legacy-codegen/closure.json.gz").read_bytes()
+     assert len(packed)<=65536
+-    assert hashlib.sha256(packed).hexdigest()=='08a1183ed80cc19e8dff070bff1a07a9f27075f9a1ad9c7ed68599c3a27f63d0'
++    assert hashlib.sha256(packed).hexdigest()=='468390e58a3476e3e1c39b3d9564a6517320a9bd5f38dec01eafabe8aa97e75d'
+     with gzip.GzipFile(fileobj=io.BytesIO(packed)) as stream:
+         raw=stream.read(65537)
+     assert len(raw)<=65536
+-    assert hashlib.sha256(raw).hexdigest()=='db9a44b726c27f1ee93d11ade814da2f53b2970a0c308d521ca5b6310e00336c'
++    assert hashlib.sha256(raw).hexdigest()=='39cd058d96197701ccc30f6fdacd2b987806e0e84a6eb58b6914b0dbce694e9b'
+     documents=json.loads(raw)
+     assert set(documents)=={'answers/legacy-codegen/.gnd-codegen.json', 'answers/legacy-codegen/artifacts/legacy-derived.applicable.json', 'answers/legacy-codegen/artifacts/legacy-derived.verbalization.txt', 'legacy-derived.orm.yaml', 'answers/legacy-codegen/references/gnd-legacy-derived-notes.md', 'answers/legacy-codegen/artifacts/legacy-derived.artifacts.json', 'answers/legacy-codegen/SKILL.md', 'answers/legacy-codegen/legacy_derived/__init__.py', 'answers/legacy-codegen/test_architecture_smoke_legacy_derived.py', 'answers/legacy-codegen/artifacts/legacy-derived.projection.schema.json', 'answers/legacy-codegen/legacy_derived/tools.py', 'answers/legacy-codegen/pyproject.toml', 'answers/legacy-codegen/architecture.contract.yaml'}
+     temporary=tempfile.TemporaryDirectory(prefix="gnd-public-legacy-codegen-")
+diff --git a/tests/test_public_measure_corpus.py b/tests/test_public_measure_corpus.py
+index dea29c0..7de70df 100644
+--- a/tests/test_public_measure_corpus.py
++++ b/tests/test_public_measure_corpus.py
+@@ -20,7 +20,7 @@ def _workspace():
+     with fixture.open("rb") as stream:
+         compressed = stream.read(128 * 1024 + 1)
+     assert len(compressed) <= 128 * 1024
+-    assert hashlib.sha256(compressed).hexdigest() == "698ee30fa559f6f119f5f8cdb6e897c5c0db85b5238feede2d611712ce1b6cd4"
++    assert hashlib.sha256(compressed).hexdigest() == "71df5a418f39ef86f142ebfd4c2f85a5b8224ab2f6ed6935e3663b46838500b4"
+     with gzip.GzipFile(fileobj=io.BytesIO(compressed)) as stream:
+         expanded = stream.read(2 * 1024 * 1024 + 1)
+     assert len(expanded) <= 2 * 1024 * 1024
+diff --git a/tests/test_rf1_pin_harness.py b/tests/test_rf1_pin_harness.py
+index c2f5393..a93c52c 100644
+--- a/tests/test_rf1_pin_harness.py
++++ b/tests/test_rf1_pin_harness.py
+@@ -26,7 +26,7 @@ from support.rf1_pins import (
+ ROOT = Path(__file__).resolve().parents[1]
+ MANIFEST = PINS_ROOT / "goldens.sha256"
+ # The manifest's own digest: changing any golden edits this line too (SM1).
+-MANIFEST_SHA256 = "389756379b6f7d15c27288c4f5a5bbae5e93a70c3b59b52883078a85b506bc55"  # TS2: gnd discover judgements options
++MANIFEST_SHA256 = "05d18cd6bd256605bd65ca70381447af9dca0ff43d87307c549d5179ae07d18f"  # TS2: gnd discover judgements options
+ 
+ _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
+ tool = importlib.util.module_from_spec(_SPEC)

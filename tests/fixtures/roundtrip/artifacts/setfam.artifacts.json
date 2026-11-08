@@ -10,7 +10,7 @@
       "sha256": "9cdf8a0ab9bb6723b9b2630acccc9160ced7bedf2a64ae63ef39f6481eb15f9e"
     }
   },
-  "gnd_version": "0.1.0",
+  "gnd_version": "0.2.0",
   "header_template": {
     "covers": [
       "booking_by_person",

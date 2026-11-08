@@ -15,11 +15,11 @@ from gnd.cli import main
 def _public_legacy_codegen():
     packed=(Path(__file__).parent/"fixtures/public-legacy-codegen/closure.json.gz").read_bytes()
     assert len(packed)<=65536
-    assert hashlib.sha256(packed).hexdigest()=='08a1183ed80cc19e8dff070bff1a07a9f27075f9a1ad9c7ed68599c3a27f63d0'
+    assert hashlib.sha256(packed).hexdigest()=='468390e58a3476e3e1c39b3d9564a6517320a9bd5f38dec01eafabe8aa97e75d'
     with gzip.GzipFile(fileobj=io.BytesIO(packed)) as stream:
         raw=stream.read(65537)
     assert len(raw)<=65536
-    assert hashlib.sha256(raw).hexdigest()=='db9a44b726c27f1ee93d11ade814da2f53b2970a0c308d521ca5b6310e00336c'
+    assert hashlib.sha256(raw).hexdigest()=='39cd058d96197701ccc30f6fdacd2b987806e0e84a6eb58b6914b0dbce694e9b'
     documents=json.loads(raw)
     assert set(documents)=={'answers/legacy-codegen/.gnd-codegen.json', 'answers/legacy-codegen/artifacts/legacy-derived.applicable.json', 'answers/legacy-codegen/artifacts/legacy-derived.verbalization.txt', 'legacy-derived.orm.yaml', 'answers/legacy-codegen/references/gnd-legacy-derived-notes.md', 'answers/legacy-codegen/artifacts/legacy-derived.artifacts.json', 'answers/legacy-codegen/SKILL.md', 'answers/legacy-codegen/legacy_derived/__init__.py', 'answers/legacy-codegen/test_architecture_smoke_legacy_derived.py', 'answers/legacy-codegen/artifacts/legacy-derived.projection.schema.json', 'answers/legacy-codegen/legacy_derived/tools.py', 'answers/legacy-codegen/pyproject.toml', 'answers/legacy-codegen/architecture.contract.yaml'}
     temporary=tempfile.TemporaryDirectory(prefix="gnd-public-legacy-codegen-")

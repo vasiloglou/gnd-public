@@ -9,6 +9,7 @@ import stat
 import subprocess
 import sys
 import tarfile
+import tomllib
 import zipfile
 from pathlib import Path
 
@@ -23,6 +24,7 @@ LATE = {
     MANIFEST.as_posix(),
     (M / "migration/b3-receipt.md").as_posix(),
 }
+VERSION = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
 IGNORED_DIRS = {".git", ".venv", "__pycache__", ".pytest_cache", ".ruff_cache", "dist"}
 
 
@@ -247,12 +249,12 @@ def audit_archive_names(names, kind):
     payload = set(expected_runtime())
     if kind == "wheel":
         files = payload | {
-            "get_nick_done-0.1.0.dist-info/" + name
+            f"get_nick_done-{VERSION}.dist-info/" + name
             for name in ["WHEEL", "entry_points.txt", "METADATA", "RECORD"]
         }
     else:
         assert kind == "sdist"
-        prefix = "get_nick_done-0.1.0/"
+        prefix = f"get_nick_done-{VERSION}/"
         files = {prefix + "src/" + name for name in payload} | {
             prefix + "PKG-INFO",
             prefix + "pyproject.toml",
@@ -283,7 +285,7 @@ def test_artifact_and_installed_resource_sets(package_probe):
         }
         (metadata_name,) = [n for n in archive.namelist() if n.endswith(".dist-info/METADATA")]
         metadata = email.message_from_bytes(archive.read(metadata_name))
-        assert metadata["Name"] == "get-nick-done" and metadata["Version"] == "0.1.0"
+        assert metadata["Name"] == "get-nick-done" and metadata["Version"] == VERSION
         requires = metadata.get_all("Requires-Dist")
         assert {r for r in requires if ";" not in r} == {
             "jsonschema==4.26.0",
@@ -328,7 +330,7 @@ def test_import_origin_contamination_control(package_probe):
         "contamination control did not resolve checkout"
     )
     clean = json.loads(run([probe["python"], "-c", code], probe["outside"], probe["env"], 60))
-    assert clean["version"] == "0.1.0"
+    assert clean["version"] == VERSION
     assert Path(clean["file"]).is_relative_to(probe["venv"])
     assert Path(clean["python"]).parent == probe["venv"] / "bin"
     assert not any(Path(p).is_relative_to(ROOT) for p in clean["path"] if p)

@@ -364,7 +364,8 @@ def test_driver_kills_the_whole_process_group_on_timeout(
     becomes a report. The reviewer reproduced two surviving 30-second
     grandchildren. This spawns a real grandchild and asserts it is gone.
     """
-    marker = tmp_path / "grandchild-alive"
+    # Regex metacharacters in the name keep the survivor check literal (FU4 review R1).
+    marker = tmp_path / "grandchild[alive]+(1)"
     spawner = (
         "import subprocess,sys,time;"
         f"subprocess.Popen([sys.executable,'-c',\"import time,pathlib;"
@@ -384,7 +385,12 @@ def test_driver_kills_the_whole_process_group_on_timeout(
         time.sleep(0.05)
     assert marker.exists(), "the grandchild never started -- the row proves nothing"
 
-    survivors = subprocess.run(
-        ["pgrep", "-f", "pathlib.Path"], check=False, capture_output=True, text=True
-    ).stdout.split()
+    # Match this test's own processes by the marker path in their argv, not a
+    # pattern another test's processes can share (issue 117, FU4 spec D1): a
+    # literal substring over the full process list, never a regex, and a
+    # failing ps fails the test (FU4 review R1, R2).
+    listing = subprocess.run(
+        ["ps", "-axww", "-o", "pid=,command="], check=True, capture_output=True, text=True
+    ).stdout
+    survivors = [line.split()[0] for line in listing.splitlines() if str(marker) in line]
     assert not survivors, f"descendants survived the bound: {survivors}"

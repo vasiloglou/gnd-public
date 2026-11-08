@@ -19,7 +19,7 @@
   },
   "boundary/fact_types-chain_has_threshold-.constraints-0.empty-host-fact-type.meta.json": {
    "bytes": 8913,
-   "sha256": "54fdae5376b11ca4e1596949b83aaef26dca25bb71e3a3b5c18cafdcaaa3c95d"
+   "sha256": "8d65a5a953501e141e44409977a5347c3d25a869b7e531d1f4a024497d1807c0"
   },
   "boundary/fact_types-chain_has_threshold-.constraints-0.occurs-exactly-once.json": {
    "bytes": 1086,
@@ -27,7 +27,7 @@
   },
   "boundary/fact_types-chain_has_threshold-.constraints-0.occurs-exactly-once.meta.json": {
    "bytes": 8885,
-   "sha256": "45b7233897a65eecd1cdffd020eeff0df0b0f304f7a132f0a2e033df4190979d"
+   "sha256": "698258773d2502e0262258b995ea7f0d608fec2b0a57eb5bedf1ef23d983d7f7"
   },
   "boundary/fact_types-chain_has_threshold-.constraints-0.occurs-twice.json": {
    "bytes": 1159,
@@ -35,7 +35,7 @@
   },
   "boundary/fact_types-chain_has_threshold-.constraints-0.occurs-twice.meta.json": {
    "bytes": 8871,
-   "sha256": "e4ca0ae74e43c0396ab8ade7ed3c5c09cfd7cbd4dd99db36f8d3adb7260c2787"
+   "sha256": "ad78c6f516bae43ef429c3ab097ab30b3eb2994260a6d93fb24209b46c98b6cb"
   },
   "boundary/fact_types-expense_has_status-.constraints-0.empty-host-fact-type.json": {
    "bytes": 844,
@@ -43,7 +43,7 @@
   },
   "boundary/fact_types-expense_has_status-.constraints-0.empty-host-fact-type.meta.json": {
    "bytes": 8939,
-   "sha256": "3868e4d5c036d328b066159d3efd2289ac4bc803f9cc1e8e02c707f5ae3bf714"
+   "sha256": "af1dd761759f2132b9c4bc1fd519656b4be089012dc9c217d5898ab8464a6eb5"
   },
   "boundary/fact_types-expense_has_status-.constraints-0.occurs-exactly-once.json": {
    "bytes": 1086,
@@ -51,7 +51,7 @@
   },
   "boundary/fact_types-expense_has_status-.constraints-0.occurs-exactly-once.meta.json": {
    "bytes": 8883,
-   "sha256": "80944a451d537ba6ec51ab0fcea7e83ad13881ce408d958e46dc3d18b15d9b5f"
+   "sha256": "5f2d9e09ce632887048620df018561eeeeecaca6efdff6fa9d921f8ae572e88d"
   },
   "boundary/fact_types-expense_has_status-.constraints-0.occurs-twice.json": {
    "bytes": 1154,
@@ -59,7 +59,7 @@
   },
   "boundary/fact_types-expense_has_status-.constraints-0.occurs-twice.meta.json": {
    "bytes": 8869,
-   "sha256": "c0168a53ed7b44600013c6e8ed23be0035807f5184d28134af98fbf81d75cf4b"
+   "sha256": "e76892f574e711f86deb5335b323ed1199bb8e8cc4fa1dbc2f661ed2184b42ad"
   },
   "boundary/fact_types-expense_has_status-.constraints-1.coverage-omission.json": {
    "bytes": 1058,
@@ -67,7 +67,7 @@
   },
   "boundary/fact_types-expense_has_status-.constraints-1.coverage-omission.meta.json": {
    "bytes": 8907,
-   "sha256": "2452b2ffe962191e6c5276b0fe67fe513ebf9d9f380ece9731a9db684c8383ae"
+   "sha256": "acbd7215d615c412d3427ac0a42f7eed13352dea7f82ea3d75782690a8bbaa76"
   },
   "boundary/fact_types-expense_has_status-.constraints-1.every-observable-instance-plays.json": {
    "bytes": 1086,
@@ -75,7 +75,7 @@
   },
   "boundary/fact_types-expense_has_status-.constraints-1.every-observable-instance-plays.meta.json": {
    "bytes": 8906,
-   "sha256": "1389335fd335deafa1afcaea62fa969b83ec4c3b009ca5a7be9c90a258f66e33"
+   "sha256": "761aadb3d3270142054c341c607be09e17e8b3ca172970356f1f9dffa33af4c0"
   },
   "boundary/fact_types-expense_has_status-.constraints-1.one-rostered-instance-does-not-play.json": {
    "bytes": 1125,
@@ -83,7 +83,7 @@
   },
   "boundary/fact_types-expense_has_status-.constraints-1.one-rostered-instance-does-not-play.meta.json": {
    "bytes": 8914,
-   "sha256": "c2d351adb024720ae2c5f91dd6cc564348afc8a99c677dddfa362be90ade0057"
+   "sha256": "1a1dcf800feb669b6fce2a5197efc7ee5fe117ff09f98369508fce664b6f9450"
   },
   "boundary/fact_types-expense_submitted_to_workday-.constraints-0.empty-host-fact-type.json": {
    "bytes": 817,
@@ -91,7 +91,7 @@
   },
   "boundary/fact_types-expense_submitted_to_workday-.constraints-0.empty-host-fact-type.meta.json": {
    "bytes": 8931,
-   "sha256": "bbb353a503af69f47ccfe99085fbe8e57efcbec7fe54b2051a20041dcef5115d"
+   "sha256": "6038f5038fb1d3cf5b9ae985479b3f497d4b583d9b0046e9c494b6c572caa46a"
   },
   "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-exactly-once.json": {
    "bytes": 1086,
@@ -99,7 +99,7 @@
   },
   "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-exactly-once.meta.json": {
    "bytes": 8903,
-   "sha256": "d0427e5bd4be22d4690791b9a1e980690ca9607624fddd1b9ad3856d083b80ec"
+   "sha256": "ad3cc0a3e79a6d6e221a30ab2acf8b546c3da10d306710a2f58fda3a6aa906e8"
   },
   "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-twice.json": {
    "bytes": 1159,
@@ -107,7 +107,7 @@
   },
   "boundary/fact_types-expense_submitted_to_workday-.constraints-0.occurs-twice.meta.json": {
    "bytes": 8889,
-   "sha256": "ba367d8e9f735d74e334dc5e4588eef9d0a63d4df93d6eab9eeb1da1299868d5"
+   "sha256": "7d1ca88af7eb3618d200f64e8ee55257f6dbe68ae98dadd3ed0be26f8fa9ab4a"
   },
   "conforming/pool.840edd2eacb14480.pool.json": {
    "bytes": 1332,
@@ -119,7 +119,7 @@
   },
   "conforming/v2_worked_example.orm.conforming.seed0.meta.json": {
    "bytes": 8779,
-   "sha256": "f1b0e027da9561dfc26abdc41d1324f5aab98d6a05b5ce28f8cdabcf1034554e"
+   "sha256": "c905b1886274d76b64332951a321f18bec7f98ac8a22c9eb80cb2e16b0b0a1dc"
   },
   "index.json": {
    "bytes": 20579,
@@ -131,7 +131,7 @@
   },
   "violating/fact_types-chain_has_threshold-.constraints-0.duplicate-covered-role-value.meta.json": {
    "bytes": 8995,
-   "sha256": "def6fa36eea341591c3f6a7d4db0692676d981a504d68254ede36f53316c0360"
+   "sha256": "1adfcaf188562c608c357735a56d273532220e2016f7148f3326b777b7a4acdb"
   },
   "violating/fact_types-chain_has_threshold-.constraints-0.empty-fact-type.json": {
    "bytes": 840,
@@ -139,7 +139,7 @@
   },
   "violating/fact_types-chain_has_threshold-.constraints-0.empty-fact-type.meta.json": {
    "bytes": 8990,
-   "sha256": "c359772d5aa694669a62a9b5ae825e6f8944941581bda17b06e40f77ce4f6a5f"
+   "sha256": "6dbe331f5269f2a920dc270eb9f451f0402803fc5147d2e3f0b5a1d1aae6a849"
   },
   "violating/fact_types-expense_has_status-.constraints-0.duplicate-covered-role-value.json": {
    "bytes": 1157,
@@ -147,7 +147,7 @@
   },
   "violating/fact_types-expense_has_status-.constraints-0.duplicate-covered-role-value.meta.json": {
    "bytes": 8992,
-   "sha256": "3b2b7db92974352692b103fc977b525430225aba181179d11a61d481719d6ca0"
+   "sha256": "e23c02403035543ff4d5d45fe1aebd07c01ddcade6f3dffc1e1404fe1f66432f"
   },
   "violating/fact_types-expense_has_status-.constraints-0.empty-fact-type.json": {
    "bytes": 845,
@@ -155,7 +155,7 @@
   },
   "violating/fact_types-expense_has_status-.constraints-0.empty-fact-type.meta.json": {
    "bytes": 9067,
-   "sha256": "995ac565f0004b36ed87acbdc8c0e801faa9c923cbb80b15f12afd2b3ef9d951"
+   "sha256": "63ed9285253213ff8ddada1c4db7fb8eb6f5f1aefbabd5940f2f17d9d987811f"
   },
   "violating/fact_types-expense_has_status-.constraints-1.drop-fact-type-from-covers.json": {
    "bytes": 1059,
@@ -163,7 +163,7 @@
   },
   "violating/fact_types-expense_has_status-.constraints-1.drop-fact-type-from-covers.meta.json": {
    "bytes": 9009,
-   "sha256": "13978e7d257c82beb361dc6e417a42b8e0b31cacbccbd68fac23e107889c58cb"
+   "sha256": "c2bde201fd0e8a5644c6b5cd2c6525782cc9e8c9176432fc063f7854398f455e"
   },
   "violating/fact_types-expense_has_status-.constraints-1.new-entity-plays-role.json": {
    "bytes": 1163,
@@ -171,7 +171,7 @@
   },
   "violating/fact_types-expense_has_status-.constraints-1.new-entity-plays-role.meta.json": {
    "bytes": 8977,
-   "sha256": "91af4d21dadfb0a02e3fee317c6bc632709d157d4ed5f9bf42dafe6b340395ed"
+   "sha256": "4fce596d6c39536251243a23c7c7dc96886be1a86f849774bc71cf99bc0ed97d"
   },
   "violating/fact_types-expense_has_status-.constraints-1.roster-add-instance.json": {
    "bytes": 1126,
@@ -179,7 +179,7 @@
   },
   "violating/fact_types-expense_has_status-.constraints-1.roster-add-instance.meta.json": {
    "bytes": 8974,
-   "sha256": "2b709fa7bffd293685b7a215c37b337662bac5a178c289b138bcff3eccf6e54a"
+   "sha256": "21e0bf49532a9d2a6f95a410ca7109bcbd3d8ad8eb35dbba5116d53b3daea6a2"
   },
   "violating/fact_types-expense_submitted_to_workday-.constraints-0.duplicate-covered-role-value.json": {
    "bytes": 1160,
@@ -187,7 +187,7 @@
   },
   "violating/fact_types-expense_submitted_to_workday-.constraints-0.duplicate-covered-role-value.meta.json": {
    "bytes": 9032,
-   "sha256": "332ebd29b6520a9bde3ddafbad644ee1f712569e264b17460434e7d9ef7245c2"
+   "sha256": "5e7f3cabaa55308af7035b319a6fe856ed3494132b02ab75f0672d180f891b41"
   },
   "violating/fact_types-expense_submitted_to_workday-.constraints-0.empty-fact-type.json": {
    "bytes": 818,
@@ -195,7 +195,7 @@
   },
   "violating/fact_types-expense_submitted_to_workday-.constraints-0.empty-fact-type.meta.json": {
    "bytes": 9025,
-   "sha256": "c9c0a6def73fc44f26d4e2f34bf13b42553c4488544ec3f0f7d0b39fc65c20aa"
+   "sha256": "20ba7640d6e88b49e5659195ac37fb7c48e855ece0b5ee0d737cfbb34dd096ab"
   }
  },
  "stderr": "",

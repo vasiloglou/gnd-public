@@ -1,0 +1,20 @@
+population: { model: ../models/ring.orm.yaml, model_id: urn:gnd-fixture:fu3-derived-ring@1, source: fixture, covers: [hop, leads] }
+facts:
+  hop:
+    - { from: 1, a: 12, b: 10 }
+    - { from: 2, a: 11, b: 10 }
+    - { from: 3, a: 14, b: 10 }
+    - { from: 4, a: 13, b: 10 }
+    - { from: 2, a: 13, b: 10 }
+    - { from: 5, a: 11, b: 10 }
+    - { from: 20, a: 121, b: 100 }
+    - { from: 21, a: 120, b: 100 }
+  leads:
+    - { from: 1, to: 2 }
+    - { from: 2, to: 1 }
+    - { from: 3, to: 4 }
+    - { from: 4, to: 3 }
+    - { from: 2, to: 3 }
+    - { from: 5, to: 1 }
+    - { from: 20, to: 21 }
+    - { from: 21, to: 20 }

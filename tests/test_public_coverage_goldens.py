@@ -27,7 +27,7 @@ _PACK = Path(__file__).parent / "fixtures/public-coverage-goldens/corpus.json.gz
 assert _PACK.is_file() and not _PACK.is_symlink()
 with _PACK.open("rb") as _stream:
     _wire = _stream.read(65537)
-assert len(_wire) <= 65536 and hashlib.sha256(_wire).hexdigest() == '42bd4e2ffe52f182ff4e184cd45d4ed8763a7e741e3998b5dcc2f32e8f25cbe3'
+assert len(_wire) <= 65536 and hashlib.sha256(_wire).hexdigest() == '965a29cbc2dfa293608cb0a4640b8a677202fcd3aa4684eab641ab472521fbde'
 with gzip.GzipFile(fileobj=io.BytesIO(_wire)) as _stream:
     _expanded = _stream.read(524289)
 assert len(_expanded) <= 524288

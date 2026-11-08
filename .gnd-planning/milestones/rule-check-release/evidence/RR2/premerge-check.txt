@@ -1,0 +1,19 @@
+Pre-merge check, NOT the candidate (2026-11-08). Scratch build of the branch at ea236619 with the M3 commands on this Mac (uv 0.10.10, Python 3.14.3); RR2's candidate is built after the owner merges PR 125 (D1 (b)).
+SHA256SUMS of the scratch build:
+e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4  release/get_nick_done-0.2.0-py3-none-any.whl
+f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104  release/get_nick_done-0.2.0.tar.gz
+e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4  comparison/get_nick_done-0.2.0-py3-none-any.whl
+
+Command: GND_CANDIDATE_DIR=<scratch build> uv run pytest -q -o addopts='' tests/test_release_acceptance.py -k 'rule_check or identity or optional_refusals' --tb=short -p no:cacheprovider
+At ea236619 (tests before review):
+..........                                                               [100%]
+10 passed, 4 deselected in 53.11s
+At cbe5f57a (after review fixes I1-I4; src unchanged since ea236619, so the same scratch build):
+..........                                                               [100%]
+10 passed, 4 deselected in 55.96s
+
+Focused default gate (tests/test_release_version.py tests/test_release_docs.py tests/test_release_preparation.py), ruff on the acceptance file, and the count of '## Unreleased' headings in docs/release-notes.md:
+.................................                                        [100%]
+33 passed, 1 deselected in 0.53s
+All checks passed!
+0

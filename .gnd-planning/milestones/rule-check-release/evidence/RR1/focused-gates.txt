@@ -1,0 +1,12 @@
+$ uv run pytest -q tests/test_release_version.py tests/test_marketplace_plugins.py tests/test_release_docs.py tests/test_release_preparation.py tests/test_induced_provenance.py tests/test_fidelity_payload.py --tb=short
+............                                                             [100%]
+228 passed, 1 deselected in 3.97s
+$ uv lock --check
+Resolved 32 packages in 3ms
+exit 0
+$ git diff --stat origin/main -- .github
+(empty)
+$ python3 scripts/components_index.py changed --base origin/main --strict
+changed against origin/main (1e63aeb): 61 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+$ ruff check <changed py files>
+All checks passed!

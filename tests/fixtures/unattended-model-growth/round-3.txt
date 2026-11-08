@@ -1,0 +1,1 @@
+A staff borrower is a kind of borrower. Staff borrowers may hold a laptop for a term.

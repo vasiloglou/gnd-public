@@ -1,0 +1,8 @@
+m5 shard0: 3777 passed, 123 deselected in 550.89s (0:09:10) (shard exit 0)
+m5 shard1: 2589 passed, 169 deselected in 202.33s (0:03:22) (shard exit 0)
+m5 shard2: 3461 passed, 95 deselected in 786.88s (0:13:06) (shard exit 0)
+m5 shard3: 2639 passed, 228 deselected, 1 warning in 340.64s (0:05:40) (shard exit 0)
+m5 shard4: 2253 passed, 97 deselected, 2 errors in 632.30s (0:10:32) (shard exit 1)
+m5 shard5: 3100 passed, 82 deselected in 613.79s (0:10:13) (shard exit 0)
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid

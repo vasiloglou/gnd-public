@@ -6,6 +6,11 @@ marketplace commands below. Python 3.11 or newer is required.
 See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
 for the pip virtual-environment alternative.
 
+The command below installs the published runtime, 0.1.0. Until 0.2.0 is
+published, the plugin on `main` is newer than that runtime: to use the plugin
+from `main`, install the runtime from a checkout of the same commit instead, as
+[Updates](#updates) shows.
+
 ```sh
 uv tool install get-nick-done==0.1.0
 uv tool update-shell
@@ -63,6 +68,18 @@ Do not delete skill files by hand or assume installing a plugin supersedes them.
 Update the marketplace and plugin through your agent's plugin manager, and update
 the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
 and runtime version aligned. Plugin users do not need `gnd install --sync`.
+
+Until 0.2.0 is published, the plugin on `main` is newer than the runtime on the
+package index (0.1.0), and `uv tool upgrade` would stay at 0.1.0. Install the
+runtime from a checkout of the commit your plugin came from (`main` if you
+added the marketplace from `main`), as the
+[course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
+
+```sh
+git clone https://github.com/vasiloglou/gnd-public.git
+git -C gnd-public checkout <the plugin's commit>
+uv tool install --force ./gnd-public
+```
 
 ## Maintainers
 

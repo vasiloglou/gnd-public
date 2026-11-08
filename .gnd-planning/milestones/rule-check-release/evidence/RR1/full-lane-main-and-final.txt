@@ -1,0 +1,19 @@
+rr1-main shard0: 3123 passed, 53 deselected in 536.15s (0:08:56)(shard exit 0)
+rr1-main shard1: 3639 passed, 124 deselected in 688.93s (0:11:28)(shard exit 0)
+rr1-main shard2: 2641 passed, 193 deselected in 313.99s (0:05:13)(shard exit 1)
+rr1-main shard3: 3510 passed, 74 deselected, 1 warning in 876.30s (0:14:36)(shard exit 0)
+rr1-main shard4: 2770 passed, 225 deselected in 520.75s (0:08:40)(shard exit 0)
+rr1-main shard5: 2147 passed, 125 deselected, 2 errors in 800.82s (0:13:20)(shard exit 1)
+rr1-final shard0: 3065 passed, 52 deselected in 421.92s (0:07:01)(shard exit 0)
+rr1-final shard1: 2764 passed, 125 deselected in 686.07s (0:11:26)(shard exit 0)
+rr1-final shard2: 3610 passed, 138 deselected in 512.12s (0:08:32)(shard exit 0)
+rr1-final shard3: 3060 passed, 130 deselected, 1 warning in 710.72s (0:11:50)(shard exit 0)
+rr1-final shard4: 2867 passed, 208 deselected in 588.26s (0:09:48)(shard exit 0)
+rr1-final shard5: 2485 passed, 141 deselected, 2 errors in 879.59s (0:14:39)(shard exit 1)
+
+rr1-main/shard2.out:FAILED tests/test_v51_phase2_extraction_scope.py::test_scope_walk_scales_linearly
+rr1-main/shard5.out:FAILED tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+rr1-main/shard5.out:ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+rr1-main/shard5.out:ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+rr1-final/shard5.out:ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+rr1-final/shard5.out:ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid

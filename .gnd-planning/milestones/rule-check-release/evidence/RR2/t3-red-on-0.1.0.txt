@@ -1,0 +1,23 @@
+T3 (red first), 2026-11-08. Test file at commit ea236619 (HEAD ea23661910ced9bbf26a0ba1a5169a752869387b).
+Candidate directory assembled from the PyPI 0.1.0 files, each hash-checked against PyPI's digests:
+cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183  release/get_nick_done-0.1.0-py3-none-any.whl
+f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86  release/get_nick_done-0.1.0.tar.gz
+cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183  comparison/get_nick_done-0.1.0-py3-none-any.whl
+
+Command: GND_CANDIDATE_DIR=<that directory> uv run pytest -q -o addopts='' tests/test_release_acceptance.py -k 'rule_check' --tb=line -p no:cacheprovider
+Output (last 15 lines, verbatim):
+                                                                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Users/nikolaosvasiloglou/.local/share/uv/python/cpython-3.14.3-macos-aarch64-none/lib/python3.14/shutil.py", line 652, in copytree
+          with os.scandir(src) as itr:
+               ~~~~~~~~~~^^^^^
+      FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/nb/7y9vtgkn05gblnsxg87f6s9h0000gn/T/pytest-of-nikolaosvasiloglou/pytest-9069/candidate-comparison0/base/lib/python3.14/site-packages/gnd/examples/rule_check'
+      
+    assert 1 == 0
+     +  where 1 = CompletedProcess(args=['/usr/bin/sandbox-exec', '-p', '(version 1)(allow default)(deny file-read* (subpath "/Users/nik...of-nikolaosvasiloglou/pytest-9069/candidate-comparison0/base/lib/python3.14/site-packages/gnd/examples/rule_check\'\n').returncode
+/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/plan-rule-check-release-abb170/tests/test_release_acceptance.py:38: AssertionError: Traceback (most recent call last):
+=========================== short test summary info ============================
+FAILED tests/test_release_acceptance.py::test_installed_rule_check_carries[release]
+FAILED tests/test_release_acceptance.py::test_published_0_1_0_lacks_rule_check[release]
+FAILED tests/test_release_acceptance.py::test_installed_rule_check_carries[comparison]
+FAILED tests/test_release_acceptance.py::test_published_0_1_0_lacks_rule_check[comparison]
+4 failed, 10 deselected in 59.46s

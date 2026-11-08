@@ -5,7 +5,7 @@ close deferred: issues 111, 112, 113, 114, 115, 116, 117 and 119.
 
 **Status: plan r3 approved by the owner on 2026-11-07
 ([plan-gate record](001-plan.md)). FU1 complete and merged ([record](002-phase-FU1.md)).
-FU2 complete and merged ([record](003-phase-FU2.md)). FU3 spec drafted, awaiting the owner gate.** Issues 111 and 112 are split out.
+FU2 complete and merged ([record](003-phase-FU2.md)). FU3 decisions ruled; corpus awaiting approval.** Issues 111 and 112 are split out.
 
 - [Plan (r3, approved)](notes/rule-check-followups-plan.md)
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md)
@@ -16,8 +16,8 @@ FU2 complete and merged ([record](003-phase-FU2.md)). FU3 spec drafted, awaiting
 - [FU2 spec (approved)](notes/phase-FU2-spec.md)
 - [FU2 record](003-phase-FU2.md)
 - [FU2 Codex review](notes/phase-FU2-codex-review.md)
-- [FU3 spec (draft r1)](notes/phase-FU3-spec.md)
+- [FU3 spec (owner-decided)](notes/phase-FU3-spec.md)
 
 Phases: FU1 (113), FU2 (115, 116), FU3 (119), FU4 (117), FU5 (114); close.
 
-Next action: the owner rules on FU3's D1-D3.
+Next action: the owner approves the FU3 corpus.

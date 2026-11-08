@@ -1,0 +1,9 @@
+population: { model: ../models/ring.orm.yaml, model_id: urn:gnd-fixture:fu3-derived-ring@1, source: fixture, covers: [hop, leads] }
+facts:
+  hop:
+    - { from: 1, a: 12, b: 10 }
+    - { from: 2, a: 11, b: 10 }
+    - { from: 3, a: 3, b: 0 }
+  leads:
+    - { from: 1, to: 2 }
+    - { from: 2, to: 1 }

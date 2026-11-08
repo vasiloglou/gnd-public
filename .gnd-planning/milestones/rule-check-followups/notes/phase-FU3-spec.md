@@ -2,8 +2,9 @@
 
 ## 1. Status
 
-**Draft r1 (2026-11-07), awaiting the owner gate.** `auto=false`. No test,
-fixture or source file has been written for this phase.
+**Owner-decided (2026-11-07); approval pending on the corpus.** D1-D3 were
+ruled over r1 (sha256 `313122c4…`, commit c29bb33d) with "Approve as
+proposed". `auto=false`. Prior status: "Draft r1, awaiting the owner gate."
 
 ## 2. Provenance
 
@@ -95,9 +96,9 @@ corpus is recorded in §11 and brought back to the owner before code.
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first** (a serialized report and its exit codes): the five cases, their README stories, and the expected bytes; it lands green if P1 holds, red cases only where it does not |
-| D2 | What "the checker's judged pairs" means for a derived ring | **the asserted facts of the derived fact type**, as the checker judges them today (P1); a gap between asserted and derived facts stays the derivation's finding, not the ring's. The alternative, judging the ring over the derived set, changes version-7 verdicts (rule 1) and is out of scope |
-| D3 | Review over the spec bytes | none |
+| D1 | Approval instrument | **corpus-first** (a serialized report and its exit codes): the five cases, their README stories, and the expected bytes; it lands green if P1 holds, red cases only where it does not **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU3's D1–D3?"). |
+| D2 | What "the checker's judged pairs" means for a derived ring | **the asserted facts of the derived fact type**, as the checker judges them today (P1); a gap between asserted and derived facts stays the derivation's finding, not the ring's. The alternative, judging the ring over the derived set, changes version-7 verdicts (rule 1) and is out of scope **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU3's D1–D3?"). |
+| D3 | Review over the spec bytes | none **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU3's D1–D3?"). |
 
 ## 8. Tests and verification ledger
 
@@ -143,4 +144,27 @@ separately and reported).
 
 ## 11. Corpus and implementation findings
 
-(none yet)
+Recorded while authoring the corpus (2026-11-07, `1e63aeb5`).
+
+- **C1 (P1 confirmed in source).** `extensions.constraint_view_legacy`
+  (`extensions.py:2573-2610`) gives a constraint the asserted facts of a
+  derived fact type the population covers, the extension only for a
+  `semiderived` one, and nothing for an uncovered derived one. The checker
+  and `acyclic_extents` both build their view through it, so they read the
+  same pairs. M1 is empty; the phase is test-only.
+- **C2.** The answers were recorded from the reports at `1e63aeb5`, not
+  from an implementation. All 17 FU3 cases and the 26 RC2 cases pass
+  (`uv run pytest -q tests/test_fu3_derived_ring.py
+  tests/test_rc2_acyclic_extent.py`: 43 passed). The corpus lands green, as
+  D1 allows when P1 holds.
+- **C3 (mutant; the spec's prediction was partly wrong).** Patching
+  `acyclic_extents` to read the derived extension
+  (`effective_facts={**view.facts, **_relation_facts(extensions)}`) turns 2
+  cases red: T1 and T2 on `asserted-only`. The spec predicted T2 and T4. T4
+  cannot catch this mutant, because in `agree` and `add-disjoint` the
+  stated and derived edges are equal by construction; `derived-only` cannot
+  either, because the checker passes it and no extent is computed. The
+  mutant is caught by `asserted-only` alone. No approved answer changed.
+- **C4 (size).** The test module is 115 lines (stop line 150); source 0.
+  The corpus is 5 populations (73 lines), one model (33), two READMEs and
+  the answer key.

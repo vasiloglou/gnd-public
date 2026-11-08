@@ -175,3 +175,26 @@ successor, review R4); D3 asks for that figure as the new basis.
   ls-tree v0.1.0 src/gnd/checker/` lists `_core.py`; `git log v0.1.0`
   lists the RF6a and RF6b commits. R2-R5 corrected above; R6 (no record
   yet) and R7 (README) follow D1.
+- **I3 (implementation, 2026-11-08).** The `graphlib` import stays:
+  `gnd.checker/__init__.py:47` re-exports `CycleError` and
+  `TopologicalSorter` from `_core` as predecessor bindings of their own,
+  and removing the import broke `import gnd.checker`. M1 is 91 lines, as P4
+  measured.
+- **I4 (implementation).** The dynamic-query removal goes through the
+  authenticated successor chain (`tests/support/pyrel_application_successors.py`,
+  `DYNAMIC_SUCCESSORS`) as a new link
+  `evidence/FU5/dynamic-query-successor.json` after RC5's, not by editing
+  `dynamic-query-successor.json` (§6's wording); the chain is the existing
+  mechanism. 13 rows, 15 occurrences, all in the three helpers.
+- **I5 (known red on the base).** `tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap`
+  fails at main `6ed86d90` (reproduced in a base worktree): the
+  rule-check-release RR1 record links `../notes/phase-RR1-codex-review.md`
+  from the milestone root. FU5 does not touch that milestone; the full
+  suite's failing list is the two uv-pin errors plus this one.
+- **I6 (size, plan §0 rule 5).** Measured against the D3 basis (about +40
+  test-side lines; stop at 1.5 times, +60): source -91 as planned; test-side
+  Python +91/-16, net **+75**, past the stop line; plus 119 lines of JSON
+  data (the retirement record 30, the successor link 89). The excess is the
+  negative-import test (43 lines against the 15 estimated: six literal
+  from-imports, the per-module attribute cases and the re-bound case) and
+  `live_baseline` in `test_rf6_packages.py`. Stopped for the owner.

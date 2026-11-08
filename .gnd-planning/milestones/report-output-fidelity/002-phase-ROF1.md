@@ -147,6 +147,6 @@ declaration list for those routes.
 
 | Row | Question | Owner / target |
 |---|---|---|
-| ROF1-O1 | Keep the `[reason: ...]` suffix (E34 holds) or change answer E34 and drop it? | owner; decide at the ROF1 merge |
-| ROF1-O2 | `dynamic-query-successor.json` is appended at the tail of `DYNAMIC_SUCCESSORS`; a sibling branch that also appends will conflict | whoever merges second |
+| ROF1-O1 | Keep the `[reason: ...]` suffix (E34 holds) or change answer E34 and drop it? | **Ruled 2026-11-07: keep the suffix** (owner: "approve", on the recommendation to keep it). E34 stands unchanged. |
+| ROF1-O2 | `dynamic-query-successor.json` is appended at the tail of `DYNAMIC_SUCCESSORS`; a sibling branch that also appends will conflict | Did not occur: FU2 (PR 126) merged first without a dynamic successor. Its `bind_population` RF5 row did conflict in `source-successors.json`; merge 207da98e keeps FU2's row and ROF1's rows (guard and ROF1 suites: 770 passed). |
 | ROF1-O3 | The 77 `test_public_tests_mode_corpus` failures and four others fail on main in this environment | not this milestone |

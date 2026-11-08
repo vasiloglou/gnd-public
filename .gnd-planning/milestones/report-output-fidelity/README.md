@@ -22,4 +22,6 @@ verification), ROF3 (111: canonical identity and producer), ROF4 (111: accept
 both identities at every matching site), ROF5 (111: report emission,
 blocked on D3), close.
 
-Next action: merge PR 124 (owner), rule ROF1-O1, then the ROF2 spec (process-phase).
+ROF1-O1 ruled 2026-11-07: keep the `[reason: ...]` suffix.
+
+Next action: merge PR 124 (owner); the ROF2 spec (draft) awaits its owner gate.

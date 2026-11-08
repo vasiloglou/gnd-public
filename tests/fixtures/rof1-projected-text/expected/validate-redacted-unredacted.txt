@@ -1,0 +1,2 @@
+REDACTION unredacted: has_email.email
+OK: models/contacts-redacted.orm.yaml is a valid GND ORM model

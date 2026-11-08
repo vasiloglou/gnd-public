@@ -1,0 +1,8 @@
+BLOCKING (alethic)
+  (none)
+ADVISORY (deontic)
+  [warning] fact_types[has_window].constraints[0]: Each customer plays 'has_window' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+pass=1 fail=0 warning=1 unchecked=0 vacuous=0
+COVERAGE
+  has_sla: declared, facts=1
+  has_window: declared, facts=2

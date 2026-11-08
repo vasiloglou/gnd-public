@@ -1,0 +1,9 @@
+REDACTION applied: has_email.email
+BLOCKING (alethic)
+  (none)
+ADVISORY (deontic)
+  (none)
+pass=3 fail=0 warning=0 unchecked=0 vacuous=0
+COVERAGE
+  has_email: declared, facts=1
+  has_nickname: declared, facts=1

@@ -1,0 +1,19 @@
+You are an independent code reviewer. Repository: GND (this working directory, read-only). Review the implementation commit 204be6dd of phase ROF1 (issue 112: `gnd check` / `gnd validate --format text` must print verdict lines, not projected JSON, for models with an active redaction policy or temporal terms). The diff is `git diff 3c2de239 204be6dd` (the base is the commit that added the approval corpus). Read the approved spec .gnd-planning/milestones/report-output-fidelity/notes/phase-ROF1-spec.md (including its "Implementation findings"), the plan .gnd-planning/milestones/report-output-fidelity/notes/report-output-fidelity-plan.md section 0 and 2, AGENTS.md and .codex/skills/process-phase/references/project.md (design rules).
+
+REFUTE the phase's claims; do not summarize. Try to find where each is false:
+1. No leak: the projected text is rendered from the projected payload only. Find any path where a value the projection removed (redacted role values in messages, offending_facts, issue messages, derivation findings, reason codes, warnings, the error field, the `model` string in the validate OK line) can reach stdout in applied mode. Check src/gnd/output.py `_projected_check_lines`, `render_check_rows`, `_with_reason`, `_row_views`, `_print_projected_check_text` and the two call sites in src/gnd/commands/checking.py.
+2. Plain-route bytes are unchanged: `_print_report` is now an adapter over `render_check_rows` and `_print_issues` over `_issue_lines`. Find any input where the old and new plain output differ (use `git show 3c2de239:src/gnd/output.py` for the old). Consider --rule-ids (`declared`), derivations with findings, coverage entries, counts, advisory vs blocking filtering, and verdict objects whose attributes are not plain str.
+3. Totality: `render_check_rows` / `_projected_check_lines` over arbitrary mappings (non-str keys, nested lists, huge counts, non-str verdict fields, cyclic or non-JSON values). Find an input that raises or produces unbounded output.
+4. Routes that must be untouched: transition and the export verification route still use `_print_projected_text`; `render_text_header` unchanged. Confirm, and find any consumer that reaches the new path unexpectedly (e.g. `check --admission`, `--steps`, batch, composition, `validate --trace`, `--document`).
+5. The new `[reason: ...]` suffix in projected rows: any case where it leaks, duplicates, or contradicts the corpus.
+6. The test file tests/test_rof1_projected_text.py: cases that cannot fail (vacuous assertions, source assertions that pass trivially), and branches of the layout with no case that can fail them.
+7. The successor evidence rows (source-successors.json, dynamic-query-successor.json, tests/support/pyrel_application_successors.py) and the 4 rf1-pins goldens: do they only record the intended change?
+
+Output format, one block per finding:
+ID: P<n>
+SEVERITY: blocking | hardening | completeness
+LOCATION: path:line
+QUOTE: the code
+PROBLEM: what is false or missing, with evidence (a concrete input and the output you expect from reading the code)
+FIX: the smallest repair
+Start with a line "DISPOSITION: approve | revise | block". Then findings. End with "CONFIRMED:" listing claims you checked and found true. You cannot run the test suite; say which conclusions are by reading only.

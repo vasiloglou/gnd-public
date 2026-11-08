@@ -1,0 +1,6 @@
+import sys
+sys.path.insert(0, "tests")
+import test_v51_phase2_extraction_scope as s
+for _ in range(3):
+    small = s._timed_scope(s._scaling_model(5000)); large = s._timed_scope(s._scaling_model(20000))
+    print(f"small={small:.5f} large={large:.5f} ratio={large/small:.2f}")

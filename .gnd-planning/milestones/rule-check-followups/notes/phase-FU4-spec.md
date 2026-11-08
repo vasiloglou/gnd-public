@@ -136,4 +136,42 @@ about 6.
 
 ## 11. Implementation findings
 
-(none yet)
+- **I1 (M1, M2 at f598ba61).** V2: 24 passed. Mutants: a leader-only kill
+  fails the driver test on the survivor assertion; the quadratic walk fails
+  the ratio (large 1.71 s, small 0.093 s).
+
+Recorded after the Codex review (2026-11-08; [review](phase-FU4-codex-review.md)).
+
+- **I2 (review R1, R2: the check M1 introduced was a regex).** `pgrep -f`
+  reads its pattern as an extended regex, so a marker path holding regex
+  metacharacters may fail to match a survivor, and an erroring `pgrep`
+  prints nothing and passes. Reproduced: with the marker renamed
+  `grandchild[alive]+(1)`, the `pgrep` check, and a leader-only kill, the
+  test **passed** while the grandchild ran. The check is now a literal
+  substring over `ps -axww -o pid=,command=` with `check=True`, and the
+  marker keeps the regex-hostile name as the regression case: unmutated it
+  passes; with a leader-only kill it fails (`descendants survived the
+  bound`). The R2 half (an erroring process listing) is structural
+  (`check=True`) and has no separate case. D1's meaning (match by the
+  marker path) is unchanged.
+- **I3 (review R3).** The ratio bound is a quadratic-regression guard, not
+  a proof of linearity: n log n (about 4.7) and n^1.5 (about 8) pass it,
+  as n log n passed the old bound. Stated in the test comment and the
+  record boundary; the test name is kept.
+- **I4 (review R4, not reproduced).** The RC2 final run does hold the
+  driver failure (`beast-3:~/rc2-shards/final/shard3.out:43`); the
+  repository summary of that run did not list it. The raw excerpts of all
+  six recorded failures are now retained:
+  `evidence/FU4/retained-failures.txt`.
+- **I5 (review R5).** The load probe recorded the leader PID but not the
+  grandchild's; F1's "the driver's own leader and grandchild were gone"
+  means only that none of them appeared among the `pgrep` matches. T5
+  (the real tests under load) is the independent check.
+- **I6 (review R6).** §5's unloaded figures (200 rounds; median 6.01,
+  maximum 9.65; fastest run maximum 8.76; mutant 17.85-17.96) were author
+  observations from 2026-11-07 and were not retained. A retained re-run on
+  the same laptop, quieter (2026-11-08, `evidence/FU4/unloaded-scope-walk.txt`
+  with its scripts): median estimator median 4.76, maximum 6.33, 3 of 200
+  above 6; fastest run median 4.63, maximum 5.86, none above 6; quadratic
+  mutant 14.29-15.75. Bound 10 holds against both sets.
+- **I7 (review R7).** The milestone README was stale.

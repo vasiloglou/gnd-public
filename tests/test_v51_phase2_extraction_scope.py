@@ -76,5 +76,7 @@ def test_scope_walk_scales_linearly() -> None:
     small = _timed_scope(_scaling_model(5000))
     large = _timed_scope(_scaling_model(20000))
     assert large < 5.0
-    # Linear measures 4-9 under noise; a quadratic walk measures about 18 (FU4 spec F2).
+    # A quadratic-regression guard, not a proof of linearity: linear measures 4-9
+    # under noise, n log n about 4.7 and n^1.5 about 8 pass; a quadratic walk
+    # measures about 18 and fails (FU4 spec F2, review R3).
     assert large < 10 * small, {'small': small, 'large': large}

@@ -1,0 +1,2 @@
+A loan is due on a date. The desk checks every due date each morning.
+Staff follow the same rule for every loan.

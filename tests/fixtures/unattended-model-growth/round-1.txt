@@ -1,0 +1,3 @@
+Equipment loans are tracked by loan id. Borrowers are tracked by borrower id.
+Laptops are tracked by laptop tag. Each loan has exactly one due date.
+A borrower holds a laptop. The loan status is one of: open, closed.

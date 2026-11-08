@@ -189,3 +189,10 @@ Recorded after the Codex review (2026-11-07; [review](phase-FU3-codex-review.md)
 - **I3 (review R3, R4, R5).** The corpus README's "same six edges" claim
   was wrong for `add-disjoint` and is corrected; the milestone README was
   stale; the promised open-questions row FU3-O1 is in the record.
+- **I4 (full suite at 528887ec).** The test imported PyYAML, which the
+  locked environment does not ship: the module failed to collect on
+  beast-3, which also tripped `test_public_collection`. The milestone
+  README linked the record before it was committed, which tripped
+  `test_development_scaffold`. The test now reads populations with
+  `ruamel.yaml`, as the other tests do, and the record is committed with
+  the fix. Case meanings unchanged.

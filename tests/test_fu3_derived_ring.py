@@ -13,8 +13,8 @@ import json
 from itertools import pairwise
 
 import pytest
-import yaml
 from jsonschema import Draft202012Validator
+from ruamel.yaml import YAML
 from support.cli_runner import run_main
 from support.repository import REPO_ROOT
 
@@ -41,7 +41,7 @@ def _rows(case: str) -> list[list[int]]:
 
 
 def _asserted_edges(case: str) -> list[tuple[int, int]]:
-    doc = yaml.safe_load((CORPUS / "populations" / f"{case}.pop.yaml").read_text())
+    doc = YAML(typ="safe").load((CORPUS / "populations" / f"{case}.pop.yaml").read_text())
     return [(fact["from"], fact["to"]) for fact in doc["facts"]["leads"]]
 
 

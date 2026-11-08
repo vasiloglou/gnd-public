@@ -24,3 +24,16 @@ paths in failure ids were replaced by `<scratch>` (edited, declared here).
 - **Not covered (stated first, as recorded).** The opt-in lanes (`evidence`,
   `census`, `distribution`, and the others the default `addopts` excludes), and
   anything that needs a network, a paid tool or a reserved split.
+
+## Added 2026-11-07, after the owner's D2 ruling
+
+- **Inventory is incomplete for archives.** `git grep` does not read the tracked
+  gzip fixtures. [gz-archives-naming-0.1.0.txt](gz-archives-naming-0.1.0.txt) lists the
+  12 that name `0.1.0` (6 moved, 6 stay; RR1 spec §13.2). The 57-file inventory
+  above covers text files only.
+- **M5 measured in a scratch copy.** [moved-digests.md](moved-digests.md) lists
+  every file the M5 edit changes (31) and every digest or member recorded inside
+  them, old and new; [m5-text-edits.diff.txt](m5-text-edits.diff.txt) is the edit to the
+  text files. The seven gzip containers are listed by digest only. These are
+  measurements in a scratch copy; nothing was applied to this repository.
+- **Lane result at the changed tree.** See RR1 spec §13.4.

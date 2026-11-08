@@ -2,10 +2,9 @@
 
 ## 1. Status
 
-**Draft r2, 2026-11-07 (repairs after the Codex review of r1, which carry no review opinion); E1 results appended 2026-11-07 (§12). Still not ready for an owner gate: D2 (and the opt-in lane selection of V2) await a ruling.** It cannot be
-approved until (a) [done] the plan gate passed on 2026-11-07 (plan r2 approved) and RL-D1, the version, is ruled: 0.2.0, and (b) experiment E1 (§6) has run over the full default lane [done, §12]
-and §7 D2 carries its ruling. The numbers below that depend on RL-D1 use the
-ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
+**Draft r3, 2026-11-07: ready for the RR1 spec owner gate once the lane result in §13 is recorded.** It is not approved. r2 carried the repairs after the Codex review of r1; r3 records experiment E1 (§12), the owner's rulings on D2 and on the opt-in lanes (§7), and the per-file classification and moved-digest list that the ruling required (§13). Nothing here has a review opinion: the one review (Codex, r1) predates it. Two items stay open for the gate: D5 (wording) and the consequence of the lane exclusion for T2 (§7, D6). No code is written in this repository. `auto=false`.
+
+It could not be approved until (a) [done] the plan gate passed on 2026-11-07 (plan r2 approved) and RL-D1 is ruled: 0.2.0, and (b) [done] experiment E1 (§6) ran over the full default lane (§12) and D2 carries its ruling (§7). The numbers below that depend on RL-D1 use the ruled `0.2.0` and are marked `<V>`.
 
 ## 2. Provenance
 
@@ -26,7 +25,7 @@ ruled `0.2.0` and are marked `<V>`. No code is written. `auto=false`.
 | plan RR1-C1 | `pyproject.toml` carries the ruled version; `uv lock --check`; three manifests | M1-M3, T1 |
 | RR1-C2 | a test fails for each of four drift mutants | T1 (M1..M4 mutants) |
 | RR1-C3 | no test names the old version as its own literal, except the `RELEASED` record | M4, T2, T3 |
-| RR1-C4 | E1 list plus grep inventory before code, each classified and handled by the ruled method; opt-in lanes named exclusions | §6 E1, D2, M5 |
+| RR1-C4 | E1 list plus grep inventory before code, each classified and handled by the ruled method; opt-in lanes named exclusions | §6 E1, §12, §13, D2, D6, M5 |
 | RR1-C5 | release notes, compatibility and support text true and unpublished, gated by a test | M6, M7, M8, T7 |
 | RR1-C6 | full default lane, no failure the merge base lacks | V3 |
 | RR1-C7 | README and installation pins unchanged, visibly | M9, T3 |
@@ -92,8 +91,9 @@ not.
 
 **Limits stated first.** The probe tried 21 of 656 test files, chosen by a
 grep for the fixture directories; it is not the list. Opt-in lanes are not
-covered; if the owner wants them covered it asks for the lanes by name (the
-`evidence or census` command of `project.md`).
+covered; the owner ruled them excluded (D6), so RR1's record names them as
+exclusions and any version-bearing site that only an opt-in lane reads stays
+unmeasured.
 
 **Candidate handling methods for D2** (E1 decides which sites need which):
 
@@ -111,7 +111,7 @@ covered; if the owner wants them covered it asks for the lanes by name (the
 | M2 | `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `"version": "<V>"` | 3 |
 | M3 | `uv.lock` | the `get-nick-done` editable entry (line 100) via `uv lock`; no dependency changes (checked by diff) | 1 |
 | M4 | `tests/test_public_distribution.py` | lines 250, 255, 286, 331 read `<V>` from `pyproject.toml` (`tomllib`) instead of the literal `0.1.0` | about 10 |
-| M5 | per E1 and D2 | the sites E1 lists | unknown until E1 |
+| M5 | per D2 (§13) | M5a: `tests/support/rf1_pins.py` compares `gnd_version` as a placeholder (method a). M5b to M5n: re-record the 14 sites of §13 (method b), each at the digests of `evidence/e1/moved-digests.md`. No edit to `src/` | 1 helper (about 8 lines); 28 re-recorded files, of which 11 are gzip containers repacked with their pinned digest |
 | M6 | `docs/release-notes.md` | opening paragraph replaced; one `## <V> (prepared, not published)` section whose first block is the rule-check items of issue 118 (report version 15 with `--rule-ids`, `remedy`, the acyclic extent; `--baseline`; `--allow-vacuous`; `source: tool-output` with `producer`), then the twelve existing `Unreleased:` sections demoted to `###` subsections with their dates, in order | about 200, mostly moves |
 | M7 | `docs/compatibility.md` | line 3: "Current 0.1.0 metadata is provisional" replaced by the state: 0.1.0 is published; `<V>` is prepared and not published; availability observed on 2026-11-07 | 3 |
 | M8 | `docs/support.md` | profile rows say the prepared package is not signed off and no profile is yet observed for it | 4 |
@@ -154,12 +154,13 @@ cite the reference pages for behavior.
 | ID | Question | Readings and cost | Status |
 |---|---|---|---|
 | D1 | The version (plan RL-D1) | `0.2.0` proposed; `0.1.1` understates; both change only M1-M3, M6-M8 | **Ruled (o, 2026-11-07): 0.2.0** ("0.2.0", answering "Which version should the release carry?") |
-| D2 | How E1's moved bytes are handled (plan RL-D9) | methods (a), (b), (c) above, possibly different per site | open: RL-D9 "as proposed" defers it to after E1 (2026-11-07) |
+| D2 | How E1's moved bytes are handled (plan RL-D9) | methods (a), (b), (c) above, possibly different per site | **Ruled (o, 2026-11-07): "Split (a)+(b) (Recommended)"** (answering "Release RR1 decision D2 (PR 125): the 0.2.0 bump turns 47 tests red because 32 saved reference outputs record version 0.1.0. How should they be handled?", relayed by the session that started this one). Meaning, as relayed: (a) normalize the version in the one RF1 pin helper `tests/support/rf1_pins.py`; (b) regenerate the committed outputs whose purpose is to equal the current command's output, listing every moved digest in the spec before any code (plan rule 6); no (c). The other pin-style failures are classified by the same rule in §13 |
 | D3 | The unreleased notes' shape (plan RL-D3) | one version section with `###` subsections gives readers one "what's new" at the cost of moving about 200 lines; renaming in place moves none but leaves twelve unrelated headings | **Ruled (o, 2026-11-07): as proposed** (plan RL-D3, relayed by the session that started this one): one section |
 | D4 | Pins stay at 0.1.0 until publication (plan RL-D4) | flipping the pins now tells users to install a file that does not exist; holding the flip until publication leaves the pins stale for the wait (a prepared patch bounds it) | **Ruled (o, 2026-11-07): as proposed** (plan RL-D4, relayed by the session that started this one): pins stay at 0.1.0 |
 | D5 | Release-notes wording of the opening: "prepared, not published" with a link to `docs/releasing.md` | readings: that wording, or a plain "not yet released"; neither changes an exit code, both are gated by T7 | open |
+| D6 | Does RR1 run the opt-in lanes (`evidence`, `census`) on both versions? | readings: run them on the base and on the bumped tree (costs two lane runs and may add sites to M5) or record them as excluded (leaves any version-bearing site in those lanes unmeasured; `tests/test_public_distribution.py` is among them, so T2 cannot run in RR1) | **Ruled (o, 2026-11-07): "Record as excluded (Recommended)"** (answering "Should RR1 also run the opt-in test lanes (evidence, census) on both versions, or record them as not measured?", relayed by the session that started this one) |
 
-At first write every row was open. D1, D3 and D4 are ruled (their rows); D2 is deferred to after E1 by RL-D9; D5 is open.
+At first write every row was open. D1, D2, D3, D4 and D6 are ruled (their rows); D5 is open.
 
 ## 8. Tests
 
@@ -167,12 +168,12 @@ At first write every row was open. D1, D3 and D4 are ruled (their rows); D2 is d
 |---|---|---|
 | T1 | `tests/test_release_version.py::test_lock_manifests_and_notes_agree_with_pyproject` | exit 0 on the RR1 tree |
 | T1m | `test_drift_is_refused` x4 (pyproject, lock entry, one manifest, notes heading each mutated to a different version) | each raises `AssertionError` from the agreement function; the control (no mutation) passes, proving the harness can pass |
-| T2 | `tests/test_public_distribution.py` (the four sites), run on the evidence lane with the opt-in command the file's own markers need, recorded in the spec when selected | exit 0; unchanged when `<V>` changes again (checked by changing `pyproject` in a tmp copy) |
+| T2 | `tests/test_public_distribution.py` (the four sites) | **not run in RR1** (D6: opt-in lanes excluded). Checked by `ruff` and the RR1-C3 grep; the cases run at RR2. The owner sees this consequence at the gate |
 | T3 | `test_install_pins_name_a_published_version` | exit 0; a mutant pin `==<V>` fails it |
 | T7 | `test_notes_and_compatibility_do_not_claim_publication` and its mutant (a heading `## 0.2.0` without the status, a compatibility page saying "is published") | exit 0 on the tree; the mutant fails |
 | T4 | `tests/test_marketplace_plugins.py` (existing, including its `999.0.0` mutation) | exit 0 |
 | T5 | `tests/test_release_docs.py`, `tests/test_release_preparation.py` | exit 0 (links in the changed notes resolve; workflow shape untouched) |
-| T6 | the E1-listed tests | exit 0 after M5 |
+| T6 | the 14 files of §13 and `tests/test_rf1_pin_harness.py` | exit 0 after M5 |
 | V3 | the six-shard full default lane at the closing tree vs the merge-base run | no failure the merge base lacks |
 
 Branch walk: each agreement (pyproject = lock, = manifests, = notes heading)
@@ -203,7 +204,7 @@ is not used: the checks are equalities over tracked files, and the answer
 ## Verification commands (unresolved ones marked)
 
 - V1: `git fetch origin && git rebase origin/main` immediately before the PR.
-- V2: `uv run pytest -q tests/test_release_version.py tests/test_marketplace_plugins.py tests/test_release_docs.py tests/test_release_preparation.py tests/test_induced_provenance.py tests/test_fidelity_payload.py --tb=short` plus the E1 list. The `tests/test_public_distribution.py` selection is **unresolved**: its cases need the `distribution` or `evidence` lane, which `project.md` forbids bringing into an ordinary gate; the spec names the one command when the owner rules it.
+- V2: `uv run pytest -q tests/test_release_version.py tests/test_marketplace_plugins.py tests/test_release_docs.py tests/test_release_preparation.py tests/test_induced_provenance.py tests/test_fidelity_payload.py --tb=short` plus the E1 list. `tests/test_public_distribution.py` is **not run in RR1**: its cases need the `distribution` or `evidence` lane, which `project.md` forbids bringing into an ordinary gate, and the owner ruled the opt-in lanes excluded (§7, D6). M4's four literals are checked here by `uv run ruff check` and by the RR1-C3 grep (no `0.1.0` literal left in the file); the file's cases run at RR2, where RL-D8 selects the one acceptance file and lane.
 - V3: `~/close-shards/close-shards.sh <run> <sha>` on beast-3 (present on 2026-11-07; arguments unresolved until read at the time).
 - V4: `uv run ruff check`.
 - V5: `python3 scripts/components_index.py changed --base main --strict`.
@@ -277,9 +278,105 @@ mechanisms, which may take different methods:
   recorded downstream; normalizing (a) weakens a claim that this release is
   exactly what the bytes document.
 
-**Recommendation, not a ruling:** (a) in the one RF1 helper, (b) for the
+**Recommendation as written at E1 (the owner has since ruled it as recommended, §7 D2 and D6; §13 holds the classification the ruling required):** (a) in the one RF1 helper, (b) for the
 committed outputs whose purpose is that they equal the current command's output
 (listing each moved digest in the spec before code, as plan rule 6 requires), and
-no (c). D2 stays open for the owner. The opt-in lanes (`evidence`, `census`) are
-not measured: RR1's record names them as exclusions unless the owner asks for the
-`evidence or census` command of `project.md` to be run on both refs.
+no (c). The opt-in lanes (`evidence`, `census`) are not measured, and the owner
+ruled them excluded.
+
+## 13. Classification of the 47 and the moved digests (2026-11-07, appended before any code)
+
+**How this was measured.** The M5 edit was applied to a scratch copy of main
+`12daa5b7` with M1 to M3 (never to this repository). Each failing test was
+reproduced there first, then fixed by the method below, then the full default
+lane ran on beast-3 over the result (§13.4). Retained in
+[evidence/e1](../evidence/e1/README.md): [moved-digests.md](../evidence/e1/moved-digests.md)
+(every changed file and every recorded digest, old and new),
+[m5-text-edits.diff.txt](../evidence/e1/m5-text-edits.diff.txt) (the edits to text
+files; the seven gzip containers are listed by digest, not diffed) and
+[gz-archives-naming-0.1.0.txt](../evidence/e1/gz-archives-naming-0.1.0.txt).
+
+**The rule used for D2** (the owner's, §7): (a) when the test compares against a
+frozen golden whose subject is not the version, and a placeholder on both sides
+makes the comparison blind to the version without touching retained bytes;
+(b) when the test's purpose is to equal the current command's output, or when
+the pinned value is a digest of bytes that carry the version (a placeholder
+cannot reach into a digest, and a digest of a file that holds a digest cascades).
+No (c).
+
+### 13.1 Per-file classification
+
+| Test file (failures) | What it compares | Method | What moves |
+|---|---|---|---|
+| `test_rf1_semantic_pins.py::test_extract` (16) | extract output text against 16 `sem-extract` goldens | **(a)** | `assert_golden` in `tests/support/rf1_pins.py` compares with every `gnd_version` value replaced by a placeholder on both sides (about 8 lines, M5a). The 16 goldens keep `0.1.0` |
+| `test_rf1_semantic_pins.py::test_synth` (8) | the sha256 of every file a synth run writes, against 8 `sem-synth` goldens | **(b)**, not (a) | A placeholder cannot reach a digest: files the synth run writes (`*.meta.json`) embed the version. 8 goldens re-recorded, plus their 8 lines in `tests/fixtures/rf1-pins/goldens.sha256` and the manifest's pinned digest in `test_rf1_pin_harness.py` (a cascade E1 could not see: that test passes at the bump and fails after re-recording) |
+| `test_tp2_shared_fact_types.py` (1) | runs `test_rf1_semantic_pins.py` in a subprocess | follows the two rows above | nothing of its own |
+| `test_object_type_description.py` (4) | rows 4 and 5 of `ik1-baseline.json`: the sha256 of `.gnd-codegen.json` and of the conformance payload, per model | **(b)** | 8 recorded digests. The test already replaces `gnd_version` in row 5 and still fails, because both files carry the sha256 of `artifacts.json`, which embeds the version, so (a) cannot reach it |
+| `test_rf2_pre_move_pins.py::test_measure_output_bytes` (1) | sha256 and size of a `gnd measure` output | **(b)** through the existing successor file | `measure-successor.json`: `after.sha256` moves, the size does not (`0.1.0` and `0.2.0` have the same length), and the `reason` gains one sentence. The `before` pin stays |
+| `test_ik6_walk.py::test_t2` (1) | sha256 of four files the tutorial walk writes | **(b)** | 4 digests in `ik6-walk/goldens.json` (`measure.json`, `discovered.json`, `discover-report.json`, `discovered.preview.json`; the E1 failure message showed three of them) |
+| `test_fidelity_stub_gate.py` (1) | a committed `setfam.artifacts.json` against a fresh `gnd extract` | **(b)** | that one file, `tests/fixtures/roundtrip/artifacts/setfam.artifacts.json`; its test message names the regeneration |
+| `test_public_extract_controls.py` (5) | extract, codegen and fidelity outputs against an answer key bound to base commit `5c0d7a8` | **(b)** | the key inside `public-extract-controls/workspace.json.gz`: 6 digests (two `artifacts.json`, the legacy `.gnd-codegen.json` and its `artifacts.json` copy, two fidelity outputs). The stdout digests do not move (stdout carries no version) |
+| `test_public_coverage_goldens.py` (3) | `gnd coverage` payload bytes | **(b)** | 3 `expected.payload.json` rows inside `public-coverage-goldens/corpus.json.gz`; sizes unchanged |
+| `test_public_measurement_publication.py` (2) | `gnd measure` over a committed corpus against 2 committed payloads | **(b)** | the two payload files, one line each |
+| `test_public_measure_corpus.py` (1) | a relocated corpus against a committed payload | **(b)** | one member of `public-measure-corpus/workspace.json.gz` |
+| `test_public_legacy_codegen_pins.py` (1) | codegen output against the "pre-v5" answer tree | **(b)** | two documents inside `public-legacy-codegen/closure.json.gz` (`.gnd-codegen.json` and `artifacts/legacy-derived.artifacts.json`), plus the container and the inner digest pinned in the test |
+| `test_public_book_runtime.py` (1), `test_public_book_skills.py` (1) | codegen and conformance output of the `bookrec` example | **(b)** | five members of `public-book-runtime/workspace.json.gz` (the project's `.gnd-codegen.json` and `artifacts.json`, the conformance evidence, and the two EXP-007 candidate copies), the sha256 citation of that evidence in `WALKTHROUGH.md` inside `public-book-skills/workspace.json.gz`, and both containers' pinned digests |
+| `test_public_expense_current.py` (1) | live conformance payload against the committed one | **(b)** | one member, `conformance/post-conversion.json`, `gnd_version` only; the project is not regenerated. `baseline.json` and `post-evolution.json` are pinned to commit `9c7a464` and keep `0.1.0` |
+
+(a) therefore covers **16 of the 47**, not the 24 the E1 table read as one
+mechanism; the other 31 are (b). Every other row of the table is a command output
+whose purpose is to equal the current output, or a digest over such bytes.
+
+### 13.2 What changed in the picture E1 gave
+
+1. **E1's inventory missed version strings inside gzip archives.** `git grep` does not
+   read them. 12 tracked archives under `tests/fixtures` hold `0.1.0`
+   ([the list](../evidence/e1/gz-archives-naming-0.1.0.txt)): 6 moved
+   (`public-book-runtime`, `public-coverage-goldens`, `public-expense-current`,
+   `public-extract-controls`, `public-legacy-codegen`, `public-measure-corpus`);
+   6 stay (`public-binding-graphs`, `public-extract-boundary`,
+   `public-fidelity-scope`, `public-legacy-readers`, `public-redaction-reports`,
+   `public-version-graph`), whose `0.1.0` is a recorded fixture value that no live
+   output is compared with (none of their tests failed at the bump). A seventh
+   container, `public-book-skills`, holds no version but cites the digest of a
+   moved file. The 32-file count in the owner's question named text fixtures only.
+2. **Every difference is the version or a digest that covers it.** For every
+   changed output the new bytes equal the old bytes once the `gnd_version` value
+   and 64-hex digests are masked; the one exception is the sentence added to the
+   RF2 `reason` on purpose. The labels "pre-v5 bytes", "pre-phase controls" and
+   "base commit" on the re-recorded pins therefore still hold in substance, and
+   the spec records here that they now carry `0.2.0`.
+3. **One more cascade appeared only by running the lane on the changed tree**
+   (`test_rf1_pin_harness.py::test_golden_manifest`). Others may exist; the closing
+   full-lane run at the RR1 tree (V3) is the check, and RR1's record reports any
+   further site it finds.
+
+### 13.3 Moved digests
+
+Everything is in [moved-digests.md](../evidence/e1/moved-digests.md): 31 changed files (7
+gzip containers, 24 others), each with its old and new sha256, and below them
+the digests and members recorded inside those files. The size of M5: 31 files,
+about 450 lines changed in text files, one 8-line helper change, no change under
+`src/`. The value `0.2.0` is the only input; a later change of version moves
+these digests again, which is the cost of method (b) the owner accepted.
+
+### 13.4 The lane at the changed tree
+
+The scratch tree is main `12daa5b7` plus M1 to M3 plus the M5 edit above. The same
+six-shard default lane, on the same machine and with the same script as E1
+([lane-m5-summary.txt](../evidence/e1/lane-m5-summary.txt)): **17,819 passed, 0 failed,
+2 errors**, the same `tests/test_public_optional.py` pair the base has. The base
+passed 17,819 and the bumped tree without M5 passed 17,772 with 47 failures, so
+M5 restores all 47 and no test was dropped. An earlier scratch run without the
+repository's git history showed a spurious failure in `test_ik6_skill_census.py`
+(the scratch copy had no history); the run recorded here used a clone with the
+full history. The one cascade that run revealed (`test_rf1_pin_harness.py`) is
+§13.1's second row.
+
+Limits, stated first. This is the **default lane** only (D6: `evidence`, `census`
+and `distribution` are excluded, and any version-bearing site only they read
+stays unmeasured). It is a scratch tree, not the RR1 tree: RR1's own V3 repeats the
+run at its closing tree, after the rebase of V1, and reports any site this run
+did not have. The scratch edit was made by a script that re-recorded each pin from
+the command's own output; the implementation may differ in form, not in the
+digests listed.

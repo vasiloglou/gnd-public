@@ -33,10 +33,9 @@ The milestone is complete when, on main after merge:
    test whose result moves with the version, is listed from a grep inventory
    and a measurement before code, and each is classified (historical or stale)
    and handled by a ruled method (RR1, RL-D9). The opt-in lanes (`evidence`,
-   `census`, `distribution`) are not measured by E1; the ones whose files
-   name the version (at least `tests/test_public_distribution.py`) are
-   selected by name in the RR1 spec, and any lane not selected is listed as an
-   exclusion in the record (review P2).
+   `census`, `distribution`) are not measured by E1; the owner ruled them
+   excluded (2026-11-07, RR1 spec D6), so the record lists them as exclusions
+   and `tests/test_public_distribution.py` runs at RR2, not RR1 (review P2).
 3. A candidate wheel and sdist built from a named main commit install into a
    fresh environment outside the checkout and carry every item of issue 118:
    report version 15, `--rule-ids`, `--baseline`, `--allow-vacuous`, the
@@ -231,7 +230,7 @@ RR2 starts when the content RL-D2 selects is on main.
 
 ### RR1: Candidate content (about 15 config lines, 60 test lines, 200 notes lines; fixtures per E1)
 
-Spec: [phase-RR1-spec.md](phase-RR1-spec.md), draft, blocked on RL-D1 and RL-D9.
+Spec: [phase-RR1-spec.md](phase-RR1-spec.md), draft r3, awaiting its own owner gate (RL-D1 and RL-D9 are ruled; the spec is not approved).
 
 - RR1-C1: `pyproject.toml` carries the ruled version; `uv lock --check` passes
   and the three manifests carry it.
@@ -363,7 +362,7 @@ this close.
 
 | ID | Risk | Control |
 |---|---|---|
-| R1 | A bump moves retained or golden bytes (`gnd_version` in 16 goldens and other fixtures) and the suite goes red in places unrelated to the release | E1 measures first; RL-D9 chooses the method; RR1-C4 and C6 |
+| R1 | A bump moves retained or golden bytes (`gnd_version` in 16 goldens and other fixtures; E1 measured 47 failures, RR1 spec §12 and §13) and the suite goes red in places unrelated to the release | E1 measures first; RL-D9 chose the method (split (a)+(b)); RR1-C4 and C6 |
 | R2 | `docs/release-notes.md` conflicts with every sibling milestone that adds an `Unreleased:` section | RR1 rebases onto main immediately before its PR; after it merges, sibling work adds a fresh `Unreleased:` section above the version's section, and RR2-C0 folds the sections of every change the candidate contains into the version's section before the build; the plan records this for sibling sessions |
 | R3 | Main carries version 0.2.0 and plugin manifests at 0.2.0 before PyPI has it | rule 3 keeps install text honest; release notes say "prepared, not published"; RL-D2 can shorten the gap |
 | R4 | The candidate's evidence is read as the published file's evidence | rule 4; O7 stated in the dossier; the served-file comparison after publication is the identity that counts |
@@ -422,14 +421,14 @@ close.
 | RL-D6 | Run the prepare job on GitHub (`publish=false`) for Ubuntu evidence? | not in this plan; the owner may ask after RR1 merges; without it RR2 claims one observed profile only | A run adds an Ubuntu result and a 30-day artifact; it dispatches a workflow on main, so it needs the owner's request each time **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed (Recommended)", answering "How do you rule on the remaining release-plan decisions RL-D0 and RL-D3 to RL-D9 in PR 125 (RL-D1 = 0.2.0 and RL-D2 = wait for FU2/FU3 are already ruled)?", relayed to this session by the session that started it). |
 | RL-D7 | If two local builds differ by hash, does that block? | no; record the difference and its cause (timestamps, paths); the served-file comparison after publication is the identity that counts | Blocking would hold the release on a property `release.yml` does not require **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed (Recommended)", answering "How do you rule on the remaining release-plan decisions RL-D0 and RL-D3 to RL-D9 in PR 125 (RL-D1 = 0.2.0 and RL-D2 = wait for FU2/FU3 are already ruled)?", relayed to this session by the session that started it). |
 | RL-D8 | Resolve conflict C1 (`addopts` override for release acceptance) | the RR2 spec approval selects that one file and lane; nothing else overrides `addopts` | Without it RR2 cannot run the acceptance the release procedure itself names **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed (Recommended)", answering "How do you rule on the remaining release-plan decisions RL-D0 and RL-D3 to RL-D9 in PR 125 (RL-D1 = 0.2.0 and RL-D2 = wait for FU2/FU3 are already ruled)?", relayed to this session by the session that started it). |
-| RL-D9 | How are version-bearing recorded bytes handled, if E1 finds some move? | decided after E1 and ruled in the RR1 spec: (a) compare with the version normalized, (b) regenerate the recorded bytes, (c) fix the version in the test environment | (b) rewrites retained evidence; (a) and (c) change a test's meaning. RR1 cannot be approved before E1 **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed (Recommended)", answering "How do you rule on the remaining release-plan decisions RL-D0 and RL-D3 to RL-D9 in PR 125 (RL-D1 = 0.2.0 and RL-D2 = wait for FU2/FU3 are already ruled)?", relayed to this session by the session that started it). RL-D9 stays deferred: it is ruled in the RR1 spec after E1. |
+| RL-D9 | How are version-bearing recorded bytes handled, if E1 finds some move? | decided after E1 and ruled in the RR1 spec: (a) compare with the version normalized, (b) regenerate the recorded bytes, (c) fix the version in the test environment | (b) rewrites retained evidence; (a) and (c) change a test's meaning. RR1 cannot be approved before E1 **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed (Recommended)", answering "How do you rule on the remaining release-plan decisions RL-D0 and RL-D3 to RL-D9 in PR 125 (RL-D1 = 0.2.0 and RL-D2 = wait for FU2/FU3 are already ruled)?", relayed to this session by the session that started it). RL-D9 stays deferred: it is ruled in the RR1 spec after E1. **Ruled after E1 (o, 2026-11-07): "Split (a)+(b) (Recommended)"** (answering "Release RR1 decision D2 (PR 125): the 0.2.0 bump turns 47 tests red because 32 saved reference outputs record version 0.1.0. How should they be handled?", relayed by the session that started this one): (a) normalize the version in the one RF1 pin helper; (b) regenerate the committed outputs whose purpose is to equal the current command's output, listing every moved digest in the RR1 spec before any code; no (c). The same relay ruled the opt-in lanes (`evidence`, `census`) "Record as excluded (Recommended)". Classification and digests: RR1 spec §13. |
 
 Open questions carried: whether `docs/support.md` should name the new
 candidate's observed profile after RR2 (proposed yes, one row); whether the
 GitHub release for the new tag should attach the wheel and sdist as v0.1.0's
 did (the owner's call at publication).
 
-**Provenance of rulings:** RL-D0 to RL-D9 are ruled (o, 2026-11-07), quoted in their rows (RL-D3 to RL-D9 as one answer relayed by the session that started this one). They rule decisions; they are not the plan gate and approve no bytes. The plan gate itself has not been passed.
+**Provenance of rulings:** RL-D0 to RL-D9 are ruled (o, 2026-11-07), quoted in their rows (RL-D3 to RL-D9 as one answer relayed by the session that started this one). They rule decisions; they are not the plan gate and approve no bytes. The plan gate was passed separately ("Approve r2", [001-plan.md](../001-plan.md)); RL-D9 was ruled later, after E1.
 
 ## 11. Review dispositions (r1 to r2)
 

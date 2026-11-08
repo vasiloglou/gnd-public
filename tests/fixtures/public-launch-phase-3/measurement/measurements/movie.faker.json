@@ -136,7 +136,7 @@
     "wrong_attribution": 0
   },
   "generator_version": "gnd-synth/1",
-  "gnd_version": "0.1.0",
+  "gnd_version": "0.2.0",
   "lanes": {
     "deterministic": "run",
     "llm": "not-applicable-phase-2"

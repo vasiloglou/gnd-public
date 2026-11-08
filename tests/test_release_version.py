@@ -39,7 +39,7 @@ def declared_version(root: Path = ROOT) -> str:
 def lock_version(root: Path = ROOT) -> str:
     """The version of the editable `get-nick-done` entry of `uv.lock`."""
     text = (root / "uv.lock").read_text(encoding="utf-8")
-    match = re.search(r'^\[\[package\]\]\nname = "get-nick-done"\nversion = "([^"]+)"\nsource = \{ editable', text, re.M)
+    match = re.search(r'^\[\[package\]\]\nname = "get-nick-done"\nversion = "([^"]+)"\nsource = \{ editable', text, re.MULTILINE)
     assert match, "uv.lock has no editable get-nick-done entry"
     return match.group(1)
 
@@ -81,7 +81,7 @@ def assert_no_publication_claim(declared: str, released: set[str], headings: lis
     assert heading is not None, f"no notes heading for {declared}"
     assert "not published" in heading, f"the notes heading {heading!r} does not say {declared} is not published"
     assert "not published" in compatibility, "docs/compatibility.md does not say the prepared version is not published"
-    claim = re.compile(rf"\b{re.escape(declared)}\b[^.\n]*\b(?:is|was|has been|are|were) (?:now )?(?:published|released|available on)", re.I)
+    claim = re.compile(rf"\b{re.escape(declared)}\b[^.\n]*\b(?:is|was|has been|are|were) (?:now )?(?:published|released|available on)", re.IGNORECASE)
     for name, text in {"docs/compatibility.md": compatibility, **other}.items():
         assert not claim.search(text), f"{name} says {declared} is published"
 
@@ -156,8 +156,7 @@ def test_notes_and_compatibility_do_not_claim_publication():
 
 
 @pytest.mark.parametrize("mutation", ["heading-status-removed", "compatibility-claims", "support-claims", "heading-missing"])
-def test_publication_claim_mutants_are_refused(tmp_path, mutation):
-    root = make_tree(tmp_path)
+def test_publication_claim_mutants_are_refused(mutation):
     declared = "9.9.9"  # an unpublished version, whatever the tree declares
     headings = [f"## {declared} (prepared, not published)"]
     compatibility = "9.9.9 is prepared and not published.\n"

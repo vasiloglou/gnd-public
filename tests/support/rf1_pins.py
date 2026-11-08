@@ -140,6 +140,14 @@ def golden_path(lane: str, key: str) -> Path | None:
     raise AssertionError(f"RF1 golden missing: {lane}/{stem}.json")
 
 
+_GND_VERSION = re.compile(rb'(gnd_version\\?"\s*:\s*\\?")[^"\\]*')
+
+
+def _version_blind(data: bytes) -> bytes:
+    """Replace the value of every gnd_version field, so a release bump does not move a pin."""
+    return _GND_VERSION.sub(rb"\1<V>", data)
+
+
 def assert_golden(lane: str, key: str, observed: Any) -> None:
     """Compare an observation with its committed golden (never writes the fixture tree)."""
     data = canonical(observed)
@@ -155,7 +163,7 @@ def assert_golden(lane: str, key: str, observed: Any) -> None:
     if path is None:
         pytest.skip(f"no RF1 golden for {lane}/{key} under {minor_tag()} (decision D2)")
     expected = path.read_bytes()
-    if data != expected:
+    if _version_blind(data) != _version_blind(expected):
         import difflib
 
         diff = "".join(

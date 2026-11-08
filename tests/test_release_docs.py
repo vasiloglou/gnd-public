@@ -20,3 +20,14 @@ def test_broken_link_rejected(tmp_path):
     p.write_text('[broken](missing.md)')
     with pytest.raises(AssertionError):
         check_links(p)
+
+
+def test_releasing_procedure_states_both_routes():
+    """docs/releasing.md names both publication routes and no stale phase wording (RR3, D1)."""
+    text = (ROOT / 'docs/releasing.md').read_text(encoding='utf-8')
+    for stale in ['After Phase 3 accepts', 'To enable the first PyPI release']:
+        assert stale not in text, stale
+    assert 'token upload' in text and 'retained' in text
+    assert 'release.yml' in text and 'publish=true' in text
+    assert 'target-only contributor realpaths' in text
+    assert 'Candidate sign-off requires those results' in ' '.join(text.split())

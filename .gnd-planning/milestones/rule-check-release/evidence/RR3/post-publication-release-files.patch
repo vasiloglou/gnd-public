@@ -1,0 +1,18 @@
+diff --git a/docs/installation.md b/docs/installation.md
+index 75c1c477..96a208de 100644
+--- a/docs/installation.md
++++ b/docs/installation.md
+@@ -111,11 +111,11 @@ runtime versions aligned.
+ ## Install a release artifact
+ 
+ You can instead download the wheel and checksums from the
+-[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
++[v0.2.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
+ Install it in an activated virtual environment:
+ 
+ ```sh
+-python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
++python -m pip install /path/to/get_nick_done-0.2.0-py3-none-any.whl
+ ```
+ 
+ ## Contributor checkout

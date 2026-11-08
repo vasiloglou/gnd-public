@@ -1,0 +1,32 @@
+diff --git a/docs/installation.md b/docs/installation.md
+index 75c1c477..76c443d0 100644
+--- a/docs/installation.md
++++ b/docs/installation.md
+@@ -62,9 +62,9 @@ expense approval policy and validate the result. Desktop clients with marketplac
+ support can also install GND from the configured marketplace.
+ 
+ The marketplace entries need to be present on repository `main`. While the
+-repository is private, access requires GitHub authentication. The `v0.1.0` tag
+-contains the Python release and predates plugin packaging, so the plugin commands
+-use `main`. See [plugin installation and updates](marketplace-plugins.md) for
++repository is private, access requires GitHub authentication. The `v0.2.0` tag
++contains both the Python release and these marketplace entries; the plugin
++commands use `main`, which may hold unreleased changes. See [plugin installation and updates](marketplace-plugins.md) for
+ switching from existing skill copies and managing plugin updates.
+ 
+ ### Install skill files directly from the Python package
+diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
+index e2b2a8af..eab2fd27 100644
+--- a/docs/marketplace-plugins.md
++++ b/docs/marketplace-plugins.md
+@@ -51,8 +51,8 @@ it there if that client does not share the CLI installation.
+ These commands use GND's repository marketplace. They do not submit GND to an
+ Anthropic or OpenAI curated directory. Until the repository is public, GitHub
+ access is required. The marketplace files must be merged into `main` before the
+-commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+-Python release, not these marketplace entries.
++commands above work. The `v0.2.0` tag contains both the Python release and these
++marketplace entries; the commands above use `main`.
+ 
+ ## Existing skill installations
+ 

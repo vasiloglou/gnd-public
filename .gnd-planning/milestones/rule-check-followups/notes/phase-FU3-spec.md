@@ -2,7 +2,10 @@
 
 ## 1. Status
 
-**Owner-decided (2026-11-07); approval pending on the corpus.** D1-D3 were
+**Approved (2026-11-07); implemented (test-only).** The owner approved the
+corpus (commit 11aef429) with "Approve, finish FU3", answering "Do you
+approve the FU3 corpus answers?". Prior status: "Owner-decided; approval
+pending on the corpus." D1-D3 were
 ruled over r1 (sha256 `313122c4…`, commit c29bb33d) with "Approve as
 proposed". `auto=false`. Prior status: "Draft r1, awaiting the owner gate."
 

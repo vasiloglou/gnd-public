@@ -1,0 +1,15 @@
+# T5 and V3 at 95dca01d (literal ps marker check): repeat probe beside a six-shard full run on beast-3
+................................................                         [100%]
+120 passed in 186.16s (0:03:06)
+probe exit=0
+shard0: 2171 passed, 96 deselected, 2 errors in 458.88s (0:07:38) shard exit=1
+shard1: 2985 passed, 54 deselected in 369.52s (0:06:09) shard exit=0
+shard2: 3692 passed, 148 deselected in 470.50s (0:07:50) shard exit=0
+shard3: 2691 passed, 172 deselected, 1 warning in 195.69s (0:03:15) shard exit=0
+shard4: 3648 passed, 71 deselected in 692.64s (0:11:32) shard exit=0
+shard5: 2665 passed, 253 deselected in 420.70s (0:07:00) shard exit=0
+8261732b98e252d1e17e491a8480080bafd2434fbd17f8a503aad8390ea9c20a  fu4c.fail
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+
+[exited with code 0]

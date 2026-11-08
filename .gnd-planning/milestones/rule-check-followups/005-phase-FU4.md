@@ -7,17 +7,43 @@ date: 2026-11-08
 gate:
   command: "uv run pytest -q -p no:cacheprovider tests/test_public_session_driver.py tests/test_v51_phase2_extraction_scope.py"
   exit: 0
-  output: "@@V2OUT@@"
+  output: "24 passed in 7.56s"
   note: >-
-    The plan section 9 FU4 row alone (V2), at @@HEAD@@. The row under load
+    The plan section 9 FU4 row alone (V2), at 95dca01d. The row under load
     (T5), the mutants, the component index check (V6) and the sharded full
     default suite against the base failure list (V3) are in the body.
 evidence:
+  - path: tests/test_public_session_driver.py
+    sha256: 25f2a68e7351fd783066de81154ea6ba937e9acba327c6aa9e1211b47c2b2a51
+  - path: tests/test_v51_phase2_extraction_scope.py
+    sha256: 3860547e9a22771ac4b0de96f03da62ee22761289777f486653a155a106a69e9
+  - path: .gnd-planning/milestones/rule-check-followups/notes/phase-FU4-spec.md
+    sha256: a8a3d509414c53fe55c58d6ee8ebc81155256c553d7f3a9aa09d7f9b38f4cae5
+  - path: .gnd-planning/milestones/rule-check-followups/notes/phase-FU4-codex-review.md
+    sha256: 807b7c3ec06dfb73285b3c4179438a9edbdae798b959d55d16dfd948c9625725
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/dist.py.txt
+    sha256: 06a4e8518eb6f92b339b9ee82206e1d1a924421e5046bdf2550994a5752b1bff
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/load-95dca01d.txt
+    sha256: 188f78707a4277db83e918a4a392a8fa49f20484e2289d2d79af8525f461156e
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/load-f598ba61.txt
+    sha256: a32bd8742f772128578b929f4c89e50c402150b29eaef29fe540f678f059b6e2
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/probe-load-df5753bf.jsonl
+    sha256: 57173295a2d7e64ffee09f8a1a858f7708796cc6dbee1009bc7c52ac261438e1
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/probe_test_fu4.py.txt
+    sha256: 2fe089c795f5d18aadcd7ae447b8aa62675bd383904f182a7b3229981469d521
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/ratio.py.txt
+    sha256: c699a1b7ccff750d3148fe7797e92d34a769f4a53921cacc97d8c9859881d862
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/retained-failures.txt
+    sha256: 076fc42088a1d2197de3769db232d7da43c9b3bed993c8da9d42e016eaf67550
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/test_fu4_repeat.py.txt
+    sha256: cd03c39f4349b3ca43001a2bd33f726f21e799171edf3cc21911b6a7b1cd6dd6
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU4/unloaded-scope-walk.txt
+    sha256: b835cf9076012055b4700fed75f9ef98f163e80cf19c5d3442761b85ba04b09c
 ---
 
 # Claim
 
-At @@HEAD@@, neither timing test fails under the six-shard full run for a
+At 95dca01d, neither timing test fails under the six-shard full run for a
 reason unrelated to what it guards, and each still fails on its mutant
 (issue 117). The driver test's survivor check finds only this test's own
 processes, by a literal match on its marker path; the scope walk is timed
@@ -40,10 +66,10 @@ changed.
 
 ## Gate output (verbatim)
 
-V2, at @@HEAD@@:
+V2, at 95dca01d:
 
     uv run pytest -q -p no:cacheprovider tests/test_public_session_driver.py tests/test_v51_phase2_extraction_scope.py
-    @@V2OUT@@
+    24 passed in 7.56s
 
 Mutants (`uv run pytest -q` on the one test each):
 
@@ -53,16 +79,30 @@ Mutants (`uv run pytest -q` on the one test each):
     regex marker, ps check, unmutated:                                     1 passed
     regex marker, ps check, leader-only kill:                              1 failed  descendants survived the bound: ['52102']
 
-@@T5@@
+T5, the two real tests 60 rounds each (`evidence/FU4/test_fu4_repeat.py.txt`)
+beside a six-shard full run on beast-3:
+
+    f598ba61 (pgrep marker check):     120 passed in 185.56s
+    95dca01d (literal ps check):       120 passed in 186.16s
+
+Before FU4, the same load made the driver's old check fail 1 of 60 probe
+rounds (spec F1), and it failed in 5 of the recorded full runs.
 
 V6, component index:
 
-@@V6@@
+    python3 scripts/components_index.py changed --base df5753bf --strict
+    changed against df5753bf (df5753b): 14 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+    exit=0
 
 V3, full default lane, six round-robin shards on beast-3 (the same run as
 T5's load):
 
-@@V3@@
+    f598ba61: 17852 passed, 2 errors; shards exit 1,0,0,0,0,0
+    95dca01d: 17852 passed, 2 errors; shards exit 1,0,0,0,0,0
+    failing list at 95dca01d: sha256 8261732b98e252d1e17e491a8480080bafd2434fbd17f8a503aad8390ea9c20a (equal to main 6651e5a4's)
+
+The 2 errors are the `tests/test_public_optional.py` uv-version pins.
+Evidence: `evidence/FU4/load-*.txt`.
 
 ## Criteria
 

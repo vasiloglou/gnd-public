@@ -1,0 +1,14 @@
+# Full suite at 10265ddf (FU2 M1+M2), beast-3, six round-robin shards
+# command: ~/fu-shards/fu-shards.sh fu2 10265ddf
+shard0: 3123 passed, 53 deselected in 354.43s (0:05:54) shard exit=0 
+shard1: 3639 passed, 124 deselected in 499.43s (0:08:19) shard exit=0 
+shard2: 2642 passed, 193 deselected in 203.85s (0:03:23) shard exit=0 
+shard3: 1 failed, 3508 passed, 74 deselected, 1 warning in 717.14s (0:11:57) shard exit=1 
+shard4: 2 failed, 2768 passed, 225 deselected in 337.77s (0:05:37) shard exit=1 
+shard5: 2148 passed, 125 deselected, 2 errors in 658.03s (0:10:58) shard exit=1 
+# failing list (fu2.fail), sha256 f775fd635e9406f7dd2f43d2f1fc0b4675dacd7e907c04bb0a99da6f00a2b74d -- the base list plus three RF6 guard failures, repaired in 95803eae
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_rf6_packages.py::test_original_definition_body_is_verbatim[gnd.model.bind_population]
+FAILED tests/test_rf6_query_policy.py::test_dynamic_candidate_inventory_is_complete_and_live
+FAILED tests/test_rf6_query_policy.py::test_dynamic_duplicate_inventory_row_is_refused

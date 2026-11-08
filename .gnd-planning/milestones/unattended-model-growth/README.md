@@ -41,6 +41,6 @@ build the population-checked admission (UG2); UG-D9 (b) an append-only
 readers, the maintained panel stated as the project's bar), D4, D5, D6, D7, D8
 as proposed. The owner closes issues 74, 75, 76 and 104 (UG-D0).
 
-**Next action.** The owner reads the UG1 record and the drafted issue dispositions ([text](notes/ug1-issue-dispositions.md), nothing posted), runs the T-anon scan with their pattern file, and decides whether to start UG2's spec.
+**Next action.** The owner reads the UG1 record and the drafted issue dispositions ([text](notes/ug1-issue-dispositions.md), nothing posted) and decides whether to start UG2's spec.
 Until then no code is written. Open owner questions: UG-Q6 (component-index contradiction in
 `project.md`), UG-Q7 (tracker labels); neither blocks UG1.

@@ -12,7 +12,7 @@ gate:
 selection:
   - {obligation: "T1 to T14 acceptance replay through the CLI", disposition: run, command: "the gate above", exit: 0}
   - {obligation: "T-src: no change under src or tools", disposition: run, command: "git diff --stat 12daa5b7..HEAD -- src tools; git status --porcelain -- src tools", exit: 0, note: "both empty"}
-  - {obligation: "T-anon: out-of-repo pattern scan", disposition: not-run, note: "needs the owner's pattern file (environment variable); not available to this session. Interim, not the specified check: a case-insensitive grep for the two names the owner's anonymity rule lists, over the milestone directory, the new test file and the fixtures, found no hit"}
+  - {obligation: "T-anon: downstream-name scan", disposition: run, command: "scratch script importing FORBIDDEN, CONTROL and _hits from tests/test_why_not_anonymity.py over the scope below", exit: 0, note: "0 hits over 16 inputs; positive control found its plant. Method deviation approved by the owner 2026-11-07, see Anonymity scan"}
   - {obligation: "mutation checks (admit-all, refuse-all policy)", disposition: run, note: "scratch plugins, not committed; results below"}
   - {obligation: "phase-diff review", disposition: run, note: "one reviewer, Codex CLI; notes/phase-UG1-codex-review.md"}
   - {obligation: "full default lane, distribution lane, changed --strict", disposition: cadence, note: "not selected: UG1 changes no imported code and adds no component; changed --strict is vacuous for UG1 (plan)"}
@@ -79,8 +79,27 @@ passed is mechanical (below).
 
 Mechanical node-id check (throwaway script, not committed): every id cited above resolves to
 a test in the gate's junit report (digest in the front matter) and every instance of it
-passed. T-anon is **not run** (see selection); it is the one specified record-time check this
-phase did not discharge.
+passed.
+
+## Anonymity scan (T-anon)
+
+Method deviation from spec §8, approved by the owner on 2026-11-07 ("Yes, record it"). The spec
+asked for a pattern file kept outside the repository with its path in an environment variable.
+No such file exists, either in this repository or in the owner's other checked-out repositories.
+The scan instead reuses the digest set the repository already commits in
+`tests/test_why_not_anonymity.py` (sha256
+`33d12db551dd601a6c9efc7186909ee3663ed6b522cca065fd9a608154acff53`): 7 SHA-256 digests of the
+normalized forbidden names and their separator-stripped forms, so no name is written anywhere.
+Before scanning, the author confirmed that the set contains the digests of both names in the
+owner's standing anonymity rule. The scan used a throwaway script, not committed.
+
+- Scope (16 inputs): every file added or modified since `12daa5b7` (14 files: the milestone
+  directory, the new test file and the three fixtures), every commit message since `12daa5b7`, and
+  the PR 123 body. After this record was committed, the scan was run again over that commit's
+  message.
+- Result: **0 hits.**
+- Positive control: the test's own control token, planted in a temporary copy of one scope file,
+  was found. The control token is absent from the scope.
 
 ## Review
 

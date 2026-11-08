@@ -517,7 +517,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.rai_import
 - used_by: cli.dispatch
 - part_of: subsystem.check
-- tests: tests/test_rf5_commands.py
+- tests: tests/test_rf5_commands.py, tests/test_reference_transition_text.py
 - notes: The commands package initializer is documentation only; checking.py also owns unrelated import, diff, composition and coverage arms.
 - checked: partial
 

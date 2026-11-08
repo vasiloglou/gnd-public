@@ -32,6 +32,10 @@ version its model gets today.
 - **`source: tool-output` and `producer`**: population header fields that label
   facts a deterministic program produced and name the program and revision. They
   are labels the writer states; GND does not run or verify the program.
+- **Population headers stay valid when copied**: `Population.model_copy(update=…)`
+  re-checks that a `producer` comes only with `source: tool-output` and is a 1
+  to 200 character string, and a population combined with its reference
+  populations keeps its own `label` (issues 115, 116).
 - **Refusals**: models version 15 does not describe (temporal terms, an active
   redaction policy, reference populations) are refused before either population
   is read.

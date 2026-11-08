@@ -24,6 +24,8 @@ dossier; close.
 
 Ruled (owner, 2026-11-07): RL-D1, version 0.2.0; RL-D2, the release waits for rule-check-followups FU2 and FU3 (FU4 and FU5 do not gate).
 
+RL-D5 route (owner, 2026-11-08, relayed): "Upload saved candidate", route (a), a token upload of the retained `7c0f4d0e` files, done by the owner by hand ([plan row](notes/rule-check-release-plan.md)).
+
 RL-D0 and RL-D3 to RL-D9 ruled as proposed (owner, 2026-11-07, relayed). RL-D9, after E1 (owner, 2026-11-07, relayed): "Split (a)+(b) (Recommended)" (normalize the version in the one RF1 pin helper; regenerate the committed outputs whose purpose is to equal the current command's output, every moved digest listed first; no fix of the version in the test environment). Opt-in lanes (`evidence`, `census`): "Record as excluded (Recommended)".
 
-Next action: the owner's merge decision on PR 131, then the milestone close. Nothing is published; publication is a separate owner request ([dossier](evidence/RR3/dossier.md)).
+Next action: the owner's upload of the retained candidate (route (a)), by hand. Until the owner says it is done, nothing is published. After that, the served-file comparison, then the tag, GitHub release, post-publication patch PR (`stale-text-check.sh token`) and issue-118 comment, each on its own owner go-ahead ([dossier](evidence/RR3/dossier.md) actions 4 to 7). Then the milestone close. PR 131 (RR3) merged as `36e47981`. Main's `src` has since moved past the candidate (ROF1 to ROF3); route (a) is unaffected.

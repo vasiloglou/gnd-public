@@ -1,0 +1,47 @@
+get-nick-done 0.2.0: publication by route (a) and the dossier's step E result
+
+## The upload (relayed; not run by any agent)
+
+The owner ran a twine token upload of the retained 7c0f4d0e files
+(~/gnd-release/0.2.0/7c0f4d0e/candidate/release/) by hand with their own
+token. Twine reported success: "View at: https://pypi.org/project/get-nick-done/0.2.0/".
+
+## Step E, run by the session that started this one (relayed)
+
+The release.yml step "Compare served PyPI files and exercise a fresh index
+install", run by hand with candidate/release holding the uploaded files:
+- served files: get_nick_done-0.2.0-py3-none-any.whl, get_nick_done-0.2.0.tar.gz
+- JSON digests and downloaded bytes match:
+  wheel e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4
+  sdist f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104
+- fresh uv pip install --index-url https://pypi.org/simple get-nick-done==0.2.0
+  in a new venv: version 0.2.0, gnd --help runs, dispatch admission check
+  seed exit 1, repaired exit 0
+- the first install attempt failed only because the simple index did not yet
+  list 0.2.0; the retry succeeded
+
+## Independent repeat by this session, read-only (2026-11-08T17:26Z, this Mac)
+
+GET https://pypi.org/pypi/get-nick-done/0.2.0/json at 2026-11-08T17:26:24Z:
+info.version: 0.2.0
+get_nick_done-0.2.0-py3-none-any.whl e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4 2857045 2026-11-08T17:24:56.542459Z yanked=False
+get_nick_done-0.2.0.tar.gz f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104 2220814 2026-11-08T17:24:58.203464Z yanked=False
+
+Downloaded files:
+e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4  get_nick_done-0.2.0-py3-none-any.whl
+f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104  get_nick_done-0.2.0.tar.gz
+cmp against ~/gnd-release/0.2.0/7c0f4d0e/candidate/release/: both files byte-identical
+
+Simple index (https://pypi.org/simple/get-nick-done/), same minute:
+get_nick_done-0.1.0-py3-none-any.whl
+get_nick_done-0.1.0.tar.gz
+get_nick_done-0.2.0-py3-none-any.whl
+get_nick_done-0.2.0.tar.gz
+
+Fresh venv (uv venv --python 3.11), uv pip install --index-url https://pypi.org/simple --no-cache get-nick-done==0.2.0:
+gnd --version -> gnd 0.2.0; importlib.metadata.version -> 0.2.0; installed from the index (no direct_url.json)
+
+Observation: at 2026-11-08T17:26:11Z the project-level JSON
+(https://pypi.org/pypi/get-nick-done/json) still listed ['0.1.0'] only, a
+cached response; the version endpoint, the simple index and the install all
+showed 0.2.0. The dispatch admission check was not repeated by this session.

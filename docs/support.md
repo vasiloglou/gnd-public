@@ -8,8 +8,8 @@ must be checked before publication. No paid support SLA is offered.
 
 | Profile | Status |
 |---|---|
-| Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance; changed Phase 4.1 package awaits final sign-off |
-| macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance; changed Phase 4.1 package awaits final sign-off |
+| Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0; the prepared 0.2.0 package is not signed off and no profile is observed for it |
+| macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0; the prepared 0.2.0 package is not signed off and no profile is observed for it |
 | Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |
 | Native/provider extras | Optional, unmeasured in this preparation |
 

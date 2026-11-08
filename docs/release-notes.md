@@ -1,9 +1,46 @@
 # Release notes and milestones
 
-The development package version remains 0.1.0. Publishing these unreleased
-changes requires a separate release decision.
+Version 0.1.0 is the published release. Version 0.2.0 is prepared and not
+published: its package files, notes and tests are on `main`, and publishing it is
+a separate decision that follows the [release procedure](releasing.md). Until it
+is published, install commands in these documents name 0.1.0, and the changes
+listed here are in the repository only.
 
-## Unreleased: unattended growth procedure (2026-11-06)
+## 0.2.0 (prepared, not published)
+
+Everything in this section is on `main` after 0.1.0. The first block is the
+rule-check work; the blocks after it are the earlier changes that were waiting
+for a release, newest first.
+
+### Rule checks for projects that already break their rules
+
+`gnd check` can now say which rule each verdict belongs to, judge a change
+against a baseline, and tell a rule that had nothing to judge from one that
+held. Without the new flags nothing changes: the check writes the report
+version its model gets today.
+
+- **`--rule-ids`**: report version 15, with the rule's own identity in every
+  verdict (`address`, `addressing`), the rule's `remedy` text, and for an
+  `acyclic` rule one row for every loop edge instead of a single cycle. See the
+  [rule-check report](reference/rule-check-report.md).
+- **`--baseline BASE`**: judges the base population under the same model and
+  marks each violation `new` or `standing`, so a change is judged by what it
+  adds. See [Adopt rules on a project that already breaks
+  them](how-to/adopt-rules-with-a-baseline.md).
+- **`--allow-vacuous`**: exits 0 when rules with nothing to judge are the only
+  shortfall.
+- **`source: tool-output` and `producer`**: population header fields that label
+  facts a deterministic program produced and name the program and revision. They
+  are labels the writer states; GND does not run or verify the program.
+- **Population headers stay valid when copied**: `Population.model_copy(update=…)`
+  re-checks that a `producer` comes only with `source: tool-output` and is a 1
+  to 200 character string, and a population combined with its reference
+  populations keeps its own `label` (issues 115, 116).
+- **Refusals**: models version 15 does not describe (temporal terms, an active
+  redaction policy, reference populations) are refused before either population
+  is read.
+
+### Unattended growth procedure (2026-11-06)
 
 The `gnd-model-from-text` skill's Unattended mode used to say how to record
 evidence and stop there; a host that followed it produced elementary fact types
@@ -26,7 +63,7 @@ changes.
   There is no policy that admits a `proposed` + `deontic` constraint over a
   populated fact type when `gnd check` is clean; that remains open.
 
-## Unreleased: report schema correction for exact-arithmetic reasons
+### Report schema correction for exact-arithmetic reasons
 
 `gnd check --format json` has always written a `term:*` reason, such as
 `term:mod-zero`, on a derivation it could not evaluate because exact
@@ -39,7 +76,7 @@ reports `gnd` writes are unchanged, no report that validated before is now
 refused, and `derived-unknown` stays on the admission versions (10 and 13),
 whose derivation rows carry the finding it needs.
 
-## Unreleased: type judgements by skill
+### Type judgements by skill
 
 The `fact-type` discover family can now take a skill's verdicts: whether an
 induced group duplicates a fact type the model has, and whether a
@@ -71,7 +108,7 @@ renders the proposals.
   applies anything. Walk through both in
   [Judge induced fact types with two skills](how-to/judge-induced-fact-types.md).
 
-## Unreleased: composition and type induction
+### Composition and type induction
 
 One checked answer from several documents, traced back to a passage in each.
 Walk through it in [From several documents to one checked answer](how-to/compose-documents.md).
@@ -105,7 +142,7 @@ Walk through it in [From several documents to one checked answer](how-to/compose
   attribute by digest; `--show-values` follows the disclosure mode. The
   default seven families are unchanged; see
   [constraint discovery](reference/discover.md#proposing-fact-types-from-generic-rows).
-## Unreleased: model growth guardrails (2026-11-04)
+### Model growth guardrails (2026-11-04)
 
 For a model that a program grows round by round, without a person in the
 loop, GND now owns five things the program used to keep for itself: four
@@ -155,7 +192,7 @@ inputs that used to raise. An `induced` constraint carrying
 `semantic:unattended-u7` rather than the schema. The schema gains
 `$defs.source_span`.
 
-## Unreleased: disclosure mode (2026-11-01)
+### Disclosure mode (2026-11-01)
 
 One GND installation can now serve readers behind your interface and
 customers ([issue #70](https://github.com/vasiloglou/gnd-public/issues/70)).
@@ -175,7 +212,7 @@ Set `GND_DISCLOSURE` or the root option `--disclosure` to `internal` or
 
 See [disclosure](reference/disclosure.md).
 
-## Unreleased: near-miss values in why-not (2026-11-01)
+### Near-miss values in why-not (2026-11-01)
 
 `gnd why-not` and `gnd.api.why_not` now tell a missing fact from one spelled
 differently ([issue #70](https://github.com/vasiloglou/gnd-public/issues/70)).
@@ -195,7 +232,7 @@ status, blockers, counts, `work` counters and exit codes are unchanged.
 
 See [values spelled differently](reference/why-not.md#values-spelled-differently).
 
-## Unreleased: why a derived fact is missing (2026-10-30)
+### Why a derived fact is missing (2026-10-30)
 
 `gnd why-not` and `gnd.api.why_not` explain a derivation that produced nothing,
 or not the row you expected ([issue #66](https://github.com/vasiloglou/gnd-public/issues/66)).
@@ -214,7 +251,7 @@ that reached it, and explains a derived blocker's row in turn.
 
 See [Why a derived fact is missing](reference/why-not.md).
 
-## Unreleased: ILP import hardening (2026-10-30)
+### ILP import hardening (2026-10-30)
 
 - The rules and Popper imports refuse a threshold their export never offered
   as `off-threshold`: a rules column the export could write but did not, and a
@@ -239,7 +276,7 @@ See [Why a derived fact is missing](reference/why-not.md).
   exit 70. Both now exit 3 by the new name. A rule over such a type whose
   values happen to be of one kind is refused too.
 
-## Unreleased: more rule learners (2026-10-28)
+### More rule learners (2026-10-28)
 
 The ILP bridge now has an adapter for each of five learners, and each was run
 against a real learner version: once, or once per setting the owner approved. The committed outputs replay in the
@@ -277,7 +314,7 @@ documentation, so the comparison is reproducible without installing a learner.
 replays every run, and the [comparison table](reference/ilp-bridge.md#comparing-the-learners)
 summarizes them. Each row is a single run on a small example, not a ranking.
 
-## Unreleased: induced knowledge (2026-10-26)
+### Induced knowledge (2026-10-26)
 
 GND can now propose rules from data, and never adopts one without review.
 Object types take an optional `description` that verbalization and generated
@@ -300,7 +337,7 @@ walks the loop on a synthetic refunds example. GND has no rule learner of its
 own: the example carries a small stand-in learner script, and no real learner
 has been run in its tests.
 
-## Unreleased: opt-in incremental evaluation (2026-10-20)
+### Opt-in incremental evaluation (2026-10-20)
 
 `api.EvaluationSession` reuses eligible extension components and constraint findings
 across loaded snapshots while keeping the normal public report semantics. Host

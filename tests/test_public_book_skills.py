@@ -25,7 +25,7 @@ def _install_fixtures():
     fixture = Path(__file__).parent / "fixtures/public-book-skills/workspace.json.gz"
     assert fixture.is_file() and not fixture.is_symlink()
     raw = fixture.read_bytes()
-    assert len(raw) <= 16384 and hashlib.sha256(raw).hexdigest() == '30f10b94fd8893494fc6874ee5ff8f144a198bf1b1f8fb0243f063b2b90a7813'
+    assert len(raw) <= 16384 and hashlib.sha256(raw).hexdigest() == 'b530b9603a0f7ac3e44c18f7b9c80a0967e4b9d47a8489a9dc73decfcf3bb5a3'
     with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:
         expanded = stream.read(65537)
     assert len(expanded) <= 65536

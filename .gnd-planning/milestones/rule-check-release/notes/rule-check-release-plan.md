@@ -264,7 +264,7 @@ Spec: [phase-RR1-spec.md](phase-RR1-spec.md), draft r3, awaiting its own owner g
 
 ### RR2: Candidate build and installed acceptance (about 60 test lines; no source)
 
-Spec: outline only; written after RR1 merges and RL-D2 is ruled. **Update (2026-11-08):** RR2's draft spec is [phase-RR2-spec.md](phase-RR2-spec.md), written once FU3 reached main and before RR1 merged; its D1 asks the owner which commit is the candidate, given PR 125 is unmerged.
+Spec: outline only; written after RR1 merges and RL-D2 is ruled. **Update (2026-11-08):** RR2's draft spec is [phase-RR2-spec.md](phase-RR2-spec.md), written once FU3 reached main and before RR1 merged; its D1 asks the owner which commit is the candidate, given PR 125 is unmerged. **Update (2026-11-08):** RR2 is implemented and recorded ([003-phase-RR2.md](../003-phase-RR2.md)); the candidate is main `7c0f4d0e`.
 
 - RR2-C0: before any build, the notes of every change merged since RR1
   (FU2 and FU3 included) are reconciled into the version's section by a docs

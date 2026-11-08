@@ -1,0 +1,18 @@
+Post-V4 checks (V4 run 2 ended 2026-11-08T05:45:18Z on beast-3).
+
+V5 at 2026-11-08T05:45:53Z, this Mac, over B1's wheel:
+release/get_nick_done-0.2.0-py3-none-any.whl: OK
+release/get_nick_done-0.2.0.tar.gz: OK
+comparison/get_nick_done-0.2.0-py3-none-any.whl: OK
+gnd 0.2.0
+exit=0
+
+V7 again at 2026-11-08T05:45:55Z:
+.github diff 12daa5b7..C lines: 0
+environments: ["github-pages"]
+release.yml runs: 0
+GitHub releases: ["v0.1.0"]
+remote tags: refs/tags/v0.1.0 
+PyPI releases: ['0.1.0']
+
+FU4 (PR 129, merge 6ed86d90, 2026-11-08T05:39Z): C is an ancestor of it; git diff --stat 7c0f4d0e 6ed86d90 -- src docs: 0 lines; '## Unreleased' headings at 6ed86d90: 0.

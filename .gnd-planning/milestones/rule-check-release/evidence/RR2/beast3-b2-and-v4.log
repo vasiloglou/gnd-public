@@ -1,0 +1,105 @@
++./rr2-beast.sh:8> date -u +%FT%TZ
+2026-11-08T05:14:04Z
++./rr2-beast.sh:8> sw_vers
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
++./rr2-beast.sh:8> uname -m
+arm64
++./rr2-beast.sh:10> /Users/nikolaosvasiloglou/.local/bin/uv venv -q uv01010
+error: Failed to create virtual environment
+  cause: A virtual environment already exists at: uv01010
+
+hint: Use the `--clear` flag or set `UV_VENV_CLEAR=1` to replace the existing virtual environment
++./rr2-beast.sh:11> mkdir -p uvbin
++./rr2-beast.sh:11> ln -sf /Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/uv01010/bin/uv uvbin/uv
++./rr2-beast.sh:12> export PATH=/Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/uvbin:/usr/bin:/bin:/usr/sbin:/sbin
++./rr2-beast.sh:13> uv --version
+uv 0.10.10 (8c730aaad 2026-03-13)
++./rr2-beast.sh:14> git clone -q -b rr2-candidate c.bundle checkout/gnd-public
++./rr2-beast.sh:14> git -C checkout/gnd-public checkout -q --detach 7c0f4d0e320ff7976296d785077280d180ea688e
++./rr2-beast.sh:15> git -C checkout/gnd-public rev-parse HEAD
++./rr2-beast.sh:15> test 7c0f4d0e320ff7976296d785077280d180ea688e '=' 7c0f4d0e320ff7976296d785077280d180ea688e
++./rr2-beast.sh:16> git -C checkout/gnd-public status --porcelain
++./rr2-beast.sh:16> wc -l
++./rr2-beast.sh:16> echo 'porcelain lines:        0'
+porcelain lines:        0
++./rr2-beast.sh:18> mkdir -p b2/src
++./rr2-beast.sh:18> git -C checkout/gnd-public archive 7c0f4d0e320ff7976296d785077280d180ea688e
++./rr2-beast.sh:18> tar -x -C b2/src
++./rr2-beast.sh:19> cd b2/src
++./rr2-beast.sh:19> uv build --out-dir ../candidate/release
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built ../candidate/release/get_nick_done-0.2.0.tar.gz
+Successfully built ../candidate/release/get_nick_done-0.2.0-py3-none-any.whl
++./rr2-beast.sh:19> mkdir -p ../candidate/source
++./rr2-beast.sh:20> tar -xzf ../candidate/release/get_nick_done-0.2.0.tar.gz -C ../candidate/source
++./rr2-beast.sh:21> uv build --wheel ../candidate/source/get_nick_done-0.2.0 --out-dir /Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/b2/src/../candidate/comparison
+Building wheel (uv build backend)...
+Successfully built ../candidate/comparison/get_nick_done-0.2.0-py3-none-any.whl
++./rr2-beast.sh:22> rm -f ../candidate/release/.gitignore ../candidate/comparison/.gitignore
++./rr2-beast.sh:23> echo 7c0f4d0e320ff7976296d785077280d180ea688e
++./rr2-beast.sh:23> python3 --version
++./rr2-beast.sh:23> uv --version
++./rr2-beast.sh:24> cd ../candidate
++./rr2-beast.sh:24> shasum -a 256 release/get_nick_done-0.2.0-py3-none-any.whl release/get_nick_done-0.2.0.tar.gz comparison/get_nick_done-0.2.0-py3-none-any.whl
++./rr2-beast.sh:24> shasum -a 256 -c SHA256SUMS
+release/get_nick_done-0.2.0-py3-none-any.whl: OK
+release/get_nick_done-0.2.0.tar.gz: OK
+comparison/get_nick_done-0.2.0-py3-none-any.whl: OK
++./rr2-beast.sh:25> echo 'B2 exit=0'
+B2 exit=0
++./rr2-beast.sh:26> test -e b2/candidate/SHA256SUMS
++./rr2-beast.sh:27> cat b2/candidate/SHA256SUMS b2/candidate/BUILD_PROFILE
+e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4  release/get_nick_done-0.2.0-py3-none-any.whl
+f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104  release/get_nick_done-0.2.0.tar.gz
+e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4  comparison/get_nick_done-0.2.0-py3-none-any.whl
+Python 3.9.6
+uv 0.10.10 (8c730aaad 2026-03-13)
++./rr2-beast.sh:28> echo 'B1 vs B2:'
+B1 vs B2:
++./rr2-beast.sh:28> diff candidate-b1/SHA256SUMS b2/candidate/SHA256SUMS
++./rr2-beast.sh:28> echo 'SHA256SUMS identical'
+SHA256SUMS identical
++./rr2-beast.sh:30> cd checkout/gnd-public
++./rr2-beast.sh:31> uv sync --locked --group dev --python 3.11
+Using CPython 3.11.18
+Creating virtual environment at: .venv
+Resolved 32 packages in 1ms
+   Building get-nick-done @ file:///Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/checkout/gnd-public
+      Built get-nick-done @ file:///Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/checkout/gnd-public
+Prepared 1 package in 5ms
+Installed 20 packages in 48ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + duckdb==1.5.5
+ + faker==40.36.0
+ + get-nick-done==0.2.0 (from file:///Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/checkout/gnd-public)
+ + iniconfig==2.3.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pytest==9.1.1
+ + referencing==0.37.0
+ + rpds-py==2026.6.3
+ + ruamel-yaml==0.19.1
+ + ruff==0.16.2
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
++./rr2-beast.sh:32> uv run python --version
+Python 3.11.18
++./rr2-beast.sh:33> date -u +%FT%TZ
+2026-11-08T05:14:08Z
++./rr2-beast.sh:34> GND_CANDIDATE_DIR=/Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/candidate-b1 uv run pytest -q -o 'addopts=' tests/test_release_acceptance.py '--tb=short'
+..............                                                           [100%]
+14 passed in 803.35s (0:13:23)
++./rr2-beast.sh:35> echo 'V4 exit=0'
+V4 exit=0
++./rr2-beast.sh:36> date -u +%FT%TZ
+2026-11-08T05:27:32Z
++./rr2-beast.sh:37> touch /Users/nikolaosvasiloglou/gnd-release/0.2.0/7c0f4d0e/done

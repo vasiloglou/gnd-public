@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC2/query-successor.json",
+  "predecessor_sha256": "279ba81395970e7708dbd714241f565d173e4e384fb6d631316421e8c9113424",
+  "reason": "report-output-fidelity ROF3 (issue 111, owner-approved 2026-11-08): the version-1 identity envelope moves unchanged from values.reference_model_digest into values._reference_identity_document, which reference_model_digest and the new model_identity_document both call. The one counted read moves with it; no allow-list widening, ceiling and original metric unchanged.",
+  "removed": [
+    [
+      "src/gnd/values.py",
+      "reference_model_digest",
+      "d['fact_types']",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/values.py",
+      "_reference_identity_document",
+      "d['fact_types']",
+      1
+    ]
+  ],
+  "result_distinct_rows": 296,
+  "result_occurrences": 364,
+  "original_metric_current": 309
+}

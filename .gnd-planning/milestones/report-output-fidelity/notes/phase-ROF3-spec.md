@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-**r2: corpus authored (2026-11-08); awaiting owner approval to implement.**
-The owner ruled D1-D7 as proposed with "Approve, author corpus"; the corpus is
-committed red (section "Corpus" below). No implementation file has been
-created or edited. Prior statuses: "r1 decisions ruled (2026-11-08); corpus
+**Approved (2026-11-08); implementing.** The owner approved the corpus and
+spec r2 with "Approve, implement", answering "Approve the ROF3 corpus and spec
+r2, so implementation can start?". D1-D7 were ruled as proposed with
+"Approve, author corpus". Prior statuses: "r2: corpus authored (2026-11-08);
+awaiting owner approval to implement."; "r1 decisions ruled (2026-11-08); corpus
 being authored."; "Draft r1. Awaiting owner review at the
 spec gate." `auto=false`.
 
@@ -314,3 +315,60 @@ spellings; the date is `"2025-01-01"`; the Greek text is literal UTF-8.
 State at commit: 32 tests, **21 red** (9 vector cases, 9 producer cases, the
 surrogate refusal, the version rules, the twins through the function), 11
 green (10 legacy pins, the corpus self-check).
+
+## An experiment, recorded before it runs (T8, 2026-11-08)
+
+Measures: wall time of `model_identity(model)` and of the legacy
+`_model_digest(model)` on one loaded model built near `MAX_MODEL_BYTES`
+(10 MB): the `plain-small` corpus model with value object types and fact types
+added until its JSON file is between 9 and 10 MB; three runs each, on the
+development machine; and the same at about 1 MB to show the growth is linear.
+Loading is not timed. Cannot measure: other machines; the cost a caller pays
+(ROF4 decides which sites call it). Liveness: a quadratic walk would take
+minutes at 10 MB. Ceiling rule: 6x the slowest measured identity run at 10 MB,
+rounded up to the next whole second; the legacy time is reported beside it,
+not bounded.
+
+Result: at 9,695,013 bytes (load 7.75 s, not timed) identity 0.472, 0.425,
+0.653 s and legacy 0.100, 0.152, 0.149 s; at 1,923,013 bytes identity 0.061,
+0.080, 0.050 s and legacy 0.019, 0.018, 0.043 s: linear, and the identity
+costs about 4x the legacy digest. Ceiling: 6 x 0.653 = 3.9, rounded up to
+**4 s**, written into `test_t8_identity_is_linear_near_the_input_cap`. The
+test builds and loads the 9.7 MB model, so it takes about 10 s.
+
+## Implementation findings (2026-11-08)
+
+- **I1.** The corpus went from 21 red / 11 green to 32 of 32 green with M1 and
+  M2 alone; the vectors needed no change.
+- **I2.** `model_identity_document` wraps the existing walk's refusal
+  (`TransitionLoadError`, rule `transition:operations-digest-unrepresentable`)
+  and `RecursionError` into `ModelIdentityError`; `model_identity_bytes` wraps
+  the byte form's `UnicodeEncodeError`, `TypeError`/`ValueError` and
+  `RecursionError`. The surrogate model's refusal path is `$` (the byte form
+  does not say which string); the walk's refusals keep their path
+  (`$.fact_types…`, T4/T6).
+- **I3.** M3 departed from the spec in one place: the "Three digests, three
+  bases" table did not gain a row, because a fourth row under a heading that
+  says "three" would be wrong; a sentence after the table names the fourth
+  value and cites the new subsection instead. The normative text also states
+  one rule the spec's list left implicit, measured with `json.dumps`: the
+  exponent of the scientific form is signed and has at least two digits
+  (`1e-05`).
+- **I4.** The CLI goldens were not edited. As RC1, RC3 and RC4 did for `gnd
+  check`, a successor fixture (`tests/fixtures/model-identity-cli/expected.json`:
+  the one new action at index 3, the help and the exit probe) is applied by
+  `tests/test_rf1_cli_pins.py` for `gnd validate`; the new help differs from
+  the frozen golden only by the usage line's wrap and the `--identity` entry.
+- **I5.** Guards moved as expected: the RF5 row for `_cmd_validate` (chained
+  onto its ROF1 row); a query-policy successor
+  (`evidence/ROF3/query-successor.json`: the one counted `d['fact_types']`
+  read moves from `reference_model_digest` to `_reference_identity_document`,
+  no widening, metric 309 of ceiling 310); a dynamic-query successor (2 rows
+  added in `values.py`) chained after ROF2's; the `model.scalar_identity`,
+  `cli.checking_command` and `infra.text_output` index entries.
+- **I6.** Three of my own first-draft tests were wrong and were fixed before
+  any code review: T12 asserted that `identity_version` never appears in a
+  validate JSON payload, but a reference model's existing payload already
+  contains it; T12 then read `model_digest` from a fixed key, which a frozen
+  version-3 payload does not carry and which is `null` under `transition`;
+  T7's "empty" twin changed the model's `version`, which is a different model.

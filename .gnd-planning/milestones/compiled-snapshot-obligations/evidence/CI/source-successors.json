@@ -509,10 +509,10 @@
         "algorithm_sha256": "754994aeecf03b996aae6636c37c608f9cd461bb360f0e3dcc92f4c0f9450687"
       },
       "after": {
-        "raw_sha256": "18816fdc7c58be25332e3cc452d2c58d3b5154a98c52f433f832e2b737e34ca6",
-        "algorithm_sha256": "afb8d91628f4acbf0d878d9ee9b47433da53b9c988dd93000dca2e049fa2cb13"
+        "raw_sha256": "512b92d740c4a6145d8576d08e443cef9cc870e8a717417e3ded7d1fde8aaf70",
+        "algorithm_sha256": "5f95550fc1516ce0419b5375246d9d87224b10c50059bc3be72536e4302cf133"
       },
-      "reason": "model-growth-guardrails MG5 (7961119c): an optional documents keyword (gnd validate --document) re-hashes the model's source spans over the supplied documents after a clean validation; without it the handler is unchanged. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing text route calls _print_projected_check_text, which prints OK/issue lines from the projected payload instead of its JSON."
+      "reason": "model-growth-guardrails MG5 (7961119c): an optional documents keyword (gnd validate --document) re-hashes the model's source spans over the supplied documents after a clean validation; without it the handler is unchanged. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing text route calls _print_projected_check_text, which prints OK/issue lines from the projected payload instead of its JSON. Then report-output-fidelity ROF3 (issue 111, owner-approved 2026-11-08): --identity prints the canonical model identity through _print_model_identity for a model that loads; every other path is unchanged."
     },
     {
       "kind": "RF5",

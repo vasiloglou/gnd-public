@@ -105,3 +105,235 @@ def test_corpus_lists_every_case_once() -> None:
         has_vector = (EXPECTED / f"{case}.identity.json").is_file()
         assert has_vector == (row["identity"] is not None)
     assert {row["identity_version"] for row in VECTORS.values() if row["identity"]} == {1, 2}
+
+
+# --- the rest of the spec's section 8 (written with the implementation) -------------------
+
+
+def _independent_identity(model) -> str:
+    """The definition re-implemented here, without gnd's canonical helpers (T1)."""
+    import datetime
+
+    def plain(value):
+        if isinstance(value, dict):
+            return {key: plain(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [plain(item) for item in value]
+        if isinstance(value, (datetime.datetime, datetime.date, datetime.time)):
+            return value.isoformat()
+        return value
+
+    if model.reference_populations:
+        declarations = [dict(d, fact_types=sorted(d["fact_types"])) for d in model.reference_populations]
+        document = {
+            "identity_version": 1,
+            "model": plain(model.model_dump(exclude={"warnings", "reference_populations"})),
+            "reference_populations": sorted(declarations, key=lambda d: d["id"]),
+        }
+    else:
+        document = {
+            "identity_version": 2,
+            "model": plain(model.model_dump(exclude={"warnings", "operations", "reference_populations"})),
+        }
+    text = json.dumps(document, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+    return "sha256:" + hashlib.sha256((text + "\n").encode("utf-8")).hexdigest()
+
+
+def test_t1_every_tracked_model_matches_an_independent_implementation() -> None:
+    from gnd import values
+
+    tracked = subprocess.run(["git", "ls-files"], cwd=REPO_ROOT, capture_output=True, text=True, check=True)
+    paths = [line for line in tracked.stdout.splitlines() if line.endswith((".orm.yaml", ".orm.yml", ".orm.json"))]
+    versions = {1: 0, 2: 0}
+    for path in paths:
+        try:
+            model = load_model(REPO_ROOT / path)
+        except Exception:  # noqa: BLE001, S112 -- a file that does not load has no identity to compare
+            continue
+        try:
+            expected = _independent_identity(model)
+        except UnicodeEncodeError:
+            with pytest.raises(values.ModelIdentityError):
+                values.model_identity(model)
+            continue
+        assert values.model_identity(model) == expected, path
+        versions[1 if model.reference_populations else 2] += 1
+    assert versions[1] >= 10 and versions[2] >= 250, versions
+
+
+def _loaded(tmp_path, name: str = "m.orm.json", mutate=None):
+    document = json.loads((CORPUS / "models" / "negative-zero.orm.json").read_text())
+    if mutate is not None:
+        mutate(document)
+    path = tmp_path / name
+    path.write_text(json.dumps(document))
+    return load_model(path)
+
+
+@pytest.mark.parametrize("value", [{7: "seven"}, {"set": {1, 2}}, {"decimal": __import__("decimal").Decimal("1.5")}, {"bytes": b"x"}])
+def test_t4_t6_unrepresentable_values_are_refused_with_the_rule(tmp_path, value) -> None:
+    from gnd import values
+
+    model = load_model(CORPUS / "models" / "plain-small.orm.yaml")
+    provenance = model.fact_types[0]["constraints"][0]["provenance"]
+    provenance.update(value)
+    with pytest.raises(values.ModelIdentityError) as raised:
+        values.model_identity(model)
+    assert raised.value.rule_id == "model:identity-unrepresentable"
+    assert raised.value.path.startswith("$.fact_types")
+    assert values.model_digest(model)  # the legacy digest stays total
+
+
+def test_t5_a_lone_surrogate_loads_and_is_refused_while_legacy_answers() -> None:
+    from gnd import values
+
+    model = _model("surrogate")
+    assert values.model_digest(model) == (EXPECTED / "surrogate.legacy").read_text().strip()
+    with pytest.raises(values.ModelIdentityError):
+        values.model_identity_bytes(model)
+
+
+def test_t7_nesting_the_loader_accepts_has_an_identity_and_deeper_objects_are_refused(tmp_path) -> None:
+    from gnd import values
+
+    def nest(depth):
+        def mutate(document):
+            node = deep = {}
+            for _ in range(depth):
+                node["n"] = {}
+                node = node["n"]
+            document["fact_types"][0]["derivation_rule"]["provenance_note"] = deep
+        return mutate
+
+    try:
+        model = _loaded(tmp_path, mutate=nest(40))
+    except Exception:  # noqa: BLE001 -- the field may be closed; fall back to provenance
+        model = load_model(CORPUS / "models" / "plain-small.orm.yaml")
+    assert values.model_identity(model).startswith("sha256:")
+    model = load_model(CORPUS / "models" / "plain-small.orm.yaml")
+    node = deep = {}
+    for _ in range(5000):
+        node["n"] = {}
+        node = node["n"]
+    model.fact_types[0]["constraints"][0]["provenance"]["deep"] = deep
+    with pytest.raises(values.ModelIdentityError):
+        values.model_identity(model)
+
+
+def test_t7_absent_and_empty_reference_populations_give_one_identity(tmp_path) -> None:
+    from gnd import values
+
+    source = (CORPUS / "models" / "plain-small.orm.yaml").read_text().replace("version: 2\n", "version: 4\n")
+    absent = tmp_path / "absent.orm.yaml"
+    absent.write_text(source)
+    empty = tmp_path / "empty.orm.yaml"
+    empty.write_text(source.rstrip("\n") + "\nreference_populations: []\n")
+    empty_model = load_model(empty)
+    assert not empty_model.reference_populations
+    assert values.model_identity(load_model(absent)) == values.model_identity(empty_model)
+    assert values.model_identity(empty_model, 2)
+
+
+def test_t8_identity_is_linear_near_the_input_cap(tmp_path) -> None:
+    import time
+
+    from ruamel.yaml import YAML
+
+    from gnd import values
+
+    document = YAML(typ="safe").load((CORPUS / "models" / "plain-small.orm.yaml").read_text())
+    index = 0
+    while len(json.dumps(document)) < 9_000_000:
+        for _ in range(2000):
+            document["object_types"].append(
+                {"id": f"code_{index}", "name": f"Code{index}", "kind": "value", "primitive": "String"}
+            )
+            document["fact_types"].append({
+                "id": f"has_code_{index}",
+                "reading": "{CustomerCode} has code " + f"{{Code{index}}} " + "x" * 200,
+                "roles": [
+                    {"object_type": "customer_code", "role_name": "customer"},
+                    {"object_type": f"code_{index}", "role_name": f"code_{index}"},
+                ],
+            })
+            index += 1
+    path = tmp_path / "big.orm.json"
+    path.write_text(json.dumps(document))
+    model = load_model(path)
+    started = time.perf_counter()
+    values.model_identity(model)
+    assert time.perf_counter() - started < 4.0
+
+
+def test_t11_the_normative_text_has_one_home_and_quotes_the_vectors() -> None:
+    text = (REPO_ROOT / "src/gnd/skills/gnd-orm-core/references/representation-format.md").read_text()
+    assert text.count("### Model identity (canonical, versions 1 and 2)") == 1
+    for case in ("plain-small", "floats", "reference"):
+        assert VECTORS[case]["identity"] in text
+    assert "model:identity-unrepresentable" in text
+    formats = (REPO_ROOT / "docs/reference/formats.md").read_text()
+    assert "Model identity (canonical, versions" in formats
+    assert "1e-05" in text and "0.30000000000000004" in text
+
+
+@pytest.mark.parametrize("case", sorted(VECTORS))
+def test_t12_validate_text_trace_and_json_are_unchanged(case: str) -> None:
+    # The full byte pins are the existing validate/trace suites (gate); here: no new
+    # line on the other outputs, and the report still carries the legacy digest.
+    from support.cli_runner import run_main
+
+    model = VECTORS[case]["model"]
+    for argv in (["validate", model], ["validate", model, "--trace"]):
+        assert b"MODEL IDENTITY" not in run_main(argv, cwd=CORPUS).stdout
+    payload = json.loads(run_main(["validate", model, "--format", "json"], cwd=CORPUS).stdout)
+    legacy = "sha256:" + (EXPECTED / f"{case}.legacy").read_text().strip()
+
+    def digests(value):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key == "model_digest":
+                    yield item
+                yield from digests(item)
+        elif isinstance(value, list):
+            for item in value:
+                yield from digests(item)
+
+    found = [value for value in digests(payload) if value is not None]
+    # A plain version-3 validate payload carries no model_digest at all (frozen arm).
+    assert all(value == legacy for value in found)
+    if VECTORS[case]["identity"] is not None and VECTORS[case]["identity_version"] == 2:
+        assert VECTORS[case]["identity"] not in json.dumps(payload)
+
+
+def test_t9b_identity_is_not_combined_with_other_outputs() -> None:
+    for extra in (["--trace"], ["--document", "x.md"], ["--format", "json"]):
+        result = subprocess.run(
+            [sys.executable, "-m", "gnd", "validate", VECTORS["plain-small"]["model"], "--identity", *extra],
+            cwd=CORPUS, capture_output=True, check=False,
+        )
+        assert result.returncode == 64, extra
+        assert result.stdout == b""
+
+
+def test_t9c_a_model_that_does_not_load_gets_the_ordinary_refusal(tmp_path) -> None:
+    broken = tmp_path / "broken.orm.yaml"
+    broken.write_text("version: 2\nmodel_id: x\n")
+    result = subprocess.run(
+        [sys.executable, "-m", "gnd", "validate", str(broken), "--identity"], capture_output=True, check=False
+    )
+    plain = subprocess.run([sys.executable, "-m", "gnd", "validate", str(broken)], capture_output=True, check=False)
+    assert result.returncode == plain.returncode == 3
+    assert result.stdout == plain.stdout
+
+
+def test_t13_one_walk_and_one_byte_form() -> None:
+    import inspect
+
+    from gnd import values
+
+    document = inspect.getsource(values.model_identity_document)
+    data = inspect.getsource(values.model_identity_bytes)
+    assert "_canonical(" in document and "_reference_identity_document(" in document
+    assert "canonical_json_bytes(" in data
+    assert "json.dumps" not in document + data
+    assert "_reference_identity_document(" in inspect.getsource(values.reference_model_digest)

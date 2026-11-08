@@ -11,6 +11,7 @@ QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/incremental-evaluation/evidence/IE3/query-successor.json',
     ROOT / '.gnd-planning/milestones/model-growth-guardrails/evidence/MG2/query-successor.json',
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC2/query-successor.json',
+    ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF3/query-successor.json',
 ]
 
 
@@ -115,6 +116,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC5/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF1/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF2/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF3/dynamic-query-successor.json',
 ]
 
 

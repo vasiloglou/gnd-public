@@ -15,6 +15,7 @@ from gnd.checker import check
 from gnd.commands._output import (
     _print_admission_text,
     _print_issues,
+    _print_model_identity,
     _print_projected_check_text,
     _print_projected_transition_text,
     _print_report,
@@ -86,8 +87,11 @@ def _cmd_validate(
     trace: bool = False,
     unredacted: bool = False,
     documents: list[str] | None = None,
+    identity: bool = False,
 ) -> int:
     result = api_module._run_validate(model_path, unredacted=unredacted)
+    if identity and result.exit_code == 0 and result.model is not None:
+        return _print_model_identity(result.model)
     if documents and result.exit_code == 0 and result.model is not None:
         refused = _cmd_validate_documents(model_path, output_format, result, documents)
         if refused != 0:
@@ -635,6 +639,16 @@ def _register_validate(subparsers):
         ),
     )
     validate_parser.add_argument(
+        "--identity",
+        action="store_true",
+        help=(
+            "print the model's canonical identity and the canonical JSON document "
+            "it is the sha256 of (two lines), so a caller can recompute it; exit 3 "
+            "if the model does not load or has no canonical identity. Text only; "
+            "not combined with --trace, --document or --format json"
+        ),
+    )
+    validate_parser.add_argument(
         "--document",
         action="append",
         default=None,
@@ -1062,12 +1076,18 @@ def handle(args, parsers) -> int:
             )
 
     if args.command == "validate":
+        if args.identity and (args.trace or args.document or args.format == "json"):
+            parsers["validate_parser"].error(
+                "--identity prints the identity alone; it is not combined with "
+                "--trace, --document or --format json"
+            )
         return _cmd_validate(
             args.model,
             args.format,
             trace=args.trace,
             unredacted=args.unredacted,
             documents=args.document,
+            **({"identity": True} if args.identity else {}),
         )
 
     if args.command == "coverage":

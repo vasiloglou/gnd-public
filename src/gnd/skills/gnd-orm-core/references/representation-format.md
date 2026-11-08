@@ -863,6 +863,73 @@ It is no longer private, though. `src/gnd/report.schema.json` has four closed ar
 
 The reason is that a path is a coordinate, not an identity. Two different models can occupy one path over time, and one model can be read from two paths, so a report naming only `model` cannot answer "which model produced this". A digest can, and a consumer comparing digests can refuse evidence about the wrong model instead of quietly aggregating it.
 
+### Model identity (canonical, versions 1 and 2)
+
+**This subsection is the one normative home of the canonical model identity.**
+`gnd.values.model_identity` implements it and `gnd validate MODEL --identity`
+prints it; everything else cites this text.
+
+The `model_digest` above is a digest of Python's `repr`, which a caller outside
+Python cannot recompute. The **model identity** is a digest a caller can
+recompute: `sha256` over a canonical JSON document, written `sha256:<64 lowercase hex>`.
+
+1. **The document.** The *loaded* model — defaults filled in, exactly as
+   `gnd validate MODEL --identity` prints it on its second line — not the
+   YAML or JSON bytes. For a model **without** reference populations
+   (`reference_populations` absent or `[]`) it is **version 2**:
+   `{"identity_version": 2, "model": M}`, where `M` is the loaded model with
+   `warnings`, `operations` and `reference_populations` removed. A model
+   **with** reference populations has **version 1** only:
+   `{"identity_version": 1, "model": M1, "reference_populations": R}`, where
+   `M1` is the loaded model with `warnings` and `reference_populations`
+   removed (its `operations` are kept) and `R` is the declarations, each
+   with its `fact_types` sorted, sorted by `id`. A model has exactly one of
+   the two versions.
+2. **The bytes.** UTF-8. Objects with their keys sorted by Unicode code
+   point; `,` and `:` as separators, with no whitespace anywhere; one `\n`
+   at the end. Strings are escaped as JSON requires and nothing more: `"` as
+   `\"`, `\` as `\\`, U+0008, U+0009, U+000A, U+000C and U+000D as `\b`,
+   `\t`, `\n`, `\f`, `\r`, the other characters below U+0020 as `\u00XX`
+   with lowercase hex; every other character, non-ASCII included, is written
+   literally. Integers are written in decimal. A number that is not an
+   integer in the model is written in the shortest decimal form that reads
+   back as the same IEEE 754 double, always with a fraction or an exponent:
+   `1.0`, `200.0`, `-0.0`, `2.5`, `0.30000000000000004`; scientific form,
+   when the decimal exponent is below -4 or at least 16, with a signed
+   exponent of at least two digits: `1e+16`, `1e-05`, `5e-324`.
+   `1` and `1.0` are different values and give different identities.
+   `true`, `false` and `null` as such. These are exactly the bytes every
+   other canonical digest in GND uses (`operations_digest`, the recorded
+   `*_sha256` values).
+3. **Dates.** A date, time or datetime value (an unquoted YAML date, for
+   example) is written as its ISO 8601 text: `"2025-01-01"`. Quoting it in
+   the model gives the same identity.
+4. **What it does not cover.** Version 2 leaves out `operations`, which
+   `operations_digest` binds, so a model whose only change is its operations
+   keeps its version-2 identity; version 1 covers them.
+5. **Refusals.** A model that has no canonical document is refused with
+   `model:identity-unrepresentable`, never coerced: a string that is not
+   valid Unicode (a lone surrogate written as a JSON escape), a mapping key
+   that is not a string, a value outside strings, numbers, booleans, null,
+   dates, lists and mappings, or nesting deeper than the writer can follow.
+   `gnd validate --identity` exits 3 on one. A verifier that meets a refusal
+   matches such a model by its legacy `model_digest` only, and never reports
+   the refusal as a mismatch.
+6. **The legacy identity is unchanged.** `model_digest` (`legacy-repr`) is
+   still what reports, `validate --trace`, steps files and generated plans
+   carry.
+7. **Test vectors** (`tests/fixtures/rof3-model-identity/`, which also holds
+   each document):
+
+   | model | version | identity |
+   |---|---|---|
+   | `plain-small` | 2 | `sha256:e4c1249e78ed5bf7ea57517fb93dd19adde1281de10207d7d4cabd70e7707a90` |
+   | `floats` (`1.0`, `200.0`) | 2 | `sha256:66b5ae67550f2df0664b6afb1d31265c675bc86d16ebff041823873eeedf1e59` |
+   | `reference` | 1 | `sha256:fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b` |
+
+To recompute one: `gnd validate MODEL --identity | sed -n 2p | shasum -a 256`
+prints the hex on line 1.
+
 ## ORM++ — derived fact types
 
 **This section is the one normative home for structured derivation rules.** The
@@ -1274,6 +1341,9 @@ discipline: a walk cannot bind a value the checker would refuse in the data.
 | `model_digest` | the loaded model object, as `population._model_digest` computes it | the same function a population's validation marker uses, so a population and a walk agree by construction about what "this model" means |
 | `operations_digest` | canonical JSON over the raw `operations` section, before compilation | `model_digest` deliberately EXCLUDES operations (A8), so it cannot carry the claim "these steps were authored against THESE operations". A model can be identical in every other respect while its operations changed under a walk's feet |
 | `pre_digest` (optional) | sha256 over the pre-population FILE BYTES | provenance, not equivalence: the question is whether this is the artifact the walk was written against, and for that question "you reformatted the file" is a legitimate no |
+
+A fourth value, the canonical **model identity**, is defined in "Model identity (canonical,
+versions 1 and 2)" above: reproducible by a caller, and printed by `gnd validate MODEL --identity`.
 
 **No one should compute these by hand.** `gnd validate MODEL --trace` prints the first two, and a
 `pre_digest` mismatch prints the value the tool computed, so repairing a pin is copy-paste.

@@ -198,19 +198,93 @@ model_digest = _model_digest
 from typing import TYPE_CHECKING, ForwardRef
 
 
-def reference_model_digest(model: Model) -> str:
-    if not model.reference_populations:
-        return "sha256:" + _model_digest(model)
+def _reference_identity_document(model: Model) -> dict[str, Any]:
+    """The version-1 identity envelope of a reference-bearing model: its one home."""
     document = model.model_dump(exclude={"warnings", "reference_populations"})
     declarations = [
         dict(d, fact_types=sorted(d["fact_types"])) for d in model.reference_populations
     ]
-    payload = {
+    return {
         "identity_version": 1,
         "model": _canonical(document, "$"),
         "reference_populations": sorted(declarations, key=lambda d: d["id"]),
     }
+
+
+def reference_model_digest(model: Model) -> str:
+    if not model.reference_populations:
+        return "sha256:" + _model_digest(model)
+    payload = _reference_identity_document(model)
     return "sha256:" + hashlib.sha256(artifacts.canonical_json_bytes(payload)).hexdigest()
+
+
+IDENTITY_VERSION = 2
+
+
+class ModelIdentityError(ValueError):
+    """A loaded model that has no canonical identity, or a version it does not define.
+
+    A refusal, never a mismatch: a verifier that meets one falls back to the
+    legacy identity and says so (plan section 2, item 10).
+    """
+
+    rule_id = "model:identity-unrepresentable"
+
+    def __init__(self, path: str, message: str) -> None:
+        super().__init__(f"{path}: {message}")
+        self.path = path
+        self.message = message
+
+
+def model_identity_document(model: Model) -> dict[str, Any]:
+    """The canonical identity document of a loaded model.
+
+    Version 2 for a model without reference populations: the loaded model
+    without ``warnings``, ``operations`` and ``reference_populations``, through
+    the one canonical walk. Version 1 for a reference-bearing model: the
+    envelope ``reference_model_digest`` hashes. The normative definition is the
+    "Model identity" subsection of the gnd-orm-core ``representation-format.md``.
+    Raises :class:`ModelIdentityError` for a model the walk refuses.
+    """
+    try:
+        if model.reference_populations:
+            return _reference_identity_document(model)
+        dumped = model.model_dump(exclude={"warnings", "operations", "reference_populations"})
+        return {"identity_version": IDENTITY_VERSION, "model": _canonical(dumped, "$")}
+    except TransitionLoadError as error:
+        issue = error.issues[0] if getattr(error, "issues", None) else None
+        path = issue.path if issue is not None else "$"
+        message = issue.message if issue is not None else str(error)
+        raise ModelIdentityError(path, message) from None
+    except RecursionError:
+        raise ModelIdentityError("$", "the model is nested too deeply to write as canonical JSON") from None
+
+
+def model_identity_bytes(model: Model) -> bytes:
+    """The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none."""
+    document = model_identity_document(model)
+    try:
+        return artifacts.canonical_json_bytes(document)
+    except UnicodeEncodeError as error:
+        raise ModelIdentityError(
+            "$", f"a string cannot be written as UTF-8 ({error.reason}); quote it differently in the model"
+        ) from None
+    except (TypeError, ValueError) as error:
+        raise ModelIdentityError("$", f"a value cannot be written as canonical JSON ({error})") from None
+    except RecursionError:
+        raise ModelIdentityError("$", "the model is nested too deeply to write as canonical JSON") from None
+
+
+def model_identity(model: Model, version: int | None = None) -> str:
+    """``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity.
+
+    ``version`` None means the model's own: 2 without reference populations, 1
+    with them. Asking for a version the model does not define is refused.
+    """
+    own = 1 if model.reference_populations else IDENTITY_VERSION
+    if version is not None and version != own:
+        raise ModelIdentityError("$", f"identity version {version} is not defined for this model")
+    return "sha256:" + hashlib.sha256(model_identity_bytes(model)).hexdigest()
 
 
 from gnd.documents import Model

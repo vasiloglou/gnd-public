@@ -6,7 +6,9 @@
 "Approve ROF4 D1-D6 as proposed, so I author the pin corpus?"). D1-D6 ruled
 as proposed. The corpus is authored and red (section 12, commit `20cc7654`).
 **Implementation approved 2026-11-08** (owner: "Approve, implement", answering
-"Approve implementing ROF4 against this corpus?"). `auto=false`.
+"Approve implementing ROF4 against this corpus?"). **Implemented** (d44ba67a,
+review repairs 770cf54d, d83e972c); record [005-phase-ROF4.md](../005-phase-ROF4.md).
+`auto=false`.
 
 ## 2. Provenance
 
@@ -328,6 +330,44 @@ corpus (each refused exactly as a wrong pin is today); the four helper tests
 (the helper does not exist); two T1 scans; T13; the two tests of the new
 example; seven T11 documentation tests. Every legacy, wrong, reference and
 frozen-bytes case passes now.
+
+## 13. Implementation findings (2026-11-08)
+
+- **I1. The walk report echoes the supplied pin.** Section 6 and T2 said a
+  walk payload "carries the computed legacy digest, not the supplied one".
+  False: `transition.model_digest` is, by the report schema, "As SUPPLIED by
+  the steps document"; only the report's own `model_digest` is computed. The
+  first implementation (`d44ba67a`) rewrote the echo to the legacy value to
+  meet T2's byte-identical answer; the review (P2) showed that this breaks
+  the schema's contract, and `770cf54d` removed it. The approved S1 answer
+  changes accordingly: the canonical run differs from the legacy run in
+  `transition.model_digest` only (which equals the supplied pin), every
+  other byte agrees, and the report's own `model_digest` is legacy. No
+  consumer in `src/gnd` reads `transition.model_digest`. Owner question
+  ROF4-O1.
+- **I2. Measure records each sidecar file's digest.** T6's "payload
+  byte-identical to the all-legacy run" cannot hold: `corpus[].sidecar_sha256`
+  is the SHA-256 of the sidecar file the case rewrote. The runner checks each
+  published value against its file and compares every other byte (review
+  P4).
+- **I3. RF5.** The spec expected an RF5 row for `replay_witness`; it has none
+  (the RF4 row names `gnd.api.replay`). The body pin that moved is
+  `_cmd_measure`'s (`gnd.cli` historical name), recorded as a new RF5 row.
+- **I4. Legacy-path cost, measured by reading.** No site computes the
+  canonical identity for a legacy pin (T13). The legacy digest: S1, S2, S3
+  compute it once, as before (S1 again only to word a refusal); S4 compares
+  the census string first and computes nothing extra; S6 compares the
+  binding's field to the one `identity()` already computed; S5 still looks
+  it up once per run through `synth.provenance` (for the refusal message;
+  `test_rf2_review_regressions` pins that lookup) and the helper computes it
+  once more per distinct sidecar digest; S7 adds one per measure run. A
+  uniform legacy measure corpus therefore costs two more legacy digests per
+  run than before: a constant, not per population. The full suite at
+  `770cf54d` caught the dropped provenance lookup (the one failure outside
+  the base set); restored in the next commit.
+- **I5.** Two pre-existing crashes found while authoring the corpus became
+  their own PRs (135: text walk on a reference model; 136: coverage on a
+  `derivations: null` report). Not in this branch.
 
 ## Verification ledger
 

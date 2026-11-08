@@ -2,24 +2,29 @@
 
 ## 1. Status line
 
-**Draft r1.2, 2026-11-07, awaiting owner review.** Not approved. Implementable
-only after the owner approves the plan's gate and this spec's gate. No code
-written. `auto=false`. Plan review round 1 (four local readers) read r1.1 of this
-spec (SHA-256 `e7523244…`); its repairs are applied here (see
-[plan-review-r1-disposition.md](plan-review-r1-disposition.md)); r1.2 itself has
-not been re-read. The owner's
-plan-decision rulings of 2026-11-07 (plan §10: UG-D2 (b), UG-D3 (c), UG-D9 (b),
-others as proposed) are mirrored below; they are not a gate approval.
+**Draft r1.3, 2026-11-07, awaiting this spec's owner gate.** Not approved. The
+plan was approved at its gate on 2026-11-07 ([001-plan.md](../001-plan.md), plan
+r1.2); that approval does not extend to this spec. Implementable only after the
+owner approves this spec's gate. No code written. `auto=false`. Plan review
+round 1 (four local readers) read r1.1 of this spec (SHA-256 `e7523244…`); its
+repairs were applied in r1.2 (see
+[plan-review-r1-disposition.md](plan-review-r1-disposition.md)). r1.3 is r1.2
+re-read in full by its author against the repository (helper names, messages,
+gate test files) with the status wording and §12 as its only changes; no review
+opinion exists over r1.2 or r1.3. The owner's plan-decision rulings of
+2026-11-07 (plan §10: UG-D2 (b), UG-D3 (c), UG-D9 (b), others as proposed) are
+mirrored below.
 
 ## 2. Provenance
 
-Derived from [the plan](unattended-model-growth-plan.md) r1.2 (reviewed once as r1.1,
-unapproved), sections 2.1 and 4 (UG1), the obligations harvested there, and the
-planning-time probes described in its opening section. Baseline `12daa5b7`.
-The owner's plan-decision rulings (relayed, tagged `(o1)`, 2026-11-07) are in
-plan §10. They do not approve this spec: no spec-gate decision exists. Review
-round 1 is advisory, not `(p)` approval. When a ruling arrives it is written at
-its site with a tag and date.
+Derived from [the plan](unattended-model-growth-plan.md) r1.2 (approved at the
+plan gate, [001-plan.md](../001-plan.md); reviewed once as r1.1), sections 2.1
+and 4 (UG1), the obligations harvested there, and the planning-time probes
+described in its opening section. Baseline `12daa5b7`. The owner's
+plan-decision rulings (relayed, tagged `(o1)`, 2026-11-07) are in plan §10.
+They do not approve this spec: no spec-gate decision exists. Review round 1 is
+advisory, not `(p)` approval. When a ruling arrives it is written at its site
+with a tag and date.
 
 ## 3. Obligations (the step 0 harvest)
 
@@ -239,3 +244,27 @@ uv run ruff check tests/test_unattended_model_growth_acceptance.py
 UG-Q4 is answered: no default-lane census pins the `tests/` listing; the
 only `tests/test_*.py` glob is `tests/test_digest_helpers.py`, which is in the
 gate.
+
+## 12. Questions for the spec gate, and one plan-reading note
+
+What the owner is asked to rule here, in the form the gate takes:
+
+1. **Approve §5 (goal), §8 (cases and exits) and §7 (decisions)** as written, or
+   amend. Nothing else is asked.
+2. **UG1-D1 to UG1-D4** carry proposals only ((a), CLI-level, record-and-route,
+   pin the message). Approving the spec approves those proposals; any other
+   reading is the owner's to name.
+3. **Gate command.** §11's focused gate is proposed, to be fixed when the spec is
+   approved. It runs 9 test modules; a run of the eight existing ones at this
+   spec's drafting passed (`250 passed in 32.16s`, 2026-11-07, no source touched). That run does not exercise
+   the new file, which does not exist.
+
+Plan-reading note. Plan criterion UG1-C1 says the final model validates with
+`--document` "over all three documents". The seed `conforming.orm.yaml` also
+declares `source.txt`, and a span whose document is not supplied is not
+re-hashed (the O14 gap, pinned in T9). This spec therefore reads UG1-C1 as the
+three round documents **plus** `source.txt` (four `--document` arguments, T1).
+That is a refinement the plan's text permits; if the owner wants the plan's
+wording kept literally, T1's final `validate` drops the fourth argument and the
+seed's own spans go unchecked, which the spec would then say. The plan is not
+edited (its approved bytes stand).

@@ -1,14 +1,16 @@
 # Unattended model growth
 
-r1.2 (rulings recorded and plan-review round 1 applied, 2026-11-07). **Draft, awaiting the owner's plan gate.** Milestone:
+r1.2 (rulings recorded and plan-review round 1 applied, 2026-11-07). **Approved at the plan gate, 2026-11-07** ([001-plan.md](../001-plan.md); approved bytes are r1.2 at `314dc019`, sha256 `f099eb2a…`; later edits are status wording only: this line, the status paragraph, one "Ready" sentence in UG1 and the revision history). Milestone:
 `unattended-model-growth`. Phase prefix `UG`. `auto=false`.
 Sources: GitHub issues 104, 74, 75, 76.
 Inspection baseline: `12daa5b7` (main after PR 121), the tip this branch was
 cut from.
 
 **Status line.** The owner has ruled UG-D0 to UG-D9 (§10, "Owner ruling" column;
-relayed 2026-11-07). Those are decision rulings only: not the plan gate, not a
-UG1 spec approval. Plan review round 1 ran on 2026-11-07 (UG-D1 (a), four local readers) over
+relayed 2026-11-07), and then approved this plan (r1.2) at the plan gate
+("approved all", relayed 2026-11-07; see [001-plan.md](../001-plan.md)). That
+approves the plan only, not UG1's spec or any phase's spec. UG-Q6 and UG-Q7
+remain open. Plan review round 1 ran on 2026-11-07 (UG-D1 (a), four local readers) over
 r1.1 (SHA-256 `b2678c57…`); its disposition is in
 [plan-review-r1-disposition.md](plan-review-r1-disposition.md) and this r1.2
 applies the accurate repairs. The review is advisory evidence, not approval,
@@ -327,7 +329,7 @@ and the unbuilt part is dispositioned openly.
 
 ### UG1: Acceptance replay and issue disposition (test-only; about 0 source lines, 550 to 650 test lines)
 
-Ready: needs no owner ruling beyond the plan gate and the spec gate.
+Ready: needs no owner ruling beyond the plan gate (given, 2026-11-07) and the spec gate.
 Deliverables: the acceptance matrix; the replay test; fixture documents;
 drafted issue dispositions (text only, not posted). First draft spec:
 [phase-UG1-spec.md](phase-UG1-spec.md).
@@ -549,4 +551,5 @@ manifest; the packaged skill file inventory and prose pins.
 
 - r1, 2026-11-07: first draft by a planning session. Not reviewed. Not approved.
 - r1.1, 2026-11-07: owner decision rulings recorded in §10 (relayed, tagged `(o1)`), conditional text made definite. Not reviewed. Not approved.
-- r1.2, 2026-11-07: plan review round 1 (four local readers over r1.1) applied; see [plan-review-r1-disposition.md](plan-review-r1-disposition.md). Not re-read, not approved.
+- r1.2, 2026-11-07: plan review round 1 (four local readers over r1.1) applied; see [plan-review-r1-disposition.md](plan-review-r1-disposition.md). Not re-read after the repairs.
+- r1.2 approved, 2026-11-07: owner approval at the plan gate ("approved all", relayed), recorded in [001-plan.md](../001-plan.md). Status wording only; no other byte changed. No confirmation review round was run.

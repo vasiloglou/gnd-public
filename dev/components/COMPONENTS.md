@@ -2527,7 +2527,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, semantics.transitions
 - used_by: codegen.service, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
 - tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py, tests/test_rof2_projected_text.py
-- notes: Text for a declaration-bearing or temporal route (check, validate, walks, `check --admission`, verify) is rendered from the projected payload only; the plain routes share the same row renderers (render_check_rows, render_transition_rows) and the one extraction_line. _print_projected_text is a dispatcher kept for the historical binding. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
+- notes: Projected text is rendered from the projected payload only: for an active redaction policy on check, validate, walks, `check --admission` and verify, and for temporal terms on check, validate and walks (temporal admission and verify are not projected and print plain text); the plain routes share the same row renderers (render_check_rows, render_transition_rows) and the one extraction_line. _print_projected_text is a dispatcher kept for the historical binding. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
 
 
 ### semantics.ground_atoms

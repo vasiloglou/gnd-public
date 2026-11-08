@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
+from itertools import islice
 from types import SimpleNamespace
 from typing import Any
 
@@ -272,7 +273,12 @@ def _row_views(rows: Any) -> list[SimpleNamespace]:
                 modality=_text(row.get("modality")),
                 # Kept as supplied when it is a plain key, so a ``declared`` lookup
                 # by the caller's own reference still finds its entry.
-                constraint_ref=ref if isinstance(ref, (str, int)) else _text(ref),
+                # (An integer too long to print becomes the placeholder.)
+                constraint_ref=(
+                    ref
+                    if isinstance(ref, str) or (isinstance(ref, int) and _text(ref) != "<number>")
+                    else _text(ref)
+                ),
                 derivation_ref=_text(row.get("derivation_ref")),
                 message=_text(row.get("message")),
                 reason_code=_text(row.get("reason_code")),
@@ -361,6 +367,9 @@ def _print_report(
     print("\n".join(render_check_rows(rows, declared)))
 
 
+_MAX_COUNT = 10**15
+
+
 def _projected_preamble(payload: Mapping[str, Any]) -> tuple[list[str], list[str] | None]:
     """The warning lines, and the closing lines when issues or an error end the output.
 
@@ -375,19 +384,25 @@ def _projected_preamble(payload: Mapping[str, Any]) -> tuple[list[str], list[str
                 f"WARNING at {_text(warning.get('path'))}: {_text(warning.get('message'))} "
                 f"[{_text(warning.get('rule_id'))}]"
             )
-    # The cap is applied to the read: rows past it are never turned into views.
-    rows = [row for row in _rows(payload.get("issues")) if isinstance(row, Mapping)]
+    # The cap is applied to the read: rows past it are never visited or copied.
+    supplied = _rows(payload.get("issues"))
+    rows = list(
+        islice((row for row in supplied if isinstance(row, Mapping)), report_module.MAX_POPULATION_ISSUES)
+    )
     if rows:
         total = payload.get("issues_total")
+        # A total that is not a plausible count (not an int, or too long to print) is ignored.
+        if not isinstance(total, int) or isinstance(total, bool) or not 0 <= total <= _MAX_COUNT:
+            total = 0
         issues = [
             SimpleNamespace(
                 path=_text(row.get("path")),
                 message=_text(row.get("message")),
                 rule_id=_text(row.get("rule_id")),
             )
-            for row in rows[: report_module.MAX_POPULATION_ISSUES]
+            for row in rows
         ]
-        return lines, _issue_lines(issues, max(len(rows), total if isinstance(total, int) else 0))
+        return lines, _issue_lines(issues, max(len(supplied), total))
     error = payload.get("error")
     if error:
         message = error.get("message") if isinstance(error, Mapping) else error

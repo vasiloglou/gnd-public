@@ -69,12 +69,6 @@
     [
       "src/gnd/output.py",
       "_projected_preamble",
-      "rows[:report_module.MAX_POPULATION_ISSUES]",
-      1
-    ],
-    [
-      "src/gnd/output.py",
-      "_projected_preamble",
       "tuple[list[str], list[str] | None]",
       1
     ],
@@ -133,6 +127,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7316,
-  "result_occurrences": 9134
+  "result_distinct_rows": 7315,
+  "result_occurrences": 9133
 }

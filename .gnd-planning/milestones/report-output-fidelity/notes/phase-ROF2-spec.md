@@ -343,3 +343,79 @@ Result: 0.085, 0.087, 0.086 s at 10,000 steps (115,013 lines); 0.015,
 0.011, 0.011 s at 1,000 steps (16,013 lines): linear. Ceiling: 6 x 0.087 =
 0.52, rounded up to **0.6 s**, written into
 `test_t16_walk_renderer_is_linear_in_rows`.
+
+## Implementation findings (2026-11-07)
+
+- **I1.** The corpus derivation could not call `_print_report` over namespaces
+  as ROF1's did: ROF1 made it an adapter that calls `model_dump()` on each
+  verdict. `derive_answers.py` calls ROF1's `render_check_rows` (the plain
+  check renderer at the base) instead. It is not ROF2 code.
+- **I2.** The walk adapter is `walk.model_dump()` fed to
+  `render_transition_rows`. The dump omits an empty `derived_changes` (its
+  field has `exclude_if`), and the `TransitionReport` serializer adds
+  `derivations` to snapshots; the renderer reads neither difference, so the
+  plain bytes hold (plain transition suites in the gate, and
+  `test_plain_walk_text_is_unchanged_by_the_adapter`).
+- **I3.** As the census predicted, `test_check_refuses_a_fifo_by_name_instead_of_hanging[--pre]`
+  and `[--post]` moved: the text is now `ERROR: [REDACTED INSTANCE DETAIL]`.
+  **Today's JSON-as-text also showed the error's type (`PopulationLoadError`);
+  the new line does not**, because neither the plain route's error line nor
+  ROF1's projected one prints a type. The type stays in `--format json`. Not
+  changed here (it would add a field to an approved layout): open question
+  ROF2-O1.
+- **I4.** `_print_check_verdicts` and `_print_derived_change_summaries` have
+  no caller inside `gnd` after the adapter; both stay because they are
+  historical `gnd.cli` bindings. Deferred refactor (record, open questions).
+- **I5.** Dispatch in `_print_projected_text` uses `post`, not the
+  `transition` key: a verify payload and a snapshot check payload also carry a
+  `transition` mapping (`evaluated: false`), so a key test would send them to
+  the walk renderer. T17 runs the dispatcher over every corpus report.
+- **I6.** `tests/test_rf1_session_pins.py::test_session_fresh[3]` and
+  `::test_session_resume[3]` fail with `spawn-failed FileNotFoundError` on the
+  base source as well (and in ROF1's main and head runs): pre-existing, not
+  this phase.
+- **I7.** Guards moved as planned: RF5 rows for `_cmd_check` (chained onto its
+  existing row), `_cmd_transition`, `_cmd_verify`, `_print_projected_text`,
+  `_print_transition`; an RF6 dynamic-query successor
+  (`evidence/ROF2/dynamic-query-successor.json`: 3 rows removed, 18 added,
+  all in `src/gnd/output.py`) chained after ROF1's; the `infra.text_output`
+  index entry. No golden file moved.
+- **I8 (Codex review of 099ba22c, `block`, 6 findings, retained verbatim in
+  `evidence/ROF2/codex-review.md`).** Each was reproduced or argued before any
+  change:
+  - **P1 (blocking), applied.** A snapshot `constraint_ref` that is an integer
+    too long to print raised `ValueError` in `path_segment`, on the walk route
+    and on ROF1's check route alike (`_row_views` kept any `int` raw for a
+    `declared` lookup). Observed red
+    (`test_p1_a_huge_constraint_ref_in_a_walk_snapshot_does_not_raise`); such
+    an integer now becomes the `<number>` placeholder, a printable one is kept
+    raw.
+  - **P2 (blocking), applied.** `_projected_preamble` (ROF1's code, moved)
+    copied every issue row before capping, and an `issues_total` too long to
+    print raised in the elision line. Observed red
+    (`test_p2_issue_rows_are_capped_on_the_read_and_a_huge_total_does_not_raise`;
+    the first version of that test counted `.get` calls and could not see the
+    copy, and was rewritten to count rows taken from the list). Rows are now
+    taken with `islice` up to the cap; a total that is not an int in
+    `[0, 10**15]` is ignored and the supplied row count is used.
+  - **P3 (hardening), not applied.** No output cap: the text is linear in the
+    payload, as the plain route's is, and the payload is produced by GND under
+    its own input caps; T16 bounds the time. A byte cap would elide rows the
+    plain route prints and break the "plain layout" goal.
+  - **P4 (hardening), not applied.** For a computed post that does not
+    serialize, the base plain printer printed the first sections and then
+    raised, while the adapter prints `<non-text>` and continues. The CLI's
+    computed post comes from a payload that has already been serialized for the
+    report, and the reviewer did not establish a CLI path either. A strict
+    mode would still differ, because the adapter builds all lines before it
+    prints. Recorded; no change.
+  - **P5 (completeness), applied.** The unredacted presence check for
+    `transition-full-unredacted` was vacuous (an empty set). Added
+    `test_p5_the_full_walk_shows_its_frame_finding_only_when_unredacted`: the
+    frame finding's text is present unredacted and absent applied. A test
+    repair; it passed on 099ba22c.
+  - **P6 (completeness), applied.** The `infra.text_output` index note now
+    says temporal projection covers check, validate and walks only.
+  - The repair moved the dynamic-query census (one fewer slice); ROF2's
+    successor file was regenerated against ROF1's (3 removed, 17 added). The
+    repairs were not re-reviewed.

@@ -281,3 +281,42 @@ def test_plain_walk_text_is_unchanged_by_the_adapter() -> None:
         'PRE-STATE\nCOMPUTED POST\n{"facts": {}}\n'
         "FRAME COMPARISON: not applicable -- post is computed\nPOST-STATE\n"
     )
+
+
+# --- review findings (Codex, ROF2 diff review of 099ba22c) ---------------------------------
+
+
+def test_p1_a_huge_constraint_ref_in_a_walk_snapshot_does_not_raise() -> None:
+    snapshot = {"verdicts": [{"constraint_ref": 10**5000, "verdict": "fail", "message": "m"}]}
+    block = {"evaluated": True, "pre_snapshot": snapshot, "post_snapshot": snapshot}
+    lines = output._projected_transition_lines({"post": "declared", "transition": block})
+    assert "  snapshot [fail] <number>: m" in lines
+    check = output._projected_check_lines({"verdicts": [{**snapshot["verdicts"][0], "modality": "alethic"}]})
+    assert "  [fail] <number>: m" in check
+
+
+def test_p2_issue_rows_are_capped_on_the_read_and_a_huge_total_does_not_raise() -> None:
+    cap = payloads.MAX_POPULATION_ISSUES
+    taken = []
+
+    class Counted(list):
+        def __iter__(self):
+            for row in super().__iter__():
+                taken.append(1)
+                yield row
+
+    rows = Counted([{"path": "p", "message": "m", "rule_id": "r"}] * (cap * 20))
+    _, closing = output._projected_preamble({"issues": rows})
+    assert len([line for line in closing if line.startswith("ERROR at")]) == cap
+    assert any(str(cap * 19) in line for line in closing)  # the elision count still uses len()
+    assert len(taken) <= cap + 1
+    _, closing = output._projected_preamble(
+        {"issues": [{"path": "p", "message": "m", "rule_id": "r"}], "issues_total": 10**5000}
+    )
+    assert closing == ["ERROR at p: m [r]"]
+
+
+def test_p5_the_full_walk_shows_its_frame_finding_only_when_unredacted() -> None:
+    finding = "the declared post-state is missing 1 has_email fact(s)"
+    assert finding in _run("transition-full-unredacted", "text").stdout.decode()
+    assert finding not in _run("transition-full", "text").stdout.decode()

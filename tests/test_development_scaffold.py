@@ -45,6 +45,15 @@ RETAINED_EXTERNAL_REFERENCES = {
     Path('.gnd-planning/milestones/rule-check-adoption/notes/phase-RC6-codex-review.md'): {
         'rule-check-report.md', '../how-to/adopt-rules-with-a-baseline.md',
     },
+    # The FU5 reviewer's verbatim report links two files by absolute worktree path.
+    Path('.gnd-planning/milestones/rule-check-followups/notes/phase-FU5-codex-review-impl.md'): {
+        '/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027/'
+        '.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md:755',
+        '/Users/nikolaosvasiloglou/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027/'
+        '.gnd-planning/milestones/rule-check-followups/notes/phase-FU5-spec.md:122',
+    },
+    # The RR3 spec's D6 row quotes proposed docs text with an elided link target.
+    Path('.gnd-planning/milestones/rule-check-release/notes/phase-RR3-spec.md'): {'…'},
     # The NM4 DC2 draft quotes new text for several docs pages, links as written.
     NM_HOME / 'checkpoints/DC2/changes.md': {
         'disclosure.md', 'disclosure.md#who-customer-mode-protects',

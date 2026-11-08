@@ -1,0 +1,12 @@
+<home>/github-repos/gnd-public/.claude/worktrees/plan-rule-check-release-abb170/tests/test_release_version.py:72: AssertionError: docs/release-notes.md has no version heading
+E   AssertionError: docs/release-notes.md has no version heading
+    assert []
+<home>/github-repos/gnd-public/.claude/worktrees/plan-rule-check-release-abb170/tests/test_release_version.py:72: AssertionError: docs/release-notes.md has no version heading
+E   AssertionError: (PosixPath('<tmp>/pytest-8978/test_drift_is_refused_notes_0/docs/release-notes.md'), '## 0.1.0')
+    assert '## 0.1.0' in '# Release notes and milestones\n\nThe development package version remains 0.1.0. Publishing these unreleased\nchanges...c repository, packaged examples, this documentation site with executable tutorials, and the external-runtimes path |\n'
+<home>/github-repos/gnd-public/.claude/worktrees/plan-rule-check-release-abb170/tests/test_release_version.py:131: AssertionError: (PosixPath('<tmp>/pytest-8978/test_drift_is_refused_notes_0/docs/release-notes.md'), '## 0.1.0')
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_lock_manifests_and_notes_agree_with_pyproject
+FAILED tests/test_release_version.py::test_agreement_control_passes_on_an_unmutated_copy
+FAILED tests/test_release_version.py::test_drift_is_refused[notes] - Assertio...
+3 failed, 13 passed in 0.11s

@@ -71,8 +71,8 @@ The aggregate measurement payload and its text rendering (VER-03, D-22).
 | `MeasuredPopulation` | class | 86 | One scored population: its paths and hashes, the sidecar that labels it, |
 | `load_measurement_schema() -> dict[str, Any]` | function | 107 | The Draft 2020-12 schema describing this payload, resolved through |
 | `build_measurement_report(model, model_path, populations, *, gnd_version, index, index_sha256) -> di…` | function | 198 | Assemble the aggregate measurement payload from scored populations. |
-| `build_labelled_report(model, model_path, *, manifest_path, manifest_sha256, model_sha256, mode, pop…` | function | 437 | The IK3 labelled payload: schema 4 (expected-state) or 5 (class). |
-| `render_measurement(payload) -> str` | function | 750 | The text rendering: coverage before rates, ``n`` beside every rate. |
+| `build_labelled_report(model, model_path, *, manifest_path, manifest_sha256, model_sha256, mode, pop…` | function | 441 | The IK3 labelled payload: schema 4 (expected-state) or 5 (class). |
+| `render_measurement(payload) -> str` | function | 754 | The text rendering: coverage before rates, ``n`` beside every rate. |
 
 ## gnd.measure.score — `src/gnd/measure/score.py`
 Components: measure.score

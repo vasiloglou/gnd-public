@@ -114,23 +114,23 @@ Stable in-process access to GND validation and checking reports.
 | `CheckReceipt` | class | 135 | Proof, held in this process only, that GND checked a population against a model. |
 | `ReceiptRefused` | class(ValueError) | 163 | A checked pre-state receipt cannot be reused for this transition. |
 | `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 171 | Return the check payload and an opaque, in-process CheckReceipt. |
-| `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 635 | Validate a model path or reuse a loaded model, returning its report. |
-| `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 647 | Check one population and return the same payload emitted by the CLI. |
-| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 713 | Read two models and optionally one directory of population documents. |
-| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 897 | Public population sentence view; applied redaction is the default. |
-| `compose(model, directory) -> dict[str, Any]` | function | 925 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 962 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1005 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1034 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1135 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1159 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1174 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1182 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1192 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1201 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1213 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1216 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1219 | (no docstring) |
+| `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 633 | Validate a model path or reuse a loaded model, returning its report. |
+| `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 645 | Check one population and return the same payload emitted by the CLI. |
+| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 711 | Read two models and optionally one directory of population documents. |
+| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 895 | Public population sentence view; applied redaction is the default. |
+| `compose(model, directory) -> dict[str, Any]` | function | 923 | Compose a composition directory's sources into one population (CT2). |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 960 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1003 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1032 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1133 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1157 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1172 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1180 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1190 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1199 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1211 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1214 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1217 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -1184,26 +1184,26 @@ Transition evaluation -- the loader half (Phase 2, lane 1).
 | `population_file_digest(path) -> str` | function | 124 | sha256 over the population FILE BYTES as read. |
 | `read_steps_document(path) -> dict[str, Any]` | function | 159 | Read and layer-1 validate a walk. TOTAL over arbitrary bytes. |
 | `validate_steps_document(document) -> dict[str, Any]` | function | 205 | Copy and validate an already-loaded steps document through layer 1. |
-| `verify_digests(document, model, pre_path) -> IdentityMatch \| None` | function | 248 | Stage 2. Each mismatch has its own rule id, so a caller is never left |
-| `operation_binding_issues(model, *, declared, operation_id, bindings, operation_path, bindings_path,…` | function | 309 | Validate one operation plus either exact bindings or a binding subset. |
-| `validate_steps(document, model) -> list[dict[str, Any]]` | function | 383 | Stage 3. Every step names a declared operation and binds exactly its |
-| `touched_fact_types(model, steps) -> set[str]` | function | 416 | Every fact type any step's operation asserts into or retracts from. |
-| `assert_frame_coverage(union, populations, supplied) -> None` | function | 438 | Stage 4. A population whose declared coverage omits a touched fact type |
-| `assert_static_derivation_coverage(model, steps, populations, supplied) -> None` | function | 466 | Require complete asserted inputs for static derivations used by the walk. |
-| `assert_dynamic_derivation_coverage(model, steps, populations, supplied) -> None` | function | 515 | Require selected/read dynamic heads and every transitive asserted leaf. |
-| `TransitionVerdict` | class(BaseModel) | 579 | One finding about one walk. |
-| `DerivedChange` | class(BaseModel) | 643 | One changed computed extension, observational and never banded. |
-| `StepResult` | class(BaseModel) | 657 | One step: what it was asked to do, what was found, and the state after. |
-| `FrameGrading` | class(BaseModel) | 673 | How one touched fact type is graded, and by whose declaration. |
-| `TransitionReport` | class(BaseModel) | 682 | Four claim families, never merged into an aggregate. |
-| `TransitionReport.all_verdicts(self) -> list[TransitionVerdict]` | method | 721 | (no docstring) |
-| `TransitionReport.embedded_reports(self) -> list[CheckReport]` | method | 728 | (no docstring) |
-| `ComputedTransition` | class | 733 | A transition report paired with the final population it computed. |
-| `band(report) -> int` | function | 741 | Verdicts -> exit band, precedence 1 > 4 > 2 > 0, jointly over all four families. |
-| `UnknownComparisonError` | class(ValueError) | 781 | A dynamic rule named an operator the evaluator does not implement. |
-| `evaluate(model, pre, post, steps, *, pre_receipt) -> TransitionReport` | function | 2058 | The whole declared-post walk, in the normative evaluation order. |
-| `evaluate_plan(model, pre, steps, *, pre_receipt) -> ComputedTransition` | function | 2100 | Apply a walk and return its computed post without a frame comparison. |
-| `frame_modalities(model) -> dict[str, tuple[str, list[str]]]` | function | 2149 | `{fact_type: (modality, operations)}` over EVERY operation in the model. |
+| `verify_digests(document, model, pre_path) -> None` | function | 248 | Stage 2. Each mismatch has its own rule id, so a caller is never left |
+| `operation_binding_issues(model, *, declared, operation_id, bindings, operation_path, bindings_path,…` | function | 301 | Validate one operation plus either exact bindings or a binding subset. |
+| `validate_steps(document, model) -> list[dict[str, Any]]` | function | 375 | Stage 3. Every step names a declared operation and binds exactly its |
+| `touched_fact_types(model, steps) -> set[str]` | function | 408 | Every fact type any step's operation asserts into or retracts from. |
+| `assert_frame_coverage(union, populations, supplied) -> None` | function | 430 | Stage 4. A population whose declared coverage omits a touched fact type |
+| `assert_static_derivation_coverage(model, steps, populations, supplied) -> None` | function | 458 | Require complete asserted inputs for static derivations used by the walk. |
+| `assert_dynamic_derivation_coverage(model, steps, populations, supplied) -> None` | function | 507 | Require selected/read dynamic heads and every transitive asserted leaf. |
+| `TransitionVerdict` | class(BaseModel) | 571 | One finding about one walk. |
+| `DerivedChange` | class(BaseModel) | 635 | One changed computed extension, observational and never banded. |
+| `StepResult` | class(BaseModel) | 649 | One step: what it was asked to do, what was found, and the state after. |
+| `FrameGrading` | class(BaseModel) | 665 | How one touched fact type is graded, and by whose declaration. |
+| `TransitionReport` | class(BaseModel) | 674 | Four claim families, never merged into an aggregate. |
+| `TransitionReport.all_verdicts(self) -> list[TransitionVerdict]` | method | 713 | (no docstring) |
+| `TransitionReport.embedded_reports(self) -> list[CheckReport]` | method | 720 | (no docstring) |
+| `ComputedTransition` | class | 725 | A transition report paired with the final population it computed. |
+| `band(report) -> int` | function | 733 | Verdicts -> exit band, precedence 1 > 4 > 2 > 0, jointly over all four families. |
+| `UnknownComparisonError` | class(ValueError) | 773 | A dynamic rule named an operator the evaluator does not implement. |
+| `evaluate(model, pre, post, steps, *, pre_receipt) -> TransitionReport` | function | 2050 | The whole declared-post walk, in the normative evaluation order. |
+| `evaluate_plan(model, pre, steps, *, pre_receipt) -> ComputedTransition` | function | 2092 | Apply a walk and return its computed post without a frame comparison. |
+| `frame_modalities(model) -> dict[str, tuple[str, list[str]]]` | function | 2141 | `{fact_type: (modality, operations)}` over EVERY operation in the model. |
 
 ## gnd.transition_kernel — `src/gnd/transition_kernel.py`
 Components: semantics.transitions

@@ -464,9 +464,7 @@ def _run_transition_raw(
             document = transition_module.validate_steps_document(steps_input)
         else:
             document = transition_module.read_steps_document(_path(steps_input, name="steps"))
-        if transition_module.verify_digests(document, model, pre_coordinate) == "canonical-v2":
-            # An accepted canonical pin is reported as the legacy identity (ROF4, D3).
-            document = {**document, "model_digest": transition_module.transition_model_identity(model)}
+        transition_module.verify_digests(document, model, pre_coordinate)
         steps = transition_module.validate_steps(document, model)
         multi_clause = any(
             isinstance(rule := fact_type.get("derivation_rule"), dict)

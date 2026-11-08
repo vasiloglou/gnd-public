@@ -11,6 +11,7 @@ The legacy, wrong and reference cases, and the corpus self-check, pass now.
 from __future__ import annotations
 
 import ast
+import copy
 import hashlib
 import importlib
 import json
@@ -119,7 +120,16 @@ def _run(case: dict, root: Path) -> dict:
             document["model_digest"] = _sidecar_identity(case["model"], spelling)
             _write_json(sidecar, document)
         result = run_main(["measure", _model_path(case), "--populations", "corpus", "--format", "json"], cwd=work)
-        return {"exit": result.returncode, "stdout": result.stdout.decode(), "stderr": result.stderr.decode()}
+        files = {
+            path.relative_to(work / "corpus").as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in (work / "corpus").rglob("*.meta.json")
+        }
+        return {
+            "exit": result.returncode,
+            "stdout": result.stdout.decode(),
+            "stderr": result.stderr.decode(),
+            "sidecar_files": files,
+        }
     if site == "S6":
         certificate = json.loads(artifact.read_text())
         binding = certificate["binding"]
@@ -164,11 +174,19 @@ def _comparable(case: dict, observed: dict) -> object:
     site = case["site"]
     if site in {"S2", "S3"}:
         return observed
-    if site in {"S1", "S6"}:
+    if site == "S1":
+        # transition.model_digest echoes the pin AS SUPPLIED (report schema);
+        # _check pins it. Every other byte of the payload must agree.
+        payload = copy.deepcopy(observed["payload"])
+        report = payload.get("report", payload)
+        report["transition"].pop("model_digest")
+        return json.dumps(payload, sort_keys=True)
+    if site == "S6":
         return json.dumps(observed["payload"], sort_keys=True)
     if site in {"S5", "S7"}:
         # corpus[].sidecar_sha256 is the digest of the sidecar FILE, whose bytes
-        # the case rewrote; every other byte of the payload must agree.
+        # the case rewrote (_check pins each against its file); every other
+        # byte of the payload must agree.
         payload = json.loads(observed["stdout"])
         for row in payload["corpus"]:
             row.pop("sidecar_sha256")
@@ -189,6 +207,9 @@ def _check(case: dict, observed: dict) -> None:
     if site == "S1":
         report = observed["report"]
         assert report["outcome"] == expect["outcome"]
+        # The walk report echoes the pin as the steps supplied it, accepted or not.
+        assert report["transition"]["model_digest"] == _supplied(case)
+        assert report["model_digest"] == IDENTITIES["models"][case["model"]]["legacy"]
         if "rule_id" in expect:
             issues = [i for i in report["issues"] if i["rule_id"] == expect["rule_id"]]
             assert [i["message"] for i in issues] == [_fill(expect["message"], case, _supplied(case))]
@@ -201,7 +222,10 @@ def _check(case: dict, observed: dict) -> None:
             assert _fill(expect["message"], case, _supplied(case)) in observed["stdout"] + observed["stderr"]
     elif site in {"S5", "S7"}:
         if "model_digest" in expect:
-            assert json.loads(observed["stdout"])["model_digest"] == _fill(expect["model_digest"], case, WRONG)
+            payload = json.loads(observed["stdout"])
+            assert payload["model_digest"] == _fill(expect["model_digest"], case, WRONG)
+            published = {row["sidecar_path"]: row["sidecar_sha256"] for row in payload["corpus"]}
+            assert published == observed["sidecar_files"]
         else:
             assert json.loads(observed["stdout"])["error"] == _fill(expect["message"], case, _supplied(case))
     elif site == "S6":
@@ -286,6 +310,32 @@ def test_case(name: str, tmp_path: Path) -> None:
     if twin:
         baseline = _run(CASES[twin], tmp_path)
         assert _comparable(case, observed) == _comparable(CASES[twin], baseline)
+
+
+def test_t5_the_binding_comparison_itself_keeps_the_key_set_and_other_fields_exact(monkeypatch) -> None:
+    """The corpus's key-set cases stop at the certificate shape; this reaches the comparison."""
+    from gnd.witness import kernel
+
+    monkeypatch.setattr(kernel, "certificate_shape", lambda certificate, **_: None)
+    model = json.loads((CORPUS / "models/dependencies/model.orm.json").read_text())
+    candidate = json.loads((CORPUS / "models/dependencies/patched.pop.json").read_text())
+    certificate = json.loads((CORPUS / "artifacts/s6-dependencies.witness.json").read_text())
+    certificate["binding"]["model_digest"] = IDENTITIES["models"]["dependencies"]["canonical"]
+    assert kernel.replay_witness(model, candidate, certificate).exit_code == 0
+    for edit in ("extra", "missing", "missing-model", "candidate", "references"):
+        damaged = copy.deepcopy(certificate)
+        if edit == "extra":
+            damaged["binding"]["extra"] = "x"
+        elif edit == "missing":
+            del damaged["binding"]["references"]
+        elif edit == "missing-model":
+            del damaged["binding"]["model_digest"]
+        elif edit == "candidate":
+            damaged["binding"]["candidate_digest"] = WRONG
+        else:
+            damaged["binding"]["references"] = [{"id": "x", "raw_sha256": "0" * 64}]
+        result = kernel.replay_witness(model, candidate, damaged)
+        assert (result.exit_code, result.reason) == (3, "binding-stale"), edit
 
 
 # --------------------------------------------------------------------------- #
@@ -441,6 +491,28 @@ def test_t9_the_helper_names_which_identity_matched() -> None:
         assert matches(refused, model) is None, refused
     for refused in (legacy, canonical, _bare(WRONG), ""):
         assert matches(refused, model, prefixed=False) is None, refused
+
+
+def test_t9_a_str_subclass_cannot_choose_its_own_equality() -> None:
+    """Review P1: equality is the plain str's, never a subclass's."""
+    matches = _helper()
+    model = _corpus_model("approvals")
+
+    class Liar(str):
+        __hash__ = str.__hash__
+
+        def __eq__(self, other):
+            return True
+
+    class Boom(str):
+        __hash__ = str.__hash__
+
+        def __eq__(self, other):
+            raise RuntimeError("equality raised")
+
+    assert matches(Liar(WRONG), model) is None
+    assert matches(Boom(WRONG), model) is None
+    assert matches(Liar(_bare(WRONG)), model, prefixed=False) is None
 
 
 def test_t9_accepted_identities_lists_legacy_first() -> None:

@@ -218,11 +218,15 @@ def build_measurement_report(
 
     # A sidecar may name either identity of the model (S5 admitted it); both
     # spellings are one model, counted and emitted as the legacy bare digest.
-    legacy_digest = model_digest(model)
-    model_digests = {
-        legacy_digest if model_identity_matches(digest, model, prefixed=False) else digest
+    # One match per distinct digest; the legacy digest is recomputed only when
+    # no sidecar carries it.
+    matches = {
+        digest: model_identity_matches(digest, model, prefixed=False)
         for digest in {mp.sidecar.model_digest for mp in populations}
     }
+    legacy = [d for d, m in matches.items() if m in ("legacy-repr", "canonical-v1")]
+    legacy_digest = legacy[0] if legacy else model_digest(model)
+    model_digests = {legacy_digest if m else d for d, m in matches.items()}
     pool_sources = {mp.sidecar.pool_source for mp in populations}
     # WR-02: `pool_source` is a LABEL ("faker", "llm-proposed"), so checking it
     # alone lets a payload span two distinct pools while reading as one — which

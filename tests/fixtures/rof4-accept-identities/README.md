@@ -65,11 +65,17 @@ bare hex belongs).
    --format json` with the approvals walk pinned three ways, and the
    reference walk pinned with its one identity, with the version-2 identity
    it does not have, and wrongly. This is the site where a person writes the
-   pin by hand.
+   pin by hand. The walk report's own `model_digest` stays the legacy value;
+   its `transition.model_digest` echoes the pin as the steps supplied it
+   (the report schema's contract), so the canonical run differs from the
+   legacy run in that one field.
 2. **A session replays an admission report (S2, S3).** The admission
    validator reads a recorded `gnd check --admission` report back. On the
    reference model it checks the wrapper's identity (S2) and the inner
    report's identity (S3); on the approvals model only the report's (S3).
+   S2 exists only for reference-bearing models, which have one identity, so
+   no S2 case can tell the widened check from the old one; the source scan
+   pins that S2 asks the helper.
 3. **Coverage reads a check report (S4).** `gnd coverage MODEL --check
    REPORT --format json`, with the report's identity in each spelling.
 4. **Measure reads a synthesized corpus (S5, S7).** `gnd measure MODEL
@@ -80,8 +86,13 @@ bare hex belongs).
 5. **A witness is replayed (S6).** `gnd replay MODEL CANDIDATE CERTIFICATE
    --raw --json` with the certificate's `binding.model_digest` in each
    spelling; and, with the canonical spelling, a wrong `candidate_digest`, an
-   extra binding key and a missing one. Only the model field may accept two
-   values; the rest of the binding stays exact.
+   extra binding key and a missing one. The last two are refused by the
+   certificate's shape before any binding comparison (an order check); a
+   test calls the comparison itself with the shape check removed. Only the
+   model field may accept two values; the rest of the binding stays exact.
+   The measure report records each sidecar file's own SHA-256, which a
+   rewritten sidecar changes; the runner checks those values against the
+   files and compares every other byte.
 6. **The shipped pins.** The 14 shipped approvals walks that pin the old
    identity, and the new shipped example `plan-draft-2.canonical.steps.json`,
    pinned with the canonical one, are each checked against the shipped model

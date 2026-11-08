@@ -923,8 +923,9 @@ recompute: `sha256` over a canonical JSON document, written `sha256:<64 lowercas
    matches such a model by its legacy `model_digest` only, and never reports
    the refusal as a mismatch.
 6. **The legacy identity is unchanged.** `model_digest` (`legacy-repr`) is
-   still what reports, `validate --trace`, steps files and generated plans
-   carry.
+   still what reports, `validate --trace` and generated plans carry. A
+   supplied pin (a steps file, a sidecar, a certificate) may name either
+   identity; see "Three digests, three bases" for where each is accepted.
 7. **Test vectors** (`tests/fixtures/rof3-model-identity/`, which also holds
    each document):
 
@@ -1358,8 +1359,8 @@ session replay), a synth sidecar's bare-hex `model_digest` (`gnd measure`) and a
 certificate's `binding.model_digest` (`gnd replay`, where every other binding field stays
 exact). A value that is neither is refused with the same message as before, naming the legacy
 value. A reference-bearing model has one identity: its legacy value is its version-1 canonical
-identity. GND itself keeps writing the legacy value in every report, including the report of a
-walk pinned with the canonical identity. Generated Pyrel plans are the exception: they accept
+identity. GND itself keeps writing the legacy value as every report's own `model_digest`; a walk
+report's `transition.model_digest` echoes the pin as the steps supplied it. Generated Pyrel plans are the exception: they accept
 only the legacy value they were generated with. This is the acceptance rule's one home;
 `gnd.values.model_identity_matches` implements it.
 

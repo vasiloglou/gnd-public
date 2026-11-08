@@ -317,7 +317,7 @@ def model_identity_matches(
     None, never an exception. The legacy digest is computed as every caller
     computed it before, failures included.
     """
-    if not isinstance(supplied, str):
+    if type(supplied) is not str:  # a str subclass could redefine equality
         return None
     prefix = "sha256:" if prefixed else ""
     if supplied == prefix + _model_digest(model):

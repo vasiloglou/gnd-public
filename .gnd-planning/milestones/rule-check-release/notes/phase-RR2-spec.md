@@ -353,3 +353,52 @@ over r1. Each finding was checked against the repository before it was accepted.
   2)". 0.1.0 exits **64** with `unrecognized arguments` for `--rule-ids`,
   `--baseline` and `--allow-vacuous` (O-e, 2026-11-08; Codex found the same in
   `v0.1.0`'s parser). T2 expects 64.
+
+## 14. Implementation findings, part one (2026-11-08, appended)
+
+Commits on PR 125 after the gate (`a000f8c1`): `07fe245d` (M1 notes bullet, M2
+tests), `ea236619` (T1's version and artifact-name rows moved after the
+probes), `cbe5f57a` (review fixes I1 to I4).
+
+- **T3 failed, but not where §8 predicted.** Over a candidate directory built
+  from the PyPI 0.1.0 files, all four new cases fail (`4 failed`,
+  [evidence](../evidence/RR2/t3-red-on-0.1.0.txt)). They fail at
+  `copy_example`, because the 0.1.0 wheel ships no `gnd/examples/rule_check`,
+  not at the first `gnd_json` with exit 64 as §8 said. T1's P1 exit-1
+  assertion is still shown to fail on 0.1.0 by T2, which asserts exit 64 for
+  the same command. The version row was moved after the probes (`ea236619`)
+  so that it cannot mask them. Recorded rather than designed around.
+- **Pre-merge check, not the candidate.** A scratch build of `ea236619` with
+  the M3 commands (this Mac, uv 0.10.10) passes T1, T2 and the existing
+  identity, negative-control and sandbox tests: `10 passed, 4 deselected`, at
+  `ea236619` and again at `cbe5f57a`. The packaged paths are unchanged between
+  them ([evidence](../evidence/RR2/premerge-check.txt)). Nested
+  `sandbox-exec` works on this Mac. The four `FAMILIES` and lifecycle cases
+  were not run; they belong to V4 on the candidate.
+- **Focused default gate:** `33 passed, 1 deselected`. Ruff on the file is
+  clean; `docs/release-notes.md` has 0 `## Unreleased` headings.
+- **Size: the stop rule triggers.** M2 adds 228 lines to
+  `tests/test_release_acceptance.py` (estimate 150, stop at 225); M1 adds 4
+  lines. The excess is the review fixes and the per-rule rows. RR2 pauses here
+  for the owner in any case (normative order step 1).
+
+### Review of the implementation diff (one reviewer)
+
+Codex over `git diff a000f8c1 ea236619 -- docs tests`: `revise`, four
+findings ([verbatim](phase-RR2-codex-review-impl.md)).
+
+| Finding | Disposition | Fix |
+|---|---|---|
+| I1 module-level read of the checkout's `pyproject.toml` | premise partly refuted: the outer pytest process already reads the checkout by design (`git archive HEAD`, the `test_packaged_skills` import), and RR2-C7 concerns the installed code under the sandbox. The fix was adopted anyway: the version is read from the archived `HEAD` the fixture extracts | `declared_version(checkout)` |
+| I2 the version-7 cycle could contain edges that do not exist | accepted | each step of the cycle must be an edge of the version-15 extent; the exact value is still compared with 0.1.0 in T2 |
+| I3 `zip` would hide a length mismatch | accepted | equal lengths asserted before pairing |
+| I4 the producer mutant passes on any load issue | accepted | control: the same `source: fixture` without `producer` loads with `issues == []` |
+
+I2 to I4 are test-strength findings, shown by reading the code; no broken
+implementation was built to show them red.
+
+### Refactoring review
+
+None executed. The new helpers (`gnd`, `gnd_json`, `copy_example`, `edit`)
+overlap the file's `run` only in calling `subprocess.run`; `run` cannot return
+stderr on an expected nonzero exit, which T2 needs. Kept separate.

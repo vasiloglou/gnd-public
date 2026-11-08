@@ -3,14 +3,15 @@
 # repository root. Exits 1 and prints every hit of the RR3 search, and every
 # release-state phrase in the release notes' opening, that is not allowlisted.
 # The allowlist holds the text that is right once 0.2.0 is published, or is
-# historical; it is matched by exact file:line-text, not line number.
+# historical; it is matched by exact file:line-text, not line number, with any
+# date or the PUBLICATION_DATE placeholder read as <DATE>.
 set -u
 PATTERN='0\.1\.0|0\.2\.0|next release|not published|not signed off|until 0\.2\.0|newer than|first pypi release|after phase 3'
 ALLOW=$(mktemp); HITS=$(mktemp); trap 'rm -f "$ALLOW" "$HITS"' EXIT
 cat > "$ALLOW" <<'LIST'
 README.md:uv tool install get-nick-done==0.2.0
 docs/compatibility.md:Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions 0.1.0
-docs/compatibility.md:and 0.2.0 are published (0.2.0 on PUBLICATION_DATE). For the next version,
+docs/compatibility.md:and 0.2.0 are published (0.2.0 on <DATE>). For the next version,
 docs/development/candidate.md:The artifact is `get_nick_done-0.1.0-py3-none-any.whl`. Its uncompressed payload
 docs/index.md:uv tool install get-nick-done==0.2.0
 docs/installation.md:uv tool install get-nick-done==0.2.0
@@ -27,6 +28,7 @@ docs/support.md:| macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release 
 LIST
 git grep -i -E "$PATTERN" -- README.md docs ':!docs/release-notes.md' > "$HITS"
 sed -n '1,10p' docs/release-notes.md | grep -i -E 'not published|prepared' | sed 's|^|docs/release-notes.md:|' >> "$HITS"
+sed -i.bak -E 's/[0-9]{4}-[0-9]{2}-[0-9]{2}|PUBLICATION_DATE/<DATE>/g' "$HITS" && rm -f "$HITS.bak"
 UNEXPECTED=$(grep -v -x -F -f "$ALLOW" "$HITS")
 if [ -n "$UNEXPECTED" ]; then
   printf 'stale release-state text:\n%s\n' "$UNEXPECTED"

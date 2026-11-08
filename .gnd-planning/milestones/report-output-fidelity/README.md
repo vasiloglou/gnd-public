@@ -33,5 +33,7 @@ on PR 127 (stacked on PR 124), awaiting merge. Corpus
 [evidence/ROF2-census/](evidence/ROF2-census/). With ROF1 and ROF2, issue 112's
 text defect is fixed in code; the issue closes at the milestone close.
 
-Next action: merge PR 124 then PR 127 (owner); rule ROF2-O1; then the ROF3
-spec (issue 111) with process-phase.
+ROF2-O1 ruled 2026-11-08: the error type stays in `--format json` only.
+
+Next action: merge PR 124 then PR 127 (owner); then the ROF3 spec (issue 111)
+with process-phase.

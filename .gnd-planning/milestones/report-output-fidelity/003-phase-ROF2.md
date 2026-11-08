@@ -184,6 +184,6 @@ not paused for, and is recorded here as a finding about the estimate.
 
 | Row | Question | Owner / target |
 |---|---|---|
-| ROF2-O1 | The projected error line (`ERROR: [REDACTED INSTANCE DETAIL]`) no longer shows the error type that the JSON-as-text showed (`PopulationLoadError`). Add a ` [type: …]` suffix on projected routes, or leave it to `--format json`? | owner; before the milestone close |
+| ROF2-O1 | The projected error line (`ERROR: [REDACTED INSTANCE DETAIL]`) no longer shows the error type that the JSON-as-text showed (`PopulationLoadError`). Add a ` [type: …]` suffix on projected routes, or leave it to `--format json`? | **Ruled 2026-11-08: leave it to `--format json`** (owner: "Leave to JSON", answering "Should the projected error line add the error type (ROF2-O1)?"). No change; the projected error line matches the plain route's. |
 | ROF2-O2 | Retire the now-unused historical bindings `_print_check_verdicts` and `_print_derived_change_summaries` | the shim-retirement phase (RF-D5), not this milestone |
 | ROF2-O3 | PR 127 is stacked on PR 124; it retargets to main when PR 124 merges | owner (merge order) |

@@ -189,5 +189,5 @@ regressions and the hand-written vectors.
 
 | Row | Question | Owner / target |
 |---|---|---|
-| ROF3-O1 | `reference_model_digest` now refuses (with the walk's `TransitionLoadError`) a reference declaration mutated after loading to carry a non-string key, where it used to coerce it; no loadable model reaches this. Accept, or keep the old coercion for the legacy function only? | owner; before ROF4 |
+| ROF3-O1 | `reference_model_digest` now refuses (with the walk's `TransitionLoadError`) a reference declaration mutated after loading to carry a non-string key, where it used to coerce it; no loadable model reaches this. Accept, or keep the old coercion for the legacy function only? | **Ruled 2026-11-08: accept the refusal** (owner: "Accept refusal", answering "Accept ROF3-O1 (refuse a mutated non-string declaration key)?"). No change; the code as reviewed stands. |
 | ROF3-O2 | The checker timing tests (10 s bounds) fail under parallel load on this machine; the gate and the main-branch run were taken under such load | not this milestone |

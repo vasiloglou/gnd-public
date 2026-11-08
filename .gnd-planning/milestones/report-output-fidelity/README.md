@@ -43,4 +43,7 @@ ROF3 implemented: canonical model identity and `gnd validate --identity`
 `tests/fixtures/rof3-model-identity/`. Issue 111 stays open (ROF4 accepts the
 identity at matching sites; reports keep the legacy digest per D3).
 
-Next action: merge the ROF3 PR (owner); rule ROF3-O1; then the ROF4 spec.
+ROF3-O1 ruled 2026-11-08: accept the refusal of a mutated non-string
+declaration key in `reference_model_digest`.
+
+Next action: merge the ROF3 PR (owner); then the ROF4 spec.

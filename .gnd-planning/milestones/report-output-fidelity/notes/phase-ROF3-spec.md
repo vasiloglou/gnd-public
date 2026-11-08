@@ -383,7 +383,8 @@ test builds and loads the 9.7 MB model, so it takes about 10 s.
     loader accepts are unchanged (the corpus `reference` vectors and
     `reference_model_digest` pins hold). `reference_model_digest` itself now
     refuses such a mutated object with the walk's `TransitionLoadError`
-    instead of coercing it; no loadable model reaches that.
+    instead of coercing it; no loadable model reaches that. ROF3-O1 **ruled
+    2026-11-08: accept the refusal** (owner: "Accept refusal").
   - **P2 (blocking), applied.** A declaration whose `fact_types` mixes types
     raised `TypeError` while sorting. Reproduced; `_identity_parts` turns it
     into `ModelIdentityError`.

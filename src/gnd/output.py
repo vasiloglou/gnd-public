@@ -124,25 +124,24 @@ def _print_trace(model: Model, model_path: str) -> None:
         print("  (none)")
 
 def _print_projected_text(payload: dict[str, Any]) -> None:
-    """Render only the already-projected tree on declaration-bearing routes."""
+    """Render only the already-projected tree on declaration-bearing routes.
+
+    The historical entry point (ROF2 D2): it picks the route's printer from the
+    payload -- ``verify`` by its command, a walk by its ``post`` (set on every
+    transition payload, refusals included), else check/validate -- so no caller
+    gets the report as text through it. Each command calls its own printer.
+    """
 
     from gnd.redaction import render_text_header
 
-    header = render_text_header(payload)
-    if header is None:
+    if render_text_header(payload) is None:
         raise ValueError("projected text requires redaction metadata")
-    print(header)
-    transition_block = payload.get("transition")
-    if isinstance(transition_block, dict):
-        for step in transition_block.get("steps") or []:
-            changes = step.get("derived_changes") if isinstance(step, dict) else None
-            if not changes:
-                continue
-            print(
-                f"STEP {step.get('index')} ({verbalize.path_segment(str(step.get('operation')))})"
-            )
-            _print_derived_change_summaries(changes)
-    print(report_module.render_json(payload))
+    if payload.get("command") == "verify":
+        _print_projected_verify_text(payload)
+    elif payload.get("post") in ("declared", "computed"):
+        _print_projected_transition_text(payload)
+    else:
+        _print_projected_check_text(payload)
 
 def _constraint_verdict_line(verdict: Any, indent: str = "  ") -> str:
     """ONE rendering of a constraint verdict, for every surface that prints one.
@@ -362,12 +361,12 @@ def _print_report(
     print("\n".join(render_check_rows(rows, declared)))
 
 
-def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
-    """Text for a check or validate payload that was already projected.
+def _projected_preamble(payload: Mapping[str, Any]) -> tuple[list[str], list[str] | None]:
+    """The warning lines, and the closing lines when issues or an error end the output.
 
-    Reads only the payload (never the unprojected report), so what the projection
-    removed cannot come back. Order: warnings; issues, which end the output;
-    an error with no issues; a validate success; otherwise the check layout.
+    Shared by every projected route, in the plain routes' order: warnings;
+    issues (capped, with the elision line), which end the output; an error with
+    no issues. The second value is ``None`` when the route's body follows.
     """
     lines = []
     for warning in _rows(payload.get("warnings"))[: report_module.MAX_POPULATION_ISSUES]:
@@ -388,14 +387,26 @@ def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
             )
             for row in rows[: report_module.MAX_POPULATION_ISSUES]
         ]
-        shown = _issue_lines(issues, max(len(rows), total if isinstance(total, int) else 0))
-        return lines + shown
+        return lines, _issue_lines(issues, max(len(rows), total if isinstance(total, int) else 0))
     error = payload.get("error")
-    exit_code = payload.get("exit_code")
     if error:
         message = error.get("message") if isinstance(error, Mapping) else error
-        prefix = "INTERNAL ERROR" if exit_code == 70 else "ERROR"
-        return [*lines, f"{prefix}: {_text(message)}"]
+        prefix = "INTERNAL ERROR" if payload.get("exit_code") == 70 else "ERROR"
+        return lines, [f"{prefix}: {_text(message)}"]
+    return lines, None
+
+
+def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a check or validate payload that was already projected.
+
+    Reads only the payload (never the unprojected report), so what the projection
+    removed cannot come back. Order: the shared preamble; a validate success;
+    otherwise the check layout.
+    """
+    lines, closing = _projected_preamble(payload)
+    if closing is not None:
+        return lines + closing
+    exit_code = payload.get("exit_code")
     if payload.get("command") == "validate":
         if exit_code != 0:
             return [*lines, f"ERROR: validate exited {_text(exit_code)} without a reported cause"]
@@ -403,12 +414,148 @@ def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
     return lines + render_check_rows(payload, show_reason=True)
 
 
-def _print_projected_check_text(payload: dict[str, Any]) -> None:
-    """``check``/``validate`` text on a declaration-bearing or temporal route.
+def _walk_views(rows: Any) -> list[SimpleNamespace]:
+    """Walk verdict rows (pre-state, step, frame) as attribute views, total over any value."""
+    return [
+        SimpleNamespace(
+            verdict=_text(row.get("verdict")),
+            locator=_text(row.get("locator")),
+            message=_text(row.get("message")),
+            reason_code=_text(row.get("reason_code")),
+        )
+        for row in _rows(rows)
+        if isinstance(row, Mapping)
+    ]
 
-    The header names the redacted coordinates and is omitted when there are none
-    (the temporal-only route has no policy to describe). The other projected
-    routes keep ``_print_projected_text`` until the phase that renders them.
+
+def _walk_verdict_lines(rows: Any, show_reason: bool) -> list[str]:
+    lines = []
+    for view in _walk_views(rows):
+        line = (
+            f"  [{view.verdict}] {verbalize.path_segment(view.locator)}: "
+            f"{verbalize.line_text(view.message)}"
+        )
+        lines.extend(_with_reason([line], view, show_reason))
+    return lines
+
+
+def _snapshot_lines(snapshot: Any, label: str, show_reason: bool) -> list[str]:
+    """The non-pass constraint verdicts of one embedded snapshot, ``label`` first."""
+    rows = snapshot.get("verdicts") if isinstance(snapshot, Mapping) else None
+    lines = []
+    for view in _row_views(rows):
+        if view.verdict != "pass":
+            line = _constraint_verdict_line(view, f"{label} ")
+            lines.extend(_with_reason([line], view, show_reason))
+    return lines
+
+
+def _derived_change_lines(changes: Any) -> list[str]:
+    lines = []
+    for change in _rows(changes):
+        if isinstance(change, Mapping):
+            added = len(_rows(change.get("added")))
+            removed = len(_rows(change.get("removed")))
+            lines.append(
+                f"DERIVED {verbalize.path_segment(_text(change.get('fact_type')))}: "
+                f"+{added} -{removed}"
+            )
+    return lines
+
+
+def _json_line(value: Any) -> str:
+    """One JSON line, as the plain route prints a computed post; a placeholder if it cannot be."""
+    try:
+        return json.dumps(value, allow_nan=False)
+    except (TypeError, ValueError, RecursionError):
+        return "<non-text>"
+
+
+def render_transition_rows(
+    block: Mapping[str, Any], *, post: str | None, show_reason: bool = False
+) -> list[str]:
+    """The walk layout from a ``transition`` block's rows: the one home of this text.
+
+    Four families, printed as four sections and never merged. Both the plain
+    route (``_print_transition``, which adapts its report object into rows) and
+    the projected route render through here. ``post == "computed"`` selects the
+    computed-post section in place of the frame section. Total over any mapping.
+    """
+    lines = ["PRE-STATE"]
+    lines.extend(_snapshot_lines(block.get("pre_snapshot"), "  snapshot", show_reason))
+    lines.extend(_walk_verdict_lines(block.get("pre_snapshot_verdicts"), show_reason))
+    for step in _rows(block.get("steps")):
+        if not isinstance(step, Mapping):
+            continue
+        operation = _text(step.get("operation"))
+        lines.append(f"STEP {_text(step.get('index'))} ({verbalize.path_segment(operation)})")
+        lines.extend(_derived_change_lines(step.get("derived_changes")))
+        lines.extend(_walk_verdict_lines(step.get("verdicts"), show_reason))
+        lines.extend(_snapshot_lines(step.get("intermediate"), "  intermediate", show_reason))
+    if post == "computed":
+        lines.append("COMPUTED POST")
+        lines.append(_json_line(block.get("computed_post")))
+        lines.append("FRAME COMPARISON: not applicable -- post is computed")
+    else:
+        lines.append("FRAME")
+        for grading in _rows(block.get("frame_grading")):
+            if not isinstance(grading, Mapping):
+                continue
+            operations = ", ".join(
+                verbalize.path_segment(_text(name)) for name in _rows(grading.get("operations"))
+            )
+            lines.append(
+                f"  {verbalize.path_segment(_text(grading.get('fact_type')))}: "
+                f"{_text(grading.get('modality'))} ({_text(grading.get('reason'))}; {operations})"
+            )
+        lines.extend(_walk_verdict_lines(block.get("frame_verdicts"), show_reason))
+    lines.append("POST-STATE")
+    lines.extend(_snapshot_lines(block.get("post_snapshot"), "  snapshot", show_reason))
+    return lines
+
+
+def _projected_transition_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a projected walk payload: the preamble, then the walk if it was evaluated.
+
+    A walk that was refused before it ran (``evaluated`` false) prints only what
+    the plain route prints then: the warnings and the issues or error.
+    """
+    lines, closing = _projected_preamble(payload)
+    if closing is not None:
+        return lines + closing
+    block = payload.get("transition")
+    if isinstance(block, Mapping) and block.get("evaluated") is True:
+        post = payload.get("post")
+        return lines + render_transition_rows(
+            block, post=post if isinstance(post, str) else None, show_reason=True
+        )
+    return lines
+
+
+def extraction_line(extraction: Any) -> str:
+    """``EXTRACTION: state=<state>[ (<reason>)]``: the one home of verify's extraction line."""
+    block = extraction if isinstance(extraction, Mapping) else {}
+    reason = _text(block.get("reason"))
+    return f"EXTRACTION: state={_text(block.get('state'))}" + (f" ({reason})" if reason else "")
+
+
+def _projected_verify_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a projected verify payload: the preamble, the extraction line, the check layout."""
+    lines, closing = _projected_preamble(payload)
+    if closing is not None:
+        return lines + closing
+    return [
+        *lines,
+        extraction_line(payload.get("extraction")),
+        *render_check_rows(payload, show_reason=True),
+    ]
+
+
+def _print_projected_header(payload: Mapping[str, Any]) -> None:
+    """The ``REDACTION`` header, printed only when there are declarations to name.
+
+    A payload projected only for temporal terms has none, and a header for a
+    policy that does not exist would mislead (plan D2).
     """
 
     from gnd.redaction import render_text_header
@@ -418,7 +565,24 @@ def _print_projected_check_text(payload: dict[str, Any]) -> None:
         header = render_text_header(payload)
         if header is not None:
             print(header)
+
+
+def _print_projected_check_text(payload: dict[str, Any]) -> None:
+    """``check``/``validate`` text on a declaration-bearing or temporal route."""
+    _print_projected_header(payload)
     print("\n".join(_projected_check_lines(payload)))
+
+
+def _print_projected_transition_text(payload: dict[str, Any]) -> None:
+    """Walk text (``check --pre --steps``) on a declaration-bearing or temporal route."""
+    _print_projected_header(payload)
+    print("\n".join(_projected_transition_lines(payload)))
+
+
+def _print_projected_verify_text(payload: dict[str, Any]) -> None:
+    """``verify`` text on a declaration-bearing route."""
+    _print_projected_header(payload)
+    print("\n".join(_projected_verify_lines(payload)))
 
 def _band(report: CheckReport) -> int:
     """Delegate to :func:`gnd.checker.band` — the ONE owner of the exit-band rule.
@@ -441,34 +605,12 @@ def _print_transition(
     """
     for warning in warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
-
-    def render(verdicts: list[Any], indent: str = "  ") -> None:
-        for verdict in verdicts:
-            where = verbalize.path_segment(verdict.locator)
-            print(f"{indent}[{verdict.verdict}] {where}: {verbalize.line_text(verdict.message)}")
-
-    print("PRE-STATE")
-    _print_check_verdicts(walk.pre_snapshot)
-    render(walk.pre_snapshot_verdicts)
-    for step in walk.steps:
-        print(f"STEP {step.index} ({verbalize.path_segment(step.operation)})")
-        _print_derived_change_summaries(step.derived_changes)
-        render(step.verdicts)
-        _print_check_verdicts(step.intermediate, label="  intermediate")
-    if computed_post is None:
-        print("FRAME")
-        for grading in walk.frame_grading:
-            print(
-                f"  {verbalize.path_segment(grading.fact_type)}: {grading.modality} "
-                f"({grading.reason}; {', '.join(map(verbalize.path_segment, grading.operations))})"
-            )
-        render(walk.frame_verdicts)
-    else:
-        print("COMPUTED POST")
-        print(json.dumps(computed_post, allow_nan=False))
-        print("FRAME COMPARISON: not applicable -- post is computed")
-    print("POST-STATE")
-    _print_check_verdicts(walk.post_snapshot)
+    # An adapter: the report object becomes rows and the one walk renderer prints
+    # them, so the plain and projected walk layouts cannot drift (ROF2).
+    block = walk.model_dump()
+    block["computed_post"] = computed_post
+    post = "declared" if computed_post is None else "computed"
+    print("\n".join(render_transition_rows(block, post=post)))
 
 def _print_derived_change_summaries(changes: Any) -> None:
     for change in changes or []:

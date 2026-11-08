@@ -91,14 +91,19 @@ def test_t8_projected_branches_read_only_the_payload() -> None:
     assert "_print_projected_check_text(mechanical_payload)" in validate
     assert "_print_projected_text(" not in validate
     check = _source(checking._cmd_check)
-    assert "_print_projected_check_text" in check
-    # ``--admission`` is ROF2's: it keeps the shared projected-JSON text.
-    assert "_print_projected_text if admission else _print_projected_check_text" in check
+    # ROF2 successor: ``--admission`` now renders the check layout too.
+    assert "_print_projected_check_text(mechanical_payload)" in check
+    assert "_print_projected_text(" not in check
 
 
-def test_t17_other_projected_routes_still_use_the_shared_json_text() -> None:
-    assert "_print_projected_text(mechanical_payload)" in _source(checking._cmd_transition)
-    assert "_print_projected_text(payload)" in inspect.getsource(verification_service)
+def test_t17_other_projected_routes_use_their_own_printers() -> None:
+    # ROF2 successor of test_t17_other_projected_routes_still_use_the_shared_json_text.
+    transition_source = _source(checking._cmd_transition)
+    assert "_print_projected_transition_text(mechanical_payload)" in transition_source
+    assert "_print_projected_text(" not in transition_source
+    verify_source = inspect.getsource(verification_service)
+    assert "_print_projected_verify_text(payload)" in verify_source
+    assert "_print_projected_text(" not in verify_source
 
 
 def test_t4c_warnings_precede_the_layout() -> None:
@@ -201,7 +206,8 @@ def test_t18_projected_text_keeps_a_reason_the_projection_removed_from_the_messa
 # --- review findings (Codex, ROF1 diff review) ----------------------------------------------
 
 
-def test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase() -> None:
+def test_p1_admission_prints_the_check_layout_then_its_lines() -> None:
+    # ROF2 successor of test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase.
     result = run_main(
         [
             "check",
@@ -214,11 +220,13 @@ def test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase() -> N
     lines = result.stdout.decode().splitlines()
     assert result.returncode == 0
     assert lines[0] == "REDACTION applied: has_email.email"
-    assert lines[1].startswith('{"schema_version": 10')
-    assert lines[2:] == ["ADMITTED has_email[0]", "ADMITTED has_nickname[0]"]
+    assert lines[1] == "BLOCKING (alethic)"
+    assert not [line for line in lines if line.startswith("{")]
+    assert lines[-2:] == ["ADMITTED has_email[0]", "ADMITTED has_nickname[0]"]
 
 
-def test_t17_transition_keeps_the_shared_projected_text(tmp_path) -> None:
+def test_t17_transition_prints_the_walk_layout(tmp_path) -> None:
+    # ROF2 successor of test_t17_transition_keeps_the_shared_projected_text.
     from support.v62_phase6_corpus import document, population_document, write_case
 
     from gnd import transition
@@ -283,7 +291,8 @@ def test_t17_transition_keeps_the_shared_projected_text(tmp_path) -> None:
     result = run_main(["check", str(model_file), "--pre", str(pre_file), "--steps", str(steps)])
     lines = result.stdout.decode().splitlines()
     assert lines[0].startswith("REDACTION applied: ")
-    assert lines[1].startswith('{"schema_version"')
+    assert lines[1] == "PRE-STATE"
+    assert not [line for line in lines if line.startswith('{"schema_version"')]
     assert "TOKEN-ALPHA-9" not in result.stdout.decode()
 
 

@@ -45,6 +45,9 @@ from gnd.output import (
     _print_projected_text as _print_projected_text,  # noqa: PLC0414 -- compatibility binding
 )
 from gnd.output import (
+    _print_projected_transition_text as _print_projected_transition_text,  # noqa: PLC0414 -- compatibility binding
+)
+from gnd.output import (
     _print_report as _print_report,  # noqa: PLC0414 -- compatibility binding
 )
 from gnd.output import (

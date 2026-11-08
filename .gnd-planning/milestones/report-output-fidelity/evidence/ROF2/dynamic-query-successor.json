@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/report-output-fidelity/evidence/ROF1/dynamic-query-successor.json",
+  "predecessor_sha256": "0ed90bbdeb3093205659477abd0331039f0b3b5b974f073681adc887ab9b324c",
+  "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): projected walk and verify text are rendered from a payload's rows (render_transition_rows, _projected_preamble, _projected_transition_lines, _projected_verify_lines, extraction_line, _walk_views, _snapshot_lines, _derived_change_lines, _json_line and the route printers in gnd.output); _print_transition is an adapter over render_transition_rows. Syntax census only; the exact query policy is unchanged.",
+  "removed": [
+    [
+      "src/gnd/output.py",
+      "_projected_check_lines",
+      "_rows(payload.get('warnings'))[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_check_lines",
+      "rows[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render",
+      "list[Any]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/output.py",
+      "_derived_change_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_projected_header",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_projected_transition_text",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_print_projected_verify_text",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_preamble",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_preamble",
+      "_rows(payload.get('warnings'))[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_preamble",
+      "list[str]",
+      2
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_preamble",
+      "rows[:report_module.MAX_POPULATION_ISSUES]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_preamble",
+      "tuple[list[str], list[str] | None]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_transition_lines",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_transition_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_verify_lines",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_projected_verify_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_snapshot_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_walk_verdict_lines",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "_walk_views",
+      "list[SimpleNamespace]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render_transition_rows",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/output.py",
+      "render_transition_rows",
+      "list[str]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7316,
+  "result_occurrences": 9134
+}

@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-**r2: corpus authored (2026-11-07); awaiting owner approval to implement.**
-The owner ruled D1-D5 as proposed with "Approve, author corpus"; the corpus is
-committed red (section "Corpus" below). No implementation file has been
-created or edited. Prior statuses: "Draft r1. Awaiting owner review at the
+**Approved (2026-11-07); implementing.** The owner approved the corpus and
+spec r2 with "Approve, implement", answering "Approve the ROF2 corpus and spec
+r2, so implementation can start?". D1-D5 were ruled as proposed with
+"Approve, author corpus". Prior statuses: "r2: corpus authored (2026-11-07);
+awaiting owner approval to implement."; "Draft r1. Awaiting owner review at the
 spec gate."; "r1 decisions ruled (2026-11-07); corpus being authored."
 `auto=false`.
 
@@ -326,3 +327,19 @@ the `raise_score` step's bindings. The model redacts the ticket role of
 to `ticket_score.ticket`, which is not redacted, so the projection keeps it by
 design (the `v62-phase2` tests accept this). The walk layout prints no
 bindings, so ROF2's text drops it; the canary is red until then.
+
+## An experiment, recorded before it runs (T16, 2026-11-07)
+
+Measures: wall time of `_projected_transition_lines` over a payload whose
+walk has 10,000 steps, each with 5 step verdict rows (40-character messages)
+and 5 failing intermediate snapshot rows, plus 5,000 frame rows; three runs on
+the development machine, and the same at 1,000 steps to show the growth is
+linear. Cannot measure: other machines, or the cost of printing. Liveness: a
+renderer quadratic in steps takes minutes at 10,000 steps, far over any
+ceiling here. Ceiling rule: 6x the slowest measured run at 10,000 steps,
+rounded up to the next 0.1 s, as ROF1's T10.
+
+Result: 0.085, 0.087, 0.086 s at 10,000 steps (115,013 lines); 0.015,
+0.011, 0.011 s at 1,000 steps (16,013 lines): linear. Ceiling: 6 x 0.087 =
+0.52, rounded up to **0.6 s**, written into
+`test_t16_walk_renderer_is_linear_in_rows`.

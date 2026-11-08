@@ -2,7 +2,19 @@
 
 ## 1. Status line
 
-**Draft r1.3, 2026-11-07, awaiting this spec's owner gate.** Not approved. The
+**Spec gate `(o2)`, 2026-11-07: approved as written.** Asked "Do you approve
+the UG1 spec at its gate?" (options: approve as written; amend; approve with
+T1's final `validate` kept to three documents), the owner replied, quoted:
+"yes". Read as approval of r1.3 as written, four `--document` arguments in T1
+(the first option), including UG1-D1 to UG1-D4 as proposed and the §11 gate.
+Approved bytes: r1.3 at `b3a4fda4`, sha256 `30835b56…`; only this paragraph was
+added after. It authorizes implementing UG1 (tests, fixtures, drafted
+dispositions) and nothing else: no source change, no issue closed or commented
+on, no merge. The phase record and the review of the phase diff follow
+implementation.
+
+Superseded status text, kept for provenance: **Draft r1.3, awaiting this spec's
+owner gate.** Not approved. The
 plan was approved at its gate on 2026-11-07 ([001-plan.md](../001-plan.md), plan
 r1.2); that approval does not extend to this spec. Implementable only after the
 owner approves this spec's gate. No code written. `auto=false`. Plan review

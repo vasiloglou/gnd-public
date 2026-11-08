@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC5/dynamic-query-successor.json",
+  "predecessor_sha256": "8159231d9b95e413ce83d967a38e3420327c572e0d1c164185f4d85c86ed972b",
+  "reason": "rule-check-followups FU5 (issue 114; owner ruling D1 r2, 2026-11-08, \"Retire them now\"): the RF6b shims _find_cycle, _dfs_cycle and _ring_component_violations, unused since RC2, are deleted, and their syntax candidates go with them. Removal only; the exact query policy is unchanged.",
+  "removed": [
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "dict[Any, set[Any]]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "graph.get(node, ())",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "list[tuple[Any, list[Any]]]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "path[path.index(successor):]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "set[Any]",
+      3
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_dfs_cycle",
+      "tuple[Any, list[Any]]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_find_cycle",
+      "dict[Any, set[Any]]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_find_cycle",
+      "list[tuple]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_find_cycle",
+      "set[Any]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_ring_component_violations",
+      "list[tuple]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_ring_component_violations",
+      "set[Any]",
+      1
+    ],
+    [
+      "src/gnd/checker/_core.py",
+      "_ring_component_violations",
+      "set[tuple]",
+      1
+    ]
+  ],
+  "added": [],
+  "result_distinct_rows": 7272,
+  "result_occurrences": 9086
+}

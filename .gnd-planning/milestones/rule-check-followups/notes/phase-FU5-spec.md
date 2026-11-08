@@ -2,13 +2,13 @@
 
 ## 1. Status
 
-**r2 (2026-11-08): D1 ruled (a), retire now; D2, D3 and the §6 design
-await the owner.** The owner ruled D1 (b), "Keep until release", over r1
+**r2 (2026-11-08): approved. D1 ruled (a), retire now; D2, D3 and the §6
+design approved as proposed (o, 2026-11-08, "Approve as proposed").** The owner ruled D1 (b), "Keep until release", over r1
 (commit e311c829). That ruling rested on r1's P1, which the Codex review
 showed false (R1): `v0.1.0` contains RF6, so RF-D5's release trigger has
 occurred. r2 corrected P1-P4 and put D1 again with the true facts; the
 owner then ruled (a), "Retire them now". The r1 ruling is retained below
-as history. `auto=false`: no code before D2, D3 and §6 are approved.
+as history. `auto=false`; implementation follows the approval.
 §5's probe deleted the helpers in the working tree and was reverted. V2
 at 53637ed8 with no code change: 2531 passed in 528.45s.
 
@@ -128,8 +128,8 @@ tests/test_rf*.py`; `compiled-snapshot-obligations/evidence/CI/`).
 |---|---|---|
 | D1 (r2) | RF-D5's trigger has occurred (P1). Retire the three helpers now, as FD5 ruled, or keep them anyway until a later release? | **Ruled (o, 2026-11-08): (a), retire now** ("Retire them now"). Proposal was **(a) retire now**: FD5 ruled retirement, RF-D5 now permits it in a separately approved phase, and no production path uses them. Cost: §6, about +40 test-side lines (one dynamic-query successor row; a retirement record for the other three guard families). (b) Keep: an explicit deferral by owner choice, not by RF-D5; the shim inventory rows are annotated with it and issue 114 stays open |
 | D1 (r1, history) | as r1 put it: "RF-D5's trigger (a public release after RF6) has not happened. Retire now, or keep the helpers until that release?" | **Ruled (o, 2026-11-08): (b), keep until the release** ("Keep until release"). Superseded: the premise was false (P1, review R1). |
-| D2 | If (a): where the retirement record lives | `compiled-snapshot-obligations/evidence/CI/retired-names.json`, beside the existing successor record |
-| D3 | If (a): the stop rule. The plan's -10 test lines did not foresee the retirement plumbing (about +35 support, net about +40 test-side lines) | accept the size as stated here; the stop line is measured against these numbers |
+| D2 | If (a): where the retirement record lives | **Approved (o, 2026-11-08) as proposed:** `compiled-snapshot-obligations/evidence/CI/retired-names.json`, beside the existing successor record |
+| D3 | If (a): the stop rule. The plan's -10 test lines did not foresee the retirement plumbing (about +35 support, net about +40 test-side lines) | **Approved (o, 2026-11-08) as proposed:** accept the size as stated here; the stop line is measured against these numbers |
 | D4 | Review over the spec | none; no spec review was run (the owner's ruling named D1 only) |
 
 ## 8. Tests and verification ledger (if D1 is "retire")

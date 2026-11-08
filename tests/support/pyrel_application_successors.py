@@ -113,6 +113,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC4/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC5/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/rule-check-followups/evidence/FU5/dynamic-query-successor.json',
 ]
 
 

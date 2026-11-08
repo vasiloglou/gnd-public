@@ -144,4 +144,4 @@ fields it would add an indirection for little gain.
 
 | Row | Question | Owner / target |
 |---|---|---|
-| FU2-O1 (spec I5) | Plan §0 rule 5: the test file is 194 lines against the 120-line stop line, and the pause for the owner did not happen at the red-test gate. Accept the size, or trim the tests? | owner, before merge |
+| FU2-O1 (spec I5) | Plan §0 rule 5: the test file is 194 lines against the 120-line stop line, and the pause for the owner did not happen at the red-test gate. Accept the size, or trim the tests? | owner, before merge. **Ruled (o, 2026-11-07): size accepted** -- the owner merged PR 126 ("merge the pr") with this row open in the PR description; the merge decision is the acceptance (AGENTS.md). Recorded after merge on the FU3 branch. |

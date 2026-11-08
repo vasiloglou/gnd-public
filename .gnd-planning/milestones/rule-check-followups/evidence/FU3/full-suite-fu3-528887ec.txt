@@ -1,0 +1,12 @@
+shard0: 1 failed, 2170 passed, 96 deselected, 2 errors in 455.90s (0:07:35) shard exit=1
+shard1: 1 failed, 2984 passed, 54 deselected in 365.35s (0:06:05) shard exit=1
+shard2: 3692 passed, 148 deselected in 460.79s (0:07:40) shard exit=0
+shard3: 2691 passed, 172 deselected, 1 warning in 187.60s (0:03:07) shard exit=0
+shard4:  shard exit=2
+shard5: 2665 passed, 253 deselected in 416.92s (0:06:56) shard exit=0
+failing list:
+ERROR tests/test_fu3_derived_ring.py
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap
+FAILED tests/test_public_collection.py::test_current_collection_has_target_owned_modules_and_hooks

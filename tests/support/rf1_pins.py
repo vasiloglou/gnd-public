@@ -140,7 +140,7 @@ def golden_path(lane: str, key: str) -> Path | None:
     raise AssertionError(f"RF1 golden missing: {lane}/{stem}.json")
 
 
-_GND_VERSION = re.compile(rb'(gnd_version\\?"\s*:\s*\\?")[^"\\]*')
+_GND_VERSION = re.compile(rb'(\\?"gnd_version\\?"\s*:\s*\\?")[^"\\]*')
 
 
 def _version_blind(data: bytes) -> bytes:

@@ -388,3 +388,18 @@ def test_r10_owed_surfaces_carry_their_approval_anchor():
     unanchored = [row["surface"] for row in rows if row["status"] == "owed" and not re.search(r"\b(D9|RF-R3)\b", row.get("note", ""))]
     assert unanchored == []
     assert [row["surface"] for row in rows if not row["rf1_nodes"] and not row["existing_nodes"] and row["owed_by"] is None] == []
+
+
+# --- T-VERSION-BLIND: a release bump must not move a pin, and nothing else may be hidden ------------
+
+
+def test_version_blind_compare_ignores_only_the_gnd_version_value():
+    from support.rf1_pins import _version_blind
+
+    base = b'{"gnd_version": "0.1.0", "prior_gnd_version": "0.0.1", "x": "a"}'
+    assert _version_blind(base) == _version_blind(base.replace(b"0.1.0", b"0.2.0"))
+    escaped = b'{"text": "{\\"gnd_version\\": \\"0.1.0\\"}"}'
+    assert _version_blind(escaped) == _version_blind(escaped.replace(b"0.1.0", b"0.2.0"))
+    assert _version_blind(base) != _version_blind(base.replace(b'"x": "a"', b'"x": "b"'))
+    # a field that merely ends in gnd_version is not the version
+    assert _version_blind(base) != _version_blind(base.replace(b"0.0.1", b"0.0.2"))

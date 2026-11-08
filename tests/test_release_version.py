@@ -81,7 +81,7 @@ def assert_no_publication_claim(declared: str, released: set[str], headings: lis
     assert heading is not None, f"no notes heading for {declared}"
     assert "not published" in heading, f"the notes heading {heading!r} does not say {declared} is not published"
     assert "not published" in compatibility, "docs/compatibility.md does not say the prepared version is not published"
-    claim = re.compile(rf"\b{re.escape(declared)}\b[^.\n]*\b(?:is|was|has been|are|were) (?:now )?(?:published|released|available on)", re.IGNORECASE)
+    claim = re.compile(rf"\b{re.escape(declared)}\b[^.\n]*\b(?:is|was|has been|are|were) (?:now )?(?:published|released|installable|available(?: on| from)?)", re.IGNORECASE)
     for name, text in {"docs/compatibility.md": compatibility, **other}.items():
         assert not claim.search(text), f"{name} says {declared} is published"
 
@@ -155,7 +155,7 @@ def test_notes_and_compatibility_do_not_claim_publication():
     )
 
 
-@pytest.mark.parametrize("mutation", ["heading-status-removed", "compatibility-claims", "support-claims", "heading-missing"])
+@pytest.mark.parametrize("mutation", ["heading-status-removed", "compatibility-claims", "support-claims", "heading-missing", "pypi-installable", "pypi-available"])
 def test_publication_claim_mutants_are_refused(mutation):
     declared = "9.9.9"  # an unpublished version, whatever the tree declares
     headings = [f"## {declared} (prepared, not published)"]
@@ -168,6 +168,10 @@ def test_publication_claim_mutants_are_refused(mutation):
         compatibility += "Version 9.9.9 is published on the package index.\n"
     elif mutation == "support-claims":
         other["docs/support.md"] += "9.9.9 has been released.\n"
+    elif mutation == "pypi-installable":
+        compatibility += "Version 9.9.9 is installable from PyPI.\n"
+    elif mutation == "pypi-available":
+        other["docs/support.md"] += "9.9.9 is available on PyPI.\n"
     else:
         headings = ["## Unreleased: something"]
     with pytest.raises(AssertionError):

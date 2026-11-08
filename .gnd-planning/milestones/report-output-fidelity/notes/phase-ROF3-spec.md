@@ -2,11 +2,12 @@
 
 ## 1. Status
 
-**Approved (2026-11-08); implementing.** The owner approved the corpus and
+**Approved (2026-11-08); implemented** (3b0dbcc1, review repairs 9ccb8290;
+record `004-phase-ROF3.md`). The owner approved the corpus and
 spec r2 with "Approve, implement", answering "Approve the ROF3 corpus and spec
 r2, so implementation can start?". D1-D7 were ruled as proposed with
 "Approve, author corpus". Prior statuses: "r2: corpus authored (2026-11-08);
-awaiting owner approval to implement."; "r1 decisions ruled (2026-11-08); corpus
+awaiting owner approval to implement."; "Approved (2026-11-08); implementing."; "r1 decisions ruled (2026-11-08); corpus
 being authored."; "Draft r1. Awaiting owner review at the
 spec gate." `auto=false`.
 

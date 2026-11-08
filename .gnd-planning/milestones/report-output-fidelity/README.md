@@ -6,16 +6,19 @@ split out by owner ruling (FD1, FD2): 111 (the model digest is a Python
 JSON for redaction and temporal models).
 
 **Status: plan r3 approved (2026-11-07, [plan-gate record](001-plan.md)). ROF1
-implemented ([record](002-phase-ROF1.md), PR 124); ROF2 implemented
-([record](003-phase-ROF2.md), PR 127, stacked on 124); both await merge.**
-ROF3 onward are outlines. `auto=false`.
+([record](002-phase-ROF1.md)) and ROF2 ([record](003-phase-ROF2.md)) merged to
+main (PR 124, PR 127). ROF3 implemented ([record](004-phase-ROF3.md)), on branch
+`claude/rof3-canonical-identity`, awaiting its PR and merge.** ROF4 onward are
+outlines. `auto=false`.
 
 - [Plan-gate record](001-plan.md)
 - [ROF1 record](002-phase-ROF1.md)
 - [ROF2 record](003-phase-ROF2.md)
+- [ROF3 record](004-phase-ROF3.md)
 - [Plan (r3, approved)](notes/report-output-fidelity-plan.md)
 - [ROF1 spec (approved, implemented)](notes/phase-ROF1-spec.md)
 - [ROF2 spec (approved, implemented)](notes/phase-ROF2-spec.md)
+- [ROF3 spec (approved, implemented)](notes/phase-ROF3-spec.md)
 - ROF1 approval corpus: `tests/fixtures/rof1-projected-text/` (README = stories, `expected/` = answers), runner `tests/test_rof1_projected_text.py`
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md) and [triage](evidence/plan-review-r2/triage.md)
 - [Digest census](evidence/census-r2/README.md)
@@ -35,6 +38,9 @@ text defect is fixed in code; the issue closes at the milestone close.
 
 ROF2-O1 ruled 2026-11-08: the error type stays in `--format json` only.
 
-ROF3 spec r2 ([phase-ROF3-spec.md](notes/phase-ROF3-spec.md)): D1-D7 ruled as proposed (2026-11-08); test-vector corpus `tests/fixtures/rof3-model-identity/` authored red. On branch `claude/rof3-canonical-identity` (stacked on ROF2).
+ROF3 implemented: canonical model identity and `gnd validate --identity`
+([spec](notes/phase-ROF3-spec.md), [record](004-phase-ROF3.md)); corpus
+`tests/fixtures/rof3-model-identity/`. Issue 111 stays open (ROF4 accepts the
+identity at matching sites; reports keep the legacy digest per D3).
 
-Next action: merge PR 124 then PR 127 (owner); approve the ROF3 corpus and spec r2 to implement.
+Next action: merge the ROF3 PR (owner); rule ROF3-O1; then the ROF4 spec.

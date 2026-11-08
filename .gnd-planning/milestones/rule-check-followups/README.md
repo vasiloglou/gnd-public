@@ -5,7 +5,7 @@ close deferred: issues 111, 112, 113, 114, 115, 116, 117 and 119.
 
 **Status: plan r3 approved by the owner on 2026-11-07
 ([plan-gate record](001-plan.md)). FU1 complete and merged ([record](002-phase-FU1.md)).
-FU2 complete and merged ([record](003-phase-FU2.md)). FU3 complete and merged ([record](004-phase-FU3.md)). FU4 complete and merged ([record](005-phase-FU4.md)). FU5 spec drafted, blocked on D1.** Issues 111 and 112 are split out.
+FU2 complete and merged ([record](003-phase-FU2.md)). FU3 complete and merged ([record](004-phase-FU3.md)). FU4 complete and merged ([record](005-phase-FU4.md)). FU5 spec r2: D1 returned to the owner after review R1.** Issues 111 and 112 are split out.
 
 - [Plan (r3, approved)](notes/rule-check-followups-plan.md)
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md)
@@ -22,8 +22,9 @@ FU2 complete and merged ([record](003-phase-FU2.md)). FU3 complete and merged ([
 - [FU4 spec (approved)](notes/phase-FU4-spec.md)
 - [FU4 record](005-phase-FU4.md)
 - [FU4 Codex review](notes/phase-FU4-codex-review.md)
-- [FU5 spec (draft r1)](notes/phase-FU5-spec.md)
+- [FU5 spec (r2)](notes/phase-FU5-spec.md)
+- [FU5 Codex review of r1](notes/phase-FU5-codex-review.md)
 
 Phases: FU1 (113), FU2 (115, 116), FU3 (119), FU4 (117), FU5 (114); close.
 
-Next action: the owner rules on FU5's D1 (retire now, or keep until the release RF-D5 names).
+Next action: the owner rules on FU5's D1 (r2): retire now, as RF-D5 now permits, or keep by choice.

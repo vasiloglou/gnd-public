@@ -2,12 +2,14 @@
 
 ## 1. Status
 
-**Approved (2026-11-08): helpers kept until the release RF-D5 names.**
-The owner ruled D1 (b) over r1 (commit e311c829) with "Keep until
-release", answering "Keep the cycle helpers until the next release, or
-retire them now?". D2 and D3 are moot; D4 (no spec review) follows the
-proposal. `auto=false`. Prior status: "Draft r1, blocked on D1." §5's
-probe deleted the helpers in the working tree and was reverted.
+**r2 (2026-11-08), D1 returned to the owner.** The owner ruled D1 (b),
+"Keep until release", over r1 (commit e311c829). That ruling rested on
+r1's P1, which the Codex review showed false (R1): `v0.1.0` contains RF6,
+so RF-D5's release trigger has occurred. r2 corrects P1-P4 and puts D1
+again with the true facts; the r1 ruling is retained below as history,
+not as a decision. `auto=false`. Prior status: "Approved: helpers kept
+until the release RF-D5 names." §5's probe deleted the helpers in the
+working tree and was reverted.
 
 ## 2. Provenance
 
@@ -46,18 +48,27 @@ reason recorded.
 
 ## 5. Probe (2026-11-08, `6ed86d90`)
 
-**P1. The RF-D5 trigger is not met.** The only release is `v0.1.0`
-(2026-10-12, source `75eda93f`, the RF1 merge); RF6 landed after it
-(records `code-refactoring/011-phase-RF6a.md`, `012-phase-RF6b.md`).
-`pyproject.toml` says 0.2.0, unreleased. FD5's own proposal text named
-"RF-D5's later approved phase, after the first public release", so its
-premise is refuted (FU5-O1).
+**P1 (r2; r1's P1 was false, review R1). The RF-D5 trigger has
+occurred.** The only release, `v0.1.0` (published 2026-10-12, source
+`75eda93f`), contains RF6a and RF6b: `git log v0.1.0` lists `a3f35a6d
+docs(rf6a)` and `10608c47 docs(rf6b): Close the model and checker package
+split`, and the tagged tree holds the RF6b package
+(`src/gnd/checker/_core.py`, `__init__.py:128` re-exporting
+`_find_cycle`). So "the first public release after RF6" exists, and RF-D5
+now allows retirement in a separately approved phase; FU5 is that phase
+if the owner approves it. r1 reached the opposite conclusion from a
+mistaken ancestry check (it tested an FU2 commit, not an RF6 one).
+`pyproject.toml` says 0.2.0, unreleased.
 
-**P2. Importability.** `gnd.checker._find_cycle` existed in `v0.1.0`
-(then a module, `src/gnd/checker.py`), so a v0.1.0 user could import it;
-it is underscore-private and documented nowhere public.
+**P2. Importability.** All three names are importable from `gnd.checker`
+in `v0.1.0` (the RF6b package; review R2 corrected r1's "a module"), so a
+v0.1.0 user could import them; they are underscore-private and documented
+nowhere public.
 
-**P3. Callers.** No production caller of any of the three. One test:
+**P3. Callers.** No production path reaches the three-helper cluster
+(they call each other: `_find_cycle` calls `_dfs_cycle`, `_core.py:1315`;
+`_ring_component_violations` calls `_find_cycle`, `:1377`; review R3). One
+test:
 `tests/test_checker_families.py:206` (`_find_cycle`, checker family). No
 test outside the checker family uses `_find_cycle`, so FD5 retires all
 three.
@@ -76,7 +87,11 @@ every `tests/test_rf*.py` plus `tests/test_checker_families.py`: 15 failed,
 | `support/rf9_ci_sources.coupling_sites` via `test_rf9_ci_repairs.py` (1), `test_rf4_peripheral.py` graph tests (6), `test_rf3_core.py` (1) | 8 | `compatibility-private-sites.json` lists the three re-exports, and the accounting refuses a listed alias that no longer exists |
 | `test_checker_families.py::test_find_cycle_helper_names_members` | 1 | the helper's own test |
 
-None of these guards has a retirement mechanism today.
+The dynamic-query guard already has a counted-removal successor,
+`dynamic-query-successor.json` (`tests/test_rf6_query_policy.py:129-160`),
+that can remove `_dfs_cycle`'s row; the import baseline, the definition
+baseline and the compatibility private sites have no retirement mechanism
+(review R4).
 
 ## 6. Design (if D1 is "retire")
 
@@ -91,14 +106,15 @@ tests/test_rf*.py`; `compiled-snapshot-obligations/evidence/CI/`).
 - **M1 source (about -91 lines).** Delete the three bodies, their
   `__module__` lines and re-exports; drop `graphlib`'s import if it becomes
   unused.
-- **M2 retirement record (about +45 test-support lines).**
+- **M2 retirement record (about +35 test-support lines).**
   `retired-names.json` lists `gnd.checker._find_cycle`, `_dfs_cycle`,
   `_ring_component_violations`, each with the issue, this phase and the
   owner's ruling. `support/rf9_ci_sources` gains one reader. Each of the
-  four guards in P4 subtracts exactly the listed names: the import baseline
-  (230 becomes 227 live, the frozen file unchanged), the definition
-  baseline rows, the compatibility private sites, and the dynamic query
-  inventory row. A listed name that is still importable fails the guard,
+  three guard families without a mechanism subtracts exactly the listed
+  names: the import baseline (230 becomes 227 live, the frozen file
+  unchanged), the definition baseline rows, and the compatibility private
+  sites. The dynamic-query row for `_dfs_cycle` is removed through the
+  existing `dynamic-query-successor.json` (review R4). A listed name that is still importable fails the guard,
   so the record cannot hide a live binding.
 - **M3 tests (about -10 / +15 lines).** Delete
   `test_find_cycle_helper_names_members`; add T2.
@@ -109,9 +125,10 @@ tests/test_rf*.py`; `compiled-snapshot-obligations/evidence/CI/`).
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | RF-D5's trigger (a public release after RF6) has not happened. Retire now, or keep the helpers until that release? | **(b) keep them until the release**: it is your standing rule, the gain is 91 dead lines, and retiring now costs a new retirement mechanism across 6 guard files for three private names. FU5 then records the kept helpers and their trigger, issue 114 stays open for the post-release retirement phase, and predicate 5 is met by "explicitly kept". (a) Retire now: waive RF-D5's release trigger for these three underscore-private names (a v0.1.0 user could import `_find_cycle`), with §6 as designed **Ruled (o, 2026-11-08): (b), keep until the release** ("Keep until release", answering "Keep the cycle helpers until the next release, or retire them now?"). |
+| D1 (r2) | RF-D5's trigger has occurred (P1). Retire the three helpers now, as FD5 ruled, or keep them anyway until a later release? | **(a) retire now**: FD5 ruled retirement, RF-D5 now permits it in a separately approved phase, and no production path uses them. Cost: §6, about +40 test-side lines (one dynamic-query successor row; a retirement record for the other three guard families). (b) Keep: an explicit deferral by owner choice, not by RF-D5; the shim inventory rows are annotated with it and issue 114 stays open |
+| D1 (r1, history) | as r1 put it: "RF-D5's trigger (a public release after RF6) has not happened. Retire now, or keep the helpers until that release?" | **Ruled (o, 2026-11-08): (b), keep until the release** ("Keep until release"). Superseded: the premise was false (P1, review R1). |
 | D2 | If (a): where the retirement record lives | `compiled-snapshot-obligations/evidence/CI/retired-names.json`, beside the existing successor record |
-| D3 | If (a): the stop rule. The plan's -10 test lines did not foresee the retirement plumbing (about +45 support, net about +50 test-side lines) | accept the size as stated here; the stop line is measured against these numbers |
+| D3 | If (a): the stop rule. The plan's -10 test lines did not foresee the retirement plumbing (about +35 support, net about +40 test-side lines) | accept the size as stated here; the stop line is measured against these numbers |
 | D4 | Review over the spec | none; no spec review was run (the owner's ruling named D1 only) |
 
 ## 8. Tests and verification ledger (if D1 is "retire")
@@ -140,17 +157,20 @@ Retiring any other shim; the RF-D5 rule itself; a release.
 ## 10. Size
 
 Plan estimate: about -90 source, -10 test lines. If D1 is "retire":
--91 source, about +50 test-side lines; D3 asks for that figure as the
-new basis.
+-91 source, about +40 test-side lines (the dynamic-query guard reuses its
+successor, review R4); D3 asks for that figure as the new basis.
 
 ## 11. Findings
 
-- **FU5-O1 (refuted premise, P1).** FD5 assumed RF-D5's release trigger;
-  it has not fired. Recorded for the close.
+- **FU5-O1 (withdrawn in r2).** r1 recorded FD5's premise as refuted; it
+  was not. FD5's premise (a release after RF6) holds.
 
-- **I1 (D1 (b), 2026-11-08).** The phase edits planning text only. The
-  shim inventory needs no edit: its rows for the three names
-  (`code-refactoring/notes/shim-inventory.md:755-757`) already give
-  "RF-D5" as the retirement, and `tests/test_rf2_helpers.py` parses that
-  file, so it is left byte-identical. Issue 114 stays open, retargeted to
-  the first retirement phase after a public release.
+- **I1 (r1, withdrawn).** r1 said the shim inventory needs no edit. The
+  plan says FU5 touches it (§5), and `tests/test_rf2_helpers.py` reads only
+  RF2 rows, so the three RF6b rows can be annotated either way D1 goes
+  (review R5).
+- **I2 (Codex review of r1, 2026-11-08).** Disposition `block`, R1-R7;
+  [review](phase-FU5-codex-review.md). R1 (blocking) reproduced: `git
+  ls-tree v0.1.0 src/gnd/checker/` lists `_core.py`; `git log v0.1.0`
+  lists the RF6a and RF6b commits. R2-R5 corrected above; R6 (no record
+  yet) and R7 (README) follow D1.

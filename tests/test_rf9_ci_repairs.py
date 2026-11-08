@@ -38,10 +38,16 @@ def test_pool_malformed_json_keeps_decoder_exception(tmp_path):
 def test_compatibility_site_accounting_does_not_hide_new_or_missing_edges():
     import json
 
-    from support.rf9_ci_sources import EVIDENCE, coupling_sites
+    from support.rf9_ci_sources import EVIDENCE, coupling_sites, retired_names
 
-    aliases = json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites']
+    frozen = json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites']
+    retired = retired_names()
+    aliases = [row for row in frozen if (row['from'], row['name']) not in retired]
+    assert len(frozen) - len(aliases) == len(retired)
     assert coupling_sites({'private_imports': aliases}) == []
+    # A retired alias that reappears is an uninventoried edge again (FU5).
+    revived = [row for row in frozen if (row['from'], row['name']) in retired]
+    assert coupling_sites({'private_imports': [*aliases, *revived]}) == revived
     duplicate = dict(aliases[0], line=99999)
     assert coupling_sites({'private_imports': [*aliases, duplicate]}) == [duplicate]
     unknown = dict(duplicate, name='_rf9_uninventoried')

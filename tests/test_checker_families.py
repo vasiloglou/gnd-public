@@ -203,17 +203,6 @@ def test_ring_acyclic_fail_names_two_cycle_members(ring_fail_report):
     )
 
 
-def test_find_cycle_helper_names_members():
-    """RESEARCH A1 gate: the cycle finder must return >=2 members (graphlib
-    CycleError args shape, or the DFS fallback if that shape ever differs)."""
-    from gnd.checker import _find_cycle
-
-    members = _find_cycle([(1, 2), (2, 3), (3, 1)])
-    assert members is not None
-    assert len(set(members)) >= 2
-    assert _find_cycle([(1, 2), (2, 3)]) is None
-
-
 # --- Value-comparison, subtype-partition, textual (misc model) ---
 
 

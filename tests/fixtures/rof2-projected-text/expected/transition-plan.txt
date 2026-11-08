@@ -1,0 +1,7 @@
+REDACTION applied: has_email.email
+PRE-STATE
+STEP 1 (add_email)
+COMPUTED POST
+{"facts": {"has_email": [{"customer": "c-1", "email": {"redacted": true, "roles": ["has_email.email"]}}, {"customer": "c-2", "email": {"redacted": true, "roles": ["has_email.email"]}}], "has_nickname": [{"customer": "c-1", "nickname": "OPEN-NICK-333333"}]}, "population": {"covers": ["has_email", "has_nickname"], "model": "../models/accounts-redacted.orm.yaml", "model_id": "urn:gnd-fixture:rof2-accounts-redacted@1", "source": "synthetic"}}
+FRAME COMPARISON: not applicable -- post is computed
+POST-STATE

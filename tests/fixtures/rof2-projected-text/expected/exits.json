@@ -1,0 +1,170 @@
+{
+  "transition-plan": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-start.pop.yaml",
+      "--steps",
+      "steps/add-email.steps.json"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "transition-plan-unredacted": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-start.pop.yaml",
+      "--steps",
+      "steps/add-email.steps.json",
+      "--unredacted"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "transition-full": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-start.pop.yaml",
+      "--steps",
+      "steps/add-email.steps.json",
+      "--post",
+      "populations/accounts-end-missing.pop.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "transition-full-unredacted": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-start.pop.yaml",
+      "--steps",
+      "steps/add-email.steps.json",
+      "--post",
+      "populations/accounts-end-missing.pop.yaml",
+      "--unredacted"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "transition-step-fail": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-start.pop.yaml",
+      "--steps",
+      "steps/add-second-email.steps.json"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "transition-precondition": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-fail.pop.yaml",
+      "--steps",
+      "steps/add-nickname-unregistered.steps.json"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "transition-refused": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "--pre",
+      "populations/accounts-start.pop.yaml",
+      "--steps",
+      "steps/add-email-stale-digest.steps.json"
+    ],
+    "exit": 3,
+    "schema_version": 9
+  },
+  "transition-temporal": {
+    "argv": [
+      "check",
+      "models/service-temporal.orm.yaml",
+      "--pre",
+      "populations/service-start.pop.yaml",
+      "--steps",
+      "steps/set-window.steps.json"
+    ],
+    "exit": 0,
+    "schema_version": 11
+  },
+  "transition-derived": {
+    "argv": [
+      "check",
+      "models/dynamic.orm.yaml",
+      "--pre",
+      "populations/pre-open.pop.yaml",
+      "--steps",
+      "steps/ticket.steps.json",
+      "--post",
+      "populations/post-resolved.pop.yaml"
+    ],
+    "exit": 0,
+    "schema_version": 9
+  },
+  "admission": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "populations/accounts-fail.pop.yaml",
+      "--admission"
+    ],
+    "exit": 1,
+    "schema_version": 10
+  },
+  "admission-unredacted": {
+    "argv": [
+      "check",
+      "models/accounts-redacted.orm.yaml",
+      "populations/accounts-fail.pop.yaml",
+      "--admission",
+      "--unredacted"
+    ],
+    "exit": 1,
+    "schema_version": 10
+  },
+  "verify": {
+    "argv": [
+      "verify",
+      "models/accounts-redacted.orm.yaml",
+      "populations/accounts-fail.pop.yaml",
+      "--no-extraction"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "verify-unredacted": {
+    "argv": [
+      "verify",
+      "models/accounts-redacted.orm.yaml",
+      "populations/accounts-fail.pop.yaml",
+      "--no-extraction",
+      "--unredacted"
+    ],
+    "exit": 1,
+    "schema_version": 9
+  },
+  "verify-refused": {
+    "argv": [
+      "verify",
+      "models/accounts-redacted.orm.yaml",
+      "populations/accounts-ill-formed.pop.yaml",
+      "--no-extraction"
+    ],
+    "exit": 3,
+    "schema_version": 9
+  }
+}

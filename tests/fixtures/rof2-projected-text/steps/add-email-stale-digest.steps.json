@@ -1,0 +1,15 @@
+{
+  "steps_schema": 1,
+  "model": "../models/accounts-redacted.orm.yaml",
+  "model_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "operations_digest": "sha256:1e101f5eeb283da8a7d4312c56c41f6235caf4bce14678e2fc8e49b2260d1b8c",
+  "steps": [
+    {
+      "op": "add_email",
+      "bindings": {
+        "customer": "c-2",
+        "email": "SECRET-EMAIL-271828"
+      }
+    }
+  ]
+}

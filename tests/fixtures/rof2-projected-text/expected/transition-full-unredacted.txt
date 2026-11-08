@@ -1,0 +1,7 @@
+REDACTION unredacted: has_email.email
+PRE-STATE
+STEP 1 (add_email)
+FRAME
+  has_email: deontic (deontic-toucher; add_email)
+  [warning] $.post.facts.has_email: the declared post-state is missing 1 has_email fact(s) that no operation in this walk retracts
+POST-STATE

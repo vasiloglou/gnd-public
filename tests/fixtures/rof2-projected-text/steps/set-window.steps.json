@@ -1,0 +1,15 @@
+{
+  "steps_schema": 1,
+  "model": "../models/service-temporal.orm.yaml",
+  "model_digest": "sha256:6db189f3f5e426bdb76efc6f44a8b98c6f8a45ea7916370912b8db9aa8e77515",
+  "operations_digest": "sha256:f5a8dfc96cc057deb7e81307cbedcaa8d217c70c67a8b6f5011852a217e162ef",
+  "steps": [
+    {
+      "op": "set_window",
+      "bindings": {
+        "customer": "c-1",
+        "window": 4
+      }
+    }
+  ]
+}

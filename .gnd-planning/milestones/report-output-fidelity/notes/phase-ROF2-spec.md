@@ -2,8 +2,12 @@
 
 ## 1. Status
 
-**Draft r1. Awaiting owner review at the spec gate.** No implementation file
-has been created or edited. `auto=false`.
+**r2: corpus authored (2026-11-07); awaiting owner approval to implement.**
+The owner ruled D1-D5 as proposed with "Approve, author corpus"; the corpus is
+committed red (section "Corpus" below). No implementation file has been
+created or edited. Prior statuses: "Draft r1. Awaiting owner review at the
+spec gate."; "r1 decisions ruled (2026-11-07); corpus being authored."
+`auto=false`.
 
 ## 2. Provenance
 
@@ -180,11 +184,11 @@ route trailer (`ADMITTED`/`BLOCKED`, `lineage`), the plain order.
 
 | D | Question | Readings and cost |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first**, as ROF1: one model/population/steps/expected-text set per case, answers split out and derived from the base renderer over the report's rows (section 11). Alternative: prose-only. Proposed: corpus. **Open** |
-| D2 | Fate of `_print_projected_text` once no command calls it | (a) **dispatcher** (proposed): the historical binding renders the new text, so no caller can get JSON-as-text through it; its RF5 body pin moves (one successor row). (b) leave it unchanged, unused, until shim retirement (RF-D5): no pin moves, but a dead function keeps printing the old layout. No exit-code difference. **Open** |
-| D3 | Reason suffix on transition and frame verdict lines | yes (proposed): the ROF1-O1 ruling applied on every projected route, so a redacted walk keeps its cause (`reason_code`) visible; plain bytes unchanged (the suffix is projected-only). No: the transition lines would show `[REDACTED INSTANCE DETAIL]` with no cause. **Open** |
-| D4 | The COMPUTED POST line is one JSON line | keep (proposed): it is the plain layout's own line (`json.dumps(computed_post)`), printed from the projected computed post, so its redacted cells are markers. Alternative: render facts as lines, which changes the plain route's bytes too (rule 1). **Open** |
-| D5 | Review over the spec bytes | none (proposed), as ROF1 D4; the diff review covers the leak surface (plan §8). **Open** |
+| D1 | Approval instrument | **Ruled (o, 2026-11-07): corpus-first, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). **corpus-first**, as ROF1: one model/population/steps/expected-text set per case, answers split out and derived from the base renderer over the report's rows (section 11). Alternative: prose-only. Proposed: corpus. **Open** |
+| D2 | Fate of `_print_projected_text` once no command calls it | **Ruled (o, 2026-11-07): (a) dispatcher, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). (a) **dispatcher** (proposed): the historical binding renders the new text, so no caller can get JSON-as-text through it; its RF5 body pin moves (one successor row). (b) leave it unchanged, unused, until shim retirement (RF-D5): no pin moves, but a dead function keeps printing the old layout. No exit-code difference. **Open** |
+| D3 | Reason suffix on transition and frame verdict lines | **Ruled (o, 2026-11-07): yes, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). yes (proposed): the ROF1-O1 ruling applied on every projected route, so a redacted walk keeps its cause (`reason_code`) visible; plain bytes unchanged (the suffix is projected-only). No: the transition lines would show `[REDACTED INSTANCE DETAIL]` with no cause. **Open** |
+| D4 | The COMPUTED POST line is one JSON line | **Ruled (o, 2026-11-07): keep, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). keep (proposed): it is the plain layout's own line (`json.dumps(computed_post)`), printed from the projected computed post, so its redacted cells are markers. Alternative: render facts as lines, which changes the plain route's bytes too (rule 1). **Open** |
+| D5 | Review over the spec bytes | **Ruled (o, 2026-11-07): none, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). none (proposed), as ROF1 D4; the diff review covers the leak surface (plan §8). **Open** |
 
 ## 8. Tests
 
@@ -211,6 +215,7 @@ the same invocation's `--format json` run at the base.
 | T15 | successors of ROF1's `test_t17_transition_keeps_the_shared_projected_text`, `test_t17_other_projected_routes_still_use_the_shared_json_text`, `test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase` and the admission assertion of `test_t8_projected_branches_read_only_the_payload` | each rewritten to pin the ROF2 behaviour; the old pins are removed in the same commit and named in the record |
 | T16 | 10,000 steps × 5 verdict rows | under a ceiling measured before the run (6x the slowest of three runs) |
 | T17 | D2 (a): `_print_projected_text` on each route's payload | prints the same lines as the route printer |
+| T18 | (r2) payload level: walk rows (snapshot, step, frame) carrying a `reason_code` absent from the message | the projected lines end ` [reason: <code>]`; the plain adapter's lines do not. No corpus row carries a code, so the corpus cannot hold this branch |
 
 Every declared branch has a case that can fail it: pre-state rows (T4),
 step verdicts and intermediate (T4), derived changes (T6b), computed post
@@ -275,3 +280,49 @@ without mentioning redaction or temporal terms (the V5 full suite catches those)
 | V4 | layers and homes | run | `tools/gnd_layers.json` import check; allowance count zero |
 | V5 | full default suite vs base | run (sharded) | failure set ⊆ the base's |
 | V6 | component index | at record time | `scripts/components_index.py changed --base <base> --strict` |
+
+## Corpus (authored 2026-11-07, r2)
+
+`tests/fixtures/rof2-projected-text/`: entry point `README.md` (stories and
+commands only), answers in `expected/` (`<case>.txt`, `reports/<case>.json`,
+`exits.json`, `README.md`, `derive_answers.py`), runner
+`tests/test_rof2_projected_text.py`. Answers derived by `derive_answers.py`
+with the base source first on `PYTHONPATH` (`src/` identical at `e1fb6a18`
+and `f1a57836`): the plain renderers `_print_transition`, `render_check_rows`
+and `_print_admission_text` over the report's rows, the extraction line as
+`_cmd_verify` spells it. A second run reproduced every answer byte for byte.
+
+Fourteen cases, mapped to section 8:
+
+| Case | Exit | T |
+|---|---|---|
+| `transition-plan`, `-unredacted` | 0 | T1, T2, T10 |
+| `transition-full`, `-unredacted` | 0 | T3, T10 |
+| `transition-step-fail` | 1 | T4 (intermediate and post-state rows) |
+| `transition-precondition` | 1 | T4 (pre-state rows, a failing precondition step row) |
+| `transition-refused` | 3 | T5 |
+| `transition-temporal` | 0 | T6 (no header; deontic intermediate and post-state rows) |
+| `transition-derived` | 0 | T6b (three `DERIVED` lines, once each) |
+| `admission`, `-unredacted` | 1 | T7, T10 |
+| `verify`, `-unredacted` | 1 | T8, T10 |
+| `verify-refused` | 3 | T9 |
+
+Changes from the section 11 plan (r2): `transition-full-unredacted`,
+`transition-precondition` and `admission-unredacted` added, so the pre-state
+and step-verdict branches and both modes of every route have a case. The
+models and walks are new except `dynamic.orm.yaml`, `pre-open`,
+`post-resolved` and `ticket.steps.json`, copied byte for byte from
+`tests/fixtures/v62-phase2`.
+
+State at commit: 57 tests, **29 red** (14 answer-key cases, 14 no-report-line
+cases, and the applied-mode canary for `transition-derived`), 28 green (14
+JSON-bytes pins, 10 other canaries, 3 unredacted presence checks, the corpus
+self-check).
+
+Observation (not a defect of this phase): the base's applied JSON-as-text for
+`transition-derived` contains the ticket value `SECRET-TICKET-314159`, from
+the `raise_score` step's bindings. The model redacts the ticket role of
+`evidence`, `ready` and `resolvable` only; `raise_score` binds the same value
+to `ticket_score.ticket`, which is not redacted, so the projection keeps it by
+design (the `v62-phase2` tests accept this). The walk layout prints no
+bindings, so ROF2's text drops it; the canary is red until then.

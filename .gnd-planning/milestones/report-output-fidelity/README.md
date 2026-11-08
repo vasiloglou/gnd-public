@@ -24,6 +24,6 @@ blocked on D3), close.
 
 ROF1-O1 ruled 2026-11-07: keep the `[reason: ...]` suffix.
 
-ROF2 spec drafted (r1, awaiting the owner gate): [phase-ROF2-spec.md](notes/phase-ROF2-spec.md), with its changed-bytes census in [evidence/ROF2-census/](evidence/ROF2-census/).
+ROF2 spec r2 ([phase-ROF2-spec.md](notes/phase-ROF2-spec.md)): D1-D5 ruled as proposed (2026-11-07); corpus `tests/fixtures/rof2-projected-text/` authored red; changed-bytes census in [evidence/ROF2-census/](evidence/ROF2-census/). On branch `claude/rof2-projected-text`, stacked on PR 124.
 
-Next action: merge PR 124 (owner); rule ROF2 D1-D5 at the spec gate.
+Next action: merge PR 124 (owner); approve the ROF2 corpus and spec r2 to implement.

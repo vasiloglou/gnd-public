@@ -1,0 +1,77 @@
+T7 red before M3 (tests/test_release_docs.py at the RR3 gate commit plus the new test, docs/releasing.md unchanged):
+=========================== short test summary info ============================
+FAILED tests/test_release_docs.py::test_releasing_procedure_states_both_routes
+1 failed, 2 passed in 0.07s
+
+RR3 checks at c84c9a499f33aafd30f370b03f54776221b00bde (2026-11-08T06:09:48Z), scratch worktree.
+
+### T1 git apply --check, each patch alone
+post-publication: exit 0
+post-publication-tag: exit 0
+post-publication-release-files: exit 0
+
+### T6 the RR3 tree
+34 passed, 1 deselected in 0.61s
+
+### T5 liveness: stale-text check on the RR3 tree (expect exit 1)
+exit 1
+
+### T2 all three patches, placeholder replaced by 2026-11-09
+154 passed in 3.26s
+
+### T5 stale-text check, all three patches applied (placeholder form, as the allowlist expects)
+no stale release-state text (16 allowlisted hits)
+exit 0
+
+### T3b one pin left at 0.1.0 after publication (README)
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_pins_name_the_declared_version_once_released
+1 failed, 21 passed in 0.09s
+
+### T3 main patch without the RELEASED hunk
+/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-plan-rule-check-release-abb170/e1da5363-429b-4c3e-bb23-3de5012243e5/scratchpad/rr3-patchwork/tests/test_release_version.py:101: AssertionError: README.md pins 0.2.0, which is not in RELEASED
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_notes_and_compatibility_do_not_claim_publication
+FAILED tests/test_release_version.py::test_install_pins_name_a_published_version
+2 failed, 20 passed in 0.09s
+
+### T4 placeholder left in place
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_no_publication_date_placeholder_once_released
+1 failed, 21 passed in 0.14s
+
+### T5 main patch only (expect exit 1, printing only the tag and release-file lines)
+stale release-state text:
+docs/installation.md:repository is private, access requires GitHub authentication. The `v0.1.0` tag
+docs/installation.md:[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+docs/installation.md:python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+docs/marketplace-plugins.md:commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+exit 1
+
+### T7 mutant: base releasing.md restored
+FAILED tests/test_release_docs.py::test_releasing_procedure_states_both_routes
+1 failed, 2 passed in 0.07s
+
+final status lines: 0
+
+### T5 rerun at 7f213a116c37ebb52239adac9b1cf9d3c17c1e94 after the <DATE> fix (2026-11-08T06:10:15Z)
+-- RR3 tree (expect exit 1):
+exit 1
+-- all three patches, placeholder kept:
+no stale release-state text (16 allowlisted hits)
+exit 0
+-- all three patches, date 2026-11-09 filled in:
+no stale release-state text (16 allowlisted hits)
+exit 0
+-- main patch only (expect exit 1, four lines):
+stale release-state text:
+docs/installation.md:repository is private, access requires GitHub authentication. The `v0.1.0` tag
+docs/installation.md:[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+docs/installation.md:python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+docs/marketplace-plugins.md:commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+exit 1
+-- T1 recheck at 7f213a116c37ebb52239adac9b1cf9d3c17c1e94:
+post-publication: exit 0
+post-publication-tag: exit 0
+post-publication-release-files: exit 0
+final status lines: 0

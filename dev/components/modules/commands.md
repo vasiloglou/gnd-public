@@ -29,8 +29,8 @@ Components: cli.checking_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 884 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 919 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 883 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 918 | (no docstring) |
 
 ## gnd.commands.codegen — `src/gnd/commands/codegen.py`
 Components: cli.codegen_command

@@ -2520,14 +2520,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.text_output
-- does: Print validation issues, snapshot verdicts, transition traces and projected report text; render check and validate text from a payload's rows, plain or projected.
-- verbs: text report, projected check text, row renderer, issue lines, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance
+- does: Print validation issues, snapshot verdicts, transition traces and projected report text; render check, validate, walk and verify text from a payload's rows, plain or projected.
+- verbs: text report, projected check text, row renderer, issue lines, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance, walk renderer, render_transition_rows, projected walk text, extraction line, projected verify text
 - status: canonical
 - modules: src/gnd/output.py
 - uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, semantics.transitions
 - used_by: codegen.service, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
-- tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py
-- notes: check and validate text for a declaration-bearing or temporal route is rendered from the projected payload only (render_check_rows is shared with the plain route); transition, `check --admission` and export verification still print projected JSON until the successor phase. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
+- tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py, tests/test_rof2_projected_text.py
+- notes: Projected text is rendered from the projected payload only: for an active redaction policy on check, validate, walks, `check --admission` and verify, and for temporal terms on check, validate and walks (temporal admission and verify are not projected and print plain text); the plain routes share the same row renderers (render_check_rows, render_transition_rows) and the one extraction_line. _print_projected_text is a dispatcher kept for the historical binding. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
 
 
 ### semantics.ground_atoms

@@ -1,0 +1,17 @@
+REDACTION applied: has_email.email
+PRE-STATE
+  snapshot [fail] fact_types[has_email].constraints[0]: [REDACTED INSTANCE DETAIL]
+  snapshot [fail] fact_types[has_email].constraints[1]: [REDACTED INSTANCE DETAIL]
+  snapshot [warning] fact_types[has_nickname].constraints[0]: Each customer plays 'has_nickname' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+STEP 1 (add_nickname)
+  [fail] $.steps[1].preconditions[id=pre_has_email]: [REDACTED INSTANCE DETAIL]
+  intermediate [fail] fact_types[has_email].constraints[0]: [REDACTED INSTANCE DETAIL]
+  intermediate [fail] fact_types[has_email].constraints[1]: [REDACTED INSTANCE DETAIL]
+  intermediate [warning] fact_types[has_nickname].constraints[0]: Each customer plays 'has_nickname' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+COMPUTED POST
+{"facts": {"has_email": [{"customer": "c-1", "email": {"redacted": true, "roles": ["has_email.email"]}}, {"customer": "c-1", "email": {"redacted": true, "roles": ["has_email.email"]}}, {"customer": "c-2", "email": {"redacted": true, "roles": ["has_email.email"]}}], "has_nickname": [{"customer": "c-1", "nickname": "OPEN-NICK-111111"}, {"customer": "c-1", "nickname": "OPEN-NICK-222222"}, {"customer": "c-9", "nickname": "OPEN-NICK-555555"}]}, "population": {"covers": ["has_email", "has_nickname"], "model": "../models/accounts-redacted.orm.yaml", "model_id": "urn:gnd-fixture:rof2-accounts-redacted@1", "source": "synthetic"}}
+FRAME COMPARISON: not applicable -- post is computed
+POST-STATE
+  snapshot [fail] fact_types[has_email].constraints[0]: [REDACTED INSTANCE DETAIL]
+  snapshot [fail] fact_types[has_email].constraints[1]: [REDACTED INSTANCE DETAIL]
+  snapshot [warning] fact_types[has_nickname].constraints[0]: Each customer plays 'has_nickname' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.

@@ -2,8 +2,14 @@
 
 ## 1. Status
 
-**Draft r1. Awaiting owner review at the spec gate.** No implementation file
-has been created or edited. `auto=false`.
+**Approved (2026-11-07); implemented** (099ba22c, review repairs 8287d5b6;
+record `003-phase-ROF2.md`). The owner approved the corpus and
+spec r2 with "Approve, implement", answering "Approve the ROF2 corpus and spec
+r2, so implementation can start?". D1-D5 were ruled as proposed with
+"Approve, author corpus". Prior statuses: "r2: corpus authored (2026-11-07);
+awaiting owner approval to implement."; "Approved (2026-11-07); implementing."; "Draft r1. Awaiting owner review at the
+spec gate."; "r1 decisions ruled (2026-11-07); corpus being authored."
+`auto=false`.
 
 ## 2. Provenance
 
@@ -180,11 +186,11 @@ route trailer (`ADMITTED`/`BLOCKED`, `lineage`), the plain order.
 
 | D | Question | Readings and cost |
 |---|---|---|
-| D1 | Approval instrument | **corpus-first**, as ROF1: one model/population/steps/expected-text set per case, answers split out and derived from the base renderer over the report's rows (section 11). Alternative: prose-only. Proposed: corpus. **Open** |
-| D2 | Fate of `_print_projected_text` once no command calls it | (a) **dispatcher** (proposed): the historical binding renders the new text, so no caller can get JSON-as-text through it; its RF5 body pin moves (one successor row). (b) leave it unchanged, unused, until shim retirement (RF-D5): no pin moves, but a dead function keeps printing the old layout. No exit-code difference. **Open** |
-| D3 | Reason suffix on transition and frame verdict lines | yes (proposed): the ROF1-O1 ruling applied on every projected route, so a redacted walk keeps its cause (`reason_code`) visible; plain bytes unchanged (the suffix is projected-only). No: the transition lines would show `[REDACTED INSTANCE DETAIL]` with no cause. **Open** |
-| D4 | The COMPUTED POST line is one JSON line | keep (proposed): it is the plain layout's own line (`json.dumps(computed_post)`), printed from the projected computed post, so its redacted cells are markers. Alternative: render facts as lines, which changes the plain route's bytes too (rule 1). **Open** |
-| D5 | Review over the spec bytes | none (proposed), as ROF1 D4; the diff review covers the leak surface (plan §8). **Open** |
+| D1 | Approval instrument | **Ruled (o, 2026-11-07): corpus-first, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). **corpus-first**, as ROF1: one model/population/steps/expected-text set per case, answers split out and derived from the base renderer over the report's rows (section 11). Alternative: prose-only. Proposed: corpus. **Open** |
+| D2 | Fate of `_print_projected_text` once no command calls it | **Ruled (o, 2026-11-07): (a) dispatcher, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). (a) **dispatcher** (proposed): the historical binding renders the new text, so no caller can get JSON-as-text through it; its RF5 body pin moves (one successor row). (b) leave it unchanged, unused, until shim retirement (RF-D5): no pin moves, but a dead function keeps printing the old layout. No exit-code difference. **Open** |
+| D3 | Reason suffix on transition and frame verdict lines | **Ruled (o, 2026-11-07): yes, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). yes (proposed): the ROF1-O1 ruling applied on every projected route, so a redacted walk keeps its cause (`reason_code`) visible; plain bytes unchanged (the suffix is projected-only). No: the transition lines would show `[REDACTED INSTANCE DETAIL]` with no cause. **Open** |
+| D4 | The COMPUTED POST line is one JSON line | **Ruled (o, 2026-11-07): keep, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). keep (proposed): it is the plain layout's own line (`json.dumps(computed_post)`), printed from the projected computed post, so its redacted cells are markers. Alternative: render facts as lines, which changes the plain route's bytes too (rule 1). **Open** |
+| D5 | Review over the spec bytes | **Ruled (o, 2026-11-07): none, as proposed** ("Approve, author corpus", answering "Approve the ROF2 spec draft as proposed (D1–D5), so I author the corpus?"). none (proposed), as ROF1 D4; the diff review covers the leak surface (plan §8). **Open** |
 
 ## 8. Tests
 
@@ -211,6 +217,7 @@ the same invocation's `--format json` run at the base.
 | T15 | successors of ROF1's `test_t17_transition_keeps_the_shared_projected_text`, `test_t17_other_projected_routes_still_use_the_shared_json_text`, `test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase` and the admission assertion of `test_t8_projected_branches_read_only_the_payload` | each rewritten to pin the ROF2 behaviour; the old pins are removed in the same commit and named in the record |
 | T16 | 10,000 steps × 5 verdict rows | under a ceiling measured before the run (6x the slowest of three runs) |
 | T17 | D2 (a): `_print_projected_text` on each route's payload | prints the same lines as the route printer |
+| T18 | (r2) payload level: walk rows (snapshot, step, frame) carrying a `reason_code` absent from the message | the projected lines end ` [reason: <code>]`; the plain adapter's lines do not. No corpus row carries a code, so the corpus cannot hold this branch |
 
 Every declared branch has a case that can fail it: pre-state rows (T4),
 step verdicts and intermediate (T4), derived changes (T6b), computed post
@@ -275,3 +282,141 @@ without mentioning redaction or temporal terms (the V5 full suite catches those)
 | V4 | layers and homes | run | `tools/gnd_layers.json` import check; allowance count zero |
 | V5 | full default suite vs base | run (sharded) | failure set ⊆ the base's |
 | V6 | component index | at record time | `scripts/components_index.py changed --base <base> --strict` |
+
+## Corpus (authored 2026-11-07, r2)
+
+`tests/fixtures/rof2-projected-text/`: entry point `README.md` (stories and
+commands only), answers in `expected/` (`<case>.txt`, `reports/<case>.json`,
+`exits.json`, `README.md`, `derive_answers.py`), runner
+`tests/test_rof2_projected_text.py`. Answers derived by `derive_answers.py`
+with the base source first on `PYTHONPATH` (`src/` identical at `e1fb6a18`
+and `f1a57836`): the plain renderers `_print_transition`, `render_check_rows`
+and `_print_admission_text` over the report's rows, the extraction line as
+`_cmd_verify` spells it. A second run reproduced every answer byte for byte.
+
+Fourteen cases, mapped to section 8:
+
+| Case | Exit | T |
+|---|---|---|
+| `transition-plan`, `-unredacted` | 0 | T1, T2, T10 |
+| `transition-full`, `-unredacted` | 0 | T3, T10 |
+| `transition-step-fail` | 1 | T4 (intermediate and post-state rows) |
+| `transition-precondition` | 1 | T4 (pre-state rows, a failing precondition step row) |
+| `transition-refused` | 3 | T5 |
+| `transition-temporal` | 0 | T6 (no header; deontic intermediate and post-state rows) |
+| `transition-derived` | 0 | T6b (three `DERIVED` lines, once each) |
+| `admission`, `-unredacted` | 1 | T7, T10 |
+| `verify`, `-unredacted` | 1 | T8, T10 |
+| `verify-refused` | 3 | T9 |
+
+Changes from the section 11 plan (r2): `transition-full-unredacted`,
+`transition-precondition` and `admission-unredacted` added, so the pre-state
+and step-verdict branches and both modes of every route have a case. The
+models and walks are new except `dynamic.orm.yaml`, `pre-open`,
+`post-resolved` and `ticket.steps.json`, copied byte for byte from
+`tests/fixtures/v62-phase2`.
+
+State at commit: 57 tests, **29 red** (14 answer-key cases, 14 no-report-line
+cases, and the applied-mode canary for `transition-derived`), 28 green (14
+JSON-bytes pins, 10 other canaries, 3 unredacted presence checks, the corpus
+self-check).
+
+Observation (not a defect of this phase): the base's applied JSON-as-text for
+`transition-derived` contains the ticket value `SECRET-TICKET-314159`, from
+the `raise_score` step's bindings. The model redacts the ticket role of
+`evidence`, `ready` and `resolvable` only; `raise_score` binds the same value
+to `ticket_score.ticket`, which is not redacted, so the projection keeps it by
+design (the `v62-phase2` tests accept this). The walk layout prints no
+bindings, so ROF2's text drops it; the canary is red until then.
+
+## An experiment, recorded before it runs (T16, 2026-11-07)
+
+Measures: wall time of `_projected_transition_lines` over a payload whose
+walk has 10,000 steps, each with 5 step verdict rows (40-character messages)
+and 5 failing intermediate snapshot rows, plus 5,000 frame rows; three runs on
+the development machine, and the same at 1,000 steps to show the growth is
+linear. Cannot measure: other machines, or the cost of printing. Liveness: a
+renderer quadratic in steps takes minutes at 10,000 steps, far over any
+ceiling here. Ceiling rule: 6x the slowest measured run at 10,000 steps,
+rounded up to the next 0.1 s, as ROF1's T10.
+
+Result: 0.085, 0.087, 0.086 s at 10,000 steps (115,013 lines); 0.015,
+0.011, 0.011 s at 1,000 steps (16,013 lines): linear. Ceiling: 6 x 0.087 =
+0.52, rounded up to **0.6 s**, written into
+`test_t16_walk_renderer_is_linear_in_rows`.
+
+## Implementation findings (2026-11-07)
+
+- **I1.** The corpus derivation could not call `_print_report` over namespaces
+  as ROF1's did: ROF1 made it an adapter that calls `model_dump()` on each
+  verdict. `derive_answers.py` calls ROF1's `render_check_rows` (the plain
+  check renderer at the base) instead. It is not ROF2 code.
+- **I2.** The walk adapter is `walk.model_dump()` fed to
+  `render_transition_rows`. The dump omits an empty `derived_changes` (its
+  field has `exclude_if`), and the `TransitionReport` serializer adds
+  `derivations` to snapshots; the renderer reads neither difference, so the
+  plain bytes hold (plain transition suites in the gate, and
+  `test_plain_walk_text_is_unchanged_by_the_adapter`).
+- **I3.** As the census predicted, `test_check_refuses_a_fifo_by_name_instead_of_hanging[--pre]`
+  and `[--post]` moved: the text is now `ERROR: [REDACTED INSTANCE DETAIL]`.
+  **Today's JSON-as-text also showed the error's type (`PopulationLoadError`);
+  the new line does not**, because neither the plain route's error line nor
+  ROF1's projected one prints a type. The type stays in `--format json`. Not
+  changed here (it would add a field to an approved layout): open question
+  ROF2-O1.
+- **I4.** `_print_check_verdicts` and `_print_derived_change_summaries` have
+  no caller inside `gnd` after the adapter; both stay because they are
+  historical `gnd.cli` bindings. Deferred refactor (record, open questions).
+- **I5.** Dispatch in `_print_projected_text` uses `post`, not the
+  `transition` key: a verify payload and a snapshot check payload also carry a
+  `transition` mapping (`evaluated: false`), so a key test would send them to
+  the walk renderer. T17 runs the dispatcher over every corpus report.
+- **I6.** `tests/test_rf1_session_pins.py::test_session_fresh[3]` and
+  `::test_session_resume[3]` fail with `spawn-failed FileNotFoundError` on the
+  base source as well (and in ROF1's main and head runs): pre-existing, not
+  this phase.
+- **I7.** Guards moved as planned: RF5 rows for `_cmd_check` (chained onto its
+  existing row), `_cmd_transition`, `_cmd_verify`, `_print_projected_text`,
+  `_print_transition`; an RF6 dynamic-query successor
+  (`evidence/ROF2/dynamic-query-successor.json`: 3 rows removed, 18 added,
+  all in `src/gnd/output.py`) chained after ROF1's; the `infra.text_output`
+  index entry. No golden file moved.
+- **I8 (Codex review of 099ba22c, `block`, 6 findings, retained verbatim in
+  `evidence/ROF2/codex-review.md`).** Each was reproduced or argued before any
+  change:
+  - **P1 (blocking), applied.** A snapshot `constraint_ref` that is an integer
+    too long to print raised `ValueError` in `path_segment`, on the walk route
+    and on ROF1's check route alike (`_row_views` kept any `int` raw for a
+    `declared` lookup). Observed red
+    (`test_p1_a_huge_constraint_ref_in_a_walk_snapshot_does_not_raise`); such
+    an integer now becomes the `<number>` placeholder, a printable one is kept
+    raw.
+  - **P2 (blocking), applied.** `_projected_preamble` (ROF1's code, moved)
+    copied every issue row before capping, and an `issues_total` too long to
+    print raised in the elision line. Observed red
+    (`test_p2_issue_rows_are_capped_on_the_read_and_a_huge_total_does_not_raise`;
+    the first version of that test counted `.get` calls and could not see the
+    copy, and was rewritten to count rows taken from the list). Rows are now
+    taken with `islice` up to the cap; a total that is not an int in
+    `[0, 10**15]` is ignored and the supplied row count is used.
+  - **P3 (hardening), not applied.** No output cap: the text is linear in the
+    payload, as the plain route's is, and the payload is produced by GND under
+    its own input caps; T16 bounds the time. A byte cap would elide rows the
+    plain route prints and break the "plain layout" goal.
+  - **P4 (hardening), not applied.** For a computed post that does not
+    serialize, the base plain printer printed the first sections and then
+    raised, while the adapter prints `<non-text>` and continues. The CLI's
+    computed post comes from a payload that has already been serialized for the
+    report, and the reviewer did not establish a CLI path either. A strict
+    mode would still differ, because the adapter builds all lines before it
+    prints. Recorded; no change.
+  - **P5 (completeness), applied.** The unredacted presence check for
+    `transition-full-unredacted` was vacuous (an empty set). Added
+    `test_p5_the_full_walk_shows_its_frame_finding_only_when_unredacted`: the
+    frame finding's text is present unredacted and absent applied. A test
+    repair; it passed on 099ba22c.
+  - **P6 (completeness), applied.** The `infra.text_output` index note now
+    says temporal projection covers check, validate and walks only.
+  - The repair moved the dynamic-query census (one fewer slice); ROF2's
+    successor file was regenerated against ROF1's (3 removed, 17 added). The
+    repairs were not re-reviewed.

@@ -81,10 +81,10 @@
         "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
       },
       "after": {
-        "raw_sha256": "55fe8b02f16f32fc18696e2f9505dff870d0ba84fa2b0d7902d8eb9b8c21e2bb",
-        "algorithm_sha256": "d91acbc4edeb43399c86227d56663dd775b00df7ab4e561ea3db05218b4dcc69"
+        "raw_sha256": "4d45820eeaccc6887947cd67c0c461475e674a4a808b9052335ea6a829457586",
+        "algorithm_sha256": "60385328c32f4ece7a124c571c46f5dc73eb570ad099e99a14577af0eee16fb7"
       },
-      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards --baseline and prints the BASELINE summary after the report. Then rule-check-adoption RC4 (spec 509b721d, corpus 938716c9): forwards --allow-vacuous and prints its closing line after the report. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing (redaction or temporal) text route calls _print_projected_check_text, which prints check verdict lines from the projected payload instead of its JSON."
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards --baseline and prints the BASELINE summary after the report. Then rule-check-adoption RC4 (spec 509b721d, corpus 938716c9): forwards --allow-vacuous and prints its closing line after the report. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing (redaction or temporal) text route calls _print_projected_check_text, which prints check verdict lines from the projected payload instead of its JSON. Then report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): --admission on a projected route renders the check layout through _print_projected_check_text instead of the shared projected-JSON text."
     },
     {
       "kind": "RF5",
@@ -705,6 +705,66 @@
         "algorithm_sha256": "81ce07adc5961ffe88235a837f700089abe367205c137244ffa5ec4cee061b41"
       },
       "reason": "report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the cap and the elision line move into _issue_lines, shared with the projected-payload route; output bytes are unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_transition",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "58e03160f8c4130e6fe49a29cc377b62862b58f192a6558a329383be56081cb4",
+        "algorithm_sha256": "232040fe561ce1c1d465734de7eed6106777fe58433a3c02de66e31a2f79fcff"
+      },
+      "after": {
+        "raw_sha256": "9cb12439bdcc497338d07301d45e28aabaaf96101b318fd9c0d442474398ec9c",
+        "algorithm_sha256": "ffae2d79641594e5712a4cfeaca0f61ec6afaff8cd932b5b2211b4f110e7cfcf"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): the projected route prints the walk layout through _print_projected_transition_text instead of the shared projected-JSON text."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_verify",
+      "home": "gnd.export.verification_service",
+      "before": {
+        "raw_sha256": "60df5dc898f481ee175423a40cda62940419853d721204d70c699b684e6b3048",
+        "algorithm_sha256": "aacfdf3a6759c7e7169823ff12063a3c841df086b4fc7e770749657472ad601a"
+      },
+      "after": {
+        "raw_sha256": "2d82002ae964cd900789466f0c86f90944f27ca5e71dcc344fdec4ab9b231ca8",
+        "algorithm_sha256": "3731062e32175fc226a07f59263d69ff87d610cdcb572e672905252168c989a4"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): the projected route prints through _print_projected_verify_text, and the plain extraction line comes from output.extraction_line (same bytes)."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_projected_text",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "434d12ff309a0c11bdbce895f6e08ab003e760bb351c71580315f3015f17eb59",
+        "algorithm_sha256": "f82a735a0430d2b3e612b1ebf4260e137302e5ccaed2a8ee11a2c85363cc05c9"
+      },
+      "after": {
+        "raw_sha256": "29d404b19c981f23170925321f518f767943d4ebd0891a05452dc5d2abbdb1dd",
+        "algorithm_sha256": "0f0c0a5df3187ba01a277ce6232450fe16fb29280ff75a7010c3ff244d0eee40"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07, D2): the historical entry point dispatches to the route printers instead of printing the report as JSON text; its refusal of a payload without redaction metadata is kept."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_transition",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "c4870baba365f2bcfe1e56283acd3c67d0bf4caed74b7585c812927d89391b72",
+        "algorithm_sha256": "63c83a93b097cd7d34ec5a85fb2a3f5bffcdd58e84216d68157773440cb3924d"
+      },
+      "after": {
+        "raw_sha256": "673ab898ca2ea27a226a7a0f08a1e1aaf5d79a1b0fa2ac9f10c8e44ea29bae68",
+        "algorithm_sha256": "4e015bfbf65a2ac2480b127aa5d1e995d039c7f1c171cd23952303396fd11070"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): an adapter over render_transition_rows, shared with the projected walk route; output bytes are unchanged."
     }
   ]
 }

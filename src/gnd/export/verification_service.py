@@ -15,8 +15,9 @@ from gnd.output import (
     _band,
     _live_assurance,
     _print_issues,
-    _print_projected_text,
+    _print_projected_verify_text,
     _print_report,
+    extraction_line,
 )
 from gnd.population import PopulationValidationError, load_population
 from gnd.semantic_registry import capture_branches
@@ -217,7 +218,7 @@ def _cmd_verify(
         if output_format == "json":
             print(rendered)
         elif "redaction" in payload:
-            _print_projected_text(payload)
+            _print_projected_verify_text(payload)
         return exit_code
 
     # --- the extraction-state machine (R-13′), before the composition ---
@@ -526,9 +527,7 @@ def _cmd_verify(
     if output_format != "json" and not active_redaction():
         for warning in warnings:
             print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
-        state = extraction["state"]
-        reason = f" ({extraction['reason']})" if extraction["reason"] else ""
-        print(f"EXTRACTION: state={state}{reason}")
+        print(extraction_line(extraction))
         _print_report(report)
     return emit(exit_code, report=report, warnings=warnings)
 

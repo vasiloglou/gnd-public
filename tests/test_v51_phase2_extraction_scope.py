@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import copy
-import statistics
 import time
 from pathlib import Path
 
@@ -61,7 +60,8 @@ def test_three_policy_consumers_obey_a_monkeypatched_scope_owner(monkeypatch: py
     assert [(issue.rule_id, issue.path) for issue in issues] == [('population:uncovered-structured-derived-facts', '$.facts.book_listed')]
 
 def _timed_scope(model: Model) -> float:
-    return statistics.median(time.perf_counter() - started for _ in range(7) for started in [time.perf_counter()] for _result in [fact_type_scope(model)])
+    # The fastest of 7 runs: sub-millisecond walks make the median noisy (issue 117, FU4 spec D2).
+    return min(time.perf_counter() - started for _ in range(7) for started in [time.perf_counter()] for _result in [fact_type_scope(model)])
 
 def _scaling_model(size: int) -> Model:
     fact_types = []
@@ -76,4 +76,5 @@ def test_scope_walk_scales_linearly() -> None:
     small = _timed_scope(_scaling_model(5000))
     large = _timed_scope(_scaling_model(20000))
     assert large < 5.0
-    assert large < 6 * small, {'small': small, 'large': large}
+    # Linear measures 4-9 under noise; a quadratic walk measures about 18 (FU4 spec F2).
+    assert large < 10 * small, {'small': small, 'large': large}

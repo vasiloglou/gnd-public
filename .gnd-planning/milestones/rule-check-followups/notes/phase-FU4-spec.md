@@ -2,9 +2,11 @@
 
 ## 1. Status
 
-**Draft r1 (2026-11-07), awaiting the owner gate.** `auto=false`. No test
-or source file has been edited for this phase; the measurements in §5 used
-an uncommitted probe (retained under `evidence/FU4/`).
+**Approved (2026-11-07).** D1-D3 were ruled over r1 (sha256 `80fab151…`,
+commit 1120a690) with "Approve as proposed"; the spec prose is the approval
+instrument (D3). `auto=false`. Prior status: "Draft r1, awaiting the owner
+gate." The measurements in §5 used an uncommitted probe (retained under
+`evidence/FU4/`).
 
 ## 2. Provenance
 
@@ -92,9 +94,9 @@ runs instead of the median.
 
 | D | Question | Proposal |
 |---|---|---|
-| D1 | Scope the driver's survivor check by the marker path, or by process group as the plan's wording says? | **marker path**: same processes, and immune to group-id reuse after the leader is reaped |
-| D2 | The scope walk: widen the ratio bound only (FD4's letter), or also time it by the fastest of 7 runs? | **both**: bound 10 and the fastest run. FD4's "widen" alone needs a bound near 10 with the median and still leaves the unloaded maximum (9.65) within 4% of it; the fastest run moves that maximum to 8.76. The quadratic mutant (about 18) stays far above 10 either way |
-| D3 | Approval instrument and review over the spec | prose (two small test edits, no format); no spec review |
+| D1 | Scope the driver's survivor check by the marker path, or by process group as the plan's wording says? | **marker path**: same processes, and immune to group-id reuse after the leader is reaped **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU4's D1–D3?"). |
+| D2 | The scope walk: widen the ratio bound only (FD4's letter), or also time it by the fastest of 7 runs? | **both**: bound 10 and the fastest run. FD4's "widen" alone needs a bound near 10 with the median and still leaves the unloaded maximum (9.65) within 4% of it; the fastest run moves that maximum to 8.76. The quadratic mutant (about 18) stays far above 10 either way **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU4's D1–D3?"). |
+| D3 | Approval instrument and review over the spec | prose (two small test edits, no format); no spec review **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on FU4's D1–D3?"). |
 
 ## 8. Tests and verification ledger
 

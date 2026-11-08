@@ -384,7 +384,9 @@ def test_driver_kills_the_whole_process_group_on_timeout(
         time.sleep(0.05)
     assert marker.exists(), "the grandchild never started -- the row proves nothing"
 
+    # Match this test's own processes by the marker path in their argv, not a
+    # pattern another test's processes can share (issue 117, FU4 spec D1).
     survivors = subprocess.run(
-        ["pgrep", "-f", "pathlib.Path"], check=False, capture_output=True, text=True
+        ["pgrep", "-f", str(marker)], check=False, capture_output=True, text=True
     ).stdout.split()
     assert not survivors, f"descendants survived the bound: {survivors}"

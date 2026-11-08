@@ -9,7 +9,7 @@ gate:
   exit: 0
   output: "46 passed"
   note: >-
-    The plan section 9 FU3 row (V2), at 528887ec. The mutant, the component
+    The plan section 9 FU3 row (V2), at a5e46e74. The mutant, the component
     index check (V6) and the sharded full default suite against the base
     failure list (V3) are in the body.
 evidence:
@@ -29,11 +29,13 @@ evidence:
     sha256: 3ba1c2fc7f744a64938d20b332455c13d7465ae34a7dd76ea521d2b5646307cf
   - path: .gnd-planning/milestones/rule-check-followups/evidence/FU3/full-suite-fu3-528887ec.txt
     sha256: fabd81c26f4701a7a0d91b7751591bddbc415791b332c919c81595ecbb985a5b
+  - path: .gnd-planning/milestones/rule-check-followups/evidence/FU3/full-suite-fu3-a5e46e74.txt
+    sha256: ac385494f3f78deca9ed875f99c938a59dbd5a8b1f50e09fec2255ba3bba35cc
 ---
 
 # Claim
 
-At 528887ec, under `gnd check --rule-ids`, a failing `acyclic` ring over a
+At a5e46e74, under `gnd check --rule-ids`, a failing `acyclic` ring over a
 fact type derived through an exact term lists exactly the in-group edges of
 the stated facts of that fact type, which are the pairs the checker judges
 (spec D2); a ring the checker passes or cannot check gets no listing, and
@@ -57,10 +59,10 @@ corpus (issue 119).
 
 ## Gate output (verbatim)
 
-V2, at 528887ec:
+V2, at a5e46e74:
 
     uv run pytest -q -p no:cacheprovider tests/test_fu3_*.py tests/test_rc2_acyclic_extent.py
-    46 passed in 6.52s
+    46 passed in 2.68s
 
 FU3 tests at each stage (`uv run pytest -q tests/test_fu3_derived_ring.py`):
 
@@ -68,6 +70,7 @@ FU3 tests at each stage (`uv run pytest -q tests/test_fu3_derived_ring.py`):
     mutant, extent reads the derived extension:          2 failed, 15 passed (T1, T2 on asserted-only)
     self-loop case against the old T2 oracle:            1 failed, 19 passed
     528887ec (reachability oracle):                     20 passed
+    a5e46e74 (ruamel.yaml, spec I4):                    20 passed
     mutant again, at 528887ec:                           2 failed, 18 passed
 
 V6, component index:
@@ -80,9 +83,17 @@ V3, full default lane, six round-robin shards on beast-3 (run although no
 source changed, because a new fixture directory is visible to
 repository-wide fixture scans):
 
-    pending: the second run, at the commit that carries this record (spec I4).
+    fu3  528887ec: 14202 passed, 2 failed, 3 errors; shards exit 1,1,0,0,2,0
+    fu3b a5e46e74: 17852 passed, 2 errors; shards exit 1,0,0,0,0,0
+    failing list at a5e46e74: sha256 8261732b98e252d1e17e491a8480080bafd2434fbd17f8a503aad8390ea9c20a (equal to main 6651e5a4's and FU2's)
 
-@@V3@@
+The first run's failures came from FU3 itself (spec I4): the module
+imported PyYAML, absent from the locked environment, so it did not
+collect (shard 4 stopped at collection, exit 2), which also failed
+`test_public_collection`; and the milestone README linked this record
+before it was committed (`test_development_scaffold`). Both repaired in
+a5e46e74. The 2 errors are the `tests/test_public_optional.py`
+uv-version pins. Evidence: `evidence/FU3/full-suite-*.txt`.
 
 ## Criteria
 
@@ -103,8 +114,8 @@ graph function; fixed with a reachability oracle and the `self-loop`
 successor case, red against the old oracle first. R1 is recorded as a
 boundary; R3-R5 corrected wording and records. The reviewer reported its
 own probes over derived, uncovered, semiderived, deontic and
-unavailable-term rings agreeing. The repair commit 528887ec carries no
-review opinion.
+unavailable-term rings agreeing. The repair commits 528887ec and a5e46e74
+carry no review opinion.
 
 ## Refactoring review
 
@@ -127,8 +138,8 @@ views now pinned equal for this route the cost is time only. Not proposed.
   retained evidence.
 - `--baseline` with a structured-derivation model is refused (RC-D11) and
   untouched.
-- One reviewer read 9662812e; the repairs in 528887ec were checked by the
-  gates above, not re-reviewed.
+- One reviewer read 9662812e; the repairs in 528887ec and a5e46e74 were
+  checked by the gates above, not re-reviewed.
 
 ## Open questions
 

@@ -24,4 +24,6 @@ blocked on D3), close.
 
 ROF1-O1 ruled 2026-11-07: keep the `[reason: ...]` suffix.
 
-Next action: merge PR 124 (owner); the ROF2 spec (draft) awaits its owner gate.
+ROF2 spec drafted (r1, awaiting the owner gate): [phase-ROF2-spec.md](notes/phase-ROF2-spec.md), with its changed-bytes census in [evidence/ROF2-census/](evidence/ROF2-census/).
+
+Next action: merge PR 124 (owner); rule ROF2 D1-D5 at the spec gate.

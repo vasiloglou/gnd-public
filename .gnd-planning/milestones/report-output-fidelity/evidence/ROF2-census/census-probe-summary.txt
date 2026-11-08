@@ -1,0 +1,10 @@
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[--pre]
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[--steps]
+FAILED tests/test_carried_defects.py::test_check_refuses_a_fifo_by_name_instead_of_hanging[--post]
+FAILED tests/test_rof1_projected_text.py::test_p1_admission_keeps_the_shared_projected_text_until_its_own_phase
+FAILED tests/test_rof1_projected_text.py::test_t17_transition_keeps_the_shared_projected_text
+FAILED tests/test_v61_phase4_review_regressions.py::test_malformed_parent_binding_container_is_redacted
+FAILED tests/test_v62_phase2_report.py::test_q05_text_summary_is_deterministic_and_value_free
+FAILED tests/test_v62_phase6_redaction.py::test_exists_where_taint_does_not_leak
+FAILED tests/test_v63_phase2_cache.py::test_unavailable_projection_after_positive_coverage
+9 failed, 3483 passed, 305 deselected, 1 warning in 1016.98s (0:16:56)

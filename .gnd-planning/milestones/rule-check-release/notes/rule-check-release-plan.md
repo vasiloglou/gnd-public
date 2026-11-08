@@ -189,7 +189,7 @@ the milestone is the package a user installs.
   (RC1-RC5) and the reference page, not from the output being tested. Each of
   the five probes has two controls, so it separates behavior from mere option
   availability (review P5): (i) availability: on the PyPI 0.1.0 wheel the
-  option is refused (exit 2), which proves only that the flag is new; (ii)
+  option is refused (exit 2; **corrected 2026-11-08, RR2 spec §13: measured exit 64**, `unrecognized arguments`), which proves only that the flag is new; (ii)
   behavior: a mutant of the candidate that reaches the same code with the
   feature removed or changed (a model without a declared `remedy` or id gives
   `null` and the position address; a baseline file that lists the violation
@@ -264,7 +264,7 @@ Spec: [phase-RR1-spec.md](phase-RR1-spec.md), draft r3, awaiting its own owner g
 
 ### RR2: Candidate build and installed acceptance (about 60 test lines; no source)
 
-Spec: outline only; written after RR1 merges and RL-D2 is ruled.
+Spec: outline only; written after RR1 merges and RL-D2 is ruled. **Update (2026-11-08):** RR2's draft spec is [phase-RR2-spec.md](phase-RR2-spec.md), written once FU3 reached main and before RR1 merged; its D1 asks the owner which commit is the candidate, given PR 125 is unmerged.
 
 - RR2-C0: before any build, the notes of every change merged since RR1
   (FU2 and FU3 included) are reconciled into the version's section by a docs

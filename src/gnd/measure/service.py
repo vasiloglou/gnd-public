@@ -100,6 +100,7 @@ def _cmd_measure(
     except IndexValidationError as error:
         return fail(3, str(error))
 
+    expected_model_digest = _prov.validated_model_sha256(model)
     # One verdict per distinct sidecar digest: a corpus pays for each identity once.
     identity_verdicts: dict[str, str | None] = {}
     expected_aggregate_disclosures = sorted(
@@ -179,7 +180,7 @@ def _cmd_measure(
                 3,
                 f"C6 sidecar binding failed for {pop_path}: model_digest "
                 f"{sidecar.model_digest!r} does not match this model "
-                f"({_prov.validated_model_sha256(model)!r}) — a wrong-model sidecar.",
+                f"({expected_model_digest!r}) — a wrong-model sidecar.",
             )
         try:
             pool_abs = _resolve_corpus_path(populations_dir, sidecar.pool_path)

@@ -1712,7 +1712,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.loading
 - does: Load bounded YAML or JSON models and bind immutable reference populations [load_model, bind_population].
-- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding
+- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried
 - in: Model path or immutable bytes; optional reference root, declared content hashes and validated candidate population.
 - out: Validated Model with warnings and compiled side table; bound reference context or combined population with occurrence origins.
 - status: canonical
@@ -1720,7 +1720,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: infra.artifacts, infra.errors, infra.input_policy, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
 - used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +62 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
-- tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py
+- tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: This module defines the loader and reference binder as well as re-exporting validation, document conversion and operation compilation helpers. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
 
 
@@ -2376,13 +2376,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.population_loading
 - does: Load YAML or JSON populations through shape and optional model validation [load_population].
-- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys, read_population_bytes, read population file once, tool-output source, producer, population source enum
+- verbs: load population, parse populations, JSON input, YAML input, load_population_bytes, validation marker, content digest, validated model, population warnings, regular file, size cap, duplicate keys, read_population_bytes, read population file once, tool-output source, producer, population source enum, producer invariant on model_copy
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
 - used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, examples.plan_apps, exp.session_judgments, … +29 more (graph.md)
 - part_of: subsystem.check
-- tests: tests/test_population_load.py, tests/test_rf7_consumers.py
+- tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
 - in: Population path or bytes; optional loaded Model.
 - out: Population with warnings and a model validation marker when a model was supplied.
 - checked: partial

@@ -688,8 +688,8 @@
       "name": "bind_population",
       "home": "gnd.model",
       "before": "f394f0010617dcbf7f8a67eae0581338cf48d237b3f8b31f1e97ea7d95b20fbb",
-      "after": "05927b85996f2e316d1e5aca24df5657a90a24f10013dc7fcbb08b11af0009fe",
-      "reason": "rule-check-adoption RC5 (spec a29931c2, corpus 6b45985b): the combined reference population header carries the candidate's optional producer (source tool-output), so a reference-bound tool-output population keeps it; every other header field and step is unchanged."
+      "after": "6a019a4e28e635e2ae8521b92941ab6882007bfc66c11bc6562540de313f4524",
+      "reason": "rule-check-adoption RC5 (spec a29931c2, corpus 6b45985b): the combined reference population header carries the candidate's optional producer (source tool-output), so a reference-bound tool-output population keeps it; every other header field and step is unchanged. Then rule-check-followups FU2 (spec 1842579c, tests e3a0ec54): the header also carries the candidate's optional label (issue 116), so a labelled candidate keeps it; an unset label leaves the header unchanged."
     },
     {
       "kind": "RF5",

@@ -11,8 +11,8 @@ milestone.
 
 **Status: plan r1.2 approved at the plan gate on 2026-11-07 ([record](001-plan.md); the owner's reply "approved all", relayed). The owner also ruled the
 decisions UG-D0 to UG-D9 the same day. Plan review round 1 (four local readers, UG-D1 (a)) ran over r1.1
-and its accurate repairs are in r1.2; no confirmation round was run. The UG1 spec (r1.3) is
-drafted and awaits its own owner gate; no phase has an approved spec. Nothing is implemented, no issue is closed.**
+and its accurate repairs are in r1.2; no confirmation round was run. The UG1 spec (r1.3) was approved at its gate and UG1 is implemented as tests only
+([record](002-phase-UG1.md)); UG2 to UG4 have no spec. No issue is closed.**
 `auto=false`.
 
 **Headline.** Most of the four issues is already on main, from the closed
@@ -27,9 +27,9 @@ items as owner decisions.
 - [Plan-gate record](001-plan.md)
 - [Canonical plan (r1.2, approved)](notes/unattended-model-growth-plan.md)
 - [Plan review round 1: disposition](notes/plan-review-r1-disposition.md)
-- [UG1 spec (r1.3, draft)](notes/phase-UG1-spec.md): acceptance replay and issue
+- [UG1 spec (r1.3, approved)](notes/phase-UG1-spec.md): acceptance replay and issue
   disposition, test-only
-- Phases: UG1 acceptance replay (ready once gated); UG2 population-checked
+- Phases: UG1 acceptance replay (done, test-only); UG2 population-checked
   constraint admission (ruled UG-D2 (b); needs its own spec gate); UG3 the
   unattended source header across rounds (ruled UG-D3 (c), UG-D9 (b); same); UG4 documentation and dispositions;
   then the close.
@@ -41,6 +41,6 @@ build the population-checked admission (UG2); UG-D9 (b) an append-only
 readers, the maintained panel stated as the project's bar), D4, D5, D6, D7, D8
 as proposed. The owner closes issues 74, 75, 76 and 104 (UG-D0).
 
-**Next action.** The owner reads the UG1 spec (its §12 lists what the gate rules on) and rules on its gate.
+**Next action.** The owner reads the UG1 record and the drafted issue dispositions ([text](notes/ug1-issue-dispositions.md), nothing posted), runs the T-anon scan with their pattern file, and decides whether to start UG2's spec.
 Until then no code is written. Open owner questions: UG-Q6 (component-index contradiction in
 `project.md`), UG-Q7 (tracker labels); neither blocks UG1.

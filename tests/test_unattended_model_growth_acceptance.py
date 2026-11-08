@@ -28,8 +28,6 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = REPO_ROOT / "tests" / "fixtures" / "unattended-model-growth"
 SEED = REPO_ROOT / "tests" / "fixtures" / "unattended" / "conforming.orm.yaml"
 SEED_DOCUMENT = REPO_ROOT / "tests" / "fixtures" / "unattended" / "source.txt"
-CONTRACT = "src/gnd/skills/gnd-model-evolve/references/evolution-contract.md"
-BASE_COMMIT = "12daa5b7"
 
 
 # --- the replay's three rounds, in the reply shape the host produces -----------------------------
@@ -212,7 +210,9 @@ def test_t1_three_round_replay_exits_zero_at_every_step(tmp_path: Path) -> None:
         # Without --policy the key is absent, so a dropped flag would otherwise pass.
         assert preview["policy"] == "additive" and preview["policy_issues"] == []
     # Control: every added fact type gets a group, so a non-empty group alone proves nothing.
-    assert all(group["existing"] == [] for group in _shape_groups(previews[0]))
+    first = _shape_groups(previews[0])
+    assert {a["fact_type"] for group in first for a in group["added"]} == {"loan_has_due_date", "borrower_holds_laptop"}
+    assert all(group["existing"] == [] for group in first)
     restated = [g for g in _shape_groups(previews[1]) if [a["fact_type"] for a in g["added"]] == ["loan_is_due_on"]]
     assert len(restated) == 1 and [m["fact_type"] for m in restated[0]["existing"]] == ["loan_has_due_date"]
     assert _shape_groups(previews[2]) == []
@@ -361,8 +361,8 @@ def _subset(sub: tuple[str, str], sup: tuple[str, str]) -> dict[str, Any]:
 
 def test_t4_a_constraint_on_a_populated_fact_type_is_refused(grown: dict[str, Path], monkeypatch: pytest.MonkeyPatch) -> None:
     raw1 = _document(1)
-    added = _constraint({"type": "mandatory", "role": "due_date"}, raw1, "Each loan has exactly one due date")
-    on_existing = (policy._op("add", policy._constraint_locator(POPULATED_FACT, None, "mandatory"), after=added),)
+    added = _constraint({"type": "uniqueness", "roles": ["due_date"]}, raw1, "Each loan has exactly one due date")
+    on_existing = (policy._op("add", policy._constraint_locator(POPULATED_FACT, None, "uniqueness"), after=added),)
     paths = _write_proposal(grown, "t4-flag", on_existing)
     flags = ("--policy", "additive", "--populated", POPULATED_FACT)
     preview, result = _preview(paths, *flags, expect=3)
@@ -377,7 +377,7 @@ def test_t4_a_constraint_on_a_populated_fact_type_is_refused(grown: dict[str, Pa
     assert document is not None and document["policy_issues"] == []
     # Control (b): the same constraint on a fact type this proposal adds is admitted, flag or not.
     reply = _reply_one((_new_fact("borrower_holds_loan"),),
-                       (_hosted("borrower_holds_loan", {"type": "mandatory", "role": "loan"}),))
+                       (_hosted("borrower_holds_loan", {"type": "uniqueness", "roles": ["loan"]}),))
     paths = _write_proposal(grown, "t4-new", _operations(reply, raw1))
     document, _ = _preview(paths, *flags)
     assert document is not None and document["policy_issues"] == []
@@ -631,7 +631,7 @@ def test_t14_no_document_text_or_sample_value_in_what_the_replay_reports(tmp_pat
            f"Bins are tracked by bin code. Row {ROW_CANARY} is one stored widget.\n").encode()
     reply = {
         "document": "canary.txt",
-        "object_types": [_entity("widget", "Widget", "widget_code", "Widgets are tracked"),
+        "object_types": [_entity("widget", "Widget", "widget_code", f"Widget {DOC_CANARY} is stored in a bin"),
                          _value("widget_code", "WidgetCode", "String", "widget code"),
                          _entity("bin", "Bin", "bin_code", "Bins are tracked"),
                          _value("bin_code", "BinCode", "String", "bin code")],
@@ -658,18 +658,25 @@ def test_t14_no_document_text_or_sample_value_in_what_the_replay_reports(tmp_pat
     for tag, operation in (("late", refusals[0]), ("rename", refusals[1])):
         paths = _write_proposal(ws, f"t14-{tag}", (operation,))
         preview, result = _preview(paths, "--policy", "additive", expect=3)
-        assert preview is not None and preview["policy_issues"]
+        _assert_refused(result, preview, "constraint.populated.add" if tag == "late" else "fact_types.rename")
         # Positive control: the sample value does sit in the keys the scan excludes, so the scan can see it.
         assert ROW_CANARY in json.dumps({k: v for k, v in preview.items() if k in MODEL_CARRYING_KEYS})
         seen += [result.stderr, json.dumps([issue["detail"] for issue in preview["policy_issues"]]).encode(),
                  json.dumps({k: v for k, v in preview.items() if k not in MODEL_CARRYING_KEYS}).encode()]
         if tag == "rename":
             applied = _apply_breaking(monkeypatch, paths, preview, "--policy", "additive")
+            assert applied.returncode == 3 and b"fact_types.rename" in applied.stderr
             seen.append(applied.stderr)
     tampered = _current(ws)
-    tampered["object_types"][0]["provenance"]["spans"][0]["excerpt_sha256"] = "0" * 64
+    # The widget's span cites the canary document, which is supplied, so the tamper must be caught.
+    widget = next(item for item in tampered["object_types"] if item["id"] == "widget")
+    assert DOC_CANARY in raw[widget["provenance"]["spans"][0]["start"]:widget["provenance"]["spans"][0]["end"]].decode()
+    widget["provenance"]["spans"][0]["excerpt_sha256"] = "0" * 64
     result = run_main(["validate", str(_write_model(tmp_path / "bad", tampered)), "--document", str(declared),
                        "--format", "json"])
+    assert result.returncode == 3, result.stderr.decode()
+    mismatches = [i for i in _issues(json.loads(result.stdout)) if i["rule_id"] == "unattended:excerpt-mismatch"]
+    assert [i["path"] for i in mismatches] == ["$.object_types[id=widget].provenance.spans[0]"]
     seen += [result.stdout, result.stderr]
     for text in seen:
         assert DOC_CANARY.encode() not in text and ROW_CANARY.encode() not in text

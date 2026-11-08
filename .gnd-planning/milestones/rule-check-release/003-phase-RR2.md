@@ -11,18 +11,21 @@ gates:
   - command: "B1 (this Mac, uv 0.10.10): the M3 build of git archive C, then shasum -a 256 -c SHA256SUMS"
     exit: 0
     output: "release wheel e323c19e…69e4, sdist f85818ea…5104, comparison wheel e323c19e…69e4: OK"
-  - command: "B2 (beast-3, uv 0.10.10): the same M3 build of git archive C, then diff against B1's SHA256SUMS"
+  - command: "B2, run 2 (beast-3, fresh directory, uv 0.10.10 from `uvx --from uv==0.10.10` as D5 ruled, script stops at any failure): the same M3 build of git archive C; shasum -c of the B1 copy; diff of the two SHA256SUMS"
     exit: 0
-    output: "SHA256SUMS identical"
-  - command: "V4 (beast-3, clean checkout at C, uv sync --locked --group dev --python 3.11): GND_CANDIDATE_DIR=<B1 copy> uv run pytest -q -o addopts='' tests/test_release_acceptance.py --tb=short"
+    output: "B1 copy: 3 x OK; B2: 3 x OK; B1 and B2 SHA256SUMS identical"
+  - command: "V4, run 2 (beast-3, clean checkout at C, uv sync --locked --group dev --python 3.11): GND_CANDIDATE_DIR=<B1 copy> uv run pytest -q -o addopts='' tests/test_release_acceptance.py --tb=short"
     exit: 0
-    output: "14 passed in 803.35s (0:13:23)"
-  - command: "V5: uvx --from ./release/get_nick_done-0.2.0-py3-none-any.whl gnd --version"
+    output: "14 passed in 791.58s (0:13:11), ended 2026-11-08T05:45:18Z"
+  - command: "V5 after V4 (2026-11-08T05:45:53Z, this Mac): uvx --from ./release/get_nick_done-0.2.0-py3-none-any.whl gnd --version"
     exit: 0
     output: "gnd 0.2.0"
-  - command: "V7: git diff 12daa5b7 C -- .github; gh api .../environments; gh run list --workflow release.yml; gh release list; PyPI JSON"
+  - command: "V7 (2026-11-08T05:45:55Z): git diff 12daa5b7 C -- .github; environments; release.yml runs; GitHub releases; remote tags; PyPI JSON"
     exit: 0
-    output: "0 lines; ['github-pages']; []; GND v0.1.0 only; ['0.1.0']"
+    output: "0 lines; ['github-pages']; 0; ['v0.1.0']; refs/tags/v0.1.0 only; ['0.1.0']"
+  - command: "V8 at the record commit: scripts/components_index.py changed --base origin/main; git diff --stat C HEAD -- src pyproject.toml LICENSE NOTICE"
+    exit: 0
+    output: "changed against origin/main (7c0f4d0): 14 file(s) differ; 0 to fix, 0 warning(s), 0 to reread; packaged-path diff C..HEAD: 0 lines"
 slow_cadence:
   command: "GND_CANDIDATE_DIR=<retained candidate> uv run pytest -q -o addopts='' tests/test_release_acceptance.py --tb=short"
   trigger: "any rebuild of the candidate (a new candidate under plan rule 4), and the prepare job if the owner dispatches it (RL-D6)"
@@ -50,6 +53,14 @@ evidence:
     sha256: 4a783cae6484744e53898ff6e0b6b4813716e8803c208222cd9d7ad64c6c18d6
   - path: .gnd-planning/milestones/rule-check-release/evidence/RR2/candidate/SOURCE_COMMIT
     sha256: c755a6c4d5fec040de31fbbcc1357a4885107ee0d0e5754ea49bd816f8b8820d
+  - path: .gnd-planning/milestones/rule-check-release/evidence/RR2/beast3-run2-b2-and-v4.log
+    sha256: caddefd26f812f3fe6f2a915f273884ec8b7ed6c450803051c6cdbf2a77f546a
+  - path: .gnd-planning/milestones/rule-check-release/evidence/RR2/beast3-script-run2.sh
+    sha256: 97d19dd83b55f54b7289ceaa0800b2d488ce96ea399058b00aa30611ccd0377c
+  - path: .gnd-planning/milestones/rule-check-release/evidence/RR2/post-v4-v5-v7.txt
+    sha256: 58dd592334fa1cd1be048590ded94923b59391bf9b0411f6db66a678f569c959
+  - path: .gnd-planning/milestones/rule-check-release/notes/phase-RR2-codex-review-record.md
+    sha256: a50bac6df0570d0915587875c84ce597ca68d8e311931b25cfd4796a4147cd21
   - path: tests/test_release_acceptance.py
     sha256: 5f0de802bbca546a982437220d9b309d5f95cb00330b1fdbefd89a3cbff12ec5
   - path: docs/release-notes.md
@@ -67,7 +78,8 @@ It consists of `get_nick_done-0.2.0-py3-none-any.whl` (sha256
 - **Reproducible:** two builds on two Macs give identical bytes, and the wheel
   rebuilt from the sdist equals the release wheel.
 - **Acceptance:** release acceptance passes over the retained files: 14 passed,
-  exit 0, on beast-3 (macOS 27.0.1, arm64, Python 3.11.18, uv 0.10.10).
+  exit 0, on beast-3 (macOS 27.0.1, arm64, Python 3.11.18, uv 0.10.10). Two
+  runs passed; the second one, with the setup D5 ruled, is the gate of record.
 - **Every issue-118 item works when installed from the wheel:** `--rule-ids`,
   `--baseline`, `--allow-vacuous`, `remedy`, the acyclic extent, and
   `source: tool-output` with `producer`.
@@ -99,31 +111,48 @@ It consists of `get_nick_done-0.2.0-py3-none-any.whl` (sha256
 | Item | Value |
 |---|---|
 | Source | main `7c0f4d0e320ff7976296d785077280d180ea688e`, the merge commit of PR 125. Its parents are `df5753bf` and `86e5e1f1`, and its tree equals `86e5e1f1`'s |
-| Files | `SHA256SUMS` in `evidence/RR2/candidate/`. The files are kept outside git, at `~/gnd-release/0.2.0/7c0f4d0e/candidate/` on this Mac and `~/gnd-release/0.2.0/7c0f4d0e/candidate-b1/` on beast-3 (both verified with `shasum -c`) |
+| Files | `SHA256SUMS` in `evidence/RR2/candidate/`. The files are kept outside git: at `~/gnd-release/0.2.0/7c0f4d0e/candidate/` on this Mac (`shasum -c` before V5, `evidence/RR2/post-v4-v5-v7.txt`) and at `~/gnd-release/0.2.0/7c0f4d0e/candidate-b1/` on beast-3 (`shasum -c` in run 2's log, and again by V4's own `candidate` fixture) |
 | B1 profile | this Mac: macOS 26.6.2 arm64, uv 0.10.10 (Homebrew), `python3` 3.14.4 |
-| B2 profile | beast-3: macOS 27.0.1 arm64, uv 0.10.10 (installed from PyPI into an isolated venv), `python3` 3.9.6 |
+| B2 profile | beast-3: macOS 27.0.1 arm64, uv 0.10.10, the binary that `uvx --from uv==0.10.10` fetched (path in run 2's log), `python3` 3.9.6 |
 | Reproducibility (RR2-C2, RL-D7) | B1 equals B2 in all three files; the release wheel equals the comparison wheel. An earlier scratch build of `ea236619` gave the same hashes; the packaged paths did not change between the two |
 | Observed acceptance profile (RR2-C6) | beast-3, macOS 27.0.1 arm64, Python 3.11.18 (uv-managed, the workflow's minor version), uv 0.10.10. No other profile is claimed |
 
 ## Gate output (verbatim)
 
-V4 on beast-3, from `evidence/RR2/beast3-b2-and-v4.log`:
+V4 run 2 on beast-3, from `evidence/RR2/beast3-run2-b2-and-v4.log`:
 
-    + GND_CANDIDATE_DIR=/Users/…/gnd-release/0.2.0/7c0f4d0e/candidate-b1 uv run pytest -q -o 'addopts=' tests/test_release_acceptance.py '--tb=short'
+    +./rr2-beast2.sh:48> GND_CANDIDATE_DIR=/Users/…/gnd-release/0.2.0/7c0f4d0e/candidate-b1 uv run pytest -q -o 'addopts=' tests/test_release_acceptance.py '--tb=short'
     ..............                                                           [100%]
-    14 passed in 803.35s (0:13:23)
-    + echo 'V4 exit=0'
+    14 passed in 791.58s (0:13:11)
+    +./rr2-beast2.sh:49> echo 'V4 exit=0'
 
-The other gate outputs are in `evidence/RR2/v1-b1-v5-v7.txt` and in the front matter.
+The other gate outputs are in `evidence/RR2/v1-b1-v5-v7.txt` (V1 and B1, at 05:12Z),
+`evidence/RR2/post-v4-v5-v7.txt` (V5 after V4, V7 with the tag audit, FU4) and
+the front matter.
 
 ## Execution findings
 
-- **The first beast-3 run failed at setup, before any test ran.** The git
-  bundle named a commit but no branch, so the clone was empty; the build and
-  the tests found no project, and the run exited at once. The bundle was
-  remade with a branch, and the script now stops at the first failed setup
-  step (`evidence/RR2/beast3-script.sh`). The failed log was deleted before
-  the rerun and is not retained; this paragraph is its only record.
+- **Three beast-3 runs; the third is the gate of record.**
+  - **Run 1 (not retained):** failed at setup before any test ran. By my
+    account the bundle held a commit but no branch, so the clone came out
+    empty. Its log was deleted before run 2, so nothing retained verifies
+    these details (review R3).
+  - **Run 2:** `evidence/RR2/beast3-b2-and-v4.log` and `beast3-script.sh`.
+    B2 was identical and V4 passed (14 passed in 803.35s). But the venv step
+    for uv failed because run 1 had already created `uv01010`. The script
+    then went on with the existing uv 0.10.10 binary, without the pinned
+    install, and it did not stop at every failed step (review R1, R2).
+  - **Run 3**, kept on beast-3 as `run2/`: `evidence/RR2/beast3-run2-b2-and-v4.log`
+    and `beast3-script-run2.sh`. It used a fresh directory, took uv 0.10.10
+    from `uvx --from uv==0.10.10` as D5 ruled, and stops at any failed step,
+    writing its status last. It logged `shasum -c` of the B1 copy. B2 was
+    again identical, and V4 passed (14 passed in 791.58s).
+- **FU4 is not in the candidate.** It merged as PR 129 at 05:39Z, after the
+  candidate commit `C` was fixed (05:12Z) and built. `C` is an ancestor of the
+  FU4 merge. FU4 changed nothing under `src/` or `docs/`, and main has no
+  `## Unreleased` heading after it, so RR2-C0 needs no fold-in and leaves no
+  separate section (`evidence/RR2/post-v4-v5-v7.txt`). The candidate is
+  unaffected.
 - The build profile files record `python3 --version`, which does not affect
   the build: `uv build` runs the `uv_build` backend.
 
@@ -136,9 +165,25 @@ One reviewer, Codex, read each part; each reviewer is one reviewer.
 - **Part-one diff:** `revise`, findings I1 to I4, all fixed in `cbe5f57a`
   ([review](notes/phase-RR2-codex-review-impl.md); dispositions in spec §14).
   I1's premise was partly refuted.
-- **This record and its evidence:** the part-two review is appended below.
+- **This record and its evidence (at `ceaf36dd`):** `revise`, findings R1
+  to R7 ([review](notes/phase-RR2-codex-review-record.md)); dispositions
+  below.
 
 The repaired bytes carry no review opinion of their own.
+
+### Dispositions of the record review
+
+| Finding | Disposition | Applied |
+|---|---|---|
+| R1 uv provenance in run 2 | accepted, confirmed in the log | rerun with `uvx --from uv==0.10.10` in a fresh directory; that run is the gate of record |
+| R2 the script did not stop at a failed step | accepted | the new script stops at any failure (`ERR_EXIT`, `PIPE_FAIL`, `ZERR` trap) and writes its status last; the finding text is corrected |
+| R3 the run-1 account is unverified | accepted | labelled as an unretained, unverified account |
+| R4 V5 was not shown after V4 | accepted | V5 repeated at 05:45:53Z, after V4 ended at 05:45:18Z |
+| R5 `shasum -c` of the beast-3 B1 copy not logged | accepted | logged in the new run |
+| R6 V8 and the tag audit missing | accepted | V8 in the gates; V7 now lists the remote tags (`v0.1.0` only). The boundary separates what the phase did from what V7 observed |
+| R7 "review appended below" was not true | accepted | this table |
+
+The corrected record and the new run carry no review opinion of their own.
 
 ## Refactoring review
 
@@ -147,8 +192,10 @@ None executed. See spec §14: the new helpers stay separate from the file's
 
 ## Boundary -- what this phase does NOT establish
 
-- **Nothing is published.** No upload, tag, GitHub release, `pypi`
-  environment, publisher registration or workflow dispatch (V7). Publisher
+- **Nothing is published.** This phase ran no upload, tag, release,
+  environment, publisher or workflow command. V7 observed, at 05:45:55Z, the
+  same state as the plan baseline: no `pypi` environment, no `release.yml`
+  run, only the `v0.1.0` tag and release, and PyPI listing only 0.1.0. Publisher
   registration on PyPI's side cannot be read and is not audited.
 - **The candidate's evidence is not the evidence for a later publication's
   bytes.** Under the workflow route, publication uploads the publishing run's
@@ -158,7 +205,8 @@ None executed. See spec §14: the new helpers stay separate from the file's
 - **One acceptance profile was observed** (beast-3, macOS 27, Python 3.11).
   Not observed: Ubuntu, other Python versions, the index install form
   (`get-nick-done==0.2.0`), TestPyPI, and any external user trial.
-- **V4 ran over B1's files only.** B2 was compared by hash, not run.
+- **V4 ran over B1's files only.** B2 was compared by hash, not run. V5 ran
+  on this Mac (macOS 26.6.2), not on the V4 host.
 - **The sandbox (RR2-C7)** is macOS `sandbox-exec` with one profile. It
   denies reads of the checkout's parent directory; it is not a general proof
   of isolation.

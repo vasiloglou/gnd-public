@@ -21,7 +21,7 @@ evidence:
   - path: tests/support/rf9_ci_sources.py
     sha256: 5728f57c0e3ab3dc48d65eab77caaa4ae9c258b0ae2f5a56c8e667dfdd67db59
   - path: tests/support/pyrel_application_successors.py
-    sha256: 140d965c5b487b4fc5743b10bfa719c5075f377ed244e7789235c115c2ffbedf
+    sha256: 0a3cd848a3b0cd35d63eb807231bc0f59a1b5611d4a13853e7eee929dea3815e
   - path: tests/test_fu5_retired_helpers.py
     sha256: c0e4811804c4e086ef95ad067a89ae112d6593beec10b45311e39d51e9e79923
   - path: tests/test_rf6_packages.py
@@ -33,7 +33,7 @@ evidence:
   - path: .gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/retired-names.json
     sha256: 23e8cf1d6b1c7724f59b7bc4718a534c6cb68c0dc6fea4279de72fdcf4f64942
   - path: .gnd-planning/milestones/rule-check-followups/evidence/FU5/dynamic-query-successor.json
-    sha256: 0576e951b1df833e7c59aff72a1977c9d444a05d30a6e75de238c1fa411b66bb
+    sha256: 10f1d0e90dff618c9641007ccfbf26d8e21fe5ad7c7b5e6708859d0d56dbbb5d
   - path: .gnd-planning/milestones/rule-check-followups/evidence/FU5/full-suite-e84cd02d.txt
     sha256: c4f5d62769fc83f40c622e7068f53815de51a6144ae54f174b11ba2a4ef17b7a
   - path: .gnd-planning/milestones/rule-check-followups/evidence/FU5/failures-e84cd02d.txt
@@ -75,7 +75,11 @@ those guards. No frozen historical evidence changed.
   definition) and `coupling_sites` (retired aliases leave the inventory,
   so a revived one is an uninventoried edge again). The dynamic-query
   census drops 13 rows (15 occurrences) through a new FU5 link in the
-  authenticated successor chain (spec I4).
+  authenticated successor chain (spec I4). After main was merged in, the
+  link follows report-output-fidelity ROF3's (result 7306 rows, 9122
+  occurrences); V2 on the merged tree: 2540 passed. The V3 full run is at
+  e84cd02d, before that merge; the merge brought no change under
+  `src/gnd/checker`.
 - **M3** `test_find_cycle_helper_names_members` deleted;
   `tests/test_fu5_retired_helpers.py` added (T2, T3);
   `tests/test_rf9_ci_repairs.py` feeds the live alias list and pins the

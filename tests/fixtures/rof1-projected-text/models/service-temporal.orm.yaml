@@ -1,0 +1,37 @@
+version: 3
+model_id: urn:gnd-fixture:rof1-service-temporal@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: customer_code, name: CustomerCode, kind: value, primitive: String }
+  - { id: sla_days, name: SlaDays, kind: value, primitive: Duration }
+  - { id: window_days, name: WindowDays, kind: value, primitive: Duration }
+fact_types:
+  - id: has_sla
+    reading: "{CustomerCode} has service level {SlaDays}"
+    roles:
+      - { object_type: customer_code, role_name: customer }
+      - { object_type: sla_days, role_name: sla }
+    constraints:
+      - id: one_sla_per_customer
+        type: uniqueness
+        scope: internal
+        roles: [customer]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Each customer has at most one service level." }
+  - id: has_window
+    reading: "{CustomerCode} has contact window {WindowDays}"
+    roles:
+      - { object_type: customer_code, role_name: customer }
+      - { object_type: window_days, role_name: window }
+    constraints:
+      - id: one_window_per_customer
+        type: uniqueness
+        scope: internal
+        roles: [customer]
+        source: explicit
+        status: confirmed
+        modality: deontic
+        provenance: { user_quote: "A customer should have at most one contact window." }
+rejected_proposals: []

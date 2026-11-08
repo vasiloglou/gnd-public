@@ -81,10 +81,10 @@
         "algorithm_sha256": "c7cc18aaaeae035be2dcf89962f6d8eee795d846461f706b71c580c14a1464d1"
       },
       "after": {
-        "raw_sha256": "e917d292be1600a87f5cbba9a9b00db0fa8e2a88cc0bcd97eb62425f43eef347",
-        "algorithm_sha256": "d2cbc6fa39e8b82c75fd9ee1bcda69da4d845e9e537ef7301bf7ad1c530f2e56"
+        "raw_sha256": "4d45820eeaccc6887947cd67c0c461475e674a4a808b9052335ea6a829457586",
+        "algorithm_sha256": "60385328c32f4ece7a124c571c46f5dc73eb570ad099e99a14577af0eee16fb7"
       },
-      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards --baseline and prints the BASELINE summary after the report. Then rule-check-adoption RC4 (spec 509b721d, corpus 938716c9): forwards --allow-vacuous and prints its closing line after the report."
+      "reason": "Approved CS1 single/batch CLI opt-in forwarding. Then composition-and-type-induction CT2 (2c25ba4d): the --composition and --sources options are validated and forwarded to the check service; without them the handler is unchanged. Then rule-check-adoption RC1 (24bb5c9e, dc592a89): the --rule-ids option is forwarded to the check service and text output reads the declared addresses back from a version-15 payload; without it the handler is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): forwards --baseline and prints the BASELINE summary after the report. Then rule-check-adoption RC4 (spec 509b721d, corpus 938716c9): forwards --allow-vacuous and prints its closing line after the report. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing (redaction or temporal) text route calls _print_projected_check_text, which prints check verdict lines from the projected payload instead of its JSON. Then report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): --admission on a projected route renders the check layout through _print_projected_check_text instead of the shared projected-JSON text."
     },
     {
       "kind": "RF5",
@@ -509,10 +509,10 @@
         "algorithm_sha256": "754994aeecf03b996aae6636c37c608f9cd461bb360f0e3dcc92f4c0f9450687"
       },
       "after": {
-        "raw_sha256": "97576bdf7eb3bf4e3b55c8c0b73e7b8e00620bfd3f5ff433ae6fb70a87089024",
-        "algorithm_sha256": "f175acb0eed3fbaef9feea0439f531368e51ea6ef3d99785b9fe377094535ffb"
+        "raw_sha256": "512b92d740c4a6145d8576d08e443cef9cc870e8a717417e3ded7d1fde8aaf70",
+        "algorithm_sha256": "5f95550fc1516ce0419b5375246d9d87224b10c50059bc3be72536e4302cf133"
       },
-      "reason": "model-growth-guardrails MG5 (7961119c): an optional documents keyword (gnd validate --document) re-hashes the model's source spans over the supplied documents after a clean validation; without it the handler is unchanged."
+      "reason": "model-growth-guardrails MG5 (7961119c): an optional documents keyword (gnd validate --document) re-hashes the model's source spans over the supplied documents after a clean validation; without it the handler is unchanged. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the declaration-bearing text route calls _print_projected_check_text, which prints OK/issue lines from the projected payload instead of its JSON. Then report-output-fidelity ROF3 (issue 111, owner-approved 2026-11-08): --identity prints the canonical model identity through _print_model_identity for a model that loads; every other path is unchanged."
     },
     {
       "kind": "RF5",
@@ -650,10 +650,10 @@
         "algorithm_sha256": "3a5132bb92bff523c47b9783ec48bddc9c955f2f3a886e375cdb42bcd37e4701"
       },
       "after": {
-        "raw_sha256": "68edce1ec5fe514d1054c1589c70874b0d0e31b0c58eaafe9c86de8193147139",
-        "algorithm_sha256": "8c6960ed1dc0f26cf5dc14ddb213095e187484251c85c96aaa7aa8ccc704a14a"
+        "raw_sha256": "d1cfae4e020e66a62632c833144362507c2d5ec1a3e677e0e000d2aa1860d297",
+        "algorithm_sha256": "dcb5125095a393a835b220aa8e89bdf2d6ae13fba8c5a5c34c120d017064077b"
       },
-      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the declared map carries the version-15 message, which the text line prints; without the map the output is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the declared map also carries each verdict's novelty, printed as [fail, new] or [fail, standing]; without the map the output is unchanged."
+      "reason": "rule-check-adoption RC1 (24bb5c9e, dc592a89): an optional declared map names each verdict by its declared address and prints its remedy; without the map the output is unchanged. Then rule-check-adoption RC2 (spec 27258a9e, corpus 9130e93d): the declared map carries the version-15 message, which the text line prints; without the map the output is unchanged. Then rule-check-adoption RC3 (spec 0e74261e, corpus 5f860cb4): the declared map also carries each verdict's novelty, printed as [fail, new] or [fail, standing]; without the map the output is unchanged. Then report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the body moves into render_check_rows(rows, declared), the one row renderer the projected check/validate text shares; _print_report only adapts its report object into rows and prints. Output bytes are unchanged (plain-route goldens)."
     },
     {
       "kind": "RF6b",
@@ -690,6 +690,81 @@
       "before": "f394f0010617dcbf7f8a67eae0581338cf48d237b3f8b31f1e97ea7d95b20fbb",
       "after": "6a019a4e28e635e2ae8521b92941ab6882007bfc66c11bc6562540de313f4524",
       "reason": "rule-check-adoption RC5 (spec a29931c2, corpus 6b45985b): the combined reference population header carries the candidate's optional producer (source tool-output), so a reference-bound tool-output population keeps it; every other header field and step is unchanged. Then rule-check-followups FU2 (spec 1842579c, tests e3a0ec54): the header also carries the candidate's optional label (issue 116), so a labelled candidate keeps it; an unset label leaves the header unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_issues",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "710839d1c73622219d0fb83f2b3ad62b6a238b1f346190f9334176be395f9cf0",
+        "algorithm_sha256": "fe86abee9b9d653c7b4264febc5810a8b96e070ef6772118cedf05139a6b58e1"
+      },
+      "after": {
+        "raw_sha256": "0d38dabef4cfaa4c8780fb1999ac3642060f559fd693fca3e352b43f4b857a04",
+        "algorithm_sha256": "81ce07adc5961ffe88235a837f700089abe367205c137244ffa5ec4cee061b41"
+      },
+      "reason": "report-output-fidelity ROF1 (issue 112, owner-approved 2026-11-07): the cap and the elision line move into _issue_lines, shared with the projected-payload route; output bytes are unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_transition",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "58e03160f8c4130e6fe49a29cc377b62862b58f192a6558a329383be56081cb4",
+        "algorithm_sha256": "232040fe561ce1c1d465734de7eed6106777fe58433a3c02de66e31a2f79fcff"
+      },
+      "after": {
+        "raw_sha256": "9cb12439bdcc497338d07301d45e28aabaaf96101b318fd9c0d442474398ec9c",
+        "algorithm_sha256": "ffae2d79641594e5712a4cfeaca0f61ec6afaff8cd932b5b2211b4f110e7cfcf"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): the projected route prints the walk layout through _print_projected_transition_text instead of the shared projected-JSON text."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_verify",
+      "home": "gnd.export.verification_service",
+      "before": {
+        "raw_sha256": "60df5dc898f481ee175423a40cda62940419853d721204d70c699b684e6b3048",
+        "algorithm_sha256": "aacfdf3a6759c7e7169823ff12063a3c841df086b4fc7e770749657472ad601a"
+      },
+      "after": {
+        "raw_sha256": "2d82002ae964cd900789466f0c86f90944f27ca5e71dcc344fdec4ab9b231ca8",
+        "algorithm_sha256": "3731062e32175fc226a07f59263d69ff87d610cdcb572e672905252168c989a4"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): the projected route prints through _print_projected_verify_text, and the plain extraction line comes from output.extraction_line (same bytes)."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_projected_text",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "434d12ff309a0c11bdbce895f6e08ab003e760bb351c71580315f3015f17eb59",
+        "algorithm_sha256": "f82a735a0430d2b3e612b1ebf4260e137302e5ccaed2a8ee11a2c85363cc05c9"
+      },
+      "after": {
+        "raw_sha256": "29d404b19c981f23170925321f518f767943d4ebd0891a05452dc5d2abbdb1dd",
+        "algorithm_sha256": "0f0c0a5df3187ba01a277ce6232450fe16fb29280ff75a7010c3ff244d0eee40"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07, D2): the historical entry point dispatches to the route printers instead of printing the report as JSON text; its refusal of a payload without redaction metadata is kept."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_print_transition",
+      "home": "gnd.output",
+      "before": {
+        "raw_sha256": "c4870baba365f2bcfe1e56283acd3c67d0bf4caed74b7585c812927d89391b72",
+        "algorithm_sha256": "63c83a93b097cd7d34ec5a85fb2a3f5bffcdd58e84216d68157773440cb3924d"
+      },
+      "after": {
+        "raw_sha256": "673ab898ca2ea27a226a7a0f08a1e1aaf5d79a1b0fa2ac9f10c8e44ea29bae68",
+        "algorithm_sha256": "4e015bfbf65a2ac2480b127aa5d1e995d039c7f1c171cd23952303396fd11070"
+      },
+      "reason": "report-output-fidelity ROF2 (issue 112, owner-approved 2026-11-07): an adapter over render_transition_rows, shared with the projected walk route; output bytes are unchanged."
     }
   ]
 }

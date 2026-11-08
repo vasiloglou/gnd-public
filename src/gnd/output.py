@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import hashlib
 import json
-from collections.abc import Mapping
+import sys
+from collections.abc import Mapping, Sequence
+from itertools import islice
+from types import SimpleNamespace
 from typing import Any
 
 from gnd import checking_service as api_module
@@ -24,15 +28,58 @@ def _print_issues(issues: list[ValidationIssue]) -> None:
     file cap. Bound every untrusted-input-proportional resource where it is
     PRODUCED, not only where it is serialized. The elision is reported, never
     silent, exactly as ``issues_truncated`` is in the payload."""
+    for line in _issue_lines(issues):
+        print(line)
+
+
+def _issue_lines(issues: Sequence[Any], total: int | None = None) -> list[str]:
+    """The ``ERROR at`` lines for ``issues`` (objects with path, message and rule_id).
+
+    The one home of the cap and the elision line, shared by the object route
+    (``_print_issues``) and the projected-payload route; ``total`` is the
+    payload's ``issues_total`` when the rows were already capped upstream.
+    """
     shown = issues[: report_module.MAX_POPULATION_ISSUES]
-    for issue in shown:
-        print(f"ERROR at {issue.path}: {issue.message} [{issue.rule_id}]")
-    if len(issues) > len(shown):
-        print(
-            f"... and {len(issues) - len(shown)} further issue(s) elided "
+    lines = [f"ERROR at {issue.path}: {issue.message} [{issue.rule_id}]" for issue in shown]
+    elided = max(len(issues), total or 0) - len(shown)
+    if elided > 0:
+        lines.append(
+            f"... and {elided} further issue(s) elided "
             f"(cap {report_module.MAX_POPULATION_ISSUES}); use --format json for "
             f"the machine-readable payload, which reports issues_total."
         )
+    return lines
+
+def _print_model_identity(model: Model) -> int:
+    """``gnd validate --identity``: the digest line, then the document it is the digest of.
+
+    The second line is the hashed bytes without their trailing newline, so
+    ``sha256(line 2 + "\\n")`` is the digest on line 1. A model with no canonical
+    identity is refused (exit 3) with its rule id.
+    """
+    from gnd import values
+
+    try:
+        document = values.model_identity_document(model)
+        data = values.model_identity_bytes(model)
+    except values.ModelIdentityError as error:
+        print(
+            f"ERROR at {verbalize.line_text(error.path)}: {verbalize.line_text(error.message)} "
+            f"[{error.rule_id}]"
+        )
+        return 3
+    digest = "sha256:" + hashlib.sha256(data).hexdigest()
+    print(f"MODEL IDENTITY {digest} (identity_version {document['identity_version']})")
+    # The canonical bytes themselves, whatever the terminal's text encoding.
+    buffer = getattr(sys.stdout, "buffer", None)
+    if buffer is None:
+        print(data.decode("utf-8").removesuffix("\n"))
+    else:
+        sys.stdout.flush()
+        buffer.write(data)
+        buffer.flush()
+    return 0
+
 
 def _print_trace(model: Model, model_path: str) -> None:
     """What a transition run WOULD evaluate. Reporting only (D6).
@@ -111,25 +158,24 @@ def _print_trace(model: Model, model_path: str) -> None:
         print("  (none)")
 
 def _print_projected_text(payload: dict[str, Any]) -> None:
-    """Render only the already-projected tree on declaration-bearing routes."""
+    """Render only the already-projected tree on declaration-bearing routes.
+
+    The historical entry point (ROF2 D2): it picks the route's printer from the
+    payload -- ``verify`` by its command, a walk by its ``post`` (set on every
+    transition payload, refusals included), else check/validate -- so no caller
+    gets the report as text through it. Each command calls its own printer.
+    """
 
     from gnd.redaction import render_text_header
 
-    header = render_text_header(payload)
-    if header is None:
+    if render_text_header(payload) is None:
         raise ValueError("projected text requires redaction metadata")
-    print(header)
-    transition_block = payload.get("transition")
-    if isinstance(transition_block, dict):
-        for step in transition_block.get("steps") or []:
-            changes = step.get("derived_changes") if isinstance(step, dict) else None
-            if not changes:
-                continue
-            print(
-                f"STEP {step.get('index')} ({verbalize.path_segment(str(step.get('operation')))})"
-            )
-            _print_derived_change_summaries(changes)
-    print(report_module.render_json(payload))
+    if payload.get("command") == "verify":
+        _print_projected_verify_text(payload)
+    elif payload.get("post") in ("declared", "computed"):
+        _print_projected_transition_text(payload)
+    else:
+        _print_projected_check_text(payload)
 
 def _constraint_verdict_line(verdict: Any, indent: str = "  ") -> str:
     """ONE rendering of a constraint verdict, for every surface that prints one.
@@ -212,53 +258,379 @@ def print_vacuous_acceptance(payload: Mapping[str, Any]) -> None:
         print(f"vacuous accepted: {vacuous} rules have nothing to judge yet (--allow-vacuous).")
 
 
+def _rows(value: Any) -> list[Any]:
+    """``value`` if it is a list, else no rows: a payload value of any other shape is skipped."""
+    return value if isinstance(value, list) else []
+
+
+def _text(value: Any) -> str:
+    """Printable text for a payload value, total and bounded: only scalars are rendered.
+
+    A string is itself; a number is its decimal text (a number past the
+    interpreter's digit limit prints a placeholder instead of raising); anything
+    else, including a container of any depth, is a placeholder. Never ``str()`` of
+    an arbitrary payload value: that is where a deep or hostile value raises.
+    """
+    if isinstance(value, str):
+        return value
+    if value is None:
+        return ""
+    if isinstance(value, (bool, int, float)):
+        try:
+            return str(value)
+        except ValueError:
+            return "<number>"
+    return "<non-text>"
+
+
+def _row_views(rows: Any) -> list[SimpleNamespace]:
+    """Verdict rows as attribute views, total over any payload value.
+
+    The line formatters read attributes; a payload row is a mapping that may be
+    missing keys or carry non-text values (the renderer is total over any
+    mapping, design rule 1). Anything that is not a mapping is skipped.
+    """
+    views = []
+    for row in _rows(rows):
+        if not isinstance(row, Mapping):
+            continue
+        findings = [
+            SimpleNamespace(kind=_text(f.get("kind")), message=_text(f.get("message")))
+            for f in _rows(row.get("findings"))
+            if isinstance(f, Mapping)
+        ]
+        ref = row.get("constraint_ref", "")
+        views.append(
+            SimpleNamespace(
+                verdict=_text(row.get("verdict")),
+                modality=_text(row.get("modality")),
+                # Kept as supplied when it is a plain key, so a ``declared`` lookup
+                # by the caller's own reference still finds its entry.
+                # (An integer too long to print becomes the placeholder.)
+                constraint_ref=(
+                    ref
+                    if isinstance(ref, str) or (isinstance(ref, int) and _text(ref) != "<number>")
+                    else _text(ref)
+                ),
+                derivation_ref=_text(row.get("derivation_ref")),
+                message=_text(row.get("message")),
+                reason_code=_text(row.get("reason_code")),
+                findings=findings,
+            )
+        )
+    return views
+
+
+def _with_reason(lines: list[str], view: SimpleNamespace, show_reason: bool) -> list[str]:
+    """Append the row's reason code to its first line when the message does not carry it.
+
+    A projection replaces a message that would show instance detail, and the
+    row's ``reason_code`` (a rule identity, never instance detail) is then the
+    only place the cause survives; the projected routes show it.
+    """
+    if show_reason and view.reason_code and view.reason_code not in view.message:
+        lines = [f"{lines[0]} [reason: {verbalize.line_text(view.reason_code)}]", *lines[1:]]
+    return lines
+
+
+def render_check_rows(
+    payload: Mapping[str, Any],
+    declared: Mapping[str, tuple[str, str | None, str, str | None]] | None = None,
+    *,
+    show_reason: bool = False,
+) -> list[str]:
+    """The check layout from a payload's rows: the one home of this text.
+
+    Both the plain route (``_print_report``, which adapts its report object into
+    rows) and the projected routes (``_projected_check_lines``) render through
+    here, so the two layouts cannot drift. It reads ``verdicts``, ``derivations``,
+    ``counts`` and ``coverage`` and nothing else, never the unprojected report
+    object, and is total over any mapping.
+    """
+    views = _row_views(payload.get("verdicts"))
+    blocking = [v for v in views if v.modality == "alethic" and v.verdict != "pass"]
+    advisory = [v for v in views if v.modality == "deontic" and v.verdict != "pass"]
+    lines = ["BLOCKING (alethic)"]
+    for verdict in blocking:
+        lines.extend(_with_reason(_identified_verdict_lines(verdict, declared), verdict, show_reason))
+    if not blocking:
+        lines.append("  (none)")
+    lines.append("ADVISORY (deontic)")
+    for verdict in advisory:
+        lines.extend(_with_reason(_identified_verdict_lines(verdict, declared), verdict, show_reason))
+    if not advisory:
+        lines.append("  (none)")
+    derivations = _row_views(payload.get("derivations"))
+    if derivations:
+        lines.append("DERIVATIONS (alethic)")
+        for verdict in derivations:
+            lines.extend(_with_reason(_derivation_verdict_lines(verdict), verdict, show_reason))
+    counts = payload.get("counts")
+    counts = counts if isinstance(counts, Mapping) else {}
+    count = {key: _text(counts.get(key, 0)) for key in ("pass", "fail", "warning", "unchecked", "vacuous")}
+    lines.append(
+        f"pass={count['pass']} fail={count['fail']} warning={count['warning']} "
+        f"unchecked={count['unchecked']} vacuous={count['vacuous']}"
+    )
+    coverage = payload.get("coverage")
+    if isinstance(coverage, Mapping) and coverage:
+        lines.append("COVERAGE")
+        for fact_type_id, entry in coverage.items():
+            entry = entry if isinstance(entry, Mapping) else {}
+            lines.append(
+                f"  {verbalize.path_segment(fact_type_id)}: "
+                f"{_text(entry.get('declared'))}, facts={_text(entry.get('facts'))}"
+            )
+    return lines
+
+
 def _print_report(
     report: CheckReport,
     declared: Mapping[str, tuple[str, str | None, str, str | None]] | None = None,
 ) -> None:
-    blocking = [
-        verdict
-        for verdict in report.verdicts
-        if verdict.modality == "alethic" and verdict.verdict != "pass"
-    ]
-    advisory = [
-        verdict
-        for verdict in report.verdicts
-        if verdict.modality == "deontic" and verdict.verdict != "pass"
-    ]
+    rows = {
+        "verdicts": [verdict.model_dump() for verdict in report.verdicts],
+        "derivations": [verdict.model_dump() for verdict in report.derivations],
+        "counts": report.counts(),
+        "coverage": {
+            fact_type_id: {"declared": entry.declared, "facts": entry.facts}
+            for fact_type_id, entry in report.coverage.items()
+        },
+    }
+    print("\n".join(render_check_rows(rows, declared)))
 
-    print("BLOCKING (alethic)")
-    if blocking:
-        for verdict in blocking:
-            print("\n".join(_identified_verdict_lines(verdict, declared)))
-    else:
-        print("  (none)")
 
-    print("ADVISORY (deontic)")
-    if advisory:
-        for verdict in advisory:
-            print("\n".join(_identified_verdict_lines(verdict, declared)))
-    else:
-        print("  (none)")
+_MAX_COUNT = 10**15
 
-    if report.derivations:
-        print("DERIVATIONS (alethic)")
-        for verdict in report.derivations:
-            for line in _derivation_verdict_lines(verdict):
-                print(line)
 
-    counts = report.counts()
-    print(
-        f"pass={counts['pass']} fail={counts['fail']} warning={counts['warning']} "
-        f"unchecked={counts['unchecked']} vacuous={counts['vacuous']}"
-    )
+def _projected_preamble(payload: Mapping[str, Any]) -> tuple[list[str], list[str] | None]:
+    """The warning lines, and the closing lines when issues or an error end the output.
 
-    if report.coverage:
-        print("COVERAGE")
-        for fact_type_id, entry in report.coverage.items():
-            print(
-                f"  {verbalize.path_segment(fact_type_id)}: {entry.declared}, facts={entry.facts}"
+    Shared by every projected route, in the plain routes' order: warnings;
+    issues (capped, with the elision line), which end the output; an error with
+    no issues. The second value is ``None`` when the route's body follows.
+    """
+    lines = []
+    for warning in _rows(payload.get("warnings"))[: report_module.MAX_POPULATION_ISSUES]:
+        if isinstance(warning, Mapping):
+            lines.append(
+                f"WARNING at {_text(warning.get('path'))}: {_text(warning.get('message'))} "
+                f"[{_text(warning.get('rule_id'))}]"
             )
+    # The cap is applied to the read: rows past it are never visited or copied.
+    supplied = _rows(payload.get("issues"))
+    rows = list(
+        islice((row for row in supplied if isinstance(row, Mapping)), report_module.MAX_POPULATION_ISSUES)
+    )
+    if rows:
+        total = payload.get("issues_total")
+        # A total that is not a plausible count (not an int, or too long to print) is ignored.
+        if not isinstance(total, int) or isinstance(total, bool) or not 0 <= total <= _MAX_COUNT:
+            total = 0
+        issues = [
+            SimpleNamespace(
+                path=_text(row.get("path")),
+                message=_text(row.get("message")),
+                rule_id=_text(row.get("rule_id")),
+            )
+            for row in rows
+        ]
+        return lines, _issue_lines(issues, max(len(supplied), total))
+    error = payload.get("error")
+    if error:
+        message = error.get("message") if isinstance(error, Mapping) else error
+        prefix = "INTERNAL ERROR" if payload.get("exit_code") == 70 else "ERROR"
+        return lines, [f"{prefix}: {_text(message)}"]
+    return lines, None
+
+
+def _projected_check_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a check or validate payload that was already projected.
+
+    Reads only the payload (never the unprojected report), so what the projection
+    removed cannot come back. Order: the shared preamble; a validate success;
+    otherwise the check layout.
+    """
+    lines, closing = _projected_preamble(payload)
+    if closing is not None:
+        return lines + closing
+    exit_code = payload.get("exit_code")
+    if payload.get("command") == "validate":
+        if exit_code != 0:
+            return [*lines, f"ERROR: validate exited {_text(exit_code)} without a reported cause"]
+        return [*lines, f"OK: {_text(payload.get('model'))} is a valid GND ORM model"]
+    return lines + render_check_rows(payload, show_reason=True)
+
+
+def _walk_views(rows: Any) -> list[SimpleNamespace]:
+    """Walk verdict rows (pre-state, step, frame) as attribute views, total over any value."""
+    return [
+        SimpleNamespace(
+            verdict=_text(row.get("verdict")),
+            locator=_text(row.get("locator")),
+            message=_text(row.get("message")),
+            reason_code=_text(row.get("reason_code")),
+        )
+        for row in _rows(rows)
+        if isinstance(row, Mapping)
+    ]
+
+
+def _walk_verdict_lines(rows: Any, show_reason: bool) -> list[str]:
+    lines = []
+    for view in _walk_views(rows):
+        line = (
+            f"  [{view.verdict}] {verbalize.path_segment(view.locator)}: "
+            f"{verbalize.line_text(view.message)}"
+        )
+        lines.extend(_with_reason([line], view, show_reason))
+    return lines
+
+
+def _snapshot_lines(snapshot: Any, label: str, show_reason: bool) -> list[str]:
+    """The non-pass constraint verdicts of one embedded snapshot, ``label`` first."""
+    rows = snapshot.get("verdicts") if isinstance(snapshot, Mapping) else None
+    lines = []
+    for view in _row_views(rows):
+        if view.verdict != "pass":
+            line = _constraint_verdict_line(view, f"{label} ")
+            lines.extend(_with_reason([line], view, show_reason))
+    return lines
+
+
+def _derived_change_lines(changes: Any) -> list[str]:
+    lines = []
+    for change in _rows(changes):
+        if isinstance(change, Mapping):
+            added = len(_rows(change.get("added")))
+            removed = len(_rows(change.get("removed")))
+            lines.append(
+                f"DERIVED {verbalize.path_segment(_text(change.get('fact_type')))}: "
+                f"+{added} -{removed}"
+            )
+    return lines
+
+
+def _json_line(value: Any) -> str:
+    """One JSON line, as the plain route prints a computed post; a placeholder if it cannot be."""
+    try:
+        return json.dumps(value, allow_nan=False)
+    except (TypeError, ValueError, RecursionError):
+        return "<non-text>"
+
+
+def render_transition_rows(
+    block: Mapping[str, Any], *, post: str | None, show_reason: bool = False
+) -> list[str]:
+    """The walk layout from a ``transition`` block's rows: the one home of this text.
+
+    Four families, printed as four sections and never merged. Both the plain
+    route (``_print_transition``, which adapts its report object into rows) and
+    the projected route render through here. ``post == "computed"`` selects the
+    computed-post section in place of the frame section. Total over any mapping.
+    """
+    lines = ["PRE-STATE"]
+    lines.extend(_snapshot_lines(block.get("pre_snapshot"), "  snapshot", show_reason))
+    lines.extend(_walk_verdict_lines(block.get("pre_snapshot_verdicts"), show_reason))
+    for step in _rows(block.get("steps")):
+        if not isinstance(step, Mapping):
+            continue
+        operation = _text(step.get("operation"))
+        lines.append(f"STEP {_text(step.get('index'))} ({verbalize.path_segment(operation)})")
+        lines.extend(_derived_change_lines(step.get("derived_changes")))
+        lines.extend(_walk_verdict_lines(step.get("verdicts"), show_reason))
+        lines.extend(_snapshot_lines(step.get("intermediate"), "  intermediate", show_reason))
+    if post == "computed":
+        lines.append("COMPUTED POST")
+        lines.append(_json_line(block.get("computed_post")))
+        lines.append("FRAME COMPARISON: not applicable -- post is computed")
+    else:
+        lines.append("FRAME")
+        for grading in _rows(block.get("frame_grading")):
+            if not isinstance(grading, Mapping):
+                continue
+            operations = ", ".join(
+                verbalize.path_segment(_text(name)) for name in _rows(grading.get("operations"))
+            )
+            lines.append(
+                f"  {verbalize.path_segment(_text(grading.get('fact_type')))}: "
+                f"{_text(grading.get('modality'))} ({_text(grading.get('reason'))}; {operations})"
+            )
+        lines.extend(_walk_verdict_lines(block.get("frame_verdicts"), show_reason))
+    lines.append("POST-STATE")
+    lines.extend(_snapshot_lines(block.get("post_snapshot"), "  snapshot", show_reason))
+    return lines
+
+
+def _projected_transition_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a projected walk payload: the preamble, then the walk if it was evaluated.
+
+    A walk that was refused before it ran (``evaluated`` false) prints only what
+    the plain route prints then: the warnings and the issues or error.
+    """
+    lines, closing = _projected_preamble(payload)
+    if closing is not None:
+        return lines + closing
+    block = payload.get("transition")
+    if isinstance(block, Mapping) and block.get("evaluated") is True:
+        post = payload.get("post")
+        return lines + render_transition_rows(
+            block, post=post if isinstance(post, str) else None, show_reason=True
+        )
+    return lines
+
+
+def extraction_line(extraction: Any) -> str:
+    """``EXTRACTION: state=<state>[ (<reason>)]``: the one home of verify's extraction line."""
+    block = extraction if isinstance(extraction, Mapping) else {}
+    reason = _text(block.get("reason"))
+    return f"EXTRACTION: state={_text(block.get('state'))}" + (f" ({reason})" if reason else "")
+
+
+def _projected_verify_lines(payload: Mapping[str, Any]) -> list[str]:
+    """Text for a projected verify payload: the preamble, the extraction line, the check layout."""
+    lines, closing = _projected_preamble(payload)
+    if closing is not None:
+        return lines + closing
+    return [
+        *lines,
+        extraction_line(payload.get("extraction")),
+        *render_check_rows(payload, show_reason=True),
+    ]
+
+
+def _print_projected_header(payload: Mapping[str, Any]) -> None:
+    """The ``REDACTION`` header, printed only when there are declarations to name.
+
+    A payload projected only for temporal terms has none, and a header for a
+    policy that does not exist would mislead (plan D2).
+    """
+
+    from gnd.redaction import render_text_header
+
+    metadata = payload.get("redaction")
+    if isinstance(metadata, Mapping) and metadata.get("declarations"):
+        header = render_text_header(payload)
+        if header is not None:
+            print(header)
+
+
+def _print_projected_check_text(payload: dict[str, Any]) -> None:
+    """``check``/``validate`` text on a declaration-bearing or temporal route."""
+    _print_projected_header(payload)
+    print("\n".join(_projected_check_lines(payload)))
+
+
+def _print_projected_transition_text(payload: dict[str, Any]) -> None:
+    """Walk text (``check --pre --steps``) on a declaration-bearing or temporal route."""
+    _print_projected_header(payload)
+    print("\n".join(_projected_transition_lines(payload)))
+
+
+def _print_projected_verify_text(payload: dict[str, Any]) -> None:
+    """``verify`` text on a declaration-bearing route."""
+    _print_projected_header(payload)
+    print("\n".join(_projected_verify_lines(payload)))
 
 def _band(report: CheckReport) -> int:
     """Delegate to :func:`gnd.checker.band` — the ONE owner of the exit-band rule.
@@ -281,34 +653,12 @@ def _print_transition(
     """
     for warning in warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
-
-    def render(verdicts: list[Any], indent: str = "  ") -> None:
-        for verdict in verdicts:
-            where = verbalize.path_segment(verdict.locator)
-            print(f"{indent}[{verdict.verdict}] {where}: {verbalize.line_text(verdict.message)}")
-
-    print("PRE-STATE")
-    _print_check_verdicts(walk.pre_snapshot)
-    render(walk.pre_snapshot_verdicts)
-    for step in walk.steps:
-        print(f"STEP {step.index} ({verbalize.path_segment(step.operation)})")
-        _print_derived_change_summaries(step.derived_changes)
-        render(step.verdicts)
-        _print_check_verdicts(step.intermediate, label="  intermediate")
-    if computed_post is None:
-        print("FRAME")
-        for grading in walk.frame_grading:
-            print(
-                f"  {verbalize.path_segment(grading.fact_type)}: {grading.modality} "
-                f"({grading.reason}; {', '.join(map(verbalize.path_segment, grading.operations))})"
-            )
-        render(walk.frame_verdicts)
-    else:
-        print("COMPUTED POST")
-        print(json.dumps(computed_post, allow_nan=False))
-        print("FRAME COMPARISON: not applicable -- post is computed")
-    print("POST-STATE")
-    _print_check_verdicts(walk.post_snapshot)
+    # An adapter: the report object becomes rows and the one walk renderer prints
+    # them, so the plain and projected walk layouts cannot drift (ROF2).
+    block = walk.model_dump()
+    block["computed_post"] = computed_post
+    post = "declared" if computed_post is None else "computed"
+    print("\n".join(render_transition_rows(block, post=post)))
 
 def _print_derived_change_summaries(changes: Any) -> None:
     for change in changes or []:

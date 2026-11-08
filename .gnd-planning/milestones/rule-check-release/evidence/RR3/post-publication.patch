@@ -1,0 +1,312 @@
+diff --git a/README.md b/README.md
+index f05f3aca..181f7d1b 100644
+--- a/README.md
++++ b/README.md
+@@ -40,7 +40,7 @@ final state either way.
+ Requires Python 3.11 or newer. With [uv](https://docs.astral.sh/uv/getting-started/installation/):
+ 
+ ```sh
+-uv tool install get-nick-done==0.1.0
++uv tool install get-nick-done==0.2.0
+ uv tool update-shell
+ ```
+ 
+diff --git a/docs/compatibility.md b/docs/compatibility.md
+index cb4f84fe..05203a90 100644
+--- a/docs/compatibility.md
++++ b/docs/compatibility.md
+@@ -1,10 +1,9 @@
+ # Compatibility and version policy
+ 
+-Distribution `get-nick-done`, import and CLI `gnd` remain stable. Version 0.1.0
+-is published. Version 0.2.0 is prepared and not published; on 2026-11-07 the
+-package index listed only 0.1.0, so 0.2.0 was free. Confirm service ownership and
+-that the version is still free before candidate freeze and again before any
+-upload. Milestone numbers are not package versions.
++Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions 0.1.0
++and 0.2.0 are published (0.2.0 on PUBLICATION_DATE). For the next version,
++confirm service ownership and that the version is still free before candidate
++freeze and again before any upload. Milestone numbers are not package versions.
+ 
+ Preserve documented schemas, exit bands and deterministic behavior unless an
+ explicit reviewed compatibility decision says otherwise. Record breaking changes
+diff --git a/docs/how-to/access-requests.md b/docs/how-to/access-requests.md
+index 95651191..741d14a6 100644
+--- a/docs/how-to/access-requests.md
++++ b/docs/how-to/access-requests.md
+@@ -18,8 +18,8 @@ and refuses the plan before any access is granted.
+ ## Before you start
+ 
+ Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+-shows: these pages need a GND newer than the 0.1.0 release, installed from a
+-checkout, and `python` must be that environment's Python.
++shows: GND from PyPI, or from a checkout for unreleased work on `main`, and
++`python` must be that environment's Python.
+ 
+ Get the example and check its model, as in the
+ [course planner tutorial](../tutorials/course-planner.md):
+diff --git a/docs/how-to/lease-schedule.md b/docs/how-to/lease-schedule.md
+index d7a9bc59..c21608ce 100644
+--- a/docs/how-to/lease-schedule.md
++++ b/docs/how-to/lease-schedule.md
+@@ -18,8 +18,8 @@ outside them, and warns about a payment due in the last week.
+ ## Before you start
+ 
+ Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+-shows: these pages need a GND newer than the 0.1.0 release, installed from a
+-checkout, and `python` must be that environment's Python.
++shows: GND from PyPI, or from a checkout for unreleased work on `main`, and
++`python` must be that environment's Python.
+ 
+ <!-- gnd-run expect=0 -->
+ ```sh
+diff --git a/docs/how-to/trip-budget.md b/docs/how-to/trip-budget.md
+index 3c8aadbc..73fc95f0 100644
+--- a/docs/how-to/trip-budget.md
++++ b/docs/how-to/trip-budget.md
+@@ -18,8 +18,8 @@ refuses two activities booked for the same time.
+ ## Before you start
+ 
+ Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+-shows: these pages need a GND newer than the 0.1.0 release, installed from a
+-checkout, and `python` must be that environment's Python.
++shows: GND from PyPI, or from a checkout for unreleased work on `main`, and
++`python` must be that environment's Python.
+ 
+ <!-- gnd-run expect=0 -->
+ ```sh
+diff --git a/docs/index.md b/docs/index.md
+index df20e438..6d68cb1c 100644
+--- a/docs/index.md
++++ b/docs/index.md
+@@ -141,7 +141,7 @@ install into both agents:
+ <p class="pills"><span>Claude Code</span><span>Codex</span><span>Agent Skills format</span><span>Python ≥ 3.11</span></p>
+ 
+ ```sh
+-uv tool install get-nick-done==0.1.0
++uv tool install get-nick-done==0.2.0
+ uv tool update-shell
+ ```
+ 
+diff --git a/docs/installation.md b/docs/installation.md
+index 75c1c477..1e3efad4 100644
+--- a/docs/installation.md
++++ b/docs/installation.md
+@@ -10,7 +10,7 @@ With [uv](https://docs.astral.sh/uv/getting-started/installation/), install GND
+ a command-line tool:
+ 
+ ```sh
+-uv tool install get-nick-done==0.1.0
++uv tool install get-nick-done==0.2.0
+ uv tool update-shell
+ ```
+ 
+@@ -22,7 +22,7 @@ Alternatively, use pip in a virtual environment:
+ ```sh
+ python3 -m venv .venv
+ source .venv/bin/activate
+-python -m pip install get-nick-done==0.1.0
++python -m pip install get-nick-done==0.2.0
+ gnd --help
+ ```
+ 
+diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
+index e2b2a8af..1bbb169f 100644
+--- a/docs/marketplace-plugins.md
++++ b/docs/marketplace-plugins.md
+@@ -6,13 +6,12 @@ marketplace commands below. Python 3.11 or newer is required.
+ See [installation from PyPI](installation.md#1-install-the-python-runtime-from-pypi)
+ for the pip virtual-environment alternative.
+ 
+-The command below installs the published runtime, 0.1.0. Until 0.2.0 is
+-published, the plugin on `main` is newer than that runtime: to use the plugin
+-from `main`, install the runtime from a checkout of the same commit instead, as
+-[Updates](#updates) shows.
++The command below installs the published runtime. If your plugin comes from a
++`main` that has unreleased changes, install the runtime from a checkout of the
++same commit instead, as [Updates](#updates) shows.
+ 
+ ```sh
+-uv tool install get-nick-done==0.1.0
++uv tool install get-nick-done==0.2.0
+ uv tool update-shell
+ ```
+ 
+@@ -69,11 +68,10 @@ Update the marketplace and plugin through your agent's plugin manager, and updat
+ the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
+ and runtime version aligned. Plugin users do not need `gnd install --sync`.
+ 
+-Until 0.2.0 is published, the plugin on `main` is newer than the runtime on the
+-package index (0.1.0), and `uv tool upgrade` would stay at 0.1.0. Install the
+-runtime from a checkout of the commit your plugin came from (`main` if you
+-added the marketplace from `main`), as the
+-[course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
++If the plugin comes from a `main` that has unreleased changes, `uv tool upgrade`
++installs only the latest release. Install the runtime from a checkout of the
++commit your plugin came from (`main` if you added the marketplace from `main`),
++as the [course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
+ 
+ ```sh
+ git clone https://github.com/vasiloglou/gnd-public.git
+diff --git a/docs/pyrel-apps.md b/docs/pyrel-apps.md
+index 218b4625..868c70ac 100644
+--- a/docs/pyrel-apps.md
++++ b/docs/pyrel-apps.md
+@@ -36,9 +36,9 @@ Python environments. Run these setup commands once, in an empty folder, outside
+ the tutorials. They need [uv](https://docs.astral.sh/uv/) and a network
+ connection; uv fetches Python 3.13 if you do not have it.
+ 
+-First, an environment where GND can be imported. These chapters need a GND
+-newer than the 0.1.0 release on PyPI, so install it from a checkout of the
+-repository until the next release:
++First, an environment where GND can be imported. Install GND from PyPI as the
++[installation page](installation.md) shows; to use unreleased work on `main`,
++install it from a checkout of the repository instead:
+ 
+ ```sh
+ git clone https://github.com/vasiloglou/gnd-public.git
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 2aff2210..cb956f33 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -1,12 +1,10 @@
+ # Release notes and milestones
+ 
+-Version 0.1.0 is the published release. Version 0.2.0 is prepared and not
+-published: its package files, notes and tests are on `main`, and publishing it is
+-a separate decision that follows the [release procedure](releasing.md). Until it
+-is published, install commands in these documents name 0.1.0, and the changes
+-listed here are in the repository only.
++Version 0.2.0, published on PUBLICATION_DATE, is the latest release; 0.1.0 was the
++first. Releases follow the [release procedure](releasing.md). Changes on `main`
++after a release are listed in an `Unreleased:` section until the next one.
+ 
+-## 0.2.0 (prepared, not published)
++## 0.2.0 (PUBLICATION_DATE)
+ 
+ Everything in this section is on `main` after 0.1.0. The first block is the
+ rule-check work; the blocks after it are the earlier changes that were waiting
+diff --git a/docs/support.md b/docs/support.md
+index 8a8d19da..4fe3e367 100644
+--- a/docs/support.md
++++ b/docs/support.md
+@@ -8,8 +8,9 @@ must be checked before publication. No paid support SLA is offered.
+ 
+ | Profile | Status |
+ |---|---|
+-| Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0; the prepared 0.2.0 package is not signed off and no profile is observed for it |
+-| macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0; the prepared 0.2.0 package is not signed off and no profile is observed for it |
++| Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0 |
++| macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0 |
++| macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |
+ | Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |
+ | Native/provider extras | Optional, unmeasured in this preparation |
+ 
+diff --git a/docs/tutorials/clinic-refills.md b/docs/tutorials/clinic-refills.md
+index 9ccae6c3..058aa0bd 100644
+--- a/docs/tutorials/clinic-refills.md
++++ b/docs/tutorials/clinic-refills.md
+@@ -28,8 +28,8 @@ bot that answers "refill this patient's prescriptions" with `refill_drug`
+ steps.
+ 
+ Set GND up first as the [course planner's "Before you start"](../tutorials/course-planner.md#what-youll-build)
+-shows: these pages need a GND newer than the 0.1.0 release, installed from a
+-checkout, and `python` must be that environment's Python.
++shows: GND from PyPI, or from a checkout for unreleased work on `main`, and
++`python` must be that environment's Python.
+ 
+ <!-- gnd-run expect=0 -->
+ ```sh
+diff --git a/docs/tutorials/course-planner.md b/docs/tutorials/course-planner.md
+index 409f5f1c..73b4fbf0 100644
+--- a/docs/tutorials/course-planner.md
++++ b/docs/tutorials/course-planner.md
+@@ -35,9 +35,9 @@ A folder with the registrar's rules, a model of them, and a bot that answers
+ | The bot (any model behind a command) | proposes plans |
+ | GND | checks each plan and names the rule that fails and the facts that break it |
+ 
+-**Before you start.** These pages need a GND newer than the 0.1.0 release on
+-PyPI, so until the next release install it from a checkout of the repository.
+-After the `export` line, `python` and `gnd` mean that environment:
++**Before you start.** Install GND from PyPI as the [installation page](../installation.md)
++shows, or, to use unreleased work on `main`, from a checkout of the repository as
++below. After the `export` line, `python` and `gnd` mean that environment:
+ 
+ ```sh
+ git clone https://github.com/vasiloglou/gnd-public.git
+diff --git a/docs/tutorials/learn-rules.md b/docs/tutorials/learn-rules.md
+index f26348fe..56dbca85 100644
+--- a/docs/tutorials/learn-rules.md
++++ b/docs/tutorials/learn-rules.md
+@@ -52,9 +52,8 @@ as a **proposal**, and only you can accept one.
+     - [`gnd-model-evolve`](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-evolve/SKILL.md): the skill's instructions
+     - [this page's Markdown source](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/learn-rules.md)
+ 
+-**Before you start.** This page needs a GND newer than the 0.1.0 release on
+-PyPI, so until the next release install it from a checkout of the repository,
+-as the [course planner's "Before you start"](course-planner.md#what-youll-build)
++**Before you start.** Install GND from PyPI as the [installation page](../installation.md)
++shows, or from a checkout of the repository for unreleased work on `main`, as the [course planner's "Before you start"](course-planner.md#what-youll-build)
+ shows. Add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
+ shows, then copy the `refunds` example into an empty folder. The
+ [commands page](../how-to/learn-rules-commands.md) has the copy step and every
+diff --git a/tests/test_release_version.py b/tests/test_release_version.py
+index 72cf01ef..a4c42af3 100644
+--- a/tests/test_release_version.py
++++ b/tests/test_release_version.py
+@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
+ # Versions that exist on the package index. Publication adds the new version
+ # here, in the same patch that moves the install pins (historical data: the one
+ # literal of its kind in the tests).
+-RELEASED = {"0.1.0"}
++RELEASED = {"0.1.0", "0.2.0"}
+ 
+ MANIFESTS = (
+     ".claude-plugin/plugin.json",
+@@ -199,3 +199,46 @@ def test_a_pin_to_the_next_version_is_refused_until_it_is_released():
+ def test_every_pin_file_carries_a_pin_so_the_rule_cannot_pass_vacuously():
+     pins = pinned_install_versions()
+     assert all(pins[name] for name in PIN_FILES), pins
++
++
++# Publication day (rule-check-release RR3, D2 and D5): once the declared version
++# is in RELEASED, every install pin names it and no publication-date
++# placeholder is left in the dated documents.
++DATE_PLACEHOLDER = "PUBLICATION_DATE"
++DATED_FILES = ("docs/release-notes.md", "docs/compatibility.md")
++
++
++def assert_pins_name_the_declared_version_once_released(pins: dict[str, set[str]], declared: str, released: set[str]) -> None:
++    if declared not in released:
++        return
++    for name, versions in pins.items():
++        assert versions == {declared}, f"{name} pins {sorted(versions)}, but {declared} is published"
++
++
++def assert_no_date_placeholder_once_released(declared: str, released: set[str], texts: dict[str, str]) -> None:
++    if declared not in released:
++        return
++    for name, text in texts.items():
++        assert DATE_PLACEHOLDER not in text, f"{name} still says {DATE_PLACEHOLDER}"
++
++
++def test_pins_name_the_declared_version_once_released():
++    assert_pins_name_the_declared_version_once_released(pinned_install_versions(), declared_version(), RELEASED)
++
++
++def test_an_old_pin_after_publication_is_refused():
++    assert_pins_name_the_declared_version_once_released({"README.md": {"0.1.0"}}, "0.2.0", {"0.1.0"})  # not yet released: allowed
++    assert_pins_name_the_declared_version_once_released({"README.md": {"0.2.0"}}, "0.2.0", {"0.1.0", "0.2.0"})
++    with pytest.raises(AssertionError):
++        assert_pins_name_the_declared_version_once_released({"README.md": {"0.1.0"}}, "0.2.0", {"0.1.0", "0.2.0"})
++
++
++def test_no_publication_date_placeholder_once_released():
++    texts = {name: (ROOT / name).read_text(encoding="utf-8") for name in DATED_FILES}
++    assert_no_date_placeholder_once_released(declared_version(), RELEASED, texts)
++
++
++def test_a_left_placeholder_is_refused():
++    assert_no_date_placeholder_once_released("0.2.0", {"0.1.0", "0.2.0"}, {"notes": "## 0.2.0 (2026-11-09)"})
++    with pytest.raises(AssertionError):
++        assert_no_date_placeholder_once_released("0.2.0", {"0.1.0", "0.2.0"}, {"notes": f"## 0.2.0 ({DATE_PLACEHOLDER})"})

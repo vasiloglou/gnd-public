@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/report-output-fidelity/evidence/ROF2/dynamic-query-successor.json",
+  "predecessor_sha256": "28d1e47ea058077508c64598e0b5843745770da9e86db13c5559938e582e3004",
+  "reason": "report-output-fidelity ROF3 (issue 111, owner-approved 2026-11-08): the canonical model identity (model_identity_document, model_identity_bytes, model_identity, ModelIdentityError and _reference_identity_document in gnd.values) and its printer _print_model_identity in gnd.output. Syntax census only; the exact query policy is unchanged.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/values.py",
+      "_identity_parts",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/values.py",
+      "_identity_parts",
+      "tuple[dict[str, Any], bytes]",
+      1
+    ],
+    [
+      "src/gnd/values.py",
+      "_reference_identity_document",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/values.py",
+      "model_identity_document",
+      "dict[str, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7319,
+  "result_occurrences": 9137
+}

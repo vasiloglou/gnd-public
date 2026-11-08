@@ -1,0 +1,214 @@
+T7 red before M3 (tests/test_release_docs.py at the RR3 gate commit plus the new test, docs/releasing.md unchanged):
+=========================== short test summary info ============================
+FAILED tests/test_release_docs.py::test_releasing_procedure_states_both_routes
+1 failed, 2 passed in 0.07s
+
+RR3 checks at c84c9a499f33aafd30f370b03f54776221b00bde (2026-11-08T06:09:48Z), scratch worktree.
+
+### T1 git apply --check, each patch alone
+post-publication: exit 0
+post-publication-tag: exit 0
+post-publication-release-files: exit 0
+
+### T6 the RR3 tree
+34 passed, 1 deselected in 0.61s
+
+### T5 liveness: stale-text check on the RR3 tree (expect exit 1)
+exit 1
+
+### T2 all three patches, placeholder replaced by 2026-11-09
+154 passed in 3.26s
+
+### T5 stale-text check, all three patches applied (placeholder form, as the allowlist expects)
+no stale release-state text (16 allowlisted hits)
+exit 0
+
+### T3b one pin left at 0.1.0 after publication (README)
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_pins_name_the_declared_version_once_released
+1 failed, 21 passed in 0.09s
+
+### T3 main patch without the RELEASED hunk
+/private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-plan-rule-check-release-abb170/e1da5363-429b-4c3e-bb23-3de5012243e5/scratchpad/rr3-patchwork/tests/test_release_version.py:101: AssertionError: README.md pins 0.2.0, which is not in RELEASED
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_notes_and_compatibility_do_not_claim_publication
+FAILED tests/test_release_version.py::test_install_pins_name_a_published_version
+2 failed, 20 passed in 0.09s
+
+### T4 placeholder left in place
+=========================== short test summary info ============================
+FAILED tests/test_release_version.py::test_no_publication_date_placeholder_once_released
+1 failed, 21 passed in 0.14s
+
+### T5 main patch only (expect exit 1, printing only the tag and release-file lines)
+stale release-state text:
+docs/installation.md:repository is private, access requires GitHub authentication. The `v0.1.0` tag
+docs/installation.md:[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+docs/installation.md:python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+docs/marketplace-plugins.md:commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+exit 1
+
+### T7 mutant: base releasing.md restored
+FAILED tests/test_release_docs.py::test_releasing_procedure_states_both_routes
+1 failed, 2 passed in 0.07s
+
+final status lines: 0
+
+### T5 rerun at 7f213a116c37ebb52239adac9b1cf9d3c17c1e94 after the <DATE> fix (2026-11-08T06:10:15Z)
+-- RR3 tree (expect exit 1):
+exit 1
+-- all three patches, placeholder kept:
+no stale release-state text (16 allowlisted hits)
+exit 0
+-- all three patches, date 2026-11-09 filled in:
+no stale release-state text (16 allowlisted hits)
+exit 0
+-- main patch only (expect exit 1, four lines):
+stale release-state text:
+docs/installation.md:repository is private, access requires GitHub authentication. The `v0.1.0` tag
+docs/installation.md:[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+docs/installation.md:python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+docs/marketplace-plugins.md:commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+exit 1
+-- T1 recheck at 7f213a116c37ebb52239adac9b1cf9d3c17c1e94:
+post-publication: exit 0
+post-publication-tag: exit 0
+post-publication-release-files: exit 0
+final status lines: 0
+
+
+## Gate of record: rerun after the implementation review (J1-J8)
+
+The runs above used the stale-text check before the review fixes and are
+superseded. This run uses the check at ff189c25 and retains its full output
+(J7). Runner: evidence/RR3/checks-runner.sh, run as
+`zsh checks-runner.sh <scratch worktree> ff189c25cebf8f5d56507a2684b3a816c3960eb1`.
+
+RR3 checks at ff189c25cebf8f5d56507a2684b3a816c3960eb1 (2026-11-08T06:21:02Z), scratch worktree.
+
+### T1 git apply --check, each patch alone
+post-publication: exit 0
+post-publication-tag: exit 0
+post-publication-release-files: exit 0
+
+### T6 the RR3 tree
+35 passed in 17.86s
+
+### T5 liveness: the RR3 tree (expect exit 1, printing the stale hits)
+$ stale-text-check.sh token
+stale release-state text:
+stale: README.md:uv tool install get-nick-done==0.1.0
+stale: docs/compatibility.md:Distribution `get-nick-done`, import and CLI `gnd` remain stable. Version 0.1.0
+stale: docs/compatibility.md:is published. Version 0.2.0 is prepared and not published; on <DATE> the
+stale: docs/compatibility.md:package index listed only 0.1.0, so 0.2.0 was free. Confirm service ownership and
+stale: docs/how-to/access-requests.md:shows: these pages need a GND newer than the 0.1.0 release, installed from a
+stale: docs/how-to/lease-schedule.md:shows: these pages need a GND newer than the 0.1.0 release, installed from a
+stale: docs/how-to/trip-budget.md:shows: these pages need a GND newer than the 0.1.0 release, installed from a
+stale: docs/index.md:uv tool install get-nick-done==0.1.0
+stale: docs/installation.md:uv tool install get-nick-done==0.1.0
+stale: docs/installation.md:python -m pip install get-nick-done==0.1.0
+stale: docs/installation.md:repository is private, access requires GitHub authentication. The `v0.1.0` tag
+stale: docs/installation.md:[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+stale: docs/installation.md:python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+stale: docs/marketplace-plugins.md:The command below installs the published runtime, 0.1.0. Until 0.2.0 is
+stale: docs/marketplace-plugins.md:published, the plugin on `main` is newer than that runtime: to use the plugin
+stale: docs/marketplace-plugins.md:uv tool install get-nick-done==0.1.0
+stale: docs/marketplace-plugins.md:commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+stale: docs/marketplace-plugins.md:Until 0.2.0 is published, the plugin on `main` is newer than the runtime on the
+stale: docs/marketplace-plugins.md:package index (0.1.0), and `uv tool upgrade` would stay at 0.1.0. Install the
+stale: docs/pyrel-apps.md:newer than the 0.1.0 release on PyPI, so install it from a checkout of the
+stale: docs/pyrel-apps.md:repository until the next release:
+stale: docs/support.md:| Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0; the prepared 0.2.0 package is not signed off and no profile is observed for it |
+stale: docs/support.md:| macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0; the prepared 0.2.0 package is not signed off and no profile is observed for it |
+stale: docs/tutorials/clinic-refills.md:shows: these pages need a GND newer than the 0.1.0 release, installed from a
+stale: docs/tutorials/course-planner.md:**Before you start.** These pages need a GND newer than the 0.1.0 release on
+stale: docs/tutorials/course-planner.md:PyPI, so until the next release install it from a checkout of the repository.
+stale: docs/tutorials/learn-rules.md:**Before you start.** This page needs a GND newer than the 0.1.0 release on
+stale: docs/tutorials/learn-rules.md:PyPI, so until the next release install it from a checkout of the repository,
+stale: docs/release-notes.md:Version 0.1.0 is the published release. Version 0.2.0 is prepared and not
+stale: docs/release-notes.md:## 0.2.0 (prepared, not published)
+missing: docs/release-notes.md opening 'Version 0.2.0, published on <DATE>, is the latest release'
+missing: exactly one '## 0.2.0 (<DATE>)' heading in docs/release-notes.md
+exit 1
+
+### T5 usage and search errors (expect exit 2)
+$ stale-text-check.sh 
+usage: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-plan-rule-check-release-abb170/e1da5363-429b-4c3e-bb23-3de5012243e5/scratchpad/rr3-patchwork/.gnd-planning/milestones/rule-check-release/evidence/RR3/stale-text-check.sh token | workflow <8-hex source commit>
+exit 2
+$ stale-text-check.sh workflow 7c0f4d0
+usage: /private/tmp/claude-501/-Users-nikolaosvasiloglou-github-repos-gnd-public--claude-worktrees-plan-rule-check-release-abb170/e1da5363-429b-4c3e-bb23-3de5012243e5/scratchpad/rr3-patchwork/.gnd-planning/milestones/rule-check-release/evidence/RR3/stale-text-check.sh token | workflow <8-hex source commit>
+exit 2
+$ (outside any repository) stale-text-check.sh token
+fatal: not a git repository (or any of the parent directories): .git
+search error (128)
+exit 2
+
+### T5 all three patches, PUBLICATION_DATE kept (expect exit 1, J3)
+$ stale-text-check.sh token
+stale release-state text:
+placeholder left in place: docs/compatibility.md:4:and 0.2.0 are published (0.2.0 on PUBLICATION_DATE). For the next version,
+placeholder left in place: docs/release-notes.md:3:Version 0.2.0, published on PUBLICATION_DATE, is the latest release; 0.1.0 was the
+placeholder left in place: docs/release-notes.md:7:## 0.2.0 (PUBLICATION_DATE)
+stale: docs/compatibility.md:and 0.2.0 are published (0.2.0 on PUBLICATION_DATE). For the next version,
+missing: docs/release-notes.md opening 'Version 0.2.0, published on <DATE>, is the latest release'
+missing: exactly one '## 0.2.0 (<DATE>)' heading in docs/release-notes.md
+exit 1
+
+### T2 all three patches, date 2026-11-09 filled in
+29 passed in 1.02s
+
+### T5 all three patches, date filled, route token (expect exit 0)
+$ stale-text-check.sh token
+no stale release-state text (16 allowlisted hits, route token, build 7c0f4d0e)
+exit 0
+
+### T5 same tree, route workflow with another build (expect exit 1 on the 7c0f4d0e row, J5)
+$ stale-text-check.sh workflow 25f58b5e
+stale release-state text:
+stale: docs/support.md:| macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |
+exit 1
+
+### T5 support row reworded for that build (expect exit 0)
+$ stale-text-check.sh workflow 25f58b5e
+no stale release-state text (16 allowlisted hits, route workflow, build 25f58b5e)
+exit 0
+
+### T5 J4 mutant: notes opening reverted to name 0.1.0, heading kept (expect exit 1)
+$ stale-text-check.sh token
+stale release-state text:
+missing: docs/release-notes.md opening 'Version 0.2.0, published on <DATE>, is the latest release'
+exit 1
+
+### T5 J4 mutant: undated 0.2.0 heading (expect exit 1)
+$ stale-text-check.sh token
+stale release-state text:
+missing: exactly one '## 0.2.0 (<DATE>)' heading in docs/release-notes.md
+exit 1
+
+### T5 main patch only, date filled (expect exit 1, the tag and release-file lines)
+$ stale-text-check.sh token
+stale release-state text:
+stale: docs/installation.md:repository is private, access requires GitHub authentication. The `v0.1.0` tag
+stale: docs/installation.md:[v0.1.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.1.0).
+stale: docs/installation.md:python -m pip install /path/to/get_nick_done-0.1.0-py3-none-any.whl
+stale: docs/marketplace-plugins.md:commands above work. The `v0.1.0` tag predates plugin packaging; it contains the
+exit 1
+
+### T3b one pin left at 0.1.0 after publication (README)
+FAILED tests/test_release_version.py::test_pins_name_the_declared_version_once_released
+1 failed, 21 passed in 0.42s
+
+### T3 main patch without the RELEASED hunk
+FAILED tests/test_release_version.py::test_notes_and_compatibility_do_not_claim_publication
+FAILED tests/test_release_version.py::test_install_pins_name_a_published_version
+2 failed, 20 passed in 1.02s
+
+### T4 placeholder left in place
+FAILED tests/test_release_version.py::test_no_publication_date_placeholder_once_released
+1 failed, 21 passed in 0.38s
+
+### T7 mutant: base releasing.md restored
+FAILED tests/test_release_docs.py::test_releasing_procedure_states_both_routes
+1 failed, 2 passed in 0.24s
+
+final status lines: 0

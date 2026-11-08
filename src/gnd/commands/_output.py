@@ -39,7 +39,16 @@ from gnd.output import (
     _print_issues as _print_issues,  # noqa: PLC0414 -- compatibility binding
 )
 from gnd.output import (
+    _print_model_identity as _print_model_identity,  # noqa: PLC0414 -- compatibility binding
+)
+from gnd.output import (
+    _print_projected_check_text as _print_projected_check_text,  # noqa: PLC0414 -- compatibility binding
+)
+from gnd.output import (
     _print_projected_text as _print_projected_text,  # noqa: PLC0414 -- compatibility binding
+)
+from gnd.output import (
+    _print_projected_transition_text as _print_projected_transition_text,  # noqa: PLC0414 -- compatibility binding
 )
 from gnd.output import (
     _print_report as _print_report,  # noqa: PLC0414 -- compatibility binding

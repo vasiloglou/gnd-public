@@ -1,0 +1,15 @@
+REDACTION unredacted: has_email.email
+BLOCKING (alethic)
+  [fail] fact_types[has_email].constraints[0]: Each customer plays 'has_email' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+  [fail] fact_types[has_email].constraints[1]: Each email plays 'has_email' with at most one combination of the other roles — violated: email 'SECRET-EMAIL-271828' has 2 facts.
+ADVISORY (deontic)
+  [warning] fact_types[has_nickname].constraints[0]: Each customer plays 'has_nickname' with at most one combination of the other roles — violated: customer 'c-1' has 2 facts.
+pass=0 fail=2 warning=1 unchecked=0 vacuous=0
+COVERAGE
+  has_email: declared, facts=3
+  has_nickname: declared, facts=2
+ADMITTED has_nickname[0]
+ADMITTED has_nickname[1]
+BLOCKED has_email[0]: fact_types[has_email].constraints[0], fact_types[has_email].constraints[1]
+BLOCKED has_email[1]: fact_types[has_email].constraints[0]
+BLOCKED has_email[2]: fact_types[has_email].constraints[1]

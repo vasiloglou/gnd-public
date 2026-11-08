@@ -718,8 +718,11 @@ Components: infra.text_output
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `print_baseline(block) -> None` | function | 192 | The ``--baseline`` summary, with the warning for keys that move when rules are inserted. |
-| `print_vacuous_acceptance(payload) -> None` | function | 208 | The ``--allow-vacuous`` closing line, when the option accepted a vacuous rule. |
+| `print_baseline(block) -> None` | function | 230 | The ``--baseline`` summary, with the warning for keys that move when rules are inserted. |
+| `print_vacuous_acceptance(payload) -> None` | function | 246 | The ``--allow-vacuous`` closing line, when the option accepted a vacuous rule. |
+| `render_check_rows(payload, declared, *, show_reason) -> list[str]` | function | 328 | The check layout from a payload's rows: the one home of this text. |
+| `render_transition_rows(block, *, post, show_reason) -> list[str]` | function | 514 | The walk layout from a ``transition`` block's rows: the one home of this text. |
+| `extraction_line(extraction) -> str` | function | 575 | ``EXTRACTION: state=<state>[ (<reason>)]``: the one home of verify's extraction line. |
 
 ## gnd.patterns — `src/gnd/patterns.py`
 Components: semantics.ground_atoms
@@ -1245,7 +1248,11 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 201 | (no docstring) |
+| `reference_model_digest(model) -> str` | function | 214 | (no docstring) |
+| `ModelIdentityError` | class(ValueError) | 224 | A loaded model that has no canonical identity, or a version it does not define. |
+| `model_identity_document(model) -> dict[str, Any]` | function | 239 | The canonical identity document of a loaded model. |
+| `model_identity_bytes(model) -> bytes` | function | 263 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
+| `model_identity(model, version) -> str` | function | 278 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

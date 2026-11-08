@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Approved (o, 2026-11-08); implementation under way.** The owner approved draft r2 as pushed to PR 125 at commit `8f305b6b` (spec sha256 `d849638adde5075354db190f75d50b0400e5b02b13df131e350a7ed3bf1f3ffc`), answering "Approve the RR2 spec (draft r2) with D1–D5 as recommended?": **"Approve as recommended"**. D1 to D5 are ruled as recommended (rows in §7). With D4 (a), the approval is RL-D8's explicit selection of `tests/test_release_acceptance.py` alone. It is not a review opinion; the approved bytes carry the Codex review of r1 only. It approves no merge, no publication and no RR3 spec. `auto=false`.
+**Approved (o, 2026-11-08); implemented and recorded ([record](../003-phase-RR2.md)): the candidate is main `7c0f4d0e`, and V4 exits 0 (14 passed). Prior status line: "Approved (o, 2026-11-08); implementation under way."** The owner approved draft r2 as pushed to PR 125 at commit `8f305b6b` (spec sha256 `d849638adde5075354db190f75d50b0400e5b02b13df131e350a7ed3bf1f3ffc`), answering "Approve the RR2 spec (draft r2) with D1–D5 as recommended?": **"Approve as recommended"**. D1 to D5 are ruled as recommended (rows in §7). With D4 (a), the approval is RL-D8's explicit selection of `tests/test_release_acceptance.py` alone. It is not a review opinion; the approved bytes carry the Codex review of r1 only. It approves no merge, no publication and no RR3 spec. `auto=false`.
 
 Prior status (r2): "Draft r2, awaiting owner review (2026-11-08). Nothing in this spec is approved."
 

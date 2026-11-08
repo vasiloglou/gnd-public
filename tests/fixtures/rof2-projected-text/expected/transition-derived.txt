@@ -1,0 +1,13 @@
+REDACTION applied: evidence.ticket, ready.ticket, resolvable.ticket
+PRE-STATE
+STEP 1 (add_evidence)
+DERIVED resolvable: +1 -0
+DERIVED ready: +1 -0
+STEP 2 (raise_score)
+DERIVED ticket_score: +1 -1
+STEP 3 (resolve)
+FRAME
+  evidence: alethic (all-alethic; add_evidence)
+  evidence_score: alethic (all-alethic; raise_score)
+  ticket_status: alethic (all-alethic; resolve)
+POST-STATE

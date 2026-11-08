@@ -39,6 +39,13 @@ ALLOW_VACUOUS_SUCCESSOR = json.loads(
 )
 
 
+# report-output-fidelity ROF3 adds `validate --identity`; its help and exit probe
+# supersede RF1's for `gnd validate` and differ from them by that one option.
+IDENTITY_SUCCESSOR = json.loads(
+    (Path(__file__).parent / 'fixtures/model-identity-cli/expected.json').read_text()
+)
+
+
 class _Captured(Exception):
     pass
 
@@ -149,6 +156,9 @@ def test_cli_tree(tree):
     expected["subcommands"]["check"]["actions"].insert(
         ALLOW_VACUOUS_SUCCESSOR["action_index"], copy.deepcopy(ALLOW_VACUOUS_SUCCESSOR["action"])
     )
+    expected["subcommands"]["validate"]["actions"].insert(
+        IDENTITY_SUCCESSOR["action_index"], copy.deepcopy(IDENTITY_SUCCESSOR["action"])
+    )
     _assert_successor("cli", "tree", tree[0], expected)
 
 
@@ -157,6 +167,10 @@ def test_cli_help(tree, path):
     if path == "gnd check":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": ALLOW_VACUOUS_SUCCESSOR["help"]})
+        return
+    if path == "gnd validate":
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": IDENTITY_SUCCESSOR["help"]})
         return
     assert_golden("cli-help", path, {"path": path, "help": tree[2][path]})
 
@@ -167,7 +181,7 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
-    if path == "gnd check":
+    if path in ("gnd check", "gnd validate"):
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
             "unknown_flag": {
@@ -176,7 +190,8 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        _assert_successor("cli-exit", path, observed, ALLOW_VACUOUS_SUCCESSOR["exit_probe"])
+        successor = ALLOW_VACUOUS_SUCCESSOR if path == "gnd check" else IDENTITY_SUCCESSOR
+        _assert_successor("cli-exit", path, observed, successor["exit_probe"])
         return
     assert_golden(
         "cli-exit",

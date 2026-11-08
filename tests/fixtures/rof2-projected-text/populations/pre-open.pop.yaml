@@ -1,0 +1,19 @@
+population:
+  model: ../models/dynamic.orm.yaml
+  model_id: urn:gnd-fixture:v62-phase2-dynamic@1
+  source: fixture
+  covers: [evidence, blocked, evidence_score, resolvable, ready, ticket_score, ticket_status, note]
+facts:
+  evidence: []
+  blocked: []
+  evidence_score:
+    - { ticket: "SECRET-TICKET-314159", score: 1 }
+  resolvable:
+    - { ticket: "authored-surplus" }
+  ready: []
+  ticket_score:
+    - { ticket: "SECRET-TICKET-314159", score: 1 }
+  ticket_status:
+    - { ticket: "SECRET-TICKET-314159", status: "open" }
+  note: []
+

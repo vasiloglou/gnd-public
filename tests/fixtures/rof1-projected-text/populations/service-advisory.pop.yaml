@@ -1,0 +1,7 @@
+population: { model: ../models/service-temporal.orm.yaml, model_id: "urn:gnd-fixture:rof1-service-temporal@1", source: fixture, covers: [has_sla, has_window] }
+facts:
+  has_sla:
+    - { customer: c-1, sla: 5 }
+  has_window:
+    - { customer: c-1, window: 2 }
+    - { customer: c-1, window: 3 }

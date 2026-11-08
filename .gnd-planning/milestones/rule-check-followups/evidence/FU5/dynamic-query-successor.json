@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "predecessor": ".gnd-planning/milestones/rule-check-adoption/evidence/RC5/dynamic-query-successor.json",
-  "predecessor_sha256": "8159231d9b95e413ce83d967a38e3420327c572e0d1c164185f4d85c86ed972b",
+  "predecessor": ".gnd-planning/milestones/report-output-fidelity/evidence/ROF3/dynamic-query-successor.json",
+  "predecessor_sha256": "9a753b6938b9664045840964a5bf1f2e44604bf644bb13848c31818a55e8ab6a",
   "reason": "rule-check-followups FU5 (issue 114; owner ruling D1 r2, 2026-11-08, \"Retire them now\"): the RF6b shims _find_cycle, _dfs_cycle and _ring_component_violations, unused since RC2, are deleted, and their syntax candidates go with them. Removal only; the exact query policy is unchanged.",
   "removed": [
     [
@@ -84,6 +84,6 @@
     ]
   ],
   "added": [],
-  "result_distinct_rows": 7272,
-  "result_occurrences": 9086
+  "result_distinct_rows": 7306,
+  "result_occurrences": 9122
 }

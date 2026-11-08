@@ -294,8 +294,10 @@ def test_check_refuses_a_fifo_by_name_instead_of_hanging(tmp_path, case):
     assert run.returncode == 3, run.stdout + run.stderr
     if case in ("--pre", "--post"):
         # The walk model redacts a role, so applied redaction hides every load
-        # error's message, as it does for a directory; the type still shows.
-        assert '"error": {"type": "PopulationLoadError", "message": "[REDACTED INSTANCE DETAIL]"}' in run.stdout
+        # error's message, as it does for a directory. Since report-output-fidelity
+        # ROF2 the text is the plain route's error line, not the JSON report; the
+        # error's type stays in the --format json report.
+        assert run.stdout.splitlines()[1:] == ["ERROR: [REDACTED INSTANCE DETAIL]"]
         return
     assert "not a regular file" in run.stdout + run.stderr
     assert str(fifo) in run.stdout + run.stderr

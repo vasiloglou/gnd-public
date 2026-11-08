@@ -1,0 +1,7 @@
+REDACTION applied: has_email.email
+PRE-STATE
+STEP 1 (add_email)
+FRAME
+  has_email: deontic (deontic-toucher; add_email)
+  [warning] $.post.facts.has_email: [REDACTED INSTANCE DETAIL]
+POST-STATE

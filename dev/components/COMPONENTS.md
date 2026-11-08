@@ -509,7 +509,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.checking_command
 - does: Register and dispatch model validation, population checks, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
+- verbs: validate model, model identity, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -2520,14 +2520,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.text_output
-- does: Print validation issues, snapshot verdicts, transition traces and projected report text.
-- verbs: text report, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance
+- does: Print validation issues, snapshot verdicts, transition traces and projected report text; render check, validate, walk and verify text from a payload's rows, plain or projected.
+- verbs: text report, projected check text, row renderer, issue lines, print issues, print verdict, blocking findings, advisory warnings, counts line, coverage display, transition trace, derivation changes, redaction header, admission output, canonical payload, live assurance, vacuous acceptance line, print_vacuous_acceptance, walk renderer, render_transition_rows, projected walk text, extraction line, projected verify text, model identity output
 - status: canonical
 - modules: src/gnd/output.py
-- uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, semantics.transitions
+- uses: assurance.transport, check.service, checker.evaluate, infra.report_payloads, infra.report_redaction, infra.verdict_prose, model.loading, model.scalar_identity, semantics.transitions
 - used_by: codegen.service, exp.command, export.verification, extract.service, fidelity.doccheck, fidelity.service, infra.output, review.command
-- tests: tests/test_report_json.py, tests/test_transition_report.py
-- notes: The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
+- tests: tests/test_report_json.py, tests/test_transition_report.py, tests/test_rof1_projected_text.py, tests/test_rof2_projected_text.py
+- notes: Projected text is rendered from the projected payload only: for an active redaction policy on check, validate, walks, `check --admission` and verify, and for temporal terms on check, validate and walks (temporal admission and verify are not projected and print plain text); the plain routes share the same row renderers (render_check_rows, render_transition_rows) and the one extraction_line. _print_projected_text is a dispatcher kept for the historical binding. The module also delegates live assurance construction and receipt preparation through _live_assurance; it is not only a string formatter.
 
 
 ### semantics.ground_atoms
@@ -2672,15 +2672,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.scalar_identity
 - does: Define ORM scalar identity, typed literals and content digests binding populations, models and reference declarations.
-- verbs: scalar identity, identity key, boolean distinction, numeric equality, identity set, typed literals, legacy literals, canonical values, ISO dates, population content digest, model digest, reference model digest, validation marker, nested mutation, canonical digest, identity_key, reference_model_digest
+- verbs: scalar identity, identity key, boolean distinction, numeric equality, identity set, typed literals, legacy literals, canonical values, ISO dates, population content digest, model digest, reference model digest, validation marker, nested mutation, canonical digest, identity_key, reference_model_digest, canonical model identity, identity version, model_identity, model_identity_document, model_identity_bytes, ModelIdentityError
 - in: Scalar or tuple values, primitive names, JSON-like model data, Model and Population objects.
 - out: Typed identity keys and sets, interpreted literals or rejection sentinel, canonical JSON-compatible values and SHA256 identity strings.
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, model.document
-- used_by: check.admission, check.compiled_obligations, check.universe, checker.evaluate, cli.api, model.loading, model.population_loading, model.population_sentences, model.reference_binding, semantics.extensions, semantics.snapshot_adapter, semantics.transitions
-- tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py
-- notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr while reference-bound model identity uses canonical JSON.
+- used_by: check.admission, check.compiled_obligations, check.universe, checker.evaluate, cli.api, infra.text_output, model.loading, model.population_loading, model.population_sentences, model.reference_binding, semantics.extensions, semantics.snapshot_adapter, … +1 more (graph.md)
+- tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
+- notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 
 
 ### semantics.temporal_guards

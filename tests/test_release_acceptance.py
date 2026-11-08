@@ -309,16 +309,6 @@ def test_installed_rule_check_carries(candidate, installed, tmp_path):
     def check(*args, expected):
         return gnd_json(python, prefix, env, tmp_path, *args, expected=expected)
 
-    # The installed version and the artifact names are the declared version.
-    assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {DECLARED}'
-    with zipfile.ZipFile(wheel) as archive:
-        assert {n.split('/')[0] for n in archive.namelist() if '.dist-info/' in n} == {
-            f'get_nick_done-{DECLARED}.dist-info'}
-        metadata = email.message_from_bytes(archive.read(f'get_nick_done-{DECLARED}.dist-info/METADATA'))
-        assert metadata['Version'] == DECLARED
-    with tarfile.open(next(candidate.glob('release/*.tar.gz'))) as archive:
-        assert {n.split('/')[0] for n in archive.getnames()} == {f'get_nick_done-{DECLARED}'}
-
     # P1 --rule-ids: version 15, each rule's own address, addressing and remedy.
     head = check(MODEL, HEAD, '--rule-ids', expected=1)
     assert head['schema_version'] == 15
@@ -385,6 +375,16 @@ def test_installed_rule_check_carries(candidate, installed, tmp_path):
     assert check(MODEL, HEAD, expected=1)['issues'] == []
     edit(tmp_path / HEAD, 'source: tool-output', 'source: fixture', tmp_path / 'catalog/producer.population.yaml')
     assert check(MODEL, 'catalog/producer.population.yaml', expected=3)['issues']
+
+    # The installed version and the artifact names are the declared version.
+    assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {DECLARED}'
+    with zipfile.ZipFile(wheel) as archive:
+        assert {n.split('/')[0] for n in archive.namelist() if '.dist-info/' in n} == {
+            f'get_nick_done-{DECLARED}.dist-info'}
+        metadata = email.message_from_bytes(archive.read(f'get_nick_done-{DECLARED}.dist-info/METADATA'))
+        assert metadata['Version'] == DECLARED
+    with tarfile.open(next(candidate.glob('release/*.tar.gz'))) as archive:
+        assert {n.split('/')[0] for n in archive.getnames()} == {f'get_nick_done-{DECLARED}'}
 
 
 def test_published_0_1_0_lacks_rule_check(installed, published_0_1_0, tmp_path):

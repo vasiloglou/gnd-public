@@ -35,5 +35,6 @@ text defect is fixed in code; the issue closes at the milestone close.
 
 ROF2-O1 ruled 2026-11-08: the error type stays in `--format json` only.
 
-Next action: merge PR 124 then PR 127 (owner); then the ROF3 spec (issue 111)
-with process-phase.
+ROF3 spec drafted (r1, awaiting the owner gate): [phase-ROF3-spec.md](notes/phase-ROF3-spec.md), on branch `claude/rof3-canonical-identity` (stacked on ROF2).
+
+Next action: merge PR 124 then PR 127 (owner); rule ROF3 D1-D7 at the spec gate.

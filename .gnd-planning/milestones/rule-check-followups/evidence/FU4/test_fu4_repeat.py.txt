@@ -1,0 +1,15 @@
+"""FU4 T5 (not committed): the two real tests, 60 rounds each, under load."""
+import pytest
+
+import test_public_session_driver as d
+import test_v51_phase2_extraction_scope as s
+
+
+@pytest.mark.parametrize("run", range(60))
+def test_driver_repeat(tmp_path, monkeypatch, run) -> None:
+    d.test_driver_kills_the_whole_process_group_on_timeout(tmp_path, monkeypatch)
+
+
+@pytest.mark.parametrize("run", range(60))
+def test_scope_repeat(run) -> None:
+    s.test_scope_walk_scales_linearly()

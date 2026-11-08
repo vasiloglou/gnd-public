@@ -1,0 +1,65 @@
+"""FU4 measurement probe (not committed): instrumented copies of the two timing tests."""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+import pytest
+
+import test_public_session_driver as d
+import test_v51_phase2_extraction_scope as s
+
+LOG = Path(os.environ["FU4_LOG"])
+N = int(os.environ.get("FU4_N", "40"))
+
+
+def _log(row: dict) -> None:
+    with LOG.open("a") as handle:
+        handle.write(json.dumps(row) + "\n")
+
+
+@pytest.mark.parametrize("run", range(N))
+def test_driver_probe(tmp_path, monkeypatch, run) -> None:
+    driver = d.driver
+    marker = tmp_path / "grandchild-alive"
+    spawner = (
+        "import subprocess,sys,time;"
+        f"subprocess.Popen([sys.executable,'-c',\"import time,pathlib;"
+        f"pathlib.Path(r'{marker}').write_text('x');time.sleep(30)\"]);"
+        "time.sleep(30)"
+    )
+    monkeypatch.setattr(driver, "GND", (sys.executable, "-c", spawner))
+    leaders: list[int] = []
+    real = subprocess.Popen
+
+    def spy(*args, **kwargs):
+        process = real(*args, **kwargs)
+        leaders.append(process.pid)
+        return process
+
+    monkeypatch.setattr(driver.subprocess, "Popen", spy)
+    d._contract(tmp_path / "exp-hang", mode="constraint-satisfaction")
+    (session,) = driver.sessions(tmp_path)
+    started = time.monotonic()
+    outcome = driver.drive(session, adapter="claude", timeout_seconds=3)
+    elapsed = time.monotonic() - started
+    deadline = time.monotonic() + 5
+    while time.monotonic() < deadline and not marker.exists():
+        time.sleep(0.05)
+    survivors = subprocess.run(["pgrep", "-f", "pathlib.Path"], check=False, capture_output=True, text=True).stdout.split()
+    detail = subprocess.run(["ps", "-o", "pid=,ppid=,pgid=,etime=,command=", "-p", ",".join(survivors)], check=False, capture_output=True, text=True).stdout if survivors else ""
+    later = subprocess.run(["pgrep", "-f", "pathlib.Path"], check=False, capture_output=True, text=True).stdout.split() if survivors else []
+    _log({"test": "driver", "run": run, "timed_out": outcome.timed_out, "elapsed": round(elapsed, 2), "marker": marker.exists(),
+          "leaders": leaders, "survivors": survivors, "detail": detail, "own_group": [p for p in detail.splitlines() if leaders and str(leaders[0]) in p.split()[2:3]],
+          "mine": [line for line in detail.splitlines() if str(tmp_path) in line], "survivors_after_ps": later})
+
+
+@pytest.mark.parametrize("run", range(N))
+def test_scope_probe(run) -> None:
+    small = s._timed_scope(s._scaling_model(5000))
+    large = s._timed_scope(s._scaling_model(20000))
+    _log({"test": "scope", "run": run, "small": small, "large": large, "ratio": large / small})

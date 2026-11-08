@@ -1,0 +1,17 @@
+import statistics, sys, time
+sys.path.insert(0, "tests")
+import test_v51_phase2_extraction_scope as s
+from gnd.extraction_scope import fact_type_scope
+def timed(model, pick):
+    xs = []
+    for _ in range(7):
+        t = time.perf_counter(); fact_type_scope(model); xs.append(time.perf_counter() - t)
+    return pick(xs)
+n = int(sys.argv[1])
+for name, pick in (("median", statistics.median), ("min", min)):
+    rs = []
+    for _ in range(n):
+        small = timed(s._scaling_model(5000), pick); large = timed(s._scaling_model(20000), pick)
+        rs.append(large / small)
+    rs.sort()
+    print(f"{name}: n={n} med {rs[n//2]:.2f} p99 {rs[int(n*.99)-1]:.2f} max {rs[-1]:.2f} over6 {sum(r>6 for r in rs)} over8 {sum(r>8 for r in rs)} over10 {sum(r>10 for r in rs)}")

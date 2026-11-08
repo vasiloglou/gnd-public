@@ -1,0 +1,22 @@
+== beast-3:~/rc2-shards/final/shard3.out
+43:E   AssertionError: descendants survived the bound: ['49360', '49361']
+45:~/rc2-shards/final/c3/tests/test_public_session_driver.py:390: AssertionError: descendants survived the bound: ['49360', '49361']
+60:FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout
+== beast-3:~/rc3-shards/base/shard3.out
+43:E   AssertionError: descendants survived the bound: ['81394', '81395']
+45:~/rc3-shards/base/c3/tests/test_public_session_driver.py:390: AssertionError: descendants survived the bound: ['81394', '81395']
+60:FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout
+== beast-3:~/rc4-shards/base/shard3.out
+57:E   AssertionError: descendants survived the bound: ['684', '686']
+59:~/rc4-shards/base/c3/tests/test_public_session_driver.py:390: AssertionError: descendants survived the bound: ['684', '686']
+74:FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout
+== beast-3:~/rc6-shards/base/shard3.out
+45:E   AssertionError: descendants survived the bound: ['32405', '32406']
+47:~/rc6-shards/base/c3/tests/test_public_session_driver.py:390: AssertionError: descendants survived the bound: ['32405', '32406']
+62:FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout
+== beast-3:~/close-shards/mergebase/shard3.out
+47:E   AssertionError: descendants survived the bound: ['51975', '51976']
+49:~/close-shards/mergebase/c3/tests/test_public_session_driver.py:390: AssertionError: descendants survived the bound: ['51975', '51976']
+64:FAILED tests/test_public_session_driver.py::test_driver_kills_the_whole_process_group_on_timeout
+== beast-3:~/rc6-shards/final/shard0.out
+44:FAILED tests/test_v51_phase2_extraction_scope.py::test_scope_walk_scales_linearly

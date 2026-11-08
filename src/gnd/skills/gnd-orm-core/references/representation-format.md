@@ -901,9 +901,16 @@ recompute: `sha256` over a canonical JSON document, written `sha256:<64 lowercas
    `true`, `false` and `null` as such. These are exactly the bytes every
    other canonical digest in GND uses (`operations_digest`, the recorded
    `*_sha256` values).
-3. **Dates.** A date, time or datetime value (an unquoted YAML date, for
-   example) is written as its ISO 8601 text: `"2025-01-01"`. Quoting it in
-   the model gives the same identity.
+3. **Dates and times.** A date, time or datetime *value* — what an unquoted
+   YAML timestamp loads as — is written as text, spelled exactly: a date as
+   `YYYY-MM-DD`; a time as `HH:MM:SS`; a datetime as the date, `T`, then the
+   time. Microseconds, when not zero, follow the seconds as `.` and exactly
+   six digits (`10:20:30.500000`). An offset, when the value has one, follows
+   as `+HH:MM` or `-HH:MM`, UTC as `+00:00` (never `Z`); a value without an
+   offset has none. A *quoted* value is a string and is written as written,
+   so quoting a date (`"2025-01-01"`) gives the same identity, but quoting
+   `2025-01-01T00:00:00Z` does not: unquoted, it is written
+   `2025-01-01T00:00:00+00:00`.
 4. **What it does not cover.** Version 2 leaves out `operations`, which
    `operations_digest` binds, so a model whose only change is its operations
    keeps its version-2 identity; version 1 covers them.

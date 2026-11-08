@@ -7,6 +7,18 @@
   "added": [
     [
       "src/gnd/values.py",
+      "_identity_parts",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/values.py",
+      "_identity_parts",
+      "tuple[dict[str, Any], bytes]",
+      1
+    ],
+    [
+      "src/gnd/values.py",
       "_reference_identity_document",
       "dict[str, Any]",
       1
@@ -18,6 +30,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7317,
-  "result_occurrences": 9135
+  "result_distinct_rows": 7319,
+  "result_occurrences": 9137
 }

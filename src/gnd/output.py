@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from collections.abc import Mapping, Sequence
 from itertools import islice
 from types import SimpleNamespace
@@ -69,7 +70,14 @@ def _print_model_identity(model: Model) -> int:
         return 3
     digest = "sha256:" + hashlib.sha256(data).hexdigest()
     print(f"MODEL IDENTITY {digest} (identity_version {document['identity_version']})")
-    print(data.decode("utf-8").removesuffix("\n"))
+    # The canonical bytes themselves, whatever the terminal's text encoding.
+    buffer = getattr(sys.stdout, "buffer", None)
+    if buffer is None:
+        print(data.decode("utf-8").removesuffix("\n"))
+    else:
+        sys.stdout.flush()
+        buffer.write(data)
+        buffer.flush()
     return 0
 
 

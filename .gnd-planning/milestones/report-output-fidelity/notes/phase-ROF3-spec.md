@@ -57,7 +57,7 @@ spec gate." `auto=false`.
 | 4 One walk | the document uses the one existing walk, `values.canonical` (`_canonical`), and the one byte form, `artifacts.canonical_json_bytes`; nothing re-implements either. |
 | 5 One home | normative text: the new subsection of `representation-format.md` (M3); `docs/reference/formats.md` cites it. Implementation: `values.py`. |
 | 6 Measure | number spelling, value kinds and refusals were measured over the tracked models (section 6 probes), not argued. |
-| plan 0.1 Frozen | `_model_digest`, `reference_model_digest`, `operations_digest`, every report version, `validate --format json` and `validate --trace` output are byte-identical (T3, T12). The only CLI bytes that move: `gnd validate -h` (one new option) and its pinned golden. |
+| plan 0.1 Frozen | `_model_digest`, `reference_model_digest`, `operations_digest`, every report version, `validate --format json` and `validate --trace` output are byte-identical (T3, T12). The only CLI bytes that move: `gnd validate -h` (one new option) and its pinned golden. **Correction (review P6, 2026-11-08):** the usage line is also printed by every `gnd validate` usage error (a missing model, an unknown flag), so those stderr bytes move too; the successor fixture records the changed usage line. Prior wording kept above. |
 | Failure classes | *Python-only terms*: D3 decides the number spelling and the normative text states it as an algorithm with test vectors, so a non-Python caller can implement it. *Coerced keys*: refused (T4). *Second re-implementation*: T13 asserts `model_identity` calls `values.canonical` and `artifacts.canonical_json_bytes`. *A rule unfalsifiable by fixtures*: the vectors include floats with and without a fractional part, `-0.0`, a non-ASCII string, a date, and a reference-bearing model, each a case where a naive re-implementation differs. |
 
 ## 5. Goal
@@ -69,7 +69,8 @@ JSON document a caller can recompute from the document's bytes alone;
 not load or whose document is not representable. A model without reference
 populations has identity version 2; a reference-bearing model has its existing
 version 1. The legacy digest, every report and every existing CLI output except
-`gnd validate -h` are byte-identical. No consumer calls the new function yet
+`gnd validate -h` are byte-identical. (Correction, review P6: and except `gnd validate`'s
+usage-error stderr, which repeats the usage line.) No consumer calls the new function yet
 (ROF4).
 
 ## 6. Design
@@ -372,3 +373,46 @@ test builds and loads the 9.7 MB model, so it takes about 10 s.
   contains it; T12 then read `model_digest` from a fixed key, which a frozen
   version-3 payload does not carry and which is `null` under `transition`;
   T7's "empty" twin changed the model's `version`, which is a different model.
+- **I7 (Codex review of 3b0dbcc1, `block`, 8 findings, retained verbatim in
+  `evidence/ROF3/codex-review.md`).** Each reproduced or argued first:
+  - **P1 (blocking), applied.** Version-1 declarations bypassed the walk: an
+    integer key added to a declaration of a loaded model was coerced and got a
+    digest. Reproduced; declarations now go through `_canonical`
+    (`$.reference_populations[i]…` path). Bytes for every declaration the
+    loader accepts are unchanged (the corpus `reference` vectors and
+    `reference_model_digest` pins hold). `reference_model_digest` itself now
+    refuses such a mutated object with the walk's `TransitionLoadError`
+    instead of coercing it; no loadable model reaches that.
+  - **P2 (blocking), applied.** A declaration whose `fact_types` mixes types
+    raised `TypeError` while sorting. Reproduced; `_identity_parts` turns it
+    into `ModelIdentityError`.
+  - **P3 (blocking), applied.** The producer wrote the document through the
+    terminal's text encoding; with `PYTHONIOENCODING=ascii` the Greek vector
+    crashed after the first line. Reproduced (exit 1, `UnicodeEncodeError`);
+    the document is now written as the canonical bytes to `stdout.buffer`.
+  - **P4 (hardening), applied.** `model_identity_document` returned a document
+    for the surrogate model that `model_identity_bytes` refused. One private
+    function, `_identity_parts`, now decides representability for both.
+  - **P5 (hardening), applied to the normative text.** "ISO 8601 text" did not
+    fix the spelling, and "quoting gives the same identity" was false for a
+    datetime: unquoted `2025-01-01T00:00:00Z` is written `+00:00`, quoted it
+    stays `Z`, and microseconds are six digits. Reproduced; the text now spells
+    dates, times, datetimes, microseconds and offsets exactly and limits the
+    quoting claim to dates; `test_p5_…` pins six spellings. No code change.
+  - **P6 (hardening), applied as a correction** of section 4 and section 5:
+    usage errors also show the new usage line. Reproduced.
+  - **P7 (completeness), partly applied.** T7's loaded-depth case fell back to
+    an unrelated model when its mutation failed; it now builds a 40-deep field,
+    asserts the depth survived loading and asserts an identity. Not applied:
+    T8 asserts the ceiling, which is its claim (the linearity is the recorded
+    experiment); T12 checks the digest field and the absence of new lines, and
+    the byte identity of validate, trace and JSON output is held by the
+    existing pin suites in the gate and the full suite.
+  - **P8 (completeness), applied.** `test_p8_hand_written_byte_vectors`
+    (14 values written by hand from the normative text: exponent boundaries,
+    integers, `-0.0`, control characters, quotes and backslashes, DEL,
+    non-BMP, U+2028) and a code-point key-order case (U+FF5E before U+1F600).
+    They passed against 3b0dbcc1: the code already matched; the normative
+    text is now pinned against an expectation not produced by an encoder.
+  - Regressions observed red against 3b0dbcc1: P1, P2, P3, P4. The repairs
+    were not re-reviewed.

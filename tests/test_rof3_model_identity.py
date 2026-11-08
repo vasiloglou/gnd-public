@@ -194,22 +194,24 @@ def test_t5_a_lone_surrogate_loads_and_is_refused_while_legacy_answers() -> None
 
 
 def test_t7_nesting_the_loader_accepts_has_an_identity_and_deeper_objects_are_refused(tmp_path) -> None:
+    from ruamel.yaml import YAML
+
     from gnd import values
 
-    def nest(depth):
-        def mutate(document):
-            node = deep = {}
-            for _ in range(depth):
-                node["n"] = {}
-                node = node["n"]
-            document["fact_types"][0]["derivation_rule"]["provenance_note"] = deep
-        return mutate
-
-    try:
-        model = _loaded(tmp_path, mutate=nest(40))
-    except Exception:  # noqa: BLE001 -- the field may be closed; fall back to provenance
-        model = load_model(CORPUS / "models" / "plain-small.orm.yaml")
-    assert values.model_identity(model).startswith("sha256:")
+    document = YAML(typ="safe").load((CORPUS / "models" / "plain-small.orm.yaml").read_text())
+    node = deep = {}
+    for _ in range(40):
+        node["n"] = {}
+        node = node["n"]
+    document["fact_types"][0]["constraints"][0]["provenance"]["deep"] = deep
+    path = tmp_path / "deep.orm.json"
+    path.write_text(json.dumps(document))
+    loaded = load_model(path)
+    kept, depth = loaded.fact_types[0]["constraints"][0]["provenance"]["deep"], 0
+    while kept:
+        kept, depth = kept["n"], depth + 1
+    assert depth == 40  # the nesting survived loading
+    assert values.model_identity(loaded).startswith("sha256:")
     model = load_model(CORPUS / "models" / "plain-small.orm.yaml")
     node = deep = {}
     for _ in range(5000):
@@ -331,9 +333,113 @@ def test_t13_one_walk_and_one_byte_form() -> None:
 
     from gnd import values
 
-    document = inspect.getsource(values.model_identity_document)
-    data = inspect.getsource(values.model_identity_bytes)
-    assert "_canonical(" in document and "_reference_identity_document(" in document
-    assert "canonical_json_bytes(" in data
-    assert "json.dumps" not in document + data
+    parts = inspect.getsource(values._identity_parts)
+    assert "_canonical(" in parts and "_reference_identity_document(" in parts
+    assert "canonical_json_bytes(" in parts
+    assert "json.dumps" not in parts
+    assert "_identity_parts(" in inspect.getsource(values.model_identity_document)
+    assert "_identity_parts(" in inspect.getsource(values.model_identity_bytes)
     assert "_reference_identity_document(" in inspect.getsource(values.reference_model_digest)
+
+
+# --- review findings (Codex, ROF3 diff review of 3b0dbcc1) ---------------------------------
+
+
+def test_p1_a_version_one_declaration_is_walked_and_refuses_a_non_string_key() -> None:
+    from gnd import values
+
+    model = _model("reference")
+    model.reference_populations[0]["extra"] = {7: "seven"}
+    with pytest.raises(values.ModelIdentityError) as raised:
+        values.model_identity(model)
+    assert raised.value.path.startswith("$.reference_populations")
+
+
+def test_p2_a_malformed_declaration_is_refused_not_a_type_error() -> None:
+    from gnd import values
+
+    model = _model("reference")
+    model.reference_populations[0]["fact_types"] = [1, "dispatch_catalog_allows"]
+    with pytest.raises(values.ModelIdentityError):
+        values.model_identity(model)
+
+
+def test_p3_the_producer_writes_utf8_whatever_the_terminal_encoding() -> None:
+    import os
+
+    result = subprocess.run(
+        [sys.executable, "-m", "gnd", "validate", VECTORS["dates-and-text"]["model"], "--identity"],
+        cwd=CORPUS, capture_output=True, check=False, env={**os.environ, "PYTHONIOENCODING": "ascii"},
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout == (EXPECTED / "dates-and-text.stdout.txt").read_bytes()
+
+
+def test_p4_the_document_function_refuses_what_cannot_be_written() -> None:
+    from gnd import values
+
+    with pytest.raises(values.ModelIdentityError):
+        values.model_identity_document(_model("surrogate"))
+
+
+def _with_provenance(tmp_path, value_yaml: str):
+    source = (CORPUS / "models" / "plain-small.orm.yaml").read_text()
+    old = 'provenance: { user_quote: "Each customer has at most one email address." }'
+    path = tmp_path / "m.orm.yaml"
+    path.write_text(source.replace(old, f'provenance: {{ user_quote: "q", at: {value_yaml} }}', 1))
+    return load_model(path)
+
+
+@pytest.mark.parametrize(
+    ("value_yaml", "spelled"),
+    [
+        ("2025-01-01", '"at":"2025-01-01"'),
+        ('"2025-01-01"', '"at":"2025-01-01"'),
+        ("2025-01-01T00:00:00Z", '"at":"2025-01-01T00:00:00+00:00"'),
+        ('"2025-01-01T00:00:00Z"', '"at":"2025-01-01T00:00:00Z"'),
+        ("2025-01-01T10:20:30.5+02:00", '"at":"2025-01-01T10:20:30.500000+02:00"'),
+        ("2025-01-01 10:20:30", '"at":"2025-01-01T10:20:30"'),
+    ],
+)
+def test_p5_date_and_datetime_spellings_follow_the_normative_text(tmp_path, value_yaml, spelled) -> None:
+    from gnd import values
+
+    assert spelled in values.model_identity_bytes(_with_provenance(tmp_path, value_yaml)).decode("utf-8")
+
+
+# Hand-written from the normative text, not from an encoder (P8): each value, set in a
+# provenance field of a loaded model, must appear in the canonical bytes exactly so.
+P8_VECTORS = [
+    (1e16, '"v":1e+16'),
+    (1e15, '"v":1000000000000000.0'),
+    (0.0001, '"v":0.0001'),
+    (0.00001, '"v":1e-05'),
+    (5e-324, '"v":5e-324'),
+    (-0.0, '"v":-0.0'),
+    (3.0, '"v":3.0'),
+    (3, '"v":3'),
+    (12345678901234567890, '"v":12345678901234567890'),
+    ("tab\there", '"v":"tab\\there"'),
+    ("bell\x07", '"v":"bell\\u0007"'),
+    ("quote\"back\\slash", '"v":"quote\\"back\\\\slash"'),
+    ("del\x7fé€😀", '"v":"del\x7fé€😀"'),
+    ("line sep", '"v":"line sep"'),
+]
+
+
+@pytest.mark.parametrize(("value", "spelled"), P8_VECTORS)
+def test_p8_hand_written_byte_vectors(value, spelled) -> None:
+    from gnd import values
+
+    model = _model("plain-small")
+    model.fact_types[0]["constraints"][0]["provenance"]["v"] = value
+    assert spelled in values.model_identity_bytes(model).decode("utf-8")
+
+
+def test_p8_keys_sort_by_code_point_not_by_utf16_unit() -> None:
+    from gnd import values
+
+    model = _model("plain-small")
+    # U+FF5E sorts before U+1F600 by code point, after it by UTF-16 unit.
+    model.fact_types[0]["constraints"][0]["provenance"]["k"] = {"\U0001f600": 1, "～": 2}
+    assert '"k":{"～":2,"\U0001f600":1}' in values.model_identity_bytes(model).decode("utf-8")

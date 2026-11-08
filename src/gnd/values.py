@@ -201,8 +201,11 @@ from typing import TYPE_CHECKING, ForwardRef
 def _reference_identity_document(model: Model) -> dict[str, Any]:
     """The version-1 identity envelope of a reference-bearing model: its one home."""
     document = model.model_dump(exclude={"warnings", "reference_populations"})
+    # Through the same walk as the model: a declaration is refused, never coerced
+    # (unchanged bytes for every declaration the loader accepts: strings and lists).
     declarations = [
-        dict(d, fact_types=sorted(d["fact_types"])) for d in model.reference_populations
+        _canonical(dict(d, fact_types=sorted(d["fact_types"])), f"$.reference_populations[{index}]")
+        for index, d in enumerate(model.reference_populations)
     ]
     return {
         "identity_version": 1,
@@ -236,6 +239,35 @@ class ModelIdentityError(ValueError):
         self.message = message
 
 
+def _identity_parts(model: Model) -> tuple[dict[str, Any], bytes]:
+    """The identity document and the bytes it is written as, or :class:`ModelIdentityError`.
+
+    One place decides representability, so the document and the bytes refuse the
+    same models: the canonical walk's refusal, a malformed declaration, a string
+    that is not UTF-8, and nesting past the interpreter's depth.
+    """
+    try:
+        if model.reference_populations:
+            document = _reference_identity_document(model)
+        else:
+            dumped = model.model_dump(exclude={"warnings", "operations", "reference_populations"})
+            document = {"identity_version": IDENTITY_VERSION, "model": _canonical(dumped, "$")}
+        return document, artifacts.canonical_json_bytes(document)
+    except TransitionLoadError as error:
+        issue = error.issues[0] if getattr(error, "issues", None) else None
+        path = issue.path if issue is not None else "$"
+        message = issue.message if issue is not None else str(error)
+        raise ModelIdentityError(path, message) from None
+    except UnicodeEncodeError as error:
+        raise ModelIdentityError(
+            "$", f"a string cannot be written as UTF-8 ({error.reason}); quote it differently in the model"
+        ) from None
+    except RecursionError:
+        raise ModelIdentityError("$", "the model is nested too deeply to write as canonical JSON") from None
+    except (TypeError, ValueError, KeyError) as error:
+        raise ModelIdentityError("$", f"a value cannot be written as canonical JSON ({error})") from None
+
+
 def model_identity_document(model: Model) -> dict[str, Any]:
     """The canonical identity document of a loaded model.
 
@@ -244,35 +276,14 @@ def model_identity_document(model: Model) -> dict[str, Any]:
     the one canonical walk. Version 1 for a reference-bearing model: the
     envelope ``reference_model_digest`` hashes. The normative definition is the
     "Model identity" subsection of the gnd-orm-core ``representation-format.md``.
-    Raises :class:`ModelIdentityError` for a model the walk refuses.
+    Raises :class:`ModelIdentityError` for a model that has no canonical bytes.
     """
-    try:
-        if model.reference_populations:
-            return _reference_identity_document(model)
-        dumped = model.model_dump(exclude={"warnings", "operations", "reference_populations"})
-        return {"identity_version": IDENTITY_VERSION, "model": _canonical(dumped, "$")}
-    except TransitionLoadError as error:
-        issue = error.issues[0] if getattr(error, "issues", None) else None
-        path = issue.path if issue is not None else "$"
-        message = issue.message if issue is not None else str(error)
-        raise ModelIdentityError(path, message) from None
-    except RecursionError:
-        raise ModelIdentityError("$", "the model is nested too deeply to write as canonical JSON") from None
+    return _identity_parts(model)[0]
 
 
 def model_identity_bytes(model: Model) -> bytes:
     """The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none."""
-    document = model_identity_document(model)
-    try:
-        return artifacts.canonical_json_bytes(document)
-    except UnicodeEncodeError as error:
-        raise ModelIdentityError(
-            "$", f"a string cannot be written as UTF-8 ({error.reason}); quote it differently in the model"
-        ) from None
-    except (TypeError, ValueError) as error:
-        raise ModelIdentityError("$", f"a value cannot be written as canonical JSON ({error})") from None
-    except RecursionError:
-        raise ModelIdentityError("$", "the model is nested too deeply to write as canonical JSON") from None
+    return _identity_parts(model)[1]
 
 
 def model_identity(model: Model, version: int | None = None) -> str:

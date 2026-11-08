@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 import json
+import sys
 from collections.abc import Mapping, Sequence
 from itertools import islice
 from types import SimpleNamespace
@@ -47,6 +49,37 @@ def _issue_lines(issues: Sequence[Any], total: int | None = None) -> list[str]:
             f"the machine-readable payload, which reports issues_total."
         )
     return lines
+
+def _print_model_identity(model: Model) -> int:
+    """``gnd validate --identity``: the digest line, then the document it is the digest of.
+
+    The second line is the hashed bytes without their trailing newline, so
+    ``sha256(line 2 + "\\n")`` is the digest on line 1. A model with no canonical
+    identity is refused (exit 3) with its rule id.
+    """
+    from gnd import values
+
+    try:
+        document = values.model_identity_document(model)
+        data = values.model_identity_bytes(model)
+    except values.ModelIdentityError as error:
+        print(
+            f"ERROR at {verbalize.line_text(error.path)}: {verbalize.line_text(error.message)} "
+            f"[{error.rule_id}]"
+        )
+        return 3
+    digest = "sha256:" + hashlib.sha256(data).hexdigest()
+    print(f"MODEL IDENTITY {digest} (identity_version {document['identity_version']})")
+    # The canonical bytes themselves, whatever the terminal's text encoding.
+    buffer = getattr(sys.stdout, "buffer", None)
+    if buffer is None:
+        print(data.decode("utf-8").removesuffix("\n"))
+    else:
+        sys.stdout.flush()
+        buffer.write(data)
+        buffer.flush()
+    return 0
+
 
 def _print_trace(model: Model, model_path: str) -> None:
     """What a transition run WOULD evaluate. Reporting only (D6).

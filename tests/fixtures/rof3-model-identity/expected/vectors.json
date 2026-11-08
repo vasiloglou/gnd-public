@@ -1,0 +1,52 @@
+{
+  "plain-small": {
+    "model": "models/plain-small.orm.yaml",
+    "identity": "sha256:e4c1249e78ed5bf7ea57517fb93dd19adde1281de10207d7d4cabd70e7707a90",
+    "identity_version": 2
+  },
+  "floats": {
+    "model": "models/floats.orm.yaml",
+    "identity": "sha256:66b5ae67550f2df0664b6afb1d31265c675bc86d16ebff041823873eeedf1e59",
+    "identity_version": 2
+  },
+  "float-spellings": {
+    "model": "models/float-spellings.orm.json",
+    "identity": "sha256:589dc487d999de36d3f76daf3495720143d987e25a18d8d2b8e48e05db7737d2",
+    "identity_version": 2
+  },
+  "negative-zero": {
+    "model": "models/negative-zero.orm.json",
+    "identity": "sha256:2be93e539e68cf0ebc60df86e2d930990ca86db549f9d83a5ff7aa79b6ce0c6a",
+    "identity_version": 2
+  },
+  "dates-and-text": {
+    "model": "models/dates-and-text.orm.yaml",
+    "identity": "sha256:f83c63620321c8bd516dba34279191673857421af698be4bff450884b850a0e3",
+    "identity_version": 2
+  },
+  "operations-a": {
+    "model": "models/operations-a.orm.yaml",
+    "identity": "sha256:72bd4f2f3d9b3e8ed659babee2c9e45634b3e2e4fee88d705496d71d4aacee44",
+    "identity_version": 2
+  },
+  "operations-b": {
+    "model": "models/operations-b.orm.yaml",
+    "identity": "sha256:72bd4f2f3d9b3e8ed659babee2c9e45634b3e2e4fee88d705496d71d4aacee44",
+    "identity_version": 2
+  },
+  "reference": {
+    "model": "models/reference/model.orm.yaml",
+    "identity": "sha256:fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b",
+    "identity_version": 1
+  },
+  "reference-operations": {
+    "model": "models/reference-operations/model.orm.yaml",
+    "identity": "sha256:cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85",
+    "identity_version": 1
+  },
+  "surrogate": {
+    "model": "models/surrogate.orm.json",
+    "identity": null,
+    "refusal": "model:identity-unrepresentable"
+  }
+}

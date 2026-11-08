@@ -59,6 +59,9 @@ pins, for example, bind exact raw files; changing whitespace changes the pin.
 Transition `model_digest` and `operations_digest` have different bases.
 Obtain them from `gnd validate MODEL --trace`, rather than hashing the whole
 model file and guessing.
+The canonical model identity, a digest a caller can recompute without Python,
+is defined in the representation format's "Model identity (canonical, versions
+1 and 2)"; `gnd validate MODEL --identity` prints it and the document it hashes.
 
 An input refusal after a file change is useful information: the old evidence
 described other bytes. Re-author or regenerate the appropriate dependent

@@ -11,3 +11,24 @@ repository visibility: public
 Not audited: PyPI account-side publisher registration (not readable).
 
 V5: changed against origin/main (25f58b5): 12 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+
+## Rerun at the record (after the review fixes, ff189c25 plus the record files), 2026-11-08T06:22:02Z
+
+V2: install pins unchanged on the RR3 tree:
+docs/installation.md:13:uv tool install get-nick-done==0.1.0
+docs/installation.md:25:python -m pip install get-nick-done==0.1.0
+docs/marketplace-plugins.md:15:uv tool install get-nick-done==0.1.0
+docs/index.md:144:uv tool install get-nick-done==0.1.0
+README.md:43:uv tool install get-nick-done==0.1.0
+24:RELEASED = {"0.1.0"}
+V3, read-only, against 12daa5b7 and the O3/O5 baseline:
+git diff 12daa5b7 HEAD -- .github: 0 lines
+git diff --stat 12daa5b7 HEAD -- docs/releasing.md: 1 file changed, 39 insertions(+), 23 deletions(-)   (M3 as D1 rules, plus the J1 restoration)
+environments: ["github-pages"]   (baseline O5: ["github-pages"])
+release.yml runs: 0   (baseline: 0)
+GitHub releases: ["v0.1.0"]   (baseline: ["v0.1.0"])
+remote tags: refs/tags/v0.1.0   (baseline: refs/tags/v0.1.0)
+PyPI releases: ['0.1.0']   (baseline O3: ['0.1.0'])
+repository visibility: PUBLIC
+Not audited: PyPI account-side publisher registration (not readable).
+V5: changed against origin/main (25f58b5): 14 file(s) differ; 0 to fix, 0 warning(s), 0 to reread

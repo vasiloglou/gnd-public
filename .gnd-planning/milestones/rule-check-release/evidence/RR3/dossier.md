@@ -123,7 +123,12 @@ that the action is still open.
    - Under route (b), drop the patch's new `docs/support.md` row, or reword
      it for the build that was published.
    - Then [`stale-text-check.sh`](stale-text-check.sh) must exit 0 and
-     `tests/test_release_version.py` must pass.
+     `tests/test_release_version.py` must pass. Run the check with the route:
+     `sh stale-text-check.sh token` under (a), or
+     `sh stale-text-check.sh workflow <8-hex commit>` under (b), so that the
+     support row must name the build that was published. It also fails while
+     `PUBLICATION_DATE` remains, or if the notes lack the dated 0.2.0 opening
+     and heading.
    - The patches were made against RR3's commit. If `git apply --check`
      fails later, regenerate the conflicting hunk; the stale-text check
      shows what is left.

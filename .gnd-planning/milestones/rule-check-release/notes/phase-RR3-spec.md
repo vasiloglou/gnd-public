@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-**Approved (o, 2026-11-08); implementation under way.** The owner approved draft r2 as pushed to PR 131 at commit `6b4644d1` (spec sha256 `75e0926704f52a6801558be1d1a45b8d37cec663aa5b6d71dcb1c7ca6e2a25ce`), answering "Approve the RR3 spec (draft r2) with D1–D6 as recommended?": **"Approve as recommended"**. D1 to D6 are ruled as recommended (rows in §7). It is not a review opinion; the approved bytes carry the Codex review of r1 only. It approves no publication, no route, no tag, no release and no application of any patch. `auto=false`.
+**Approved (o, 2026-11-08); implemented and recorded ([record](../004-phase-RR3.md)).** The owner approved draft r2 as pushed to PR 131 at commit `6b4644d1` (spec sha256 `75e0926704f52a6801558be1d1a45b8d37cec663aa5b6d71dcb1c7ca6e2a25ce`), answering "Approve the RR3 spec (draft r2) with D1–D6 as recommended?": **"Approve as recommended"**. D1 to D6 are ruled as recommended (rows in §7). It is not a review opinion; the approved bytes carry the Codex review of r1 only. It approves no publication, no route, no tag, no release and no application of any patch. `auto=false`.
 
 Prior status (r2): "Draft r2, awaiting owner review (2026-11-08). Nothing in this spec is approved."
 

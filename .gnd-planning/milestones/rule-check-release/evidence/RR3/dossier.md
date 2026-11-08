@@ -13,7 +13,7 @@ cites it and does not restate it.
 | Source | main `7c0f4d0e320ff7976296d785077280d180ea688e`, the merge commit of PR 125; parents `df5753bf` and `86e5e1f1` |
 | Release wheel | `get_nick_done-0.2.0-py3-none-any.whl`, sha256 `e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4`, 2,857,045 bytes |
 | Release sdist | `get_nick_done-0.2.0.tar.gz`, sha256 `f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104`, 2,220,814 bytes |
-| Comparison wheel | built from the sdist; identical to the release wheel (same sha256) |
+| Comparison wheel | `comparison/get_nick_done-0.2.0-py3-none-any.whl`, built from the sdist, sha256 `e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4`: identical to the release wheel. It is never uploaded |
 | Identity files | [`SHA256SUMS`, `SOURCE_COMMIT`, `BUILD_PROFILE`](../RR2/candidate/) |
 | Build tools | uv 0.10.10 on both builds (the workflow's pin); the `uv_build` backend from `pyproject.toml` |
 | Retained copies (outside git) | this Mac: `~/gnd-release/0.2.0/7c0f4d0e/candidate/`; beast-3: `~/gnd-release/0.2.0/7c0f4d0e/candidate-b1/`. Before any upload, run `shasum -a 256 -c SHA256SUMS` in the copy you use |
@@ -96,7 +96,13 @@ that the action is still open.
        past `7c0f4d0e` (FU4, the RR2 and RR3 records), so this is a new build
        with its own source commit and its own acceptance run.
      - Whether its bytes equal section A's is known only by comparing
-       hashes. The changes since `7c0f4d0e` are tests and planning files.
+       hashes. The package is built from `src`, `pyproject.toml`, `LICENSE`
+       and `NOTICE` only (the sdist holds nothing else, and `pyproject.toml`
+       has no `readme` key). *Observed* at main `25f58b5e`: none of them
+       changed since `7c0f4d0e`. RR3 itself changes `docs/releasing.md`, which
+       is not in the package. Before dispatch, rerun
+       `git diff --stat 7c0f4d0e origin/main -- src pyproject.toml LICENSE NOTICE`;
+       any output means different package inputs.
      - The notes must cover everything on that `main`; check for any
        `## Unreleased` heading first.
 4. **Tag.** `v0.2.0` at the published commit: `7c0f4d0e` under (a), the

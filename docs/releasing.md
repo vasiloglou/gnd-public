@@ -42,8 +42,9 @@ must be completed before dispatching publication. A failed post-upload check
 does not undo the release; use the incident procedure below.
 
 Under either route, the release dossier records the exact source commit,
-independent artifact hashes, observed profiles and selected regression results
-before publication. Rebuilding makes a new candidate and repeats affected
+independent artifact hashes, observed profiles, selected regression results and
+target-only contributor realpaths before publication. Candidate sign-off
+requires those results. Rebuilding makes a new candidate and repeats affected
 validation; the comparison wheel never replaces the release wheel.
 
 Before publication by either route, confirm package ownership/version

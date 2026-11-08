@@ -29,3 +29,5 @@ def test_releasing_procedure_states_both_routes():
         assert stale not in text, stale
     assert 'token upload' in text and 'retained' in text
     assert 'release.yml' in text and 'publish=true' in text
+    assert 'target-only contributor realpaths' in text
+    assert 'Candidate sign-off requires those results' in ' '.join(text.split())

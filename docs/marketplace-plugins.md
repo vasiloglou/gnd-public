@@ -64,6 +64,11 @@ Update the marketplace and plugin through your agent's plugin manager, and updat
 the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
 and runtime version aligned. Plugin users do not need `gnd install --sync`.
 
+Until 0.2.0 is published, the plugin on `main` is newer than the runtime on the
+package index (0.1.0). Install the runtime from the repository at the commit of
+the plugin you use, as the [course planner tutorial](tutorials/course-planner.md#what-youll-build)
+does, instead of `uv tool upgrade`, which would stay at 0.1.0.
+
 ## Maintainers
 
 The repository root is the plugin root. `.claude-plugin/plugin.json` and

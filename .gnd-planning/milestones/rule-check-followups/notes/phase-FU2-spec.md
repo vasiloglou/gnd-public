@@ -208,3 +208,5 @@ untouched.
   size, so the pause did not happen. Recorded here and put to the owner
   with the PR; the excess is fixtures and pinned values (two digest pins,
   the relabelled-reference helper), not extra scope.
+  **Ruled (o, 2026-11-07): size accepted** by the owner's merge of PR 126
+  ("merge the pr"); recorded after merge (record row FU2-O1).

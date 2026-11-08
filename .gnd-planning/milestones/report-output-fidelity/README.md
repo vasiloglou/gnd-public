@@ -46,4 +46,8 @@ identity at matching sites; reports keep the legacy digest per D3).
 ROF3-O1 ruled 2026-11-08: accept the refusal of a mutated non-string
 declaration key in `reference_model_digest`.
 
-Next action: merge the ROF3 PR (owner); then the ROF4 spec.
+ROF3 merged (PR 132, 6058c674).
+
+ROF4 spec drafted ([phase-ROF4-spec.md](notes/phase-ROF4-spec.md), r1), on
+branch `claude/rof4-accept-identities`. Next action: the owner's ruling on
+ROF4 D1-D6 at the spec gate.

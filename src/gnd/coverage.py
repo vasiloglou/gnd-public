@@ -831,7 +831,9 @@ def _index_snapshot(
                 schema_version=document["schema_version"],
             )
         )
-    for row in document.get("derivations", []):
+    # The report contract makes ``derivations`` nullable from schema version 7
+    # on (null = the model derives nothing), so null reads exactly as absent.
+    for row in document.get("derivations") or []:
         evidence[str(row["derivation_ref"])].append(
             Evidence(
                 kind,

@@ -1,6 +1,7 @@
 """Consume retained candidate artifacts; never rebuild them during acceptance."""
 import email
 import hashlib
+import itertools
 import json
 import os
 import re
@@ -226,7 +227,6 @@ def test_target_only_contributor_lifecycle(installed):
 # The wheel PyPI serves for the published 0.1.0, historical data like RELEASED in
 # tests/test_release_version.py: the negative control installs exactly this file.
 PUBLISHED_WHEEL_SHA256 = {'0.1.0': 'cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183'}
-DECLARED = tomllib.loads((ROOT / 'pyproject.toml').read_text(encoding='utf-8'))['project']['version']
 MODEL, HEAD, BASE, FIXED = (f'catalog/{n}' for n in [
     'model.orm.yaml', 'head.population.yaml', 'base.population.yaml', 'fixed.population.yaml'])
 REMEDIES = {
@@ -302,8 +302,14 @@ def published_0_1_0(tmp_path_factory):
     return venv / 'bin/python', env
 
 
+def declared_version(checkout):
+    """The version pyproject.toml declares at the archived HEAD the fixture extracted."""
+    return tomllib.loads((checkout / 'pyproject.toml').read_text(encoding='utf-8'))['project']['version']
+
+
 def test_installed_rule_check_carries(candidate, installed, tmp_path):
-    _outside, _checkout, python, wheel, env, prefix = installed
+    _outside, checkout, python, wheel, env, prefix = installed
+    declared = declared_version(checkout)
     copy_example(python, prefix, env, tmp_path)
 
     def check(*args, expected):
@@ -335,7 +341,9 @@ def test_installed_rule_check_carries(candidate, installed, tmp_path):
     plain = check(MODEL, HEAD, expected=1)
     assert plain['schema_version'] == 7
     (cycle,) = acyclic_verdict(plain)['offending_facts']
-    assert len(cycle) >= 3 and cycle[0] == cycle[-1] and set(cycle) <= {'api', 'auth', 'search', 'util'}
+    assert len(cycle) >= 3 and cycle[0] == cycle[-1]
+    # every step of the cycle is an edge of the version-15 extent above
+    assert set(itertools.pairwise(cycle)) <= set(edges(loops['offending_facts'])), cycle
     # Control: without the separate search/util loop the api/auth rows keep their values.
     fixed = by_address(check(MODEL, FIXED, '--rule-ids', expected=1))[LOOPS]
     assert edges(fixed['offending_facts']) == [('api', 'auth'), ('auth', 'api')]
@@ -351,6 +359,9 @@ def test_installed_rule_check_carries(candidate, installed, tmp_path):
     assert {a: marked[a]['novelty'] for a in REMEDIES} == {
         LOOPS: 'new', 'constraint:no_legacy_components': 'standing',
         'constraint:every_component_has_an_owner': 'standing', 'constraint:no_draft_releases': None}
+    for address in REMEDIES:
+        if marked[address]['row_novelty'] is not None:  # one mark per offending row
+            assert len(marked[address]['row_novelty']) == len(marked[address]['offending_facts']), address
     rows = {a: sorted((json.dumps(r, sort_keys=True), m) for r, m in
                       zip(marked[a]['offending_facts'], marked[a]['row_novelty']))
             for a in REMEDIES if marked[a]['row_novelty']}
@@ -375,16 +386,20 @@ def test_installed_rule_check_carries(candidate, installed, tmp_path):
     assert check(MODEL, HEAD, expected=1)['issues'] == []
     edit(tmp_path / HEAD, 'source: tool-output', 'source: fixture', tmp_path / 'catalog/producer.population.yaml')
     assert check(MODEL, 'catalog/producer.population.yaml', expected=3)['issues']
+    # Control: the same source without the producer loads, so the producer is what was refused.
+    edit(tmp_path / 'catalog/producer.population.yaml', '  producer: "components-scan 1.4.0 @ 9b72c55"\n', '',
+         tmp_path / 'catalog/no-producer.population.yaml')
+    assert check(MODEL, 'catalog/no-producer.population.yaml', expected=1)['issues'] == []
 
     # The installed version and the artifact names are the declared version.
-    assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {DECLARED}'
+    assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {declared}'
     with zipfile.ZipFile(wheel) as archive:
         assert {n.split('/')[0] for n in archive.namelist() if '.dist-info/' in n} == {
-            f'get_nick_done-{DECLARED}.dist-info'}
-        metadata = email.message_from_bytes(archive.read(f'get_nick_done-{DECLARED}.dist-info/METADATA'))
-        assert metadata['Version'] == DECLARED
+            f'get_nick_done-{declared}.dist-info'}
+        metadata = email.message_from_bytes(archive.read(f'get_nick_done-{declared}.dist-info/METADATA'))
+        assert metadata['Version'] == declared
     with tarfile.open(next(candidate.glob('release/*.tar.gz'))) as archive:
-        assert {n.split('/')[0] for n in archive.getnames()} == {f'get_nick_done-{DECLARED}'}
+        assert {n.split('/')[0] for n in archive.getnames()} == {f'get_nick_done-{declared}'}
 
 
 def test_published_0_1_0_lacks_rule_check(installed, published_0_1_0, tmp_path):

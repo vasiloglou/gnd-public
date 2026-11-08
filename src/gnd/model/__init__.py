@@ -701,6 +701,7 @@ def bind_population(
                 "model_id": candidate.model_id,
                 "source": candidate.source,
                 **({"producer": candidate.producer} if candidate.producer is not None else {}),
+                **({"label": candidate.label} if candidate.label is not None else {}),
                 "covers": covers,
             },
             "facts": facts,

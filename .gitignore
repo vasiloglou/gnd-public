@@ -12,3 +12,6 @@ dist/
 /candidate/
 /site/
 /.cache/
+# Local-only planning media and archives, kept out of git (owner ruling 2026-11-09)
+/.gnd-planning/milestones/linkedin-videos/
+/.gnd-planning/milestones/pyrel-applications/evidence/PA6/installed-artifacts.zip

@@ -79,6 +79,11 @@ policy](reference/evolve-policy.md#source-documents).
 
 ### Fixes and internal changes
 
+- **Discover on an unattended model** (issue 148): `gnd discover` no longer
+  exits 70 with `semantic:unattended-u5` on a model with `source.mode:
+  unattended`. Rule U5 now accepts an `induced` constraint without a span: its
+  required `provenance.induction` block cites the population it was found in.
+  Spans it does carry are still checked, and U8 still keeps it `deontic`.
 - **Text walk on a reference model**: `gnd check MODEL --pre PRE --steps STEPS`
   in text format, without `--post`, no longer fails with `KeyError:
   'transition'` on a model with reference populations. It prints the same

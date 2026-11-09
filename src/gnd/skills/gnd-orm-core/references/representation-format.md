@@ -671,7 +671,7 @@ decoding, as anchors do; `excerpt_sha256` is the SHA-256 of the UTF-8 encoding o
 | U2 | any constraint, operation or obligation with `status: confirmed` |
 | U3 | any constraint with `source: explicit` or `user-supplied` (also refused by U2 and the status/source rule) |
 | U4 | an object type or fact type without a non-empty `provenance.spans` |
-| U5 | a constraint without a non-empty `provenance.spans`, for every source except `common-sense`, which keeps its required `library_entry` (spans it does carry are checked by U7) |
+| U5 | a constraint without a non-empty `provenance.spans`, for every source except `common-sense`, which keeps its required `library_entry`, and `induced`, which cites its population evidence in its required `provenance.induction` block (spans either does carry are checked by U7) |
 | U6 | `provenance.sample_spans` (a list of `{row, span}`) that does not name every `sample_population` row index exactly once, or names a row that does not exist |
 | U7 | a span that is malformed, has `start ≥ end`, or names an undeclared document |
 | U8 | an `alethic` constraint whose source is `sample`, `llm-inferred`, `common-sense` or `induced` |
@@ -1589,7 +1589,7 @@ The normative meta-schema ([`orm-meta.schema.json`](orm-meta.schema.json)) enfor
 | `semantic:unattended-u2` | error | under `source.mode: unattended` only: no `confirmed` constraint, operation or obligation ("Unattended source") |
 | `semantic:unattended-u3` | error | under `source.mode: unattended` only: no `explicit` or `user-supplied` constraint ("Unattended source") |
 | `semantic:unattended-u4` | error | under `source.mode: unattended` only: every object type and fact type cites a span ("Unattended source") |
-| `semantic:unattended-u5` | error | under `source.mode: unattended` only: every constraint except `common-sense` cites a span ("Unattended source") |
+| `semantic:unattended-u5` | error | under `source.mode: unattended` only: every constraint except `common-sense` and `induced` cites a span ("Unattended source") |
 | `semantic:unattended-u6` | error | under `source.mode: unattended` only: every sample row cites a span ("Unattended source") |
 | `semantic:unattended-u7` | error | under `source.mode: unattended` only: every span is well formed and names a declared document ("Unattended source") |
 | `semantic:unattended-u8` | error | under `source.mode: unattended` only: no `alethic` constraint from `sample`, `llm-inferred`, `common-sense` or `induced` ("Unattended source") |

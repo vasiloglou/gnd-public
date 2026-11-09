@@ -4,7 +4,7 @@ Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
 first. Releases follow the [release procedure](releasing.md). Changes on `main`
 after a release are listed in an `Unreleased:` section until the next one.
 
-## Unreleased: model identity and plain text for projected reports
+## Unreleased: model identity, projected text, and unattended growth
 
 These changes are on `main` after 0.2.0 and are not in any published package.
 Install from a checkout of the repository to use them.

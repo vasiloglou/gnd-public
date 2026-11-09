@@ -122,8 +122,9 @@ the operations depending on it. The full blast-radius walker over operations is 
 
 ## The additive policy — `--policy additive` and exit 3
 
-An agent growing a model in rounds, without a human in the loop, must never invalidate facts it
-has already admitted. Pass `--policy additive` to **both** `preview` and `apply`, with the same
+An agent growing a model in rounds, without a human in the loop, must never invalidate the facts
+it has already admitted that GND can see: sample rows, a declared reference population, a
+`population` artifact, and the fact types named with `--populated`. Pass `--policy additive` to **both** `preview` and `apply`, with the same
 `--populated FACT_TYPE` ids for fact types whose population lives outside the model. Preview then
 refuses, with exit `3` and the refused operations listed under `policy_issues` in the written
 preview: any rename, delete or change of an existing object type, fact type or role; a replaced
@@ -132,7 +133,10 @@ declared reference population, a `population` artifact, or `--populated`). Apply
 when its options differ from the preview's, and re-runs the policy on the bytes it publishes. The
 matrix and the strengthening list are in the
 [evolution contract](references/evolution-contract.md) ("Additive policy"); the guarantee holds
-only when apply repeats the options.
+only when apply repeats the options. Two later cells are there too: `--check-population FILE`
+admits a `proposed`, `deontic` constraint that a clean population satisfies, relative to that
+file ("Population check"), and a round may declare a new source document while a change or
+removal of a declared one is refused (`source_document.*`).
 
 ## The shape report — `--shape-report`, advice only
 

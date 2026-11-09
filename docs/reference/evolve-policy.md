@@ -1,7 +1,9 @@
 # Additive evolve policy
 
 `gnd evolve preview --policy additive` refuses a proposal that would make
-facts already admitted under the current model uninterpretable: a rename,
+facts already admitted under the current model uninterpretable, among the facts
+it can see (see [what the preview carries](#what-the-preview-carries) and
+[admitting a constraint on clean data](#admitting-a-constraint-on-clean-data)): a rename,
 delete or change of an existing object type, fact type or role; a replaced
 reference scheme; a new or stronger constraint on a fact type that has a
 population. Without `--policy`, nothing changes: every preview and apply is

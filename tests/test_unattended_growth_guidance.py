@@ -19,10 +19,9 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+import test_evolve_additive_policy as policy
 from ruamel.yaml import YAML
 from support.cli_runner import run_main
-
-import test_evolve_additive_policy as policy
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 REFERENCE = REPO_ROOT / "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md"
@@ -189,3 +188,95 @@ def test_additive_admits_a_constraint_with_the_fact_type_that_adds_it() -> None:
     refused = policy._op("add", policy._constraint_locator(policy.POPULATED, None, "uniqueness"), after=constraint,
                          operation_id="late")
     assert [i.cell for i in policy._direct_issues((refused,))] == ["constraint.populated.add"]
+
+
+# --- UG4-D4: the procedure names only commands and options that exist --------
+
+#: Inline code spans, which may wrap across lines, and the lines of fenced blocks.
+_CODE_SPAN = re.compile(r"(?<!`)`([^`]+)`(?!`)")
+_FENCE = re.compile(r"^```[^\n]*\n(.*?)^```", re.DOTALL | re.MULTILINE)
+#: The commands the procedure drives; every option it names belongs to one of them.
+_COMMANDS = (("validate",), ("evolve", "preview"), ("evolve", "apply"))
+
+
+def _parsers() -> dict[tuple[str, ...], Any]:
+    import test_rf1_cli_pins as pins
+
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        found: dict[str, Any] = {}
+        pins._walk(pins._root(monkeypatch), ("gnd",), found)
+    return {tuple(path.split()[1:]): parser for path, parser in found.items()}
+
+
+def _actions(parser: Any) -> dict[str, Any]:
+    return {option: action for action in parser._actions for option in action.option_strings}
+
+
+def _invocations(text: str) -> list[str]:
+    """Every code span and every fenced line, whitespace-normalized (a span may wrap)."""
+    fenced = [line for block in _FENCE.findall(text) for line in block.splitlines()]
+    unfenced = _FENCE.sub("", text)
+    return [" ".join(chunk.split()) for chunk in (*_CODE_SPAN.findall(unfenced), *fenced) if chunk.strip()]
+
+
+def _option_problems(span: str, words: list[str], actions: dict[str, Any]) -> list[str]:
+    problems = []
+    for index, word in enumerate(words):
+        if not word.startswith("--"):
+            continue
+        action = actions.get(word)
+        if action is None:
+            problems.append(f"{span}: unknown option {word}")
+            continue
+        value = words[index + 1] if index + 1 < len(words) else None
+        # A value the reference spells literally (lowercase, not a placeholder) must be one the option accepts.
+        if action.choices is not None and value is not None and value.islower() and value not in action.choices:
+            problems.append(f"{span}: {word} does not accept {value}")
+    return problems
+
+
+def _drift(text: str) -> list[str]:
+    """Every `gnd ...` invocation whose command, options or literal choices do not exist, and every
+    bare option that none of the driven commands has."""
+    parsers = _parsers()
+    known = {option: action for command in _COMMANDS for option, action in _actions(parsers[command]).items()}
+    problems = []
+    for span in _invocations(text):
+        words = span.split()
+        if words[:1] == ["gnd"]:
+            command = next((key for key in (tuple(words[1:3]), tuple(words[1:2])) if key in parsers), None)
+            if command is None:
+                problems.append(f"no such command: {span}")
+                continue
+            problems += _option_problems(span, words, _actions(parsers[command]))
+        elif words[0].startswith("--"):
+            problems += _option_problems(span, words, known)
+    return problems
+
+
+def test_ug4_the_procedure_names_only_options_that_exist() -> None:
+    text = REFERENCE.read_text(encoding="utf-8")
+    assert _drift(text) == []
+    spans = _invocations(text)
+    # Non-vacuity: the wrapped preview command and the gate's commands are among the checked spans.
+    assert "gnd evolve preview --policy additive --check-population FILE" in spans
+    assert any(span.startswith("gnd validate") and "--require-documents" in span for span in spans)
+    for shipped in ("source-document", "--require-documents", "--check-population", "--shape-report"):
+        assert shipped in text, shipped
+
+
+@pytest.mark.parametrize(("old", "new", "suffix"), [
+    ("--require-documents", "--require-document", ""),                        # a misspelt option
+    ("additive --check-population FILE`", "additive --check-populations FILE`", ""),  # inside a wrapped span
+    ("--policy additive --shape-report", "--policy banana --shape-report", ""),        # a value the option refuses
+    (None, None, "\n`gnd evolv preview --policy additive`\n"),                       # an unknown command
+    (None, None, "\n```bash\ngnd validate MODEL --require-documentz\n```\n"),      # inside a fenced block
+    (None, None, "\n`gnd evolve apply --shape-report`\n"),                           # an option of the wrong command
+])
+def test_ug4_the_guard_can_fail(old: str | None, new: str | None, suffix: str) -> None:
+    """Mutation control (review finding 2): each planted drift is reported."""
+    text = REFERENCE.read_text(encoding="utf-8")
+    if old is not None:
+        assert old in text, old
+        text = text.replace(old, new, 1)
+    assert _drift(text + suffix)

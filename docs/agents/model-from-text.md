@@ -27,7 +27,8 @@ pipeline with nobody to review: the model says so (`source.mode: unattended`), c
 nothing, and cites a span of its source text for every claim, which `gnd validate` checks.
 Unattended mode covers Steps 3 to 7 too: the skill's `references/unattended-growth.md` says
 what text licenses a uniqueness, mandatory, value or subtype proposal, how a pipeline grows the
-model one document at a time, and the reply shape a host asks its model for.
+model one document at a time (including how a round declares its new document and acts on a
+shape match), and the reply shape a host asks its model for.
 
 ## What the dialogue looks like
 

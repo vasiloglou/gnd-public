@@ -35,9 +35,12 @@ gnd evolve apply   model.orm.yaml proposal.json --preview preview.json --workspa
   rolled back; it tells you what to regenerate.
 - **Finalize** completes an interrupted apply idempotently.
 - **Additions only.** When an agent grows the model on its own, add `--policy additive`
-  to both commands: GND then refuses any round that would make earlier facts
+  to both commands: GND then refuses any round that would make earlier facts it can see
   uninterpretable (pass `--populated FT` for fact types whose facts live in population
   files), and `--shape-report` names existing fact types with the same role players. See [Grow a model by additions](../how-to/grow-a-model.md).
+  `--check-population FILE` admits a proposed constraint that a clean population
+  satisfies, and an unattended round declares its new source document in the proposal;
+  both are in the [additive evolve policy reference](../reference/evolve-policy.md).
 
 ## Why it matters: legal yesterday, illegal today
 

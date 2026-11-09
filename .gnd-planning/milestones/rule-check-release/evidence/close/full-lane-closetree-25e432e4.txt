@@ -1,0 +1,17 @@
+rule-check-release close: full default lane, six round-robin shards on beast-3 (close-shards.sh copied to ~/rr-close, ~/.local/bin on PATH), at main 25e432e43119a771a7e68d1537baa3e9c71e311b; finished 2026-11-09T05:05:47Z.
+Command: zsh ./close-shards.sh closetree 25e432e43119a771a7e68d1537baa3e9c71e311b (each shard: uv sync --locked --group dev; gnd install --symlink --project --force; uv run pytest -q --tb=line -p no:cacheprovider <every 6th tests/test_*.py>)
+
+closetree shard0: 4253 passed, 85 deselected in 815.99s (0:13:35)(shard exit=0)
+closetree shard1: 2296 passed, 278 deselected in 726.60s (0:12:06)(shard exit=0)
+closetree shard2: 2259 passed, 123 deselected, 2 errors in 432.54s (0:07:12)(shard exit=1)
+closetree shard3: 3574 passed, 58 deselected, 1 warning in 600.96s (0:10:00)(shard exit=0)
+closetree shard4: 2871 passed, 122 deselected in 622.32s (0:10:22)(shard exit=0)
+closetree shard5: 2998 passed, 133 deselected in 639.93s (0:10:39)(shard exit=0)
+
+Failing and erroring ids (grep ^FAILED|^ERROR, sorted):
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+
+sha256 of that list: 8261732b98e252d1e17e491a8480080bafd2434fbd17f8a503aad8390ea9c20a
+
+Total: 18251 passed, 0 failed, 2 errors (sum of the six shard lines).

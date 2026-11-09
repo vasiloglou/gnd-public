@@ -54,56 +54,50 @@ def _read_validate_documents(paths: list[str]) -> tuple[dict[str, bytes], int | 
 
 
 def _cmd_validate_documents(
-    model_path: str, output_format: str, result: Any, paths: list[str], *, require: bool = False
+    model_path: str, output_format: str, result: Any, paths: list[str], *, require: bool = False,
+    unredacted: bool = False,
 ) -> tuple[int, Any]:
     """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue).
 
-    UG3: also count the spans that were not re-hashed. Returns the exit and the
-    ``unattended:spans-unchecked`` warning to append. A non-zero exit has
-    already been printed; on 0 the caller prints the ordinary result with the
-    warning, if any. Under ``require`` the entry is an error and the run exits 3."""
+    UG3: also count the spans that were not re-hashed, as one
+    ``unattended:spans-unchecked`` warning, or an error under ``require``.
+    Returns ``(exit, result)``. A document that cannot be read is reported here
+    and returns its exit with ``None``; otherwise the result is rebuilt through
+    the validate pipeline with the walk's issues and warnings, for the caller
+    to print (exit 0 with nothing to add returns the original result)."""
     from gnd.model import unattended_span_coverage, unattended_span_issues
 
     documents, exit_code, message = _read_validate_documents(paths)
-    issues = []
-    entry = None
-    if exit_code is None:
-        document = result.model.model_dump(exclude={"warnings"})
-        issues = unattended_span_issues(document, documents)
-        coverage = unattended_span_coverage(document, documents)
-        if coverage is not None:
-            entry = coverage.issue(severity="error" if require else "warning")
-            if require and entry is not None:
-                issues.append(entry)
-                entry = None
-        if not issues:
-            return result.exit_code, entry
-        exit_code = 3
-    # The model's own warnings ride along on the refusal (review R-F3).
-    warnings = [*result.warnings, *([entry] if entry is not None else [])]
-    if output_format == "json":
-        report_module.emit(report_module.build_validate_payload(
-            exit_code, model_path, schema_version=result.payload["schema_version"],
-            issues=issues or None, warnings=warnings, error=None if issues else RuntimeError(message)))
-        return exit_code, None
-    for warning in warnings:
-        print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
-    if issues:
-        _print_issues(issues)
-    else:
+    if exit_code is not None:
+        # The model's own warnings ride along on the refusal (review R-F3).
+        if output_format == "json":
+            report_module.emit(report_module.build_validate_payload(
+                exit_code, model_path, schema_version=result.payload["schema_version"],
+                warnings=list(result.warnings), error=RuntimeError(message)))
+            return exit_code, None
+        for warning in result.warnings:
+            print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         print(f"ERROR: {message}")
-    return exit_code, None
+        return exit_code, None
+    document = result.model.model_dump(exclude={"warnings"})
+    issues = unattended_span_issues(document, documents)
+    coverage = unattended_span_coverage(document, documents)
+    entry = None if coverage is None else coverage.issue(severity="error" if require else "warning")
+    warnings = list(result.warnings)
+    if entry is not None:
+        (issues if require else warnings).append(entry)
+    if not issues and entry is None:
+        return result.exit_code, result
+    rebuilt = api_module._run_validate_with_documents(
+        model_path, result.model, issues=issues, warnings=warnings, unredacted=unredacted)
+    return rebuilt.exit_code, rebuilt
 
 
-def _with_warning(payload: dict[str, Any], entry: Any) -> dict[str, Any]:
-    """UG3: the payload with one more warning, in the mechanical report both routes read."""
-    payload = dict(payload)
-    if "report" in payload:
-        payload["report"] = target = dict(payload["report"])
-    else:
-        target = payload
-    target["warnings"] = [*(target.get("warnings") or []), entry.model_dump()]
-    return payload
+def _is_unattended(model: Any) -> bool:
+    from gnd.model import UNATTENDED_MODE
+
+    source = model.source
+    return isinstance(source, dict) and source.get("mode") == UNATTENDED_MODE
 
 
 def _cmd_validate(
@@ -119,19 +113,18 @@ def _cmd_validate(
     result = api_module._run_validate(model_path, unredacted=unredacted)
     if identity and result.exit_code == 0 and result.model is not None:
         return _print_model_identity(result.model)
-    payload = result.payload
-    warnings = list(result.warnings)
-    if (documents or require_documents) and result.exit_code == 0 and result.model is not None:
-        refused, entry = _cmd_validate_documents(
-            model_path, output_format, result, documents or [], require=require_documents)
-        if refused != 0:
+    if result.exit_code == 0 and result.model is not None and (
+        documents or (require_documents and _is_unattended(result.model))
+    ):
+        # UG3: the flag alone walks only an unattended model; for any other model it is a no-op.
+        refused, rebuilt = _cmd_validate_documents(
+            model_path, output_format, result, documents or [], require=require_documents, unredacted=unredacted)
+        if rebuilt is None:
             return refused
-        if entry is not None:
-            payload = _with_warning(payload, entry)
-            warnings.append(entry)
+        result = rebuilt
     if output_format == "json":
         try:
-            report_module.emit(payload)
+            report_module.emit(result.payload)
         except report_module.NonJsonValueError as error:
             fallback = report_module.build_validate_payload(
                 EXIT_INTERNAL,
@@ -142,13 +135,13 @@ def _cmd_validate(
             report_module.emit(fallback)
             return EXIT_INTERNAL
         return result.exit_code
-    mechanical_payload = payload.get("report", payload)
+    mechanical_payload = result.payload.get("report", result.payload)
     if "redaction" in mechanical_payload:
         if trace and result.model is not None and not result.issues and result.error is None:
             _print_trace(result.model, model_path)
         _print_projected_check_text(mechanical_payload)
         return result.exit_code
-    for warning in warnings:
+    for warning in result.warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
     if result.issues:
         _print_issues(list(result.issues))

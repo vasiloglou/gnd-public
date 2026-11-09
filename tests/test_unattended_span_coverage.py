@@ -284,3 +284,64 @@ def test_a13_the_walk_is_one_linear_pass(count: int, monkeypatch: pytest.MonkeyP
     coverage = unattended.unattended_span_coverage(_span_doc([span] * count, declared), {"d.txt": text.encode()})
     assert (coverage.total, coverage.rehashed) == (count, count)
     assert calls == {"walk": 1, "span": count}
+
+
+# --- review regressions (notes/phase-UG3-codex-review.md) --------------------
+
+REDACTED = ("- id: order_placed_by_customer\n", "- id: order_placed_by_customer\n  redact: true\n")
+
+
+@pytest.mark.parametrize(("documents", "flags", "exit_code", "rule"), [
+    ([], [FLAG], 3, RULE),                              # the UG3 strict route
+    (["round.txt"], [], 3, "unattended:document-undeclared"),  # MG5's refusal route, same rebuild
+    (["ledger.txt"], [], 0, RULE),                      # the warning route
+])
+def test_r1_a_redacted_model_keeps_its_projected_report(tmp_path: Path, documents: list[str], flags: list[str],
+                                                        exit_code: int, rule: str) -> None:
+    """Review finding 1: the walk's result is projected like any validate result."""
+    from jsonschema import Draft202012Validator
+
+    from gnd.report_schema import load_report_schema
+
+    root = _workspace(tmp_path / "ws")
+    model = _variant(root, "redacted.orm.yaml", *REDACTED)
+    result = _validate(root, model, documents, flags)
+    assert result.returncode == exit_code, result.stderr
+    payload = json.loads(result.stdout)
+    assert "redaction" in payload.get("report", payload)
+    assert list(Draft202012Validator(load_report_schema()).iter_errors(payload)) == []
+    entries = [*(payload["issues"] or []), *payload["warnings"]]
+    assert rule in [entry["rule_id"] for entry in entries]
+    text = _validate(root, model, documents, flags, "text")
+    assert text.returncode == exit_code
+    assert f"[{rule}]" in text.stdout.decode()
+
+
+def test_r2_the_flag_is_a_no_op_on_a_model_with_unchecked_span_metadata(tmp_path: Path) -> None:
+    """Review finding 2: outside the mode `provenance.spans` is not checked, so the walk must be total."""
+    root = _workspace(tmp_path / "ws")
+    text = (root / "models" / "plain.orm.yaml").read_text(encoding="utf-8")
+    head, rest = text.split("object_types:\n", 1)
+    first_line, tail = rest.split("\n", 1)
+    (root / "models" / "odd.orm.yaml").write_text(
+        f"{head}object_types:\n{first_line}\n  provenance: {{spans: 3}}\n{tail}", encoding="utf-8")
+    control = _validate(root, "odd.orm.yaml", [], [])
+    assert control.returncode == 0
+    flagged = _validate(root, "odd.orm.yaml", [], [FLAG])
+    assert (flagged.returncode, flagged.stdout, flagged.stderr) == (control.returncode, control.stdout, control.stderr)
+    with_document = _validate(root, "odd.orm.yaml", ["ledger.txt"], [])
+    assert with_document.returncode == 3
+    issues = json.loads(with_document.stdout)["issues"]
+    assert [issue["rule_id"] for issue in issues] == ["unattended:document-undeclared"]
+
+
+def test_r4_a_digest_of_the_wrong_type_counts_as_unchecked() -> None:
+    """Review finding 4: shape before lookup."""
+    from gnd.model import unattended_span_coverage
+
+    text = "an order has one placing customer"
+    declared = _digest(text)
+    for digest in ([], {}, 7):
+        span = {"document_sha256": digest, "start": 0, "end": 2, "excerpt_sha256": declared}
+        coverage = unattended_span_coverage(_span_doc([span], declared), {"d.txt": text.encode("utf-8")})
+        assert (coverage.total, coverage.rehashed) == (1, 0)

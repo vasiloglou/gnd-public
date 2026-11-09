@@ -278,7 +278,9 @@ def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[lis
     total = rehashed = 0
     for path, span in _iter_unattended_spans(doc):
         total += 1
-        if not isinstance(span, Mapping) or span.get("document_sha256") not in supplied:
+        # Shape first: a digest that is not a string is never a key (UG3 review finding 4).
+        digest = span.get("document_sha256") if isinstance(span, Mapping) else None
+        if not isinstance(digest, str) or digest not in supplied:
             continue
         if _span_issue(span, path, set(supplied), rule_id="unattended:span-invalid") is not None:
             continue
@@ -313,16 +315,18 @@ def unattended_span_coverage(doc: dict[str, Any], documents: Mapping[str, bytes]
 def _iter_unattended_spans(doc: dict[str, Any]):
     def spans_of(owner: Any, path: str):
         provenance = owner.get("provenance") if isinstance(owner, Mapping) else None
-        for index, span in enumerate(provenance.get("spans") or [] if isinstance(provenance, Mapping) else []):
+        # Total over any shape (UG3 review finding 2): outside the mode, layer one
+        # does not check `provenance.spans`, and `--document` still walks it.
+        for index, span in enumerate(_listed(provenance.get("spans")) if isinstance(provenance, Mapping) else []):
             yield f"{path}.provenance.spans[{index}]", span
 
     for collection in ("object_types", "fact_types"):
-        for element in doc.get(collection) or []:
+        for element in _listed(doc.get(collection)):
             if isinstance(element, Mapping):
                 yield from spans_of(element, f"$.{collection}[id={element.get('id', '?')}]")
     for path, constraint in _iter_constraints(doc):
         yield from spans_of(constraint, path)
-    for fact_type in doc.get("fact_types") or []:
+    for fact_type in _listed(doc.get("fact_types")):
         provenance = fact_type.get("provenance") if isinstance(fact_type, Mapping) else None
         entries = provenance.get("sample_spans") if isinstance(provenance, Mapping) else None
         for index, entry in enumerate(entries if isinstance(entries, list) else []):

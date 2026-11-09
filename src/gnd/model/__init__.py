@@ -36,6 +36,7 @@ from gnd.model._operations import _has_literal as _has_literal
 from gnd.model._operations import _roles_by_variable as _roles_by_variable
 from gnd.model._operations import _variables_in as _variables_in
 from gnd.model._operations import compile_operation as compile_operation
+from gnd.model._unattended import UNATTENDED_MODE as UNATTENDED_MODE
 from gnd.model._unattended import SpanCoverage as SpanCoverage
 from gnd.model._unattended import unattended_span_coverage as unattended_span_coverage
 from gnd.model._unattended import unattended_span_issues as unattended_span_issues

@@ -1,9 +1,18 @@
-# UG1: drafted issue dispositions (text for the owner to post)
+# UG1: issue dispositions (posted)
 
 Drafted 2026-11-07 from the UG1 acceptance replay (`tests/test_unattended_model_growth_acceptance.py`,
-phase record `002-phase-UG1.md`). **Nothing here has been posted.** UG1 closes and comments on
-no issue; whether and when to post, and whether to close, is the owner's. The texts name no
-downstream application. Test names are those of the replay file unless another file is named.
+phase record `002-phase-UG1.md`). The texts name no downstream application. Test names are
+those of the replay file unless another file is named.
+
+**Posted 2026-11-08 on the owner's instruction ("post them")**, after PR 123 merged:
+[#74](https://github.com/vasiloglou/gnd-public/issues/74#issuecomment-6725035181),
+[#75](https://github.com/vasiloglou/gnd-public/issues/75#issuecomment-6725035325),
+[#76](https://github.com/vasiloglou/gnd-public/issues/76#issuecomment-6725035514),
+[#104](https://github.com/vasiloglou/gnd-public/issues/104#issuecomment-6725035758).
+The posted comments are the texts below with two changes: wrapped lines joined into paragraphs,
+and an added last line citing the replay file and the UG1 record (merged in #123). No issue was
+closed; closing is the owner's (UG-D0). The UG1 record's boundary, which says the dispositions
+are text for the owner, describes UG1 as recorded and is not edited.
 
 ## #74 (unattended, source-grounded mode)
 

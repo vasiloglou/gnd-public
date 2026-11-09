@@ -15,7 +15,7 @@ recognise is a ``neither`` verdict, never a traceback.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from typing import Any, Final
 
 from gnd.documents import Model
@@ -31,6 +31,7 @@ POLICY_ADDITIVE: Final = "additive"
 
 __all__ = [
     "POLICY_ADDITIVE",
+    "ConstraintSubjects",
     "additive_policy_issues",
     "effective_populated",
 ]
@@ -300,11 +301,87 @@ def _object_scoped_types(value: Any) -> set[str]:
     return named
 
 
+class ConstraintSubjects:
+    """The fact types a constraint operation ranges over, before and after (MG2).
+
+    One definition, shared by the policy walk and the population check (UG2),
+    so "populated subject" means the same thing in both. A fact-type-hosted
+    constraint's subject is its host; a model-hosted constraint's subjects are
+    the fact types its role references and rule atoms name, plus every fact
+    type played by an object type it ranges over without a role.
+    """
+
+    def __init__(self, index: ModelIndex) -> None:
+        self._index = index
+        self._players: dict[str, set[str]] | None = None
+
+    def _playing(self, object_types: set[str]) -> set[str]:
+        """Fact types with a role played by one of `object_types` or a subtype of one."""
+        if self._players is None:
+            players: dict[str, set[str]] = {}
+            # A value type that identifies an entity constrains that entity's
+            # reference values, so the entity's roles count too.
+            identifies: dict[str, set[str]] = {}
+            for object_type_id, row in self._index.object_types_by_id().items():
+                reference = _lookup(row, "reference")
+                value_type = _lookup(reference, "value_type") if isinstance(reference, dict) else None
+                if isinstance(value_type, str):
+                    identifies.setdefault(object_type_id, set()).add(value_type)
+            for fact_type_id, roles in self._index.role_object_types().items():
+                for player in roles.values():
+                    kinds = {player, *self._index.supertype_closure(player)}
+                    for kind_of in set(kinds):
+                        kinds |= identifies.get(kind_of, set())
+                    for kind_of in kinds:
+                        players.setdefault(kind_of, set()).add(fact_type_id)
+            self._players = players
+        found: set[str] = set()
+        for object_type in object_types:
+            found |= self._players.get(object_type, set())
+        return found
+
+    def of(self, operation: Any) -> set[str]:
+        locator = operation.locator
+        if locator.host == "fact_type":
+            return {locator.host_id} if locator.host_id is not None else set()
+        # Before AND after: a constraint spanning only unpopulated fact
+        # types must not be re-pointed at a populated one (review F1).
+        subjects: set[str] = set()
+        _role_ref_fact_types(operation.before, subjects)
+        _role_ref_fact_types(operation.after, subjects)
+        subjects |= self._playing(_object_scoped_types(operation.before) | _object_scoped_types(operation.after))
+        return subjects
+
+
+POPULATION_PASS: Final = "pass"
+
+
+def _population_eligible(operation: Any, kind: Any) -> bool:
+    """UG2: only a `proposed` + `deontic` constraint after the operation can be cleared."""
+    after = operation.after
+    return (
+        kind in (_ADD, _MODIFY)
+        and _lookup(after, "status") == "proposed"
+        and _lookup(after, "modality") == "deontic"
+    )
+
+
+def _strengthening_only(before: Any, after: Any) -> bool:
+    """Every refusing key of a constraint MODIFY strengthens; a `neither` key is never cleared."""
+    family = _lookup(before, "type")
+    for path, left, right in diff_paths(before, after):
+        verdict = constraint_change(path, left, right, family=family)
+        if verdict not in (_ADMITTED, _WEAKENING, _STRENGTHENING):
+            return False
+    return True
+
+
 def additive_policy_issues(
     before: Model,
     proposal: EvolutionProposal,
     *,
     populated: frozenset[str],
+    population_outcomes: Mapping[int, str] | None = None,
 ) -> tuple[PolicyIssue, ...]:
     """Every operation the additive policy refuses, in proposal order.
 
@@ -312,6 +389,13 @@ def additive_policy_issues(
     result. Operations on the ``operations`` collection are the operations
     gate's (exit 18) and are admitted here. The policy walks the proposal once
     and never reads a population.
+
+    ``population_outcomes`` (UG2, ``--check-population``) maps an operation
+    index to the population check's outcome word. ``None`` is the policy as
+    before. Otherwise a populated-constraint refusal is cleared when the
+    constraint after the operation is ``proposed`` and ``deontic``, a MODIFY
+    only strengthens, and the outcome is ``pass``; every other refusal gains a
+    ``; population: <outcome>`` (or ``not eligible``) suffix.
     """
 
     index = ModelIndex.for_model(before)
@@ -320,34 +404,19 @@ def additive_policy_issues(
     }
     added_fact_types: set[str] = set()
     issues: list[PolicyIssue] = []
-    players: dict[str, set[str]] | None = None
-
-    def playing(object_types: set[str]) -> set[str]:
-        """Fact types with a role played by one of `object_types` or a subtype of one."""
-        nonlocal players
-        if players is None:
-            players = {}
-            # A value type that identifies an entity constrains that entity's
-            # reference values, so the entity's roles count too.
-            identifies: dict[str, set[str]] = {}
-            for object_type_id, row in index.object_types_by_id().items():
-                reference = _lookup(row, "reference")
-                value_type = _lookup(reference, "value_type") if isinstance(reference, dict) else None
-                if isinstance(value_type, str):
-                    identifies.setdefault(object_type_id, set()).add(value_type)
-            for fact_type_id, roles in index.role_object_types().items():
-                for player in roles.values():
-                    kinds = {player, *index.supertype_closure(player)}
-                    for kind_of in set(kinds):
-                        kinds |= identifies.get(kind_of, set())
-                    for kind_of in kinds:
-                        players.setdefault(kind_of, set()).add(fact_type_id)
-        found: set[str] = set()
-        for object_type in object_types:
-            found |= players.get(object_type, set())
-        return found
+    subjects_of = ConstraintSubjects(index)
 
     def refuse(position: int, operation: Any, cell: str, detail: str) -> None:
+        if population_outcomes is not None and cell.startswith("constraint.populated."):
+            if not _population_eligible(operation, operation.kind) or (
+                operation.kind is _MODIFY and not _strengthening_only(operation.before, operation.after)
+            ):
+                detail = f"{detail}; population: not eligible"
+            else:
+                outcome = population_outcomes.get(position, "not-located")
+                if outcome == POPULATION_PASS:
+                    return
+                detail = f"{detail}; population: {outcome}"
         issues.append(
             PolicyIssue(
                 operation_index=position,
@@ -388,15 +457,7 @@ def additive_policy_issues(
             refuse(position, operation, f"role.{kind.value}", f"{kind.value} refused on an existing fact type")
             continue
         if locator_kind == "constraint":
-            if locator.host == "fact_type":
-                subjects = {locator.host_id} if locator.host_id is not None else set()
-            else:
-                # Before AND after: a constraint spanning only unpopulated fact
-                # types must not be re-pointed at a populated one (review F1).
-                subjects = set()
-                _role_ref_fact_types(operation.before, subjects)
-                _role_ref_fact_types(operation.after, subjects)
-                subjects |= playing(_object_scoped_types(operation.before) | _object_scoped_types(operation.after))
+            subjects = subjects_of.of(operation)
             # `populated` is computed from the before model, so a same-proposal
             # fact type is never in it; no subtraction is needed (review F5).
             if not (subjects & populated):

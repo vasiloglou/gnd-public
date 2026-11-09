@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 from support.cli_runner import run_main
-from support.rf1_pins import CAPTURE_ENV, assert_golden, canonical, encode, golden_path
+from support.rf1_pins import CAPTURE_ENV, assert_golden, canonical, encode, golden_path, minor_tag
 
 from gnd import batch, cli, exits
 from gnd.conformance import service as conformance_service
@@ -44,6 +44,22 @@ ALLOW_VACUOUS_SUCCESSOR = json.loads(
 IDENTITY_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/model-identity-cli/expected.json').read_text()
 )
+
+
+# unattended-model-growth UG2 adds `evolve preview/apply --check-population`; the
+# action is inserted into RF1's tree, and the help and exit probe of both commands
+# are superseded per Python minor (their RF1 goldens are per minor too).
+CHECK_POPULATION_SUCCESSOR = json.loads(
+    (Path(__file__).parent / 'fixtures/check-population-cli/expected.json').read_text()
+)
+CHECK_POPULATION_PATHS = {"gnd evolve preview": "preview", "gnd evolve apply": "apply"}
+
+
+def _check_population_successor(path: str, field: str):
+    entry = CHECK_POPULATION_SUCCESSOR[CHECK_POPULATION_PATHS[path]][field]
+    if minor_tag() not in entry:
+        pytest.skip(f"no UG2 successor for {path} under {minor_tag()}")
+    return entry[minor_tag()]
 
 
 class _Captured(Exception):
@@ -159,6 +175,11 @@ def test_cli_tree(tree):
     expected["subcommands"]["validate"]["actions"].insert(
         IDENTITY_SUCCESSOR["action_index"], copy.deepcopy(IDENTITY_SUCCESSOR["action"])
     )
+    for command in ("preview", "apply"):
+        successor = CHECK_POPULATION_SUCCESSOR[command]
+        expected["subcommands"]["evolve"]["subcommands"][command]["actions"].insert(
+            successor["action_index"], copy.deepcopy(successor["action"])
+        )
     _assert_successor("cli", "tree", tree[0], expected)
 
 
@@ -171,6 +192,10 @@ def test_cli_help(tree, path):
     if path == "gnd validate":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": IDENTITY_SUCCESSOR["help"]})
+        return
+    if path in CHECK_POPULATION_PATHS:
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": _check_population_successor(path, "help")})
         return
     assert_golden("cli-help", path, {"path": path, "help": tree[2][path]})
 
@@ -192,6 +217,17 @@ def test_cli_exit_probe(path, monkeypatch):
         }
         successor = ALLOW_VACUOUS_SUCCESSOR if path == "gnd check" else IDENTITY_SUCCESSOR
         _assert_successor("cli-exit", path, observed, successor["exit_probe"])
+        return
+    if path in CHECK_POPULATION_PATHS:
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {
+                "exit": refused.returncode,
+                "stdout": refused.stdout.decode(),
+                "stderr": refused.stderr.decode(),
+            },
+        }
+        _assert_successor("cli-exit", path, observed, _check_population_successor(path, "exit_probe"))
         return
     assert_golden(
         "cli-exit",

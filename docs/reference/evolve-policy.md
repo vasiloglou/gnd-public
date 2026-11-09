@@ -43,6 +43,27 @@ than reading the preview's list. A preview stripped of every policy field and
 applied without `--policy` publishes as a policy-free preview: the guarantee
 is the caller's to repeat.
 
+## Admitting a constraint on clean data
+
+A constraint the text reveals only after its fact type has data is refused by
+the policy. With `--check-population FILE` the policy admits it when the
+constraint is `proposed` and `deontic` and the population in `FILE` satisfies
+it; the preview then records the file's digest and the operations it admitted.
+
+```bash
+gnd evolve preview model.orm.yaml proposal.json --workspace . --records records --out preview.json --policy additive --populated orders --check-population population.json
+```
+
+```bash
+gnd evolve apply model.orm.yaml proposal.json --preview preview.json --workspace . --records records --policy additive --populated orders --check-population population.json
+```
+
+The conditions, the outcome words a refusal carries and the exits are normative
+in the evolution contract (section "Additive policy", "Population check").
+The admitted constraint stays advisory: the guarantee then holds relative to
+the population you supplied. Several population files are composed into one
+with `gnd compose` first.
+
 ## Subtypes
 
 The policy admits a new object type that declares `subtype_of` in the same
@@ -60,8 +81,9 @@ describes when to run one.
 | Exit | When |
 |---|---|
 | 0 | `--policy additive` and every operation admitted |
-| 3 | an operation refused by the policy (the preview is written); `--populated` without `--policy`; a `--populated` id the model does not declare; apply's options differ from the preview's; the service's re-run at apply finds an issue |
-| 11 | the reviewed preview differs from the one apply rebuilds, an edited issue list included |
+| 3 | an operation refused by the policy (the preview is written); `--populated` or `--check-population` without `--policy`; a `--populated` id the model does not declare; a refused population file; apply's options differ from the preview's; the service's re-run at apply finds an issue |
+| 11 | the reviewed preview differs from the one apply rebuilds, an edited issue list or a changed population file included |
+| 66, 74 | the `--check-population` file is missing (66), or is a symlink, directory or otherwise not a readable regular file (74) |
 | 18 | the operations gate, which runs before the policy |
 
 The policy is a gate, not advice: it changes the exit. The same proposal

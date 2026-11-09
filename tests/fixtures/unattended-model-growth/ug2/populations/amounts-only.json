@@ -1,0 +1,18 @@
+{
+  "facts": {
+    "order_has_amount": [
+      {
+        "amount": 40,
+        "order": 10
+      }
+    ]
+  },
+  "population": {
+    "covers": [
+      "order_has_amount"
+    ],
+    "model": "base.orm.yaml",
+    "model_id": "ug2-orders",
+    "source": "agent-output"
+  }
+}

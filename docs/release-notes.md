@@ -41,6 +41,18 @@ only, so nothing the projection hides reaches the text. A projected error line
 does not name the error's type; `--format json` still reports it. JSON output,
 the report schema and digests are unchanged.
 
+### Constraints admitted on clean data (issue 104)
+
+`gnd evolve preview --policy additive --check-population FILE` admits a new or
+strengthened `proposed` + `deontic` constraint on a fact type that already has
+data, when the population in `FILE` covers every populated fact type the
+constraint ranges over and satisfies the constraint. This closes the route the
+0.2.0 notes list as open. `apply` repeats the option, and a changed file stops
+it (exit 11). The preview records the file's digest and the operations it
+admitted, never a path or a value. A preview that carries the new
+`population_check` field is refused by older GND readers. Rules and exits:
+[admitting a constraint on clean data](reference/evolve-policy.md#admitting-a-constraint-on-clean-data).
+
 ### Fixes and internal changes
 
 - **Text walk on a reference model**: `gnd check MODEL --pre PRE --steps STEPS`

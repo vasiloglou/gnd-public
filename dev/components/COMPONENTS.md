@@ -64,11 +64,11 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### subsystem.evolve
 - does: Preview, apply and finalize explicit model changes with blast-radius review and linked conformance evidence.
-- verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal
+- verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population
 - status: canonical
-- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.policy, evolve.shape_matches, evolve.schema
-- members_uses: cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, model.document, model.json_document, model.operation_obligations, model.population_loading, … +6 more (graph.md)
-- flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.policy -> evolve.shape_matches -> evolve.schema
+- components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.schema
+- members_uses: checker.evaluate, cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, model.address, model.document, model.json_document, … +8 more (graph.md)
+- flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.schema
 - notes: Apply writes staged evidence before one model compare-and-swap. Finalize reruns conformance on linked projects.
 
 ### subsystem.recovery
@@ -575,7 +575,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.evolve_command
 - does: Register preview, apply and finalize arguments for model evolution [add_parsers; handle].
-- verbs: evolve command, preview model, apply proposal, finalize evolution, reviewed preview, workspace root, evidence records, additive policy, populated fact types, shape report, parse flags, dispatch handler
+- verbs: evolve command, preview model, apply proposal, finalize evolution, reviewed preview, workspace root, evidence records, additive policy, populated fact types, shape report, check population, parse flags, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -918,12 +918,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.service
 - does: Preview explicit model changes, publish a model CAS, and finalize linked conformance evidence [EvolutionService].
-- verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record
+- verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record, population check, constraint placement
 - in: Current model bytes, explicit EvolutionProposal or reviewed EvolutionPreview, evidence root, allowed project root.
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
 - modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py
-- uses: conformance.report, conformance.service, evolve.policy, evolve.schema, evolve.shape_matches, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.loading, model.reference_binding, model.verbalization
+- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.loading, model.reference_binding, model.verbalization
 - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
@@ -933,13 +933,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.schema
 - does: Validate versioned evolution proposals, stable operation locators, preview digests, pending states, and final records.
-- verbs: evolution schema, proposal contract, stable locator, operation identity, committed text, tracked roster, project coordinate, preview digest, finalization state, record binding, legacy reader, wire version, canonical_sha256, EvolutionProposal, EvolutionPreview
+- verbs: evolution schema, proposal contract, stable locator, operation identity, committed text, tracked roster, project coordinate, preview digest, finalization state, record binding, legacy reader, wire version, canonical_sha256, EvolutionProposal, EvolutionPreview, PopulationCheckRecord, PopulationOutcome
 - in: Evolution JSON documents, operation before and after values, exact UTF-8 text, versioned linked-project records.
 - out: Closed frozen Pydantic evidence records and canonical identity digests.
 - status: canonical
 - modules: src/gnd/evolve/models.py
 - uses: infra.input_policy
-- used_by: discover.fact_types, discover.output, evolve.policy, evolve.service, evolve.shape_matches, examples.expense_evolution
+- used_by: discover.fact_types, discover.output, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
 - checked: partial
@@ -947,17 +947,30 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### evolve.policy
-- does: Classify additive model changes against populated fact types and report refused operations [additive_policy_issues].
-- verbs: additive policy, populated facts, preserve existing data, strengthening constraint, weaken constraint, constraint change, allowed metadata, refuse rename, refuse delete, effective_populated, diff_paths, constraint_change, policy issues
-- in: Validated before-model, explicit proposal operations, effective populated fact-type identifiers.
-- out: Ordered PolicyIssue records; effective populated identifiers and structural change classifications.
+- does: Classify additive model changes against populated fact types and report refused operations, clearing a populated-constraint refusal on a population check's pass [additive_policy_issues].
+- verbs: additive policy, populated facts, preserve existing data, strengthening constraint, weaken constraint, constraint change, allowed metadata, refuse rename, refuse delete, effective_populated, diff_paths, constraint_change, policy issues, constraint subjects, population outcomes
+- in: Validated before-model, explicit proposal operations, effective populated fact-type identifiers, optional population-check outcome words by operation index.
+- out: Ordered PolicyIssue records; effective populated identifiers, the subjects of a constraint operation (ConstraintSubjects) and structural change classifications.
 - status: canonical
 - modules: src/gnd/evolve/policy.py
 - uses: evolve.schema, model.document, model.query_index
-- used_by: evolve.service
+- used_by: evolve.population_check, evolve.service
 - part_of: subsystem.evolve
-- tests: tests/test_evolve_additive_policy.py
-- notes: Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file.
+- tests: tests/test_evolve_additive_policy.py, tests/test_evolve_population_check.py
+- notes: Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
+
+### evolve.population_check
+- does: Read one population file beneath the workspace, check the candidate model over it once, and give one outcome word per constraint operation for the additive policy [population_outcomes].
+- verbs: check population, population-checked admission, clean population, check-population, admit constraint on populated fact type, population digest, uncovered subject, sample rows, constraint placement
+- in: Workspace anchor and relative population path, candidate and before models, the proposal, effective populated identifiers, replay placements of constraint objects.
+- out: The SHA-256 of the bytes read, the candidate model_id and an outcome word per constraint ADD/MODIFY operation; EvolutionPopulationError with a fixed message and exit band on refusal.
+- status: canonical
+- modules: src/gnd/evolve/population_check.py
+- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, model.address, model.document, model.population_loading, model.query_index
+- used_by: evolve.command, evolve.service
+- part_of: subsystem.evolve
+- tests: tests/test_evolve_population_check.py
+- notes: Reuses the workspace-anchored artifact read with the population cap and load_population_bytes on the same bytes; decides no policy cell; emits no population value, count or checker message (UG2, UG-R6).
 
 
 ### evolve.shape_matches
@@ -976,12 +989,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.command
 - does: Run file-based evolution preview, apply, and finalize commands with reviewed identity checks and exact breaking acceptance.
-- verbs: evolve preview command, evolve apply command, evolve finalize command, reviewed preview, interactive acceptance, blast radius digest, workspace paths, records root, claim output, preview collision, policy arguments, retry apply, exit code
+- verbs: evolve preview command, evolve apply command, evolve finalize command, reviewed preview, interactive acceptance, blast radius digest, workspace paths, records root, claim output, preview collision, policy arguments, retry apply, exit code, check-population option
 - in: Explicit model, proposal, preview or pending paths; workspace and records roots; format and policy options.
 - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
 - status: canonical
 - modules: src/gnd/evolve/cli_service.py
-- uses: evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, model.loading
+- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, model.loading
 - used_by: cli.dispatch, cli.evolve_command, recovery.command
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_additive_policy.py, tests/test_evolve_shape_matches.py
@@ -1772,7 +1785,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/checker/__init__.py, src/gnd/checker/_core.py
 - uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
-- used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, exp.acceptance, export.ilp_service, export.verification, infra.report_payloads, … +18 more (graph.md)
+- used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, evolve.population_check, exp.acceptance, export.ilp_service, export.verification, … +19 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_checker_families.py, tests/test_public_branch_runtime.py, tests/test_v62_phase5_checker.py, tests/test_anchor_sidecar_v2.py, tests/test_reference_population_corpus.py, tests/test_compiled_snapshot_obligations.py
 - checked: partial
@@ -1879,7 +1892,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +58 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +59 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1905,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/address.py
 - uses: (none)
-- used_by: check.admission, check.applicability, check.element_coverage, check.service, checker.evaluate, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, semantics.snapshot_adapter, synth.assemble, … +2 more (graph.md)
+- used_by: check.admission, check.applicability, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, semantics.snapshot_adapter, … +3 more (graph.md)
 - tests: tests/test_address.py
 
 
@@ -2155,7 +2168,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.shape_matches, extract.guidelines, infra.report_payloads, model.extraction_scope, … +11 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.shape_matches, extract.guidelines, infra.report_payloads, … +12 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
@@ -2168,7 +2181,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, export.applications, export.ilp_service, export.pyrel_rules, extract.manifest, infra.report_payloads, infra.safe_filesystem, model.document, … +10 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, evolve.population_check, export.applications, export.ilp_service, export.pyrel_rules, extract.manifest, infra.report_payloads, infra.safe_filesystem, … +11 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2380,7 +2393,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, examples.plan_apps, exp.session_judgments, … +29 more (graph.md)
+- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.plan_apps, … +30 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
 - in: Population path or bytes; optional loaded Model.
@@ -2394,7 +2407,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +21 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +22 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -3291,7 +3304,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - acyclic extents: check.service, check.snapshot_decision
 - acyclic_extents: check.snapshot_decision, checker.evaluate
 - adapter policy: cli.exp_command, cli.solve_command
-- additive policy: cli.evolve_command, evolve.policy
+- additive policy: cli.evolve_command, evolve.policy, subsystem.evolve
 - age appropriate: examples.book_recommendations, examples.book_rules
 - allow vacuous: check.service, checker.reports, cli.checking_command
 - anchor_normalize: extract.scalar_identity, model.anchor_identity
@@ -3321,7 +3334,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - canonical payload: infra.output, infra.text_output
 - case directories: cli.fidelity_command, fidelity.service
 - check: cli.api, examples.book_rules
-- check population: check.service, checker.evaluate, cli.checking_command, subsystem.check
+- check population: check.service, checker.evaluate, cli.checking_command, cli.evolve_command, evolve.population_check, subsystem.check, subsystem.evolve
 - check proposal: examples.book_recommendations, export.applications
 - check_thresholds: export.ilasp, export.popper
 - checker defects: measure.report, measure.service
@@ -3343,6 +3356,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - conflicting options: cli.measure_command, cli.verify_command
 - conformance command: cli.conformance_command, conformance.command
 - constraint blind: extract.guidelines, model.extraction_vocabulary
+- constraint placement: evolve.population_check, evolve.service
 - constraint provenance: model.verbalization, recovery.verify
 - content digest: assurance.identity, model.population_loading
 - corpus manifest: assurance.claim_graph, synth.corpus
@@ -3446,6 +3460,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - policy acceptance: export.applications, export.pyrel_runtime
 - pool artifact: cli.synth_command, synth.pool
 - population census: measure.score, measure.service
+- population digest: evolve.population_check, synth.provenance
 - precision recall: cli.fidelity_command, fidelity.report
 - prediction mismatch: synth.boundary, synth.mutations
 - preferred genre: examples.book_recommendations, examples.book_rules

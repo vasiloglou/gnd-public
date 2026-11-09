@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/report-output-fidelity/evidence/ROF4/dynamic-query-successor.json",
+  "predecessor_sha256": "d5bd1a757a88b1aaaa02358e278ee995ca70cd8dec49d5f29b18e3398b49d8f3",
+  "reason": "unattended-model-growth UG2 (issue 104 item 5, owner-approved spec and corpus 2026-11-09): the population check behind gnd evolve --check-population (gnd.evolve.population_check), the shared ConstraintSubjects resolver and outcome clearing in gnd.evolve.policy, the replay's placement recorder in gnd.evolve.service, and the PopulationOutcome/PopulationCheckRecord models. Syntax census only; the exact query policy is unchanged.",
+  "removed": [
+    [
+      "src/gnd/evolve/policy.py",
+      "additive_policy_issues",
+      "dict[str, set[str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "additive_policy_issues",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "playing",
+      "dict[str, set[str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "playing",
+      "identifies.get(kind_of, set())",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "playing",
+      "players.get(object_type, set())",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "playing",
+      "set[str]",
+      4
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/evolve/models.py",
+      "<module>",
+      "Literal['pass', 'fail', 'warning', 'unchecked', 'vacuous', 'uncovered', 'sample-rows', 'not-located']",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "PopulationCheckRecord",
+      "tuple[PopulationAdmission, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "_bindings_match",
+      "operations[row.operation_index]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "__init__",
+      "dict[str, set[str]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "__init__",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "_playing",
+      "dict[str, set[str]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "_playing",
+      "identifies.get(kind_of, set())",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "_playing",
+      "self._players.get(object_type, set())",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "_playing",
+      "set[str]",
+      5
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "additive_policy_issues",
+      "Mapping[int, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "of",
+      "set[str]",
+      2
+    ],
+    [
+      "src/gnd/evolve/policy.py",
+      "refuse",
+      "population_outcomes.get(position, 'not-located')",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "PopulationCheck",
+      "Mapping[int, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_caused_by",
+      "type[BaseException]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_sample_row_fact_types",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "_sample_row_fact_types",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "Iterable[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "dict[int, tuple[str | None, int]]",
+      2
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "tuple[str | None, int]",
+      2
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "population_outcomes",
+      "Mapping[int, tuple[str | None, int]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "population_outcomes",
+      "dict[int, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "population_outcomes",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "population_outcomes",
+      "placements.get(position)",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "population_outcomes",
+      "tuple[str | None, int]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "population_outcomes",
+      "verdicts.get(positional_constraint_ref(*placement))",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "read_population_for_check",
+      "tuple[str, Population]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "collection[-1]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "collection[index]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_policy_values",
+      "Callable[[frozenset[str]], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_policy_values",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_policy_values",
+      "proposal.operations[position]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_check",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_check",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_check",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_check",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_runner",
+      "Callable[[frozenset[str]], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_runner",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_runner",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_runner",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_runner",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_recheck_policy",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_recheck_policy",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_recheck_policy",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_record_placement",
+      "list[Any]",
+      2
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_record_placement",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_record_placement",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "apply",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "apply",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "apply",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "preview",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "preview",
+      "list[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "preview",
+      "tuple[int, str | None, list[Any], Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7361,
+  "result_occurrences": 9183
+}

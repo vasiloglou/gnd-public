@@ -762,9 +762,10 @@ PolicyCell = Literal[
 #: existed; `accepted_blast_radius_sha256` keeps writing `null` as before.
 _POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
 
-#: Every optional preview field omitted when unset: the policy's four and the
-#: shape report's one (MG3), under the same rule.
-_OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches")
+#: Every optional preview field omitted when unset: the policy's four, the
+#: shape report's one (MG3) and the population check's one (UG2), under the
+#: same rule.
+_OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches", "population_check")
 
 
 class PolicyIssue(_ClosedFrozenModel):
@@ -778,6 +779,49 @@ class PolicyIssue(_ClosedFrozenModel):
     reference: NonEmptyString
     cell: PolicyCell
     detail: NonEmptyString
+
+
+#: The population check's outcome per constraint operation (UG2). The checker's
+#: five verdict words, spelled as `gnd.checker` spells them, plus three of the
+#: check's own: a populated subject with no fact in the population, a subject
+#: with sample rows in the current model, and a verdict that could not be
+#: located (a defect guard). Only `pass` clears a refusal.
+PopulationOutcome = Literal[
+    "pass",
+    "fail",
+    "warning",
+    "unchecked",
+    "vacuous",
+    "uncovered",
+    "sample-rows",
+    "not-located",
+]
+
+
+class PopulationAdmission(_ClosedFrozenModel):
+    """One populated-constraint operation the supplied population cleared (UG2)."""
+
+    operation_index: int = Field(ge=0)
+    reference: NonEmptyString
+    outcome: Literal["pass"]
+
+
+class PopulationCheckRecord(_ClosedFrozenModel):
+    """What a `--check-population` admission rested on: digests and ids only (UG2).
+
+    No path, no count and no population value; `admitted` is in operation order.
+    """
+
+    sha256: Sha256String
+    model_id: NonEmptyString
+    admitted: tuple[PopulationAdmission, ...]
+
+    @model_validator(mode="after")
+    def _admitted_in_order(self) -> PopulationCheckRecord:
+        indexes = [row.operation_index for row in self.admitted]
+        if indexes != sorted(set(indexes)):
+            raise ValueError("population_check.admitted must be unique and in operation order")
+        return self
 
 
 class ShapeMember(_ClosedFrozenModel):
@@ -864,6 +908,7 @@ class _EvolutionPreviewV3(_EvolutionPreviewV2):
     populated: tuple[NonEmptyString, ...] | None = None
     policy_issues: tuple[PolicyIssue, ...] | None = None
     shape_matches: tuple[ShapeGroup, ...] | None = None
+    population_check: PopulationCheckRecord | None = None
 
 
 class EvolutionPreview(_ClosedFrozenModel):
@@ -883,6 +928,7 @@ class EvolutionPreview(_ClosedFrozenModel):
     populated: tuple[NonEmptyString, ...] | None = None
     policy_issues: tuple[PolicyIssue, ...] | None = None
     shape_matches: tuple[ShapeGroup, ...] | None = None
+    population_check: PopulationCheckRecord | None = None
     preview_sha256: Sha256String
 
     @classmethod
@@ -939,6 +985,15 @@ class EvolutionPreview(_ClosedFrozenModel):
                 raise ValueError("populated_args must be a subset of populated")
         if self.shape_matches is not None:
             _check_shape_matches(self.shape_matches, self.proposal)
+        if self.population_check is not None:
+            if self.policy is None:
+                raise ValueError("population_check requires policy")
+            operations = self.proposal.operations
+            for row in self.population_check.admitted:
+                if row.operation_index >= len(operations) or (
+                    operations[row.operation_index].reference() != row.reference
+                ):
+                    raise ValueError("population_check names an operation the proposal does not carry")
         if self.proposal_sha256 != self.proposal.proposal_sha256:
             raise ValueError("proposal_sha256 does not bind proposal")
         if self.candidate_model != self.proposal.candidate_model:

@@ -262,3 +262,318 @@ def test_t10_flag_free_preview_bytes_do_not_move(tmp_path: Path, row: dict[str, 
         assert not paths["preview"].exists()
     else:
         assert _sha(paths["preview"]) == row["preview_sha256"]
+
+
+# --- implementation tests (spec §8, beyond the approval corpus) -------------
+#
+# These are separately identified successors of the approved corpus (process
+# step 3): they add cases, they change no approved answer.
+
+P_ORDERS = ["--policy", "additive", "--populated", "customer_places_order"]
+
+
+def _service(root: Path) -> Any:
+    from gnd.evolve import EvolutionService
+
+    return EvolutionService(model_path=root / "model.orm.yaml", evidence_root=root / "records",
+                            allowed_project_root=root)
+
+
+def _service_workspace(tmp_path: Path, operations: tuple[Any, ...], population: dict[str, Any] | None = None,
+                       *, name: str = "pop.json") -> tuple[Any, Any, Path]:
+    root = tmp_path.resolve() / "ws"
+    root.mkdir(parents=True)
+    (root / "records").mkdir()
+    shutil.copyfile(BASE, root / "model.orm.yaml")
+    (root / "model.verbalization.txt").write_text("pre-existing\n", encoding="utf-8")
+    if population is not None:
+        (root / name).write_text(json.dumps(population), encoding="utf-8")
+    return _service(root), _proposal(operations, proposal_id="ug2-service"), root
+
+
+def _population(facts: dict[str, list[dict[str, Any]]], **header: Any) -> dict[str, Any]:
+    return {"population": {"model": "base.orm.yaml", "model_id": "ug2-orders", "source": "agent-output",
+                           "covers": sorted(facts), **header}, "facts": facts}
+
+
+PLACEMENTS = [{"customer": 1, "order": 10}, {"customer": 2, "order": 11}]
+LLM_TEXT = {"rationale": "Stated by the host.", "provenance": {"rationale_world_fact": "Seen in the text."}}
+
+FAMILIES = {
+    "uniqueness": ("customer_places_order", {"type": "uniqueness", "roles": ["order"]}),
+    "mandatory": ("customer_places_order", {"type": "mandatory", "role": "customer"}),
+    "frequency": ("customer_places_order",
+                  {"type": "frequency", "scope": "internal", "roles": ["customer"], "bound": {"min": 1, "max": 5}}),
+    "value": ("customer_places_order",
+              {"type": "value", "object_type": "order",
+               "role_ref": {"fact_type": "customer_places_order", "role": "order"}, "range": {"min": 1, "max": 50}}),
+    "subset": (None, {"type": "subset",
+                      "subset_role_seq": [{"fact_type": "order_has_amount", "role": "order"}],
+                      "superset_role_seq": [{"fact_type": "customer_places_order", "role": "order"}]}),
+}
+
+
+@pytest.mark.parametrize("family", sorted(FAMILIES))
+def test_t1_each_family_is_cleared_by_a_clean_population(tmp_path: Path, family: str) -> None:
+    host, shape = FAMILIES[family]
+    after = {**shape, **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator(host, None, shape["type"]), after=after),)
+    facts = {"customer_places_order": PLACEMENTS,
+             "order_has_amount": [{"order": 10, "amount": 40}, {"order": 11, "amount": 75}]}
+    service, proposal, _root = _service_workspace(tmp_path, operations, _population(facts))
+    populated = ("customer_places_order", "order_has_amount")
+    refused = service.preview(proposal, policy="additive", populated=populated)
+    assert [issue.cell for issue in refused.policy_issues] == ["constraint.populated.add"]
+    preview = service.preview(proposal, policy="additive", populated=populated, check_population="pop.json")
+    assert preview.policy_issues == ()
+    assert [row.operation_index for row in preview.population_check.admitted] == [0]
+
+
+def test_t5b_an_unchecked_verdict_is_its_own_word(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from gnd.evolve import population_check
+
+    real = population_check.check
+
+    def unchecked(model: Any, population: Any) -> Any:
+        report = real(model, population)
+        rows = [row.model_copy(update={"verdict": "unchecked"}) for row in report.verdicts]
+        return report.model_copy(update={"verdicts": rows})
+
+    monkeypatch.setattr(population_check, "check", unchecked)
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert preview.policy_issues[0].detail.endswith("; population: unchecked")
+    assert preview.population_check.admitted == ()
+
+
+def test_not_located_fails_closed(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from gnd.evolve import population_check
+
+    real = population_check.check
+    monkeypatch.setattr(population_check, "check",
+                        lambda model, population: real(model, population).model_copy(update={"verdicts": []}))
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert preview.policy_issues[0].detail.endswith("; population: not-located")
+
+
+def test_t4b_vacuous_and_t3b_fail_reachability(tmp_path: Path) -> None:
+    """`vacuous` needs a populated subject that is covered yet empty for the constraint: unreachable,
+    because `uncovered` is decided first (precedence, spec §6.1). `fail` is an alethic verdict, and an
+    alethic constraint is never eligible. Both words stay in the vocabulary for the checker's sake; this
+    test pins the precedence that makes them unreachable through the CLI."""
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    empty = _population({"customer_places_order": []})
+    service, proposal, _ = _service_workspace(tmp_path, operations, empty)
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert preview.policy_issues[0].detail.endswith("; population: uncovered")
+
+
+def test_t9_bytes_changed_between_fresh_preview_and_service_reread(tmp_path: Path) -> None:
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    service, proposal, root = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    before = (root / "model.orm.yaml").read_bytes()
+    (root / "pop.json").write_text(json.dumps(_population({"customer_places_order": PLACEMENTS[:1]})),
+                                   encoding="utf-8")
+    from gnd.evolve import EvolutionError
+
+    with pytest.raises(EvolutionError, match="population changed before apply"):
+        service.apply(preview, check_population="pop.json")
+    assert (root / "model.orm.yaml").read_bytes() == before
+    with pytest.raises(EvolutionError, match="--check-population differs"):
+        service.apply(preview)
+
+
+CANARIES = ("zqx-canary-customer", "zqx-canary-memo")
+
+
+def test_t11_no_population_value_reaches_any_output(tmp_path: Path) -> None:
+    root = tmp_path.resolve() / "ws"
+    paths = _workspace(root, "C05")
+    memo_rows = [{"order": 10, "memo": CANARIES[1]}]
+    pop = _population({"customer_places_order": [{"customer": 1, "order": 10}], "order_has_memo": memo_rows})
+    pop_bad = _population({"customer_places_order": [{"customer": 1, "order": 10}],
+                           "order_has_memo": [{"order": CANARIES[0], "memo": CANARIES[1]}]})
+    (root / "populations" / "canary.json").write_text(json.dumps(pop), encoding="utf-8")
+    (root / "populations" / "canary-bad.json").write_text(json.dumps(pop_bad), encoding="utf-8")
+    flags = P_ORDERS + ["--populated", "order_has_memo", "--check-population", "canary.json"]
+    channels = []
+    for argv in (_preview_argv(paths, flags), _apply_argv(paths, flags)):
+        result = run_main(argv)
+        channels += [result.stdout, result.stderr]
+    preview = json.loads(paths["preview"].read_text(encoding="utf-8"))
+    for key in ("candidate_model", "before_model", "verbalization", "proposal"):
+        preview.pop(key)
+    channels.append(json.dumps(preview).encode())
+    channels += [path.read_bytes() for path in paths["records"].rglob("*") if path.is_file()]
+    bad = _workspace(tmp_path.resolve() / "bad", "C05")
+    (bad["workspace"] / "populations" / "canary-bad.json").write_text(json.dumps(pop_bad), encoding="utf-8")
+    result = run_main(_preview_argv(bad, P_ORDERS + ["--populated", "order_has_memo",
+                                                     "--check-population", "canary-bad.json"]))
+    assert result.returncode == 3
+    channels += [result.stdout, result.stderr]
+    blob = b"\n".join(channels)
+    assert not any(canary.encode() in blob for canary in CANARIES)
+    # positive control: the scan finds a planted canary
+    assert CANARIES[0].encode() in blob + CANARIES[0].encode()
+    assert CANARIES[1].encode() in json.dumps(pop).encode()
+
+
+def _hostile(root: Path, name: str) -> str:
+    pops = root / "populations"
+    target = pops / name
+    good = json.dumps(_population({"customer_places_order": PLACEMENTS}))
+    if name == "oversize.json":
+        target.write_bytes(b" " * (10 * 1024 * 1024 + 1))
+    elif name == "latin1.json":
+        target.write_bytes(good.replace("agent-output", "agent-\xe9").encode("latin-1"))
+    elif name == "nan.json":
+        target.write_text(good.replace('"order": 10', '"order": NaN'), encoding="utf-8")
+    elif name == "longint.json":
+        target.write_text(good.replace('"order": 10', '"order": ' + "9" * 100_000), encoding="utf-8")
+    elif name == "deep.json":
+        target.write_text("[" * 65 + "]" * 65, encoding="utf-8")
+    elif name == "bomb.yaml":
+        lines = ["a: &a [x, x, x, x, x, x, x, x, x]"] + [
+            f"{chr(98 + i)}: &{chr(98 + i)} [*{chr(97 + i)}, *{chr(97 + i)}, *{chr(97 + i)}, *{chr(97 + i)}]"
+            for i in range(9)]
+        target.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    elif name == "list.json":
+        target.write_text("[]", encoding="utf-8")
+    elif name == "dir.json":
+        target.mkdir()
+    elif name == "fifo.json":
+        import os
+
+        os.mkfifo(target)
+    elif name == "link.json":
+        target.symlink_to(pops / "clean.json")
+    return name
+
+
+@pytest.mark.parametrize(("name", "exit_code"), [
+    ("missing.json", 66), ("link.json", 74), ("dir.json", 74), ("fifo.json", 74), ("oversize.json", 3),
+    ("latin1.json", 3), ("nan.json", 3), ("longint.json", 3), ("deep.json", 3), ("bomb.yaml", 3), ("list.json", 3),
+])
+def test_t12_hostile_population_files(tmp_path: Path, name: str, exit_code: int) -> None:
+    paths = _workspace(tmp_path.resolve() / "ws", "C01")
+    _hostile(paths["workspace"], name)
+    result = run_main(_preview_argv(paths, P_ORDERS + ["--check-population", name]))
+    assert result.returncode == exit_code, result.stderr.decode()
+    assert b"Traceback" not in result.stderr
+    assert not paths["preview"].exists()
+
+
+def test_t12_reference_bearing_candidate_is_refused(tmp_path: Path) -> None:
+    from gnd.evolve import population_check
+    from gnd.evolve.population_check import EvolutionPopulationError
+
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+
+    class Bearing:
+        reference_populations = ({"id": "r"},)
+
+    with pytest.raises(EvolutionPopulationError) as caught:
+        service._population_check("pop.json", None, proposal, Bearing(), frozenset(), [])
+    assert caught.value.exit_code == 3
+    assert population_check  # the module owns the refusal type
+
+
+@pytest.mark.parametrize("count", [1, 10, 100])
+def test_t13_one_check_call_and_linear_mapping(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, count: int) -> None:
+    from gnd.evolve import population_check
+    from gnd.evolve import service as service_module
+
+    calls = {"check": 0, "placed": 0}
+    real_check = population_check.check
+    real_record = service_module._record_placement
+
+    def counting_check(model: Any, population: Any) -> Any:
+        calls["check"] += 1
+        return real_check(model, population)
+
+    def counting_record(*args: Any) -> None:
+        calls["placed"] += 1
+        real_record(*args)
+
+    operations = tuple(
+        _op("add", _constraint_locator("customer_places_order", None, "frequency"), operation_id=f"op-{i}",
+            after={"type": "frequency", "scope": "internal", "roles": ["customer"],
+                   "bound": {"min": 1, "max": 5 + i}, **LLM, **LLM_TEXT})
+        for i in range(count))
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    # Spies installed after setup: building the proposal replays the operations too.
+    monkeypatch.setattr(population_check, "check", counting_check)
+    monkeypatch.setattr(service_module, "_record_placement", counting_record)
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert calls["check"] == 1
+    assert calls["placed"] == count  # one placement per operation: linear, not quadratic
+    assert len(preview.population_check.admitted) == count
+
+
+def test_t14_order_replay_before_the_population_read() -> None:
+    import inspect
+
+    from gnd.evolve.service import EvolutionService
+
+    source = inspect.getsource(EvolutionService.preview)
+    assert source.index("_enforce_d12(") < source.index("self._policy_values(")
+    values = inspect.getsource(EvolutionService._policy_values)
+    assert values.index("checked = population(effective)") < values.index("population_outcomes=")
+    apply_source = inspect.getsource(EvolutionService.apply)
+    assert apply_source.index("_enforce_d12(") < apply_source.index("check_population=check_population")
+
+
+def test_t14_a_replay_mismatch_is_reported_before_a_missing_population(tmp_path: Path) -> None:
+    paths = _workspace(tmp_path.resolve() / "ws", "C01")
+    declared = _case_operations("C01")
+    other = _proposal((_op("add", _constraint_locator("customer_places_order", None, "uniqueness"),
+                           after={**UNIQUE_ORDER, "roles": ["customer"]}),), proposal_id="ug2-c01")
+    mismatched = _proposal(declared, proposal_id="ug2-c01").model_copy(
+        update={"candidate_model": other.candidate_model})
+    paths["proposal"].write_text(json.dumps(mismatched.model_dump(mode="json")), encoding="utf-8")
+    result = run_main(_preview_argv(paths, P_ORDERS + ["--check-population", "missing.json"]))
+    assert result.returncode == 3, result.stderr.decode()
+    assert b"declared operations" in result.stderr
+
+
+def test_t15_a_declared_constraint_id_is_located(tmp_path: Path) -> None:
+    after = {**FAMILIES["uniqueness"][1], "id": "one_buyer_per_order", **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert preview.policy_issues == ()
+
+
+def test_t16_placement_follows_a_later_delete(tmp_path: Path) -> None:
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    existing = _order_range()
+    operations = (
+        _op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after, operation_id="a"),
+        _op("delete", _constraint_locator("customer_places_order", existing, "value"), before=existing,
+            operation_id="b"),
+    )
+    violating = [{"customer": 1, "order": 10}, {"customer": 2, "order": 10}]
+    service, proposal, root = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    clean = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                            check_population="pop.json")
+    assert clean.policy_issues == () and [r.operation_index for r in clean.population_check.admitted] == [0]
+    (root / "bad.json").write_text(json.dumps(_population({"customer_places_order": violating})), encoding="utf-8")
+    bad = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                          check_population="bad.json")
+    assert bad.policy_issues[0].detail.endswith("; population: warning")

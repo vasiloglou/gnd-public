@@ -68,6 +68,12 @@ def _register_evolve(subparsers):
         action="store_true",
         help="list existing fact types with the same role players as each added one (advice only)",
     )
+    evolve_preview_parser.add_argument(
+        "--check-population",
+        default=None,
+        metavar="FILE",
+        help="check new or strengthened proposed deontic constraints on populated fact types against the population in FILE beneath ROOT; requires --policy additive",
+    )
     _add_format_argument(evolve_preview_parser)
 
     evolve_apply_parser = evolve_subparsers.add_parser(
@@ -112,6 +118,12 @@ def _register_evolve(subparsers):
         default=None,
         metavar="FACT_TYPE",
         help="treat FACT_TYPE as populated under --policy additive; repeatable",
+    )
+    evolve_apply_parser.add_argument(
+        "--check-population",
+        default=None,
+        metavar="FILE",
+        help="repeat the reviewed preview's --check-population FILE beneath ROOT",
     )
     _add_format_argument(evolve_apply_parser)
 
@@ -168,6 +180,7 @@ def handle(args, parsers) -> int:
                 policy=args.policy,
                 populated=args.populated,
                 shape_report=args.shape_report,
+                check_population=args.check_population,
             )
         if args.evolve_command == "apply":
             return _handler_evolve_cli_service._cmd_evolve_apply(
@@ -179,6 +192,7 @@ def handle(args, parsers) -> int:
                 args.format,
                 policy=args.policy,
                 populated=args.populated,
+                check_population=args.check_population,
             )
         return _handler_evolve_cli_service._cmd_evolve_finalize(
             args.model,

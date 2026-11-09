@@ -2,7 +2,14 @@
 
 ## 1. Status line
 
-**Corpus authored and red, 2026-11-09; waiting for the owner's corpus approval.**
+**Corpus approved `(o)`, 2026-11-09; implementation authorized.** Asked "Do you
+approve the UG2 corpus answers?", the owner replied, quoted: "Approve the
+corpus". Approved bytes: the five files in "Corpus authoring" at the digests
+listed there (commit `c635ef9d`). This authorizes implementing UG2 as specified.
+No merge, release or issue action. Changing an approved expected answer returns
+it to the owner.
+
+Earlier status, kept: **Corpus authored and red, 2026-11-09; waiting for the owner's corpus approval.**
 The corpus (§11) is committed before any source edit: 15 cases (C01 to C11c),
 each red for the intended reason (exit 64, `--check-population` is not an
 option on the base), plus a green flag-free parity baseline (12 rows) and a
@@ -523,8 +530,60 @@ Findings while authoring:
   constraint with one empty subject gets `pass` (the any/every trap) is still
   measured by C05 and T5 during implementation, not assumed.
 
+## Implementation findings (recorded as found, 2026-11-09)
+
+- **F-i1 (refutes §6.4 wiring, fixed).** The first wiring resolved
+  `--check-population` in the CLI with `required=True`, so a missing file exited
+  66 before the proposal's replay check: the order §6.4 pins was broken. T14
+  caught it. The CLI now checks spelling and containment only
+  (`required=False`), and the service read gives 66 after every proposal refusal.
+- **F-i2 (seams preserved).** Two existing tests patch internals: MG3's T4b
+  patches `EvolutionService._policy_values` as a staticmethod, and MG2's T1a
+  swaps `additive_policy_issues` for a lambda with MG2's signature. The first
+  wiring made `_policy_values` an instance method and always passed
+  `population_outcomes`. Both seams are restored: `_policy_values` stays static
+  and takes the population check as a closure, and without the option the
+  policy is called exactly as before (AGENTS.md: patch lookups keep their owner).
+- **F-i3.** RF2's exit-allocation census requires every `EXIT_*` constant to
+  live in `gnd/exits.py`; the new module imports `EXIT_NO_INPUT` and `EXIT_IO`
+  and writes band 3 as the literal the evolve lane already uses.
+- **F-i4 (departs from §6.7 and plan §4 UG2 wording).** The RF1 harness has, since
+  RC1, kept its historical goldens frozen and asserted later CLI changes through
+  successor fixtures (`check --rule-ids`, `--baseline`, `--allow-vacuous`,
+  `validate --identity`). UG2 follows that convention:
+  `tests/fixtures/check-population-cli/expected.json` holds the two actions, their
+  indexes, and the help and exit probe per Python minor, captured with
+  `GND_RF1_CAPTURE` under 3.11, 3.13 and 3.14. `goldens/`, `goldens.sha256` and
+  `MANIFEST_SHA256` do not change. A fresh capture also differs for `gnd check`
+  and `gnd validate`, which are already covered by their successors; those
+  goldens were not touched.
+- **F-i5 (refines §6.1).** The population loader's messages can quote values
+  (layer-2 issues name offending data). Re-raising them as `EvolutionError`, as
+  §6.1 said, would breach UG-R6 on stderr. `EvolutionPopulationError` carries
+  a fixed category message (missing; not a readable regular file; over the cap;
+  `model_id` mismatch; not valid, with rule ids only) and its exit band, and is
+  mapped by type in `_evolve_error_exit`.
+- **F-i6 (deviation in T1).** The family sweep uses uniqueness, mandatory,
+  frequency, value and a model-level subset. Ring is replaced by subset: the
+  corpus model has no fact type with two roles of one type.
+- **F-i7.** Through the CLI, `vacuous` is unreachable (an empty populated
+  subject is `uncovered` first) and so is `fail` (alethic constraints are not
+  eligible). `test_t4b_vacuous_and_t3b_fail_reachability` pins the precedence;
+  the words stay in the vocabulary because they are the checker's.
+- **F-i8 (rule 6 measurement).** T15: a constraint with a declared `id` is
+  located by its positional reference; `check()` without `--rule-ids` emits
+  positional references.
+- **F-i9.** `admitted` is computed as the operations refused by the policy
+  without outcomes and not refused with them: two calls of the same pure walk,
+  so a `pass` on an operation that was never refused is not listed.
+- **F-i10.** The RF6 dynamic-candidate census moved (the resolver class, the
+  placement recorder, the new literals): successor
+  `evidence/UG2/dynamic-query-successor.json` chained after ROF4, 6 rows removed
+  and 57 added, the exact query policy unchanged.
+
 ## Revision history
 
 - r1, 2026-11-09: first draft. Not reviewed. Not approved.
 - r1 approved, 2026-11-09: spec gate `(o)`, "Approve all as proposed". Status line and ruling column only.
 - 2026-11-09: corpus authored red; status line replaced and "Corpus authoring" appended.
+- 2026-11-09: corpus approved `(o)` ("Approve the corpus"); status line only.

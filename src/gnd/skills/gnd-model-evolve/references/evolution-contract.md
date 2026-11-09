@@ -79,7 +79,9 @@ uses the old locator and puts the distinct new identity in `after`.
 
 `ArtifactLocator.artifact_kind` is one of `population`, `provenance`, `verbalization`,
 `generated-code`, `extension-code`, `documentation`, or `supplied-artifact`. It binds a supplied
-identity; evolution does not discover, open, rewrite, or regenerate the artifact.
+identity; evolution does not discover, open, rewrite, or regenerate the artifact. The one file
+evolution opens beyond the model, proposal and preview is the population named by
+`--check-population` ("Population check"), never an artifact locator's path.
 
 `ProjectLocator` admits exactly the base literal `allowed-project-root`. Its path is lexical data,
 not filesystem authority: it rejects empty, dot, parent, absolute POSIX/Windows/UNC,
@@ -188,7 +190,9 @@ of ids and key names only). Without the option the four keys are **omitted** fro
 not written as `null`, so a policy-free preview has the bytes and `preview_sha256` it had before
 the policy existed; `accepted_blast_radius_sha256` keeps writing `null`. Readers of versions 1 and 2
 are unchanged. Under `--shape-report` the preview carries one more optional field, `shape_matches`
-("Shape report" below), omitted by the same rule.
+("Shape report" below), omitted by the same rule. Under `--check-population` it carries
+`population_check` ("Population check" below), omitted by the same rule; a GND reader older than
+that field refuses a preview that carries it.
 
 ### Additive policy
 
@@ -254,6 +258,51 @@ digest was recomputed differs from the fresh one and exits `11`. `EvolutionServi
 the policy on the bytes it is about to publish and refuses with `3` on any issue, naming the
 operation index and cell; it never reads the preview's issue list. A preview stripped of every
 policy field and applied without `--policy` publishes as a policy-free preview.
+
+#### Population check
+
+`--check-population FILE` (with `--policy additive`; alone it exits `3`) lets the policy admit a
+constraint it would refuse as `constraint.populated.add`, or as a `constraint.populated.modify` whose
+differing keys all strengthen, weaken or are admitted, on the evidence of one population file. It
+clears that refusal only when all of these hold:
+
+1. the constraint after the operation is `status: proposed` and `modality: deontic`;
+2. every populated subject of the constraint (the subjects defined under **Populated**) has at least
+   one fact in the file, and no subject has `sample_population` rows in the current model, which the
+   checker does not see;
+3. that constraint's own verdict, from one `gnd.checker.check` of the candidate model over the file,
+   is `pass`. `warning` (how a deontic violation is reported), `fail`, `unchecked` and `vacuous` leave
+   the refusal. Other constraints' verdicts do not matter, and the `gnd check` exit band is never
+   consulted.
+
+Every other cell is unchanged. A refusal that the check did not clear keeps its cell and its detail
+gains `; population: <outcome>`, where the outcome is the verdict word, `uncovered`, `sample-rows`,
+`not-located` (no verdict could be matched: fail closed) or `not eligible` (condition 1, or a
+`neither` key). No population value, count of facts or checker message appears anywhere.
+
+The file is resolved beneath the workspace, read once (a regular file, no symlink, the population
+size cap applied at the read), hashed, and loaded against the candidate model from those same bytes.
+Its header `model_id` is required and must equal the candidate's. A model that declares
+`reference_populations` cannot use the option. A missing file exits `66`; a symlink, directory, FIFO
+or unreadable file `74`; an oversize, malformed or invalid population, or a `model_id` that is absent
+or different, `3`. The file is read after candidate validation, replay equality and D-12, and before
+the policy walk, so a malformed proposal reports its own error first.
+
+The preview records `population_check`: `sha256` (of the bytes read), the candidate's `model_id`, and
+`admitted`, one `{operation_index, reference, outcome: "pass"}` per operation the population cleared,
+in operation order. It records no path. The D-13 record binds `preview_sha256`, and the staged
+preview carries this field, so the record shows what an admission rested on.
+
+**Apply.** `apply` must repeat `--check-population` exactly when the reviewed preview carries
+`population_check`; otherwise it exits `3` before the retry branch. It rebuilds the preview from the
+same path, so changed bytes make the fresh preview differ and the command exits `11`. The service then
+re-reads the file and re-runs the check and the policy after candidate validation, replay equality and
+D-12; a digest different from the preview's exits `11` ("population changed before apply"), and any
+issue exits `3`. Without the option the policy re-run keeps its place before candidate validation.
+
+**What the admission means.** The constraint stays `proposed` and `deontic`, so a later violating fact
+is a reported warning, not an uninterpretable fact. Under this option the additive guarantee holds
+relative to the supplied population: it is evidence, not review.
 
 ### Shape report
 
@@ -457,7 +506,7 @@ exit, drift publication flag, model commit point, transaction scope, and final r
 | Exit | Meaning | Publication consequence | Returned by |
 |---|---|---|---|
 | `0` | requested stage completed; inspect the emitted preview, pending, or record claim | stage-specific only | preview, apply, finalize |
-| `3` | malformed model, proposal, preview, pending state, or closed evidence; an operation the additive policy refuses; `--policy` or `--populated` differing from the reviewed preview's | no new authorized mutation (a refusing preview is still written for review) | preview, apply, finalize |
+| `3` | malformed model, proposal, preview, pending state, or closed evidence; an operation the additive policy refuses; `--policy`, `--populated` or `--check-population` differing from the reviewed preview's; a refused population file (see "Population check") | no new authorized mutation (a refusing preview is still written for review) | preview, apply, finalize |
 | `11` | stale identity or collision, **or** a published-but-incomplete evolution refusing a new one | preserve current bytes; no rollback; the pending transaction is untouched | preview, apply, finalize |
 | `13` | model was published and linked conformance found drift | retain drift evidence; do not regenerate | apply, finalize |
 | `66` | required input path is absent | nothing was established about the absent input | preview, apply, finalize |

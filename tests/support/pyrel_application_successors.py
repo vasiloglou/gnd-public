@@ -119,6 +119,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/rule-check-followups/evidence/FU5/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF4/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/unattended-model-growth/evidence/UG2/dynamic-query-successor.json',
 ]
 
 

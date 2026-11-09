@@ -365,6 +365,10 @@ def _evolve_emit_claim(claim: Any, output_format: str, *, stage: str) -> None:
             print(f"  populated: {' '.join(claim.populated) or '-'}")
             for issue in claim.policy_issues:
                 print(f"  policy-issue: {issue.operation_index} {issue.cell} {issue.reference}")
+            if getattr(claim, "population_check", None) is not None:
+                print(f"  population: {claim.population_check.sha256}")
+                for row in claim.population_check.admitted:
+                    print(f"  population-admitted: {row.operation_index} {row.reference}")
         for group in claim.shape_matches or ():
             added = ",".join(member.fact_type for member in group.added)
             existing = ",".join(member.fact_type for member in group.existing) or "-"
@@ -454,6 +458,7 @@ def _evolve_error_exit(error: Exception) -> int:
         EvolutionPolicyRefusedError,
         EvolutionReadOnlyCompatibilityError,
     )
+    from gnd.evolve.population_check import EvolutionPopulationError
     from gnd.safefs import InstallPathError
 
     if isinstance(error, _EvolutionCLIError):
@@ -469,6 +474,10 @@ def _evolve_error_exit(error: Exception) -> int:
     # policy (MG-D12).
     if isinstance(error, EvolutionPolicyRefusedError):
         return 3
+    # By type: the population check's refusal carries its own band and a
+    # fixed, value-free message (UG2, UG-R6).
+    if isinstance(error, EvolutionPopulationError):
+        return error.exit_code
     # Before the generic arm, and by TYPE for the same reason: a pending state
     # this tool can read but cannot finish is a collision with existing
     # evidence, not a malformed input (D-P3.5).
@@ -484,11 +493,26 @@ def _evolve_error_exit(error: Exception) -> int:
         return EXIT_IO
     return EXIT_INTERNAL
 
-def _evolve_policy_arguments(policy: str | None, populated: list[str] | None) -> None:
-    """``--populated`` is meaningful only under a policy; refuse it alone (3)."""
+def _evolve_policy_arguments(
+    policy: str | None, populated: list[str] | None, check_population: str | None = None
+) -> None:
+    """``--populated`` and ``--check-population`` mean something only under a policy (3)."""
 
     if populated and policy is None:
         raise _EvolutionCLIError(3, "--populated requires --policy additive")
+    if check_population is not None and policy is None:
+        raise _EvolutionCLIError(3, "--check-population requires --policy additive")
+
+def _evolve_population_relative(workspace: Path, value: str | None) -> str | None:
+    """The workspace-relative population path, or None without the option (UG2)."""
+
+    if value is None:
+        return None
+    # Spelling and containment only: the read (with its missing / not-regular
+    # bands) happens in the service, after every proposal refusal, so a bad
+    # proposal still reports its own error first (UG2 spec §6.4, T14).
+    _file, relative = _evolve_workspace_path(workspace, value, label="population", required=False)
+    return relative
 
 
 def _evolve_fail(error: Exception, *, stage: str) -> int:
@@ -538,6 +562,7 @@ def _cmd_evolve_preview(
     policy: str | None = None,
     populated: list[str] | None = None,
     shape_report: bool = False,
+    check_population: str | None = None,
 ) -> int:
     """Validate one proposal through ``EvolutionService.preview`` and publish its claim.
 
@@ -548,11 +573,12 @@ def _cmd_evolve_preview(
     from gnd.evolve import EvolutionService, read_evolution_proposal
 
     try:
-        _evolve_policy_arguments(policy, populated)
+        _evolve_policy_arguments(policy, populated, check_population)
         workspace = _evolve_workspace(workspace_path)
         model, _model_relative = _evolve_workspace_path(
             workspace, model_path, label="model", required=True
         )
+        population_relative = _evolve_population_relative(workspace, check_population)
         proposal_file, proposal_relative = _evolve_workspace_path(
             workspace, proposal_path, label="proposal", required=True
         )
@@ -572,7 +598,11 @@ def _cmd_evolve_preview(
             allowed_project_root=workspace,
         )
         preview = service.preview(
-            proposal, policy=policy, populated=populated or (), shape_report=shape_report
+            proposal,
+            policy=policy,
+            populated=populated or (),
+            shape_report=shape_report,
+            check_population=population_relative,
         )
         rendered = _evolve_json_bytes(preview)
         _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
@@ -598,6 +628,7 @@ def _cmd_evolve_apply(
     *,
     policy: str | None = None,
     populated: list[str] | None = None,
+    check_population: str | None = None,
 ) -> int:
     """Revalidate an exact preview, publish the model CAS, and complete it.
 
@@ -609,7 +640,7 @@ def _cmd_evolve_apply(
     from gnd.evolve import EvolutionPreview, EvolutionService, read_evolution_proposal
 
     try:
-        _evolve_policy_arguments(policy, populated)
+        _evolve_policy_arguments(policy, populated, check_population)
         populated_args = tuple(sorted(set(populated or ())))
         workspace = _evolve_workspace(workspace_path)
         model, model_relative = _evolve_workspace_path(
@@ -655,6 +686,14 @@ def _cmd_evolve_apply(
                 "--populated differs from the reviewed preview: "
                 f"preview {list(reviewed.populated_args or ())}, apply {list(populated_args)}",
             )
+        if (reviewed.population_check is None) != (check_population is None):
+            raise _EvolutionCLIError(
+                3,
+                "--check-population differs from the reviewed preview: "
+                f"preview {'with' if reviewed.population_check is not None else 'without'}, "
+                f"apply {'with' if check_population is not None else 'without'}",
+            )
+        population_relative = _evolve_population_relative(workspace, check_population)
         service = EvolutionService(
             model_path=model,
             evidence_root=records,
@@ -700,14 +739,18 @@ def _cmd_evolve_apply(
                     EXIT_COLLISION,
                     "staged accepted preview differs from the reviewed preview identity",
                 )
-            pending = service.apply(staged)
+            pending = service.apply(staged, check_population=population_relative)
             return _evolve_finish_apply(service, pending, output_format)
         # The shape report is advice with no apply option (MG3 D6): the fresh
         # preview carries it exactly when the reviewed one does, so the
         # equality below still binds every reviewed byte.
         shape_report = reviewed.shape_matches is not None
         fresh = service.preview(
-            proposal, policy=policy, populated=populated_args, shape_report=shape_report
+            proposal,
+            policy=policy,
+            populated=populated_args,
+            shape_report=shape_report,
+            check_population=population_relative,
         )
         if reviewed != fresh:
             raise _EvolutionCLIError(
@@ -732,8 +775,9 @@ def _cmd_evolve_apply(
                 policy=policy,
                 populated=populated_args,
                 shape_report=shape_report,
+                check_population=population_relative,
             )
-        pending = service.apply(accepted)
+        pending = service.apply(accepted, check_population=population_relative)
         return _evolve_finish_apply(service, pending, output_format)
     except Exception as error:  # noqa: BLE001 -- preserve predecessor refusal contract
         return _evolve_fail(error, stage="apply")

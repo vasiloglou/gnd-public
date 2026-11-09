@@ -4,7 +4,7 @@ station: milestone-close
 skill: "n/a -- repository development under process-milestone auto=false, not a gnd-solve station over a domain model"
 scope: milestone-close
 date: 2026-11-09
-status: "DRAFT -- not ruled. Close review and closing full lane done; waiting on the owner's rulings listed at the end"
+status: "RULED -- the owner approved the close as proposed (\"Accept as proposed\", 2026-11-09)"
 source_base: 12daa5b7
 gates:
   - command: "~/rr-close/close-shards.sh closetree 25e432e43119a771a7e68d1537baa3e9c71e311b on beast-3: the full default lane, six round-robin shards"
@@ -64,17 +64,20 @@ gates:
   - command: "ruling: owner, close review instrument"
     exit: "n/a -- ruling"
     output: "\"One Codex reviewer\" (2026-11-09, relayed)"
-  - command: "ruling: owner <approved | amended | refused> .gnd-planning/milestones/rule-check-release/005-milestone-close.md"
-    exit: "n/a -- ruling, PENDING"
-    output: "not given"
+  - command: "ruling: owner approved .gnd-planning/milestones/rule-check-release/005-milestone-close.md sha256 c850acde8c72268b9f5d6546b6912e38f364f408498c1d95bd9260053f400747 (the draft at aee3da8b, PR 144)"
+    exit: "n/a -- ruling"
+    output: "\"Accept as proposed\" (owner, 2026-11-09, in this session), answering \"How do you rule on the remaining rule-check-release close decisions?\""
+  - command: "ruling: owner approved .gnd-planning/milestones/rule-check-release/notes/rule-check-release-plan.md §12 sha256 dcdab3174655038385b44fc730c663ee96f7608a961386c9780d7e8a18b56283 (at aee3da8b)"
+    exit: "n/a -- ruling"
+    output: "the same answer, \"Accept as proposed\" (owner, 2026-11-09)"
 slow_cadence:
   command: 'uv run pytest -q -m "evidence or census"'
   trigger: "explicit owner request"
   reason: "excluded for this milestone by the owner (RR1 spec D6, 2026-11-07); not selected at this close"
 evidence:
   - path: .gnd-planning/milestones/rule-check-release/notes/rule-check-release-plan.md
-    sha256: dcdab3174655038385b44fc730c663ee96f7608a961386c9780d7e8a18b56283
-    note: "r2 plus the draft §12 close amendment (narrowed after review L3); the approved r2 bytes are 97a94db5…aad at c09dcbcc"
+    sha256: c0412370c9bd0d1426af7523b82d38676d7e592fce8d53e8a518cd457213ea1b
+    note: "r2 plus the §12 close amendment (narrowed after review L3; approved by the owner with the close, 2026-11-09); the approved r2 bytes are 97a94db5…aad at c09dcbcc"
   - path: .gnd-planning/milestones/rule-check-release/001-plan.md
     sha256: 355d004fb12f5fe1550bd7becef8fc7489cee420b61f46d032c3ddeb16a4a8b7
   - path: .gnd-planning/milestones/rule-check-release/002-phase-RR1.md
@@ -105,11 +108,13 @@ evidence:
     sha256: d84e42a258c95dfee0c994856f68d183fd2f2034241e3995604354d47b6e86d1
 ---
 
-# Claim (draft)
+# Claim
 
-**This record is a draft and is not ruled.** The close review (one Codex
-reviewer, the owner's choice) and the closing full lane are done. The close is
-final only after the owner's rulings listed at the end.
+**The owner approved this close as proposed** ("Accept as proposed",
+2026-11-09, given in this session, over the draft at `aee3da8b`, sha256
+`c850acde…0747`). The close review (one Codex reviewer, the owner's choice)
+and the closing full lane are done. The rulings are recorded at the end;
+merging this record is the owner's.
 
 The closing full lane at main `25e432e4` exited 1 on the two known
 `tests/test_public_optional.py` errors only: 18251 passed, 0 failed. That
@@ -167,8 +172,8 @@ No announcement was made; that is a separate decision.
 | 3 | Candidate installs outside the checkout and carries every issue-118 item; 0.1.0 lacks them | RR2 (T1-T3, 0.1.0 controls) | yes |
 | 4 | Release acceptance passes over the retained files, output recorded | RR2 V4: 14 passed | yes; also 14 passed over the published files (relayed) |
 | 5 | Dossier written; post-publication patch prepared and not applied | RR3 | yes at RR3; the patches are now on main by PR 140 (`c239ad8e`) under RL-D10 |
-| 6 | No workflow, environment, setting or PyPI configuration changed to enable publication; nothing uploaded | the read-only gates: `.github` diff empty since 12daa5b7; environments `["github-pages"]`; 0 `release.yml` runs | **proposed reading, pending the owner's §12 and close rulings**: no phase uploaded anything; the observed `.github` diff, environments and workflow runs are unchanged; repository settings and the PyPI publisher configuration are not audited; the upload, tag and release are the owner's under RL-D10 |
-| 7 | Spec, verbatim gate and one reviewer per phase; every open question disposed; issue 118 left open | the three records; the close review; the sweep below | **pending**: the per-phase part holds and the close review ran. Two residuals, the fixtures-refactor target and three dossier owner checks are still the owner's (sweep). Issue 118 is closed as completed, which is the proposed §12 reading, pending ruling |
+| 6 | No workflow, environment, setting or PyPI configuration changed to enable publication; nothing uploaded | the read-only gates: `.github` diff empty since 12daa5b7; environments `["github-pages"]`; 0 `release.yml` runs | **holds as amended by §12 (owner, 2026-11-09)**: no phase uploaded anything; the observed `.github` diff, environments and workflow runs are unchanged; repository settings and the PyPI publisher configuration are not audited; the upload, tag and release are the owner's under RL-D10 |
+| 7 | Spec, verbatim gate and one reviewer per phase; every open question disposed; issue 118 left open | the three records; the close review; the sweep below | **holds as amended by §12 (owner, 2026-11-09)**: the per-phase part holds, the close review ran, and every sweep row is closed, carried to a named target, retired or accepted by the owner. Issue 118 is closed as completed |
 
 ## Gate output (verbatim)
 
@@ -211,7 +216,7 @@ draft at `71df1b99`, with the plan, the README, the four earlier records and
 their evidence. Disposition `revise`, 8 findings, retained verbatim in
 [close-codex-review.md](notes/close-codex-review.md). Each finding was
 reproduced against the cited lines before it was applied. The corrected record
-was not re-reviewed.
+was not re-reviewed. The "Applied" column shows the draft as it went to the owner; the owner's later rulings are under "Owner rulings at the close".
 
 | Finding | Reproduced | Applied |
 |---|---|---|
@@ -232,40 +237,41 @@ was not re-reviewed.
 | Should the GitHub release attach the wheel and sdist? | plan §10, RR3 | closed: the owner's release attaches the wheel, the sdist and `SHA256SUMS.txt` (RL-D10) |
 | Publication route | plan RL-D5, RR3 | closed: route (a), "Upload saved candidate" |
 | Tag, release, announcements | RR3 | closed: tag and release made by the owner (RL-D10). Announcements retired as outside this milestone (plan §7); none made |
-| Dossier 1: does the account that uploaded 0.1.0 own `get-nick-done`? | dossier §D | **carried to the owner**: account-side, not readable by any agent. The owner's own token upload of 0.2.0 was accepted, which shows upload rights, not ownership |
-| Dossier 1.1: repository review (visibility, content, history) | dossier §D | partly observed: visibility `public`, default branch `main`. A content and history review is not recorded; **carried to the owner** |
-| Dossier 1.2: only the owner can publish `get-nick-done` | dossier §D | **carried to the owner**: not auditable here (dossier); no `pypi` environment or `release.yml` run exists (gates) |
-| Dossier 1.3: the 0.2.0 notes record every breaking change with its migration | dossier §D | **carried to the owner**: the dossier gave starting points, not a confirmation. No record confirms completeness. A missed note can still be added to the notes on `main` |
+| Dossier 1: does the account that uploaded 0.1.0 own `get-nick-done`? | dossier §D | **accepted residual (owner, 2026-11-09)**: account-side, not readable by any agent. The owner's own token upload of 0.2.0 was accepted, which shows upload rights, not ownership |
+| Dossier 1.1: repository review (visibility, content, history) | dossier §D | partly observed: visibility `public`, default branch `main`. A content and history review is not recorded; **accepted residual (owner, 2026-11-09)** |
+| Dossier 1.2: only the owner can publish `get-nick-done` | dossier §D | **accepted residual (owner, 2026-11-09)**: not auditable here (dossier); no `pypi` environment or `release.yml` run exists (gates) |
+| Dossier 1.3: the 0.2.0 notes record every breaking change with its migration | dossier §D | **accepted residual (owner, 2026-11-09)**: the dossier gave starting points, not a confirmation. No record confirms completeness. A missed note can still be added to the notes on `main` |
 | Dossier 1.4: never overwrite released files | dossier §D | closed as observed: the simple index still lists both 0.1.0 files (2026-11-09). They were not re-hashed |
 | Dossier 2: version availability before the upload | dossier §D | closed: PyPI accepted the 0.2.0 upload |
 | RR2 spec gate and FU3 on main (RL-D2) | 002 | closed: [003](003-phase-RR2.md) |
 | Reconcile the notes before the build (RR2-C0) | 002 | closed: 003 V1, 0 `Unreleased` headings at `7c0f4d0e` |
 | Publication-day patch (pins, `RELEASED`, compatibility) | 002, 003 | closed: on main by PR 140 (`c239ad8e`) |
 | RR3 spec, dossier and patches | 003 | closed: [004](004-phase-RR3.md) |
-| Deferred refactor: record version-bearing fixtures independently of the version (31 files, 7 gzip containers) | 002, carried by 003 and 004 | **carried; target pending the owner**: proposed, the milestone that prepares the release after 0.2.0, or an issue |
+| Deferred refactor: record version-bearing fixtures independently of the version (31 files, 7 gzip containers) | 002, carried by 003 and 004 | **carried (owner, 2026-11-09)**: target, the milestone that prepares the release after 0.2.0 (the first form of the proposal) |
 | Two load-sensitive timing tests | 002, carried by 003 and 004 | closed: FU4 (PR 129, issue 117 closed). Neither failed in the closing full lane |
-| The 0.1.0 control downloads from PyPI on every prepare run | 003, carried by 004 | **accepted residual, proposed, pending the owner**: 0.1.0 is not yanked; if it were removed, the test fails with its hash or lookup message, which is the intended signal |
+| The 0.1.0 control downloads from PyPI on every prepare run | 003, carried by 004 | **accepted residual (owner, 2026-11-09)**: 0.1.0 is not yanked; if it were removed, the test fails with its hash or lookup message, which is the intended signal |
 | Three pages say the repository is private | 004 | closed: on main by PR 140 (`c239ad8e`); `README.md` and the two docs are bound above |
 | Dossier 3(b): "none changed since `7c0f4d0e`", observed at `25f58b5e` | close input | retired: the observation is stale (18 package-input files differ at `db762f29`), but route (a) published the retained files, so 3(b) was never used. Recorded here; the RR3 evidence is not edited |
 | ROF changes on main after the candidate have no `Unreleased:` entry | close input | closed: on main by PR 140 (`c239ad8e`), "Unreleased: model identity and plain text for projected reports"; `docs/release-notes.md` is bound above |
 | Patches checked only against the RR3 tree | 004 | closed: they applied cleanly on `6058c674` and rebased cleanly onto `db762f29`; the stale-text check gives exit 0 on this branch |
 | Local CI's scaffold failure | RL-D10 HOLD | closed: PR 137 |
-| Ubuntu profile not observed (RL-D6; local CI) | 003, local CI | **accepted residual, proposed, pending the owner**: `docs/support.md` names only observed profiles; the prepare job (`publish=false`) on GitHub would add Ubuntu, on the owner's request |
-| Issue 118 | plan predicate 7 | closed as completed (RL-D10); the plan reading is §12, pending ruling |
+| Ubuntu profile not observed (RL-D6; local CI) | 003, local CI | **accepted residual (owner, 2026-11-09)**: `docs/support.md` names only observed profiles; the prepare job (`publish=false`) on GitHub would add Ubuntu, on the owner's request |
+| Issue 118 | plan predicate 7 | closed as completed (RL-D10); the plan reading is §12, approved by the owner |
 | Close review instrument | plan §8, RL-D0 | closed: "One Codex reviewer" (owner, 2026-11-09) |
 
 ## Plan repair
 
-Plan §12 (draft, appended 2026-11-09, narrowed after review L3) reads
-predicates 6 and 7, and §4's close row, against RL-D10. The r2 wording is
-kept. It applies only under the close ruling. The amended plan's sha256 is
-bound above.
+Plan §12 (appended 2026-11-09, narrowed after review L3) reads predicates 6
+and 7, and §4's close row, against RL-D10. The r2 wording is kept. The owner
+approved it with the close ("Accept as proposed", 2026-11-09). Its heading now
+records that ruling, and the amended plan's sha256 is bound above.
 
 ## Refactoring review
 
 - No phase executed a refactor.
 - One deferred refactor was raised (version-independent fixtures, RR1). It
-  has a sweep row above; its target is pending the owner.
+  has a sweep row above, carried to the milestone that prepares the release
+  after 0.2.0 (owner, 2026-11-09).
 - The component index check over `12daa5b7..HEAD` lists 20 entries to
   reread. None comes from this milestone: its merges (PRs 125, 130, 131, 133,
   140 and 143) change nothing under `src/`.
@@ -294,14 +300,21 @@ bound above.
 
 ## Owner rulings at the close
 
-Given:
-- Close review instrument: "One Codex reviewer" (2026-11-09, relayed).
-
-Still needed:
-- the two proposed residuals: the 0.1.0 control's PyPI download, and no
-  Ubuntu profile;
-- the target of the deferred fixtures refactor;
-- dossier owner checks 1, 1.1 (content and history) and 1.2, and 1.3
-  (breaking changes and migrations): confirm each, or accept it as a residual;
-- plan §12;
-- the close ruling itself.
+- **Close review instrument:** "One Codex reviewer" (2026-11-09, relayed by
+  the session that started this one).
+- **Every remaining decision:** "Accept as proposed" (owner, 2026-11-09,
+  given in this session). It answered "How do you rule on the remaining
+  rule-check-release close decisions?", asked over PR 144 at `aee3da8b`. It
+  rules:
+  - the two residuals as accepted: the 0.1.0 control's PyPI download, and no
+    Ubuntu profile for 0.2.0;
+  - the deferred fixtures refactor as carried to the milestone that prepares
+    the release after 0.2.0. This is the first form of the proposal; the
+    other form was an issue;
+  - the dossier's owner checks 1, 1.1 (content and history), 1.2 and 1.3 as
+    accepted residuals. The draft offered "confirm, or accept as a residual",
+    and no confirmation was given;
+  - plan §12 as approved;
+  - this close as approved.
+- **Not ruled here:** merging this record, and any announcement. Both remain
+  the owner's.

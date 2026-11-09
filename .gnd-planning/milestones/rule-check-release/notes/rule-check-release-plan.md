@@ -456,7 +456,7 @@ P3 (13 `docs/` files name 0.1.0, plus `docs/index.md:144`,
 The reviewer's "checked and found true" list is retained with the record. r2's
 repairs have no review opinion; one reviewer is one reviewer.
 
-## 12. Close amendment (draft, 2026-11-09; applies only under the close ruling)
+## 12. Close amendment (2026-11-09; approved by the owner with the close: "Accept as proposed", 2026-11-09)
 
 Raised by the close record [`005-milestone-close.md`](../005-milestone-close.md),
 2026-11-09. r2 was written for a milestone that ends before publication. The

@@ -227,7 +227,7 @@ def _cmd_transition(
             result.report,
             list(result.warnings),
             computed_post=(
-                result.payload["transition"]["computed_post"] if post_path is None else None
+                mechanical_payload["transition"]["computed_post"] if post_path is None else None
             ),
         )
         return result.exit_code

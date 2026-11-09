@@ -5,18 +5,33 @@ split out by owner ruling (FD1, FD2): 111 (the model digest is a Python
 `repr`, not reproducible by a caller) and 112 (text output prints projected
 JSON for redaction and temporal models).
 
-**Status: plan r3 approved (2026-11-07, [plan-gate record](001-plan.md)). ROF1
+History (status as of 2026-11-08; superseded by the 2026-11-09 status below): **plan r3 approved (2026-11-07, [plan-gate record](001-plan.md)). ROF1
 ([record](002-phase-ROF1.md)) and ROF2 ([record](003-phase-ROF2.md)) merged to
 main (PR 124, PR 127). ROF3 ([record](004-phase-ROF3.md)) merged (PR 132).
 ROF4 implemented ([record](005-phase-ROF4.md)), on branch
 `claude/rof4-accept-identities`, awaiting its PR and merge.**
 ROF5 onward are outlines. `auto=false`.
 
+**Status, 2026-11-09: closed.** The owner gave the close ruling ("Approve
+and merge") over the [close record](006-milestone-close.md) and the seven
+plan [section 11](notes/report-output-fidelity-plan.md) amendments, which are
+approved and in effect. ROF1-ROF4 are merged (PRs 124, 127, 132, 138). ROF5
+is withdrawn by the owner's ruling R1 (no emission in this milestone).
+Issues 111 and 112 are closed. The close review ran (one Codex reviewer,
+`block`, 10 findings, all fixed), and the full-suite close runs are in
+(every failure passed on rerun). The close lands with the owner's merge of
+PR 145.
+
+History (status as of 2026-11-09, before the close ruling): the close was
+drafted and reviewed, the full-suite runs were in, and it awaited the
+owner's close ruling.
+
 - [Plan-gate record](001-plan.md)
 - [ROF1 record](002-phase-ROF1.md)
 - [ROF2 record](003-phase-ROF2.md)
 - [ROF3 record](004-phase-ROF3.md)
 - [ROF4 record](005-phase-ROF4.md)
+- [Milestone close record (close ruling given 2026-11-09)](006-milestone-close.md)
 - [Plan (r3, approved)](notes/report-output-fidelity-plan.md)
 - [ROF1 spec (approved, implemented)](notes/phase-ROF1-spec.md)
 - [ROF2 spec (approved, implemented)](notes/phase-ROF2-spec.md)

@@ -1,0 +1,21 @@
+You are an independent reviewer. Repository: GND (this working directory, read-only). Review the DRAFT milestone close of the report-output-fidelity milestone at commit d38670e9 (branch claude/report-output-fidelity-close, PR 145): `git diff 8eb4fe60 d38670e9`. It adds .gnd-planning/milestones/report-output-fidelity/006-milestone-close.md, plan section 11 in .gnd-planning/milestones/report-output-fidelity/notes/report-output-fidelity-plan.md, a README status paragraph and evidence/close/issue-states.txt (GitHub issue and PR states, retained because you have no GitHub access). The full-suite gates are deliberately PENDING (runs in progress); do not report their absence as a finding, but do check that the record does not claim anything that depends on them.
+
+Read: the whole plan (sections 0-11), the plan-gate record 001-plan.md, every phase record 002-005, the phase specs under notes/ where a record cites them, the milestone README, the contracts .codex/skills/process-milestone/SKILL.md ("Close the named milestone") and .codex/skills/process-phase/references/milestone-record-format.md ("The milestone-close record"), .codex/skills/process-phase/references/project.md, and AGENTS.md. A sibling close for format: .gnd-planning/milestones/rule-check-followups/007-milestone-close.md.
+
+REFUTE the close; do not summarize. Try to find where each claim is false:
+1. The open-questions sweep: every open question, deferred refactor, boundary and refused or declined review finding raised in 001-005 (and their specs' implementation-findings sections) has a row, dispositioned closed (with the record that closed it), carried (with a named owner/target) or retired/accepted (with a reason). Find a missed item or a wrong disposition.
+2. The completion predicates table: each "yes" is supported by the cited phase evidence; each amendment is stated as an amendment. Find a predicate that does not hold as claimed, or a qualification the record omits.
+3. Plan section 11: each row keeps the r3 wording, is marked proposed (effective only with the owner's close ruling), and matches the rulings recorded in the close record. Find any wording that overstates the ruling or departs from it.
+4. Every factual statement about code on main 8eb4fe60 (e.g. output.py line numbers for the historical bindings, the identity helper, D7 documentation in docs/agents/plans.md, ROF2's refactors closing ROF1's not-done items) is true of the code. Every evidence path and sha256 in the front matter matches the bytes at d38670e9 (`shasum -a 256`).
+5. The phases table (focused gates, review dispositions, PR numbers, merge commits) matches the phase records and evidence/close/issue-states.txt.
+6. Rulings: the record distinguishes owner rulings from tests and review, says that R1 and ROF4-O1 were relayed by another session, and does not invent the owner's words.
+7. The boundary section and "What the close still needs" are complete and not misleading.
+
+Output format, one block per finding:
+ID: K<n>
+SEVERITY: blocking | hardening | completeness
+LOCATION: path:line
+QUOTE: the text
+PROBLEM: what is false or missing, with evidence
+FIX: the smallest repair
+Start with a line "DISPOSITION: approve | revise | block". Then findings. End with "CONFIRMED:" listing claims you checked and found true. You cannot run the test suite; say which conclusions are by reading only.

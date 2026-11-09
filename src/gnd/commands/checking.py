@@ -53,31 +53,51 @@ def _read_validate_documents(paths: list[str]) -> tuple[dict[str, bytes], int | 
     return documents, None, None
 
 
-def _cmd_validate_documents(model_path: str, output_format: str, result: Any, paths: list[str]) -> int:
-    """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue)."""
-    from gnd.model import unattended_span_issues
+def _cmd_validate_documents(
+    model_path: str, output_format: str, result: Any, paths: list[str], *, require: bool = False,
+    unredacted: bool = False,
+) -> tuple[int, Any]:
+    """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue).
+
+    UG3: also count the spans that were not re-hashed, as one
+    ``unattended:spans-unchecked`` warning, or an error under ``require``.
+    Returns ``(exit, result)``. A document that cannot be read is reported here
+    and returns its exit with ``None``; otherwise the result is rebuilt through
+    the validate pipeline with the walk's issues and warnings, for the caller
+    to print (exit 0 with nothing to add returns the original result)."""
+    from gnd.model import unattended_span_coverage, unattended_span_issues
 
     documents, exit_code, message = _read_validate_documents(paths)
-    issues = []
-    if exit_code is None:
-        issues = unattended_span_issues(result.model.model_dump(exclude={"warnings"}), documents)
-        if not issues:
-            return result.exit_code
-        exit_code = 3
-    # The model's own warnings ride along on the refusal (review R-F3).
-    warnings = list(result.warnings)
-    if output_format == "json":
-        report_module.emit(report_module.build_validate_payload(
-            exit_code, model_path, schema_version=result.payload["schema_version"],
-            issues=issues or None, warnings=warnings, error=None if issues else RuntimeError(message)))
-        return exit_code
-    for warning in warnings:
-        print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
-    if issues:
-        _print_issues(issues)
-    else:
+    if exit_code is not None:
+        # The model's own warnings ride along on the refusal (review R-F3).
+        if output_format == "json":
+            report_module.emit(report_module.build_validate_payload(
+                exit_code, model_path, schema_version=result.payload["schema_version"],
+                warnings=list(result.warnings), error=RuntimeError(message)))
+            return exit_code, None
+        for warning in result.warnings:
+            print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
         print(f"ERROR: {message}")
-    return exit_code
+        return exit_code, None
+    document = result.model.model_dump(exclude={"warnings"})
+    issues = unattended_span_issues(document, documents)
+    coverage = unattended_span_coverage(document, documents)
+    entry = None if coverage is None else coverage.issue(severity="error" if require else "warning")
+    warnings = list(result.warnings)
+    if entry is not None:
+        (issues if require else warnings).append(entry)
+    if not issues and entry is None:
+        return result.exit_code, result
+    rebuilt = api_module._run_validate_with_documents(
+        model_path, result.model, issues=issues, warnings=warnings, unredacted=unredacted)
+    return rebuilt.exit_code, rebuilt
+
+
+def _is_unattended(model: Any) -> bool:
+    from gnd.model import UNATTENDED_MODE
+
+    source = model.source
+    return isinstance(source, dict) and source.get("mode") == UNATTENDED_MODE
 
 
 def _cmd_validate(
@@ -88,14 +108,20 @@ def _cmd_validate(
     unredacted: bool = False,
     documents: list[str] | None = None,
     identity: bool = False,
+    require_documents: bool = False,
 ) -> int:
     result = api_module._run_validate(model_path, unredacted=unredacted)
     if identity and result.exit_code == 0 and result.model is not None:
         return _print_model_identity(result.model)
-    if documents and result.exit_code == 0 and result.model is not None:
-        refused = _cmd_validate_documents(model_path, output_format, result, documents)
-        if refused != 0:
+    if result.exit_code == 0 and result.model is not None and (
+        documents or (require_documents and _is_unattended(result.model))
+    ):
+        # UG3: the flag alone walks only an unattended model; for any other model it is a no-op.
+        refused, rebuilt = _cmd_validate_documents(
+            model_path, output_format, result, documents or [], require=require_documents, unredacted=unredacted)
+        if rebuilt is None:
             return refused
+        result = rebuilt
     if output_format == "json":
         try:
             report_module.emit(result.payload)
@@ -659,6 +685,15 @@ def _register_validate(subparsers):
             "that is out of range or has a different excerpt digest"
         ),
     )
+    validate_parser.add_argument(
+        "--require-documents",
+        action="store_true",
+        help=(
+            "exit 3 unless every source span of an unattended model was "
+            "re-hashed over a supplied --document; a no-op for a model "
+            "without the unattended mode"
+        ),
+    )
     _add_format_argument(validate_parser)
     _add_unredacted_argument(validate_parser)
 
@@ -1081,6 +1116,10 @@ def handle(args, parsers) -> int:
                 "--identity prints the identity alone; it is not combined with "
                 "--trace, --document or --format json"
             )
+        if args.identity and args.require_documents:
+            parsers["validate_parser"].error(
+                "--identity prints the identity alone; it is not combined with --require-documents"
+            )
         return _cmd_validate(
             args.model,
             args.format,
@@ -1088,6 +1127,7 @@ def handle(args, parsers) -> int:
             unredacted=args.unredacted,
             documents=args.document,
             **({"identity": True} if args.identity else {}),
+            **({"require_documents": True} if args.require_documents else {}),
         )
 
     if args.command == "coverage":

@@ -602,6 +602,41 @@ def _run_validate(
     )
 
 
+def _run_validate_with_documents(
+    model_path: str,
+    model: Model,
+    *,
+    issues: list[ValidationIssue],
+    warnings: list[ValidationIssue],
+    unredacted: bool = False,
+) -> _RunResult:
+    """A loaded, valid model's validate result once the ``--document`` walk ran (MG5, UG3).
+
+    The walk's issues refuse the run (3); its warnings ride along otherwise (0).
+    Built, projected and reference-wrapped exactly as ``_run_validate`` builds
+    its own result, so a redacted or reference-bearing model keeps its report
+    variant (UG3 review finding 1)."""
+    schema_version = report_module.payload_schema_version(model)
+    exit_code = 3 if issues else 0
+
+    def build(code: int, *, error: BaseException | None = None) -> dict[str, Any]:
+        if error is not None:
+            return report_module.build_validate_payload(code, model_path, schema_version=schema_version, error=error)
+        return report_module.build_validate_payload(
+            code, model_path, schema_version=schema_version, issues=issues or None, warnings=warnings
+        )
+
+    raw = _finalize(
+        build(exit_code),
+        exit_code=exit_code,
+        fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
+        model=model,
+        warnings=tuple(warnings),
+        issues=tuple(issues),
+    )
+    return _reference_wrap(_project_result(raw, "validate", unredacted=unredacted))
+
+
 
 
 @_index_scoped

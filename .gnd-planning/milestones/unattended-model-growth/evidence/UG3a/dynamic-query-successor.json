@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/unattended-model-growth/evidence/UG2/dynamic-query-successor.json",
+  "predecessor_sha256": "22e5da6c7e988b0efc8fa4321df194a8d59c1a997e61b88fa166f86191f0035f",
+  "reason": "unattended-model-growth UG3 part A (issue 74, owner-approved spec and corpus 2026-11-09): span counts on gnd validate --document and --require-documents in gnd.commands.checking and gnd.model._unattended. Syntax census only; the exact query policy is unchanged.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/api.py",
+      "_run_validate_with_documents",
+      "list[ValidationIssue]",
+      2
+    ],
+    [
+      "src/gnd/api.py",
+      "build",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_cmd_validate_documents",
+      "tuple[int, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7375,
+  "result_occurrences": 9200
+}

@@ -46,6 +46,14 @@ IDENTITY_SUCCESSOR = json.loads(
 )
 
 
+# unattended-model-growth UG3 adds `validate --require-documents`; its help and exit
+# probe supersede ROF3's for `gnd validate` and differ from them by that one option.
+# The bytes are the same on every supported minor (measured on 3.11, 3.13, 3.14).
+VALIDATE_DOCUMENTS_SUCCESSOR = json.loads(
+    (Path(__file__).parent / 'fixtures/validate-documents-cli/expected.json').read_text()
+)
+
+
 # unattended-model-growth UG2 adds `evolve preview/apply --check-population`; the
 # action is inserted into RF1's tree, and the help and exit probe of both commands
 # are superseded per Python minor (their RF1 goldens are per minor too).
@@ -175,6 +183,9 @@ def test_cli_tree(tree):
     expected["subcommands"]["validate"]["actions"].insert(
         IDENTITY_SUCCESSOR["action_index"], copy.deepcopy(IDENTITY_SUCCESSOR["action"])
     )
+    expected["subcommands"]["validate"]["actions"].insert(
+        VALIDATE_DOCUMENTS_SUCCESSOR["action_index"], copy.deepcopy(VALIDATE_DOCUMENTS_SUCCESSOR["action"])
+    )
     for command in ("preview", "apply"):
         successor = CHECK_POPULATION_SUCCESSOR[command]
         expected["subcommands"]["evolve"]["subcommands"][command]["actions"].insert(
@@ -191,7 +202,7 @@ def test_cli_help(tree, path):
         return
     if path == "gnd validate":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
-                          {"path": path, "help": IDENTITY_SUCCESSOR["help"]})
+                          {"path": path, "help": VALIDATE_DOCUMENTS_SUCCESSOR["help"]})
         return
     if path in CHECK_POPULATION_PATHS:
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -215,7 +226,7 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        successor = ALLOW_VACUOUS_SUCCESSOR if path == "gnd check" else IDENTITY_SUCCESSOR
+        successor = ALLOW_VACUOUS_SUCCESSOR if path == "gnd check" else VALIDATE_DOCUMENTS_SUCCESSOR
         _assert_successor("cli-exit", path, observed, successor["exit_probe"])
         return
     if path in CHECK_POPULATION_PATHS:

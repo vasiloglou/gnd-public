@@ -1,0 +1,325 @@
+{
+  "part_a": {
+    "base": "5c6a0c5f",
+    "rows": [
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "json",
+        "model": "span-element.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-element.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "text",
+        "model": "span-element.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-element.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": true,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 0,
+        "format": "json",
+        "model": "span-element.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-element.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": true,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 0,
+        "format": "text",
+        "model": "span-element.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-element.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 0,
+        "format": "json",
+        "model": "span-element.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-element.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 0,
+        "format": "text",
+        "model": "span-element.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-element.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "json",
+        "model": "span-constraint.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-constraint.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "text",
+        "model": "span-constraint.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-constraint.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": true,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 0,
+        "format": "json",
+        "model": "span-constraint.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-constraint.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": true,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 0,
+        "format": "text",
+        "model": "span-constraint.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-constraint.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 0,
+        "format": "json",
+        "model": "span-constraint.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-constraint.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 0,
+        "format": "text",
+        "model": "span-constraint.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-constraint.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "json",
+        "model": "span-sample.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-sample.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "text",
+        "model": "span-sample.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-sample.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": true,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 0,
+        "format": "json",
+        "model": "span-sample.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-sample.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": true,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 0,
+        "format": "text",
+        "model": "span-sample.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-sample.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 0,
+        "format": "json",
+        "model": "span-sample.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/span-sample.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 0,
+        "format": "text",
+        "model": "span-sample.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/span-sample.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "json",
+        "model": "plain.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"accepted\", \"exit_code\": 0, \"acceptance_ready\": true, \"model\": \"<ws>/models/plain.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [], \"issues_total\": 0, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [],
+        "exit": 0,
+        "format": "text",
+        "model": "plain.orm.yaml",
+        "stderr": "",
+        "stdout": "OK: <ws>/models/plain.orm.yaml is a valid GND ORM model\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 3,
+        "format": "json",
+        "model": "plain.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<ws>/models/plain.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"<ws>/documents/ledger.txt\", \"message\": \"document sha256 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}], \"issues_total\": 1, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt"
+        ],
+        "exit": 3,
+        "format": "text",
+        "model": "plain.orm.yaml",
+        "stderr": "",
+        "stdout": "ERROR at <ws>/documents/ledger.txt: document sha256 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8 is not declared in source.documents [unattended:document-undeclared]\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 3,
+        "format": "json",
+        "model": "plain.orm.yaml",
+        "stderr": "",
+        "stdout": "{\"schema_version\": 3, \"tool\": \"gnd\", \"command\": \"validate\", \"outcome\": \"ill_formed\", \"exit_code\": 3, \"acceptance_ready\": false, \"model\": \"<ws>/models/plain.orm.yaml\", \"population\": null, \"counts\": {\"pass\": 0, \"fail\": 0, \"warning\": 0, \"unchecked\": 0, \"vacuous\": 0}, \"verdicts\": [], \"coverage\": {}, \"extraction\": {}, \"issues\": [{\"path\": \"<ws>/documents/ledger.txt\", \"message\": \"document sha256 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}, {\"path\": \"<ws>/documents/annex.txt\", \"message\": \"document sha256 69897fa97fa34393398757221b81b99c4fad230ffc46c28cd1dd8d088061d5e4 is not declared in source.documents\", \"rule_id\": \"unattended:document-undeclared\", \"severity\": \"error\"}], \"issues_total\": 2, \"issues_truncated\": false, \"warnings\": [], \"error\": null, \"transition\": null}\n"
+      },
+      {
+        "carve_out": false,
+        "documents": [
+          "ledger.txt",
+          "annex.txt"
+        ],
+        "exit": 3,
+        "format": "text",
+        "model": "plain.orm.yaml",
+        "stderr": "",
+        "stdout": "ERROR at <ws>/documents/ledger.txt: document sha256 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8 is not declared in source.documents [unattended:document-undeclared]\nERROR at <ws>/documents/annex.txt: document sha256 69897fa97fa34393398757221b81b99c4fad230ffc46c28cd1dd8d088061d5e4 is not declared in source.documents [unattended:document-undeclared]\n"
+      }
+    ]
+  },
+  "part_b": {
+    "base": "5c6a0c5f",
+    "rows": [
+      {
+        "exit": 0,
+        "flags": [],
+        "preview_sha256": "d50684a18998ce1d42f34fff98b8548c401f58df81512ffc023327b56428de60",
+        "proposal": "add-object-type",
+        "proposal_file_sha256": "8134429becdd9340c58be1cf4cb9900befd3f4c4ea80edc758fe77271c93d2d2",
+        "proposal_sha256": "25ab4ca18c09feddcb2a263223750a4925c1b27c63b5afa008129bd59b1cf17a"
+      },
+      {
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_sha256": "56cd34d5f6476d76e27187b887bf9a602021cab68dc88ea8ba3e4a20ac928076",
+        "proposal": "add-object-type",
+        "proposal_file_sha256": "8134429becdd9340c58be1cf4cb9900befd3f4c4ea80edc758fe77271c93d2d2",
+        "proposal_sha256": "25ab4ca18c09feddcb2a263223750a4925c1b27c63b5afa008129bd59b1cf17a"
+      },
+      {
+        "exit": 3,
+        "flags": [],
+        "preview_sha256": null,
+        "proposal": "add-citing-undeclared",
+        "proposal_file_sha256": "fd34ea1c2951c498cee1be31daf224e29b98774324b0dd9f4dab881776b55f9f",
+        "proposal_sha256": "ab23471eacc0774b89c22ecafab984e34b3811d84931c91dfa9da85a88c97098"
+      },
+      {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_sha256": null,
+        "proposal": "add-citing-undeclared",
+        "proposal_file_sha256": "fd34ea1c2951c498cee1be31daf224e29b98774324b0dd9f4dab881776b55f9f",
+        "proposal_sha256": "ab23471eacc0774b89c22ecafab984e34b3811d84931c91dfa9da85a88c97098"
+      },
+      {
+        "exit": 0,
+        "flags": [],
+        "preview_sha256": "92e169c33bf2e4fe408a24954dfabfef3dbd594419d229cabbf085f73c9fd08f",
+        "proposal": "delete-fact-type",
+        "proposal_file_sha256": "912e384d80752b88e9be11bb0dee9c50e2028bdd8098f56d980e86559d20dab6",
+        "proposal_sha256": "0255e246cd9bd5480582bf59c7bc5cc1ccef76f8ae8b808cf9a957f2e48638d5"
+      },
+      {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_sha256": "e23d9519a88283129ebde16e824cfda8b481558dcf627e9fa0c5f65be4258fd3",
+        "proposal": "delete-fact-type",
+        "proposal_file_sha256": "912e384d80752b88e9be11bb0dee9c50e2028bdd8098f56d980e86559d20dab6",
+        "proposal_sha256": "0255e246cd9bd5480582bf59c7bc5cc1ccef76f8ae8b808cf9a957f2e48638d5"
+      }
+    ]
+  }
+}

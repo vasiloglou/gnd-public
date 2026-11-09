@@ -579,8 +579,8 @@ def test_t12_declaring_a_document_inside_a_round_is_refused_but_before_it_is_adm
     paths = _round_paths(ws, "t12a")
     paths["proposal"].write_text(json.dumps(declared.model_dump(mode="json"), indent=2, sort_keys=True) + "\n",
                                  encoding="utf-8")
-    # (a) Pinned gap, not a wish: no operation locator reaches `source`, so the replay equality refuses it.
-    # UG3 (i) (UG-D9 (b)) will change this message and must edit this assertion knowingly.
+    # (a) A declaration with no operation is still refused by replay equality. UG3 (UG-D9 (b)) added
+    # the source-document operation that declares it; without that operation nothing reaches `source`.
     _document_after, result = _preview(paths, "--policy", "additive", expect=3)
     assert b"declared operations do not equal the canonical candidate model" in result.stderr
     assert ws["model"].read_text(encoding="utf-8") == text

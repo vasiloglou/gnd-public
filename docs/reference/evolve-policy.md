@@ -64,6 +64,15 @@ The admitted constraint stays advisory: the guarantee then holds relative to
 the population you supplied. Several population files are composed into one
 with `gnd compose` first.
 
+## Source documents
+
+A growth round of an unattended model can declare the document its new spans
+cite with a `source-document` operation in a proposal of `schema_version` 3.
+The policy admits an `add`; a `modify` (a changed label) is refused as
+`source_document.modify` and a `delete` as `source_document.delete`. The
+operation's rules are in the evolution contract (sections "Stable locators"
+and "EvolutionOperation").
+
 ## Subtypes
 
 The policy admits a new object type that declares `subtype_of` in the same

@@ -683,8 +683,25 @@ document: a document whose SHA-256 is not declared (`unattended:document-undecla
 `--document` is undeclared. A document that is not strict UTF-8 (`unattended:document-unreadable`) or
 exceeds 10 MiB exits 3; a missing path exits 66 and an unreadable one 74. Documents are read only
 after the model validates, so an invalid model reports its own issues first. Spans over a declared
-document that was not supplied are not re-hashed. Messages carry paths, digests and offsets, never
-document text.
+document that was not supplied are not re-hashed, and are counted. Messages carry paths, digests and
+offsets, never document text.
+
+Each span the walk visits counts as re-hashed or unchecked:
+
+| Span | Counted as |
+|---|---|
+| its document was supplied and decoded, and its shape is valid (it then matches, mismatches or runs out of range) | re-hashed |
+| its document is declared but was not supplied | unchecked |
+| its document was supplied but is not strict UTF-8 (the run already exits 3) | unchecked |
+| it is not a mapping, is malformed, or names an undeclared document (U7 refuses the model first) | unchecked |
+
+When some span is unchecked, the run carries one entry, path `$.source.documents`, rule
+`unattended:spans-unchecked`, message `N of M source spans were not re-hashed; supply every declared
+document with --document`. It is a warning: the exit stays 0, or stays 3 when another issue is
+present. `--require-documents` makes the same entry an error and the run exits 3; the entry is listed
+after the walk's other issues. With the flag and no `--document`, every span is unchecked. Without
+the flag and without `--document`, nothing is counted and the output is unchanged. The flag is a
+no-op for a model without the mode, and is not combined with `--identity` (exit 64).
 
 ## `rejected_proposals` — kept so future runs don't re-propose
 

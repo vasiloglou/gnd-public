@@ -23,6 +23,7 @@ from gnd.model_index import ModelIndex
 
 from .models import (
     EvolutionOperationKind,
+    EvolutionPolicyGapError,
     EvolutionProposal,
     PolicyIssue,
 )
@@ -472,4 +473,14 @@ def additive_policy_issues(
             continue
         if locator_kind == "model-identity":
             refuse(position, operation, "model_identity.modify", "model identity change refused")
+            continue
+        if locator_kind == "source-document":
+            # UG3: a round may declare a new document; changing or removing a
+            # declared one changes what earlier spans were checked against.
+            if kind is not _ADD:
+                refuse(position, operation, f"source_document.{kind.value}",
+                       f"{kind.value} of a declared source document refused")
+            continue
+        # Fail closed: a locator kind with no rule is refused, never admitted.
+        raise EvolutionPolicyGapError(locator_kind)
     return tuple(issues)

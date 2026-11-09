@@ -4,10 +4,10 @@ station: milestone-close
 skill: "n/a -- repository development under process-milestone auto=false, not a gnd-solve station over a domain model"
 scope: milestone-close
 date: 2026-11-09
-status: "DRAFT -- not ruled. Waiting on the close review, the closing full-lane gate, the owner's close ruling, and the merges of PR 133 and PR 140"
+status: "DRAFT -- not ruled. Waiting on the close review, the closing full-lane gate and the owner's close ruling. PR 140 and PR 133 merged 2026-11-09"
 source_base: 12daa5b7
 gate:
-  command: "PENDING: ~/close-shards/close-shards.sh <run> <sha> on beast-3, the full default lane in six shards, at the closing tree (main after PR 133 and PR 140 merge), compared with RR1's main record 1e63aeb5"
+  command: "PENDING: ~/close-shards/close-shards.sh <run> <sha> on beast-3, the full default lane in six shards, at the closing tree (main at or after 1b0155e2, which holds PR 140 and PR 133), compared with RR1's main record 1e63aeb5"
   exit: "not run"
   output: "not run; see 'Exit gates'"
 gates:
@@ -20,6 +20,9 @@ gates:
   - command: "PR 140 at ac34737e: sh stale-text-check.sh token; uv run pytest -q tests/test_release_version.py tests/test_release_docs.py tests/test_marketplace_plugins.py tests/test_release_preparation.py tests/test_development_scaffold.py"
     exit: 0
     output: "no stale release-state text (15 allowlisted hits, route token, build 7c0f4d0e); 99 passed, 2 deselected"
+  - command: "after the merges, main 54554bf0 (relayed, not run by this session): sh stale-text-check.sh token; the release, docs, scaffold, RF1 pin and coverage tests and the merged PRs' own tests"
+    exit: 0
+    output: "stale-text check exit 0; 267 passed"
   - command: "close review"
     exit: "PENDING -- instrument not selected"
     output: "not run"
@@ -52,10 +55,11 @@ evidence:
 
 # Claim (draft)
 
-**This record is a draft and is not ruled.** The close is final only after:
-the close review; the closing full-lane gate; the owner's close ruling; and
-the owner's merges of PR 133 (this record, the route ruling and step E) and
-PR 140 (the post-publication docs).
+**This record is a draft and is not ruled.** The close is final only after
+the close review, the closing full-lane gate and the owner's close ruling.
+The owner merged PR 140 (the post-publication docs) as `c239ad8e` and PR 133
+(this draft, the route ruling and step E) as `8a3ae7aa`, both on 2026-11-09
+("Merge all three", relayed; the third was PR 136, outside this milestone).
 
 All three phases (RR1 to RR3) are on main. Each has an owner-approved spec, a
 record with verbatim focused-gate output, one independent reviewer (Codex) and
@@ -88,7 +92,7 @@ quote below was relayed to this session by the session that started it.
 | 2026-11-08 | HOLD for local CI, then "Yes, resume" | the session that started this one | local CI at 7c0f4d0e (gates above); its one failure was fixed in PR 137 (`c104644d`) |
 | 2026-11-09 | tag `v0.2.0` | the owner (this session's push was refused by a permission check) | `d84ad6d5` → `7c0f4d0e` |
 | 2026-11-09 | GitHub release | the owner ran the command this session prepared (this session's attempt was refused) | [GND v0.2.0](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0), Latest; wheel, sdist and `SHA256SUMS.txt` attached, as for v0.1.0 |
-| 2026-11-09 | docs PR | this session | [PR 140](https://github.com/vasiloglou/gnd-public/pull/140): the three RR3 patches (date 2026-11-08), then the `Unreleased:` section and the "private" fix; open, not merged |
+| 2026-11-09 | docs PR | this session | [PR 140](https://github.com/vasiloglou/gnd-public/pull/140): the three RR3 patches (date 2026-11-08), then the `Unreleased:` section and the "private" fix; merged by the owner as `c239ad8e` (2026-11-09T03:47:18Z) |
 | 2026-11-09 | issue 118 comment and close | the session that started this one posted this session's text | [comment](https://github.com/vasiloglou/gnd-public/issues/118#issuecomment-6731442881); closed as completed 03:21:19Z |
 
 No announcement was made; that is a separate decision.
@@ -101,7 +105,7 @@ No announcement was made; that is a separate decision.
 | 2 | Version-bearing files and moved tests inventoried, classified and handled by a ruled method; opt-in lanes listed as exclusions | RR1, E1, RL-D9 | yes |
 | 3 | Candidate installs outside the checkout and carries every issue-118 item; 0.1.0 lacks them | RR2 (T1-T3, 0.1.0 controls) | yes |
 | 4 | Release acceptance passes over the retained files, output recorded | RR2 V4: 14 passed | yes; also 14 passed over the published files (relayed) |
-| 5 | Dossier written; post-publication patch prepared and not applied | RR3 | yes at RR3; the patches are now applied in PR 140 under RL-D10 (plan §12) |
+| 5 | Dossier written; post-publication patch prepared and not applied | RR3 | yes at RR3; the patches are now applied on main by PR 140 (`c239ad8e`) under RL-D10 (plan §12) |
 | 6 | No workflow, environment, setting or PyPI configuration changed to enable publication; nothing uploaded | the read-only checks above: `.github` diff empty since 12daa5b7; environments `["github-pages"]`; 0 `release.yml` runs | **as amended (§12)**: no phase uploaded or changed anything; the upload, tag and release are the owner's under RL-D10; publisher registration on PyPI is not auditable |
 | 7 | Spec, verbatim gate and one reviewer per phase; every open question disposed; issue 118 left open | the three records; the sweep below | **as amended (§12)**: issue 118 is closed as completed after publication; the rest holds once the close review runs |
 
@@ -118,8 +122,8 @@ No announcement was made; that is a separate decision.
   (`c104644d`), merged into this branch with main. The Ubuntu leg was not
   reproduced; there is no Docker on these machines.
 - **PENDING: the full default lane at the closing tree** (plan §9). Run
-  `close-shards.sh` on beast-3 at main after PR 133 and PR 140 merge, and
-  compare with RR1's main record (`1e63aeb5`: 17830 passed, 2 timing
+  `close-shards.sh` on beast-3 at main (now `1b0155e2` or later, which holds
+  PR 140 and PR 133), and compare with RR1's main record (`1e63aeb5`: 17830 passed, 2 timing
   failures, 2 errors). Until it runs, this close claims no full-suite result
   for the closing tree. The local CI above was at the candidate, not here.
 
@@ -134,20 +138,20 @@ this record has no review opinion.
 
 | Item | Raised | Disposition |
 |---|---|---|
-| Should `docs/support.md` name the candidate's observed profile? | plan §10 | closed: yes, one row (RR3 patch), applied in PR 140 |
+| Should `docs/support.md` name the candidate's observed profile? | plan §10 | closed: yes, one row (RR3 patch), on main by PR 140 (`c239ad8e`) |
 | Should the GitHub release attach the wheel and sdist? | plan §10, RR3 | closed: the owner's release attaches the wheel, the sdist and `SHA256SUMS.txt` (RL-D10) |
 | Publication route | plan RL-D5, RR3 | closed: route (a), "Upload saved candidate" |
 | Tag, release, announcements | RR3 | closed: tag and release made by the owner (RL-D10). Announcements retired as outside this milestone (plan §7); none made |
 | RR2 spec gate and FU3 on main (RL-D2) | 002 | closed: [003](003-phase-RR2.md) |
 | Reconcile the notes before the build (RR2-C0) | 002 | closed: 003 V1, 0 `Unreleased` headings at `7c0f4d0e` |
-| Publication-day patch (pins, `RELEASED`, compatibility) | 002, 003 | closed by PR 140 once it merges (owner) |
+| Publication-day patch (pins, `RELEASED`, compatibility) | 002, 003 | closed: on main by PR 140 (`c239ad8e`) |
 | RR3 spec, dossier and patches | 003 | closed: [004](004-phase-RR3.md) |
 | Deferred refactor: record version-bearing fixtures independently of the version (31 files, 7 gzip containers) | 002, carried by 003 and 004 | **carried**: target is the milestone that prepares the release after 0.2.0. The owner should name it or file an issue (proposed) |
 | Two load-sensitive timing tests | 002, carried by 003 and 004 | closed: FU4 (PR 129, issue 117 closed). No timing failure in the local CI at `7c0f4d0e`, which predates FU4. The closing full lane will show whether they recur |
 | The 0.1.0 control downloads from PyPI on every prepare run | 003, carried by 004 | **accepted residual (proposed)**: 0.1.0 is not yanked; if it were removed, the test fails with its hash or lookup message, which is the intended signal |
-| Three pages say the repository is private | 004 | closed by PR 140 (`ac34737e`) once it merges |
+| Three pages say the repository is private | 004 | closed: on main by PR 140 (`c239ad8e`) |
 | Dossier 3(b): "none changed since `7c0f4d0e`", observed at `25f58b5e` | close input | retired: the observation is stale (18 package-input files differ at `db762f29`), but route (a) published the retained files, so 3(b) was never used. Recorded here; the RR3 evidence is not edited |
-| ROF changes on main after the candidate have no `Unreleased:` entry | close input | closed by PR 140 (`ac34737e`), "Unreleased: model identity and plain text for projected reports", once it merges |
+| ROF changes on main after the candidate have no `Unreleased:` entry | close input | closed: on main by PR 140 (`c239ad8e`), "Unreleased: model identity and plain text for projected reports" |
 | Patches checked only against the RR3 tree | 004 | closed: they applied cleanly on `6058c674`, and the branch rebased cleanly onto `db762f29`; the stale-text check gives exit 0 |
 | Local CI's scaffold failure | RL-D10 HOLD | closed: PR 137 |
 | Ubuntu profile not observed (RL-D6; local CI) | 003, local CI | **accepted residual (proposed)**: `docs/support.md` names only observed profiles; the prepare job (`publish=false`) on GitHub would add Ubuntu, on the owner's request |
@@ -182,13 +186,13 @@ close ruling. The amended plan's sha256 is bound above.
   its logs.
 - Ubuntu, Windows and other Python versions were not observed for 0.2.0.
 - PyPI publisher registration and account ownership are not auditable here.
-- Merging PR 133 and PR 140, and any announcement, are the owner's.
+- PR 133 and PR 140 were merged by the owner; any announcement is the owner's.
 
 ## Owner rulings at the close
 
 None yet. Needed:
 - the close review instrument;
-- whether to run the closing full lane after the merges;
+- whether to run the closing full lane, now that both PRs are merged;
 - the residuals proposed above (the 0.1.0 control, the Ubuntu profile);
 - the target of the deferred fixtures refactor;
 - plan §12;

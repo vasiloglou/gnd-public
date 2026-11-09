@@ -32,11 +32,15 @@ Dossier actions 4 to 7 are done (RL-D10, recorded in the draft close).
 - The owner pushed tag `v0.2.0` (`d84ad6d5` → `7c0f4d0e`) and created the
   [GitHub release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
 - [PR 140](https://github.com/vasiloglou/gnd-public/pull/140) applies the
-  post-publication patches; it is open.
+  post-publication patches; the owner merged it as `c239ad8e` (2026-11-09),
+  and PR 133 (the draft close) as `8a3ae7aa`.
 - Issue 118 is closed as completed (2026-11-09).
 
 **Close: drafted, not ruled ([draft close record](005-milestone-close.md); plan §12 draft amendment).** Next actions, all the owner's:
-- choose the close review instrument;
-- merge PR 133 and PR 140;
-- run the closing full lane;
-- give the close ruling. Done: route (a) upload (owner, by hand) and the step E served-file check (served wheel and sdist equal `e323c19e…69e4` and `f85818ea…5104`; a fresh index install gives `gnd 0.2.0`). PR 131 (RR3) merged as `36e47981`; main's `src` has since moved past the candidate (ROF1 to ROF3), which does not affect the published files.
+- choose the close review instrument (the closing full lane on beast-3 runs after that choice);
+- rule on the two proposed residuals (the 0.1.0 control's PyPI download; no Ubuntu profile observed);
+- name the target of the deferred fixtures refactor;
+- rule on plan §12;
+- give the close ruling.
+
+Done: route (a) upload (owner, by hand) and the step E served-file check (served wheel and sdist equal `e323c19e…69e4` and `f85818ea…5104`; a fresh index install gives `gnd 0.2.0`). PR 131 (RR3) merged as `36e47981`; main's `src` has since moved past the candidate (ROF1 to ROF3), which does not affect the published files.

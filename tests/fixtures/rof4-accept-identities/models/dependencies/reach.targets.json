@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "targets": [
+    {
+      "fact_type": "reachable",
+      "tuple": [
+        {
+          "primitive": "String",
+          "value": "checkout"
+        },
+        {
+          "primitive": "String",
+          "value": "ledger-db"
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,7 @@ unless a declared operation changes it.
 | `state.pop.yaml` | The current state: expense 41 (Ada's team dinner) is still a draft |
 | `plan-draft-1.steps.json` | The agent's first plan: reimburse expense 41 directly |
 | `plan-draft-2.steps.json` | The revised plan: approve, submit to Workday, then reimburse |
+| `plan-draft-2.canonical.steps.json` | The same plan, pinned with the model's canonical identity (`gnd validate model.orm.yaml --identity`) instead of the legacy `model_digest`; `gnd check` accepts either identity |
 | `approve-41.steps.json` + `claimed-post.pop.yaml` | A walk that claims a post-state in which bystander expense 42 also flipped to `rejected` |
 | `stand_in_agent.py` | A scripted stand-in for an agent, used by the offline session tutorial |
 | `recordings/` | Real Claude Code, Codex and hosted-model sessions on one task, with their results |
@@ -18,6 +19,7 @@ unless a declared operation changes it.
 ```sh
 gnd check model.orm.yaml --pre state.pop.yaml --steps plan-draft-1.steps.json   # exit 1
 gnd check model.orm.yaml --pre state.pop.yaml --steps plan-draft-2.steps.json   # exit 0
+gnd check model.orm.yaml --pre state.pop.yaml --steps plan-draft-2.canonical.steps.json   # exit 0
 gnd check model.orm.yaml --pre state.pop.yaml --steps approve-41.steps.json --post claimed-post.pop.yaml   # exit 1
 ```
 

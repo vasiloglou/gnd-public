@@ -92,7 +92,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd witness, replay certificate, why not, derivation proof, witness view
 - status: canonical
 - components: cli.witness_command, witness.command, witness.service, witness.schema, witness.produce, witness.replay, witness.why_not, witness.presentation
-- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding
+- members_uses: check.population_structure, checker.evaluate, infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, … +1 more (graph.md)
 - notes: Production evaluates through the checker; replay does not search for a fixpoint.
 
 ### subsystem.review_panel
@@ -825,7 +825,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: versioned measurement payload or escaped text report
 - status: canonical
 - modules: src/gnd/measure/report.py
-- uses: checker.evaluate, infra.input_policy, infra.report_redaction, infra.verdict_prose, measure.coverage, measure.score, measure.truth, model.address, model.labels, model.loading, synth.assemble, synth.frontier, synth.provenance
+- uses: checker.evaluate, infra.input_policy, infra.report_redaction, infra.verdict_prose, measure.coverage, measure.score, measure.truth, model.address, model.labels, model.loading, model.scalar_identity, synth.assemble, synth.frontier, synth.provenance
 - used_by: measure.service
 - part_of: subsystem.measure
 - tests: tests/test_measure_offline.py, tests/test_measure_labels.py, tests/test_measure_coverage.py, tests/test_measure_negative_control.py
@@ -853,7 +853,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: measurement output and command exit code; optional promoted regression inputs
 - status: canonical
 - modules: src/gnd/measure/service.py, src/gnd/measure/__init__.py
-- uses: checker.evaluate, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.version, measure.agreement, measure.labels, measure.promote, measure.report, measure.score, measure.truth, model.loading, model.population_loading, model.scalar_terms, synth.corpus, synth.pool, synth.provenance
+- uses: checker.evaluate, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.version, measure.agreement, measure.labels, measure.promote, measure.report, measure.score, measure.truth, model.loading, model.population_loading, model.scalar_identity, model.scalar_terms, synth.corpus, synth.pool, synth.provenance
 - used_by: cli.dispatch, cli.measure_command
 - part_of: subsystem.measure
 - tests: tests/test_measure_offline.py, tests/test_measure_labels.py, tests/test_measure_negative_control.py, tests/test_measure_coverage.py
@@ -1980,7 +1980,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: admitted/blocked partition; occurrence verdict references; validated candidate metrics
 - status: canonical
 - modules: src/gnd/admission.py, src/gnd/admission_validation.py
-- uses: check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.bounded_json, infra.report_payloads, model.address, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_adapter, semantics.snapshot_ir, semantics.transitions
+- uses: check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.bounded_json, infra.report_payloads, model.address, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_adapter, semantics.snapshot_ir
 - used_by: check.service, exp.session_replay, exp.session_runtime, semantics.saved_judgments
 - part_of: subsystem.check
 - tests: tests/test_v71_phase4_successors.py, tests/test_public_v72_status.py
@@ -2339,7 +2339,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: CoverageResult and coverage payload with element claims/evidence, census, unmatched addresses and source gaps
 - status: canonical
 - modules: src/gnd/coverage.py
-- uses: conformance.report, exp.spec, infra.artifacts, infra.input_policy, infra.report_payloads, model.address, model.loading, model.query_index, semantics.transitions
+- uses: conformance.report, exp.spec, infra.artifacts, infra.input_policy, infra.report_payloads, model.address, model.loading, model.query_index, model.scalar_identity, semantics.transitions
 - used_by: cli.checking_command
 - tests: tests/test_coverage_cli.py, tests/test_coverage_payload.py, tests/test_coverage_scaling.py, tests/test_public_coverage_goldens.py, tests/test_coverage_derivation.py, tests/test_v62_phase6_coverage.py
 - checked: partial
@@ -2671,14 +2671,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.scalar_identity
-- does: Define ORM scalar identity, typed literals and content digests binding populations, models and reference declarations.
-- verbs: scalar identity, identity key, boolean distinction, numeric equality, identity set, typed literals, legacy literals, canonical values, ISO dates, population content digest, model digest, reference model digest, validation marker, nested mutation, canonical digest, identity_key, reference_model_digest, canonical model identity, identity version, model_identity, model_identity_document, model_identity_bytes, ModelIdentityError
+- does: Define ORM scalar identity, typed literals and content digests binding populations, models and reference declarations, and decide whether a supplied model identity names a model (legacy or canonical).
+- verbs: scalar identity, identity key, boolean distinction, numeric equality, identity set, typed literals, legacy literals, canonical values, ISO dates, population content digest, model digest, reference model digest, validation marker, nested mutation, canonical digest, identity_key, reference_model_digest, canonical model identity, identity version, model_identity, model_identity_document, model_identity_bytes, ModelIdentityError, model identity match, either identity, accept supplied digest, model_identity_matches, accepted_model_identities, IdentityMatch
 - in: Scalar or tuple values, primitive names, JSON-like model data, Model and Population objects.
 - out: Typed identity keys and sets, interpreted literals or rejection sentinel, canonical JSON-compatible values and SHA256 identity strings.
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, model.document
-- used_by: check.admission, check.compiled_obligations, check.universe, checker.evaluate, cli.api, infra.text_output, model.loading, model.population_loading, model.population_sentences, model.reference_binding, semantics.extensions, semantics.snapshot_adapter, … +1 more (graph.md)
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, infra.text_output, measure.report, measure.service, model.loading, model.population_loading, model.population_sentences, … +5 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 
@@ -2704,7 +2704,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/transition.py, src/gnd/transition_kernel.py
 - uses: check.branches, check.compiled_obligations, check.population_structure, check.universe, checker.evaluate, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.extensions, semantics.ground_atoms
-- used_by: assurance.policy, check.admission, check.element_coverage, check.service, cli.api, cli.dispatch, examples.plan_apps, exp.schema, exp.service, exp.session_store, export.pyrel_rules, export.verification, … +2 more (graph.md)
+- used_by: assurance.policy, check.element_coverage, check.service, cli.api, cli.dispatch, examples.plan_apps, exp.schema, exp.service, exp.session_store, export.pyrel_rules, export.verification, infra.report_payloads, … +1 more (graph.md)
 - tests: tests/test_transition_report.py, tests/test_public_transition_walks.py, tests/test_public_transition_contract.py, tests/test_v62_phase2_intermediate.py, tests/test_v62_phase3_terms.py, tests/test_public_phase4_transition_support.py
 - checked: partial
 - notes: transition.py combines input validation, report models and evaluation; transition_kernel.py supplies pure primitive decisions also consumed by payloads. Failed preconditions produce findings while effects still apply; band combines embedded snapshot findings with transition findings.
@@ -3071,7 +3071,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: WitnessResult with independently checked per-target statuses and graph work counts.
 - status: canonical
 - modules: src/gnd/witness/kernel.py
-- uses: infra.artifacts, model.loading, model.population_loading, witness.schema
+- uses: infra.artifacts, model.loading, model.population_loading, model.scalar_identity, witness.schema
 - used_by: export.souffle_runtime, witness.service
 - part_of: subsystem.witness
 - tests: tests/test_v71_phase3_successors.py, tests/test_witness_composition.py

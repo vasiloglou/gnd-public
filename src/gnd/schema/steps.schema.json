@@ -16,7 +16,7 @@
       "type": "string"
     },
     "model_digest": {
-      "description": "sha256 of the loaded model object, as population._model_digest computes it. It deliberately EXCLUDES the operations section, which is exactly why operations_digest exists.",
+      "description": "sha256 of the loaded model object, as population._model_digest computes it. It deliberately EXCLUDES the operations section, which is exactly why operations_digest exists. Either identity is accepted: this legacy value or the model's canonical model identity (gnd validate MODEL --identity); see the representation-format digest table.",
       "$ref": "#/$defs/digest"
     },
     "operations_digest": {

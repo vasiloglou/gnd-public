@@ -49,10 +49,10 @@ Independent certificate replay: finite local inference, never fixpoint search.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `InvalidProof` | class(ValueError) | 32 | A structurally admitted inference is false or ungrounded. |
-| `UnsupportedScalar` | class(ValueError) | 36 | A scalar is outside the independently implemented fragment. |
-| `graph_work(certificate, *, limits)` | function | 110 | (no docstring) |
-| `replay_witness(model_document, candidate_document, certificate, *, reference_inputs, limits, compos…` | function | 288 | (no docstring) |
+| `InvalidProof` | class(ValueError) | 34 | A structurally admitted inference is false or ungrounded. |
+| `UnsupportedScalar` | class(ValueError) | 38 | A scalar is outside the independently implemented fragment. |
+| `graph_work(certificate, *, limits)` | function | 112 | (no docstring) |
+| `replay_witness(model_document, candidate_document, certificate, *, reference_inputs, limits, compos…` | function | 290 | (no docstring) |
 
 ## gnd.witness.producer — `src/gnd/witness/producer.py`
 Components: witness.produce

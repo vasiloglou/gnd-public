@@ -1,0 +1,14 @@
+{
+  "steps_schema": 1,
+  "model": "model.orm.yaml",
+  "model_digest": "sha256:cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85",
+  "operations_digest": "sha256:1e3bf9a63e9c3c0bce7fe428d9324f353078b2ede75f866e804805c01d0ebc34",
+  "steps": [
+    {
+      "op": "label_warehouse",
+      "bindings": {
+        "warehouse": "WH-A"
+      }
+    }
+  ]
+}

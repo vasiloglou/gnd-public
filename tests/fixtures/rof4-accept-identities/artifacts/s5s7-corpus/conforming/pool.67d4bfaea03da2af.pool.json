@@ -1,0 +1,100 @@
+{
+  "object_types": {
+    "approver": [
+      "situation",
+      "look",
+      "beat",
+      "plan",
+      "sure",
+      "perform",
+      "ever",
+      "source"
+    ],
+    "expense": [
+      339563,
+      993908,
+      158176,
+      414002,
+      682554,
+      50631,
+      75954,
+      861168
+    ],
+    "workday_submission": [
+      "worry",
+      "evening",
+      "past",
+      "old",
+      "myself",
+      "everybody",
+      "action",
+      "wall"
+    ]
+  },
+  "provenance": {
+    "model_id": "urn:gnd-example:approvals",
+    "source": "faker"
+  },
+  "value_types": {
+    "approver_name": [
+      "reason",
+      "study",
+      "concern",
+      "minute",
+      "woman",
+      "thousand",
+      "type",
+      "wall"
+    ],
+    "expense_id": [
+      561913,
+      98702,
+      383452,
+      611097,
+      60816,
+      953893,
+      532084,
+      225127
+    ],
+    "expense_status": [
+      "thought",
+      "focus",
+      "law",
+      "message",
+      "to",
+      "stage",
+      "sure",
+      "stop"
+    ],
+    "paid_on": [
+      "2000-02-17",
+      "2005-05-26",
+      "2012-01-02",
+      "2015-06-16",
+      "2002-01-06",
+      "2020-11-20",
+      "2011-11-02",
+      "2012-01-05"
+    ],
+    "reimbursement_amount": [
+      764878,
+      470636,
+      301924,
+      638539,
+      76756,
+      123800,
+      536800,
+      438433
+    ],
+    "submission_id": [
+      "identify",
+      "miss",
+      "again",
+      "million",
+      "one",
+      "fall",
+      "reality",
+      "buy"
+    ]
+  }
+}

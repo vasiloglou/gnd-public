@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Versions that exist on the package index. Publication adds the new version
 # here, in the same patch that moves the install pins (historical data: the one
 # literal of its kind in the tests).
-RELEASED = {"0.1.0"}
+RELEASED = {"0.1.0", "0.2.0"}
 
 MANIFESTS = (
     ".claude-plugin/plugin.json",
@@ -199,3 +199,46 @@ def test_a_pin_to_the_next_version_is_refused_until_it_is_released():
 def test_every_pin_file_carries_a_pin_so_the_rule_cannot_pass_vacuously():
     pins = pinned_install_versions()
     assert all(pins[name] for name in PIN_FILES), pins
+
+
+# Publication day (rule-check-release RR3, D2 and D5): once the declared version
+# is in RELEASED, every install pin names it and no publication-date
+# placeholder is left in the dated documents.
+DATE_PLACEHOLDER = "PUBLICATION_DATE"
+DATED_FILES = ("docs/release-notes.md", "docs/compatibility.md")
+
+
+def assert_pins_name_the_declared_version_once_released(pins: dict[str, set[str]], declared: str, released: set[str]) -> None:
+    if declared not in released:
+        return
+    for name, versions in pins.items():
+        assert versions == {declared}, f"{name} pins {sorted(versions)}, but {declared} is published"
+
+
+def assert_no_date_placeholder_once_released(declared: str, released: set[str], texts: dict[str, str]) -> None:
+    if declared not in released:
+        return
+    for name, text in texts.items():
+        assert DATE_PLACEHOLDER not in text, f"{name} still says {DATE_PLACEHOLDER}"
+
+
+def test_pins_name_the_declared_version_once_released():
+    assert_pins_name_the_declared_version_once_released(pinned_install_versions(), declared_version(), RELEASED)
+
+
+def test_an_old_pin_after_publication_is_refused():
+    assert_pins_name_the_declared_version_once_released({"README.md": {"0.1.0"}}, "0.2.0", {"0.1.0"})  # not yet released: allowed
+    assert_pins_name_the_declared_version_once_released({"README.md": {"0.2.0"}}, "0.2.0", {"0.1.0", "0.2.0"})
+    with pytest.raises(AssertionError):
+        assert_pins_name_the_declared_version_once_released({"README.md": {"0.1.0"}}, "0.2.0", {"0.1.0", "0.2.0"})
+
+
+def test_no_publication_date_placeholder_once_released():
+    texts = {name: (ROOT / name).read_text(encoding="utf-8") for name in DATED_FILES}
+    assert_no_date_placeholder_once_released(declared_version(), RELEASED, texts)
+
+
+def test_a_left_placeholder_is_refused():
+    assert_no_date_placeholder_once_released("0.2.0", {"0.1.0", "0.2.0"}, {"notes": "## 0.2.0 (2026-11-09)"})
+    with pytest.raises(AssertionError):
+        assert_no_date_placeholder_once_released("0.2.0", {"0.1.0", "0.2.0"}, {"notes": f"## 0.2.0 ({DATE_PLACEHOLDER})"})

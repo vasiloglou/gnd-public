@@ -1,12 +1,59 @@
 # Release notes and milestones
 
-Version 0.1.0 is the published release. Version 0.2.0 is prepared and not
-published: its package files, notes and tests are on `main`, and publishing it is
-a separate decision that follows the [release procedure](releasing.md). Until it
-is published, install commands in these documents name 0.1.0, and the changes
-listed here are in the repository only.
+Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
+first. Releases follow the [release procedure](releasing.md). Changes on `main`
+after a release are listed in an `Unreleased:` section until the next one.
 
-## 0.2.0 (prepared, not published)
+## Unreleased: model identity and plain text for projected reports
+
+These changes are on `main` after 0.2.0 and are not in any published package.
+Install from a checkout of the repository to use them.
+
+### Model identity a caller can recompute (issue 111)
+
+The `model_digest` that steps documents, sidecars and certificates pin is a
+digest of a Python representation, which a caller outside Python cannot
+reproduce. A second identity can now be used in its place.
+
+- **Canonical model identity**: `gnd validate MODEL --identity` prints the
+  model's canonical identity and, on the second line, the canonical JSON
+  document it is the sha256 of, so a caller can recompute it. A model that has
+  no canonical form exits 3 with `model:identity-unrepresentable`. The flag is
+  text only and is refused (exit 64) with `--trace`, `--document` or
+  `--format json`. The bytes are defined in the `gnd-orm-core` representation
+  format, "Model identity (canonical, versions 1 and 2)"; see
+  [formats](reference/formats.md).
+- **Either identity is accepted** wherever GND matches a `model_digest` you
+  supply: a walk's steps document (`gnd check --steps`), a report read back by
+  session replay, a coverage source, a measure sidecar and corpus, and a
+  witness certificate. Refusal messages are unchanged, and GND's own reports
+  still write the legacy value. A Pyrel rules program generated from a model
+  checks the legacy value only, so pin plans meant for it with the legacy
+  `model_digest`. See [data and transitions](guides/data-and-transitions.md).
+
+### Plain text for redaction and temporal models (issue 112)
+
+On a model with an active redaction policy or temporal terms, the text output
+of `gnd validate`, `gnd check`, a walk (`gnd check --steps`),
+`gnd check --admission` and `gnd verify` printed the projected JSON report.
+They now print their usual plain layouts, rendered from the projected payload
+only, so nothing the projection hides reaches the text. A projected error line
+does not name the error's type; `--format json` still reports it. JSON output,
+the report schema and digests are unchanged.
+
+### Fixes and internal changes
+
+- **Text walk on a reference model**: `gnd check MODEL --pre PRE --steps STEPS`
+  in text format, without `--post`, no longer fails with `KeyError:
+  'transition'` on a model with reference populations. It prints the same
+  layout as on a plain model.
+- **Retired private helpers**: `_find_cycle`, `_dfs_cycle` and
+  `_ring_component_violations` are removed from `gnd.checker` (issue 114). They
+  were private and had no remaining caller.
+- **Test timing** (tests only, issue 117): two timing-sensitive tests no longer
+  fail under load.
+
+## 0.2.0 (2026-11-08)
 
 Everything in this section is on `main` after 0.1.0. The first block is the
 rule-check work; the blocks after it are the earlier changes that were waiting

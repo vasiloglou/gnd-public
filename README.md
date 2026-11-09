@@ -40,7 +40,7 @@ final state either way.
 Requires Python 3.11 or newer. With [uv](https://docs.astral.sh/uv/getting-started/installation/):
 
 ```sh
-uv tool install get-nick-done==0.1.0
+uv tool install get-nick-done==0.2.0
 uv tool update-shell
 ```
 
@@ -66,8 +66,9 @@ codex plugin add gnd@gnd-marketplace
 ```
 
 Start a new agent session after installing. The marketplace commands require the
-plugin entries on repository `main` and GitHub access while the repository is
-private. See [plugin installation](docs/marketplace-plugins.md) for details.
+plugin entries on repository `main`; the repository is public, so no GitHub
+sign-in is needed. See [plugin installation](docs/marketplace-plugins.md) for
+details.
 
 Alternatively, install skill files directly from the Python package in your
 working project, choosing this route instead of a plugin:

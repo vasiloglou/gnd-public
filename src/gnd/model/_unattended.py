@@ -18,7 +18,8 @@ from __future__ import annotations
 import hashlib
 import re
 from collections.abc import Callable, Iterator, Mapping
-from typing import Any
+from dataclasses import dataclass
+from typing import Any, Literal
 
 from gnd.errors import ValidationIssue
 
@@ -229,13 +230,33 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
     return sorted(issues, key=lambda issue: order[issue.rule_id])
 
 
-def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes]) -> list[ValidationIssue]:
-    """MG5 `gnd validate --document`: re-hash every valid span over a supplied document.
+@dataclass(frozen=True)
+class SpanCoverage:
+    """UG3: how many of an unattended model's source spans one ``--document`` run re-hashed.
 
-    ``documents`` maps a display path to raw bytes. Offsets count code points
-    of the NFC text of the strict UTF-8 decoding (``canonical_document_text``);
-    ``documents[].sha256`` is over the raw bytes. Messages name paths, digests
-    and offsets, never document text (MG-R5)."""
+    A span counts as re-hashed when its document was supplied, decoded, and
+    its shape is valid (whether it then matched, mismatched or ran out of
+    range). Everything else counts as unchecked, failing closed. The counting
+    table is normative in representation-format.md ("Unattended source")."""
+
+    total: int
+    rehashed: int
+
+    @property
+    def unchecked(self) -> int:
+        return self.total - self.rehashed
+
+    def issue(self, *, severity: Literal["error", "warning"]) -> ValidationIssue | None:
+        """The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed."""
+        if not self.unchecked:
+            return None
+        return ValidationIssue(
+            path="$.source.documents", rule_id="unattended:spans-unchecked", severity=severity,
+            message=f"{self.unchecked} of {self.total} source spans were not re-hashed; "
+                    "supply every declared document with --document")
+
+
+def _span_walk(doc: dict[str, Any], documents: Mapping[str, bytes]) -> tuple[list[ValidationIssue], SpanCoverage]:
     from gnd.anchors import AnchorError, canonical_document_text
 
     source = _unattended_source(doc) or {}
@@ -254,11 +275,14 @@ def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes]) 
             issues.append(ValidationIssue(path=display, rule_id="unattended:document-unreadable",
                                           message=f"document is not strict UTF-8 text: {error}".replace(
                                               "anchor:sidecar-invalid: ", "")))
+    total = rehashed = 0
     for path, span in _iter_unattended_spans(doc):
+        total += 1
         if not isinstance(span, Mapping) or span.get("document_sha256") not in supplied:
             continue
         if _span_issue(span, path, set(supplied), rule_id="unattended:span-invalid") is not None:
             continue
+        rehashed += 1
         _display, text = supplied[span["document_sha256"]]
         if span["end"] > len(text):
             issues.append(ValidationIssue(path=path, rule_id="unattended:span-out-of-range",
@@ -266,7 +290,24 @@ def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes]) 
         elif hashlib.sha256(text[span["start"]:span["end"]].encode("utf-8")).hexdigest() != span["excerpt_sha256"]:
             issues.append(ValidationIssue(path=path, rule_id="unattended:excerpt-mismatch",
                                           message=f"the excerpt at [{span['start']}, {span['end']}) has a different sha256"))
-    return issues
+    return issues, SpanCoverage(total=total, rehashed=rehashed)
+
+
+def unattended_span_issues(doc: dict[str, Any], documents: Mapping[str, bytes]) -> list[ValidationIssue]:
+    """MG5 `gnd validate --document`: re-hash every valid span over a supplied document.
+
+    ``documents`` maps a display path to raw bytes. Offsets count code points
+    of the NFC text of the strict UTF-8 decoding (``canonical_document_text``);
+    ``documents[].sha256`` is over the raw bytes. Messages name paths, digests
+    and offsets, never document text (MG-R5)."""
+    return _span_walk(doc, documents)[0]
+
+
+def unattended_span_coverage(doc: dict[str, Any], documents: Mapping[str, bytes]) -> SpanCoverage | None:
+    """UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode."""
+    if _unattended_source(doc) is None:
+        return None
+    return _span_walk(doc, documents)[1]
 
 
 def _iter_unattended_spans(doc: dict[str, Any]):

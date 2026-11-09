@@ -53,31 +53,57 @@ def _read_validate_documents(paths: list[str]) -> tuple[dict[str, bytes], int | 
     return documents, None, None
 
 
-def _cmd_validate_documents(model_path: str, output_format: str, result: Any, paths: list[str]) -> int:
-    """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue)."""
-    from gnd.model import unattended_span_issues
+def _cmd_validate_documents(
+    model_path: str, output_format: str, result: Any, paths: list[str], *, require: bool = False
+) -> tuple[int, Any]:
+    """MG5: re-hash the model's source spans over the supplied documents (exit 3 on any issue).
+
+    UG3: also count the spans that were not re-hashed. Returns the exit and the
+    ``unattended:spans-unchecked`` warning to append. A non-zero exit has
+    already been printed; on 0 the caller prints the ordinary result with the
+    warning, if any. Under ``require`` the entry is an error and the run exits 3."""
+    from gnd.model import unattended_span_coverage, unattended_span_issues
 
     documents, exit_code, message = _read_validate_documents(paths)
     issues = []
+    entry = None
     if exit_code is None:
-        issues = unattended_span_issues(result.model.model_dump(exclude={"warnings"}), documents)
+        document = result.model.model_dump(exclude={"warnings"})
+        issues = unattended_span_issues(document, documents)
+        coverage = unattended_span_coverage(document, documents)
+        if coverage is not None:
+            entry = coverage.issue(severity="error" if require else "warning")
+            if require and entry is not None:
+                issues.append(entry)
+                entry = None
         if not issues:
-            return result.exit_code
+            return result.exit_code, entry
         exit_code = 3
     # The model's own warnings ride along on the refusal (review R-F3).
-    warnings = list(result.warnings)
+    warnings = [*result.warnings, *([entry] if entry is not None else [])]
     if output_format == "json":
         report_module.emit(report_module.build_validate_payload(
             exit_code, model_path, schema_version=result.payload["schema_version"],
             issues=issues or None, warnings=warnings, error=None if issues else RuntimeError(message)))
-        return exit_code
+        return exit_code, None
     for warning in warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
     if issues:
         _print_issues(issues)
     else:
         print(f"ERROR: {message}")
-    return exit_code
+    return exit_code, None
+
+
+def _with_warning(payload: dict[str, Any], entry: Any) -> dict[str, Any]:
+    """UG3: the payload with one more warning, in the mechanical report both routes read."""
+    payload = dict(payload)
+    if "report" in payload:
+        payload["report"] = target = dict(payload["report"])
+    else:
+        target = payload
+    target["warnings"] = [*(target.get("warnings") or []), entry.model_dump()]
+    return payload
 
 
 def _cmd_validate(
@@ -88,17 +114,24 @@ def _cmd_validate(
     unredacted: bool = False,
     documents: list[str] | None = None,
     identity: bool = False,
+    require_documents: bool = False,
 ) -> int:
     result = api_module._run_validate(model_path, unredacted=unredacted)
     if identity and result.exit_code == 0 and result.model is not None:
         return _print_model_identity(result.model)
-    if documents and result.exit_code == 0 and result.model is not None:
-        refused = _cmd_validate_documents(model_path, output_format, result, documents)
+    payload = result.payload
+    warnings = list(result.warnings)
+    if (documents or require_documents) and result.exit_code == 0 and result.model is not None:
+        refused, entry = _cmd_validate_documents(
+            model_path, output_format, result, documents or [], require=require_documents)
         if refused != 0:
             return refused
+        if entry is not None:
+            payload = _with_warning(payload, entry)
+            warnings.append(entry)
     if output_format == "json":
         try:
-            report_module.emit(result.payload)
+            report_module.emit(payload)
         except report_module.NonJsonValueError as error:
             fallback = report_module.build_validate_payload(
                 EXIT_INTERNAL,
@@ -109,13 +142,13 @@ def _cmd_validate(
             report_module.emit(fallback)
             return EXIT_INTERNAL
         return result.exit_code
-    mechanical_payload = result.payload.get("report", result.payload)
+    mechanical_payload = payload.get("report", payload)
     if "redaction" in mechanical_payload:
         if trace and result.model is not None and not result.issues and result.error is None:
             _print_trace(result.model, model_path)
         _print_projected_check_text(mechanical_payload)
         return result.exit_code
-    for warning in result.warnings:
+    for warning in warnings:
         print(f"WARNING at {warning.path}: {warning.message} [{warning.rule_id}]")
     if result.issues:
         _print_issues(list(result.issues))
@@ -659,6 +692,15 @@ def _register_validate(subparsers):
             "that is out of range or has a different excerpt digest"
         ),
     )
+    validate_parser.add_argument(
+        "--require-documents",
+        action="store_true",
+        help=(
+            "exit 3 unless every source span of an unattended model was "
+            "re-hashed over a supplied --document; a no-op for a model "
+            "without the unattended mode"
+        ),
+    )
     _add_format_argument(validate_parser)
     _add_unredacted_argument(validate_parser)
 
@@ -1081,6 +1123,10 @@ def handle(args, parsers) -> int:
                 "--identity prints the identity alone; it is not combined with "
                 "--trace, --document or --format json"
             )
+        if args.identity and args.require_documents:
+            parsers["validate_parser"].error(
+                "--identity prints the identity alone; it is not combined with --require-documents"
+            )
         return _cmd_validate(
             args.model,
             args.format,
@@ -1088,6 +1134,7 @@ def handle(args, parsers) -> int:
             unredacted=args.unredacted,
             documents=args.document,
             **({"identity": True} if args.identity else {}),
+            **({"require_documents": True} if args.require_documents else {}),
         )
 
     if args.command == "coverage":

@@ -145,3 +145,142 @@ def test_a10b_the_carve_out_adds_exactly_one_entry(tmp_path: Path) -> None:
         else:
             line = f"WARNING at {entry['path']}: {entry['message']} [{RULE}]\n"
             assert row["stdout"] == line + base["stdout"], row
+
+
+# --- A7 to A13: the spec's successor cases beyond the approved corpus --------
+#
+# These are implementation cases (spec §8), not corpus answers: they pin the
+# usage error, both text routes, the absence of document text, the order of
+# entries, the payload schema, the counting table at the function, and the
+# single pass.
+
+LEDGER_SPAN = "excerpt_sha256: 21eb2153dd1483cd67a621fb2c7b2f65b2ca46c64a49e49be4b939a1f0c844f8"
+ENTRY_LINE = ("WARNING at $.source.documents: 1 of 10 source spans were not re-hashed; "
+              "supply every declared document with --document [unattended:spans-unchecked]\n")
+
+
+def _variant(root: Path, name: str, old: str, new: str) -> str:
+    """A copy of the element-span model with one textual edit, under ``models/``."""
+    text = (root / "models" / "span-element.orm.yaml").read_text(encoding="utf-8")
+    assert text.count(old) == 1, old
+    (root / "models" / name).write_text(text.replace(old, new), encoding="utf-8")
+    return name
+
+
+def test_a7_require_documents_with_identity_is_a_usage_error(tmp_path: Path) -> None:
+    root = _workspace(tmp_path / "ws")
+    result = run_main(["validate", str(root / "models" / "span-element.orm.yaml"), "--identity", FLAG])
+    assert result.returncode == 64
+    assert b"not combined with --require-documents" in result.stderr
+    assert result.stdout == b""
+
+
+def test_a8_both_text_routes_print_the_entry(tmp_path: Path) -> None:
+    root = _workspace(tmp_path / "ws")
+    plain = _validate(root, "span-element.orm.yaml", ["ledger.txt"], [], "text")
+    assert plain.returncode == 0
+    assert plain.stdout.decode().startswith(ENTRY_LINE)
+    # The projected route: a redacted fact type turns the redaction projection on.
+    projected = _variant(root, "projected.orm.yaml", "- id: order_placed_by_customer\n",
+                         "- id: order_placed_by_customer\n  redact: true\n")
+    result = _validate(root, projected, ["ledger.txt"], [], "text")
+    assert result.returncode == 0, result.stderr
+    assert ENTRY_LINE in result.stdout.decode()
+    as_json = json.loads(_validate(root, projected, ["ledger.txt"], [], "json").stdout)
+    report = as_json.get("report", as_json)
+    assert "redaction" in report  # the route under test really is the projected one
+    assert [warning["rule_id"] for warning in report["warnings"]] == [RULE]
+
+
+def test_a9_no_document_text_reaches_the_output(tmp_path: Path) -> None:
+    canaries = {"ledger.txt": "Café Lumière keeps", "annex.txt": "Annex to the ledger"}
+    for name, canary in canaries.items():  # positive control: the canary is in the document
+        assert canary in (CORPUS / "documents" / name).read_text(encoding="utf-8")
+    root = _workspace(tmp_path / "ws")
+    runs = [_validate(root, case["model"], case["documents"], case["flags"]) for case in EXPECTED.values()]
+    runs += [_validate(root, "span-element.orm.yaml", ["ledger.txt"], flags, "text") for flags in ([], [FLAG])]
+    for result in runs:
+        for stream in (result.stdout, result.stderr):
+            for canary in canaries.values():
+                assert canary.encode("utf-8") not in stream
+
+
+def test_a11_existing_issues_come_first_then_the_unchecked_entry(tmp_path: Path) -> None:
+    root = _workspace(tmp_path / "ws")
+    broken = _variant(root, "broken.orm.yaml", LEDGER_SPAN, "excerpt_sha256: " + "a" * 64)
+    result = _validate(root, broken, ["ledger.txt"], [FLAG])
+    assert result.returncode == 3
+    payload = json.loads(result.stdout)
+    assert [(issue["rule_id"], issue["severity"]) for issue in payload["issues"]] == [
+        ("unattended:excerpt-mismatch", "error"), (RULE, "error")]
+    # Without the flag the same entry rides in warnings instead.
+    plain = json.loads(_validate(root, broken, ["ledger.txt"], []).stdout)
+    assert [issue["rule_id"] for issue in plain["issues"]] == ["unattended:excerpt-mismatch"]
+    assert [warning["rule_id"] for warning in plain["warnings"]] == [RULE]
+
+
+def test_a12_the_payload_fits_the_report_schema(tmp_path: Path) -> None:
+    from jsonschema import Draft202012Validator
+
+    from gnd.report_schema import load_report_schema
+
+    validator = Draft202012Validator(load_report_schema())
+    root = _workspace(tmp_path / "ws")
+    for flags in ([], [FLAG]):
+        payload = json.loads(_validate(root, "span-element.orm.yaml", ["ledger.txt"], flags).stdout)
+        assert RULE in json.dumps(payload)
+        assert list(validator.iter_errors(payload)) == []
+
+
+def _digest(text: str) -> str:
+    import hashlib
+
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _span_doc(spans: list[Any], declared: str) -> dict[str, Any]:
+    return {
+        "source": {"kind": "prose", "mode": "unattended", "reviewer": "none",
+                   "documents": [{"sha256": declared, "label": "d.txt"}]},
+        "object_types": [{"id": f"o{index}", "provenance": {"spans": [span]}} for index, span in enumerate(spans)],
+    }
+
+
+def test_a12b_malformed_and_undeclared_spans_count_as_unchecked() -> None:
+    from gnd.model import unattended_span_coverage
+
+    text = "an order has one placing customer"
+    declared, other = _digest(text), "e" * 64
+    good = {"document_sha256": declared, "start": 0, "end": 8, "excerpt_sha256": _digest(text[:8])}
+    spans = [good, "not a mapping", {"document_sha256": declared, "start": 0}, {**good, "document_sha256": other}]
+    coverage = unattended_span_coverage(_span_doc(spans, declared), {"d.txt": text.encode("utf-8")})
+    assert (coverage.total, coverage.rehashed, coverage.unchecked) == (4, 1, 3)
+    entry = coverage.issue(severity="warning")
+    assert entry is not None and entry.message.startswith("3 of 4 ")
+    # Not the mode: no counts at all.
+    assert unattended_span_coverage({"object_types": []}, {}) is None
+
+
+@pytest.mark.parametrize("count", [1, 10, 100])
+def test_a13_the_walk_is_one_linear_pass(count: int, monkeypatch: pytest.MonkeyPatch) -> None:
+    import gnd.model._unattended as unattended
+
+    text = "an order has one placing customer"
+    declared = _digest(text)
+    span = {"document_sha256": declared, "start": 0, "end": 8, "excerpt_sha256": _digest(text[:8])}
+    calls = {"walk": 0, "span": 0}
+    original_walk, original_span = unattended._iter_unattended_spans, unattended._span_issue
+
+    def walk(doc: dict[str, Any]):
+        calls["walk"] += 1
+        return original_walk(doc)
+
+    def span_issue(*args: Any, **kwargs: Any):
+        calls["span"] += 1
+        return original_span(*args, **kwargs)
+
+    monkeypatch.setattr(unattended, "_iter_unattended_spans", walk)
+    monkeypatch.setattr(unattended, "_span_issue", span_issue)
+    coverage = unattended.unattended_span_coverage(_span_doc([span] * count, declared), {"d.txt": text.encode()})
+    assert (coverage.total, coverage.rehashed) == (count, count)
+    assert calls == {"walk": 1, "span": count}

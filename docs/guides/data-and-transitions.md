@@ -76,7 +76,10 @@ gnd check model.orm.yaml --pre before.pop.json --steps steps.json --post after.p
 ```
 
 Use the text `--trace` output to obtain `model_digest` and
-`operations_digest`; a steps document requires both. Do not substitute the raw
+`operations_digest`; a steps document requires both. For `model_digest`,
+either identity is accepted: the legacy value `--trace` prints, or the
+canonical model identity `gnd validate model.orm.yaml --identity` prints,
+which a caller can recompute without Python. Do not substitute the raw
 file hash or add `--format json` expecting a JSON trace. Each step must name
 a declared operation and bind exactly its parameters.
 

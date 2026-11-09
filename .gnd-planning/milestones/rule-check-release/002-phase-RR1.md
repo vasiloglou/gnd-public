@@ -83,7 +83,7 @@ Retained in `evidence/RR1/focused-gates.txt` and `evidence/RR1/full-lane-main-an
 
 ## Adversarial review
 
-One reviewer is one reviewer: Codex (gpt-6-sol, xhigh, read-only) over the diff at aebe047c, disposition `revise`, 3 findings, each reproduced before it was accepted ([review](../notes/phase-RR1-codex-review.md)). F1 (the plugin page's first install block did not point to the unpublished-version route), F2 (the publication guard accepted "installable from PyPI") and F3 (the version mask matched a key ending in `gnd_version`) were fixed in 15ea4265; F2 and F3 each have a test that was red before the fix (`evidence/RR1/red-review-findings-F2-F3.txt`). The repaired bytes carry no review opinion. The reviewer could not run the suite or `uv lock --check`; this record's gates did.
+One reviewer is one reviewer: Codex (gpt-6-sol, xhigh, read-only) over the diff at aebe047c, disposition `revise`, 3 findings, each reproduced before it was accepted ([review](notes/phase-RR1-codex-review.md)). F1 (the plugin page's first install block did not point to the unpublished-version route), F2 (the publication guard accepted "installable from PyPI") and F3 (the version mask matched a key ending in `gnd_version`) were fixed in 15ea4265; F2 and F3 each have a test that was red before the fix (`evidence/RR1/red-review-findings-F2-F3.txt`). The repaired bytes carry no review opinion. The reviewer could not run the suite or `uv lock --check`; this record's gates did.
 
 ## Refactoring review
 

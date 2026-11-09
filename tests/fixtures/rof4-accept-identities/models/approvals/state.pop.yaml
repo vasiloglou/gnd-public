@@ -1,0 +1,21 @@
+population:
+  model: model.orm.yaml
+  model_id: urn:gnd-example:approvals
+  source: synthetic
+  covers: [expense_has_status, expense_approved_by, expense_submitted_to_workday, expense_reimbursed]
+
+facts:
+  expense_has_status:
+    - { expense: 40, status: "submitted" }
+    - { expense: 41, status: "draft" }
+    - { expense: 42, status: "submitted" }
+    - { expense: 43, status: "approved" }
+  expense_approved_by:
+    - { expense: 40, approver: "bob" }
+    - { expense: 42, approver: "bob" }
+    - { expense: 43, approver: "carol" }
+  expense_submitted_to_workday:
+    - { expense: 40, submission: "WD-7999" }
+    - { expense: 42, submission: "WD-8000" }
+  expense_reimbursed:
+    - { expense: 40, amount: 120, paid_on: "2026-09-30" }

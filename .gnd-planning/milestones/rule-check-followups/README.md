@@ -5,7 +5,7 @@ close deferred: issues 111, 112, 113, 114, 115, 116, 117 and 119.
 
 **Status: plan r3 approved by the owner on 2026-11-07
 ([plan-gate record](001-plan.md)). FU1 complete and merged ([record](002-phase-FU1.md)).
-FU2 complete and merged ([record](003-phase-FU2.md)). FU3 complete and merged ([record](004-phase-FU3.md)). FU4 approved and implemented ([record](005-phase-FU4.md)), awaiting merge.** Issues 111 and 112 are split out.
+FU2 complete and merged ([record](003-phase-FU2.md)). FU3 complete and merged ([record](004-phase-FU3.md)). FU4 complete and merged ([record](005-phase-FU4.md)). FU5 complete, PR open ([record](006-phase-FU5.md)).** Issues 111 and 112 are split out.
 
 - [Plan (r3, approved)](notes/rule-check-followups-plan.md)
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md)
@@ -22,7 +22,11 @@ FU2 complete and merged ([record](003-phase-FU2.md)). FU3 complete and merged ([
 - [FU4 spec (approved)](notes/phase-FU4-spec.md)
 - [FU4 record](005-phase-FU4.md)
 - [FU4 Codex review](notes/phase-FU4-codex-review.md)
+- [FU5 spec (r2, approved)](notes/phase-FU5-spec.md)
+- [FU5 record](006-phase-FU5.md)
+- [FU5 Codex review of r1](notes/phase-FU5-codex-review.md)
+- [FU5 Codex review of the diff](notes/phase-FU5-codex-review-impl.md)
 
 Phases: FU1 (113), FU2 (115, 116), FU3 (119), FU4 (117), FU5 (114); close.
 
-Next action: merge the FU4 PR, then the FU5 spec (process-phase).
+Next action: the owner merges the FU5 PR; then the milestone close.

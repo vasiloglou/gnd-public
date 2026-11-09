@@ -4,6 +4,24 @@ from pathlib import Path
 
 EVIDENCE = Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair'
 SOURCE_SUCCESSORS = EVIDENCE.parents[2] / 'compiled-snapshot-obligations/evidence/CI/source-successors.json'
+RETIRED_NAMES = SOURCE_SUCCESSORS.parent / 'retired-names.json'
+
+
+def retired_names(path=RETIRED_NAMES):
+    """Owner-approved retired (module, name) pairs; a listed name still bound fails."""
+    import importlib
+
+    document = json.loads(path.read_text())
+    assert document['schema_version'] == 1 and document['reason']
+    rows = document['retired']
+    keys = [(row['module'], row['name']) for row in rows]
+    assert len(set(keys)) == len(keys), 'duplicate retired name'
+    for row in rows:
+        assert row['home'] and row['issue'] and row['phase'] and row['ruling'], row
+        for module in (row['module'], row['home']):
+            assert not hasattr(importlib.import_module(module), row['name']), (
+                f"retired name still bound: {module}.{row['name']}")
+    return frozenset(keys)
 
 
 def coupling_sites(metrics):
@@ -12,7 +30,9 @@ def coupling_sites(metrics):
 
     def key(row):
         return tuple(row.get(k) for k in ('from', 'to', 'name', 'kind'))
-    aliases = Counter(key(row) for row in json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites'])
+    retired = retired_names()
+    aliases = Counter(key(row) for row in json.loads((EVIDENCE / 'compatibility-private-sites.json').read_text())['sites']
+                      if (row['from'], row['name']) not in retired)
     import ast
 
     root = EVIDENCE.parents[4]

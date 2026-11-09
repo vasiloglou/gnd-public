@@ -20,7 +20,7 @@ from gnd.population import Population
 from gnd.report_schema import load_report_schema
 from gnd.semantic_adapter import canonical_scalar
 from gnd.universe import resolve_primitive, resolve_reference_value_type
-from gnd.values import reference_model_digest
+from gnd.values import model_identity_matches
 
 _VALIDATOR = Draft202012Validator(load_report_schema())
 
@@ -56,7 +56,7 @@ def validate_reference_transport(payload, *, model, references, expected_version
         ],
     }
     if (
-        payload["model_digest"] != reference_model_digest(model)
+        model_identity_matches(payload["model_digest"], model) is None
         or payload["reference_binding"] != binding
     ):
         raise AdmissionValidationError("reference wrapper binding differs")
@@ -125,9 +125,7 @@ def _validate(payload, model, candidate, references):
         if references is not None or payload.get("schema_version") not in {10, 13}:
             raise AdmissionValidationError("candidate admission report required")
         inner = payload
-    from gnd.transition import transition_model_identity
-
-    if inner["model_digest"] != transition_model_identity(model):
+    if model_identity_matches(inner["model_digest"], model) is None:
         raise AdmissionValidationError("model identity differs")
     universe = {(ft, i) for ft, rows in candidate.facts.items() for i in range(len(rows))}
     all_nodes = {(ft, i) for ft, rows in combined.facts.items() for i in range(len(rows))}

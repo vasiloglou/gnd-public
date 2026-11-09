@@ -1,0 +1,30 @@
+{
+  "wrong": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "models": {
+    "approvals": {
+      "path": "models/approvals/model.orm.yaml",
+      "legacy": "sha256:278b20b244428f78a095c7824b12b6ae9c120ce70a16a485f612f878a077588f",
+      "canonical": "sha256:1ef9d764a69241c0eda2015c8065517660e84706ae10615cbdbfa87584d52935",
+      "canonical_version": 2
+    },
+    "reference": {
+      "path": "models/reference/model.orm.yaml",
+      "legacy": "sha256:cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85",
+      "canonical": "sha256:cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85",
+      "canonical_version": 1,
+      "dropped_references": "sha256:c86faf363c3788c1b409a8d49f4fb4f66d03432412a054da517a7b06cc544f0d"
+    },
+    "nonstructured": {
+      "path": "models/nonstructured/model.orm.yaml",
+      "legacy": "sha256:e4a5c453f40d3181146cfd1195beca4ec23b211c96287442b9646a6276bf6633",
+      "canonical": "sha256:68cf04d3d5953b23908eba293ed67406d3e7902bd1f4e1e01ba087427e073c96",
+      "canonical_version": 2
+    },
+    "dependencies": {
+      "path": "models/dependencies/model.orm.json",
+      "legacy": "sha256:aa0eaa25e2cdf4108b89f049dfe984657590408f84ca44c4ef0d582f7ec92910",
+      "canonical": "sha256:f0a63145185f54506eec15d103dcbd3f2e5fdc8c2e28118bec14151e15eedcdb",
+      "canonical_version": 2
+    }
+  }
+}

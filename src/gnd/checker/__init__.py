@@ -98,7 +98,6 @@ from gnd.checker._core import _denoting_types as _denoting_types
 from gnd.checker._core import _derivation_obligation as _derivation_obligation
 from gnd.checker._core import _derivation_variable as _derivation_variable
 from gnd.checker._core import _descendant_closure as _descendant_closure
-from gnd.checker._core import _dfs_cycle as _dfs_cycle
 from gnd.checker._core import _evaluate_derivations as _evaluate_derivations
 from gnd.checker._core import _evaluate_derivations_dispatch as _evaluate_derivations_dispatch
 from gnd.checker._core import _evaluate_stratified_extensions as _evaluate_stratified_extensions
@@ -126,7 +125,6 @@ from gnd.checker._core import _family_message_subtype_partition as _family_messa
 from gnd.checker._core import _family_message_uniqueness as _family_message_uniqueness
 from gnd.checker._core import _family_message_value as _family_message_value
 from gnd.checker._core import _family_message_value_comparison as _family_message_value_comparison
-from gnd.checker._core import _find_cycle as _find_cycle
 from gnd.checker._core import _FixpointJoinWork as _FixpointJoinWork
 from gnd.checker._core import _flat_projected_witness as _flat_projected_witness
 from gnd.checker._core import _guarded_atom_index as _guarded_atom_index
@@ -181,7 +179,6 @@ from gnd.checker._core import _relation_facts as _relation_facts
 from gnd.checker._core import _relation_roles as _relation_roles
 from gnd.checker._core import _require_joinable as _require_joinable
 from gnd.checker._core import _requires_fixpoint as _requires_fixpoint
-from gnd.checker._core import _ring_component_violations as _ring_component_violations
 from gnd.checker._core import _role_object_type as _role_object_type
 from gnd.checker._core import _role_seq_tuples as _role_seq_tuples
 from gnd.checker._core import _row_projected_witness as _row_projected_witness

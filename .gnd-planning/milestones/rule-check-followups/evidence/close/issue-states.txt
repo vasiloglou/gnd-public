@@ -1,0 +1,9 @@
+# issue states, gh issue view, 2026-11-09T03:34Z
+111 OPEN - last comment: -
+112 CLOSED 2026-11-08T14:44:56Z last comment: Fixed by #124 (ROF1) and #127 (ROF2): `report`, `walk`, `check --admission` and `verify` now print their plain-text layouts for projected (redaction and tempora
+113 CLOSED 2026-11-07T17:40:37Z last comment: -
+114 CLOSED 2026-11-08T18:00:18Z last comment: Delivered by rule-check-followups phase FU5 (PR 134, merge 0e093158): _find_cycle, _dfs_cycle and _ring_component_violations are retired, with an explicit retir
+115 CLOSED 2026-11-08T00:20:25Z last comment: -
+116 CLOSED 2026-11-08T00:20:26Z last comment: -
+117 CLOSED 2026-11-08T05:39:19Z last comment: -
+119 CLOSED 2026-11-08T04:29:06Z last comment: -

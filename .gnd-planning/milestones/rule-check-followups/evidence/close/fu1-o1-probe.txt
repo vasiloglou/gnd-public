@@ -1,0 +1,16 @@
+# FU1-O1 probe at main 859b852d, 2026-11-08
+# population: tests/fixtures/v70-phase4/positive.pop.json with the P02-opaque-claimed edits of cases.json
+# (observed += {record: R1, item: {$opaque: missing-item}}; inferred += {record: R1, item: B})
+flags=[] exit=4
+  schema_version 7
+  derivations [('unchecked', 'opaque-value', [])]
+  schema errors 0
+flags=[--rule-ids] exit=4
+  schema_version 15
+  derivations [('unchecked', 'opaque-value', [])]
+  schema errors 0
+flags=[--admission] exit=4
+  schema_version 10
+  derivations [('unchecked', 'derived-unknown', ['derived-extension-unresolved'])]
+  schema errors 0
+flags=[--admission --rule-ids] exit=64

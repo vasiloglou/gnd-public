@@ -1,0 +1,12 @@
+# Full suite at main 859b852d (closing tree; the close changes only planning text and one generated index page), beast-3, six round-robin shards
+# command: ~/fu-shards/fu-shards.sh close-859b852d 859b852d
+shard0: 2286 passed, 263 deselected in 235.15s (0:03:55) shard exit=0 
+shard1: 2285 passed, 98 deselected, 2 errors in 578.04s (0:09:38) shard exit=1 
+shard2: 1 failed, 3294 passed, 77 deselected in 395.82s (0:06:35) shard exit=1 
+shard3: 2879 passed, 127 deselected, 1 warning in 405.80s (0:06:45) shard exit=0 
+shard4: 3172 passed, 104 deselected in 355.27s (0:05:55) shard exit=0 
+shard5: 4248 passed, 129 deselected in 767.96s (0:12:47) shard exit=0 
+# failing list (close.fail), sha256 049f48f52bf719061d2dabeaa60ee75df43421013f5d9346a754997850a1a8a6
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_transition]

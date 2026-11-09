@@ -297,6 +297,20 @@ StableLocator = ElementLocator | RoleLocator | ConstraintLocator | ModelIdentity
 _SOURCE_DOCUMENT_KEYS = frozenset({"sha256", "label"})
 
 
+def _refuse_source_documents_before_v3(
+    schema_version: int, operations: tuple[Any, ...], label: str
+) -> None:
+    """UG3-D10 (a): the v1 and v2 graphs are frozen, so every reader of an outer
+    document that carries operations (a proposal, a record) refuses the locator
+    below version 3 when it is read, before any version gate (exit 3)."""
+    if schema_version != EVOLUTION_SCHEMA_VERSION and any(
+        isinstance(item.locator, SourceDocumentLocator) for item in operations
+    ):
+        raise ValueError(
+            f"source-document operations require {label} schema_version {EVOLUTION_SCHEMA_VERSION}"
+        )
+
+
 class EvolutionOperation(_ClosedFrozenModel):
     operation_id: StableId
     kind: EvolutionOperationKind
@@ -643,14 +657,7 @@ class EvolutionProposal(_ClosedFrozenModel):
 
     @model_validator(mode="after")
     def _source_documents_need_version_3(self) -> EvolutionProposal:
-        # UG3-D10 (a): the v1 and v2 graphs are frozen, so the locator is refused
-        # when an older proposal is read, before any version gate (exit 3).
-        if self.schema_version != EVOLUTION_SCHEMA_VERSION and any(
-            isinstance(item.locator, SourceDocumentLocator) for item in self.operations
-        ):
-            raise ValueError(
-                f"source-document operations require proposal schema_version {EVOLUTION_SCHEMA_VERSION}"
-            )
+        _refuse_source_documents_before_v3(self.schema_version, self.operations, "proposal")
         return self
 
     @property
@@ -1433,6 +1440,7 @@ class EvolutionRecord(_EvolutionRecordBase):
 
     @model_validator(mode="after")
     def _record_binding(self) -> EvolutionRecord:
+        _refuse_source_documents_before_v3(self.schema_version, self.operations, "record")
         for conformance in self.linked_conformance:
             _refuse_cross_version_project(conformance, self.schema_version, "conformance leaf")
         body = self.model_dump(mode="json", exclude={"record_identity_sha256"})

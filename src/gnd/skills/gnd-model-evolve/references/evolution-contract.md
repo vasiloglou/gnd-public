@@ -121,7 +121,8 @@ and the `label` is a non-blank string. A `modify` can therefore change only the 
 digest is a different document, deleted and added. Replay appends an `add` at the end of the list,
 after refusing a digest already declared ("source document is already declared"), and refuses an
 `add` on a model with no `source.documents` list ("the model declares no source.documents to append
-to"). A `modify` or `delete` finds the entry by digest and compares it with `before`. No operation
+to"). A `modify` or `delete` needs exactly one entry with the digest (two are refused as ambiguous) and
+compares it with `before`. No operation
 reorders the list, so a candidate that only reorders it fails replay equality. The locator
 contributes no object/fact-type element id and adds no blast-radius entry; the always-present
 `model` entry keeps the report non-empty.
@@ -191,8 +192,9 @@ nonempty ordered `operations`, `rationale`, `audit`, `linked_projects`, and `art
 project, coordinate, artifact id, and artifact path identities are unique. `proposal_sha256` is the
 canonical digest of the complete closed proposal.
 
-`SourceDocumentLocator` exists in proposal `schema_version` 3 only. A version 1 or 2 proposal
-that carries it is refused when it is read (`3`), before the read-only version gate. A version 3
+`SourceDocumentLocator` exists in proposal and record `schema_version` 3 only. A version 1 or 2
+proposal or record that carries it is refused when it is read (`3`), before the read-only version
+gate. A version 3
 proposal without it keeps its bytes and `proposal_sha256`. GND 0.2.0 and older refuse a proposal
 that carries it.
 

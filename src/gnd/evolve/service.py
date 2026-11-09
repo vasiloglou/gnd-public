@@ -873,7 +873,7 @@ def _find_constraint(document: dict[str, Any], locator: ConstraintLocator) -> tu
 
 
 def _operation_target(
-    document: dict[str, Any], operation: EvolutionOperation
+    document: dict[str, Any], operation: EvolutionOperation, *, declared: set[str] | None = None
 ) -> tuple[list[Any], int | None]:
     locator = operation.locator
     if isinstance(locator, ElementLocator):
@@ -903,7 +903,7 @@ def _operation_target(
             return roles, None
         return _find_role(document, locator)
     if isinstance(locator, SourceDocumentLocator):
-        return _source_document_target(document, operation, locator)
+        return _source_document_target(document, operation, locator, declared)
     if operation.kind is EvolutionOperationKind.ADD:
         if locator.host == "model":
             constraints = document.setdefault("constraints", [])
@@ -917,13 +917,36 @@ def _operation_target(
     return _find_constraint(document, locator)
 
 
+def _declared_positions(documents: list[Any], sha256: str) -> list[int]:
+    """Every index of ``documents`` that declares ``sha256`` (one pass)."""
+    return [
+        index for index, item in enumerate(documents)
+        if isinstance(item, dict) and item.get("sha256") == sha256
+    ]
+
+
+def _declared_digests(document: dict[str, Any]) -> set[str]:
+    """The digests ``source.documents`` declares, in one pass (UG3); empty without a list."""
+    source = document.get("source")
+    listed = source.get("documents") if isinstance(source, dict) else None
+    if not isinstance(listed, list):
+        return set()
+    return {item["sha256"] for item in listed if isinstance(item, dict) and isinstance(item.get("sha256"), str)}
+
+
 def _source_document_target(
-    document: dict[str, Any], operation: EvolutionOperation, locator: SourceDocumentLocator
+    document: dict[str, Any],
+    operation: EvolutionOperation,
+    locator: SourceDocumentLocator,
+    declared: set[str] | None = None,
 ) -> tuple[list[Any], int | None]:
     """The ``source.documents`` list and the declared entry's index (UG3).
 
     An add appends after refusing a duplicate digest; nothing reorders, so a
-    candidate that only reorders still fails replay equality."""
+    candidate that only reorders still fails replay equality. ``declared``, when
+    the replay passes it, is the digest set it keeps current, so a run of adds
+    is linear (UG3 review finding 6). A modify or delete needs exactly one entry
+    with the digest: two would make the target depend on list order (finding 5)."""
     source = document.get("source")
     documents = source.get("documents") if isinstance(source, dict) else None
     if not isinstance(documents, list):
@@ -931,16 +954,21 @@ def _source_document_target(
         raise EvolutionError(
             f"stable locator {locator.reference()}: the model declares no source.documents{purpose}"
         )
-    matches = [
-        index for index, item in enumerate(documents)
-        if isinstance(item, dict) and item.get("sha256") == locator.sha256
-    ]
     if operation.kind is EvolutionOperationKind.ADD:
-        if matches:
+        present = (
+            locator.sha256 in declared if declared is not None
+            else bool(_declared_positions(documents, locator.sha256))
+        )
+        if present:
             raise EvolutionError(f"add target {locator.reference()}: source document is already declared")
         return documents, None
+    matches = _declared_positions(documents, locator.sha256)
     if not matches:
         raise EvolutionError(f"stable locator {locator.reference()} is absent")
+    if len(matches) > 1:
+        raise EvolutionError(
+            f"stable locator {locator.reference()} is ambiguous: {len(matches)} entries declare it"
+        )
     return documents, matches[0]
 
 
@@ -958,7 +986,10 @@ def _apply_declared_operations(
     """
 
     document = deepcopy(before)
+    declared: set[str] | None = None  # UG3: built on the first source-document operation
     for position, operation in enumerate(operations):
+        if isinstance(operation.locator, SourceDocumentLocator) and declared is None:
+            declared = _declared_digests(document)
         if isinstance(operation.locator, ModelIdentityLocator):
             dumped = operation.model_dump(mode="json")
             declared_before = dumped["before"]
@@ -974,13 +1005,15 @@ def _apply_declared_operations(
             assert declared_after is not None
             document.update(deepcopy(declared_after))
             continue
-        collection, index = _operation_target(document, operation)
+        collection, index = _operation_target(document, operation, declared=declared)
         dumped = operation.model_dump(mode="json")
         declared_before = dumped["before"]
         declared_after = dumped["after"]
         if operation.kind is EvolutionOperationKind.ADD:
             collection.append(deepcopy(declared_after))
             _record_placement(placed, position, operation, collection, collection[-1])
+            if isinstance(operation.locator, SourceDocumentLocator):
+                declared.add(operation.locator.sha256)
             continue
         assert index is not None
         actual_before = collection[index]
@@ -988,6 +1021,8 @@ def _apply_declared_operations(
             raise EvolutionError(f"declared before value does not match {operation.reference()}")
         if operation.kind is EvolutionOperationKind.DELETE:
             del collection[index]
+            if isinstance(operation.locator, SourceDocumentLocator):
+                declared.discard(operation.locator.sha256)
         else:
             collection[index] = deepcopy(declared_after)
             _record_placement(placed, position, operation, collection, collection[index])

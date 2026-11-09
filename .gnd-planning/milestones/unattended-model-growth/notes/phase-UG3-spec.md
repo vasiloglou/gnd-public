@@ -2,7 +2,11 @@
 
 ## 1. Status line
 
-**Corpus gate `(o)`, 2026-11-09: approved.** Asked "Do you approve the UG3 corpus
+**Implemented, reviewed and recorded, 2026-11-09** (records
+[004-phase-UG3a.md](../004-phase-UG3a.md) and [005-phase-UG3b.md](../005-phase-UG3b.md)).
+Not merged; merging needs the owner.
+
+Earlier status, kept: **Corpus gate `(o)`, 2026-11-09: approved.** Asked "Do you approve the UG3 corpus
 answers?", the owner replied, quoted: "Approve the corpus". The approved answers
 are `expected.json` at sha256 `a46dc7dcdc702aa4c361024990d10e8f97179345a38099ab03ac9e0feebd7358`
 (commit `e881e521`), unchanged since. Implementation follows: part A, then part B.
@@ -446,6 +450,7 @@ exits); the B7 control.
 - **F-i2 (part B), a spec correction to B15:** the CLI's `apply` compares its `--policy` with the preview's and exits 3 ("--policy differs from the reviewed preview") **before** the policy re-runs, so §8's B15 (a policy-free preview applied with the policy) never reaches the re-run. B15 is re-shaped onto the route MG2's T3b uses: a preview made under the policy, its issue list stripped, applied through the service, which re-runs the policy and refuses with `source_document.modify` on operation 0 (exit 3 by type). Not a corpus answer.
 - **F-i3 (part B):** the service maps its refusals to exits by message family (`cli_service._evolve_service_exit`). The replay refusals therefore carry the existing families: "add target source.documents[…]: source document is already declared" and "stable locator source.documents[…]: the model declares no source.documents to append to". For a `modify` or `delete` on a model with no list the suffix " to append to" is dropped. The corpus needles (B4, B8) are substrings of these.
 - **F-i4 (part B):** UG1 T12 (a)'s comment said UG3 "will change this message and must edit this assertion knowingly". The approved design leaves the message unchanged (B10: a declaration with no operation is still refused by replay equality), so only the comment is updated.
+- **F-i6 (review, both parts):** the one Codex review found 3 blocking and 3 hardening defects, all reproduced and fixed with regression tests ([phase-UG3-codex-review.md](phase-UG3-codex-review.md)). Two of them refine this spec: §6.2's step 5 ("exit 3 as today") rebuilt an unprojected payload, which was already wrong for a redacted or reference-bearing model under MG5; the walk's result now goes through the validate pipeline. And §6.4's `modify`/`delete` "finds the entry by sha256" is now "exactly one entry"; two are ambiguous (3). §6.3's v3-only rule now covers records as well as proposals.
 - **F-i5:** `gnd.model._unattended` was unassigned in the component index; UG3 assigns it to `model.validation`, whose verbs already named unattended spans.
 
 ## Revision history
@@ -453,3 +458,4 @@ exits); the B7 control.
 - r1, 2026-11-09: first draft. Not reviewed. Approved as proposed at the spec gate.
 - r1 + corpus, 2026-11-09: rulings recorded, corpus authoring and findings F-c1 to F-c3 added; A7's exit corrected (F-c1). Not reviewed.
 - r1 + corpus + implementation, 2026-11-09: corpus approval recorded; findings F-i1 to F-i5 added; B15 re-shaped (F-i2). Not reviewed.
+- r1 + review, 2026-11-09: F-i6 added after the phase-diff review. Not reviewed again.

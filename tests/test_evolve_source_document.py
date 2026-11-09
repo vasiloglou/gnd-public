@@ -414,20 +414,73 @@ def test_b15_apply_re_runs_the_policy_over_a_stripped_preview(tmp_path: Path) ->
 
 
 @pytest.mark.parametrize("count", [1, 10, 100])
-def test_b16_the_replay_visits_each_declaration_once(count: int, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_b16_a_run_of_adds_is_linear(count: int, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Review finding 6: the digests are read once per replay, and an add never rescans the list."""
     from gnd.evolve import service
 
-    calls = {"target": 0}
-    original = service._source_document_target
+    calls = {"digests": 0, "positions": 0}
+    digests_of, positions_of = service._declared_digests, service._declared_positions
 
-    def spy(*args: Any, **kwargs: Any) -> Any:
-        calls["target"] += 1
-        return original(*args, **kwargs)
+    def digests(*args: Any) -> Any:
+        calls["digests"] += 1
+        return digests_of(*args)
 
-    monkeypatch.setattr(service, "_source_document_target", spy)
-    digests = [_sha(f"document {index}".encode()) for index in range(count)]
+    def positions(*args: Any) -> Any:
+        calls["positions"] += 1
+        return positions_of(*args)
+
+    monkeypatch.setattr(service, "_declared_digests", digests)
+    monkeypatch.setattr(service, "_declared_positions", positions)
+    added = [_sha(f"document {index}".encode()) for index in range(count)]
     operations = tuple(_declaration("add", digest, after={"sha256": digest, "label": f"d{index}.txt"},
-                                    operation_id=f"op-{index}") for index, digest in enumerate(digests))
+                                    operation_id=f"op-{index}") for index, digest in enumerate(added))
     replayed = service._apply_declared_operations(_doc(ROUNDS), operations)
-    assert [entry["sha256"] for entry in replayed["source"]["documents"]][-count:] == digests
-    assert calls["target"] == count
+    assert [entry["sha256"] for entry in replayed["source"]["documents"]][-count:] == added
+    assert calls == {"digests": 1, "positions": 0}
+    # A duplicate later in the same run is still caught by the kept set.
+    with pytest.raises(service.EvolutionError, match="already declared"):
+        service._apply_declared_operations(_doc(ROUNDS), (*operations, _declaration(
+            "add", added[0], after={"sha256": added[0], "label": "again.txt"}, operation_id="op-again")))
+
+
+# --- review regressions (notes/phase-UG3-codex-review.md) --------------------
+
+
+def test_r3_an_old_record_cannot_carry_the_locator() -> None:
+    """Review finding 3: records share EvolutionOperation, so their readers refuse it below version 3 too."""
+    import test_public_evolution_legacy_readers as legacy
+    from pydantic import ValidationError
+
+    from gnd.evolve import EvolutionRecord, canonical_sha256
+
+    record, _conformance = legacy._legacy_clean_record_documents()
+    declaration = _round_add().model_dump(mode="json")
+    for version in (1, 2):
+        for operations, refused in ((record["operations"], False), ([declaration], True)):
+            document = dict(record, schema_version=version, operations=operations, linked_conformance=[],
+                            conformance_exit_code=0, published_with_drift=False)
+            document["record_identity_sha256"] = canonical_sha256(
+                {key: value for key, value in document.items() if key != "record_identity_sha256"})
+            for read in (lambda document=document: EvolutionRecord.model_validate(document),
+                         lambda document=document: EvolutionRecord.model_validate_json(json.dumps(document))):
+                if refused:
+                    with pytest.raises(ValidationError, match="require record schema_version 3"):
+                        read()
+                else:
+                    assert read().schema_version == version
+
+
+def test_r5_a_digest_declared_twice_is_an_ambiguous_target() -> None:
+    """Review finding 5: modify and delete need exactly one entry with the digest."""
+    from gnd.evolve import service
+    from gnd.evolve.cli_service import _evolve_error_exit
+
+    before = _doc(ROUNDS)
+    second = {"sha256": ANNEX, "label": "second-annex.txt"}
+    before["source"]["documents"].append(second)
+    for operation in (_declaration("modify", ANNEX, before=_annex(), after=_annex("x.txt")),
+                      _declaration("modify", ANNEX, before=second, after=_annex("x.txt")),
+                      _declaration("delete", ANNEX, before=_annex())):
+        with pytest.raises(service.EvolutionError, match="is ambiguous: 2 entries declare it") as raised:
+            service._apply_declared_operations(before, (operation,))
+        assert _evolve_error_exit(raised.value) == 3

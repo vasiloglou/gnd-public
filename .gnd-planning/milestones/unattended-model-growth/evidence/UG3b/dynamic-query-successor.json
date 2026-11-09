@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "predecessor": ".gnd-planning/milestones/unattended-model-growth/evidence/UG3a/dynamic-query-successor.json",
-  "predecessor_sha256": "06a488c82294f5a92f4704e20c88bf00a4d86f22dfbb71848cae44610a066661",
+  "predecessor_sha256": "d2c6971063971fd3ba22d96896dd5c2e9166b9ed7799f0fc70d89828600c0b3b",
   "reason": "unattended-model-growth UG3 part B (issue 104, owner-approved spec and corpus 2026-11-09): the source-document evolve locator, its policy cells and its replay target in gnd.evolve.models, gnd.evolve.policy and gnd.evolve.service. Syntax census only; the exact query policy is unchanged.",
   "removed": [
     [
@@ -19,6 +19,48 @@
       1
     ],
     [
+      "src/gnd/evolve/models.py",
+      "_refuse_source_documents_before_v3",
+      "tuple[Any, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_declared_digests",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_declared_digests",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_declared_positions",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_declared_positions",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_operation_target",
+      "set[str]",
+      1
+    ],
+    [
       "src/gnd/evolve/service.py",
       "_source_document_target",
       "dict[str, Any]",
@@ -33,10 +75,16 @@
     [
       "src/gnd/evolve/service.py",
       "_source_document_target",
+      "set[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_source_document_target",
       "tuple[list[Any], int | None]",
       1
     ]
   ],
-  "result_distinct_rows": 7378,
-  "result_occurrences": 9202
+  "result_distinct_rows": 7386,
+  "result_occurrences": 9211
 }

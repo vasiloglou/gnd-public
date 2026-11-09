@@ -1,0 +1,186 @@
+{
+  "format_version": 2,
+  "population": {
+    "model": "model.orm.json",
+    "model_id": "urn:gnd:tutorial:release-governance:dependencies@1",
+    "source": "synthetic",
+    "covers": [
+      "dependency",
+      "deployable",
+      "vulnerable",
+      "request",
+      "reachable",
+      "exposure",
+      "affected",
+      "unaffected",
+      "vulnerability_count",
+      "blocked"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dependency": [
+      {
+        "service": "checkout",
+        "dependency": "payments"
+      },
+      {
+        "service": "checkout",
+        "dependency": "inventory"
+      },
+      {
+        "service": "checkout",
+        "dependency": "identity"
+      },
+      {
+        "service": "payments",
+        "dependency": "ledger"
+      },
+      {
+        "service": "payments",
+        "dependency": "serialization"
+      },
+      {
+        "service": "identity",
+        "dependency": "serialization"
+      },
+      {
+        "service": "inventory",
+        "dependency": "stock-db"
+      },
+      {
+        "service": "ledger",
+        "dependency": "ledger-db"
+      },
+      {
+        "service": "reporting",
+        "dependency": "analytics-db"
+      }
+    ],
+    "deployable": [
+      {
+        "service": "checkout"
+      },
+      {
+        "service": "payments"
+      },
+      {
+        "service": "inventory"
+      },
+      {
+        "service": "identity"
+      },
+      {
+        "service": "ledger"
+      },
+      {
+        "service": "reporting"
+      }
+    ],
+    "vulnerable": [],
+    "request": [
+      {
+        "release": "REL-101",
+        "service": "checkout"
+      },
+      {
+        "release": "REL-102",
+        "service": "inventory"
+      },
+      {
+        "release": "REL-103",
+        "service": "reporting"
+      },
+      {
+        "release": "REL-104",
+        "service": "payments"
+      },
+      {
+        "release": "REL-105",
+        "service": "ledger"
+      }
+    ],
+    "reachable": [
+      {
+        "service": "checkout",
+        "dependency": "identity"
+      },
+      {
+        "service": "checkout",
+        "dependency": "inventory"
+      },
+      {
+        "service": "checkout",
+        "dependency": "ledger"
+      },
+      {
+        "service": "checkout",
+        "dependency": "ledger-db"
+      },
+      {
+        "service": "checkout",
+        "dependency": "payments"
+      },
+      {
+        "service": "checkout",
+        "dependency": "serialization"
+      },
+      {
+        "service": "checkout",
+        "dependency": "stock-db"
+      },
+      {
+        "service": "identity",
+        "dependency": "serialization"
+      },
+      {
+        "service": "inventory",
+        "dependency": "stock-db"
+      },
+      {
+        "service": "ledger",
+        "dependency": "ledger-db"
+      },
+      {
+        "service": "payments",
+        "dependency": "ledger"
+      },
+      {
+        "service": "payments",
+        "dependency": "ledger-db"
+      },
+      {
+        "service": "payments",
+        "dependency": "serialization"
+      },
+      {
+        "service": "reporting",
+        "dependency": "analytics-db"
+      }
+    ],
+    "exposure": [],
+    "affected": [],
+    "unaffected": [
+      {
+        "service": "checkout"
+      },
+      {
+        "service": "identity"
+      },
+      {
+        "service": "inventory"
+      },
+      {
+        "service": "ledger"
+      },
+      {
+        "service": "payments"
+      },
+      {
+        "service": "reporting"
+      }
+    ],
+    "vulnerability_count": [],
+    "blocked": []
+  }
+}

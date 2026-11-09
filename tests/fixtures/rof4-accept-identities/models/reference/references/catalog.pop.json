@@ -1,0 +1,19 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "fixture",
+    "model_id": "urn:gnd-fixture:v71-dispatch-references@1",
+    "covers": [
+      "dispatch_catalog_allows"
+    ]
+  },
+  "instances": {},
+  "facts": {
+    "dispatch_catalog_allows": [
+      {
+        "warehouse": "WH-A",
+        "product": "GEAR-2"
+      }
+    ]
+  }
+}

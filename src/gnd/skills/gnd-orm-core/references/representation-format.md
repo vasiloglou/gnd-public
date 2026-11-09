@@ -923,8 +923,9 @@ recompute: `sha256` over a canonical JSON document, written `sha256:<64 lowercas
    matches such a model by its legacy `model_digest` only, and never reports
    the refusal as a mismatch.
 6. **The legacy identity is unchanged.** `model_digest` (`legacy-repr`) is
-   still what reports, `validate --trace`, steps files and generated plans
-   carry.
+   still what reports, `validate --trace` and generated plans carry. A
+   supplied pin (a steps file, a sidecar, a certificate) may name either
+   identity; see "Three digests, three bases" for where each is accepted.
 7. **Test vectors** (`tests/fixtures/rof3-model-identity/`, which also holds
    each document):
 
@@ -1345,12 +1346,23 @@ discipline: a walk cannot bind a value the checker would refuse in the data.
 
 | field | basis | reason |
 |---|---|---|
-| `model_digest` | the loaded model object, as `population._model_digest` computes it | the same function a population's validation marker uses, so a population and a walk agree by construction about what "this model" means |
+| `model_digest` | the loaded model object, as `population._model_digest` computes it. A supplied `model_digest` may name either identity: this legacy value or the model's canonical model identity (below) | the same function a population's validation marker uses, so a population and a walk agree by construction about what "this model" means |
 | `operations_digest` | canonical JSON over the raw `operations` section, before compilation | `model_digest` deliberately EXCLUDES operations (A8), so it cannot carry the claim "these steps were authored against THESE operations". A model can be identical in every other respect while its operations changed under a walk's feet |
 | `pre_digest` (optional) | sha256 over the pre-population FILE BYTES | provenance, not equivalence: the question is whether this is the artifact the walk was written against, and for that question "you reformatted the file" is a legitimate no |
 
 A fourth value, the canonical **model identity**, is defined in "Model identity (canonical,
 versions 1 and 2)" above: reproducible by a caller, and printed by `gnd validate MODEL --identity`.
+
+**Either identity is accepted wherever GND matches a model identity someone supplied**: a walk's
+`model_digest`, the `model_digest` of a check, verify or admission report read back (coverage,
+session replay), a synth sidecar's bare-hex `model_digest` (`gnd measure`) and a witness
+certificate's `binding.model_digest` (`gnd replay`, where every other binding field stays
+exact). A value that is neither is refused with the same message as before, naming the legacy
+value. A reference-bearing model has one identity: its legacy value is its version-1 canonical
+identity. GND itself keeps writing the legacy value as every report's own `model_digest`; a walk
+report's `transition.model_digest` echoes the pin as the steps supplied it. Generated Pyrel plans are the exception: they accept
+only the legacy value they were generated with. This is the acceptance rule's one home;
+`gnd.values.model_identity_matches` implements it.
 
 **No one should compute these by hand.** `gnd validate MODEL --trace` prints the first two, and a
 `pre_digest` mismatch prints the value the tool computed, so repairing a pin is copy-paste.

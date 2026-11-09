@@ -1,6 +1,7 @@
 """Independent certificate replay: finite local inference, never fixpoint search.
 
-Only intake/identity and the immutable wire contract are shared with production.
+Only intake/identity (including the model-identity match of ``gnd.values``) and
+the immutable wire contract are shared with production.
 The scalar table, body unification and rule instantiation below are independent.
 """
 
@@ -11,6 +12,7 @@ from datetime import date
 from gnd.artifacts import canonical_json_bytes
 from gnd.model import ModelLoadError, ModelValidationError, iter_derivation_clauses
 from gnd.population import PopulationLoadError
+from gnd.values import model_identity_matches
 from gnd.witness.io import (
     certificate_shape,
     classify_targets,
@@ -310,7 +312,18 @@ def replay_witness(
             return WitnessResult(3, reason="binding-stale")
         if composed and binding.pop("composition_sha256") != composition[0]:
             return WitnessResult(3, reason="binding-stale")
-        if binding != identity(model, candidate, reference_inputs):
+        # Whole-binding equality, key set included; only model_digest may name
+        # either identity of the model (ROF4). Every other field stays exact.
+        expected = identity(model, candidate, reference_inputs)
+        if (
+            binding.keys() != expected.keys()
+            or {k: v for k, v in binding.items() if k != "model_digest"}
+            != {k: v for k, v in expected.items() if k != "model_digest"}
+            or (
+                binding["model_digest"] != expected["model_digest"]
+                and model_identity_matches(binding["model_digest"], model) is None
+            )
+        ):
             return WitnessResult(3, reason="binding-stale")
         if composed:
             lineage = composition[1]

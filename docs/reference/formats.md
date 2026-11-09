@@ -62,6 +62,10 @@ model file and guessing.
 The canonical model identity, a digest a caller can recompute without Python,
 is defined in the representation format's "Model identity (canonical, versions
 1 and 2)"; `gnd validate MODEL --identity` prints it and the document it hashes.
+Wherever GND matches a `model_digest` you supply (a walk, a report read back, a
+synth sidecar, a witness certificate), either identity is accepted, and GND
+keeps writing the legacy value in its own reports; the representation
+format's digest table states the rule.
 
 An input refusal after a file change is useful information: the old evidence
 described other bytes. Re-author or regenerate the appropriate dependent

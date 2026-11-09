@@ -376,22 +376,22 @@ Read-only element coverage over models and previously emitted evidence.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SourceBindingGap` | class | 75 | One accepted check/verify source that never named its model. |
-| `SourceBindingGap.row(self) -> dict[str, Any]` | method | 83 | (no docstring) |
-| `SourceBindingGap.order(self) -> tuple[str, str]` | method | 91 | (no docstring) |
-| `Claim` | class | 96 | One covers row from one experiment. |
-| `Evidence` | class | 107 | One previously emitted payload row naming a model element. |
-| `ElementRow` | class | 116 | (no docstring) |
-| `CoverageResult` | class | 126 | (no docstring) |
-| `build_payload(result, *, gnd_version) -> dict[str, Any]` | function | 169 | Serialize a result into the closed coverage output contract. |
-| `render_coverage(payload) -> str` | function | 247 | Render the human element roadmap without an aggregate or grade. |
-| `CoverageInputError` | class(Exception) | 358 | A named source could not be consumed as the declared evidence kind. |
-| `CoverageMissingError` | class(Exception) | 362 | A path explicitly named by the caller does not exist. |
-| `CoveragePathError` | class(Exception) | 366 | A source path crossed a symlink or had a refused file type. |
-| `guard_named_source(path, *, directory) -> None` | function | 387 | Apply existence before the path guard for one argv-named source. |
-| `read_json_document(path, *, kind, payload_version) -> dict[str, Any]` | function | 458 | Read one evidence object, or raise :class:`CoverageInputError`. |
-| `read_evidence_document(path, *, kind, payload_version, census_model_digest) -> tuple[dict[str, Any]…` | function | 627 | Read and validate one document as exactly the evidence kind declared. |
-| `build_coverage(model, *, model_path, experiments, check, verify, conformance, transition) -> Covera…` | function | 943 | Build one coverage view by indexing sources, then walking elements once. |
+| `SourceBindingGap` | class | 76 | One accepted check/verify source that never named its model. |
+| `SourceBindingGap.row(self) -> dict[str, Any]` | method | 84 | (no docstring) |
+| `SourceBindingGap.order(self) -> tuple[str, str]` | method | 92 | (no docstring) |
+| `Claim` | class | 97 | One covers row from one experiment. |
+| `Evidence` | class | 108 | One previously emitted payload row naming a model element. |
+| `ElementRow` | class | 117 | (no docstring) |
+| `CoverageResult` | class | 127 | (no docstring) |
+| `build_payload(result, *, gnd_version) -> dict[str, Any]` | function | 170 | Serialize a result into the closed coverage output contract. |
+| `render_coverage(payload) -> str` | function | 248 | Render the human element roadmap without an aggregate or grade. |
+| `CoverageInputError` | class(Exception) | 359 | A named source could not be consumed as the declared evidence kind. |
+| `CoverageMissingError` | class(Exception) | 363 | A path explicitly named by the caller does not exist. |
+| `CoveragePathError` | class(Exception) | 367 | A source path crossed a symlink or had a refused file type. |
+| `guard_named_source(path, *, directory) -> None` | function | 388 | Apply existence before the path guard for one argv-named source. |
+| `read_json_document(path, *, kind, payload_version) -> dict[str, Any]` | function | 459 | Read one evidence object, or raise :class:`CoverageInputError`. |
+| `read_evidence_document(path, *, kind, payload_version, census_model_digest, census_model) -> tuple[…` | function | 628 | Read and validate one document as exactly the evidence kind declared. |
+| `build_coverage(model, *, model_path, experiments, check, verify, conformance, transition) -> Covera…` | function | 959 | Build one coverage view by indexing sources, then walking elements once. |
 
 ## gnd.declared_adapter — `src/gnd/declared_adapter.py`
 Components: agent.declared_adapter
@@ -1179,31 +1179,31 @@ Transition evaluation -- the loader half (Phase 2, lane 1).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `operations_digest(operations) -> str` | function | 94 | The digest of exactly the ``operations`` section, as loaded. |
-| `transition_model_identity(model) -> str` | function | 114 | The same function ``population.py`` uses, called from a second place. |
-| `population_file_digest(path) -> str` | function | 123 | sha256 over the population FILE BYTES as read. |
-| `read_steps_document(path) -> dict[str, Any]` | function | 158 | Read and layer-1 validate a walk. TOTAL over arbitrary bytes. |
-| `validate_steps_document(document) -> dict[str, Any]` | function | 204 | Copy and validate an already-loaded steps document through layer 1. |
-| `verify_digests(document, model, pre_path) -> None` | function | 247 | Stage 2. Each mismatch has its own rule id, so a caller is never left |
-| `operation_binding_issues(model, *, declared, operation_id, bindings, operation_path, bindings_path,…` | function | 298 | Validate one operation plus either exact bindings or a binding subset. |
-| `validate_steps(document, model) -> list[dict[str, Any]]` | function | 372 | Stage 3. Every step names a declared operation and binds exactly its |
-| `touched_fact_types(model, steps) -> set[str]` | function | 405 | Every fact type any step's operation asserts into or retracts from. |
-| `assert_frame_coverage(union, populations, supplied) -> None` | function | 427 | Stage 4. A population whose declared coverage omits a touched fact type |
-| `assert_static_derivation_coverage(model, steps, populations, supplied) -> None` | function | 455 | Require complete asserted inputs for static derivations used by the walk. |
-| `assert_dynamic_derivation_coverage(model, steps, populations, supplied) -> None` | function | 504 | Require selected/read dynamic heads and every transitive asserted leaf. |
-| `TransitionVerdict` | class(BaseModel) | 568 | One finding about one walk. |
-| `DerivedChange` | class(BaseModel) | 632 | One changed computed extension, observational and never banded. |
-| `StepResult` | class(BaseModel) | 646 | One step: what it was asked to do, what was found, and the state after. |
-| `FrameGrading` | class(BaseModel) | 662 | How one touched fact type is graded, and by whose declaration. |
-| `TransitionReport` | class(BaseModel) | 671 | Four claim families, never merged into an aggregate. |
-| `TransitionReport.all_verdicts(self) -> list[TransitionVerdict]` | method | 710 | (no docstring) |
-| `TransitionReport.embedded_reports(self) -> list[CheckReport]` | method | 717 | (no docstring) |
-| `ComputedTransition` | class | 722 | A transition report paired with the final population it computed. |
-| `band(report) -> int` | function | 730 | Verdicts -> exit band, precedence 1 > 4 > 2 > 0, jointly over all four families. |
-| `UnknownComparisonError` | class(ValueError) | 770 | A dynamic rule named an operator the evaluator does not implement. |
-| `evaluate(model, pre, post, steps, *, pre_receipt) -> TransitionReport` | function | 2047 | The whole declared-post walk, in the normative evaluation order. |
-| `evaluate_plan(model, pre, steps, *, pre_receipt) -> ComputedTransition` | function | 2089 | Apply a walk and return its computed post without a frame comparison. |
-| `frame_modalities(model) -> dict[str, tuple[str, list[str]]]` | function | 2138 | `{fact_type: (modality, operations)}` over EVERY operation in the model. |
+| `operations_digest(operations) -> str` | function | 95 | The digest of exactly the ``operations`` section, as loaded. |
+| `transition_model_identity(model) -> str` | function | 115 | The same function ``population.py`` uses, called from a second place. |
+| `population_file_digest(path) -> str` | function | 124 | sha256 over the population FILE BYTES as read. |
+| `read_steps_document(path) -> dict[str, Any]` | function | 159 | Read and layer-1 validate a walk. TOTAL over arbitrary bytes. |
+| `validate_steps_document(document) -> dict[str, Any]` | function | 205 | Copy and validate an already-loaded steps document through layer 1. |
+| `verify_digests(document, model, pre_path) -> None` | function | 248 | Stage 2. Each mismatch has its own rule id, so a caller is never left |
+| `operation_binding_issues(model, *, declared, operation_id, bindings, operation_path, bindings_path,…` | function | 301 | Validate one operation plus either exact bindings or a binding subset. |
+| `validate_steps(document, model) -> list[dict[str, Any]]` | function | 375 | Stage 3. Every step names a declared operation and binds exactly its |
+| `touched_fact_types(model, steps) -> set[str]` | function | 408 | Every fact type any step's operation asserts into or retracts from. |
+| `assert_frame_coverage(union, populations, supplied) -> None` | function | 430 | Stage 4. A population whose declared coverage omits a touched fact type |
+| `assert_static_derivation_coverage(model, steps, populations, supplied) -> None` | function | 458 | Require complete asserted inputs for static derivations used by the walk. |
+| `assert_dynamic_derivation_coverage(model, steps, populations, supplied) -> None` | function | 507 | Require selected/read dynamic heads and every transitive asserted leaf. |
+| `TransitionVerdict` | class(BaseModel) | 571 | One finding about one walk. |
+| `DerivedChange` | class(BaseModel) | 635 | One changed computed extension, observational and never banded. |
+| `StepResult` | class(BaseModel) | 649 | One step: what it was asked to do, what was found, and the state after. |
+| `FrameGrading` | class(BaseModel) | 665 | How one touched fact type is graded, and by whose declaration. |
+| `TransitionReport` | class(BaseModel) | 674 | Four claim families, never merged into an aggregate. |
+| `TransitionReport.all_verdicts(self) -> list[TransitionVerdict]` | method | 713 | (no docstring) |
+| `TransitionReport.embedded_reports(self) -> list[CheckReport]` | method | 720 | (no docstring) |
+| `ComputedTransition` | class | 725 | A transition report paired with the final population it computed. |
+| `band(report) -> int` | function | 733 | Verdicts -> exit band, precedence 1 > 4 > 2 > 0, jointly over all four families. |
+| `UnknownComparisonError` | class(ValueError) | 773 | A dynamic rule named an operator the evaluator does not implement. |
+| `evaluate(model, pre, post, steps, *, pre_receipt) -> TransitionReport` | function | 2050 | The whole declared-post walk, in the normative evaluation order. |
+| `evaluate_plan(model, pre, steps, *, pre_receipt) -> ComputedTransition` | function | 2092 | Apply a walk and return its computed post without a frame comparison. |
+| `frame_modalities(model) -> dict[str, tuple[str, list[str]]]` | function | 2141 | `{fact_type: (modality, operations)}` over EVERY operation in the model. |
 
 ## gnd.transition_kernel — `src/gnd/transition_kernel.py`
 Components: semantics.transitions
@@ -1253,6 +1253,8 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `model_identity_document(model) -> dict[str, Any]` | function | 271 | The canonical identity document of a loaded model. |
 | `model_identity_bytes(model) -> bytes` | function | 284 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
 | `model_identity(model, version) -> str` | function | 289 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
+| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 304 | Which identity of ``model`` the ``supplied`` value names, or None. |
+| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 334 | The identities :func:`model_identity_matches` accepts, legacy first. |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

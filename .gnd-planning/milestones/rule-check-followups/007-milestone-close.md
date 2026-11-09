@@ -118,7 +118,10 @@ Component index, whole milestone:
     exit=0
     with this close's own files added: 408 file(s) differ; 0 to fix, 0 warning(s), 10 to reread
 
-The stale page predates this close and is not this milestone's: line drift
+After main merged PR 138 (ROF4), which regenerated the same page, the
+merge of main into this branch took main's page; `write` reproduces it
+byte for byte and `components_index.py --check` exits 0, so the close PR
+no longer changes it. The stale page predates this close and is not this milestone's: line drift
 in `output.py` and the model-identity module from other milestones (PR 135
 noted it). The regenerated page changes line numbers only. Of the 10
 rereads, the seven subsystem entries over `model.loading` were reread at

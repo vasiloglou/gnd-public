@@ -1,0 +1,45 @@
+rule-check-release close: predicate 6 read-only checks, 2026-11-09T03:27:33Z, closing tree afc5bd8f (PR 133 branch merged with main db762f29)
+
+$ git diff --stat 12daa5b7 HEAD -- .github
+0
+
+$ gh api repos/vasiloglou/gnd-public/environments -q "[.environments[].name]"
+["github-pages"]
+
+$ gh run list --repo vasiloglou/gnd-public --workflow release.yml --json databaseId -q length
+0
+
+$ gh release list --repo vasiloglou/gnd-public
+GND v0.2.0	Latest	v0.2.0	2026-11-09T03:19:04Z
+GND v0.1.0		v0.1.0	2026-10-12T04:06:31Z
+
+$ gh release view v0.2.0 (assets)
+draft=false prerelease=false
+get_nick_done-0.2.0-py3-none-any.whl 2857045 sha256:e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4
+get_nick_done-0.2.0.tar.gz 2220814 sha256:f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104
+SHA256SUMS.txt 196 sha256:de14131eed0529695f769075011a6c6373c56fb3a4f7e4a15db2a386ff1ce72f
+
+$ git ls-remote --tags origin
+75eda93f314e7ef82578ab4ee212d5e6d964fd71	refs/tags/v0.1.0
+d84ad6d5cca021aa572751223d7c640d2b261055	refs/tags/v0.2.0
+7c0f4d0e320ff7976296d785077280d180ea688e	refs/tags/v0.2.0^{}
+
+$ GET https://pypi.org/pypi/get-nick-done/0.2.0/json (files)
+info.version: 0.2.0
+get_nick_done-0.2.0-py3-none-any.whl e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4 2857045 2026-11-08T17:24:56.542459Z yanked=False
+get_nick_done-0.2.0.tar.gz f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104 2220814 2026-11-08T17:24:58.203464Z yanked=False
+
+$ GET https://pypi.org/simple/get-nick-done/ (files)
+get_nick_done-0.1.0-py3-none-any.whl
+get_nick_done-0.1.0.tar.gz
+get_nick_done-0.2.0-py3-none-any.whl
+get_nick_done-0.2.0.tar.gz
+
+$ GET https://pypi.org/pypi/get-nick-done/json (releases)
+['0.1.0', '0.2.0']
+
+$ gh issue view 118 --json state,stateReason,closedAt
+CLOSED COMPLETED 2026-11-09T03:21:19Z
+
+$ git diff --stat 7c0f4d0e origin/main -- src pyproject.toml LICENSE NOTICE | tail -1
+ 18 files changed, 809 insertions(+), 214 deletions(-)

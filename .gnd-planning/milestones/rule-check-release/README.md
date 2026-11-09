@@ -2,7 +2,7 @@
 
 Planning opened 2026-11-07 for GitHub issue 118 (GR-D7): a release of
 `get-nick-done` on PyPI that carries the rule-check flags, which are on main
-and in no release. The published version is still 0.1.0.
+and in no release before 0.2.0. **0.2.0 is published on PyPI (2026-11-08T17:24:56Z): the owner uploaded the retained `7c0f4d0e` files by hand with their own token (route (a)), and the served files are byte-identical to them ([step E](evidence/publication/step-E-served-files.txt)).**
 
 **Status: plan r2 approved by the owner on 2026-11-07 ([plan-gate record](001-plan.md)). RR1 is implemented, reviewed and recorded ([record](002-phase-RR1.md)); its spec was approved by the owner on 2026-11-07 ("approved all", relayed). RR2's spec was approved by the owner on 2026-11-08 ("Approve as recommended"); RR2 is implemented and recorded ([record](003-phase-RR2.md)): candidate built from main `7c0f4d0e`, wheel sha256 `e323c19e…69e4`, sdist `f85818ea…5104`, release acceptance 14 passed on beast-3. RR3's spec was approved by the owner on 2026-11-08 ("Approve as recommended"); RR3 is implemented and recorded ([record](004-phase-RR3.md)): the hand-over dossier, three unapplied post-publication patches with a route-aware stale-text check, and `docs/releasing.md` stating both publication routes; implementation review by one reviewer (Codex, `revise`, J1 to J8, all fixed).** r1 was reviewed by one
 reviewer (Codex, `revise`, 11 findings, all accepted and applied in r2); the RR1 diff by one reviewer (Codex, `revise`, 3 findings, fixed). This milestone prepares a
@@ -24,6 +24,19 @@ dossier; close.
 
 Ruled (owner, 2026-11-07): RL-D1, version 0.2.0; RL-D2, the release waits for rule-check-followups FU2 and FU3 (FU4 and FU5 do not gate).
 
+RL-D5 route (owner, 2026-11-08, relayed): "Upload saved candidate", route (a), a token upload of the retained `7c0f4d0e` files, done by the owner by hand ([plan row](notes/rule-check-release-plan.md)).
+
 RL-D0 and RL-D3 to RL-D9 ruled as proposed (owner, 2026-11-07, relayed). RL-D9, after E1 (owner, 2026-11-07, relayed): "Split (a)+(b) (Recommended)" (normalize the version in the one RF1 pin helper; regenerate the committed outputs whose purpose is to equal the current command's output, every moved digest listed first; no fix of the version in the test environment). Opt-in lanes (`evidence`, `census`): "Record as excluded (Recommended)".
 
-Next action: the owner's merge decision on PR 131, then the milestone close. Nothing is published; publication is a separate owner request ([dossier](evidence/RR3/dossier.md)).
+Dossier actions 4 to 7 are done (RL-D10, recorded in the draft close).
+- The owner pushed tag `v0.2.0` (`d84ad6d5` → `7c0f4d0e`) and created the
+  [GitHub release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
+- [PR 140](https://github.com/vasiloglou/gnd-public/pull/140) applies the
+  post-publication patches; it is open.
+- Issue 118 is closed as completed (2026-11-09).
+
+**Close: drafted, not ruled ([draft close record](005-milestone-close.md); plan §12 draft amendment).** Next actions, all the owner's:
+- choose the close review instrument;
+- merge PR 133 and PR 140;
+- run the closing full lane;
+- give the close ruling. Done: route (a) upload (owner, by hand) and the step E served-file check (served wheel and sdist equal `e323c19e…69e4` and `f85818ea…5104`; a fresh index install gives `gnd 0.2.0`). PR 131 (RR3) merged as `36e47981`; main's `src` has since moved past the candidate (ROF1 to ROF3), which does not affect the published files.

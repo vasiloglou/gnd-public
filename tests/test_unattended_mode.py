@@ -202,6 +202,31 @@ def test_t2_branches_unreachable_through_this_fixture_at_the_rule() -> None:
     assert _direct(without) == ["semantic:unattended-u7"]
 
 
+def test_issue148_induced_cites_its_induction_block_in_place_of_a_span() -> None:
+    """U5 accepts a spanless induced constraint whose induction block cites the population.
+
+    Without the block it is still refused (above); a span it does carry is
+    still checked by U7, and U8 still refuses it as alethic."""
+    induction = {"inducer": {"name": "discover", "version": "1"}, "method": "discover",
+                 "manifest_sha256": "a" * 64, "examples": [], "support": {"numerator": 1, "denominator": 1},
+                 "counterexamples": [], "evidence": [{"ref": "population.json", "sha256": "a" * 64}]}
+
+    def with_induced(**extra: Any) -> dict[str, Any]:
+        document = _doc()
+        _fact(document)["constraints"].append({
+            "type": "mandatory", "role": "customer", "source": "induced", "status": "proposed",
+            "modality": "deontic", "provenance": {"induction": copy.deepcopy(induction), **extra}})
+        return document
+
+    assert _direct(with_induced()) == []
+    assert _direct(with_induced(spans=[_span("customers")])) == []
+    assert _direct(with_induced(spans=[{**_span("customers"), "document_sha256": "b" * 64}])) == [
+        "semantic:unattended-u7"]
+    alethic = with_induced()
+    _fact(alethic)["constraints"][-1]["modality"] = "alethic"
+    assert _direct(alethic) == ["semantic:unattended-u8"]
+
+
 def test_t2c_the_conforming_model_exits_0(tmp_path: Path) -> None:
     assert _validate(_doc(), tmp_path)[:2] == (0, [])
     assert _direct(_doc()) == []

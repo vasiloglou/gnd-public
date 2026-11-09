@@ -343,8 +343,9 @@ See the [rule verbalization reference](../reference/rule-verbalization.md).
 
 If the model itself was proposed by an LLM with no person confirming it,
 declare that with `source.mode: unattended`; `gnd validate` then requires
-every element, sample row and constraint (except `common-sense` ones, which
-cite a library entry) to cite its source text. See the
+every element, sample row and constraint to cite its source text, except
+`common-sense` constraints, which cite a library entry, and `induced` ones from
+`gnd discover`, which cite the population they were found in. See the
 [`gnd-model-from-text` skill's Unattended mode](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-model-from-text/SKILL.md).
 
 A program that proposes only fact types stops at the skill's Steps 1 and 2: its

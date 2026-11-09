@@ -30,7 +30,7 @@ slow_cadence:
   reason: "not selected at this close; the broad historical lanes are outside the milestone's impact closure"
 evidence:
   - path: .gnd-planning/milestones/report-output-fidelity/notes/report-output-fidelity-plan.md
-    sha256: 33594798e442e06b78302123c2fc3ae87ac1b0e838d775e9e377ec605ce66ea6
+    sha256: 8fb1869a0b47c0672992b8ea3f50cc2b0449c4f8495993ee83deee53f57148ba
   - path: .gnd-planning/milestones/report-output-fidelity/001-plan.md
     sha256: ad5b883f643c39657d9d0d84e137a316136c4bcf5ea5e6bc4813c46872e84064
   - path: .gnd-planning/milestones/report-output-fidelity/002-phase-ROF1.md
@@ -47,6 +47,10 @@ evidence:
     sha256: PENDING (file not yet written)
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/full-suite-base-12daa5b7.txt
     sha256: PENDING (file not yet written)
+  - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/codex-review.md
+    sha256: fc6974138edf525ccb548c0a109355052aee2022a1b6c9945c6c72709b51c3cc
+  - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/review-prompt.txt
+    sha256: 754052f3d8364ef9a9a1a017309b2b0c1163113208673cdddd36125b8c3d1f60
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/issue-states.txt
     sha256: fe5be88b4608cb80f2f1b116ac93c0b1e093e4dcbb18aaae1d987290c375d806
 ---
@@ -64,14 +68,18 @@ Both issues are closed as completed, by the owner:
 - 111 on 2026-11-09, with the report-side gap stated on the issue.
 
 Completion predicates 1, 2, 3 and the phase half of 5 hold by the evidence
-the phase records bind. Predicate 4's issue-111 clause, and predicate 5's
-issue clauses, hold only as amended in plan section 11. These amendments
-are the owner's ruling R1 and take effect with the close ruling.
+the phase records bind, with the qualifications in the table below.
+Predicate 3's compatibility clause is pending at main 8eb4fe60, until the
+close runs finish. Predicate 4's issue-111 clause and predicate 5's issue
+clauses hold only as amended in plan section 11 (rows 1-3, the owner's
+ruling R1). Section 11 also records four places where an owner-approved
+phase spec departed from r3's wording (rows 4-7). All of section 11 takes
+effect with the close ruling.
 
 **Full suite: PENDING.** The beast-3 runs at main 8eb4fe60 and at the merge base 12daa5b7 were still running when this draft was committed; their results come in a follow-up commit.
 
-**This record is a draft.** It has had no close review, and no close
-ruling has been given (see "What the close still needs").
+**This record is a draft.** Its close review has run (one Codex
+reviewer, by the owner's ruling); no close ruling has been given (see "What the close still needs").
 
 ## Phases
 
@@ -87,9 +95,9 @@ ruling has been given (see "What the close still needs").
 
 | # | Predicate (plan) | Evidence | Holds |
 |---|---|---|---|
-| 1 | Text output of `check`, `validate`, `transition` (full and plan) and export verification prints the plain layout for a model with a redaction policy or temporal terms. The body is rendered from the projected tree only. A canary secret never appears. | ROF1 and ROF2 corpora, canaries and goldens | yes. ROF2's boundary: temporal `--admission` and temporal `verify` are not projected and print plain text, unchanged |
-| 2 | A caller outside GND can recompute a model's identity, with one normative home, a shipped producer and a differential test | ROF3: `representation-format.md` subsection, `gnd validate --identity`, T1 over the 306 loadable models, hand-written byte vectors | yes |
-| 3 | Every matching site accepts both identities through one helper. Exact-coherence and copy sites stay exact. No recorded digest is rewritten, and pre-milestone artifacts verify. | ROF4: `values.model_identity_matches`, seven sites, the T1 source scan, the 15 shipped pins plus the new canonical example | yes. A generated Pyrel plan refuses a canonical pin by D7. T8, which shows that, needs DuckDB and has not run on the author's machine |
+| 1 | Text output of `check`, `validate`, `transition` (full and plan) and export verification prints the plain layout for a model with a redaction policy or temporal terms. The body is rendered from the projected tree only. A canary secret never appears. The plan excepts `validate --trace` and `validate --document`, which print from the model. | ROF1 and ROF2 corpora, canaries and goldens; ROF1 spec section 6 | yes, with the plan's own exception: `validate --trace` prints the model's structure, and `validate --document` can return early with warnings and issues. Neither prints from the projected tree; both are canary-tested. ROF2's boundary: temporal `--admission` and temporal `verify` are not projected and print plain text, unchanged |
+| 2 | A caller outside GND can recompute a model's identity, with one normative home, a shipped producer and a differential test | ROF3: `representation-format.md` subsection, `gnd validate --identity`, T1 over every tracked loadable model (313 at ROF3; the plan's 306 was measured at 12daa5b7), hand-written byte vectors | yes |
+| 3 | Every matching site accepts both identities through one helper. Exact-coherence and copy sites stay exact. No recorded digest is rewritten, and pre-milestone artifacts verify. | ROF4: `values.model_identity_matches`, seven sites, the T1 source scan; T10: the 14 executable legacy `steps.json` pins, `recordings/TASK.md` (which quotes the digest and is byte-preserved), and the new canonical example; ROF4's full suite at d83e972c equal to its base | yes for the helper, the sites and the shipped pins (ROF4 evidence). **Pending at main 8eb4fe60**: the claim that every pre-milestone artifact still verifies on main rests on the close runs (gates 1 and 2), because main gained other PRs after d83e972c. Plan ROF4-C3's "15 ... (executable)" is qualified in section 11, row 7. A generated Pyrel plan refuses a canonical pin by D7. T8, which shows that, needs DuckDB and has not run on the author's machine |
 | 4 | D3 honoured: ROF5 withdrawn with its reason, or delivered. Issue 111 stays open unless ROF5 delivers. | R1 (below); evidence/close/issue-states.txt | **as amended (plan section 11, row 1)**: ROF5 is withdrawn with its reason; issue 111 is closed by the owner's ruling, with the gap stated |
 | 5 | Approved spec, verbatim focused gate and one independent reviewer per phase. The close disposes every open question and closes 112. 111 closes only if ROF5 delivers. | the four records; the sweep below | the phase half holds. The question sweep is below. **As amended (section 11, row 2)**: the owner closed 112 before this close and 111 under R1 |
 
@@ -105,6 +113,32 @@ Component index, this close's files:
     uv run pytest -q -p no:cacheprovider tests/test_development_scaffold.py
     57 passed, 1 deselected in 21.12s
 
+## Close review
+
+One reviewer is one reviewer: Codex (gpt-6-sol, xhigh, read-only, prompt on
+stdin), selected by the owner ("One Codex reviewer", 2026-11-09). It
+reviewed the draft at d38670e9 (`git diff 8eb4fe60 d38670e9`) and returned
+`block` with 10 findings:
+- K1-K3 blocking;
+- K4 and K6-K9 completeness;
+- K5 and K10 hardening.
+
+Every finding was reproduced from the cited bytes before it was acted on,
+and all 10 were accurate and fixed:
+- K1 restates the R1 amendment.
+- K2 and K4 add plan section 11 rows 4-7.
+- K3 marks predicate 3's main-level claim as pending.
+- K5 corrects the line numbers.
+- K6 and K7 add sweep rows and a refuted premise.
+- K8 states predicate 1's plan exception.
+- K9 lists the pending runs.
+- K10 marks the README's older status as history.
+
+The review is retained verbatim with its triage in
+[evidence/close/codex-review.md](evidence/close/codex-review.md). The
+reviewer could not run the suite. The corrected record was not
+re-reviewed.
+
 ## Owner rulings recorded at this close
 
 Every quote below was relayed to this session by the session that started
@@ -114,6 +148,7 @@ directly.
 | ID | Question (as relayed) | Ruling (quoted as relayed) | Date | Effect |
 |---|---|---|---|---|
 | R1 (D3 re-ask after ROF4) | First, the explanation that ROF5 would emit the canonical identity in reports. Then: "Close #111 now, without ROF5?" | "ok skip it for now", then "Yes, close #111" | 2026-11-09 | No emission in this milestone; ROF5 withdrawn; issue 111 closed as completed by the session that started this one, at 2026-11-09T05:08:59Z. The closing comment states what shipped (PRs 132, 138) and the gap the owner accepted (evidence/close/issue-states.txt). This departs from plan predicate 4 ("Issue 111 stays open as partially addressed unless ROF5 delivers"). It is the owner's ruling, recorded as plan section 11 row 1, as the rule-check-release close recorded RL-D10 |
+| Close review instrument | "How should the report-output-fidelity close be reviewed?" | "One Codex reviewer" | 2026-11-09 | One read-only Codex review over this draft (section "Close review"). This waives the project's panel bar for the close, as RF-D0 did for the plan |
 | ROF4-O1 | Accept the corrected S1 answer: a canonical-pinned walk report's `transition.model_digest` echoes the pin as the steps supplied it, as the report schema defines | relayed as ruled; the owner's own wording was not relayed | 2026-11-09 | No change. The behaviour is on main in PR 138, which the owner merged at 2026-11-09T03:15:53Z |
 
 ## Open-questions sweep
@@ -125,7 +160,7 @@ directly.
 | ROF1-O3: 77 `test_public_tests_mode_corpus` failures and four others, on the author's machine only | 002 | PENDING: disposed against the beast-3 runs (follow-up commit) |
 | ROF1 refactoring, not done: `_print_projected_text` served three routes; `render_text_header` raised on an empty list | 002 | closed by ROF2's refactoring (003): `_print_projected_header`, `_projected_preamble` and the walk and verify rows |
 | ROF2-O1: should the projected error line add the error type? | 003 | closed: ruled 2026-11-08, leave it to `--format json` (003) |
-| ROF2-O2: retire the unused historical bindings `_print_check_verdicts` and `_print_derived_change_summaries` | 003 | **carried**: the shim-retirement phase under RF-D5. Both are still defined on main (`output.py:663`, `:675`) as `gnd.cli` bindings |
+| ROF2-O2: retire the unused historical bindings `_print_check_verdicts` and `_print_derived_change_summaries` | 003 | **carried**: the shim-retirement phase under RF-D5. Both are still defined on main (`output.py:675` and `:663` respectively) as `gnd.cli` bindings |
 | ROF2-O3: PR 127 was stacked on PR 124 | 003 | closed: both merged on 2026-11-08 (4f3afc9e, then 8f9781b9) |
 | ROF3-O1: `reference_model_digest` refuses a mutated non-string declaration key | 004 | closed: ruled 2026-11-08, accept the refusal (004) |
 | ROF3-O2: the checker timing tests fail under parallel load | 004 | closed by rule-check-followups FU4 (PR 129; issue 117 closed) |
@@ -143,14 +178,25 @@ directly.
 | ROF3 boundaries: a caller starting from YAML text needs GND's defaults or the `--identity` output; T1 and `derive_vectors.py` share Python's JSON encoder (the hand-written vectors do not) | 004 | accepted residual |
 | ROF4 boundary: S2 cannot observe the widening (a reference-bearing model has one identity); T1 pins that S2 asks the helper | 005 | accepted residual (review P5) |
 | The slow `evidence or census` lane did not run to green; its acceptance-runner cases fail on main too | 002 | carried: not this milestone's. It runs only on explicit owner request (`slow_cadence`) |
+| ROF2 size: source lines added reached 1.76 times the estimate (1.2 times net), past the 1.5 times stop rule, without the pause the plan requires | 003 | accepted residual: recorded in 003 as a finding about the estimate; the owner merged PR 127 over that record. The pause was missed, not waived |
+| ROF3 size: tests reached 1.55 times their estimate (review regressions and hand-written vectors) | 004 | accepted residual: recorded in 004; the owner merged PR 132 over that record |
+| ROF3 review P7: proposed repairs to T8 and T12, argued rather than applied (T7 was applied) | 004 | accepted residual: spec I7 states the argument |
+| ROF4 spec I5: two pre-existing crashes found while authoring the corpus (a text walk on a reference model; coverage on a `derivations: null` report) | 005 | closed by their own PRs, both on main 8eb4fe60: PR 135 (859b852d) and PR 136 (54554bf0) (issue-states.txt) |
 | Repairs after each phase review carry no review opinion | 002-005 | accepted residual (boundary below) |
 
 ## Plan repair
 
 Phase records named one plan repair: ROF4's R1, the predicate-4 clause on
 issue 111. This close adds the predicate-5 issue clauses and ROF5's
-withdrawal. All three are written into plan section 11 with the r3 wording
-kept, as **proposed** amendments that take effect with the owner's close
+withdrawal (rows 1-3). The close review (K2, K4) found four more places
+where an owner-approved phase spec departed from r3's wording (rows 4-7):
+- the refusal rule id (ROF3 D4);
+- the scope of the legacy pin (ROF3 D6);
+- the wrong-pin message (ROF4 D2);
+- the count of executable shipped pins (ROF4 T10).
+
+All seven rows are written into plan section 11 with the r3 wording kept.
+They are **proposed** amendments that take effect with the owner's close
 ruling. The amended plan is bound above by sha256.
 
 ## Refuted premises
@@ -162,6 +208,12 @@ ruling. The amended plan is bound above by sha256.
   and the spec were corrected (ROF4 spec I1). The owner accepted the
   corrected answer (ROF4-O1). This was a spec premise, not a plan premise;
   the plan needs no repair for it.
+- The approved ROF4 T6 answer said a measure corpus mixing both spellings
+  gives a payload byte-identical to the all-legacy run. It cannot: the
+  report's `corpus[].sidecar_sha256` is the SHA-256 of the sidecar file the
+  case rewrote (ROF4 spec I2, review P4). The runner checks each published
+  value against its file and compares every other byte. A spec premise; no
+  plan repair.
 
 ## Refactoring review
 
@@ -177,7 +229,7 @@ ruling. The amended plan is bound above by sha256.
 
 - Each phase had one reviewer (Codex). The project's panel bar ran over
   nothing in this milestone. Repairs after each review carry no review
-  opinion. This close has had no review yet.
+  opinion. This close had one reviewer; its repairs were not re-reviewed.
 - Owner rulings R1 and ROF4-O1 are recorded as relayed by another session.
 - T8 (a generated Pyrel plan refuses a canonical pin) needs the DuckDB
   runtime and has not run on the author's machine.
@@ -189,11 +241,9 @@ ruling. The amended plan is bound above by sha256.
 
 ## What the close still needs
 
-1. **The close review instrument.** Plan section 9 names none for the close.
-   The project's bar is the maintained panel. Each phase of this milestone,
-   and the rule-check-followups close, used one reviewer (Codex) by the
-   owner's selection.
-2. **The close review itself**, then its findings' dispositions in this
-   record.
-3. **The close ruling** over this record and plan section 11 (the R1
+1. **The two close runs** on beast-3 (gates 1 and 2): their results are
+   retained under evidence/close/, and the failing-test sets at 8eb4fe60 and
+   12daa5b7 are compared. Predicate 3's main-level compatibility claim and
+   ROF1-O3's disposition wait on them.
+2. **The close ruling** over this record and plan section 11 (the R1
    amendments), and the merge of this PR.

@@ -269,8 +269,9 @@ program. There is one exception: when the facts the program extracted are in a
 population file and every one of them satisfies the rule, `--check-population`
 lets the policy admit the rule as a proposed, advisory constraint, relative to
 that file ([admitting a constraint on clean data](../reference/evolve-policy.md#admitting-a-constraint-on-clean-data)).
-Here the rule would rest on two sample rows, and the policy never admits a rule
-over a fact type that carries sample rows, so round 2 stays refused.
+Here the rule's fact type carries two sample rows in the current model, and the
+population check never clears a rule over such a fact type, so round 2 stays
+refused.
 
 ## Give the extractor guidelines
 

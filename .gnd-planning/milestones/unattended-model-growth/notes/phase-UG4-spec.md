@@ -2,7 +2,9 @@
 
 ## 1. Status line
 
-**Spec gate `(o)`, 2026-11-09: approved as proposed.** Asked "How do you rule on UG4-D1 to
+**Implemented, reviewed and recorded, 2026-11-09** ([record](../006-phase-UG4.md)). Not merged.
+
+Earlier status, kept: **Spec gate `(o)`, 2026-11-09: approved as proposed.** Asked "How do you rule on UG4-D1 to
 UG4-D7?", the owner replied, quoted: "Approve all as proposed". Every decision in §7 is ruled
 as its proposed reading, including UG4-D1 (a): the approval instrument is this spec's prose.
 Approved bytes: r1 at `478ea2a2` (sha256 `f475810eb62a06aba44b402baa255e4e3b6c116f8df935320a0553db1f91338a`). Implementation follows.
@@ -239,7 +241,25 @@ about 30 test lines (UG4-D4).
 Proposed UG4-D1 (a): the owner rules UG4-D1 to UG4-D7 on this text. Implementation starts only
 after that ruling is recorded here.
 
+## Implementation findings (recorded as found)
+
+- **F-i1:** the skill routing pin (`tests/test_packaged_skills.py`) moved knowingly: two new edges
+  from `unattended-growth.md` into the contract (`#stable-locators`, `#population-check`) and
+  the count from 235 to 238 (the two edges plus one more mention of `#unattended-source`),
+  measured.
+- **F-i2:** ruff's import-order rule already failed on `tests/test_unattended_growth_guidance.py`
+  at `ad454305`; the autofix in this phase resolves it.
+- **F-i3:** `uv run gnd doctor --project` exits 11 in this worktree: its machine-local receipt
+  (placed 2026-10-13) records collisions (2 in `.claude/skills`, 18 in `.codex/skills`). No
+  packaged file is added, renamed or removed here, and the install and doctor tests pass; the
+  worktree's links were not re-adopted.
+- **F-i4 (review, [phase-UG4-codex-review.md](phase-UG4-codex-review.md)):** five findings, all
+  fixed. Two correct this spec: §6.1 (b)'s "then `apply` with the same options" (apply rejects
+  `--shape-report`; kept from the earlier text), and the guard of UG4-D4, which now also covers
+  wrapped spans, fenced lines and literal option values.
+
 ## Revision history
 
 - r1, 2026-11-09: first draft. Not reviewed.
 - r1 ruled, 2026-11-09: all of UG4-D1 to D7 as proposed.
+- r1 + implementation, 2026-11-09: findings F-i1 to F-i4. Not reviewed again.

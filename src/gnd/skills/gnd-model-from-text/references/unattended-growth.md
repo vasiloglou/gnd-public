@@ -52,8 +52,9 @@ One round is one document, in four moves.
    are in [representation-format.md](../../gnd-orm-core/references/representation-format.md#unattended-source)).
    Then `gnd evolve preview --policy additive --shape-report`, adding `--check-population FILE`
    when the round adds a constraint on a fact type that already holds facts
-   ([below](#constraints-on-fact-types-that-already-hold-facts)), then `apply` with the same
-   options. The shape report is advice: for each added fact type it lists existing fact types
+   ([below](#constraints-on-fact-types-that-already-hold-facts)), then `apply` repeating
+   `--policy additive` and any `--populated` and `--check-population` options. `--shape-report`
+   is a preview option only; `apply` rejects it (exit 64). The shape report is advice: for each added fact type it lists existing fact types
    over the same role players. Deciding that two readings mean the same thing is the host's
    ([acting on a shape match](#acting-on-a-shape-match)).
 
@@ -73,11 +74,13 @@ Never merge, rename or delete in the round. A merge is a rename or delete of som
 exists, so it belongs to the consolidation round's reviewed proposal.
 
 **Constraints travel with their fact type.** Under `--policy additive` a new constraint over a
-fact type that already holds facts is refused (`constraint.populated.add`, exit 3), and a fact
-type the same proposal adds is never populated. So propose a fact type's uniqueness, mandatory,
+fact type that already holds facts is refused (`constraint.populated.add`, exit 3) unless a
+clean population clears it ([below](#constraints-on-fact-types-that-already-hold-facts)), and a
+fact type the same proposal adds is never populated. So propose a fact type's uniqueness, mandatory,
 value and ring constraints in the round that adds it, before its facts are extracted. A
 constraint that spans fact types, or a `value` constraint on an object type, is populated if
-**any** fact type it touches is, so it is admitted only when every one of them is new or empty.
+**any** fact type it touches is, so without that population it is admitted only when every one
+of them is new or empty.
 A population held outside the model (extracted facts in a separate file) is invisible to the
 policy unless the host passes `--populated FACT_TYPE` for it; leave that out and the policy
 admits constraints it should have refused. The policy protects the facts it can see, and only

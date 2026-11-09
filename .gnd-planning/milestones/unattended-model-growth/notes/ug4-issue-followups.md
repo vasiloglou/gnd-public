@@ -20,7 +20,7 @@ its number when posted.
 >
 > - **Unchecked spans are counted.** `gnd validate MODEL --document DOC` on an unattended model
 >   adds one `unattended:spans-unchecked` warning ("N of M source spans were not re-hashed")
->   when a declared document was not supplied; `--require-documents` makes it an error (exit 3),
+>   when at least one source span was not re-hashed (its document was not supplied); `--require-documents` makes it an error (exit 3),
 >   also with no `--document`. Runs that re-hash every span, runs without `--document`, and
 >   models without the mode are unchanged. Rules: `gnd-orm-core` representation format,
 >   "Unattended source". Record: `.gnd-planning/milestones/unattended-model-growth/004-phase-UG3a.md`.

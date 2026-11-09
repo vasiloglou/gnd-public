@@ -53,6 +53,7 @@ UNATTENDED_MODE = "unattended"
 _SHA256_HEX = re.compile(r"[0-9a-f]{64}")  # always fullmatch: `$` admits a trailing newline (review R-F1)
 _SPAN_KEYS = frozenset({"document_sha256", "start", "end", "excerpt_sha256"})
 _UNATTENDED_SPANLESS_SOURCE = "common-sense"
+_UNATTENDED_INDUCED_SOURCE = "induced"
 _UNATTENDED_ALETHIC_SOURCES = ("sample", "llm-inferred", "common-sense", "induced")
 
 
@@ -206,11 +207,16 @@ def _rule_unattended(doc: dict[str, Any]) -> list[ValidationIssue]:
                                rule_id="semantic:unattended-u4", span_rule_id="semantic:unattended-u7")
     for path, constraint in constraints:
         provenance = constraint.get("provenance")
-        spanless = constraint.get("source") == _UNATTENDED_SPANLESS_SOURCE and not (
-            isinstance(provenance, Mapping) and "spans" in provenance)
+        has_spans = isinstance(provenance, Mapping) and "spans" in provenance
+        # An induced constraint cites the digest-bound population evidence in
+        # its induction block in place of a span (issue #148).
+        cites_population = constraint.get("source") == _UNATTENDED_INDUCED_SOURCE and isinstance(
+            provenance, Mapping) and isinstance(provenance.get("induction"), Mapping)
+        spanless = not has_spans and (
+            constraint.get("source") == _UNATTENDED_SPANLESS_SOURCE or cites_population)
         if not spanless:
-            # A common-sense constraint needs no span, but a span it does carry
-            # is checked like any other (review R-F6).
+            # A common-sense or induced constraint needs no span, but a span it
+            # does carry is checked like any other (review R-F6).
             _require_spans(constraint, path, "constraint", declared, issues,
                            rule_id="semantic:unattended-u5", span_rule_id="semantic:unattended-u7")
     for fact_type in _listed(doc.get("fact_types")):

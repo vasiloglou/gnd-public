@@ -103,7 +103,7 @@ If no answer: default to **MVP-fast** when the stated goal is a prototype or an 
 A host pipeline that runs this skill without a person to answer (an LLM proposing the model from document passages) uses **Unattended**, not One-shot. One-shot still assumes a reviewer edits the YAML afterwards and auto-confirms library-tier constraints; Unattended confirms nothing. The host runs the LLM; GND validates the result.
 
 - Set `source.mode: unattended`, `source.reviewer: none`, and list every source document in `source.documents` with the SHA-256 of its raw bytes.
-- Every object type, fact type and sample row, and every constraint except `common-sense` (which cites `library_entry`), carries a span of the document it came from.
+- Every object type, fact type and sample row, and every constraint except `common-sense` (which cites `library_entry`) and `induced` (which cites its `induction` evidence), carries a span of the document it came from.
 - Every constraint stays `proposed`, and every constraint this workflow emits stays `deontic`; no `explicit` or `user-supplied` source, since nobody said it.
 - Validate with `gnd validate MODEL --document DOC ...`, not `scripts/validate_model.py`, which checks the schema only and cannot see these rules.
 

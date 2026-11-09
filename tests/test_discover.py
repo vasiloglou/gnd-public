@@ -687,3 +687,59 @@ def test_q1_an_existing_out_is_refused_before_anything_is_written(tmp_path: Path
     out.write_text("old proposal\n", encoding="utf-8")
     assert run_main(argv).returncode == 11
     assert out.read_text() == "old proposal\n" and not report.exists()
+
+
+def _unattended_bookrec(tmp_path: Path, mode: str) -> tuple[Path, Path]:
+    """Issue 148's recipe: the packaged bookrec model, every element citing one stand-in document."""
+    import hashlib
+    import importlib.resources
+
+    from ruamel.yaml import YAML
+
+    example = importlib.resources.files("gnd") / "examples" / "bookrec"
+    model = YAML(typ="safe").load((example / "complete.orm.yaml").read_text(encoding="utf-8"))
+    doc = ("A stand-in source document for the bookrec example. " * 20).encode()
+    digest = hashlib.sha256(doc).hexdigest()
+    span = {"document_sha256": digest, "start": 0, "end": 10, "excerpt_sha256": hashlib.sha256(doc[:10]).hexdigest()}
+    model["source"] = {"kind": "prose", "mode": mode, "reviewer": "none",
+                       "documents": [{"sha256": digest, "label": "doc.txt"}]}
+
+    def llm(constraint: dict[str, Any]) -> None:
+        constraint.update(status="proposed", modality="deontic", source="llm-inferred", rationale="stated",
+                          provenance={"spans": [span], "rationale_world_fact": "stated"})
+
+    for element in model.get("object_types", []):
+        element.setdefault("provenance", {})["spans"] = [span]
+    for fact_type in model.get("fact_types", []):
+        fact_type.setdefault("provenance", {})["spans"] = [span]
+        fact_type.pop("sample_population", None)
+        for constraint in fact_type.get("constraints") or []:
+            llm(constraint)
+    for constraint in model.get("constraints") or []:
+        llm(constraint)
+    model.pop("derivation_rules", None)
+    model_path = tmp_path / "model.orm.json"
+    model_path.write_text(json.dumps(model), encoding="utf-8")
+    population = json.loads((example / "complete.population.json").read_text(encoding="utf-8"))
+    population["population"]["model"] = "model.orm.json"
+    population_path = tmp_path / "population.json"
+    population_path.write_text(json.dumps(population), encoding="utf-8")
+    return model_path, population_path
+
+
+def _operations(tmp_path: Path, mode: str) -> list[dict[str, Any]]:
+    root = tmp_path / mode
+    root.mkdir()
+    model, population = _unattended_bookrec(root, mode)
+    assert run_main(["validate", str(model)]).returncode == 0
+    result = run_main(["discover", str(model), str(population), "--out", str(root / "proposal.json"),
+                       "--report", str(root / "report.json"), "--actor", "issue-148",
+                       "--requested-at", "2026-11-09T00:00:00+00:00"])
+    assert result.returncode == 0, result.stderr
+    return json.loads((root / "proposal.json").read_text(encoding="utf-8"))["operations"]
+
+
+def test_issue148_discover_on_an_unattended_model_matches_one_shot(tmp_path: Path) -> None:
+    """Issue 148: an unattended model no longer exits 70; it emits what one-shot emits."""
+    unattended = _operations(tmp_path, "unattended")
+    assert unattended and len(unattended) == len(_operations(tmp_path, "one-shot"))

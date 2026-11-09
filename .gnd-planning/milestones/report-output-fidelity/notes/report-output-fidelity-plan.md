@@ -378,3 +378,15 @@ merge-base run on beast-3 precedes the first code change.
 | D5 | The shipped producer surface | decided in the ROF3 spec; options are an extra `validate --trace` line (moves the trace goldens), a flag, a subcommand **Ruled (o, 2026-11-07): as proposed**, i.e. deferred to the ROF3 spec ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D6 | Index review | `components_index.py review` printed 180 leads in 10 groups ("a place to look, not a finding") and names `output.py` among them. The plan does not rely on the index for the renderer's boundaries beyond component ids; the owner may call for the index's Review mode **Ruled (o, 2026-11-07): as proposed** ("Approve as proposed", answering "How do you rule on RF-D0 and D1–D6 in the plan?"). |
 | D7 | Generated Pyrel plans (new in r3, review P3) | the plan's embedded `MODEL_DIGEST` and its in-file comparison cannot call a GND helper. (a) keep the legacy constant: plans stay byte-identical, canonical pins are refused by generated plans (proposal). (b) embed both: 24 recorded plan fixtures change bytes (rule 1) **Ruled (o, 2026-11-07): (a)** ("Approve r3, D7 (a)", answering "Approve plan r3 at the plan gate?"). |
+
+## 11. Close amendments (draft, appended 2026-11-09)
+
+Proposed by the draft close record
+([006-milestone-close.md](../006-milestone-close.md)). They take effect only
+with the owner's close ruling. The r3 wording above is kept unchanged.
+
+| Row | r3 wording (kept above) | Amendment | Source |
+|---|---|---|---|
+| 1 | Predicate 4: "ROF5 is withdrawn with the reason recorded, or, if D3 is re-ruled to \"emit\", specified and delivered. **Issue 111 stays open as partially addressed unless ROF5 delivers**" | D3 was re-asked after ROF4 (ROF4 record, row R1) and ruled again: no emission in this milestone. ROF5 is withdrawn: emission needs a new report version for each live version (7, 9, 11, 15 and the wrapped 12/14 forms) and moves 154 tracked fixture files. **Issue 111 is closed as completed** by the owner's ruling, with the report-side gap recorded on the issue. This departs from the r3 clause by the owner's decision. | R1, owner, 2026-11-09 (close record, Owner rulings) |
+| 2 | Predicate 5: "the close record ... closes issue 112; issue 111 closes only if ROF5 delivers, otherwise the close record keeps it open and states the remaining gap" | Issue 112 was closed by the owner on 2026-11-08 after ROF1 and ROF2 merged, before this close. Issue 111 was closed by the owner on 2026-11-09 under row 1. The close record states the remaining gap and retains both issue states (evidence/close/issue-states.txt). | close record |
+| 3 | Section 4, ROF5: "Outline only. Unblocks when D3 rules (b) or (c)." | Withdrawn (row 1). A later milestone that wants emission starts from D3 (b) or (c) with its own plan. | R1 |

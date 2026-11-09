@@ -1,0 +1,35 @@
+# gh issue view, 2026-11-09 (2026-11-09T05:11:59Z)
+## issue 111
+number: 111
+title: The model digest is a Python repr, which a caller cannot reproduce
+state: CLOSED
+stateReason: COMPLETED
+closedAt: 2026-11-09T05:08:59Z
+last comment:
+  author: vasiloglou
+  createdAt: 2026-11-09T05:08:58Z
+  body:
+Addressed by the report-output-fidelity milestone:
+
+- **#132 (ROF3):** a canonical model identity built from a canonical JSON serialization of the model, which a caller can recompute outside GND. `gnd validate --identity` prints it.
+- **#138 (ROF4):** every site that matches a supplied model identity against a loaded model now accepts either the legacy digest or the canonical identity, through one helper. No recorded digest was rewritten, and pre-milestone digest-bound artifacts still verify.
+
+Known gap, accepted by the owner: reports still print the legacy `model_digest`. Emitting the canonical identity in reports (ROF5) was withdrawn; it would need a new version of each live report format. Closed by the owner's decision.
+
+## issue 112
+number: 112
+title: Text output prints projected JSON for redaction and temporal models
+state: CLOSED
+stateReason: COMPLETED
+closedAt: 2026-11-08T14:44:56Z
+last comment:
+  author: vasiloglou
+  createdAt: 2026-11-08T14:44:56Z
+  body:
+Fixed by #124 (ROF1) and #127 (ROF2): `report`, `walk`, `check --admission` and `verify` now print their plain-text layouts for projected (redaction and temporal) payloads instead of JSON-as-text. Closed by the owner's decision.
+
+## PRs
+PR 124: MERGED 2026-11-08T06:26:37Z merge 4f3afc9ed25b4efbf1bf53ccbac17aab4fd94499
+PR 127: MERGED 2026-11-08T06:31:39Z merge 8f9781b933082546f4a65df91b427ca3f3d5a63f
+PR 132: MERGED 2026-11-08T14:57:33Z merge 6058c67443b122c982385fc487e302736a65652f
+PR 138: MERGED 2026-11-09T03:15:53Z merge db762f292c13fb99b533fe419348ca1fa98ca1a1

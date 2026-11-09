@@ -12,11 +12,18 @@ ROF4 implemented ([record](005-phase-ROF4.md)), on branch
 `claude/rof4-accept-identities`, awaiting its PR and merge.**
 ROF5 onward are outlines. `auto=false`.
 
+**Status, 2026-11-09: ROF4 merged (PR 138, db762f29). ROF5 is withdrawn by
+the owner's ruling R1 (no emission in this milestone). Issues 111 and 112
+are closed. The milestone close is drafted ([close record](006-milestone-close.md),
+plan [section 11](notes/report-output-fidelity-plan.md) amendments). It
+awaits the close review and the owner's close ruling.**
+
 - [Plan-gate record](001-plan.md)
 - [ROF1 record](002-phase-ROF1.md)
 - [ROF2 record](003-phase-ROF2.md)
 - [ROF3 record](004-phase-ROF3.md)
 - [ROF4 record](005-phase-ROF4.md)
+- [Milestone close record (draft)](006-milestone-close.md)
 - [Plan (r3, approved)](notes/report-output-fidelity-plan.md)
 - [ROF1 spec (approved, implemented)](notes/phase-ROF1-spec.md)
 - [ROF2 spec (approved, implemented)](notes/phase-ROF2-spec.md)

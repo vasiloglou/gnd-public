@@ -187,6 +187,17 @@ def test_current_successor_lookup_rejects_duplicates_and_unchained_rows(monkeypa
     current_path.write_text(json.dumps(altered))
     with pytest.raises(AssertionError, match='duplicate current'):
         sources.body_successor('RF4', target['name'], target['old'])
+    chained = copy.deepcopy(document)
+    chained['successors'].append({**copy.deepcopy(target), 'before': copy.deepcopy(target['after']),
+                                  'after': {'chained': True}, 'reason': 'later change'})
+    current_path.write_text(json.dumps(chained))
+    collapsed = sources.body_successor('RF4', target['name'], target['old'])
+    assert collapsed['before'] == {'original': True} and collapsed['after'] == {'chained': True}
+    assert collapsed['reason'] == 'later change'
+    chained['successors'][-1]['home'] = 'gnd.elsewhere'
+    current_path.write_text(json.dumps(chained))
+    with pytest.raises(AssertionError, match='duplicate current'):
+        sources.body_successor('RF4', target['name'], target['old'])
     altered = copy.deepcopy(document)
     next(row for row in altered['successors'] if row['kind'] == 'RF4'
          and row['name'] == target['name'])['before']['algorithm_sha256'] = 'unrecorded'

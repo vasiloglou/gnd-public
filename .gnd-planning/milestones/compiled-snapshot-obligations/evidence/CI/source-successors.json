@@ -780,6 +780,21 @@
         "algorithm_sha256": "b25b6aaa22c09fce7988f09b72a2f9933f6a5a442a7509bc8eb3ab3dc64144b9"
       },
       "reason": "report-output-fidelity ROF4 (issue 111, owner-approved 2026-11-08): the C6 sidecar binding accepts either identity of the model through gnd.values.model_identity_matches (bare hex), one verdict per distinct sidecar digest; the legacy digest is still looked up once through synth.provenance for the refusal message, which is unchanged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_transition",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "9cb12439bdcc497338d07301d45e28aabaaf96101b318fd9c0d442474398ec9c",
+        "algorithm_sha256": "ffae2d79641594e5712a4cfeaca0f61ec6afaff8cd932b5b2211b4f110e7cfcf"
+      },
+      "after": {
+        "raw_sha256": "4d4fc50136808f2e47089ca50e63990f18942a8ffdcb0c0e5b294d99d11f2dfd",
+        "algorithm_sha256": "4e412262752fe02b9389890cbc86fcd5a5b7fb6952ed70a902c2a525a937f5f5"
+      },
+      "reason": "PR 135 (commit 9ff471a7, merged 2026-11-08): the text walk on a reference model reads computed_post from the nested mechanical_payload report instead of the top-level payload; chained after the ROF2 row."
     }
   ]
 }

@@ -65,14 +65,27 @@ def _unique(rows, predicate):
 
 
 def _current_rows():
+    """One row per identity; a later change to the same body appends a chained row.
+
+    Rows sharing an identity must follow each other in file order (each one's
+    before equals the previous one's after, same home); they collapse to one
+    row spanning the first before to the last after, keeping the last reason.
+    """
     document = json.loads(SOURCE_SUCCESSORS.read_text())
     assert document['schema_version'] == 1
     rows = document['successors']
-    identities = [(row['kind'], row.get('old', row.get('module')), row['name']) for row in rows]
-    assert len(set(identities)) == len(identities), 'duplicate current source successor'
     assert all(row['kind'] in {'RF4', 'RF5', 'RF6b'} and row['reason'] and row['home']
                for row in rows)
-    return rows
+    collapsed = {}
+    for row in rows:
+        identity = (row['kind'], row.get('old', row.get('module')), row['name'])
+        previous = collapsed.get(identity)
+        if previous is not None:
+            assert row['home'] == previous['home'] and row['before'] == previous['after'], (
+                'duplicate current source successor')
+            row = {**row, 'before': previous['before']}
+        collapsed[identity] = row
+    return list(collapsed.values())
 
 
 def body_successor(kind, name, old=None):

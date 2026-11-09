@@ -783,7 +783,7 @@ def project_output(
                             gap["offending_facts"] = [marker for _ in gap.get("offending_facts", ())]
                             if gap.get("witness_sentence") is not None:
                                 gap["witness_sentence"] = INSTANCE_DETAIL
-                    for difference in row.get("derivations", ()):
+                    for difference in row.get("derivations") or ():
                         difference["tuple"] = marker
                         difference["offending_facts"] = [marker for _ in difference.get("offending_facts", ())]
             return payload

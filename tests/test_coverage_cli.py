@@ -197,3 +197,22 @@ def test_coverage_modules_allocate_no_exit_band() -> None:
                 names = [target.id for target in targets if isinstance(target, ast.Name)]
                 value = node.value
                 assert not (any('EXIT' in name or 'BAND' in name for name in names) and isinstance(value, ast.Constant) and isinstance(value.value, int))
+
+def test_fresh_check_report_with_null_derivations_is_coverage_evidence(tmp_path: Path) -> None:
+    """A model without derivations yields a check report whose ``derivations``
+    is null (legal from report schema version 7 on); coverage must read it as
+    absent rather than crash iterating None."""
+    example = REPO_ROOT / 'src/gnd/examples/approvals'
+    model = example / 'model.orm.yaml'
+    code, report_text, stderr = _run(['check', str(model), str(example / 'state.pop.yaml'), '--format', 'json'])
+    assert code == 0, (report_text, stderr)
+    assert json.loads(report_text)['derivations'] is None
+    report = tmp_path / 'check.json'
+    report.write_text(report_text, encoding='utf-8')
+    code, stdout, stderr = _run(['coverage', str(model), '--check', str(report), '--format', 'json'])
+    assert code == 0, (stdout, stderr)
+    assert 'Traceback' not in stdout + stderr
+    payload = json.loads(stdout)
+    assert payload['sources']['check'] == [str(report)]
+    evidence = [item for element in payload['elements'] for item in element['evidence']]
+    assert evidence and {item['source'] for item in evidence} == {'check'}

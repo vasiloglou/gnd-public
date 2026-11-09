@@ -219,16 +219,16 @@ Cross-validate retained GND verifier bytes and gate exact acceptance.
 | `AttemptFeedback.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1238 | (no docstring) |
 | `AttemptFeedback.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1311 | Route JSON through the version dispatcher above. |
 | `validate_transition_payload(raw, *, case_id, role, process_exit, expected_schema_version, expected_…` | function | 1433 | Validate one v7/v8 transition report and derive answer-free step rows. |
-| `validate_verifier_payload(raw, *, case_id, role, process_exit, expected_command, expected_subject, …` | function | 1571 | Validate exact raw verifier bytes before they may enter acceptance. |
-| `validate_tests_payload(raw, *, case_id, role, process_exit, required_tests, candidate_sha256, contr…` | function | 1882 | Bind one tests-runner row to the current immutable candidate attempt. |
-| `case_decision(case, result) -> CaseDecision` | function | 1959 | Decide one case from its validated checker evidence and acceptance branch. |
-| `contract_accepts(contract, attempt) -> bool` | function | 2032 | Whether every and only required case has one current accepted result. |
-| `ranking_observations(contract, attempt)` | function | 2064 | (no docstring) |
-| `best_key(contract, attempt) -> tuple[int, ...]` | function | 2118 | Return the locked ascending rank from the shared case decision seam. |
-| `project_assurance_feedback(execution)` | function | 2413 | Shared live projection for snapshot, derivation and direct walk consumers. |
-| `normalized_verifier_signature(contract, attempt, *, schema_version) -> str` | function | 2547 | Hash closed verifier decision semantics for one explicit wire version. |
-| `build_attempt_feedback(*, run_id, contract, contract_id, contract_sha256, invocation, evaluation, d…` | function | 2570 | Build feedback solely from one immutable attempt and its fixed contract. |
-| `canonical_feedback(feedback) -> tuple[bytes, str]` | function | 2657 | Return feedback's sole accepted JSON encoding and its SHA-256. |
+| `validate_verifier_payload(raw, *, case_id, role, process_exit, expected_command, expected_subject, …` | function | 1573 | Validate exact raw verifier bytes before they may enter acceptance. |
+| `validate_tests_payload(raw, *, case_id, role, process_exit, required_tests, candidate_sha256, contr…` | function | 1884 | Bind one tests-runner row to the current immutable candidate attempt. |
+| `case_decision(case, result) -> CaseDecision` | function | 1961 | Decide one case from its validated checker evidence and acceptance branch. |
+| `contract_accepts(contract, attempt) -> bool` | function | 2034 | Whether every and only required case has one current accepted result. |
+| `ranking_observations(contract, attempt)` | function | 2066 | (no docstring) |
+| `best_key(contract, attempt) -> tuple[int, ...]` | function | 2120 | Return the locked ascending rank from the shared case decision seam. |
+| `project_assurance_feedback(execution)` | function | 2415 | Shared live projection for snapshot, derivation and direct walk consumers. |
+| `normalized_verifier_signature(contract, attempt, *, schema_version) -> str` | function | 2549 | Hash closed verifier decision semantics for one explicit wire version. |
+| `build_attempt_feedback(*, run_id, contract, contract_id, contract_sha256, invocation, evaluation, d…` | function | 2572 | Build feedback solely from one immutable attempt and its fixed contract. |
+| `canonical_feedback(feedback) -> tuple[bytes, str]` | function | 2659 | Return feedback's sole accepted JSON encoding and its SHA-256. |
 
 ## gnd.exp.session_judgments — `src/gnd/exp/session_judgments.py`
 Components: exp.session_judgments

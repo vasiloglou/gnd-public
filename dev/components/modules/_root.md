@@ -391,7 +391,7 @@ Read-only element coverage over models and previously emitted evidence.
 | `guard_named_source(path, *, directory) -> None` | function | 388 | Apply existence before the path guard for one argv-named source. |
 | `read_json_document(path, *, kind, payload_version) -> dict[str, Any]` | function | 459 | Read one evidence object, or raise :class:`CoverageInputError`. |
 | `read_evidence_document(path, *, kind, payload_version, census_model_digest, census_model) -> tuple[…` | function | 628 | Read and validate one document as exactly the evidence kind declared. |
-| `build_coverage(model, *, model_path, experiments, check, verify, conformance, transition) -> Covera…` | function | 959 | Build one coverage view by indexing sources, then walking elements once. |
+| `build_coverage(model, *, model_path, experiments, check, verify, conformance, transition) -> Covera…` | function | 961 | Build one coverage view by indexing sources, then walking elements once. |
 
 ## gnd.declared_adapter — `src/gnd/declared_adapter.py`
 Components: agent.declared_adapter

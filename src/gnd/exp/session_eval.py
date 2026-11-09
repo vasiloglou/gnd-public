@@ -1483,16 +1483,18 @@ def validate_transition_payload(
     block = payload["transition"]
     step_rows: list[TransitionStepFeedback] = []
     if block["evaluated"]:
+        # Snapshot objects are free-form in the report schema; a present-null
+        # ``derivations`` reads as absent, like the report-level field.
         collections: list[Sequence[Mapping[str, Any]]] = [
             block["pre_snapshot"]["verdicts"],
-            block["pre_snapshot"].get("derivations", ()),
+            block["pre_snapshot"].get("derivations") or (),
             block["pre_snapshot_verdicts"],
         ]
         for step in block["steps"]:
             step_collections = [
                 step["verdicts"],
                 step["intermediate"]["verdicts"],
-                step["intermediate"].get("derivations", ()),
+                step["intermediate"].get("derivations") or (),
             ]
             step_band = _wire_band(*step_collections)
             step_rows.append(
@@ -1509,7 +1511,7 @@ def validate_transition_payload(
             collections.extend(
                 [
                     block["post_snapshot"]["verdicts"],
-                    block["post_snapshot"].get("derivations", ()),
+                    block["post_snapshot"].get("derivations") or (),
                 ]
             )
         computed_band = _wire_band(*collections)

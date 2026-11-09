@@ -2,9 +2,12 @@
 
 ## 1. Status line
 
-**Draft r1, 2026-11-09: awaiting the owner's ruling on UG4-D1 to UG4-D7.** Docs and skill
-prose only, plus one prose guard test (UG4-D4). No source file under `src/gnd` changes other
-than packaged-skill Markdown. No issue is commented on or closed by this phase.
+**Spec gate `(o)`, 2026-11-09: approved as proposed.** Asked "How do you rule on UG4-D1 to
+UG4-D7?", the owner replied, quoted: "Approve all as proposed". Every decision in §7 is ruled
+as its proposed reading, including UG4-D1 (a): the approval instrument is this spec's prose.
+Approved bytes: r1 at `478ea2a2` (sha256 `f475810eb62a06aba44b402baa255e4e3b6c116f8df935320a0553db1f91338a`). Implementation follows.
+
+Earlier status, kept: Draft r1, 2026-11-09: awaiting the owner's ruling on UG4-D1 to UG4-D7.
 
 ## 2. Provenance
 
@@ -190,13 +193,13 @@ home.
 
 | ID | Question | Readings | Proposed |
 |---|---|---|---|
-| UG4-D1 | Approval instrument | (a) this spec's prose: a docs phase is none of the three shapes for which corpus-first is the default (serialized formats, exit-code contracts, validation predicates); (b) a corpus of page excerpts | **(a)** |
-| UG4-D2 | Issue follow-ups | (a) draft them in a note (§6.9); post only on the owner's later instruction, after merge; (b) post them as part of this phase | **(a)** (plan §7 and UG-D0) |
-| UG4-D3 | The "interpretable" wording | (a) qualify each restating sentence ("that GND can see") and link the contract; (b) delete the restatements and leave only links | **(a)**: the pages stay readable on their own |
-| UG4-D4 | A guard for the procedure's commands | (a) extend `tests/test_unattended_growth_guidance.py`: every `gnd` command line in a code span or block of `unattended-growth.md` parses with the real CLI parser (no 64), and the reference names `source-document`, `--require-documents` and `--check-population`; (b) prose only | **(a)**: about 30 test lines, catches the drift class the reference already had |
-| UG4-D5 | UG3-Q2 (a digest declared twice passes U1) | (a) document "declare each document once" in the procedure and leave UG3-Q2 to the close sweep; (b) a U1 rule refusing duplicates: a validation change for existing unattended models (UG-R1), code in a docs phase | **(a)** |
-| UG4-D6 | Release notes | (a) retitle the Unreleased heading only; (b) also merge the UG2/UG3 entries into one "unattended growth" block | **(a)** |
-| UG4-D7 | The how-to | (a) two cited paragraphs, no executed change; (b) a third executed round showing `--check-population` (fixture and tutorial-runner changes) | **(a)** |
+| UG4-D1 `(o)` 2026-11-09: as proposed | Approval instrument | (a) this spec's prose: a docs phase is none of the three shapes for which corpus-first is the default (serialized formats, exit-code contracts, validation predicates); (b) a corpus of page excerpts | **(a)** |
+| UG4-D2 `(o)` 2026-11-09: as proposed | Issue follow-ups | (a) draft them in a note (§6.9); post only on the owner's later instruction, after merge; (b) post them as part of this phase | **(a)** (plan §7 and UG-D0) |
+| UG4-D3 `(o)` 2026-11-09: as proposed | The "interpretable" wording | (a) qualify each restating sentence ("that GND can see") and link the contract; (b) delete the restatements and leave only links | **(a)**: the pages stay readable on their own |
+| UG4-D4 `(o)` 2026-11-09: as proposed | A guard for the procedure's commands | (a) extend `tests/test_unattended_growth_guidance.py`: every `gnd` command line in a code span or block of `unattended-growth.md` parses with the real CLI parser (no 64), and the reference names `source-document`, `--require-documents` and `--check-population`; (b) prose only | **(a)**: about 30 test lines, catches the drift class the reference already had |
+| UG4-D5 `(o)` 2026-11-09: as proposed | UG3-Q2 (a digest declared twice passes U1) | (a) document "declare each document once" in the procedure and leave UG3-Q2 to the close sweep; (b) a U1 rule refusing duplicates: a validation change for existing unattended models (UG-R1), code in a docs phase | **(a)** |
+| UG4-D6 `(o)` 2026-11-09: as proposed | Release notes | (a) retitle the Unreleased heading only; (b) also merge the UG2/UG3 entries into one "unattended growth" block | **(a)** |
+| UG4-D7 `(o)` 2026-11-09: as proposed | The how-to | (a) two cited paragraphs, no executed change; (b) a third executed round showing `--check-population` (fixture and tutorial-runner changes) | **(a)** |
 
 ## 8. Tests and verification ledger
 
@@ -239,3 +242,4 @@ after that ruling is recorded here.
 ## Revision history
 
 - r1, 2026-11-09: first draft. Not reviewed.
+- r1 ruled, 2026-11-09: all of UG4-D1 to D7 as proposed.

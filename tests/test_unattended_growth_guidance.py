@@ -19,10 +19,9 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+import test_evolve_additive_policy as policy
 from ruamel.yaml import YAML
 from support.cli_runner import run_main
-
-import test_evolve_additive_policy as policy
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 REFERENCE = REPO_ROOT / "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md"
@@ -189,3 +188,58 @@ def test_additive_admits_a_constraint_with_the_fact_type_that_adds_it() -> None:
     refused = policy._op("add", policy._constraint_locator(policy.POPULATED, None, "uniqueness"), after=constraint,
                          operation_id="late")
     assert [i.cell for i in policy._direct_issues((refused,))] == ["constraint.populated.add"]
+
+
+# --- UG4-D4: the procedure names only commands and options that exist --------
+
+_CODE_SPAN = re.compile(r"`([^`\n]+)`")
+_FLAG = re.compile(r"(?<![\w-])--[a-z][a-z-]*")
+#: The commands the procedure drives; every option it names belongs to one of them.
+_COMMANDS = (("validate",), ("evolve", "preview"), ("evolve", "apply"))
+
+
+def _parsers() -> dict[tuple[str, ...], Any]:
+    import test_rf1_cli_pins as pins
+
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        found: dict[str, Any] = {}
+        pins._walk(pins._root(monkeypatch), ("gnd",), found)
+    return {tuple(path.split()[1:]): parser for path, parser in found.items()}
+
+
+def _options(parser: Any) -> set[str]:
+    return {option for action in parser._actions for option in action.option_strings}
+
+
+def _drift(text: str) -> list[str]:
+    """Every `gnd ...` span whose command or options do not exist, and every option no driven command has."""
+    parsers = _parsers()
+    known = set().union(*(_options(parsers[command]) for command in _COMMANDS))
+    problems = []
+    for span in _CODE_SPAN.findall(text):
+        words = span.split()
+        if words[:1] == ["gnd"]:
+            command = next((key for key in (tuple(words[1:3]), tuple(words[1:2])) if key in parsers), None)
+            if command is None:
+                problems.append(f"no such command: {span}")
+                continue
+            problems += [f"{span}: {flag}" for flag in _FLAG.findall(span) if flag not in _options(parsers[command])]
+        else:
+            problems += [f"{span}: {flag}" for flag in _FLAG.findall(span) if flag not in known]
+    return problems
+
+
+def test_ug4_the_procedure_names_only_options_that_exist() -> None:
+    text = REFERENCE.read_text(encoding="utf-8")
+    assert _drift(text) == []
+    for shipped in ("source-document", "--require-documents", "--check-population", "--shape-report"):
+        assert shipped in text, shipped
+
+
+def test_ug4_the_guard_can_fail() -> None:
+    """Mutation control: a misspelt option and an unknown command are both reported."""
+    text = REFERENCE.read_text(encoding="utf-8")
+    assert "--require-documents" in text
+    assert _drift(text.replace("--require-documents", "--require-document", 1))
+    assert _drift(text + "\n`gnd evolv preview --policy additive`\n")
+    assert _drift(text + "\n`--check-populations FILE`\n")

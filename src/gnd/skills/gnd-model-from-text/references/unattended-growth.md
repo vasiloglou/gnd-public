@@ -39,11 +39,38 @@ One round is one document, in four moves.
    for the fact types and object types this round introduces. Do not revisit earlier rounds
    here; that is the consolidation round.
 3. **Emit the reply** ([shape](#the-reply-shape)), and have the host write the candidate model
-   and a proposal.
-4. **Gate.** `gnd validate MODEL --document DOC ...`, then `gnd evolve preview --policy additive
-   --shape-report`, then `apply` with the same options. The shape report is advice: for each
-   added fact type it lists existing fact types over the same role players. Deciding that two
-   readings mean the same thing is the host's.
+   and a proposal. When the round's document is new to the model, the proposal opens with one
+   `source-document` `add` (the SHA-256 of the document's raw bytes and a label), before the
+   elements whose spans cite it. Declare each document once: a document already in
+   `source.documents` is not declared again, and a digest declared twice makes a later change
+   to it ambiguous. The operation's rules are in the
+   [evolution contract](../../gnd-model-evolve/references/evolution-contract.md#stable-locators). (Before the operation existed the host edited
+   `source.documents` by hand before the round; a declaration that appears in the candidate
+   with no operation is still refused.)
+4. **Gate.** `gnd validate MODEL --document DOC ... --require-documents`, supplying every declared
+   document, so a span left unchecked fails the round instead of passing silently (the counts
+   are in [representation-format.md](../../gnd-orm-core/references/representation-format.md#unattended-source)).
+   Then `gnd evolve preview --policy additive --shape-report`, adding `--check-population FILE`
+   when the round adds a constraint on a fact type that already holds facts
+   ([below](#constraints-on-fact-types-that-already-hold-facts)), then `apply` with the same
+   options. The shape report is advice: for each added fact type it lists existing fact types
+   over the same role players. Deciding that two readings mean the same thing is the host's
+   ([acting on a shape match](#acting-on-a-shape-match)).
+
+### Acting on a shape match
+
+For each existing fact type the report names beside an added one, the host does one of three
+things and logs which:
+
+- **Reuse the existing id.** The two readings say the same thing: drop the added fact type and
+  write its facts against the existing one.
+- **Keep both, with the reason.** The readings differ ("is returned via" is not "arrives via"):
+  say why in the added fact type's `provenance.rationale`.
+- **Keep both, and record the doubt** in `open_questions`, for the consolidation round to
+  settle.
+
+Never merge, rename or delete in the round. A merge is a rename or delete of something that
+exists, so it belongs to the consolidation round's reviewed proposal.
 
 **Constraints travel with their fact type.** Under `--policy additive` a new constraint over a
 fact type that already holds facts is refused (`constraint.populated.add`, exit 3), and a fact
@@ -53,7 +80,8 @@ constraint that spans fact types, or a `value` constraint on an object type, is 
 **any** fact type it touches is, so it is admitted only when every one of them is new or empty.
 A population held outside the model (extracted facts in a separate file) is invisible to the
 policy unless the host passes `--populated FACT_TYPE` for it; leave that out and the policy
-admits constraints it should have refused. The cells are in the
+admits constraints it should have refused. The policy protects the facts it can see, and only
+those. The cells are in the
 [evolution contract](../../gnd-model-evolve/references/evolution-contract.md#additive-policy).
 
 ## Evidence for Steps 3 to 7
@@ -252,12 +280,16 @@ read the reply, and `gnd validate --document` is the only gate.
 
 ## Constraints on fact types that already hold facts
 
-The procedure above prevents this by proposing constraints with the fact type. For a model
-already grown without them, `--policy additive` offers no route: it has no mode that admits a
-new `proposed` and `deontic` constraint over a populated fact type when `gnd check` reports no
-violation. Add them through a reviewed non-additive proposal (`gnd evolve preview` without
-`--policy`), after `gnd check` over the population shows no violation. The constraint stays
-`proposed` and `deontic`, so it is advisory even if the population later breaks it.
+The procedure above prevents this by proposing constraints with the fact type. For a constraint
+the text reveals only later, pass the population to the policy: `gnd evolve preview --policy
+additive --check-population FILE`, and `apply` with the same options. The policy admits a new
+constraint, or a change that only strengthens one, when it is `proposed` and `deontic`, `FILE`
+holds facts for every populated fact type it ranges over and none of them has sample rows, and
+the constraint's own verdict over `FILE` is `pass`. The admission holds relative to `FILE`: the
+constraint stays `proposed` and `deontic`, so it is advisory if a later population breaks it.
+The rules are in the [evolution contract](../../gnd-model-evolve/references/evolution-contract.md#population-check). Anything else (a constraint
+the population violates, or one over a fact type with sample rows) goes through a reviewed
+non-additive proposal (`gnd evolve preview` without `--policy`).
 
 ---
 *Checks adapted from the rai-agent-skills ORM skills (branch an-orm-skill) and `rai-ontology-design`.*

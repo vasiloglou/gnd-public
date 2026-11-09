@@ -265,7 +265,12 @@ well as a person; its `policy_issues` carry the same three fields. The full
 policy is in the [additive evolve policy reference](../reference/evolve-policy.md).
 A rule like this one is a job for a reviewed change with a person in the loop,
 as in [Expense chapter 3](../expense/03-evolution.md), not for the growing
-program.
+program. There is one exception: when the facts the program extracted are in a
+population file and every one of them satisfies the rule, `--check-population`
+lets the policy admit the rule as a proposed, advisory constraint, relative to
+that file ([admitting a constraint on clean data](../reference/evolve-policy.md#admitting-a-constraint-on-clean-data)).
+Here the rule would rest on two sample rows, and the policy never admits a rule
+over a fact type that carries sample rows, so round 2 stays refused.
 
 ## Give the extractor guidelines
 
@@ -348,7 +353,9 @@ uniqueness, mandatory or subtype rule. The skill's
 says what the program asks for at Steps 3 to 7, document by document, and when
 to run a consolidation round over the whole model. One consequence for this
 page's rounds: propose a fact type's constraints in the round that adds it, as
-round 2 above shows a later one is refused.
+round 2 above shows a later one is refused. The procedure also says how a round
+declares its new source document inside its proposal and checks every span with
+`gnd validate --document ... --require-documents`.
 
 ## Recap
 

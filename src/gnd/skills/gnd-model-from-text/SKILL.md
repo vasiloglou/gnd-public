@@ -102,10 +102,10 @@ If no answer: default to **MVP-fast** when the stated goal is a prototype or an 
 
 A host pipeline that runs this skill without a person to answer (an LLM proposing the model from document passages) uses **Unattended**, not One-shot. One-shot still assumes a reviewer edits the YAML afterwards and auto-confirms library-tier constraints; Unattended confirms nothing. The host runs the LLM; GND validates the result.
 
-- Set `source.mode: unattended`, `source.reviewer: none`, and list every source document in `source.documents` with the SHA-256 of its raw bytes.
+- Set `source.mode: unattended`, `source.reviewer: none`, and list every source document in `source.documents` with the SHA-256 of its raw bytes. A growth round declares a new document with a `source-document` operation in its `gnd evolve` proposal.
 - Every object type, fact type and sample row, and every constraint except `common-sense` (which cites `library_entry`), carries a span of the document it came from.
 - Every constraint stays `proposed`, and every constraint this workflow emits stays `deontic`; no `explicit` or `user-supplied` source, since nobody said it.
-- Validate with `gnd validate MODEL --document DOC ...`, not `scripts/validate_model.py`, which checks the schema only and cannot see these rules.
+- Validate with `gnd validate MODEL --document DOC ... --require-documents`, supplying every declared document, not `scripts/validate_model.py`, which checks the schema only and cannot see these rules.
 
 The rules, span units and refusals are in [representation-format.md](../gnd-orm-core/references/representation-format.md) ("Unattended source").
 
@@ -116,15 +116,17 @@ gives for each the text that licenses a proposal (uniqueness from "exactly one",
 subtype, typed primitives through the 6a library), always cited and always `proposed` and
 `deontic`. It also defines:
 
-- **one round** (one document: Steps 1 and 2, then Steps 3 to 6 on that round's new types) and a
-  periodic **consolidation round** over the whole model;
+- **one round** (one document: Steps 1 and 2, then Steps 3 to 6 on that round's new types), how
+  it declares its document and acts on a shape match, and a periodic **consolidation round**
+  over the whole model;
 - the checks a model built from many documents needs (no-overlap, not-a-property-group, hidden
   intermediate type, subtype completeness, subtype or subset, irreducibility, minimum key span,
   enumeration or subtype);
 - one **reply shape** a host asks the model for, covering fact types, subtype links, constraints
   and derived fact types, each with its quote;
 - the timing rule: **propose a fact type's constraints in the round that adds it**, since
-  `--policy additive` refuses a new constraint over a fact type that already holds facts, and it
+  `--policy additive` refuses a new constraint over a fact type that already holds facts (unless
+  `--check-population` shows a clean population satisfies it), and it
   refuses adding `subtype_of` to an existing entity type, so a consolidation round is a reviewed
   non-additive proposal.
 

@@ -226,8 +226,9 @@ that field refuses a preview that carries it.
 ### Additive policy
 
 `gnd evolve preview --policy additive` judges every operation by one matrix over (locator kind,
-operation kind). The policy keeps every fact already admitted under the current model
-interpretable under the candidate: nothing existing is renamed, deleted or changed, and no
+operation kind). The policy keeps every fact already admitted under the current model that GND
+can see (sample rows, a declared reference population, a `population` artifact, `--populated`;
+under `--check-population`, relative to that file) interpretable under the candidate: nothing existing is renamed, deleted or changed, and no
 constraint on a populated fact type is added or strengthened. This table and the strengthening list
 are the policy's one normative home; `gnd.evolve.policy` implements them, and preview and apply
 share that implementation.

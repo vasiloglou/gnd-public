@@ -22,7 +22,7 @@ gates:
   - command: "~/rof-shards/rof-shards.sh base-12daa5b7 12daa5b7 on beast-3: the same lane at the merge base"
     exit: "1 (14 failed, 2 errors)"
     output: "merge base 12daa5b7: 17805 passed, 14 failed, 2 errors"
-  - command: "ruling: owner -- pending (the close ruling over this record and plan section 11)"
+  - command: "ruling: owner -- \"Approve and merge\", 2026-11-09 (the close ruling over this record at 2e25e7b5 and plan section 11 rows 1-7)"
     exit: n/a -- ruling
 slow_cadence:
   command: 'uv run pytest -q -m "evidence or census"'
@@ -30,7 +30,7 @@ slow_cadence:
   reason: "not selected at this close; the broad historical lanes are outside the milestone's impact closure"
 evidence:
   - path: .gnd-planning/milestones/report-output-fidelity/notes/report-output-fidelity-plan.md
-    sha256: 8fb1869a0b47c0672992b8ea3f50cc2b0449c4f8495993ee83deee53f57148ba
+    sha256: 07b84c9e9a57c84be03a2ad227a4a2343c8c6032bf467f84ce89f2d5dcbc5d6f
   - path: .gnd-planning/milestones/report-output-fidelity/001-plan.md
     sha256: ad5b883f643c39657d9d0d84e137a316136c4bcf5ea5e6bc4813c46872e84064
   - path: .gnd-planning/milestones/report-output-fidelity/002-phase-ROF1.md
@@ -73,8 +73,8 @@ Predicate 3's compatibility clause rests at main 8eb4fe60 on the close
 runs; every failure there passed on rerun. Predicate 4's issue-111 clause and predicate 5's issue
 clauses hold only as amended in plan section 11 (rows 1-3, the owner's
 ruling R1). Section 11 also records four places where an owner-approved
-phase spec departed from r3's wording (rows 4-7). All of section 11 takes
-effect with the close ruling.
+phase spec departed from r3's wording (rows 4-7). All of section 11 took
+effect with the owner's close ruling (2026-11-09, "Approve and merge").
 
 **Full suite.** The default lane ran on beast-3, at main 8eb4fe60 and at the
 merge base 12daa5b7. Both runs were on a loaded host and each failed 13-14
@@ -85,8 +85,8 @@ when rerun alone at 8eb4fe60: the 10 that failed only there, and the 3 that
 failed in both runs. No failure points at this milestone's files.
 
 The close review has run (one Codex reviewer, by the owner's ruling) and
-both close runs are in. The owner's close ruling has not been given (see
-"What the close still needs").
+both close runs are in. The owner gave the close ruling on 2026-11-09:
+"Approve and merge" (see "Owner rulings recorded at this close").
 
 ## Phases
 
@@ -194,6 +194,7 @@ directly.
 | R1 (D3 re-ask after ROF4) | First, the explanation that ROF5 would emit the canonical identity in reports. Then: "Close #111 now, without ROF5?" | "ok skip it for now", then "Yes, close #111" | 2026-11-09 | No emission in this milestone; ROF5 withdrawn; issue 111 closed as completed by the session that started this one, at 2026-11-09T05:08:59Z. The closing comment states what shipped (PRs 132, 138) and the gap the owner accepted (evidence/close/issue-states.txt). This departs from plan predicate 4 ("Issue 111 stays open as partially addressed unless ROF5 delivers"). It is the owner's ruling, recorded as plan section 11 row 1, as the rule-check-release close recorded RL-D10 |
 | Close review instrument | "How should the report-output-fidelity close be reviewed?" | "One Codex reviewer" | 2026-11-09 | One read-only Codex review over this draft (section "Close review"). This waives the project's panel bar for the close, as RF-D0 did for the plan |
 | ROF4-O1 | Accept the corrected S1 answer: a canonical-pinned walk report's `transition.model_digest` echoes the pin as the steps supplied it, as the report schema defines | relayed as ruled; the owner's own wording was not relayed | 2026-11-09 | No change. The behaviour is on main in PR 138, which the owner merged at 2026-11-09T03:15:53Z |
+| Close ruling | "Approve the close record and the seven plan amendments, and merge PR 145?" | "Approve and merge" | 2026-11-09 | The close record as it stood at 2e25e7b5 and plan section 11 rows 1-7 are approved; the rows took effect and are marked approved. The ruling was over the bytes at 2e25e7b5; the commit that follows records only this ruling, the approved status of section 11 and the README status. The owner also ran the PR body update and took PR 145 out of draft. The merge is the owner's |
 
 ## Open-questions sweep
 
@@ -240,8 +241,9 @@ where an owner-approved phase spec departed from r3's wording (rows 4-7):
 - the count of executable shipped pins (ROF4 T10).
 
 All seven rows are written into plan section 11 with the r3 wording kept.
-They are **proposed** amendments that take effect with the owner's close
-ruling. The amended plan is bound above by sha256.
+They were proposed by this record and are **approved** by the owner's
+close ruling (2026-11-09, "Approve and merge"). The amended plan is bound
+above by sha256.
 
 ## Refuted premises
 
@@ -274,16 +276,18 @@ ruling. The amended plan is bound above by sha256.
 - Each phase had one reviewer (Codex). The project's panel bar ran over
   nothing in this milestone. Repairs after each review carry no review
   opinion. This close had one reviewer; its repairs were not re-reviewed.
-- Owner rulings R1 and ROF4-O1 are recorded as relayed by another session.
+- Owner rulings R1, ROF4-O1 and the close ruling are recorded as relayed by
+  another session.
 - T8 (a generated Pyrel plan refuses a canonical pin) needs the DuckDB
   runtime and has not run on the author's machine.
 - The broad lanes (`slow_cadence`) did not run.
 - GitHub issue and PR states are as observed at 2026-11-09T05:11:59Z
   (evidence/close/issue-states.txt).
-- Merge of this close is the owner's. It is the close ruling over this
-  record and the plan section 11 amendments.
+- The close ruling approved this record at 2e25e7b5. The later commit that
+  records the ruling was not itself ruled on.
+- Merge of this close is the owner's.
 
 ## What the close still needs
 
-1. **The close ruling**: the owner's ruling over this record and plan
-   section 11 (rows 1-7), and the merge of PR 145. The merge is that ruling.
+1. **The merge of PR 145**, which the owner approved in the close ruling
+   ("Approve and merge") and performs.

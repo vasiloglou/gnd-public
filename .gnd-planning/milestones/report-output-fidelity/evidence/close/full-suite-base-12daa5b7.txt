@@ -1,0 +1,26 @@
+# main 12daa5b7 on beast-3 (Apple M5 Pro, 18 cores), 2026-11-09
+# six round-robin shards of tests/test_*.py, default lane, one pytest process each (rof-shards.sh = the rule-check-followups fu-shards.sh runner with paths renamed); shard summary lines, then the sorted FAILED/ERROR ids
+# load average during the runs was about 40-78 (other jobs on the host)
+shard0: 1 failed, 3776 passed, 123 deselected in 991.01s (0:16:31)  shard exit=1
+shard1: 3 failed, 2586 passed, 169 deselected in 411.12s (0:06:51)  shard exit=1
+shard2: 3461 passed, 95 deselected in 1360.92s (0:22:40)  shard exit=0
+shard3: 4 failed, 2635 passed, 228 deselected, 1 warning in 629.72s (0:10:29)  shard exit=1
+shard4: 1 failed, 2252 passed, 97 deselected, 2 errors in 1014.48s (0:16:54)  shard exit=1
+shard5: 5 failed, 3095 passed, 82 deselected in 1011.16s (0:16:51)  shard exit=1
+
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_agent_cli.py::test_agent_wrapper_refuses_an_unproven_process_cleanup
+FAILED tests/test_agent_cli.py::test_cancellation_during_timeout_cleanup_cannot_detach_the_cleanup_task
+FAILED tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+FAILED tests/test_agent_cli.py::test_version_evidence_is_digest_only_even_when_probe_echoes_inherited_values
+FAILED tests/test_exp_session_e2e.py::test_resume_binds_contract_policy_adapter_and_prompt_before_launch
+FAILED tests/test_public_constraint_sessions.py::test_schema_v2_exact_mode_retains_byte_identity_control[{"facts":{"person_has_name":[{"name":"Ada","person":1},{"name":"Grace","person":2}]},"instances":{"person":[1,2]},"population":{"covers":["person_has_name"],"model":"model.orm.yaml","source":"agent-output"}}\n-0-matched]
+FAILED tests/test_public_constraint_sessions.py::test_schema_v2_exact_mode_retains_byte_identity_control[{"facts":{"person_has_name":[{"name":"Lin","person":11},{"name":"Margaret","person":12}]},"instances":{"person":[11,12]},"population":{"covers":["person_has_name"],"model":"model.orm.yaml","source":"agent-output"}}\n-15-differs]
+FAILED tests/test_public_plan_contract.py::test_mixed_cli_run_evaluates_tests_snapshot_and_transition
+FAILED tests/test_public_session_derivation.py::test_the_live_session_delivers_the_derivation_witness_and_accepts
+FAILED tests/test_rf1_session_pins.py::test_session_determinism[1]
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[4]
+FAILED tests/test_rf1_session_pins.py::test_session_resume[5]
+FAILED tests/test_rf2_instrument.py::test_successor_current_case_is_green
+FAILED tests/test_v51_phase2_extraction_scope.py::test_scope_walk_scales_linearly

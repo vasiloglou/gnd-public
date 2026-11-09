@@ -7,8 +7,8 @@ date: 2026-11-09
 source_base: 8eb4fe60
 gates:
   - command: "~/rof-shards/rof-shards.sh close-8eb4fe60 8eb4fe60 on beast-3: the full default lane, six round-robin shards, at main 8eb4fe60"
-    exit: "PENDING"
-    output: "PENDING -- the beast-3 run has not finished; filled in a follow-up commit"
+    exit: "1 (13 failed, 2 errors; every failure passed on rerun, below)"
+    output: "main 8eb4fe60: 18238 passed, 13 failed, 2 errors; the 10 failing only here and the 3 failing in both runs each passed when rerun alone"
     note: >-
       Plan section 9's close row: the full suite against the merge-base
       record (main 12daa5b7). The ROF1 base record
@@ -20,8 +20,8 @@ gates:
       PRs 135, 137, 142), so the comparison is of the observed failing-test
       sets, not of this milestone's commits alone.
   - command: "~/rof-shards/rof-shards.sh base-12daa5b7 12daa5b7 on beast-3: the same lane at the merge base"
-    exit: "PENDING"
-    output: "PENDING -- the beast-3 run has not finished; filled in a follow-up commit"
+    exit: "1 (14 failed, 2 errors)"
+    output: "merge base 12daa5b7: 17805 passed, 14 failed, 2 errors"
   - command: "ruling: owner -- pending (the close ruling over this record and plan section 11)"
     exit: n/a -- ruling
 slow_cadence:
@@ -44,9 +44,9 @@ evidence:
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/ROF1/full-suite-main-12daa5b7.txt
     sha256: 5b1573a294c053260bdfd2bd85caae6fe7e188f325f6fd0ce85e7bbf4b6f6197
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/full-suite-close-8eb4fe60.txt
-    sha256: PENDING (file not yet written)
+    sha256: de49145f2380b3dcff2d2450395552ac654222c320f0a394442f55cda7ad96e5
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/full-suite-base-12daa5b7.txt
-    sha256: PENDING (file not yet written)
+    sha256: e4514abee5889ed230e08e512f7c58c5698a1a016e362058cac0848a41b59c77
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/codex-review.md
     sha256: fc6974138edf525ccb548c0a109355052aee2022a1b6c9945c6c72709b51c3cc
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/close/review-prompt.txt
@@ -69,17 +69,24 @@ Both issues are closed as completed, by the owner:
 
 Completion predicates 1, 2, 3 and the phase half of 5 hold by the evidence
 the phase records bind, with the qualifications in the table below.
-Predicate 3's compatibility clause is pending at main 8eb4fe60, until the
-close runs finish. Predicate 4's issue-111 clause and predicate 5's issue
+Predicate 3's compatibility clause rests at main 8eb4fe60 on the close
+runs; every failure there passed on rerun. Predicate 4's issue-111 clause and predicate 5's issue
 clauses hold only as amended in plan section 11 (rows 1-3, the owner's
 ruling R1). Section 11 also records four places where an owner-approved
 phase spec departed from r3's wording (rows 4-7). All of section 11 takes
 effect with the close ruling.
 
-**Full suite: PENDING.** The beast-3 runs at main 8eb4fe60 and at the merge base 12daa5b7 were still running when this draft was committed; their results come in a follow-up commit.
+**Full suite.** The default lane ran on beast-3, at main 8eb4fe60 and at the
+merge base 12daa5b7. Both runs were on a loaded host and each failed 13-14
+tests from the same families: process-timeout, process-kill, session and
+session-pin tests. Plus the two uv-pin errors present at every base. The
+failing sets differ test by test. Every test that failed at 8eb4fe60 passed
+when rerun alone at 8eb4fe60: the 10 that failed only there, and the 3 that
+failed in both runs. No failure points at this milestone's files.
 
-**This record is a draft.** Its close review has run (one Codex
-reviewer, by the owner's ruling); no close ruling has been given (see "What the close still needs").
+The close review has run (one Codex reviewer, by the owner's ruling) and
+both close runs are in. The owner's close ruling has not been given (see
+"What the close still needs").
 
 ## Phases
 
@@ -97,21 +104,58 @@ reviewer, by the owner's ruling); no close ruling has been given (see "What the 
 |---|---|---|---|
 | 1 | Text output of `check`, `validate`, `transition` (full and plan) and export verification prints the plain layout for a model with a redaction policy or temporal terms. The body is rendered from the projected tree only. A canary secret never appears. The plan excepts `validate --trace` and `validate --document`, which print from the model. | ROF1 and ROF2 corpora, canaries and goldens; ROF1 spec section 6 | yes, with the plan's own exception: `validate --trace` prints the model's structure, and `validate --document` can return early with warnings and issues. Neither prints from the projected tree; both are canary-tested. ROF2's boundary: temporal `--admission` and temporal `verify` are not projected and print plain text, unchanged |
 | 2 | A caller outside GND can recompute a model's identity, with one normative home, a shipped producer and a differential test | ROF3: `representation-format.md` subsection, `gnd validate --identity`, T1 over every tracked loadable model (313 at ROF3; the plan's 306 was measured at 12daa5b7), hand-written byte vectors | yes |
-| 3 | Every matching site accepts both identities through one helper. Exact-coherence and copy sites stay exact. No recorded digest is rewritten, and pre-milestone artifacts verify. | ROF4: `values.model_identity_matches`, seven sites, the T1 source scan; T10: the 14 executable legacy `steps.json` pins, `recordings/TASK.md` (which quotes the digest and is byte-preserved), and the new canonical example; ROF4's full suite at d83e972c equal to its base | yes for the helper, the sites and the shipped pins (ROF4 evidence). **Pending at main 8eb4fe60**: the claim that every pre-milestone artifact still verifies on main rests on the close runs (gates 1 and 2), because main gained other PRs after d83e972c. Plan ROF4-C3's "15 ... (executable)" is qualified in section 11, row 7. A generated Pyrel plan refuses a canonical pin by D7. T8, which shows that, needs DuckDB and has not run on the author's machine |
+| 3 | Every matching site accepts both identities through one helper. Exact-coherence and copy sites stay exact. No recorded digest is rewritten, and pre-milestone artifacts verify. | ROF4: `values.model_identity_matches`, seven sites, the T1 source scan; T10: the 14 executable legacy `steps.json` pins, `recordings/TASK.md` (which quotes the digest and is byte-preserved), and the new canonical example; ROF4's full suite at d83e972c equal to its base | yes for the helper, the sites and the shipped pins (ROF4 evidence). At main 8eb4fe60 (main gained other PRs after d83e972c), the close runs (gates 1 and 2) show no failure attributable to this milestone. Every failure there passed on rerun, and none is in an identity, transition, coverage, measure or witness test. Plan ROF4-C3's "15 ... (executable)" is qualified in section 11, row 7. A generated Pyrel plan refuses a canonical pin by D7. T8, which shows that, needs DuckDB and has not run on the author's machine |
 | 4 | D3 honoured: ROF5 withdrawn with its reason, or delivered. Issue 111 stays open unless ROF5 delivers. | R1 (below); evidence/close/issue-states.txt | **as amended (plan section 11, row 1)**: ROF5 is withdrawn with its reason; issue 111 is closed by the owner's ruling, with the gap stated |
 | 5 | Approved spec, verbatim focused gate and one independent reviewer per phase. The close disposes every open question and closes 112. 111 closes only if ROF5 delivers. | the four records; the sweep below | the phase half holds. The question sweep is below. **As amended (section 11, row 2)**: the owner closed 112 before this close and 111 under R1 |
 
 ## Gate output (verbatim)
 
-**PENDING.** The full default lane at 8eb4fe60 and at 12daa5b7 on beast-3 (gates 1 and 2 above) had not finished when this draft was committed.
+Full default lane, six round-robin shards on beast-3 (18 cores; load
+average about 40-78 from other jobs during the runs). Retained:
+[close](evidence/close/full-suite-close-8eb4fe60.txt),
+[base](evidence/close/full-suite-base-12daa5b7.txt).
+
+    main 8eb4fe60:
+    shard0: 4253 passed, 85 deselected in 1068.22s (0:17:48)  shard exit=0
+    shard1: 1 failed, 2295 passed, 278 deselected in 945.84s (0:15:45)  shard exit=1
+    shard2: 2259 passed, 123 deselected, 2 errors in 596.83s (0:09:56)  shard exit=1
+    shard3: 4 failed, 3570 passed, 58 deselected, 1 warning in 818.30s (0:13:38)  shard exit=1
+    shard4: 2 failed, 2869 passed, 122 deselected in 880.04s (0:14:40)  shard exit=1
+    shard5: 6 failed, 2992 passed, 133 deselected in 854.29s (0:14:14)  shard exit=1
+    failing list sha256 7886252a7dfd7a4cfee2494e30e59c3d5831ac4e480577ab51d0eb4ff60258cb
+
+    merge base 12daa5b7:
+    shard0: 1 failed, 3776 passed, 123 deselected in 991.01s (0:16:31)
+    shard1: 3 failed, 2586 passed, 169 deselected in 411.12s (0:06:51)
+    shard2: 3461 passed, 95 deselected in 1360.92s (0:22:40)
+    shard3: 4 failed, 2635 passed, 228 deselected, 1 warning in 629.72s (0:10:29)
+    shard4: 1 failed, 2252 passed, 97 deselected, 2 errors in 1014.48s (0:16:54)
+    shard5: 5 failed, 3095 passed, 82 deselected in 1011.16s (0:16:51)
+    failing list sha256 440a5dffb017ddfd387daef11cc4e845c0aca7d4322f9d0a60206e6fa45fee96
+
+    comm -23 close.fail base.fail: 10 ids (test_agent_cli 2, test_exp_session_e2e 2,
+      test_public_session_derivation 1, test_public_tests_mode_corpus 1,
+      test_rf1_agent_cli_pins 1, test_rf1_session_pins 3)
+    comm -13 close.fail base.fail: 11 ids (same families, other members)
+    comm -12: the 2 test_public_optional uv-pin errors and 3 failures
+      (test_agent_cli 2, test_public_constraint_sessions 1)
+
+    rerun at 8eb4fe60, the 10 ids failing only there, one process: 10 passed in 15.67s
+    rerun at 8eb4fe60, the 3 FAILED ids common to both runs:        3 passed in 3.65s
+
+Several failures show `PermissionError` from `gnd/process.py:151` or a
+timeout outcome (`sigterm` where `sigkill` was expected). Both are the
+host's load, not a code path this milestone changed. The comparison is of
+the observed failing sets; main also merged other milestones' PRs in that
+range. T8 (`pyrel_oracle`) is deselected by the default lane in both runs.
 
 Component index, this close's files:
 
     python3 scripts/components_index.py changed --base origin/main --strict
-    changed against origin/main (8eb4fe6): 4 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
+    changed against origin/main (8eb4fe6): 8 file(s) differ; 0 to fix, 0 warning(s), 0 to reread
 
     uv run pytest -q -p no:cacheprovider tests/test_development_scaffold.py
-    57 passed, 1 deselected in 21.12s
+    57 passed, 1 deselected in 23.12s
 
 ## Close review
 
@@ -127,11 +171,11 @@ Every finding was reproduced from the cited bytes before it was acted on,
 and all 10 were accurate and fixed:
 - K1 restates the R1 amendment.
 - K2 and K4 add plan section 11 rows 4-7.
-- K3 marks predicate 3's main-level claim as pending.
+- K3 marks predicate 3's main-level claim as resting on the close runs (now filled in).
 - K5 corrects the line numbers.
 - K6 and K7 add sweep rows and a refuted premise.
 - K8 states predicate 1's plan exception.
-- K9 lists the pending runs.
+- K9 lists the runs, which were then pending (now filled in).
 - K10 marks the README's older status as history.
 
 The review is retained verbatim with its triage in
@@ -157,7 +201,7 @@ directly.
 |---|---|---|
 | ROF1-O1: keep the `[reason: ...]` suffix (answer E34)? | 002 | closed: ruled 2026-11-07, keep the suffix (002) |
 | ROF1-O2: the dynamic-query successor list conflicts when a sibling branch also appends | 002 | closed. It did not occur for ROF1. It did occur for ROF4 against FU5 (PR 134). The ROF4 branch merge 0ff79efa resolved it: FU5 is chained first and ROF4's successor names FU5's file (005, "Merge with main") |
-| ROF1-O3: 77 `test_public_tests_mode_corpus` failures and four others, on the author's machine only | 002 | PENDING: disposed against the beast-3 runs (follow-up commit) |
+| ROF1-O3: 77 `test_public_tests_mode_corpus` failures and four others, on the author's machine only | 002 | retired: environment-specific. On beast-3, `test_public_tests_mode_corpus` failed once at 8eb4fe60 (`experiment-dir-stable`, which passed on rerun) and not at all at 12daa5b7; the 77 failures do not reproduce off the author's machine |
 | ROF1 refactoring, not done: `_print_projected_text` served three routes; `render_text_header` raised on an empty list | 002 | closed by ROF2's refactoring (003): `_print_projected_header`, `_projected_preamble` and the walk and verify rows |
 | ROF2-O1: should the projected error line add the error type? | 003 | closed: ruled 2026-11-08, leave it to `--format json` (003) |
 | ROF2-O2: retire the unused historical bindings `_print_check_verdicts` and `_print_derived_change_summaries` | 003 | **carried**: the shim-retirement phase under RF-D5. Both are still defined on main (`output.py:675` and `:663` respectively) as `gnd.cli` bindings |
@@ -241,9 +285,5 @@ ruling. The amended plan is bound above by sha256.
 
 ## What the close still needs
 
-1. **The two close runs** on beast-3 (gates 1 and 2): their results are
-   retained under evidence/close/, and the failing-test sets at 8eb4fe60 and
-   12daa5b7 are compared. Predicate 3's main-level compatibility claim and
-   ROF1-O3's disposition wait on them.
-2. **The close ruling** over this record and plan section 11 (the R1
-   amendments), and the merge of this PR.
+1. **The close ruling**: the owner's ruling over this record and plan
+   section 11 (rows 1-7), and the merge of PR 145. The merge is that ruling.

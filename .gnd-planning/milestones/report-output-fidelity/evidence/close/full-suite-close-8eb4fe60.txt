@@ -1,0 +1,33 @@
+# main 8eb4fe60 on beast-3 (Apple M5 Pro, 18 cores), 2026-11-09
+# six round-robin shards of tests/test_*.py, default lane, one pytest process each (rof-shards.sh = the rule-check-followups fu-shards.sh runner with paths renamed); shard summary lines, then the sorted FAILED/ERROR ids
+# load average during the runs was about 40-78 (other jobs on the host)
+shard0: 4253 passed, 85 deselected in 1068.22s (0:17:48)  shard exit=0
+shard1: 1 failed, 2295 passed, 278 deselected in 945.84s (0:15:45)  shard exit=1
+shard2: 2259 passed, 123 deselected, 2 errors in 596.83s (0:09:56)  shard exit=1
+shard3: 4 failed, 3570 passed, 58 deselected, 1 warning in 818.30s (0:13:38)  shard exit=1
+shard4: 2 failed, 2869 passed, 122 deselected in 880.04s (0:14:40)  shard exit=1
+shard5: 6 failed, 2992 passed, 133 deselected in 854.29s (0:14:14)  shard exit=1
+
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_agent_cli.py::test_cancellation_during_timeout_cleanup_cannot_detach_the_cleanup_task
+FAILED tests/test_agent_cli.py::test_credential_bearing_endpoint_is_redacted_from_main_streams_across_chunks
+FAILED tests/test_agent_cli.py::test_failed_version_probe_never_claims_the_writable_main_process_ran
+FAILED tests/test_agent_cli.py::test_timeout_escalates_term_to_kill_and_awaits_descendants
+FAILED tests/test_exp_session_e2e.py::test_second_attempt_receives_only_the_exact_current_feedback_bytes_and_digest
+FAILED tests/test_exp_session_e2e.py::test_verifier_bands_never_escape_as_the_parent_session_exit[model_fixture1-subject_fixture1-None-2]
+FAILED tests/test_public_constraint_sessions.py::test_schema_v2_exact_mode_retains_byte_identity_control[{"facts":{"person_has_name":[{"name":"Lin","person":11},{"name":"Margaret","person":12}]},"instances":{"person":[11,12]},"population":{"covers":["person_has_name"],"model":"model.orm.yaml","source":"agent-output"}}\n-15-differs]
+FAILED tests/test_public_session_derivation.py::test_replay_refuses_the_wrong_expected_version
+FAILED tests/test_public_tests_mode_corpus.py::test_named_sibling_or_control_accepts[experiment-dir-stable]
+FAILED tests/test_rf1_agent_cli_pins.py::test_agent_invoke[success]
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[1]
+FAILED tests/test_rf1_session_pins.py::test_session_fresh[5]
+FAILED tests/test_rf1_session_pins.py::test_session_resume[1]
+
+# comm -23 close.fail base.fail (failed at 8eb4fe60 only): 10 ids
+# comm -13 close.fail base.fail (failed at 12daa5b7 only): 11 ids
+# comm -12 (both): the 2 uv-pin errors and 3 failures
+# rerun at 8eb4fe60 on beast-3, same clone (c0), the 10 ids failing only here, one pytest process, load average about 39:
+10 passed in 15.67s
+# rerun at 8eb4fe60, the 3 FAILED ids common to both runs:
+3 passed in 3.65s

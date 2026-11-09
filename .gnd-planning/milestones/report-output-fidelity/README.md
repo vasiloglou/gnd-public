@@ -16,8 +16,9 @@ ROF5 onward are outlines. `auto=false`.
 the owner's ruling R1 (no emission in this milestone). Issues 111 and 112
 are closed. The milestone close is drafted ([close record](006-milestone-close.md),
 plan [section 11](notes/report-output-fidelity-plan.md) amendments). Its close review
-ran (one Codex reviewer, `block`, 10 findings, all fixed). It awaits the
-two full-suite close runs and the owner's close ruling.**
+ran (one Codex reviewer, `block`, 10 findings, all fixed). The full-suite
+close runs are in (every failure passed on rerun). It awaits the owner's
+close ruling.**
 
 - [Plan-gate record](001-plan.md)
 - [ROF1 record](002-phase-ROF1.md)

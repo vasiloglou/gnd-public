@@ -1,0 +1,314 @@
+{
+  "note": "UG3 answer key (spec \u00a711). Narration is README.md; this file is never read by it.",
+  "part_a": {
+    "A1": {
+      "documents": [
+        "ledger.txt",
+        "annex.txt"
+      ],
+      "exit": 0,
+      "flags": [],
+      "issues": [],
+      "model": "span-element.orm.yaml",
+      "warnings": []
+    },
+    "A2a": {
+      "documents": [
+        "ledger.txt"
+      ],
+      "exit": 0,
+      "flags": [],
+      "issues": [],
+      "model": "span-element.orm.yaml",
+      "warnings": [
+        {
+          "message": "1 of 10 source spans were not re-hashed; supply every declared document with --document",
+          "path": "$.source.documents",
+          "rule_id": "unattended:spans-unchecked",
+          "severity": "warning"
+        }
+      ]
+    },
+    "A2b": {
+      "documents": [
+        "ledger.txt"
+      ],
+      "exit": 0,
+      "flags": [],
+      "issues": [],
+      "model": "span-constraint.orm.yaml",
+      "warnings": [
+        {
+          "message": "1 of 10 source spans were not re-hashed; supply every declared document with --document",
+          "path": "$.source.documents",
+          "rule_id": "unattended:spans-unchecked",
+          "severity": "warning"
+        }
+      ]
+    },
+    "A2c": {
+      "documents": [
+        "ledger.txt"
+      ],
+      "exit": 0,
+      "flags": [],
+      "issues": [],
+      "model": "span-sample.orm.yaml",
+      "warnings": [
+        {
+          "message": "1 of 10 source spans were not re-hashed; supply every declared document with --document",
+          "path": "$.source.documents",
+          "rule_id": "unattended:spans-unchecked",
+          "severity": "warning"
+        }
+      ]
+    },
+    "A3": {
+      "documents": [
+        "ledger.txt",
+        "annex.txt"
+      ],
+      "exit": 0,
+      "flags": [
+        "--require-documents"
+      ],
+      "issues": [],
+      "model": "span-element.orm.yaml",
+      "warnings": []
+    },
+    "A4": {
+      "documents": [
+        "ledger.txt"
+      ],
+      "exit": 3,
+      "flags": [
+        "--require-documents"
+      ],
+      "issues": [
+        {
+          "message": "1 of 10 source spans were not re-hashed; supply every declared document with --document",
+          "path": "$.source.documents",
+          "rule_id": "unattended:spans-unchecked",
+          "severity": "error"
+        }
+      ],
+      "model": "span-element.orm.yaml",
+      "warnings": []
+    },
+    "A5": {
+      "documents": [],
+      "exit": 3,
+      "flags": [
+        "--require-documents"
+      ],
+      "issues": [
+        {
+          "message": "10 of 10 source spans were not re-hashed; supply every declared document with --document",
+          "path": "$.source.documents",
+          "rule_id": "unattended:spans-unchecked",
+          "severity": "error"
+        }
+      ],
+      "model": "span-element.orm.yaml",
+      "warnings": []
+    },
+    "A6a": {
+      "documents": [],
+      "exit": 0,
+      "flags": [
+        "--require-documents"
+      ],
+      "model": "plain.orm.yaml",
+      "same_as_without_flag": true
+    },
+    "A6b": {
+      "documents": [
+        "ledger.txt"
+      ],
+      "exit": 3,
+      "flags": [
+        "--require-documents"
+      ],
+      "model": "plain.orm.yaml",
+      "same_as_without_flag": true
+    }
+  },
+  "part_b": {
+    "B1": {
+      "apply": {
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive"
+        ]
+      },
+      "preview": {
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "issues": [],
+        "preview_written": true
+      },
+      "published_documents": [
+        "ledger.txt",
+        "annex.txt",
+        "round.txt"
+      ],
+      "validate_after": {
+        "documents": [
+          "ledger.txt",
+          "annex.txt",
+          "round.txt"
+        ],
+        "exit": 0,
+        "issues": [],
+        "warnings": []
+      }
+    },
+    "B2": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "issue": {
+          "cell": "source_document.modify",
+          "operation_index": 0
+        },
+        "preview_written": true
+      },
+      "preview_without_policy": {
+        "exit": 0,
+        "flags": [],
+        "preview_written": true
+      }
+    },
+    "B3a": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "issue": {
+          "cell": "source_document.delete",
+          "operation_index": 0
+        },
+        "preview_written": true
+      },
+      "preview_without_policy": {
+        "exit": 0,
+        "flags": [],
+        "preview_written": true
+      }
+    },
+    "B3b": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false,
+        "stderr_contains": [
+          "candidate model validation failed",
+          "the span names a document the source does not declare"
+        ]
+      },
+      "preview_without_policy": {
+        "exit": 3,
+        "flags": [],
+        "preview_written": false,
+        "stderr_contains": [
+          "candidate model validation failed"
+        ]
+      }
+    },
+    "B4": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false,
+        "stderr_contains": [
+          "source document is already declared"
+        ]
+      }
+    },
+    "B5a": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false
+      }
+    },
+    "B5b": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false
+      }
+    },
+    "B5c": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false
+      }
+    },
+    "B6": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false
+      }
+    },
+    "B7a": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false
+      }
+    },
+    "B7b": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive"
+        ],
+        "preview_written": false
+      }
+    },
+    "B8": {
+      "preview": {
+        "exit": 3,
+        "flags": [],
+        "preview_written": false,
+        "stderr_contains": [
+          "the model declares no source.documents to append to"
+        ]
+      }
+    }
+  }
+}

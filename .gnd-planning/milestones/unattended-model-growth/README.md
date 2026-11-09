@@ -12,7 +12,7 @@ milestone.
 **Status: plan r1.2 approved at the plan gate on 2026-11-07 ([record](001-plan.md); the owner's reply "approved all", relayed). The owner also ruled the
 decisions UG-D0 to UG-D9 the same day. Plan review round 1 (four local readers, UG-D1 (a)) ran over r1.1
 and its accurate repairs are in r1.2; no confirmation round was run. The UG1 spec (r1.3) was approved at its gate and UG1 is implemented as tests only
-([record](002-phase-UG1.md)); UG2 is implemented and merged (PR 147); UG3's spec is drafted and awaits its owner gate; UG4 has no spec. No issue is closed.**
+([record](002-phase-UG1.md)); UG2 is implemented and merged (PR 147); UG3's spec is approved and its corpus awaits approval; UG4 has no spec. No issue is closed.**
 `auto=false`.
 
 **Headline.** Most of the four issues is already on main, from the closed
@@ -32,7 +32,7 @@ items as owner decisions.
 - [UG2 spec (r1, approved 2026-11-09, all decisions as proposed)](notes/phase-UG2-spec.md): population-checked
   constraint admission; corpus approved
 - [UG2 record](003-phase-UG2.md): implemented, one-reviewer diff review applied; merged in PR 147 (`5c6a0c5f`)
-- [UG3 spec (r1, draft, awaiting owner review)](notes/phase-UG3-spec.md): span counts and `--require-documents` (part A), a `source.documents` evolve locator (part B)
+- [UG3 spec (r1, approved 2026-11-09, all decisions as proposed; corpus awaiting approval)](notes/phase-UG3-spec.md): span counts and `--require-documents` (part A), a `source.documents` evolve locator (part B)
 - Phases: UG1 acceptance replay (done, test-only); UG2 population-checked
   constraint admission (ruled UG-D2 (b); needs its own spec gate); UG3 the
   unattended source header across rounds (ruled UG-D3 (c), UG-D9 (b); same); UG4 documentation and dispositions;
@@ -45,6 +45,6 @@ build the population-checked admission (UG2); UG-D9 (b) an append-only
 readers, the maintained panel stated as the project's bar), D4, D5, D6, D7, D8
 as proposed. The owner closes issues 74, 75, 76 and 104 (UG-D0).
 
-**Next action.** The owner rules on UG3-D1 to UG3-D14 in the [UG3 spec](notes/phase-UG3-spec.md) §7 (branch `claude/ug3-spec`). The UG1 issue dispositions were posted on 2026-11-08 ([text and links](notes/ug1-issue-dispositions.md)); no issue is closed.
+**Next action.** The owner approves or amends the UG3 corpus answers ([UG3 spec](notes/phase-UG3-spec.md), "Corpus authoring") (branch `claude/ug3-spec`). The UG1 issue dispositions were posted on 2026-11-08 ([text and links](notes/ug1-issue-dispositions.md)); no issue is closed.
 Until then no code is written. Open owner questions: UG-Q6 (component-index contradiction in
 `project.md`), UG-Q7 (tracker labels); neither blocks UG1.

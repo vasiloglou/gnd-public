@@ -1,0 +1,3 @@
+Café Lumière keeps a ledger of customers and orders.
+Each order is placed by a customer. Order 10 was placed by customer 1.
+Order 11 was placed by customer 2. An order has one placing customer.

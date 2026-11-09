@@ -1,0 +1,49 @@
+# UG3 corpus. A model without the unattended mode: no source header and no spans.
+version: 1
+model_id: ug3-plain
+object_types:
+- id: customer
+  name: Customer
+  kind: entity
+  reference: {mode: popular, value_type: customer_no}
+- {id: customer_no, name: CustomerNo, kind: value, primitive: Integer}
+- id: order
+  name: Order
+  kind: entity
+  reference: {mode: popular, value_type: order_no}
+- {id: order_no, name: OrderNo, kind: value, primitive: Integer}
+fact_types:
+- id: order_placed_by_customer
+  reading: '{Order} is placed by {Customer}'
+  roles:
+  - {object_type: order, role_name: order}
+  - {object_type: customer, role_name: customer}
+  sample_population:
+  - {order: 10, customer: 1}
+  - {order: 11, customer: 2}
+  constraints:
+  - type: uniqueness
+    roles: [order]
+    source: llm-inferred
+    status: proposed
+    modality: deontic
+    rationale: The text says an order has one placing customer.
+    provenance: {rationale_world_fact: An order has one placing customer.}
+  - type: mandatory
+    role: order
+    source: sample
+    status: proposed
+    modality: deontic
+    rationale: Every sampled order has a placing customer.
+    provenance: {}
+  - type: mandatory
+    role: customer
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: A ledger customer is recorded because they placed something.
+    provenance: {library_entry: ledger-party-participates}
+- id: customer_listed
+  reading: '{Customer} is listed'
+  roles:
+  - {object_type: customer, role_name: customer}

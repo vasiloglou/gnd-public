@@ -1,0 +1,4 @@
+Annex to the ledger.
+Order 11 was placed by customer 2 again.
+An order has one placing customer.
+A customer is listed in the ledger.

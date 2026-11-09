@@ -2,9 +2,23 @@
 
 ## 1. Status line
 
-**Draft r1, 2026-11-09: awaiting owner review.** No decision in §7 is ruled. No
-fixture, test or source file is written. Implementation starts only after the owner
-rules on §7 and, if UG3-D14 (a) is chosen, approves the corpus.
+**Corpus authored and red, 2026-11-09: waiting for the owner's corpus approval.**
+The corpus (§11) is committed before any source edit: 23 cases (A1 to A6b, B1 to
+B8 with B3, B5 and B7 split), each red for the intended reason except A1, which
+asserts that nothing is added and so holds on the base too. The flag-free
+baselines (A10, B9) and the B7 control are green. See "Corpus authoring" below.
+No source file is edited. Implementation starts only when the owner approves the
+corpus.
+
+Earlier status, kept: Spec gate `(o)`, 2026-11-09: approved as proposed.** Asked "How do you rule on
+UG3-D1 to UG3-D14?", the owner replied, quoted: "approved". Every decision in §7 is
+ruled as its **(proposed)** reading, including UG3-D14 (a): the approval
+instrument is **corpus-first**. Approved bytes: r1 at `e3b95610` (sha256
+`6c65d9f5…`). Next: the corpus and its red harness (§11), committed before any
+source edit and put to the owner. No source file is edited until the corpus is
+approved.
+
+Earlier status, kept: Draft r1, 2026-11-09: awaiting owner review.
 
 ## 2. Provenance
 
@@ -153,7 +167,7 @@ New option on `gnd validate`:
 **Order (normative, per boundary):**
 
 1. Model load and layer-one validation, as today. An invalid model reports its own issues and exit first.
-2. `--identity` combined with `--require-documents` is a usage error, the same message family as `--document` (exit 2, argparse).
+2. `--identity` combined with `--require-documents` is a usage error, the same message family as `--document` (exit 64; corrected from 2 by F-c1).
 3. `--document` reading, as today (66, 74, 3 for oversize).
 4. The span walk: the existing issues (`document-undeclared`, `document-unreadable`, `span-out-of-range`, `excerpt-mismatch`) and the coverage counts.
 5. If the existing issues are non-empty, exit 3 as today. The `spans-unchecked` entry rides in `warnings`, or in `issues` under the strict flag.
@@ -242,7 +256,7 @@ raise EvolutionPolicyGapError(locator_kind)   # mapped to exit 3 by type
 | The entry fits the frozen v3 payload | Yes: `ValidationIssue` is `{path, message, rule_id, severity}` with `severity` in `{error, warning}` (`errors.py:13-19`), the same closed shape as `report.schema.json` `$defs.issue`. A12 measures it |
 | Both text routes print the entry | Yes: the plain route prints `result.warnings` (`checking.py:119`); the projected route prints `payload["warnings"]` (`output.py:406-418`). The entry must be added to the result's warnings **before** the payload is projected. The projected payload may sit under `"report"` (`checking.py:112`), so the implementation appends at the one place both read, and A8 runs both |
 | Strict with no `--document` reaches the walk | Yes: today `_cmd_validate` calls the document path only when `documents` is truthy (`checking.py:101`); the flag adds a second trigger |
-| A usage error for `--identity` with the flag | Yes: the existing `parsers["validate_parser"].error(...)` (`checking.py:1079-1083`) exits 2 |
+| A usage error for `--identity` with the flag | Yes: the existing `parsers["validate_parser"].error(...)` (`checking.py:1079-1083`) exits 64 (F-c1) |
 | `add` appends without moving other bytes | Yes: replay works on the parsed document; the canonical candidate text is produced by the same writer as today, and B1 compares the published model |
 | The policy's fail-closed default is testable | Yes, only through `model_construct` (the union is closed); B11 |
 | `entries` non-empty for a declaration-only proposal | Yes: `_surface_index` always adds `model` (`service.py:466`) |
@@ -255,20 +269,20 @@ At first write every row is open; the proposed reading is marked **(proposed)**.
 
 | ID | Question | Readings and cost | Proposed | Owner ruling |
 |---|---|---|---|---|
-| UG3-D1 | One spec or two | (a) one spec, two parts (UG3a = (ii) counts and flag; UG3b = (i) locator), each with its own corpus cases, commits and record (`004-phase-UG3a.md`, `005-phase-UG3b.md`), landing (ii) then (i) on one branch and one PR. (b) two specs and two PRs: a second gate and a second PR for about 300 lines | **(a)** | |
-| UG3-D2 (UG-Q2) | Flag name | `--require-documents` (the plan's placeholder; reads as "the run requires the documents") / `--require-spans-checked` / `--strict-spans` | **`--require-documents`** | |
-| UG3-D3 | Where the counts go | (a) one `unattended:spans-unchecked` entry in the existing `warnings` list, present only when a span is unchecked. No version bump, fits `$defs.issue` (A12), but a run with every span checked shows no count. (b) counts always present: a new report variant or version bump (`build_validate_payload` is documented frozen; `counts` and the variants are `additionalProperties: false`). It moves every `validate --document` payload and needs a schema change and new pins. The owner's UG-D3 ruling said "counts always reported"; (a) meets it only when there is something to report | **(a)**, with this cost stated as the plan required | |
-| UG3-D4 | No `--document`, no flag, unattended model | (a) unchanged: no entry, byte-identical (UG-R1 as the plan wrote it). (b) always warn: closes the hole without the flag, but moves every unattended `validate` output | **(a)** | |
-| UG3-D5 | Form of the strict refusal | (a) the same entry in `issues` with `severity: error`, exit 3: machine-detectable by `rule_id`. (b) `error` object only: one less list shape, but no `rule_id` | **(a)** | |
-| UG3-D6 | Strict flag on a model without the mode | (a) no-op: the same bytes and exit as without the flag (plan). (b) usage error: a host could not pass the flag uniformly | **(a)** | |
-| UG3-D7 | Malformed spans and spans on an undeclared document | (a) counted as unchecked (fail closed), reachable only at the function. (b) excluded from the total: the counts would then hide them | **(a)** | |
-| UG3-D8 | Locator shape | `SourceDocumentLocator{locator_kind: "source-document", sha256}`, reference `source.documents[<sha256>]`. Alternative: key by position. Positions move when a document is deleted, and the digest is already the identity U1 uses | **digest-keyed** | |
-| UG3-D9 | Operation kinds | (a) `add`, `modify` (label only), `delete`; no `rename`. The policy admits `add` and refuses the other two with named cells (UG3-C6 needs the cells to exist). (b) `add` only: smaller, but a removal is then an operation-validation error with no cell, which misses UG3-C6 | **(a)** | |
-| UG3-D10 (UG-Q5) | Schema version | (a) admitted in v3 only; v1 and v2 stay frozen and refuse it; GND 0.2.0 refuses a v3 proposal carrying it (forward-incompatible, stated in the release note). (b) a new schema version 4 across proposal, preview, intent and record: the principled reading of "one closed graph per version", at the cost of four new nested classes, readers and pins, perhaps +250 lines. (c) all of v1 to v3: rewrites frozen graphs | **(a)** | |
-| UG3-D11 | `add` on a model without a `source.documents` list | (a) refuse, exit 3: adopting the unattended mode stays a reviewed change outside this locator. (b) create the header: the locator would then also switch a model into a mode | **(a)** | |
-| UG3-D12 | An unknown locator kind in the policy | (a) fail closed: a typed error, exit 3 (§6.5). (b) a catch-all cell in `PolicyCell`: the contract table and `test_t14` would carry a cell no real case reaches | **(a)** | |
-| UG3-D13 | RF1 re-pin form | (a) a successor fixture, as RC1 and UG2 did; historical goldens untouched. (b) re-pin the historical goldens and `MANIFEST_SHA256` as the plan's text says; a fresh capture drifts about 60 unrelated goldens (MG3-Q1) | **(a)** (departs from the plan's wording) | |
-| UG3-D14 | Approval instrument | (a) **corpus-first**, the default for exit-code contracts and a serialized field. Before any source edit, commit the fixtures for A1 to A6 and B1 to B8, a README narrating each without its outcome, and a separate `expected.json` answer key (exits, rule ids, cells, the entry's exact text). Committed red, then put to the owner. (b) this prose, with §8 as the narrated cases | **(a)** | |
+| UG3-D1 | One spec or two | (a) one spec, two parts (UG3a = (ii) counts and flag; UG3b = (i) locator), each with its own corpus cases, commits and record (`004-phase-UG3a.md`, `005-phase-UG3b.md`), landing (ii) then (i) on one branch and one PR. (b) two specs and two PRs: a second gate and a second PR for about 300 lines | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D2 (UG-Q2) | Flag name | `--require-documents` (the plan's placeholder; reads as "the run requires the documents") / `--require-spans-checked` / `--strict-spans` | **`--require-documents`** | `(o)` 2026-11-09: as proposed |
+| UG3-D3 | Where the counts go | (a) one `unattended:spans-unchecked` entry in the existing `warnings` list, present only when a span is unchecked. No version bump, fits `$defs.issue` (A12), but a run with every span checked shows no count. (b) counts always present: a new report variant or version bump (`build_validate_payload` is documented frozen; `counts` and the variants are `additionalProperties: false`). It moves every `validate --document` payload and needs a schema change and new pins. The owner's UG-D3 ruling said "counts always reported"; (a) meets it only when there is something to report | **(a)**, with this cost stated as the plan required | `(o)` 2026-11-09: as proposed |
+| UG3-D4 | No `--document`, no flag, unattended model | (a) unchanged: no entry, byte-identical (UG-R1 as the plan wrote it). (b) always warn: closes the hole without the flag, but moves every unattended `validate` output | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D5 | Form of the strict refusal | (a) the same entry in `issues` with `severity: error`, exit 3: machine-detectable by `rule_id`. (b) `error` object only: one less list shape, but no `rule_id` | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D6 | Strict flag on a model without the mode | (a) no-op: the same bytes and exit as without the flag (plan). (b) usage error: a host could not pass the flag uniformly | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D7 | Malformed spans and spans on an undeclared document | (a) counted as unchecked (fail closed), reachable only at the function. (b) excluded from the total: the counts would then hide them | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D8 | Locator shape | `SourceDocumentLocator{locator_kind: "source-document", sha256}`, reference `source.documents[<sha256>]`. Alternative: key by position. Positions move when a document is deleted, and the digest is already the identity U1 uses | **digest-keyed** | `(o)` 2026-11-09: as proposed |
+| UG3-D9 | Operation kinds | (a) `add`, `modify` (label only), `delete`; no `rename`. The policy admits `add` and refuses the other two with named cells (UG3-C6 needs the cells to exist). (b) `add` only: smaller, but a removal is then an operation-validation error with no cell, which misses UG3-C6 | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D10 (UG-Q5) | Schema version | (a) admitted in v3 only; v1 and v2 stay frozen and refuse it; GND 0.2.0 refuses a v3 proposal carrying it (forward-incompatible, stated in the release note). (b) a new schema version 4 across proposal, preview, intent and record: the principled reading of "one closed graph per version", at the cost of four new nested classes, readers and pins, perhaps +250 lines. (c) all of v1 to v3: rewrites frozen graphs | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D11 | `add` on a model without a `source.documents` list | (a) refuse, exit 3: adopting the unattended mode stays a reviewed change outside this locator. (b) create the header: the locator would then also switch a model into a mode | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D12 | An unknown locator kind in the policy | (a) fail closed: a typed error, exit 3 (§6.5). (b) a catch-all cell in `PolicyCell`: the contract table and `test_t14` would carry a cell no real case reaches | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG3-D13 | RF1 re-pin form | (a) a successor fixture, as RC1 and UG2 did; historical goldens untouched. (b) re-pin the historical goldens and `MANIFEST_SHA256` as the plan's text says; a fresh capture drifts about 60 unrelated goldens (MG3-Q1) | **(a)** (departs from the plan's wording) | `(o)` 2026-11-09: as proposed |
+| UG3-D14 | Approval instrument | (a) **corpus-first**, the default for exit-code contracts and a serialized field. Before any source edit, commit the fixtures for A1 to A6 and B1 to B8, a README narrating each without its outcome, and a separate `expected.json` answer key (exits, rule ids, cells, the entry's exact text). Committed red, then put to the owner. (b) this prose, with §8 as the narrated cases | **(a)** | `(o)` 2026-11-09: as proposed |
 
 ## 8. Tests
 
@@ -284,7 +298,7 @@ Two new files: `tests/test_unattended_span_coverage.py` (Part A) and `tests/test
 | A4 | `--require-documents`, one supplied | 3; issue `unattended:spans-unchecked`, severity `error` |
 | A5 | `--require-documents`, no `--document`, unattended model | 3; `N of N` |
 | A6 | `--require-documents` on a model without the mode, with and without `--document` | bytes and exit equal the same run without the flag |
-| A7 | `--require-documents --identity` | 2, usage error |
+| A7 | `--require-documents --identity` | 64, usage error (corrected from 2 by F-c1) |
 | A8 | Text output on both text routes, plain and projected | the `WARNING at $.source.documents: …` line |
 | A9 | Canaries: unique strings in both documents' text; scan stdout and stderr of A1 to A8 | 0 hits; positive control found |
 | A10 | Parity: every `tests/test_unattended_mode.py` T3 case and UG1's validate calls, without the flag, against bytes captured on `5c6a0c5f` | identical, except A2's carved-out entry |
@@ -369,6 +383,67 @@ It is committed red (the flag and the locator do not exist) before the first sou
 
 Optional spec review: none proposed. The owner may call one.
 
+## Corpus authoring (step 2 instrument, recorded as it was done)
+
+Committed red before any source edit, on the spec gate's ruling UG3-D14 (a). The
+fixtures were generated once by a throwaway script (not committed) from the MG5
+fixture `tests/fixtures/unattended/` and checked on the base: every model
+validates (exit 0), and `--document` over both documents exits 0 for each
+span model.
+
+| File (under `tests/fixtures/unattended-model-growth/ug3/`) | sha256 |
+|---|---|
+| `README.md` (narration, no outcomes) | `c0a6980ca1c571cd92537962ab10606a1bfb8a342c90f41c32c1be14e7806718` |
+| `expected.json` (answer key: parts A and B) | `a46dc7dcdc702aa4c361024990d10e8f97179345a38099ab03ac9e0feebd7358` |
+| `parity-baseline.json` (captured on `5c6a0c5f`) | `6b84dfb57a5475dbf21d6cacbf60bbc6b10a3634e2fc9c31c596106bc4957035` |
+| `documents/ledger.txt` (the MG5 `source.txt` bytes) | `6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8` |
+| `documents/annex.txt` | `69897fa97fa34393398757221b81b99c4fad230ffc46c28cd1dd8d088061d5e4` |
+| `documents/round.txt` | `780ce83053b3e907a53cd0026934ff4bab7f63cda98ee1ece44e8035d093d7e6` |
+| `models/span-element.orm.yaml` | `56213db71bb18914d8825a76613ba363355cdc3232277f0af9e318fea1a5370e` |
+| `models/span-constraint.orm.yaml` | `4feeee1df49065396a4731cf3c3be0c72835f25d6ae7a750c56724a4b5b16734` |
+| `models/span-sample.orm.yaml` | `e8a581fee1b769d6b3a5b398dbd6f9905fc11e8de6d8b401bc0bbec153476dce` |
+| `models/plain.orm.yaml` | `d58221bd2637f02cf25391584da3bf1b80a4fff078105c1d8aafe3332dfb09e9` |
+| `models/rounds.orm.yaml` | `47d43750e81a47733ca84bd19e3c3228b6902ad7cb59020c551d24d9b96e6519` |
+
+Harness: `tests/test_unattended_span_coverage.py` (part A, sha256 `3fd779d8…`) and
+`tests/test_evolve_source_document.py` (part B, sha256 `800f7b82…`). On the base:
+`21 failed, 5 passed`, ruff clean, `tests/test_digest_helpers.py` green.
+
+| Red case | Reason on the base |
+|---|---|
+| A2a, A2b, A2c | the `warnings` list has no `unattended:spans-unchecked` entry |
+| A3, A4, A5, A6a, A6b | 64: `--require-documents` is not an option |
+| A10b | the carved-out runs carry no entry |
+| B1 to B8 (12) | `ImportError`: `SourceDocumentLocator` does not exist, so the case's proposal cannot be built |
+
+Green on the base, by design: A1 (it asserts that nothing is added); the answer-key
+split check; A10 (18 runs outside the carve-out, byte-identical); B9 (six
+locator-free previews: proposal digests, proposal file bytes, preview bytes and
+exits); the B7 control.
+
+**What the owner approves:** the answers in `expected.json`. In plain words:
+
+- **Part A:**
+  - A1 and A3 (both documents supplied, with and without the flag) exit 0 with no entry.
+  - A2a to A2c (only the ledger supplied, one span at each location) exit 0, with exactly one warning: `1 of 10 source spans were not re-hashed; supply every declared document with --document`, path `$.source.documents`.
+  - A4 is A2a with the flag: exit 3, with the same text as an `error` issue and no warning.
+  - A5 is the flag with no document: exit 3, `10 of 10 …`.
+  - A6a and A6b (the plain model) are unchanged by the flag: 0 and 3, byte for byte.
+- **Part B:**
+  - B1: the round previews and applies with exit 0 under `--policy additive`, the published `source.documents` is ledger, annex, round in that order, and `validate` over all three documents exits 0 with no entry.
+  - B2 (label change) and B3a (removing the uncited annex): exit 3 under the policy, with cells `source_document.modify` and `source_document.delete` on operation 0. Without the policy, both exit 0.
+  - B3b (removing the cited ledger): exit 3 with and without the policy, by candidate validation ("the span names a document the source does not declare"); no preview is written.
+  - B4 (duplicate): exit 3, "source document is already declared".
+  - B5a to B5c (bad shapes), B6 (`rename`) and B7a and B7b (the locator in schema versions 1 and 2): exit 3, with no preview written.
+  - B8 (a model with no `source` header): exit 3, "the model declares no source.documents to append to".
+
+## Implementation findings (recorded as found)
+
+- **F-c1 (corpus authoring), a spec correction:** a usage error in this CLI exits **64**, not 2 (measured: an unknown `--require-documents` on the base exits 64). §4, §6.2 step 2 and A7 said 2. A7's expected exit is corrected to **64** before implementation; this is not a corpus answer.
+- **F-c2:** `gnd evolve preview` refuses every v1 or v2 proposal with exit **70** ("versions 1 and 2 are read-only compatibility evidence", `service.py:1357`), after the proposal is read. B7's answer (3) therefore holds only if UG3-D10's refusal sits in **reading** the v1 and v2 graphs, as §6.3 says. The control pins the 70 for an ordinary operation, so B7 cannot pass by reaching the version gate.
+- **F-c3:** UG1 pinned no golden proposal bytes (plan §4 UG1-C8 said it "may"). B9 captures them now on `5c6a0c5f`: three locator-free proposals, each previewed with and without the policy, giving outcomes 0 and 3, written and not written.
+
 ## Revision history
 
-- r1, 2026-11-09: first draft. Not reviewed. Not approved.
+- r1, 2026-11-09: first draft. Not reviewed. Approved as proposed at the spec gate.
+- r1 + corpus, 2026-11-09: rulings recorded, corpus authoring and findings F-c1 to F-c3 added; A7's exit corrected (F-c1). Not reviewed.

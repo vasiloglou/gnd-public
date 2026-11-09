@@ -455,3 +455,22 @@ P3 (13 `docs/` files name 0.1.0, plus `docs/index.md:144`,
 
 The reviewer's "checked and found true" list is retained with the record. r2's
 repairs have no review opinion; one reviewer is one reviewer.
+
+## 12. Close amendment (draft, 2026-11-09; applies only under the close ruling)
+
+Raised by the close record [`005-milestone-close.md`](../005-milestone-close.md),
+2026-11-09. r2 was written for a milestone that ends before publication. The
+owner then asked for publication (RL-D5's route ruling, 2026-11-08, and the
+go-aheads quoted in the close record). As §4's close row requires, the close
+records those requests as a new decision, RL-D10, not as part of the plan.
+Three clauses describe a state that no longer holds. Their r2 wording is kept
+above; this section says how the close reads them.
+
+| Clause | r2 wording (kept above) | Read at the close as |
+|---|---|---|
+| Predicate 6 | "No workflow, environment, repository setting or PyPI configuration was changed to enable publication, and nothing was uploaded (all phases)" | No phase uploaded anything or changed a workflow, environment, setting or publisher. The 0.2.0 upload was the owner's own token upload of the retained files, under RL-D10. The tag and the GitHub release were also made by the owner, under RL-D10, and are not phase work. |
+| Predicate 7 | "the close record ... leaves issue 118 open with its reason" | Issue 118 is closed as completed. With the owner's go-ahead, the comment recorded the published version and the served-file result. |
+| §4, Milestone close | "issue 118 left open with the reason \"prepared, not published\"" | As predicate 7 above. |
+
+The post-publication patches (RR3) were applied in PR 140 under RL-D10, and
+not by a phase.

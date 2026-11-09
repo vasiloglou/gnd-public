@@ -28,4 +28,15 @@ RL-D5 route (owner, 2026-11-08, relayed): "Upload saved candidate", route (a), a
 
 RL-D0 and RL-D3 to RL-D9 ruled as proposed (owner, 2026-11-07, relayed). RL-D9, after E1 (owner, 2026-11-07, relayed): "Split (a)+(b) (Recommended)" (normalize the version in the one RF1 pin helper; regenerate the committed outputs whose purpose is to equal the current command's output, every moved digest listed first; no fix of the version in the test environment). Opt-in lanes (`evidence`, `census`): "Record as excluded (Recommended)".
 
-Next action: dossier actions 4 to 7, each on its own owner go-ahead: tag `v0.2.0` at `7c0f4d0e`; the GitHub release; the post-publication patch PR, with `PUBLICATION_DATE` set to 2026-11-08 and `stale-text-check.sh token`; the issue-118 comment and close. Then the milestone close. Done: route (a) upload (owner, by hand) and the step E served-file check (served wheel and sdist equal `e323c19e…69e4` and `f85818ea…5104`; a fresh index install gives `gnd 0.2.0`). PR 131 (RR3) merged as `36e47981`; main's `src` has since moved past the candidate (ROF1 to ROF3), which does not affect the published files.
+Dossier actions 4 to 7 are done (RL-D10, recorded in the draft close).
+- The owner pushed tag `v0.2.0` (`d84ad6d5` → `7c0f4d0e`) and created the
+  [GitHub release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
+- [PR 140](https://github.com/vasiloglou/gnd-public/pull/140) applies the
+  post-publication patches; it is open.
+- Issue 118 is closed as completed (2026-11-09).
+
+**Close: drafted, not ruled ([draft close record](005-milestone-close.md); plan §12 draft amendment).** Next actions, all the owner's:
+- choose the close review instrument;
+- merge PR 133 and PR 140;
+- run the closing full lane;
+- give the close ruling. Done: route (a) upload (owner, by hand) and the step E served-file check (served wheel and sdist equal `e323c19e…69e4` and `f85818ea…5104`; a fresh index install gives `gnd 0.2.0`). PR 131 (RR3) merged as `36e47981`; main's `src` has since moved past the candidate (ROF1 to ROF3), which does not affect the published files.

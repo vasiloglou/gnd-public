@@ -280,12 +280,12 @@ gains `; population: <outcome>`, where the outcome is the verdict word, `uncover
 `not-located` (no verdict could be matched: fail closed) or `not eligible` (condition 1, or a
 `neither` key). No population value, count of facts or checker message appears anywhere.
 
-The file is resolved beneath the workspace, read once (a regular file, no symlink, the population
+The path is made absolute lexically and must lie beneath the workspace (else `74`); the file is read once (a regular file, no symlink, the population
 size cap applied at the read), hashed, and loaded against the candidate model from those same bytes.
 Its header `model_id` is required and must equal the candidate's. A model that declares
 `reference_populations` cannot use the option. A missing file exits `66`; a symlink, directory, FIFO
-or unreadable file `74`; an oversize, malformed or invalid population, or a `model_id` that is absent
-or different, `3`. The file is read after candidate validation, replay equality and D-12, and before
+or unreadable file `74`; an oversize, malformed or invalid population (JSON, or YAML by a `.yaml` or
+`.yml` suffix), or a `model_id` that is absent or different, `3`. The file is read after candidate validation, replay equality and D-12, and before
 the policy walk, so a malformed proposal reports its own error first.
 
 The preview records `population_check`: `sha256` (of the bytes read), the candidate's `model_id`, and
@@ -295,10 +295,11 @@ preview carries this field, so the record shows what an admission rested on.
 
 **Apply.** `apply` must repeat `--check-population` exactly when the reviewed preview carries
 `population_check`; otherwise it exits `3` before the retry branch. It rebuilds the preview from the
-same path, so changed bytes make the fresh preview differ and the command exits `11`. The service then
-re-reads the file and re-runs the check and the policy after candidate validation, replay equality and
-D-12; a digest different from the preview's exits `11` ("population changed before apply"), and any
-issue exits `3`. Without the option the policy re-run keeps its place before candidate validation.
+same path and the reviewed digest: bytes whose digest differs are refused as stale (`11`, "population
+changed before apply") before they are parsed, whatever they now hold. The service then re-reads the
+file and re-runs the check and the policy after candidate validation, replay equality and D-12, under
+the same digest rule, and any issue exits `3`. The option check also runs before the
+candidate-already-live retry branch. Without the option the policy re-run keeps its place before candidate validation.
 
 **What the admission means.** The constraint stays `proposed` and `deontic`, so a later violating fact
 is a reported warning, not an uninterpretable fact. Under this option the additive guarantee holds

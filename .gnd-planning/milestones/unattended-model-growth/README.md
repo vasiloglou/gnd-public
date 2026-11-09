@@ -30,7 +30,8 @@ items as owner decisions.
 - [UG1 spec (r1.3, approved)](notes/phase-UG1-spec.md): acceptance replay and issue
   disposition, test-only
 - [UG2 spec (r1, approved 2026-11-09, all decisions as proposed)](notes/phase-UG2-spec.md): population-checked
-  constraint admission; corpus-first, corpus in `tests/fixtures/unattended-model-growth/ug2/`, red
+  constraint admission; corpus approved
+- [UG2 record](003-phase-UG2.md): implemented, one-reviewer diff review applied; not merged
 - Phases: UG1 acceptance replay (done, test-only); UG2 population-checked
   constraint admission (ruled UG-D2 (b); needs its own spec gate); UG3 the
   unattended source header across rounds (ruled UG-D3 (c), UG-D9 (b); same); UG4 documentation and dispositions;
@@ -43,6 +44,6 @@ build the population-checked admission (UG2); UG-D9 (b) an append-only
 readers, the maintained panel stated as the project's bar), D4, D5, D6, D7, D8
 as proposed. The owner closes issues 74, 75, 76 and 104 (UG-D0).
 
-**Next action.** The owner approves the UG2 corpus (`tests/fixtures/unattended-model-growth/ug2/README.md` and `expected.json`); implementation follows. The UG1 issue dispositions were posted on 2026-11-08 ([text and links](notes/ug1-issue-dispositions.md)); no issue is closed.
+**Next action.** The owner decides whether to open a PR for UG2 (branch `claude/ug2-spec`) and, separately, whether to start UG3's spec. The UG1 issue dispositions were posted on 2026-11-08 ([text and links](notes/ug1-issue-dispositions.md)); no issue is closed.
 Until then no code is written. Open owner questions: UG-Q6 (component-index contradiction in
 `project.md`), UG-Q7 (tracker labels); neither blocks UG1.

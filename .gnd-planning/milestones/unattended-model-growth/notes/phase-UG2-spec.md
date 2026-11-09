@@ -2,7 +2,11 @@
 
 ## 1. Status line
 
-**Corpus approved `(o)`, 2026-11-09; implementation authorized.** Asked "Do you
+**Implemented, 2026-11-09 ([record](../003-phase-UG2.md)).** The approved corpus is
+green and its answer key unchanged; the phase-diff review's nine findings were reproduced and
+fixed. Not merged; merge needs the owner.
+
+Earlier status, kept: **Corpus approved `(o)`, 2026-11-09; implementation authorized.** Asked "Do you
 approve the UG2 corpus answers?", the owner replied, quoted: "Approve the
 corpus". Approved bytes: the five files in "Corpus authoring" at the digests
 listed there (commit `c635ef9d`). This authorizes implementing UG2 as specified.
@@ -566,10 +570,15 @@ Findings while authoring:
 - **F-i6 (deviation in T1).** The family sweep uses uniqueness, mandatory,
   frequency, value and a model-level subset. Ring is replaced by subset: the
   corpus model has no fact type with two roles of one type.
-- **F-i7.** Through the CLI, `vacuous` is unreachable (an empty populated
+- **F-i7 (corrected `(r1)` after the phase-diff review, finding 9).** Prior
+  wording, kept: "Through the CLI, `vacuous` is unreachable (an empty populated
   subject is `uncovered` first) and so is `fail` (alethic constraints are not
   eligible). `test_t4b_vacuous_and_t3b_fail_reachability` pins the precedence;
-  the words stay in the vocabulary because they are the checker's.
+  the words stay in the vocabulary because they are the checker's." Correction:
+  `vacuous` **is** reachable, through a population whose `covers` claims nothing
+  (`test_r9_a_vacuous_verdict_leaves_the_refusal`); only `fail` is unreachable
+  except as `not eligible`. The T4b test is renamed to what it pins: an empty
+  populated subject is `uncovered` first.
 - **F-i8 (rule 6 measurement).** T15: a constraint with a declared `id` is
   located by its positional reference; `check()` without `--rule-ids` emits
   positional references.
@@ -587,3 +596,4 @@ Findings while authoring:
 - r1 approved, 2026-11-09: spec gate `(o)`, "Approve all as proposed". Status line and ruling column only.
 - 2026-11-09: corpus authored red; status line replaced and "Corpus authoring" appended.
 - 2026-11-09: corpus approved `(o)` ("Approve the corpus"); status line only.
+- 2026-11-09: implemented; findings F-i1 to F-i10 appended, F-i7 corrected `(r1)` after the review; status line replaced.

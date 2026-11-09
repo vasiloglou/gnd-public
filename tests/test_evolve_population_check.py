@@ -363,11 +363,11 @@ def test_not_located_fails_closed(tmp_path: Path, monkeypatch: pytest.MonkeyPatc
     assert preview.policy_issues[0].detail.endswith("; population: not-located")
 
 
-def test_t4b_vacuous_and_t3b_fail_reachability(tmp_path: Path) -> None:
-    """`vacuous` needs a populated subject that is covered yet empty for the constraint: unreachable,
-    because `uncovered` is decided first (precedence, spec §6.1). `fail` is an alethic verdict, and an
-    alethic constraint is never eligible. Both words stay in the vocabulary for the checker's sake; this
-    test pins the precedence that makes them unreachable through the CLI."""
+def test_t4b_an_empty_populated_subject_is_uncovered_first(tmp_path: Path) -> None:
+    """Precedence (spec §6.1): a populated subject with no fact is `uncovered` before any verdict.
+    `vacuous` is still reachable through a population whose `covers` claims nothing (review R9,
+    `test_r9_a_vacuous_verdict_leaves_the_refusal`); `fail` is alethic, and an alethic constraint is
+    never eligible, so it is reachable only as the `not eligible` path (C08a)."""
     after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
     operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
     empty = _population({"customer_places_order": []})
@@ -387,9 +387,11 @@ def test_t9_bytes_changed_between_fresh_preview_and_service_reread(tmp_path: Pat
     (root / "pop.json").write_text(json.dumps(_population({"customer_places_order": PLACEMENTS[:1]})),
                                    encoding="utf-8")
     from gnd.evolve import EvolutionError
+    from gnd.evolve.population_check import EvolutionPopulationError
 
-    with pytest.raises(EvolutionError, match="population changed before apply"):
+    with pytest.raises(EvolutionPopulationError, match="population changed before apply") as caught:
         service.apply(preview, check_population="pop.json")
+    assert caught.value.exit_code == 11
     assert (root / "model.orm.yaml").read_bytes() == before
     with pytest.raises(EvolutionError, match="--check-population differs"):
         service.apply(preview)
@@ -487,7 +489,7 @@ def test_t12_reference_bearing_candidate_is_refused(tmp_path: Path) -> None:
         reference_populations = ({"id": "r"},)
 
     with pytest.raises(EvolutionPopulationError) as caught:
-        service._population_check("pop.json", None, proposal, Bearing(), frozenset(), [])
+        service._population_check("pop.json", None, proposal, Bearing(), frozenset(), [], document={})
     assert caught.value.exit_code == 3
     assert population_check  # the module owns the refusal type
 
@@ -577,3 +579,161 @@ def test_t16_placement_follows_a_later_delete(tmp_path: Path) -> None:
     bad = service.preview(proposal, policy="additive", populated=("customer_places_order",),
                           check_population="bad.json")
     assert bad.policy_issues[0].detail.endswith("; population: warning")
+
+
+# --- regression tests for the phase-diff review (notes/phase-UG2-codex-review.md) ---
+#
+# One per reproduced finding, each shown failing on 2518e8fe before its fix.
+
+
+def test_r1_a_detached_constraint_never_borrows_another_verdict(tmp_path: Path) -> None:
+    """R1: ADD a constraint, then MODIFY its whole fact type reordering the list; the added
+    constraint's recorded object is detached, so its outcome is `not-located`, never the verdict
+    of whatever now sits at the recorded position."""
+    unique = {**UNIQUE_ORDER}
+    fact = next(item for item in _doc()["fact_types"] if item["id"] == "customer_places_order")
+    between = copy.deepcopy(fact)
+    between["constraints"] = [*fact["constraints"], unique]
+    reordered = copy.deepcopy(fact)
+    reordered["constraints"] = [unique, *fact["constraints"]]
+    from gnd.evolve import ElementLocator
+
+    operations = (
+        _op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=unique, operation_id="a"),
+        _op("modify", ElementLocator(collection="fact_types", element_id="customer_places_order"),
+            before=between, after=reordered, operation_id="b"),
+    )
+    violating = [{"customer": 1, "order": 10}, {"customer": 2, "order": 10}]
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": violating}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert [row.operation_index for row in preview.population_check.admitted] == []
+    refused = {issue.operation_index: issue for issue in preview.policy_issues}
+    assert refused[0].detail.endswith("; population: not-located")
+
+
+def test_r2_a_float_overflow_in_the_population_is_band_3(tmp_path: Path) -> None:
+    from gnd.evolve.population_check import EvolutionPopulationError, read_population_for_check
+    from gnd.model import load_model
+
+    root = tmp_path.resolve()
+    model_path = root / "float.orm.yaml"
+    model_path.write_text(BASE.read_text(encoding="utf-8").replace(
+        "  - id: amount\n    name: Amount\n    kind: value\n    primitive: Integer",
+        "  - id: amount\n    name: Amount\n    kind: value\n    primitive: Float"), encoding="utf-8")
+    candidate = load_model(str(model_path))
+    (root / "pop.json").write_text(json.dumps(_population(
+        {"order_has_amount": [{"order": 10, "amount": 10 ** 400}]})), encoding="utf-8")
+    with pytest.raises(EvolutionPopulationError) as caught:
+        read_population_for_check(root, "pop.json", candidate=candidate)
+    assert caught.value.exit_code == 3
+
+
+def test_r3_a_yaml_population_is_read_as_yaml(tmp_path: Path) -> None:
+    paths = _workspace(tmp_path.resolve() / "ws", "C01")
+    document = json.loads((paths["workspace"] / "populations" / "clean.json").read_text(encoding="utf-8"))
+    import io
+
+    buffer = io.StringIO()
+    YAML().dump(document, buffer)
+    (paths["workspace"] / "populations" / "clean.yaml").write_text(buffer.getvalue(), encoding="utf-8")
+    result = run_main(_preview_argv(paths, P_ORDERS + ["--check-population", "clean.yaml"]))
+    assert result.returncode == 0, result.stderr.decode()
+
+
+class _CountingList(list):
+    visits = 0
+
+    def __iter__(self):
+        for item in super().__iter__():
+            type(self).visits += 1
+            yield item
+
+
+@pytest.mark.parametrize("count", [10, 100, 1000])
+def test_r4_placement_lookup_is_linear(count: int) -> None:
+    from gnd.evolve.population_check import constraint_placements
+
+    items = [{"n": index} for index in range(count)]
+    host = _CountingList(items)
+    placed = [(index, "f", host, item) for index, item in enumerate(items)]
+    _CountingList.visits = 0
+    positions = constraint_placements(placed, lambda host_id: host if host_id == "f" else None)
+    assert positions == {index: ("f", index) for index in range(count)}
+    assert _CountingList.visits <= 2 * count
+
+
+@pytest.mark.parametrize("replacement", ["[]", "{not json", "other-model.json"])
+def test_r5_changed_population_bytes_exit_11_even_when_invalid(tmp_path: Path, replacement: str) -> None:
+    paths = _workspace(tmp_path.resolve() / "ws", "C01")
+    flags = P_ORDERS + ["--check-population", "clean.json"]
+    assert run_main(_preview_argv(paths, flags)).returncode == 0
+    target = paths["workspace"] / "populations" / "clean.json"
+    if replacement.endswith(".json"):
+        shutil.copyfile(paths["workspace"] / "populations" / replacement, target)
+    else:
+        target.write_text(replacement, encoding="utf-8")
+    result = run_main(_apply_argv(paths, flags))
+    assert result.returncode == 11, result.stderr.decode()
+
+
+def test_r6_the_service_retry_branch_checks_the_option(tmp_path: Path) -> None:
+    from gnd.evolve import EvolutionError
+
+    after = {**FAMILIES["uniqueness"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=after),)
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    service.apply(preview, check_population="pop.json")  # publishes; finalization left pending
+    with pytest.raises(EvolutionError, match="--check-population differs"):
+        service.apply(preview)
+
+
+def test_r7_a_filename_cannot_spoof_the_cap_band(tmp_path: Path) -> None:
+    from gnd.evolve.population_check import EvolutionPopulationError, read_population_for_check
+    from gnd.model import load_model
+
+    root = tmp_path.resolve()
+    (root / "clean.json").write_text(json.dumps(_population({"customer_places_order": PLACEMENTS})),
+                                     encoding="utf-8")
+    (root / "bad-byte cap.json").symlink_to(root / "clean.json")
+    with pytest.raises(EvolutionPopulationError) as caught:
+        read_population_for_check(root, "bad-byte cap.json", candidate=load_model(str(BASE)))
+    assert caught.value.exit_code == 74
+    paths = _workspace(root / "ws", "C01")
+    pops = paths["workspace"] / "populations"
+    (pops / "bad-byte cap.json").symlink_to(pops / "clean.json")
+    result = run_main(_preview_argv(paths, P_ORDERS + ["--check-population", "bad-byte cap.json"]))
+    assert result.returncode == 74, result.stderr.decode()
+
+
+def test_r8a_a_bad_proposal_reports_first_even_with_a_population_outside_the_workspace(tmp_path: Path) -> None:
+    paths = _workspace(tmp_path.resolve() / "ws", "C01")
+    outside = tmp_path.resolve() / "outside.json"
+    outside.write_text("{}", encoding="utf-8")
+    paths["proposal"].write_text("{not a proposal", encoding="utf-8")
+    argv = _preview_argv(paths, P_ORDERS) + ["--check-population", str(outside)]
+    result = run_main(argv)
+    assert result.returncode == 3, result.stderr.decode()
+    assert b"proposal" in result.stderr
+
+
+def test_r8b_a_stale_proposal_reports_11_before_the_option_without_policy(tmp_path: Path) -> None:
+    paths = _workspace(tmp_path.resolve() / "ws", "C01")
+    paths["model"].write_text(paths["model"].read_text(encoding="utf-8") + "# edited after the proposal\n",
+                              encoding="utf-8")
+    result = run_main(_preview_argv(paths, ["--check-population", "clean.json"]))
+    assert result.returncode == 11, result.stderr.decode()
+
+
+def test_r9_a_vacuous_verdict_leaves_the_refusal(tmp_path: Path) -> None:
+    after = {**FAMILIES["mandatory"][1], **LLM, **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "mandatory"), after=after),)
+    population = _population({"customer_places_order": PLACEMENTS})
+    population["population"]["covers"] = []
+    service, proposal, _ = _service_workspace(tmp_path, operations, population)
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",),
+                              check_population="pop.json")
+    assert preview.policy_issues[0].detail.endswith("; population: vacuous")
+    assert preview.population_check.admitted == ()

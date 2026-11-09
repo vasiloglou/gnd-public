@@ -966,7 +966,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: The SHA-256 of the bytes read, the candidate model_id and an outcome word per constraint ADD/MODIFY operation; EvolutionPopulationError with a fixed message and exit band on refusal.
 - status: canonical
 - modules: src/gnd/evolve/population_check.py
-- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, model.address, model.document, model.population_loading, model.query_index
+- uses: checker.evaluate, evolve.policy, evolve.schema, infra.artifacts, infra.errors, infra.exit_codes, model.address, model.document, model.population_loading, model.query_index
 - used_by: evolve.command, evolve.service
 - part_of: subsystem.evolve
 - tests: tests/test_evolve_population_check.py
@@ -2194,7 +2194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/exits.py
 - uses: (none)
-- used_by: agent.solve, check.service, cli.api, cli.arguments, cli.checking_command, cli.dispatch, cli.exp_command, cli.export_command, cli.lifecycle_command, cli.solve_command, codegen.service, conformance.service, … +21 more (graph.md)
+- used_by: agent.solve, check.service, cli.api, cli.arguments, cli.checking_command, cli.dispatch, cli.exp_command, cli.export_command, cli.lifecycle_command, cli.solve_command, codegen.service, conformance.service, … +22 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf1_cli_pins.py, tests/test_coverage_cli.py
 - notes: Consumers preserve their older public names through imports or explicit aliases; quarantine and checker-defect names intentionally share value 6.
 

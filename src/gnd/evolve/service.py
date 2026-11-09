@@ -964,6 +964,22 @@ def _apply_declared_operations(
     return document
 
 
+def _final_constraint_host(document: dict[str, Any]) -> Callable[[str | None], list[Any] | None]:
+    """The constraint list of a host in a replayed document, or None when it is gone (UG2)."""
+
+    def host(host_id: str | None) -> list[Any] | None:
+        if host_id is None:
+            found = document.get("constraints")
+        else:
+            try:
+                found = _find_fact(document, host_id).get("constraints")
+            except EvolutionError:
+                return None
+        return found if isinstance(found, list) else None
+
+    return host
+
+
 def _record_placement(
     placed: list[tuple[int, str | None, list[Any], Any]] | None,
     position: int,
@@ -1311,6 +1327,7 @@ class EvolutionService:
         populated: Sequence[str] = (),
         shape_report: bool = False,
         check_population: str | None = None,
+        expected_population_sha256: str | None = None,
     ) -> EvolutionPreview:
         """Validate and bind a proposal without changing any publication leaf.
 
@@ -1322,17 +1339,17 @@ class EvolutionService:
         With ``shape_report=True`` the preview also carries ``shape_matches``
         (MG3), advice that no exit, ``breaking`` or blast radius reads.
 
-        With ``check_population`` (UG2), a workspace-relative population file,
-        the policy may clear a populated-constraint refusal on the evidence of
-        that population, and the preview carries ``population_check``.
+        With ``check_population`` (UG2), a population file (workspace-relative
+        or absolute beneath the workspace), the policy may clear a
+        populated-constraint refusal on the evidence of that population, and the
+        preview carries ``population_check``. ``expected_population_sha256``
+        (apply's rebuild) refuses changed bytes as stale before parsing them.
         """
 
         if policy is not None and policy != POLICY_ADDITIVE:
             raise EvolutionError(f"invalid evolution policy {policy!r}: the only policy is {POLICY_ADDITIVE!r}")
         if populated and policy is None:
             raise EvolutionError("invalid request: --populated requires --policy additive")
-        if check_population is not None and policy is None:
-            raise EvolutionError("invalid request: --check-population requires --policy additive")
         try:
             proposal = read_evolution_proposal_document(proposal.model_dump(mode="json"))
         except (AttributeError, ValidationError, ValueError) as error:
@@ -1399,15 +1416,24 @@ class EvolutionService:
         _enforce_d12(before_document, candidate_document)
         # After the gate (18), candidate validation, replay equality and D-12
         # (all 3), so a preview written with issues is otherwise valid (spec D6).
-        # The population is read here, after every proposal refusal and before
-        # the policy walk that consumes its outcomes (UG2 spec §6.4).
+        # The population option is judged here, after every proposal refusal
+        # and before the policy walk that consumes its outcomes (UG2 spec §6.4,
+        # review R8): its policy requirement, then the read.
+        if check_population is not None and policy is None:
+            raise EvolutionError("invalid request: --check-population requires --policy additive")
         policy_values = self._policy_values(
             before_loaded_model,
             proposal,
             policy,
             populated,
             population=self._population_runner(
-                check_population, before_loaded_model, proposal, candidate_model, placed
+                check_population,
+                before_loaded_model,
+                proposal,
+                candidate_model,
+                placed,
+                declared_document,
+                expected_population_sha256,
             ),
         )
         # After the policy and every refusal, and read by nothing below: the
@@ -1539,13 +1565,22 @@ class EvolutionService:
         proposal: EvolutionProposal,
         candidate: Any,
         placed: list[tuple[int, str | None, list[Any], Any]],
+        document: dict[str, Any] | None,
+        expected_sha256: str | None,
     ) -> Callable[[frozenset[str]], Any] | None:
         """A closure that runs the population check, or None without the option (UG2)."""
 
         if check_population is None:
             return None
         return lambda effective: self._population_check(
-            check_population, before_loaded_model, proposal, candidate, effective, placed
+            check_population,
+            before_loaded_model,
+            proposal,
+            candidate,
+            effective,
+            placed,
+            document=document or {},
+            expected_sha256=expected_sha256,
         )
 
     def _recheck_policy(
@@ -1557,6 +1592,7 @@ class EvolutionService:
         check_population: str | None = None,
         candidate: Any = None,
         placed: list[tuple[int, str | None, list[Any], Any]] | None = None,
+        document: dict[str, Any] | None = None,
     ) -> None:
         """Re-run the additive policy on the bytes about to be published (MG-R3, UG2)."""
 
@@ -1566,7 +1602,13 @@ class EvolutionService:
             preview.policy,
             preview.populated_args or (),
             population=self._population_runner(
-                check_population, before_loaded_model, proposal, candidate, placed or []
+                check_population,
+                before_loaded_model,
+                proposal,
+                candidate,
+                placed or [],
+                document,
+                None if preview.population_check is None else preview.population_check.sha256,
             ),
         )
         if recomputed["populated"] != preview.populated:
@@ -1580,12 +1622,15 @@ class EvolutionService:
 
     def _population_check(
         self,
-        relative: str,
+        value: str,
         before_loaded_model: Any,
         proposal: EvolutionProposal,
         candidate: Any,
         effective: frozenset[str],
         placed: list[tuple[int, str | None, list[Any], Any]],
+        *,
+        document: dict[str, Any],
+        expected_sha256: str | None = None,
     ) -> Any:
         """Read, load and check the population; refusals raise ``EvolutionPopulationError``."""
 
@@ -1596,7 +1641,7 @@ class EvolutionService:
                 3, "--check-population is not available for a model that declares reference_populations"
             )
         digest, population = read_population_for_check(
-            self.allowed_project_root, relative, candidate=candidate
+            self.allowed_project_root, value, candidate=candidate, expected_sha256=expected_sha256
         )
         return population_outcomes(
             proposal,
@@ -1605,7 +1650,7 @@ class EvolutionService:
             population=population,
             sha256=digest,
             populated=effective,
-            placements=constraint_placements(placed),
+            placements=constraint_placements(placed, _final_constraint_host(document)),
         )
 
     def _linked_snapshot(
@@ -1817,6 +1862,12 @@ class EvolutionService:
                 "breaking evolution requires explicit acceptance of this exact blast radius"
             )
 
+        # Before the retry branch, as the CLI does (review R6): a population
+        # admission is only as good as the caller repeating the option.
+        if (preview.population_check is None) != (check_population is None):
+            raise EvolutionError(
+                "invalid request: --check-population differs from the reviewed preview"
+            )
         proposal = preview.proposal
         proposal_id = proposal.proposal_id
         # Re-run the gate here rather than trusting the preview that carried it:
@@ -1873,10 +1924,6 @@ class EvolutionService:
         # Re-run the additive policy on the bytes about to be published rather
         # than reading the preview's issue list: anyone can recompute
         # preview_sha256 over a stripped list, so the re-run is the guard (MG-R3).
-        if (preview.population_check is None) != (check_population is None):
-            raise EvolutionError(
-                "invalid request: --check-population differs from the reviewed preview"
-            )
         if preview.policy is not None and preview.population_check is None:
             self._recheck_policy(before_loaded_model, proposal, preview)
         candidate_loaded_model, candidate_document, validation = self._validated_candidate(
@@ -1902,6 +1949,7 @@ class EvolutionService:
                 check_population=check_population,
                 candidate=candidate_loaded_model,
                 placed=placed,
+                document=declared_document,
             )
         candidate_verbalization = render_model_verbalization(candidate_loaded_model)
         recomputed_blast_radius = _build_blast_radius(

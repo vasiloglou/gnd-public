@@ -141,7 +141,19 @@
     [
       "src/gnd/evolve/population_check.py",
       "constraint_placements",
+      "Callable[[str | None], list[Any] | None]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
       "Iterable[tuple[int, str | None, list[Any], Any]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "dict[int, int]",
       1
     ],
     [
@@ -153,8 +165,26 @@
     [
       "src/gnd/evolve/population_check.py",
       "constraint_placements",
-      "list[Any]",
+      "dict[str | None, dict[int, int] | None]",
       1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "index_of.get(id(item))",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "indexes[host_id]",
+      1
+    ],
+    [
+      "src/gnd/evolve/population_check.py",
+      "constraint_placements",
+      "list[Any]",
+      2
     ],
     [
       "src/gnd/evolve/population_check.py",
@@ -242,6 +272,24 @@
     ],
     [
       "src/gnd/evolve/service.py",
+      "_final_constraint_host",
+      "Callable[[str | None], list[Any] | None]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_final_constraint_host",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_final_constraint_host",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
       "_policy_values",
       "Callable[[frozenset[str]], Any]",
       1
@@ -261,6 +309,12 @@
     [
       "src/gnd/evolve/service.py",
       "_population_check",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_check",
       "frozenset[str]",
       1
     ],
@@ -291,6 +345,12 @@
     [
       "src/gnd/evolve/service.py",
       "_population_runner",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_population_runner",
       "frozenset[str]",
       1
     ],
@@ -310,6 +370,12 @@
       "src/gnd/evolve/service.py",
       "_population_runner",
       "tuple[int, str | None, list[Any], Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_recheck_policy",
+      "dict[str, Any]",
       1
     ],
     [
@@ -368,6 +434,12 @@
     ],
     [
       "src/gnd/evolve/service.py",
+      "host",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
       "preview",
       "list[Any]",
       1
@@ -385,6 +457,6 @@
       1
     ]
   ],
-  "result_distinct_rows": 7361,
-  "result_occurrences": 9183
+  "result_distinct_rows": 7373,
+  "result_occurrences": 9196
 }

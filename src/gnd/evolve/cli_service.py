@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import stat
 import sys
 from pathlib import Path
@@ -500,19 +501,23 @@ def _evolve_policy_arguments(
 
     if populated and policy is None:
         raise _EvolutionCLIError(3, "--populated requires --policy additive")
-    if check_population is not None and policy is None:
-        raise _EvolutionCLIError(3, "--check-population requires --policy additive")
+
+
+def _reviewed_population_sha256(reviewed: Any) -> str | None:
+    check = getattr(reviewed, "population_check", None)
+    return None if check is None else check.sha256
+
 
 def _evolve_population_relative(workspace: Path, value: str | None) -> str | None:
-    """The workspace-relative population path, or None without the option (UG2)."""
+    """The population path as given, made absolute lexically, or None without the option (UG2).
+
+    No filesystem access here: containment, symlinks and existence are judged
+    by the service's read, after every proposal refusal (UG2 spec §6.4, review R8).
+    """
 
     if value is None:
         return None
-    # Spelling and containment only: the read (with its missing / not-regular
-    # bands) happens in the service, after every proposal refusal, so a bad
-    # proposal still reports its own error first (UG2 spec §6.4, T14).
-    _file, relative = _evolve_workspace_path(workspace, value, label="population", required=False)
-    return relative
+    return os.path.abspath(value)
 
 
 def _evolve_fail(error: Exception, *, stage: str) -> int:
@@ -751,6 +756,7 @@ def _cmd_evolve_apply(
             populated=populated_args,
             shape_report=shape_report,
             check_population=population_relative,
+            expected_population_sha256=_reviewed_population_sha256(reviewed),
         )
         if reviewed != fresh:
             raise _EvolutionCLIError(
@@ -776,6 +782,7 @@ def _cmd_evolve_apply(
                 populated=populated_args,
                 shape_report=shape_report,
                 check_population=population_relative,
+                expected_population_sha256=_reviewed_population_sha256(reviewed),
             )
         pending = service.apply(accepted, check_population=population_relative)
         return _evolve_finish_apply(service, pending, output_format)

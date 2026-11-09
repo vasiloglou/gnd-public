@@ -66,8 +66,9 @@ codex plugin add gnd@gnd-marketplace
 ```
 
 Start a new agent session after installing. The marketplace commands require the
-plugin entries on repository `main` and GitHub access while the repository is
-private. See [plugin installation](docs/marketplace-plugins.md) for details.
+plugin entries on repository `main`; the repository is public, so no GitHub
+sign-in is needed. See [plugin installation](docs/marketplace-plugins.md) for
+details.
 
 Alternatively, install skill files directly from the Python package in your
 working project, choosing this route instead of a plugin:

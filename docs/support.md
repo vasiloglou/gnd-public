@@ -3,8 +3,7 @@
 Report reproducible bugs through the repository Issues page; follow
 [SECURITY](https://github.com/vasiloglou/gnd-public/blob/main/SECURITY.md) for vulnerabilities. Include package version, OS,
 Python, exact command, exit and a minimal synthetic input. Do not include keys.
-Repository access remains private during preparation; public routing availability
-must be checked before publication. No paid support SLA is offered.
+The repository is public. No paid support SLA is offered.
 
 | Profile | Status |
 |---|---|

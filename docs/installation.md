@@ -61,8 +61,8 @@ Start a new Codex chat, then ask it to use `gnd-model-from-text` to model your
 expense approval policy and validate the result. Desktop clients with marketplace
 support can also install GND from the configured marketplace.
 
-The marketplace entries need to be present on repository `main`. While the
-repository is private, access requires GitHub authentication. The `v0.2.0` tag
+The marketplace entries need to be present on repository `main`. The repository
+is public, so no GitHub sign-in is needed. The latest release tag
 contains both the Python release and these marketplace entries; the plugin
 commands use `main`, which may hold unreleased changes. See [plugin installation and updates](marketplace-plugins.md) for
 switching from existing skill copies and managing plugin updates.

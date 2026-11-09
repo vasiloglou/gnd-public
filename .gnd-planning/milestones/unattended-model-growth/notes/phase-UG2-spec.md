@@ -2,7 +2,26 @@
 
 ## 1. Status line
 
-**Draft r1, waiting for this spec's owner gate.** Not approved, no code written,
+**Corpus authored and red, 2026-11-09; waiting for the owner's corpus approval.**
+The corpus (§11) is committed before any source edit: 15 cases (C01 to C11c),
+each red for the intended reason (exit 64, `--check-population` is not an
+option on the base), plus a green flag-free parity baseline (12 rows) and a
+check that the narration gives no outcome. See "Corpus authoring" below. No
+source file is edited. Implementation starts only when the owner approves the
+corpus.
+
+Earlier status, kept: **Spec gate `(o)`, 2026-11-09: approved as proposed.** The owner was asked
+"How do you rule on UG2-D1 to UG2-D12?" and replied, quoted: "Approve all as
+proposed". Every decision in §7 is ruled as its **(proposed)** reading,
+including UG2-D12 (a): the approval instrument is **corpus-first**. So this
+approval covers the design and the decisions. Under corpus-first the next step
+is the fixture corpus and its red harness (§11), committed before any source
+edit and put to the owner. Approved bytes: r1 at `bff83562`, sha256 `7164d48b…`;
+only this paragraph, the §7 ruling column and the revision history changed
+after. No source file may be edited until the owner approves the corpus. No
+merge, release or issue action is authorized.
+
+Superseded status text, kept for provenance: **Draft r1, waiting for this spec's owner gate.** Not approved, no code written,
 `auto=false`. The plan (r1.2) was approved at its gate on 2026-11-07
 ([001-plan.md](../001-plan.md)). That approval covers the plan only, not this
 spec. Decisions UG2-D1 to UG2-D12 (§7) are open. No implementation file may be
@@ -357,22 +376,22 @@ gets no new row.
 
 ## 7. Decisions
 
-Every row is open. The proposed reading is marked **(proposed)**.
+At first write every row was open; the proposed reading is marked **(proposed)**. Rulings are in the last column.
 
-| ID | Question | Readings and cost | Proposed |
-|---|---|---|---|
-| UG2-D1 (UG-Q3) | How does the population arrive? | (a) a new `--check-population PATH` on `preview` and `apply`, digest recorded in the preview: a new option on two commands; the artifact locator keeps today's meaning (evolve never opens artifacts). (b) open the proposal's existing `population` artifact locators, digest already in `proposal_sha256`: no path option on `apply`, but a boolean flag is still needed on both commands, because opening artifacts by default would move every existing proposal's exits (UG-R1); and the contract sentence "evolution does not … open … the artifact" changes for all artifacts | **(a)** |
-| UG2-D2 (UG-Q3) | One file or several? | (a) exactly one file. A host with several populations composes them first with `gnd compose` (shipped in CT2), which already keeps per-source anchors. (b) repeatable, files concatenated into one population: needs instance merging rules GND does not have. (c) repeatable, each checked alone: unsound, since two clean files can violate in union. The plan's §2.2 said "repeatable" provisionally | **(a)** |
-| UG2-D3 (UG-Q2) | Option name | `--check-population` (the plan's placeholder) / `--population` / `--admit-on-population` | **`--check-population`** |
-| UG2-D4 | A populated subject with no fact in the population | (a) refuse with `uncovered`; (b) rely on the checker, which gives `vacuous` only when **every** subject is empty, so a spanning constraint with one covered and one uncovered populated subject could `pass` (the any/every trap, T5) | **(a)** |
-| UG2-D5 | A subject populated by before-model `sample_population` rows | (a) refuse with `sample-rows` (fail closed; `check` does not see sample rows); (b) convert sample rows into facts and check them too: new conversion code and a second population source | **(a)** |
-| UG2-D6 | Do the supplied population's fact types count as populated? | (a) no change to `populated`: it stays `effective_populated`'s set, and the population only clears refusals; (b) add them: a constraint on a fact type populated only by the file would then be checked, and could be refused, where without the flag it is admitted. (b) is stricter but makes the opt-in flag able to refuse what the flag-free run admits | **(a)** |
-| UG2-D7 | Population `model_id` | (a) required, must equal the candidate's (exit 3 if absent or different); (b) the loader's default: optional, a mismatch is an error, an absence is a warning. (a) costs hosts one header field; (b) lets a population for another model with the same shape clear a refusal | **(a)** |
-| UG2-D8 | Counts in refusal details | (a) no counts: the outcome word only. (b) the plan's "count only": the number of offending facts. Over a `redact: true` role a count is an oracle, and (a) removes the question for every mode | **(a)** (departs from plan §2.2 wording) |
-| UG2-D9 | A population that violates a different, pre-existing constraint | (a) ignored: only the operation's own verdict decides; (b) every constraint must pass: a host's existing data may already carry deontic warnings, which would then block every admission | **(a)** |
-| UG2-D10 | How the D-13 record shows what an admission rested on | (a) transitively: the record binds `preview_sha256` and the staged `preview.json` carries `population_check`; no record schema change. (b) an explicit record field: a record-schema change and new pins | **(a)** |
-| UG2-D11 | Candidate declares `reference_populations` | (a) refuse the option, exit 3: `check()` needs a bound reference context the evolve lane does not build; constraints over reference-owned fact types stay refused. (b) build the context: more code and a second input class | **(a)** |
-| UG2-D12 | Approval instrument (step 2) | (a) **corpus-first**, the default for a phase with an exit-code contract and a serialized field: before any source edit, commit T1 to T9's fixtures, the T1 preview golden (§6.3 JSON with real digests) and the expected-exit table, red, and approve those. Costs one authoring session. (b) this prose, with the test list (§8) as the narrated cases; then the reason must be on the page: the exit bands are existing ones and the field is small | **(a)** |
+| ID | Question | Readings and cost | Proposed | Owner ruling |
+|---|---|---|---|---|
+| UG2-D1 (UG-Q3) | How does the population arrive? | (a) a new `--check-population PATH` on `preview` and `apply`, digest recorded in the preview: a new option on two commands; the artifact locator keeps today's meaning (evolve never opens artifacts). (b) open the proposal's existing `population` artifact locators, digest already in `proposal_sha256`: no path option on `apply`, but a boolean flag is still needed on both commands, because opening artifacts by default would move every existing proposal's exits (UG-R1); and the contract sentence "evolution does not … open … the artifact" changes for all artifacts | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D2 (UG-Q3) | One file or several? | (a) exactly one file. A host with several populations composes them first with `gnd compose` (shipped in CT2), which already keeps per-source anchors. (b) repeatable, files concatenated into one population: needs instance merging rules GND does not have. (c) repeatable, each checked alone: unsound, since two clean files can violate in union. The plan's §2.2 said "repeatable" provisionally | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D3 (UG-Q2) | Option name | `--check-population` (the plan's placeholder) / `--population` / `--admit-on-population` | **`--check-population`** | `(o)` 2026-11-09: as proposed |
+| UG2-D4 | A populated subject with no fact in the population | (a) refuse with `uncovered`; (b) rely on the checker, which gives `vacuous` only when **every** subject is empty, so a spanning constraint with one covered and one uncovered populated subject could `pass` (the any/every trap, T5) | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D5 | A subject populated by before-model `sample_population` rows | (a) refuse with `sample-rows` (fail closed; `check` does not see sample rows); (b) convert sample rows into facts and check them too: new conversion code and a second population source | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D6 | Do the supplied population's fact types count as populated? | (a) no change to `populated`: it stays `effective_populated`'s set, and the population only clears refusals; (b) add them: a constraint on a fact type populated only by the file would then be checked, and could be refused, where without the flag it is admitted. (b) is stricter but makes the opt-in flag able to refuse what the flag-free run admits | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D7 | Population `model_id` | (a) required, must equal the candidate's (exit 3 if absent or different); (b) the loader's default: optional, a mismatch is an error, an absence is a warning. (a) costs hosts one header field; (b) lets a population for another model with the same shape clear a refusal | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D8 | Counts in refusal details | (a) no counts: the outcome word only. (b) the plan's "count only": the number of offending facts. Over a `redact: true` role a count is an oracle, and (a) removes the question for every mode | **(a)** (departs from plan §2.2 wording) | `(o)` 2026-11-09: as proposed |
+| UG2-D9 | A population that violates a different, pre-existing constraint | (a) ignored: only the operation's own verdict decides; (b) every constraint must pass: a host's existing data may already carry deontic warnings, which would then block every admission | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D10 | How the D-13 record shows what an admission rested on | (a) transitively: the record binds `preview_sha256` and the staged `preview.json` carries `population_check`; no record schema change. (b) an explicit record field: a record-schema change and new pins | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D11 | Candidate declares `reference_populations` | (a) refuse the option, exit 3: `check()` needs a bound reference context the evolve lane does not build; constraints over reference-owned fact types stay refused. (b) build the context: more code and a second input class | **(a)** | `(o)` 2026-11-09: as proposed |
+| UG2-D12 | Approval instrument (step 2) | (a) **corpus-first**, the default for a phase with an exit-code contract and a serialized field: before any source edit, commit T1 to T9's fixtures, the T1 preview golden (§6.3 JSON with real digests) and the expected-exit table, red, and approve those. Costs one authoring session. (b) this prose, with the test list (§8) as the narrated cases; then the reason must be on the page: the exit bands are existing ones and the field is small | **(a)** | `(o)` 2026-11-09: as proposed |
 
 ## 8. Tests
 
@@ -463,6 +482,49 @@ Optional spec review: none proposed. The owner may call one (the project's
 instrument is the maintained panel; UG-D1 ruled four local readers for plan and
 close review only).
 
+## Corpus authoring (step 2 instrument, recorded as it was done)
+
+Committed red before any source edit, on the spec gate's ruling UG2-D12 (a).
+
+| File | sha256 |
+|---|---|
+| `tests/fixtures/unattended-model-growth/ug2/README.md` (narration, no outcomes) | `3935544a51462987cbb1be2a00cc54e48251f48979d2f3d5fc657c2058f1d602` |
+| `tests/fixtures/unattended-model-growth/ug2/expected.json` (answer key) | `622a47a65357689f95e773c03a7f21810544808620389cf1b816abdb28a3f2c4` |
+| `tests/fixtures/unattended-model-growth/ug2/parity-baseline.json` (T10 baseline) | `cce0c1dbba4697ea7926e819b498a3d324c19add1a9cef2f16ced9b95a45442b` |
+| `tests/fixtures/unattended-model-growth/ug2/base.orm.yaml` | `1a8db33084817e9e418b4fb06d9ac08bfc6876d460fb1b9e908639cdaecae314` |
+| `tests/test_evolve_population_check.py` (harness) | `3d994ac280aaac5e95b0cde82935569b7d2ad1b57e3df6c580245022b0c82fcb` |
+
+Run on the base source (`git status` clean under `src` and `tools`):
+`uv run pytest -q tests/test_evolve_population_check.py` gives `15 failed, 13
+passed`. Every failure is exit 64 with the argparse usage line. The 13 passes are
+the 12 parity rows and the narration check. `ruff check` is clean.
+
+Mapping to §8: C01 is T1 (one family; the family sweep stays a service-level
+test to add during implementation), C02 T2, C03 T3, C04 T4, C05 T5, C06 T6,
+C07a/b T7, C08a/b T8, C09 T17, C10 the T12 row "without `--policy`", C11a to
+C11c T9. T4b, T5b, T11 to T16 and the remaining T12 rows are implementation
+tests, not part of the approval corpus.
+
+Findings while authoring:
+
+- **F-c1.** The CLI's usage-error exit is 64, not argparse's 2. Only the red
+  state shows it; no corpus answer depends on it.
+- **F-c2.** On macOS `tempfile` paths under `/var` are refused by the evolve
+  workspace check ("workspace crosses symlink /var", exit 74). pytest's
+  `tmp_path` is already resolved; the parity capture script had to `resolve()`.
+  This is test plumbing only.
+- **F-c3.** Every flag-free `--policy additive` preview of the corpus proposals
+  is refused (3) on the base, and every policy-free preview is 0. That is what
+  T10 pins. So the parity rows cover both the refusal bytes and the admission
+  bytes without the option.
+- **F-c4.** `gnd check` over `amounts-only.json` reports the existing
+  order-number rule as `vacuous` (exit 2): the checker's vacuity is per
+  constraint over empty subjects, as §7 UG2-D4 assumed. Whether a spanning
+  constraint with one empty subject gets `pass` (the any/every trap) is still
+  measured by C05 and T5 during implementation, not assumed.
+
 ## Revision history
 
 - r1, 2026-11-09: first draft. Not reviewed. Not approved.
+- r1 approved, 2026-11-09: spec gate `(o)`, "Approve all as proposed". Status line and ruling column only.
+- 2026-11-09: corpus authored red; status line replaced and "Corpus authoring" appended.

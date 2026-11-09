@@ -1,0 +1,353 @@
+{
+  "cases": {
+    "C01": {
+      "apply": {
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ]
+      },
+      "preview": {
+        "admitted": [
+          0
+        ],
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "population_file": "clean.json"
+      }
+    },
+    "C02": {
+      "apply": {
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ]
+      },
+      "preview": {
+        "admitted": [
+          0
+        ],
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "population_file": "clean.json"
+      }
+    },
+    "C03": {
+      "apply": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "violating.json"
+        ],
+        "stderr_contains": [
+          "additive policy refused operation 0"
+        ]
+      },
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "violating.json"
+        ],
+        "issue": {
+          "cell": "constraint.populated.add",
+          "operation_index": 0,
+          "population": "warning"
+        }
+      }
+    },
+    "C04": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "amounts-only.json"
+        ],
+        "issue": {
+          "cell": "constraint.populated.add",
+          "operation_index": 0,
+          "population": "uncovered"
+        }
+      }
+    },
+    "C05": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--populated",
+          "order_has_memo",
+          "--check-population",
+          "small-orders.json"
+        ],
+        "issue": {
+          "cell": "constraint.populated.add",
+          "operation_index": 0,
+          "population": "uncovered"
+        }
+      }
+    },
+    "C06": {
+      "apply": {
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "older-rule-violated.json"
+        ]
+      },
+      "preview": {
+        "admitted": [
+          0
+        ],
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "older-rule-violated.json"
+        ],
+        "population_file": "older-rule-violated.json"
+      }
+    },
+    "C07a": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "no-model-id.json"
+        ],
+        "preview_written": false,
+        "stderr_contains": [
+          "model_id"
+        ]
+      }
+    },
+    "C07b": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "other-model.json"
+        ],
+        "preview_written": false,
+        "stderr_contains": [
+          "model_id"
+        ]
+      }
+    },
+    "C08a": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "issue": {
+          "cell": "constraint.populated.add",
+          "operation_index": 0,
+          "population": "not eligible"
+        }
+      }
+    },
+    "C08b": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "issue": {
+          "cell": "constraint.populated.modify",
+          "operation_index": 0,
+          "population": "not eligible"
+        }
+      }
+    },
+    "C09": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--check-population",
+          "channel.json"
+        ],
+        "issue": {
+          "cell": "constraint.populated.add",
+          "operation_index": 0,
+          "population": "sample-rows"
+        }
+      }
+    },
+    "C10": {
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--check-population",
+          "clean.json"
+        ],
+        "preview_written": false,
+        "stderr_contains": [
+          "--check-population requires --policy additive"
+        ]
+      }
+    },
+    "C11a": {
+      "apply": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order"
+        ],
+        "stderr_contains": [
+          "--check-population differs from the reviewed preview"
+        ]
+      },
+      "preview": {
+        "admitted": [
+          0
+        ],
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "population_file": "clean.json"
+      }
+    },
+    "C11b": {
+      "apply": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "stderr_contains": [
+          "--check-population differs from the reviewed preview"
+        ]
+      },
+      "preview": {
+        "exit": 3,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order"
+        ],
+        "issue": {
+          "cell": "constraint.populated.add",
+          "operation_index": 0,
+          "population": null
+        }
+      }
+    },
+    "C11c": {
+      "apply": {
+        "exit": 11,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "stderr_contains": [
+          "reviewed preview is stale"
+        ]
+      },
+      "preview": {
+        "admitted": [
+          0
+        ],
+        "exit": 0,
+        "flags": [
+          "--policy",
+          "additive",
+          "--populated",
+          "customer_places_order",
+          "--check-population",
+          "clean.json"
+        ],
+        "population_file": "clean.json"
+      },
+      "replace_population": [
+        "clean-changed.json",
+        "clean.json"
+      ]
+    }
+  },
+  "detail_rule": "A refused issue's detail ends with '; population: <outcome>'; population null means the detail carries no population suffix (no --check-population given).",
+  "schema": "UG2 corpus answer key (phase-UG2-spec.md \u00a78, \u00a711). Kept apart from README.md, which narrates the cases without outcomes."
+}

@@ -1,0 +1,121 @@
+{
+  "base": "8eb4fe60",
+  "captured": "2026-11-09, source tree unchanged from the base (git status clean under src and tools)",
+  "note": "UG-R1 baseline for T10: preview without --check-population, with --policy additive and with no policy.",
+  "rows": [
+    {
+      "case": "C01",
+      "exit": 3,
+      "flags": [
+        "--policy",
+        "additive",
+        "--populated",
+        "customer_places_order"
+      ],
+      "mode": "policy",
+      "preview_sha256": "72326058387c3d8bf3932220ddcf2c1d388fd2c7b4c8b74db66ebf25c0f36317"
+    },
+    {
+      "case": "C01",
+      "exit": 0,
+      "flags": [],
+      "mode": "none",
+      "preview_sha256": "7f4712e86d93b42d8e34f1011bff16a1dc95a4392965c7f93c1f3be91571cc64"
+    },
+    {
+      "case": "C02",
+      "exit": 3,
+      "flags": [
+        "--policy",
+        "additive",
+        "--populated",
+        "customer_places_order"
+      ],
+      "mode": "policy",
+      "preview_sha256": "73c8bdd4a28c14a54e5d9a88df5b6ecac65449fe546c95d046705fdee5d17418"
+    },
+    {
+      "case": "C02",
+      "exit": 0,
+      "flags": [],
+      "mode": "none",
+      "preview_sha256": "93da4a41e75b10b56e090fe38aaa13ece3889624499a4a4a729c0ca2e4bb1bf1"
+    },
+    {
+      "case": "C05",
+      "exit": 3,
+      "flags": [
+        "--policy",
+        "additive",
+        "--populated",
+        "customer_places_order",
+        "--populated",
+        "order_has_memo"
+      ],
+      "mode": "policy",
+      "preview_sha256": "3e943979e63808fa6ab757f9601602a0ac12b8cc6dedb6bf4ef004c3aa473945"
+    },
+    {
+      "case": "C05",
+      "exit": 0,
+      "flags": [],
+      "mode": "none",
+      "preview_sha256": "cafab38fe2fef21c8996ebc2da66aa503e7ea35979134b71c6710a0ccaf3c106"
+    },
+    {
+      "case": "C08a",
+      "exit": 3,
+      "flags": [
+        "--policy",
+        "additive",
+        "--populated",
+        "customer_places_order"
+      ],
+      "mode": "policy",
+      "preview_sha256": "15631117cbaac9d3ac5487f8f279e0ad9fc0bc25b4861165906a0fac36e1cc73"
+    },
+    {
+      "case": "C08a",
+      "exit": 0,
+      "flags": [],
+      "mode": "none",
+      "preview_sha256": "826c2a95ae3fcf35e38e903bcff0e11bb931b6967a4f1962c17f22bb0a342eb4"
+    },
+    {
+      "case": "C08b",
+      "exit": 3,
+      "flags": [
+        "--policy",
+        "additive",
+        "--populated",
+        "customer_places_order"
+      ],
+      "mode": "policy",
+      "preview_sha256": "0bf28bf3951914d2df4acb32b60d767a96d930b13864eac86fffb0a16df83d61"
+    },
+    {
+      "case": "C08b",
+      "exit": 0,
+      "flags": [],
+      "mode": "none",
+      "preview_sha256": "aada7fb2fd8e9abcc76f89c0d8676cbe521d959b80bcdbcbf1a8b32ed5406e03"
+    },
+    {
+      "case": "C09",
+      "exit": 3,
+      "flags": [
+        "--policy",
+        "additive"
+      ],
+      "mode": "policy",
+      "preview_sha256": "1666b37f0c9d4b73adc163c4ae812f8f325788298647c7d2a1e3ad77c3320b49"
+    },
+    {
+      "case": "C09",
+      "exit": 0,
+      "flags": [],
+      "mode": "none",
+      "preview_sha256": "9603dc83e718d56a5a7d238e2b104ba9fb52341410ac04e1ffe2fb5bc433cf5a"
+    }
+  ]
+}

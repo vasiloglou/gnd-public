@@ -1,0 +1,83 @@
+# UG2 corpus model (spec phase-UG2-spec.md, §8 and §11). No `operations`
+# section, so the operations gate never pre-empts a policy cell.
+#
+# customer_places_order, order_has_amount and order_has_memo carry no sample
+# rows: the cases mark them populated with --populated, the route UG2 can
+# clear. order_has_channel carries sample rows: the sample-rows case (UG2-D5).
+version: 1
+model_id: ug2-orders
+source: { kind: fixture }
+object_types:
+  - id: customer
+    name: Customer
+    kind: entity
+    reference: { mode: popular, value_type: customer_id }
+  - id: customer_id
+    name: CustomerId
+    kind: value
+    primitive: Integer
+  - id: order
+    name: Order
+    kind: entity
+    reference: { mode: popular, value_type: order_id }
+  - id: order_id
+    name: OrderId
+    kind: value
+    primitive: Integer
+  - id: amount
+    name: Amount
+    kind: value
+    primitive: Integer
+  - id: channel
+    name: Channel
+    kind: value
+    primitive: String
+  - id: memo
+    name: Memo
+    kind: value
+    primitive: String
+fact_types:
+  - id: customer_places_order
+    reading: "{Customer} places {Order}"
+    roles:
+      - { object_type: customer, role_name: customer }
+      - { object_type: order, role_name: order }
+    constraints:
+      - type: value
+        object_type: order
+        role_ref: { fact_type: customer_places_order, role: order }
+        range: { min: 1, max: 1000 }
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Order numbers are small positive integers."
+        provenance: { rationale_world_fact: "Order numbers are assigned sequentially from one." }
+  - id: order_has_amount
+    reading: "{Order} has {Amount}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: amount, role_name: amount }
+    constraints:
+      - type: value
+        object_type: amount
+        role_ref: { fact_type: order_has_amount, role: amount }
+        range: { min: 0, max: 1000 }
+        source: llm-inferred
+        status: proposed
+        modality: deontic
+        rationale: "Amounts are non-negative and bounded."
+        provenance: { rationale_world_fact: "Retail amounts are bounded." }
+  - id: order_has_memo
+    reading: "{Order} has {Memo}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: memo, role_name: memo }
+  - id: order_has_channel
+    reading: "{Order} arrives by {Channel}"
+    roles:
+      - { object_type: order, role_name: order }
+      - { object_type: channel, role_name: channel }
+    sample_population:
+      - { order: 10, channel: web }
+      - { order: 11, channel: phone }
+    provenance: { rationale: "Two rows seen in the first extraction round." }

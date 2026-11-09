@@ -45,7 +45,7 @@ evidence:
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/ROF4/codex-review.md
     sha256: b4f326f78d87565a5220c28459dfa14c535a89df1a7c6cce134c4211f1f8a7ed
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/ROF4/dynamic-query-successor.json
-    sha256: 55c5b62875bbbea60eafb7f57611c724ec6e49bbe7d1137efdf30b45d1fd189e
+    sha256: d5bd1a757a88b1aaaa02358e278ee995ca70cd8dec49d5f29b18e3398b49d8f3
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/ROF4/full-suite-base-6058c674.txt
     sha256: 11d11a8301d4e1fac26e40786394692f043b3acbd4dbc01098b169bc73fa70f1
   - path: .gnd-planning/milestones/report-output-fidelity/evidence/ROF4/full-suite-rof4-770cf54d.txt
@@ -160,6 +160,21 @@ V7: `git diff --stat 6058c674 d83e972c -- .gnd-planning/milestones/*/evidence`
 shows only `compiled-snapshot-obligations/evidence/CI/source-successors.json`
 (one added RF5 row, 15 lines) and this milestone's new `evidence/ROF4/`
 files. No historical record or evidence file is edited.
+
+Merge with main (c104644d, after PR 134, rule-check-followups FU5): FU5
+chained its own dynamic-query successor after ROF3's. The one textual
+conflict, in `tests/support/pyrel_application_successors.py`, keeps both
+entries, FU5 before ROF4. ROF4's successor now names FU5's file as its
+predecessor (sha256 `10f1d0e9…dbbb5d`), with the same four added rows; its
+result counts follow FU5's removals (7306/9122 plus four rows and four
+occurrences: 7310/9126; was 7323/9141 after ROF3). After the merge:
+`745 passed, 1 deselected` over `test_rf6_query_policy.py
+test_rf5_commands.py test_rof4_accept_identities.py
+test_fu5_retired_helpers.py test_rf6_packages.py test_checker_families.py`,
+and `393 passed, 1 deselected` over `test_rf9_ci_repairs.py
+test_development_scaffold.py test_rf2_review_regressions.py` and the ROF1-3
+tests. The component index needs no edit (0 to fix). The full suite was not
+rerun after the merge.
 
 ## Criteria
 

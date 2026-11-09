@@ -1,0 +1,6 @@
+shard0: 2784 passed, 207 deselected in 318.34s (0:05:18) shard exit=0 
+shard1: 1 failed, 2369 passed, 113 deselected, 2 errors in 555.88s (0:09:15) shard exit=1 
+shard2: 2980 passed, 77 deselected in 301.40s (0:05:01) shard exit=0 
+shard3: 2866 passed, 128 deselected, 1 warning in 449.24s (0:07:29) shard exit=0 
+shard4: 3797 passed, 118 deselected in 358.84s (0:05:58) shard exit=0 
+shard5: 3083 passed, 155 deselected in 607.91s (0:10:07) shard exit=0 

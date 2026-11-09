@@ -25,11 +25,11 @@ Deterministic constraint checker with the 5-state verdict lattice.
 | --- | --- | --- | --- |
 | `check_legacy(model, population) -> CheckReport` | function | 331 | Check a population against every constraint in the model. |
 | `JoinAmbiguousError` | class(Exception) | 1061 | A fact type offers multiple same-type candidates for one join anchor. |
-| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1509 | Return the computed structured extensions as fact-shaped rows. |
-| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2041 | (no docstring) |
-| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 2059 | (no docstring) |
-| `check_partial(model, population) -> CheckReport` | function | 2084 | Evaluate opaque input with the three-valued internal extension view. |
-| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2093 | Use the same opaque semantics when an anchored check is requested. |
+| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1424 | Return the computed structured extensions as fact-shaped rows. |
+| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1956 | (no docstring) |
+| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1974 | (no docstring) |
+| `check_partial(model, population) -> CheckReport` | function | 1999 | Evaluate opaque input with the three-valued internal extension view. |
+| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2008 | Use the same opaque semantics when an anchored check is requested. |
 
 ## gnd.checker._reports — `src/gnd/checker/_reports.py`
 Components: checker.reports

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "reason": "Owner-approved retirement of RF6b compatibility names. Each listed name is absent from its predecessor facade and its home; the frozen RF6b and RF9 evidence is not edited.",
+  "retired": [
+    {
+      "module": "gnd.checker",
+      "name": "_dfs_cycle",
+      "home": "gnd.checker._core",
+      "issue": 114,
+      "phase": "rule-check-followups FU5",
+      "ruling": "owner, 2026-11-08, D1 r2: \"Retire them now\" (RF-D5 trigger: v0.1.0 contains RF6)"
+    },
+    {
+      "module": "gnd.checker",
+      "name": "_find_cycle",
+      "home": "gnd.checker._core",
+      "issue": 114,
+      "phase": "rule-check-followups FU5",
+      "ruling": "owner, 2026-11-08, D1 r2: \"Retire them now\" (RF-D5 trigger: v0.1.0 contains RF6)"
+    },
+    {
+      "module": "gnd.checker",
+      "name": "_ring_component_violations",
+      "home": "gnd.checker._core",
+      "issue": 114,
+      "phase": "rule-check-followups FU5",
+      "ruling": "owner, 2026-11-08, D1 r2: \"Retire them now\" (RF-D5 trigger: v0.1.0 contains RF6)"
+    }
+  ]
+}

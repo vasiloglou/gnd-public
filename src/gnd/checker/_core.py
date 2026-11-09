@@ -1293,91 +1293,6 @@ def _in_range(value: Any, bounds: dict[str, Any], primitive: str | None = None) 
     return not (below or above)
 
 
-def _find_cycle(pairs: list[tuple]) -> list | None:
-    """Cycle members of the directed graph induced by binary pairs, or None.
-
-    Primary path: stdlib ``graphlib.TopologicalSorter`` — its ``CycleError``
-    carries the cycle path in ``args[1]`` (RESEARCH A1, confirmed by unit
-    test). If that shape ever yields fewer than two members, a ~20-line DFS
-    fallback recovers the cycle path.
-    """
-    graph: dict[Any, set[Any]] = {}
-    for a, b in pairs:
-        graph.setdefault(a, set()).add(b)
-        graph.setdefault(b, set())
-    try:
-        TopologicalSorter(graph).prepare()
-        return None
-    except CycleError as error:
-        members = list(error.args[1]) if len(error.args) > 1 else []
-        if len(set(members)) >= 2:
-            return members
-        return _dfs_cycle(graph)
-
-
-def _dfs_cycle(graph: dict[Any, set[Any]]) -> list | None:
-    """Iterative DFS fallback returning an explicit cycle path."""
-    visiting: set[Any] = set()
-    visited: set[Any] = set()
-    for start in graph:
-        if start in visited:
-            continue
-        stack: list[tuple[Any, list[Any]]] = [(start, [start])]
-        while stack:
-            node, path = stack.pop()
-            if node in visiting:
-                continue
-            visiting.add(node)
-            for successor in graph.get(node, ()):
-                if successor in path:
-                    return path[path.index(successor) :] + [successor]
-                if successor not in visited:
-                    stack.append((successor, path + [successor]))
-            visited.add(node)
-    return None
-
-
-def _ring_component_violations(
-    component: str, pair_set: set[tuple], elements: set[Any]
-) -> list[tuple]:
-    """Offending witnesses for one primitive ring variant (Halpin semantics)."""
-    if component == "irreflexive":
-        return sorted(((a, b) for a, b in pair_set if a == b), key=repr)
-    if component == "asymmetric":
-        return sorted(((a, b) for a, b in pair_set if (b, a) in pair_set), key=repr)
-    if component == "antisymmetric":
-        return sorted(((a, b) for a, b in pair_set if a != b and (b, a) in pair_set), key=repr)
-    if component == "symmetric":
-        return sorted(((a, b) for a, b in pair_set if (b, a) not in pair_set), key=repr)
-    if component == "intransitive":
-        return sorted(
-            (
-                (a, b, c)
-                for a, b in pair_set
-                for b2, c in pair_set
-                if b2 == b and (a, c) in pair_set
-            ),
-            key=repr,
-        )
-    if component == "transitive":
-        return sorted(
-            (
-                (a, b, c)
-                for a, b in pair_set
-                for b2, c in pair_set
-                if b2 == b and (a, c) not in pair_set
-            ),
-            key=repr,
-        )
-    if component == "purely-reflexive":
-        return sorted(((a, b) for a, b in pair_set if a != b), key=repr)
-    if component == "reflexive":
-        return sorted(((a,) for a in elements if (a, a) not in pair_set), key=repr)
-    # acyclic
-    cycle = _find_cycle(sorted(pair_set, key=repr))
-    return [tuple(cycle)] if cycle else []
-
-
 _COMPARATORS = {
     "<": lambda a, b: a < b,
     "<=": lambda a, b: a <= b,
@@ -2346,9 +2261,6 @@ _ref_labels.__module__ = 'gnd.checker'
 _violation_verdict.__module__ = 'gnd.checker'
 _orderable.__module__ = 'gnd.checker'
 _in_range.__module__ = 'gnd.checker'
-_find_cycle.__module__ = 'gnd.checker'
-_dfs_cycle.__module__ = 'gnd.checker'
-_ring_component_violations.__module__ = 'gnd.checker'
 _typed_comparison_values.__module__ = 'gnd.checker'
 _compare.__module__ = 'gnd.checker'
 _guarded_variable.__module__ = 'gnd.checker'

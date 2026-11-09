@@ -279,7 +279,22 @@ class ModelIdentityLocator(_ClosedFrozenModel):
         return "model.identity"
 
 
-StableLocator = ElementLocator | RoleLocator | ConstraintLocator | ModelIdentityLocator
+class SourceDocumentLocator(_ClosedFrozenModel):
+    """One declared ``source.documents`` entry of an unattended model, by its digest (UG3).
+
+    Admitted in proposal ``schema_version`` 3 only: the v1 and v2 graphs are
+    frozen, so a v1 or v2 proposal that carries it is refused when it is read."""
+
+    locator_kind: Literal["source-document"] = "source-document"
+    sha256: Sha256String
+
+    def reference(self) -> str:
+        return f"source.documents[{self.sha256}]"
+
+
+StableLocator = ElementLocator | RoleLocator | ConstraintLocator | ModelIdentityLocator | SourceDocumentLocator
+
+_SOURCE_DOCUMENT_KEYS = frozenset({"sha256", "label"})
 
 
 class EvolutionOperation(_ClosedFrozenModel):
@@ -340,6 +355,19 @@ class EvolutionOperation(_ClosedFrozenModel):
                 raise ValueError(
                     "model identity before and after must contain exactly version and model_id"
                 )
+        elif isinstance(self.locator, SourceDocumentLocator):
+            if self.kind is EvolutionOperationKind.RENAME:
+                raise ValueError("source documents cannot be renamed; change the label with modify")
+            for value in (self.before, self.after):
+                if value is None:
+                    continue
+                if set(value) != _SOURCE_DOCUMENT_KEYS:
+                    raise ValueError("a source document value is exactly {sha256, label}")
+                if value["sha256"] != self.locator.sha256:
+                    raise ValueError("a source document value's sha256 must match the stable locator")
+                label = value["label"]
+                if not isinstance(label, str) or not label.strip():
+                    raise ValueError("a source document label is a non-blank string")
         else:
             if self.kind is EvolutionOperationKind.RENAME:
                 raise ValueError("constraints cannot be renamed because they have no stable id")
@@ -613,6 +641,18 @@ class EvolutionProposal(_ClosedFrozenModel):
             raise ValueError("artifact paths must be unique")
         return self
 
+    @model_validator(mode="after")
+    def _source_documents_need_version_3(self) -> EvolutionProposal:
+        # UG3-D10 (a): the v1 and v2 graphs are frozen, so the locator is refused
+        # when an older proposal is read, before any version gate (exit 3).
+        if self.schema_version != EVOLUTION_SCHEMA_VERSION and any(
+            isinstance(item.locator, SourceDocumentLocator) for item in self.operations
+        ):
+            raise ValueError(
+                f"source-document operations require proposal schema_version {EVOLUTION_SCHEMA_VERSION}"
+            )
+        return self
+
     @property
     def proposal_sha256(self) -> str:
         return canonical_sha256(self)
@@ -754,6 +794,8 @@ PolicyCell = Literal[
     "constraint.populated.add",
     "constraint.populated.modify",
     "model_identity.modify",
+    "source_document.modify",
+    "source_document.delete",
 ]
 
 #: The four optional preview fields the additive policy writes. They are
@@ -766,6 +808,18 @@ _POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
 #: shape report's one (MG3) and the population check's one (UG2), under the
 #: same rule.
 _OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches", "population_check")
+
+
+class EvolutionPolicyGapError(Exception):
+    """A locator kind the additive policy has no rule for (UG3, exit 3 by type).
+
+    Fail closed: an unknown kind is refused, never admitted. It carries the
+    kind word only, never operator text. The locator union is closed, so this
+    is reachable only through ``model_construct``."""
+
+    def __init__(self, locator_kind: str) -> None:
+        super().__init__(f"the additive policy has no rule for locator kind {locator_kind!r}")
+        self.locator_kind = locator_kind
 
 
 class PolicyIssue(_ClosedFrozenModel):
@@ -1483,6 +1537,7 @@ __all__ = [
     "EvolutionOperation",
     "EvolutionOperationAudit",
     "EvolutionOperationKind",
+    "EvolutionPolicyGapError",
     "EvolutionPreview",
     "EvolutionProposal",
     "EvolutionRecord",
@@ -1496,6 +1551,7 @@ __all__ = [
     "ShapeGroup",
     "ShapeMember",
     "ShapeReference",
+    "SourceDocumentLocator",
     "StableLocator",
     "TrackedRoster",
     "ValidationEvidence",

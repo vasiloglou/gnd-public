@@ -127,6 +127,7 @@ def _preview(tmp_path: Path, operations: tuple[Any, ...], *, before_text: str | 
 
 NEW_CONSTRAINT = {"type": "mandatory", "role": "order", "source": "user-supplied", "status": "confirmed",
                   "modality": "deontic", "provenance": {"user_quote": "Every row names an order."}}
+DOCUMENT = {"sha256": "a" * 64, "label": "notes.txt"}
 NEW_OBJECT = {"id": "region", "name": "Region", "kind": "value", "primitive": "String"}
 NEW_FACT = {"id": "order_ships_to_region", "reading": "{Order} ships to {Region}",
             "roles": [{"object_type": "order", "role_name": "order"}, {"object_type": "region", "role_name": "region"}]}
@@ -169,11 +170,12 @@ def _cell_cases() -> list[tuple[str, Any, str | None, str | None]]:
     control_role = control_fact["roles"][1]
     identity_before = {"version": 1, "model_id": "evolve-policy-base"}
     identity_after = {"version": 2, "model_id": "evolve-policy-base"}
-    from gnd.evolve import ModelIdentityLocator
+    from gnd.evolve import ModelIdentityLocator, SourceDocumentLocator
 
     new_fact_with_role = dict(NEW_FACT, reading="{Order} ships to {Region} via {Channel}",
                               roles=NEW_FACT["roles"] + [{"object_type": "channel", "role_name": "channel"}])
     reading_mismatch = r"placeholder\(s\) but"
+    no_documents = "the model declares no source.documents"
     return [
         ("object_types.add", lambda: (_op("add", _element("object_types", "region"), after=NEW_OBJECT),), None, None),
         ("object_types.modify (confined)", lambda: (_op("modify", _element("object_types", "customer"),
@@ -222,6 +224,14 @@ def _cell_cases() -> list[tuple[str, Any, str | None, str | None]]:
             _op("add", _element("fact_types", NEW_FACT["id"]), after=new_fact_with_role, operation_id="op2")), None, None),
         ("role.modify on a role the control's constraints name", lambda: (_op("modify", _role(CONTROL, "amount"),
             before=control_role, after=dict(control_role, redact=True)),), "role.modify", None),
+        # UG3: the fixture declares no source header, so the service's replay
+        # pre-empts every source-document case; the function judges the cell.
+        ("source_document.add", lambda: (_op("add", SourceDocumentLocator(sha256=DOCUMENT["sha256"]), after=DOCUMENT),),
+            None, no_documents),
+        ("source_document.modify", lambda: (_op("modify", SourceDocumentLocator(sha256=DOCUMENT["sha256"]),
+            before=DOCUMENT, after=dict(DOCUMENT, label="renamed.txt")),), "source_document.modify", no_documents),
+        ("source_document.delete", lambda: (_op("delete", SourceDocumentLocator(sha256=DOCUMENT["sha256"]),
+            before=DOCUMENT),), "source_document.delete", no_documents),
     ]
 
 
@@ -244,7 +254,7 @@ def _direct_issues(operations: tuple[Any, ...], *, populated: frozenset[str] = f
 
 def _refused_index(operations: tuple[Any, ...], cell: str) -> int:
     kinds = {"object_types": "element", "fact_types": "element", "role": "role", "constraint": "constraint",
-             "model_identity": "model-identity"}
+             "model_identity": "model-identity", "source_document": "source-document"}
     wanted = kinds[cell.split(".", 1)[0]]
     return next(index for index, operation in enumerate(operations) if operation.locator.locator_kind == wanted
                 and operation.kind.value == cell.rsplit(".", 1)[-1])
@@ -1006,7 +1016,7 @@ def test_t14_the_cell_literal_the_contract_table_and_the_walk_agree() -> None:
 
     literal = set(get_args(PolicyCell))
     section = CONTRACT.read_text(encoding="utf-8").split("### Additive policy", 1)[1].split("\n## ", 1)[0]
-    documented = set(re.findall(r"`((?:object_types|fact_types|role|constraint\.populated|model_identity)\.[a-z_]+)`", section))
+    documented = set(re.findall(r"`((?:object_types|fact_types|role|constraint\.populated|model_identity|source_document)\.[a-z_]+)`", section))
     assert documented == literal, (documented ^ literal)
     emitted = {cell for _name, _build, cell, _reach in CELL_CASES if cell is not None}
     assert emitted == literal, (emitted ^ literal)

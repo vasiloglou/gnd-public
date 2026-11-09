@@ -2,13 +2,12 @@
 
 ## 1. Status line
 
-**Corpus authored and red, 2026-11-09: waiting for the owner's corpus approval.**
-The corpus (§11) is committed before any source edit: 23 cases (A1 to A6b, B1 to
-B8 with B3, B5 and B7 split), each red for the intended reason except A1, which
-asserts that nothing is added and so holds on the base too. The flag-free
-baselines (A10, B9) and the B7 control are green. See "Corpus authoring" below.
-No source file is edited. Implementation starts only when the owner approves the
-corpus.
+**Corpus gate `(o)`, 2026-11-09: approved.** Asked "Do you approve the UG3 corpus
+answers?", the owner replied, quoted: "Approve the corpus". The approved answers
+are `expected.json` at sha256 `a46dc7dcdc702aa4c361024990d10e8f97179345a38099ab03ac9e0feebd7358`
+(commit `e881e521`), unchanged since. Implementation follows: part A, then part B.
+
+Earlier status, kept: **Corpus authored and red, 2026-11-09: waiting for the owner's corpus approval.**
 
 Earlier status, kept: Spec gate `(o)`, 2026-11-09: approved as proposed.** Asked "How do you rule on
 UG3-D1 to UG3-D14?", the owner replied, quoted: "approved". Every decision in §7 is
@@ -443,7 +442,14 @@ exits); the B7 control.
 - **F-c2:** `gnd evolve preview` refuses every v1 or v2 proposal with exit **70** ("versions 1 and 2 are read-only compatibility evidence", `service.py:1357`), after the proposal is read. B7's answer (3) therefore holds only if UG3-D10's refusal sits in **reading** the v1 and v2 graphs, as §6.3 says. The control pins the 70 for an ordinary operation, so B7 cannot pass by reaching the version gate.
 - **F-c3:** UG1 pinned no golden proposal bytes (plan §4 UG1-C8 said it "may"). B9 captures them now on `5c6a0c5f`: three locator-free proposals, each previewed with and without the policy, giving outcomes 0 and 3, written and not written.
 
+- **F-i1 (part A):** `gnd validate --document` walks an unattended model's spans twice, once for the existing issues (`unattended_span_issues`) and once for the counts (`unattended_span_coverage`), to keep the two public signatures §6.1 fixes. Both are linear (A13 pins one pass per call) and the documents are capped at 10 MiB. Not a defect; named so the refactoring review can weigh it.
+- **F-i2 (part B), a spec correction to B15:** the CLI's `apply` compares its `--policy` with the preview's and exits 3 ("--policy differs from the reviewed preview") **before** the policy re-runs, so §8's B15 (a policy-free preview applied with the policy) never reaches the re-run. B15 is re-shaped onto the route MG2's T3b uses: a preview made under the policy, its issue list stripped, applied through the service, which re-runs the policy and refuses with `source_document.modify` on operation 0 (exit 3 by type). Not a corpus answer.
+- **F-i3 (part B):** the service maps its refusals to exits by message family (`cli_service._evolve_service_exit`). The replay refusals therefore carry the existing families: "add target source.documents[…]: source document is already declared" and "stable locator source.documents[…]: the model declares no source.documents to append to". For a `modify` or `delete` on a model with no list the suffix " to append to" is dropped. The corpus needles (B4, B8) are substrings of these.
+- **F-i4 (part B):** UG1 T12 (a)'s comment said UG3 "will change this message and must edit this assertion knowingly". The approved design leaves the message unchanged (B10: a declaration with no operation is still refused by replay equality), so only the comment is updated.
+- **F-i5:** `gnd.model._unattended` was unassigned in the component index; UG3 assigns it to `model.validation`, whose verbs already named unattended spans.
+
 ## Revision history
 
 - r1, 2026-11-09: first draft. Not reviewed. Approved as proposed at the spec gate.
 - r1 + corpus, 2026-11-09: rulings recorded, corpus authoring and findings F-c1 to F-c3 added; A7's exit corrected (F-c1). Not reviewed.
+- r1 + corpus + implementation, 2026-11-09: corpus approval recorded; findings F-i1 to F-i5 added; B15 re-shaped (F-i2). Not reviewed.

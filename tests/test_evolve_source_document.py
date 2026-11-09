@@ -321,3 +321,113 @@ def test_b9_capture_or_compare_the_locator_free_baseline(tmp_path: Path) -> None
     # Each kind of outcome is represented, so the comparison can move.
     assert {row["exit"] for row in base_rows} == {0, 3}
     assert any(row["preview_sha256"] is None for row in base_rows)
+
+
+# --- B10 to B16: the spec's successor cases beyond the approved corpus --------
+
+
+def test_b10_a_declaration_without_an_operation_is_still_refused(tmp_path: Path) -> None:
+    """UG1 T12 (a) unchanged: the candidate declares round.txt, but no operation says so."""
+    element = _element("add", "object_types", "invoice_no", after=INVOICE_NO)
+    candidate = _declared_candidate(_doc(ROUNDS), (_round_add(), element))
+    proposal = _proposal(ROUNDS, (element,), "ug3-b10", candidate=candidate).model_dump(mode="json")
+    paths = _workspace(tmp_path / "ws", ROUNDS, proposal)
+    result = _preview(paths, ["--policy", "additive"])
+    assert result.returncode == 3
+    assert b"declared operations do not equal the canonical candidate model" in result.stderr
+    assert not paths["preview"].exists()
+
+
+def test_b11_a_locator_kind_without_a_policy_rule_is_refused_by_type() -> None:
+    from gnd.evolve import (
+        EvolutionOperation,
+        EvolutionOperationKind,
+        EvolutionPolicyGapError,
+        EvolutionProposal,
+        SourceDocumentLocator,
+    )
+    from gnd.evolve.cli_service import _evolve_error_exit
+    from gnd.evolve.policy import additive_policy_issues
+    from gnd.model import load_model
+
+    forged = SourceDocumentLocator.model_construct(locator_kind="forged", sha256=ROUND)
+    operation = EvolutionOperation.model_construct(operation_id="op-0", kind=EvolutionOperationKind.ADD,
+                                                   locator=forged, before=None, after=None)
+    proposal = EvolutionProposal.model_construct(operations=(operation,))
+    with pytest.raises(EvolutionPolicyGapError) as raised:
+        additive_policy_issues(load_model(str(ROUNDS)), proposal, populated=frozenset())
+    assert raised.value.locator_kind == "forged"
+    assert _evolve_error_exit(raised.value) == 3
+    # Control: the same walk over a real declaration admits it.
+    assert additive_policy_issues(load_model(str(ROUNDS)), EvolutionProposal.model_construct(
+        operations=(_round_add(),)), populated=frozenset()) == ()
+
+
+def test_b12_the_target_and_delta_never_reach_the_constraint_fall_through(monkeypatch: pytest.MonkeyPatch) -> None:
+    from gnd.evolve import service
+
+    def forbidden(*_args: Any, **_kwargs: Any) -> Any:
+        raise AssertionError("the constraint fall-through was reached")
+
+    monkeypatch.setattr(service, "_find_constraint", forbidden)
+    document = _doc(ROUNDS)
+    documents = document["source"]["documents"]
+    modify = _declaration("modify", ANNEX, before=_annex(), after=_annex("annex-2025.txt"))
+    assert service._operation_target(document, modify) == (documents, 1)
+    assert service._operation_target(document, _round_add()) == (documents, None)
+    assert service._delta_element_ids(modify) == frozenset()
+    assert service._delta_element_ids(_round_add()) == frozenset()
+
+
+def test_b14_a_declaration_only_proposal_has_a_blast_radius(tmp_path: Path) -> None:
+    proposal = _proposal(ROUNDS, (_round_add(),), "ug3-b14").model_dump(mode="json")
+    paths = _workspace(tmp_path / "ws", ROUNDS, proposal)
+    result = _preview(paths, ["--policy", "additive"])
+    assert result.returncode == 0, result.stderr.decode()
+    preview = json.loads(paths["preview"].read_text(encoding="utf-8"))
+    assert preview["policy_issues"] == []
+    assert preview["blast_radius"]["entries"] != []
+
+
+def test_b15_apply_re_runs_the_policy_over_a_stripped_preview(tmp_path: Path) -> None:
+    """Apply never trusts the preview's issue list: a preview whose issues were stripped is refused again.
+
+    Corrected from the spec's CLI wording (finding F-i2): the CLI refuses a --policy that
+    differs from the preview's before the policy runs, so the re-run is reached with the
+    same policy and a stripped issue list, as MG2's T3b does for its cells."""
+    import test_evolve_additive_policy as policy
+
+    from gnd.evolve import EvolutionPolicyRefusedError, EvolutionProposal
+    from gnd.evolve.cli_service import _evolve_error_exit
+
+    text = ROUNDS.read_text(encoding="utf-8")
+    service = policy._service(tmp_path, text)
+    preview = service.preview(EvolutionProposal.model_validate(_case("B2")[1]), policy="additive")
+    assert [issue.cell for issue in preview.policy_issues] == ["source_document.modify"]
+    stripped = policy._stripped_preview(preview)
+    assert stripped.policy_issues == ()
+    with pytest.raises(EvolutionPolicyRefusedError) as raised:
+        service.apply(stripped)
+    assert raised.value.issues[0].cell == "source_document.modify"
+    assert raised.value.issues[0].operation_index == 0
+    assert _evolve_error_exit(raised.value) == 3
+
+
+@pytest.mark.parametrize("count", [1, 10, 100])
+def test_b16_the_replay_visits_each_declaration_once(count: int, monkeypatch: pytest.MonkeyPatch) -> None:
+    from gnd.evolve import service
+
+    calls = {"target": 0}
+    original = service._source_document_target
+
+    def spy(*args: Any, **kwargs: Any) -> Any:
+        calls["target"] += 1
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(service, "_source_document_target", spy)
+    digests = [_sha(f"document {index}".encode()) for index in range(count)]
+    operations = tuple(_declaration("add", digest, after={"sha256": digest, "label": f"d{index}.txt"},
+                                    operation_id=f"op-{index}") for index, digest in enumerate(digests))
+    replayed = service._apply_declared_operations(_doc(ROUNDS), operations)
+    assert [entry["sha256"] for entry in replayed["source"]["documents"]][-count:] == digests
+    assert calls["target"] == count

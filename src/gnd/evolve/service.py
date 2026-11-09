@@ -61,6 +61,7 @@ from .models import (
     PopulationCheckRecord,
     ProjectLocator,
     RoleLocator,
+    SourceDocumentLocator,
     ValidationEvidence,
     ValidationFinding,
     canonical_sha256,
@@ -611,7 +612,7 @@ def _delta_element_ids(operation: EvolutionOperation) -> frozenset[str]:
         return frozenset(ids)
     if isinstance(locator, RoleLocator):
         return frozenset({locator.fact_type_id})
-    if isinstance(locator, ModelIdentityLocator):
+    if isinstance(locator, (ModelIdentityLocator, SourceDocumentLocator)):
         return frozenset()
     if locator.host == "fact_type" and locator.host_id is not None:
         return frozenset({locator.host_id})
@@ -901,6 +902,8 @@ def _operation_target(
                 raise EvolutionError(f"add target {locator.reference()} already exists")
             return roles, None
         return _find_role(document, locator)
+    if isinstance(locator, SourceDocumentLocator):
+        return _source_document_target(document, operation, locator)
     if operation.kind is EvolutionOperationKind.ADD:
         if locator.host == "model":
             constraints = document.setdefault("constraints", [])
@@ -912,6 +915,33 @@ def _operation_target(
             raise EvolutionError(f"add target {locator.reference()} already exists")
         return constraints, None
     return _find_constraint(document, locator)
+
+
+def _source_document_target(
+    document: dict[str, Any], operation: EvolutionOperation, locator: SourceDocumentLocator
+) -> tuple[list[Any], int | None]:
+    """The ``source.documents`` list and the declared entry's index (UG3).
+
+    An add appends after refusing a duplicate digest; nothing reorders, so a
+    candidate that only reorders still fails replay equality."""
+    source = document.get("source")
+    documents = source.get("documents") if isinstance(source, dict) else None
+    if not isinstance(documents, list):
+        purpose = " to append to" if operation.kind is EvolutionOperationKind.ADD else ""
+        raise EvolutionError(
+            f"stable locator {locator.reference()}: the model declares no source.documents{purpose}"
+        )
+    matches = [
+        index for index, item in enumerate(documents)
+        if isinstance(item, dict) and item.get("sha256") == locator.sha256
+    ]
+    if operation.kind is EvolutionOperationKind.ADD:
+        if matches:
+            raise EvolutionError(f"add target {locator.reference()}: source document is already declared")
+        return documents, None
+    if not matches:
+        raise EvolutionError(f"stable locator {locator.reference()} is absent")
+    return documents, matches[0]
 
 
 def _apply_declared_operations(

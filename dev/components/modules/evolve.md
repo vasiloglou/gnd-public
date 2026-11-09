@@ -37,46 +37,49 @@ Closed evidence models for staged ORM evolution.
 | `ConstraintLocator.reference(self) -> str` | method | 267 | (no docstring) |
 | `ModelIdentityLocator` | class(_ClosedFrozenModel) | 273 | The atomic top-level ``version``/``model_id`` identity pair. |
 | `ModelIdentityLocator.reference(self) -> str` | method | 278 | (no docstring) |
-| `EvolutionOperation` | class(_ClosedFrozenModel) | 285 | (no docstring) |
-| `EvolutionOperation.reference(self) -> str` | method | 356 | (no docstring) |
-| `EvolutionOperationAudit` | class(_ClosedFrozenModel) | 360 | Who requested an operation; never a constraint provenance source. |
-| `ArtifactLocator` | class(_ClosedFrozenModel) | 387 | A digest-bound, explicitly supplied downstream artifact reference. |
-| `ArtifactLocator.reference(self) -> str` | method | 423 | (no docstring) |
-| `LinkedProject` | class(_ClosedFrozenModel) | 477 | Normalized linked-project view preserving its selected wire coordinate. |
-| `EvolutionProposal` | class(_ClosedFrozenModel) | 549 | (no docstring) |
-| `EvolutionProposal.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 561 | (no docstring) |
-| `EvolutionProposal.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 577 | (no docstring) |
-| `EvolutionProposal.proposal_sha256(self) -> str` | method | 617 | (no docstring) |
-| `ValidationFinding` | class(_ClosedFrozenModel) | 621 | (no docstring) |
-| `ValidationEvidence` | class(_ClosedFrozenModel) | 628 | (no docstring) |
-| `BlastRadiusEntry` | class(_ClosedFrozenModel) | 634 | (no docstring) |
-| `BlastRadiusReport` | class(_ClosedFrozenModel) | 686 | (no docstring) |
-| `PolicyIssue` | class(_ClosedFrozenModel) | 771 | One operation the additive policy refused, by index, locator and cell. |
-| `PopulationAdmission` | class(_ClosedFrozenModel) | 801 | One populated-constraint operation the supplied population cleared (UG2). |
-| `PopulationCheckRecord` | class(_ClosedFrozenModel) | 809 | What a `--check-population` admission rested on: digests and ids only (UG2). |
-| `ShapeMember` | class(_ClosedFrozenModel) | 827 | One fact type in a shape group: its id and readings (MG3). |
-| `ShapeAdded` | class(ShapeMember) | 835 | A fact type the proposal adds, with the operation that adds it. |
-| `ShapeReference` | class(_ClosedFrozenModel) | 841 | How one entity role player is identified, from ``reference_identity``. |
-| `ShapeGroup` | class(_ClosedFrozenModel) | 855 | Every fact type sharing one role-player signature with an added one. |
-| `EvolutionPreview` | class(_ClosedFrozenModel) | 914 | (no docstring) |
-| `EvolutionPreview.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 935 | (no docstring) |
-| `EvolutionPreview.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 953 | (no docstring) |
-| `EvolutionIntent` | class(_ClosedFrozenModel) | 1071 | Normalized staged intent selected by its enclosing schema version. |
-| `EvolutionIntent.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1091 | (no docstring) |
-| `EvolutionIntent.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1107 | (no docstring) |
-| `EvolutionFinalizationState` | class(_ClosedFrozenModel) | 1134 | Durable identity required to finish exact post-CAS leaves. |
-| `CASEvidence` | class(_ClosedFrozenModel) | 1179 | (no docstring) |
-| `LinkedProjectConformance` | class(_LinkedProjectConformanceBase) | 1248 | Normalized conformance leaf; its caller owns the wire-version choice. |
-| `AffectedCodeEvidence` | class(_ClosedFrozenModel) | 1275 | (no docstring) |
-| `EvolutionRecord` | class(_EvolutionRecordBase) | 1342 | (no docstring) |
-| `EvolutionRecord.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1347 | (no docstring) |
-| `EvolutionRecord.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1365 | (no docstring) |
-| `read_evolution_proposal_document(document) -> EvolutionProposal` | function | 1405 | Read one proposal after selecting its closed wire graph by envelope version. |
-| `read_evolution_preview_document(document) -> EvolutionPreview` | function | 1411 | Read one preview after selecting its closed wire graph by envelope version. |
-| `read_evolution_intent_document(document) -> EvolutionIntent` | function | 1417 | Read one staged intent through its explicit enclosing version. |
-| `read_evolution_finalization_state_document(document) -> EvolutionFinalizationState` | function | 1423 | Read one pending-finalization claim through its closed envelope. |
-| `read_evolution_record_document(document) -> EvolutionRecord` | function | 1439 | Read one record after selecting its nested conformance graph by version. |
-| `read_linked_project_conformance_document(document, *, envelope_version) -> LinkedProjectConformance` | function | 1445 | Read a standalone leaf using only its caller-supplied envelope version. |
+| `SourceDocumentLocator` | class(_ClosedFrozenModel) | 282 | One declared ``source.documents`` entry of an unattended model, by its digest (UG3). |
+| `SourceDocumentLocator.reference(self) -> str` | method | 291 | (no docstring) |
+| `EvolutionOperation` | class(_ClosedFrozenModel) | 300 | (no docstring) |
+| `EvolutionOperation.reference(self) -> str` | method | 384 | (no docstring) |
+| `EvolutionOperationAudit` | class(_ClosedFrozenModel) | 388 | Who requested an operation; never a constraint provenance source. |
+| `ArtifactLocator` | class(_ClosedFrozenModel) | 415 | A digest-bound, explicitly supplied downstream artifact reference. |
+| `ArtifactLocator.reference(self) -> str` | method | 451 | (no docstring) |
+| `LinkedProject` | class(_ClosedFrozenModel) | 505 | Normalized linked-project view preserving its selected wire coordinate. |
+| `EvolutionProposal` | class(_ClosedFrozenModel) | 577 | (no docstring) |
+| `EvolutionProposal.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 589 | (no docstring) |
+| `EvolutionProposal.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 605 | (no docstring) |
+| `EvolutionProposal.proposal_sha256(self) -> str` | method | 657 | (no docstring) |
+| `ValidationFinding` | class(_ClosedFrozenModel) | 661 | (no docstring) |
+| `ValidationEvidence` | class(_ClosedFrozenModel) | 668 | (no docstring) |
+| `BlastRadiusEntry` | class(_ClosedFrozenModel) | 674 | (no docstring) |
+| `BlastRadiusReport` | class(_ClosedFrozenModel) | 726 | (no docstring) |
+| `EvolutionPolicyGapError` | class(Exception) | 813 | A locator kind the additive policy has no rule for (UG3, exit 3 by type). |
+| `PolicyIssue` | class(_ClosedFrozenModel) | 825 | One operation the additive policy refused, by index, locator and cell. |
+| `PopulationAdmission` | class(_ClosedFrozenModel) | 855 | One populated-constraint operation the supplied population cleared (UG2). |
+| `PopulationCheckRecord` | class(_ClosedFrozenModel) | 863 | What a `--check-population` admission rested on: digests and ids only (UG2). |
+| `ShapeMember` | class(_ClosedFrozenModel) | 881 | One fact type in a shape group: its id and readings (MG3). |
+| `ShapeAdded` | class(ShapeMember) | 889 | A fact type the proposal adds, with the operation that adds it. |
+| `ShapeReference` | class(_ClosedFrozenModel) | 895 | How one entity role player is identified, from ``reference_identity``. |
+| `ShapeGroup` | class(_ClosedFrozenModel) | 909 | Every fact type sharing one role-player signature with an added one. |
+| `EvolutionPreview` | class(_ClosedFrozenModel) | 968 | (no docstring) |
+| `EvolutionPreview.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 989 | (no docstring) |
+| `EvolutionPreview.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1007 | (no docstring) |
+| `EvolutionIntent` | class(_ClosedFrozenModel) | 1125 | Normalized staged intent selected by its enclosing schema version. |
+| `EvolutionIntent.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1145 | (no docstring) |
+| `EvolutionIntent.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1161 | (no docstring) |
+| `EvolutionFinalizationState` | class(_ClosedFrozenModel) | 1188 | Durable identity required to finish exact post-CAS leaves. |
+| `CASEvidence` | class(_ClosedFrozenModel) | 1233 | (no docstring) |
+| `LinkedProjectConformance` | class(_LinkedProjectConformanceBase) | 1302 | Normalized conformance leaf; its caller owns the wire-version choice. |
+| `AffectedCodeEvidence` | class(_ClosedFrozenModel) | 1329 | (no docstring) |
+| `EvolutionRecord` | class(_EvolutionRecordBase) | 1396 | (no docstring) |
+| `EvolutionRecord.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1401 | (no docstring) |
+| `EvolutionRecord.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1419 | (no docstring) |
+| `read_evolution_proposal_document(document) -> EvolutionProposal` | function | 1459 | Read one proposal after selecting its closed wire graph by envelope version. |
+| `read_evolution_preview_document(document) -> EvolutionPreview` | function | 1465 | Read one preview after selecting its closed wire graph by envelope version. |
+| `read_evolution_intent_document(document) -> EvolutionIntent` | function | 1471 | Read one staged intent through its explicit enclosing version. |
+| `read_evolution_finalization_state_document(document) -> EvolutionFinalizationState` | function | 1477 | Read one pending-finalization claim through its closed envelope. |
+| `read_evolution_record_document(document) -> EvolutionRecord` | function | 1493 | Read one record after selecting its nested conformance graph by version. |
+| `read_linked_project_conformance_document(document, *, envelope_version) -> LinkedProjectConformance` | function | 1499 | Read a standalone leaf using only its caller-supplied envelope version. |
 
 ## gnd.evolve.policy — `src/gnd/evolve/policy.py`
 Components: evolve.policy
@@ -84,12 +87,12 @@ The additive policy for ``gnd evolve preview --policy additive`` (MG2).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `effective_populated(before, proposal, *, populated_args) -> frozenset[str]` | function | 72 | The fact types the policy treats as populated (plan MG-D4 (a)+(b)). |
-| `diff_paths(before, after) -> list[tuple[str, Any, Any]]` | function | 145 | (no docstring) |
-| `constraint_change(path, before, after, *, family) -> str` | function | 195 | The closed strengthening/weakening list (plan §2.2, MG-D3 (a), (p1) F). |
-| `ConstraintSubjects` | class | 304 | The fact types a constraint operation ranges over, before and after (MG2). |
-| `ConstraintSubjects.of(self, operation) -> set[str]` | method | 343 | (no docstring) |
-| `additive_policy_issues(before, proposal, *, populated, population_outcomes) -> tuple[PolicyIssue, .…` | function | 379 | Every operation the additive policy refuses, in proposal order. |
+| `effective_populated(before, proposal, *, populated_args) -> frozenset[str]` | function | 73 | The fact types the policy treats as populated (plan MG-D4 (a)+(b)). |
+| `diff_paths(before, after) -> list[tuple[str, Any, Any]]` | function | 146 | (no docstring) |
+| `constraint_change(path, before, after, *, family) -> str` | function | 196 | The closed strengthening/weakening list (plan §2.2, MG-D3 (a), (p1) F). |
+| `ConstraintSubjects` | class | 305 | The fact types a constraint operation ranges over, before and after (MG2). |
+| `ConstraintSubjects.of(self, operation) -> set[str]` | method | 344 | (no docstring) |
+| `additive_policy_issues(before, proposal, *, populated, population_outcomes) -> tuple[PolicyIssue, .…` | function | 380 | Every operation the additive policy refuses, in proposal order. |
 
 ## gnd.evolve.population_check — `src/gnd/evolve/population_check.py`
 Components: evolve.population_check
@@ -110,24 +113,24 @@ Validated, evidence-first model evolution with a raw-byte CAS commit point.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `EvolutionError` | class(Exception) | 102 | A proposal, stage, CAS, or immutable evidence write was refused. |
-| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 106 | An old evidence document that may be READ but cannot be finished. |
-| `EvolutionOperationsGatedError` | class(EvolutionError) | 118 | An ORM+ v2 operation delta this tool deliberately does not own. |
-| `EvolutionPolicyRefusedError` | class(EvolutionError) | 128 | The additive policy refused an operation at apply (MG2, exit 3). |
-| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1095 | Read one bounded, closed JSON evolution proposal. |
-| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1112 | Read one bounded, version-selected preview claim. |
-| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1129 | Read one bounded, version-selected staged intent. |
-| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1146 | Read one bounded pending-finalization claim. |
-| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1163 | Read one bounded, version-selected immutable record. |
-| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1180 | Read one bounded standalone conformance leaf for an explicit envelope. |
-| `EvolutionService` | class | 1201 | Preview, apply, and finalize one explicit model evolution proposal. |
-| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1321 | Validate and bind a proposal without changing any publication leaf. |
-| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 1766 | Report one staged pending finalization that has no completed record. |
-| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 1820 | Refuse to start a *new* evolution over an incomplete published one. |
-| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 1841 | Stage immutable evidence and publish only the candidate model CAS. |
-| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2086 | (no docstring) |
-| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2092 | (no docstring) |
-| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2095 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
+| `EvolutionError` | class(Exception) | 103 | A proposal, stage, CAS, or immutable evidence write was refused. |
+| `EvolutionReadOnlyCompatibilityError` | class(EvolutionError) | 107 | An old evidence document that may be READ but cannot be finished. |
+| `EvolutionOperationsGatedError` | class(EvolutionError) | 119 | An ORM+ v2 operation delta this tool deliberately does not own. |
+| `EvolutionPolicyRefusedError` | class(EvolutionError) | 129 | The additive policy refused an operation at apply (MG2, exit 3). |
+| `read_evolution_proposal(path, *, anchor, relative) -> EvolutionProposal` | function | 1125 | Read one bounded, closed JSON evolution proposal. |
+| `read_evolution_preview(path, *, anchor, relative) -> EvolutionPreview` | function | 1142 | Read one bounded, version-selected preview claim. |
+| `read_evolution_intent(path, *, anchor, relative) -> EvolutionIntent` | function | 1159 | Read one bounded, version-selected staged intent. |
+| `read_evolution_finalization_state(path, *, anchor, relative) -> EvolutionFinalizationState` | function | 1176 | Read one bounded pending-finalization claim. |
+| `read_evolution_record(path, *, anchor, relative) -> EvolutionRecord` | function | 1193 | Read one bounded, version-selected immutable record. |
+| `read_linked_project_conformance(path, *, envelope_version, anchor, relative) -> LinkedProjectConfor…` | function | 1210 | Read one bounded standalone conformance leaf for an explicit envelope. |
+| `EvolutionService` | class | 1231 | Preview, apply, and finalize one explicit model evolution proposal. |
+| `EvolutionService.preview(self, proposal, *, accepted_blast_radius_sha256, policy, populated, shape_…` | method | 1351 | Validate and bind a proposal without changing any publication leaf. |
+| `EvolutionService.pending_finalization(self, proposal_id) -> EvolutionFinalizationState \| None` | method | 1796 | Report one staged pending finalization that has no completed record. |
+| `EvolutionService.refuse_inherited_pending_finalization(self, proposal_id) -> None` | method | 1850 | Refuse to start a *new* evolution over an incomplete published one. |
+| `EvolutionService.apply(self, preview, *, check_population) -> EvolutionFinalizationState` | method | 1871 | Stage immutable evidence and publish only the candidate model CAS. |
+| `EvolutionService.record_path(self, proposal_id) -> Path` | method | 2116 | (no docstring) |
+| `EvolutionService.final_record_file_sha256(self, record) -> str` | method | 2122 | (no docstring) |
+| `EvolutionService.finalize(self, state) -> EvolutionRecord` | method | 2125 | Complete exact post-CAS leaves and publish the immutable D-13 record last. |
 
 ## gnd.evolve.shapes — `src/gnd/evolve/shapes.py`
 Components: evolve.shape_matches

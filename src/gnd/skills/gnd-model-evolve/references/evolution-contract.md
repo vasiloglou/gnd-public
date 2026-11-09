@@ -71,6 +71,7 @@ where applicable. A legacy nested shape is never silently interpreted as current
 | `RoleLocator` | `fact_type_id`, old `role_name` | `fact_types[id].roles[name]` |
 | `ConstraintLocator` | host, family, canonical before SHA-256, duplicate occurrence | `HOST.constraints[family:digest:occurrence]` |
 | `ModelIdentityLocator` | exactly `locator_kind: model-identity` | `model.identity` |
+| `SourceDocumentLocator` | `locator_kind: source-document`, the declared document's `sha256` (64 lowercase hex) | `source.documents[sha256]` |
 | `ArtifactLocator` | unique id, kind, safe relative path, content SHA-256, sorted referenced model locators | `artifacts[id]` |
 | `ProjectLocator` | `base: allowed-project-root`, normalized relative POSIX `path` | project coordinate beneath the already-trusted allowed root |
 
@@ -92,8 +93,8 @@ spellings. It does not resolve a path or claim containment.
 
 `EvolutionOperationKind` is the closed literal set `add | modify | rename | delete`.
 `StableLocator` is the closed union of `ElementLocator`, `RoleLocator`,
-`ConstraintLocator`, and `ModelIdentityLocator`; artifact locators bind downstream impact rather
-than a model mutation target.
+`ConstraintLocator`, `ModelIdentityLocator`, and `SourceDocumentLocator`; artifact locators bind
+downstream impact rather than a model mutation target.
 
 | Field | Rule |
 |---|---|
@@ -111,6 +112,27 @@ must each contain exactly the pair `version` and `model_id`. Replay compares the
 before replacing both fields atomically, refuses a stale pair, and candidate equality refuses any
 hidden top-level change. It contributes the affected reference `model.identity` and no
 object/fact-type element id.
+
+`SourceDocumentLocator` addresses one entry of an unattended model's `source.documents` by its
+digest, so a growth round can declare the document its spans cite. `add`, `modify` and `delete` are
+admitted; `rename` is refused ("source documents cannot be renamed; change the label with modify").
+`before` and `after` each contain exactly `sha256` and `label`, the `sha256` equals the locator's,
+and the `label` is a non-blank string. A `modify` can therefore change only the label: a different
+digest is a different document, deleted and added. Replay appends an `add` at the end of the list,
+after refusing a digest already declared ("source document is already declared"), and refuses an
+`add` on a model with no `source.documents` list ("the model declares no source.documents to append
+to"). A `modify` or `delete` finds the entry by digest and compares it with `before`. No operation
+reorders the list, so a candidate that only reorders it fails replay equality. The locator
+contributes no object/fact-type element id and adds no blast-radius entry; the always-present
+`model` entry keeps the report non-empty.
+
+| Term | Meaning | Outcome |
+|---|---|---|
+| modified | `modify` of a declared digest with a different `label` | `source_document.modify` under `--policy additive` (`3`); admitted without it |
+| removed | `delete` of a declared digest | `source_document.delete` under `--policy additive` (`3`); without it, admitted only when no span cites the document, otherwise candidate validation (`semantic:unattended-u7`, `3`) |
+| reordered | a candidate whose list order differs with no operation | replay equality (`3`) |
+| duplicate | `add` of a digest already declared | replay (`3`) |
+| a different digest under a `modify` | the value's `sha256` differs from the locator's | operation validation (`3`) |
 
 ### Additive structured-derived fact types
 
@@ -169,6 +191,11 @@ nonempty ordered `operations`, `rationale`, `audit`, `linked_projects`, and `art
 project, coordinate, artifact id, and artifact path identities are unique. `proposal_sha256` is the
 canonical digest of the complete closed proposal.
 
+`SourceDocumentLocator` exists in proposal `schema_version` 3 only. A version 1 or 2 proposal
+that carries it is refused when it is read (`3`), before the read-only version gate. A version 3
+proposal without it keeps its bytes and `proposal_sha256`. GND 0.2.0 and older refuse a proposal
+that carries it.
+
 Proposal, preview, intent, and record readers first inspect their outer version and select one
 complete closed nested graph. Mixed embeddings fail. Dict, JSON-text, bounded-file, and CLI claim
 entry points all use this same direction; field presence is never a version discriminator.
@@ -223,6 +250,7 @@ same proposal adds is judged like any other `modify`: declare the element once, 
 | constraint, subject not populated | admitted | admitted | pre-empted: a constraint has no stable id to rename (exit `3` at proposal read) | admitted |
 | constraint, subject populated | `constraint.populated.add` | admitted iff every differing key weakens or is `rationale` (or `provenance.reviewed_in`); otherwise `constraint.populated.modify` | pre-empted | admitted |
 | model identity | — | `model_identity.modify` | — | — |
+| source document | admitted | `source_document.modify` | pre-empted: refused at proposal read (`3`) | `source_document.delete` |
 
 An element `modify` replaces the whole element, so its cell is an allow-list over the dotted paths
 at which `before` and `after` differ; a path beneath an admitted key (`description.summary`) is
@@ -245,6 +273,9 @@ neither, and refused on a populated subject.
 
 D-12 runs first, so a changed constraint still has to be llm-inferred/proposed/deontic,
 user-supplied/confirmed, or a reviewed induced confirmation; the policy judges what D-12 admits.
+
+A locator kind the matrix has no row for is refused, never admitted: the policy raises
+`EvolutionPolicyGapError`, which exits `3` by type.
 
 **Order.** Pending state (`11`), stale identity (`11`), the operations gate (`18`), candidate
 validation, replay equality and D-12 (`3`), then the policy. A preview with issues is still written

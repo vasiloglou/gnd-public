@@ -8,24 +8,24 @@ Model loading with two-layer validation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `parse_model_document(data, *, source) -> Any` | function | 283 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
-| `load_model_bytes(data, *, source) -> Model` | function | 317 | Validate one immutable bounded buffer; source is diagnostic metadata. |
-| `load_model(path) -> Model` | function | 352 | Read model and reference bytes beneath a single retained directory. |
-| `ReferenceInputError` | class(ValueError) | 405 | A reference boundary refused its input before domain evaluation. |
-| `ReferenceOrigin` | class | 414 | (no docstring) |
-| `OccurrenceOrigin` | class | 420 | (no docstring) |
-| `BoundReferenceContext` | class | 426 | (no docstring) |
-| `BoundPopulationView` | class | 436 | (no docstring) |
-| `validate_reference_structure(document) -> None` | function | 443 | (no docstring) |
-| `retained_root(root)` | function | 468 | Open every lexical ancestor without following a symlink. |
-| `validate_declarations(model) -> dict[str, str]` | function | 486 | (no docstring) |
-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 587 | (no docstring) |
-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 593 | Bind a model's declared reference populations at ``root``, or return None |
-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 608 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
-| `resolve_context(model, references) -> BoundReferenceContext` | function | 617 | (no docstring) |
-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 649 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 725 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 729 | Recognize only a current combined population created by this binder. |
+| `parse_model_document(data, *, source) -> Any` | function | 285 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
+| `load_model_bytes(data, *, source) -> Model` | function | 319 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+| `load_model(path) -> Model` | function | 354 | Read model and reference bytes beneath a single retained directory. |
+| `ReferenceInputError` | class(ValueError) | 407 | A reference boundary refused its input before domain evaluation. |
+| `ReferenceOrigin` | class | 416 | (no docstring) |
+| `OccurrenceOrigin` | class | 422 | (no docstring) |
+| `BoundReferenceContext` | class | 428 | (no docstring) |
+| `BoundPopulationView` | class | 438 | (no docstring) |
+| `validate_reference_structure(document) -> None` | function | 445 | (no docstring) |
+| `retained_root(root)` | function | 470 | Open every lexical ancestor without following a symlink. |
+| `validate_declarations(model) -> dict[str, str]` | function | 488 | (no docstring) |
+| `bind_references(model, *, root) -> BoundReferenceContext` | function | 589 | (no docstring) |
+| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 595 | Bind a model's declared reference populations at ``root``, or return None |
+| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 610 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+| `resolve_context(model, references) -> BoundReferenceContext` | function | 619 | (no docstring) |
+| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 651 | (no docstring) |
+| `candidate_fact_count(view) -> int` | function | 727 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 731 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document
@@ -52,12 +52,16 @@ Existing model operations section; historical facade retained.
 | `compile_operation(operation, effects) -> list[dict[str, Any]]` | function | 63 | Standing obligations derivable from one operation's preconditions. |
 
 ## gnd.model._unattended — `src/gnd/model/_unattended.py`
-Components: unassigned
+Components: model.validation
 MG5 unattended source mode (model-growth-guardrails milestone).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `unattended_span_issues(doc, documents) -> list[ValidationIssue]` | function | 232 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+| `SpanCoverage` | class | 234 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+| `SpanCoverage.unchecked(self) -> int` | method | 246 | (no docstring) |
+| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 249 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+| `unattended_span_issues(doc, documents) -> list[ValidationIssue]` | function | 296 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+| `unattended_span_coverage(doc, documents) -> SpanCoverage \| None` | function | 306 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
 
 ## gnd.model._validation — `src/gnd/model/_validation.py`
 Components: model.validation

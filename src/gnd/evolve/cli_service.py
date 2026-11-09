@@ -456,6 +456,7 @@ def _evolve_error_exit(error: Exception) -> int:
     from gnd.evolve import (
         EvolutionError,
         EvolutionOperationsGatedError,
+        EvolutionPolicyGapError,
         EvolutionPolicyRefusedError,
         EvolutionReadOnlyCompatibilityError,
     )
@@ -474,6 +475,9 @@ def _evolve_error_exit(error: Exception) -> int:
     # user-supplied ids, and 3 is the band for a valid request refused by
     # policy (MG-D12).
     if isinstance(error, EvolutionPolicyRefusedError):
+        return 3
+    # By type (UG3): a locator kind the policy has no rule for fails closed.
+    if isinstance(error, EvolutionPolicyGapError):
         return 3
     # By type: the population check's refusal carries its own band and a
     # fixed, value-free message (UG2, UG-R6).

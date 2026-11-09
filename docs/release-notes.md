@@ -64,6 +64,19 @@ every span is re-hashed, a run without `--document`, and a model without the
 unattended mode are unchanged. See "Unattended source" in the `gnd-orm-core`
 representation format.
 
+### A growth round can declare its source document (issue 104)
+
+An unattended model's growth round can now declare the document its new spans
+cite, inside the round: a `source-document` operation in `gnd evolve`
+addresses one `source.documents` entry by its digest. `add` appends it;
+`modify` changes its label; `delete` removes it; `rename` is refused. Under
+`--policy additive` the add is admitted, and a modify or delete is refused
+(`source_document.modify`, `source_document.delete`, exit 3). The operation
+exists in proposal `schema_version` 3 only. **GND 0.2.0 cannot read a proposal
+that declares a source document**: it refuses it (exit 3). Proposals without
+the operation are unchanged. See [the additive
+policy](reference/evolve-policy.md#source-documents).
+
 ### Fixes and internal changes
 
 - **Text walk on a reference model**: `gnd check MODEL --pre PRE --steps STEPS`

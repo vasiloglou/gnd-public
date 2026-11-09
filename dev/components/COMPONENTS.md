@@ -509,7 +509,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.checking_command
 - does: Register and dispatch model validation, population checks, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, model identity, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
+- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -918,7 +918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.service
 - does: Preview explicit model changes, publish a model CAS, and finalize linked conformance evidence [EvolutionService].
-- verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record, population check, constraint placement
+- verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record, population check, constraint placement, declare source document
 - in: Current model bytes, explicit EvolutionProposal or reviewed EvolutionPreview, evidence root, allowed project root.
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
@@ -933,7 +933,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### evolve.schema
 - does: Validate versioned evolution proposals, stable operation locators, preview digests, pending states, and final records.
-- verbs: evolution schema, proposal contract, stable locator, operation identity, committed text, tracked roster, project coordinate, preview digest, finalization state, record binding, legacy reader, wire version, canonical_sha256, EvolutionProposal, EvolutionPreview, PopulationCheckRecord, PopulationOutcome
+- verbs: evolution schema, proposal contract, stable locator, operation identity, committed text, tracked roster, project coordinate, preview digest, finalization state, record binding, legacy reader, wire version, canonical_sha256, EvolutionProposal, EvolutionPreview, PopulationCheckRecord, PopulationOutcome, SourceDocumentLocator, source document, EvolutionPolicyGapError
 - in: Evolution JSON documents, operation before and after values, exact UTF-8 text, versioned linked-project records.
 - out: Closed frozen Pydantic evidence records and canonical identity digests.
 - status: canonical
@@ -943,12 +943,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
 - checked: partial
-- notes: Wire versions 1, 2, and 3 remain readable; publication eligibility is enforced by evolve.service. Hash serialization here does not append the newline used by review request identities.
+- notes: Wire versions 1, 2, and 3 remain readable; the source-document locator is admitted in version 3 only (UG3). Publication eligibility is enforced by evolve.service. Hash serialization here does not append the newline used by review request identities.
 
 
 ### evolve.policy
 - does: Classify additive model changes against populated fact types and report refused operations, clearing a populated-constraint refusal on a population check's pass [additive_policy_issues].
-- verbs: additive policy, populated facts, preserve existing data, strengthening constraint, weaken constraint, constraint change, allowed metadata, refuse rename, refuse delete, effective_populated, diff_paths, constraint_change, policy issues, constraint subjects, population outcomes
+- verbs: additive policy, populated facts, preserve existing data, strengthening constraint, weaken constraint, constraint change, allowed metadata, refuse rename, refuse delete, effective_populated, diff_paths, constraint_change, policy issues, constraint subjects, population outcomes, source document cells, fail closed on unknown locator kind
 - in: Validated before-model, explicit proposal operations, effective populated fact-type identifiers, optional population-check outcome words by operation index.
 - out: Ordered PolicyIssue records; effective populated identifiers, the subjects of a constraint operation (ConstraintSubjects) and structural change classifications.
 - status: canonical
@@ -1739,16 +1739,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.validation
 - does: Validate model schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
-- verbs: validate model, structural validation, semantic validation, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans
+- verbs: validate model, structural validation, semantic validation, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
-- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py
-- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.atom_bindings, model.document, model.scalar_terms
+- modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
+- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.scalar_terms
 - used_by: model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
 - checked: partial
-- notes: The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
+- notes: The unattended module holds the MG5 rule family and the `--document` span walk, which also counts the spans it re-hashed (UG3). The induction module supplies registered provenance rules, sharing a provenance walker injected by validation to avoid a reverse import. The validation module also owns derivation graph and aggregate analyses exposed through gnd.model; these are potential separate homes, not separately assignable modules today.
 
 
 ### model.json_document
@@ -1955,7 +1955,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.population_sentences, witness.service
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.population_sentences, model.validation, witness.service
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 

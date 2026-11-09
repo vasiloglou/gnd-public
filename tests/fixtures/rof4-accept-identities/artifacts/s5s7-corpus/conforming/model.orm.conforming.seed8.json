@@ -1,0 +1,76 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "source": "synthetic",
+    "label": "conforming",
+    "covers": [
+      "expense_has_status",
+      "expense_approved_by",
+      "expense_submitted_to_workday",
+      "expense_reimbursed"
+    ],
+    "model_id": "urn:gnd-example:approvals"
+  },
+  "instances": {},
+  "facts": {
+    "expense_has_status": [
+      {
+        "expense": 339563,
+        "status": "message"
+      },
+      {
+        "expense": 993908,
+        "status": "stage"
+      },
+      {
+        "expense": 158176,
+        "status": "sure"
+      }
+    ],
+    "expense_approved_by": [
+      {
+        "expense": 339563,
+        "approver": "situation"
+      },
+      {
+        "expense": 993908,
+        "approver": "situation"
+      },
+      {
+        "expense": 158176,
+        "approver": "beat"
+      }
+    ],
+    "expense_submitted_to_workday": [
+      {
+        "expense": 339563,
+        "submission": "worry"
+      },
+      {
+        "expense": 993908,
+        "submission": "worry"
+      },
+      {
+        "expense": 158176,
+        "submission": "worry"
+      }
+    ],
+    "expense_reimbursed": [
+      {
+        "expense": 339563,
+        "amount": 638539,
+        "paid_on": "2015-06-16"
+      },
+      {
+        "expense": 993908,
+        "amount": 536800,
+        "paid_on": "2000-02-17"
+      },
+      {
+        "expense": 158176,
+        "amount": 438433,
+        "paid_on": "2012-01-05"
+      }
+    ]
+  }
+}

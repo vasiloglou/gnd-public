@@ -72,6 +72,7 @@ from gnd.values import ISO_TYPES as _ISO_TYPES  # noqa: F401 -- compatibility ex
 from gnd.values import canonical as _canonical
 from gnd.values import identity_key as _identity_key
 from gnd.values import model_digest as _model_digest
+from gnd.values import model_identity_matches
 from gnd.values import refuse as _refuse
 
 #: The untrusted-input posture population.py already takes, applied to the one
@@ -246,10 +247,12 @@ def _supplied_digests(document: Any) -> dict[str, Any]:
 
 def verify_digests(document: dict[str, Any], model: Model, pre_path: str | Path | None) -> None:
     """Stage 2. Each mismatch has its own rule id, so a caller is never left
-    guessing WHICH claim about the world stopped being true."""
+    guessing WHICH claim about the world stopped being true. The walk's
+    ``model_digest`` may name either identity of the model; a refusal names
+    the legacy one, and the payload keeps echoing what the steps supplied."""
     supplied = _supplied_digests(document)
-    expected_model = transition_model_identity(model)
-    if supplied["model_digest"] != expected_model:
+    if model_identity_matches(supplied["model_digest"], model) is None:
+        expected_model = transition_model_identity(model)
         _refuse(
             "$.model_digest",
             f"model_digest does not match this model: steps say "

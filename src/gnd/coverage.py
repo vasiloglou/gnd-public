@@ -42,6 +42,7 @@ from gnd.report import (
     payload_schema_version,
 )
 from gnd.transition import transition_model_identity
+from gnd.values import model_identity_matches
 
 MAX_EVIDENCE_BYTES = 10 * 1024 * 1024
 
@@ -630,6 +631,7 @@ def read_evidence_document(
     kind: EvidenceKind,
     payload_version: int = PAYLOAD_SCHEMA_VERSION,
     census_model_digest: str | None = None,
+    census_model: Model | None = None,
 ) -> tuple[dict[str, Any], ReportBinding | None]:
     """Read and validate one document as exactly the evidence kind declared.
 
@@ -648,8 +650,10 @@ def read_evidence_document(
     ``census_model_digest`` is the identity of the model the view is being
     built for. When it is supplied and the source is model-bound, the two must
     be the same model; the refusal carries the stable name
-    ``coverage:model-digest-mismatch``. Legacy sources skip the comparison --
-    they never made the claim -- and are reported as unbound instead.
+    ``coverage:model-digest-mismatch``. With ``census_model`` as well, a
+    source naming that model's canonical identity is the same model too.
+    Legacy sources skip the comparison -- they never made the claim -- and are
+    reported as unbound instead.
     """
 
     document = read_json_document(path, kind=kind, payload_version=payload_version)
@@ -663,7 +667,7 @@ def read_evidence_document(
     if kind in ("check", "verify"):
         if command != kind or transition is not None:
             raise CoverageInputError(f"{path} is not {kind} snapshot evidence as its flag declared")
-        return document, _report_binding(document, path, census_model_digest)
+        return document, _report_binding(document, path, census_model_digest, census_model)
     if kind == "transition":
         if command != "check" or not isinstance(transition, dict):
             raise CoverageInputError(f"{path} is not transition evidence as its flag declared")
@@ -674,19 +678,29 @@ def read_evidence_document(
 
 
 def _report_binding(
-    document: dict[str, Any], path: Path, census_model_digest: str | None
+    document: dict[str, Any],
+    path: Path,
+    census_model_digest: str | None,
+    census_model: Model | None = None,
 ) -> ReportBinding:
     """Classify one schema-valid check/verify source, comparing if it claims.
 
     The schema has already proved that a model-bound version carries a
     well-formed digest and that a frozen version carries none, so this is a
-    string comparison over two values that are both known to exist.
+    string comparison over two values that are both known to exist. The
+    census string is the legacy identity; only a source that does not carry
+    it asks ``model_identity_matches`` whether it names the census model's
+    canonical identity (no second legacy digest is computed).
     """
 
     carried = document.get("model_digest")
     if carried is None:
         return "legacy-unbound"
-    if census_model_digest is not None and carried != census_model_digest:
+    if (
+        census_model_digest is not None
+        and carried != census_model_digest
+        and (census_model is None or model_identity_matches(carried, census_model) is None)
+    ):
         raise CoverageInputError(
             f"{path} was produced by a different model [{MODEL_DIGEST_MISMATCH}]: "
             f"the report names {carried}, this census model is {census_model_digest}"
@@ -812,12 +826,14 @@ def _index_snapshot(
     payload_version: int,
     census_model_digest: str,
     unbound: list[SourceBindingGap],
+    census_model: Model | None = None,
 ) -> None:
     document, binding = read_evidence_document(
         path,
         kind=kind,
         payload_version=payload_version,
         census_model_digest=census_model_digest,
+        census_model=census_model,
     )
     if binding == "legacy-unbound":
         # A gap per SOURCE, keyed by the full path the caller named. Two
@@ -1050,6 +1066,7 @@ def build_coverage(
                 payload_version=expected_payload_version,
                 census_model_digest=census_model_digest,
                 unbound=unbound,
+                census_model=model,
             )
     for path in conformance:
         guard_named_source(path, directory=False)

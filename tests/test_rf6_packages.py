@@ -53,14 +53,25 @@ def assert_bindings(baseline):
                 assert value is getattr(importlib.import_module(producers[module, row['name']]), row['name'])
 
 
-def test_all_predecessor_import_bindings_and_metadata():
+def live_baseline():
+    """The frozen import baseline less exactly the owner-retired names."""
+    from support.rf9_ci_sources import retired_names
     baseline = json.loads(runtime_baseline('import-baseline').read_text())
     assert {k: len(v) for k, v in baseline.items()} == {'gnd.model': 238, 'gnd.checker': 230}
+    retired = retired_names()
+    assert retired <= {(module, row['name']) for module, rows in baseline.items() for row in rows}
+    return {module: [row for row in rows if (module, row['name']) not in retired]
+            for module, rows in baseline.items()}
+
+
+def test_all_predecessor_import_bindings_and_metadata():
+    baseline = live_baseline()
+    assert {k: len(v) for k, v in baseline.items()} == {'gnd.model': 238, 'gnd.checker': 227}
     assert_bindings(baseline)
 
 
 def test_deleted_binding_is_observed(monkeypatch):
-    baseline = json.loads(runtime_baseline('import-baseline').read_text())
+    baseline = live_baseline()
     import gnd.model
     monkeypatch.delattr(gnd.model, 'semantic_validate')
     with pytest.raises(AttributeError):
@@ -76,6 +87,10 @@ def test_original_definition_body_is_verbatim(row):
         path = ROOT / 'src' / relative / '__init__.py'
     source = path.read_text()
     definitions = [n for n in ast.parse(source).body if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == row['name']]
+    from support.rf9_ci_sources import retired_names
+    if (row['module'], row['name']) in retired_names():
+        assert definitions == []
+        return
     assert len(definitions) == 1
     node = definitions[0]
     start = min([node.lineno] + [d.lineno for d in node.decorator_list])

@@ -752,9 +752,9 @@ All predecessor namespace bindings remain explicit aliases. Retirement requires 
 | gnd.checker._violation_verdict | gnd.checker._core._violation_verdict | RF6b | RF-D5; original qualification retained |
 | gnd.checker._orderable | gnd.checker._core._orderable | RF6b | RF-D5; original qualification retained |
 | gnd.checker._in_range | gnd.checker._core._in_range | RF6b | RF-D5; original qualification retained |
-| gnd.checker._find_cycle | gnd.checker._core._find_cycle | RF6b | RF-D5; original qualification retained |
-| gnd.checker._dfs_cycle | gnd.checker._core._dfs_cycle | RF6b | RF-D5; original qualification retained |
-| gnd.checker._ring_component_violations | gnd.checker._core._ring_component_violations | RF6b | RF-D5; original qualification retained |
+| gnd.checker._find_cycle | gnd.checker._core._find_cycle | RF6b | RF-D5; retired in rule-check-followups FU5 (issue 114, owner ruling 2026-11-08); no longer importable |
+| gnd.checker._dfs_cycle | gnd.checker._core._dfs_cycle | RF6b | RF-D5; retired in rule-check-followups FU5 (issue 114, owner ruling 2026-11-08); no longer importable |
+| gnd.checker._ring_component_violations | gnd.checker._core._ring_component_violations | RF6b | RF-D5; retired in rule-check-followups FU5 (issue 114, owner ruling 2026-11-08); no longer importable |
 | gnd.checker._COMPARATORS | gnd.checker._core._COMPARATORS | RF6b | RF-D5; original qualification retained |
 | gnd.checker._typed_comparison_values | gnd.checker._core._typed_comparison_values | RF6b | RF-D5; original qualification retained |
 | gnd.checker._compare | gnd.checker._core._compare | RF6b | RF-D5; original qualification retained |

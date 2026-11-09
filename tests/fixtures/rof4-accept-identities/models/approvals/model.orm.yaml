@@ -1,0 +1,193 @@
+# Expense approvals with operations: the plan an agent proposes is a walk of
+# operations, and GND checks each step's preconditions, the intermediate
+# states, and the frame (no undeclared side effects).
+version: 2
+model_id: urn:gnd-example:approvals
+
+source:
+  kind: text-conversation
+  confidence: standard
+  mode: one-shot
+
+object_types:
+  - id: expense
+    name: Expense
+    kind: entity
+    reference: { mode: popular, value_type: expense_id }
+  - id: expense_id
+    name: ExpenseId
+    kind: value
+    primitive: Integer
+  - id: expense_status
+    name: ExpenseStatus
+    kind: value
+    primitive: String
+  - id: approver
+    name: Approver
+    kind: entity
+    reference: { mode: popular, value_type: approver_name }
+  - id: approver_name
+    name: ApproverName
+    kind: value
+    primitive: String
+  - id: workday_submission
+    name: WorkdaySubmission
+    kind: entity
+    reference: { mode: popular, value_type: submission_id }
+  - id: submission_id
+    name: SubmissionId
+    kind: value
+    primitive: String
+  - id: reimbursement_amount
+    name: ReimbursementAmount
+    kind: value
+    primitive: Integer
+  - id: paid_on
+    name: PaidOn
+    kind: value
+    primitive: Date
+
+fact_types:
+  - id: expense_has_status
+    reading: "{Expense} has status {ExpenseStatus}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: expense_status, role_name: status }
+    constraints:
+      - id: one_status_per_expense
+        type: uniqueness
+        scope: internal
+        roles: [expense]
+        preferred: true
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "An expense is in exactly one state at a time." }
+      - type: mandatory
+        role: expense
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 5, user_quote: "Every expense has a state from the moment it is filed." }
+
+  - id: expense_approved_by
+    reading: "{Expense} is approved by {Approver}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: approver, role_name: approver }
+    constraints:
+      - id: one_approver_per_expense
+        type: uniqueness
+        scope: internal
+        roles: [expense]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "One approver signs off on an expense." }
+
+  - id: expense_submitted_to_workday
+    reading: "{Expense} is submitted to Workday as {WorkdaySubmission}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: workday_submission, role_name: submission }
+    constraints:
+      - id: one_submission_per_expense
+        type: uniqueness
+        scope: internal
+        roles: [expense]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "One expense reaches Workday once." }
+
+  - id: expense_reimbursed
+    reading: "{Expense} is reimbursed {ReimbursementAmount} on {PaidOn}"
+    roles:
+      - { object_type: expense, role_name: expense }
+      - { object_type: reimbursement_amount, role_name: amount }
+      - { object_type: paid_on, role_name: paid_on }
+    constraints:
+      - id: one_reimbursement_per_expense
+        type: uniqueness
+        scope: internal
+        roles: [expense]
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { csdp_step: 4, user_quote: "An expense is paid at most once." }
+
+operations:
+  - id: approve_expense
+    reading: "{Expense} is approved by {Approver}"
+    parameters:
+      - { name: expense, object_type: expense }
+      - { name: approver, object_type: approver }
+    preconditions:
+      - id: pre_draft
+        require:
+          - { fact_type: expense_has_status, bind: { expense: "$expense", status: "draft" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { csdp_step: 7, user_quote: "Only a draft can be approved." }
+    effects:
+      - retract: { fact_type: expense_has_status, bind: { expense: "$expense" } }
+      - assert: { fact_type: expense_has_status, bind: { expense: "$expense", status: "approved" } }
+      - assert: { fact_type: expense_approved_by, bind: { expense: "$expense", approver: "$approver" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 7, user_quote: "An approver signs off a draft expense." }
+
+  - id: submit_expense_to_workday
+    reading: "{Expense} is submitted to Workday as {WorkdaySubmission}"
+    parameters:
+      - { name: expense, object_type: expense }
+      - { name: submission, object_type: workday_submission }
+    preconditions:
+      - id: pre_approved
+        require:
+          - { fact_type: expense_has_status, bind: { expense: "$expense", status: "approved" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { csdp_step: 7, user_quote: "Nothing reaches Workday before approval." }
+    effects:
+      - create: { object_type: workday_submission, param: submission }
+      - assert: { fact_type: expense_submitted_to_workday, bind: { expense: "$expense", submission: "$submission" } }
+      - retract: { fact_type: expense_has_status, bind: { expense: "$expense" } }
+      - assert: { fact_type: expense_has_status, bind: { expense: "$expense", status: "submitted" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 7, user_quote: "Approved expenses are filed in Workday." }
+
+  - id: reimburse_expense
+    reading: "{Expense} is reimbursed {ReimbursementAmount} on {PaidOn}"
+    parameters:
+      - { name: expense, object_type: expense }
+      - { name: submission, object_type: workday_submission }
+      - { name: approver, object_type: approver }
+      - { name: amount, object_type: reimbursement_amount }
+      - { name: on_date, object_type: paid_on }
+    preconditions:
+      - id: pre_submitted
+        require:
+          - { fact_type: expense_submitted_to_workday, bind: { expense: "$expense", submission: "$submission" } }
+        modality: alethic
+        source: explicit
+        status: confirmed
+        provenance: { csdp_step: 7, user_quote: "We only pay what Workday has." }
+      - id: pre_has_approver
+        require:
+          - { fact_type: expense_approved_by, bind: { expense: "$expense", approver: "$approver" } }
+        modality: deontic
+        source: user-supplied
+        status: confirmed
+        provenance: { csdp_step: 7, user_quote: "We like to know who signed it off." }
+    effects:
+      - assert: { fact_type: expense_reimbursed, bind: { expense: "$expense", amount: "$amount", paid_on: "$on_date" } }
+    frame: { modality: alethic }
+    source: explicit
+    status: confirmed
+    provenance: { csdp_step: 7, user_quote: "Finance pays submitted expenses." }

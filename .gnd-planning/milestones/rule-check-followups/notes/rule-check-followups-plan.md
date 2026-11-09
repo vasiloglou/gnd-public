@@ -4,7 +4,7 @@
 ("Approve r3"; [plan-gate record](../001-plan.md)).** r3 applies the Codex
 review of r2 (P1-P6, [plan-review-r2](../evidence/plan-review-r2/codex-review.md));
 r3 itself was not re-reviewed. The owner ruled RF-D0 and FD1-FD5 as
-proposed over r1. `auto=false`.
+proposed over r1. `auto=false`. Amended at the milestone close (§11).
 
 Eight small follow-ups that the rule-check-adoption milestone deferred at its
 close ([012-milestone-close.md](../../rule-check-adoption/012-milestone-close.md),
@@ -91,8 +91,9 @@ rule-check-adoption close record.
 FU1   FU2   FU3   FU4   FU5   ──> close
 ```
 
-The phases are independent; the order is by size and risk. FU3 reuses the
-exact-terms fixtures FU1 uses.
+The phases are independent; the order is by size and risk. FU3 has its
+own ring model and corpus (`tests/fixtures/fu3-derived-ring/`); FU1's
+exact-terms fixtures cannot carry a ring (amended at the close, §11).
 
 | Artifact | Home |
 |---|---|
@@ -207,3 +208,16 @@ The merge-base full suite is run on beast-3 before FU1 changes code.
 | FD3 | FU1: widen the version-7 enum to version 15's set, or only to the `term:*` values the version-7 route can emit? | version 15's set: one list, and a value the route cannot emit costs nothing **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
 | FD4 | FU4: widen the bounds, or move both tests to a serial lane? | widen: the scope walk's ratio and ceiling, and the driver test's time margins, to values measured under the six-shard load (fixed in the FU4 spec), each checked against its mutant; a serial lane needs runner support the shard script lacks **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
 | FD5 | FU5: retire the three helpers (RF-D5's later approved phase, after the first public release), or keep them? | retire `_dfs_cycle` and `_ring_component_violations`; keep `_find_cycle` only if a test outside the checker family needs it, else retire it and its test **Ruled (o, 2026-11-07): as proposed** ("Approve all as proposed", answering "How do you rule on the plan's decisions RF-D0 and FD1–FD5?"). |
+
+## 11. Close amendments
+
+Proposed at the milestone close (2026-11-08,
+[007-milestone-close.md](../007-milestone-close.md)); they take effect with
+the owner's close ruling, the merge of the close PR. The prior wording is
+kept here.
+
+| Where | Raised by | Prior wording | Now |
+|---|---|---|---|
+| §3, the paragraph under the diagram | FU3 spec finding P2, record row FU3-O1 ([004-phase-FU3.md](../004-phase-FU3.md)) | "FU3 reuses the exact-terms fixtures FU1 uses." | FU3 has its own ring model and corpus; FU1's `terms.orm.yaml` has no binary fact type over one object type, so it cannot carry a ring |
+| Completion predicate 2 | close review K1 (reproduced at the close) | "no copy of a `Population` can carry `producer` without `source: tool-output`" | no copy of a validated `Population` can; `model_construct` is unvalidated and its copies are not revalidated (FU2 boundary) |
+| Completion predicate 6 | close review K2 | "Issues 111 and 112 stay open, split out by owner ruling (FD1, FD2) to milestones of their own; this milestone does not close them." | this milestone closes neither; issue 112 was closed on 2026-11-08 by the report-output-fidelity milestone (PRs 124, 127), which supersedes the open-state clause for it |

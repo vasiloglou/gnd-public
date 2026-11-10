@@ -1,0 +1,91 @@
+{
+  "source_commit": "c7fc66dd27b64891df4057406684a80755e6f828",
+  "cases": [
+    {
+      "id": 1,
+      "exit": 0,
+      "comparison": "exact include-free text bytes"
+    },
+    {
+      "id": 2,
+      "exit": 0,
+      "header": "Includes contracts (contracts-v1.orm.json, sha256 0136fc8fe6f4)",
+      "semantics": "all object/fact/constraint tags from flattened input, each once"
+    },
+    {
+      "id": 3,
+      "compose_exit": 0,
+      "replay_exit": 0,
+      "comparison": "composed facts and lineage equal; allow only model digests/identities/version/path differences, verified from original bytes independently"
+    },
+    {
+      "id": 4,
+      "exit": 3,
+      "reason": "include:hash-mismatch",
+      "output_files": []
+    },
+    {
+      "id": 5,
+      "exit": 3,
+      "record_verify_called": false
+    },
+    {
+      "id": 6,
+      "exit": 3,
+      "reason": "include:unsupported-route",
+      "output_files": []
+    },
+    {
+      "id": 7,
+      "input": "multiple/project.orm.json",
+      "exit": 0,
+      "headers": [
+        "Includes z-contracts (contracts-v1.orm.json, sha256 0136fc8fe6f4)",
+        "Includes a-labels (labels.orm.json, sha256 c1df3dfb3a52)"
+      ],
+      "order": "authored declaration order, not lexical ID order"
+    },
+    {
+      "id": 8,
+      "input": "unresolved-model.json",
+      "entry": "Model.model_validate then render_model_verbalization",
+      "raises": "ModelValidationError",
+      "rule_id": "include:unresolved",
+      "output_text": null
+    },
+    {
+      "id": 9,
+      "input": "model path absent",
+      "cli_exit": 66,
+      "review_text": null
+    },
+    {
+      "id": 10,
+      "input": "invalid JSON model path",
+      "cli_exit": 3,
+      "review_text": null
+    },
+    {
+      "id": 11,
+      "input": "include metadata containing newline/control data",
+      "exit": 0,
+      "header_lines": "exactly one per include, controls escaped by existing path_segment/line_text"
+    },
+    {
+      "id": 12,
+      "input": "include-bearing in-memory loaded Model with composition requested",
+      "exit": 3,
+      "reason": "include:unsupported-route"
+    },
+    {
+      "id": 13,
+      "input": "owned-inline/project.orm.yaml",
+      "exit": 0,
+      "owned_constraints": [
+        "project_no_loops",
+        "project_owner_required"
+      ],
+      "representation": "Each owned attached rule and every included vocabulary rule appears once under the existing composed semantic locators; include header precedes Object Types."
+    }
+  ]
+}

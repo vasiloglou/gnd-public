@@ -16,7 +16,13 @@
       "id": 3,
       "compose_exit": 0,
       "replay_exit": 0,
-      "comparison": "composed facts and lineage equal; allow only model digests/identities/version/path differences, verified from original bytes independently"
+      "comparison": "composed facts and lineage equal; full replay payload equal except model/population coordinates, model_digest and composition.record_sha256, each verified independently from frozen original model/record bytes",
+      "allowlist": [
+        "model",
+        "population",
+        "model_digest",
+        "composition.record_sha256"
+      ]
     },
     {
       "id": 4,

@@ -858,7 +858,7 @@ def _register_compose(subparsers):
 def _cmd_compose(model_path: str, directory: str, out: str, record: str) -> int:
     from gnd import api
 
-    result = api.compose(model_path, directory)
+    result, dependencies = api._compose_with_inputs(model_path, directory)
     if result["exit_code"]:
         print(f"ERROR: {result['error']['message']}", file=sys.stderr)
         return result["exit_code"]
@@ -867,9 +867,10 @@ def _cmd_compose(model_path: str, directory: str, out: str, record: str) -> int:
     targets = [Path(out).resolve(), Path(record).resolve()]
     inputs = Path(directory).resolve()
     model = Path(model_path).resolve()
-    if (_same_file(targets[0], targets[1]) or any(_same_file(model, target) for target in targets)
+    if (_same_file(targets[0], targets[1]) or any(_same_file(source, target) for source in (model, *dependencies) for target in targets)
             or any(_within(target, inputs) for target in targets)):
-        print("ERROR: --out and --record must be two different paths, neither the model nor inside the composition directory",
+        subject = "a model input" if dependencies else "the model"
+        print(f"ERROR: --out and --record must be two different paths, neither {subject} nor inside the composition directory",
               file=sys.stderr)
         return 64
     # Refuse before staging so a failure cannot leave one output replaced

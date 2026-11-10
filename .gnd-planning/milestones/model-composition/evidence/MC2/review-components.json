@@ -1,0 +1,6 @@
+{
+  "command": "python3 scripts/components_index.py --no-cache changed --base 55a7d89a12a5500775602e137ee97bf9559c544c --strict",
+  "exit_code": 0,
+  "output": "reread: subsystem.check (entry not edited): its members changed: cli.checking_command, cli.api, check.service, model.loading\nreread: subsystem.synth (entry not edited): its members changed: model.loading\nreread: subsystem.codegen (entry not edited): its members changed: model.loading\nreread: subsystem.conformance (entry not edited): its members changed: model.loading\nreread: subsystem.measure (entry not edited): its members changed: model.loading\nreread: subsystem.evolve (entry not edited): its members changed: model.loading\nreread: subsystem.recovery (entry not edited): its members changed: model.loading, model.verbalization\nreread: infra.disclosure (entry not edited): src/gnd/disclosure.py\nchanged against 55a7d89a12a5500775602e137ee97bf9559c544c (55a7d89): 93 file(s) differ; 0 to fix, 0 warning(s), 8 to reread\n",
+  "reread": "The eight descriptions were reread in the first candidate and remain accurate; this repair reuses composition and its existing writer without adding a subsystem."
+}

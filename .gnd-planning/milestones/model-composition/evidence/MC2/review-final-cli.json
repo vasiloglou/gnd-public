@@ -1,0 +1,5 @@
+{
+  "command": ".venv/bin/pytest -q tests/test_mc2_consumers.py tests/test_composition.py --tb=short",
+  "exit_code": 0,
+  "output": "........................................................................ [ 58%]\n...................................................                      [100%]\n123 passed in 28.39s\n"
+}

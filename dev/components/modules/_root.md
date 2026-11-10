@@ -119,19 +119,19 @@ Stable in-process access to GND validation and checking reports.
 | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 746 | Read two models and optionally one directory of population documents. |
 | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 930 | Public population sentence view; applied redaction is the default. |
 | `compose(model, directory) -> dict[str, Any]` | function | 958 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model) -> str` | function | 1006 | Render the caller's complete model for review, including authored samples. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1015 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1058 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1087 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1195 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1219 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1234 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1242 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1252 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1261 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1273 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1276 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1279 | (no docstring) |
+| `verbalize_model(model) -> str` | function | 1012 | Render the caller's complete model for review, including authored samples. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1021 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1064 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1093 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1201 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1225 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1240 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1248 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1258 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1267 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1279 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1282 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1285 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability

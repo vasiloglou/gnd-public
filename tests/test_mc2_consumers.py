@@ -435,3 +435,42 @@ def test_T8_changed_vocabulary_never_claims_currency(corpus, tmp_path, route):
     result = run_main(args)
     assert result.returncode == 3 and b'include:unsupported-route' in result.stdout + result.stderr
     assert not out.exists() and path.read_bytes() == before
+
+
+@pytest.mark.parametrize('option', ['--out', '--record'])
+@pytest.mark.parametrize('alias', ['direct', 'symlink', 'hardlink'])
+def test_compose_never_targets_included_input(corpus, tmp_path, monkeypatch, option, alias):
+    from gnd.commands import checking
+
+    a = corpus / 'anchored'
+    vocabulary = a / 'contracts-v1.orm.json'
+    target = vocabulary
+    if alias != 'direct':
+        target = tmp_path / 'alias.json'
+        if alias == 'symlink':
+            target.symlink_to(vocabulary)
+        else:
+            target.hardlink_to(vocabulary)
+    before = vocabulary.read_bytes()
+    monkeypatch.setattr(checking, '_atomic_write_all', lambda *a: pytest.fail('writer reached'))
+    outputs = {'--out': tmp_path / 'out.json', '--record': tmp_path / 'record.json'}
+    outputs[option] = target
+    result = run_main(['compose', str(a / 'project.orm.json'), str(a / 'composition'),
+                       '--out', str(outputs['--out']), '--record', str(outputs['--record'])])
+    assert result.returncode == 64, result.stdout + result.stderr
+    assert vocabulary.read_bytes() == before
+    assert not outputs['--record' if option == '--out' else '--out'].exists()
+
+
+def test_source_successor_after_commit_reproduces_raw_observation():
+    import ast
+    import subprocess
+
+    path = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC2/source-successors.json'
+    document = read(path)
+    commit = document['raw_observation_commits']['after']
+    for row in document['successors']:
+        relative = 'src/' + row['home'].replace('.', '/') + '.py'
+        source = subprocess.check_output(['git', 'show', f'{commit}:{relative}'], cwd=ROOT).decode()
+        node = next(n for n in ast.parse(source).body if getattr(n, 'name', None) == row['name'])
+        assert hashlib.sha256(ast.get_source_segment(source, node).encode()).hexdigest() == row['after']['raw_sha256']

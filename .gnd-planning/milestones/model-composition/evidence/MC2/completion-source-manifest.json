@@ -1,0 +1,98 @@
+{
+  "candidate_commit": "07986c53580c6edb3ed48ad01427aad19c974a94",
+  "base": "55a7d89a12a5500775602e137ee97bf9559c544c",
+  "files": [
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "744291a9394b06542eaeba3f4f8c5358c5c1846825670d4e0b094fe49f8492df"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "9ec50b027d522717df9f4851b577ef8ceed4c7993f618812f618e4770861b5d6"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "fd0d4414542efb07fd1763707e4785aa3b3a49a3f7b9c249f49613b420ff9b75"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "566364060078870eb685be367c19960d97192b2ddfabf575aee9d25d600fd4ab"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "58f20a468571c86538f8061170214d6180ef3bd891972aaa01ea58223ea66fb0"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "7e7f80ef257ab59f3472a5e2c9fe1bf8ce44e9558c30e5bb51b78e8d7700b9a7"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "51228fcf00250eb139854bf44098c2f8f8cdf8ce1d1524a7f489921f6216d466"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "sha256": "af98fab53cd3fdc1cfa68264b09f5444323cf01c1e85ac1f74b808a2fd59f0fc"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "sha256": "c79ec765c88c001ed4bc3f8e8cbc853136ac71f3033f5024335c7629517905c5"
+    },
+    {
+      "path": "src/gnd/disclosure.py",
+      "sha256": "eb4289d0a4fd724f43296941d114d9d73a68d041dece017682d44ac2183148d1"
+    },
+    {
+      "path": "src/gnd/documents.py",
+      "sha256": "cf82f9bd1e50d565b16cdd5d8df236ab61be7058db8c50c9a584f0782c59916f"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "305debf92a00f2e03bc0bea81bfd34469cb93db77f317719728aabfc788e568a"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "sha256": "decd16aee01e5c26e64b8bd35c0984faddd989531203c8e58eb2559ae005e2f1"
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "sha256": "d98ac04685cebe431d2f3d5c70f5b24ea79795fe336b90f04f2260ab57e765e6"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "34e10181a252ac9a9b26ad967a8f963b4aecb6cba3ffaee75380b9f63f46a4ef"
+    },
+    {
+      "path": "tests/support/rf9_ci_sources.py",
+      "sha256": "d0b5adbb015ef7a1b26f61bc3b379cd7766600a2428be2d07524f5a5a0796e95"
+    },
+    {
+      "path": "tests/test_disclosure_mode.py",
+      "sha256": "01cd1da01e627b7c91b3176a603aedfcad665ed97c49524db0e1a761ead742ed"
+    },
+    {
+      "path": "tests/test_mc1_guards.py",
+      "sha256": "4013506e8611c23cea421cceb9404123baa184757e3a7e4e0aa276f95783009b"
+    },
+    {
+      "path": "tests/test_mc1_review_regressions.py",
+      "sha256": "d8f5923601870e8b98a0021fe94a890869830faf233d6c51d5a12b9719d224cb"
+    },
+    {
+      "path": "tests/test_mc2_consumers.py",
+      "sha256": "badf7e18f01b3d71217a91e1d3b59abd37002890c8494274586db24eda12a55e"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "38ac0ffa6d373418d39b87c46638f682b7a36150469583f82c7cfc5d1095186f"
+    },
+    {
+      "path": "tests/test_rf5_commands.py",
+      "sha256": "76427085c1816cb83c78c441a3b9d831863ebe5499fb98e16cd1eeec938d918a"
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "sha256": "734df98e86d57e06db93e34d015dc7a487bc1da7607a6668b2cf55b1f9d98041"
+    }
+  ]
+}

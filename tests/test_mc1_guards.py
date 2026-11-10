@@ -89,15 +89,20 @@ def test_R29_standalone_validate(tmp_path):
     assert b'gnd validate' in result.stdout + result.stderr
 
 
-def test_R29_standalone_migration(tmp_path):
+def test_R29_standalone_migration(tmp_path, monkeypatch):
     import importlib.util
     path, _, _ = write_case(tmp_path)
     script = Path(__file__).resolve().parents[1] / 'src/gnd/skills/gnd-adopt/scripts/verify_migration.py'
     spec = importlib.util.spec_from_file_location('mc_migration', script)
     module = importlib.util.module_from_spec(spec)
     import sys
+    # This source resource is also the installer's exact packaged inventory.
+    # Import the standalone script without publishing a cache into that tree.
+    before = set(script.parent.rglob('*'))
+    monkeypatch.setattr(sys, 'dont_write_bytecode', True)
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
+    assert set(script.parent.rglob('*')) == before
     with pytest.raises(module.Refusal, match='include:unsupported-route.*gnd validate'):
         module._load_model_surface(path.read_bytes(), path)
 

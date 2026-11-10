@@ -1,0 +1,68 @@
+Retained local output; operator home paths sanitized to <HOME>.
+........................................................................ [  6%]
+........................................................................ [ 13%]
+........................................................................ [ 20%]
+........................................................................ [ 26%]
+........................................................................ [ 33%]
+........................................................................ [ 40%]
+........................................................................ [ 46%]
+........................................................................ [ 53%]
+........................................................................ [ 60%]
+........................................................................ [ 67%]
+.........................F.............................................. [ 73%]
+........................................................................ [ 80%]
+........................................F....F....................F..... [ 87%]
+........................................................................ [ 93%]
+..................F...............................................       [100%]
+=================================== FAILURES ===================================
+______ test_moved_algorithm_preserves_base_body[gnd.api:_witness_inputs] _______
+tests/test_rf4_peripheral.py:143: in test_moved_algorithm_preserves_base_body
+    assert _import_bindings(after) == successor['after']['imports']
+E   AssertionError: assert ['DEFAULT_LIM...d_bytes', ...] == ['DEFAULT_LIM...l_bytes', ...]
+E     
+E     At index 5 diff: 'guard_bytes' != 'load_model_bytes'
+E     Left contains one more item: 'load_population_bytes'
+E     Use -v to get more diff
+_______ test_moved_algorithm_preserves_base_body[gnd.api:_run_check_raw] _______
+tests/test_rf4_peripheral.py:143: in test_moved_algorithm_preserves_base_body
+    assert _import_bindings(after) == successor['after']['imports']
+E   AssertionError: assert ['AnchorError...extents', ...] == ['AnchorError...extents', ...]
+E     
+E     At index 11 diff: 'guard_path' != 'read_anchor_sidecar'
+E     Left contains 2 more items, first extra item: 'validate_anchor_sidecar'
+E     Use -v to get more diff
+___________ test_current_successor_body_and_import_controls_are_live ___________
+tests/test_rf4_peripheral.py:157: in test_current_successor_body_and_import_controls_are_live
+    assert hashlib.sha256(_algorithm(current).encode()).hexdigest() == successor['after']['algorithm_sha256']
+E   AssertionError: assert '1f1a958c0116...d4f18ac43c3ec' == '505e43b75bae...710e64618c123'
+E     
+E     - 505e43b75bae946449e2811ea2f7e81f0ffbde4c9ddf0931d87710e64618c123
+E     + 1f1a958c0116748d6a4d63259f7bc6384ff7f3c4b4421a72b2ad4f18ac43c3ec
+_ test_body_successors_reject_changed_bodies[RF4-gnd.api-_witness_inputs-gnd.witness.service] _
+tests/test_rf9_ci_repairs.py:85: in test_body_successors_reject_changed_bodies
+    control()
+tests/test_rf9_ci_repairs.py:81: in control
+    rf4.test_moved_algorithm_preserves_base_body(row)
+tests/test_rf4_peripheral.py:143: in test_moved_algorithm_preserves_base_body
+    assert _import_bindings(after) == successor['after']['imports']
+E   AssertionError: assert ['DEFAULT_LIM...d_bytes', ...] == ['DEFAULT_LIM...l_bytes', ...]
+E     
+E     At index 5 diff: 'guard_bytes' != 'load_model_bytes'
+E     Left contains one more item: 'load_population_bytes'
+E     Use -v to get more diff
+_____________________ test_original_handler_bytes[install] _____________________
+tests/test_rf5_handler_pins.py:42: in test_original_handler_bytes
+    assert observe(case, tmp_path, monkeypatch) == ANSWERS[case['id']]
+E   AssertionError: assert {'exit': 0, '... 'stderr': ''} == {'exit': 0, '... 'stderr': ''}
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Differing items:
+E     {'stdout': 'claude/global -> <case>/home/.claude/skills\n  placed 71 file(s)\n'} != {'stdout': 'claude/global -> <case>/home/.claude/skills\n  placed 70 file(s)\n'}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_witness_inputs]
+FAILED tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_run_check_raw]
+FAILED tests/test_rf4_peripheral.py::test_current_successor_body_and_import_controls_are_live
+FAILED tests/test_rf9_ci_repairs.py::test_body_successors_reject_changed_bodies[RF4-gnd.api-_witness_inputs-gnd.witness.service]
+FAILED tests/test_rf5_handler_pins.py::test_original_handler_bytes[install]
+5 failed, 1069 passed in 41.49s

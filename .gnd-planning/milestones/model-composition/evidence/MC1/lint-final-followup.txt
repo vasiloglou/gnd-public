@@ -1,0 +1,236 @@
+Current lint, retaining the13 exact baseline findings. Operator home paths sanitized to <HOME>.
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/gnd/examples/expense/project/cli/expense_cli.py:3:1
+   |
+ 1 |   """Developer-owned expense CLI; policy is evaluated by the GND model."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | import argparse
+ 6 | | import copy
+ 7 | | import json
+ 8 | | import os
+ 9 | | import sys
+10 | | import tempfile
+11 | | from pathlib import Path
+12 | |
+13 | | from cli.reporting import summarize
+14 | |
+15 | | from gnd.api import check
+   | |_________________________^
+help: Organize imports
+   |
+13 | from cli.reporting import summarize
+   -
+14 | from gnd.api import check
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> tests/test_candidate_ignore.py:2:1
+  |
+1 |   """Release output ignore rules must not hide committed candidate fixtures."""
+2 | / import shutil
+3 | | import subprocess
+4 | | from pathlib import Path
+  | |________________________^
+help: Organize imports
+  |
+5 |
+  -
+6 | ROOT = Path(__file__).resolve().parents[1]
+  |
+
+ISC004 Unparenthesized implicit string concatenation in collection
+  --> tests/test_development_scaffold.py:50:9
+   |
+48 |       # The FU5 reviewer's verbatim report links two files by absolute worktree path.
+49 |       Path('.gnd-planning/milestones/rule-check-followups/notes/phase-FU5-codex-review-impl.md'): {
+50 | /         '<HOME>/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027/'
+51 | |         '.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md:755',
+   | |_______________________________________________________________________________^
+52 |           '<HOME>/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027/'
+53 |           '.gnd-planning/milestones/rule-check-followups/notes/phase-FU5-spec.md:122',
+   |
+help: Did you forget a comma?
+help: Wrap implicitly concatenated strings in parentheses
+
+ISC004 Unparenthesized implicit string concatenation in collection
+  --> tests/test_development_scaffold.py:52:9
+   |
+50 |           '<HOME>/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027/'
+51 |           '.gnd-planning/milestones/code-refactoring/notes/shim-inventory.md:755',
+52 | /         '<HOME>/github-repos/gnd-public/.claude/worktrees/intelligent-pasteur-df4027/'
+53 | |         '.gnd-planning/milestones/rule-check-followups/notes/phase-FU5-spec.md:122',
+   | |___________________________________________________________________________________^
+54 |       },
+55 |       # The RR3 spec's D6 row quotes proposed docs text with an elided link target.
+   |
+help: Did you forget a comma?
+help: Wrap implicitly concatenated strings in parentheses
+
+RUF007 Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs
+  --> tests/test_figures_render.py:14:29
+   |
+12 |     for page in sorted((ROOT / 'docs').rglob('*.md')):
+13 |         lines = page.read_text(encoding='utf-8').splitlines()
+14 |         for before, line in zip(lines, lines[1:]):
+   |                             ^^^
+15 |             if line.lstrip().startswith('![') and re.match(r'\s*<(div|figure|section)\b[^>]*>\s*$', before):
+16 |                 found.append(f'{page.relative_to(ROOT)}: {line[:60]}')
+   |
+help: Replace `zip()` with `itertools.pairwise()`
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_m3_population_shape.py:2:1
+   |
+ 1 |   """Positive shape acceleration never broadens the authoritative schema."""
+ 2 | / from __future__ import annotations
+ 3 | | import copy
+ 4 | | import json
+ 5 | | from pathlib import Path
+ 6 | | import pytest
+ 7 | | from jsonschema import Draft202012Validator
+ 8 | | from gnd import population
+ 9 | | from gnd.errors import ValidationIssue
+10 | | from gnd.model import load_model
+   | |________________________________^
+11 |
+12 |   FIXTURES=Path(__file__).parent/'fixtures/skeleton'
+   |
+help: Organize imports
+   |
+2  | from __future__ import annotations
+3  +
+4  | import copy
+5  | import json
+6  | from pathlib import Path
+7  +
+8  | import pytest
+9  | from jsonschema import Draft202012Validator
+10 +
+11 | from gnd import population
+   |
+
+FURB167 [*] Use of regular expression alias `re.M`
+   --> tests/test_plan_app_docs.py:147:52
+    |
+145 |     denials = next(e for e in events if e['type'] == 'result')['permission_denials']
+146 |     page = (ROOT / 'docs/tutorials/course-planner.md').read_text(encoding='utf-8')
+147 |     for line in re.findall(r'^ERROR at .*$', page, re.M):
+    |                                                    ^^^^
+148 |         assert line in results, line
+149 |     for edit in edits:
+    |
+help: Replace with `re.MULTILINE`
+    |
+146 |     page = (ROOT / 'docs/tutorials/course-planner.md').read_text(encoding='utf-8')
+    -     for line in re.findall(r'^ERROR at .*$', page, re.M):
+147 +     for line in re.findall(r'^ERROR at .*$', page, re.MULTILINE):
+148 |         assert line in results, line
+    |
+
+FURB167 [*] Use of regular expression alias `re.M`
+   --> tests/test_plan_app_recordings.py:112:58
+    |
+110 |         session = (_folder(row) / 'session.txt').read_text(encoding='utf-8')
+111 |         assert recorder.summary(session) == row['attempts'], row['model'] + '/' + row['example'] + str(row['run'])
+112 |         assert len(re.findall(r'^attempt \d+$', session, re.M)) == len(row['attempts'])
+    |                                                          ^^^^
+help: Replace with `re.MULTILINE`
+    |
+111 |         assert recorder.summary(session) == row['attempts'], row['model'] + '/' + row['example'] + str(row['run'])
+    -         assert len(re.findall(r'^attempt \d+$', session, re.M)) == len(row['attempts'])
+112 +         assert len(re.findall(r'^attempt \d+$', session, re.MULTILINE)) == len(row['attempts'])
+113 |
+    |
+
+FURB167 [*] Use of regular expression alias `re.M`
+   --> tests/test_plan_app_recordings.py:127:61
+    |
+125 |     for row in RESULTS['runs']:
+126 |         session = (_folder(row) / 'session.txt').read_text(encoding='utf-8')
+127 |         blocks = re.split(r'^attempt \d+\n', session, flags=re.M)[1:]
+    |                                                             ^^^^
+128 |         for n, (attempt, block) in enumerate(zip(row['attempts'], blocks), 1):
+129 |             reply = json.loads((_folder(row) / f'reply-{n:02d}.json').read_text(encoding='utf-8'))
+    |
+help: Replace with `re.MULTILINE`
+    |
+126 |         session = (_folder(row) / 'session.txt').read_text(encoding='utf-8')
+    -         blocks = re.split(r'^attempt \d+\n', session, flags=re.M)[1:]
+127 +         blocks = re.split(r'^attempt \d+\n', session, flags=re.MULTILINE)[1:]
+128 |         for n, (attempt, block) in enumerate(zip(row['attempts'], blocks), 1):
+    |
+
+RUF059 Unpacked variable `core` is never used
+   --> tests/test_plan_apps.py:264:5
+    |
+262 |     program = tmp_path / 'rules.py'
+263 |     program.write_text(render(APPS / 'lease/model.orm.json', 'duckdb'))
+264 |     core, app, plan = _plan(tmp_path, 'lease', json.loads((APPS / 'lease/plans/attempt-2.steps.json').read_text())['steps'])
+    |     ^^^^
+265 |     target = tmp_path / 'exists.json' if where == 'exists' else tmp_path / 'nodir/x.json'
+266 |     if where == 'exists':
+    |
+help: Prefix it with an underscore or any other dummy variable pattern
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_public_v71_judgment_successor_guards.py:74:5
+   |
+73 |   def test_source_replacement_between_stat_and_open_is_refused(tmp_path, monkeypatch):
+74 | /     from gnd import artifacts
+75 | |     from tests.support.v71_judgment_cases import public
+   | |_______________________________________________________^
+76 |
+77 |       b = bundle("dispatch", tmp_path)
+   |
+help: Organize imports
+   |
+73 | def test_source_replacement_between_stat_and_open_is_refused(tmp_path, monkeypatch):
+   -     from gnd import artifacts
+74 |     from tests.support.v71_judgment_cases import public
+75 |
+76 +     from gnd import artifacts
+77 +
+78 |     b = bundle("dispatch", tmp_path)
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_public_v71_judgment_successor_guards.py:107:5
+    |
+105 |   )
+106 |   def test_answer_kind_boundaries_are_closed(tmp_path, variant):
+107 | /     from importlib.resources import files
+108 | |
+109 | |     from jsonschema import Draft202012Validator
+110 | |
+111 | |     from gnd.judgments import read_judgment_receipts
+112 | |     from tests.support.v71_judgment_cases import attach_evidence
+    | |________________________________________________________________^
+113 |
+114 |       b = bundle("dispatch", tmp_path)
+    |
+help: Organize imports
+    |
+109 |     from jsonschema import Draft202012Validator
+110 +     from tests.support.v71_judgment_cases import attach_evidence
+111 |
+112 |     from gnd.judgments import read_judgment_receipts
+    -     from tests.support.v71_judgment_cases import attach_evidence
+113 |
+    |
+
+PERF102 When using only the values of a dict use the `values()` method
+  --> tests/test_pyrel_recordings.py:85:24
+   |
+83 |     manifest = _manifest(domain)
+84 |     recorded = {(row['variant'], row['run']): row for row in results['sessions']}
+85 |     for name, entry in manifest['recordings'].items():
+   |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+86 |         row = recorded[(entry['variant'], entry['run'])]
+87 |         assert row['disposition'] == entry['result'] and row['bands'] == entry['bands']
+   |
+help: Replace `.items()` with `.values()`
+
+Found 13 errors.
+[*] 8 fixable with the `--fix` option (4 hidden fixes can be enabled with the `--unsafe-fixes` option).

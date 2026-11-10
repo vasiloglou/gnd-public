@@ -1,0 +1,4 @@
+Retained beast-3 candidate output; operator home paths sanitized to <HOME> where present.
+baseline_members=400 added_members=3
+..
+2 passed in 15.26s

@@ -170,6 +170,12 @@ def test_current_successor_lookup_rejects_duplicates_and_unchained_rows(monkeypa
 
     from support import rf9_ci_sources as sources
     document = json.loads(sources.SOURCE_SUCCESSORS.read_text())
+    for path in sources.PHASE_SUCCESSORS:
+        document['successors'].extend(json.loads(path.read_text())['successors'])
+    effective = next(row for row in sources._current_rows()
+                     if row['kind'] == 'RF4' and row['name'] == '_run_check_raw')
+    # The synthetic replacement below contains the complete current chain.
+    monkeypatch.setattr(sources, 'PHASE_SUCCESSORS', ())
     target = next(row for row in document['successors']
                   if row['kind'] == 'RF4' and row['name'] == '_run_check_raw')
     current_path = tmp_path / 'current.json'
@@ -188,7 +194,7 @@ def test_current_successor_lookup_rejects_duplicates_and_unchained_rows(monkeypa
     with pytest.raises(AssertionError, match='duplicate current'):
         sources.body_successor('RF4', target['name'], target['old'])
     chained = copy.deepcopy(document)
-    chained['successors'].append({**copy.deepcopy(target), 'before': copy.deepcopy(target['after']),
+    chained['successors'].append({**copy.deepcopy(target), 'before': copy.deepcopy(effective['after']),
                                   'after': {'chained': True}, 'reason': 'later change'})
     current_path.write_text(json.dumps(chained))
     collapsed = sources.body_successor('RF4', target['name'], target['old'])

@@ -1,4 +1,4 @@
-"""Reproduced independent MC1 findings; every case is observed red pre-fix."""
+"""Reproduced MC1 findings, legacy controls and test-inventory falsifiers."""
 from __future__ import annotations
 
 import copy
@@ -143,3 +143,55 @@ def test_guard_keeps_raw_type_refusal_in_legacy_adapter():
     from gnd.export.souffle import render_souffle
     result=render_souffle('{"version":4,"object_types":[],"fact_types":[]}',b'{}',model_format='json')
     assert (result.exit_code,result.reason)==(3,'input-invalid')
+
+
+def test_full_followup_raw_view_pin_rejects_unrecorded_body(monkeypatch):
+    import ast
+    from pathlib import Path
+
+    import test_disclosure_mode as disclosure
+
+    disclosure.test_review_r2_raw_bodies_keep_the_rf4_base_algorithm()
+    original = Path.read_text
+
+    def dirty(path, *args, **kwargs):
+        source = original(path, *args, **kwargs)
+        if path == ROOT / 'src/gnd/witness/service.py':
+            node = next(n for n in ast.parse(source).body
+                        if isinstance(n, ast.FunctionDef) and n.name == 'witness_result')
+            lines = source.splitlines(keepends=True)
+            lines.insert(node.end_lineno, '    raise RuntimeError("unrecorded raw view")\n')
+            source = ''.join(lines)
+        return source
+
+    monkeypatch.setattr(Path, 'read_text', dirty)
+    with pytest.raises(AssertionError):
+        disclosure.test_review_r2_raw_bodies_keep_the_rf4_base_algorithm()
+
+
+def test_full_followup_raw_observations_and_dirty_control():
+    import ast
+    import hashlib
+    import subprocess
+
+    path = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC1/source-successors.json'
+    document = json.loads(path.read_text())
+
+    def check(rows):
+        for row in rows:
+            source_path = 'src/' + row['home'].replace('.', '/') + '.py'
+            for side, commit in [('after', 'c7fc66dd')]:
+                if 'raw_sha256' not in row[side]:
+                    continue
+                text = subprocess.check_output(['git', 'show', commit + ':' + source_path],
+                                               cwd=ROOT, encoding='utf-8')
+                node = next(n for n in ast.parse(text).body
+                            if isinstance(n, ast.FunctionDef) and n.name == row['name'])
+                raw = ast.get_source_segment(text, node).encode('utf-8')
+                assert hashlib.sha256(raw).hexdigest() == row[side]['raw_sha256']
+
+    check(document['successors'])
+    dirty = copy.deepcopy(document['successors'])
+    next(row for row in dirty if 'raw_sha256' in row['after'])['after']['raw_sha256'] = '0' * 64
+    with pytest.raises(AssertionError):
+        check(dirty)

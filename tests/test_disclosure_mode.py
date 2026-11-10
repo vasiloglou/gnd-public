@@ -746,6 +746,8 @@ def test_review_r1_doccheck_emits_values_in_every_mode(tmp_path, monkeypatch):
 
 def test_review_r2_raw_bodies_keep_the_rf4_base_algorithm():
     import ast
+    import hashlib
+    import json
     import subprocess
 
     import test_rf4_peripheral as rf4
@@ -757,7 +759,11 @@ def test_review_r2_raw_bodies_keep_the_rf4_base_algorithm():
         after = ast.parse(ast.unparse(after)).body[0]
         after.name = name
         assert rf4._import_bindings(before) == rf4._import_bindings(after), name
-        assert rf4._algorithm(before) == rf4._algorithm(after), name
+        successors = json.loads((ROOT / '.gnd-planning/milestones/model-composition/evidence/MC1/raw-view-successors.json').read_text())
+        successor = next(row for row in successors if row['name'] == name)
+        assert successor['reason']
+        assert hashlib.sha256(rf4._algorithm(before).encode()).hexdigest() == successor['before'], name
+        assert hashlib.sha256(rf4._algorithm(after).encode()).hexdigest() == successor['after'], name
 
 
 def test_review_r3_only_named_values_are_unmasked(tmp_path, monkeypatch):

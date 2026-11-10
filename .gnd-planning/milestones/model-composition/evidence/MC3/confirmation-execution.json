@@ -1,0 +1,14 @@
+{
+  "candidate_commit": "ebec0980005690f6e23e5e4e806fdfc50b96de85",
+  "tool": "Codex CLI",
+  "version": "0.163.0",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "sandbox": "read-only",
+  "ephemeral": true,
+  "exit_code": 0,
+  "session_id": "01a1c65b-ca86-7e61-b56d-a5bfcade41b6",
+  "reported_tokens_used": 66136,
+  "verdict": "approve",
+  "review_budget_exhausted": true
+}

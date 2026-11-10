@@ -1,0 +1,14 @@
+{
+  "candidate_commit": "ebec0980005690f6e23e5e4e806fdfc50b96de85",
+  "all_15_source_hashes_match": true,
+  "actual_process_exits": {
+    "repair-primary": 0,
+    "repair-impact": 0,
+    "repair-known-red": 1,
+    "candidate-primary": 0,
+    "candidate-impact": 0,
+    "candidate-direct": 0
+  },
+  "test_counts_overlap": true,
+  "phase_default_and_census_not_selected": true
+}

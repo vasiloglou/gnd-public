@@ -1,0 +1,6 @@
+{
+  "candidate_commit": "ebec0980005690f6e23e5e4e806fdfc50b96de85",
+  "command": "uv run python scripts/components_index.py --check --strict",
+  "exit_code": 0,
+  "output": ""
+}

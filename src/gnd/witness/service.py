@@ -161,7 +161,8 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
         return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult
-        return WitnessResult(3, reason=error.issues[0].rule_id).model_dump(mode="json")
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+        return WitnessResult(3, reason=reason).model_dump(mode="json")
     except _input_errors():
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
@@ -181,7 +182,8 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
     except ModelValidationError as error:
         from gnd.witness.types import WitnessResult
-        return WitnessResult(3, reason=error.issues[0].rule_id).model_dump(mode="json")
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+        return WitnessResult(3, reason=reason).model_dump(mode="json")
     except (*_input_errors(), YAMLError):
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 

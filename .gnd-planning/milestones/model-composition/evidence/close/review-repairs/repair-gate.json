@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-10",
+  "ruling": "delegated approval (auto=true)",
+  "authority": "named milestone auto delegation and current continue request",
+  "scope": "D1-D5 bounded close repairs, not merge/close acceptance",
+  "spec": ".gnd-planning/milestones/model-composition/notes/close-review-repair-spec.md",
+  "spec_sha256": "ec6f33ae1764022b11ef70faa52fa0d2cb33d87a7aa6db5b8645321be2bd215f",
+  "review_budget_remaining": 1,
+  "amendment": "pre-fix included control preserves unsupported-route precedence measured by initial6-case run",
+  "prior_spec_sha256": "94bdac7defb8edcf57173d9a6ef320f5cccca077bd74077aacc3a6bfd58182cd",
+  "prior_ruling_retained": "Initial D1-D5 delegated approval, before the measured pre-fix included-answer correction; original prose remains exact prefix."
+}

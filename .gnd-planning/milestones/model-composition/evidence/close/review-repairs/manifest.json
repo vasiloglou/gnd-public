@@ -1,0 +1,18 @@
+{
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/architecture-pins.txt": "d0c66dda41dc10fc37ce200f095109ed8a83cd5ecfd882e731b842b966ea9cf0",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/baseline-witness.txt": "08c25617e1d221ab0ed30670ef721fdc0e4d012d9b079d9f16a7d322630dd91e",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/components.txt": "f2fa95a4e8be85d0f88d72a2be254e0a23755d194b2d909f49cb07cec15ef71c",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/lint.json": "c4fb6ec9775b2181b1b6479d8c2b604337d6f4b38a1c622a0f397e1ba909a049",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/regressions-after.txt": "04da4a1ef16d2966b66b717dcd535d2104616be8ba69a5d926074d78f2d8946f",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/regressions-before-corrected.txt": "05fb0aab967ffd5389a90bcf43849f3c5891ca38633c17ba58815d5b4ec5170c",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/regressions-before.txt": "63400d8a5edce651c31b8e113115c69ba0b028cbbfb7cd35105b092a1198d2d1",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/repair-gate.json": "4f4d3804b9424c4893e0986787275eeb91ff94a1949364aa9483327b22752b5c",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/review-prompt.txt": "31f123b94daa0f276d41b3b081ff913da5a628d3be4ae2cb2a267ea4f32cda27",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/review-receipt.json": "ae14106d24a635089502f6b83574db9d49313ebcb61ddf4ca813907926c1664e",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/sizes.json": "63812a7d8bd5a77a64276cf5f823980710dbb751f4739bc426e5fd4e05564dea",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/source-manifest.json": "f67d0e4c62103949207a13d9276bdb2a46c44e75c785cf6a8158d8f546d91cd2",
+  ".gnd-planning/milestones/model-composition/notes/close-codex-review.md": "088f67b1dac2982efe4fdcb7b724952c33192d03bda9393590eac917a2dfa4f6",
+  ".gnd-planning/milestones/model-composition/notes/close-review-repair-spec.md": "ec6f33ae1764022b11ef70faa52fa0d2cb33d87a7aa6db5b8645321be2bd215f",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/current-reference.txt": "b1a06b26972c2140d432c34fda543615763c138b875a7c41cc50eedff85f4e4a",
+  ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/whitespace.json": "873f6e285b5644aab709de3dfce02228238703d99de3088bb4373d7bf8dc9e18"
+}

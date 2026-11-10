@@ -1,0 +1,6 @@
+{
+  "command": ".venv/bin/zensical build -f .mc4-draft-zensical.toml",
+  "exit_code": 0,
+  "output": "Build started\nBuild finished in 0.53s\nNo issues found\n",
+  "sanitization": "Repository/home path tokens replaced; output otherwise retained."
+}

@@ -1,0 +1,17 @@
+version: 5
+model_id: urn:gnd-example:shared-components:platform@1
+includes:
+- id: components
+  path: vocabulary/components-v1.orm.yaml
+  sha256: 512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3
+fact_type_constraints:
+- fact_type: component_has_owner
+  constraints:
+  - id: every_component_has_an_owner
+    type: mandatory
+    role: component
+    source: user-supplied
+    status: confirmed
+    modality: deontic
+    remedy: Add the owning team to the component's catalog entry.
+    provenance: {user_quote: Every component should have an owning team.}

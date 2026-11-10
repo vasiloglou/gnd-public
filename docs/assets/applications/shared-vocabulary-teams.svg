@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="490" viewBox="0 0 1000 490" role="img" aria-labelledby="title desc">
+<title id="title">One vocabulary, two project policies</title>
+<desc id="desc">The same component scanner vocabulary supplies both projects. Checkout owns a blocking no-import-loops rule. Its api/auth and search/util loops fail; removing the return imports makes it pass. Platform owns an advisory ownership rule. Missing ownership for metrics warns; adding the platform team removes the warning. Both projects retain identical vocabulary bytes.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#526375"/></marker></defs>
+<rect width="1000" height="490" rx="16" fill="#f5f7fb"/>
+<g font-family="system-ui,sans-serif" fill="#182b42">
+<rect x="245" y="20" width="510" height="98" rx="12" fill="#e1ebf7" stroke="#6585a9"/>
+<text x="500" y="50" text-anchor="middle" font-size="22" font-weight="700">Tool-owned component vocabulary</text>
+<text x="500" y="79" text-anchor="middle" font-size="17">Imports · areas · owning teams · releases</text>
+<text x="500" y="102" text-anchor="middle" font-size="15">Same version and bytes in both projects</text>
+<path d="M370 118V148H252V178M630 118V148H748V178" fill="none" stroke="#526375" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="32" y="184" width="440" height="273" rx="12" fill="white" stroke="#7e91a7"/>
+<rect x="528" y="184" width="440" height="273" rx="12" fill="white" stroke="#7e91a7"/>
+<text x="57" y="218" font-size="22" font-weight="700">Checkout's policy</text>
+<text x="57" y="248" font-size="18">No import loops</text>
+<text x="57" y="271" font-size="15" fill="#526375">Blocking rule, owned by the project</text>
+<text x="57" y="312" font-size="18" fill="#a12f36">Before: api ↔ auth, search ↔ util</text>
+<text x="57" y="340" font-size="17">Two loops; the rule fails.</text>
+<path d="M67 353V384" stroke="#526375" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="88" y="375" font-size="15">Remove the two return imports</text>
+<text x="57" y="421" font-size="18" fill="#23684a">After: both loops gone; passes</text>
+<text x="553" y="218" font-size="22" font-weight="700">Platform's policy</text>
+<text x="553" y="248" font-size="18">Every component should have an owner</text>
+<text x="553" y="271" font-size="15" fill="#526375">Advisory rule, owned by the project</text>
+<text x="553" y="312" font-size="18" fill="#915a0e">Before: metrics has no owner</text>
+<text x="553" y="340" font-size="17">A warning; the run is not blocked.</text>
+<path d="M563 353V384" stroke="#526375" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="584" y="375" font-size="15">Assign metrics to the platform team</text>
+<text x="553" y="421" font-size="18" fill="#23684a">After: owned; warning gone</text>
+<text x="500" y="480" text-anchor="middle" font-size="15">Repairs change the facts. Vocabulary and project rules stay the same.</text>
+</g></svg>

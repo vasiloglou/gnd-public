@@ -1,0 +1,5 @@
+{
+  "command": "python3 scripts/components_index.py --no-cache changed --base origin/main --strict",
+  "exit_code": 0,
+  "output": "changed against origin/main (d5ca5d9): 46 file(s) differ; 0 to fix, 0 warning(s), 0 to reread\n"
+}

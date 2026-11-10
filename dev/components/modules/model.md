@@ -57,11 +57,11 @@ MG5 unattended source mode (model-growth-guardrails milestone).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SpanCoverage` | class | 234 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
-| `SpanCoverage.unchecked(self) -> int` | method | 246 | (no docstring) |
-| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 249 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
-| `unattended_span_issues(doc, documents) -> list[ValidationIssue]` | function | 298 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
-| `unattended_span_coverage(doc, documents) -> SpanCoverage \| None` | function | 308 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
+| `SpanCoverage` | class | 240 | UG3: how many of an unattended model's source spans one ``--document`` run re-hashed. |
+| `SpanCoverage.unchecked(self) -> int` | method | 252 | (no docstring) |
+| `SpanCoverage.issue(self, *, severity) -> ValidationIssue \| None` | method | 255 | The one ``unattended:spans-unchecked`` entry, or ``None`` when every span was re-hashed. |
+| `unattended_span_issues(doc, documents) -> list[ValidationIssue]` | function | 304 | MG5 `gnd validate --document`: re-hash every valid span over a supplied document. |
+| `unattended_span_coverage(doc, documents) -> SpanCoverage \| None` | function | 314 | UG3: the span counts of one ``--document`` run; ``None`` without the unattended mode. |
 
 ## gnd.model._validation — `src/gnd/model/_validation.py`
 Components: model.validation

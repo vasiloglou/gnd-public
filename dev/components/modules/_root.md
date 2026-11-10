@@ -535,18 +535,18 @@ Explicit, bounded in-process reuse ownership. Never an admission authority.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ReuseRefused` | class(ValueError) | 32 | (no docstring) |
-| `active_state()` | function | 253 | (no docstring) |
-| `affected_heads(model, changed)` | function | 261 | One reverse walk across existing positive/negative/aggregate edges. |
-| `ReuseState` | class | 296 | One committed generation plus a transaction-local candidate, never history. |
-| `ReuseState.owns_model(self, model)` | method | 329 | (no docstring) |
-| `ReuseState.transaction(self, model, *, options, sequence)` | method | 333 | (no docstring) |
-| `ReuseState.discard(self)` | method | 394 | (no docstring) |
-| `ReuseState.note(self, event)` | method | 399 | Bounded out-of-band event diagnostics, never semantic feedback. |
-| `ReuseState.prepare_policy(self, policy)` | method | 407 | Normalize once; preserve live guards and exact transaction authority. |
-| `ReuseState.reuse(self, namespace, unit, snapshot, calculate, *, policy, rows)` | method | 424 | (no docstring) |
-| `ReuseState.reset(self)` | method | 523 | (no docstring) |
-| `ReuseState.close(self)` | method | 536 | (no docstring) |
-| `ReuseState.stats(self)` | method | 546 | (no docstring) |
+| `active_state()` | function | 270 | (no docstring) |
+| `affected_heads(model, changed)` | function | 278 | One reverse walk across existing positive/negative/aggregate edges. |
+| `ReuseState` | class | 313 | One committed generation plus a transaction-local candidate, never history. |
+| `ReuseState.owns_model(self, model)` | method | 346 | (no docstring) |
+| `ReuseState.transaction(self, model, *, options, sequence)` | method | 350 | (no docstring) |
+| `ReuseState.discard(self)` | method | 411 | (no docstring) |
+| `ReuseState.note(self, event)` | method | 416 | Bounded out-of-band event diagnostics, never semantic feedback. |
+| `ReuseState.prepare_policy(self, policy)` | method | 424 | Normalize once; preserve live guards and exact transaction authority. |
+| `ReuseState.reuse(self, namespace, unit, snapshot, calculate, *, policy, rows)` | method | 444 | (no docstring) |
+| `ReuseState.reset(self)` | method | 545 | (no docstring) |
+| `ReuseState.close(self)` | method | 558 | (no docstring) |
+| `ReuseState.stats(self)` | method | 568 | (no docstring) |
 
 ## gnd.input_policy — `src/gnd/input_policy.py`
 Components: infra.input_policy

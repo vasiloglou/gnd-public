@@ -92,7 +92,7 @@ The additive policy for ``gnd evolve preview --policy additive`` (MG2).
 | `constraint_change(path, before, after, *, family) -> str` | function | 196 | The closed strengthening/weakening list (plan §2.2, MG-D3 (a), (p1) F). |
 | `ConstraintSubjects` | class | 305 | The fact types a constraint operation ranges over, before and after (MG2). |
 | `ConstraintSubjects.of(self, operation) -> set[str]` | method | 344 | (no docstring) |
-| `additive_policy_issues(before, proposal, *, populated, population_outcomes) -> tuple[PolicyIssue, .…` | function | 380 | Every operation the additive policy refuses, in proposal order. |
+| `additive_policy_issues(before, proposal, *, populated, population_outcomes) -> tuple[PolicyIssue, .…` | function | 383 | Every operation the additive policy refuses, in proposal order. |
 
 ## gnd.evolve.population_check — `src/gnd/evolve/population_check.py`
 Components: evolve.population_check

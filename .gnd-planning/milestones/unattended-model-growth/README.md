@@ -12,7 +12,7 @@ milestone.
 **Status: plan r1.2 approved at the plan gate on 2026-11-07 ([record](001-plan.md); the owner's reply "approved all", relayed). The owner also ruled the
 decisions UG-D0 to UG-D9 the same day. Plan review round 1 (four local readers, UG-D1 (a)) ran over r1.1
 and its accurate repairs are in r1.2; no confirmation round was run. The UG1 spec (r1.3) was approved at its gate and UG1 is implemented as tests only
-([record](002-phase-UG1.md)); UG2 is implemented and merged (PR 147); UG3 is implemented and merged (PR 149; [part A](004-phase-UG3a.md), [part B](005-phase-UG3b.md)); UG4 is implemented and recorded on branch `claude/ug4-spec` ([record](006-phase-UG4.md)), not merged; the milestone close remains. No issue is closed.**
+([record](002-phase-UG1.md)); UG2 is implemented and merged (PR 147); UG3 is implemented and merged (PR 149; [part A](004-phase-UG3a.md), [part B](005-phase-UG3b.md)); UG4 is implemented and merged (PR 151, `dd3c35a5`; [record](006-phase-UG4.md)). The milestone close is recorded in [007-close.md](007-close.md) on branch `claude/ug-close`, with one blocking close-review fix; owner acceptance and merge of the close are pending. Issues 74, 75 and 76 are closed (2026-11-08); 104 is open.**
 `auto=false`.
 
 **Headline.** Most of the four issues is already on main, from the closed
@@ -33,14 +33,14 @@ items as owner decisions.
   constraint admission; corpus approved
 - [UG2 record](003-phase-UG2.md): implemented, one-reviewer diff review applied; merged in PR 147 (`5c6a0c5f`)
 - [UG3a record](004-phase-UG3a.md): span counts and `validate --require-documents` (issue 74); one-reviewer diff review applied; merged in PR 149 (`ad454305`)
-- [UG3b record](005-phase-UG3b.md): the `source-document` evolve operation (issue 104); one-reviewer diff review applied; merged in PR 149 (`ad454305`)
+- [UG3b record](005-phase-UG3b.md): the `source-document` evolve operation (issues 74 and 104); one-reviewer diff review applied; merged in PR 149 (`ad454305`)
 - [UG4 spec (r1, approved 2026-11-09, all decisions as proposed)](notes/phase-UG4-spec.md): documentation, skill pointer and issue follow-ups
-- [UG4 record](006-phase-UG4.md): docs and skill prose, one guard test; one-reviewer diff review applied; not merged. [Drafted issue follow-ups](notes/ug4-issue-followups.md) (not posted)
+- [UG4 record](006-phase-UG4.md): docs and skill prose, one guard test; one-reviewer diff review applied; merged in PR 151 (`dd3c35a5`). [Drafted issue follow-ups](notes/ug4-issue-followups.md) (not posted)
+- [Milestone close](007-close.md): union gate, parity table, four close readers, question sweep, plan close note `(c1)`
 - [UG3 spec (r1, approved 2026-11-09, all decisions as proposed; corpus approved the same day)](notes/phase-UG3-spec.md): span counts and `--require-documents` (part A), a `source.documents` evolve locator (part B)
-- Phases: UG1 acceptance replay (done, test-only); UG2 population-checked
-  constraint admission (ruled UG-D2 (b); needs its own spec gate); UG3 the
-  unattended source header across rounds (ruled UG-D3 (c), UG-D9 (b); same); UG4 documentation and dispositions;
-  then the close.
+- Phases (all done): UG1 acceptance replay (test-only); UG2 population-checked
+  constraint admission; UG3 the unattended source header across rounds; UG4 documentation and
+  dispositions; then the close.
 
 **Owner rulings, 2026-11-07** (plan §10, "Owner ruling" column): UG-D2 (b)
 build the population-checked admission (UG2); UG-D9 (b) an append-only
@@ -49,6 +49,4 @@ build the population-checked admission (UG2); UG-D9 (b) an append-only
 readers, the maintained panel stated as the project's bar), D4, D5, D6, D7, D8
 as proposed. The owner closes issues 74, 75, 76 and 104 (UG-D0).
 
-**Next action.** The owner reviews the UG4 pull request and decides whether to merge it (branch `claude/ug4-spec`); then the milestone close. Posting the drafted follow-ups ([ug4-issue-followups.md](notes/ug4-issue-followups.md)) and closing issues are the owner's (UG-D0).
-Until then no code is written. Open owner questions: UG-Q6 (component-index contradiction in
-`project.md`), UG-Q7 (tracker labels); neither blocks UG1.
+**Next action.** The owner accepts or amends the close ([007-close.md](007-close.md)) and decides whether to merge its pull request (branch `claude/ug-close`). Posting the drafted follow-ups ([ug4-issue-followups.md](notes/ug4-issue-followups.md)) and closing issue 104 are the owner's (UG-D0). Open owner questions are in the close record's sweep.

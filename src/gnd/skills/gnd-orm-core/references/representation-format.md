@@ -686,7 +686,9 @@ after the model validates, so an invalid model reports its own issues first. Spa
 document that was not supplied are not re-hashed, and are counted. Messages carry paths, digests and
 offsets, never document text.
 
-Each span the walk visits counts as re-hashed or unchecked:
+The walk visits the spans of object types, fact types, constraints and sample rows; spans that an
+operation or an obligation carries are neither checked by U7 nor counted. Each span the walk visits
+counts as re-hashed or unchecked:
 
 | Span | Counted as |
 |---|---|

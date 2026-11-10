@@ -286,7 +286,7 @@ read the reply, and `gnd validate --document` is the only gate.
 The procedure above prevents this by proposing constraints with the fact type. For a constraint
 the text reveals only later, pass the population to the policy: `gnd evolve preview --policy
 additive --check-population FILE`, and `apply` with the same options. The policy admits a new
-constraint, or a change that only strengthens one, when it is `proposed` and `deontic`, `FILE`
+constraint, or a change to one whose differing keys all strengthen, weaken or are admitted, when it is `proposed` and `deontic`, `FILE`
 holds facts for every populated fact type it ranges over and none of them has sample rows, and
 the constraint's own verdict over `FILE` is `pass`. The admission holds relative to `FILE`: the
 constraint stays `proposed` and `deontic`, so it is advisory if a later population breaks it.

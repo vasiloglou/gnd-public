@@ -8,8 +8,8 @@ note adds, and GND checks the round before anything is published.
 The one rule of a growing model is that each round only **adds**. A rename, a
 delete, or a new constraint on facts the model already holds would change what
 earlier facts mean, and the rounds that produced them could no longer be
-trusted. GND checks that for you, round by round, and it points out when a new
-fact type looks like one you already have.
+trusted. GND checks that for you, round by round, for the facts it can see
+(below), and it points out when a new fact type looks like one you already have.
 
 <div class="app-figure" markdown="1" role="region" tabindex="0" aria-label="One round of growing a model">
 

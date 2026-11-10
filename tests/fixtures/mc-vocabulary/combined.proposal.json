@@ -35,7 +35,7 @@
         "host": "included_fact_type",
         "host_id": "component_uses_component",
         "family": "ring",
-        "canonical_before_sha256": "8fec85b55cda8ea099dd9d541bced5562e5429ddadebbe12af02b102ffc83b66",
+        "canonical_before_sha256": "8b7b439c24a3c127c389934649931743b270fcb888972459e821a330eef11c95",
         "duplicate_occurrence": 0
       },
       "before": {

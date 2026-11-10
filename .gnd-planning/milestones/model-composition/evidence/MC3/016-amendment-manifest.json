@@ -1,0 +1,29 @@
+{
+  "reason": "Exact two-input locator identity correction; answer meanings unchanged.",
+  "files": [
+    {
+      "path": "tests/fixtures/mc-vocabulary/combined.proposal.json",
+      "sha256": "f63ef0b62d1ee777bb2e6e7c57581ecdb482f7d76fe33d0ceb554fb81e968a51"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/flattened.proposal.json",
+      "sha256": "97362fa088205f16c81883446c29d01116a865c00e2f1a96ea35b7632447bf65"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/016-original-combined.proposal.json",
+      "sha256": "9ea51224fcc69e1276735727e9a1579c1b5079954d745d8bb4600f0b33770bcc"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/016-original-flattened.proposal.json",
+      "sha256": "7d9a358e0a8da461428ac8f9a4b543754f6deeedb89740c30efc8f95603ab60e"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/016-corpus-locator-red.json",
+      "sha256": "b267d22f3db18d804209e5b232795dc0448837aa301fc18fac972a22d819b9fc"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/notes/phase-MC3-spec.md",
+      "sha256": "dd2fa83b669ed019ef08ce596690fcdc7fbe4a4dc61a65c2c7d2edd144e891be"
+    }
+  ]
+}

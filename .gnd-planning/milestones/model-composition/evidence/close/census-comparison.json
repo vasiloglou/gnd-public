@@ -1,0 +1,226 @@
+{
+  "baseline_commit": "459ca8d293eeef79110c8def26ae7b061d5a8fd5",
+  "candidate_commit": "6de7189a47dfc11a385dd60de0f0ebb942dfa452",
+  "original_members": 400,
+  "original_observable_mismatches": [],
+  "candidate_members": 423,
+  "added_members": 23,
+  "added_loaded": 22,
+  "added_expected_refusals": 1,
+  "additions": [
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/contracts-v1.orm.json",
+      "source_sha256": "0136fc8fe6f4eec6bd9fe95423d97033e2e41023802e46916289ad9f5c4bc22f",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/model.orm.yaml",
+      "source_sha256": "02d6a6d0cf8953d67c8037ea8c0dc495b9de238f32387727be396f4cff2fa76b",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/project.orm.json",
+      "source_sha256": "17b002d6cd3649aaa21853f1c97cd8afa02decf1e3ae10d060bc99f1ea70b676",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/multiple/contracts-v1.orm.json",
+      "source_sha256": "0136fc8fe6f4eec6bd9fe95423d97033e2e41023802e46916289ad9f5c4bc22f",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/multiple/labels.orm.json",
+      "source_sha256": "c1df3dfb3a529ff3cbe65bf1a6e39f10b983e099ab112cf9ecf35b0de3d4e1af",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/multiple/project.orm.json",
+      "source_sha256": "580c8b5a402b01b46b2c2fa305c534acce0db623d8317fac062e9bb62b266c8f",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/flattened.orm.yaml",
+      "source_sha256": "6c4f1f5155acf4ed068b7c6cf334ae30642352ee23790f58e975c015db26b812",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/project.orm.yaml",
+      "source_sha256": "4cfa7dee672e7042d37f1b7ed102a7edc04ca496771b0a55f037e8759e9093b0",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/vocabulary.orm.yaml",
+      "source_sha256": "07cca3d30d7652507a322d9dbc775760c1b8981088aa6488aa5f47b1bfa6d90a",
+      "phase": "MC2",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/engineering.orm.json",
+      "source_sha256": "e25a74c13c072eecb0fa1dd777d39ac89e1ccca687e9f2dc111662f512b59632",
+      "phase": "MC4",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales-v2.orm.json",
+      "source_sha256": "f1a7dca97c0ce2608d872b9e53329f3dbf1c9fa73d864a4e0d21060ffb73aa31",
+      "phase": "MC4",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales.orm.json",
+      "source_sha256": "c4d11f9c02f637b6f3fe04342e540d0a3f78cbf0fa73d91811ad29e1b036a647",
+      "phase": "MC4",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "source_sha256": "6ae0d1130e5c6fec871fd9ca51e92178ea260abf2d87c8aee96d1e2216963817",
+      "phase": "MC4",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "source_sha256": "194543c6d7a7ab3de7d6bf932fafb34dd6591d3f23a87159ba204e85d69bcd5c",
+      "phase": "MC4",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/combined.orm.json",
+      "source_sha256": "14c51311f257748c4a864f1851c6716cfb6f8e1c855b1c31d398782ac10e6185",
+      "phase": "MC3",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/flattened-negative.orm.json",
+      "source_sha256": "63b773d121060fefc951e8b3a121a314f27cfde9aa82938e123df2ec1950d5dc",
+      "phase": "MC3",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/project.orm.json",
+      "source_sha256": "3ab3b74a782b1340b78ebf786c39c7a44f29a8dda58cb466c0238382bf83bd86",
+      "phase": "MC3",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/repin-only.orm.json",
+      "source_sha256": "2ea6d19849da0f0d2933c0536a862abb50c2d9fd0491b8b2981eea147a07bb02",
+      "phase": "MC3",
+      "disposition": "deliberately invalid re-pin-only candidate; load refusal expected, analysis case C03",
+      "load": {
+        "refusal": "ModelValidationError",
+        "path": null,
+        "issues": [
+          {
+            "rule_id": "include:unknown-target",
+            "path": "$.fact_type_constraints[0]"
+          }
+        ]
+      }
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/vocabulary-v1.orm.json",
+      "source_sha256": "a7e9566ab1fc3c73fd281fd9b8f5dd94582ea92e6621cf21776c469525a46615",
+      "phase": "MC3",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/vocabulary-v2.orm.json",
+      "source_sha256": "1d027000f5b2fba5967d8799e5a0b8f97327e74e332d919195a4a4ee657d8584",
+      "phase": "MC3",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc1-includes/flattened.orm.yaml",
+      "source_sha256": "6c4f1f5155acf4ed068b7c6cf334ae30642352ee23790f58e975c015db26b812",
+      "phase": "MC1",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc1-includes/project.orm.yaml",
+      "source_sha256": "4cfa7dee672e7042d37f1b7ed102a7edc04ca496771b0a55f037e8759e9093b0",
+      "phase": "MC1",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    },
+    {
+      "path": "tests/fixtures/mc1-includes/vocabulary.orm.yaml",
+      "source_sha256": "07cca3d30d7652507a322d9dbc775760c1b8981088aa6488aa5f47b1bfa6d90a",
+      "phase": "MC1",
+      "disposition": "new valid fixture/example; original400 compatibility meanings unchanged",
+      "load": {
+        "value": "loaded"
+      }
+    }
+  ]
+}

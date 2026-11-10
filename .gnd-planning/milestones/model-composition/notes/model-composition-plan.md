@@ -672,3 +672,45 @@ here.
 | §9 MC4 row | "doc-sync and skill-structure tests" | adds the tutorial test, the tutorial runner, the strict site build and the site checker; MC4-draft row added |
 | §10 | MD0-MD16 | MD17 (business-level tutorial page), open |
 
+
+
+## 13. Execution repairs for close (2026-11-10; delegated amendment)
+
+Authority: owner's current `process-milestone model-composition auto` delegation.
+This section amends the effective plan; all prior wording above and the original
+plan-gate history remain retained. It does not itself accept milestone close,
+assert a result from a still-running suite, authorize a merge, or close issue95.
+The independent close review and final close ruling remain separate requirements.
+
+| Repair | Prior wording/premise retained above | Effective correction and provenance |
+|---|---|---|
+| Authority/review | §8 `auto=false`; MD0 one Codex reviewer for plan only | Current owner explicitly delegated named milestone spec/phase/close rulings with auto, selected one Codex CLI close reviewer overriding the panel, and separately authorized named beast-3 baseline/candidate default+census runs. These choices do not authorize merges/certification/publication. Execution-readiness amendment and phase gates retain actual scope. |
+| Census membership | MC1-C5 “every tracked” member “all equal to the baseline” | Preserve all400 baseline459ca8d2 members and each observable; required new tracked fixtures are explicit additions, not new expected answers for originals. Record008 raises this repair. Final candidate6de7189a has423 members:400 unchanged and23 individually dispositioned additions (22 load, one intentionally invalid re-pin-only fixture refuses). evidence/close/census-comparison.json binds them. Historical MC1's three additions are a narrower earlier inventory. |
+| Guard/hash order | MC1 spec §6.7 says before any loader/hash/copy; §2.5/MC1-C10 guard before work/output | Authenticated bounded-reader intake snapshots and closed refusal-report metadata may hash input bytes. They do not establish positive composition/currency. Unsupported-route refusal precedes work/publication that would consume a half-model. Same-invocation verified dependencies remain necessary for positive claims. Records005/008 preserve the reproduced clarification; no blanket hash or currency exception. |
+| Phase overlap | §3 MC2 and MC3 “touch disjoint files” | They share Model/loader and consumer seams and were executed serially. MC3 consumes completed MC2 semantics; discover/ILP authored writers still belong to MC3. Records013/023 bind actual defining homes, source successors and unchanged public aliases. No parallel implementation authority is inferred. |
+| Model verbalization | §2.8/MC2 assumes `gnd verbalize` already offers the model route | MC2 adds the explicit `gnd verbalize model MODEL` route; existing verbalize variants stay frozen. Record013 and MC2 CLI/source controls retain this measured premise repair. |
+| Same-phase normative updates | §4/§5 suggests all documentation waits for MC4 | Live source-synchronized disclosure classification was updated in MC2 and minimum evolution grammar in MC3. Final workflows, tutorial, nav and release notes stayed MC4. Records013/023 identify exact single-home changes; no second specification was introduced. |
+| Re-pin classification | §2.7 requires breaking acceptance when referenced included elements change | All re-pins are conservatively breaking, including path-only/byte-only changes. MC3 gate015 and record023 approve this rule; MC4's direct byte/path-only case proves unaccepted apply refusal and exact acceptance. Invalid analysis remains non-authorizing; include-bearing linked-project evolution stays refused while conformance is unsupported. |
+| Historical apply evidence | §2.7 snapshots/re-verification plus old operations-first premise | Use authenticated old snapshots only for actual old re-pins; untouched and candidate dependencies remain live. Include-bearing ownership needs verified provenance before the operations gate; check live CAS first and reverify candidate after destination checks immediately before CAS. Record021's exact implementability amendment controls; include-free order stays frozen. Model/preview/staging/writer destinations exclude dependency paths and aliases (record022). |
+| Corpus identities | Corpus-author assumption that artifact-file digest and evolution constraint digest match | MC3 record016 corrects only two DELETE locator hashes: existing evolution canonical_sha256 omits artifact producer's trailing newline. All16 approved answers and candidate/vocabulary meanings remain; no product digest algorithm changed. MC2 record012 similarly corrects only C03's exact derived digest/path comparison fields with independent checks; no blanket output allowlist. |
+| Component index | Hook first says no index, later says dev/components | Actual dev/components catalog is authoritative; changed/check strict gates ran each phase. Hook contradiction is an explicit repository-owner maintenance residual; delivered skills are not edited here. Records008/013/023/025 retain entry updates and reread dispositions. |
+| Estimates/stops | MC1 500/950; MC2 250/400; MC3 400/600; MC4 0/450doc/80test | Preserve original estimates. Actual conservative gross source/test-support: MC1 818/1392 under explicit owner1100/1900 stop (004/008); MC2 106/563 under375/600 (measured final diff d5ca5d9a..5a083f46); MC3 1109/1218 under explicit owner1400/1400 (018/023); MC4 0/114 plus759prose/SVG under0/120 and1050prose. MD17(a)'s selected250doc cost adds to450 for effective700estimate. Fixture JSON and retained output remain separate axes, not hidden Python. No stop exception transfers. |
+| Owner-selected story | Predicate8, MC4-D1/C4 and §5 name component story, initial MD17 open | Preserve original technical component corpus as MC3 proof. Owner rejected initial scanner exposition, requested a familiar real demo and actual Claude Fable authorship. Final high-level expense story and command page use Engineering/Sales policies and Finance editions. Actual reaction “Yes, this explains it” satisfies MD17(a) direction/reaction; not byte/merge approval. Records011/014/018/019/020/021/025 retain rejections, selection, authorship, corrected checkpoint bindings and final gates. |
+| Example guard | MC1 R30 temporarily prohibits all included examples | Final exact successor admits only expense engineering/sales/sales-v2 roots, each loaded with canonical resolution, preserving prohibition on every other shipped root. MC4 includes missing/extra-root dirty controls and original guard inventory remains historical. |
+| Evidence corrections | Original completion/checkpoint bindings implied unrestricted whitespace/render attribution | Records009/020 explicitly correct stale metadata without rewriting originals. MC4 record025 accepts four historical first-run trailing-space lines as artifact-only residual, source diff clean; no red gate is called green. Completion records/manifests, not suggestive intermediate filenames, identify current source/evidence. |
+
+MD17 is now ruled (o, actual owner instruction/feedback,2026-11-10): option(a),
+Fable-authored business-level expense page with commands on its supporting
+how-to. The latest positive reaction supersedes the earlier two rejections as
+direction feedback; their history stays retained. No owner personally reviewed
+final bytes by inference.
+
+Full-default compatibility acceptance requires exactly the six frozen failure
+names from baseline459ca8d2 and no additional failures, reported as nonzero.
+The13 baseline lint findings stay explicit, with the exact five-line checkpoint
+location shift in test_plan_app_docs. Neither is silently waived or repaired.
+Current final default execution is still pending at this amendment's preparation.
+Main after required merges, the independent close opinion, final question sweep
+and exact amended-plan digest ruling remain necessary before milestone/issue95
+completion. No optional certificate, publication or excluded historical replay
+is selected.

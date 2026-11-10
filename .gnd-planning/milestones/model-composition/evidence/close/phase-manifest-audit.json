@@ -1,0 +1,58 @@
+[
+  {
+    "scope": "MC1 evidence",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC1/completion-evidence-manifest.json",
+    "snapshot": "55a7d89a",
+    "bound_files": 81,
+    "mismatches": []
+  },
+  {
+    "scope": "MC1 runtime at corrected candidate",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC1/followup-runtime-manifest.json",
+    "snapshot": "64a42f12",
+    "bound_files": 1117,
+    "mismatches": []
+  },
+  {
+    "scope": "MC2 evidence",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC2/completion-evidence-manifest.json",
+    "snapshot": "5a083f46",
+    "bound_files": 62,
+    "mismatches": []
+  },
+  {
+    "scope": "MC2 source",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC2/completion-source-manifest.json",
+    "snapshot": "07986c53",
+    "bound_files": 23,
+    "mismatches": []
+  },
+  {
+    "scope": "MC3 evidence",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC3/completion-evidence-manifest.json",
+    "snapshot": "c6dad88d",
+    "bound_files": 73,
+    "mismatches": []
+  },
+  {
+    "scope": "MC3 source",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC3/completion-source-manifest.json",
+    "snapshot": "ebec0980",
+    "bound_files": 49,
+    "mismatches": []
+  },
+  {
+    "scope": "MC4 evidence",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC4/completion-evidence-manifest.json",
+    "snapshot": "396f86f3",
+    "bound_files": 39,
+    "mismatches": []
+  },
+  {
+    "scope": "MC4 source",
+    "manifest": ".gnd-planning/milestones/model-composition/evidence/MC4/completion-source-manifest.json",
+    "snapshot": "6de7189a",
+    "bound_files": 37,
+    "mismatches": []
+  }
+]

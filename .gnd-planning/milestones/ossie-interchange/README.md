@@ -19,7 +19,7 @@ export exits 0 with a loss report; contribute `requires` → `require`
 upstream (new phase OS6); and OS0 also tries relationalai 2.0. `auto=false`.
 
 - [Plan r3](notes/ossie-interchange-plan.md)
-- [OS0 spec r3 (draft)](notes/phase-OS0-spec.md)
+- [OS0 spec r4](notes/phase-OS0-spec.md)
 - [Light-panel review of r2](evidence/plan-review-r2/PANEL-REVIEW.md)
 
 Phases: OS0 (pin, measure, decide; no code), OS1 (export core), OS2
@@ -27,6 +27,10 @@ Phases: OS0 (pin, measure, decide; no code), OS1 (export core), OS2
 cross-check), OS5 (docs and skill), OS6 (upstream converter contribution);
 then close.
 
-Next: the OS0 spec gate (D2 still open). The owner approved r3 without a
-second panel round. The panel evidence and
-these files are uncommitted.
+The owner approved r3 without a second panel round. PR #159 merged the plan.
+The [OS0 spec gate](002-OS0-spec-gate.md) records delegated approval under the
+milestone execution request. The [OS0 candidate](003-OS0-candidate.md) retains the
+measurements and awaits independent review. The
+[checkpoint](evidence/OS0/CHECKPOINT.md) shows the refunds translation.
+
+Next: complete the OS0 review and record, then confirm OD6 before the OS1 gate.

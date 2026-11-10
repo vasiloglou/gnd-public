@@ -1,0 +1,19 @@
+from relationalai.semantics import Integer, Model, String
+
+m = Model("model")
+
+RefundNo = m.Concept("RefundNo", extends=[Integer])
+CustomerCode = m.Concept("CustomerCode", extends=[String])
+Amount = m.Concept("Amount", extends=[Integer])
+Channel = m.Concept("Channel", extends=[String])
+Customer = m.Concept("Customer")
+Refund = m.Concept("Refund")
+
+Customer.code = m.Property(f"{Customer} is identified by {CustomerCode}")
+Refund.nr = m.Property(f"{Refund} is identified by {RefundNo}")
+Refund.refund_by = m.Property(f"{Refund} is requested by {Customer}")
+Refund.refund_amount = m.Relationship(f"{Refund} is for {Amount}")
+Refund.refund_channel = m.Relationship(f"{Refund} is paid by {Channel}")
+
+Customer.identify_by(Customer.code)
+Refund.identify_by(Refund.nr)

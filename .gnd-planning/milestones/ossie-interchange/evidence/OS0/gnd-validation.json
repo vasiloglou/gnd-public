@@ -1,0 +1,170 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/approvals/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/approvals/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/bookrec/complete.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/bookrec/complete.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/bookrec/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/bookrec/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/bookrec/strict.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/bookrec/strict.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/composition/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/composition/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/disclosure/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "REDACTION applied: has_email.email\nOK: src/gnd/examples/disclosure/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/growth/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/growth/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/refunds/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/refunds/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/rule_check/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/rule_check/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/examples/staffing/model.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/examples/staffing/model.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml"
+    ],
+    "exit": 3,
+    "stdout": "ERROR at $.fact_types[3].roles[1].role_name: 'issueNumber' does not match '^[a-z][a-z0-9_]*$' [jsonschema:pattern]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OK: src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml is a valid GND ORM model\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml"
+    ],
+    "exit": 3,
+    "stdout": "ERROR at $.fact_types[4].roles[1].role_name: 'occurredOn' does not match '^[a-z][a-z0-9_]*$' [jsonschema:pattern]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "gnd",
+      "validate",
+      "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml"
+    ],
+    "exit": 3,
+    "stdout": "ERROR at $.fact_types[0].roles[1].role_name: 'startDate' does not match '^[a-z][a-z0-9_]*$' [jsonschema:pattern]\nERROR at $.fact_types[2].roles[1].role_name: 'fullName' does not match '^[a-z][a-z0-9_]*$' [jsonschema:pattern]\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,43 @@
+version: 0.3.0.dev0
+name: Refunds
+ontology:
+- concept: RefundNo
+  type: ValueType
+  extends: [Integer]
+- concept: CustomerCode
+  type: ValueType
+  extends: [String]
+- concept: Amount
+  type: ValueType
+  extends: [Integer]
+- concept: Channel
+  type: ValueType
+  extends: [String]
+- concept: Customer
+  type: EntityType
+  identify_by: [code]
+  relationships:
+  - name: code
+    roles: [{concept: CustomerCode}]
+    verbalizes: ["{Customer} is identified by {CustomerCode}"]
+    multiplicity: OneToOne
+- concept: Refund
+  type: EntityType
+  description: One refund paid back to a customer.
+  identify_by: [nr]
+  relationships:
+  - name: nr
+    roles: [{concept: RefundNo}]
+    verbalizes: ["{Refund} is identified by {RefundNo}"]
+    multiplicity: OneToOne
+  - name: refund_by
+    roles: [{concept: Customer}]
+    verbalizes: ["{Refund} is requested by {Customer}"]
+    multiplicity: ManyToOne
+  - name: refund_amount
+    roles: [{concept: Amount}]
+    verbalizes: ["{Refund} is for {Amount}"]
+    requires: ["Amount <= 1000"]
+  - name: refund_channel
+    roles: [{concept: Channel}]
+    verbalizes: ["{Refund} is paid by {Channel}"]

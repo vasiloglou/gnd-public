@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-r1, delegated approval (auto=true),2026-11-10, exact bytes bound in record015. No MC3 implementation preceded this gate; implementation begins only after its commit.
+r1 with recorded amendments, in progress (2026-11-10). Original gate015 preceded implementation. Amendment016 corrects corpus digests. Owner ruling018 resumes after the recorded017 size pause, raising MC3 only to1400 source/1400 test-support lines.
 
 ## 2. Provenance
 
@@ -231,3 +231,9 @@ The first schema lane exposes an input-authoring error: the two DELETE ring loca
 - Loader lane impact initially reproduces6 failures/223 passes: the new optional analysis collector reused two pre-existing local variable names during standalone validation, accidentally enabling collection in the default public path. Renaming those locals preserves the caller collector and default None. The final229 selection passes; direct probes distinguish valid old/combined views from repin-only model=None with unknown-target, while the public loader still raises. No public API now accepts that invalid composition. Retain the initial failed output and final output separately.
 
 - Size stop reached before preview/publication integration:615 conservative runtime lines (308 tracked additions +257 new helper lines +50 extracted retained validation-policy lines) and251 test/support lines. Plan0.7 requires an explicit owner pause past600 source. The owner was asked to raise MC3 to1400 source/1400 tests; no answer or authority to cross this stop is inferred. No further implementation proceeds pending the ruling. Record017 binds the paused source snapshot and actual measurement.
+
+### Owner ruling a2: MC3 size and documentation direction (2026-11-10)
+
+The owner explicitly answered “Raise MC3 to 1,400 / 1,400.” Record018 and its verbatim owner-decisions JSON bind the current615/251 pause and authorize resumption within the unchanged feature scope. The original600/900 estimate/stop and record017 remain historical evidence; the new current stop is1400 source/1400 test-support. Count conservative gross additions and extracted retained lines after each lane. No review/gate/currency requirement is waived.
+
+The owner separately authorized MC2 PR156 at fixed5a083f46; the SHA-guarded merge succeeded at720053ff after empty review/thread checks. The owner rejected the revised scanner story and explicitly requested Claude Fable choose an existing demo (expense reports, bookrec or another) and extend it at the same high level as the existing docs. This supersedes record014’s driving-agent-authorship choice. A read-only Claude CLI request with --model fable was launched; actual result and identity must be checked before claiming authorship. Final MC4 records this second actual rejection and the eventual selected story, without inventing docs approval.

@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-10",
+  "mc2_merge": {
+    "question_scope": "PR156 fixed head5a083f469d0a14271c3417401c6ae2fd046a165a",
+    "owner_answer": "Approve merging this fixed head",
+    "observed_head": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+    "review_threads": [],
+    "reviews": [],
+    "merge_result": {
+      "sha": "720053ffa6d69443d057102d6b677aa2a3edf759",
+      "merged": true,
+      "message": "Pull Request successfully merged"
+    }
+  },
+  "mc3_size": {
+    "owner_answer": "Raise MC3 to 1,400 / 1,400",
+    "source_stop": 1400,
+    "test_support_stop": 1400,
+    "prior_source_stop": 600,
+    "prior_test_support_stop": 900,
+    "paused_count": {
+      "source": 615,
+      "test_support": 251
+    }
+  },
+  "docs_reaction": {
+    "question_scope": "MD17 revised high-level component-scanner page, PR155 headb334573c087f4071737e914789457c91743f63b4",
+    "owner_answer": "no it doesn't I don't understand what you mean by the scanner? ask fable from claude to do this task for you. Explain what you want to demonstrate, and ask it to pick an existing demo example, like the expense report or the bookrec or anything else and extend it to show the functionality in the same high level manner",
+    "disposition": "Rejected component/scanner framing. Explicitly delegate authorship to Claude Fable; choose and extend an existing demo with a high-level story. No merge or byte approval."
+  }
+}

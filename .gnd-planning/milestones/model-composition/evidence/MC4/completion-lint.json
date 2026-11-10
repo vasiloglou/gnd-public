@@ -1,0 +1,518 @@
+[
+  {
+    "cell": null,
+    "code": "I001",
+    "end_location": {
+      "column": 26,
+      "row": 15
+    },
+    "filename": "<REPO>/src/gnd/examples/expense/project/cli/expense_cli.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from __future__ import annotations\n\nimport argparse\nimport copy\nimport json\nimport os\nimport sys\nimport tempfile\nfrom pathlib import Path\n\nfrom cli.reporting import summarize\nfrom gnd.api import check\n\n\n",
+          "end_location": {
+            "column": 1,
+            "row": 18
+          },
+          "location": {
+            "column": 1,
+            "row": 3
+          }
+        }
+      ],
+      "message": "Organize imports"
+    },
+    "location": {
+      "column": 1,
+      "row": 3
+    },
+    "message": "Import block is un-sorted or un-formatted",
+    "name": "unsorted-imports",
+    "noqa_row": 3,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+  },
+  {
+    "cell": null,
+    "code": "I001",
+    "end_location": {
+      "column": 25,
+      "row": 4
+    },
+    "filename": "<REPO>/tests/test_candidate_ignore.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "import shutil\nimport subprocess\nfrom pathlib import Path\n\n",
+          "end_location": {
+            "column": 1,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 2
+          }
+        }
+      ],
+      "message": "Organize imports"
+    },
+    "location": {
+      "column": 1,
+      "row": 2
+    },
+    "message": "Import block is un-sorted or un-formatted",
+    "name": "unsorted-imports",
+    "noqa_row": 2,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+  },
+  {
+    "cell": null,
+    "code": "ISC004",
+    "end_location": {
+      "column": 80,
+      "row": 51
+    },
+    "filename": "<REPO>/tests/test_development_scaffold.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "(",
+          "end_location": {
+            "column": 9,
+            "row": 50
+          },
+          "location": {
+            "column": 9,
+            "row": 50
+          }
+        },
+        {
+          "content": ")",
+          "end_location": {
+            "column": 80,
+            "row": 51
+          },
+          "location": {
+            "column": 80,
+            "row": 51
+          }
+        }
+      ],
+      "message": "Did you forget a comma?"
+    },
+    "location": {
+      "column": 9,
+      "row": 50
+    },
+    "message": "Unparenthesized implicit string concatenation in collection",
+    "name": "implicit-string-concatenation-in-collection-literal",
+    "noqa_row": 50,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/implicit-string-concatenation-in-collection-literal"
+  },
+  {
+    "cell": null,
+    "code": "ISC004",
+    "end_location": {
+      "column": 84,
+      "row": 53
+    },
+    "filename": "<REPO>/tests/test_development_scaffold.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "(",
+          "end_location": {
+            "column": 9,
+            "row": 52
+          },
+          "location": {
+            "column": 9,
+            "row": 52
+          }
+        },
+        {
+          "content": ")",
+          "end_location": {
+            "column": 84,
+            "row": 53
+          },
+          "location": {
+            "column": 84,
+            "row": 53
+          }
+        }
+      ],
+      "message": "Did you forget a comma?"
+    },
+    "location": {
+      "column": 9,
+      "row": 52
+    },
+    "message": "Unparenthesized implicit string concatenation in collection",
+    "name": "implicit-string-concatenation-in-collection-literal",
+    "noqa_row": 52,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/implicit-string-concatenation-in-collection-literal"
+  },
+  {
+    "cell": null,
+    "code": "RUF007",
+    "end_location": {
+      "column": 32,
+      "row": 14
+    },
+    "filename": "<REPO>/tests/test_figures_render.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "import itertools\n",
+          "end_location": {
+            "column": 1,
+            "row": 6
+          },
+          "location": {
+            "column": 1,
+            "row": 6
+          }
+        },
+        {
+          "content": "itertools.pairwise(lines)",
+          "end_location": {
+            "column": 50,
+            "row": 14
+          },
+          "location": {
+            "column": 29,
+            "row": 14
+          }
+        }
+      ],
+      "message": "Replace `zip()` with `itertools.pairwise()`"
+    },
+    "location": {
+      "column": 29,
+      "row": 14
+    },
+    "message": "Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs",
+    "name": "zip-instead-of-pairwise",
+    "noqa_row": 14,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/zip-instead-of-pairwise"
+  },
+  {
+    "cell": null,
+    "code": "I001",
+    "end_location": {
+      "column": 33,
+      "row": 10
+    },
+    "filename": "<REPO>/tests/test_m3_population_shape.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "from __future__ import annotations\n\nimport copy\nimport json\nfrom pathlib import Path\n\nimport pytest\nfrom jsonschema import Draft202012Validator\n\nfrom gnd import population\nfrom gnd.errors import ValidationIssue\nfrom gnd.model import load_model\n\n",
+          "end_location": {
+            "column": 1,
+            "row": 12
+          },
+          "location": {
+            "column": 1,
+            "row": 2
+          }
+        }
+      ],
+      "message": "Organize imports"
+    },
+    "location": {
+      "column": 1,
+      "row": 2
+    },
+    "message": "Import block is un-sorted or un-formatted",
+    "name": "unsorted-imports",
+    "noqa_row": 2,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+  },
+  {
+    "cell": null,
+    "code": "FURB167",
+    "end_location": {
+      "column": 56,
+      "row": 152
+    },
+    "filename": "<REPO>/tests/test_plan_app_docs.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "import re",
+          "end_location": {
+            "column": 10,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        },
+        {
+          "content": "re.MULTILINE",
+          "end_location": {
+            "column": 56,
+            "row": 152
+          },
+          "location": {
+            "column": 52,
+            "row": 152
+          }
+        }
+      ],
+      "message": "Replace with `re.MULTILINE`"
+    },
+    "location": {
+      "column": 52,
+      "row": 152
+    },
+    "message": "Use of regular expression alias `re.M`",
+    "name": "regex-flag-alias",
+    "noqa_row": 152,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/regex-flag-alias"
+  },
+  {
+    "cell": null,
+    "code": "FURB167",
+    "end_location": {
+      "column": 62,
+      "row": 112
+    },
+    "filename": "<REPO>/tests/test_plan_app_recordings.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "import re",
+          "end_location": {
+            "column": 10,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        },
+        {
+          "content": "re.MULTILINE",
+          "end_location": {
+            "column": 62,
+            "row": 112
+          },
+          "location": {
+            "column": 58,
+            "row": 112
+          }
+        }
+      ],
+      "message": "Replace with `re.MULTILINE`"
+    },
+    "location": {
+      "column": 58,
+      "row": 112
+    },
+    "message": "Use of regular expression alias `re.M`",
+    "name": "regex-flag-alias",
+    "noqa_row": 112,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/regex-flag-alias"
+  },
+  {
+    "cell": null,
+    "code": "FURB167",
+    "end_location": {
+      "column": 65,
+      "row": 127
+    },
+    "filename": "<REPO>/tests/test_plan_app_recordings.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "import re",
+          "end_location": {
+            "column": 10,
+            "row": 7
+          },
+          "location": {
+            "column": 1,
+            "row": 7
+          }
+        },
+        {
+          "content": "re.MULTILINE",
+          "end_location": {
+            "column": 65,
+            "row": 127
+          },
+          "location": {
+            "column": 61,
+            "row": 127
+          }
+        }
+      ],
+      "message": "Replace with `re.MULTILINE`"
+    },
+    "location": {
+      "column": 61,
+      "row": 127
+    },
+    "message": "Use of regular expression alias `re.M`",
+    "name": "regex-flag-alias",
+    "noqa_row": 127,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/regex-flag-alias"
+  },
+  {
+    "cell": null,
+    "code": "RUF059",
+    "end_location": {
+      "column": 9,
+      "row": 264
+    },
+    "filename": "<REPO>/tests/test_plan_apps.py",
+    "fix": null,
+    "location": {
+      "column": 5,
+      "row": 264
+    },
+    "message": "Unpacked variable `core` is never used",
+    "name": "unused-unpacked-variable",
+    "noqa_row": 264,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-unpacked-variable"
+  },
+  {
+    "cell": null,
+    "code": "I001",
+    "end_location": {
+      "column": 56,
+      "row": 75
+    },
+    "filename": "<REPO>/tests/test_public_v71_judgment_successor_guards.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "    from tests.support.v71_judgment_cases import public\n\n    from gnd import artifacts\n",
+          "end_location": {
+            "column": 1,
+            "row": 76
+          },
+          "location": {
+            "column": 1,
+            "row": 74
+          }
+        }
+      ],
+      "message": "Organize imports"
+    },
+    "location": {
+      "column": 5,
+      "row": 74
+    },
+    "message": "Import block is un-sorted or un-formatted",
+    "name": "unsorted-imports",
+    "noqa_row": 74,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+  },
+  {
+    "cell": null,
+    "code": "I001",
+    "end_location": {
+      "column": 65,
+      "row": 112
+    },
+    "filename": "<REPO>/tests/test_public_v71_judgment_successor_guards.py",
+    "fix": {
+      "applicability": "safe",
+      "edits": [
+        {
+          "content": "    from importlib.resources import files\n\n    from jsonschema import Draft202012Validator\n    from tests.support.v71_judgment_cases import attach_evidence\n\n    from gnd.judgments import read_judgment_receipts\n",
+          "end_location": {
+            "column": 1,
+            "row": 113
+          },
+          "location": {
+            "column": 1,
+            "row": 107
+          }
+        }
+      ],
+      "message": "Organize imports"
+    },
+    "location": {
+      "column": 5,
+      "row": 107
+    },
+    "message": "Import block is un-sorted or un-formatted",
+    "name": "unsorted-imports",
+    "noqa_row": 107,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+  },
+  {
+    "cell": null,
+    "code": "PERF102",
+    "end_location": {
+      "column": 52,
+      "row": 85
+    },
+    "filename": "<REPO>/tests/test_pyrel_recordings.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "entry",
+          "end_location": {
+            "column": 20,
+            "row": 85
+          },
+          "location": {
+            "column": 9,
+            "row": 85
+          }
+        },
+        {
+          "content": "values",
+          "end_location": {
+            "column": 52,
+            "row": 85
+          },
+          "location": {
+            "column": 47,
+            "row": 85
+          }
+        }
+      ],
+      "message": "Replace `.items()` with `.values()`"
+    },
+    "location": {
+      "column": 24,
+      "row": 85
+    },
+    "message": "When using only the values of a dict use the `values()` method",
+    "name": "incorrect-dict-iterator",
+    "noqa_row": 85,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/incorrect-dict-iterator"
+  }
+]

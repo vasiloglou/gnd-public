@@ -1,0 +1,12 @@
+{
+  "unrestricted": {
+    "command": "git diff --check c6dad88d..HEAD",
+    "exit_code": 2,
+    "stdout": ".gnd-planning/milestones/model-composition/evidence/MC4/documentation-first.txt:10: trailing whitespace.\n+E       missing (0): \n.gnd-planning/milestones/model-composition/evidence/MC4/mc4-direct-second.txt:8: trailing whitespace.\n+E       extra   (0): \n.gnd-planning/milestones/model-composition/evidence/MC4/mc4-direct.txt:8: trailing whitespace.\n+E       extra   (0): \n.gnd-planning/milestones/model-composition/evidence/MC4/skills-guards.txt:10: trailing whitespace.\n+E       extra   (0): \n"
+  },
+  "source": {
+    "command": "git diff --check c6dad88d..HEAD -- docs src tests tools dev zensical.toml",
+    "exit_code": 0,
+    "stdout": ""
+  }
+}

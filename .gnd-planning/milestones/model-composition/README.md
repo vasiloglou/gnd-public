@@ -24,6 +24,9 @@ scenario), MC4 (docs, skills and a runnable how-to on the shipped component
 example); close. Owner amendment a1 (2026-11-09, plan §12) adds the how-to
 and a review copy of it shown to the owner right after MC1 (MC4-draft).
 
-MC1's D1-D8 were ruled under the named milestone auto delegation; records002–005 retain the exact gates and amendments. MD17 received the actual positive owner reaction to Fable’s expense story: “Yes, this explains it” ([record021](021-MC3-apply-order-amendment.md)). Final MC4 incorporates that direction; this feedback is not byte or merge approval.
+MC1's D1-D8 were ruled under the named milestone auto delegation; records002–005 retain the exact gates and amendments. MD17 received the actual positive owner reaction to Fable’s expense story: “Yes, this explains it” ([record021](021-MC3-apply-order-amendment.md)). Final MC4 incorporates that direction ([record025](025-phase-MC4.md)); this feedback is not byte or merge approval.
 
-Next: finish MC4 around the accepted shared-expense-policies story in draft PR #155 while the fixed-head MC3 merge request is pending. Final default/census comparisons and actual main-branch close predicates remain.
+MC4 is locally complete and independently reviewed at6de7189a; PR #155 carries the accepted Fable story and measured update. MC3 merge authorization remains pending. The final beast-3 census passed400originals plus23 separately inventoried additions; the full default comparison is running. Main-branch predicates and independent close still remain.
+
+- [MC4 final spec gate](024-MC4-gate.md)
+- [MC4 completion](025-phase-MC4.md)

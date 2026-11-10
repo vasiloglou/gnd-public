@@ -1,0 +1,43 @@
+{
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "working_head": "b7a6461f",
+  "state": "partial runtime implementation, uncommitted at mandatory owner size pause; not a passing candidate",
+  "files": [
+    {
+      "path": "src/gnd/documents.py",
+      "sha256": "d7e012971bf4a3f9ba13b1749e9df0fe94c076dc425f681a2a9ffbeb22148562"
+    },
+    {
+      "path": "src/gnd/evolve/__init__.py",
+      "sha256": "7268bb627b2606f8ade185cd1e1d709e65e4fed604cd82d9ea736853f543a474"
+    },
+    {
+      "path": "src/gnd/evolve/models.py",
+      "sha256": "46982418b3189d887646e8ee729bc64c154e5d7047bc857fdf14d261acc9f19f"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "sha256": "58b1c542560a47d9d43875220d4ac481cff88084c207ab7d36a0281286703225"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "953c271c96a8eebc5c915c4949c1befb5302cc7db0102470a4fd5f7b942b53e0"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "sha256": "940ec225b80cea90e63a7bd6a030e682ea8eaf54cca8388aa91a849c34055a83"
+    },
+    {
+      "path": "src/gnd/model/_paths.py",
+      "sha256": "31b9251d72e0603d5f4ad8aab850052bea21535c4717dea5e5aa9c6b0e4b5119"
+    },
+    {
+      "path": "tests/test_mc3_evolution.py",
+      "sha256": "e7d312fd2c2270e403878419422e6d5332ee8b018542f1749b5dea26586473b5"
+    },
+    {
+      "path": "src/gnd/evolve/_includes.py",
+      "sha256": "78abeb44b97fbec255a0858371a538627efb5515dde105bf861f96f6d76c143e"
+    }
+  ]
+}

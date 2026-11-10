@@ -1,0 +1,233 @@
+# Phase MC3: authored evolution, vocabulary re-pin and proposal writers
+
+## 1. Status
+
+r1, delegated approval (auto=true),2026-11-10, exact bytes bound in record015. No MC3 implementation preceded this gate; implementation begins only after its commit.
+
+## 2. Provenance
+
+Owner-approved model-composition r3 plan and amendment a1, especially §0, §2.7, MC3-C1–C4, §5–10; MC1 records002–009 and merged PR154 at d5ca5d9a; MC2 records010/012/013, source07986c53 and completion5a083f469d0a14271c3417401c6ae2fd046a165a. This branch starts at that completion. MC2 merge authority is pending and is not inferred. The documentation checkpoint's owner reaction and revision are retained on PR155 in records011/014; final MC4 remains after this phase. Private loader/Model overlap refutes the plan's disjoint-files premise: implementation is serial. No independent spec opinion is claimed. The required diff review is one independent Codex CLI reviewer, prompt on stdin, max one repair confirmation, existing authenticated environment only; no repository env file or reviewer subagent.
+
+## 3. Obligations harvested
+
+| Source | Obligation | Discharge |
+|---|---|---|
+| MC3-C1, O3/O6/O18, MD10 | Refuse included definitions for add/modify/rename/delete; own declarations and owned inline attachments remain editable | §6.2/3, T1–T4 |
+| MC3-C2, MD8/12/13, O7/O20 | repin-include, authenticated old/new snapshots, invalid analysis only, breaking review, valid staging/CAS/recovery, dependency races refuse | §6.1/4–7, T5–T13 |
+| MC3-C3, O15, rule0.4 | Evolve/discover/ILP/recovery write authored includer only; valid flattened negative refuses | §6.3/8, T4/T11/T14/T15 |
+| MC3-C4, predicate7 | v1+rules, versioned v2 removes used relation, named broken rule analysis, combined publish/check | committed mc-vocabulary corpus, T5/T6 |
+| §9 MC3 | “new MC3 tests + evolve, discover and ILP suites”; affected readers and linked conformance | §8 verification ledger, T12/T16 |
+| §0.1/2/3, predicate5, risks resolver/half-model/identity | One resolver; every raw route supports or retains guard; include-free outputs/readers frozen | §4, §6.4/8, T14–T18 |
+| §0.4/5, O15, risks flattening/currency/old vocabulary gone | Input-only dependencies; authored CAS; old authenticated fallback; live candidate verification immediately before CAS | §6.4–7, T7–T13 |
+| §0.6/7 | Red-first discriminating refusals, measured added layers, phase size stop | §8/10 |
+| O11/O12/O13/O23, AGENTS | Component homes updated, runtime/lazy import graph zero allowances, ModelIndex semantic queries and all aliases preserved | §6.9, T18 |
+| §5 | gnd-model-evolve grammar/reference pin sites; gnd-orm-core includes contract remains one home | §6.9, T16/T18; final skill workflow edits belong MC4 |
+| §6 risks | Unsafe paths, forbidden/colliding vocabulary, anonymous ownership ambiguity, unreproduced currency | T2/T7/T8/T10/T12 |
+| prior008/009/013 | Six default-suite failures and13 lint findings remain; raw-log whitespace residual retained; codegen/conformance/generic recovery remain refused | §8/9 and boundary |
+| §7 | No nested/remote/overriding includes, identity replacement or multi-file atomicity | §9 |
+| a1/MD17 | Finishable real re-pin data for final docs; preserve actual owner feedback | T5/T6 fixture; MC4 consumes it, not a claim of final docs acceptance |
+
+No MC3-specific Residual paragraph exists. The inherited publication boundary is “no multi-file atomicity”: the model CAS is a single leaf, and another file can change after its last verified read.
+
+## 4. Standing rules bound here
+
+1. **Totality belongs to the function:** new include operation/snapshot validators, ownership/dependency walkers, old-snapshot flag binding and analysis intake are total over arbitrary JSON. T2/T8/T16 cover null/scalar/list/mapping, arbitrary after.id, malformed nested values, long integers, nonfinite JSON, deep input, UTF-8/encoding/suffix and caps. Use existing bounded readers on the read, never an unbounded read followed by a size report.
+2. **An input cap bounds the document, not the algorithm:** build one provenance/semantic ownership index per loaded composition; one semantic dependency walk for owned roots; never rebuild it per operation or per element kind. T17 separately times the added ownership/dependency layer on20,000 elements and20,000 lookups/operations under3 seconds, excluding loader/checker work. Snapshot serialization/cap admission gets a legal near-cap and over-cap branch. This is a bounded latency control, not a host-independent complexity claim.
+3. **Validation order is part of the design:** §6.7 states each new boundary. Ownership3 precedes ordinary operations18 when both apply. Existing operations gate18 precedes candidate dependency work when independently decisive. New repin footprint gate18 follows verified standalone new dependencies but precedes own candidate semantic validation. Reference declaration immutability precedes candidate reference IO. Source-order controls pin last dependency verification immediately before actual CAS.
+4. **A policy governing N kinds is enforced by one walk:** one provenance-backed ownership policy covers element, role, model constraint, included-host constraint and IDs introduced by after; one generic semantic dependency walk covers all owned roots. New locator/host dispatch extends the existing additive-policy walk, not a second policy implementation. T1/T2/T3/T9 discriminate every branch, including anonymous duplicates across origins.
+5. **Normative prose has exactly one home:** includes declaration/resolution stays in representation-format.md. Evolution locator/operation/evidence/order rules live in the existing evolution-contract.md; this phase updates only its contradictory grammar and new include-evolution section, linking the includes home. Final skill/CLI/how-to citations belong MC4. No second format reference is created.
+6. **Resolve contested representations by measurement:** exact UTF-8 snapshots reuse CommittedText because parse_model_document decodes UTF-8 before format parsing. No speculative UTF-16/base64 format is added. Corpus reaches old valid, invalid-only re-pin, valid combined and standalone-valid flattening states before implementation. Observe required refusals red first and freeze their meanings before source edits.
+7. **Milestone composition once/no half-models/frozen variants:** public/candidate loads remain canonical and live; historical override is private and limited to actual old repinned IDs. Include-free loader/reference/serializer branches retain their explicit old resolver variant. No ModelIndex exemption or embedded runtime change. T12/T16/T18.
+8. **Only includer writable/freshness after verification:** authored raw replay and single-leaf CAS never write included files. All publication paths revalidate candidate live dependencies; old evidence may authenticate history but cannot authorize a positive current claim. T4/T10–T15.
+9. **Measure and size stop:** source/test count is relative to5a083f46, including support/moved code; stop600 source/900 tests. MC1's exception does not transfer. No broad suite is inferred from auto.
+
+Failure classes: corpus has both included/owned and blocking/advisory branches, duplicate anonymous constraints from both origins, a valid flattened negative, dependent/unrelated operations, old gone/old stale/untouched stale dependencies, invalid-alone/combined candidates, pre-CAS/finalize/recovery races, all old schema readers and both dump entry points. Shared canonical JSON produces external digests; no private repr digest is introduced. Constraint audit provenance and D12 policy still run on owned additions. Repair neighbours are rechecked; one reviewer is never called a panel.
+
+## 5. Goal
+
+An include-bearing project can preview and publish its own declared change, while any edit to a vocabulary-owned definition exits3 with evolve:included-element. A re-pin alone that breaks a rule returns analysis-only3 with a radius naming that rule and no staged candidate. A combined valid re-pin/rule edit produces preview0, exact breaking-radius acceptance, apply/finalize0 and check0; only the project model is replaced. Discover/ILP proposals preserve authored declarations and recompose. Include-free public bytes and old refusal/version contracts remain unchanged.
+
+## 6. Design
+
+### 6.0 Reuse decisions
+
+| Capability | Two actual searches | Found / decision |
+|---|---|---|
+| Authored model preview, snapshots, CAS | evolve snapshots; authored model proposal | adapt evolve.service/schema/command; retain its raw-document replay and single-leaf publication |
+| Candidate/proposal writing | constraint proposal output; discover candidate rendering | adapt canonical discover.output/service and export.ilp_service; no second proposal writer |
+| Shared vocabulary verification/history | model provenance includes; pinned vocabulary snapshot | adapt model.loading (_includes/_paths), artifacts bounded descriptors and CommittedText; a narrow evolve/_includes.py helper owns ownership/snapshot/analysis orchestration, never resolution |
+
+### 6.1 Current-schema grammar and snapshots (models.py, about90 added lines)
+
+Add EvolutionOperationKind.REPIN_INCLUDE = "repin-include" and IncludeLocator with exact fields `{locator_kind: "include", include_id: string(1..128)}`. include_id is unstripped, with the same range as the loader, including whitespace, controls, `model` and `=`. reference() is `includes[<JSON string literal>]`, ensure_ascii=True, so it is injective and terminal-safe. Add it to StableLocator/current public exports.
+
+repin-include is legal only on IncludeLocator; that locator accepts only repin-include. Both before/after are exact declaration triples admitted by the canonical declaration validator, IDs equal the locator, and path or SHA must change. No add/delete/rename of includes, no noop. Include IDs do not share the semantic element ID namespace. Reuse existing canonical before/after digests.
+
+ConstraintLocator gains host="included_fact_type" with required host_id, reference `fact_type_constraints[HOST].constraints[FAMILY:DIGEST:OCCURRENCE]`. This explicitly addresses owned attachment lists, distinct from old host="fact_type". Old host model/fact_type spellings and normalization stay unchanged. The new kind, locator and host are schema3-only; every old enclosing proposal/preview/record reader refuses them at parsing before execution's read-only gate, following the SourceDocumentLocator precedent.
+
+Add IncludeSnapshot with id/path/sha256 declaration plus content:CommittedText. It binds the exact UTF-8 raw bytes to both SHAs; format parsing always uses the declared original suffix, never a fallback filename or media label. before_includes and candidate_includes are optional ordered snapshot tuples on current-schema EvolutionPreview and its v3 reader. Both are present together only for include-bearing previews, match the exact respective declaration order/triples, and are omitted entirely on both dump APIs when absent. Preview SHA includes them. Old readers forbid the fields. Staged preview.json retains them; no unbound sidecar.
+
+One shared breaking predicate is rename/delete OR repin-include. All re-pins conservatively require exact radius acceptance, including byte/path-only changes; this is explicit D4, not a claim that every change affects facts. Existing include-free flags/bytes are unchanged.
+
+### 6.2 One ownership and dependency index (new evolve/_includes.py, about170 lines)
+
+Define private IncludeInputError and analysis data (not a valid Model); service wraps them in EvolutionIncludeError(EvolutionError), with an EvolutionIncludeAnalysis subtype carrying the existing radius plus issues. CLI maps the new typed error to3 before legacy message substring classification, so IDs containing `stale` do not become CAS11.
+
+A shared ownership helper consumes the loaded Model's structural provenance plus one ModelIndex snapshot. It builds readonly semantic IDs/hosts and canonical constraint occurrences once, then checks all declared operations in one walk. Element/role/old fact_type-host edits on included definitions refuse evolve:included-element; model constraints distinguish owned-before-prefix occurrences from included anonymous suffix occurrences. Included-host locators may target only owned attachments. Introduced string IDs cannot borrow an included semantic ID; arbitrary non-string after.id is refused/validated without a set-membership traceback. Model identity, source-document and include locator IDs are not accidentally classified as semantic element IDs. Own elements retain existing behavior. No caller supplies an ownership claim.
+
+A shared iterative semantic-leaf walk collects dependencies for all owned roots, excluding author-only annotation/provenance fields. It conservatively admits semantic literal coincidences as impact; it never claims a minimal radius. Compare old/new included definitions by stable semantic IDs, using their composed views. New repin footprint intersections reuse the existing operations reference-set/gate, with unrelated-operation controls. Owned rule/operation/reference ownership roots affected by removed/changed definitions enter the radius as affected surfaces, with stable authored IDs or structural addresses for anonymous rules. The untouched owner rule must not be called broken in the removal corpus. The structural root index is not built by constructing an invalid Model.
+
+### 6.3 Authored replay and attachment locators (service.py, about90 lines)
+
+Keep `_load_model_document` returning (loaded composition, authored JSON document). `_parse_model_text` may parse an authored include document for replay, without pretending it is a validated composition; support is confined to evolve's gated path. No composed Model dump replaces authored text.
+
+For included_fact_type constraints, resolve family/hash/occurrence across all matching authored attachment entries in order. ADD appends to the last matching entry or appends one new entry. DELETE prunes an empty attachment entry and removes the top field when empty. Old own-fact list behavior is unchanged. A combined host move is DELETE old ring plus ADD same ring on replacement host, not a special hidden mutation. Replay compares the complete authored document with the candidate, so valid flattened replacements fail3. D12/audit rules and optional population/advisory policy consume owned placements; they do not silently ignore new attachments.
+
+### 6.4 Canonical historical resolution (model/_includes.py, _paths.py, documents.py; about70 lines)
+
+Retain exact raw bytes in private IncludedFile metadata with a default bytes field, preserving existing six-positional construction, display and serialized Model bytes. Extend the ONE canonical compose worker with private historical snapshots and optional analysis issues; public path/rooted APIs retain their signatures and live-only defaults.
+
+Only IDs named by actual repin operations may use authenticated old snapshots. Every supplied snapshot is checked against the old declaration's raw SHA and existing per-file/set caps, parser suffix, forbidden sections, standalone validity and collision rules. Untouched includes always read live; candidate and publication always read live. Historical path preflight uses the same confinement rules and refuses every existing symlink/nonregular leaf/ancestor; absent old leaves/parents can use the explicitly authenticated snapshot. Add a small no-follow path preflight seam in _paths, not a second resolver. Historical bytes are not a currency claim.
+
+Analysis mode can retain missing attachment-target issues while composing the remaining unambiguous new document, then collect structural/semantic issues without constructing Model or ValidationEvidence. Hash/path/read/parse/forbidden/standalone/collision errors remain ordinary input3; do not fabricate a radius over unreadable or ambiguous definitions. This mode is private and unavailable to public valid-model loaders.
+
+### 6.5 Old bytes and limits
+
+`EvolutionService.preview(..., previous_includes: Mapping[str,bytes] | None = None)` adds one keyword-only input. CLI preview adds repeatable `--previous-include ID=PATH`; all apply/finalize flows use the bound preview snapshots, never need the external file again. Match the longest declared ID+'=' prefix without stripping; at most8 flags, no duplicate/unknown/empty binding, all checked before reading supplied snapshots. Paths follow existing evolve workspace-relative/absolute-beneath-workspace admission and capped no-follow reads. Programmatic mappings receive equivalent shape/count/ID/bytes/cap checks.
+
+Keep the existing10MiB evolution claim cap. Before returning/staging an include preview, refuse if its canonical serialized form exceeds that cap. CLI additionally checks its already-rendered pretty output before publishing it, so it never writes an include preview its reader cannot reopen. Same cap for requested analysis radius output. Include-free artifact behavior is unchanged. A legal loader input whose snapshot bundle is too large may be refused by evolve; this boundary is explicitly documented and tested. Never silently raise limits or use fallback raw bytes without binding them into preview SHA.
+
+### 6.6 Invalid analysis and live publication
+
+An invalid eligible re-pin raises EvolutionIncludeAnalysis carrying an existing BlastRadiusReport schema1, issues and named broken-owned roots. CLI prints an ANALYSIS-ONLY explanation in text (escaped names); `--format json` prints the existing radius object. The explicitly requested `--out` contains only that radius, through the existing safe publisher. No candidate/staged proposal/pending state or ValidationEvidence(valid=True) is produced. Feeding the radius to apply refuses3. A later combined valid proposal has its own distinct radius; acceptance of invalid analysis cannot authorize it.
+
+Valid preview/apply retain existing staging and acceptance. Rebuild authenticates old repinned snapshots and verifies all candidate dependencies live. Recheck the candidate live immediately before `_atomic_write` performs the model CAS, after staging validation and destination checks. No include file is written. Finalize authenticates historical before view and live candidate, refuses changed dependencies, recovers after restoring pinned bytes and is idempotent. Candidate-already-live retry also verifies dependencies before returning pending state. Include-bearing linked_projects are refused3 before staging/CAS while conformance remains unsupported; old include-free linked paths are unchanged. Generic recovery.verify stays refused.
+
+### 6.7 Per-boundary order
+
+Preview: existing proposal/version/pending checks → capped current raw bytes and expected SHA (actual includer staleness11) → bounded current parse/declaration validation → supplied-old binding checks/reads → current verified composition → linked-project refusal → shared ownership3 → existing independently decisive operations gate18 → authored candidate parse/reference-declaration immutability and raw replay equality → verified new standalone dependencies → repin footprint operations gate18 → candidate valid Model OR analysis-only3 → D12/optional policy/population/shape → composed radius/serialization caps → preview0. Preserve exact include-free predecessor order. Compound faults and source order distinguish these boundaries.
+
+Apply: re-read/rebind preview identity, typed ownership and operations gates even for forged claims → live authored CAS checks → historical old snapshot binding and live untouched/candidate verification → raw replay/validation/radius/policy acceptance rebuild → staging → staged candidate validation → safe destination → final live dependency verification → existing single-leaf CAS. Already-published branch verifies candidate dependencies before pending return. Finalize: authenticate staged lineage/history → current candidate/dependency verification → existing publication/final record protocol. Do not claim atomicity beyond the leaf CAS.
+
+### 6.8 Discover and ILP writers (about70 lines)
+
+Enable only R17/R18/R19 from MC2's inventory. Discover and each ILP prepare/mined/candidate admission use the rooted canonical loader on the same safely captured bytes; include-free load_model_bytes variant is retained. Descriptor-safe capture rejects a changed/symlinked include input. Semantic eligibility/checks use the loaded composition and ModelIndex; rendered candidate/proposal source uses the parsed authored includer. A shared locator choice emits included_fact_type for owned induced constraints attached to included hosts, ordinary host for own fact types and model for top-level guarded rules. Both early per-candidate validation and final proposal building use it. Legacy raw data fixtures remain unchanged. No other closed/export/copy/currency route is enabled.
+
+### 6.9 Homes, normative updates and fidelity
+
+Declared runtime writes: src/gnd/evolve/{models.py,service.py,cli_service.py,__init__.py,policy.py,population_check.py}; new src/gnd/evolve/_includes.py; src/gnd/model/{_includes.py,_paths.py,__init__.py}; src/gnd/documents.py; src/gnd/commands/evolve.py; src/gnd/discover/{output.py,service.py}; src/gnd/export/ilp_service.py. population_check is conditional: adapt owned attachment placements only if its actual address lookup requires it, otherwise leave unchanged. New worker homes enter tools/gnd_layers.json and dev/components canonical membership; regenerate and keep zero allowances. Preserve old identity aliases/module attributes and no embedded-runtime edits.
+
+Minimal normative write: src/gnd/skills/gnd-model-evolve/references/evolution-contract.md, its existing locator/operation/opened-input/preview sections plus one includes-evolution section citing representation-format. This corrects live contradictory four-kind/closed-union/opened-files prose; final workflow/skill/CLI/how-to citations remain MC4. The includes format has no second normative home.
+
+Tests: tests/test_mc3_evolution.py, tests/test_mc3_writers.py and bounded exact successors in tests/test_mc1_guards.py, tests/test_mc1_review_regressions.py, tests/test_rf1_cli_pins.py, tests/test_rf5_commands.py, tests/test_rf6_packages.py, tests/test_packaged_skills.py, tests/support/rf9_ci_sources.py, tests/support/pyrel_application_successors.py only for changed input/body/syntax pin observations. Historical fixture/golden bytes remain unchanged. New data tests/fixtures/mc-vocabulary/** and MC3 planning evidence/records are declared. Count all added support toward900 tests.
+
+Five historical RF5 body pins reproduce red at5a083f46 (retained baseline). They are not fixed or relabelled green. For changed known-red bodies, retain separate authenticated before/after observations against actual phase-base Git objects and assert the old historical mismatch still exists; do not register an unchained global successor or weaken old tests. Unchanged known-red bodies stay byte-equal to the actual phase base. Other deliberately changed source/CLI syntax inventories get exact chained successors with dirty controls, current grammar authored independently rather than captured as its own answer.
+
+### 6.10 Concrete private interfaces selected before the gate
+
+The canonical loader retains its default return behavior. `_load_model_at(data, *, source, descriptor, historical=None, analysis=False)` and a private rooted `_composed_view(data, *, source, root, historical=None, analysis=False)` accept the new private modes. Default calls return Model and never use history. Analysis calls return CompositionView(document, origins, included, issues, model), with model=None for invalid input; the view is a private data carrier, never a valid-model claim. Only ordinary root semantic/missing-attachment-target issues are collected; dependency declaration/path/read/hash/parse/forbidden/standalone/collision refusals still raise normally. Validation runs before any Model is constructed; reference binding runs only for a valid model under that same retained root. Public load_model/load_model_bytes_composed signatures remain unchanged and delegate to default modes.
+
+The existing canonical `model._includes.compose(document, *, descriptor, source, historical=None, issues=None)` remains the only dependency resolver. Its `_merge` accepts the optional issues collector for missing attachment targets. `model._paths.historical_path_at(descriptor: int, relative: str) -> None` only checks existing ancestors/leaf without following links, permitting absence for authenticated history. It does not read/parse/resolve a model.
+
+The new evolution helper exposes private `enforce_ownership(model, document, operations) -> None`, `owned_impact(document, changed_ids: frozenset[str]) -> tuple`, `include_snapshots(model) -> tuple[IncludeSnapshot, ...]`, `historical_bytes(proposal, snapshots) -> dict[str, bytes]`, and `previous_bindings(document, bindings: Sequence[str]) -> dict[str,str]`. Input/type/cap/refusal checks belong to these functions, not merely their callers. Historical selection derives from actual repin operations; the candidate loader is never passed history. `owned_impact` uses one semantic-leaf traversal and returns stable owned root descriptors; it does not construct ModelIndex over invalid content. Existing service/CLI safe readers perform the supplied path reads after binding validation. Names may be shortened by a recorded implementation finding, but no new resolver or policy walk is admitted.
+
+New private `_load_model_bytes_captured(data, *, source)` in the canonical model home serves discover/ILP initial intake: for includes, use the strict no-follow path loader and compare its authenticated authored SHA with the already capped capture before any proposal/derivation work; a changed capture refuses3. For include-free bytes retain the existing explicit load_model_bytes variant. This extra admission check does not make the historical pre-admission intake read a positive verified model. Unsaved candidate bytes use load_model_bytes_composed with the original root, never the live-source capture helper. The distinction is tested so a proposal candidate is not accidentally compared against unchanged live bytes.
+
+The service adds `EvolutionIncludeError(EvolutionError)` and `EvolutionIncludeAnalysis(EvolutionIncludeError)` (carrying radius/issues) to its public error exports. The private helper's IncludeInputError is translated to the public typed error at the service boundary, avoiding an import cycle; no helper imports evolve.service. Existing renderer, radius, proposal digest and atomic writer remain their canonical implementations.
+
+
+## 7. Decisions for exact-byte delegated ruling
+
+| ID | Question / alternatives and costs | Proposed ruling |
+|---|---|---|
+| D1 | Prose or corpus-first? New serialized grammar/exits/validation demand discriminating authored inputs | corpus-first; freeze separate answers and narrated source data before implementation **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D2 | Review instrument and budget | no optional spec review; one independent Codex CLI diff review plus max one confirmation, no panel/subagents/extra credentials **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D3 | Ambiguous old host or explicit owned-attachment host? Explicit host adds grammar but preserves old meaning and anonymous ownership | included_fact_type with exact authored replay **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D4 | Infer breaking from bytes-only declarations or conservative repin classification? Inference needs extra version graph; conservative classification costs acceptance for harmless pin changes | all repins breaking, one shared predicate; include-free unchanged **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D5 | Invalid candidate staged vs analysis-only? Literal valid=True forbids staged invalid candidate | existing radius schema1, analysis exception/diagnostic3, no candidate stage, separate combined acceptance **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D6 | Old files versioned + fallback vs standing cache? Standing cache out of plan and can hide stale inputs | versioned paths; explicit verified previous-include; bound preview snapshots; historical overrides actual old repinned IDs only **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D7 | Missing old path vs symlink fallback | missing permitted only with explicit authenticated old snapshot; existing unsafe ancestors/leaf still refuse **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D8 | Raise evidence cap vs retain limitation | retain10MiB; early canonical+actual CLI output cap; document legal loader inputs can exceed evolve bundle capacity **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D9 | Linked-project includes while conformance unsupported | refuse3 before staging/CAS; preserve include-free linked behavior; generic recovery stays refused **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D10 | New additive policy meanings | conservatively refuse include/repin under additive policy; owned attachment constraints use existing subject/family matrix, including population-check lookups **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D11 | API/public claim compatibility | optional new preview fields onlyschema3, omitted when absent; frozen old readers/exports/aliases; exactUTF8 CommittedText and canonical JSON **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D12 | New type-vs-message refusal | EvolutionIncludeError mapped3 before legacy stale text; actual model CAS11/operations18 retained **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D13 | Minimal normative grammar now vs contradictory docs until MC4 | update evolution-contract single home now; final skill/citation work staysMC4 **Ruled: delegated approval (auto=true),2026-11-10.** |
+| D14 | Known-red source bodies | preserve old five failures; authenticate separate actual-base after observations, no broad waiver or global unchained successor **Ruled: delegated approval (auto=true),2026-11-10.** |
+
+## 8. Tests and verification selection
+
+Narrated corpus under tests/fixtures/mc-vocabulary/README.md, separate answers.json. API/harness successors may extend it without changing approved meanings; a changed meaning returns to delegated amendment with originals retained.
+
+| Test | Branches / expected exits | Criteria |
+|---|---|---|
+| T1 | Parametric included element/role/constraint ADD/MODIFY/RENAME/DELETE3; own equivalents0; IDs containing stale stay3 | C1 |
+| T2 | Own/included identical anonymous constraints, global occurrences, new host, introduced scalar/list IDs, full-range include IDs/control/`=` JSON references; malformed shapes3 | C1, totality |
+| T3 | Owned inline add/modify/delete, repeated attachment entries, deterministic append/prune, provenance/D12 and optional additive population subjects | C1/C3 |
+| T4 | Exact authored replay; standalone-valid flattened candidate validates0 but preview3; no vocabulary writes | C3 |
+| T5 | v1validate0,cleancheck0/cycle1; old model still loads with v2 present; repin-only analysis3 names project_no_loops, excludes unaffected owner rule, no stage/valid evidence; apply diagnostic3 | C2/C4 |
+| T6 | Combined repin+DELETE/ADD ring preview0, breaking true, exact radius acceptance required; invalid analysis hash refused; apply/finalize0/check0; authored model only | C2/C4 |
+| T7 | Old missing/overwritten valid fallback0; no fallback/bad digest/original-suffix parse violation/symlink/nonregular/escaping path3; all flags duplicate/unknown/empty/over8/malformed before reads | C2 |
+| T8 | Tampered snapshot declaration/content/SHA/order/missing tuple/old reader fields3; untouched dependency stale3; parser/cap/depth/nonfinite branches refuse before stage | C2/compat |
+| T9 | Ownership3 before operation18; existing independent gate before candidate IO; repin dependent operation18 before invalid own candidate vs unrelated0; references immutable before IO; linked3 no writes | C1/C2/order |
+| T10 | Candidate vocabulary changes after preview, pre-CAS verification and already-live retry3; no model overwrite; literal final verify→CAS order | C2/freshness |
+| T11 | Interrupted apply/finalize after old v1 removal uses bound history; changed new vocabulary3; restore pin then finalize0 and idempotent; only owned publication bytes | C2/C3 |
+| T12 | Reference-bearing include model and reference-owned effects retain existing rules; include-bearing linked preview/forged apply/finalize3 while include-free linked conformance consumers unchanged | C2/compat |
+| T13 | Near-cap serializable preview reopens0; over-cap canonical and pretty output3 before write/stage; analysis output cap3; no new input-limit changes | C2/caps |
+| T14 | Actual discover checks incl hosted constraint proposal; exact includes/owned-only candidate; early and final replay0; old models unchanged | C3 |
+| T15 | ILP class/learner/mined and candidate admissions incl rooted context; genuine generated guarded rule proposal preserves includer and previews0 | C3 |
+| T16 | Old schema1/2 proposal/preview/record rejects new grammar3 before exec; include-free model_dump/model_dump_json exact omission/digest controls; selected actual-base fidelity controls | compat |
+| T17 | Isolated ownership/dependency20k/20k under3s, near-cap serialization, malicious after shapes total; measure actual timings | standing2 |
+| T18 | Architecture/runtime imports zero allowances, ModelIndex query policy, schema sync/skill grammar, CLI tree/help/flags/probes, dynamic/source exact successors and dirty controls | homes/compat |
+
+Focused primary: new MC3 tests plus tests/test_model_evolution.py, test_evolve_loading.py, test_evolve_references.py, test_evolution_conformance.py, test_evolve_additive_policy.py, test_evolve_population_check.py, test_evolve_source_document.py, test_evolve_shape_matches.py, test_public_evolution_drift_readers.py, test_public_evolution_version_graph.py, test_public_evolution_legacy_readers.py, test_public_legacy_evolution.py, test_discover.py, test_induced_provenance.py, test_ilp_bridge.py, test_ilp_rules.py, test_ilp_amie.py, test_ilp_asp.py, test_ilp_learners.py, test_ilp_llm.py; default filter retained. This is the plan's actual §9 consumer closure, not every historical/native lane.
+
+Impact controls: MC1/MC2 direct tests, tests/test_rf1_cli_pins.py, test_rf5_commands.py, test_rf4_peripheral.py, test_rf9_ci_repairs.py, test_rf6_packages.py, test_rf6_query_policy.py, test_rf8_structure.py, test_schema_sync.py, affected skill-structure/doc-sync nodes. Preserve five known RF5 pin failures as a separately compared nonzero gate, with exact baseline output; no xfail/skip. The unrelated grow-a-model sixth full-suite baseline failure remains inherited, not claimed rerun by this focused gate. Lint uv run ruff check src tests must retain exactly13 baseline findings. Index changed --base5a083f46 --strict and --check --strict must exit0, each reread disposition recorded. Syntax/source inventory selectors found during implementation are added by recorded exact amendment before edit.
+
+No new full default/census or excluded evidence/proof/distribution/native/external lane selected for this phase. Existing owner authority covers final candidate/default and named compatibility census on beast-3 at close; current MC1/MC2 evidence does not attest to later bytes. Optional certification/publication is not selected.
+
+## 9. Out of scope
+
+Nested/remote/overriding includes; all-route support; positive codegen/conformance or generic recovery currency; changing identity algorithms, runtime exports or historical evidence; multi-file atomic publication; scanner implementation; final documentation/skill workflow/nav/release integration. No reviewer panel or extra authors/reviewers. No merge authority is inferred from auto or phase acceptance.
+
+## 10. Size
+
+Original plan estimate400 source/600 tests; conservative stop600 source/900 test/support Python lines. Preliminary design totals about490–580 added runtime lines and650–850 test/support lines; minimal normative prose/data measured separately. Count gross additions including moved code and exact pin support after each lane. If actual count exceeds a stop, pause with the measured count and request owner ruling; MC1's1100/1900 exception does not apply.
+
+## 11. Approval instrument
+
+Corpus-first. Entry tests/fixtures/mc-vocabulary/README.md describes source states; separate answers.json gives the expected outcomes. Commit exact spec/corpus/answers, base-known-red evidence and manifest under the next numbered gate before any source or test implementation. Complete implementability sweep and record all D1–D14 rulings as delegated approval (auto=true), with exact SHA, review budget and boundaries. Optional spec review omitted. Then land the new evolution/writer harness red before implementation; retained predecessor controls already green are identified explicitly, not mislabelled red.
+
+## 12. Implementability sweep before gate
+
+- Raw authored replay already exists and refuses a valid flattened candidate by equality; no new write protocol is needed.
+- Current preview valid:Literal[True] cannot represent invalid analysis. A typed separate exception plus existing radius satisfies MD13 without a new schema/version.
+- Missing attached target currently refuses inside _merge. Optional private issue collection in that same worker is necessary; a separate resolver or invalid Model would violate rule0.1.
+- CommittedText preserves exact UTF8, including BOM; parser rejects other encodings before suffix parsing. Existing evidence cap requires explicit bundle refusal, not a hidden increased cap.
+- Current raw operations gate does not see repin semantic changes; standalone dependency verification plus a shared footprint intersection closes that gap, preserving ordinary18 priority.
+- Candidate references are bound inside rooted loading; compare raw declarations before that call to preserve immutable-reference order and avoid double binding.
+- New owned-host policy/population placement consumers are affected even though the phase paragraph omits them; they enter this spec's closure.
+- A combined host move changes attachment order under deterministic append: DELETE/prune the old first entry, retain owner entry, then ADD the new relation entry at the end. The hand-authored combined corpus must use this precise order before freezing.
+- Existing normative evolution prose names only four kinds and only one extra opened file. Minimal same-home updates are necessary now rather than letting it contradict the runtime untilMC4; close repairs the defer-all-docs premise.
+- Five body pins are already red at the actual phase base, confirmed by a focused run. Separate actual-base observations can bind deliberate new bytes without laundering historical failures into green.
+
+- Final sweep measured the existing breaking-acceptance refusal band: missing acceptance and mismatched accepted radius both map11 through the legacy typed/service adapter, not3. The draft C04 guesses were corrected to11 before the gate, retaining the existing contract; new include input refusals still map3. evidence/MC3/acceptance-band-controls.json records both observations. No production change is indicated.
+
+- Final population/D12 sweep: `_constraints` currently walks only authored fact_types/top-level lists, and `_final_constraint_host` cannot locate attachment lists. Extend the existing D12 traversal with raw owned attachments in one shared host iteration. For population placement, retain placed objects' raw identity and build one host view consisting of the verified candidate's included-prefix constraints followed by the original owned attachment objects in authored order; the existing constraint_placements identity index then yields actual composed positions. Do not reparse/deep-copy placed objects or build a new index per operation. `_record_placement` recognizes the new host. Include a base vocabulary constraint plus a newly attached own constraint and a later deletion/replacement control, so a mistakenly shifted or detached placement can fail the case. Existing population_check algorithms can stay unchanged if this service boundary supplies their established positions correctly.
+
+- Pin-site harvest: tests/test_packaged_skills.py fixes238 relative links and its exact link set. The new evolution-contract → representation-format includes anchor is one intentional edge. Preserve the old238 set and add a separately named MC3 successor containing only that exact edge (239 total), with a removal/wrong-anchor dirty control. Select tests/test_packaged_skills.py and tests/test_skill_prose_sync.py as actual minimal-normative-write consumers; no packaged workflow entry point is edited in this phase.
+
+## 13. Implementation findings
+
+- The first evolution harness is33 failed,3 passed in1.20s before runtime implementation. Its retained C01 source-state and two old-schema refusal controls were already green; no new support branch is called implemented by those controls. The raw output is retained with path sanitization.
+- CLI apply independently rebuilds the reviewed preview before service.apply. It must pass only the authenticated old repinned snapshots into that rebuild; otherwise deleting the supplied old backup after preview makes an otherwise recoverable claim fail. This changes another already-known-red CLI body and is within declared cli_service.py scope; preserve its old historical failure and authenticate the actual-base successor separately.
+
+### a1: measured corpus locator correction (2026-11-10)
+
+The first schema lane exposes an input-authoring error: the two DELETE ring locators were hashed with artifacts.canonical_json_bytes, which terminates file bytes with a newline, rather than the unchanged evolution canonical_sha256 convention (compact sorted literal-Unicode JSON without a terminal newline). Both proposals reproduce a constraint-locator binding refusal. Preserve their exact originals in016-original-* and commit history. Delegated approval (auto=true) corrects only those two locator digests using the existing evolution producer; all16 expected meanings, candidate/before/vocabulary bytes, operations and review/size limits stay unchanged. Both corrected proposals parse under the new graph. This corrects a fixture, not the existing digest algorithm. Record016 binds the successor inputs and prior snapshots; the gate015 and its approved answers/spec remain immutable.
+
+- Loader analysis sweep: reference ownership is validated after Model construction in the old `_finish_model`; semantic_validate alone does not check it. To collect broken reference ownership without constructing an invalid Model, factor the existing declaration policy into private `_validate_reference_document(document)` in the same model home. The public validate_declarations(Model) keeps its signature/identity and delegates with the same dump; analysis validates its raw composed document through that one policy before `_finish_model`. Preserve defining aliases and add only exact source/query-inventory successors if required. No copy of the reference-ownership policy or unchecked Model proxy is admitted.
+
+- Loader lane impact initially reproduces6 failures/223 passes: the new optional analysis collector reused two pre-existing local variable names during standalone validation, accidentally enabling collection in the default public path. Renaming those locals preserves the caller collector and default None. The final229 selection passes; direct probes distinguish valid old/combined views from repin-only model=None with unknown-target, while the public loader still raises. No public API now accepts that invalid composition. Retain the initial failed output and final output separately.
+
+- Size stop reached before preview/publication integration:615 conservative runtime lines (308 tracked additions +257 new helper lines +50 extracted retained validation-policy lines) and251 test/support lines. Plan0.7 requires an explicit owner pause past600 source. The owner was asked to raise MC3 to1400 source/1400 tests; no answer or authority to cross this stop is inferred. No further implementation proceeds pending the ruling. Record017 binds the paused source snapshot and actual measurement.

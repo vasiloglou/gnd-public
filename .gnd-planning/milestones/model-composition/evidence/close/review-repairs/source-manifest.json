@@ -1,0 +1,7 @@
+{
+  "src/gnd/witness/service.py": "629b9075a32a8c2912103f4d11dd1a38e6f54b2687d456a1d137694ad0de9434",
+  "tests/test_mc2_consumers.py": "b1aa241ba2e3a1ca874894070d1a2f856ea04b22cef437f88101c372b4abec13",
+  "tests/test_model_v2.py": "0916b06b3008ecc7188e613812146c2b4ed0dc33d6ccebed956d68dfa7a3efe0",
+  "dev/components/COMPONENTS.md": "4d1f2bd572c969f5b57b0a958224b5b2d7308f4e364ff9ed329dc66f118b6483",
+  "dev/components/modules/witness.md": "38d0bc5fdc446322796b801d404e1536ef1bc09b0613e3c79e693c941394eee3"
+}

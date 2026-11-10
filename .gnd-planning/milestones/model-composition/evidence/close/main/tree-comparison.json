@@ -1,0 +1,91 @@
+{
+  "main": "a9b67d8b3a507dffd219c146c7cb4d5953100a0c",
+  "approved_MC3_head": "c6dad88d042d196229e76a23698bb48365184c9b",
+  "MC3_merge": "ed091709dcccc92e6316684b62e4a00c3998315a",
+  "approved_MC4_head": "396f86f3e504536280fb36b0584cae8a608d6ba4",
+  "MC4_merge": "a9b67d8b3a507dffd219c146c7cb4d5953100a0c",
+  "main_tree_equals_MC4": true,
+  "measured_candidate": "1ca2379f7e0d0834da8e530599f1e9eada7a335d",
+  "current_nonplanning_tree_equals_measured_candidate": true,
+  "nonplanning_files_compared": 4698,
+  "equal_nonplanning_files": 4693,
+  "exact_pending_delta": [
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/SKILL.md",
+      "main": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "824c150f2b58f48e4669bbea8a5efef781d37a70",
+        "sha256": "852b3bad98012ac239edb2fc551c189f66220d3c9600d2d175a6ad814657c7bd"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "a4f9ae4a43816210e7743f316ae0519ae0fe3595",
+        "sha256": "036d6cb5fe7d6edabf34f4fa1950178c8478e5f1612669dc8565e86991437c4b"
+      }
+    },
+    {
+      "path": "tests/test_development_scaffold.py",
+      "main": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "7951de3cc5f21367443a9313e2b32a3ed9a7ca9f",
+        "sha256": "24dc606d86f105209da69f2e6e9a4b94ef0523b0bab76a7013baddf5c995ce99"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "cee7f39c747f7973dc68c6147032d090483fd32d",
+        "sha256": "292e65af460f69c02e65f99dfef8258ccb79bc7426702bd3490787f1dbf3726d"
+      }
+    },
+    {
+      "path": "tests/test_model_v2.py",
+      "main": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "cfe71698779505b707200950aa9f2d2f63a56651",
+        "sha256": "9e3137d7aefeb4bc50cf3dedb69f14acd2ece2b80c12a7b6464e8444b027b5c9"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "32eaa674685da862838703c04e9ce60417c53db2",
+        "sha256": "8cd9521cd23a402f0df4e7780615354c196b272f4878adce6f847a338a305857"
+      }
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "main": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "1d821db241db76b53d86e9f79be25a079e77fc40",
+        "sha256": "5e1fb7c3b91d5f9ad84b8cc2f192d749b11fcd07a1f10891feb130156b8e7025"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "6d23e8c966797778e316dc811a9311870d872795",
+        "sha256": "8b645ff70c5885541398fdd95e6dd67ba90277d711fc2d67e68e58b27c8c4379"
+      }
+    },
+    {
+      "path": "tests/test_rf1_pin_harness.py",
+      "main": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "e6c2715898b638d7ce6fd7a3e9a7bb2e2b00745a",
+        "sha256": "64127865c111cc460204975ed43c1980c599f94f8af256867b88dba5a5c9fd8d"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "git_object": "9bb237081f8864030def93f50c2bec83589ecad3",
+        "sha256": "96babaef5805cf05a788d5854bf59373c97fc31d937447b47a258d36e20487ba"
+      }
+    }
+  ],
+  "runtime_schema_models_docs_config_identical": true,
+  "scope_note": "runtime equality excludes the sole listed skill prose file; four test guards and one skill repair remain unmerged in PR158"
+}

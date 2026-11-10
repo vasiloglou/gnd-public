@@ -1,0 +1,13 @@
+{
+  "base": "d5ca5d9a",
+  "candidate": "5a083f46",
+  "convention": "gross added Python lines in source and tests/support; no moved Python omitted",
+  "counts": {
+    "source": 106,
+    "test_support": 563
+  },
+  "stops": {
+    "source": 375,
+    "test_support": 600
+  }
+}

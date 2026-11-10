@@ -3037,7 +3037,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### witness.service
-- does: Orchestrate path-based witness production, replay and why-not requests with composition lineage and disclosure modes.
+- does: Orchestrate path-based witness production, replay and why-not requests with composition lineage, disclosure modes and preserved include-free input refusals.
 - verbs: produce witness, replay certificate, explain why not, witness_result, replay_result, why_not_result, load inputs, reference root, composed witness, composition lineage, composition digest, input refusal, customer disclosure, raw result, public witness API
 - in: Model, population, targets, certificate or row paths, optional reference root or composition record.
 - out: Raw result dictionaries or disclosure-filtered public API results with exit codes.
@@ -3046,7 +3046,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: infra.artifacts, infra.disclosure, infra.errors, infra.input_policy, model.anchors, model.composition, model.loading, model.population_loading, witness.presentation, witness.produce, witness.replay, witness.schema, witness.why_not
 - used_by: cli.api, witness.command
 - part_of: subsystem.witness
-- tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py
+- tests: tests/test_witness_composition.py, tests/test_public_why_not.py, tests/test_disclosure_mode.py, tests/test_mc2_consumers.py
 - notes: The package marker is documentation only; gnd.api exposes the service functions through compatibility aliases. Composition certificates bind the record digest and each base fact's source lineage.
 
 

@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "459ca8d293eeef79110c8def26ae7b061d5a8fd5",
+  "source_path": ".gnd-planning/milestones/model-composition/evidence/MC1/baseline-full-default.txt",
+  "source_sha256": "6b64751cbadcf06dd7f4a58fe23265857e5aa70a3619738dd10bf6c70c335184",
+  "baseline_exit": 1,
+  "baseline_summary": "6 failed, 18392 passed, 799 deselected, 1 warning in 2324.31s (0:38:44)",
+  "failure_names": [
+    "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+  ],
+  "acceptance": "Final suite must exit1 with exactly this set, no added/removed failures; matching count alone insufficient.",
+  "candidate_commit": "6de7189a47dfc11a385dd60de0f0ebb942dfa452",
+  "prepared_before_final_suite_completed": true
+}

@@ -60,6 +60,9 @@ RETAINED_EXTERNAL_REFERENCES = {
         'disclosure.md#what-customer-mode-refuses', 'why-not.md',
         '../reference/disclosure.md', 'reference/disclosure.md',
     },
+    # Verbatim Fable draft's proposed placeholder; final pages cite the format home.
+    Path('.gnd-planning/milestones/model-composition/notes/phase-MC4-fable-draft.md'): {
+        '../reference/model-includes.md'},
 }
 
 # Review snapshots preserve the exact original text, including relative links.
@@ -68,6 +71,9 @@ IE_HOME = Path('.gnd-planning/milestones/incremental-evaluation')
 IK_HOME = Path('.gnd-planning/milestones/induced-knowledge')
 MC_HOME = Path('.gnd-planning/milestones/model-composition')
 RETAINED_DOCUMENT_ORIGINS = {
+    MC_HOME / 'notes/phase-MC4-fable-draft.md': (
+        Path('docs/tutorials/shared-expense-policies.md'),
+        '4a3cdd3d4cb802fc91eaa7ebb75ef3f9374c5391eae5a747483eb789b3b05ea7'),
     IE_HOME / 'evidence/plan-review-r1/incremental-evaluation-plan.md': (
         IE_HOME / 'notes/incremental-evaluation-plan.md',
         '34b1004e9d7e5e60f3162dae423e78b3d42bf98678edcccc0ad358517f086de1'),

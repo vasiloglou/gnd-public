@@ -1,0 +1,11 @@
+{
+  "path": ".gnd-planning/milestones/model-composition/evidence/close/candidate-r3-full-default.txt",
+  "accepted_raw_E_only_lines": [
+    279,
+    286,
+    293,
+    300,
+    307
+  ],
+  "ruling": "delegated auto exact raw diagnostic retention; every authored path remains whitespace-clean"
+}

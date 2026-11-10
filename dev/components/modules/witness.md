@@ -79,11 +79,11 @@ Bounded witness/replay input orchestration.
 | `witness_result(model_path, population_path, targets_path, *, reference_root)` | function | 86 | Produce finite witnesses; exit zero requires every requested tuple proved. |
 | `replay_result(model_path, population_path, certificate_path, *, reference_root)` | function | 117 | Replay a finite proof with an independent local inference kernel. |
 | `composed_witness_result(model_path, population_path, targets_path, *, composition)` | function | 153 | A version-2 witness over a composed population: each base node names its source facts (CT3). |
-| `composed_replay_result(model_path, population_path, certificate_path, *, composition)` | function | 169 | Replay a version-2 witness against the composition record it binds (CT3). |
-| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 227 | Explain why a derived fact type, or one claimed row of it, is not derived. |
-| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 281 | Produce finite witnesses; exit zero requires every requested tuple proved. |
-| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 295 | Replay a finite proof with an independent local inference kernel. |
-| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 309 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `composed_replay_result(model_path, population_path, certificate_path, *, composition)` | function | 170 | Replay a version-2 witness against the composition record it binds (CT3). |
+| `why_not_result(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 229 | Explain why a derived fact type, or one claimed row of it, is not derived. |
+| `witness(model_path, population_path, targets_path, *, reference_root, composition)` | function | 283 | Produce finite witnesses; exit zero requires every requested tuple proved. |
+| `replay(model_path, population_path, certificate_path, *, reference_root, composition)` | function | 297 | Replay a finite proof with an independent local inference kernel. |
+| `why_not(model_path, population_path, fact_type, *, row_path, reference_root)` | function | 311 | Explain why a derived fact type, or one claimed row of it, is not derived. |
 
 ## gnd.witness.types — `src/gnd/witness/types.py`
 Components: witness.schema

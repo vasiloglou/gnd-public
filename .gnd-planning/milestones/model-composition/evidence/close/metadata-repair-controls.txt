@@ -1,0 +1,17 @@
+..................................................................F...   [100%]
+=================================== FAILURES ===================================
+_______ test_retained_external_reference_exception_is_bounded[retained] ________
+tests/test_development_scaffold.py:282: in test_retained_external_reference_exception_is_bounded
+    check_references(tmp_path)
+tests/test_development_scaffold.py:164: in check_references
+    check_document_references(root, path)
+tests/test_development_scaffold.py:148: in check_document_references
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == digest, relative
+E   AssertionError: PosixPath('.gnd-planning/milestones/model-composition/notes/phase-MC4-fable-draft.md')
+E   assert 'ee9319ace0b9...ca18e094a0619' == '4a3cdd3d4cb8...eb789b3b05ea7'
+E     
+E     - 4a3cdd3d4cb802fc91eaa7ebb75ef3f9374c5391eae5a747483eb789b3b05ea7
+E     + ee9319ace0b967bc731603d99c81dd1f46ffbb22d145ad2ee13ca18e094a0619
+=========================== short test summary info ============================
+FAILED tests/test_development_scaffold.py::test_retained_external_reference_exception_is_bounded[retained]
+1 failed, 69 passed, 15 deselected in 0.32s

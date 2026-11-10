@@ -1,0 +1,34 @@
+FF..FF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_composed_witness_validation_refusal_compatibility[False-composed_witness_result] _
+tests/test_mc2_consumers.py:40: in test_composed_witness_validation_refusal_compatibility
+    assert result == WitnessResult(3, reason=reason).model_dump(mode='json')
+E   AssertionError: assert {'exit_code':...oss-ref', ...} == {'exit_code':...invalid', ...}
+E     
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'reason': 'semantic:cross-ref'} != {'reason': 'input-invalid'}
+E     Use -v to get more diff
+_ test_composed_witness_validation_refusal_compatibility[False-composed_replay_result] _
+tests/test_mc2_consumers.py:40: in test_composed_witness_validation_refusal_compatibility
+    assert result == WitnessResult(3, reason=reason).model_dump(mode='json')
+E   AssertionError: assert {'exit_code':...oss-ref', ...} == {'exit_code':...invalid', ...}
+E     
+E     Omitting 4 identical items, use -vv to show
+E     Differing items:
+E     {'reason': 'semantic:cross-ref'} != {'reason': 'input-invalid'}
+E     Use -v to get more diff
+_ test_current_model_order_guard_rejects_wrong_candidate_argument[before_loaded_model] _
+tests/test_model_v2.py:356: in test_current_model_order_guard_rejects_wrong_candidate_argument
+    with pytest.raises(AssertionError):
+E   Failed: DID NOT RAISE AssertionError
+_ test_current_model_order_guard_rejects_wrong_candidate_argument[proposal.model_id] _
+tests/test_model_v2.py:356: in test_current_model_order_guard_rejects_wrong_candidate_argument
+    with pytest.raises(AssertionError):
+E   Failed: DID NOT RAISE AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mc2_consumers.py::test_composed_witness_validation_refusal_compatibility[False-composed_witness_result]
+FAILED tests/test_mc2_consumers.py::test_composed_witness_validation_refusal_compatibility[False-composed_replay_result]
+FAILED tests/test_model_v2.py::test_current_model_order_guard_rejects_wrong_candidate_argument[before_loaded_model]
+FAILED tests/test_model_v2.py::test_current_model_order_guard_rejects_wrong_candidate_argument[proposal.model_id]
+4 failed, 2 passed in 0.42s

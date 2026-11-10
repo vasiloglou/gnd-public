@@ -20,6 +20,26 @@ CORPUS = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC2/corpus'
 ANSWERS = {r['id']: r for r in json.loads((CORPUS / 'answers.json').read_text())['cases']}
 
 
+@pytest.mark.parametrize('adapter', ['composed_witness_result', 'composed_replay_result'])
+@pytest.mark.parametrize('included', [False, True])
+def test_composed_witness_validation_refusal_compatibility(corpus, adapter, included):
+    from gnd.artifacts import canonical_json_bytes
+    from gnd.witness import service
+    from gnd.witness.types import WitnessResult
+    a = corpus / 'anchored'
+    model = a / 'project.orm.json' if included else ROOT / 'tests/fixtures/public-launch-phase-2/invalid.orm.yaml'
+    population = a / ('include-composed.population.json' if included else 'composed.population.json')
+    record = read(a / ('include-composition.record.json' if included else 'composition.record.json'))
+    record['model_sha256'] = hashlib.sha256(model.read_bytes()).hexdigest()
+    record['population_sha256'] = hashlib.sha256(population.read_bytes()).hexdigest()
+    binding = a / 'review-bound.record.json'
+    binding.write_bytes(canonical_json_bytes(record))
+    certificate = ROOT / 'tests/fixtures/v71/phase3/dispatch/direct.witness.json'
+    result = getattr(service, adapter)(model, population, certificate, composition=binding)
+    reason = 'include:unsupported-route' if included else 'input-invalid'
+    assert result == WitnessResult(3, reason=reason).model_dump(mode='json')
+
+
 @pytest.fixture
 def corpus(tmp_path):
     target = tmp_path / 'corpus'

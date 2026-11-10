@@ -1,0 +1,29 @@
+{
+  "MC2": {
+    "source": 110,
+    "source_stop": 375,
+    "test": 585,
+    "test_stop": 600,
+    "new_source": 4,
+    "new_tests": 20
+  },
+  "MC3": {
+    "source": 1109,
+    "source_stop": 1400,
+    "test": 1239,
+    "test_stop": 1400,
+    "new_tests": 15
+  },
+  "MC4": {
+    "tests": 120,
+    "test_stop": 120,
+    "new_tests": 0
+  },
+  "combined_post_MC3_support": 163,
+  "reconciled": {
+    "MC4": 120,
+    "late_MC2": 22,
+    "late_MC3": 21
+  },
+  "counting": "conservative additions, all Python helper/comment/blank support retained, no cap transfer"
+}

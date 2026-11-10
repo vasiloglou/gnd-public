@@ -672,3 +672,225 @@ here.
 | §9 MC4 row | "doc-sync and skill-structure tests" | adds the tutorial test, the tutorial runner, the strict site build and the site checker; MC4-draft row added |
 | §10 | MD0-MD16 | MD17 (business-level tutorial page), open |
 
+
+
+## 13. Execution repairs for close (2026-11-10; delegated amendment)
+
+Authority: owner's current `process-milestone model-composition auto` delegation.
+This section amends the effective plan; all prior wording above and the original
+plan-gate history remain retained. It does not itself accept milestone close,
+assert a result from a still-running suite, authorize a merge, or close issue95.
+The independent close review and final close ruling remain separate requirements.
+
+| Repair | Prior wording/premise retained above | Effective correction and provenance |
+|---|---|---|
+| Authority/review | §8 `auto=false`; MD0 one Codex reviewer for plan only | Current owner explicitly delegated named milestone spec/phase/close rulings with auto, selected one Codex CLI close reviewer overriding the panel, and separately authorized named beast-3 baseline/candidate default+census runs. These choices do not authorize merges/certification/publication. Execution-readiness amendment and phase gates retain actual scope. |
+| Census membership | MC1-C5 “every tracked” member “all equal to the baseline” | Preserve all400 baseline459ca8d2 members and each observable; required new tracked fixtures are explicit additions, not new expected answers for originals. Record008 raises this repair. Final candidate6de7189a has423 members:400 unchanged and23 individually dispositioned additions (22 load, one intentionally invalid re-pin-only fixture refuses). evidence/close/census-comparison.json binds them. Historical MC1's three additions are a narrower earlier inventory. |
+| Guard/hash order | MC1 spec §6.7 says before any loader/hash/copy; §2.5/MC1-C10 guard before work/output | Authenticated bounded-reader intake snapshots and closed refusal-report metadata may hash input bytes. They do not establish positive composition/currency. Unsupported-route refusal precedes work/publication that would consume a half-model. Same-invocation verified dependencies remain necessary for positive claims. Records005/008 preserve the reproduced clarification; no blanket hash or currency exception. |
+| Phase overlap | §3 MC2 and MC3 “touch disjoint files” | They share Model/loader and consumer seams and were executed serially. MC3 consumes completed MC2 semantics; discover/ILP authored writers still belong to MC3. Records013/023 bind actual defining homes, source successors and unchanged public aliases. No parallel implementation authority is inferred. |
+| Model verbalization | §2.8/MC2 assumes `gnd verbalize` already offers the model route | MC2 adds the explicit `gnd verbalize model MODEL` route; existing verbalize variants stay frozen. Record013 and MC2 CLI/source controls retain this measured premise repair. |
+| Same-phase normative updates | §4/§5 suggests all documentation waits for MC4 | Live source-synchronized disclosure classification was updated in MC2 and minimum evolution grammar in MC3. Final workflows, tutorial, nav and release notes stayed MC4. Records013/023 identify exact single-home changes; no second specification was introduced. |
+| Re-pin classification | §2.7 requires breaking acceptance when referenced included elements change | All re-pins are conservatively breaking, including path-only/byte-only changes. MC3 gate015 and record023 approve this rule; MC4's direct byte/path-only case proves unaccepted apply refusal and exact acceptance. Invalid analysis remains non-authorizing; include-bearing linked-project evolution stays refused while conformance is unsupported. |
+| Historical apply evidence | §2.7 snapshots/re-verification plus old operations-first premise | Use authenticated old snapshots only for actual old re-pins; untouched and candidate dependencies remain live. Include-bearing ownership needs verified provenance before the operations gate; check live CAS first and reverify candidate after destination checks immediately before CAS. Record021's exact implementability amendment controls; include-free order stays frozen. Model/preview/staging/writer destinations exclude dependency paths and aliases (record022). |
+| Corpus identities | Corpus-author assumption that artifact-file digest and evolution constraint digest match | MC3 record016 corrects only two DELETE locator hashes: existing evolution canonical_sha256 omits artifact producer's trailing newline. All16 approved answers and candidate/vocabulary meanings remain; no product digest algorithm changed. MC2 record012 similarly corrects only C03's exact derived digest/path comparison fields with independent checks; no blanket output allowlist. |
+| Component index | Hook first says no index, later says dev/components | Actual dev/components catalog is authoritative; changed/check strict gates ran each phase. Hook contradiction is an explicit repository-owner maintenance residual; delivered skills are not edited here. Records008/013/023/025 retain entry updates and reread dispositions. |
+| Estimates/stops | MC1 500/950; MC2 250/400; MC3 400/600; MC4 0/450doc/80test | Preserve original estimates. Actual conservative gross source/test-support: MC1 818/1392 under explicit owner1100/1900 stop (004/008); MC2 106/563 under375/600 (measured final diff d5ca5d9a..5a083f46); MC3 1109/1218 under explicit owner1400/1400 (018/023); MC4 0/114 plus759prose/SVG under0/120 and1050prose. MD17(a)'s selected250doc cost adds to450 for effective700estimate. Fixture JSON and retained output remain separate axes, not hidden Python. No stop exception transfers. |
+| Owner-selected story | Predicate8, MC4-D1/C4 and §5 name component story, initial MD17 open | Preserve original technical component corpus as MC3 proof. Owner rejected initial scanner exposition, requested a familiar real demo and actual Claude Fable authorship. Final high-level expense story and command page use Engineering/Sales policies and Finance editions. Actual reaction “Yes, this explains it” satisfies MD17(a) direction/reaction; not byte/merge approval. Records011/014/018/019/020/021/025 retain rejections, selection, authorship, corrected checkpoint bindings and final gates. |
+| Example guard | MC1 R30 temporarily prohibits all included examples | Final exact successor admits only expense engineering/sales/sales-v2 roots, each loaded with canonical resolution, preserving prohibition on every other shipped root. MC4 includes missing/extra-root dirty controls and original guard inventory remains historical. |
+| Evidence corrections | Original completion/checkpoint bindings implied unrestricted whitespace/render attribution | Records009/020 explicitly correct stale metadata without rewriting originals. MC4 record025 accepts four historical first-run trailing-space lines as artifact-only residual, source diff clean; no red gate is called green. Completion records/manifests, not suggestive intermediate filenames, identify current source/evidence. |
+
+MD17 is now ruled (o, actual owner instruction/feedback,2026-11-10): option(a),
+Fable-authored business-level expense page with commands on its supporting
+how-to. The latest positive reaction supersedes the earlier two rejections as
+direction feedback; their history stays retained. No owner personally reviewed
+final bytes by inference.
+
+Full-default compatibility acceptance requires exactly the six frozen failure
+names from baseline459ca8d2 and no additional failures, reported as nonzero.
+The13 baseline lint findings stay explicit, with the exact five-line checkpoint
+location shift in test_plan_app_docs. Neither is silently waived or repaired.
+Current final default execution is still pending at this amendment's preparation.
+Main after required merges, the independent close opinion, final question sweep
+and exact amended-plan digest ruling remain necessary before milestone/issue95
+completion. No optional certificate, publication or excluded historical replay
+is selected.
+
+
+## 14. Close-discovered retained-draft reference repair (2026-11-10)
+
+Delegated amendment under the same named milestone auto authority, gated before
+implementation by notes/close-metadata-repair.md and its exact gate JSON;
+record027 retains the reproduction and scope. Current-checkout reference scanning
+first encountered an unrelated untracked nested worktree; no user worktree was
+modified. The isolated tracked8efd3409 archive then reproduced a real missing
+origin for Fable's verbatim draft, which uses documentation-relative links.
+
+Use the existing exact origin/hash mapping to interpret that draft from its
+intended docs/tutorials/shared-expense-policies.md home. Retain exactly one
+hash-bound draft-only exception for its proposed ../reference/model-includes.md
+placeholder; final pages already cite the real canonical representation-format
+section. All other draft targets and every other document remain checked. The
+existing changed-snapshot/missing-target controls exercise the new origin entry.
+No historical draft text or opinion is rewritten, no new validator/waiver class
+is introduced, and no runtime/schema/example semantics change.
+
+The patch adds six Python data-table/comment lines, bringing MC4-attributable
+support from the historical114 in record025 to120, exactly its existing stop.
+Production remains0 and prose/SVG759. No further Python growth is authorized by
+this amendment. The first insertion changed a fixture's meaningful dictionary
+order and its existing retained-exception control failed; appending the new
+exception preserves the predecessor's first entry and restores that control.
+
+The in-flight full run at6de7189a was stopped through its exact process tree
+once this metadata input was known to need correction. It has no full result;
+SSH exit255 is not a pytest suite verdict. Earlier completed phase/census results
+remain bound to their snapshots, not relabelled as this corrected candidate.
+Restart the explicitly authorized named candidate default/census after focused
+metadata gates pass. Close remains pending actual full results, required owner
+merges, main evidence and independent close review. Phase review budgets remain
+exhausted and do not cover this new patch; the separately declared close budget
+will inspect it. PR155's pending fixed head is unchanged; draft close PR158
+contains the repair.
+
+The failed first-insertion control log retains one literal trailing-space E-line
+(line12) as verbatim historical output. Delegated acceptance preserves this
+artifact-only whitespace residual, alongside prior009/025 residuals; source
+whitespace checks remain0. Staged verification must reject any other new finding.
+
+
+## 15. Complete default comparison rejection and narrow follow-ups (2026-11-10)
+
+Candidate8e5ff181's complete named default run is rejected:14failed,
+18787passed,801deselected,1warning in2536.74s, exit1. It contains the six
+frozen failures plus eight additions; no new expected baseline or waiver is
+adopted. Record028 and the preimplementation final-suite-repair prose gate
+retain the full traces and independently reproduced8fail/7pass focused set.
+
+Five added failures share one cause: MC4 introduced an example HTTPS URL into
+the offline evolution skill; replace it with the local repository walkthrough
+path, keeping the no-HTTP/network guards unchanged. Three other additions are
+exact current compatibility instruments omitted from earlier impact closure:
+MC2's new public verbalize_model export, MC3's indented plain/include candidate
+branches, and MC3's two unlisted CLI mutation-control meta cases. Preserve the
+old export tuple prefix and all old keyword checks; add only the intended
+export/signature. Preserve validated-current→gate→both-candidate order and
+argument binding without indentation coupling. Enumerate only those two meta
+case IDs; keep historical inventory rows, golden files and manifest unchanged.
+Unknown extra cases still refuse. Runtime/source semantics, schemas, models,
+populations, CLI grammar, digests and report formats are unchanged by this repair.
+
+Budget accounting is explicit by originating obligation, not transferred to
+MC4: MC2 adds2test lines (563→565, stop600); MC3 adds6 (1218→1224, stop1400).
+MC4 Python remains120/120; its prose increases by one net line within1050.
+The combined post-MC3 branch test/support diff is128 =120MC4 +2MC2 +6MC3.
+Do not report that combined128 as120 or hide these follow-ups. Prior phase
+counts/opinions remain historical; the separate close review must inspect new
+bytes. No phase size ceiling is raised and no additional phase review selected.
+
+All418 selected affected checks pass after the repairs. Actual guard liveness
+probes reject missing/extra/reordered API exports, gate-after-candidates order,
+unknown inventory nodes and missing cli_tree. These prove guard sensitivity,
+not a full-suite or runtime result. Strict build/site/component checks pass;
+13lint findings remain with the existing checkpoint offset. A new complete
+named beast-3 candidate default/census run is required before comparison
+acceptance; six frozen failure identities remain the immutable target.
+
+The two retained rejected-output artifacts contain49 literal pytest E-only
+trailing-space lines. Preserve those exact raw bytes as an explicit artifact-only
+residual under the existing009/025/027 retention policy. Current staged author,
+runtime and test source checks must remain0; no blanket whitespace waiver.
+
+
+## 16. Exact amendment provenance (2026-11-10)
+
+The numbered sources cited by the execution-repair tables above resolve to
+these exact raising/gate/completion paths. Prior wording and original snapshots
+remain retained; dates below are each record’s own date, not retrospective approval.
+This lookup is preparation and does not accept a still-pending full run or merge.
+
+| Record path | Recorded date | Scope/station |
+|---|---|---|
+| [001-plan.md](../001-plan.md) | 2026-11-09 | plan gate |
+| [002-execution-gate.md](../002-execution-gate.md) | 2026-11-09 | execution and MC1 spec gate |
+| [003-execution-amendment.md](../003-execution-amendment.md) | 2026-11-09 | MC1 execution amendment |
+| [004-MC1-size-ruling.md](../004-MC1-size-ruling.md) | 2026-11-09 | MC1 size ruling |
+| [005-MC1-repair-ruling.md](../005-MC1-repair-ruling.md) | 2026-11-09 | MC1 repair ruling |
+| [006-MC1-candidate.md](../006-MC1-candidate.md) | 2026-11-09 | MC1 candidate snapshot |
+| [007-MC1-followup-gate.md](../007-MC1-followup-gate.md) | 2026-11-10 | MC1 test/inventory follow-up review gate |
+| [008-phase-MC1.md](../008-phase-MC1.md) | 2026-11-10 | phase-MC1 |
+| [009-MC1-record-correction.md](../009-MC1-record-correction.md) | 2026-11-10 | MC1 completion metadata correction |
+| [010-MC2-gate.md](../010-MC2-gate.md) | 2026-11-10 | MC2 exact spec/corpus gate |
+| [011-MC4-draft.md](../011-MC4-draft.md) | 2026-11-10 | MC4-draft early owner documentation checkpoint |
+| [012-MC2-amendment.md](../012-MC2-amendment.md) | 2026-11-10 | MC2 measured comparison amendment |
+| [013-phase-MC2.md](../013-phase-MC2.md) | 2026-11-10 | phase-MC2 |
+| [014-MC4-draft-revision.md](../014-MC4-draft-revision.md) | 2026-11-10 | MC4-draft owner-feedback revision |
+| [015-MC3-gate.md](../015-MC3-gate.md) | 2026-11-10 | MC3 corpus/spec gate |
+| [016-MC3-amendment.md](../016-MC3-amendment.md) | 2026-11-10 | MC3 measured corpus locator correction |
+| [017-MC3-size-stop.md](../017-MC3-size-stop.md) | 2026-11-10 | MC3 mandatory size pause |
+| [018-MC3-owner-resume.md](../018-MC3-owner-resume.md) | 2026-11-10 | MC3 owner resume and related decisions |
+| [019-MC4-fable-checkpoint.md](../019-MC4-fable-checkpoint.md) | 2026-11-10 | MC4-draft Claude Fable expense checkpoint |
+| [020-MC4-evidence-correction.md](../020-MC4-evidence-correction.md) | 2026-11-10 | MC4 checkpoint evidence correction |
+| [021-MC3-apply-order-amendment.md](../021-MC3-apply-order-amendment.md) | 2026-11-10 | MC3 verified include apply ordering |
+| [022-MC3-review-repairs.md](../022-MC3-review-repairs.md) | 2026-11-10 | MC3 reproduced review repairs |
+| [023-phase-MC3.md](../023-phase-MC3.md) | 2026-11-10 | MC3 authored evolution and proposal writers |
+| [024-MC4-gate.md](../024-MC4-gate.md) | 2026-11-10 | MC4 final spec gate |
+| [025-phase-MC4.md](../025-phase-MC4.md) | 2026-11-10 | MC4 documentation and skills |
+| [026-close-preparation.md](../026-close-preparation.md) | 2026-11-10 | Milestone close preparation |
+| [027-close-metadata-repair.md](../027-close-metadata-repair.md) | 2026-11-10 | Close retained-draft metadata repair |
+| [028-close-compatibility-repairs.md](../028-close-compatibility-repairs.md) | 2026-11-10 | Final compatibility instrument follow-ups |
+
+
+## 17. Measured final candidate comparison (2026-11-10)
+
+Delegated acceptance (auto=true) of the compatibility comparison only:
+source1ca2379f completed the named beast-3 default run with6failed,
+18795passed,801deselected,1warning in2550.44s (0:42:30), exit1. Every failed
+node identity exactly equals frozen459ca8d2: the grow-a-model paragraph and five
+RF5 source pins. There are no added/removed failures, errors, skips, xfails or
+xpasses. Both tracked before/after statuses are empty. This is an unchanged
+known-red comparison, never a green full-suite claim.
+
+The same corrected candidate's marked census exits0 (2passed in15.82s), with
+all400 original per-observable rows unchanged and23 additions individually
+dispositioned. Its producer output is byte-identical to the already retained
+423-row artifact; the new source/runtime/exits bind that alias explicitly.
+Neither original expected answers nor historical goldens were regenerated.
+The rejected14-failure8e5ff181 result and incomplete6de run remain separate.
+
+[Record029](../029-candidate-comparison.md) binds the actual commands, outputs,
+source and comparison. Later close bookkeeping/provenance must receive focused
+current-context reference/frontmatter checks; it does not extend this full
+execution to untested runtime/test changes. Actual owner merges, main evidence,
+the selected independent close opinion and final milestone ruling/issue95
+closure remain pending. This comparison ruling authorizes none of them.
+
+Raw pytest output retains original diagnostic whitespace at candidate-r2-full-default.txt lines 279, 286, 293, 300, 307. Delegated acceptance preserves those artifact bytes only; authored source and metadata whitespace must remain clean. Current reference checks pass2tests and frontmatter validates114citations;11historical manifests have zero mismatches at their recorded snapshots.
+
+
+## 18. Actual owner merges and close boundary (2026-11-10)
+
+The owner explicitly approved MC3 PR157 at c6dad88d and MC4 PR155 at396f86f3 in that order, then requested main verification and the Codex CLI close review. SHA-guarded merges completed ased091709dcccc92e6316684b62e4a00c3998315a thena9b67d8b3a507dffd219c146c7cb4d5953100a0c. Actual main's complete tree equals the approved MC4 head. This supersedes pending merge statements in prior snapshots without changing their historical scope.
+
+Actual main runtime/schema/models/docs/configuration match the measured final candidate. Exactly five nonplanning files differ: four test guards and the offline model-evolve skill prose repair already gated by027/028. PR158 carries these follow-ups; main does not inherit their passing tests or the candidate's full outcome before that PR merges. All4698 nonplanning tracked paths/modes were compared. Planning-only close bookkeeping receives focused current-context checks. No runtime change or new broad run is authorized by this provenance update.
+
+[Record030](../030-main-verification.md) binds actual main and the exact pending delta. The selected close reviewer judges candidate readiness and actual main evidence separately; any local delegated close ruling must remain conditional on PR158's explicit owner merge and final tree verification. Issue95 remains open until the complete accepted candidate is on main. This sequencing discharges the original on-main completion predicates without inventing merge permission or marking unmerged repairs complete. The separate maximum2-call close review budget from026 remains binding.
+
+
+## 19. Close review findings and bounded repair (2026-11-10)
+
+The first selected independent Codex CLI close opinion atb89747d6 is REVISE, not approval. It found one blocking include-free compatibility defect in composed_witness_result/composed_replay_result and one hardening gap in the repaired candidate-argument source guard. A real canonical composition record bound to the committed semantic-invalid plain model reproduces baseline input-invalid versus current semantic:cross-ref in both adapters; the model census/default tests alone did not discriminate that adapter edge. Current runtime candidate argument remains correct, but substituting its first argument still passed the old test by matching a later payload field. Preserve prior full results and phase opinions as their actual scope; none proves these two omitted controls.
+
+[Record031](../031-close-review-repairs.md) and notes/close-review-repair-spec.md gate narrow fixes under the original named auto delegation before production edits. Both witness adapters now forward only include:* reasons, falling back to the historical input-invalid otherwise, exactly as neighboring adapters. The actual ordering assertion additionally binds the call's first argument. Both new regressions fail pre-fix, baseline adapter bodies pass the plain controls, and included controls preserve unsupported-route admission order. The initial proposed included hash-mismatch answer was refuted by the pre-fix test and corrected before implementation; no route was enabled or guard weakened.
+
+These obligations remain in their originating budgets: MC2 adds4source/20test lines, bringing110source/585tests under375/600; MC3 adds15test lines, bringing1239under1400, source1109under1400. MC4remains120/120. Combined post-MC3 Python support is163 =120MC4 +22late MC2 +21late MC3, with4production lines separately attributed. No cap transfer or waiver. Component index reuses witness.service rather than adding a new home or helper.
+
+Runtime changes invalidate final1ca2379f full-result attribution for these new bytes. Repeat the already explicitly selected named beast-3 default/census on the corrected committed candidate; preserve400originalobservations and exact six frozen failure IDs. The remaining one narrowly scoped Codex CLI confirmation reviews these findings/repairs/current evidence only; maximum2calls total, no third opinion. Actual main remainsa9b67d8b until separately authorized PR158merge; pending runtime/guard/prose changes cannot be called on-main. Issue95closure and final main equality remain pending. No optional native/external replay, publication or certification is selected.
+
+
+## 20. Corrected candidate comparison and confirmation readiness (2026-11-10)
+
+The named beast-3 replay on corrected sourceb7da04b1ead8dbc72e27ac0b3bf945cc7d970244 completes with6failed,18801passed,801deselected,1warning in2545.10s (0:42:25), exit1. The exact six identities match immutable459ca8d2; no added/removed failure, error, skip,xfail orxpass. Both tracked statuses are empty. The new marked census exits0:2passed in15.80s; producer bytes exactly equal the retained423-row final-census artifact, all400 original observations unchanged and23additions individually dispositioned. Source/runtime/exits bind this new invocation, not a replay inferred from1ca.
+
+[Record032](../032-candidate-confirmation-input.md) accepts the corrected comparison under named auto delegation, not milestone close or merge.031's new7controls,466affectedchecks/11deselected and125source/architecturepins pass;13baseline lint findings unchanged. Raw pytest whitespace is retained only at the exact E-only lines in candidate-r3-whitespace.json. Source/test/component/skill bytes remain the measuredb7candidate. Nine pending nonplanning paths distinguish it from actual maina9b67d8b, including the restored witness refusal code; no new main satisfaction is inferred.
+
+One narrowly scoped Codex CLI confirmation remains within the maximum2-call budget. It confirms the two reproduced findings and current evidence/authority/budgets. The final delegated local close ruling binds this exact amended plan and question sweep only after that opinion. Actual milestone completion/issue95closure waits for separately authorized finalPR158merge and main tree verification. Prior record/review/failed-run bytes remain historical, and no excluded lane, publisher or certificate is selected.

@@ -1,0 +1,7 @@
+# Corrected final candidate replay selection
+
+Before execution: explicitly owner-authorized named baseline/candidate default+census on beast-3, repeated on committed corrected source b7da04b1ead8dbc72e27ac0b3bf945cc7d970244. Close first opinion reproduced two omitted controls;031gates and fixes them. Seven direct repair/source-order checks pass,125source/architecture pins pass,13lint findings unchanged; neighboring witness/composition selection remains independently running. No result is inferred from that in-flight selection.
+
+Use the exact previous pinned uv0.10.10/lockeddev/Python3.11harness on fresh tracked clone, original local main refd2d6309b retained for comparable historical tests (not actual GitHubmaina9b67d8b). Produce census, marked tests/test_mc1_census.py, then default pytest -q --tb=short; capture actual exits,complete outputs,source/runtime,before/aftertrackedstatus. Compare unchanged400originalobservations, separately retained23additions, and exact six frozen failure IDs. Do not regenerate expected answers, addxfails or claim a green full suite. This replay supersedes full1ca attribution only after it actually completes; prior results remain retained at original sources.
+
+No xdist/native/external/historical-oracle lane or env-file read. Existing SSH auth only. Independent close confirmation remains one call, after concrete results; no extra reviewer. FinalPR158merge,actualmain verification and issue95closure remain separate owner gates.

@@ -340,7 +340,24 @@ def test_the_current_model_is_validated_before_it_is_traversed() -> None:
     gated = source.index('_enforce_operations_gate(before_document, proposal)')
     assert '_parse_model_text' not in source, 'the preview must not re-parse the live bytes'
     assert loaded < validated < gated, 'the current model must be validated before it is parsed or traversed'
-    assert gated < source.index('self._validated_candidate(\n            proposal.candidate_model,')
+    plain_candidate = source.index('self._validated_candidate(')
+    assert gated < plain_candidate < source.index('proposal.candidate_model,', plain_candidate)
+    assert re.match(r'self\._validated_candidate\(\s*proposal\.candidate_model\s*,', source[plain_candidate:])
+    assert gated < source.index('self._include_candidate(')
+
+@pytest.mark.parametrize('argument', ['before_loaded_model', 'proposal.model_id'])
+def test_current_model_order_guard_rejects_wrong_candidate_argument(monkeypatch, argument):
+    import inspect
+
+    from gnd.evolve.service import EvolutionService
+    source, count = re.subn(
+        r'(self\._validated_candidate\(\s*)proposal\.candidate_model,',
+        lambda match: match[1] + argument + ',', inspect.getsource(EvolutionService.preview), count=1)
+    assert count == 1
+    monkeypatch.setattr(inspect, 'getsource', lambda _: source)
+    with pytest.raises(AssertionError):
+        test_the_current_model_is_validated_before_it_is_traversed()
+
 
 def test_an_alias_bearing_current_model_is_refused(tmp_path) -> None:
     from gnd.evolve import (

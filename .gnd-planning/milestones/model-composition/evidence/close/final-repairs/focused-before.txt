@@ -1,0 +1,121 @@
+Retained output; operator home paths sanitized, other bytes preserved.
+
+FFFFF...FFF....                                                          [100%]
+=================================== FAILURES ===================================
+_______ test_model_evolve_skill_is_offline_and_preserves_write_authority _______
+tests/test_measure_offline.py:494: in test_model_evolve_skill_is_offline_and_preserves_write_authority
+    assert "http://" not in lowered and "https://" not in lowered
+E   AssertionError: assert ('http://' not in '---\nname: ...s refused.\n'
+E     
+E     'http://' is contained here:
+E       s refused. and 'https://' not in '---\nname: ...s refused.\n'
+E     
+E     'https://' is contained here:
+E       kthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+E     ?           ++++++++
+E       for an executed example. this guidance does not duplicate the proposal grammar.
+E       
+E       ### add a structured-derived fact type and bump identity atomically...
+E     
+E     ...Full output truncated (953 lines hidden), use '-vv' to show)
+__________ test_the_current_model_is_validated_before_it_is_traversed __________
+tests/test_model_v2.py:343: in test_the_current_model_is_validated_before_it_is_traversed
+    assert gated < source.index('self._validated_candidate(\n            proposal.candidate_model,')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: substring not found
+______________ test_public_exports_and_current_keyword_signatures ______________
+tests/test_public_api.py:16: in test_public_exports_and_current_keyword_signatures
+    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose")
+E   AssertionError: assert ('validate', ...witness', ...) == ('validate', ...witness', ...)
+E     
+E     Left contains one more item: 'verbalize_model'
+E     Use -v to get more diff
+________________________________ test_inventory ________________________________
+tests/test_rf1_pin_harness.py:132: in test_inventory
+    assert unmapped == []
+E   AssertionError: assert ['tests/test_...flag[remove]'] == []
+E     
+E     Left contains 2 more items, first extra item: 'tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[metavar]'
+E     Use -v to get more diff
+_______________ test_python_fence_parser_refuses_malformed_code ________________
+tests/test_rf9_ci_repairs.py:295: in test_python_fence_parser_refuses_malformed_code
+    scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+tests/test_measure_offline.py:494: in test_model_evolve_skill_is_offline_and_preserves_write_authority
+    assert "http://" not in lowered and "https://" not in lowered
+E   AssertionError: assert ('http://' not in '---\nname: ...s refused.\n'
+E     
+E     'http://' is contained here:
+E       s refused. and 'https://' not in '---\nname: ...s refused.\n'
+E     
+E     'https://' is contained here:
+E       kthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+E     ?           ++++++++
+E       for an executed example. this guidance does not duplicate the proposal grammar.
+E       
+E       ### add a structured-derived fact type and bump identity atomically...
+E     
+E     ...Full output truncated (957 lines hidden), use '-vv' to show)
+_ test_review_container_and_text_fence_boundaries[```text\nimport requests\n```-False] _
+tests/test_rf9_ci_repairs.py:326: in test_review_container_and_text_fence_boundaries
+    scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+tests/test_measure_offline.py:494: in test_model_evolve_skill_is_offline_and_preserves_write_authority
+    assert "http://" not in lowered and "https://" not in lowered
+E   AssertionError: assert ('http://' not in '---\nname: ...s refused.\n'
+E     
+E     'http://' is contained here:
+E       s refused. and 'https://' not in '---\nname: ...s refused.\n'
+E     
+E     'https://' is contained here:
+E       kthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+E     ?           ++++++++
+E       for an executed example. this guidance does not duplicate the proposal grammar.
+E       
+E       ### add a structured-derived fact type and bump identity atomically...
+E     
+E     ...Full output truncated (957 lines hidden), use '-vv' to show)
+_ test_review_container_and_text_fence_boundaries[> ```text\n> import requests\n> ```-False] _
+tests/test_rf9_ci_repairs.py:326: in test_review_container_and_text_fence_boundaries
+    scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+tests/test_measure_offline.py:494: in test_model_evolve_skill_is_offline_and_preserves_write_authority
+    assert "http://" not in lowered and "https://" not in lowered
+E   AssertionError: assert ('http://' not in '---\nname: ...s refused.\n'
+E     
+E     'http://' is contained here:
+E       s refused. and 'https://' not in '---\nname: ...s refused.\n'
+E     
+E     'https://' is contained here:
+E       kthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+E     ?           ++++++++
+E       for an executed example. this guidance does not duplicate the proposal grammar.
+E       
+E       ### add a structured-derived fact type and bump identity atomically...
+E     
+E     ...Full output truncated (957 lines hidden), use '-vv' to show)
+_ test_review_container_and_text_fence_boundaries[- ```python\n  pass\n  ```-False] _
+tests/test_rf9_ci_repairs.py:326: in test_review_container_and_text_fence_boundaries
+    scans.test_model_evolve_skill_is_offline_and_preserves_write_authority()
+tests/test_measure_offline.py:494: in test_model_evolve_skill_is_offline_and_preserves_write_authority
+    assert "http://" not in lowered and "https://" not in lowered
+E   AssertionError: assert ('http://' not in '---\nname: ...s refused.\n'
+E     
+E     'http://' is contained here:
+E       s refused. and 'https://' not in '---\nname: ...s refused.\n'
+E     
+E     'https://' is contained here:
+E       kthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+E     ?           ++++++++
+E       for an executed example. this guidance does not duplicate the proposal grammar.
+E       
+E       ### add a structured-derived fact type and bump identity atomically...
+E     
+E     ...Full output truncated (957 lines hidden), use '-vv' to show)
+=========================== short test summary info ============================
+FAILED tests/test_measure_offline.py::test_model_evolve_skill_is_offline_and_preserves_write_authority
+FAILED tests/test_model_v2.py::test_the_current_model_is_validated_before_it_is_traversed
+FAILED tests/test_public_api.py::test_public_exports_and_current_keyword_signatures
+FAILED tests/test_rf1_pin_harness.py::test_inventory - AssertionError: assert...
+FAILED tests/test_rf9_ci_repairs.py::test_python_fence_parser_refuses_malformed_code
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[```text\nimport requests\n```-False]
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[> ```text\n> import requests\n> ```-False]
+FAILED tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[- ```python\n  pass\n  ```-False]
+8 failed, 7 passed in 1.07s

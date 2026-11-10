@@ -1,0 +1,10 @@
+{
+  "bundle_sha256": "912b3222e38d0380f635fbdf6ca44d30a8ea860f1774c2aa9360b23c1eb270ab",
+  "remote": "beast-3",
+  "source": "b7da04b1ead8dbc72e27ac0b3bf945cc7d970244",
+  "bundle_verification_exit": 0,
+  "initial_verify_attempt": "remote hash matched, git bundle verify lacked repository and exited1; corrected -C baseline repo verification0 before launch",
+  "remote_directory": "/private/tmp/gnd-model-composition-candidate-r3-b7da04b1",
+  "local_ssh_session": 70009,
+  "result": "running; no completed default result yet"
+}

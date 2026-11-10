@@ -1,0 +1,15 @@
+{
+  "accepted_artifact_only": {
+    ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/regressions-before.txt": [
+      7,
+      16,
+      25,
+      34
+    ],
+    ".gnd-planning/milestones/model-composition/evidence/close/review-repairs/regressions-before-corrected.txt": [
+      7,
+      16
+    ]
+  },
+  "ruling": "delegated auto retention of exact pre-fix diagnostic bytes only; no source waiver"
+}

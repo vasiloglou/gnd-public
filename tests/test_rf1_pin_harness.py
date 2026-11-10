@@ -126,7 +126,9 @@ def test_inventory():
     pins = {node for node in collected if node.split("::", 1)[0] in set(tool.PIN_FILES) | {"tests/test_rf1_layering.py"}}
     meta = {"tests/test_rf1_helper_pins.py::test_helper_coverage", "tests/test_rf1_helper_pins.py::test_case_manifest_builds",
             "tests/test_rf1_cli_pins.py::test_cli_coverage", "tests/test_rf1_layering.py::test_layer_scope",
-            "tests/test_rf1_layering.py::test_layer_ratchet_detects_a_new_pair"}
+            "tests/test_rf1_layering.py::test_layer_ratchet_detects_a_new_pair",
+            "tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[remove]",
+            "tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[metavar]"}
     rf1_refs = [ref for row in rows for ref in row["rf1_nodes"]]
     unmapped = sorted(node for node in pins - meta if not any(node.startswith(ref) for ref in rf1_refs))
     assert unmapped == []

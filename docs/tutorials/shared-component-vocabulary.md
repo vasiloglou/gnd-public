@@ -5,4 +5,4 @@ It extends the existing expense demo with different team policies over one share
 
 !!! info "Files on GitHub"
 
-    [Current example files](https://github.com/vasiloglou/gnd-public/tree/codex/model-composition-docs-draft/src/gnd/examples/expense/teams)
+    [Current example files](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/expense/teams)

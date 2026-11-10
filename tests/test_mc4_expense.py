@@ -36,3 +36,11 @@ def test_byte_and_path_only_repin_still_requires_acceptance(tmp_path):
     accepted = service.preview(parsed, accepted_blast_radius_sha256=preview.blast_radius.report_sha256)
     assert accepted.accepted_blast_radius_sha256 == preview.blast_radius.report_sha256
     assert old.read_bytes() == (source / 'shared/expense-v1.orm.json').read_bytes()
+
+
+def test_retained_entry_points_link_current_source():
+    root = Path(__file__).resolve().parents[1] / 'docs'
+    for name in ['how-to/share-a-vocabulary.md', 'tutorials/shared-component-vocabulary.md']:
+        text = (root / name).read_text()
+        assert 'tree/main/src/gnd/examples/expense/teams' in text
+        assert 'codex/model-composition-docs-draft' not in text

@@ -16,7 +16,7 @@ from pathlib import Path
 def observe(call):
     try:
         return {"value": call()}
-    except Exception as error:
+    except Exception as error:  # noqa: BLE001 -- observe each historical refusal
         return {"refusal": type(error).__name__, "path": getattr(error, "path", None),
                 "issues": [{"rule_id": i.rule_id, "path": i.path}
                            for i in getattr(error, "issues", [])]}
@@ -32,19 +32,21 @@ def collect(paths):
         row = {}
         try:
             model = load_model(path)
-        except Exception as error:
-            row["load"] = observe(lambda: (_ for _ in ()).throw(error))
+        except Exception as error:  # noqa: BLE001 -- observe each historical refusal
+            row["load"] = {"refusal": type(error).__name__, "path": getattr(error, "path", None),
+                           "issues": [{"rule_id": i.rule_id, "path": i.path}
+                                      for i in getattr(error, "issues", [])]}
         else:
             row["load"] = {"value": "loaded"}
             for name, call in (
                 ("model_dump", model.model_dump),
                 ("model_dump_json", model.model_dump_json),
-                ("model_digest", lambda: _model_digest(model)),
-                ("model_identity", lambda: model_identity(model)),
-                ("reference_model_digest", lambda: reference_model_digest(model)),
+                ("model_digest", lambda model=model: _model_digest(model)),
+                ("model_identity", lambda model=model: model_identity(model)),
+                ("reference_model_digest", lambda model=model: reference_model_digest(model)),
             ):
                 row[name] = observe(call)
-        def cli():
+        def cli(path=path):
             stdout, stderr = io.StringIO(), io.StringIO()
             with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
                 code = main(["validate", path, "--identity"])

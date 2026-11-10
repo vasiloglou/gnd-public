@@ -1,0 +1,749 @@
+{
+ "schema_version": 1,
+ "run_sha256": "b2e21cbeec8f3599690733e1467ade8d0a98b72e2db02e99ef11c46205adc162",
+ "summary": "Five of six seats succeeded (qwen timed out) at effort high; all five asked for revision (gemini: block). The strongest agreement: populations lack a valid disposition (5 seats), predicate 4 has no semantic oracle (3), and the disposition unit is undefined (2).",
+ "agreed_concerns": [
+  {
+   "group_id": "g-populations",
+   "severity": "high",
+   "title": "Populations have no valid disposition",
+   "summary": "Five reviewers: \u00a72.1 marks reference/sample populations 'out of scope', which is outside predicate 3's four dispositions, so they are silently lost or the export hits exit 70.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "populations-no-disposition"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-population-disposition"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "missing-disposition-reference-pops"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-populations-no-disposition"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C2"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "g-semantic-oracle",
+   "severity": "high",
+   "title": "Predicate 4 names no evaluator of formula meaning",
+   "summary": "The differential claim compares GND's verdict with 'the formula's meaning', but every Ossie-side instrument named only parses formulas; no second verdict engine exists, so OS2-C2 cannot fail on a semantic mismatch.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "differential-no-oracle"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-predicate4-semantics-oracle"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C1"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  },
+  {
+   "group_id": "g-disposition-unit",
+   "severity": "high",
+   "title": "Unit of disposition undefined; mixed rows break 'exactly one'",
+   "summary": "Rows such as 'native + extension' and 'requires/extension' contradict predicate 3's exactly-one rule unless the element unit (object, field, JSON pointer) is defined.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "exactly-one-vs-native-plus-extension"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-disposition-granularity"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "g-os6-close",
+   "severity": "medium",
+   "title": "OS6 close criterion contradictory",
+   "summary": "Predicate 9 requires an opened upstream PR, while OS6 and \u00a76 say it does not block close; the declined-PR-text case is unaddressed.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os6-close-contradiction"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-os6-close-gate"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "group_id": "g-phase-graph",
+   "severity": "medium",
+   "title": "Dependency arrow contradicts prose",
+   "summary": "The arrow makes OS3 and OS2 prerequisites of OS4 and OS5 starts after OS4, while the prose says OS4 needs only OS1 and OS5-draft follows OS1.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os4-dependency-mismatch"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "phase-ordering-contradiction-os2-os4"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "phase-ordering-os5-draft"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "gemini"
+   ]
+  },
+  {
+   "group_id": "g-od-range",
+   "severity": "low",
+   "title": "Status line says OD0\u2013OD7, \u00a710 has OD8",
+   "summary": "Stale ruling range in the header.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "status-od-range-stale"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-od-range-inconsistency"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C6"
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ]
+  }
+ ],
+ "divergent_concerns": [
+  {
+   "reviewer_id": "claude",
+   "concern_id": "digest-in-document-under-sidecar"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "consumer-rows-in-runtime-report"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "fork-push-ungated"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "import-digest-order"
+  },
+  {
+   "reviewer_id": "claude",
+   "concern_id": "os6-unpinned-converter"
+  },
+  {
+   "reviewer_id": "codex",
+   "concern_id": "ossie-loss-report-output"
+  },
+  {
+   "reviewer_id": "gemini",
+   "concern_id": "ossieparser-unsupported"
+  },
+  {
+   "reviewer_id": "gemini",
+   "concern_id": "proprietary-ordinary-gate"
+  },
+  {
+   "reviewer_id": "gemini",
+   "concern_id": "stale-r1-wording-od1-od7"
+  },
+  {
+   "reviewer_id": "kimi",
+   "concern_id": "ossie-plan-roundtrip-vs-refused-elements"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "OSR2-C3"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "OSR2-C4"
+  },
+  {
+   "reviewer_id": "glm",
+   "concern_id": "OSR2-C7"
+  }
+ ],
+ "prioritized_fixes": [
+  {
+   "fix_id": "f-populations",
+   "title": "Give populations a real disposition",
+   "action": "Mark reference_populations and sample populations `refused` with reason `population:out-of-scope` (or extension), cover them in the census, and state how the round trip treats them.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "populations-no-disposition"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-population-disposition"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "missing-disposition-reference-pops"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-populations-no-disposition"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C2"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "populations-no-disposition",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-population-disposition",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "missing-disposition-reference-pops",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-populations-no-disposition",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C2",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex",
+    "gemini",
+    "kimi",
+    "glm"
+   ],
+   "rank": 1
+  },
+  {
+   "fix_id": "f-semantic-oracle",
+   "title": "Name the second verdict engine for predicate 4",
+   "action": "Use hand-verified expected verdicts per constraint kind (written before the formula renderer), recorded with their circularity limits; narrow predicate 4 accordingly.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "differential-no-oracle"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-predicate4-semantics-oracle"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C1"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "differential-no-oracle",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-predicate4-semantics-oracle",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C1",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ],
+   "rank": 2
+  },
+  {
+   "fix_id": "f-disposition-unit",
+   "title": "Define the disposition unit",
+   "action": "Dispositions apply per JSON pointer into the source model; a row may emit native output while its residual fields carry extension; the census asserts exactly one disposition per pointer.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "exactly-one-vs-native-plus-extension"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-disposition-granularity"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "exactly-one-vs-native-plus-extension",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-disposition-granularity",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ],
+   "rank": 3
+  },
+  {
+   "fix_id": "f-loss-report-output",
+   "title": "Guarantee a loss report on lossy success",
+   "action": "Write the loss report by default beside the output (FILE.loss.json) and fail with exit 74 if it cannot be written.",
+   "concerns": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-loss-report-output"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-loss-report-output",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "codex"
+   ],
+   "rank": 4
+  },
+  {
+   "fix_id": "f-os6-close",
+   "title": "Make OS6's close rule single",
+   "action": "Close requires the PR opened, or an owner decision recorded declining it; merge never required; align \u00a73 and \u00a76.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os6-close-contradiction"
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-os6-close-gate"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os6-close-contradiction",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "codex",
+     "concern_id": "ossie-os6-close-gate",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "codex"
+   ],
+   "rank": 5
+  },
+  {
+   "fix_id": "f-fork-gate",
+   "title": "Gate the public fork push",
+   "action": "Keep the OS6 branch local until the owner approves pushing a fork and the PR text.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "fork-push-ungated"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "fork-push-ungated",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ],
+   "rank": 6
+  },
+  {
+   "fix_id": "f-import-order",
+   "title": "Fix import digest order",
+   "action": "Verify the extension digest before GND admission consumes any extension content.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "import-digest-order"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "import-digest-order",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ],
+   "rank": 7
+  },
+  {
+   "fix_id": "f-consumer-rows",
+   "title": "Move consumer limitations out of the runtime report",
+   "action": "Record converter skips in an OS4 lane artifact keyed by converter commit, not in the runtime loss report.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "consumer-rows-in-runtime-report"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "consumer-rows-in-runtime-report",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ],
+   "rank": 8
+  },
+  {
+   "fix_id": "f-digest-home",
+   "title": "Say where the identity digest lives under the sidecar route",
+   "action": "Make predicate 2 name the digest's location for both OD2 branches.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "digest-in-document-under-sidecar"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "digest-in-document-under-sidecar",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ],
+   "rank": 9
+  },
+  {
+   "fix_id": "f-os6-pin",
+   "title": "Record the fork commit separately from R7 pins",
+   "action": "OS6-C2 runs against a recorded fork commit; compliance claims stay on the pinned upstream converter.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os6-unpinned-converter"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os6-unpinned-converter",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude"
+   ],
+   "rank": 10
+  },
+  {
+   "fix_id": "f-roundtrip-scope",
+   "title": "Scope the round trip",
+   "action": "Round-trip equality holds for documents with no refused rows; refused rows are listed in the OS3 spec.",
+   "concerns": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-roundtrip-vs-refused-elements"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-roundtrip-vs-refused-elements",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "kimi"
+   ],
+   "rank": 11
+  },
+  {
+   "fix_id": "f-od6-confirm",
+   "title": "Confirm OD6 before the OS1 gate",
+   "action": "List explicit OD6 confirmation as an OS1 spec precondition.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C3"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C3",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ],
+   "rank": 12
+  },
+  {
+   "fix_id": "f-phase-graph",
+   "title": "Redraw the dependency graph",
+   "action": "OS4 needs OS1 (OS2 soft); OS5-draft after OS1; OS6 needs OS2 and OS4.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os4-dependency-mismatch"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "phase-ordering-contradiction-os2-os4"
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "phase-ordering-os5-draft"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "os4-dependency-mismatch",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "phase-ordering-contradiction-os2-os4",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "phase-ordering-os5-draft",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "gemini"
+   ],
+   "rank": 13
+  },
+  {
+   "fix_id": "f-ossieparser-source",
+   "title": "Name OssieParser's source",
+   "action": "Cite ossie_ontology.parser in ossie-converters ontology/ at the pin in \u00a71.4.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ossieparser-unsupported"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "ossieparser-unsupported",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "gemini"
+   ],
+   "rank": 14
+  },
+  {
+   "fix_id": "f-os6-lane-label",
+   "title": "Label the OS6 upstream suite as an out-of-repo opt-in run",
+   "action": "Move the upstream relationalai suite out of the ordinary-gate column in \u00a79.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "proprietary-ordinary-gate"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "proprietary-ordinary-gate",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "gemini"
+   ],
+   "rank": 15
+  },
+  {
+   "fix_id": "f-od-range",
+   "title": "Update the header ruling range",
+   "action": "Status line: OD0\u2013OD8, OD3 follows OD1.",
+   "concerns": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "status-od-range-stale"
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-od-range-inconsistency"
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C6"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "claude",
+     "concern_id": "status-od-range-stale",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "kimi",
+     "concern_id": "ossie-plan-od-range-inconsistency",
+     "evidence_index": 0
+    },
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C6",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "claude",
+    "kimi",
+    "glm"
+   ],
+   "rank": 16
+  },
+  {
+   "fix_id": "f-stale-r1",
+   "title": "Drop the stale r1 quote in OS0-C3",
+   "action": "Remove the quoted r1 wording from OS0-C3.",
+   "concerns": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "stale-r1-wording-od1-od7"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "gemini",
+     "concern_id": "stale-r1-wording-od1-od7",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "gemini"
+   ],
+   "rank": 17
+  },
+  {
+   "fix_id": "f-release-source",
+   "title": "Source the release-history claim",
+   "action": "Cite the dated upstream version history in spec.md for '0.1.1 is the only release'.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C4"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C4",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ],
+   "rank": 18
+  },
+  {
+   "fix_id": "f-rule6-list",
+   "title": "Align rule 6's contested list with experiments",
+   "action": "Add OneToOne and modality checks to the OS0 inventory.",
+   "concerns": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C7"
+    }
+   ],
+   "evidence": [
+    {
+     "reviewer_id": "glm",
+     "concern_id": "OSR2-C7",
+     "evidence_index": 0
+    }
+   ],
+   "supporting_reviewers": [
+    "glm"
+   ],
+   "rank": 19
+  }
+ ]
+}

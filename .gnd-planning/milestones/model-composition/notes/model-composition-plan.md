@@ -1,6 +1,6 @@
 # Model composition
 
-**Status: r3, approved by the owner at the plan gate on 2026-11-09 ("Approve as proposed"; [plan-gate record](../001-plan.md)), MD1-MD16 ruled as proposed.** Approved bytes: r3, sha256 2923a34ec2531abdb0f1b1771bfa6037e88ab26c388247f93aa2f9b3cd1ed9fd; later edits are this status line and the rulings written into §10. r2 applied the Codex review of r1 (P1-P18; [review](../evidence/plan-review-r1/codex-review.md)); r3 applied the Codex review of r2 (P11, P12, P15, P16, P19-P27; [review](../evidence/plan-review-r2/codex-review.md)), every finding reproduced and accepted; triage in §11. **r3 itself was not reviewed**: the convergence stop rule fired after round two (§11). MD0 ruled (o, 2026-11-09): one reviewer, Codex. `auto=false`. The plan approves no phase spec: MC1 needs its own owner gate before any code. Tags: `(r1 Pn)` and `(r2 Pn)` mark changes made for each review.
+**Status: r3, approved by the owner at the plan gate on 2026-11-09 ("Approve as proposed"; [plan-gate record](../001-plan.md)), MD1-MD16 ruled as proposed.** Approved bytes: r3, sha256 2923a34ec2531abdb0f1b1771bfa6037e88ab26c388247f93aa2f9b3cd1ed9fd; later edits are this status line, the rulings written into §10, and owner amendment a1 (2026-11-09: documentation with a worked example and an early checkpoint; §12, prior wording kept; MD17 open). r2 applied the Codex review of r1 (P1-P18; [review](../evidence/plan-review-r1/codex-review.md)); r3 applied the Codex review of r2 (P11, P12, P15, P16, P19-P27; [review](../evidence/plan-review-r2/codex-review.md)), every finding reproduced and accepted; triage in §11. **r3 itself was not reviewed**: the convergence stop rule fired after round two (§11). MD0 ruled (o, 2026-11-09): one reviewer, Codex. `auto=false`. The plan approves no phase spec: MC1 needs its own owner gate before any code. Tags: `(r1 Pn)` and `(r2 Pn)` mark changes made for each review.
 
 Phase prefix `MC`. Source: GR-D4, [issue 95](https://github.com/vasiloglou/gnd-public/issues/95),
 filed by the owner on 2026-11-06 and excluded from the rule-check-adoption
@@ -57,7 +57,10 @@ The milestone is complete when, on main after merge:
    the re-pin preview that names the broken rule, and the combined re-pin plus
    rule edit that publishes (MC3-C4).
 8. The normative contract has one home (`representation-format.md`, new
-   section "Model includes (version 5)"); skills and docs cite it (MC4).
+   section "Model includes (version 5)"); skills and docs cite it; a how-to
+   tells the issue's story on the shipped component example and runs end to
+   end under the tutorial runner; the owner saw a review copy of it right
+   after MC1 (MC4; amended (a1), §12).
 9. Each phase has an approved spec, a record with verbatim focused-gate output
    and one independent reviewer; the close record disposes every open
    question and closes issue 95.
@@ -310,13 +313,19 @@ otherwise unchanged text; models without includes are byte-identical.
 ## 3. Dependencies and artifact homes
 
 ```
-MC1 ──┬──> MC2 ──┐
-      └──> MC3 ──┴──> MC4 ──> close
+MC1 ──┬──> MC2 ──────────┐
+      ├──> MC3 ──────────┼──> MC4 ──> close
+      └──> MC4-draft ····┘   (owner checkpoint)
 ```
 
 MC2 and MC3 both need MC1's loader, provenance table and guards, and touch
 disjoint files: discover and ILP candidate rendering belong to MC3 (they are
-proposal writers), every other §1.3 route to MC2.
+proposal writers), every other §1.3 route to MC2. MC4-draft (a1) is the
+how-to's review copy, written once MC1 merges, covering what MC1 can run
+(validate and check on an includer); it touches only `docs/` and its example
+directory, so it runs beside MC2 and MC3, and it is a checkpoint, not a
+phase: the owner looks at it and reacts, and MC4 finishes it once MC3 has
+`repin-include`.
 
 | Artifact | Home |
 |---|---|
@@ -416,7 +425,18 @@ proposal writers), every other §1.3 route to MC2.
   re-pin preview is analysis-only and names the broken rule; the combined
   re-pin plus rule edit publishes and checks.
 
-### MC4: documentation and skills (about 0 source, 40 test lines)
+### MC4-draft: how-to review copy (checkpoint after MC1; amended (a1))
+- MC4-D1: a draft of `docs/how-to/share-a-vocabulary.md` on the shipped
+  component example, covering what MC1 can run: the vocabulary file the tool
+  ships, the project's rules file that includes it, the acyclic rule placed
+  on the included "imports" fact type with `fact_type_constraints`, and
+  `gnd validate` and `gnd check` on it, with one finding and the project's
+  own remedy text. The re-pin half is a marked placeholder.
+- MC4-D2: its commands run under `tools/run_tutorials.py`; a rendered copy
+  is shown to the owner, who reacts before MC4 continues. The owner's
+  reaction is recorded in the MC4 spec; it approves no bytes by itself.
+
+### MC4: documentation and skills (about 0 source, 450 doc, 80 test lines; amended (a1))
 - MC4-C1: `representation-format.md` section is the one home; `gnd-orm-core`,
   `gnd-model-evolve`, `gnd-model-from-text` (vocabulary-file authoring) and
   the CLI reference cite it, with no second normative copy.
@@ -424,6 +444,25 @@ proposal writers), every other §1.3 route to MC2.
   generate, versioned paths per MD12, how a project pins and re-pins), with
   the MC3 fixture as its example.
 - MC4-C3: doc-sync and skill-structure tests pass.
+- MC4-C4 (a1): the how-to, finished, tells the issue's whole story on the
+  shipped example: a tool ships the component vocabulary; the project adds
+  its rules without copying the vocabulary; the tool ships vocabulary v2,
+  which drops a fact type a rule uses; `repin-include` previews what breaks
+  and names the rule; the project's one combined change re-pins and fixes the
+  rule; `gnd check` passes again. Written in the existing how-to style
+  (`adopt-rules-with-a-baseline.md`): a situation, what the reader will see,
+  a figure, then the steps. It does not restate the normative contract; it
+  links it.
+- MC4-C5 (a1): every command block on the page runs under
+  `tests/test_documentation_tutorials.py` and `tools/run_tutorials.py`, which
+  compare exit codes and key output lines; the example's files are shipped
+  under `src/gnd/examples/` and are what the page shows.
+- MC4-C6 (a1): one figure (before and after the vocabulary update: which
+  rule broke and why), source named under the figure, alt text complete.
+- MC4-C7 (a1): `zensical.toml` nav entry; a `docs/release-notes.md` entry;
+  `zensical build --strict` and `tools/check_docs.py site` exit 0.
+- MC4-C8 (a1): per MD17, the business-level tutorial page, or its explicit
+  absence recorded.
 
 ### Close
 Close record; open-question sweep; full suite against the merge-base run;
@@ -436,6 +475,13 @@ closes issue 95.
 - Skills: `gnd-orm-core`, `gnd-model-evolve`, `gnd-model-from-text`; any skill
   whose script parses models itself (`validate_model.py`,
   `verify_migration.py`) is an MC1 guard row and an MC2 decision.
+- Docs site (a1): a new how-to `docs/how-to/share-a-vocabulary.md` in the
+  `zensical.toml` "How-to guides" nav, a shipped example split from
+  `src/gnd/examples/rule_check/` (vocabulary file plus project rules), a
+  figure under `docs/assets/applications/`, `docs/reference/cli.md` for any
+  new flag (`--previous-include`), `docs/reference/` pages that restate the
+  model format (cite, do not restate), and a `docs/release-notes.md` entry.
+  The business-level tutorial page is MD17.
 - Compatibility: models without `includes` are unchanged (predicate 4); an
   older gnd refuses a version-5 file at load (version enum and
   `extra="forbid"`), so no silent misreading by old readers.
@@ -483,7 +529,8 @@ maintained panel (project.md); MD0 ruled one Codex reviewer for this plan.
 | MC1 | new MC1 tests + `tests/test_schema_sync.py`, model validation, identity, reference-population and evolve-loading tests, and each guarded route's suite | every loader caller; recorded identities |
 | MC2 | new MC2 tests + the consumer suites of each row | export, codegen, conformance, recovery, exp, witness, batch |
 | MC3 | new MC3 tests + evolve, discover and ILP suites | evolve evidence readers, linked-project conformance |
-| MC4 | doc-sync and skill-structure tests | packaged skills |
+| MC4-draft (a1) | `uv run python tools/run_tutorials.py` over the draft how-to; a rendered review copy for the owner | — |
+| MC4 | doc-sync and skill-structure tests; `uv run pytest -q tests/test_documentation_tutorials.py`; `uv run python tools/run_tutorials.py`; `zensical build --strict`; `uv run python tools/check_docs.py site` (amended (a1)) | packaged skills, docs site |
 | close | full suite vs the merge-base run (main `459ca8d2`) | — |
 
 The merge-base full suite and the MC1-C5 census baseline are recorded on
@@ -514,6 +561,7 @@ left to each spec, which reads them at its own baseline.
 | MD14 (r1 P14) | A new aggregate cap on composed declarations? | (a) none; rely on the 32 MiB set cap and the scaling test; (b) a cap such as 100,000 composed declarations, a new input limit | (a), unless MC1's scaling test shows superlinear cost **Ruled (o, 2026-11-09): as proposed** ("Approve as proposed", answering "How do you rule on MD1–MD16 at the plan gate?") |
 | MD15 (r1 P16) | When routes become safe | (a) MC1 ships the guards for every admission point; (b) MC1 and MC2 merge to main together, so `includes` is never admitted with unguarded routes | (a) **Ruled (o, 2026-11-09): as proposed** ("Approve as proposed", answering "How do you rule on MD1–MD16 at the plan gate?") |
 | MD16 (r1 P18) | Effective `source` across includes | (a) the includer's `source` governs; an included file may not be in unattended mode; included `source` is kept per include in provenance; (b) unattended included files allowed, with their documents and spans validated against their own `source`, a second validation context; (c) refuse any included `source` | (a) **Ruled (o, 2026-11-09): as proposed** ("Approve as proposed", answering "How do you rule on MD1–MD16 at the plan gate?") |
+| MD17 (a1) | A business-level tutorial page beside the how-to? | (a) yes: a page under `docs/tutorials/` where the reader types `/gnd:` skill prompts and sees plain results (figures, tables, before and after), no Python or command plumbing, written by Fable, with the runnable commands kept on the how-to; (b) no, the how-to is enough. (a) adds about 250 doc lines and one owner review round on the page | (a) |
 
 Open question: the project hook says both "There is no component index in
 this repository" (§"What these skills are here") and that the index lives in
@@ -601,3 +649,26 @@ The self-inflicted ratio exceeds one half, so the stop rule fires: another
 prose round would measure the repair process, not the plan. The next
 instrument is code (MC1's tests), not a third review round. r3's repairs are
 unreviewed and say so.
+
+## 12. Owner amendments
+
+### a1: documentation with a worked example (2026-11-09)
+
+Owner amendment, 2026-11-09, answering "Amend MC4 to add a runnable how-to
+example and an early docs checkpoint?": `Amend the plan`. It follows the
+docs pattern of earlier milestones (RC6's `adopt-rules-with-a-baseline.md`,
+TS5's `judge-induced-fact-types.md`: a how-to run by the tutorial runner)
+and the owner's standing request for a viewable checkpoint before a
+milestone completes. a1 has not been reviewed. The prior wording is kept
+here.
+
+| Where | Prior wording (r3) | Now |
+|---|---|---|
+| Completion predicate 8 | "The normative contract has one home (`representation-format.md`, new section "Model includes (version 5)"); skills and docs cite it (MC4)." | adds the runnable how-to on the shipped component example and the owner's review copy after MC1 |
+| §3 diagram | `MC1 ──┬──> MC2 ──┐` / `└──> MC3 ──┴──> MC4 ──> close` | adds MC4-draft after MC1 as an owner checkpoint, beside MC2 and MC3 |
+| §4 MC4 heading | "about 0 source, 40 test lines" | about 0 source, 450 doc, 80 test lines; MC4-draft (D1, D2) added before it |
+| §4 MC4 criteria | C1-C3 only | C1-C3 unchanged; C4-C8 added (how-to, runner, figure, nav, release notes, docs gates, MD17) |
+| §5 | no docs-site bullet | docs-site bullet added |
+| §9 MC4 row | "doc-sync and skill-structure tests" | adds the tutorial test, the tutorial runner, the strict site build and the site checker; MC4-draft row added |
+| §10 | MD0-MD16 | MD17 (business-level tutorial page), open |
+

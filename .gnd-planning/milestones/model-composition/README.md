@@ -19,8 +19,11 @@ started; no code is written.
 
 Phases: MC1 (contract, loader, route guards, validate and check), MC2
 (consumer support), MC3 (evolve, re-pin, proposal writers, end-to-end
-scenario), MC4 (docs and skills); close.
+scenario), MC4 (docs, skills and a runnable how-to on the shipped component
+example); close. Owner amendment a1 (2026-11-09, plan §12) adds the how-to
+and a review copy of it shown to the owner right after MC1 (MC4-draft).
 
-Pending decisions: MC1's D1-D8 (spec §7).
+Pending decisions: MC1's D1-D8 (spec §7); MD17, the business-level
+tutorial page (plan §10), before MC4.
 
 Next action: the MC1 spec gate (the owner rules D1-D8 and approves the spec), then MC1 implementation under process-phase.

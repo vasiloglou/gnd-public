@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-Draft r3, **awaiting the owner's spec gate**. The plan gate passed on
+r5, **locally completed under delegated approval (auto=true), 2026-11-10**; [phase record](../008-phase-MC1.md). Records002–005 retain the exact earlier approval snapshots and amendments. The original r4 gate was bound in 002-execution-gate.md. The plan gate passed on
 2026-11-09 (plan r3 approved, MD1-MD16 as proposed; [record](../001-plan.md)).
-Implementable once the owner rules D1-D8 and approves this spec. No code is
-written before that.
+D1-D8 are ruled as proposed by delegated approval (auto=true), authorized by
+the current owner request for the whole model-composition milestone.
+Implementation follows the baseline capture and the ruling in record 002.
 
 ## 2. Provenance
 
@@ -175,7 +176,7 @@ authored), `_provenance: tuple[ElementOrigin, ...]` and
 ```python
 @dataclass(frozen=True)
 class ElementOrigin:
-    origin: str                 # "model" or the include id
+    origin: str                 # "model" or "includes[<include id>]" (r5: no sentinel collision)
     composed_address: str       # "$.fact_types[7]", "$.fact_types[7].constraints[2]"
     original_address: str       # in the origin file, e.g. "$.fact_type_constraints[0].constraints[1]"
     element_id: str | None      # None for an anonymous constraint
@@ -533,3 +534,204 @@ counted) and 950 test lines plus fixtures and the census baseline. Stop line
 This prose. The fixture corpus is authored during implementation; its answer
 key lives in the test module, not in the fixture directory's README, so a
 later blind pass is possible.
+
+
+## 12. Execution amendment r4 and implementability sweep (2026-11-09)
+
+Delegated rulings (auto=true), current owner authorization:
+`process-milestone model-composition auto`. D1-D8: adopt every proposal;
+D7 remains a measurement choice with the stated fallback. Optional further
+spec review omitted: the previous convergence stop stands. One Codex CLI
+reviewer is selected for phase diffs by plan section 8; the owner now also
+explicitly selects one Codex CLI reviewer for close, overriding the panel
+requirement. One reviewer is one reviewer.
+
+Approval instrument: prose, retaining section 11's choice. This departs
+from the corpus-first default because the existing spec already fixes T1-T51
+and their expected exits, twice-reviewed plan/spec snapshots fix the prior
+answers, and MC1 must still retain pre-implementation red refusal evidence.
+A separate corpus approval would duplicate those answer decisions; it would
+not replace the hostile-shape, compound-fault, identity, scaling-mutant or
+compatibility controls. New implementation cases remain separately identified.
+
+The implementability sweep identified two acyclic-home repairs:
+
+- Move `parse_model_document(data: bytes, *, source: str | Path) -> Any`
+  verbatim into `gnd.model._validation`, retaining an explicit identity alias
+  in `gnd.model`. `_includes.parse_included` imports its defining home.
+- Move `ReferenceInputError` unchanged into `gnd.errors`, preserving its
+  public `__module__ = "gnd.model"` and explicit alias in `gnd.model`.
+  `_paths` imports it from errors. Its model annotation is type-only.
+
+Both moves enter the historical shim inventory and source scan coverage.
+They add no new refusal spelling and no runtime import allowance. These
+repairs supersede section 6.10 only as to these two defining homes.
+
+Additional sweep decisions: guarded routes retain their existing error
+adapters; guards supply a shared `ModelValidationError` issue before work,
+and adapters must preserve its reason. No unrelated parser becomes stricter.
+The declared-order validation stages remain as section 6.2; included JSON
+suffixes retain their parser semantics. Own attachments are validated once
+at their authored location and once in the composed target context; the
+collision walk counts each active constraint once, at its composed location.
+The scaling timing isolates merge/id indexing from existing schema/semantic
+validation, with warm-up and repeated medians for each workload and mutant.
+
+All milestone rules 0.1-0.7 are discharged: one loader resolver, admission
+inventory guards, census-frozen include-free variants, no included-file
+writer, no new freshness claim, measured identities/refusals, and the
+750-source/1,425-test stop. No per-phase publication or merge is delegated.
+The dependency remains: full baseline and census captured before production
+edits; MC2 and MC3 do not begin before MC1's completed record and review.
+
+### Verification-selection ledger
+
+Each run expects exit 0 unless an explicit negative control is named.
+No evidence is inherited as a current-byte pass.
+
+| Obligation | Disposition | Command / evidence | Input boundary | Invalidation / justification |
+|---|---|---|---|---|
+| MC1-C1..C11 direct tests | run | focused command in section 8 | loader, schema, identities, fixtures | rerun for changed behavior; covers every new branch |
+| Route consumers | run | `uv run pytest -q tests/test_mc1_guards.py tests/test_evolve_loading.py tests/test_pyrel_export.py tests/test_public_reference_budget.py --tb=short`; add each actual guarded route's direct tests when its adapter is edited | guard predicate and each public adapter | every admission point gets its own parameter id; enumerate any newly found sites in the implementation findings |
+| Import layers | run | `uv run pytest -q tests/test_rf8_structure.py::test_graph_and_each_dirty_direction --tb=short` | source modules, tools/gnd_layers.json | no runtime SCC, wrong-way edge or missing home |
+| Lint | run | `uv run ruff check src tests` | all source and tests under configured ruff | required project lint; record known-red separately if observed |
+| Components | run | `python3 scripts/components_index.py changed --base d2d6309b --strict` | component entries, generated views, changed modules | regenerate with code; reread each changed component |
+| MC1-C5 census | run, explicitly selected by owner 2026-11-09 | `uv run pytest -q -m "evidence or census" tests/test_mc1_census.py --tb=short` on beast-3; producer baseline at 459ca8d2 | tracked *.orm.yaml/*.orm.json manifest, per-observable outputs, source and toolchain | compare baseline/candidate values and refusals; dirty negative control must fail |
+| Full default compatibility | run, explicitly selected by owner 2026-11-09 | `uv run pytest -q --tb=short` on beast-3 at 459ca8d2 and candidate | locked dependencies, default addopts, all default tests | preserve lane exclusions; compare known reds and new failures; skipped lanes establish no pass |
+| Other excluded lanes | cadence | separately selected CI/owner lane | native/provider/distribution/proof/historical data | no selection for unrelated historical or certification work |
+
+The baseline archive uses `git archive 459ca8d2` and a manifest produced by
+`git ls-tree -r --name-only 459ca8d2`. The committed producer accepts that
+manifest for archive execution (there is no .git inside an archive), retaining
+exact relative paths. Candidate collection uses `git ls-files`; only original
+baseline members are compared, with new MC1 fixture membership separately
+printed and tested. This explicitly amends section 6.8's blanket membership
+rule, which otherwise conflicts with section 8's required new *.orm fixtures:
+MC1 additions are not historical baseline members. A missing baseline member
+still fails. No prior member's expected answer is regenerated on candidate code.
+
+## 13. Implementation findings
+
+- 2026-11-09, preparation: parser and exception initializer dependencies,
+  resolved by section 12 before implementation; no source edited at discovery.
+- 2026-11-09, preparation: requiring the census's tracked-file set never to
+  grow conflicts with the mandatory MC1 *.orm fixtures. Section 12 admits
+  separately enumerated new fixtures without weakening comparisons for
+  the frozen 400 historical files. Retain this plan-repair row at close.
+
+### r4 execution clarification: isolated baseline and guard helpers
+
+Delegated amendment (auto=true), 2026-11-09: the frozen 459ca8d2 baseline
+census has completed (400/334/66/1), and its full default suite is running
+in a separate beast-3 checkout. Source capture and launch preceded production
+edits. Local implementation may proceed while that immutable baseline run
+finishes: no baseline file or process imports the candidate checkout. The
+full result is still owed before MC1 completion, never inferred from launch.
+This supersedes the requirement to wait for full-suite completion before
+local source edits; it preserves the exact before/after source boundary.
+
+The shared guard exports `guard_document(document, route)`,
+`guard_bytes(raw, *, source, route)` and `guard_path(path, route)`.
+Each detects declarations using `declares_includes`, then calls
+`refuse_unsupported`; no include resolution is reimplemented. Parse/read
+failures on include-free input fall through to each route's original loader
+and existing error adapter, preserving refusal precedence and spelling.
+
+- 2026-11-09, size stop: the conservative gross count is 763 added
+  production/schema lines (includes synchronized schema bytes and moved
+  bodies), versus a 750-line stop. Source edits paused pending a current
+  owner budget choice. Net count is lower; the retained size-check lists
+  both rather than selecting the more permissive measure after the fact.
+  New tests currently total 832 lines. One failing judgments-API reason
+  propagation case remains unfixed at the pause. No phase completion claimed.
+
+### Owner size ruling (2026-11-09)
+
+Owner response to the measured MC1 size stop, verbatim:
+
+> Raise MC1’s stop to 1,100 source / 1,900 test lines
+
+This supersedes the original 750-source / 1,425-test stop for MC1 only.
+Use the conservative gross source/schema count, including the schema twin
+and moved code, to retain the same measurement basis. Resume implementation
+under the existing auto delegation. Later phase budgets are unchanged.
+
+- MC1 implementation: the first mixed-host warning fixture lacked the
+  common-sense library_entry and therefore failed structurally, not on
+  provenance. Its output is explicitly labelled invalid evidence. After
+  correcting that fixture, the selector-path defect was reproduced on the
+  pre-fix remapper (red-provenance-selector.txt) and passed after the fix.
+- MC1 implementation: the RF6/RF8 historical source pins cannot describe
+  intentionally changed loader/version/guard bodies or new homes. Named
+  successor artifacts bind the prior expected digests and exact new bodies;
+  callable identity, pickle/metadata, source visitation and dirty controls
+  remain in the focused selection. Original evidence is not rewritten.
+- MC1 implementation: new Model metadata annotations and serializer getattr
+  sites add exact dynamic-syntax candidates. The successor inventory adds
+  those counted rows only; the ModelIndex query policy remains unchanged.
+- MC1 implementation: D7 experiment A and B both matched the frozen census;
+  A (one wrapping serializer) is selected. The program-export baseline was
+  independently produced on beast-3 at 459ca8d2 and retained for T51.
+
+### Expanded affected-consumer controls
+
+Add tests/test_rf6_packages.py, tests/test_rf6_query_policy.py,
+tests/test_rf8_sessions.py and the affected public witness/composition,
+conformance, extract, measure and PyRel export suites to impact closure.
+The selected full default candidate gate also executes each ordinary guard
+consumer's suite under the unchanged default exclusions. A skipped historical
+or native control is not claimed as a completed gate. Lint's 13 known reds
+are reproduced at the frozen baseline and retained separately; no new lint
+failure is accepted, and the final record must report the nonzero lint exit.
+
+- MC1 self-audit during independent review: R20's direct service guard passes,
+  but the public batch adapter emits band 70 because the refused BatchResult
+  carries no model digest while the closed report schema requires one. The
+  read-only CLI probe is retained as red-batch-adapter-probe.json. This is a
+  blocking finding; preserve guard-first order and emit the authentic digest
+  only as refusal metadata, never as a positive currency claim. Add a public
+  CLI regression and avoid the adapter's policy reload for this refused route.
+
+### r5: reproduced review repairs and completed implementability sweep
+
+Delegated approval (auto=true), 2026-11-09, under the current named milestone
+authorization. Adopt MC1-review-disposition.md's R1-R9 repairs and the shared
+`include_reason(error) -> str | None` guard-adapter helper. Included origin
+kind is encoded as includes[ID], distinct from the own sentinel model; no
+new reserved ID or public identity/report field is introduced. Deep copy
+recursion maps to include:declaration rather than escaping the total composer.
+The exact digest length is also stated in both synchronized schema copies.
+
+Inventory additions: R31 is direct `render_lean` raw-byte admission; R32 is
+direct `render_souffle` raw-byte admission. Each has its own include-bearing
+refusal and include-free refusal controls. R7's copy-bound helper is separately
+tested, as are API and text/JSON composition checks and the public batch CLI.
+
+The guard-before-hash requirement concerns the route's model identity/currency
+work. The shared bounded reader's internal LeafSnapshot hash is a trusted
+intake control, not a positive model-currency claim, and remains part of that
+reader. A refused batch report still requires its existing closed digest field:
+compute that authentic captured-byte digest only after the guard has refused;
+never load/evaluate the composition or report currency on that path. This is
+a compatibility decision preserving the existing report schema, not a new
+report version or a fabricated digest. Record this clarification as a plan
+repair at close.
+
+The 17 corrected regressions were observed red before repairs and green after.
+Three successor raw legacy controls are also green. The one focused independent
+confirmation remains selected; a green local test is not that review. Preserve
+all earlier rulings and snapshots. MC1's owner-selected 1100/1900 stop remains.
+
+### Full-suite follow-up (2026-11-10)
+
+Focused reproductions during the initial c7fc66dd full run found incomplete exact scan/source/snapshot inventories and test-source bytecode pollution. The shared loader, schema and production adapters remain unchanged. Register the two new loader homes in the exact atom-bind scan, eight digest-checked snapshot original homes, and the seven defining-body/two raw-view source successors. Suppress bytecode only for the test's standalone-script import and prove the packaged inventory/install answer remains unchanged. Synthetic chained-source and unrecorded-body controls remain mandatory. Record007 binds the one newly selected test/inventory review; it does not reopen the exhausted production-code review loop or accept the unfinished default run.
+
+The initial beast-3 candidate full run finished:25 failed,18564 passed,801 deselected,1 warning in2518.63s (0:41:58),exit1. All19 additional failures were named: one atom-bind scope, one snapshot link closure, one raw witness-view pin, four RF4/current-body controls, five guarded RF5 bodies, and seven packaged/install/receipt observations of the exact generated migration-script cache. The frozen six failures remain. The initial attempt is retained and rejected for completion; corrected candidate comparison is still owed.
+
+The one bounded test/inventory review approved with no findings; it executed read-only AST/hash and synthetic chain/body controls, not pytest or lint. A later self-audit found the optional new after.raw_sha256 observations included a terminal newline while the predecessor's ast.get_source_segment convention excludes it. The newly added raw-observation case was observed red, then those two after hashes were corrected and bound explicitly to c7fc66dd. Before observations remain unchanged. This small evidence correction and its new test are outside the earlier opinion's exact bytes; no further review round is selected. Publishing a wrong byte checksum is not deferred completeness work.
+
+The first strengthened checksum checker overreached by also rebinding inherited before.raw_sha256 to a7c7cf46. The inherited _run_check_raw raw observation predates later source spelling, although its normalized algorithm/import pins match the base. That failed check is retained as an invalid before-attribution premise. The corrected instrument verifies only the newly authored after.raw_sha256 observations against c7fc66dd and keeps inherited before entries exactly tied to the digest-checked predecessor; it does not silently rewrite historical raw observations.
+
+### Completed corrected comparison (2026-11-10)
+
+Corrected candidate64a42f12 on beast-3 finished: 6 failed, 18609 passed, 801 deselected, 1 warning in 3941.86s (1:05:41),exit1. The exact named failure set equals the six frozen baseline failures; no added or removed failure. The marked census has2 passes over400 original members and3 additions. Resource-cache inventories before and after are empty and tracked status is clean. Production/schema bytes remain c7fc66dd. Record008 binds current evidence and the delegated local completion ruling. The final catalog-only cleanup assigns the pre-existing composed-anchor checker to checker.evaluate; full catalog strict now exits0. Its initially missing assignment was reproduced on the complete a7c7cf46 archive. Neither independent review opinion is broadened to the later checksum control or catalog metadata.

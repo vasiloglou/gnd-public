@@ -1,0 +1,23 @@
+Invalid first warning fixture: failed structural validation, so this is NOT evidence of the selector regression. Corrected fixture and real pre-fix reproduction are retained separately.
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________________ test_T45b_mixed_host_warning_paths ______________________
+tests/test_mc1_model_includes.py:553: in test_T45b_mixed_host_warning_paths
+    model = load_model(path)
+            ^^^^^^^^^^^^^^^^
+src/gnd/model/__init__.py:366: in load_model
+    return _load_model_no_follow(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model/__init__.py:349: in _load_model_no_follow
+    model = _load_model_at(data, source=path, descriptor=descriptor)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model/__init__.py:325: in _load_model_at
+    doc, origins, included = compose(doc, descriptor=descriptor, source=source)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model/_includes.py:146: in compose
+    raise ModelValidationError(issues)
+E   gnd.model.ModelValidationError: model validation failed: $.fact_type_constraints[0].constraints[0]: Unevaluated properties are not allowed ('id', 'modality', 'provenance', 'rationale', 'remedy', 'source', 'status' were unexpected); $.fact_type_constraints[0].constraints[0].provenance: 'library_entry' is a required property
+=========================== short test summary info ============================
+FAILED tests/test_mc1_model_includes.py::test_T45b_mixed_host_warning_paths
+1 failed, 119 deselected in 0.42s

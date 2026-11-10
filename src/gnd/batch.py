@@ -150,6 +150,11 @@ def check_population_directory(model_path: Path, populations_dir: Path, *,
         )
     except ArtifactError as error:
         raise BatchIOError(str(error)) from error
+    from gnd.model._includes import guard_bytes
+    try:
+        guard_bytes(model_bytes, source=model_path, route="batch")
+    except ModelValidationError as error:
+        return _model_failure(model_path, hashlib.sha256(model_bytes).hexdigest(), _issue_records(error.issues))
     model_digest = hashlib.sha256(model_bytes).hexdigest()
     try:
         model = load_model(model_path)

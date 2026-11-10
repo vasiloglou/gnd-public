@@ -1,0 +1,44 @@
+"""Historical confined reference paths and retained roots; shared by includes."""
+from __future__ import annotations
+
+import os
+import re
+from contextlib import contextmanager
+from pathlib import Path
+
+from gnd.errors import ReferenceInputError
+
+
+def _relative(path: object) -> str:
+    if not isinstance(path, str) or not path or len(path) > 4096:
+        raise ReferenceInputError("reference path is empty or exceeds 4096 characters")
+    parts = path.split("/")
+    if len(parts) > 32 or any(p in {"", ".", ".."} for p in parts):
+        raise ReferenceInputError(
+            "reference path must have at most 32 nonempty relative components"
+        )
+    if "\\" in path or "\x00" in path or re.match(r"^[A-Za-z]:", path):
+        raise ReferenceInputError("reference path is not a confined POSIX relative path")
+    return path
+
+
+@contextmanager
+def retained_root(root: str | Path):
+    """Open every lexical ancestor without following a symlink."""
+    if not hasattr(os, "O_NOFOLLOW") or not hasattr(os, "O_DIRECTORY"):
+        raise ReferenceInputError("safe reference descriptor traversal is unavailable")
+    absolute = Path(root)
+    if not absolute.is_absolute():
+        absolute = Path.cwd() / absolute
+    descriptor = os.open(absolute.anchor, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        for part in absolute.parts[1:]:
+            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = next_fd
+        yield descriptor
+    finally:
+        os.close(descriptor)
+
+_relative.__module__ = "gnd.model"
+retained_root.__module__ = "gnd.model"

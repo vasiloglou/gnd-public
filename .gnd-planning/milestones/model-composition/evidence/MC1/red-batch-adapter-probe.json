@@ -1,0 +1,8 @@
+{
+  "scope": "self-discovered MC1 R20 public batch adapter, source frozen for independent review",
+  "expected_exit": 3,
+  "actual_exit": 70,
+  "stdout": "",
+  "stderr": "INTERNAL ERROR: ValidationError: None is not of type 'string'\n\nFailed validating 'type' in schema['properties']['model']['properties']['sha256']:\n    {'type': 'string', 'pattern': '^[0-9a-f]{64}$'}\n\nOn instance['model']['sha256']:\n    None\n",
+  "consequence": "guard returns a refused BatchResult with model_digest=None, but the closed public report requires a string digest; CLI emits internal band 70."
+}

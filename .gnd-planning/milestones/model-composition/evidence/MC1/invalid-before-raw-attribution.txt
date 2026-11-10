@@ -1,0 +1,15 @@
+Invalid strengthened instrument: inherited before raw observation was wrongly attributed to a7c7cf46. Operator home paths sanitized to <HOME>.
+.....................F.............                                      [100%]
+=================================== FAILURES ===================================
+____________ test_full_followup_raw_observations_and_dirty_control _____________
+tests/test_mc1_review_regressions.py:193: in test_full_followup_raw_observations_and_dirty_control
+    check(document['successors'])
+tests/test_mc1_review_regressions.py:191: in check
+    assert hashlib.sha256(raw).hexdigest() == row[side]['raw_sha256']
+E   AssertionError: assert 'd08a4a854e91...3b147f532128a' == 'baef6c243035...3d187aa083087'
+E     
+E     - baef6c243035f32c4160ccd80855d32811fee73d2b9d3c21e7a3d187aa083087
+E     + d08a4a854e9162e3a6cdf909e39126073fd0c726528ef920adb3b147f532128a
+=========================== short test summary info ============================
+FAILED tests/test_mc1_review_regressions.py::test_full_followup_raw_observations_and_dirty_control
+1 failed, 34 passed in 3.77s

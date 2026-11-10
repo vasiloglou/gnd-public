@@ -117,10 +117,10 @@ Programmatic one-attempt controller for data-driven experiment sessions.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `case_payload_versions(contract, experiment_root) -> dict[str, int]` | function | 372 | The report schema version each case's digest-bound MODEL selects. |
-| `case_redaction(contract, experiment_root) -> SessionRedaction \| None` | function | 415 | Return the applied, case-scoped policy selected by bound case models. |
-| `run_gnd_verifier(case, snapshot, *, experiment_root, timeout_seconds) -> tuple[int, bytes]` | async function | 437 | Run one fixed GND verifier command over an isolated immutable view. |
-| `run_session(contract, *, contract_sha256, adapter_id, adapter_policy, prompt, candidate_root, run_r…` | async function | 526 | Run or resume a deterministic bounded agent/verifier feedback session. |
+| `case_payload_versions(contract, experiment_root) -> dict[str, int]` | function | 376 | The report schema version each case's digest-bound MODEL selects. |
+| `case_redaction(contract, experiment_root) -> SessionRedaction \| None` | function | 419 | Return the applied, case-scoped policy selected by bound case models. |
+| `run_gnd_verifier(case, snapshot, *, experiment_root, timeout_seconds) -> tuple[int, bytes]` | async function | 441 | Run one fixed GND verifier command over an isolated immutable view. |
+| `run_session(contract, *, contract_sha256, adapter_id, adapter_policy, prompt, candidate_root, run_r…` | async function | 530 | Run or resume a deterministic bounded agent/verifier feedback session. |
 
 ## gnd.exp.session_contract — `src/gnd/exp/session_contract.py`
 Components: exp.schema
@@ -155,7 +155,7 @@ Closed, digest-bound contracts for data-driven experiment sessions.
 | `DataDrivenContract.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1084 | Dispatch the closed wire version before parsing either schema. |
 | `DataDrivenContract.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1135 | Route JSON through the version dispatcher above. |
 | `DataDrivenContract.required_cases(self) -> tuple[SessionCase, ...]` | method | 1216 | Required cases in their contract order. |
-| `read_session_contract(path, *, experiment_root, experiment_id) -> DataDrivenContract` | function | 1597 | Load, close, path-check, and recompute every contract byte binding. |
+| `read_session_contract(path, *, experiment_root, experiment_id) -> DataDrivenContract` | function | 1605 | Load, close, path-check, and recompute every contract byte binding. |
 
 ## gnd.exp.session_control — `src/gnd/exp/session_control.py`
 Components: exp.service
@@ -240,9 +240,9 @@ Version-8 protected authority, retained opinions and replay composition.
 | `prepare(contract, experiment, run_root)` | function | 41 | (no docstring) |
 | `verify_authority(contract, experiment, run_root)` | function | 57 | (no docstring) |
 | `evaluate(case, result, mechanical, model, refs, snapshot, experiment, run_root)` | function | 70 | (no docstring) |
-| `entry(path, raw)` | function | 133 | (no docstring) |
-| `feedback(results, *, unredacted)` | function | 137 | (no docstring) |
-| `replay(record, rebuilt, directory)` | function | 159 | (no docstring) |
+| `entry(path, raw)` | function | 135 | (no docstring) |
+| `feedback(results, *, unredacted)` | function | 139 | (no docstring) |
+| `replay(record, rebuilt, directory)` | function | 161 | (no docstring) |
 
 ## gnd.exp.session_patch — `src/gnd/exp/session_patch.py`
 Components: exp.candidate_patch
@@ -305,7 +305,7 @@ Version-7 orchestration and read-only reconstruction of its exact evidence.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reconstruct(store, contract, *, allow_terminal, policy_sha256)` | function | 261 | Reject partial, stale or tampered evidence before another invocation. |
+| `reconstruct(store, contract, *, allow_terminal, policy_sha256)` | function | 263 | Reject partial, stale or tampered evidence before another invocation. |
 
 ## gnd.exp.session_runtime — `src/gnd/exp/session_runtime.py`
 Components: exp.session_runtime

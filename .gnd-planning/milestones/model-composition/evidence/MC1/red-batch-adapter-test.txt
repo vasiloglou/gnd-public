@@ -1,0 +1,14 @@
+Standalone invocation of the authored public batch regression, against pre-fix production code.
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/private/tmp/gnd-mc1-batch-regression/test_batch_adapter.py", line 17, in test_batch_include_refusal_stays_in_input_band
+    assert result.returncode == 3, result.stderr.decode()
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: INTERNAL ERROR: ValidationError: None is not of type 'string'
+
+Failed validating 'type' in schema['properties']['model']['properties']['sha256']:
+    {'type': 'string', 'pattern': '^[0-9a-f]{64}$'}
+
+On instance['model']['sha256']:
+    None
+

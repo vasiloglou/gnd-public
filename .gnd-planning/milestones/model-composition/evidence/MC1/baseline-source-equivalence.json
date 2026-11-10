@@ -1,0 +1,38 @@
+{
+  "baseline": "459ca8d293eeef79110c8def26ae7b061d5a8fd5",
+  "phase_base": "a7c7cf46",
+  "equal_objects": [
+    {
+      "path": "src",
+      "baseline_git_object": "4e594174eb511f7996001f82ed1f50031b8d00de",
+      "phase_base_git_object": "4e594174eb511f7996001f82ed1f50031b8d00de"
+    },
+    {
+      "path": "tests",
+      "baseline_git_object": "f0a01329738b89a9d0fd3d996a4bab00d0ab2ad6",
+      "phase_base_git_object": "f0a01329738b89a9d0fd3d996a4bab00d0ab2ad6"
+    },
+    {
+      "path": "docs",
+      "baseline_git_object": "7f1224fa0c3d7d0c2a4a2725c1ff2c1e479cc59d",
+      "phase_base_git_object": "7f1224fa0c3d7d0c2a4a2725c1ff2c1e479cc59d"
+    },
+    {
+      "path": "pyproject.toml",
+      "baseline_git_object": "a5c8ef2bbe52d408ec837e5fa33751f5827546af",
+      "phase_base_git_object": "a5c8ef2bbe52d408ec837e5fa33751f5827546af"
+    },
+    {
+      "path": "uv.lock",
+      "baseline_git_object": "2ac1fc91feba756c24919b702765a48f0c4b2e6b",
+      "phase_base_git_object": "2ac1fc91feba756c24919b702765a48f0c4b2e6b"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "baseline_git_object": "e09925345816978c818633190635e57d49fa846e",
+      "phase_base_git_object": "e09925345816978c818633190635e57d49fa846e"
+    }
+  ],
+  "claim": "Frozen full/default and lint known reds use identical source/test/docs/config objects to the production phase base; preparation changed planning and its standalone observation producer.",
+  "limits": "Planning artifacts are additional full-suite inputs; equality of these named objects does not imply full test-input equality. Newly added planning snapshot links still require current reference-closure controls."
+}

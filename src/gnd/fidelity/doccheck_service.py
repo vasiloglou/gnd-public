@@ -45,6 +45,8 @@ def _cmd_doccheck(model_path: str, manifest_path: str, artifacts_dir: str) -> in
     from gnd.fidelity.match import match_fact_type
 
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "fidelity/doccheck_service.py")
         model = load_model(model_path)
         from gnd.terms import require_non_temporal
 

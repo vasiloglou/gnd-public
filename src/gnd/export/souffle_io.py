@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 
 from gnd import artifacts
+from gnd.errors import ModelValidationError
+from gnd.model._includes import include_reason
 
 from . import souffle
 from .souffle_types import DEFAULT_LIMITS, SouffleLimits, checked_limits, refused
@@ -111,7 +113,8 @@ def export_souffle(model_path, population_path, *, reference_root=None, out=None
         mf = "json" if Path(model_path).suffix == ".json" else "yaml"
         pf = "json" if Path(population_path).suffix == ".json" else "yaml"
         from gnd.model import load_model_bytes_bound
-
+        from gnd.model._includes import guard_bytes
+        guard_bytes(mr, source=model_path, route='souffle_io:115')
         _model, context = load_model_bytes_bound(
             mr, source=model_path, root=reference_root or Path(model_path).parent
         )
@@ -120,5 +123,7 @@ def export_souffle(model_path, population_path, *, reference_root=None, out=None
             mr, pr, model_format=mf, candidate_format=pf, reference_inputs=refs
         )
         return write_souffle_bundle(result, out, raw=raw) if out is not None else result
+    except ModelValidationError as error:
+        return refused(3, include_reason(error) or "input-invalid")
     except (artifacts.ArtifactError, *souffle.INPUT_ERRORS):
         return refused()

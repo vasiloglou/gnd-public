@@ -1,0 +1,45 @@
+reread: subsystem.check (entry not edited): its members changed: cli.checking_command, cli.api, check.service, model.loading
+reread: subsystem.synth (entry not edited): its members changed: model.loading
+reread: subsystem.codegen (entry not edited): its members changed: codegen.service, model.loading, codegen.emit, codegen.manifest
+reread: subsystem.conformance (entry not edited): its members changed: conformance.service, model.loading, codegen.manifest, conformance.currency
+reread: subsystem.extract (entry not edited): its members changed: extract.service, fidelity.service, fidelity.doccheck
+reread: subsystem.measure (entry not edited): its members changed: measure.service, model.loading
+reread: subsystem.evolve (entry not edited): its members changed: evolve.service, model.loading
+reread: subsystem.recovery (entry not edited): its members changed: recovery.verify, model.loading
+reread: subsystem.experiment (entry not edited): its members changed: exp.schema, exp.service
+reread: subsystem.witness (entry not edited): its members changed: witness.service, witness.schema
+reread: codegen.manifest (entry not edited): src/gnd/codegen/manifest.py
+reread: codegen.emit (entry not edited): src/gnd/codegen/emit.py
+reread: codegen.service (entry not edited): src/gnd/codegen/service.py
+reread: conformance.currency (entry not edited): src/gnd/conformance/currency.py
+reread: conformance.service (entry not edited): src/gnd/conformance/service.py
+reread: discover.service (entry not edited): src/gnd/discover/service.py
+reread: extract.service (entry not edited): src/gnd/extract/service.py
+reread: cli.checking_command (entry not edited): src/gnd/commands/checking.py
+reread: measure.service (entry not edited): src/gnd/measure/service.py
+reread: fidelity.service (entry not edited): src/gnd/fidelity/service.py
+reread: fidelity.doccheck (entry not edited): src/gnd/fidelity/doccheck_service.py
+reread: evolve.service (entry not edited): src/gnd/evolve/service.py
+reread: recovery.verify (entry not edited): src/gnd/recovery/verify.py
+reread: exp.schema (entry not edited): src/gnd/exp/session_contract.py
+reread: exp.service (entry not edited): src/gnd/exp/session.py
+reread: exp.session_replay (entry not edited): src/gnd/exp/session_replay.py
+reread: exp.session_judgments (entry not edited): src/gnd/exp/session_judgments.py
+reread: export.ilp_service (entry not edited): src/gnd/export/ilp_service.py
+reread: export.pyrel_emit (entry not edited): src/gnd/export/emit.py
+reread: export.pyrel_rules (entry not edited): src/gnd/export/pyrel_rules.py
+reread: export.applications (entry not edited): src/gnd/export/applications.py
+reread: export.souffle_lowering (entry not edited): src/gnd/export/souffle.py
+reread: export.souffle_bundle (entry not edited): src/gnd/export/souffle_io.py
+reread: export.lean_lowering (entry not edited): src/gnd/export/lean.py
+reread: export.lean_bundle (entry not edited): src/gnd/export/lean_io.py
+reread: check.service (entry not edited): src/gnd/checking_service.py
+reread: cli.api (entry not edited): src/gnd/api.py
+reread: check.batch (entry not edited): src/gnd/batch.py
+reread: semantics.saved_judgments (entry not edited): src/gnd/judgments.py
+reread: model.rai_import (entry not edited): src/gnd/rai_import.py
+reread: witness.schema (entry not edited): src/gnd/witness/io.py
+reread: witness.service (entry not edited): src/gnd/witness/service.py
+reread: skills.migration_verify (entry not edited): src/gnd/skills/gnd-adopt/scripts/verify_migration.py
+reread: skills.model_structure (entry not edited): src/gnd/skills/gnd-model-from-text/scripts/validate_model.py
+changed against d2d6309b (d2d6309): 120 file(s) differ; 0 to fix, 0 warning(s), 44 to reread

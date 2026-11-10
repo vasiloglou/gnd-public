@@ -5,7 +5,9 @@ from dataclasses import replace
 from datetime import date
 
 from gnd.artifacts import canonical_json_bytes
+from gnd.errors import ModelValidationError
 from gnd.model import derivation_dependencies, iter_derivation_clauses
+from gnd.model._includes import guard_bytes, include_reason
 from gnd.witness import io as witness_io
 from gnd.witness.types import DEFAULT_LIMITS as WITNESS_LIMITS
 
@@ -797,6 +799,7 @@ def render_lean(
     limits=DEFAULT_LIMITS,
 ):
     try:
+        guard_bytes(model_bytes, source=f"model.{model_format}", route="export.lean.raw")
         checked_limits(limits)
         if not isinstance(toolchain, str) or not PIN.fullmatch(toolchain):
             raise ValueError("pin")
@@ -951,5 +954,7 @@ def render_lean(
         return refused(4, "work-limit")
     except Unsupported:
         return refused(2, "fragment-unsupported")
+    except ModelValidationError as error:
+        return refused(3, include_reason(error) or "input-invalid")
     except INPUT_ERRORS:
         return refused()

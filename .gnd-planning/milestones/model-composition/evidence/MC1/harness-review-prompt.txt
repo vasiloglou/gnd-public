@@ -1,0 +1,19 @@
+Review the MC1 test/inventory follow-up diff against commit c7fc66dd in this repository. This is one explicitly selected, bounded independent Codex CLI review. Read only; do not write files, source/read credential environments, invoke external agents, run broad suites, or inspect unrelated untracked files/worktrees. Existing parent authentication only. No .env reading.
+
+Authority/design: .gnd-planning/milestones/model-composition/007-MC1-followup-gate.md and notes/MC1-full-followup-gate.md. Original plan and phase spec remain under that milestone. One reviewer is one reviewer. Prior two-round production-code review is exhausted; this review covers ONLY the new test and source/snapshot inventory repairs, no new production review loop.
+
+Try to refute these concrete claims:
+1. No production/schema byte differs from c7fc66dd. Added exact source pins honestly describe the intended guards and preserve historical predecessor artifacts. They do not launder the five pre-existing RF5 failures into green or omit unrecorded body/import differences.
+2. tests/support/rf9_ci_sources.py adds one authenticated MC1 successor layer and retains generic duplicate/unchained/current-body dirty controls. The synthetic replacement test contains the whole effective chain and still admits a legitimate later chained row while refusing duplicate, wrong-home, unchained and duplicate-frozen rows.
+3. tests/test_atom_bind.py adds the two actual new loader homes without weakening the one-reader scan or introducing an exemption.
+4. tests/test_development_scaffold.py binds eight immutable plan/spec snapshots to exact SHA and original home. It validates their targets rather than exempting links. Existing mutation controls cover changed bytes and missing targets. Unrelated local .claude/worktrees can make the global local-root scan fail; a tracked-source archive passed full reference closure with this current helper. Do not fix unrelated worktrees.
+5. The standalone migration import test suppresses only bytecode publication for that test and asserts no new resource path appears. This preserves the existing packaged inventory and install golden (70 files); it does not alter inventory/installer policy to accept generated cache files.
+6. Normalized witness/replay raw-view successors pin exact before/current algorithm bodies and unchanged import bindings, and the new dirty-body probe proves an unrecorded mutation is refused.
+
+Evidence: /tmp/mc1-full-followup-focused.txt (1195 passed, one console PATH skip), /tmp/mc1-console-current.txt (that console case separately passed with .venv/bin on PATH), /tmp/mc1-snapshot-origin-controls.txt (63 passed), /tmp/mc1-rf5-current.txt (exact five known-red pins, 258 passed). Lint still has the baseline13 findings. The initial remote c7fc66dd full/default run is finishing with additional failures; it is NOT acceptance. A corrected candidate full/default and marked census remain mandatory on beast-3.
+
+Inspect git diff c7fc66dd -- tests and these untracked owned artifacts:
+.gnd-planning/milestones/model-composition/evidence/MC1/source-successors.json
+.gnd-planning/milestones/model-composition/evidence/MC1/raw-view-successors.json
+
+Report approve or revise. Findings need exact path/line, observable consequence, and minimal reproduction, distinguish blocking/hardening/completeness. Empty approval is admissible. Also state concrete claims checked and limits, especially tests not executed. No request to produce findings for their own sake. Do not infer a panel or main-merge authority.

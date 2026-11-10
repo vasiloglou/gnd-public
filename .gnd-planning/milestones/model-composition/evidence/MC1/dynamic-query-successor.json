@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/unattended-model-growth/evidence/UG3b/dynamic-query-successor.json",
+  "predecessor_sha256": "6e0048d0d4bd31a05c6be56db79b1076da3dd5dba9d803860c455eebb2a9237e",
+  "reason": "MC1 include metadata annotations and the one empty-field serializer add exact dynamic syntax candidates in documents. Syntax census only; no ModelIndex query-policy exemption is added.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/documents.py",
+      "IncludedFile",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/documents.py",
+      "Model",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/documents.py",
+      "Model",
+      "list[dict[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/documents.py",
+      "Model",
+      "tuple[ElementOrigin, ...]",
+      1
+    ],
+    [
+      "src/gnd/documents.py",
+      "Model",
+      "tuple[IncludedFile, ...]",
+      1
+    ],
+    [
+      "src/gnd/documents.py",
+      "_omit_empty_include_fields",
+      "getattr(self, name)",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7390,
+  "result_occurrences": 9219
+}

@@ -108,6 +108,8 @@ def _cmd_extract(model_path: str, out_dir: str, *, guidelines: bool = False) -> 
     from gnd.synth import paths as _paths
 
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "extract/service.py")
         model = load_model(model_path)
         from gnd.terms import require_non_temporal
 

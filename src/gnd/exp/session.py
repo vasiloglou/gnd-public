@@ -298,6 +298,8 @@ def _copy_bound_model(
         data = stream.read(MAX_SESSION_INPUT_BYTES + 1)
     if len(data) > MAX_SESSION_INPUT_BYTES:
         raise ValueError("session verifier model grew over its byte cap")
+    from gnd.model._includes import guard_bytes
+    guard_bytes(data, source=bound.path, route="exp.copy-bound-model")
     if len(data) != bound.size_bytes or hashlib.sha256(data).hexdigest() != bound.sha256:
         raise ValueError("session verifier model changed after contract validation")
 
@@ -360,6 +362,8 @@ def _case_models(
             rule_id="experiment:session-contract-invalid",
         ) as (_, stream):
             data = stream.read(MAX_SESSION_INPUT_BYTES + 1)
+        from gnd.model._includes import guard_bytes
+        guard_bytes(data, source=bound.path, route="exp.session")
         if len(data) != bound.size_bytes or hashlib.sha256(data).hexdigest() != bound.sha256:
             raise ValueError("session verifier model changed after contract validation")
         with tempfile.NamedTemporaryFile("wb", suffix=".orm.yaml") as handle:

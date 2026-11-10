@@ -906,3 +906,20 @@ and CLI qualifications remain; current scan/patch owners follow the defining hom
 | gnd.commands._output.report_module | gnd.output.report_module | RF9-repair | RF-D5 |
 | gnd.commands._output.transition | gnd.output.transition | RF9-repair | RF-D5 |
 | gnd.commands._output.verbalize | gnd.output.verbalize | RF9-repair | RF-D5 |
+
+
+## MC1 retained aliases (2026-11-09)
+
+Model-composition MC1 moves these defining homes without retirement:
+
+| Historical lookup | Defining home | Identity control |
+|---|---|---|
+| `gnd.model.parse_model_document` | `gnd.model._validation.parse_model_document` | `test_mc1_model_includes.py::test_T50_runtime_frozen_T46_aliases` |
+| `gnd.model._relative` | `gnd.model._paths._relative` | same control |
+| `gnd.model.retained_root` | `gnd.model._paths.retained_root` | same control |
+| `gnd.model.ReferenceInputError` | `gnd.errors.ReferenceInputError` | same control; class module remains `gnd.model` |
+
+The existing graph scanner visits all mapped modules, including `_paths` and
+`_includes`; its dirty controls remain in the MC1 gate. This adds no retirement
+or RF-D5 trigger. Patch moved implementations at their defining home; loader
+wrapper patches keep the actual public lookup used by each caller.

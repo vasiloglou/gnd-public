@@ -1,0 +1,26 @@
+You are the selected independent Codex CLI reviewer for model-composition MC1.
+Read-only: do not modify files. Do not read .env files or credentials. No provider calls or reviewer subagents. One reviewer is one reviewer.
+
+Review the actual staged/working tree diff against a7c7cf46 (the last preparation commit before production implementation), in the current repository. Use git diff a7c7cf46 -- src tests tools and inspect the new tracked fixture/evidence files. This is a phase diff review, not milestone close or a new plan review round. Try to REFUTE the claimed behavior, not summarize the patch.
+
+Normative scope: AGENTS.md; .codex/skills/process-phase/references/project.md; effective plan .gnd-planning/milestones/model-composition/notes/model-composition-plan.md; MC1 spec notes/phase-MC1-spec.md (same milestone). Owner selected auto=true, explicitly authorized beast-3 baseline/candidate full default + census runs, and raised MC1's conservative gross budget to 1100 source / 1900 test lines. Owner selected one Codex CLI reviewer for close under an explicit panel override; phase diffs were already selected in the plan. No merge, certification or publication is selected.
+
+Production design: version 5 pinned depth-one includes resolved once in gnd.model._includes, paths in _paths, parser moved verbatim to _validation, ReferenceInputError moved to errors with identity aliases; Model retains private structural-address provenance and include metadata; empty include/attachment fields vanish in every serializer entry point. All raw/direct consumer routes guard include-bearing input before loading, copying or hashing it; guard helpers centralize detection but do not resolve includes. PyRel runtime bytes are unchanged. Existing include-free models must preserve prior observations. Temporal and reference version gates admit 5. Own fact_type_constraints append inline rules to included hosts and remain owned by the includer.
+
+Evidence so far: frozen 459ca8d2 beast-3 census = 400 members /334 loads/66 load refusals/one loaded canonical-identity refusal. Both serializer mechanisms matched every frozen observable; wrapping serializer selected. Frozen program export digest measured independently on beast-3. Baseline full default suite remains running; focused candidate run is also pending. Lint has 13 baseline-known errors, reproduced on the exact frozen tree; current lint has the same 13. Do not infer completed gates from launch. Phase acceptance has NOT been claimed. MC1-interim-audit.md is an explicitly historical partial checkpoint; later tests/fixes may discharge its rows.
+
+Check especially:
+- totality/hostile direct calls, depth/bytes/alias/numeric caps and validation ordering across all includes; path/root confinement and size discrimination preserving legacy ArtifactError spelling;
+- no parser/import cycles (lazy runtime edges count), exact alias and pickle/metadata preservation, every moved home visited by source scans;
+- every direct-byte route guarded, including session copy and digest intake, witness, API compose/judgments, codegen manifests/emit, conformance currency, discovery/ILP, extract/fidelity/doccheck, RAI import, recovery, embedded/export runtime calls, standalone scripts;
+- include-free behavior and outputs unchanged; inspect actual output adapters for lost include reason or wrong band; Python runtime export byte identity;
+- composed identity envelopes, no metadata inserted into a digest-covered section, attachment ownership and deepest provenance for anonymous/selector-addressed constraints;
+- test branch coverage and negative controls. A fixture failing for a different reason proves nothing. Retained red-invalid-warning-fixture.txt is explicitly NOT a valid regression proof; red-provenance-selector.txt uses the corrected fixture against the pre-fix remapper;
+- RF6/RF8 named successor pins: exact predecessor hashes, moved homes and current bodies are bound; original historical evidence is not rewritten. Dynamic syntax census adds only counted new annotations/getattr sites; no query policy exemption is added;
+- normative format prose and schema parity; frozen variants and the 400-member census do not alone establish all default test gates; avoid weakening tests to launder drift.
+
+You may run bounded read-only probes using .venv/bin/python and read tests; do not launch the whole suite, broad historical lanes, paid/native tools, or network. Default suite and marked census are being executed separately on beast-3.
+
+Output:
+DISPOSITION: approve | revise | block
+For each actionable finding: ID, severity (blocking/hardening/completeness), file:line, concrete observable consequence, a minimal reproducer or read-only evidence, and a targeted fix/regression control. Distinguish reproduced findings from hypotheses. Ignore style-only concerns. List the substantive claims you checked and could not refute and any verification limits. State explicitly if no findings. Do not demand another plan review round: its declared convergence stop remains in force. Bound this to one review plus at most one focused confirmation if reproduced blocking fixes require it.

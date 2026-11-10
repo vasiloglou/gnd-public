@@ -11,7 +11,7 @@ The inline `anchored` family uses the common constraint fields plus an optional 
 ## Top-level structure
 
 ```yaml
-version: 1                                    # mandatory; first field. 1, 2, 3 or 4 (calendar terms and references below).
+version: 1                                    # mandatory; first field. 1, 2, 3, 4 or 5 (calendar terms, references and includes below).
 
 model_id: urn:example:movies@3                # optional; stable opaque identifier for this model
 
@@ -33,7 +33,7 @@ fact_types:                                   # list of fact types with their in
 constraints:                                  # model-level (cross-fact-type or object-type-scope) constraints
   - …
 
-operations:                                   # v2/v3/v4: named state transitions; requires version 2, 3 or 4
+operations:                                   # v2–v5: named state transitions; requires version 2, 3, 4 or 5
   - …
 
 rejected_proposals:                           # constraints the user rejected; preserved so future runs don't re-propose
@@ -728,7 +728,7 @@ A future authoring run on the same domain reads `rejected_proposals` first and e
 
 Version 2 adds exactly one optional top-level section, `operations:`, and changes nothing else. It exists so the conceptual model can also be the *requirements* document: an operation is a named state transition, and a feature is an operation.
 
-**Version rule.** `version:` accepts `1`, `2`, `3` or `4`. A document carrying `operations:` MUST declare version 2, 3 or 4 (a root `if/then` in the meta-schema; violating it is exit 3). Version 3 adds calendar terms; version 4 adds the reference populations described below. A `version: 2` document that declares no operations is behaviourally a v1 document — and every consumer feature-detects on `model.operations` being non-empty, never on `model.version`, so it stays one. Migration from v1 is: change `version: 1` to `version: 2`. Nothing else.
+**Version rule.** `version:` accepts `1`, `2`, `3`, `4` or `5`. A document carrying `operations:` MUST declare version 2, 3, 4 or 5 (a root `if/then` in the meta-schema; violating it is exit 3). Version 3 adds calendar terms; version 4 adds the reference populations described below. A `version: 2` document that declares no operations is behaviourally a v1 document — and every consumer feature-detects on `model.operations` being non-empty, never on `model.version`, so it stays one. Migration from v1 is: change `version: 1` to `version: 2`. Nothing else.
 
 **Default snapshot mode ignores operations entirely.** `gnd check` over a population reads object types, fact types and constraints, exactly as it did before v2 existed. A v2 model's operations produce no verdict, no coverage entry, and no change to any exit band. Transition checking is a separate CLI arm. Explicit `--compiled-operations` snapshot activation is defined under [Compiled obligations](#compiled-obligations).
 
@@ -1659,7 +1659,7 @@ check/transition support this fragment; no new assurance is claimed.
 
 ## Fixed reference populations (version 4)
 
-A version-4 model may declare fixed input populations alongside candidate facts:
+A version-4 or version-5 model may declare fixed input populations alongside candidate facts:
 
 ```yaml
 reference_populations:
@@ -1712,3 +1712,114 @@ them as metadata and does not invent a rule. Session behavior lives in
 [the v7 contract](../../gnd-dev-session/references/session-v7-contract.md).
 
 For explicitly selected saved opinion evidence, see the [judgment contract](../../gnd-dev-session/references/judgment-contract.md).
+
+
+## Model includes (version 5)
+
+A project model can include a tool's shared vocabulary without copying its
+object types, fact types or constraints. This section is the normative home
+for version-5 model composition; workflow notes and how-to pages cite it.
+
+```yaml
+version: 5
+includes:
+  - id: components
+    path: vocab/components-v1.orm.yaml
+    sha256: <64 lowercase hexadecimal digits of the exact file bytes>
+fact_type_constraints:
+  - fact_type: component_imports_component
+    constraints:
+      - id: no_import_loops
+        type: ring
+        variant: acyclic
+        source: user-supplied
+        status: confirmed
+        modality: alethic
+        provenance: {user_quote: "No component may import itself, directly or indirectly."}
+```
+
+`includes` is a nonempty list of at most eight entries. Each entry has exactly
+`id`, `path` and `sha256`. Its id is a unique string of 1–128 characters;
+its digest is 64 lowercase hexadecimal characters. Include-bearing models
+use version 5 and may omit `object_types` and `fact_types`. An include-free
+version-5 model has version-4 semantics and identities that also cover its
+version. Earlier model versions remain admitted under their existing rules.
+
+Each path is confined POSIX relative to the explicit model parent/root:
+at most 32 nonempty components and 4,096 characters, no absolute path,
+dot/parent component, backslash, NUL or drive prefix. Neither the root nor
+any included path ancestor or leaf may be a symlink. Each included file
+is a regular file read with a 10 MiB cap; the entire included set is at
+most 32 MiB. Hashes cover raw bytes, including whitespace and final newlines.
+
+An included file is a standalone-valid model at version 1–4, declaring its
+object types and fact types and optionally constraints and deontic notes.
+It cannot declare `includes`, `reference_populations`, `operations`,
+`rejected_proposals` or `fact_type_constraints`, even as empty lists. Its
+source mode cannot be `unattended`. Nesting is not admitted. The includer's
+version, model id and source govern composition; each included file's
+version, model id and source are retained privately as origin metadata.
+
+Composition retains the includer's own elements first, in authored order,
+then appends each include's object types, fact types, constraints and notes
+in declaration order. All ids of object types, fact types, operations and
+active named constraints share one namespace: a duplicate refuses, never
+overrides. Anonymous constraints are tracked by structural address.
+
+`fact_type_constraints` is available only with includes. It is a nonempty
+list of mappings with exactly `fact_type` and `constraints`; the target is
+a nonempty fact-type id and constraints is a nonempty list of ordinary
+inline constraints. The target must originate in an include. These owned
+constraints append after the target's included inline constraints. They
+remain project-owned; they are not vocabulary overrides. Existing top-level
+constraint kinds remain top-level. Own operations, derivations, subtypes
+and reference declarations resolve against the full composition.
+
+Resolution runs in this order, each stage across all includes before the next:
+
+1. Parse the including bytes with the existing suffix-sensitive parser.
+2. Validate declarations, then the includer's structural schema.
+3. Validate every confined path.
+4. Read every included file, enforcing per-file and set caps.
+5. Verify every raw digest; never parse mismatched bytes.
+6. Parse every included file with its declared suffix (`.json` is strict JSON).
+7. Refuse forbidden sections and unattended included sources.
+8. Validate every included document standalone.
+9. Merge, resolve attachment targets, then check the shared id namespace.
+10. Validate composed structure and semantics, remap issues/warnings, construct
+    the model, validate reference declarations and compile obligations.
+11. Bind reference populations under the same retained root.
+
+Include refusals are `ModelValidationError` issues in input band 3. Reasons:
+`include:declaration`, `include:path`, `include:unreadable`, `include:size`,
+`include:hash-mismatch`, `include:parse`, `include:forbidden-section`,
+`include:invalid-included-model`, `include:unknown-target`, `include:collision`.
+A document whose nested containers cannot be safely copied refuses
+`include:declaration`; direct composer callers receive the same issue band.
+They identify declarations or structural addresses without population values.
+Diagnostics inside included elements use `includes[ID]:<original address>`.
+The deepest origin wins: an owned inline attachment on an included host
+reports its authored `$.fact_type_constraints[i].constraints[j]` address.
+Warnings use the same origin mapping; ValidationIssue gains no new field.
+
+`load_model(path)` resolves includes. The explicit rooted bytes entry point
+is `load_model_bytes_composed(data, *, source, root)`. Unrooted
+`load_model_bytes` refuses any `includes` key with `include:unresolved`,
+even if malformed; orphan `fact_type_constraints` refuses
+`include:declaration`. Unsupported consumers refuse declared includes or
+attachments with `include:unsupported-route` before loading, copying,
+performing model-identity/currency work or publishing a partial model.
+The bounded reader may still produce its internal intake snapshot hash. A
+refused closed-format batch report computes its authentic captured-byte
+digest only as refusal metadata after detection; it never evaluates or
+claims currency for that composition. Portable standalone skill scripts
+have their own nonzero refusal and direct callers to `gnd validate`.
+
+Existing identity functions cover the loaded composition and its authored
+include/attachment declarations, with their existing field exclusions.
+Include paths therefore participate in identity. No private origin metadata
+is serialized or hashed. Empty include/attachment fields are omitted from
+both model dump entry points, preserving include-free serializations.
+A raw includer hash commits to the pinned bytes but cannot prove their
+presence or validity: any positive freshness/publication claim additionally
+requires verification of the included bytes in that same invocation.

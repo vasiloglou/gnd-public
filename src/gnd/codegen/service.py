@@ -107,6 +107,8 @@ def _cmd_codegen(model_path: str, out_dir: str, *, force: bool = False) -> int:
     from gnd.extract.projection import ProjectionGateError
 
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "codegen/service.py")
         model = load_model(model_path)
         from gnd.terms import require_non_temporal
 

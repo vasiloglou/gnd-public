@@ -1,0 +1,9 @@
+[
+  {
+    "name": "_model",
+    "path": "src/gnd/exp/session_replay.py",
+    "predecessor_sha256": "7c6347a783b79bbb9cfee3904f6f8ee01840da04b0c0f720f391958ec9bdc756",
+    "ast_sha256": "1262b7dcef17d00cd690977e30128c02c8bdb3bcc68921a66610a65b575f6d88",
+    "reason": "MC1 explicit include guard before model consumption; guarded-route behavior tests are in tests/test_mc1_guards.py"
+  }
+]

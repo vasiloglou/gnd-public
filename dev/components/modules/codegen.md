@@ -44,7 +44,7 @@ The model -> file-tree emitter: deterministic, self-parsing, provider-free.
 | `smoke_module_relpath(discriminator) -> str` | function | 891 | The one home for the emitted smoke module's path. |
 | `smoke_module_pattern() -> str` | function | 907 | The glob every emitted smoke module matches, whatever its project. |
 | `emit_project(model, model_path, *, skill_name) -> GeneratedProject` | function | 923 | Describe the whole tree for ``model`` — WITHOUT writing anything. |
-| `write_project(project_, out_root, *, manifest_text, parent_fd, parent_path, root_parts, root_fd) ->…` | function | 1183 | Publish ``project_`` under ``out_root`` atomically, or raise. |
+| `write_project(project_, out_root, *, manifest_text, parent_fd, parent_path, root_parts, root_fd) ->…` | function | 1186 | Publish ``project_`` under ``out_root`` atomically, or raise. |
 
 ## gnd.codegen.identifiers — `src/gnd/codegen/identifiers.py`
 Components: codegen.identifiers
@@ -73,10 +73,10 @@ The codegen manifest: GND's third digest-bound record, and the first with a
 | `digest_text(text) -> str` | function | 214 | Content identity by BYTES, over the UTF-8 encoding the emitter writes. |
 | `manifest_path(root) -> Path` | function | 224 | ``<project root>/.gnd-codegen.json``. |
 | `build_manifest(project, model_path, *, entries) -> CodegenManifest` | function | 229 | The manifest for ``project``, or for an explicit ``entries`` list. |
-| `render_manifest(manifest) -> str` | function | 265 | The manifest's canonical BYTES. |
-| `write_manifest(root, manifest) -> Path` | function | 284 | Write the manifest at ``root``, atomically, and return its path. |
-| `read_manifest_bytes(data, *, source) -> CodegenManifest` | function | 363 | Load strict manifest bytes already read through a bound descriptor. |
-| `read_manifest(path) -> CodegenManifest` | function | 377 | Load a manifest strictly, or raise :class:`CodegenManifestError`. |
+| `render_manifest(manifest) -> str` | function | 267 | The manifest's canonical BYTES. |
+| `write_manifest(root, manifest) -> Path` | function | 286 | Write the manifest at ``root``, atomically, and return its path. |
+| `read_manifest_bytes(data, *, source) -> CodegenManifest` | function | 365 | Load strict manifest bytes already read through a bound descriptor. |
+| `read_manifest(path) -> CodegenManifest` | function | 379 | Load a manifest strictly, or raise :class:`CodegenManifestError`. |
 
 ## gnd.codegen.plan — `src/gnd/codegen/plan.py`
 Components: codegen.regenerate

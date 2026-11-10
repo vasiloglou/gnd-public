@@ -1,0 +1,14 @@
+[
+  {
+    "name": "witness",
+    "before": "c75fd8e0206111a02ade91a2200294d23b08ab3b4c70569cc6439a6a2af314ab",
+    "after": "67b48aaabddcf00a197559354332035a9be1755ea9bac4b1b0c0177fc2486e0b",
+    "reason": "MC1 maps unsupported include input to the existing closed witness/replay result rather than leaking the new exception."
+  },
+  {
+    "name": "replay",
+    "before": "2b99c38822a21ea7e9bf6d35fe0d9289637ee90e5a41f75849ee8d741bb5a350",
+    "after": "5f362de07b2061884ada05a43b25087d6d326966c6c4d0a68c3a3cee94b4ef46",
+    "reason": "MC1 maps unsupported include input to the existing closed witness/replay result rather than leaking the new exception."
+  }
+]

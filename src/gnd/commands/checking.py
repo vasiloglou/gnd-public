@@ -473,10 +473,12 @@ def _cmd_check_batch(model_path: str, populations_dir: str, *, unredacted: bool 
             **({"compiled_operations": True} if compiled_operations else {}),
         )
         payload = build_batch_payload(result)
-        try:
-            batch_model = load_model(model_path)
-        except Exception:  # noqa: BLE001 -- preserve predecessor refusal contract
-            batch_model = None
+        batch_model = None
+        if not any(i.get("rule_id") == "include:unsupported-route" for i in result.issues):
+            try:
+                batch_model = load_model(model_path)
+            except Exception:  # noqa: BLE001 -- preserve predecessor refusal contract
+                batch_model = None
         if batch_model is not None:
             from gnd.redaction import RedactionPolicy, project_output
 

@@ -169,3 +169,14 @@ PopulationValidationError.__module__ = 'gnd.population'
 UnvalidatedPopulationError.__module__ = 'gnd.checker'
 
 TransitionLoadError.__module__ = 'gnd.transition'
+
+
+class ReferenceInputError(ValueError):
+    """A reference boundary refused its input before domain evaluation."""
+
+    def __init__(self, message: str, *, model: Model | None = None):
+        super().__init__(message)
+        self.model = model
+
+
+ReferenceInputError.__module__ = "gnd.model"

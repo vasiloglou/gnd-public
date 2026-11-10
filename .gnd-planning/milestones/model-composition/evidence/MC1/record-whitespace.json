@@ -1,0 +1,8 @@
+{
+  "command": "git diff --check 64a42f12..15ad60b8",
+  "exit": 2,
+  "stdout": ".gnd-planning/milestones/model-composition/evidence/MC1/candidate-corrected-full-default.txt:274: trailing whitespace.\n+E     \n.gnd-planning/milestones/model-composition/evidence/MC1/candidate-corrected-full-default.txt:281: trailing whitespace.\n+E     \n.gnd-planning/milestones/model-composition/evidence/MC1/candidate-corrected-full-default.txt:288: trailing whitespace.\n+E     \n.gnd-planning/milestones/model-composition/evidence/MC1/candidate-corrected-full-default.txt:295: trailing whitespace.\n+E     \n.gnd-planning/milestones/model-composition/evidence/MC1/candidate-corrected-full-default.txt:302: trailing whitespace.\n+E     \n",
+  "source_command": "git diff --check 64a42f12..15ad60b8 -- src tests dev/components tools",
+  "source_exit": 0,
+  "source_stdout": ""
+}

@@ -1,0 +1,15 @@
+Valid red: newly authored after checksum used the wrong terminal-newline convention. Operator home paths sanitized to <HOME>.
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_full_followup_raw_observations_and_dirty_control _____________
+tests/test_mc1_review_regressions.py:193: in test_full_followup_raw_observations_and_dirty_control
+    check(document['successors'])
+tests/test_mc1_review_regressions.py:191: in check
+    assert hashlib.sha256(raw).hexdigest() == row[side]['raw_sha256']
+E   AssertionError: assert 'a1e6e15a1d9b...dcc94688262f8' == '2f4851fe21c0...287a57324c937'
+E     
+E     - 2f4851fe21c0c4297cffbc2a820b1408a2bbdbc44ab5aab1da5287a57324c937
+E     + a1e6e15a1d9b3ea7be24fea1d79b9a6ae874ea4de8841e8c1dfdcc94688262f8
+=========================== short test summary info ============================
+FAILED tests/test_mc1_review_regressions.py::test_full_followup_raw_observations_and_dirty_control
+1 failed in 0.25s

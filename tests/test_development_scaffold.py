@@ -66,6 +66,7 @@ RETAINED_EXTERNAL_REFERENCES = {
 # Validate those links from their original document home, never exempt them.
 IE_HOME = Path('.gnd-planning/milestones/incremental-evaluation')
 IK_HOME = Path('.gnd-planning/milestones/induced-knowledge')
+MC_HOME = Path('.gnd-planning/milestones/model-composition')
 RETAINED_DOCUMENT_ORIGINS = {
     IE_HOME / 'evidence/plan-review-r1/incremental-evaluation-plan.md': (
         IE_HOME / 'notes/incremental-evaluation-plan.md',
@@ -106,6 +107,30 @@ RETAINED_DOCUMENT_ORIGINS = {
     CT_HOME / 'checkpoints/DC2/docs/how-to/compose-documents.md': (
         Path('docs/how-to/compose-documents.md'),
         '47705a00acc19320e7c91899b8974d2a0c4a4de17ed4f98c42e8d55bfabee448'),
+    MC_HOME / 'evidence/MC1/002-approved-spec.md': (
+        MC_HOME / 'notes/phase-MC1-spec.md',
+        '5179c82f8e6b953d49257b4b5dd50383955de5061bd89cf0455b4f33703d0a5f'),
+    MC_HOME / 'evidence/MC1/003-approved-spec.md': (
+        MC_HOME / 'notes/phase-MC1-spec.md',
+        '7b471ea27b46918e25dcaacc3a558c052232eb70d29c9810b1bb9d3ea51c13ce'),
+    MC_HOME / 'evidence/MC1/004-approved-spec.md': (
+        MC_HOME / 'notes/phase-MC1-spec.md',
+        '6483b4f8d9da57ea05c3ad6225fc94102ab4ca84dd87ec20969ebf81ea7a5c33'),
+    MC_HOME / 'evidence/MC1/005-approved-spec.md': (
+        MC_HOME / 'notes/phase-MC1-spec.md',
+        'f06505f3194bf191d9d3318ad37f007d0dac10b80d3bb0a56fdcaf1d88ee6662'),
+    MC_HOME / 'evidence/plan-review-r1/model-composition-plan.r1.md': (
+        MC_HOME / 'notes/model-composition-plan.md',
+        'bd661eeede495e2c3c82e9fbd81cfa6d79f7d2a8d0f77c4374f20736f6d1597a'),
+    MC_HOME / 'evidence/plan-review-r1/phase-MC1-spec.r1.md': (
+        MC_HOME / 'notes/phase-MC1-spec.md',
+        'b6ebc5db0b9ecaba0992380ff43f05d865d05415a2dbcbebf9016200a4c06dff'),
+    MC_HOME / 'evidence/plan-review-r2/model-composition-plan.r2.md': (
+        MC_HOME / 'notes/model-composition-plan.md',
+        '2dc91f4e4aee8279ae5feb9695face7b2820e243ccb56e3db1749b4f73bc438a'),
+    MC_HOME / 'evidence/plan-review-r2/phase-MC1-spec.r2.md': (
+        MC_HOME / 'notes/phase-MC1-spec.md',
+        'e8f6cf85ab0d4ae988727f9143ad52fb6dc38e3f328f4acce32b7cfb6ef4a07f'),
 }
 
 

@@ -1,0 +1,20 @@
+You are the selected independent Codex CLI reviewer doing the ONE bounded MC1 repair confirmation after the initial nine-finding review. Read-only; do not modify files, read credentials/.env, use network/provider/native tools, launch whole/broad suites, or use reviewer subagents. One reviewer is one reviewer.
+
+Review current source against a7c7cf46; the original review is .gnd-planning/milestones/model-composition/notes/phase-MC1-codex-review.md, dispositions in notes/MC1-review-disposition.md, r5 spec and 005 ruling/snapshot under that milestone. New regression tests: tests/test_mc1_review_regressions.py (17 corrected cases observed red before fixes; 20 now pass with legacy/raw-type successors). The first reproduction log is explicitly labelled invalid only for its initial Lean R6 toolchain/format; red-review-regressions.txt is the corrected 17-failure proof.
+
+Confirm R1-R9 and examine immediate neighbors for repair-introduced faults:
+R1: authenticated captured-byte digest in refused closed batch report AFTER guard, with no post-refusal model/policy reload. Public CLI stays band 3.
+R2: guard composition at check intake before model load; keep defensive adapter for later re-verification exceptions, including in-memory Model callers.
+R3/R6: one include_reason helper selects include-specific reasons only; legacy path AND raw include-free errors retain input-invalid; raw Lean/Souffle now guard before profile/toolchain/classification.
+R4: one _clone seam catches recursion in every composition/metadata copy and raises include:declaration.
+R5/R8: tagged includes[ID] private origins distinguish valid ID model from own sentinel; own selector warnings keep authored spelling, owned attachments still map to fact_type_constraints, included selectors retain original form.
+R7: copy/case/replay guards precede explicit route hashes; PyRel guard precedes temporal classification. Internal bounded-reader snapshot hashing remains a trusted intake control, not positive currency; r5 explicitly distinguishes it. Batch refusal metadata digest is authentic, not fabricated. No report version or positive freshness claim is introduced.
+R9: both schema copies have exact 64-character digest min/max plus hex pattern, tested against a final newline.
+
+Behavior-preserving refactor: the duplicated empty-field omission loop was removed from model_dump; one wrapping serializer now governs both dump entry points. Preserve frozen include-free dump/JSON/identity behavior.
+
+Successor controls: RF8 _model body pin is refreshed for guard ordering; the pending MC1 dynamic syntax delta is refreshed after removing duplicate serialization policy; the batch controller has an exact RF5 predecessor/current successor artifact using its existing ReaderSeam normalization. Old historical evidence is not rewritten.
+
+Evidence: pre-review focused run 995 passed/3 deselected; repaired focused selection 455 passed; current dedicated review regressions 20 passed. Frozen beast-3 full default baseline completed at clean 459ca8d2 with 6 failed, 18392 passed, 799 deselected, 1 warning, exit 1. Failures: grow-a-model prose length plus historical RF5 pins _cmd_evolve_apply, _cmd_evolve_preview, _cmd_validate, _evolve_emit_claim, _evolve_error_exit. Candidate full suite and marked census are still owed and NOT claimed passing. Lint has exactly the same 13 code/path/line/column failures as baseline; do not relabel that green. MC1 remains under the owner's 1100 source/1900 test stop. No merge/certification/publication is selected.
+
+Read the final source and regressions and try to refute the repairs. Use bounded read-only probes if useful. Do not ask for another plan review round. This is the declared final confirmation budget, not an invitation to churn prose. Output DISPOSITION approve|revise|block; each actual finding needs file:line, observable consequence, reproduction and targeted correction. Otherwise state no findings, the repaired claims checked, and verification limits. Do not infer candidate acceptance from review alone.

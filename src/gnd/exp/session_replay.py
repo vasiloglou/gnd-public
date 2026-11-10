@@ -63,6 +63,8 @@ def _model(case, experiment):
         return None, None
     bound = case.verify.model
     raw = _read(experiment, bound.path)
+    from gnd.model._includes import guard_bytes
+    guard_bytes(raw, source=bound.path, route='session_replay:68')
     if len(raw) != bound.size_bytes or _sha(raw) != bound.sha256:
         raise ValueError("bound verifier model changed")
     model = load_model_bytes(raw, source=bound.path)

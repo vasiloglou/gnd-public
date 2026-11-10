@@ -977,7 +977,13 @@ def compose(
         return {"schema": "gnd-compose/1", "exit_code": 3,
                 "error": {"kind": "input", "message": "model could not be read safely"}}
     try:
+        from gnd.model._includes import guard_bytes
+        guard_bytes(raw, source=model, route='api:980')
         selected = model_module.load_model_bytes(raw, source=model)
+    except ModelValidationError as error:
+        if any(i.rule_id == "include:unsupported-route" for i in error.issues):
+            return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "include:unsupported-route"}}
+        return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}
     except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
         return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}
     try:
@@ -1117,9 +1123,13 @@ def judgments(
             ) from error
 
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "api.judgments")
         policy = read_judgment_policy(read(policy_path, 1024 * 1024))
         receipts = read_judgment_receipts(read(receipts_path, 10 * 1024 * 1024))
         mr, pr = read(model_path, 10 * 1024 * 1024), read(population_path, 10 * 1024 * 1024)
+        from gnd.model._includes import guard_bytes
+        guard_bytes(mr, source=model_path, route='api:1123')
         model = load_model_bytes(mr, source=model_path)
         candidate = load_population_bytes(pr, source=population_path, model=model)
         refs = bind_declared_references(model, root=reference_root or Path(model_path).parent)
@@ -1152,13 +1162,16 @@ def judgments(
             outcome=4 if error.reason in {"limit", "io"} else 3,
             error={"reason": error.reason, "message": str(error)},
         )
+    except ModelValidationError as error:
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), None)
+        result.update(error={"reason": reason or "binding",
+                             "message": reason or "invalid bound judgment input"})
     except (
         ValueError,
         TypeError,
         OSError,
         ArtifactError,  # an unbindable reference file (IKE-Q3 D2-A)
         ModelLoadError,
-        ModelValidationError,
         PopulationLoadError,
     ):
         result.update(error={"reason": "binding", "message": "invalid bound judgment input"})

@@ -1,0 +1,8 @@
+{
+  "runtime_candidate": "64a42f1243e55dab05ec43c19ceb882e7bee13d7",
+  "semantic_candidate": "c7fc66dd27b64891df4057406684a80755e6f828",
+  "runtime_manifest_files_checked": 1117,
+  "runtime_manifest_matches": true,
+  "runtime_tests_schema_layers_diff_from_64a42f12": [],
+  "subsequent_changes": "Catalog assignment/generated views and phase records/evidence only; no runtime opinion broadened to these metadata bytes."
+}

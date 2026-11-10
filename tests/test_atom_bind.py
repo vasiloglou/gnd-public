@@ -27,6 +27,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 #: separate production surface would force an assurance recertification without
 #: improving malformed-input handling.
 BIND_CONSUMERS = ("model/__init__.py", "model/_validation.py", "model/_operations.py",
+                  # MC1's shared include resolver and confined path home (neither reads bind).
+                  "model/_includes.py", "model/_paths.py",
                   "checker/__init__.py", "checker/_reports.py", "checker/_core.py", "model_verbalization.py",
                   # IK2 split its semantic rules into this module; the induced-knowledge
                   # close registers it (it reads no bind).

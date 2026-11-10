@@ -1,0 +1,27 @@
+........................................................................ [ 11%]
+...................F.................................................... [ 22%]
+........................................................................ [ 33%]
+........................................................................ [ 44%]
+........................................................................ [ 55%]
+........................................................................ [ 66%]
+........................................................................ [ 77%]
+........................................................................ [ 89%]
+...........................................F...........................  [100%]
+=================================== FAILURES ===================================
+____________________________ test_R5_judgments_api _____________________________
+tests/test_mc1_guards.py:225: in test_R5_judgments_api
+    assert 'include:unsupported-route' in str(result)
+E   assert 'include:unsupported-route' in "{'schema_version': 15, 'command': 'judgments', 'outcome': 3, 'error': {'reason': 'binding', 'message': 'invalid bound judgment input'}, 'mechanical_report': None, 'judgment_policy': None}"
+E    +  where "{'schema_version': 15, 'command': 'judgments', 'outcome': 3, 'error': {'reason': 'binding', 'message': 'invalid bound judgment input'}, 'mechanical_report': None, 'judgment_policy': None}" = str({'schema_version': 15, 'command': 'judgments', 'outcome': 3, 'error': {'reason': 'binding', 'message': 'invalid bound judgment input'}, ...})
+________________ test_unchanged_moved_bodies_and_shim_identity _________________
+tests/test_rf8_structure.py:70: in test_unchanged_moved_bodies_and_shim_identity
+    assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']
+E   AssertionError: _model
+E   assert '63f5bd3872e5...f5d2daf46261a' == '7c6347a783b7...1958ec9bdc756'
+E     
+E     - 7c6347a783b79bbb9cfee3904f6f8ee01840da04b0c0f720f391958ec9bdc756
+E     + 63f5bd3872e54e038d77dc893ec4efe8dbc00c70d8d9360cf7bf5d2daf46261a
+=========================== short test summary info ============================
+FAILED tests/test_mc1_guards.py::test_R5_judgments_api - assert 'include:unsu...
+FAILED tests/test_rf8_structure.py::test_unchanged_moved_bodies_and_shim_identity
+2 failed, 645 passed, 3 deselected in 93.19s (0:01:33)

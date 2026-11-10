@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "reason": "MC1 explicit admission guards change only the named defining bodies; retain historical evidence and chain exact before/after source observations.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "_witness_inputs",
+      "home": "gnd.witness.service",
+      "before": {
+        "raw_sha256": "739d5f382a00bbf848e8c1b44e9015f0e5f855f5738ff882f3110f2638df7d00",
+        "algorithm_sha256": "269afd420aea00e8c9fb09d8f8a1d7c6c789ee058b29225ca6be1035be27fe2e",
+        "imports": [
+          "DEFAULT_LIMITS",
+          "Path",
+          "WitnessInputError",
+          "_parse_document_bytes",
+          "bind_declared_references",
+          "load_model_bytes",
+          "load_population_bytes"
+        ]
+      },
+      "after": {
+        "algorithm_sha256": "fee59503ebf5d68349dc8172b34f753fc2a0fc1ce4060b7179ef8d7cb493667a",
+        "imports": [
+          "DEFAULT_LIMITS",
+          "Path",
+          "WitnessInputError",
+          "_parse_document_bytes",
+          "bind_declared_references",
+          "guard_bytes",
+          "load_model_bytes",
+          "load_population_bytes"
+        ],
+        "raw_sha256": "a1e6e15a1d9b3ea7be24fea1d79b9a6ae874ea4de8841e8c1dfdcc94688262f8"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    },
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "_run_check_raw",
+      "home": "gnd.checking_service",
+      "before": {
+        "raw_sha256": "baef6c243035f32c4160ccd80855d32811fee73d2b9d3c21e7a3d187aa083087",
+        "algorithm_sha256": "505e43b75bae946449e2811ea2f7e81f0ffbde4c9ddf0931d87710e64618c123",
+        "imports": [
+          "AnchorError",
+          "AnchorSidecar",
+          "CompositionError",
+          "MAX_DOCUMENT_BYTES",
+          "acyclic_extents",
+          "acyclic_extents",
+          "bind_anchors",
+          "bind_population",
+          "calculation_scope",
+          "compare",
+          "compose",
+          "read_anchor_sidecar",
+          "read_regular_path",
+          "resolve_context",
+          "validate_anchor_sidecar",
+          "verify_composition"
+        ]
+      },
+      "after": {
+        "algorithm_sha256": "1f1a958c0116748d6a4d63259f7bc6384ff7f3c4b4421a72b2ad4f18ac43c3ec",
+        "imports": [
+          "AnchorError",
+          "AnchorSidecar",
+          "CompositionError",
+          "MAX_DOCUMENT_BYTES",
+          "acyclic_extents",
+          "acyclic_extents",
+          "bind_anchors",
+          "bind_population",
+          "calculation_scope",
+          "compare",
+          "compose",
+          "guard_path",
+          "read_anchor_sidecar",
+          "read_regular_path",
+          "refuse_unsupported",
+          "resolve_context",
+          "validate_anchor_sidecar",
+          "verify_composition"
+        ],
+        "raw_sha256": "fd890dbbe8ecccf64059b6410a19090be69202e13727869ca0a2aa45f15ac8c4"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_codegen",
+      "home": "gnd.codegen.service",
+      "before": {
+        "algorithm_sha256": "13959f856db2d6217ee88bf31fbd041ebe46c364a1bc17c94b30cce846f64c98"
+      },
+      "after": {
+        "algorithm_sha256": "1f8e93b180223ab23a5e76bb3eacf0a3e56b8fec3f9103c7fa81d772af15ae53"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_doccheck",
+      "home": "gnd.fidelity.doccheck_service",
+      "before": {
+        "algorithm_sha256": "cb7b3d77621ef58c5e3d9afe66dcdecbcedb01686ac105bf96e3ba6ee4d7efb1"
+      },
+      "after": {
+        "algorithm_sha256": "947f0e685d1b53bc42aef98d2a6ea40a3405ecf2840f73b925612853bd4a0b0d"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_extract",
+      "home": "gnd.extract.service",
+      "before": {
+        "raw_sha256": "cc76281b8ffb6ee69ddad91984ee65744f3fc44de7baad1e05e1182c440f86d3",
+        "algorithm_sha256": "d663540924c590474b79328c9df7162b2b092e79347bfac757cb7dedb2c83068"
+      },
+      "after": {
+        "algorithm_sha256": "f4174258b8d0fc439a1ff64d07eb2e41883e2828beebba78e5003ba7004b79c1",
+        "raw_sha256": "a6352d4972608a9652aba32db7c55131e143a263f90909366f76b8499c026d9f"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_fidelity",
+      "home": "gnd.fidelity.service",
+      "before": {
+        "algorithm_sha256": "fb248626b85c0f86e657883eb61628efae2e0a81cc9edcba08747dd0dfa396f6"
+      },
+      "after": {
+        "algorithm_sha256": "633c89d5895601afd6d14ef9fd5e0506ec160c79112bf46f9b8a0823fd2a3b30"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_measure",
+      "home": "gnd.measure.service",
+      "before": {
+        "raw_sha256": "850d65089fc7142836ff04e8af0420fa9eaebcc9a0ad5a3a009840eb08f4b710",
+        "algorithm_sha256": "b25b6aaa22c09fce7988f09b72a2f9933f6a5a442a7509bc8eb3ab3dc64144b9"
+      },
+      "after": {
+        "algorithm_sha256": "e8e3e2b9635c162cfa92b753bffe323fd2305f4e40ade756f58819e389546554",
+        "raw_sha256": "b93686dae9a31e3279cef5506383e64030ee6570ad73e9568ab3716e916f59b3"
+      },
+      "reason": "MC1 include admission/refusal adapter; actual route and include-free compatibility cases remain binding."
+    }
+  ],
+  "raw_observation_commits": {
+    "after": "c7fc66dd27b64891df4057406684a80755e6f828"
+  },
+  "raw_sha256_convention": "New after.raw_sha256: UTF-8 ast.get_source_segment at the bound after commit, excluding the following line terminator. before is the unchanged historical predecessor entry, including its historical raw observation; only its normalized algorithm/import state is compared with the production phase base."
+}

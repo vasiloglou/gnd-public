@@ -466,6 +466,8 @@ def evaluate_judgments(
     trusted_root,
     references=None,
 ):
+    from gnd.model._includes import guard_bytes
+    guard_bytes(model_bytes, source="model.orm.yaml", route="judgments")
     started = time.monotonic()
     if (
         not isinstance(policy, JudgmentPolicy)

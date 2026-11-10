@@ -1565,6 +1565,14 @@ def _verify_bound_file(root: Path, field: str, bound: DigestBoundPath) -> list[V
                         f"{MAX_SESSION_INPUT_BYTES}-byte cap",
                     )
                 ]
+            if field.endswith(".verify.model"):
+                from gnd.model._includes import guard_bytes
+                try:
+                    guard_bytes(stream.read(MAX_SESSION_INPUT_BYTES + 1), source=bound.path,
+                                route="exp.session-contract")
+                except ModelValidationError as error:
+                    return error.issues
+                stream.seek(0)
             digest = hashlib.sha256()
             observed = 0
             while chunk := stream.read(1024 * 1024):
@@ -1674,7 +1682,11 @@ def read_session_contract(
                     raw, _snapshot = read_regular_bounded(
                         root, model_path, max_bytes=MAX_MODEL_BYTES
                     )
+                    from gnd.model._includes import guard_bytes
+                    guard_bytes(raw, source=model_path, route='session_contract:1677')
                     selected_model = load_model_bytes(raw, source=model_path)
+            except ModelValidationError as error:
+                raise SessionContractError(str(error), error.issues) from error
             except Exception as error:
                 raise SessionContractError("session model input could not be validated") from error
             if selected_model.reference_populations:

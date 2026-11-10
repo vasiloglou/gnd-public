@@ -12,8 +12,8 @@ Verify one GSD-to-GND migration record against the bytes it claims.
 | `read_bounded_bytes(path, *, budget, cap) -> bytes` | function | 124 | Read at most ``cap`` bytes; refuse if the file holds even one more. |
 | `load_migration(path, *, budget) -> dict[str, Any]` | function | 160 | Parse and schema-validate the migration record. Total over bytes. |
 | `declared_requirement_ids(artifact_bytes) -> list[tuple[str, bool]]` | function | 194 | Every ``(id, closed)`` pair the checkbox grammar finds, in order. |
-| `verify(migration, *, root, requirements_rel, budget) -> tuple[list[tuple[str, str]], int]` | function | 281 | Run assertions A1..A6. Returns (failures, model_element_count). |
-| `main(argv) -> int` | function | 430 | (no docstring) |
+| `verify(migration, *, root, requirements_rel, budget) -> tuple[list[tuple[str, str]], int]` | function | 284 | Run assertions A1..A6. Returns (failures, model_element_count). |
+| `main(argv) -> int` | function | 433 | (no docstring) |
 
 ## gnd.skills.gnd-model-from-text.scripts.validate_model — `src/gnd/skills/gnd-model-from-text/scripts/validate_model.py`
 Components: skills.model_structure

@@ -1018,6 +1018,12 @@
     },
     "gnd.evaluation_feedback": {
       "layer": "checking"
+    },
+    "gnd.model._includes": {
+      "layer": "model"
+    },
+    "gnd.model._paths": {
+      "layer": "model"
     }
   },
   "schema_version": 1

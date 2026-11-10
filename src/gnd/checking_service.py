@@ -161,6 +161,8 @@ def _composition_view(model, model_coordinate, population_coordinate, population
             raise CompositionError(f"{label} could not be read safely") from error
 
     model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
+    from gnd.model._includes import guard_bytes
+    guard_bytes(model_raw, source=model_coordinate, route="check.composition")
     population_raw = population_bytes if population_bytes is not None else read(
         population_coordinate, "composed population", MAX_DOCUMENT_BYTES)
     if isinstance(composition, dict):
@@ -302,6 +304,13 @@ def _run_check_raw(
         )
 
     try:
+        if composition is not None:
+            from gnd.model._includes import guard_path, refuse_unsupported
+            if isinstance(model_input, Model):
+                if model_input.includes or model_input.fact_type_constraints:
+                    refuse_unsupported("check.composition")
+            else:
+                guard_path(model_input, "check.composition")
         model, _ = _resolve_model(model_input)
     except ModelValidationError as error:
         return _finalize(
@@ -416,9 +425,9 @@ def _run_check_raw(
             population = load_population_bytes(
                 composed[0].population_bytes, source="composed.population.json", model=model,
             )
-        except CompositionError as error:
+        except (CompositionError, ModelValidationError) as error:
             return _finalize(
-                build(3, error=error),
+                build(3, issues=getattr(error, "issues", None), error=error),
                 exit_code=3,
                 fallback=lambda failure: build(EXIT_INTERNAL, error=failure),
                 model=model,

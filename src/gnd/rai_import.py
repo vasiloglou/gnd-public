@@ -407,6 +407,11 @@ def plan_rai_import(request: RaiImportRequest) -> RaiImportResult:
         rule = "size" if "byte cap" in str(error) else "io"
         cls = RaiImportIO
         raise cls(f"rai-import:{rule}", "$", str(error)) from error
+    from gnd.model._includes import guard_bytes
+    try:
+        guard_bytes(data, source=request.model_path, route="import.rai-orm")
+    except ModelValidationError:
+        raise _refuse("include:unsupported-route", "$", "include:unsupported-route") from None
     input_sha = hashlib.sha256(data).hexdigest()
     if _valid_model_bytes(data):
         alias = _alias_document(request, input_sha, input_sha, [], [])

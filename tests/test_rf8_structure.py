@@ -65,6 +65,12 @@ def test_unchanged_moved_bodies_and_shim_identity():
         if row['name'] == 'reconstruct':
             successor = json.loads((EVIDENCE.parent / 'RF9-repair/reconstruct-successor.json').read_text())
             row = dict(row, ast_sha256=successor['ast_sha256'])
+        if row['name'] == '_model':
+            successors = json.loads((ROOT / '.gnd-planning/milestones/model-composition/evidence/MC1/body-successors.json').read_text())
+            successor, = successors
+            assert successor['name'] == row['name'] and successor['path'] == row['new']
+            assert successor['predecessor_sha256'] == row['ast_sha256']
+            row = dict(row, ast_sha256=successor['ast_sha256'])
         # Run's public identity lookup intentionally changes; its end-to-end matrix is G3.
         if row['name'] != 'run':
             assert hashlib.sha256(predecessor_body(node).encode()).hexdigest() == row['ast_sha256'], row['name']

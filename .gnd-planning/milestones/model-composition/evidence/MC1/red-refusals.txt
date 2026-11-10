@@ -1,0 +1,456 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                            [100%]
+=================================== FAILURES ===================================
+__________________________ test_T5_declaration[None] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T5_declaration[True] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+____________________________ test_T5_declaration[1] ____________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+____________________________ test_T5_declaration[x] ____________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T5_declaration[bad4] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T5_declaration[bad5] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T5_declaration[bad6] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T5_declaration[bad7] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T5_declaration[bad8] ___________________________
+tests/test_mc1_model_includes.py:53: in test_T5_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+_ test_T6_hash_declaration[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA] _
+tests/test_mc1_model_includes.py:61: in test_T6_hash_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+_ test_T6_hash_declaration[000000000000000000000000000000000000000000000000000000000000000] _
+tests/test_mc1_model_includes.py:61: in test_T6_hash_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+_ test_T6_hash_declaration[gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg] _
+tests/test_mc1_model_includes.py:61: in test_T6_hash_declaration
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+______________________________ test_T8_path[../x] ______________________________
+tests/test_mc1_model_includes.py:69: in test_T8_path
+    reason(path, 'path')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:path'
+E     
+E     - include:path
+E     + jsonschema:required
+_____________________________ test_T8_path[/tmp/x] _____________________________
+tests/test_mc1_model_includes.py:69: in test_T8_path
+    reason(path, 'path')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:path'
+E     
+E     - include:path
+E     + jsonschema:required
+______________________________ test_T8_path[a//b] ______________________________
+tests/test_mc1_model_includes.py:69: in test_T8_path
+    reason(path, 'path')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:path'
+E     
+E     - include:path
+E     + jsonschema:required
+______________________________ test_T8_path[a\\b] ______________________________
+tests/test_mc1_model_includes.py:69: in test_T8_path
+    reason(path, 'path')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:path'
+E     
+E     - include:path
+E     + jsonschema:required
+______________________________ test_T8_path[C:x] _______________________________
+tests/test_mc1_model_includes.py:69: in test_T8_path
+    reason(path, 'path')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:path'
+E     
+E     - include:path
+E     + jsonschema:required
+____________________________ test_T10_hash_mismatch ____________________________
+tests/test_mc1_model_includes.py:75: in test_T10_hash_mismatch
+    reason(path, 'hash-mismatch')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:hash-mismatch'
+E     
+E     - include:hash-mismatch
+E     + jsonschema:required
+_________________________ test_T13_forbidden[includes] _________________________
+tests/test_mc1_model_includes.py:84: in test_T13_forbidden
+    reason(path, 'forbidden-section')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:forbidden-section'
+E     
+E     - include:forbidden-section
+E     + jsonschema:required
+________________________ test_T13_forbidden[operations] ________________________
+tests/test_mc1_model_includes.py:84: in test_T13_forbidden
+    reason(path, 'forbidden-section')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:forbidden-section'
+E     
+E     - include:forbidden-section
+E     + jsonschema:required
+__________________ test_T13_forbidden[reference_populations] ___________________
+tests/test_mc1_model_includes.py:84: in test_T13_forbidden
+    reason(path, 'forbidden-section')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:forbidden-section'
+E     
+E     - include:forbidden-section
+E     + jsonschema:required
+____________________ test_T13_forbidden[rejected_proposals] ____________________
+tests/test_mc1_model_includes.py:84: in test_T13_forbidden
+    reason(path, 'forbidden-section')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:forbidden-section'
+E     
+E     - include:forbidden-section
+E     + jsonschema:required
+__________________ test_T13_forbidden[fact_type_constraints] ___________________
+tests/test_mc1_model_includes.py:84: in test_T13_forbidden
+    reason(path, 'forbidden-section')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:forbidden-section'
+E     
+E     - include:forbidden-section
+E     + jsonschema:required
+______________________________ test_T15_collision ______________________________
+tests/test_mc1_model_includes.py:91: in test_T15_collision
+    reason(path, 'collision')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:collision'
+E     
+E     - include:collision
+E     + jsonschema:required
+___________________________ test_T18_unknown_target ____________________________
+tests/test_mc1_model_includes.py:101: in test_T18_unknown_target
+    reason(path, 'unknown-target')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:unknown-target'
+E     
+E     - include:unknown-target
+E     + jsonschema:required
+________________________ test_T25_unresolved_and_orphan ________________________
+tests/test_mc1_model_includes.py:110: in test_T25_unresolved_and_orphan
+    assert caught.value.issues[0].rule_id == 'include:unresolved'
+E   AssertionError: assert 'jsonschema:required' == 'include:unresolved'
+E     
+E     - include:unresolved
+E     + jsonschema:required
+___________________________ test_T1_composed_content ___________________________
+tests/test_mc1_model_includes.py:119: in test_T1_composed_content
+    composed = load_model(path)
+               ^^^^^^^^^^^^^^^^
+src/gnd/model/__init__.py:364: in load_model
+    return _load_model_no_follow(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model/__init__.py:346: in _load_model_no_follow
+    model = load_model_bytes(data, source=path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/gnd/model/__init__.py:325: in load_model_bytes
+    raise ModelValidationError(issues)
+E   gnd.model.ModelValidationError: model validation failed: $: 'object_types' is a required property; $: 'fact_types' is a required property; $: Additional properties are not allowed ('includes' was unexpected); $.version: 5 is not one of [1, 2, 3, 4]
+_________________________ test_T9_unreadable[missing] __________________________
+tests/test_mc1_model_includes.py:143: in test_T9_unreadable
+    reason(path, 'unreadable')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:unreadable'
+E     
+E     - include:unreadable
+E     + jsonschema:required
+________________________ test_T9_unreadable[directory] _________________________
+tests/test_mc1_model_includes.py:143: in test_T9_unreadable
+    reason(path, 'unreadable')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:unreadable'
+E     
+E     - include:unreadable
+E     + jsonschema:required
+________________________ test_T9_unreadable[leaf-link] _________________________
+tests/test_mc1_model_includes.py:143: in test_T9_unreadable
+    reason(path, 'unreadable')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:unreadable'
+E     
+E     - include:unreadable
+E     + jsonschema:required
+______________________ test_T9_unreadable[ancestor-link] _______________________
+tests/test_mc1_model_includes.py:143: in test_T9_unreadable
+    reason(path, 'unreadable')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:unreadable'
+E     
+E     - include:unreadable
+E     + jsonschema:required
+________________________________ test_T11_size _________________________________
+tests/test_mc1_model_includes.py:150: in test_T11_size
+    reason(path, 'size')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:size'
+E     
+E     - include:size
+E     + jsonschema:required
+_____________________________ test_T12_parse[\xff] _____________________________
+tests/test_mc1_model_includes.py:160: in test_T12_parse
+    reason(path, 'parse')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:parse'
+E     
+E     - include:parse
+E     + jsonschema:required
+______________________________ test_T12_parse[[:] ______________________________
+tests/test_mc1_model_includes.py:160: in test_T12_parse
+    reason(path, 'parse')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:parse'
+E     
+E     - include:parse
+E     + jsonschema:required
+______________________________ test_T12_parse[[]] ______________________________
+tests/test_mc1_model_includes.py:160: in test_T12_parse
+    reason(path, 'parse')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:parse'
+E     
+E     - include:parse
+E     + jsonschema:required
+______________________ test_T12_parse[x: &a [1]\ny: *a\n] ______________________
+tests/test_mc1_model_includes.py:160: in test_T12_parse
+    reason(path, 'parse')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:parse'
+E     
+E     - include:parse
+E     + jsonschema:required
+________ test_T12_parse[version: 1\nobject_types: []\nfact_types: []\n] ________
+tests/test_mc1_model_includes.py:160: in test_T12_parse
+    reason(path, 'parse')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:parse'
+E     
+E     - include:parse
+E     + jsonschema:required
+_____________________________ test_T14_unattended ______________________________
+tests/test_mc1_model_includes.py:167: in test_T14_unattended
+    reason(path, 'forbidden-section')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:forbidden-section'
+E     
+E     - include:forbidden-section
+E     + jsonschema:required
+_________________________ test_T17_invalid_standalone __________________________
+tests/test_mc1_model_includes.py:174: in test_T17_invalid_standalone
+    reason(path, 'invalid-included-model')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:inva...ncluded-model'
+E     
+E     - include:invalid-included-model
+E     + jsonschema:required
+__________________________ test_T7_attachments[None] ___________________________
+tests/test_mc1_model_includes.py:182: in test_T7_attachments
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T7_attachments[bad1] ___________________________
+tests/test_mc1_model_includes.py:182: in test_T7_attachments
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T7_attachments[bad2] ___________________________
+tests/test_mc1_model_includes.py:182: in test_T7_attachments
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T7_attachments[bad3] ___________________________
+tests/test_mc1_model_includes.py:182: in test_T7_attachments
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+__________________________ test_T7_attachments[bad4] ___________________________
+tests/test_mc1_model_includes.py:182: in test_T7_attachments
+    reason(path, 'declaration')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:declaration'
+E     
+E     - include:declaration
+E     + jsonschema:required
+______________________ test_T21_all_paths_before_any_hash ______________________
+tests/test_mc1_model_includes.py:190: in test_T21_all_paths_before_any_hash
+    reason(path, 'path')
+tests/test_mc1_model_includes.py:43: in reason
+    assert caught.value.issues[0].rule_id == 'include:' + expected
+E   AssertionError: assert 'jsonschema:required' == 'include:path'
+E     
+E     - include:path
+E     + jsonschema:required
+=========================== short test summary info ============================
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[None] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[True] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[1] - AssertionEr...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[x] - AssertionEr...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[bad4] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[bad5] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[bad6] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[bad7] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T5_declaration[bad8] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T6_hash_declaration[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]
+FAILED tests/test_mc1_model_includes.py::test_T6_hash_declaration[000000000000000000000000000000000000000000000000000000000000000]
+FAILED tests/test_mc1_model_includes.py::test_T6_hash_declaration[gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg]
+FAILED tests/test_mc1_model_includes.py::test_T8_path[../x] - AssertionError:...
+FAILED tests/test_mc1_model_includes.py::test_T8_path[/tmp/x] - AssertionErro...
+FAILED tests/test_mc1_model_includes.py::test_T8_path[a//b] - AssertionError:...
+FAILED tests/test_mc1_model_includes.py::test_T8_path[a\\b] - AssertionError:...
+FAILED tests/test_mc1_model_includes.py::test_T8_path[C:x] - AssertionError: ...
+FAILED tests/test_mc1_model_includes.py::test_T10_hash_mismatch - AssertionEr...
+FAILED tests/test_mc1_model_includes.py::test_T13_forbidden[includes] - Asser...
+FAILED tests/test_mc1_model_includes.py::test_T13_forbidden[operations] - Ass...
+FAILED tests/test_mc1_model_includes.py::test_T13_forbidden[reference_populations]
+FAILED tests/test_mc1_model_includes.py::test_T13_forbidden[rejected_proposals]
+FAILED tests/test_mc1_model_includes.py::test_T13_forbidden[fact_type_constraints]
+FAILED tests/test_mc1_model_includes.py::test_T15_collision - AssertionError:...
+FAILED tests/test_mc1_model_includes.py::test_T18_unknown_target - AssertionE...
+FAILED tests/test_mc1_model_includes.py::test_T25_unresolved_and_orphan - Ass...
+FAILED tests/test_mc1_model_includes.py::test_T1_composed_content - gnd.model...
+FAILED tests/test_mc1_model_includes.py::test_T9_unreadable[missing] - Assert...
+FAILED tests/test_mc1_model_includes.py::test_T9_unreadable[directory] - Asse...
+FAILED tests/test_mc1_model_includes.py::test_T9_unreadable[leaf-link] - Asse...
+FAILED tests/test_mc1_model_includes.py::test_T9_unreadable[ancestor-link] - ...
+FAILED tests/test_mc1_model_includes.py::test_T11_size - AssertionError: asse...
+FAILED tests/test_mc1_model_includes.py::test_T12_parse[\xff] - AssertionErro...
+FAILED tests/test_mc1_model_includes.py::test_T12_parse[[:] - AssertionError:...
+FAILED tests/test_mc1_model_includes.py::test_T12_parse[[]] - AssertionError:...
+FAILED tests/test_mc1_model_includes.py::test_T12_parse[x: &a [1]\ny: *a\n]
+FAILED tests/test_mc1_model_includes.py::test_T12_parse[version: 1\nobject_types: []\nfact_types: []\n]
+FAILED tests/test_mc1_model_includes.py::test_T14_unattended - AssertionError...
+FAILED tests/test_mc1_model_includes.py::test_T17_invalid_standalone - Assert...
+FAILED tests/test_mc1_model_includes.py::test_T7_attachments[None] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T7_attachments[bad1] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T7_attachments[bad2] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T7_attachments[bad3] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T7_attachments[bad4] - Assertio...
+FAILED tests/test_mc1_model_includes.py::test_T21_all_paths_before_any_hash
+45 failed in 0.48s

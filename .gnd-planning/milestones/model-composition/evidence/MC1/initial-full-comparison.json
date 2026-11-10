@@ -1,0 +1,73 @@
+{
+  "accepted": false,
+  "baseline": {
+    "failed": [
+      "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+    ],
+    "passed": 18392,
+    "deselected": 799,
+    "warnings": 1,
+    "elapsed": "2324.31s (0:38:44)"
+  },
+  "candidate": {
+    "failed": [
+      "tests/test_atom_bind.py::test_no_raw_bind_access_remains_in_the_ruled_scope",
+      "tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap",
+      "tests/test_disclosure_mode.py::test_review_r2_raw_bodies_keep_the_rf4_base_algorithm",
+      "tests/test_packaged_skills.py::test_skill_resource_tree_carries_every_file",
+      "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+      "tests/test_rf4_peripheral.py::test_current_successor_body_and_import_controls_are_live",
+      "tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_run_check_raw]",
+      "tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_witness_inputs]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_codegen]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_doccheck]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_extract]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_fidelity]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_measure]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]",
+      "tests/test_rf5_handler_pins.py::test_original_handler_bytes[install]",
+      "tests/test_rf9_ci_repairs.py::test_body_successors_reject_changed_bodies[RF4-gnd.api-_witness_inputs-gnd.witness.service]",
+      "tests/test_verification_fixes.py::test_f01_a_forced_run_over_the_same_root_still_writes_its_receipt",
+      "tests/test_verification_fixes.py::test_f01_a_run_that_placed_nothing_and_owns_nothing_writes_no_receipt",
+      "tests/test_verification_fixes.py::test_f01_doctor_does_not_date_and_version_a_root_gnd_never_wrote",
+      "tests/test_verification_fixes.py::test_f01_the_aliased_install_is_fully_removable_by_uninstall",
+      "tests/test_verification_fixes.py::test_f01_two_targets_aliasing_one_directory_leave_a_receipt_owning_the_files"
+    ],
+    "passed": 18564,
+    "deselected": 801,
+    "warnings": 1,
+    "elapsed": "2518.63s (0:41:58)"
+  },
+  "added_failures": [
+    "tests/test_atom_bind.py::test_no_raw_bind_access_remains_in_the_ruled_scope",
+    "tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap",
+    "tests/test_disclosure_mode.py::test_review_r2_raw_bodies_keep_the_rf4_base_algorithm",
+    "tests/test_packaged_skills.py::test_skill_resource_tree_carries_every_file",
+    "tests/test_rf4_peripheral.py::test_current_successor_body_and_import_controls_are_live",
+    "tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_run_check_raw]",
+    "tests/test_rf4_peripheral.py::test_moved_algorithm_preserves_base_body[gnd.api:_witness_inputs]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_codegen]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_doccheck]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_extract]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_fidelity]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_measure]",
+    "tests/test_rf5_handler_pins.py::test_original_handler_bytes[install]",
+    "tests/test_rf9_ci_repairs.py::test_body_successors_reject_changed_bodies[RF4-gnd.api-_witness_inputs-gnd.witness.service]",
+    "tests/test_verification_fixes.py::test_f01_a_forced_run_over_the_same_root_still_writes_its_receipt",
+    "tests/test_verification_fixes.py::test_f01_a_run_that_placed_nothing_and_owns_nothing_writes_no_receipt",
+    "tests/test_verification_fixes.py::test_f01_doctor_does_not_date_and_version_a_root_gnd_never_wrote",
+    "tests/test_verification_fixes.py::test_f01_the_aliased_install_is_fully_removable_by_uninstall",
+    "tests/test_verification_fixes.py::test_f01_two_targets_aliasing_one_directory_leave_a_receipt_owning_the_files"
+  ],
+  "removed_failures": [],
+  "disposition": "All19 additional failures belong to exact scope/source/snapshot inventory gaps or seven downstream cache-pollution observations. Corrections need a fresh candidate full run; this result is not accepted."
+}

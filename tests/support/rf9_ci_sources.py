@@ -1,10 +1,14 @@
 """Named CI successors; historical evidence is immutable."""
+import hashlib
 import json
 from pathlib import Path
 
 EVIDENCE = Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair'
 SOURCE_SUCCESSORS = EVIDENCE.parents[2] / 'compiled-snapshot-obligations/evidence/CI/source-successors.json'
 RETIRED_NAMES = SOURCE_SUCCESSORS.parent / 'retired-names.json'
+PHASE_SUCCESSORS = (
+    Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/model-composition/evidence/MC1/source-successors.json',
+)
 
 
 def retired_names(path=RETIRED_NAMES):
@@ -74,6 +78,13 @@ def _current_rows():
     document = json.loads(SOURCE_SUCCESSORS.read_text())
     assert document['schema_version'] == 1
     rows = document['successors']
+    root = Path(__file__).resolve().parents[2]
+    for path in PHASE_SUCCESSORS:
+        phase = json.loads(path.read_text())
+        assert phase['schema_version'] == 1 and phase['reason']
+        assert phase['predecessor'] == '.gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json'
+        assert hashlib.sha256((root / phase['predecessor']).read_bytes()).hexdigest() == phase['predecessor_sha256']
+        rows = [*rows, *phase['successors']]
     assert all(row['kind'] in {'RF4', 'RF5', 'RF6b'} and row['reason'] and row['home']
                for row in rows)
     collapsed = {}

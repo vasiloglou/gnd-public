@@ -1,0 +1,4474 @@
+{
+  "semantic_candidate": "c7fc66dd27b64891df4057406684a80755e6f828",
+  "claim": "Every tracked production/schema/layer-map byte is unchanged by the test/inventory repair. Ignored resource caches are measured separately by the next beast-3 run.",
+  "files": [
+    {
+      "path": "src/gnd/__init__.py",
+      "sha256": "6972e6c565a1b89855408ec3fcfa45deebb6bcd2746e2f06804bb7274ff6011c"
+    },
+    {
+      "path": "src/gnd/__main__.py",
+      "sha256": "4bec122bdce0eda90470def22da420b70695960fef604d61cba8e063338c0f24"
+    },
+    {
+      "path": "src/gnd/address.py",
+      "sha256": "69ad0ae04472b31cb86bf754e94c09b7f55b0a7cdc96da943c2ce30bf44b3390"
+    },
+    {
+      "path": "src/gnd/admission.py",
+      "sha256": "cf10aca393bcdb91c67dda40fd307d0665481d7828695a895fa0ae69128526fc"
+    },
+    {
+      "path": "src/gnd/admission_validation.py",
+      "sha256": "596666c982e2a6ca93210a7a1dab8e256e84eb3dde3aeb6ae06ffc4a533b29fb"
+    },
+    {
+      "path": "src/gnd/agent_cli.py",
+      "sha256": "e94fe702043b744a24975b8aef0502507abd6778e33956a6b8adc5e3998453e4"
+    },
+    {
+      "path": "src/gnd/agents.py",
+      "sha256": "d7bc6ead5e8f69a902628520b29ac78b2b639b05bb922063aae2005e04b412f1"
+    },
+    {
+      "path": "src/gnd/anchor-sidecar.schema.json",
+      "sha256": "44189a0ea62ba0df5a2be631262fcd1d610cf8af40039edc00558f8e53a0a84a"
+    },
+    {
+      "path": "src/gnd/anchor_identity.py",
+      "sha256": "d07f11808d733470002969615a9d1f621eadc88951fdfcb6d4296bc012118973"
+    },
+    {
+      "path": "src/gnd/anchors.py",
+      "sha256": "4af2e4e83cbc30bb7672bfab44e4526020e3d7234033b521d27a7a55d64349e1"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "fff9af21fdd7285c9e7b13babad0d525987f1a6de22690787eb2ba8d76acde3c"
+    },
+    {
+      "path": "src/gnd/applicability.py",
+      "sha256": "117a7b67d26a52e4198dc779b6c45de8724da49b90a7535c6208c264aaf18a09"
+    },
+    {
+      "path": "src/gnd/architecture.py",
+      "sha256": "2b5adf16bef7c5eb72b3eaee13b00c7b195e234fff11ac1f2fb5f9b80299e32e"
+    },
+    {
+      "path": "src/gnd/archsmoke.py",
+      "sha256": "547fb81196c91e4bed6ac1f971c86866b79b467c02833f2fe72774f71bbdcc12"
+    },
+    {
+      "path": "src/gnd/artifacts.py",
+      "sha256": "3b4863142b58c6c61b8ea03608f57e9fdca8e9d6beb8128e45b6fd7b9b7bfbee"
+    },
+    {
+      "path": "src/gnd/assurance-anchor.schema.json",
+      "sha256": "e5debdcb159490fb2c660f554c1f02eadfe506ef40cd6f2e4244b722ebe0b52b"
+    },
+    {
+      "path": "src/gnd/assurance-evidence.schema.json",
+      "sha256": "0a937f7e2120a85d0e4cfa2d387274e2306427c58607fd7843cf38c1f8b7d2f6"
+    },
+    {
+      "path": "src/gnd/assurance/__init__.py",
+      "sha256": "dab17c7cc9e4a0cc51032e89af4d790d973a729a381327105221a74625cbc354"
+    },
+    {
+      "path": "src/gnd/assurance/_wire.py",
+      "sha256": "cd1c030640964f486121712c70312bb63f7dce80c2d7afb96df4f52e4346ee10"
+    },
+    {
+      "path": "src/gnd/assurance/claims.py",
+      "sha256": "0d526513f57dc6c85806ef932e8cc059ae7318c7d60ca916d17cf82aeb3bbb37"
+    },
+    {
+      "path": "src/gnd/assurance/core.py",
+      "sha256": "1a977fde883170525af4a4f8d4d1bee29f8efdda016fe9877e24d1a57e3019d0"
+    },
+    {
+      "path": "src/gnd/assurance/evidence.py",
+      "sha256": "6c88ec04fac5cd64e0175e501b98617d99508e4bb502bdaf99fe91e24fd8eb99"
+    },
+    {
+      "path": "src/gnd/assurance/inheritance.py",
+      "sha256": "0169f712cd554d4e72e76cae6b607a5702fc7e962e5f3c56c0be0f61b5808548"
+    },
+    {
+      "path": "src/gnd/assurance/transport.py",
+      "sha256": "abfbc133343fea9f17216de595c13b313a918222f68219a9edc15d20d16d786c"
+    },
+    {
+      "path": "src/gnd/assurance_claims.py",
+      "sha256": "982d107a436addbaea38b7c2f7ce8fe24c00797a4a2fe0fa2515785443d358ee"
+    },
+    {
+      "path": "src/gnd/assurance_evidence.py",
+      "sha256": "cbce88de21c8f3426147723af48d288eb691b1fe5aeef063b89ae8684c7fd8b6"
+    },
+    {
+      "path": "src/gnd/assurance_inheritance.py",
+      "sha256": "f4b1df9c5a9cb4dad64ec19374a658b8cc44b2d259f7d01f77f34808ec66fa96"
+    },
+    {
+      "path": "src/gnd/assurance_transport.py",
+      "sha256": "dd5c1c28c27bcba36d24aff78edea182f3489fe4406129c01c99ab9456bcd20e"
+    },
+    {
+      "path": "src/gnd/atoms.py",
+      "sha256": "ed504215f59aad871c70ff72108547b20b5a0eb9fcc118faa8e5c53c315f08d5"
+    },
+    {
+      "path": "src/gnd/baseline.py",
+      "sha256": "d7e6fcc580d57815efdb1303221c879babc4597289cfea6f837ae5ce610e47d8"
+    },
+    {
+      "path": "src/gnd/batch-report.schema.json",
+      "sha256": "f024ceefc3447646408c6e0427c71cc793e8b400f422e890b9e2985cb67a9917"
+    },
+    {
+      "path": "src/gnd/batch.py",
+      "sha256": "5af99547532fa55909cb7b65731439bc576a05af59989cb5f47da267fd0d36e3"
+    },
+    {
+      "path": "src/gnd/branches.py",
+      "sha256": "ae0675c0055c2f9ce4ab570416f3eee887e24e7a09beb4bae40d807a799bb7c2"
+    },
+    {
+      "path": "src/gnd/checker/__init__.py",
+      "sha256": "befe4dfbbba4601f57d14df71bf3d696088744f34592923def5c8bb74da8ba42"
+    },
+    {
+      "path": "src/gnd/checker/_composed.py",
+      "sha256": "477d449c7ec3b1f21a8b85ff6de258291afdac1460eab99afb9b7bea77a9a6e9"
+    },
+    {
+      "path": "src/gnd/checker/_core.py",
+      "sha256": "ff83d4b366dae96058a9f50ebc5e5ab035e5bb965bb202cef52190b544cb8b5b"
+    },
+    {
+      "path": "src/gnd/checker/_reports.py",
+      "sha256": "6c9a3ae8dd4e65e78594cd3be1074793490f75432002602f4366d5550e6b6714"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "sha256": "60bf9aea74816fc33aa2fce05154c3619f028c20ea6b82ec777631b6d77a2dda"
+    },
+    {
+      "path": "src/gnd/cli.py",
+      "sha256": "33c1af6a5c3772e9549eb31ec5edab6121b0dba98b37f10e989ad70ede937ec7"
+    },
+    {
+      "path": "src/gnd/codegen/__init__.py",
+      "sha256": "89d2d91ac93b040dbb3dcd78916b50fe530550a897f9a1b391dcc211d77cce85"
+    },
+    {
+      "path": "src/gnd/codegen/docstrings.py",
+      "sha256": "03ffca04f570720156c932c9259b6b7b4a09b27ab2117d5bc89160dbdc64db65"
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "sha256": "8dbc1d2de294b6076e8ac1724d4c77e656fdf49b93d9d7e0b4e2bd2a2343446b"
+    },
+    {
+      "path": "src/gnd/codegen/identifiers.py",
+      "sha256": "ceac36cecacb7d9ed88cd6d531ce8719c97658dc216b0ee9e9640961597b8fd6"
+    },
+    {
+      "path": "src/gnd/codegen/manifest.py",
+      "sha256": "207a1d75e94179b67004a383949dd47246eba488b76b812f14b5bb025b0c4636"
+    },
+    {
+      "path": "src/gnd/codegen/plan.py",
+      "sha256": "c72c30f792dbb071bfbf5e753f7c0919ef22935a0bd22fdab9d0567d2c224cab"
+    },
+    {
+      "path": "src/gnd/codegen/service.py",
+      "sha256": "8c1a6d06986cbee032e0a8cf64913788de65c059f68a33b83e32b2d6e1e87436"
+    },
+    {
+      "path": "src/gnd/commands/__init__.py",
+      "sha256": "57b4e772fa3fe936e5f3be4036bd6d82fe213eb8b9d4eee8909ef39a12030958"
+    },
+    {
+      "path": "src/gnd/commands/_arguments.py",
+      "sha256": "637b73ea7d6def6e69d6b145028ec08f43bea49a00d8378116a8ae73b80c1f12"
+    },
+    {
+      "path": "src/gnd/commands/_output.py",
+      "sha256": "9e0d506f52295d1e7b0b1f36263b558ef18170835e27dfcf876002b640794b70"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "sha256": "f4331ac90f28aaeb974dd7b2088cabce507cc446e516f37ba219bd073854028f"
+    },
+    {
+      "path": "src/gnd/commands/codegen.py",
+      "sha256": "88fc45d932dec327e780cd017c97acbe453cfac4ad410da8da384d1d81188cd8"
+    },
+    {
+      "path": "src/gnd/commands/conformance.py",
+      "sha256": "4c228ac00ae72238a6c9f678d05d2b64f4153f3756c9864e23ed44ba91428aaa"
+    },
+    {
+      "path": "src/gnd/commands/discover.py",
+      "sha256": "88af8235acc534b6e9b174990199409db79b2cad0ddbfc5b4d6c780d8c32a553"
+    },
+    {
+      "path": "src/gnd/commands/doccheck.py",
+      "sha256": "8826c5d4e594f1381f96141243c7bfcbc046255a008c96f053da99ba3e5fecaa"
+    },
+    {
+      "path": "src/gnd/commands/evolve.py",
+      "sha256": "9ca7da9abce2258d5b965df7bb8a1b63807deb27a731c1efc7ab2f2171220196"
+    },
+    {
+      "path": "src/gnd/commands/exp.py",
+      "sha256": "b95641730a03c203b3ca4c71857b1b72f3ae79a74fbacdbe2fa17dfff5670dde"
+    },
+    {
+      "path": "src/gnd/commands/export.py",
+      "sha256": "3929fd54dad612ab234778534cf1203c79265907650ce8fa3505e70e7bee22f0"
+    },
+    {
+      "path": "src/gnd/commands/extract.py",
+      "sha256": "7a01070c5168af699fdf26ac7aaea2ee6ed4f7d0c0d3871055e2656e25856c4e"
+    },
+    {
+      "path": "src/gnd/commands/fidelity.py",
+      "sha256": "75156652a1df73c0bba8c371b27c61872f430e0faccaf8babbb29b7942868209"
+    },
+    {
+      "path": "src/gnd/commands/judgments.py",
+      "sha256": "92712980cde7c5d12e5c6a1c0c84380c30e8d24053bc45b7f478b95eb675969b"
+    },
+    {
+      "path": "src/gnd/commands/lifecycle.py",
+      "sha256": "3fadce04bb400f475b2f8869dfd765c95982af4677f76aa513bb20df63ebbe59"
+    },
+    {
+      "path": "src/gnd/commands/measure.py",
+      "sha256": "ca041bcde09e4e0e4b755953cce4a40562cf1871efbf87ccb12cbf203f285f9c"
+    },
+    {
+      "path": "src/gnd/commands/recovery.py",
+      "sha256": "23d1a108c97fec77e932103f90e08bed82b69c6617cb17ca32df304c298c5c38"
+    },
+    {
+      "path": "src/gnd/commands/review.py",
+      "sha256": "63c8a0bb2322a41699fcad16537f4b661b7fa97e9abe4da474f2cc07369796b2"
+    },
+    {
+      "path": "src/gnd/commands/solve.py",
+      "sha256": "5eb51b97b21a0885987e60091472b4ed8759eca10d9d28acf1a03bb718ac2fb2"
+    },
+    {
+      "path": "src/gnd/commands/synth.py",
+      "sha256": "ee87e7ec1294311f9523e2bd475562dcac9dc9a487a75312d3a1f8f6f7a79a14"
+    },
+    {
+      "path": "src/gnd/commands/verify.py",
+      "sha256": "ffafe1192aee822ff2c4b209674984ed3194c8d29f86139b48609db9e4ad8730"
+    },
+    {
+      "path": "src/gnd/commands/witness.py",
+      "sha256": "a21133b72aab3cf6509bfc3f28f0d48dd4349e8002963270a375f32ed10b6f5f"
+    },
+    {
+      "path": "src/gnd/compiled_obligations.py",
+      "sha256": "9ac13c82bb3a62376a9d7e2cef1dc312d9aca84b24a9fe71d735fa1d2d7bc05e"
+    },
+    {
+      "path": "src/gnd/composition-manifest.schema.json",
+      "sha256": "a69af972586c3b4c8c55e48205116a850496477a1eb6bd96a9ecb1a18f0b96cc"
+    },
+    {
+      "path": "src/gnd/composition.py",
+      "sha256": "345a845ca494a4ec1a776d1226780159dd6b6cc702ff9596f7cc1bd6d6394a20"
+    },
+    {
+      "path": "src/gnd/composition.schema.json",
+      "sha256": "13d4525a6439250f5f2d25f8274fee4f299b281de6d464540802cfa43310bdcd"
+    },
+    {
+      "path": "src/gnd/conformance.schema.json",
+      "sha256": "1d95679a4f16c2ed18d321d9b69b6c7de37f7712de6816dd893ace3ebe190dcd"
+    },
+    {
+      "path": "src/gnd/conformance/__init__.py",
+      "sha256": "d8a0cc925e8acdf2a20eb2cf5ca92d384c981cef158a2cded4c1f4bc9e834c7f"
+    },
+    {
+      "path": "src/gnd/conformance/architecture.py",
+      "sha256": "4bc3dfb5dd05d08ece5df92727455a15e467be8cd49145627140712e6bc091e1"
+    },
+    {
+      "path": "src/gnd/conformance/cli_service.py",
+      "sha256": "5dc9b4f01a0dd88e8b03b2939d7ea13e583cb3fae7c794f7536ed36edc611fdd"
+    },
+    {
+      "path": "src/gnd/conformance/currency.py",
+      "sha256": "7d6e8240f4429b6ed2064b8a7a4ef14864d665fb3403806735866d6acf3e889c"
+    },
+    {
+      "path": "src/gnd/conformance/integrity.py",
+      "sha256": "c037e7d1ed8ed22c8840339bb68eb0b4785b3dd379970d4626bf440a7ee6c5a3"
+    },
+    {
+      "path": "src/gnd/conformance/report.py",
+      "sha256": "c6a3ba8c156f0a2674eba479fd5abe8170da8c10282d9014ab41c3c1638eeaa6"
+    },
+    {
+      "path": "src/gnd/conformance/service.py",
+      "sha256": "c3c519801168fc7ddae60c67019d353eb0f9a476235117b3ff92b975de5b62e8"
+    },
+    {
+      "path": "src/gnd/conformance/structural.py",
+      "sha256": "231b894ce70babbf09e2d7904aef30aeb2d4953dd2a204935652e82c600ce794"
+    },
+    {
+      "path": "src/gnd/constraint_families.py",
+      "sha256": "28772968671b6298fa2a24cb047551239547ddcb52637f5d150ba443e2651196"
+    },
+    {
+      "path": "src/gnd/correspondence.py",
+      "sha256": "845ce008b44f681ce55e6103bc9722beecdb08b6d5955cbeeee17262608f7bfd"
+    },
+    {
+      "path": "src/gnd/coverage.py",
+      "sha256": "9b28faccd86a081aee6e02f8e80427bcf3d03b64aed6762e1101334ac530f6e7"
+    },
+    {
+      "path": "src/gnd/coverage.schema.json",
+      "sha256": "7f5836a58f21ce562b14cdb8b7bd974dd0e447c5de88db9dc6c3bdc89f7aaa15"
+    },
+    {
+      "path": "src/gnd/declared_adapter.py",
+      "sha256": "e90e9b19bbebbf94f53653bcd910a442aef0bb2bc41635b7350f3b3392fd9a22"
+    },
+    {
+      "path": "src/gnd/diff.py",
+      "sha256": "b0af505ba3245b4b6f42fc31c8b5cc95c6f2cd806371038a9461aad613262ee9"
+    },
+    {
+      "path": "src/gnd/diff.reference.md",
+      "sha256": "f32bc5f319701b4539a36124ceffb1ebfa5b392decd29d1d61a9365eb72e4e00"
+    },
+    {
+      "path": "src/gnd/diff.schema.json",
+      "sha256": "0e528953e9ada1cbc1ef5f2404b131b37877fbe18a1474659b9e9c4383f35107"
+    },
+    {
+      "path": "src/gnd/disclosure.py",
+      "sha256": "4d17febd1db670d67712ac576d11ea4134b5379f97bd9cdacd7479dcb9bd6687"
+    },
+    {
+      "path": "src/gnd/discover.schema.json",
+      "sha256": "01788de8cce4b96a3ad4a4fb85a94206d7e840208d8f21ce86b2a3afb27bcaa5"
+    },
+    {
+      "path": "src/gnd/discover/__init__.py",
+      "sha256": "2637fb2bce3e15babdb57d71a2c92f180f44b16262c06564b42e97fa5645ab2d"
+    },
+    {
+      "path": "src/gnd/discover/candidates.py",
+      "sha256": "c3093a04b942c913e97802dba538d40513f33e5d9c347145c1bf30a25a717989"
+    },
+    {
+      "path": "src/gnd/discover/output.py",
+      "sha256": "dc187b1beb99f069cf71baf10172f4605f892fd70c65d3c97588b68161f9ace7"
+    },
+    {
+      "path": "src/gnd/discover/service.py",
+      "sha256": "8db8fa51abb08f10d8017807aecdb30780846ba8a750bb0d8e44132794183ec3"
+    },
+    {
+      "path": "src/gnd/discover/support.py",
+      "sha256": "5cc2df401d1620a3b31992796697fef8a88e79a9ba385335ed8273fd384f1756"
+    },
+    {
+      "path": "src/gnd/discover/type_evidence.py",
+      "sha256": "609ce48a0f7aa2e930be4f720af2f08fb3fd285a327de030104962c7d81fcafe"
+    },
+    {
+      "path": "src/gnd/discover/type_judgements.py",
+      "sha256": "dd164fca5b9aad37143f2ff563172459f245f524c54a9ddc99f9286835781fd2"
+    },
+    {
+      "path": "src/gnd/discover/types.py",
+      "sha256": "9912c0b51cb621523130f500212a756a2e5f9642bf1fd18d8bfb3480b43d7bb9"
+    },
+    {
+      "path": "src/gnd/documents.py",
+      "sha256": "898aa52e7b8ad5ab6cbcd5c147077920faccc2482e7a4c3877df632737483d6c"
+    },
+    {
+      "path": "src/gnd/errors.py",
+      "sha256": "1e53dda3adfaf7d95f0cf5ecf6a54aca4402a92d534e220382d7e55bf81c71a3"
+    },
+    {
+      "path": "src/gnd/evaluation_feedback.py",
+      "sha256": "ca688c5f90f23d1e10e82eb7f44cbba27c2c30bb8330697566eb82d0671727e5"
+    },
+    {
+      "path": "src/gnd/evolve/__init__.py",
+      "sha256": "c3954f77780e7dbf61655afde20bbf73af16985820f326ef2094769bb9063b07"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "sha256": "148e0fa352ee30f13385c7e934c2ffd5b0c8c596515c813fb5f2317868bca21d"
+    },
+    {
+      "path": "src/gnd/evolve/models.py",
+      "sha256": "f908834b4bbe121eb9dfa553ff4d57f744bd46dbc5cc92c9959672e79a2a5160"
+    },
+    {
+      "path": "src/gnd/evolve/policy.py",
+      "sha256": "8f7782e7e559c68c06df76c867b69a9b1f2a2db072bb786104e7af95337ee619"
+    },
+    {
+      "path": "src/gnd/evolve/population_check.py",
+      "sha256": "5c571c8a3d4cf64be8f611425f018dcd7199a8c4b9db365d6f535603cbd119b7"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "sha256": "fbfe347ac422c0c1c93c42057f2e2926088482c7ffc028df7705807d117bd2c1"
+    },
+    {
+      "path": "src/gnd/evolve/shapes.py",
+      "sha256": "6d9bb573a57cfd1e13a219f7683f8ec310fddf45c20b5447b79dba7cfafb314b"
+    },
+    {
+      "path": "src/gnd/examples/approvals/README.md",
+      "sha256": "063068fdf56ac195844f2ba19621004fc4ec9677fc01b60a88b720b3fa817d09"
+    },
+    {
+      "path": "src/gnd/examples/approvals/approve-41.steps.json",
+      "sha256": "e28d3572a22a4f46a6b7749cb2840924b238a92e2d6b1aaf6e1c4a49b98f025b"
+    },
+    {
+      "path": "src/gnd/examples/approvals/claimed-post.pop.yaml",
+      "sha256": "8dda1301927362a77d8c3d7c9a460e91ccf0df994e3f3bc0968844be1cd5184a"
+    },
+    {
+      "path": "src/gnd/examples/approvals/model.orm.yaml",
+      "sha256": "83d0d8474042bd1191bd0898d86e8c8a06c02d2b80247329b260cee8369f4219"
+    },
+    {
+      "path": "src/gnd/examples/approvals/plan-draft-1.steps.json",
+      "sha256": "63ce2014032bf43e7172ffe0b83a8d473804546bfeea29cb83ca1e1ec153032d"
+    },
+    {
+      "path": "src/gnd/examples/approvals/plan-draft-2.canonical.steps.json",
+      "sha256": "3c2433ac6e0745cf3b9508353c9f9d98dc105c0df7c384943df88287f3e18b6b"
+    },
+    {
+      "path": "src/gnd/examples/approvals/plan-draft-2.steps.json",
+      "sha256": "b09a7e00939db593c88bbd0ea40d527955ccd7517025656cf4b3b3a5abb5a3a7"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/README.md",
+      "sha256": "f23a8a2023d42937725ba9222c119f0b759fd0ff0b9cf20752da2e7012f19334"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/TASK.md",
+      "sha256": "21fc98c15661d9bbf3598a2404b5c343755cccd751083f77c9d269a2aecfc2cb"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/claude-code/attempt-0001/feedback.json",
+      "sha256": "7fdec6c4d1688f37c2de9c5ce9c6c842be7ee63e174dfc2d7af895307814d444"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/claude-code/attempt-0001/steps.json",
+      "sha256": "324e56d9b59f6555680c15a170b44249c5e01b55ff84f164b66c0c7763ad3cc8"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/claude-code/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/codex/attempt-0001/feedback.json",
+      "sha256": "e7924eca6d673c33266619390ab786aab22dfee0d16408e448c12fc4ba974e01"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/codex/attempt-0001/steps.json",
+      "sha256": "0d44d47de2f51b6d372baa21b5ed947044d1c194856cae37b80a77c12ce8ced9"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/codex/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/gemma-3-4b-it/attempt-0001/feedback.json",
+      "sha256": "e0749de135b5a49fd0f61e8ee42cea2ef9eac48e1d0febf96261fa0213e6b289"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/gemma-3-4b-it/attempt-0001/steps.json",
+      "sha256": "2af800b4af2a1183646213ca6ca7d5f343972c459230fe4c7e38be60794cdfe1"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/gemma-3-4b-it/attempt-0002/feedback.json",
+      "sha256": "3a4f4223af1b86f7b81e73ab2ade50dd62a51ef64e0174ec58e491c1c17e87f4"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/gemma-3-4b-it/attempt-0002/steps.json",
+      "sha256": "fa33453b2b2fb256a2bf82f8ed26230226f36a1c2675c2baa572a494f2774958"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/gemma-3-4b-it/result.json",
+      "sha256": "60862dcbc7df78517603d7c9d0ff23bc9c47fba9f87e8150360d57a6969c0d17"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/attempt-0001/feedback.json",
+      "sha256": "c2eddf45c9293a49c8a52e7476ec38685b71ed21ca337ebc5b07c4e75b16b434"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/attempt-0001/steps.json",
+      "sha256": "2c5cf589fbb43e8e6694703987fac742daa8b987a7c257eb52a7ad492cd394a6"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/attempt-0002/feedback.json",
+      "sha256": "ae7ed0a0d70cf16ce168c8cbe555cba365b27fabdd53716c23eb7ecccc920bf6"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/attempt-0002/steps.json",
+      "sha256": "d41d6b158dd19b03d9df8132102cc423d01b62a20bf6eb1f409749efbdcf8645"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/attempt-0003/feedback.json",
+      "sha256": "2516ef4c465b2e57e7c5c198c0176774f98993316bf4212d77e3c31b50c9ea49"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/attempt-0003/steps.json",
+      "sha256": "2c5cf589fbb43e8e6694703987fac742daa8b987a7c257eb52a7ad492cd394a6"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.1-8b-instruct/result.json",
+      "sha256": "8441f1184258ad1a4af15cb00a0a7c687d5e8c2fc7c1e02f5013acc8c0689340"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/attempt-0001/feedback.json",
+      "sha256": "127ddb90746cf8f124977733b3e35af8f9b6f1564734b17752fb399e5c45d9b6"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/attempt-0001/steps.json",
+      "sha256": "15fb470f202eb9aa9f9600c60a5a0c096ee0fe8f10364e9afd00768a4e2ce6ff"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/attempt-0002/feedback.json",
+      "sha256": "910ebe15e6711f426fc06a82ac8bf55cb0486271088fdd7d8899cd865c799c92"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/attempt-0002/steps.json",
+      "sha256": "6d3bc1fd2ef7667dde0571794527aab75a907c4781cbd4b057d53133e679d8cf"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/attempt-0003/feedback.json",
+      "sha256": "36c355ef55003d193937d948b908ea27cf5d93d25206a3df4a0fe7e7f0f84a9f"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/attempt-0003/steps.json",
+      "sha256": "6d3bc1fd2ef7667dde0571794527aab75a907c4781cbd4b057d53133e679d8cf"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/llama-3.2-3b-instruct/result.json",
+      "sha256": "07bd1d9b786075f4d893748958917954b4e82fc87ba142176bd28f552ab11a08"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/manifest.json",
+      "sha256": "08de9957e3a7ba7f169e0a19b734acd045059d8643f0c21eae47cb4c12bc3373"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/qwen3-14b/attempt-0001/feedback.json",
+      "sha256": "cf5fce20dd5a743ba63c10cdbfb8cc4719b507dcf17e1b8493a0a78fee29cba4"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/qwen3-14b/attempt-0001/steps.json",
+      "sha256": "92b59696b6e91661129c19e451748d57d6a47d7941430d0d16103ea6b1c58a93"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/qwen3-14b/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/approvals/recordings/results.json",
+      "sha256": "f36567d027e23022889f998c3028662783aa0676eeade363557bf5ab5d2be959"
+    },
+    {
+      "path": "src/gnd/examples/approvals/stand_in_agent.py",
+      "sha256": "26da9d6a8a0ba9cdeb7870adc430d618f1a1cea0299f0cf7b97061adf707f5da"
+    },
+    {
+      "path": "src/gnd/examples/approvals/state.pop.yaml",
+      "sha256": "4d172d4d08f64415b3e15fd899ce7c9512446d8d5a6aec90a906187afe46b660"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/README.md",
+      "sha256": "5079f7e37b6fbf1e012a5c005ce0fb26bc362b99c6fefcb835e3d8be05e9378f"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/adult-for-minor.population.json",
+      "sha256": "e81573a5fa8c352f9a6696834de1cf7c3b6e76c488bc47f62e6a8596b99ef143"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/already-read.population.json",
+      "sha256": "0452dea591233c7dd3a189815abe66f0449addf5cf194132e202e72cf2ce4218"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/app.py",
+      "sha256": "5bce22330333bf516a68202d2ba7aa1353891fea89b5917128150677917694a3"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/architecture.contract.yaml",
+      "sha256": "2edf14e9b5f1c03f5813fdecc16af15b2bab1fbffb15cc7cf5fb39cf52cd4053"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "sha256": "cc2d42be35d284f20d00e56bc761ff9121ee2e3c9f7c02091a6a3d2c277b232b"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/complete.population.json",
+      "sha256": "489c3ceaaa194f034fb997cdb0709e8040669b90dc9138ce6cfa642bc3ac0d46"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/extension/bookrec/__init__.py",
+      "sha256": "d451c83030160c2cfd9997c1cd0a0c0a141506336351c5c27c8d17213a230077"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/extension/bookrec/cli.py",
+      "sha256": "cc9a2f421b0d2128c78f18392e4866992a5f0c6844d44f99134a0a7bea47abd5"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/extension/bookrec/library.py",
+      "sha256": "c6004eaaf4f6cd3bc8ba1fa63228d015332cc51a69b1fea1a19ccfb3f8b249d3"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/extension/bookrec/native_query.py",
+      "sha256": "9be23f429ed1dec992a899bf1745205f55988439e954eb3c6188a6910e8d6dc8"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/genre-proposal.json",
+      "sha256": "fb2a3e91eb0164d31a4f53d15b00f509c706656925bf33c37cc349b20f5c2205"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/genre-warning.population.json",
+      "sha256": "f182c9a14cf384c40ed079186b865c887fcde9fe413930b80c05d99d91e5eb3a"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/model.orm.yaml",
+      "sha256": "0198fcfbeca7f006c581915ae456f788c762ab3cb697a01c06535188a658656c"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/README.md",
+      "sha256": "343795dc25e86c321e75a49cde917cbf8dec45f279d43b83d826a56cde256a59"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/TASK-conflict.md",
+      "sha256": "b1d54631c8c1acf76b4c33d0dd28cc5536f92d0669a10d075894b4da90730d82"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/TASK-plain.md",
+      "sha256": "daced7985ea66ce5d43bd0093b258c6f23fa517b377fda56dcd1a7aff86b41d1"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-1/attempt-0001/agent.stdout",
+      "sha256": "bb7728813ac598d99e36e9975b71f85eaf849de5fcaa8c35c123331c3047c989"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-1/attempt-0001/feedback.json",
+      "sha256": "1a18fb2b337e4e81a87e6e31f9de824d5b74d3feaa0ae62296cfc1641ae45a75"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-1/attempt-0001/recommendation.population.json",
+      "sha256": "4808b72c8aed18863c884bd59b76a75cde24aa3cdfb7e353f138006739e09a69"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-1/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-2/attempt-0001/agent.stdout",
+      "sha256": "b5cab7ce3e92f7adc60f0f2bd0971ed7f931899482a33c12df3fd24115f07f37"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-2/attempt-0001/feedback.json",
+      "sha256": "e61fdf3225a25e723f89584ff8c8765821eb8fdc019283cb1b50b89cc532c035"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-2/attempt-0001/recommendation.population.json",
+      "sha256": "4808b72c8aed18863c884bd59b76a75cde24aa3cdfb7e353f138006739e09a69"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-conflict-2/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-1/attempt-0001/agent.stdout",
+      "sha256": "ab7ff04ae063b7ab8c04117894dd20997dca6b8553d6012f6008fd761697e764"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-1/attempt-0001/feedback.json",
+      "sha256": "c5f3220b19cc0e23f512c7173d414fe48b2a5aaf24bef203f99d0445ec4a64c2"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-1/attempt-0001/recommendation.population.json",
+      "sha256": "89d0ec12217e12aba2c13e63e150bb77a547cc28aeb399fa4c830e722394dd03"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-1/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-2/attempt-0001/agent.stdout",
+      "sha256": "6b2f65441d236be60fffcce491ab522605a960dc99c776fd469660472eb36230"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-2/attempt-0001/feedback.json",
+      "sha256": "308d77e8936f855fdc006e3ec3cf089e26c026206201b3642775a5587fbbcc0a"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-2/attempt-0001/recommendation.population.json",
+      "sha256": "89d0ec12217e12aba2c13e63e150bb77a547cc28aeb399fa4c830e722394dd03"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/codex-plain-2/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/manifest.json",
+      "sha256": "a25be2acc77ca26509ddf9d5284a0a078578d8f0dce7276e790d7af3d40147a5"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/recordings/results.json",
+      "sha256": "98d5becdadffc6511e48584c0b2e0a5ef903cb453f2b0cb4fa667e9f3dc01d74"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/rules_in_pyrel.py",
+      "sha256": "0431bb086c4b1b568e06d63494066ee10746d7812908cae9dc4b5e8bab749eaa"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/seed.population.json",
+      "sha256": "be1f8cbc9b0150d3263806b11a5a02b62e6e96f1433ec35aedc1f02779976ab9"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/stand_in_agent.py",
+      "sha256": "6d0e2a4ca4be983829c1a68a6d2e2fab1c5eec8512c987232d21732d4c684d9e"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "sha256": "b735fbc09574403b3036830e505857b4c30d6c78e2fd6a7aa8ab506ada90da67"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/adult-refusal.input.json",
+      "sha256": "9d9f9bd989a34a3ea722c2a33ddddb365bc5dae0bb671b1220e9bae967369e62"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/adult-refusal.json",
+      "sha256": "eb7dad17ed7c34238fac748070c14e5464adb40ef3067b7ac80a01bea8fe0c3e"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/advisory.candidate.json",
+      "sha256": "34a162839ed39ae3bfa0ec9d8037fdebc3a81cadc7ed6e4b330fcf41a754d305"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/advisory.json",
+      "sha256": "167b663325b3fe73317f746cecc20ca4ddf3471da78029bbf9fcba6d1d91ce70"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/already-read-refusal.input.json",
+      "sha256": "75ebd4ea8b0403f783f69c30a260b7e1f0ef8821a24b727a75dc189fc91c778f"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/already-read-refusal.json",
+      "sha256": "2a01d4b18473fd7e94b2ea9f6c73029910340629014d33fb420f1cb42b04b588"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/complete.candidate.json",
+      "sha256": "0d8617807ed9ecf395a0de1a1b2473cf57d356e1e11398a52468a57b80de7a99"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/complete.json",
+      "sha256": "e92da3ea9cb4e32ccc5027ffdc37cd0d7de773002d3d8bf5d7a478dcf7f26a1e"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.input.json",
+      "sha256": "be5ce520195f10368f7b51bd73a9b852990f4192f7e67b162c807484e2fdb679"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/omission-refusal.json",
+      "sha256": "954dd3f85aa4859fc1e1651609d1fe85b425daa8a1dc41e9d203c38b9ffb00cc"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/preferred.candidate.json",
+      "sha256": "1e6f53d90b15abb43a85c55388df99d35d5e4057d5fd7a38a833ac4227cb3b0c"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/preferred.json",
+      "sha256": "c4621dfc0974bcceccaa23f5914ce4ab86dd72c8d835e9f819add6a4f36019cc"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/checkpoints/strict.json",
+      "sha256": "6528b160f86889f041c90da642d28b0fe3aeb2b45cbd4c6df43d872b2611df24"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/eligibility.svg",
+      "sha256": "66a76ca2c6f3bdd2b9c5b0f7a51465a0ef1fe38daac399abd4474ce82115bd79"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/evolution.svg",
+      "sha256": "9354fdfed8e538b1ebc8a9a98ea0c84d11ecd082d5ff34df96cf0af508dc2616"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/flow.svg",
+      "sha256": "cbb4d607b6c96b22684e98b749e11836b7363a44e9d06236ea7a8890055d03fd"
+    },
+    {
+      "path": "src/gnd/examples/bookrec/tutorial-assets/sources.json",
+      "sha256": "1d5621bb901adfa54b6b6e5ccd4db4276859adc57832204a5735d8cfcaf5e1b1"
+    },
+    {
+      "path": "src/gnd/examples/composition/README.md",
+      "sha256": "fc28f2138e81045d511343da4bf4b1d377ccc9394be13c94a37ba57cd7c1ab0e"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/contract-a/document.txt",
+      "sha256": "32f5d38985bbf47cd14f87e1bbcdd9162a17fc87a64a40a36ad77003c33e7665"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/contract-a/population.json",
+      "sha256": "e27825b8374866b9801091274a14701d989cafe34a0178a76bc27f43e76cd412"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/contract-a/population.json.anchors.json",
+      "sha256": "c1b31f7b5ceb9d23ce4659d1264b9613957d0b27761d0795d68334033d6fcd58"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/contract-b/document.txt",
+      "sha256": "e039abc51e879990b8fd90b582312a0610863357f0a1f072147316bb0685efcc"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/contract-b/population.json",
+      "sha256": "ff7cc2577b90a75c1b98d75593d286c4f66068404fc81ff09864c56956d6914c"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/contract-b/population.json.anchors.json",
+      "sha256": "989857cbb7f648734537e5864fb51612e59f5a2d9d6fcfc0427b422737722545"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition-conflict/manifest.json",
+      "sha256": "ac6e2ec329776e3bc0633734bc6f8b6ca7d8e2e1147719495a7e6ab8cca79c56"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/contract-a/document.txt",
+      "sha256": "32f5d38985bbf47cd14f87e1bbcdd9162a17fc87a64a40a36ad77003c33e7665"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/contract-a/population.json",
+      "sha256": "e27825b8374866b9801091274a14701d989cafe34a0178a76bc27f43e76cd412"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/contract-a/population.json.anchors.json",
+      "sha256": "c1b31f7b5ceb9d23ce4659d1264b9613957d0b27761d0795d68334033d6fcd58"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/contract-b/document.txt",
+      "sha256": "002cb09de627ed4f8d6dbe98f94e26cb2cd580134be2e1a059817f45cffb6427"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/contract-b/population.json",
+      "sha256": "25aa227a0c297aa267e6a8d53b6afeaafd4d3ddc48542fe432620251d2d86017"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/contract-b/population.json.anchors.json",
+      "sha256": "748fb681df8cb9dec98562f8a810405ad33738764927baf4e6c187740a6fadcf"
+    },
+    {
+      "path": "src/gnd/examples/composition/composition/manifest.json",
+      "sha256": "ac6e2ec329776e3bc0633734bc6f8b6ca7d8e2e1147719495a7e6ab8cca79c56"
+    },
+    {
+      "path": "src/gnd/examples/composition/model.orm.yaml",
+      "sha256": "227a779cb9838981609fd688d0a446b9ebf3d3425b5423c6941bacdf0bb7506c"
+    },
+    {
+      "path": "src/gnd/examples/composition/targets.json",
+      "sha256": "7c127685056ddbc0bdbbd90eff025bb4d828fa680acdc10dd455723a99498d09"
+    },
+    {
+      "path": "src/gnd/examples/disclosure/README.md",
+      "sha256": "d37ff309e933dd071af974e8f46c7fdac6594a207b1eede14dba2f65399a27a8"
+    },
+    {
+      "path": "src/gnd/examples/disclosure/model.orm.yaml",
+      "sha256": "c09380b30a38c64927cd53bc359dd930a12087302a23702b249e6dbf7bf54b00"
+    },
+    {
+      "path": "src/gnd/examples/disclosure/population.json",
+      "sha256": "a07f972cbb4a32962d6a76e8a2022da74fe4db13794e54f95615f04979b2d929"
+    },
+    {
+      "path": "src/gnd/examples/dispatch/model.orm.json",
+      "sha256": "55853a680ac28b5860adb1a586c6f7572a7540e9d6fd2788b66c396a8343bb57"
+    },
+    {
+      "path": "src/gnd/examples/dispatch/references/catalog.pop.json",
+      "sha256": "a56ea3ba86db90da81e1bcf11eaf6703e031d73140c7543f2bd501ffcbf066c1"
+    },
+    {
+      "path": "src/gnd/examples/dispatch/repaired.pop.json",
+      "sha256": "bfadb1f4193b1ea86d546eb8470c229d76cc439ade98aaa96529c64622190326"
+    },
+    {
+      "path": "src/gnd/examples/dispatch/seed.pop.json",
+      "sha256": "3a1171da63ebec6a48573a37e275fd9534aa00cef4558bd7e186686a8c7ba3af"
+    },
+    {
+      "path": "src/gnd/examples/expense/README.md",
+      "sha256": "56961b3cdcdf8db10601d03b9acd20136e1441d8268875f2c6ee8181c31e3545"
+    },
+    {
+      "path": "src/gnd/examples/expense/approved.population.json",
+      "sha256": "20b9084755c800bf3cd7aae280cddc071ce26c5cb1ffacaeecfbdc32a048e9f0"
+    },
+    {
+      "path": "src/gnd/examples/expense/architecture.contract.yaml",
+      "sha256": "cee7c9589a00d6fe6d7ba11df29b48e5b8e5fb6fd0bcb3052c860a2b3a379045"
+    },
+    {
+      "path": "src/gnd/examples/expense/currency-missing.population.json",
+      "sha256": "fe74784f419c6a7154187ad44fa715860da4c933b08e5322d7c617ddef15b580"
+    },
+    {
+      "path": "src/gnd/examples/expense/currency.architecture.contract.yaml",
+      "sha256": "c7dae2f6b212f2d7dd0927237bb32a118206a04655c81d01786024d0ebb5867a"
+    },
+    {
+      "path": "src/gnd/examples/expense/currency.orm.json",
+      "sha256": "ae75defc443b4a537709377c49d5d778d579917f2ff88e30ac5a41b97c80511e"
+    },
+    {
+      "path": "src/gnd/examples/expense/currency.population.json",
+      "sha256": "47e86d8a4ad0a7233929f1a047afa0a5a81de154d55c5baf57a2eb5f143a5b38"
+    },
+    {
+      "path": "src/gnd/examples/expense/currency_reporting.py",
+      "sha256": "590754c957dffbf25377e1c653d28a017edab79682e36bb26f25018133a18f30"
+    },
+    {
+      "path": "src/gnd/examples/expense/extension.py",
+      "sha256": "bf6ce0970db03a3792b09d495252c092d39a45b8ce63bcc9c7e9caa180fce976"
+    },
+    {
+      "path": "src/gnd/examples/expense/invalid-chain.population.json",
+      "sha256": "f72267d7d18f6fdd29a6f676b7d8ed5a555c0a2fdef8e74831e0aedf0173e312"
+    },
+    {
+      "path": "src/gnd/examples/expense/invalid-meal.population.json",
+      "sha256": "1f85a8d9708f93446f81ac89abb7a76fe726c5944c55160e3735cc57e8e8b891"
+    },
+    {
+      "path": "src/gnd/examples/expense/model.orm.json",
+      "sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0"
+    },
+    {
+      "path": "src/gnd/examples/expense/native_query.py",
+      "sha256": "4d98c321f6e6f33631ff6ec93bd1d0d2fe43ae5f8a32ce81edf480a2107f05ee"
+    },
+    {
+      "path": "src/gnd/examples/expense/prepare_currency.py",
+      "sha256": "d520536eccf2d11c285d20a0c43f670696148065953976dad3a56d18a1841882"
+    },
+    {
+      "path": "src/gnd/examples/expense/prepare_meal_cap.py",
+      "sha256": "649bda9b76477c4036c004c61fbd9c7379eee2afa34a1cb20ee90cad513192a3"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/app.py",
+      "sha256": "5175b4a7124228d94c2d3cd9932225e1f898b23317c97323d6c3dd7bf4cf656f"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/architecture.contract.yaml",
+      "sha256": "cee7c9589a00d6fe6d7ba11df29b48e5b8e5fb6fd0bcb3052c860a2b3a379045"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/cli/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/cli/expense_cli.py",
+      "sha256": "bf6ce0970db03a3792b09d495252c092d39a45b8ce63bcc9c7e9caa180fce976"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/cli/native_query.py",
+      "sha256": "4d98c321f6e6f33631ff6ec93bd1d0d2fe43ae5f8a32ce81edf480a2107f05ee"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/cli/reporting.py",
+      "sha256": "0147aed995049c1074c7ebc29372709a7dd279dd2d896725fcd0084c079a3afa"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/model.orm.json",
+      "sha256": "027c3631b207114f3d26966a62cb601b1b6d3bd031562f95f6bfcfa98f9ce2e0"
+    },
+    {
+      "path": "src/gnd/examples/expense/project/seed.population.json",
+      "sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/README.md",
+      "sha256": "177a41de8d0cb1556882cc17aa4b5bd4e1a688b77ca2ad3bd55d402bed67d373"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/TASK-conflict.md",
+      "sha256": "b9ecff986774a2648cb687aeacf196d2822ee6c5b4261f0628f60026f04be730"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/TASK-plain.md",
+      "sha256": "af1b828dcc2f6c7113c1f9deb81b2178e9af9ff497272075d364acb65c3fa22f"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-1/attempt-0001/agent.stdout",
+      "sha256": "f1c4549126934f97e44e06da9d63f321a2fc80e6c9005e41488e9ccec379a80f"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-1/attempt-0001/approvals.population.json",
+      "sha256": "715ab6f17f07db3202a3ebc5e3150afa504275bc202371704f043c982c6bcba1"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-1/attempt-0001/feedback.json",
+      "sha256": "69b00bda336629165fbcba3bba921d1d58bd3d8429db474d3c4e6f7845330516"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-1/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-2/attempt-0001/agent.stdout",
+      "sha256": "95035e15716f207d5d5697a092e3d948dfde6e1fcd4ee5eb2067cb16410ae979"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-2/attempt-0001/approvals.population.json",
+      "sha256": "715ab6f17f07db3202a3ebc5e3150afa504275bc202371704f043c982c6bcba1"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-2/attempt-0001/feedback.json",
+      "sha256": "4e6c30834486a5b838064872b455c2e993fc231636e200fadbbea905dd2f6f0f"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-conflict-2/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-1/attempt-0001/agent.stdout",
+      "sha256": "8dea95d5beb09123d49a1ceea9539b84694a6d03c2a531f0f8ab1701129fe107"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-1/attempt-0001/approvals.population.json",
+      "sha256": "715ab6f17f07db3202a3ebc5e3150afa504275bc202371704f043c982c6bcba1"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-1/attempt-0001/feedback.json",
+      "sha256": "f637da57e5ec8ad96ac2d517c1da90048910ced4fa708f54961057d5ed551b14"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-1/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-2/attempt-0001/agent.stdout",
+      "sha256": "b4fbc89b8491ef2eb316a006ec5195afe4b8d4f257edf1c4371a33ce3a531cbd"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-2/attempt-0001/approvals.population.json",
+      "sha256": "715ab6f17f07db3202a3ebc5e3150afa504275bc202371704f043c982c6bcba1"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-2/attempt-0001/feedback.json",
+      "sha256": "648231e63486969d50b2f727f428753244cedb48da503f0c9159949dd27d3fbe"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/codex-plain-2/result.json",
+      "sha256": "f84eb3d50d4ccbfa5e1b9e47d58be59d82fa63f8a2f1f1bcab2dd1914e6de0cc"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/manifest.json",
+      "sha256": "42a5c64155964fe7df357594e71e9a1e58ab803e5a04fad73bab5dcb739c44fa"
+    },
+    {
+      "path": "src/gnd/examples/expense/recordings/results.json",
+      "sha256": "98d5becdadffc6511e48584c0b2e0a5ef903cb453f2b0cb4fa667e9f3dc01d74"
+    },
+    {
+      "path": "src/gnd/examples/expense/reporting.py",
+      "sha256": "0147aed995049c1074c7ebc29372709a7dd279dd2d896725fcd0084c079a3afa"
+    },
+    {
+      "path": "src/gnd/examples/expense/rules_in_pyrel.py",
+      "sha256": "ee42adcf5db16f49d058670c5e1a53b437af07fec4114ae6f5170bdee4dc0f44"
+    },
+    {
+      "path": "src/gnd/examples/expense/seed.population.json",
+      "sha256": "60e1e3a77c83a96f494da91d357cc09f1c15a8557ac6491c096461f3c34bfcfd"
+    },
+    {
+      "path": "src/gnd/examples/expense/stand_in_agent.py",
+      "sha256": "d289ddc2726765b63ab9e828cc8bd37c04de397dfef42c6aac3bd9599af3f94a"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/baseline.json",
+      "sha256": "edf70cc6abacf023edb0667a722e95d891472d7b0faa07b389e1fbde59fbd106"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/chain-limit.json",
+      "sha256": "568665f82bc4c6ad511806c7b74c5eb0dcf64cc5999bf13ea957bf5a6145bc85"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/currency-explicit.json",
+      "sha256": "e6343586719e32833dfb4133a8bc127d389c6d5cbd96a1a7d69fbf8d8073dbab"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/currency-missing.json",
+      "sha256": "3374c7aadba325ed07c4c157934ba9f015467d84f4257ae0fb464397fa6fce1e"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/finance.json",
+      "sha256": "20a57d196195eca8d9006b01473fb66a279ac9b7a1da1587d1cffa533bc529fb"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/meal-cap.json",
+      "sha256": "57903e38c567631505bfbf0f069694ad686b4894d7963f52294f13fc0bab7463"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/team-lead.json",
+      "sha256": "4482caae3bf1efa965abb5ad27c22332c0c43cfcb232cece072cfca6abfda1b5"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/usd.input.json",
+      "sha256": "e39648eef481c6912a85addced101e0eb38bbf5d4ea5d05e77700bb707c7a561"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/checkpoints/usd.json",
+      "sha256": "e5d70edbd238d2c6724717e061afa0fef9a05c87c054bedfdae8466e74e46565"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/currency.svg",
+      "sha256": "70cc75b5f585af923782dc0c30953a570353d449af65a16f3515709cb2d0a1bf"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/flow.svg",
+      "sha256": "4654889be5a9726ba9368d8a7acc0632e70f08f807fa9aa601b3104e25a427d5"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/limits.svg",
+      "sha256": "df4b69c12854c612552df966112d91fd9a72891804da74220682e58653749943"
+    },
+    {
+      "path": "src/gnd/examples/expense/tutorial-assets/sources.json",
+      "sha256": "2813ed9462508a92d376d36e4c5b575b6f45a41dbde7f8e06cf885bd4aa6192b"
+    },
+    {
+      "path": "src/gnd/examples/growth/README.md",
+      "sha256": "0a3f016b810fb261a833922be35680005710979ba9c434ba4e0c96c4f06cafa4"
+    },
+    {
+      "path": "src/gnd/examples/growth/model.orm.yaml",
+      "sha256": "100474ee44f3e3dfcb8b3e2d223921a18dc853341b78e9fc91c5bf9134269e55"
+    },
+    {
+      "path": "src/gnd/examples/growth/round-1.document.txt",
+      "sha256": "4d430046721740aa162bcd12bb7c685a11a5492d6d1a54bf0ee531694f140263"
+    },
+    {
+      "path": "src/gnd/examples/growth/round-1.proposal.json",
+      "sha256": "5677b683f163fc600a3103a8b4896306ff5971baf266e2d7007abd3a7756f415"
+    },
+    {
+      "path": "src/gnd/examples/growth/round-2.document.txt",
+      "sha256": "27a22e25c730e95276b1562649898282d3b1a6446a656cfe9b5ceaf2c94f2ad5"
+    },
+    {
+      "path": "src/gnd/examples/growth/round-2.proposal.json",
+      "sha256": "fde9d9312a0392dca054c6ba60a76b3f32abc751250324cb20da31e9a693ceb8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/README.md",
+      "sha256": "0de1a4a9bc39e914fcd100363842a2c196461916b3297a5cecf42d52684882ab"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/README.md",
+      "sha256": "c7b433b6331649b05348bc1298f12f51fee6a18450189d6a6e2d46e380379930"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/app.py",
+      "sha256": "791bd926c23ae372bccf0559d506d42f27c5a3b777eadde2362b8bd8dbfed570"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "sha256": "c513aa70d0bc1c4d52bae9623067b0a852855da219084c33a37df3107f501deb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/plans/attempt-1.steps.json",
+      "sha256": "eb231f425df49ffce8eb7888f9ddfaafd99fa015a908aeab36fe6f5f348812b8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/plans/attempt-2.steps.json",
+      "sha256": "eb216941654a55427a049530e3ff245d184df4d89aeb8ffcffad95f9f32766a9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/plans/attempt-3.steps.json",
+      "sha256": "45e210cd4dfbc8195a23f58a3fe409e86bcdbc6ebcba04c0930f556d446c31e4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/rules.md",
+      "sha256": "bdefcbc6e7f1b4b1b2d647113fcddccd1dd5c0e810c8461eb119ed1ac3e62d31"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/stand_in_bot.py",
+      "sha256": "982c13bfb79d4a2d0f7aa6e3eb89a7120218a06e26f908e2d3618c4dcb8664e1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/access/state.pop.json",
+      "sha256": "c10ca2b23a1b829667089cc6287763a1c3055885fb578a6a92d6b2947fe16e22"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/README.md",
+      "sha256": "a9501dc60c4ed542693a52138fc5797254224302ceb71a6e364e0e1745cdf811"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/app.py",
+      "sha256": "14b48744debf8c69e7520533526b0035c03ade8696da830682da1e87b2d40bbc"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "sha256": "b5b57f8c1028da40813899b9ffec7db99b8ababc7ff579c3a3fd80622075197c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/plans/attempt-1.steps.json",
+      "sha256": "5719eb7dd3637c18cc7c6cb272e76e574ab483dbd01bdb7a22aee06866d729d0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/plans/attempt-2.steps.json",
+      "sha256": "eb6038966d145734e6be02966169391b6654fda6820d6e81b519c5cf01d4db97"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/plans/attempt-3.steps.json",
+      "sha256": "ab034fc9e98b463af9afb2d191545d55a9588bc78fc3e03cbf906480b9a3b8bf"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/rules.md",
+      "sha256": "a3d6cbd898e7905e82cac8fb0c0b602217d7bc22c0ac3e904c27720f6beb670c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/stand_in_bot.py",
+      "sha256": "9b650f6fba0c4505723828a613ba703a80590bccd1db31d258bcf178037a9e77"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/clinic/state.pop.json",
+      "sha256": "3bfbc77e272297e6872b2028a911b0ccfc753ac93a2468feb9f4139fb9ab69df"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/core.py",
+      "sha256": "3ee1e25a937beffbece517f29052be58bd708f29db5f1801c999e3c4e28b881b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/README.md",
+      "sha256": "cf3684f36ba241d9868eda78735da1c0401210679ab8ed02d0e9da333b21f6ef"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/app.py",
+      "sha256": "de8fbd355ee34eb052d5d37f9313065f620e655d6a3b2732b9d3f111e319f3f3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/credit-cap-proposal.json",
+      "sha256": "f4535db9843fa7c34babd8d5de20f78126aace6140e3b1db6d155430476a7354"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "sha256": "c34b1902e4dbef537b378d83bb32f8a0b2acf07a0061c161a1bfda3bb56087be"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/plans/attempt-1.steps.json",
+      "sha256": "9ac1be8b225abd6dbffad1c02e1aaa9130da1331c2366ee8510c07b0985abedf"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/plans/attempt-2.steps.json",
+      "sha256": "6c88c8a28ef5ae1057bf2193b5ba62feb903b3ab4a5ebb9eeb93bf6151b7dc2a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/plans/attempt-3.steps.json",
+      "sha256": "2006cf32f2f9015fa1bc5da86284661af7003cd7154a6c0be481478e4f386c32"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/rules.md",
+      "sha256": "346f640129c646d1a99775d6a677dad6fcdc6b0d12d2cbd9bc72a1aaf1c1409d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/stand_in_bot.py",
+      "sha256": "3049e433efa0b660500deb77d798ebf147ca3b6cba430a972fa9041973500634"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/course/state.pop.json",
+      "sha256": "631094ef7aff6cffa035eb4cedd8bf51c8c0ac2a641c45fe657e874f4aabc8c9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/README.md",
+      "sha256": "20b721df8861528fa4e29b45bd78ff88a587c55fca34b57266cef1b84faa905a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/app.py",
+      "sha256": "50df439a24c5ad64e5bc4e9cc9c9bb254ce1cf04b4f26443c3db7d2ae85d7ff4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "sha256": "b850be0da21edb69be691075fc8aa47e28d3978567e5da04e24550346f975a11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/plans/attempt-1.steps.json",
+      "sha256": "9a752c05a82431c1db606ea36257d3bee09a9b94ceaca0d0d13b83163c01263a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/plans/attempt-2.steps.json",
+      "sha256": "048340865a503207082fb5c1e16682e4451a4da4609edd5b862f6c3b3fc23abd"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/rules.md",
+      "sha256": "ac8e0df85d33a11642e6b84fafd36d414ca14278cf9fee98bc7d257ba39c0966"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/stand_in_bot.py",
+      "sha256": "a8ad210b472e440c84667febaca8a32871051a4207eee88f42fb19abc5608eae"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/lease/state.pop.json",
+      "sha256": "aa2b3ae4f01c71b1f5e07d3588d2e5e26d9efaaf42dec965825baf2fd87b5228"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/CAVEATS.md",
+      "sha256": "1e76b865d101e88b551421137966bc84218ada8b40bb19722f8053e6a3566d0b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/README.md",
+      "sha256": "59bb62f5780844112a9594551e735168412525617f611d2cb5d2a5f83e03caaa"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-1/reply-01.json",
+      "sha256": "d8af23613db74a452db63bf73dc0427901c8951776afe51d236fdd1e246faf2b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-1/session.txt",
+      "sha256": "7a90bb3705a1220b2921e0fd0fd0eec6938d52d8d4dd1396ae4f648472f2c4cb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-2/reply-01.json",
+      "sha256": "6f2357746b6ce5dd0d02e0a49cbbc7fde13a5bfa83eaeda424d53033ac8cf076"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-2/session.txt",
+      "sha256": "22978f479853fe73ef6d88be028191eb09c8dfeb76bce914f05591633ef6aba6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-3/reply-01.json",
+      "sha256": "d088daf605122116ba22aefface05ac8858c22e2ea8ab7911a9fb357e390164f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-3/session.txt",
+      "sha256": "432ad9854871b657be8ef7c4f9419f33502eebaece9bc18e323e47e517db2ee3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-4/reply-01.json",
+      "sha256": "ea8fa524507a9694ffa5655b05e4a8dc43c0289ebc38c6fbea327f92d463c7be"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-4/session.txt",
+      "sha256": "53348ad5e7008549d6955e18c7ff0c65e8faf89de2d40d9ea65e544ff17d561b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-5/reply-01.json",
+      "sha256": "6c31af8b7f079a2133f97cb39e4729095b4d602e34b5d0b08feff6b341564cbe"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/access/run-5/session.txt",
+      "sha256": "150846f6e40a18ba88027d2d02d9f45cf8a1ef0470ff6a28ffc3dab4a90eec21"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-1/reply-01.json",
+      "sha256": "6e832487c187540cc1e7b2bb962d2b182107c3f9268ab2102d271fded9489911"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-1/session.txt",
+      "sha256": "0e7fe341628d36e45625b1565a77dc9f20275bd2af48c059bfd8808515058b4a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-2/reply-01.json",
+      "sha256": "7dde5abb866c274a641de875186a700ab8236d2ca79e9041fd39678c1fac179b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-2/session.txt",
+      "sha256": "f08b0be084a3fd8787ce03eb918da42413370c19227fe381bc72fb94e577a151"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-3/reply-01.json",
+      "sha256": "2ce0fbee340791e1983b5979c592d74d30ddde5e163b16c97419e79499aad7b1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-3/session.txt",
+      "sha256": "14c5548a9aac84ce0d550470d3e54b80cc35a6fc1db28551fa47c2e7a544ac48"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-4/reply-01.json",
+      "sha256": "c8ee6255a019ca2edb8e7c1b3104382a652db03bff09e01b7f0cfa1b6e5f0374"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-4/session.txt",
+      "sha256": "788ba6be31a8c0fe5dc0be39f64de6737a4b86f320d7d1baaa5bd98c89bec9fa"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-5/reply-01.json",
+      "sha256": "be0fd65fbbcfa12140cdd9c9a3cf7bfe8fe5e82cd15639e14603f42551359e21"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/clinic/run-5/session.txt",
+      "sha256": "4f199f081b1a7af138b8d496d1f8ef54f533aed93a22415c1683ba9605eaad72"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-1/reply-01.json",
+      "sha256": "2dd3f25634458ff6bab4ba72be2a0437639a91d87d7209115988014b5ae90abe"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-1/session.txt",
+      "sha256": "a3f9ccb4f6f27b79f5e7b8655b3ed14f406bf33157a24b0c2efe1d70f2793f6c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-2/reply-01.json",
+      "sha256": "b077c5c04a6e910a2f4b7004f452d5ad33d98985d9086a2daccb655755e6fd25"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-2/session.txt",
+      "sha256": "0f043fe3db2b9a22dedf0a8b999663f37b1f8f2074f96e3161bde1722ccd80d0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-3/reply-01.json",
+      "sha256": "a0799c080c2775eb73d7de2cb9efb7e5cac4bb0c89d6b4304e7611f60ca322f1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-3/session.txt",
+      "sha256": "d13bf82cb09f8830fc2e5ee86274019a1d20c1c8aa0e4bea4b123ae8b2f289c2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-4/reply-01.json",
+      "sha256": "3431ec172eb1f02f87fdc0d2af36b272ce57294737c1b341a3500fbfea4ec0ea"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-4/session.txt",
+      "sha256": "9e0677c52dbea0327a6d70ea6ada76a8d07b2f961155454be1b9d81fc900d009"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-5/reply-01.json",
+      "sha256": "bb2ea9b82764b4bf1630431a51f28ff7262c118aa6e36564ed8c7080bfee6cb4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/course/run-5/session.txt",
+      "sha256": "d601501be8ad6c465108b1c1895facd94091e63d6a3941e89b2c3f76a6fae769"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-1/reply-01.json",
+      "sha256": "987256aca93cc3d1b33441a43830b9c42df2ea7b91e6accdbfe8007fa3bc26ab"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-1/reply-02.json",
+      "sha256": "3f6ec09fb0fb47ae2fe2fd547677381e1abe49821680aa114aa4b0615a1bcbe0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-1/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-2/reply-01.json",
+      "sha256": "ffc4e0306b92b7efc407368d324079a9529f0451f1c3a5088312e8b23999fdf7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-2/reply-02.json",
+      "sha256": "3b34d10580b7ef153b5f49912adeeac7d2f2e9e457c3956b6da6325e160e2a05"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-2/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-3/reply-01.json",
+      "sha256": "f6666c2672f2cbd14fe33e9f9ce67851c2ec5899d1c656e6d241a64190ad514f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-3/reply-02.json",
+      "sha256": "82b7f503a00c432ca5ef17d9b0c3e384137ee507b9af6ae654e7f958f078bb24"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-3/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-4/reply-01.json",
+      "sha256": "2e8c960ac473df132ebd5d18cd7e373831b0320f9a97219ae57af50364b34663"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-4/reply-02.json",
+      "sha256": "f1e360b352f1ed132671e7633b6719cf087d530f7628c43e4710a96a36158884"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-4/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-5/reply-01.json",
+      "sha256": "2d8e3b58aef0b304b0e69ee8e915d1003fbc97b91ae7094ba32c8af3d2e72d2c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-5/reply-02.json",
+      "sha256": "bd786f318f4035b779e8345a0470f82e0841aa8a50b2de1e41cd8ad06c645d6e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/lease/run-5/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-1/reply-01.json",
+      "sha256": "1ab36c827cde609f27ae2bef31a9182166fa63d8e3156156fd4ce2f63ee5262c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-1/session.txt",
+      "sha256": "f1c69f544b32adc77c90f6d8adef40759aed5341ab0df5377bbec75fd9a46a8b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-2/reply-01.json",
+      "sha256": "cfe59a2cb8314a69060e458c7bf192b81b353e11c2fce81efb9dc2b92fc02cbe"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-2/session.txt",
+      "sha256": "511181bbdc277358c1d955047d63bca0914b887c6ea36d6f5794568c5d4291df"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-3/reply-01.json",
+      "sha256": "4d7e0f423df9e178d2633a59d071af446ae8ca0c747278740a50c43e95e44a81"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-3/session.txt",
+      "sha256": "42c4e698b79ce77ccce31360092cca666474c60ea05020a20ab6a8eff5d007d2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-4/reply-01.json",
+      "sha256": "9c1bd75d9ff5724d2706293f169cdb48712dff6f096f7abb7859acb18479bf19"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-4/session.txt",
+      "sha256": "20390599cc94d929079e378d3a8782b17334f5d5b3c936a3ac8f3fa1ee6cf6c6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-5/reply-01.json",
+      "sha256": "b278a2270d23fa360481940cb1e65e0d61af7f7e3ce9945b95603b0e489aff46"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-default/trip/run-5/session.txt",
+      "sha256": "c9f1bfc6a3680031efa8b52e2ea638a05b2349dbe3ee6508ccc652b6db5c2cb1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-1/reply-01.json",
+      "sha256": "35cb71eaec3f6e002e27ddb6ebc2b49d05895eb4fd68db82676d50e2281c3fff"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-1/reply-02.json",
+      "sha256": "9a68bd34b40cdff4131007097e415e0140a3e306d5a284de2c1b668daa086fbb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-1/session.txt",
+      "sha256": "4f5f4ee598f92e92e362954a620f6c6094fa2bbb294c6a0c62ce9f75b6623825"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-2/reply-01.json",
+      "sha256": "838aa22eb0f9dc7ee6f0608cdd290f811de0aa821d9374b0ea41d068d3fac067"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-2/reply-02.json",
+      "sha256": "7c889c8d873f829324e3c8f6af4f94182fb6f7b4e976594bf791532482570384"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-2/session.txt",
+      "sha256": "d058816c83b7ad1bad7dccff4c3d2d87fc2412da026b935424f14fa112094bae"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-3/reply-01.json",
+      "sha256": "d27b7030c04702c04ccf44b818b096b36b807f902760184f4725ddca214b1087"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-3/session.txt",
+      "sha256": "d93422e48836f6ed1c63f215728865c1c030415d819214247f20cbef7365a8ac"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-4/reply-01.json",
+      "sha256": "3a1d5eb537c918814ae941225f4a8a8f0ba81b12f1f238a75f672f6dee59900b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-4/session.txt",
+      "sha256": "f4f64474361e7e4ade285e1b7df8806bf1d6e2d932ff8505c53416ce221755ec"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-5/reply-01.json",
+      "sha256": "5b9077bfa445978525e1249013415b67bf9b3e6596df5f00a46c15ddf695fc5c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/access/run-5/session.txt",
+      "sha256": "75b2c313428cc21d5aa18077405f008af87275ef159af7efccc543ef7e30ceb3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-1/reply-01.json",
+      "sha256": "b108b42c7ffdddcb54a2fc95844bf0ef88eb40499486111f3744f70e6b9a40ad"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-1/session.txt",
+      "sha256": "b5e0921d6277a3d7d14e152b07148bc4357f6ed8e6cc09945bb507c1c755d376"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-2/reply-01.json",
+      "sha256": "9a7eb358212625cc15c93d3550cffdaab81ccc7cccb2a1c8a6f9c9d3c6a3e368"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-2/session.txt",
+      "sha256": "1481f54f0e57995f26f1422d61f5d877c46b8520bc39d81a467b5161a53eacad"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-3/reply-01.json",
+      "sha256": "bd3865aec6d75451745eb05824239075b66406cd6d32f55ccb289a9b98f63916"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-3/session.txt",
+      "sha256": "18c5895a432890dc80775148824d7b42c8a99d93e124dd3ea01382aea280bacc"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-4/reply-01.json",
+      "sha256": "719a1474f1214dc56461c741ab132e1d1c4bef1b305ab3dd00749f9a98012b3b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-4/session.txt",
+      "sha256": "75e1a7675f66465bfb12692d073f1a0c36303cd386305784a0135d4b2d30e1cd"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-5/reply-01.json",
+      "sha256": "15870d0100a5004661ca0606f848f420f54c9c68462d4cf9cfcd3e40593841ce"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/clinic/run-5/session.txt",
+      "sha256": "b115411fc336c2733733fceca0c4da6cdc15db022594a3ff3534b6ed92d7a714"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-1/reply-01.json",
+      "sha256": "cceb0528434676473f5a68885c93d2dd555352ea66aaa53008f91f060b0b9879"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-1/session.txt",
+      "sha256": "68ded175e402be00664a16f60b17fb3710c9e55b3ca0f8f82b667f0820d62de9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-2/reply-01.json",
+      "sha256": "f1a52c79ceb4c1223f6cd60c942d1e67fd565159b16dda6ccf7244fff18eb49f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-2/session.txt",
+      "sha256": "65dd379c696128fb8e926cb4ae1cd1ba1387937b51ab1ff8c97a882dbc4f4c08"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-3/reply-01.json",
+      "sha256": "939f5286b454cc88b3308763bbb5005e5b56a18eae1e2ec12b7210792702ea2c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-3/session.txt",
+      "sha256": "439e9bf49279c9807eb6676e296a8fb1eb1a535ed5c016cc90ebd556d738d3a2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-4/reply-01.json",
+      "sha256": "0f7a4c8cf216d6989d777dd324b2b580cd10e44a21cc939bebf37435f8008d66"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-4/session.txt",
+      "sha256": "83cd4f82516fd7be3c69a2e43660091adba827cb4766bcb886f37e46abf123b3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-5/reply-01.json",
+      "sha256": "0b3a1c3c6c5a532017e41a41afce637837f5c904437fa277ee4e7a7b920f9f04"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/course/run-5/session.txt",
+      "sha256": "a2791ee02a1271c1721c6c8bb0e96c2318c1491dea5d97b0e81fa083d45f3f35"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-1/reply-01.json",
+      "sha256": "bd758c8a99b2fe5bbcb59357bf133190d97ee18bcf3a763e4c9001ed62531a33"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-1/reply-02.json",
+      "sha256": "1fb289038d92e404412acf07f53f2308569bb9bb95f5c07ad13a07340f5cf914"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-1/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-2/reply-01.json",
+      "sha256": "5d19f6ca0a53d65b3eb4355d816d8e1fe567721f2a07ba3fa3b7b3a34d4b0603"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-2/session.txt",
+      "sha256": "34d31d7d9cf9ff1a5d3f965263a380feaad4d4cc8713757046166d392eb28237"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-3/reply-01.json",
+      "sha256": "a06082a5eb4379e14ec4ddfa4bbc854c53ffaff505f3cb0760bab08b3f7ccffb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-3/reply-02.json",
+      "sha256": "37db0af7284f830010e00fdc6d86564247a5d1f9cbe0a324bc96fbcc7c901b9c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-3/session.txt",
+      "sha256": "345b12756c0317d3ea609a641591c42bf116a0c0282c23b200aea2ed0ca64e3a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-4/reply-01.json",
+      "sha256": "33bc4230ef044eb412335bd4c539d7fb451a1b19a86b972e8cd5b52cd6d66cfc"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-4/session.txt",
+      "sha256": "34d31d7d9cf9ff1a5d3f965263a380feaad4d4cc8713757046166d392eb28237"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-5/reply-01.json",
+      "sha256": "6a95c2c6ea2b8f2b1754d7222c897155a2d772bad77037079d51cc3ee38f28be"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/lease/run-5/session.txt",
+      "sha256": "34d31d7d9cf9ff1a5d3f965263a380feaad4d4cc8713757046166d392eb28237"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-1/reply-01.json",
+      "sha256": "4e30d9c8079818fd6ed3ec0449281ae3f5233c1229ebb572e712623fcba7ee31"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-1/session.txt",
+      "sha256": "20390599cc94d929079e378d3a8782b17334f5d5b3c936a3ac8f3fa1ee6cf6c6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-2/reply-01.json",
+      "sha256": "8d55bc8a9a06c4874c52b453f153b0226f9ced0c8d0b728f4add2b0422252103"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-2/session.txt",
+      "sha256": "2f30db4792dd3501dd2da3138dee5824d6e599bdce45acfafc2353a77337ac94"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-3/reply-01.json",
+      "sha256": "307ae591345aaacb020199459be81dbe22c201b8b8c1586f89aa6f8d8e4c64be"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-3/session.txt",
+      "sha256": "4f3219f19bb3b123151ab0ddeaa8acdc7d68c2570162baed4b6c984c68c99a6c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-4/reply-01.json",
+      "sha256": "f47e110a9e2934adfb92d4f2e0952ee1334c2fa0fe1859e90e1793c4e2aa9d47"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-4/session.txt",
+      "sha256": "20390599cc94d929079e378d3a8782b17334f5d5b3c936a3ac8f3fa1ee6cf6c6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-5/reply-01.json",
+      "sha256": "556c6d2984f12422c3bf1ee0b383e4f3b18f59948bf2eb2a39bcb819a13e96c9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-5/reply-02.json",
+      "sha256": "92daea86b5b603cd57348cdb5883da1d5fc20f1e6044234c19101f29e54394a7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/claude-haiku/trip/run-5/session.txt",
+      "sha256": "e8b79f024ab449516b12a5340d837a7e99c441a0512a17703ee21453f55d859e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-1/reply-01.json",
+      "sha256": "8b602f940762b71aaef4af94a776160d8ea4a411090f56ccbe4d2dc81bb1a50b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-1/reply-02.json",
+      "sha256": "f0543cf130d9714637ec6837b63e8f784d87458ced3844b945c24d80ead75d17"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-1/reply-03.json",
+      "sha256": "16f4dfed9431a6f6baa756645cfbe2aa743a7f2410110d41b0bb485ce2a916cd"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-1/session.txt",
+      "sha256": "eb6beadcd362de7d0dc5ae71dabbc792ae50a7fb21ac9bb3f3ca16caeeb18fb7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-2/reply-01.json",
+      "sha256": "cfb4743e2501d13bd53f98eed236672ad48a8d3467031df64ac1c1f08b4431c6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-2/reply-02.json",
+      "sha256": "61c9e1a35c51dde9089659b726e7ce664bee6e85caea78c9d540e24ec95a5703"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-2/reply-03.json",
+      "sha256": "967cd7256ff4a7376eabcbfdd7557096ca63c95b694f8df61b44994908999ab2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-2/session.txt",
+      "sha256": "85513d5eb79f10cfa107eb4bb5182295a68405217c0818f938194813bfb97204"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-3/reply-01.json",
+      "sha256": "56b79bd571ff943f157c75ad8b1b84a3ae05886a30c215eb1dc7ce5b004c7ce3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-3/reply-02.json",
+      "sha256": "90884bf369de00d9cbf091db916278ec481991b00ddc01b6838a09225352cfa8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-3/reply-03.json",
+      "sha256": "752405d0fd91624248ff6acf7fb97d02ad9e409344bdfce3332fd2fdd6beab6c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-3/session.txt",
+      "sha256": "995d05d1936cd563e308b462870ac6459f8e73be9f4911476468b6e7a87922ce"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-4/reply-01.json",
+      "sha256": "6d903b40163027e15411394c99ca9af75b614f627e424d96b946d05198cba473"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-4/reply-02.json",
+      "sha256": "d75d417e127169f90686a7dc78e1910b23998ccb90c0de7bf9602298debeaab1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-4/reply-03.json",
+      "sha256": "721979455805803f7a49cf5102b1bf72f6ce3f1db703a7e908de222e9b45476b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-4/session.txt",
+      "sha256": "7b0339d138043efe488200b8f7b008ac8dc5518a694c7154e161105489601280"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-5/reply-01.json",
+      "sha256": "09770c0fcec289fca116f716b5dac95f9b62ec00ee6a427b9fd3bac859bfdcf4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-5/reply-02.json",
+      "sha256": "6a4a50f510a4b4d961f918be4c8e81fe89ad143d87704dd40dc9a0b79a25e9db"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-5/reply-03.json",
+      "sha256": "65418521c8348de3c7ebbb507df80a611e228ada6a8708b290f152de7311d28e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/access/run-5/session.txt",
+      "sha256": "9e7cbd9cbc7abbdf3362007160605b5895367e0ef7266ad607a6390dea799091"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-1/reply-01.json",
+      "sha256": "e7340dc5096f222f3885f44984136a2d4b1f47d54ea78f9da8c98c06fb22fa6b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-1/reply-02.json",
+      "sha256": "bc1ddae4f2fe204897fff190cef872eddea72b0ec0eb5e784ab6e55db4cd88bf"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-1/reply-03.json",
+      "sha256": "0490170e421ab6207d07bc83667a54c681979568bc8c195430cd25f00cf49dda"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-1/session.txt",
+      "sha256": "f25fe678900d343dee0d898e245cdc1455b5c6b42f0f9ff188a3af8789a4e87f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-2/reply-01.json",
+      "sha256": "0032c527052d7e00907b9742de6b5a5479b7601d95cec0c700c120e6eeee96df"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-2/reply-02.json",
+      "sha256": "a242e2b42fce23e8db5b40e9376cfdef13567767910e633f605ef9cc12290e22"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-2/reply-03.json",
+      "sha256": "3ba13fa47d2700b8d509d23caf0e3129fc65c4bb6360d64ad55fa225ddc5f2a9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-2/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-3/reply-01.json",
+      "sha256": "4988ccef33532fe0148c4d65c088eb37522f9afeaa744655a53b3ec0e4d2de16"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-3/reply-02.json",
+      "sha256": "90ff234a31c004a7887007b9326ceb56a96b00377ff30efc4f746998d2cafc4c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-3/reply-03.json",
+      "sha256": "aef101f54f998a46ff9ff99ceaa34147f46df01f5bb5d3555af6734f889496fa"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-3/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-4/reply-01.json",
+      "sha256": "6f07c2dcd11cf734d1c640329951558991aca5db95788805da4cbf546de4cfae"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-4/reply-02.json",
+      "sha256": "5ee3b5adbb3bf61c8e2876154d48ed5fb182927313268cb388d5ad59d58797fe"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-4/session.txt",
+      "sha256": "78bdd1436be296b88246dd59f4826b961a6abbb9361cb6bacefe2b2d3f9a503d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-5/reply-01.json",
+      "sha256": "70a164645b7309e1fda4e33c363567f84df15f8349a5d2e555941acaf7e54392"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-5/reply-02.json",
+      "sha256": "3e16f4dd72fa80750fc51047e8ea0adc26735f0450ed481f4f9c1cfb6ebb932b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-5/reply-03.json",
+      "sha256": "cc4c7439f74128c9e1d151d8fb668b040013a08b48322d1afb37341479e8b20c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/clinic/run-5/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-1/reply-01.json",
+      "sha256": "26f29d82d6a13132cfd0d7773131a8b90ed6185f91a39d2e6f4a1b18c1122c89"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-1/reply-02.json",
+      "sha256": "eb6b1d3b29d96b1acb5fca9b545facbafebd21d7560c03f71b263bff4b44b142"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-1/reply-03.json",
+      "sha256": "84b6303f25b10fd665207b35b6e024e51f9d77f0c331bc78089f3ddefa591737"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-1/session.txt",
+      "sha256": "c9011e5d610b892a54a390b589940c4a5672f2027a7977428056540005914184"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-2/reply-01.json",
+      "sha256": "353f5737894253179a7c9e55868ec212a1beb9aeb426e0440d1bc1dba22c62b9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-2/reply-02.json",
+      "sha256": "19886f2b7aa07dd4aabd800c97febf24ffc4943e00ac6c4c02fce008c72f5b65"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-2/reply-03.json",
+      "sha256": "c7992fa64f96348b4340b99a876f0a7288a44d864fa140631f1dbb951e366426"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-2/session.txt",
+      "sha256": "c819ad6f767a43d89eeeb1d43ce1e138ef60e442f2807651572021a942422fa8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-3/reply-01.json",
+      "sha256": "26f29d82d6a13132cfd0d7773131a8b90ed6185f91a39d2e6f4a1b18c1122c89"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-3/reply-02.json",
+      "sha256": "a5c02d71b9d1c203e75844efc644f6673f84746cdf93da8216d419fce9a9370e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-3/reply-03.json",
+      "sha256": "7f198f8ea63d3f23d45216fb87fb4e998ef730a75ea8978e0cfbb3f034751970"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-3/session.txt",
+      "sha256": "7da23ed3e7c59f8974ad610f000a248a1fd1e557d690e864a4eaf50e277d1134"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-4/reply-01.json",
+      "sha256": "87774112ac8edaee46d82b480ad7f4965684edfc1c9c8d9c81d44ec113a3b08d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-4/reply-02.json",
+      "sha256": "616bea461054a86ca43bd6c464882e2cee63b2241ec81564640b97d2394d6b3f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-4/reply-03.json",
+      "sha256": "c633158209ae7ccd15d6cdbd78eb8a7bb11e4967cf23a400083af670f7e7f977"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-4/session.txt",
+      "sha256": "ecabeae9bac69850b3f715be71baf91172d597506e925a8240671715501cd546"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-5/reply-01.json",
+      "sha256": "d6a95e4dd32ec3181b224bce4530b955426536b24250c816e331505e5ef9cab9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-5/reply-02.json",
+      "sha256": "b702a26f8ab10e770e1f3c3ff769f52a34a6a1c910abdfd54ae0a9d490a98016"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-5/reply-03.json",
+      "sha256": "dba04f1546006a9de430456269fbfa51b6e1662ff154be2b276d065d1e64ed22"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/course/run-5/session.txt",
+      "sha256": "e70ae1b32702460891bdf828b8c6692673da63a39668a57e2fb45ffea03dc2a3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-1/reply-01.json",
+      "sha256": "f1d0fa74ea8feaec3c9b68687a66f1e49937c033611770e2916f9053d932e9fe"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-1/reply-02.json",
+      "sha256": "4385521fe8aaa30ac96035955a3c72bbc6dbe3bc82dd906cc0a8ccc88c4873d2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-1/reply-03.json",
+      "sha256": "b408e807d4402650d8fc4181af8d0fde6f2346f164f6974dfa7c01ebd2e2554f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-1/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-2/reply-01.json",
+      "sha256": "8147ca9c89585f86b08e605c0bf58df1baec6e6f6e8b9ac67d3d1c35f00b1b07"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-2/reply-02.json",
+      "sha256": "52cdb75ff4f983ef3a1c7d9685680cc673324487658f4417507c1bc254f24985"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-2/reply-03.json",
+      "sha256": "6c07f0684525bb2aa30e802b7fc772f842bdb8bd918e64de20cfdd839fa2274c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-2/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-3/reply-01.json",
+      "sha256": "ba88f360c98cfac48fad875f53604a1a8c6a365011771cb8862a6d645d5a148e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-3/reply-02.json",
+      "sha256": "7f29aa9ed9a9ae9a6a5f5c6310cde43505527d9f3e12b5f7f51f20f084d760ac"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-3/reply-03.json",
+      "sha256": "14ef98c823a6a8a67f2fa0ede2ad406054cc7510c8ffe9d535a277a018572527"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-3/session.txt",
+      "sha256": "4fd2bd01e2973bba38f0b7f5e32a3a98bfc6cebe7f664499b65958c77b80d249"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-4/reply-01.json",
+      "sha256": "8147ca9c89585f86b08e605c0bf58df1baec6e6f6e8b9ac67d3d1c35f00b1b07"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-4/reply-02.json",
+      "sha256": "3fef343072c95898af01fc95b17dbd22c5c5d6812f294f7559c30f4ef3f46c78"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-4/reply-03.json",
+      "sha256": "a4c798cd91d90e28ad65433265fece6f5882d04c3ff9657956a0eb4628941d4c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-4/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-5/reply-01.json",
+      "sha256": "ba88f360c98cfac48fad875f53604a1a8c6a365011771cb8862a6d645d5a148e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-5/reply-02.json",
+      "sha256": "7f58ae844efae9a6f9698965225143f9b248d6aabacefc4c1241180da8c94bfc"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-5/reply-03.json",
+      "sha256": "834386d849007320feecee618e7be175ad0cdb78273306c420b3319de31dc24a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/lease/run-5/session.txt",
+      "sha256": "8841ccd08c32ffbeac06279445b18c9291fc84900afb3eb1863a5167c4c70de4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-1/reply-01.json",
+      "sha256": "1245192ca317daada2e731417f3e6d96d0b2cf2c0e244c5a3c3ef364cf0288a1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-1/reply-02.json",
+      "sha256": "537fecfc8ce7d6328486563c3d7045da6847619a3a44405055cd0adf4a0cc6ab"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-1/session.txt",
+      "sha256": "8fbc06c72007c17d2a5f92ed653b8f8578a82a3fe6ff35827bb122c9968bfb10"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-2/reply-01.json",
+      "sha256": "45aec0f0f799238f672b80a59139392dcd95f568432c85507006536ea471ae82"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-2/session.txt",
+      "sha256": "42c51eb21526c22dd9f1cd3fa31bc8935ed512e35c7783cd83330f530e2637b6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-3/reply-01.json",
+      "sha256": "f8f1e2561f93b152e258544a87314231b1016a1d49e5c765459be8d5481f5cad"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-3/reply-02.json",
+      "sha256": "f700025de9a427ddd5f55352fec8d7ea41d29a39bc3066f3674cf79024c64bd7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-3/reply-03.json",
+      "sha256": "5f4f40ec608aa81266564f20a3dbeeefee6a2368387b140fe69cf12ade2c2288"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-3/session.txt",
+      "sha256": "ead34ae804366e651fa7d9c390c3f529a34c1306d91f6b826703192b58a3a142"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-4/reply-01.json",
+      "sha256": "f2a262c739f9824c3a2208a150cdabc67e378127890d126750e52497389f67b5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-4/reply-02.json",
+      "sha256": "cedff688f806a9eac6e396ee60a10f01285949fba5e351db53ccf163a58fd67a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-4/reply-03.json",
+      "sha256": "6c86cbb3f030f11c43737ca7ac9a1a5e0c5e33b0c1fba7ea87335156f3ce9b24"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-4/session.txt",
+      "sha256": "5411a594cf7d9abdac61c9ee705bfdca6070dee02d0ae48723679322710b69ea"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-5/reply-01.json",
+      "sha256": "d5b2b97748c0b4bcb0e97cd6ea78250c07ca52dddaa0fa2324c437eff00576b2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-5/reply-02.json",
+      "sha256": "2d839465229ef6d10d0df87e791a7794f76b19bdd6f45560a1a2dcc4c0ae1c8e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-5/reply-03.json",
+      "sha256": "2ef2054289cf520e004c76ee6fb48fbc385046cae196fd541f7cd05a310d8e97"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/gemma-3-4b/trip/run-5/session.txt",
+      "sha256": "ead34ae804366e651fa7d9c390c3f529a34c1306d91f6b826703192b58a3a142"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-1/reply-01.json",
+      "sha256": "ed0d15b1c2bd71b53567ab2234431b5a3dec2dcb2e7d10e3bf51983348ee988b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-1/reply-02.json",
+      "sha256": "d2b93b32a363e747432cd574e7085553178a18e3d2e4abe87423a88f67aeb29a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-1/session.txt",
+      "sha256": "5015b7b1d338e0a32c4d02ddd63237bd564610eedeeb92487d97d867489c2022"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-2/reply-01.json",
+      "sha256": "0a9145ea7dd5c296253b2ba4253d866473b51bd3de877f6c658ca23c358ee093"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-2/reply-02.json",
+      "sha256": "6e3f811777d92e14f0621cd9eb6d1bfb867ef7ce9f1c4c45ca9c7b28b984d1b1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-2/reply-03.json",
+      "sha256": "656a3a96e04f9077e8b96d0854ecab14c6b064d08877d5312bc1d4f5b4597200"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-2/session.txt",
+      "sha256": "465d5cd713499fe75182735f4c0af900643c2cd90cc0ac420edaa0bea9c4c323"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-3/reply-01.json",
+      "sha256": "8b006dc79717afe012c648fe2214e0352200daf1cd99cfa661b68c9c5fce2db5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-3/reply-02.json",
+      "sha256": "f7bdf878a89416bea3d755391b90e9a786eba197969c8ac986e0068bcb471a23"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-3/reply-03.json",
+      "sha256": "7cfa58db62463362600c0a192a0080a79c4edc6837cda0ea3722b94a81886b85"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-3/session.txt",
+      "sha256": "1e800f1a2e5e025a26b8905f7eec6ebbb158b9825714a27b6220339af7b1765d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-4/reply-01.json",
+      "sha256": "ed0d15b1c2bd71b53567ab2234431b5a3dec2dcb2e7d10e3bf51983348ee988b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-4/reply-02.json",
+      "sha256": "2879045c73d64e874355a574f955a0f309ef8461f45527e52d76ff9de3036b30"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-4/reply-03.json",
+      "sha256": "7ecc823798cbfd7b778650b318117d0c06feedabc12eb83e17e4dd3d9d53b101"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-4/session.txt",
+      "sha256": "c51ea84712bb5ebe45031b291371b1211257e2a8da63be589063c1398eec3be9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-5/reply-01.json",
+      "sha256": "33dae6d4483111ac2979c298f28521ac37ab33e266c767ad6b3602a22e12dd65"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-5/reply-02.json",
+      "sha256": "777bf6fee37fd3c9f07f4c91fa44f225eaf66cd640998432804d16e5e333a8d0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-5/reply-03.json",
+      "sha256": "f77e77f376d8d090b1dc85bf944d3b48317ce08e3436a21a947f519f3d28c98e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/access/run-5/session.txt",
+      "sha256": "2dfaf99a29ed23df5472eb3e0c5bcdc02b12f7235844d234761c52d0e99947d1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-1/reply-01.json",
+      "sha256": "a973e0957f2706b74757e4d47a0cfd60d6909231668d965ca4741cf08f34217f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-1/reply-02.json",
+      "sha256": "57eaf6ad68e7ee5d390d061e689d4d4931b18496b9189d21b5ba535e6b29598a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-1/session.txt",
+      "sha256": "c90a11466fba7e68800726de5c05084398c5cd7d87ab334605db9b192185363e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-2/reply-01.json",
+      "sha256": "d1344c2c2fd47b33a21fc2fe76275ccf5ebda488e2656c26919c3c585ba4ff33"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-2/reply-02.json",
+      "sha256": "c491a02f1fde45095f9fc0a5f5550fab16c158ff702de6565f8bfd90eb0cacdb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-2/reply-03.json",
+      "sha256": "0b75b8a9aa4697c3e7d773916a3f2e4065229bce31ad3f96c2d12154caef77e7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-2/session.txt",
+      "sha256": "cd8c2875340a7a569015cd083d897e28bbd985226366d8212128bba9d26ee5fb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-3/reply-01.json",
+      "sha256": "8b63446bbc61afd2c37569ba2211aee8059c76fe74f88a4e20560ddf7ec89380"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-3/reply-02.json",
+      "sha256": "fde4c3dd3f676315ab766d9955a778e42bcc1c3a127ee26c0693ae0c6de9d227"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-3/reply-03.json",
+      "sha256": "62c3e54fbb3c1b9d1b2858506a446da86b9e2bbed8bd921094a348f2a07f2755"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-3/session.txt",
+      "sha256": "0ceb3c1bc587f2a80f3e0faaecefd64cd244d71aab8e6af0fe74b864742c58be"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-4/reply-01.json",
+      "sha256": "ec500b625a4a5f84de8b3a64f95b621fe801da75c9f725f508bed5c52656c280"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-4/reply-02.json",
+      "sha256": "096621ede15b60b8d90c6bc4086d496beeb6c2db20e3c8f1850e124a59479742"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-4/reply-03.json",
+      "sha256": "1483cd4c9b6d12a1026b582d852a5d941a14031881c7456064470b6077513a41"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-4/session.txt",
+      "sha256": "5d82976013173612f62a5e3656c9df73ab8aa6a7531824ec9e921e81cccb9167"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-5/reply-01.json",
+      "sha256": "38b2fcc70836e2ad47904cee11b2ead3d186db91dbe06ecbc60d8423b352b7fa"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-5/reply-02.json",
+      "sha256": "2b471c79db8dadf1cfc214f3f6ab4fc38dfada3ef7ca744cbe16e6edc2b8aba2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-5/reply-03.json",
+      "sha256": "f74dd4f2b542a5df31e6d56eaa5c8d79fec72847d3e2d5044f36183b0442a68b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/clinic/run-5/session.txt",
+      "sha256": "b31b83bca1e849af91d62cc65ef57260694d63de8026d7bd18b3d85935903ecf"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-1/reply-01.json",
+      "sha256": "804813ed6022a2fc8a00bb296e9c2fa2e367a26028ac48ec9a2692aeeeb690be"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-1/reply-02.json",
+      "sha256": "d8d259532ca0f6c5be0b69ecdf12f099da3eaa8efaa61109e89cc97a6b17d08a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-1/reply-03.json",
+      "sha256": "b1192a0e82d16adeecc8c057addfdb95b5f0324407ed39716c04a5dfcfc2151e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-1/session.txt",
+      "sha256": "63cfa36e69f8d09d67771f6b7157fc8ae7bd2dee463c1bb2a4da7c197c356725"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-2/reply-01.json",
+      "sha256": "8b2d492483d851db43127d178a3492069ba53830b6ddf66a41ce2da802ac6f5c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-2/reply-02.json",
+      "sha256": "bd6760f67f99f63eb1e171282fd28b024de332cd592611a9fd2b06618a233fd2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-2/reply-03.json",
+      "sha256": "df550cc58cc743ce2ee8b831c2f65203290c946d698295f82079b5a8cdfdfc4d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-2/session.txt",
+      "sha256": "9b95c6a8a341943f18ec2a3cd69aea1925de683569470607b52f70e36ed60266"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-3/reply-01.json",
+      "sha256": "8e23352560290ad4f936e815082f39a9896c948e384678aab6471b5fec8352c8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-3/reply-02.json",
+      "sha256": "57cb305aea3568c6cbd7db421a8588cb9fe158f15916fff4dae6189496b290cd"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-3/reply-03.json",
+      "sha256": "80bb288ab3118135a2ae6ff5c6dfd55912b480deeda52357e365eb3dbd7e187a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-3/session.txt",
+      "sha256": "85c1dc5c42831a3a1654f001263a395fcbb0ed52f8606084898589a2336b46cf"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-4/reply-01.json",
+      "sha256": "24f7d8a34cd6bb464d01f909a551882a52ed7a30c228a237cec1b3c0b9be3d84"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-4/reply-02.json",
+      "sha256": "0203f13fe6b617facc1781d17ee960c2694b6e08f27579430bdbaad191c6277f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-4/reply-03.json",
+      "sha256": "9ae6ad4dc7d2ad84769181b99037ee0ac6f69c6170a5990f30bc64c8df6d76f4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-4/session.txt",
+      "sha256": "debc8c4656c399a89e3932bc41e9af46f85d6b4316f425cccdbbc7e5765fc2de"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-5/reply-01.json",
+      "sha256": "5274c8ad98e5233b2054038689979a8945596c9c8180566b5dba8c211ca7a360"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-5/reply-02.json",
+      "sha256": "00a4b6df18810945b47e7d963698c28ad5ca29110674c8b17dd39d6f8dcae207"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-5/reply-03.json",
+      "sha256": "370d7826f0735fd889d781306421dcbc06f57d4018891c7b31ddc571ebd2cae3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/course/run-5/session.txt",
+      "sha256": "d164b452cf8ba4d06ba11a3a80da5270399079ece73713d3ec649bdfeeb89184"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-1/reply-01.json",
+      "sha256": "f9406551d9d9a13cd6fd4b7e805196acf917dcdb32dfef92da2215a2f2b27a86"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-1/session.txt",
+      "sha256": "e6f37416d8fe9487aa0bfd91f47deb10e14c45e339e80f1ab701e6671137fb0a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-2/reply-01.json",
+      "sha256": "e8435a39236482140aa562aa157f6f4d29c9fab1490f976ba5c24cbc762a8923"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-2/reply-02.json",
+      "sha256": "b37a838ba51a5d4a6becd726ef713f6bb7b92dd6d0a78fc8ca426ecde7507918"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-2/reply-03.json",
+      "sha256": "f73ef49df7e9e655b849b77a84b4cbee1077da3bc50c418bb58b78f2db661380"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-2/session.txt",
+      "sha256": "fa8e75b83e2b9f01bf40ae2066d0b03b6ec7095e50ad9414b927481f18ebaea8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-3/reply-01.json",
+      "sha256": "43fc68bf6026e6c852c8d46e0916a1344c422c7733d52b5cdfcb83d69fda313a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-3/session.txt",
+      "sha256": "4f5795b2de2657e01dfb7985d8acf2bc7a32de99b8ff676319b526b1a583e125"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-4/reply-01.json",
+      "sha256": "d6a6447d592bb637cc0af692719d6c2f3686188ff0876dca9df884b1b8616537"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-4/session.txt",
+      "sha256": "c1691e5d85a66d2c4118ac987076170acdf4cdfb93e3ced701856e31ab809be9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-5/reply-01.json",
+      "sha256": "96bad5e67dd3549c84cb7e58f36bc899d4d67da829a650eb7e6b23d1e377dc73"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-5/reply-02.json",
+      "sha256": "0626cf51ee4dac50d74981ccc4933b47712a69dae7e4437baadfaf87d524bbe9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/lease/run-5/session.txt",
+      "sha256": "b4fef9aad9b3d0bebf7e24ddc0f78656e0e1ffd27d527e57764c59964c62a0e3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-1/reply-01.json",
+      "sha256": "9bafb08cd2b1a37c102377fe25ddb23f05c37b60cab8949e0d188db640e3c930"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-1/session.txt",
+      "sha256": "6191e7e593f8c48b39e581fc49a7ca30a82e544cd6fc713b174ef861ac2d75d1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-2/reply-01.json",
+      "sha256": "cee0835897437019139f1586b6b11f67fb8285e1256a67ade48e2b9e4e9ca150"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-2/reply-02.json",
+      "sha256": "8102b036630f0a902811a6125928405590ed43def5695c744dc9da77584f4fc8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-2/session.txt",
+      "sha256": "2cd3195355405868737ba4161930d2d604a4cd28f3f3df2c051b2f1c0b97f5a7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-3/reply-01.json",
+      "sha256": "b9896371c67eb4a7d1a2e9f6ef417fff8c9b5cc537b476a7ffedd7502f5f3a66"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-3/reply-02.json",
+      "sha256": "490907d52c05a74809367a467e19b82e68f6bedc0e2daa43b4039c603bc29f95"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-3/session.txt",
+      "sha256": "1043d962be7aee3df23d64c436d05168fb2a97cf0aefb95f08b3187af98183c4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-4/reply-01.json",
+      "sha256": "a36ecd6f2aed8b09619d9eebd924cf9c1c6a31b2f716a5a999b5597db3e8b3f3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-4/reply-02.json",
+      "sha256": "c1ad262aaf3a764f939967a2cfdb81a7608e43356825e0eecfa25905d0e2789e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-4/reply-03.json",
+      "sha256": "112ec2b6a51159cec4f17ff271ca900e2f6cada1ceffe6b0bc65c985d82ec082"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-4/session.txt",
+      "sha256": "22bd7ceed31c41d869aebb7b5df5dc2a8e4f8ae2c85b7f03a86ed66088a6f63e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-5/reply-01.json",
+      "sha256": "4f863f57f7f90b5ada99a161aa4e17f46d06f77ae80c363c1852db2ff3c4556e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.1-8b/trip/run-5/session.txt",
+      "sha256": "7eb9142af9c31430197396a9bfcc2c641b7a8ae49adb9c1e45ee156b76b73889"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-1/reply-01.json",
+      "sha256": "aa2f2a016ecf92670516e55d52be19519c0d1c1848ac83b9f1047be69c8166d3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-1/reply-02.json",
+      "sha256": "6de0f758c12aa41b40473b51cb171c501268fc21331595af24608668a1493057"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-1/reply-03.json",
+      "sha256": "05b7a72c81bba7e40874328093e6b826aff88f92cf56644c0dff6a15d4d8592e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-1/session.txt",
+      "sha256": "830bb2f3e8d2b65d3b74b01e416b8967ae464e1bb8764370c21e92559f50bdaf"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-2/reply-01.json",
+      "sha256": "c2f141016c83d9d6e77822231eea9ad522443351adb65d15ff33e474e9c531ce"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-2/reply-02.json",
+      "sha256": "dd52f304fc868bdb59f9acccee5406b900896c0c7324ddf32bedd2461988eb5b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-2/reply-03.json",
+      "sha256": "9eb36ff280ec63b34a759047625acba62d8e5da7f70fa8be08321b41d60df8d9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-2/session.txt",
+      "sha256": "4453639b887b02e504aba83808a23e2a5bc675a2c6dbdd8020c5755de0beb812"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-3/reply-01.json",
+      "sha256": "efff9230c238ed3eef2131378cdc9463a130df59aa0900b581db1b24b2b427a9"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-3/reply-02.json",
+      "sha256": "82d54cc25f5d441ed1219160c5d8a9a8c1d7f72e7fb1af659dba78efcad55771"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-3/reply-03.json",
+      "sha256": "c4292e98979826c6c851fa20f80cf70a09779c1e6fea10193e750b8674db03d5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-3/session.txt",
+      "sha256": "bc2b53490f85430b3f3542a133b6e807934ec1660ed08271d846e189fa257b05"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-4/reply-01.json",
+      "sha256": "088242e8dd536b9840be7bda772ae76e071255557eb8f18e3d08be1caecd5152"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-4/reply-02.json",
+      "sha256": "6a4ab445bf017628b0f7519b61701f7705533c9592c155d0fd67f5929d2dc3f6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-4/reply-03.json",
+      "sha256": "682aa647d23296782884d4fd78aa53ecbc7c28d9291ebef2f5347e0e991f2d3c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-4/session.txt",
+      "sha256": "d1d5b2742e31884078cc1481d1d29cad91f53b0be40d3d01d0e61ca006462451"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-5/reply-01.json",
+      "sha256": "3436a90aca66a18cd8aad0e852e56dbca012672f23ab5860a69bf82a6dbc3cc3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-5/reply-02.json",
+      "sha256": "4a9747e0f1cfa06b5d0651e4b31cbd68ffb1fcff6dc5d798a113d90c2c57406a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-5/reply-03.json",
+      "sha256": "3a2bbb1271536331dcce9f7a3e4f95d65750e6f14494f48b7bc6daa34e1a7407"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/access/run-5/session.txt",
+      "sha256": "eceaa99d0c91202ca8e2208874ca5c0fdd1c635a9ec46e7581a9cee880e349a1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-1/reply-01.json",
+      "sha256": "22ddeee9602dad25f299b2f2fafadeac0335939880189a01c490367a76060850"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-1/reply-02.json",
+      "sha256": "6e89c7c79985983632bbce34783ab4854978af3b69e683e99606fc784f1cd7aa"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-1/reply-03.json",
+      "sha256": "437114ee560877ba82519f92d05af004c6f78f536b0b0ec8f3c514860812e9e0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-1/session.txt",
+      "sha256": "f83d7866dba10d0e57cbdb30b3b10d11b31440016675f410be723796526f29d2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-2/reply-01.json",
+      "sha256": "cbc9384778a0fd4b9b1aa2b6ee42801a2504aab1ba1f750769eae1c20c4560b4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-2/reply-02.json",
+      "sha256": "d24f1aaf5532f28d14c9db540ae6349702d12aa3ccc6909ccdd4b6d8a8d9d23f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-2/reply-03.json",
+      "sha256": "d0d22dc915ccfcfa5e2d0c62f6966452bfe9adeed429982464775908e3e4b45c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-2/session.txt",
+      "sha256": "a135034eebfb10a34d6418266335192d4cf6aecc660643b633f43931d6dfffee"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-3/reply-01.json",
+      "sha256": "83865dddae4ef8c66586efe4152884ba80d5ca917602a14712a010eda24b3fcc"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-3/session.txt",
+      "sha256": "8adcf546e2c70c7ace6b6de5026cc13b4b0764a4f89f82bfa996213dd9c5a6ff"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-4/reply-01.json",
+      "sha256": "3eda5cb971085a296af36aed4a6e7902ac87cabc47dac7cf28821b77a739d8a6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-4/session.txt",
+      "sha256": "d2b7d6f8861de4bf63deaaa05c29e2cc2140073f86c518c3c385cba552b88a64"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-5/reply-01.json",
+      "sha256": "33de1529d96263411977b5b53529a7c29c9205787752ed625deb4d561bbf3fef"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-5/reply-02.json",
+      "sha256": "d1201cbaf19bab72a445c6fe036aa609f21dbd7ec3b8effb9acf9c2d92f679ac"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-5/reply-03.json",
+      "sha256": "40f7ce4cff725f21bd6531a1104503822aea12e8d39ad7835473d0b2808cbec6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/clinic/run-5/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-1/reply-01.json",
+      "sha256": "f4dd11f58079bb5c8847e2784e0f8538cecf59d17b5176486a42fd8e4f59a81e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-1/reply-02.json",
+      "sha256": "56be209ec282af308f286cf0233510942e3b1c9ae7683d4e015ab5d80a513079"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-1/reply-03.json",
+      "sha256": "0e0ad48ac710439fd33f99d4dc055045a638d7001cbdc59022e3a9d8362ec5b2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-1/session.txt",
+      "sha256": "d03fbe53a9534bdecd6eab968f9cbd6c0d6fb095390584db8f15f136154e26f5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-2/reply-01.json",
+      "sha256": "5d181beb22d680d9647d54d7695d22101680bb5af7f6220e2f673e8ea783ac6d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-2/reply-02.json",
+      "sha256": "c8bddae195418d4dd8d38b95222c955d3318f5f144720305d0c16f2d94e8de42"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-2/session.txt",
+      "sha256": "4b7644acb2063ccea73d7b482dc614346b3de54ff0503f9ce837402822be872d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-3/reply-01.json",
+      "sha256": "9703b0153ee222e2a7e5bc8d5b8488e514e36883dd12a59c1bd9efaf335b8793"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-3/reply-02.json",
+      "sha256": "f3766daa0bff826e8919129cdf3cfdf456364b2106cae26c59f841851c742b9c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-3/reply-03.json",
+      "sha256": "0489b8dc4c66e0938d6216c787f1f84b52f75e2030bf88b88354fe4a3a59319b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-3/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-4/reply-01.json",
+      "sha256": "fbbfe9bb29f7e61526bf629f84a07fa944bb397edddd10641d58af4685f6caa2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-4/reply-02.json",
+      "sha256": "ec5def40603617b515869b2b849bd70cf18444b9976eb7b38dd9aa56acc9cae8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-4/reply-03.json",
+      "sha256": "de172fd5cb6f5476fa816d86fa5dee84c7fd728a7500ec4c175a18cda0f07925"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-4/session.txt",
+      "sha256": "58236af0fd726d1e57e9ff8c3753a6171d6eb4787fb13d199ecfecfb5afb4bd3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-5/reply-01.json",
+      "sha256": "3a745df71fbb3887e939a7886f3e55e5a1789a9afb4333f86b75bc4486ebfdfc"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-5/reply-02.json",
+      "sha256": "a16341db1eb836a6b4bee44c5ae4a242054c7da6002b2a317bfbe3cf9ada83c0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-5/reply-03.json",
+      "sha256": "4a7f3cf6917337ae2784a35c507d5df61d6f94d482e8116e0c02144e093f66a7"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/course/run-5/session.txt",
+      "sha256": "d2f16d47c6a50a3202f953262ee87fd010b2a366f2b6db90b2ba97c387bbeb8a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-1/reply-01.json",
+      "sha256": "b0fea4a23b5d51b9aba988f9e30644386d208bc7e4c9293cd79c39030c1938b4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-1/reply-02.json",
+      "sha256": "18813061a2837e63f483df82ab70b4fe4de020b72e23014a71631fe6c2af3cdd"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-1/reply-03.json",
+      "sha256": "d5fe4e849bbf004d7761c4636a311c7b2ad19dfe7ea6e958ba09ba843c068c80"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-1/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-2/reply-01.json",
+      "sha256": "e93b12ca9dcd1faa92a8dc78764bf0ee6f76ebdd2ad808dca2b8c86888269b76"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-2/reply-02.json",
+      "sha256": "b961bc130033496709d5b2170c4a63013e242baa7e4b1771d21c3ec99e2d6ea1"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-2/reply-03.json",
+      "sha256": "be70a9d70fb3eef034307e2bb6d37619e1aa730f7e177775c04c5b6fd09557ad"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-2/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-3/reply-01.json",
+      "sha256": "f6dc99c86a247f5e35746c28492940eff6c1cc9f9bcb87238b0b34df8d78e104"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-3/reply-02.json",
+      "sha256": "5f483f906f3e348aeedafe5c868a1d108d4b0eb95a78a103d610b25a91eae972"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-3/reply-03.json",
+      "sha256": "95ab526e065cefe551bdd2c2079039b914b338a09f18d1a677ba4566891fa39c"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-3/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-4/reply-01.json",
+      "sha256": "14a7a61b35003e23f080d6fe2c81e62d7a36fb92b6922078ba0a2a6ac2f029ca"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-4/reply-02.json",
+      "sha256": "8ff021e3dcf61107c8f9b4f3dbea39586d1f5db26d541ba81a1b0fb35798d2d2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-4/reply-03.json",
+      "sha256": "57020d8727ccf15674ea68638217dc5e46e7f13f1cec79492c55cee6016ad1ff"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-4/session.txt",
+      "sha256": "fabfb7a3e6528ba13bb83eac628469a80dd43cee2fd79202417c48c5ae124fe8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-5/reply-01.json",
+      "sha256": "6a6106f714e77481bfbebc1083057dbedc489c70a7afadd678e87837434263d8"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-5/reply-02.json",
+      "sha256": "dbb2163fd5f1577a761f0c3959c62e57a4a7e392aa03c4b3ea9fea37586d55d4"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-5/reply-03.json",
+      "sha256": "261a6cd55c9de8fca89d3fc1772468c69c115f12073cdaed7c0061afab12b28f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/lease/run-5/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-1/reply-01.json",
+      "sha256": "489d435842d4c41fd39320bc6a569c8aaacc59d1c2798babaa6003b0d0262347"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-1/reply-02.json",
+      "sha256": "4c71cfb8a34733ec577d4b929c192cae48f9d1bdffaa9b9874e47ee72876026b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-1/reply-03.json",
+      "sha256": "8b3dde0d8de0be6ad38c4b7ceddcd18ea974bfcf40e187c92a40bba952283476"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-1/session.txt",
+      "sha256": "909da1ee911455462cf5d4388de53163134e15c42d5cdd164226cffde3887746"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-2/reply-01.json",
+      "sha256": "5c539b8568e4a434f230f7a9b665a451efbea8aa349dd9f6b58f263e2e163aea"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-2/reply-02.json",
+      "sha256": "2834d9ce19b4796490011bfe8cbecd71892d71664f7b9801cfda13fc9080b220"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-2/reply-03.json",
+      "sha256": "759e7116d13e849222a9556f7d0efb0aa3f03765edbe76cac8e65a60c58a13a0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-2/session.txt",
+      "sha256": "8216689ffaf8e919fcf639374cc14451c21a837d5a41a294c279c35ef682af11"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-3/reply-01.json",
+      "sha256": "f1a5ef294d68efb4299c8c15db98fe2bbe8ac99db05de7b624030ac267a6011b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-3/reply-02.json",
+      "sha256": "ecd832ff3cfc218030b7c47d71cc473222cdcd522061382fbf81c07621513273"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-3/session.txt",
+      "sha256": "b34fb7a0ae743d5084000114a316588bee8edb0fc1dcc3abee2fef351504019a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-4/reply-01.json",
+      "sha256": "f6dbfe44fd411174b757f1c0b9f9008bd4a88ba633585298b1ac0982f6745a19"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-4/reply-02.json",
+      "sha256": "5f5beaa98315175507fff48b18f6aebec8e2021c81eae54e1aee08f3618aed05"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-4/reply-03.json",
+      "sha256": "5f439a004747581d04ad014ffed449be7b01ae9b607c58096bf0f9ca1ea91890"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-4/session.txt",
+      "sha256": "461e7da34bee7cf85664aee1b7ce07914b0c168bf6479f627d6234ab7441af5b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-5/reply-01.json",
+      "sha256": "908f8cbd232179c330594820f0f34118429498936dba23de82fc0619641ae53f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-5/reply-02.json",
+      "sha256": "ff54e232387448841082b3c961d2d04d59983525defe741dac24c9b12161b2ee"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-5/reply-03.json",
+      "sha256": "7e0a965d3264e083c94307ea4b8979a7c1afe3d1a3f59dc46c2f79c4abc7c032"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/llama-3.2-3b/trip/run-5/session.txt",
+      "sha256": "11e4c8144daaa4e7a86ec807714f472c84c29d425690cc552aef847afc28ffb2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/manifest.json",
+      "sha256": "dfec2a18944fde45a65347d70e0c3a17215d62f3a429558adb9c50cde05ad08b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/recordings/results.json",
+      "sha256": "1dce761366463544323171e839660fb376580f28206c0d3dfdc0530c5e9f731d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/README.md",
+      "sha256": "fcf1b8035bae892c773b813f716e46d8bc67cf0d1d52f6bd1591c75ae467b3f5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "sha256": "b86855c17e26fd25ca1633c81d3aeb201a83f368b646f4c93b789b5a10c9b3af"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/turn-01.jsonl",
+      "sha256": "534439cfd26c2645c5cf47c2d2a6573d5541cb4b090d90eafd38eb3fb46515b3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/validate.txt",
+      "sha256": "340e26dd82980e37d409b9ef08b2f9261a763afaa71a1d75aed516153e790d6f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "sha256": "ad28ef84a1eaf891812c04c2b15da9298db61cf9b847db94401c15f2e3e2ab29"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/turn-01.jsonl",
+      "sha256": "ef7c1c17198bf12bd83957d4075e1a9fc48503e035886a515c91755db733c831"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/validate.txt",
+      "sha256": "340e26dd82980e37d409b9ef08b2f9261a763afaa71a1d75aed516153e790d6f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/manifest.json",
+      "sha256": "9080e2a4da1fcd7a75e32d8beedc50a9fe043411ffbca44f47aaf3f512c6ce4e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions-evolve/results.json",
+      "sha256": "fb2db8e03d6e67611c385f3dd2354a4cdf392f8faca2d94e3d364983cfdb2022"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/README.md",
+      "sha256": "c1af0d1ea67d66e714b42a89b0af527eef0b9ceae66bd98675d4544bde313236"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "sha256": "6664fe559bf49d3a227a13a5531d94c58fa9eb58a02b3f82db391b1b092e8918"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/turn-01.jsonl",
+      "sha256": "e9c6fbca4838aecae137bad7f34d63cd7ef2e41f3569a2f961a6975aed564f66"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/turn-02.jsonl",
+      "sha256": "2595dc75a68e5dd92cbfe871025f62f515805119192f54571e5da6b00f42af59"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/validate.txt",
+      "sha256": "c5c14bd915d75a15c3d118ea156f3bf17d140c0563bfed2a1d07ff022fb31666"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "sha256": "497ca980e9ba059e30e740fe373ef2ef58cf07dddf9ad3617f992c65d8f988b3"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-01.jsonl",
+      "sha256": "a72f26dabdf86b7e25e4058f708dd351165fb27bfafb4445d427cd5142b1bacb"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-02.jsonl",
+      "sha256": "b60490a2ed571e5b89596f870695973e12d318ffe4bd4f7c77025ab148b21305"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-03.jsonl",
+      "sha256": "f11d38431fa02789ed8df05eca4189ea4f599168e2e68c9f3dc36ff00267b52b"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-04.jsonl",
+      "sha256": "45cbe298d09107951cee7e2abd04071436437a1e8aef2e89a74238c0ab16aee5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/turn-05.jsonl",
+      "sha256": "5670923687b899c5f4fe56ede7e4f41d01b356c45167bd672b20bc0ce86b2903"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/validate.txt",
+      "sha256": "340e26dd82980e37d409b9ef08b2f9261a763afaa71a1d75aed516153e790d6f"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "sha256": "7b9f7ec1a42e52901a194d9ea0ccc6a86a0d42af8c5bb61b34a8d158dc76d90e"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/turn-01.jsonl",
+      "sha256": "f192ec530267a9a6d3c7e75f385e5c950ced56de61196d5e64641cc4b89ac9f2"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/validate.txt",
+      "sha256": "c5c14bd915d75a15c3d118ea156f3bf17d140c0563bfed2a1d07ff022fb31666"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "sha256": "43bb8ee6411df541d030fbb16705a777c496c13c920de97ea81aabe14c709c54"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/turn-01.jsonl",
+      "sha256": "ee84f1b5a4a46597b59dad920383308be5fee53e366547e2d5bb69758da0b250"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/turn-02.jsonl",
+      "sha256": "a603624b470567f2d532f9ebc2d93411ceb7caa82131c7b48701fc9a2be0e0e6"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/validate.txt",
+      "sha256": "c5c14bd915d75a15c3d118ea156f3bf17d140c0563bfed2a1d07ff022fb31666"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/manifest.json",
+      "sha256": "8c571da3292432d1c43febc419f37eada173865ad19cdf31bfe3c396723b49a5"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/skill-sessions/results.json",
+      "sha256": "bcf36213f3b3ad3dcc9d2a8a094937e4418226f66380f5219e5e796db0e823fe"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/README.md",
+      "sha256": "5504887b833c40e2487e124c88f9f3c6087ae1b1eab93435519b2c16dc789745"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/app.py",
+      "sha256": "1c0bcb8739dd26d9e7aacc0887423f728d3d2eea8f472f6d2c2893ec45c20e54"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "sha256": "eb057bcf1663202b6f19af435612720ecce2f83d6f5951decd1f1ef7b49bf951"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/plans/attempt-1.steps.json",
+      "sha256": "e6802aa585ad853e81d4b8e95829b24a3eefe76eda622a7f8a897de9a56cb83a"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/plans/attempt-2.steps.json",
+      "sha256": "7c0577658a965cddbfbfa42ab9d8404f148c684cfa6019eb581b0937dd2dfcf0"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/plans/attempt-3.steps.json",
+      "sha256": "50d8c976ad3bafce37a11f2e3b5cfdef36ef5eb76ce5bdf8f5ed18b21d44c815"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/rules.md",
+      "sha256": "583760a81c9fa9c0a64d4122c9342cce82434d681a58842aba6e7ece859c79ad"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/stand_in_bot.py",
+      "sha256": "726e4568cbf37f5c0e3ed4907455e62cf86199c95963449416781f71052a0d6d"
+    },
+    {
+      "path": "src/gnd/examples/plan_apps/trip/state.pop.json",
+      "sha256": "122dd5d23b8ddef77920a5247d02f184d9f0522d0f04f522772260199af605dc"
+    },
+    {
+      "path": "src/gnd/examples/quoted_claims/README.md",
+      "sha256": "3021fc80df1f2890ecf52d07c57ed268d89528c618363d99b9231fca2fc34729"
+    },
+    {
+      "path": "src/gnd/examples/quoted_claims/claim.json",
+      "sha256": "f954610ad3d5ef5178686db6fd5d871fc9f60de38a2baeebfbcdec5592a2dd99"
+    },
+    {
+      "path": "src/gnd/examples/quoted_claims/extracted.json",
+      "sha256": "51d37910711408549a2869bb2c3a92d7bdb5a44f6e420fa7f479fa2676e3a581"
+    },
+    {
+      "path": "src/gnd/examples/quoted_claims/gap.pop.json",
+      "sha256": "fa584181acc9f0be6f48b2d06abf17710fa8186a0c82e8a531b1bec4364ae602"
+    },
+    {
+      "path": "src/gnd/examples/quoted_claims/model.orm.json",
+      "sha256": "bdb0c0f7235e1d6771af4657d341f7a45216f228b72658aec81a44e18cfd7432"
+    },
+    {
+      "path": "src/gnd/examples/quoted_claims/spelling-gap.pop.json",
+      "sha256": "cdd55a51ae86a2c0a52811da589ef43cb78ac0b7721adef19e74c3d968d4f153"
+    },
+    {
+      "path": "src/gnd/examples/refunds/README.md",
+      "sha256": "ea95bd520a3a1e61dddb3a54c9709f35e1bb0e5d6bf1e3f7542ffff246c4ca23"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/airport.yaml",
+      "sha256": "518b533b2f7c203a8dddcd73f26d25fddde0466d2c89b33eda3ef72ea5f2c0f4"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/east.yaml",
+      "sha256": "29acd8050b53ceccee0bc1d3c3e9f9423e331c0c474bcb7bb12d94989970064e"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/harbor.yaml",
+      "sha256": "58a8e9c74d0e7b2711eef0e5cc2a8c7a272bc84126e45e26332d71bc7dc47c5b"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/market.yaml",
+      "sha256": "d893718faae108f5e1df08b29d4232043f0aab3b7890f2b63abf851144093244"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/north.yaml",
+      "sha256": "3f10fb892fb68107694e345e80759f363a687f6f0305819035a5903b8a60e3f7"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/south.yaml",
+      "sha256": "b13e0e200de530576c728465ee02503c0858185df689b91678939ac224ec08c6"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/station.yaml",
+      "sha256": "5464e5e0d4892e9b42e566db53e011c19956449bda1cb82cb1f2bba01675076a"
+    },
+    {
+      "path": "src/gnd/examples/refunds/batches/west.yaml",
+      "sha256": "cd0fc78ef16991df4c5adb1bd8823a4c3380a16e9329bf5b2627892e4404ec7a"
+    },
+    {
+      "path": "src/gnd/examples/refunds/labels.json",
+      "sha256": "888ee509ec8fc37a525287c5c855646e97d1de752371944e3f4d0af6f734cdfa"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/ilasp/hypothesis.las",
+      "sha256": "980756ff90d0e7fa358e9c8242a2396e3da9ef734e1f88e53799ecc9ebd6e50f"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/ilasp/run.json",
+      "sha256": "0b459640a613923cff8011c1cdda0af841b69923845f6f16835fe06c170bb65f"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/llm/answer.json",
+      "sha256": "98db66d2a20c0c5637172649b1d66ff4291967d916d74cb8f38e184f2a4a83a1"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/llm/run.json",
+      "sha256": "6a9ca0f04263262957f75ea0a85666c35b11f1c98d2b8a1f52ae4c240015759e"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/popper/program.pl",
+      "sha256": "53988e12d988c61b8a0e876eeec59bb7192546d48b847716ace5828a3d8120e4"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/popper/run.json",
+      "sha256": "c2816a3435454fecc53259032d7979a957f9251c1d0e98324c4ff059fac96373"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/rules/ruleset.txt",
+      "sha256": "1c63fedce2510e01db0cc6de0210ab74e5e1f23d1efaed5f9b0558bdeaac987e"
+    },
+    {
+      "path": "src/gnd/examples/refunds/learners/rules/run.json",
+      "sha256": "44c158518293123d681b70bf7a4d24c534d4828fb9bc031b688cd41147e2e308"
+    },
+    {
+      "path": "src/gnd/examples/refunds/model.orm.yaml",
+      "sha256": "8e03676063123e10447ccc0b448156867a5e3a10804d33443146bbea1b50baf0"
+    },
+    {
+      "path": "src/gnd/examples/refunds/stand_in_learner.py",
+      "sha256": "cc750c5463a8a59a9531b24245258371af8e5601354b14959c5a069da0dec88e"
+    },
+    {
+      "path": "src/gnd/examples/release/model.orm.json",
+      "sha256": "0d5cb7d5412f46352553e9caa4dcf2871c703bfee6fe7b35eb8200869a2a506e"
+    },
+    {
+      "path": "src/gnd/examples/release/references/catalog.pop.json",
+      "sha256": "11abdbe28ec6cdf9863a696649da2a80f337c1c79c29bee66c29a0986d159de0"
+    },
+    {
+      "path": "src/gnd/examples/release/repaired.pop.json",
+      "sha256": "42543697a1576e8354acf17338579b2463fbdad0607ad68e28d168731f770e83"
+    },
+    {
+      "path": "src/gnd/examples/release/seed.pop.json",
+      "sha256": "2143462dd98000c1c88195eec3469ef37e74c091f47e7691693f6b263d1ee284"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/FalseClaim.lean",
+      "sha256": "5021411965383b9fe985df1dc96ff9ab77d231dde9fce50676d663548c669b15"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/Proofs.lean",
+      "sha256": "a08acc305ebfb19ff2402da626594c157935e278f8671dcf1607c98e74501668"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/README.md",
+      "sha256": "41e45468009a0e2661ae410f44de3574c30edb9ad9a4ab0a3c58e19159db8163"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/approval-proof/model.orm.json",
+      "sha256": "47e2af3c4481bec06a053a26c34151576017496e9348b77566f295be4c126a77"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/approval-proof/repaired.pop.json",
+      "sha256": "4389dec5cfe69b9f64fc2b9b0d308e182475f4a3dd80657ee17e154e6d373dc6"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/lean-compile.json",
+      "sha256": "cea06c42b0ccaec7603d0bf1f6f302380482d834ca144428e6974b6ba84b6c23"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/lean-false-claim.txt",
+      "sha256": "5a754225faec3fc92f4198974e061688b8c415cdcd19cc58e617b573b543fa58"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/lean-proof-audit.txt",
+      "sha256": "6e8fae1c77a6cbdb5c84a4a9a5314fb8f883fd37492880e6c5470d6c45c578e9"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/manifest.json",
+      "sha256": "897a09fed9f0f6791519a248dc2d2e2101acc2ec4190fd33b05c12d2bde7f684"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/pyrel-invalid.json",
+      "sha256": "7c18813fe0bc05a50c604c93ddb91362ff69d5584d9718338ab21743e49c7485"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/pyrel-native-invalid.json",
+      "sha256": "fb42db12fbeff69d1081f1136bcb386266da3be57a87213e2fbc71bd33233db0"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/pyrel-native-repaired.json",
+      "sha256": "70edbb0ccb90bd5def2b24df562491accd854745832a7b88936c1224fcd980b6"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/pyrel-repaired.json",
+      "sha256": "208c609e342a97ae28cf0efe5569bd0fd9745e92626a31fb13d6100fc1e329d7"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/souffle-cycle.json",
+      "sha256": "f941f3a2d02902121c6ca1d66eb1b2703a091a8f5de26936b661a6f6b06be3be"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/souffle-patched.json",
+      "sha256": "886fba2f599c5b6e5d9731dd23ba863b72275d953062d96025c3e370966e578d"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/checkpoints/souffle-repaired.json",
+      "sha256": "beaa59a81a2678803bdb02d8ffc3b5c86496b265f4fd96146ed4092db4bd4392"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/cycle.base.pop.json",
+      "sha256": "f2fd9f5d95ee1c69566c3c4809745155ebd8ea6bddc5f4f5956e6632f2de0ee1"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/cycle.pop.json",
+      "sha256": "5750114b1fdca3d6f559197dba7fa178fd9c62af7fa992c081371ad8f5d9fcff"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/expected.json",
+      "sha256": "059bdd474100dcab619dac99bc53c09a6fa69f8485ac93dd15ae8195b6690735"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "sha256": "9006d643cfb09cbfbb4fad77d51c0df1892b165d844b6128a2ee7adb804ce737"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/patched.base.pop.json",
+      "sha256": "48249e29b2b8d155a8e52400d76ffd2ea770d133f780d952a2c3d0d467c69ab8"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/patched.pop.json",
+      "sha256": "44bdb135c89855f9fa2b9e663bad39bad9d503aab2f864132784de70768d15b3"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/reach.targets.json",
+      "sha256": "2fd8385e5103e1ecad6dfcdd3dc8af5c3080c11b1573d85ee7c937081fc7b44a"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/repaired.base.pop.json",
+      "sha256": "56a2acae0a33736cad91d01db9c1619b10def03fd7a3bd633fc3e7f323f9d3f4"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/repaired.pop.json",
+      "sha256": "e5dee29e1eae4ef2b14f491000e9d02a91cc181daa38d86304ce8f9a712ba113"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/unaffected.targets.json",
+      "sha256": "4b84c473d3e1674b9a2846f82b864d14f8f9ec019240a4ffa0bdaa02ab5ca953"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependencies/vulnerability_count.targets.json",
+      "sha256": "660f2af7bdbe7b0635996ccc79069aa8f4b64308652ae7f2a641efa01eef88de"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/dependency_analysis.dl",
+      "sha256": "ed71825745187eaa97893aaf1466d0e207c793eb4b09e61e025491745a0ad4b5"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/policy/invalid.pop.json",
+      "sha256": "694447975b9311a5aabb5bce136cfc22b34d5077544547a3c7c981f1947bd0bb"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/policy/model.orm.json",
+      "sha256": "74aff72b65e2eb2a5b54780406d45a584fe67faf54d872fc1ea71e791c4130e1"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/policy/repaired.pop.json",
+      "sha256": "7ffd5d8b6b9b3204b9f51ac64e6ec65834d6e5e967673e7a18bce7ff7b43fc94"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/prepare_facts.py",
+      "sha256": "987555bebe01c03efcc71a72e0f108942c5a14b640b04e83e9d6dffa67bccb61"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/pyrel_queries.py",
+      "sha256": "df808c2e0101729fe9f19014d71d35762a96b1a1918c5224029499af1550a327"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/runtime-environment/pyproject.toml",
+      "sha256": "41d7c94fa5fd93e397a7392bed52cbcf4ebd37d845a70dc4b740d12fa6894b0d"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/runtime-environment/uv.lock",
+      "sha256": "2b84d81648f9ce8c798257fb847ad16cbd0d5184100f7292134bd0a1a37546b6"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/scenario-cycle.json",
+      "sha256": "7fc52dd1f0464b2168d7d63037dcefce2f29592676c8645b203c773bc9a5c18d"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/scenario-invalid.json",
+      "sha256": "4fceba576d053bc8ea9d1b19b4937488e2b3d8c2c479eca9d8269ba362ab9bc4"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/scenario-patched.json",
+      "sha256": "8c5c481e52448246f5cb79335cce4cbf41043abfc0f0b76332149c77c090f06c"
+    },
+    {
+      "path": "src/gnd/examples/release_governance/scenario-repaired.json",
+      "sha256": "cb5b658c9518c5b1551695efbd1b1bf63a2b20285bc899b377e95a14f83a4bad"
+    },
+    {
+      "path": "src/gnd/examples/rule_check/README.md",
+      "sha256": "1609682d3b0dbe9508c3914080123fbffeefba3788f7405d948c71e45cd6a9f9"
+    },
+    {
+      "path": "src/gnd/examples/rule_check/base.population.yaml",
+      "sha256": "d816aea7caf713a67837f1361c4a2676a91a5aac82ba7167bf1ef88106fd5fcd"
+    },
+    {
+      "path": "src/gnd/examples/rule_check/fixed.population.yaml",
+      "sha256": "ae8a6a67686b02bdbe7881dfc0a179d575f6a09dd5c05fc49101867db6dc4b3e"
+    },
+    {
+      "path": "src/gnd/examples/rule_check/head.population.yaml",
+      "sha256": "4d6a6e2f57c6799890429b47546b3de39902cc06d660a335345f482170f5b1e0"
+    },
+    {
+      "path": "src/gnd/examples/rule_check/model.orm.yaml",
+      "sha256": "e83fcc2bc018bd09d73212f650720b30c750e2d5a405c76b7810bc64626db53b"
+    },
+    {
+      "path": "src/gnd/examples/staffing/README.md",
+      "sha256": "b92bdd1b6b80b485caefe47c7a882e66c78514e0941bd7d02a1ab6125acaaba0"
+    },
+    {
+      "path": "src/gnd/examples/staffing/learners/amie-2/reported.json",
+      "sha256": "2dc09dd494a633d6ba7fe48aae73dbfa68ec2e9dddee6c2e49f3dd103324e871"
+    },
+    {
+      "path": "src/gnd/examples/staffing/learners/amie-2/rules.txt",
+      "sha256": "4229ea06b20814788e5b28fa5f77368faf599a23abf6623359bc18329dfe762c"
+    },
+    {
+      "path": "src/gnd/examples/staffing/learners/amie/reported.json",
+      "sha256": "1d9a504318a0bf210b0dc9de6b71d0fb4b47803b5e3af2c11231d193e382a712"
+    },
+    {
+      "path": "src/gnd/examples/staffing/learners/amie/rules.txt",
+      "sha256": "cbe40fe6018aad4f79d240994b67d86dac5f9f0ca62b9cd391d0253bbbab7f59"
+    },
+    {
+      "path": "src/gnd/examples/staffing/model.orm.yaml",
+      "sha256": "fe3857c96fc16d01d38526a4aedc89de52158f3b1a01e305ffbc6f201a2770aa"
+    },
+    {
+      "path": "src/gnd/examples/staffing/population.yaml",
+      "sha256": "dfbfee12d84a102392b44cb7f8f25e8cd67a6afab417dbd3b5a0a636bbe11e9a"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/README.md",
+      "sha256": "f26f6061682949d7e2e6bb259f02009259f81caa42936c3cfa74bb8091d332b9"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/duplicates/duplicates.judgements.json",
+      "sha256": "9f4b7bfdcf551b4e8fcc88a9fc7b54d1cf02a4e78ab74886c6b44aee190a6cae"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/duplicates/items.population.json",
+      "sha256": "ad0c9da0c4854872c3bf431810eefdd57f1f16f15b38494887bb13cd1a6c37fe"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/duplicates/model.orm.yaml",
+      "sha256": "adb36c4fde0a7e74b67384195f756fb60e3f7fe5cefaa57d47f81dc839d10ebd"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/multi-valued/items.population.json",
+      "sha256": "66dc3f9a4f2c314b85f770aeff4fab9bdfa5d59c5143e5b75e7a86c9cf06ad57"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "sha256": "d90a666c8a7419b667ede47ee191a2424cc71cc07bdf2e4a145617b01c48629e"
+    },
+    {
+      "path": "src/gnd/examples/type_judgements/multi-valued/shapes.judgements.json",
+      "sha256": "cc11bd2195751639f1c29d59d5e0728754e4fdb2d1394d812ec07d4265e07b54"
+    },
+    {
+      "path": "src/gnd/exits.py",
+      "sha256": "fe895a03a5b403650440955998a18fddf6544c9be298e4c7d08131d051b944d9"
+    },
+    {
+      "path": "src/gnd/exp/__init__.py",
+      "sha256": "4f455667034151f4f4e2f5792f57599e1ce8b7c439f9abcb1e75ecdfda1a0097"
+    },
+    {
+      "path": "src/gnd/exp/adapter_policy.py",
+      "sha256": "b280612fe6c334f09b04e47dcd46c2056826333bc737d2ba05d7b32a1ccd9907"
+    },
+    {
+      "path": "src/gnd/exp/cli_service.py",
+      "sha256": "cba09f4d8d66f5f794adaa184c388f7c062ca162aebb66e302f8172fc56c8771"
+    },
+    {
+      "path": "src/gnd/exp/close.py",
+      "sha256": "5d3bdff51e15809a9e3606430be9b47ab3e8d04ea9189072c81429b22112b0bf"
+    },
+    {
+      "path": "src/gnd/exp/conclusions.py",
+      "sha256": "c1fa1bf02507c715957a765c483fb70f1d82d9d6ffe0dbfdfd851b62d074b0bd"
+    },
+    {
+      "path": "src/gnd/exp/declared_invocation.py",
+      "sha256": "72d524e030264e833361a64b15315bd2d7ca3697c56702fb224953cd45ca4f27"
+    },
+    {
+      "path": "src/gnd/exp/expectation_author.py",
+      "sha256": "995220946842910223be40c2cecbd34d2a2867d30ad10e8440ee0d5f0310d014"
+    },
+    {
+      "path": "src/gnd/exp/frontmatter.py",
+      "sha256": "9917df239b560066fd3f39fb44899391da71cb033714af480c086a00207d3072"
+    },
+    {
+      "path": "src/gnd/exp/junit.py",
+      "sha256": "126c5127ba7b5449e639ed10c998d2abbb2d0fffe754065ca362cebd755ecdb9"
+    },
+    {
+      "path": "src/gnd/exp/paths.py",
+      "sha256": "9303e7596621412b902bef15ee0e3349a63f5c0b1fd185d6ac804f45c9386d5a"
+    },
+    {
+      "path": "src/gnd/exp/session.py",
+      "sha256": "2c0f751d8cddd3f6ae38021775f33c4ad95af9ff0a4e6408aae02044ecaf260d"
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "sha256": "9e49017ab153a81bae29b9e4c828cc4f15b2b3b3b2edcdd6a31ad01b4c135bc5"
+    },
+    {
+      "path": "src/gnd/exp/session_control.py",
+      "sha256": "07e5fee609aa52579f11383661c3fb66d50ace75f3757570e13a46d2af351eb5"
+    },
+    {
+      "path": "src/gnd/exp/session_environment.py",
+      "sha256": "434dd3c2e6905455f533f4e1fade7275a1b70cba4f106dcec027decb5fdaf0d0"
+    },
+    {
+      "path": "src/gnd/exp/session_eval.py",
+      "sha256": "10ed8eaa57eb1d85b8ac51c146fe3ed7bff7ed2d7199f6687022e3e3237a36ff"
+    },
+    {
+      "path": "src/gnd/exp/session_judgments.py",
+      "sha256": "d1ad3e6afca588a26eb31fc0fdac9525f78298cb867a9a90d802a58a5d93dd04"
+    },
+    {
+      "path": "src/gnd/exp/session_patch.py",
+      "sha256": "0cba429fee0cdfb01bf056de020531f30ba8776e85e44bd8d778f3081a5a460c"
+    },
+    {
+      "path": "src/gnd/exp/session_profile.py",
+      "sha256": "a7d19007ee7b2c26199bbf101f87d6163d928c5b9549b9c6ca638744f58edf6d"
+    },
+    {
+      "path": "src/gnd/exp/session_records.py",
+      "sha256": "66effaf2d9a469408120bd5356d7b084f3e02c66a4a9b8d44ec99a96b1a17910"
+    },
+    {
+      "path": "src/gnd/exp/session_replay.py",
+      "sha256": "01e33f39103c22ec0801a1ab5909ea3c3cc8c8882f26b3c22bc3cad206bd5a98"
+    },
+    {
+      "path": "src/gnd/exp/session_runtime.py",
+      "sha256": "fab7def65c678f59b0c3dfc93628470d285b7bdd21143196ed3d18cafef60a97"
+    },
+    {
+      "path": "src/gnd/exp/session_store.py",
+      "sha256": "a9bf60e73f84eac00b412c5c51599ba08de6d96303de7f45b5a8886ade421b0e"
+    },
+    {
+      "path": "src/gnd/exp/session_v7.py",
+      "sha256": "0b4f18e6daf4c6a0476bd36dad6327f85be88fd0db693311fb510c8dfe72ce45"
+    },
+    {
+      "path": "src/gnd/exp/spec.py",
+      "sha256": "8348d3e3d264de2c22e7f4ebc172694ff37b319ba74f6b27d3b139349ab579e1"
+    },
+    {
+      "path": "src/gnd/exp/tests_runner.py",
+      "sha256": "33b02cf6754daaeb1f16707dab08a6ab71d56aab06efd00d8a9bcf76f8a152f9"
+    },
+    {
+      "path": "src/gnd/export/__init__.py",
+      "sha256": "ac246c97d22f496c9fa33fa93b676ec5184555de12d5fa9b6bb4cd78618562ed"
+    },
+    {
+      "path": "src/gnd/export/applications.py",
+      "sha256": "4ef10175a0c1d5129fb2d84870ad379086f5af46f2c8246cc1d866e96a57e4e2"
+    },
+    {
+      "path": "src/gnd/export/emit.py",
+      "sha256": "e19eef306cbe8201a6ff63b4ceceeb9acf2e49e18845419548b29288b5b8704d"
+    },
+    {
+      "path": "src/gnd/export/ilp.py",
+      "sha256": "fb16a6f0671897541bb54b05c100f8aa56a8865d104c55d08442154df530bd41"
+    },
+    {
+      "path": "src/gnd/export/ilp_amie.py",
+      "sha256": "d05f3da4e4e1052d09d33837a09eda9b36ee8d6d445f73c8b1a869df82e732f7"
+    },
+    {
+      "path": "src/gnd/export/ilp_asp.py",
+      "sha256": "9cc77998920da9149d8ce6d00d34de5d74e20f17d7bcee4de59c15fcb463da18"
+    },
+    {
+      "path": "src/gnd/export/ilp_learners.py",
+      "sha256": "fcc1c0b254019609109948233fb6afb56fad3b10f6bd1163a2508803fd1d5419"
+    },
+    {
+      "path": "src/gnd/export/ilp_popper.py",
+      "sha256": "bbbbe478bb8b1ab4ab4160ea26fc57f05f07dd7eb951054b38251d3307392d6d"
+    },
+    {
+      "path": "src/gnd/export/ilp_prompt.py",
+      "sha256": "b26a37f4cb1b60cd360996980eb8de56c188b01ffb88d790a55abe4c0314be66"
+    },
+    {
+      "path": "src/gnd/export/ilp_rewrite.py",
+      "sha256": "e46e77d6c4b146c1bd9cd490f1b253c37fd30c4ec5f4120c5038e2379f41c9fe"
+    },
+    {
+      "path": "src/gnd/export/ilp_rules.py",
+      "sha256": "95798050c803bb07808001663c77f4c1d4726be7560b45724e776ee5d74fe7e7"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "sha256": "a181d41698daebf791eadeffb1472500ff3096895c14d807656ac3cb3376e8b0"
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "sha256": "d8fb67777509a0c84363993393ab8d133e517f1fd1a3c3e5d8c4554326545e0d"
+    },
+    {
+      "path": "src/gnd/export/lean_cli.py",
+      "sha256": "068aa1f25232b6a4f1907917c638afc492213c853d044183daea15c88b8220f6"
+    },
+    {
+      "path": "src/gnd/export/lean_io.py",
+      "sha256": "f10d64c9cda098932eba27aa0cafd2db9830a48c09fd37760d55f304856ae10f"
+    },
+    {
+      "path": "src/gnd/export/lean_runtime.py",
+      "sha256": "0a6f837b0e24d7dfea0891b47b92d7a0cf1b50c4aa4dcc7bb016d86d11047bf6"
+    },
+    {
+      "path": "src/gnd/export/lean_types.py",
+      "sha256": "767f41aaf7973030d784d80e4e21b2fa1668f83466ad1d5f7e772c8dbebc551c"
+    },
+    {
+      "path": "src/gnd/export/pyrel_rules.py",
+      "sha256": "21c79e80ab65a5f1ae21d96134b0bca630f9b157fc93ce9beea7807d782aa402"
+    },
+    {
+      "path": "src/gnd/export/pyrel_runtime.py",
+      "sha256": "6748717f97e26247b364b1ad348e8321689b779e3147c1fda054133033e64f9c"
+    },
+    {
+      "path": "src/gnd/export/service.py",
+      "sha256": "a531b8ac6b82d8b2b3111b4fdc59f8761725b5c665b1a7672d04814dd280d598"
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "sha256": "11fbd709ae21bf1154f781b3dbde10b25573f089e99e09e6d83734a874ddc217"
+    },
+    {
+      "path": "src/gnd/export/souffle_cli.py",
+      "sha256": "c8151a73f4e36b10be8d074f1fff027d0aeb05dfc770619ad61897796f17181a"
+    },
+    {
+      "path": "src/gnd/export/souffle_io.py",
+      "sha256": "6ca9e0ad74c45436ed2fd2b4ef724c90b61687e8af4c5c36261a1acaec66847e"
+    },
+    {
+      "path": "src/gnd/export/souffle_runtime.py",
+      "sha256": "0130088edc07fab4a9abc015d8726583d9dcf438f1cd146018561b04fa27b8ec"
+    },
+    {
+      "path": "src/gnd/export/souffle_types.py",
+      "sha256": "6d44ec658e2ce208065e4b9feaa18f1467c91934c8aeadd506029dbd279f7a78"
+    },
+    {
+      "path": "src/gnd/export/verification_service.py",
+      "sha256": "8e9e79c661c9171a226f0447b287650180cad4498b80ee15383db544c0df79b2"
+    },
+    {
+      "path": "src/gnd/extension_preparation.py",
+      "sha256": "1dade95600f2069ab02ecca70c6e94f4e76bccff55be02db11e06e51b2c3d68e"
+    },
+    {
+      "path": "src/gnd/extensions.py",
+      "sha256": "3324dad80252e5f160eefc78f8f5104b74aa3e52ee268ce10c0c68dafc97d471"
+    },
+    {
+      "path": "src/gnd/extract/__init__.py",
+      "sha256": "21d58ca267dc78694ec6806dc7589c28b7d210e6ef3d0671f7c459c6a48bae9b"
+    },
+    {
+      "path": "src/gnd/extract/anchors.py",
+      "sha256": "03a6e6ed0f33ac39809f0cbbf0d537585dbb4ee174c7441b959364d17ffd1bdb"
+    },
+    {
+      "path": "src/gnd/extract/bundle.py",
+      "sha256": "4a91a5ad294e635ab0d1fb140cec2c369229ddd9077f73f10844654f53699d07"
+    },
+    {
+      "path": "src/gnd/extract/guidelines.py",
+      "sha256": "c8b3d68bc339c7f7eb7f5bf55801ae4b9b190983e3155112969aec00350dccfe"
+    },
+    {
+      "path": "src/gnd/extract/identity.py",
+      "sha256": "9a8c578f9a42ee50ea892b4578897b077ff5f1c541fa368f26f6416154db2d34"
+    },
+    {
+      "path": "src/gnd/extract/manifest.py",
+      "sha256": "673d41fd1d616bc3f457402f1125d63f750dc4aa5f037d037bf80fa4ad149eb0"
+    },
+    {
+      "path": "src/gnd/extract/projection.py",
+      "sha256": "69982f6fea0d4dfa0c692ddb866a282bb4d16d21112832376070a200360b576f"
+    },
+    {
+      "path": "src/gnd/extract/refscheme.py",
+      "sha256": "b1378c6ea0be36423a023b4c78b75870013552e502821eaf140c7ef375dc2295"
+    },
+    {
+      "path": "src/gnd/extract/service.py",
+      "sha256": "300de8330c9561d622c747a21fafa4b7bb26c4804d28f213b3bc05c0b784579c"
+    },
+    {
+      "path": "src/gnd/extract/vocabulary.py",
+      "sha256": "b846059dd3e0eb97b6dc76bf4ec4f649e8bf44b1658e8073ee1dc1b95ea1f643"
+    },
+    {
+      "path": "src/gnd/extraction_scope.py",
+      "sha256": "b88626ab9093f703544b060955c055520f2b76fb48323eaebc4a52c387a79d95"
+    },
+    {
+      "path": "src/gnd/fidelity.schema.json",
+      "sha256": "368688042fb02e7473817870a30ac028a13864d1973236a495dac42f0f04de2f"
+    },
+    {
+      "path": "src/gnd/fidelity/__init__.py",
+      "sha256": "95db5b60a5fe8a35583b5e4b3664cafb65421ac8cc34ea02a7eee889e981b204"
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "sha256": "08f82010d774f7569542f4358630285f7aee683be65a2db87b27b3b68a365ee9"
+    },
+    {
+      "path": "src/gnd/fidelity/match.py",
+      "sha256": "a1f220d3a7cd0935b99d1ac88f8e431c217636b02fd9bf36a6f2bc099c1aa826"
+    },
+    {
+      "path": "src/gnd/fidelity/report.py",
+      "sha256": "e4dda7b422f62f823aeb27274492ee3a37badbde7114fff59b0077c1595e7885"
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "sha256": "f026530cee7aa79cc630d7853b85a7ae8a2457d7e8615910e91c0cf8f5de89e9"
+    },
+    {
+      "path": "src/gnd/graphs.py",
+      "sha256": "6156e442912d9d9f4cad21c27d89390dc15d213ba9fd3a1cb4d164309750ab3d"
+    },
+    {
+      "path": "src/gnd/ilp-clauses.schema.json",
+      "sha256": "c4e7c72a8b7176075fa8c8c3f4d8359037b7e91575f7b5d6a3e7db0fa6d015f6"
+    },
+    {
+      "path": "src/gnd/ilp-features.schema.json",
+      "sha256": "c2be8078ec9e6f52f4355375c72239d0dea67a9b329a5134c22e7624073be3ee"
+    },
+    {
+      "path": "src/gnd/ilp-import.schema.json",
+      "sha256": "2ec08ef113a4f348d6fdef3c639c7f87da6a7a619e672879c550f1a75a096001"
+    },
+    {
+      "path": "src/gnd/ilp-run.schema.json",
+      "sha256": "af49e606b40df7b1d3fed75ece44b2701294eb91a838757b738b6b5b04c09671"
+    },
+    {
+      "path": "src/gnd/ilp.schema.json",
+      "sha256": "2c07aa7e207749e1bd9bb4a45e558bb27dd677e9be955d6e3890bf91011f952c"
+    },
+    {
+      "path": "src/gnd/incremental_state.py",
+      "sha256": "67cfb134eeae8f84aabbf0a2aac38aa002695cea9a87382605c32a5e17474193"
+    },
+    {
+      "path": "src/gnd/input_policy.py",
+      "sha256": "1ddf49be72a52035f1b536aa02bc9fc906d2db2318ed585d7ca957c9094e58eb"
+    },
+    {
+      "path": "src/gnd/install.py",
+      "sha256": "f92ca3f1b4a2fca12aab1d0be9f58d61d1b24c6a08586d462abcf8435188b4b7"
+    },
+    {
+      "path": "src/gnd/json_input.py",
+      "sha256": "f1d264048a0097d54c253c386ddccee06138f5ab55f271bbe5a204b840cf062c"
+    },
+    {
+      "path": "src/gnd/judgment.schema.json",
+      "sha256": "724d365af41aa5d5a17b5e530f1280905da7907ecb4a7e7f78877dc19822d1c3"
+    },
+    {
+      "path": "src/gnd/judgments.py",
+      "sha256": "10f4b0ef8e29b012503cf5c57e3f6e5868c89ab08ed6a78008cfeed71f00fac1"
+    },
+    {
+      "path": "src/gnd/labels.schema.json",
+      "sha256": "f3b90f9f1654a3246858c2c28e3ac60f08ed0485182594a7aaef9c7d8deeecf8"
+    },
+    {
+      "path": "src/gnd/manifest_paths.py",
+      "sha256": "f2659268610473dfb10bc40dad5c3103f820cface947e0723aaf89fea2380fcd"
+    },
+    {
+      "path": "src/gnd/measure/__init__.py",
+      "sha256": "e3f49978fbcba813421729d74bf5262a97cd665ebba568a9b241640256902b29"
+    },
+    {
+      "path": "src/gnd/measure/agreement.py",
+      "sha256": "baa07668f562928800310851440cb1cce15d8b470369f7af0eaee05f1e1e3b45"
+    },
+    {
+      "path": "src/gnd/measure/coverage.py",
+      "sha256": "38b0b4cec10ea547f2939fe25e313a562e6f81e88000f86bc2b68001f02e485c"
+    },
+    {
+      "path": "src/gnd/measure/labels.py",
+      "sha256": "3fb37033831b88c91c6781b02641bb8c3c9c5d5df8d3648974480af864c8cf27"
+    },
+    {
+      "path": "src/gnd/measure/promote.py",
+      "sha256": "e8b6e937db1fbd24387d5cb07eb918949adda01b452c7e70e4437cd6ea09b659"
+    },
+    {
+      "path": "src/gnd/measure/report.py",
+      "sha256": "2510537101f030ea2bc5773c03bbaa386a596c35e6a5da8934b109232dea54af"
+    },
+    {
+      "path": "src/gnd/measure/score.py",
+      "sha256": "86fe4edbf0083a12790ac09d0597710b2dc6c99781010643bb20e875707bbe97"
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "sha256": "ffec7006f8f0db1fcb4e967d19e9bb771e5da3ca8bc03b798503f42d678ac460"
+    },
+    {
+      "path": "src/gnd/measure/truth.py",
+      "sha256": "7f97c0ab69586a9d075e55057e3c9385ceb134a8bbc26e37f4b081c86638c0a1"
+    },
+    {
+      "path": "src/gnd/measurement.schema.json",
+      "sha256": "cb782089247e98a21cf5f4694a7703e49c2c0e92cb35b1dc50a7a7f9fb169c65"
+    },
+    {
+      "path": "src/gnd/mined-import.schema.json",
+      "sha256": "775eeb026b95eea4e4b20147f1ab78e1d7fcf1a63b4b2ff2f484de4a84209273"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "2497886e9816ab9889e42affe5c60f80be345fff0e7918d4f7cc0ffe834c6bc4"
+    },
+    {
+      "path": "src/gnd/model/_documents.py",
+      "sha256": "63c3cc6518e3f843381b644bb4350ffb9e55fe8afb4ec6f3d1e82fcbf5b47aa4"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "sha256": "1dde6ff1a18ade207055f162e80cce8290f502db483e2314e1d1d1579f4e4538"
+    },
+    {
+      "path": "src/gnd/model/_induction.py",
+      "sha256": "cb0220eb0d93748757f72f92eb082442fa814b9094abd995b6cb2cfa9d862849"
+    },
+    {
+      "path": "src/gnd/model/_operations.py",
+      "sha256": "4a77e23734dd254550ddb371a08a4ca8521108999c4bd9dc6b46ee232934b266"
+    },
+    {
+      "path": "src/gnd/model/_paths.py",
+      "sha256": "3a326e6c7b145d0c953b11d55f4470dce2667952a9b0c29d2a765c09c7767738"
+    },
+    {
+      "path": "src/gnd/model/_unattended.py",
+      "sha256": "380a9f064b49a54e7988aa53c90c0591b6e0ca93053e1b9d20d434d1ccddf69f"
+    },
+    {
+      "path": "src/gnd/model/_validation.py",
+      "sha256": "05c4d2de538ca57662e43b5dc20a99d88fbcaaa1a9a2f18acf0d0b8920cf085a"
+    },
+    {
+      "path": "src/gnd/model_identity.py",
+      "sha256": "a08c6c2cc05b9356fb2d668d0aea71d4d0fd2b94101eeeaf1c1f4acc79d9038e"
+    },
+    {
+      "path": "src/gnd/model_index.py",
+      "sha256": "680a36d84784daa1b63d0a8b6591b6eebf2a05cf10f39525e398ca2fe610a93e"
+    },
+    {
+      "path": "src/gnd/model_queries.py",
+      "sha256": "f106aba3d3b392aa54650c3070294738dc1a28bc3c1862cec9fdbb3e31867926"
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "sha256": "78d28cd7d0ddf70c77233d6d80afca27818069fb03d07dbac0992c0b94bff1d8"
+    },
+    {
+      "path": "src/gnd/output.py",
+      "sha256": "9567ec0672c6fa606f931c4319486f8136fad8271f377cfdbffbb3a03cfe578d"
+    },
+    {
+      "path": "src/gnd/patterns.py",
+      "sha256": "813430dfd69d1362f3c1283aa156d222c31af71bd54a8ae6672a9924b49ec7bd"
+    },
+    {
+      "path": "src/gnd/payloads.py",
+      "sha256": "eebd9968cabcd65953c14cb5d402cd2c597fc3446201437dccc567e06fc8bc80"
+    },
+    {
+      "path": "src/gnd/pool.schema.json",
+      "sha256": "a1ce4321802e133499e50e2bc19b0da1e430ff933bf9616abc7ac09417aa065e"
+    },
+    {
+      "path": "src/gnd/population.py",
+      "sha256": "d78d63e270ba0108d44501c38db3bfa1c23cedf8c2de11484d581c2ac66fb3e8"
+    },
+    {
+      "path": "src/gnd/population_shape.py",
+      "sha256": "76947860968961973a03e2e942d9b64c2bf8786d2321d1d9c7418d831286cecf"
+    },
+    {
+      "path": "src/gnd/popvalidate.py",
+      "sha256": "76dc8467fa2ae0016161a2c98e23b4bb0df1416f6b7e437ae689ba2afbb7653d"
+    },
+    {
+      "path": "src/gnd/process.py",
+      "sha256": "ce296ecb63b5d421113e3672cc1c230646275a2e37a0b74c290301a92c7ebb0a"
+    },
+    {
+      "path": "src/gnd/proof_bridge.py",
+      "sha256": "7343a8a374070dbc78ecd3f52af5fadbf7816b1ca5f0ca7695b8b8df6289cfad"
+    },
+    {
+      "path": "src/gnd/proof_currency.py",
+      "sha256": "d06e04b6cfb0b16f1e6d63c52d81aab2cb7f24e7ee2b1b2956a1be6c818403fe"
+    },
+    {
+      "path": "src/gnd/proof_kernel.py",
+      "sha256": "ce20f38e4fafb7b74f6281d0e8fbeab9605622992ea257b7f39f4209f585354a"
+    },
+    {
+      "path": "src/gnd/rai-alias.schema.json",
+      "sha256": "cdc9d44522734305db6b115e1d06e2b18e250648b19f5b9c1f13c102149aaba1"
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "sha256": "b0e22da6e7bcb050496970889e5be923cd357e54e3de7a983f3e61eae5455bb6"
+    },
+    {
+      "path": "src/gnd/recovery/__init__.py",
+      "sha256": "e9fb311aba3a0ed148afca1df150d7704c5801159a66202c3d56714842336e00"
+    },
+    {
+      "path": "src/gnd/recovery/inventory.py",
+      "sha256": "96341fcdcb064db6237ca3ef6de62da46d38dc700c63c26810382dbc1474986a"
+    },
+    {
+      "path": "src/gnd/recovery/report.py",
+      "sha256": "bd866a2cbcee8df6cbc2fc69b894f72171e5f820184e0ced67573316aff4514d"
+    },
+    {
+      "path": "src/gnd/recovery/service.py",
+      "sha256": "a1cf281ce9a61da2ddf15df5e4b3fafffb0829e66f4ef388024bf488f6763253"
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "sha256": "91de6d0eff21cf993c19a1641b48f3d3185e2819fcb260acbe345983da7e0f3e"
+    },
+    {
+      "path": "src/gnd/redaction.py",
+      "sha256": "7f8e96c35e899e786a480ae6118cc1423c69b2599e1394ac97ed1655185ab3c3"
+    },
+    {
+      "path": "src/gnd/references.py",
+      "sha256": "2ba9b73df4800bd3ab8f052a5fb46e8913a36f72b1b5869ea91337a337cf18e1"
+    },
+    {
+      "path": "src/gnd/refscheme.py",
+      "sha256": "8a94071f3585e93344e678cb612e97c5b4929ca2ac39caf6c4d2633f0e85ac4e"
+    },
+    {
+      "path": "src/gnd/report.py",
+      "sha256": "a24c223e972a9234fccc33e2526a6586b0fbb6c988e737d22f7d1359da34fa7c"
+    },
+    {
+      "path": "src/gnd/report.schema.json",
+      "sha256": "d2ac38dafb978c7a16f6e80e526e3c83c438f23245366430a359b6d462c8b5ac"
+    },
+    {
+      "path": "src/gnd/report_schema.py",
+      "sha256": "09a67267ec932ae0e1e5feafaf6b27c5df286200afb0a28269d5f3be09033237"
+    },
+    {
+      "path": "src/gnd/review/__init__.py",
+      "sha256": "44688e250d8660a68595d6a1e13835fd08657faba95c46ce5d89930ea03bee46"
+    },
+    {
+      "path": "src/gnd/review/adapters.py",
+      "sha256": "ea1e960290ccb94a18d1ffb251b79544322fdc0cf9f43d4cafbc90bb02715bd9"
+    },
+    {
+      "path": "src/gnd/review/constants.py",
+      "sha256": "f7756f9d11c7da62df66bf838cdd6e5db5ee5083dd91ea2de33e73926b9d8dbf"
+    },
+    {
+      "path": "src/gnd/review/report.py",
+      "sha256": "caba0f7219d29c16cd8019e3b1654506514358655b409d361c06e8ee9f7a49c9"
+    },
+    {
+      "path": "src/gnd/review/request.py",
+      "sha256": "41b432b8efb239996b6f8901d83662e724f0273b9a325ccde38fb5a39d82bfa4"
+    },
+    {
+      "path": "src/gnd/review/runner.py",
+      "sha256": "cbf6de522f76e9c99248ef2b9e8fb4215b8498ef60c384a4b49166f71cb09801"
+    },
+    {
+      "path": "src/gnd/review/service.py",
+      "sha256": "154cdef1293292c15da9cba6dc9c8207a1a2c5c7addf62153e9681b4985c4767"
+    },
+    {
+      "path": "src/gnd/rule-verbalization.schema.json",
+      "sha256": "bc16d32e4d7bb1b8653ec723785d204e67c7d315f73de30136f5734e060857ba"
+    },
+    {
+      "path": "src/gnd/safefs.py",
+      "sha256": "e46d2a18c93a701dd2ce063c84cc13ad0b9554df397b126aa9f77c5d268d3c2f"
+    },
+    {
+      "path": "src/gnd/schema/orm-meta.schema.json",
+      "sha256": "8ce5ebecc6cf989c984597c32f20548ab6821776d02bc1f2b10e1ebf663d5e33"
+    },
+    {
+      "path": "src/gnd/schema/population.schema.json",
+      "sha256": "2f0e2a46109824a5850c458b628e20270c69b9c92d18bef0e2dd83585d4ce0d0"
+    },
+    {
+      "path": "src/gnd/schema/steps.schema.json",
+      "sha256": "f7a91c0a91f4139fd1db3ae7add6cbc5845092bc3f02223a6c8517a95f761aa7"
+    },
+    {
+      "path": "src/gnd/schema/witness-result.schema.json",
+      "sha256": "4c887b64760d61baa18f843838c1fcb03f202865b606dd0441652011a049267f"
+    },
+    {
+      "path": "src/gnd/schema/witness.schema.json",
+      "sha256": "b06401a2c52e2471059acd4559ab9221d3406cc02b1bf507c17cee3e0e50da36"
+    },
+    {
+      "path": "src/gnd/semantic_adapter.py",
+      "sha256": "6e9d78b0aac6ef9ea003e17d42d72666d8f26a3025b0684d714d92acf2de83c4"
+    },
+    {
+      "path": "src/gnd/semantic_ir.py",
+      "sha256": "a59dba34ff9c952da0db6a62c9a5a7d5e3ebaff57e351313ba3019dcbb73796c"
+    },
+    {
+      "path": "src/gnd/semantic_origins.py",
+      "sha256": "baa5ee5bb342638e188abbd96f130b44b4c4083981d25b144e737180487b739c"
+    },
+    {
+      "path": "src/gnd/semantic_registry.py",
+      "sha256": "5a1ec1fbba65e32b9e4d4507842f42f68c1bd9c33776f9af6f1745399c14c5cc"
+    },
+    {
+      "path": "src/gnd/semantic_rows.py",
+      "sha256": "a3ed1885f3dbb6d7a4e2edbf92ac9bd91f5a46fdc9b8deafd1a3a7f1899bf3e4"
+    },
+    {
+      "path": "src/gnd/semantic_spec.py",
+      "sha256": "8689218de1c41674af3460e5991673efe14c56c011e5f147ee989ba9463a2ffa"
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/SKILL.md",
+      "sha256": "acff4dc97170eeff69e4c42c4f30bde73e6f643014280c4fb4f1867c30682e7d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/migration.schema.json",
+      "sha256": "b408427e84b31db75f416e786a1941930752c9ddf721792b648f27b2f2a69e35"
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/references/gsd-environment-cleanup.md",
+      "sha256": "365e0a0e436f1110b8cc4c831520b22b3a1bdd6479b820499bab9c439f4efa3f"
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/references/gsd-mapping.md",
+      "sha256": "d28743e481611b2456eeb6cce9685a1bdcb96b0999a40756e8173f7b8e45aaf7"
+    },
+    {
+      "path": "src/gnd/skills/gnd-adopt/scripts/verify_migration.py",
+      "sha256": "ad9f96f5b7d24f513f2a7316feccb49dd43fca910c5b3a3f2629736eb03df84f"
+    },
+    {
+      "path": "src/gnd/skills/gnd-codegen/SKILL.md",
+      "sha256": "3cd705e63fc1e8569b335f165eb94ae03162418482148a054ba7530a02486658"
+    },
+    {
+      "path": "src/gnd/skills/gnd-codegen/references/architecture-contract.md",
+      "sha256": "39404f214b048eb94b7c602539125f61b9b00089d2b7f2f92d0fecb89b51c3fb"
+    },
+    {
+      "path": "src/gnd/skills/gnd-codegen/references/codegen-contract.md",
+      "sha256": "d5065310f96af8407a26b616871c8602ae911a4dbede1355f2eab6fc093b83da"
+    },
+    {
+      "path": "src/gnd/skills/gnd-conformance/SKILL.md",
+      "sha256": "1a7f19003e9ca58e2da87a56f631de8a128ee7fa05cf3ff70e2954e5e805355a"
+    },
+    {
+      "path": "src/gnd/skills/gnd-conformance/references/conformance-contract.md",
+      "sha256": "dcfaedb886f61810c66bd6ffef3af975b95e0b7f02467d11027ebcc2559f4b2a"
+    },
+    {
+      "path": "src/gnd/skills/gnd-dev-session/SKILL.md",
+      "sha256": "a871c929a20b1126c399c3c322a6ffbd7a60421dcd8b8e21c47395ff1d18dc7c"
+    },
+    {
+      "path": "src/gnd/skills/gnd-dev-session/references/judgment-contract.md",
+      "sha256": "5f46027bb1ae8591b77f5082012af6002a6ad59a18bad8230f252707b283360b"
+    },
+    {
+      "path": "src/gnd/skills/gnd-dev-session/references/session-v7-contract.md",
+      "sha256": "e0038cbe1bf51b5072ee85a0ba419c5d82104f0f3baa3910871f315be5bb1c6a"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/SKILL.md",
+      "sha256": "83836a7104ce98606c55aaf7596053876aafe24eb3f2e341561456b9a75851ad"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/export-contract.md",
+      "sha256": "d0c0cb3d32d8059beff10be7c83d0aeec933213b10fff8025c0e0702602f1ff4"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/witness-contract.md",
+      "sha256": "5aeb551d84d6717d4e160cb3b90d4f31d7da689dd68e603314c4d3d7c3ff996f"
+    },
+    {
+      "path": "src/gnd/skills/gnd-export/references/witness.schema.json",
+      "sha256": "b06401a2c52e2471059acd4559ab9221d3406cc02b1bf507c17cee3e0e50da36"
+    },
+    {
+      "path": "src/gnd/skills/gnd-extract/SKILL.md",
+      "sha256": "59aaad239ebf872ecb168550071932a34ea076040dfec2624391806059a353f9"
+    },
+    {
+      "path": "src/gnd/skills/gnd-extract/references/extraction-contract.md",
+      "sha256": "ebfafabe1c4490eb3a1331218493dfd42835254fb10603ab635964f12ad3f46b"
+    },
+    {
+      "path": "src/gnd/skills/gnd-judge-fact-types/SKILL.md",
+      "sha256": "48b267b633640ebb3aa1beaa85650426f95b97729d3071d12959117e0055888f"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/SKILL.md",
+      "sha256": "2d9a26acbbe113395c94a77e9dc2380581ec8e21ca12e46c37537849b3be9e80"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/references/evolution-contract.md",
+      "sha256": "5a8a1bbb90cec546f88bc169ac7400aad045d510c93434f5fbe858469eab0f2d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-code/SKILL.md",
+      "sha256": "271eae7fe9f0dfe300e64efad7a7025ef0ac6a716276b256ca8861b647a8934c"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-code/references/recovery-contract.md",
+      "sha256": "0383e695bd47efb214f06be04f6fd2897a643b0cca4a5d2f517e4a729fd6d641"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/SKILL.md",
+      "sha256": "e92c9ec88221a0f4686b724b624c3628074783346ebc6a0f16b1c480932b3331"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/USAGE.md",
+      "sha256": "df171b8a44c599cf0fdc00894e2bacb75d7a691bfcb0b6cb91d27df228a06f49"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/evals/README.md",
+      "sha256": "933d2a892952952b4811b4f5092989099b65cb3c1b235752b442f465c2174cc4"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/evals/cases.json",
+      "sha256": "3dcfccbf41d52fcd6ae63ea2e9416e1c64817ea16335f5dd46c1dee0b8336993"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml",
+      "sha256": "aa7c7f4a7ac179334e5a268b051318229e3cc273a64798d9d99c70d455898963"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md",
+      "sha256": "2416d896c848d9f27ed586c9108910be62269daf6251104e7f355b1cd639f6ef"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md",
+      "sha256": "6b6155a22499552fccf481fdc39f56ade2e8fad5b47f0c326070d018dbfad07d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/evals/reviewability_checklist.md",
+      "sha256": "4216dc6b525fe17ef3c31b2ff6b4c648a25ff6fe417f65dcec932a91c5bc5e88"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.dialogue.md",
+      "sha256": "e6b4df87518fa54ea40fa55929ffd062fcc7e9c1bfaf35deedf4e487ff36a807"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "sha256": "adb509e8f267a884f00f8b1f0f1c04e3646a435963fcba8d72d4e8042a61b3c5"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.dialogue.md",
+      "sha256": "b9ccee069f5a210f1971766c1d9ec1fe049e70de60bcdba6b336e051f3dcd047"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "sha256": "19e49d6b8e78361b95203367fd060e7daac6eac9a38e3b621790c1c93ce563b3"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md",
+      "sha256": "0a1c3595df369cfca11e5f7b1b3266ad4bcb42c2c19a9adcf226747bf262c7aa"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml",
+      "sha256": "fe775a5b01288c2ee11149334f9876120db1a79878274b55571d6f9034add78e"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md",
+      "sha256": "6ad69c69808e2064e5c2c06a19e8209d35ec5481faa549248ebfed7e965f0a56"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml",
+      "sha256": "36cf4f5fb6243af4aaf195e4595f5fc02f420664a826258cd4b1c95c5d3e672a"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/csdp-workflow.md",
+      "sha256": "0b97b1fd753801ac264183d176ed584da1787a403d141cef197e207f31398561"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/dialogue-patterns.md",
+      "sha256": "e1f6752cf12f9848ef776227ea9d9f7bf8b7d36fa5c4306b15db7f500b58b6a6"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/references/unattended-growth.md",
+      "sha256": "6f217fc641801b9ad188ddbb7b7bb2ea796f889b2eaafc121c6e9e05d387545d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-from-text/scripts/validate_model.py",
+      "sha256": "6fdbed90b634142a66c2fb7697c767b2d735cb30d80f9e3fe004ae3dfbc853cb"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-multivalued/SKILL.md",
+      "sha256": "2a3b486fa2333e4b55d98d4bb7c7ade6bab6519cc6e3e38fe9f95ecc0dd4f1cc"
+    },
+    {
+      "path": "src/gnd/skills/gnd-new-project/SKILL.md",
+      "sha256": "1537847880226817373717cb33077cce0ec866c571097bdb3e42510538d68598"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/SKILL.md",
+      "sha256": "b7fcf2dba26c638afe301cd11a4ed384a06d6ed419a7301b2a5886ac7dd3dc4b"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/constraint-inference.md",
+      "sha256": "954643cc68f6f8dad798f4d426543d660ddb4c6d1276189ab37b1813e63a9dfc"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/constraint-reference.md",
+      "sha256": "b3453e98a3b3816bec4dc40d0c985be8d57f9fbcbed42c8986250e978881b57d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/coverage-and-element-addressing.md",
+      "sha256": "d654a9f4c1a261e4f3a2de0bcc5127656a52c520d096db1a2095e798c503a028"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/halpin-posture.md",
+      "sha256": "ad0accef061eea27ec8697a32bb6462ad2f7eeb7bd9aff0a352953f14b9ec50d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/milestone-record-format.md",
+      "sha256": "bfe007b9cd86ee7cf55926da094a39760b080c4694977b8e62cd2bcbe869b154"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json",
+      "sha256": "8ce5ebecc6cf989c984597c32f20548ab6821776d02bc1f2b10e1ebf663d5e33"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/population-format.md",
+      "sha256": "3d94c0e7d56bc15bf4fe757e34d0b888f9d25a695df54abc60657c1a8b480230"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/population.schema.json",
+      "sha256": "2f0e2a46109824a5850c458b628e20270c69b9c92d18bef0e2dd83585d4ce0d0"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md",
+      "sha256": "d2d344780dd8e501bfe43b191fe23606c1aaa9dfab24e8ff7d65459aae44d93f"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/representation-format.md",
+      "sha256": "4883ac7af5636f36ea2e232a4cf1a147d9362eb1e221d7d646614d2a074f80d5"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/steps.schema.json",
+      "sha256": "f7a91c0a91f4139fd1db3ae7add6cbc5845092bc3f02223a6c8517a95f761aa7"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/type-evidence.schema.json",
+      "sha256": "b561876934520b283019618bb6de7df3fd48acd15b9007e586e7ce08e4c6c699"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/type-judgements.schema.json",
+      "sha256": "3a5bf109771342e1741b91eef1c9bc816185e7362b1e23cb7f590353ec4bb873"
+    },
+    {
+      "path": "src/gnd/skills/gnd-orm-core/references/verbalization-patterns.md",
+      "sha256": "1b0c7ebd695d017484a4adb1cce48742373a4a613e53ac716ed114c872289579"
+    },
+    {
+      "path": "src/gnd/skills/gnd-render-doc/SKILL.md",
+      "sha256": "e39f059c6b45ded9e80234d619599b3ef12aff9444b0119b2b24c6756b627393"
+    },
+    {
+      "path": "src/gnd/skills/gnd-render-doc/references/rendering-contract.md",
+      "sha256": "0a35eba25b346f7d19b20f6cac03994187a632dde0e3a64f853bafb12fe49c07"
+    },
+    {
+      "path": "src/gnd/skills/gnd-review-panel-light/SKILL.md",
+      "sha256": "77284d6f7f411dc1e6e43c85597a3953c966ff3c90e0f8d7be7b6cc76fa3e4a3"
+    },
+    {
+      "path": "src/gnd/skills/gnd-review-panel/SKILL.md",
+      "sha256": "bb9a8dc5eeeec32d4caaad5bcdf38a7e9e4c223d78a0317276eb5f38ad8e9bd1"
+    },
+    {
+      "path": "src/gnd/skills/gnd-review-panel/references/review-contract.md",
+      "sha256": "01d8057acf896882b49c0e482f229d0fc5ffd901f221db895248e07ebedd3691"
+    },
+    {
+      "path": "src/gnd/skills/gnd-solve/SKILL.md",
+      "sha256": "b4fa0fdda7ca7e19ace2228a4232bdea6b2ec93580d5f3b98aaedf93e3c6e621"
+    },
+    {
+      "path": "src/gnd/skills/gnd-update-review-panel/SKILL.md",
+      "sha256": "9868d6ad405dd475f1a8e21b5e184fc03a9f018b96c5b9d300eaafc13affdd4d"
+    },
+    {
+      "path": "src/gnd/skills/gnd-update-review-panel/agents/openai.yaml",
+      "sha256": "03517f037d571c8f40d04744f5b4c08228a981b597c8200c85c27f2d0049221b"
+    },
+    {
+      "path": "src/gnd/skills/gnd-update-review-panel/scripts/update_harnesses.py",
+      "sha256": "bf3c4c7ff42d737ccd78db4a1a6818e4f4b0a178aaf77a251d0b02ae5d65096c"
+    },
+    {
+      "path": "src/gnd/solve.py",
+      "sha256": "a0e9cb637edab87094901b6acf60b79940ebcfff2033cdb678c10aeeea4e7595"
+    },
+    {
+      "path": "src/gnd/synth/__init__.py",
+      "sha256": "9a965cff199516048709daf8377d790a49a987579b5b1b8556736bc76446c8e8"
+    },
+    {
+      "path": "src/gnd/synth/assemble.py",
+      "sha256": "221697834fda41a696b9c1e1c775e7caabceab7bee4b0d5774b3df6c7914fbda"
+    },
+    {
+      "path": "src/gnd/synth/boundary.py",
+      "sha256": "8cb610db9070bfe3c02f09d10481823efb4ff7aa53a7c58334294e71f514ca97"
+    },
+    {
+      "path": "src/gnd/synth/comparison.py",
+      "sha256": "0bc987ee621edc27a699bfd3e916462bbf70f26f5b9370a2551d9feb447a2120"
+    },
+    {
+      "path": "src/gnd/synth/corpus_service.py",
+      "sha256": "4c8e49d23ab3a48636da841d9b734b1c0efcdf4491057ebc7f4b24b40505d237"
+    },
+    {
+      "path": "src/gnd/synth/frontier.py",
+      "sha256": "45748dc7c0baf62acc1393a861df94e19a0dfe3b805b083a7cd0c2b358fdcafe"
+    },
+    {
+      "path": "src/gnd/synth/guarded.py",
+      "sha256": "fecbd67467207cd066a8171b805c07a9367602fff5d023af944ca6067a8a9439"
+    },
+    {
+      "path": "src/gnd/synth/identity.py",
+      "sha256": "eb3afec5970bc352126a5099a6a30cd363cbf7803f49ac82a23d4f13366447b2"
+    },
+    {
+      "path": "src/gnd/synth/mutate.py",
+      "sha256": "ba4c8b85257d52a70897e36ca373a61a021236ed1c36002b76ca82a002412e8c"
+    },
+    {
+      "path": "src/gnd/synth/oracle/__init__.py",
+      "sha256": "437aa6fce688e1183e11cca6fa0ad4d5ed32bdc1e736753479215c61bb8c1841"
+    },
+    {
+      "path": "src/gnd/synth/oracle/constructive.py",
+      "sha256": "1af24498d4d0adf10bab4284b5fd182efe7bf536e0b98b92f949a2cce9c47dee"
+    },
+    {
+      "path": "src/gnd/synth/oracle/mutations.py",
+      "sha256": "c46cf1ea1ec27622396eb75980313d23ad4a42edf3ef0db96d910c4aad331b05"
+    },
+    {
+      "path": "src/gnd/synth/oracle/state.py",
+      "sha256": "a6dbdbbb9a0e2b6f5269e7dd1a7db07d6d85fad68b04b3654b13add356c12b69"
+    },
+    {
+      "path": "src/gnd/synth/paths.py",
+      "sha256": "56b0f49e3a73ad4fb1a5ff613a6acc7ce73226bc8dd51c9a67bf467c3d511775"
+    },
+    {
+      "path": "src/gnd/synth/pool.py",
+      "sha256": "d43fb5e46bd2e8ea408482484c6f7443ae7789fe8bae529fea74c534ad9b9ac6"
+    },
+    {
+      "path": "src/gnd/synth/poolfile.py",
+      "sha256": "9d8e827d6663e63ca8077d2acb8b2a4ccf0aeb46832b027bd02b729914aa74a1"
+    },
+    {
+      "path": "src/gnd/synth/provenance.py",
+      "sha256": "2ce61dc6887d18f4da3298f5c5ed147954a6322922178706453ad498e1da04b9"
+    },
+    {
+      "path": "src/gnd/synth/service.py",
+      "sha256": "d7d1dea6eac10e499af75f9dd394b823f031b5438781afdd281ba31b7905e27a"
+    },
+    {
+      "path": "src/gnd/synth/value_domain.py",
+      "sha256": "0d0c9708bc994f850f7a371947026fed84dcdd3da1d8eb99692fdb772e3d4e2c"
+    },
+    {
+      "path": "src/gnd/synth/values.py",
+      "sha256": "7a46b20d67c8961a4ae1beb62184c570e8bf74514e8d29e79e237fd5be869c7b"
+    },
+    {
+      "path": "src/gnd/temporal_guarded.py",
+      "sha256": "f1f180a556755d339f1b904a6ed91b714aa74837e19d54903c865616ae425d34"
+    },
+    {
+      "path": "src/gnd/terms.py",
+      "sha256": "5efb4e8c7faa3dd112fb6d8e75ed29552218c45a6df708f265dc2cb0f404ec87"
+    },
+    {
+      "path": "src/gnd/transition.py",
+      "sha256": "0faae6b25b691ba7efbdc9cf3cf89396a80963bd6cf824e09a9344dcfafd2212"
+    },
+    {
+      "path": "src/gnd/transition_kernel.py",
+      "sha256": "9697b35b43ad6ba4dcbc5c286e894e6cd1c7ff618d62804b6de448ef405b7cd1"
+    },
+    {
+      "path": "src/gnd/type-evidence.schema.json",
+      "sha256": "b561876934520b283019618bb6de7df3fd48acd15b9007e586e7ce08e4c6c699"
+    },
+    {
+      "path": "src/gnd/type-judgements.schema.json",
+      "sha256": "3a5bf109771342e1741b91eef1c9bc816185e7362b1e23cb7f590353ec4bb873"
+    },
+    {
+      "path": "src/gnd/universe.py",
+      "sha256": "5b95ab065bf6e780596bd58fa151e41edf14364f29f9a60093f31409749689e4"
+    },
+    {
+      "path": "src/gnd/values.py",
+      "sha256": "738d3ca4f390eb2652c4361ca55d643eaab0cf37f91a4705dfd5a27b17c0e833"
+    },
+    {
+      "path": "src/gnd/verbalize.py",
+      "sha256": "af95d805250a478292c8d515592c0fd7ddacc382fcdd7818150e3075a630c5ff"
+    },
+    {
+      "path": "src/gnd/verbalize_population.py",
+      "sha256": "9d471466484fff5ce426d8f42693122c549222583f917e0656d5d333e21b3cd9"
+    },
+    {
+      "path": "src/gnd/vocabulary.py",
+      "sha256": "2cd1301882b058fdd42835e6f9aa1131d153e30bb97f5627a7a7c8ab1ebfc5bd"
+    },
+    {
+      "path": "src/gnd/why-not.schema.json",
+      "sha256": "6a43565feb923eac97e89ad44a9c62268d92dca1ab454544b84517c189393756"
+    },
+    {
+      "path": "src/gnd/witness/__init__.py",
+      "sha256": "5b542c37c5f76d8997c12909877574847fad9c193f51516fd78481e1e00cf42f"
+    },
+    {
+      "path": "src/gnd/witness/cli.py",
+      "sha256": "a9b51df9f64ee629d3bc15bfed3a5d86ce7909160d7bd7d489c4781597b6fe30"
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "sha256": "69f8d65e4666877d7451b92bd87277cbeade7c5f7e46f4299a45c3836d57df5c"
+    },
+    {
+      "path": "src/gnd/witness/kernel.py",
+      "sha256": "af3d307e886000bf4f385fe17f2bfa216c7115f7c09b22f65e830b53bf938e51"
+    },
+    {
+      "path": "src/gnd/witness/producer.py",
+      "sha256": "7e57a25264728b1c4553f3f8973e2fd4a6ff26d111b848e3912e0265326a48ba"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "sha256": "f9e15e4674dcc755dda5befd79a268e48289a20eafa9b29271e329fbf7e618a4"
+    },
+    {
+      "path": "src/gnd/witness/types.py",
+      "sha256": "df7c1a121dec3566d7e826957199bab806efe156cb6b6f42f5e00244b1cd6c8a"
+    },
+    {
+      "path": "src/gnd/witness/view.py",
+      "sha256": "4e9f25371f225c912d7123dae54ffe65fb51550a579b9dcdd57da79baa7243e1"
+    },
+    {
+      "path": "src/gnd/witness/why_not.py",
+      "sha256": "e2f70fc680cbafac8873f2e8e65e983331b31f15da4d70fda127443e5ee6acef"
+    },
+    {
+      "path": "src/gnd/yaml_comments.py",
+      "sha256": "d9eaf1505db6c3941a50f44a2e582c2238f2301489eb3a9e12c8c79e1d5ef177"
+    },
+    {
+      "path": "tools/gnd_layers.json",
+      "sha256": "7a6dea16e384d730bb787f14f2fdf48e4580d19e12099eabace9d1148a8e1b3e"
+    }
+  ]
+}

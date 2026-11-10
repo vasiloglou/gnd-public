@@ -168,6 +168,17 @@ Generate the ILP learners' comparison table from the committed live-run evidence
 | `markdown(doc) -> str` | function | 222 | The two tables, labelled then unlabelled, as the bridge page shows them. |
 | `main() -> int` | function | 262 | (no docstring) |
 
+## tools.mc1_model_census — `tools/mc1_model_census.py`
+Components: unassigned
+MC1 per-observable compatibility producer; run against baseline and candidate.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `observe(call)` | function | 16 | (no docstring) |
+| `collect(paths)` | function | 25 | (no docstring) |
+| `tracked_paths()` | function | 61 | (no docstring) |
+| `main()` | function | 66 | (no docstring) |
+
 ## tools.measure_evaluation_sessions — `tools/measure_evaluation_sessions.py`
 Components: unassigned
 Bounded IE5 integrated parity/work/timing evidence; no provider or native lane.

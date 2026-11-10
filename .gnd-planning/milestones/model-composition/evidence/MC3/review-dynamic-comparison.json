@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC3/dynamic-query-successor.json",
+  "predecessor_sha256": "f9c27b03f11de402d365e1ae768e90b29c3181a3e4738f9fe064a30c565c7f64",
+  "reason": "Measured review repairs introduce no inventoried dynamic-query candidate and no semantic-query exception; the existing MC3 successor remains current.",
+  "removed": [],
+  "added": [],
+  "result_distinct_rows": 7429,
+  "result_occurrences": 9268
+}

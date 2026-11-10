@@ -1,0 +1,6 @@
+{
+  "before_candidate": "c93506e28d4ba98a96c85223fbad630cf250b550",
+  "command": ".venv/bin/pytest -q tests/test_mc3_evolution.py -k 'test_review_' --tb=short",
+  "exit_code": 0,
+  "output": "....                                                                     [100%]\n4 passed, 89 deselected in 0.48s\n"
+}

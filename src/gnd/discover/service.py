@@ -35,7 +35,7 @@ from gnd.discover.candidates import (
 )
 from gnd.discover.support import PopulationView, Work, work_ceiling
 from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
-from gnd.evolve._includes import included_hosts
+from gnd.evolve._includes import IncludeInputError, exclude_input_outputs, included_hosts
 from gnd.evolve.service import (
     MAX_EVOLUTION_PROPOSAL_BYTES,
     _operations_reference_set,
@@ -521,7 +521,10 @@ def _cmd_discover(
             families=families, max_values=max_values, max_pairs=max_pairs,
             min_support=min_support, show_values=show_values, show_digests=show_digests,
         )
-    except (ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError,
+        loaded = result["view"].model
+        if loaded.includes:
+            exclude_input_outputs(model_path, loaded._included, outputs)
+    except (IncludeInputError, ModelLoadError, ModelValidationError, PopulationLoadError, ReferenceInputError,
             types.GenericDeclarationError) as error:
         _stderr(str(error))
         return EXIT_ILL_FORMED

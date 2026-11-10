@@ -945,3 +945,53 @@ def test_C07_historical_path_preflight_checks_existing_parts(work, state):
         with pytest.raises(EvolutionIncludeError):
             current.apply(accepted)
         assert not (work / 'records').exists()
+
+
+@pytest.mark.parametrize('alias', ['direct', 'hardlink', 'symlink'])
+def test_review_discover_never_reports_into_included_input(work, alias):
+    from gnd.discover import output
+
+    vocabulary = work / 'vocabulary-v1.orm.json'
+    target = vocabulary if alias == 'direct' else work / 'report-alias.json'
+    if alias == 'hardlink':
+        target.hardlink_to(vocabulary)
+    elif alias == 'symlink':
+        target.symlink_to(vocabulary)
+    exact = vocabulary.read_bytes()
+    with patch.object(output, 'write', side_effect=AssertionError('writer reached')):
+        result = run_main(['discover', str(work / 'project.orm.json'), str(work / 'clean.pop.json'),
+                           '--families', 'mandatory', '--out', str(work / 'discover-proposal.json'),
+                           '--report', str(target), '--actor', 'mc3-review',
+                           '--requested-at', '2026-11-10T00:00:00Z', '--format', 'json'])
+    assert result.returncode == 3, result.stdout + result.stderr
+    assert vocabulary.read_bytes() == exact
+    assert not (work / 'discover-proposal.json').exists()
+
+
+def test_review_model_cas_cannot_target_historical_include_path(work):
+    import gnd.evolve.service as runtime
+    from gnd.evolve import EvolutionIncludeError, read_evolution_proposal_document
+
+    model = work / 'project.orm.json'
+    old = (work / 'vocabulary-v1.orm.json').read_bytes()
+    authored = read(model)
+    authored['includes'][0]['path'] = model.name
+    write(model, authored)
+    value = read(work / 'combined.proposal.json')
+    value['expected_model_sha256'] = sha(model.read_bytes())
+    value['operations'][0]['before'] = authored['includes'][0]
+    built = read_evolution_proposal_document(value)
+    current = service(work)
+    reviewed = current.preview(built, previous_includes={'components': old})
+    accepted = current.preview(built, previous_includes={'components': old},
+                               accepted_blast_radius_sha256=reviewed.blast_radius.report_sha256)
+    exact = model.read_bytes()
+    original = runtime._atomic_write
+    def guarded(root, relative, *args, **kwargs):
+        if root == work and relative == model.name:
+            raise AssertionError('model CAS reached historical include input')
+        return original(root, relative, *args, **kwargs)
+    with patch.object(runtime, '_atomic_write', side_effect=guarded), pytest.raises(EvolutionIncludeError):
+        current.apply(accepted)
+    assert model.read_bytes() == exact
+    assert not (work / 'records').exists()

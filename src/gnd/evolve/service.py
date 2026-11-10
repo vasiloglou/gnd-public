@@ -1749,7 +1749,7 @@ class EvolutionService:
 
         leaves = ('proposal.json', 'before.orm.yaml', 'candidate.orm.yaml',
                   'candidate.verbalization.txt', 'preview.json', 'intent.json', 'pending.json', 'record.json')
-        outputs = [self.verbalization_path, *(self.evidence_root / preview.proposal.proposal_id / leaf
+        outputs = [self._model_path, self.verbalization_path, *(self.evidence_root / preview.proposal.proposal_id / leaf
                                              for leaf in leaves)]
         _include_input(exclude_input_outputs, self._model_path, (*before._included, *candidate._included), outputs)
         snapshots = _include_snapshot_values(before, candidate)

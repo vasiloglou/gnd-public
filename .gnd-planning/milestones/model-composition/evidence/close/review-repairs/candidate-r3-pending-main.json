@@ -1,0 +1,55 @@
+{
+  "actual_main": "a9b67d8b3a507dffd219c146c7cb4d5953100a0c",
+  "measured_candidate": "b7da04b1ead8dbc72e27ac0b3bf945cc7d970244",
+  "exact_pending_nonplanning_delta": [
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "main_sha256": "a8d58541d6b6b8b4b025f33381b970a6eb72a2d2800ab87bcfb8c4c4899d6dee",
+      "candidate_sha256": "4d1f2bd572c969f5b57b0a958224b5b2d7308f4e364ff9ed329dc66f118b6483"
+    },
+    {
+      "path": "dev/components/modules/witness.md",
+      "main_sha256": "86854db0cc1e154137d0040df22d3c1ebe7434ac303b608a800ffd1965845670",
+      "candidate_sha256": "38d0bc5fdc446322796b801d404e1536ef1bc09b0613e3c79e693c941394eee3"
+    },
+    {
+      "path": "src/gnd/skills/gnd-model-evolve/SKILL.md",
+      "main_sha256": "852b3bad98012ac239edb2fc551c189f66220d3c9600d2d175a6ad814657c7bd",
+      "candidate_sha256": "036d6cb5fe7d6edabf34f4fa1950178c8478e5f1612669dc8565e86991437c4b"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "main_sha256": "f9e15e4674dcc755dda5befd79a268e48289a20eafa9b29271e329fbf7e618a4",
+      "candidate_sha256": "629b9075a32a8c2912103f4d11dd1a38e6f54b2687d456a1d137694ad0de9434"
+    },
+    {
+      "path": "tests/test_development_scaffold.py",
+      "main_sha256": "24dc606d86f105209da69f2e6e9a4b94ef0523b0bab76a7013baddf5c995ce99",
+      "candidate_sha256": "292e65af460f69c02e65f99dfef8258ccb79bc7426702bd3490787f1dbf3726d"
+    },
+    {
+      "path": "tests/test_mc2_consumers.py",
+      "main_sha256": "badf7e18f01b3d71217a91e1d3b59abd37002890c8494274586db24eda12a55e",
+      "candidate_sha256": "b1aa241ba2e3a1ca874894070d1a2f856ea04b22cef437f88101c372b4abec13"
+    },
+    {
+      "path": "tests/test_model_v2.py",
+      "main_sha256": "9e3137d7aefeb4bc50cf3dedb69f14acd2ece2b80c12a7b6464e8444b027b5c9",
+      "candidate_sha256": "0916b06b3008ecc7188e613812146c2b4ed0dc33d6ccebed956d68dfa7a3efe0"
+    },
+    {
+      "path": "tests/test_public_api.py",
+      "main_sha256": "5e1fb7c3b91d5f9ad84b8cc2f192d749b11fcd07a1f10891feb130156b8e7025",
+      "candidate_sha256": "8b645ff70c5885541398fdd95e6dd67ba90277d711fc2d67e68e58b27c8c4379"
+    },
+    {
+      "path": "tests/test_rf1_pin_harness.py",
+      "main_sha256": "64127865c111cc460204975ed43c1980c599f94f8af256867b88dba5a5c9fd8d",
+      "candidate_sha256": "96babaef5805cf05a788d5854bf59373c97fc31d937447b47a258d36e20487ba"
+    }
+  ],
+  "runtime_changes": [
+    "src/gnd/witness/service.py"
+  ],
+  "note": "Main229smoke predates repair; no current-main claim for unmerged refusal fixes. Other runtime files, schemas, models,docs,config unchanged."
+}

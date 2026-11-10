@@ -1,0 +1,13 @@
+{
+  "candidate": "b7da04b1ead8dbc72e27ac0b3bf945cc7d970244",
+  "new_producer_exit": 0,
+  "new_marked_tests_exit": 0,
+  "new_marked_summary": "2 passed in 15.80s",
+  "raw_sha256": "8c751a61b1a2160257b35dfec8d61f5c811acf4cd01f86a88690b76dc627fedb",
+  "identical_retained_artifact": ".gnd-planning/milestones/model-composition/evidence/close/final-census.json",
+  "members": 423,
+  "original_members": 400,
+  "original_per_observable_mismatches": 0,
+  "added_members": 23,
+  "note": "New actual invocation; exact byte equality aliases retained423-row artifact, not a duplicate or baseline regeneration."
+}

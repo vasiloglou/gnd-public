@@ -33,7 +33,7 @@ grouped below with their raising records; unresolved rows remain pending.
 | MC4 merge | 025 | Resolved: explicit current owner approval, exact head/empty reviews/threads checked; SHA-guarded merge a9b67d8b after MC3. Record030 binds actual main. |
 | Final candidate full default | 008/013/015/023/025 | Resolved by029 at1ca2379f:6failed/18795passed/801deselected/1warning, exact baseline IDs; marked census2pass,400originals unchanged/23additions. Rejected8e5 fourteen-failure output and incomplete6de remain distinct. |
 | Actual main predicates | plan completion;013/014/018/021/023/025 | Record030: actual maina9b67d8b equals MC4 complete tree. All runtime/schema/models/docs/config match1ca; exactly four test guards and one offline skill prose repair remain in PR158. Main runtime smoke separately measured. PR158 merge and final relevant-tree comparison remain owner-dependent; final main satisfaction is not residual-waived. |
-| Independent close opinion / exact ruling | 008/013/015/023/025 | PENDING one explicitly selected Codex CLI close review after complete reviewable results/main evidence. Phase reviewers do not substitute; no extra panel or subagent selected. Final close binds exact amended-plan SHA and sweep. |
+| Independent close opinion / exact ruling | 008/013/015/023/025 | First selected close opinion atb89747d6 REVISE: one blocking witness refusal defect plus one hardening candidate-call guard gap.031reproduces/repairs them;032completes corrected candidate results. One narrowly scoped confirmation remains pending. Budget1/2used; no extra panel/subagent/thirdopinion. Final close binds amended-plan SHA and current sweep. |
 | Issue95 closure | plan completion9;013/018/023 | PENDING actual achieved milestone. Only then close issue95; do not start another milestone, publish or certify. |
 
 No optional native acceptance/certification/publication is selected. Excluded
@@ -53,3 +53,15 @@ and other explicitly refused routes remain unsupported, not partially accepted.
 | New refactoring |023/025/027/028|No additional runtime refactor needed: source homes and one composition path remain unchanged by narrow guard/prose follow-ups. Delivered component-hook contradiction stays repository-owner maintenance, not a new runtime task.|
 
 No newly discovered question is silently retired. Six baseline failures,13lint findings, exact retained artifact whitespace and the delivered hook/index contradiction remain accepted maintenance residuals with repository owner as target; they do not include pending main/merge/review gates.
+
+## First close-review disposition — 2026-11-10
+
+| Finding | Class | Evidence / current disposition |
+|---|---|---|
+| Plain composed witness/replay expose semantic rule |blocking|031: actual baseline bodies2pass; oldcandidate2plainfail; two narrow include-only fallback repairs; new real-byte controls pass. 032completes corrected full/default/census atb7da04b1 with exactly six frozen failures,18801passes and400unchangedoriginals. Confirmation remains pending.|
+| Candidate-call source guard matches later payload |hardening, delivered instrument|031: two wrong-first-argument controls fail oldguard; added regex binds firstcallargument; both controls and cleanorder pass. Runtimecandidatebinding unchanged. Confirmation pending.|
+| Proposed included control expected hash-mismatch |refuted test premise|031pre-fixactualrun shows unsupported-route lineage wins; revised oracle beforefix preserves existing route matrix. Initial6fail and corrected4fail/2pass outputs both retained.|
+
+Budgets after repairs: MC2source110/test585 under375/600; MC3source1109/test1239 under1400/1400; MC4test120/120. Combinedsupport163=120+22+21,4productionlines separate. Newbroaderaffected466pass/11deselected;125source/architecturepins pass;13lint findings same. No first-reviewapproval or finalmerge is inferred.
+
+Record032 supersedes earlier pending candidate execution states: corrected full exit1 with6failed/18801passed/801deselected/1warning, no new failures; marked census2pass with400originals unchanged. Current actual-main delta is exactly9nonplanning files as bound in candidate-r3-pending-main.json. FinalPR158merge and finalmain/issue95 remain owner-dependent; neither is accepted as a residual waiver.

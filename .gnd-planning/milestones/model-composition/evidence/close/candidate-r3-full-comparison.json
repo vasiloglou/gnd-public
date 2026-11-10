@@ -1,0 +1,30 @@
+{
+  "baseline_commit": "459ca8d293eeef79110c8def26ae7b061d5a8fd5",
+  "baseline_raw_output_sha256": "6b64751cbadcf06dd7f4a58fe23265857e5aa70a3619738dd10bf6c70c335184",
+  "candidate_commit": "b7da04b1ead8dbc72e27ac0b3bf945cc7d970244",
+  "candidate_raw_output_sha256_before_sanitization": "22c719450576d68a62f01ce41638e341fe03574c37e1ca0f8ccc260f4b97c7a4",
+  "candidate_retained_output_sha256": "b306bec2528801c0cceb0fa47ce3fb088198bd042096081e2f37627d0c6513d8",
+  "candidate_exit": 1,
+  "summary": "6 failed, 18801 passed, 801 deselected, 1 warning in 2545.10s (0:42:25)",
+  "counts": {
+    "failed": 6,
+    "passed": 18801,
+    "deselected": 801,
+    "skipped": 0,
+    "xfailed": 0,
+    "xpassed": 0,
+    "errors": 0
+  },
+  "failure_names": [
+    "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+  ],
+  "added_failures": [],
+  "removed_failures": [],
+  "tracked_status_before_after": "empty",
+  "claim": "Exact observed frozen failure-set equality; full suite remains nonzero. No excluded lane is claimed."
+}

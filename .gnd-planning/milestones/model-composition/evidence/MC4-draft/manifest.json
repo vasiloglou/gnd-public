@@ -1,0 +1,60 @@
+{
+  "base_main": "d5ca5d9a77d07778ce37a1a00dec20eaa2faadb3",
+  "tracked_inputs": [
+    {
+      "path": "docs/how-to/share-a-vocabulary.md",
+      "sha256": "dbf50e5c749c51fe47720ac03038dce47645138f0bd40e5b60dde30e0983fbcb"
+    },
+    {
+      "path": "docs/assets/applications/shared-vocabulary-draft.svg",
+      "sha256": "d835d7b021f53562af74a5c27fc3ff61f1225000f1ccd444fe5caea1a14aff6d"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/cycle.population.yaml",
+      "sha256": "b33135ee170f9c5aece717716a257ee7f2cdac54098ce3d920a82bc659b88cfc"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/fixed.population.yaml",
+      "sha256": "ded4585f6f538b97de5f2a0b813fa9cbfc8c2871b3eda309f7dc1235504ae230"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/project.orm.yaml",
+      "sha256": "1300934c0d21fbb972db2be66e089bc10d05b3fbdf2d23907eccc57b21356d3c"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/vocabulary/components-v1.orm.yaml",
+      "sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/run.py",
+      "sha256": "8845be60fc48c143b8ee3fccdef60fd16f25443eadb97bdc1b00c96bb67946cd"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/tutorial-receipt.json",
+      "sha256": "905903dfb4af590c91f0b101a45a6ecfe1e4cebf5224fd0ad2ea7ce5e5487101"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/render-config.toml",
+      "sha256": "b567724432373ca1a9372ef9804e02339fdee542970447fbeb8dda06c78bbd60"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/render-output.txt",
+      "sha256": "3eccf17a2c46441c4d0e5a566cada91ea805403045bc6826b48b48ba729c8148"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/example-scan-red.json",
+      "sha256": "72373acb47500137956540bcd0066054fb1192d06243394740d4ac84adfe420b"
+    }
+  ],
+  "external_rendered_artifacts": [
+    {
+      "path": "/private/tmp/mc4-draft-site/how-to/share-a-vocabulary/index.html",
+      "sha256": "f63bc37650c7e2c23e9d20524f91d3031ae5b3a744504f2fa7252d6e970c7de0"
+    },
+    {
+      "path": "/Users/nikolaosvasiloglou/.codex/visualizations/2026/11/10/01a1c385-c9db-7ad1-b499-19ca30d94e20/mc4-draft-review.png",
+      "sha256": "1c413896f6bbe22c9009a438ce86214d0853bc9f2fa382e91367d5c9431986bc"
+    }
+  ],
+  "external_boundary": "Rendered bytes live outside history; these render identities are checkable only by whoever holds those bytes. The source/example/runner evidence is committed and reproducible."
+}

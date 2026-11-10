@@ -1,0 +1,33 @@
+# Component vocabulary shipped by the scanner. Project rules live in project.orm.yaml.
+version: 2
+model_id: urn:gnd-example:components-vocabulary@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+- {id: component, name: Component, kind: entity, reference: {mode: popular,
+      value_type: component_name}}
+- {id: component_name, name: ComponentName, kind: value, primitive: String}
+- {id: area, name: Area, kind: value, primitive: String}
+- {id: owner, name: Owner, kind: value, primitive: String}
+- {id: release, name: Release, kind: value, primitive: String}
+fact_types:
+- id: component_imports_component
+  reading: '{Component} imports {Component}'
+  roles:
+  - {object_type: component, role_name: importer}
+  - {object_type: component, role_name: imported}
+- id: component_is_in_area
+  reading: '{Component} is in {Area}'
+  roles:
+  - {object_type: component, role_name: component}
+  - {object_type: area, role_name: area}
+- id: component_has_owner
+  reading: '{Component} has owner {Owner}'
+  roles:
+  - {object_type: component, role_name: component}
+  - {object_type: owner, role_name: owner}
+- id: component_ships_in_release
+  reading: '{Component} ships in {Release}'
+  roles:
+  - {object_type: component, role_name: component}
+  - {object_type: release, role_name: release}
+constraints: []

@@ -1,0 +1,13 @@
+population:
+  model: project.orm.yaml
+  model_id: urn:gnd-example:shared-components@1
+  source: tool-output
+  producer: components-scan demo @ fixed
+  covers:
+  - component_imports_component
+facts:
+  component_imports_component:
+  - importer: web
+    imported: api
+  - importer: api
+    imported: auth

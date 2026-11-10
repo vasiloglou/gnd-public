@@ -1,0 +1,39 @@
+{
+  "schema_version": 3,
+  "proposal_id": "sales-repin",
+  "expected_model_sha256": "c4d11f9c02f637b6f3fe04342e540d0a3f78cbf0fa73d91811ad29e1b036a647",
+  "candidate_model": {
+    "media_type": "application/yaml",
+    "encoding": "utf-8",
+    "text": "{\n  \"version\": 5,\n  \"model_id\": \"urn:gnd-tutorial:expense:sales@1\",\n  \"includes\": [\n    {\n      \"id\": \"expense\",\n      \"path\": \"shared/expense-v2.orm.json\",\n      \"sha256\": \"194543c6d7a7ab3de7d6bf932fafb34dd6591d3f23a87159ba204e85d69bcd5c\"\n    }\n  ],\n  \"constraints\": [\n    {\n      \"id\": \"policy_meals\",\n      \"type\": \"guarded\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"expense_in_category\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"category\": \"meals\"\n          }\n        },\n        {\n          \"fact_type\": \"expense_has_amount\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"amount\": \"$a\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"comparison\": {\n          \"operator\": \"<=\",\n          \"left\": \"$a\",\n          \"right\": 120\n        }\n      },\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"Sales meals cost at most 120 EUR.\"\n      }\n    },\n    {\n      \"id\": \"policy_training\",\n      \"type\": \"guarded\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"expense_in_category\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"category\": \"training\"\n          }\n        },\n        {\n          \"fact_type\": \"expense_has_amount\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"amount\": \"$a\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"comparison\": {\n          \"operator\": \"<=\",\n          \"left\": \"$a\",\n          \"right\": 1500\n        }\n      },\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"Training expenses cost at most 1500 EUR.\"\n      }\n    },\n    {\n      \"id\": \"policy_travel\",\n      \"type\": \"guarded\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"expense_in_category\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"category\": \"travel\"\n          }\n        },\n        {\n          \"fact_type\": \"expense_has_amount\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"amount\": \"$a\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"comparison\": {\n          \"operator\": \"<=\",\n          \"left\": \"$a\",\n          \"right\": 2000\n        }\n      },\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"Travel expenses cost at most 2000 EUR.\"\n      }\n    },\n    {\n      \"id\": \"policy_equipment\",\n      \"type\": \"guarded\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"expense_in_category\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"category\": \"equipment\"\n          }\n        },\n        {\n          \"fact_type\": \"expense_has_amount\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"amount\": \"$a\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"comparison\": {\n          \"operator\": \"<=\",\n          \"left\": \"$a\",\n          \"right\": 3000\n        }\n      },\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"Equipment expenses cost at most 3000 EUR.\"\n      }\n    },\n    {\n      \"id\": \"approval_limit_team_lead\",\n      \"type\": \"guarded\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"expense_approved_by_chain\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"chain\": \"team-lead\"\n          }\n        },\n        {\n          \"fact_type\": \"expense_has_amount\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"amount\": \"$a\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"comparison\": {\n          \"operator\": \"<=\",\n          \"left\": \"$a\",\n          \"right\": 1000\n        }\n      },\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"A Sales team lead approves at most 1000 EUR.\"\n      }\n    },\n    {\n      \"id\": \"approval_limit_finance\",\n      \"type\": \"guarded\",\n      \"antecedent\": [\n        {\n          \"fact_type\": \"expense_approved_by_chain\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"chain\": \"finance\"\n          }\n        },\n        {\n          \"fact_type\": \"expense_has_amount\",\n          \"bind\": {\n            \"expense\": \"$e\",\n            \"amount\": \"$a\"\n          }\n        }\n      ],\n      \"consequent\": {\n        \"comparison\": {\n          \"operator\": \"<=\",\n          \"left\": \"$a\",\n          \"right\": 3000\n        }\n      },\n      \"source\": \"explicit\",\n      \"status\": \"confirmed\",\n      \"modality\": \"alethic\",\n      \"provenance\": {\n        \"user_quote\": \"The finance chain approves at most 3000 EUR.\"\n      }\n    }\n  ],\n  \"fact_type_constraints\": [\n    {\n      \"fact_type\": \"expense_has_receipt\",\n      \"constraints\": [\n        {\n          \"id\": \"receipt_required\",\n          \"type\": \"mandatory\",\n          \"role\": \"expense\",\n          \"source\": \"explicit\",\n          \"status\": \"confirmed\",\n          \"modality\": \"alethic\",\n          \"remedy\": \"Add the receipt, then check again.\",\n          \"provenance\": {\n            \"user_quote\": \"No receipt, no reimbursement.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+    "sha256": "c3a452fc204ae00e699faece53381ff652898093d7d6c72a98fdf2db0c60a897"
+  },
+  "operations": [
+    {
+      "operation_id": "review-expense-edition",
+      "kind": "repin-include",
+      "locator": {
+        "locator_kind": "include",
+        "include_id": "expense"
+      },
+      "before": {
+        "id": "expense",
+        "path": "shared/expense-v1.orm.json",
+        "sha256": "6ae0d1130e5c6fec871fd9ca51e92178ea260abf2d87c8aee96d1e2216963817"
+      },
+      "after": {
+        "id": "expense",
+        "path": "shared/expense-v2.orm.json",
+        "sha256": "194543c6d7a7ab3de7d6bf932fafb34dd6591d3f23a87159ba204e85d69bcd5c"
+      }
+    }
+  ],
+  "rationale": "Review the Finance edition and preserve Sales spending policy.",
+  "audit": {
+    "actor_id": "sales-owner",
+    "origin": "synthetic shared-expense tutorial",
+    "requested_at": "2026-11-10T00:00:00+00:00"
+  },
+  "linked_projects": [],
+  "artifacts": []
+}

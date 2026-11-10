@@ -202,6 +202,7 @@ def groups(root: Path) -> dict[str, list[Path]]:
         'quickstart': [root / 'docs/quickstart.md', root / 'README.md'],
         'release': [root / 'docs/release-example.md'],
         'bookrec': sorted((root / 'docs/bookrec').glob('[0-9]*.md')),
+        'shared-expenses': [root / 'docs/how-to/shared-expense-policies-commands.md'],
         'expense': sorted((root / 'docs/expense').glob('[0-9]*.md')),
         'api': [root / 'docs/reference/python-api.md'],
         'walkthrough': [root / 'docs/walkthrough.md'],

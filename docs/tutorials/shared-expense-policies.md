@@ -20,16 +20,16 @@ requests; GND does the checking. All the data is synthetic.
 </div>
 
 *Source: the shipped expense example, extended with a shared expense model,
-two team policies and receipt facts. Every Part 1 result below comes from a
+two team policies and receipt facts. Every result below comes from a
 real run of the [commands behind it](../how-to/shared-expense-policies-commands.md).
-Part 2 remains planned. The requests are suggestions, not recordings of an agent conversation.*
+The requests are suggestions, not recordings of an agent conversation.*
 
 !!! info "Files on GitHub"
 
-    - [The shared expense model](https://github.com/vasiloglou/gnd-public/blob/codex/model-composition-docs-draft/src/gnd/examples/expense/teams/shared/expense-v1.orm.json)
-    - [Engineering's policy](https://github.com/vasiloglou/gnd-public/blob/codex/model-composition-docs-draft/src/gnd/examples/expense/teams/engineering.orm.json)
-    - [Sales's policy](https://github.com/vasiloglou/gnd-public/blob/codex/model-composition-docs-draft/src/gnd/examples/expense/teams/sales.orm.json)
-    - [The facts and all example files](https://github.com/vasiloglou/gnd-public/tree/codex/model-composition-docs-draft/src/gnd/examples/expense/teams)
+    - [The shared expense model](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/expense/teams/shared/expense-v1.orm.json)
+    - [Engineering's policy](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/expense/teams/engineering.orm.json)
+    - [Sales's policy](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/examples/expense/teams/sales.orm.json)
+    - [The facts and all example files](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/expense/teams)
 
 ## The result in one table
 
@@ -38,7 +38,7 @@ Part 2 remains planned. The requests are suggestions, not recordings of an agent
 | What an expense is | written separately in each copy | written once |
 | A team's own rules | mixed in with the definitions | a short file of its own: 6 limits and a receipt rule |
 | The same 90 EUR dinner | whatever each copy happens to say | blocked for Engineering, accepted for Sales, on purpose |
-| Finance changes a definition | edit every copy by hand | each team sees which of its rules break before anything changes *(planned)* |
+| Finance changes a definition | edit every copy by hand | each team sees which of its rules break before anything changes |
 
 ## Who does what
 
@@ -53,7 +53,7 @@ A team's policy never copies a shared definition and cannot change one. It says
 which edition of the shared model it builds on, the way a contract cites the
 2026 edition of a handbook and not just "the handbook".
 
-**Before you start.** Use a checkout of this draft branch for the unreleased example, as the
+**Before you start.** Use a checkout of a development checkout for the unreleased example, as the
 [installation page](../installation.md) shows and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
 shows. The [commands page](../how-to/shared-expense-policies-commands.md) has
 the copy step and every command behind the requests below.
@@ -197,25 +197,24 @@ definition both teams rely on can only change as a new edition, in the open.
 
 ## Part 2: Finance changes a shared definition
 
-!!! warning "Planned, not yet available"
-
-    This half describes work in progress. Nothing below has been run; it is the
-    demonstration this page will show once the feature is released.
-
 Finance starts accepting e-invoices as well as paper receipts. It publishes a
 second edition of the shared model: "Expense has Receipt" is replaced by
 "Expense is supported by Document". The first edition stays where it is.
 
+![Before: both teams use edition 1 and their own receipt policies. After: Sales uses edition 2, replacing its broken receipt requirement with a document requirement; its six limits stay unchanged. Engineering stays on edition 1.](../assets/applications/expense-update.svg)
+
+*Source: the shipped [expense team models and proposals](https://github.com/vasiloglou/gnd-public/tree/main/src/gnd/examples/expense/teams), exercised by the [command walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2).*
+
 ### 6. Ask what the update would break
 
-**You will type**
+**You type**
 
 ```text
 Finance published edition 2 of the shared expense model. Preview moving
 Sales's policy to it. Do not change anything yet.
 ```
 
-**GND will say** the move, on its own, does not work, and name why: Sales's
+**GND says** the move, on its own, does not work, and name why: Sales's
 rule *every expense must have a receipt* hangs on a relationship edition 2 no
 longer has. The six limits are not named, because nothing they use changed.
 Nothing is published; Sales's policy is exactly as it was.
@@ -228,7 +227,7 @@ Nothing is published; Sales's policy is exactly as it was.
 
 ### 7. Repair it in one reviewed change
 
-**You will type**
+**You type**
 
 ```text
 Move Sales's policy to edition 2 and, in the same change, restate the receipt
@@ -236,11 +235,11 @@ rule as: every expense must be supported by a document. Preview it, show me
 what it affects, and wait for my go-ahead.
 ```
 
-**GND will say** the combined change is valid, and will mark it as one that
+**GND says** the combined change is valid, and will mark it as one that
 needs your explicit acceptance. After you accept, only Sales's policy file
 changes. The shared model is never written by a team's change.
 
-**You will get** a Sales policy on edition 2. An expense with a document passes;
+**You get** a Sales policy on edition 2. An expense with a document passes;
 an expense without one is blocked, as the missing receipt was in step 4.
 
 ### 8. What stays put
@@ -260,7 +259,7 @@ an expense without one is blocked, as the missing receipt was in step 4.
 | 3 | one dinner and one trip, two correct verdicts | GND, once per policy |
 | 4 | one missing receipt: a warning for one team, a violation for the other | GND |
 | 5 | an in-place edit to the shared model was refused | GND |
-| 6–8 *(planned)* | a new edition named the one rule it breaks; one change repaired it | GND, before anything was published |
+| 6–8 | a new edition named the one rule it breaks; one change repaired it | GND, before anything was published |
 
 ## What this does not establish
 
@@ -271,7 +270,6 @@ an expense without one is blocked, as the missing receipt was in step 4.
 - **Anything about a generated application.** The expense tutorial's generated
   project does not yet accept a policy built on a shared model. This page
   checks facts directly.
-- **Anything in Part 2.** It is a plan until its results are recorded.
 
 The exact rules for building one model on another are in the
 [model includes reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#model-includes-version-5).

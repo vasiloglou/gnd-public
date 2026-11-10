@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_documented_learning_path[shared-expenses] ________________
+tests/test_documentation_tutorials.py:96: in test_documented_learning_path
+    pages = runner.groups(ROOT)[group]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'shared-expenses'
+=========================== short test summary info ============================
+FAILED tests/test_documentation_tutorials.py::test_documented_learning_path[shared-expenses]
+1 failed in 0.10s

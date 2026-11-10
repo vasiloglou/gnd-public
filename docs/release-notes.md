@@ -9,6 +9,18 @@ after a release are listed in an `Unreleased:` section until the next one.
 These changes are on `main` after 0.2.0 and are not in any published package.
 Install from a checkout of the repository to use them.
 
+### Shared definitions, project-owned policies (issue 95)
+
+A project can pin a local shared vocabulary while keeping its own rules.
+Validation, checking and model verbalization use the composed model; evolution
+can review a vocabulary update and repair project rules in one accepted change.
+The [two-team expense tutorial](tutorials/shared-expense-policies.md) shows
+Engineering and Sales using different policies, then Sales moving to a new
+Finance edition while Engineering stays on the old one. The
+[command walkthrough](how-to/shared-expense-policies-commands.md) runs every step.
+Generated-app and linked-project conformance routes for these models remain
+unsupported. This feature requires the development checkout.
+
 ### Model identity a caller can recompute (issue 111)
 
 The `model_digest` that steps documents, sidecars and certificates pin is a

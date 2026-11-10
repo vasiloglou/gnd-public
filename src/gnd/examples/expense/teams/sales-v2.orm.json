@@ -1,0 +1,230 @@
+{
+  "version": 5,
+  "model_id": "urn:gnd-tutorial:expense:sales@1",
+  "includes": [
+    {
+      "id": "expense",
+      "path": "shared/expense-v2.orm.json",
+      "sha256": "194543c6d7a7ab3de7d6bf932fafb34dd6591d3f23a87159ba204e85d69bcd5c"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "policy_meals",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "meals"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 120
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Sales meals cost at most 120 EUR."
+      }
+    },
+    {
+      "id": "policy_training",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "training"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 1500
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Training expenses cost at most 1500 EUR."
+      }
+    },
+    {
+      "id": "policy_travel",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "travel"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 2000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Travel expenses cost at most 2000 EUR."
+      }
+    },
+    {
+      "id": "policy_equipment",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_in_category",
+          "bind": {
+            "expense": "$e",
+            "category": "equipment"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 3000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "Equipment expenses cost at most 3000 EUR."
+      }
+    },
+    {
+      "id": "approval_limit_team_lead",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_approved_by_chain",
+          "bind": {
+            "expense": "$e",
+            "chain": "team-lead"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 1000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "A Sales team lead approves at most 1000 EUR."
+      }
+    },
+    {
+      "id": "approval_limit_finance",
+      "type": "guarded",
+      "antecedent": [
+        {
+          "fact_type": "expense_approved_by_chain",
+          "bind": {
+            "expense": "$e",
+            "chain": "finance"
+          }
+        },
+        {
+          "fact_type": "expense_has_amount",
+          "bind": {
+            "expense": "$e",
+            "amount": "$a"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "operator": "<=",
+          "left": "$a",
+          "right": 3000
+        }
+      },
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "The finance chain approves at most 3000 EUR."
+      }
+    }
+  ],
+  "fact_type_constraints": [
+    {
+      "fact_type": "expense_supported_by_document",
+      "constraints": [
+        {
+          "id": "document_required",
+          "type": "mandatory",
+          "role": "expense",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "modality": "alethic",
+          "remedy": "Add a supporting document, then check again.",
+          "provenance": {
+            "user_quote": "Every expense must be supported by a document."
+          }
+        }
+      ]
+    }
+  ]
+}

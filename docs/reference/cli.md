@@ -46,7 +46,7 @@ does not add trace fields.
 |---|---|
 | `gnd codegen MODEL --out DIR` | Derived project files and initial extension structure |
 | `gnd conformance MODEL DIR --format json` | Static integrity, currency, structure and architecture findings |
-| `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT --check-population FILE] [--shape-report]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations, and [admits a constraint on clean data](evolve-policy.md#admitting-a-constraint-on-clean-data) with `--check-population`; the [shape report](evolve-policy.md#shape-report) lists same-shaped fact types |
+| `gnd evolve preview MODEL PROPOSAL --workspace ROOT --records DIR --out PREVIEW [--policy additive --populated FT --check-population FILE] [--shape-report] [--previous-include ID=PATH]` | Immutable proposal preview for review; the [additive policy](evolve-policy.md) refuses non-additive operations, and [admits a constraint on clean data](evolve-policy.md#admitting-a-constraint-on-clean-data) with `--check-population`; the [shape report](evolve-policy.md#shape-report) lists same-shaped fact types |
 | `gnd evolve apply MODEL PROPOSAL --preview PREVIEW --workspace ROOT --records DIR [--policy additive --populated FT --check-population FILE]` | Model publication and linked-project rechecks; repeats the preview's policy and population check |
 | `gnd evolve finalize MODEL PENDING --workspace ROOT --records DIR` | Completion of an interrupted published evolution |
 | `gnd discover MODEL POPULATION --out PROPOSAL --report REPORT --actor ID --requested-at 2026-10-24T12:00:00+00:00` | Candidate constraints observed in one population, as a reviewable evolve proposal plus a report; `--families fact-type` opts in to proposing fact types from generic rows; `--type-evidence` writes their evidence, and `--type-evidence-in` with `--duplicate-judgements` or `--shape-judgements` renders a skill's verdicts ([contract](discover.md)) |
@@ -129,3 +129,11 @@ The authoritative parser lives in
 [cli.py](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/cli.py).
 CLI composition does not enlarge the stable [Python API](python-api.md),
 whose function list is the one count of record.
+
+Shared-vocabulary models use the canonical
+[model includes contract](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#model-includes-version-5).
+`gnd verbalize model MODEL` reads the composed model and identifies its includes.
+For an edition update, see the
+[expense walkthrough](../how-to/shared-expense-policies-commands.md#review-edition-2)
+and the evolution contract linked above; `--previous-include ID=PATH` supplies
+verified historical bytes when the old edition is unavailable.

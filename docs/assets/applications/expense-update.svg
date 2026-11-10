@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="300" viewBox="0 0 960 300" role="img" aria-labelledby="title desc">
+<title id="title">One team moves to the new expense definition</title>
+<desc id="desc">Before: Engineering and Sales use Finance edition 1 with their own receipt policies. After: Engineering remains on edition 1. Sales moves to edition 2 and replaces its broken receipt requirement with a document requirement. Its six limits remain unchanged.</desc>
+<rect width="960" height="300" rx="16" fill="#f5f7fb"/>
+<g font-family="sans-serif" fill="#17253b">
+<text x="35" y="40" font-size="22" font-weight="bold">Before</text><text x="515" y="40" font-size="22" font-weight="bold">After Sales reviews its update</text>
+<rect x="35" y="65" width="395" height="80" rx="10" fill="#e0eaff"/><rect x="515" y="65" width="410" height="80" rx="10" fill="#e0eaff"/>
+<text x="55" y="96" font-size="19">Engineering · edition 1</text><text x="55" y="124" font-size="16">Receipt expected · six limits</text>
+<text x="535" y="96" font-size="19">Engineering · edition 1</text><text x="535" y="124" font-size="16">Same receipt policy · same six limits</text>
+<rect x="35" y="165" width="395" height="100" rx="10" fill="#e5f2e9"/><rect x="515" y="165" width="410" height="100" rx="10" fill="#e5f2e9"/>
+<text x="55" y="197" font-size="19">Sales · edition 1</text><text x="55" y="225" font-size="16">Receipt required · six limits</text>
+<text x="535" y="197" font-size="19">Sales · edition 2</text><text x="535" y="225" font-size="16">Receipt rule breaks → document required</text><text x="535" y="250" font-size="16">Six spending and approval limits unchanged</text>
+<text x="449" y="218" font-size="30">→</text>
+</g></svg>

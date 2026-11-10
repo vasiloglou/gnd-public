@@ -333,10 +333,15 @@ def test_R27_recovery_before_copy(tmp_path, monkeypatch):
 
 
 def test_R30_examples_do_not_declare_includes():
-    from gnd.model import parse_model_document
+    from gnd.model import load_model, parse_model_document
     from gnd.model._includes import declares_includes
     examples = Path(__file__).resolve().parents[1] / 'src/gnd/examples'
     paths = sorted(examples.rglob('*.orm.yaml')) + sorted(examples.rglob('*.orm.json'))
     assert paths
-    for path in paths:
-        assert not declares_includes(parse_model_document(path.read_bytes(), source=path))
+    included = {path.relative_to(examples).as_posix() for path in paths
+                if declares_includes(parse_model_document(path.read_bytes(), source=path))}
+    expected = {'expense/teams/engineering.orm.json', 'expense/teams/sales.orm.json',
+                'expense/teams/sales-v2.orm.json'}
+    assert included == expected
+    for relative in included:
+        assert load_model(examples / relative)._included

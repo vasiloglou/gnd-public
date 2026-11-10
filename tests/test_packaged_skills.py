@@ -28,6 +28,14 @@ MC3_INCLUDE_EDGE = ('gnd-model-evolve/references/evolution-contract.md',
                     '../../gnd-orm-core/references/representation-format.md#model-includes-version-5')
 MC3_RELATIVE_LINKS = EXPECTED_RELATIVE_LINKS | {MC3_INCLUDE_EDGE}
 MC3_RELATIVE_LINK_COUNT = EXPECTED_RELATIVE_LINK_COUNT + 1
+# MC4 keeps the predecessor and adds two cross-skill entry-point citations to one home.
+MC4_INCLUDE_EDGES = {
+    ('gnd-model-evolve/SKILL.md', '../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
+    ('gnd-model-from-text/SKILL.md', '../gnd-orm-core/references/representation-format.md#model-includes-version-5'),
+}
+MC4_RELATIVE_LINKS = MC3_RELATIVE_LINKS | MC4_INCLUDE_EDGES
+MC4_RELATIVE_LINK_COUNT = MC3_RELATIVE_LINK_COUNT + 2
+
 
 RELATIVE_LINK_RE = re.compile(b'\\]\\((\\.\\./[^)\\s]+)\\)')
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -97,10 +105,10 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
             if resolved not in entries and resolved not in directories:
                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
-    missing = sorted(MC3_RELATIVE_LINKS - edges)
-    extra = sorted(edges - MC3_RELATIVE_LINKS)
+    missing = sorted(MC4_RELATIVE_LINKS - edges)
+    extra = sorted(edges - MC4_RELATIVE_LINKS)
     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
-    assert checked == MC3_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {EXPECTED_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+    assert checked == MC4_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {EXPECTED_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
 
 def test_pep723_validator_sibling_schema_ships() -> None:
     root = _skills_root()
@@ -222,18 +230,19 @@ def test_the_record_contract_binds_the_agent_and_not_the_cli() -> None:
     assert 'append-only' in text
 
 
+@pytest.mark.parametrize('edge', [MC3_INCLUDE_EDGE, *sorted(MC4_INCLUDE_EDGES)])
 @pytest.mark.parametrize('damage', ['remove', 'wrong-anchor'])
-def test_mc3_normative_edge_rejects_removal_or_replacement(tmp_path, monkeypatch, damage):
+def test_include_normative_edges_reject_removal_or_replacement(tmp_path, monkeypatch, damage, edge):
     import sys
 
     original = _skills_root()
     destination = tmp_path / 'skills'
     shutil.copytree(str(original), destination)
-    document = destination / MC3_INCLUDE_EDGE[0]
+    document = destination / edge[0]
     text = document.read_text()
-    assert MC3_INCLUDE_EDGE[1] in text
-    text = text.replace(MC3_INCLUDE_EDGE[1], '#local' if damage == 'remove' else
-                        MC3_INCLUDE_EDGE[1].replace('#model-includes-version-5', '#wrong-anchor'))
+    assert edge[1] in text
+    text = text.replace(edge[1], '#local' if damage == 'remove' else
+                        edge[1].replace('#model-includes-version-5', '#wrong-anchor'))
     document.write_text(text)
     monkeypatch.setattr(sys.modules[__name__], '_skills_root', lambda: destination)
     with pytest.raises(AssertionError):

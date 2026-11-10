@@ -323,7 +323,9 @@ def _load_model_at(data, *, source, descriptor):
     doc = parse_model_document(data, source=source)
     if declares_includes(doc):
         doc, origins, included = compose(doc, descriptor=descriptor, source=source)
-        return _finish_model(doc, origins, included)
+        model = _finish_model(doc, origins, included)
+        model._authored_sha256 = hashlib.sha256(data).hexdigest()
+        return model
     return load_model_bytes(data, source=source)
 
 

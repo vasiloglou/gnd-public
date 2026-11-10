@@ -1,0 +1,5 @@
+{
+  "exit": 0,
+  "stdout_stderr": "20 capped authored-byte comparisons: 0.065529s < 3s\n.\n1 passed in 0.68s\n",
+  "sanitization": "operator home and pytest operator-directory tokens replaced; output otherwise retained"
+}

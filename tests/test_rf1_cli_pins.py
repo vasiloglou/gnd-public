@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import copy
+import io
 import json
 import os
 from pathlib import Path
@@ -18,7 +20,7 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 58  # CT2 adds `gnd compose`; IK5 adds `gnd export ilp` and `gnd import ilp-rules`; IL4 `gnd import mined-rules`; WN2 `gnd why-not`
+EXPECTED_PARSERS = 59  # MC2 adds `gnd verbalize model`; historical paths retained.
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
@@ -165,6 +167,57 @@ def _assert_successor(lane, key, observed, expected):
         assert canonical(observed) == canonical(expected)
 
 
+def _model_review_successor():
+    """Decode the frozen grammar independently, then add only MC2's literal leaf."""
+    base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
+    reference = cli._BandSafeParser(prog=base['prog'], description=base['description'])
+
+    def restore(parser, node):
+        children = None
+        for action in node['actions']:
+            if action['class'] == '_HelpAction':
+                continue
+            if action['class'] == '_SubParsersAction':
+                children = parser.add_subparsers(dest=action['dest'], required=action['required'])
+                for name, child in node['subcommands'].items():
+                    restore(children.add_parser(name, help=child['listed_help']), child)
+                continue
+            kwargs = {k: action[k] for k in ('default', 'help')}
+            if action['class'] == '_StoreAction':
+                assert action['const'] is None
+                kwargs.update({k: action[k] for k in ('type', 'choices', 'metavar', 'nargs')})
+            else:
+                assert action['class'] == '_StoreTrueAction'
+                kwargs['action'] = 'store_true'
+            names = action['option_strings'] or [action['dest']]
+            if action['option_strings']:
+                kwargs.update(dest=action['dest'], required=action['required'])
+            parser.add_argument(*names, **kwargs)
+        return children
+
+    children = restore(reference, base)
+    before = _walk(reference, ('gnd', 'verbalize'), {})
+    before['listed_help'] = base['listed_help']
+    assert canonical(before) == canonical(base)  # Every old field binds before widening.
+    model = children.add_parser('model', help='Render the complete model for review.')
+    model.add_argument('model')
+    after = _walk(reference, ('gnd', 'verbalize'), {})
+    after['listed_help'] = base['listed_help']
+
+    def probe(argv):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), pytest.raises(SystemExit) as caught:
+            reference.parse_args(argv)
+        return {'exit': caught.value.code, 'stdout': out.getvalue(), 'stderr': err.getvalue()}
+
+    paths = {'gnd verbalize': [], 'gnd verbalize model': ['model']}
+    return {'tree': after, 'help': {'gnd verbalize': reference.format_help(),
+                                  'gnd verbalize model': model.format_help()},
+            'exit_probe': {path: {'help': probe([*argv, '--help']),
+                                  'unknown_flag': probe([*argv, '--rf1-unknown-flag'])}
+                           for path, argv in paths.items()}}
+
+
 def test_cli_tree(tree):
     # Preserve RF1's historical bytes; approve only this additive successor.
     expected = json.loads(golden_path("cli", "tree").read_text())
@@ -191,11 +244,16 @@ def test_cli_tree(tree):
         expected["subcommands"]["evolve"]["subcommands"][command]["actions"].insert(
             successor["action_index"], copy.deepcopy(successor["action"])
         )
+    expected['subcommands']['verbalize'] = _model_review_successor()['tree']
     _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path in {'gnd verbalize', 'gnd verbalize model'}:
+        _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
+                          {'path': path, 'help': _model_review_successor()['help'][path]})
+        return
     if path == "gnd check":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
                           {"path": path, "help": ALLOW_VACUOUS_SUCCESSOR["help"]})
@@ -217,6 +275,11 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path in {'gnd verbalize', 'gnd verbalize model'}:
+        observed = {'help': {'exit': shown.returncode, 'stdout': shown.stdout.decode(), 'stderr': shown.stderr.decode()},
+                    'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}
+        _assert_successor('cli-exit', path, observed, _model_review_successor()['exit_probe'][path])
+        return
     if path in ("gnd check", "gnd validate"):
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
@@ -275,7 +338,7 @@ def test_cli_exit_map():
 
 
 def test_cli_coverage(tree):
-    """T-CLI-COV: the pinned path set is the discovered set and has 53 members."""
+    """T-CLI-COV: the pinned path set is the complete discovered set."""
     _structure, parsers, helps = tree
     assert len(parsers) == EXPECTED_PARSERS
     assert sorted(parsers) == PATHS == sorted(helps)

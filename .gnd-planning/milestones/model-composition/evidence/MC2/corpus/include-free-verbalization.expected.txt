@@ -1,0 +1,17 @@
+=== Header ===
+Complete deterministic ORM review; version=2 model_id="urn:gnd-fixture:ct2-contracts@1" source={"confidence":"standard","kind":"text-conversation","mode":"one-shot"}
+
+=== Object Types ===
+[object-type:city] City is a value of type String. canonical={"id":"city","kind":"value","name":"City","primitive":"String"}
+[object-type:contract] Contract is a value of type String. canonical={"id":"contract","kind":"value","name":"Contract","primitive":"String"}
+[object-type:party] Party is a value of type String. canonical={"id":"party","kind":"value","name":"Party","primitive":"String"}
+
+=== Fact Types ===
+[fact-type:contract_has_party] Contract has party Party. reading="{Contract} has party {Party}" canonical={"id":"contract_has_party","reading":"{Contract} has party {Party}"}
+[role:contract_has_party:contract] contract is played by Contract. canonical={"object_type":"contract","role_name":"contract"}
+[role:contract_has_party:party] party is played by Party. canonical={"object_type":"party","role_name":"party"}
+[constraint:fact_types[contract_has_party]:anchored:b06cd8b3e8cd37363fca092ac4429dfd9e6ac3ae1c8e724cc043787c34e4a2e9:0] [from explicit, confirmed; modality=alethic] Each populated value of role party of fact_types[contract_has_party] must have a bound source anchor. source=explicit status=confirmed modality=alethic provenance={"user_quote":"x"} canonical={"modality":"alethic","provenance":{"user_quote":"x"},"role":"party","source":"explicit","status":"confirmed","type":"anchored"}
+[fact-type:party_is_based_in_city] Party is based in City. reading="{Party} is based in {City}" canonical={"id":"party_is_based_in_city","reading":"{Party} is based in {City}"}
+[role:party_is_based_in_city:party] party is played by Party. canonical={"object_type":"party","role_name":"party"}
+[role:party_is_based_in_city:city] city is played by City. canonical={"object_type":"city","role_name":"city"}
+[constraint:fact_types[party_is_based_in_city]:uniqueness:901105f89b421b0d00786ee0f0da4417e286e11915111d70f6fdbb1be4a0cffb:0] [from explicit, confirmed; modality=alethic] Each combination of party occurs at most once. source=explicit status=confirmed modality=alethic provenance={"user_quote":"x"} canonical={"modality":"alethic","provenance":{"user_quote":"x"},"roles":["party"],"source":"explicit","status":"confirmed","type":"uniqueness"}

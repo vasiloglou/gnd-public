@@ -24,7 +24,7 @@ from gnd.model_index import ModelIndex
 from gnd.refscheme import reference_identity
 from gnd.terms import term_variables
 from gnd.universe import resolve_primitive
-from gnd.verbalize import description_lines, line_text
+from gnd.verbalize import description_lines, line_text, path_segment
 from gnd.vocabulary import reading_text
 
 __all__ = [
@@ -541,11 +541,31 @@ def _refuse_values_outside_json(loaded: Model) -> None:
         ) from None
 
 
+def _include_lines(loaded: Model) -> list[str]:
+    from gnd.model._includes import refuse_unresolved
+
+    if loaded.fact_type_constraints and not loaded.includes:
+        refuse_unresolved()
+    if not loaded.includes:
+        return []
+    metadata = loaded._included
+    if len(metadata) != len(loaded.includes) or any(
+        tuple(entry.get(key) for key in ('id', 'path', 'sha256')) !=
+        (included.id, included.path, included.sha256)
+        for entry, included in zip(loaded.includes, metadata, strict=True)
+    ):
+        refuse_unresolved()
+    return [line_text(
+        f"Includes {path_segment(entry['id'])} ({path_segment(entry['path'])}, "
+        f"sha256 {entry['sha256'][:12]})") for entry in loaded.includes]
+
+
 def render_model_verbalization(model: Model | str | Path) -> str:
     """Render all model semantics in stable-id order with one final newline."""
 
     loaded = _coerce_model(model)
     _refuse_values_outside_json(loaded)
+    include_lines = _include_lines(loaded)
     object_types = {
         str(item["id"]): item for item in loaded.object_types if item.get("id") is not None
     }
@@ -556,6 +576,7 @@ def render_model_verbalization(model: Model | str | Path) -> str:
             f"version={loaded.version} model_id={json.dumps(loaded.model_id)} "
             f"source={_canonical(loaded.source)}"
         ),
+        *include_lines,
         "",
         "=== Object Types ===",
     ]

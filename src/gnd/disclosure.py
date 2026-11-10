@@ -104,6 +104,7 @@ SURFACES: Mapping[str, Surface] = {
     "gnd fidelity": Surface("every-mode", note="quotes the extracted facts it measures"),
     "gnd doccheck": Surface("every-mode", note="quotes the population values a rendered document misses"),
     "gnd compose": Surface("every-mode", note="writes the caller's own composed population"),
+    "gnd verbalize model": Surface("every-mode", note="reviews the caller's own model and authored samples"),
     **_rows("value-free", [f"gnd {leaf}" for leaf in (
         "codegen", "conformance", "coverage", "doctor", "evolve apply",
         "evolve finalize", "evolve preview", "exp author-expectation", "exp close", "exp init",
@@ -120,6 +121,7 @@ SURFACES: Mapping[str, Surface] = {
     "api:EvaluationSession.check_with_feedback": Surface("every-mode", note="session feedback is applied"),
     "api:EvaluationSession.observe": Surface("every-mode", note="returns the caller's own population"),
     "api:compose": Surface("every-mode", note="returns the caller's own composed population"),
+    "api:verbalize_model": Surface("every-mode", note="reviews the caller's own model and authored samples"),
     **_rows("value-free", [f"api:{name}" for name in (
         "CheckReceipt", "ReceiptRefused", "DisclosureRefused", "EvaluationSession", "verify_lean", "verify_souffle",
         "verbalize_rules",

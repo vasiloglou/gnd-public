@@ -1,0 +1,226 @@
+{
+  "guard-pass": {
+    "rule": "balance_ceiling",
+    "verdict": "pass",
+    "formulas": [
+      "balance <= 100"
+    ],
+    "reason": "Both balances are at most 100.",
+    "scopes": [
+      "relationship:Account.account_balance"
+    ]
+  },
+  "guard-fail": {
+    "rule": "balance_ceiling",
+    "verdict": "fail",
+    "formulas": [
+      "balance <= 100"
+    ],
+    "reason": "a2 has balance 120.",
+    "scopes": [
+      "relationship:Account.account_balance"
+    ]
+  },
+  "mandatory-pass": {
+    "rule": "balance_required",
+    "verdict": "pass",
+    "formulas": [
+      "EXISTS(Account.account_balance)"
+    ],
+    "reason": "Both accounts have a balance tuple.",
+    "scopes": [
+      "concept:Account"
+    ]
+  },
+  "mandatory-fail": {
+    "rule": "balance_required",
+    "verdict": "fail",
+    "formulas": [
+      "EXISTS(Account.account_balance)"
+    ],
+    "reason": "a2 remains in the account roster and has no balance tuple.",
+    "scopes": [
+      "concept:Account"
+    ]
+  },
+  "frequency-pass": {
+    "rule": "balance_count",
+    "verdict": "pass",
+    "formulas": [
+      "COUNT[Account.account_balance] <= 2"
+    ],
+    "reason": "Each account has only one balance value.",
+    "scopes": [
+      "concept:Account"
+    ]
+  },
+  "frequency-fail": {
+    "rule": "balance_count",
+    "verdict": "fail",
+    "formulas": [
+      "COUNT[Account.account_balance] <= 2"
+    ],
+    "reason": "a1 has three distinct balance values.",
+    "scopes": [
+      "concept:Account"
+    ]
+  },
+  "subset-pass": {
+    "rule": "active_registered",
+    "verdict": "pass",
+    "formulas": [
+      "Account.account_registered"
+    ],
+    "reason": "The active account a1 is registered.",
+    "scopes": [
+      "relationship:Account.account_active"
+    ]
+  },
+  "subset-fail": {
+    "rule": "active_registered",
+    "verdict": "fail",
+    "formulas": [
+      "Account.account_registered"
+    ],
+    "reason": "a1 is active and only a2 is registered.",
+    "scopes": [
+      "relationship:Account.account_active"
+    ]
+  },
+  "equality-pass": {
+    "rule": "activity_registry",
+    "verdict": "pass",
+    "formulas": [
+      "Account.account_registered",
+      "Account.account_active"
+    ],
+    "reason": "Both unary relations contain a1 only.",
+    "scopes": [
+      "relationship:Account.account_active",
+      "relationship:Account.account_registered"
+    ]
+  },
+  "equality-fail": {
+    "rule": "activity_registry",
+    "verdict": "fail",
+    "formulas": [
+      "Account.account_registered",
+      "Account.account_active"
+    ],
+    "reason": "a2 is registered and inactive, so the second direction fails.",
+    "scopes": [
+      "relationship:Account.account_active",
+      "relationship:Account.account_registered"
+    ]
+  },
+  "exclusion-pass": {
+    "rule": "active_not_flagged",
+    "verdict": "pass",
+    "formulas": [
+      "NOT EXISTS(Account.account_flagged)"
+    ],
+    "reason": "The active and flagged relations contain different accounts.",
+    "scopes": [
+      "relationship:Account.account_active"
+    ]
+  },
+  "exclusion-fail": {
+    "rule": "active_not_flagged",
+    "verdict": "fail",
+    "formulas": [
+      "NOT EXISTS(Account.account_flagged)"
+    ],
+    "reason": "a1 is active and flagged.",
+    "scopes": [
+      "relationship:Account.account_active"
+    ]
+  },
+  "ring-pass": {
+    "rule": "no_self_recommendation",
+    "verdict": "pass",
+    "formulas": [
+      "Account != recommended"
+    ],
+    "reason": "a1 recommends a different account.",
+    "scopes": [
+      "relationship:Account.account_recommends"
+    ]
+  },
+  "ring-fail": {
+    "rule": "no_self_recommendation",
+    "verdict": "fail",
+    "formulas": [
+      "Account != recommended"
+    ],
+    "reason": "a1 recommends itself.",
+    "scopes": [
+      "relationship:Account.account_recommends"
+    ]
+  },
+  "value-pass": {
+    "rule": "category_codes",
+    "verdict": "pass",
+    "formulas": [
+      "Category == 'Retail' OR Category == 'Business'"
+    ],
+    "reason": "The only category is Retail.",
+    "scopes": [
+      "concept:Category"
+    ]
+  },
+  "value-fail": {
+    "rule": "category_codes",
+    "verdict": "fail",
+    "formulas": [
+      "Category == 'Retail' OR Category == 'Business'"
+    ],
+    "reason": "Wholesale is outside the allowed categories.",
+    "scopes": [
+      "concept:Category"
+    ]
+  },
+  "cardinality-pass": {
+    "rule": "account_cap",
+    "verdict": "pass",
+    "formulas": [
+      "COUNT[Account] <= 2"
+    ],
+    "reason": "Exactly two accounts are present.",
+    "scopes": [
+      "ontology"
+    ]
+  },
+  "cardinality-fail": {
+    "rule": "account_cap",
+    "verdict": "fail",
+    "formulas": [
+      "COUNT[Account] <= 2"
+    ],
+    "reason": "The account roster also contains a3.",
+    "scopes": [
+      "ontology"
+    ]
+  },
+  "derivation-pass": {
+    "rule": "derivation:account_band",
+    "verdict": "pass",
+    "formulas": [
+      "Account.account_classified.category_band(band)"
+    ],
+    "reason": "a1 is Retail, Retail is ordinary, and the sole claim is a1 in ordinary.",
+    "scopes": [
+      "relationship:Account.account_band"
+    ]
+  },
+  "derivation-fail": {
+    "rule": "derivation:account_band",
+    "verdict": "fail",
+    "formulas": [
+      "Account.account_classified.category_band(band)"
+    ],
+    "reason": "The join yields ordinary. The asserted band premium has no witness.",
+    "scopes": [
+      "relationship:Account.account_band"
+    ]
+  }
+}

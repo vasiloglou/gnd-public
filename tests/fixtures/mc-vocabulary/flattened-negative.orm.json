@@ -1,0 +1,102 @@
+{
+  "version": 5,
+  "model_id": "urn:gnd-fixture:model-composition@1",
+  "source": {
+    "kind": "fixture"
+  },
+  "object_types": [
+    {
+      "id": "component",
+      "name": "Component",
+      "kind": "entity",
+      "reference": {
+        "mode": "popular",
+        "value_type": "component_name"
+      }
+    },
+    {
+      "id": "component_name",
+      "name": "ComponentName",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "owner",
+      "name": "Owner",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "component_depends_on_component",
+      "reading": "{Component} depends on {Component}",
+      "roles": [
+        {
+          "role_name": "dependent",
+          "object_type": "component"
+        },
+        {
+          "role_name": "dependency",
+          "object_type": "component"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "vocabulary_no_self_use",
+          "type": "ring",
+          "variant": "irreflexive",
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "user_quote": "Components should not depend on themselves."
+          }
+        },
+        {
+          "id": "project_no_loops",
+          "type": "ring",
+          "variant": "acyclic",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "remedy": "Break the use loop.",
+          "provenance": {
+            "user_quote": "No component may use itself indirectly."
+          }
+        }
+      ]
+    },
+    {
+      "id": "component_has_owner",
+      "reading": "{Component} has {Owner}",
+      "roles": [
+        {
+          "role_name": "component",
+          "object_type": "component"
+        },
+        {
+          "role_name": "owner",
+          "object_type": "owner"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "project_owner_required",
+          "type": "mandatory",
+          "role": "component",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "user_quote": "Every component must have an owner."
+          }
+        }
+      ]
+    }
+  ],
+  "constraints": [],
+  "operations": [],
+  "rejected_proposals": [],
+  "deontic_notes": []
+}

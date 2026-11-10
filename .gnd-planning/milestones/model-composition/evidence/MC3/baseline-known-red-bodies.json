@@ -1,0 +1,31 @@
+{
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "convention": "UTF8 ast.get_source_segment, no following line terminator; actual phase base, not the mismatching historical pin.",
+  "rows": [
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_cmd_evolve_apply",
+      "raw_sha256": "06d1d862a687a10a0e9affce5f435325713c8cba0dc1ce2d889ddd6230dc672c"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_cmd_evolve_preview",
+      "raw_sha256": "a801e9811f484006e9eb862a01b38f2e769cf13f134525f318d284d132ec4416"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_evolve_emit_claim",
+      "raw_sha256": "d8d55e6fba27aef7b80865826a763ded38b91a67221326b75750069174005189"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_evolve_error_exit",
+      "raw_sha256": "98322237f22a1f3ae978a7a26b661d993e096dcda2263ad03691a124024647e8"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "name": "_cmd_validate",
+      "raw_sha256": "b7aea56b6943d882c26e166314df1ed491e62180d8451cc84b9c4ffa88c6bb30"
+    }
+  ]
+}

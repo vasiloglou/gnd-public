@@ -1,0 +1,11 @@
+{
+  "source_gross_additions": 1035,
+  "conservative_retained_extractions": 70,
+  "architecture_config_lines": 4,
+  "source_total": 1109,
+  "test_support_gross_additions": 1218,
+  "stops": [
+    1400,
+    1400
+  ]
+}

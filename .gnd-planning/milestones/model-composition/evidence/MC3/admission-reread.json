@@ -1,0 +1,67 @@
+{
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "supports": [
+    "R17",
+    "R18",
+    "R19"
+  ],
+  "other_rows": "Retain MC2 dispositions, except these explicitly enabled rows. Generic recovery and codegen/conformance stay refused.",
+  "guard_calls": [
+    {
+      "path": "src/gnd/evolve/service.py",
+      "line": 232,
+      "function": "_load_model_document",
+      "call": "guard_bytes(data, source=model_path, route='service:231')",
+      "definition_sha256": "97d1ed5d92e695ccc9b67ac3c16e48398be7dc3c5bdd7435eadec1efde70d5ac"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "line": 307,
+      "function": "_parse_model_text",
+      "call": "guard_document(parsed, \"evolve.parse-model-text\")",
+      "definition_sha256": "f82378f46c34e5ee9d5f01f42c5626b27dd731f97bbf5a8a55104dd3ba53972f"
+    },
+    {
+      "path": "src/gnd/discover/service.py",
+      "line": 214,
+      "function": "discover",
+      "call": "guard_bytes(model_bytes, source=model_path, route='service:213')",
+      "definition_sha256": "69c876f8c9a948bb947d6b50ce479ba1081ab0017f0177bb032d7e377a140005"
+    },
+    {
+      "path": "src/gnd/discover/service.py",
+      "line": 266,
+      "function": "discover",
+      "call": "guard_bytes(output.candidate_text(checked).encode('utf-8'), source=model_path, route='service:263')",
+      "definition_sha256": "69c876f8c9a948bb947d6b50ce479ba1081ab0017f0177bb032d7e377a140005"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "line": 155,
+      "function": "_prepare",
+      "call": "guard_bytes(model_bytes, source=model_path, route='ilp_service:154')",
+      "definition_sha256": "c7b2af6582b0f8702569ee45da3d3f320ac141ddbe2f93b402b7a9c672138ec0"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "line": 267,
+      "function": "_load_candidate",
+      "call": "guard_bytes(output.candidate_text(document).encode('utf-8'), source=model_path, route='ilp_service:264')",
+      "definition_sha256": "6c66de8a3d983850c57c0fa2ed2deca65aba39eb2af3feb886ed9892394e6060"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "line": 558,
+      "function": "load_mined_inputs",
+      "call": "guard_bytes(model_bytes, source=model_path, route='ilp_service:553')",
+      "definition_sha256": "9191ec059fd026f1c91446e87d1e9715c25a86431b21c2c49ef9012fd6e99e59"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "line": 760,
+      "function": "_cmd_import_mined_rules",
+      "call": "guard_bytes(output.candidate_text(document).encode('utf-8'), source=paths['model'], route='ilp_service:754')",
+      "definition_sha256": "b1c52c305d73b7388b8c54bf9406b7c281687fb6c41cf4f5adc3e33f24b70cec"
+    }
+  ]
+}

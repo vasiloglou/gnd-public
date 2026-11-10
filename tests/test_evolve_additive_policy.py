@@ -888,6 +888,8 @@ def test_t5_preview_without_policy_has_no_policy_keys_and_the_old_digest_shape(t
     document = plain.model_dump(mode="json")
     assert not {"policy", "populated", "populated_args", "policy_issues"} & set(document)
     assert "accepted_blast_radius_sha256" in document and document["accepted_blast_radius_sha256"] is None
+    assert {'before_includes', 'candidate_includes'}.isdisjoint(document)
+    assert json.loads(plain.model_dump_json()) == document
     with_policy = service.preview(_proposal(text, ADMITTED_OPS), policy="additive")
     assert with_policy.preview_sha256 != plain.preview_sha256
     assert with_policy.model_dump(mode="json")["policy_issues"] == []
@@ -1016,10 +1018,17 @@ def test_t14_the_cell_literal_the_contract_table_and_the_walk_agree() -> None:
 
     literal = set(get_args(PolicyCell))
     section = CONTRACT.read_text(encoding="utf-8").split("### Additive policy", 1)[1].split("\n## ", 1)[0]
-    documented = set(re.findall(r"`((?:object_types|fact_types|role|constraint\.populated|model_identity|source_document)\.[a-z_]+)`", section))
+    documented = set(re.findall(r"`((?:object_types|fact_types|role|constraint\.populated|model_identity|source_document|include)\.[a-z_-]+)`", section))
     assert documented == literal, (documented ^ literal)
     emitted = {cell for _name, _build, cell, _reach in CELL_CASES if cell is not None}
-    assert emitted == literal, (emitted ^ literal)
+    # MC3 adds one closed cell; retain every predecessor matrix case unchanged.
+    assert emitted == literal - {'include.repin-include'}, (emitted ^ literal)
+    from gnd.evolve import IncludeLocator
+
+    old = {'id': 'vocabulary', 'path': 'before.json', 'sha256': 'a' * 64}
+    repin = _op('repin-include', IncludeLocator(include_id='vocabulary'), before=old,
+                after={**old, 'path': 'after.json'})
+    assert [issue.cell for issue in _direct_issues((repin,))] == ['include.repin-include']
     from gnd.evolve import PolicyIssue
 
     with pytest.raises(ValidationError):

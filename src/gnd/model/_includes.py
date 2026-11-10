@@ -5,6 +5,8 @@ import copy
 import hashlib
 import re
 from collections.abc import Mapping
+from dataclasses import dataclass
+from itertools import chain
 from pathlib import Path
 from typing import Any, NoReturn
 
@@ -13,7 +15,7 @@ from ruamel.yaml.error import YAMLError
 from gnd import artifacts
 from gnd.documents import ElementOrigin, IncludedFile
 from gnd.errors import ModelLoadError, ModelValidationError, ReferenceInputError, ValidationIssue
-from gnd.model._paths import _relative
+from gnd.model._paths import _relative, historical_path_at
 from gnd.model._validation import (
     ID_SECTIONS,
     MAX_MODEL_BYTES,
@@ -29,6 +31,15 @@ REASONS = ('include:declaration', 'include:path', 'include:unreadable',
            'include:unsupported-route')
 Declarations = list[dict[str, Any]]
 SECTIONS = (*ID_SECTIONS[:2], 'constraints', 'deontic_notes')
+
+
+@dataclass(frozen=True)
+class CompositionView:
+    document: dict
+    origins: tuple
+    included: tuple
+    issues: tuple
+    model: Any = None
 
 
 def _refuse(reason, path='$', detail='') -> NoReturn:
@@ -116,7 +127,7 @@ def _ids(document):
                     yield f'{address}.constraints[{j}]', constraint
 
 
-def _merge(document, included, declarations):
+def _merge(document, included, declarations, *, issues=None):
     result = _clone(dict(document))
     origins = {address: ElementOrigin('model', address, address, element.get('id'))
                for address, element in _ids(document)}
@@ -134,10 +145,20 @@ def _merge(document, included, declarations):
             targets[ft['id']] = i + offsets['fact_types']
     result.setdefault('object_types', [])
     result.setdefault('fact_types', [])
+    orphaned = []
     for i, attachment in enumerate(document.get('fact_type_constraints', [])):
         target = targets.get(attachment['fact_type'])
         if target is None:
-            _refuse('unknown-target', f'$.fact_type_constraints[{i}]')
+            address = f'$.fact_type_constraints[{i}]'
+            if issues is None:
+                _refuse('unknown-target', address)
+            issues.append(ValidationIssue(path=address, message='include:unknown-target',
+                                          rule_id='include:unknown-target'))
+            for j, constraint in enumerate(attachment['constraints']):
+                path = f'{address}.constraints[{j}]'
+                origins[path] = ElementOrigin('model', path, path, constraint.get('id'))
+                orphaned.append((path, constraint))
+            continue
         constraints = result['fact_types'][target].setdefault('constraints', [])
         for j, constraint in enumerate(attachment['constraints']):
             address = f'$.fact_types[{target}].constraints[{len(constraints)}]'
@@ -145,7 +166,7 @@ def _merge(document, included, declarations):
                 f'$.fact_type_constraints[{i}].constraints[{j}]', constraint.get('id'))
             constraints.append(_clone(constraint))
     seen = {}
-    for address, element in _ids(result):
+    for address, element in chain(_ids(result), orphaned):
         identifier = element.get('id')
         if identifier is not None:
             if identifier in seen:
@@ -157,10 +178,13 @@ def _merge(document, included, declarations):
     return result, tuple(origins.values())
 
 
-def compose(document: object, *, descriptor: int, source: str | Path):
+def compose(document: object, *, descriptor: int, source: str | Path, historical=None, issues=None):
     declarations = parse_declarations(document)
-    if issues := _structural(document):
-        raise ModelValidationError(issues)
+    if historical is not None and (not isinstance(historical, Mapping)
+                                  or set(historical) - {entry['id'] for entry in declarations}):
+        _refuse('declaration')
+    if structural := _structural(document):
+        raise ModelValidationError(structural)
     for i, entry in enumerate(declarations):
         try:
             _relative(entry['path'])
@@ -170,8 +194,16 @@ def compose(document: object, *, descriptor: int, source: str | Path):
     for i, entry in enumerate(declarations):
         path = entry['path']
         try:
-            raw, _ = artifacts.read_regular_bounded_at(descriptor, path, max_bytes=MAX_MODEL_BYTES)
-        except (OSError, artifacts.ArtifactError) as error:
+            if historical is not None and entry['id'] in historical:
+                historical_path_at(descriptor, path)
+                raw = historical[entry['id']]
+                if not isinstance(raw, bytes):
+                    _refuse('declaration', f'$.includes[{i}]')
+                if len(raw) > MAX_MODEL_BYTES:
+                    _refuse('size', f'$.includes[{i}]')
+            else:
+                raw, _ = artifacts.read_regular_bounded_at(descriptor, path, max_bytes=MAX_MODEL_BYTES)
+        except (OSError, artifacts.ArtifactError, ReferenceInputError) as error:
             # Exact legacy bounded-reader spellings; no exception class changes.
             growth = f'artifact {path} grew over the {MAX_MODEL_BYTES}-byte cap'
             oversize = re.escape(f'artifact {path} is ') + rf'\d+ bytes, over the {MAX_MODEL_BYTES}-byte cap'
@@ -194,16 +226,16 @@ def compose(document: object, *, descriptor: int, source: str | Path):
                 isinstance(source_doc, Mapping) and source_doc.get('mode') == 'unattended'):
             _refuse('forbidden-section', f'includes[{entry["id"]}]')
     for entry, doc in zip(declarations, included, strict=True):
-        issues = _structural(doc)
-        if not issues:
-            issues = [i for i in semantic_validate(doc) if i.severity == 'error']
-        if doc.get('version') not in (1, 2, 3, 4) or issues:
-            detail = f'{issues[0].rule_id} at {issues[0].path}' if issues else 'version'
+        included_issues = _structural(doc)
+        if not included_issues:
+            included_issues = [i for i in semantic_validate(doc) if i.severity == 'error']
+        if doc.get('version') not in (1, 2, 3, 4) or included_issues:
+            detail = f'{included_issues[0].rule_id} at {included_issues[0].path}' if included_issues else 'version'
             _refuse('invalid-included-model', f'includes[{entry["id"]}]', detail)
-    result, origins = _merge(document, included, declarations)
+    result, origins = _merge(document, included, declarations, issues=issues)
     metadata = tuple(IncludedFile(entry['id'], entry['path'], entry['sha256'],
-                      doc['version'], doc.get('model_id'), _clone(doc.get('source')))
-                     for entry, doc in zip(declarations, included, strict=True))
+                      doc['version'], doc.get('model_id'), _clone(doc.get('source')), raw)
+                     for entry, doc, raw in zip(declarations, included, buffers, strict=True))
     return result, origins, metadata
 
 

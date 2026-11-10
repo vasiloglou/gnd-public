@@ -1,0 +1,7 @@
+{
+  "command_scope": "policy-red",
+  "exit_code": 1,
+  "summary": "1 failed, 39 deselected in 0.34s",
+  "sanitization": "Operator home, repository and temporary directory prefixes replaced; remaining output retained verbatim.",
+  "output": "F                                                                        [100%]\n=================================== FAILURES ===================================\n______________ test_additive_repin_is_an_explicit_policy_refusal _______________\ntests/test_mc3_evolution.py:299: in test_additive_repin_is_an_explicit_policy_refusal\n    reviewed = service(work).preview(proposal(work), policy='additive')\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsrc/gnd/evolve/service.py:1619: in preview\n    policy_values = self._policy_values(\nsrc/gnd/evolve/service.py:1766: in _policy_values\n    issues = additive_policy_issues(before_loaded_model, proposal, populated=effective)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsrc/gnd/evolve/policy.py:488: in additive_policy_issues\n    raise EvolutionPolicyGapError(locator_kind)\nE   gnd.evolve.models.EvolutionPolicyGapError: the additive policy has no rule for locator kind 'include'\n=========================== short test summary info ============================\nFAILED tests/test_mc3_evolution.py::test_additive_repin_is_an_explicit_policy_refusal\n1 failed, 39 deselected in 0.34s\n"
+}

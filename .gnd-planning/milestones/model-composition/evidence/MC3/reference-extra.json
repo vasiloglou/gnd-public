@@ -1,0 +1,7 @@
+{
+  "command_scope": "reference-extra",
+  "exit_code": 0,
+  "summary": "1 passed, 81 deselected in 2.01s",
+  "sanitization": "Operator home, repository and temporary directory prefixes replaced; remaining output retained verbatim.",
+  "output": ".                                                                        [100%]\n1 passed, 81 deselected in 2.01s\n"
+}

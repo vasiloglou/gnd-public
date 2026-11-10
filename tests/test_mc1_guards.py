@@ -21,6 +21,11 @@ from gnd.errors import ModelValidationError
 def test_direct_refusals(tmp_path, module, name, args):
     path, _, _ = write_case(tmp_path)
     function = getattr(importlib.import_module(module), name)
+    if module == 'gnd.evolve.service' and name == '_parse_model_text':
+        # MC3 enables authored parsing only; canonical loading still authenticates includes.
+        import json
+        assert function(*args(path)) == json.loads(path.read_text())
+        return
     with pytest.raises(Exception, match='include:unsupported-route'):
         function(*args(path))
     assert sorted(p.name for p in tmp_path.iterdir()) == ['project.orm.json', 'vocab.orm.json']
@@ -76,7 +81,17 @@ def test_R3_witness_memory(tmp_path):
 def test_R19_evolve_loaded_bytes(tmp_path):
     from gnd.evolve.service import _load_model_document
     path, _, _ = write_case(tmp_path)
-    with pytest.raises(Exception, match='include:unsupported-route'):
+    import json
+
+    from gnd.model import load_model_bytes
+
+    model, authored = _load_model_document(path.read_bytes(), label='model', model_path=path)
+    assert model.includes and authored == json.loads(path.read_text())
+    with pytest.raises(ModelValidationError, match='include:unresolved'):
+        load_model_bytes(path.read_bytes(), source=path)
+    vocabulary = tmp_path / 'vocab.orm.json'
+    vocabulary.write_bytes(vocabulary.read_bytes() + b' ')
+    with pytest.raises(Exception, match='include:hash-mismatch'):
         _load_model_document(path.read_bytes(), label='model', model_path=path)
 
 
@@ -160,7 +175,10 @@ def test_R18_discover(tmp_path):
     path, _, _ = write_case(tmp_path)
     population = tmp_path / 'candidate.json'
     population.write_text('{}')
-    with pytest.raises(ModelValidationError, match='include:unsupported-route'):
+    # MC3's rooted successor verifies dependencies before downstream admission.
+    vocabulary = tmp_path / 'vocab.orm.json'
+    vocabulary.write_bytes(vocabulary.read_bytes() + b' ')
+    with pytest.raises(ModelValidationError, match='include:hash-mismatch'):
         discover(path, population, families=('mandatory',), max_values=10, max_pairs=10)
 
 
@@ -168,7 +186,10 @@ def test_R17_ilp_prepare(tmp_path):
     from gnd.export.ilp_service import _prepare
     path, _, _ = write_case(tmp_path)
     labels = Path(__file__).resolve().parents[1] / 'tests/fixtures/induced_knowledge/ik3-corpus/c1.labels.json'
-    with pytest.raises(ModelValidationError, match='include:unsupported-route'):
+    # MC3's rooted successor verifies dependencies before downstream admission.
+    vocabulary = tmp_path / 'vocab.orm.json'
+    vocabulary.write_bytes(vocabulary.read_bytes() + b' ')
+    with pytest.raises(ModelValidationError, match='include:hash-mismatch'):
         _prepare(path, labels, 'popper')
 
 

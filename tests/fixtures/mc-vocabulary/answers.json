@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "status": "approved by exact-byte delegated gate015 before implementation",
+  "cases": [
+    {
+      "id": "C01",
+      "story": "Vocabulary v1 plus two project rules validates and checks; the cycle breaks only the owned ring.",
+      "validate_exit": 0,
+      "clean_exit": 0,
+      "cycle_exit": 1,
+      "rule": "project_no_loops"
+    },
+    {
+      "id": "C02",
+      "story": "Editing any included definition, role or included base constraint refuses; own elements/attachments remain editable.",
+      "included_exit": 3,
+      "reason": "evolve:included-element",
+      "own_exit": 0,
+      "all_kinds": [
+        "add",
+        "modify",
+        "rename",
+        "delete"
+      ]
+    },
+    {
+      "id": "C03",
+      "story": "A re-pin alone loses the fact type used by the project ring. It produces only a reviewable analysis, not a staged invalid candidate.",
+      "preview_exit": 3,
+      "analysis_only": true,
+      "broken_owned_rules": [
+        "project_no_loops"
+      ],
+      "not_broken": [
+        "project_owner_required"
+      ],
+      "removed_fact_type": "component_uses_component",
+      "added_fact_type": "component_depends_on_component",
+      "staged_files": [],
+      "diagnostic_apply_exit": 3
+    },
+    {
+      "id": "C04",
+      "story": "One proposal re-pins and moves the same ring to the replacement relation. The owner reviews its distinct radius; only the authored project model publishes.",
+      "preview_exit": 0,
+      "breaking": true,
+      "unaccepted_apply_exit": 11,
+      "wrong_analysis_acceptance_exit": 11,
+      "accepted_apply_finalize_exit": 0,
+      "check_exit": 0,
+      "only_model_write": "project.orm.json",
+      "vocabulary_writes": []
+    },
+    {
+      "id": "C05",
+      "story": "The flattened candidate is a valid standalone model, but is not the authored replay of these operations.",
+      "standalone_validate_exit": 0,
+      "preview_exit": 3,
+      "reason_contains": "declared operations do not equal"
+    },
+    {
+      "id": "C06",
+      "story": "The old versioned vocabulary is gone or overwritten. Only an explicit snapshot with its original exact digest supplies historical bytes.",
+      "valid_previous_exit": 0,
+      "missing_previous_exit": 3,
+      "wrong_digest_exit": 3,
+      "retained_in_preview": true
+    },
+    {
+      "id": "C07",
+      "story": "Unknown/duplicate/empty/over-eight old bindings refuse before snapshot IO. Existing symlink/nonregular/escaping paths and original-suffix parse violations refuse; a differently suffixed backup filename cannot select a new parser.",
+      "invalid_exit": 3,
+      "later_reads": 0,
+      "safe_backup_with_original_bytes_exit": 0
+    },
+    {
+      "id": "C08",
+      "story": "Snapshot identity/order/declaration/content tampering refuses; an unchanged other include never gets historical substitution.",
+      "tampered_exit": 3,
+      "untouched_stale_exit": 3,
+      "valid_history_recovery_exit": 0
+    },
+    {
+      "id": "C09",
+      "story": "Included ownership wins over operations gate. An independently decisive operation gate precedes candidate IO; a repin-dependent operation is gated before own semantic validation. Unrelated operations remain usable.",
+      "ownership_exit": 3,
+      "operation_exit": 18,
+      "unrelated_exit": 0,
+      "candidate_reference_mutation_exit": 3,
+      "candidate_reference_reads": 0
+    },
+    {
+      "id": "C10",
+      "story": "Change the new vocabulary after preview, at the final verification seam before CAS, or before an already-live retry. No unchanged includer hash grants currency.",
+      "exit": 3,
+      "model_overwrite": false
+    },
+    {
+      "id": "C11",
+      "story": "Apply can be interrupted after publishing the includer. Finalize authenticates old history, requires current new bytes, and can recover after restoration.",
+      "missing_old_with_bound_history_exit": 0,
+      "changed_candidate_exit": 3,
+      "restored_finalize_exit": 0,
+      "idempotent_exit": 0,
+      "flattening": false
+    },
+    {
+      "id": "C12",
+      "story": "Linked conformance is not enabled for includes. Preview/forged apply/finalization must not bypass that refusal; include-free linked behavior stays frozen.",
+      "include_linked_exit": 3,
+      "stage_before_refusal": false
+    },
+    {
+      "id": "C13",
+      "story": "A serialized include preview must fit the existing claim cap in canonical and actual CLI forms. A legal-loader oversized bundle refuses before writing or staging.",
+      "readable_bundle_exit": 0,
+      "oversized_bundle_exit": 3,
+      "oversized_analysis_exit": 3,
+      "limit_raised": false
+    },
+    {
+      "id": "C14",
+      "story": "Discover and every ILP preparation/mined/candidate intake use the rooted composition for semantics and the authored model for output. Generated proposals contain own additions, not copied vocabulary definitions.",
+      "proposal_preview_exit": 0,
+      "includes_preserved": true,
+      "copied_definitions": false,
+      "vocabulary_writes": []
+    },
+    {
+      "id": "C15",
+      "story": "Old schema1/2 proposal/preview/record readers reject the new kind/locator/host/snapshot fields before their execution gate. Include-free wire bytes omit both snapshot fields.",
+      "old_reader_exit": 3,
+      "include_free_fields_absent": [
+        "before_includes",
+        "candidate_includes"
+      ]
+    },
+    {
+      "id": "C16",
+      "story": "Full-range include IDs remain unstripped and JSON-quoted, while malformed arbitrary shapes never traceback. New ownership/dependency work is measured as a separate layer.",
+      "hostile_input_exit": 3,
+      "actual_model_stale_exit": 11,
+      "layer_elements": 20000,
+      "layer_operations": 20000,
+      "layer_seconds_ceiling": 3.0
+    }
+  ]
+}

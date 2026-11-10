@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reason": "MC3 factors the reference-ownership policy once for invalid analysis before Model construction; public defining identity and semantics stay bound.",
+  "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC1/definition-successors.json",
+  "predecessor_sha256": "c90c8fdcd0e5fe10812de4fa6e4694cc95ce2f4167c7f7ec2044f51a74398201",
+  "successors": [
+    {
+      "kind": "RF6b",
+      "module": "gnd.model",
+      "name": "validate_declarations",
+      "home": "gnd.model",
+      "before": "cce02b53cd1de0a876ea865aa81367c3cccaff83db14dce64f03b1613814b147",
+      "after": "bb24d92b83b9b608b20b3ecf02c758110dba110c9da706b8230c8a42577afa04",
+      "reason": "Existing public validator delegates to its same-home raw policy; analysis uses that one policy without minting an invalid Model."
+    }
+  ]
+}

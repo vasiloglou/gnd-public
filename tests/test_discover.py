@@ -314,7 +314,7 @@ def test_t10_validation_order_is_pinned_in_source() -> None:
     from gnd.discover import service
 
     source = inspect.getsource(service.discover)
-    steps = ["load_model_bytes(", "load_population_bytes(", "generate(", "catalogue.rule(",
+    steps = ["_load_model_bytes_captured(", "load_population_bytes(", "generate(", "catalogue.rule(",
              "check(", "redundancy("]
     positions = [source.index(step) for step in steps]
     assert positions == sorted(positions)

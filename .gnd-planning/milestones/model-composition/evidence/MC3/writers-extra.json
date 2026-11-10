@@ -1,0 +1,7 @@
+{
+  "command_scope": "writers-extra",
+  "exit_code": 0,
+  "summary": "2 passed, 78 deselected in 0.74s",
+  "sanitization": "Operator home, repository and temporary directory prefixes replaced; remaining output retained verbatim.",
+  "output": "..                                                                       [100%]\n2 passed, 78 deselected in 0.74s\n"
+}

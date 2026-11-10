@@ -74,6 +74,10 @@ def _register_evolve(subparsers):
         metavar="FILE",
         help="check new or strengthened proposed deontic constraints on populated fact types against the population in FILE beneath ROOT; requires --policy additive",
     )
+    evolve_preview_parser.add_argument(
+        '--previous-include', action='append', default=None, metavar='ID=PATH',
+        help='authenticate old bytes for a repinned include from PATH beneath ROOT; repeatable',
+    )
     _add_format_argument(evolve_preview_parser)
 
     evolve_apply_parser = evolve_subparsers.add_parser(
@@ -181,6 +185,7 @@ def handle(args, parsers) -> int:
                 populated=args.populated,
                 shape_report=args.shape_report,
                 check_population=args.check_population,
+                previous_include=args.previous_include,
             )
         if args.evolve_command == "apply":
             return _handler_evolve_cli_service._cmd_evolve_apply(

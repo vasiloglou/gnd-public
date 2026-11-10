@@ -55,12 +55,14 @@ def induced(candidate: Candidate, *, version: str, digest: str, ref: str) -> dic
             "provenance": {"induction": induction}}
 
 
-def operations(constraints: list[tuple[Candidate, dict[str, Any]]]) -> tuple[EvolutionOperation, ...]:
-    return add_operations([(candidate.host, constraint) for candidate, constraint in constraints])
+def operations(constraints: list[tuple[Candidate, dict[str, Any]]], *, included_hosts=frozenset()) -> tuple[EvolutionOperation, ...]:
+    return add_operations([(candidate.host, constraint) for candidate, constraint in constraints],
+                          included_hosts=included_hosts)
 
 
 def add_operations(
-    constraints: list[tuple[str | None, dict[str, Any]]], *, prefix: str = "discover"
+    constraints: list[tuple[str | None, dict[str, Any]]], *, prefix: str = "discover",
+    included_hosts=frozenset()
 ) -> tuple[EvolutionOperation, ...]:
     """One ADD operation per (host fact type or None for the top level, constraint).
 
@@ -69,7 +71,8 @@ def add_operations(
     result = []
     for number, (host, constraint) in enumerate(constraints):
         locator = (
-            ConstraintLocator(host="fact_type", host_id=host, family=constraint["type"])
+            ConstraintLocator(host="included_fact_type" if host in included_hosts else "fact_type",
+                              host_id=host, family=constraint["type"])
             if host is not None
             else ConstraintLocator(host="model", family=constraint["type"])
         )

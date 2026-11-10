@@ -1,0 +1,39 @@
+{
+  "ruling": "delegated approval (auto=true)",
+  "date": "2026-11-10",
+  "authorization_source": "Owner invocation: gnd:process-milestone model-composition auto",
+  "scope": "MC3 phase acceptance only; not merge, publication, certification or milestone close",
+  "spec_sha256": "046883e33f15c43769bd5ec6906923912f3218e153a6bd329eeec2522e936f57",
+  "reviewed_source_commit": "ebec0980005690f6e23e5e4e806fdfc50b96de85",
+  "criteria": [
+    "MC3-C1",
+    "MC3-C2",
+    "MC3-C3",
+    "MC3-C4"
+  ],
+  "review_instrument": "One Codex CLI reviewer, gpt-6.1-sol/xhigh, one first diff review and one repair confirmation",
+  "review_budget_used": "2 of 2 rounds; exhausted",
+  "review_verdict": "confirmation approved repairs",
+  "size_stop": [
+    1400,
+    1400
+  ],
+  "measured_size": {
+    "source_gross_additions": 1035,
+    "conservative_retained_extractions": 70,
+    "architecture_config_lines": 4,
+    "source_total": 1109,
+    "test_support_gross_additions": 1218,
+    "stops": [
+      1400,
+      1400
+    ]
+  },
+  "accepted_phase_residuals": [
+    "exact five baseline RF5 source-pin failures",
+    "exact thirteen baseline lint locations",
+    "large supplied gates not independently rerun by reviewer",
+    "broad default/census comparison deferred to authorized final beast-3 candidate",
+    "single-leaf CAS, no multi-file atomicity"
+  ]
+}

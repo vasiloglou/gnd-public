@@ -149,13 +149,13 @@ Components: export.ilp_service
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `coverage(verdicts, ids) -> dict[str, list[str]]` | function | 285 | Covered, vacuous and unchecked ids for one clause, in manifest order. |
-| `MinedInputs` | class | 515 | The model and one population, loaded from the bytes that are digested. |
-| `MinedTables` | class | 527 | The relation table and the spelled pairs one population yields, built once (IH1-D3 (o)). |
-| `MinedCount` | class | 537 | Every rule mapped, then every rule counted, in rule order. |
-| `load_mined_inputs(model_path, population_path, *, population_sha256) -> MinedInputs` | function | 545 | The model and one population, loaded from the bytes that are digested. |
-| `mined_tables(inputs) -> MinedTables` | function | 581 | The relation table and the spelled pairs of INPUTS' population. |
-| `count_mined_rules(inputs, parsed, *, tables) -> MinedCount` | function | 587 | Map every rule in :data:`ilp_amie.MAPPING_REFUSALS` order, then count every rule. |
+| `coverage(verdicts, ids) -> dict[str, list[str]]` | function | 282 | Covered, vacuous and unchecked ids for one clause, in manifest order. |
+| `MinedInputs` | class | 512 | The model and one population, loaded from the bytes that are digested. |
+| `MinedTables` | class | 524 | The relation table and the spelled pairs one population yields, built once (IH1-D3 (o)). |
+| `MinedCount` | class | 534 | Every rule mapped, then every rule counted, in rule order. |
+| `load_mined_inputs(model_path, population_path, *, population_sha256) -> MinedInputs` | function | 542 | The model and one population, loaded from the bytes that are digested. |
+| `mined_tables(inputs) -> MinedTables` | function | 576 | The relation table and the spelled pairs of INPUTS' population. |
+| `count_mined_rules(inputs, parsed, *, tables) -> MinedCount` | function | 582 | Map every rule in :data:`ilp_amie.MAPPING_REFUSALS` order, then count every rule. |
 
 ## gnd.export.lean — `src/gnd/export/lean.py`
 Components: export.lean_lowering

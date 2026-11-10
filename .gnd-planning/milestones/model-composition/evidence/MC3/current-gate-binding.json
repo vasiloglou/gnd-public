@@ -1,0 +1,6 @@
+{
+  "candidate_commit": "c93506e28d4ba98a96c85223fbad630cf250b550",
+  "all_candidate_source_hashes_match": true,
+  "primary_and_direct_overlap": true,
+  "primary_collection_note": "The three historical-path states were added after primary collection; current-direct includes all three and all other MC3 cases. Do not sum counts."
+}

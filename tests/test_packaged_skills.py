@@ -23,6 +23,12 @@ EXPECTED_SKILL_NAMES = frozenset({'gnd-adopt', 'gnd-judge-fact-types', 'gnd-mode
 EXPECTED_SKILL_FILES = frozenset({'gnd-judge-fact-types/SKILL.md', 'gnd-model-multivalued/SKILL.md', 'gnd-orm-core/references/type-evidence.schema.json', 'gnd-orm-core/references/type-judgements.schema.json', 'gnd-dev-session/references/judgment-contract.md', 'gnd-adopt/SKILL.md', 'gnd-adopt/migration.schema.json', 'gnd-adopt/references/gsd-environment-cleanup.md', 'gnd-adopt/references/gsd-mapping.md', 'gnd-adopt/scripts/verify_migration.py', 'gnd-codegen/SKILL.md', 'gnd-codegen/references/architecture-contract.md', 'gnd-codegen/references/codegen-contract.md', 'gnd-conformance/SKILL.md', 'gnd-conformance/references/conformance-contract.md', 'gnd-dev-session/SKILL.md', 'gnd-dev-session/references/session-v7-contract.md', 'gnd-export/SKILL.md', 'gnd-export/references/export-contract.md', 'gnd-export/references/witness-contract.md', 'gnd-export/references/witness.schema.json', 'gnd-extract/SKILL.md', 'gnd-extract/references/extraction-contract.md', 'gnd-model-evolve/SKILL.md', 'gnd-model-evolve/references/evolution-contract.md', 'gnd-model-from-code/SKILL.md', 'gnd-model-from-code/references/recovery-contract.md', 'gnd-model-from-text/SKILL.md', 'gnd-model-from-text/USAGE.md', 'gnd-model-from-text/evals/README.md', 'gnd-model-from-text/evals/cases.json', 'gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/README.md', 'gnd-model-from-text/evals/fixtures/synthetic_good_user/dialogue.md', 'gnd-model-from-text/evals/reviewability_checklist.md', 'gnd-model-from-text/examples/library_with_subtypes.dialogue.md', 'gnd-model-from-text/examples/library_with_subtypes.orm.yaml', 'gnd-model-from-text/examples/movie_catalog.dialogue.md', 'gnd-model-from-text/examples/movie_catalog.orm.yaml', 'gnd-model-from-text/examples/objectification_in_enrollment.dialogue.md', 'gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml', 'gnd-model-from-text/examples/reference_scheme_elicitation.dialogue.md', 'gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml', 'gnd-model-from-text/references/csdp-workflow.md', 'gnd-model-from-text/references/dialogue-patterns.md', 'gnd-model-from-text/references/unattended-growth.md', 'gnd-model-from-text/scripts/validate_model.py', 'gnd-new-project/SKILL.md', 'gnd-orm-core/SKILL.md', 'gnd-orm-core/references/constraint-inference.md', 'gnd-orm-core/references/coverage-and-element-addressing.md', 'gnd-orm-core/references/constraint-reference.md', 'gnd-orm-core/references/halpin-posture.md', 'gnd-orm-core/references/milestone-record-format.md', 'gnd-orm-core/references/orm-meta.schema.json', 'gnd-orm-core/references/population-format.md', 'gnd-orm-core/references/population.schema.json', 'gnd-orm-core/references/provenance-and-modality.md', 'gnd-orm-core/references/representation-format.md', 'gnd-orm-core/references/steps.schema.json', 'gnd-orm-core/references/verbalization-patterns.md', 'gnd-render-doc/SKILL.md', 'gnd-render-doc/references/rendering-contract.md', 'gnd-review-panel/SKILL.md', 'gnd-review-panel/references/review-contract.md', 'gnd-review-panel-light/SKILL.md', 'gnd-solve/SKILL.md', 'gnd-update-review-panel/SKILL.md', 'gnd-update-review-panel/agents/openai.yaml', 'gnd-update-review-panel/scripts/update_harnesses.py'})
 FROZEN_BASE_DEPENDENCIES = {'jsonschema', 'pydantic', 'ruamel-yaml'}
 PEP723_SIBLING_SCHEMA = 'gnd-orm-core/references/orm-meta.schema.json'
+# MC3 preserves the 238-edge predecessor and adds exactly this normative edge.
+MC3_INCLUDE_EDGE = ('gnd-model-evolve/references/evolution-contract.md',
+                    '../../gnd-orm-core/references/representation-format.md#model-includes-version-5')
+MC3_RELATIVE_LINKS = EXPECTED_RELATIVE_LINKS | {MC3_INCLUDE_EDGE}
+MC3_RELATIVE_LINK_COUNT = EXPECTED_RELATIVE_LINK_COUNT + 1
+
 RELATIVE_LINK_RE = re.compile(b'\\]\\((\\.\\./[^)\\s]+)\\)')
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PYPROJECT = REPO_ROOT / 'pyproject.toml'
@@ -91,10 +97,10 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
             if resolved not in entries and resolved not in directories:
                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
-    missing = sorted(EXPECTED_RELATIVE_LINKS - edges)
-    extra = sorted(edges - EXPECTED_RELATIVE_LINKS)
+    missing = sorted(MC3_RELATIVE_LINKS - edges)
+    extra = sorted(edges - MC3_RELATIVE_LINKS)
     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
-    assert checked == EXPECTED_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {EXPECTED_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+    assert checked == MC3_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {EXPECTED_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
 
 def test_pep723_validator_sibling_schema_ships() -> None:
     root = _skills_root()
@@ -214,3 +220,21 @@ def test_the_record_contract_binds_the_agent_and_not_the_cli() -> None:
     assert re.search('never binds the .?gnd.? CLI', text), 'the milestone-record contract no longer states that it binds the driving agent and never the gnd CLI.'
     assert 'never touches git' in text
     assert 'append-only' in text
+
+
+@pytest.mark.parametrize('damage', ['remove', 'wrong-anchor'])
+def test_mc3_normative_edge_rejects_removal_or_replacement(tmp_path, monkeypatch, damage):
+    import sys
+
+    original = _skills_root()
+    destination = tmp_path / 'skills'
+    shutil.copytree(str(original), destination)
+    document = destination / MC3_INCLUDE_EDGE[0]
+    text = document.read_text()
+    assert MC3_INCLUDE_EDGE[1] in text
+    text = text.replace(MC3_INCLUDE_EDGE[1], '#local' if damage == 'remove' else
+                        MC3_INCLUDE_EDGE[1].replace('#model-includes-version-5', '#wrong-anchor'))
+    document.write_text(text)
+    monkeypatch.setattr(sys.modules[__name__], '_skills_root', lambda: destination)
+    with pytest.raises(AssertionError):
+        test_every_relative_skill_link_resolves_inside_the_resource_tree()

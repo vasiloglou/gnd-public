@@ -1,0 +1,6 @@
+{
+  "command": ".venv/bin/pytest -q tests/test_mc1_model_includes.py tests/test_schema_sync.py tests/test_evolve_references.py tests/test_evolve_loading.py --tb=short",
+  "exit_code": 0,
+  "output": "........................................................................ [ 31%]\n........................................................................ [ 62%]\n........................................................................ [ 94%]\n.............                                                            [100%]\n229 passed in 17.30s\n",
+  "sanitization": "Repository, home, temporary-root and pytest operator tokens replaced."
+}

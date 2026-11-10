@@ -1,0 +1,6 @@
+{
+  "candidate_commit": "ebec0980005690f6e23e5e4e806fdfc50b96de85",
+  "command": "uv run python scripts/components_index.py changed --base 5a083f469d0a14271c3417401c6ae2fd046a165a --strict",
+  "exit_code": 0,
+  "output": "reread: subsystem.check (entry not edited): its members changed: model.loading\nreread: subsystem.synth (entry not edited): its members changed: model.loading\nreread: subsystem.codegen (entry not edited): its members changed: model.loading\nreread: subsystem.conformance (entry not edited): its members changed: model.loading\nreread: subsystem.measure (entry not edited): its members changed: model.loading\nreread: subsystem.evolve (entry not edited): its members changed: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.policy, evolve.schema\nreread: subsystem.recovery (entry not edited): its members changed: model.loading\nchanged against 5a083f469d0a14271c3417401c6ae2fd046a165a (5a083f4): 132 file(s) differ; 0 to fix, 0 warning(s), 7 to reread\n"
+}

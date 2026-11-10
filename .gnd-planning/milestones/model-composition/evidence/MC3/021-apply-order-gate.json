@@ -1,0 +1,12 @@
+{
+  "ruling": "delegated approval (auto=true)",
+  "authorization": "process-milestone model-composition auto",
+  "spec_sha256": "5e486fdf703085f6aed58ce0c1a96459f3b18f00687b5ed55ad302ac79c75d7a",
+  "scope": "MC3 a3 verified include apply ordering",
+  "size_stop": [
+    1400,
+    1400
+  ],
+  "review": "one Codex CLI reviewer plus at most one confirmation",
+  "owner_docs_reaction": "Yes, this explains it"
+}

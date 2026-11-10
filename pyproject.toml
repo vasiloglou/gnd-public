@@ -70,10 +70,11 @@ module-name = "gnd"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 norecursedirs = ["fixtures"]
-addopts = "-m 'not derivation_oracle and not pyrel_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
+addopts = "-m 'not derivation_oracle and not pyrel_oracle and not ossie_oracle and not distribution and not network and not slow and not live and not review_runner and not proof and not evidence and not census'"
 markers = [
   "proof: opt-in proof lane; not selected by the default public development gate",
   "derivation_oracle: opt-in derivation_oracle lane; not selected by the default public development gate",
+  "ossie_oracle: opt-in pinned Ossie validator and parser lane",
   "pyrel_oracle: opt-in pyrel_oracle lane; not selected by the default public development gate",
   "distribution: opt-in distribution lane; not selected by the default public development gate",
   "evidence: opt-in evidence lane; not selected by the default public development gate",

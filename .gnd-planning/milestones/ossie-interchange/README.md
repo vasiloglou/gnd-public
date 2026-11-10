@@ -34,5 +34,6 @@ too narrow. The [OS0 phase record](006-phase-OS0.md) closes that phase after
 replaying the expanded 41-model census and parser controls. The
 [refunds checkpoint](evidence/OS0/CHECKPOINT.md) shows the hand translation.
 
-Next: OS1. The [owner confirmed OD6](004-owner-OD6.md). The spec will use the
-revised census and cover the three include roots and three invalid examples.
+The [owner confirmed OD6](004-owner-OD6.md). The
+[OS1 exporter candidate](008-OS1-candidate.md) passes its local checks over the
+revised census. Next: the independent OS1 diff review and opt-in oracle gate.

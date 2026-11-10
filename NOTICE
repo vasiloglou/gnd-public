@@ -14,3 +14,7 @@ src/gnd/skills/gnd-model-from-text) are adapted from RelationalAI's
 rai-agent-skills ORM skills (https://github.com/RelationalAI/rai-agent-skills,
 branch an-orm-skill), Copyright 2026 RelationalAI, licensed under the
 Apache License, Version 2.0.
+
+The vendored ontology schema in gnd/schema/ossie/ontology.json is from
+Apache Ossie (incubating), commit ee89dbdc2844d8b7d293ed42c8613928bb99505f,
+Copyright The Apache Software Foundation, under the Apache License, Version 2.0.

@@ -20,7 +20,7 @@ from gnd.evolve import models as evolve_models
 from gnd.evolve import service as evolve_service
 from gnd.exp import session_eval
 
-EXPECTED_PARSERS = 59  # MC2 adds `gnd verbalize model`; historical paths retained.
+EXPECTED_PARSERS = 60  # OS1 adds `gnd export ossie`.
 COMPILED_SUCCESSOR = json.loads(
     (Path(__file__).parent / 'fixtures/compiled-snapshot-cli/expected.json').read_text()
 )
@@ -221,6 +221,45 @@ def _model_review_successor():
                            for path, argv in paths.items()}}
 
 
+def _ossie_export_successor():
+    """Add the OS1 leaf to the frozen export tree."""
+    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["export"]
+    reference = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    children = reference.add_subparsers(dest="export_target", required=True)
+    choices = next(action for action in base["actions"] if action["class"] == "_SubParsersAction")["choices"]
+    for name in choices:
+        children.add_parser(name, help=base["subcommands"][name]["listed_help"])
+    old_help = json.loads(golden_path("cli-help", "gnd export").read_text())["help"]
+    assert reference.format_help() == old_help
+
+    help_text = "export an Ossie ontology with a loss report"
+    ossie = children.add_parser("ossie", help=help_text)
+    ossie.add_argument("model", help="path to the model file")
+    ossie.add_argument("--out", required=True, help="new ontology file path")
+    ossie.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
+    ossie.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
+    ossie.add_argument("--strict", action="store_true", help="refuse any export with lost elements")
+    leaf = _walk(ossie, ("gnd", "export", "ossie"), {})
+    leaf["listed_help"] = help_text
+    choices.append("ossie")
+    base["subcommands"]["ossie"] = leaf
+
+    def probe(argv):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), pytest.raises(SystemExit) as caught:
+            reference.parse_args(argv)
+        return {"exit": caught.value.code, "stdout": out.getvalue(), "stderr": err.getvalue()}
+
+    return {
+        "tree": base,
+        "help": {"gnd export": reference.format_help(), "gnd export ossie": ossie.format_help()},
+        "exit_probe": {
+            path: {"help": probe([*argv, "--help"]), "unknown_flag": probe([*argv, "--rf1-unknown-flag"])}
+            for path, argv in {"gnd export": [], "gnd export ossie": ["ossie"]}.items()
+        },
+    }
+
+
 def _include_preview_successor():
     """Restore the frozen predecessor, then add MC3's one literal repeatable flag."""
     base = copy.deepcopy(json.loads(golden_path('cli', 'tree').read_text())['subcommands']['evolve']['subcommands']['preview'])
@@ -278,11 +317,16 @@ def test_cli_tree(tree):
         )
     expected['subcommands']['evolve']['subcommands']['preview'] = _include_preview_successor()['tree']
     expected['subcommands']['verbalize'] = _model_review_successor()['tree']
+    expected['subcommands']['export'] = _ossie_export_successor()['tree']
     _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path in {"gnd export", "gnd export ossie"}:
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": _ossie_export_successor()["help"][path]})
+        return
     if path == 'gnd evolve preview':
         _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
                           {'path': path, 'help': _include_preview_successor()['help']})
@@ -312,6 +356,13 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path in {"gnd export", "gnd export ossie"}:
+        observed = {
+            "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
+            "unknown_flag": {"exit": refused.returncode, "stdout": refused.stdout.decode(), "stderr": refused.stderr.decode()},
+        }
+        _assert_successor("cli-exit", path, observed, _ossie_export_successor()["exit_probe"][path])
+        return
     if path == 'gnd evolve preview':
         observed = {'help': {'exit': shown.returncode, 'stdout': shown.stdout.decode(), 'stderr': shown.stderr.decode()},
                     'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}

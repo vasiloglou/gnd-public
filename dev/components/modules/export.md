@@ -225,6 +225,16 @@ Bounded finite-model export claims, separate from checking and proof.
 | `LeanResult.model_dump(self, *, mode)` | method | 59 | (no docstring) |
 | `refused(code, reason)` | function | 73 | (no docstring) |
 
+## gnd.export.ossie — `src/gnd/export/ossie.py`
+Components: export.ossie
+Render a GND model as a pinned Ossie ontology and bound interchange metadata.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `OssieInputError` | class(ValueError) | 38 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 43 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 379 | Render three deterministic artifacts from one bounded, admitted model read. |
+
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules
 Render a model's rules as a readable PyRel program, as requirements.

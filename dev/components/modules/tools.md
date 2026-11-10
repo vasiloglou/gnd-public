@@ -273,6 +273,17 @@ A loopback OpenAI-compatible gateway that lets a small hosted model drive a GND 
 | `Gateway.log_message(self, *args) -> None` | method | 96 | (no docstring) |
 | `main() -> None` | function | 100 | (no docstring) |
 
+## tools.ossie_oracle — `tools/ossie_oracle.py`
+Components: unassigned
+Run the pinned standalone Ossie validator and parser without runtime dependencies.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `OssieOracle` | class | 26 | (no docstring) |
+| `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
+| `OssieOracle.validate(self, path) -> subprocess.CompletedProcess[str]` | method | 47 | (no docstring) |
+| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 56 | (no docstring) |
+
 ## tools.plan_app_bot — `tools/plan_app_bot.py`
 Components: unassigned
 A model behind a plan app's bot interface: Claude Code, or a small model on OpenRouter.

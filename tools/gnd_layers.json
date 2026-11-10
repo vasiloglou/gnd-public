@@ -498,6 +498,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.ossie": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.pyrel_rules": {
       "lane": "export",
       "layer": "lanes"

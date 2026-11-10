@@ -602,13 +602,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.export_command
-- does: Dispatch Lean, Souffle, PyRel and ILP exports with target specific input checks [handle].
-- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, output collision, dispatch handler
+- does: Dispatch Lean, Souffle, PyRel, ILP and Ossie exports with target specific input checks [handle].
+- verbs: export command, standalone artifact, lean export, souffle export, pyrel checker, pyrel rules, duckdb requirements, ilp learner, amie population, class labels, ossie ontology, output collision, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/export.py
-- uses: export.command, export.ilp_service, export.pyrel_emit, export.pyrel_runtime, infra.exit_codes
+- uses: export.command, export.ilp_service, export.ossie, export.pyrel_emit, export.pyrel_runtime, infra.artifacts, infra.errors, infra.exit_codes, infra.safe_filesystem
 - used_by: cli.dispatch
 - tests: tests/test_pyrel_export.py, tests/test_rf5_commands.py
 
@@ -1552,6 +1552,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - notes: Prepare, mined-input and candidate admission compose rooted inputs; generated proposals retain the authored includer and leave vocabulary files unchanged. Labelled imports recompute checker coverage; mined imports bind facts, recount support, require holding rules and confirm checker pass before proposal publication. Public counting helpers are also usable without admitting the rules; _Mined and _mined_inputs retain identity aliases.
 
 
+### export.ossie
+- does: Project an admitted ORM model to a pinned Ossie ontology and bind a loss report and reconstruction sidecar [render_ossie].
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal
+- in: standalone model path and output format
+- out: ontology, sidecar and loss report bytes
+- status: canonical
+- modules: src/gnd/export/ossie.py
+- uses: infra.artifacts, model.json_document, model.loading, model.query_index, model.scalar_identity
+- used_by: cli.export_command
+- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py
+
+
 ### export.pyrel_emit
 - does: Emit a self-contained PyRel checker with embedded model text or route readable rule-program rendering [render_pyrel].
 - verbs: export PyRel, standalone Python, embed model, copy runtime, script dependencies, offline rendering, DuckDB config, connection option, temporal refusal, compile source, render_pyrel, render_pyrel_rules
@@ -1732,7 +1744,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +67 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +68 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1760,7 +1772,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_documents.py
 - uses: (none)
-- used_by: model.loading
+- used_by: export.ossie, model.loading
 - tests: tests/test_evolve_loading.py
 - notes: Strict JSON-domain conversion, permissive YAML preservation and JSON-encoder compatibility share one recursive walk with explicit switches. gnd.model re-exports this capability.
 
@@ -1893,7 +1905,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +59 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +61 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -2182,7 +2194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, … +17 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, … +18 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2408,7 +2420,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +23 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +24 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2496,12 +2508,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### infra.safe_filesystem
-- does: Guard destination paths and provide atomic file writes, regular-file reads and stable file digests.
-- verbs: safe destination, reject unsafe path, manifest path, manifest_path_issue, path traversal, symlink parent, atomic_write, descriptor anchored, rename no replace, regular file, FIFO refusal, file_sha256, file digest, write file atomically, safe file write, sha256 of file
+- does: Guard destination paths and provide create-once file set publication, atomic file writes, regular-file reads and stable file digests.
+- verbs: safe destination, reject unsafe path, manifest path, manifest_path_issue, path traversal, symlink parent, atomic_write, descriptor anchored, rename no replace, publish_new_files, output rollback, regular file, FIFO refusal, file_sha256, file digest, write file atomically, safe file write, sha256 of file
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.verification, extract.manifest, extract.service, fidelity.service, … +10 more (graph.md)
+- used_by: cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.verification, extract.manifest, extract.service, … +11 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -2692,7 +2704,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, model.document
-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, infra.text_output, measure.report, measure.service, model.loading, model.population_loading, model.population_sentences, … +5 more (graph.md)
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.population_loading, … +6 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 
@@ -3525,6 +3537,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - scalar terms: model.atom_bindings, model.scalar_terms
 - session contract: cli.exp_command, exp.schema, subsystem.experiment
 - shape report: cli.evolve_command, evolve.shape_matches
+- sidecar: export.ossie, synth.provenance
 - sidecar binding: export.verification, measure.service
 - skip marker: extract.manifest, fidelity.service
 - skip station: agent.solve, cli.solve_command

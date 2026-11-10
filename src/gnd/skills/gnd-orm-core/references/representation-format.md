@@ -1823,3 +1823,50 @@ both model dump entry points, preserving include-free serializations.
 A raw includer hash commits to the pinned bytes but cannot prove their
 presence or validity: any positive freshness/publication claim additionally
 requires verification of the included bytes in that same invocation.
+
+## Ossie interchange
+
+`gnd export ossie MODEL --out FILE` projects a standalone GND model to an
+Apache Ossie ontology document, version `0.3.0.dev0`, using the
+`ontology/ontology.json` schema from commit
+`ee89dbdc2844d8b7d293ed42c8613928bb99505f`. The optional parser oracle comes
+from `apache/ossie-converters` at
+`83ddc294c8840f5f497a2bdbec2348a128fc2254`. YAML is the default. Select
+`--format json` for canonical JSON. The source loader refuses include-bearing
+models with `include:unsupported-route` before resolving their dependencies.
+
+| Source | Core projection |
+|---|---|
+| Object types and subtypes | EntityType or ValueType concepts, with subtype parents in `extends`. Safe unique names are preserved. Other names get deterministic ID-based aliases. |
+| Value primitives | The corresponding Ossie built-in, with Number projected as Decimal and Duration as Integer. The sidecar retains those source types and Binary. |
+| Popular and general references | A generated binary OneToOne relationship and an `identify_by` entry. |
+| External references | `identify_by` on suitable binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
+| Fact types and readings | One relationship under its first-role concept. The forward placeholders bind by source role position. Explicit inverse qualifiers bind by role name. A bare binary inverse reverses the bindings. Additional roles have explicit names. |
+| Internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
+| Other constraints, derivations, provenance, modality and operations | The source values travel in the sidecar. |
+
+The report at `FILE.loss.json` (overridable with `--loss-report`) uses
+`gnd-ossie-loss/1`. Each RFC 6901 pointer, including the root and containers,
+has one disposition and a reason from the packaged schema. A `native`
+row describes a core projection. An `extension` row carries GND-specific
+shape or value. A `refused` row names an omitted element. Population
+subtrees are refused as `population:out-of-scope`. The report and sidecar
+omit the refused values. A successful export may contain refusals in the
+report. `--strict` rejects an export with any refusal before publication.
+
+The `FILE.gnd.json` sidecar uses `gnd-ossie-sidecar/1`. Both metadata files
+contain the model's canonical `model_identity` and the bare hexadecimal
+SHA-256 of the exact ontology bytes, `document_sha256`. Sidecar `elements`
+groups original source pointers by their nearest element ID. The empty
+group key means document scope. The entries are `object` and `array` shape
+markers, `copy` entries with an Ossie pointer in `from`, and `literal`
+entries with a source `value`. Literal entries preserve exact spelling
+where the core projection uses a different representation.
+
+The command stages all outputs, then publishes the report and sidecar
+before the ontology, which is the completion marker. Publication is
+create-once. A synchronous failure rolls back the invocation's published
+entries. An interruption before the ontology appears can leave uncommitted
+companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
+11 on output collision, 66 on missing input, 70 on an internal rendering
+failure and 74 on an I/O refusal.

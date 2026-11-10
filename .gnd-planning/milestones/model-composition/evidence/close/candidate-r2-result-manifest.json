@@ -1,0 +1,20 @@
+{
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-full-default.txt": "2baa626204796979f92ba9bd058fac3e8cbd38ded795c6e62bba42419b487893",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-full-default.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-full-comparison.json": "9a3d6167b94839d87f10717c9bab09f9bf656f6a849b72575d38479029073d3e",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-census-binding.json": "a6d56a53470e44bac95731f2e6924936081564ec85454d0e983a2475154da512",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-census-producer.log": "5cec15dfbd2dd7c90a1d31ad7cfaa7027461996f5021e58c984202fe183253a4",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-census-producer.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-census-tests.log": "c1975da14d2a98578abe3ff1a6ea008d6288c41a83ac38f1bb49e8e44adcffe1",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-census-tests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-source.txt": "35c433fd8b8e70ca65a19176d4e4b6446a8629a8cc691f6d01953ab7d8e3cae1",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-runtime.txt": "59064468e3b619a369a25e1430c8a6ae1709dd07afa58396da31397475aaec1d",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-main-ref.txt": "44566bd18ef569e41e62246faf1465bf1bb7c918431de4c177f97b114f22bebc",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-status-before.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-status-after.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-selection.md": "4cfcb8a8051df7e6b3fe0b05e9c9e25ff183f64d0c89b4e751923d8d63b9fb3c",
+  ".gnd-planning/milestones/model-composition/notes/candidate-readiness.md": "f38800969a59c26a7b3510610b1f862b786d814ee54053066c74fe7922edc2e9",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-historical-audit.json": "682668f7852025e0523a80071e690dfa317d0aaf63d8f118b9dd32424b48fb4b",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-metadata-reference.txt": "0a97b591ab7ce9644866a9aea8e19c37ff6647585418c546d0481e0cb92bfbc7",
+  ".gnd-planning/milestones/model-composition/evidence/close/candidate-r2-metadata-frontmatter.txt": "e31b11fce6d37f6c9f18d7dc4ab2acd8b089ae9a31e3539727f3c416b005f229"
+}

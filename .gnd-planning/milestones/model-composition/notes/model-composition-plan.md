@@ -799,3 +799,69 @@ The two retained rejected-output artifacts contain49 literal pytest E-only
 trailing-space lines. Preserve those exact raw bytes as an explicit artifact-only
 residual under the existing009/025/027 retention policy. Current staged author,
 runtime and test source checks must remain0; no blanket whitespace waiver.
+
+
+## 16. Exact amendment provenance (2026-11-10)
+
+The numbered sources cited by the execution-repair tables above resolve to
+these exact raising/gate/completion paths. Prior wording and original snapshots
+remain retained; dates below are each record’s own date, not retrospective approval.
+This lookup is preparation and does not accept a still-pending full run or merge.
+
+| Record path | Recorded date | Scope/station |
+|---|---|---|
+| [001-plan.md](../001-plan.md) | 2026-11-09 | plan gate |
+| [002-execution-gate.md](../002-execution-gate.md) | 2026-11-09 | execution and MC1 spec gate |
+| [003-execution-amendment.md](../003-execution-amendment.md) | 2026-11-09 | MC1 execution amendment |
+| [004-MC1-size-ruling.md](../004-MC1-size-ruling.md) | 2026-11-09 | MC1 size ruling |
+| [005-MC1-repair-ruling.md](../005-MC1-repair-ruling.md) | 2026-11-09 | MC1 repair ruling |
+| [006-MC1-candidate.md](../006-MC1-candidate.md) | 2026-11-09 | MC1 candidate snapshot |
+| [007-MC1-followup-gate.md](../007-MC1-followup-gate.md) | 2026-11-10 | MC1 test/inventory follow-up review gate |
+| [008-phase-MC1.md](../008-phase-MC1.md) | 2026-11-10 | phase-MC1 |
+| [009-MC1-record-correction.md](../009-MC1-record-correction.md) | 2026-11-10 | MC1 completion metadata correction |
+| [010-MC2-gate.md](../010-MC2-gate.md) | 2026-11-10 | MC2 exact spec/corpus gate |
+| [011-MC4-draft.md](../011-MC4-draft.md) | 2026-11-10 | MC4-draft early owner documentation checkpoint |
+| [012-MC2-amendment.md](../012-MC2-amendment.md) | 2026-11-10 | MC2 measured comparison amendment |
+| [013-phase-MC2.md](../013-phase-MC2.md) | 2026-11-10 | phase-MC2 |
+| [014-MC4-draft-revision.md](../014-MC4-draft-revision.md) | 2026-11-10 | MC4-draft owner-feedback revision |
+| [015-MC3-gate.md](../015-MC3-gate.md) | 2026-11-10 | MC3 corpus/spec gate |
+| [016-MC3-amendment.md](../016-MC3-amendment.md) | 2026-11-10 | MC3 measured corpus locator correction |
+| [017-MC3-size-stop.md](../017-MC3-size-stop.md) | 2026-11-10 | MC3 mandatory size pause |
+| [018-MC3-owner-resume.md](../018-MC3-owner-resume.md) | 2026-11-10 | MC3 owner resume and related decisions |
+| [019-MC4-fable-checkpoint.md](../019-MC4-fable-checkpoint.md) | 2026-11-10 | MC4-draft Claude Fable expense checkpoint |
+| [020-MC4-evidence-correction.md](../020-MC4-evidence-correction.md) | 2026-11-10 | MC4 checkpoint evidence correction |
+| [021-MC3-apply-order-amendment.md](../021-MC3-apply-order-amendment.md) | 2026-11-10 | MC3 verified include apply ordering |
+| [022-MC3-review-repairs.md](../022-MC3-review-repairs.md) | 2026-11-10 | MC3 reproduced review repairs |
+| [023-phase-MC3.md](../023-phase-MC3.md) | 2026-11-10 | MC3 authored evolution and proposal writers |
+| [024-MC4-gate.md](../024-MC4-gate.md) | 2026-11-10 | MC4 final spec gate |
+| [025-phase-MC4.md](../025-phase-MC4.md) | 2026-11-10 | MC4 documentation and skills |
+| [026-close-preparation.md](../026-close-preparation.md) | 2026-11-10 | Milestone close preparation |
+| [027-close-metadata-repair.md](../027-close-metadata-repair.md) | 2026-11-10 | Close retained-draft metadata repair |
+| [028-close-compatibility-repairs.md](../028-close-compatibility-repairs.md) | 2026-11-10 | Final compatibility instrument follow-ups |
+
+
+## 17. Measured final candidate comparison (2026-11-10)
+
+Delegated acceptance (auto=true) of the compatibility comparison only:
+source1ca2379f completed the named beast-3 default run with6failed,
+18795passed,801deselected,1warning in2550.44s (0:42:30), exit1. Every failed
+node identity exactly equals frozen459ca8d2: the grow-a-model paragraph and five
+RF5 source pins. There are no added/removed failures, errors, skips, xfails or
+xpasses. Both tracked before/after statuses are empty. This is an unchanged
+known-red comparison, never a green full-suite claim.
+
+The same corrected candidate's marked census exits0 (2passed in15.82s), with
+all400 original per-observable rows unchanged and23 additions individually
+dispositioned. Its producer output is byte-identical to the already retained
+423-row artifact; the new source/runtime/exits bind that alias explicitly.
+Neither original expected answers nor historical goldens were regenerated.
+The rejected14-failure8e5ff181 result and incomplete6de run remain separate.
+
+[Record029](../029-candidate-comparison.md) binds the actual commands, outputs,
+source and comparison. Later close bookkeeping/provenance must receive focused
+current-context reference/frontmatter checks; it does not extend this full
+execution to untested runtime/test changes. Actual owner merges, main evidence,
+the selected independent close opinion and final milestone ruling/issue95
+closure remain pending. This comparison ruling authorizes none of them.
+
+Raw pytest output retains original diagnostic whitespace at candidate-r2-full-default.txt lines 279, 286, 293, 300, 307. Delegated acceptance preserves those artifact bytes only; authored source and metadata whitespace must remain clean. Current reference checks pass2tests and frontmatter validates114citations;11historical manifests have zero mismatches at their recorded snapshots.

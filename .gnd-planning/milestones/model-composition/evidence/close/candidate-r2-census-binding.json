@@ -1,0 +1,13 @@
+{
+  "candidate": "1ca2379f7e0d0834da8e530599f1e9eada7a335d",
+  "raw_sha256": "8c751a61b1a2160257b35dfec8d61f5c811acf4cd01f86a88690b76dc627fedb",
+  "retained_bytes": ".gnd-planning/milestones/model-composition/evidence/close/final-census.json",
+  "byte_identical": true,
+  "original400_mismatches": 0,
+  "total_members": 423,
+  "additions": 23,
+  "dispositions": ".gnd-planning/milestones/model-composition/evidence/close/census-comparison.json",
+  "producer_exit": 0,
+  "census_tests_exit": 0,
+  "census_summary": "2 passed in15.82s"
+}

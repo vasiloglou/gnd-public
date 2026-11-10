@@ -15,6 +15,7 @@ from gnd.model import (
     _iter_constraints,
     iter_derivation_clauses,
 )
+from gnd.model._includes import guard_bytes, include_reason
 from gnd.population import PopulationLoadError
 from gnd.witness import io as witness_io
 from gnd.witness.types import DEFAULT_LIMITS as WITNESS_LIMITS
@@ -212,6 +213,7 @@ def render_souffle(
     limits=DEFAULT_LIMITS,
 ):
     try:
+        guard_bytes(model_bytes, source=f"model.{model_format}", route="export.souffle.raw")
         checked_limits(limits)
         model, candidate, _refs, rows, origins, roles, charge, counts = admit(
             model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits
@@ -394,5 +396,7 @@ def render_souffle(
         )
     except Unsupported:
         return refused(2, "fragment-unsupported")
+    except ModelValidationError as error:
+        return refused(3, include_reason(error) or "input-invalid")
     except INPUT_ERRORS:
         return refused()

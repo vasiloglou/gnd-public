@@ -81,6 +81,8 @@ def _cmd_measure(
         return code
 
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "measure/service.py")
         model = load_model(model_path)
         from gnd.terms import require_non_temporal
 
@@ -499,7 +501,11 @@ def _measure_labels(
     if not model_file.exists():
         return fail(EXIT_NO_INPUT, f"model {model_path} does not exist")
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_file, "measure.synth")
         before = file_sha256(model_file)
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "measure/service.py")
         model = load_model(model_path)
         from gnd.terms import require_non_temporal
 

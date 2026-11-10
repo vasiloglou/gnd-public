@@ -8,24 +8,22 @@ Model loading with two-layer validation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `parse_model_document(data, *, source) -> Any` | function | 286 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |
-| `load_model_bytes(data, *, source) -> Model` | function | 320 | Validate one immutable bounded buffer; source is diagnostic metadata. |
-| `load_model(path) -> Model` | function | 355 | Read model and reference bytes beneath a single retained directory. |
-| `ReferenceInputError` | class(ValueError) | 408 | A reference boundary refused its input before domain evaluation. |
+| `load_model_bytes(data, *, source) -> Model` | function | 287 | Validate one immutable bounded buffer; source is diagnostic metadata. |
+| `load_model_bytes_composed(data, *, source, root) -> Model` | function | 330 | Resolve the authored model and bind references under one retained root. |
+| `load_model(path) -> Model` | function | 358 | Read model and reference bytes beneath a single retained directory. |
 | `ReferenceOrigin` | class | 417 | (no docstring) |
 | `OccurrenceOrigin` | class | 423 | (no docstring) |
 | `BoundReferenceContext` | class | 429 | (no docstring) |
 | `BoundPopulationView` | class | 439 | (no docstring) |
 | `validate_reference_structure(document) -> None` | function | 446 | (no docstring) |
-| `retained_root(root)` | function | 471 | Open every lexical ancestor without following a symlink. |
-| `validate_declarations(model) -> dict[str, str]` | function | 489 | (no docstring) |
-| `bind_references(model, *, root) -> BoundReferenceContext` | function | 590 | (no docstring) |
-| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 596 | Bind a model's declared reference populations at ``root``, or return None |
-| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 611 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
-| `resolve_context(model, references) -> BoundReferenceContext` | function | 620 | (no docstring) |
-| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 652 | (no docstring) |
-| `candidate_fact_count(view) -> int` | function | 728 | (no docstring) |
-| `is_bound_population(model, population, context) -> bool` | function | 732 | Recognize only a current combined population created by this binder. |
+| `validate_declarations(model) -> dict[str, str]` | function | 461 | (no docstring) |
+| `bind_references(model, *, root) -> BoundReferenceContext` | function | 562 | (no docstring) |
+| `bind_declared_references(model, *, root, attach) -> BoundReferenceContext \| None` | function | 568 | Bind a model's declared reference populations at ``root``, or return None |
+| `load_model_bytes_bound(data, *, source, root, attach) -> tuple[Model, BoundReferenceContext \| None]` | function | 583 | ``load_model_bytes``, then ``bind_declared_references`` at ``root``; neither |
+| `resolve_context(model, references) -> BoundReferenceContext` | function | 592 | (no docstring) |
+| `bind_population(model, candidate, *, references) -> BoundPopulationView` | function | 624 | (no docstring) |
+| `candidate_fact_count(view) -> int` | function | 700 | (no docstring) |
+| `is_bound_population(model, population, context) -> bool` | function | 704 | Recognize only a current combined population created by this binder. |
 
 ## gnd.model._documents — `src/gnd/model/_documents.py`
 Components: model.json_document
@@ -35,6 +33,23 @@ Model documents as plain JSON values (evolve-loading follow-up, IK4-Q3, IKE-Q2).
 | --- | --- | --- | --- |
 | `ModelValueError` | class(ValueError) | 13 | A model value outside the JSON data model, named by path and kind. |
 | `json_document(document, *, refuse, encodable) -> dict[str, Any]` | function | 27 | The parsed model document as plain Python, in one walk over every value. |
+
+## gnd.model._includes — `src/gnd/model/_includes.py`
+Components: model.loading
+One resolver and admission guards for pinned version-5 model includes.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `declares_includes(document) -> bool` | function | 40 | (no docstring) |
+| `parse_declarations(document) -> Declarations` | function | 45 | (no docstring) |
+| `parse_included(raw, *, include_id, path) -> dict` | function | 75 | (no docstring) |
+| `include_reason(error) -> str \| None` | function | 100 | (no docstring) |
+| `compose(document, *, descriptor, source)` | function | 155 | (no docstring) |
+| `remap_issues(issues, origins)` | function | 205 | (no docstring) |
+| `refuse_unsupported(route) -> NoReturn` | function | 236 | (no docstring) |
+| `guard_document(document, route)` | function | 240 | (no docstring) |
+| `guard_bytes(raw, *, source, route)` | function | 245 | (no docstring) |
+| `guard_path(path, route)` | function | 255 | (no docstring) |
 
 ## gnd.model._induction — `src/gnd/model/_induction.py`
 Components: model.validation
@@ -50,6 +65,14 @@ Existing model operations section; historical facade retained.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `compile_operation(operation, effects) -> list[dict[str, Any]]` | function | 63 | Standing obligations derivable from one operation's preconditions. |
+
+## gnd.model._paths — `src/gnd/model/_paths.py`
+Components: model.loading
+Historical confined reference paths and retained roots; shared by includes.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `retained_root(root)` | function | 26 | Open every lexical ancestor without following a symlink. |
 
 ## gnd.model._unattended — `src/gnd/model/_unattended.py`
 Components: model.validation
@@ -70,17 +93,18 @@ Model loading with two-layer validation.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `yaml_stream_guard_error(path) -> str \| None` | function | 100 | Pre-load guard for untrusted YAML input (T-01-02), or None when safe. |
-| `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2132 | Do the roles the SUBJECT BINDS determine at most one value? |
-| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 2848 | Present legacy sugar and every explicit clause without changing model bytes. |
-| `AggregateAnalysis` | class | 3010 | The one shared, total interpretation of a structured aggregate. |
-| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3024 | Analyze an aggregate without assuming schema-valid input. |
-| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3284 | Use the one aggregate policy walk with declared body-role primitives. |
-| `body_components(rule) -> list[frozenset[str]]` | function | 3299 | The connected components of a rule body's join graph, canonically ordered. |
-| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3359 | Fact type -> the fact types its rule reads. |
-| `DerivationEdge` | class | 3378 | (no docstring) |
-| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3386 | Keep every labelled atom edge, including duplicate and mixed edges. |
-| `DerivationClassification` | class | 3410 | One structured fact type's stability under the declared operations. |
-| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3423 | Return asserted leaves beneath one structured head, failing closed. |
-| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3514 | Classify every structured fact type against every operation touch. |
-| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3641 | SCC-condensed, dependency-first deterministic structured strata. |
-| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4713 | Run every layer-2 semantic rule over a parsed model document. |
+| `dynamic_subject_is_functional(subject, fact_types) -> bool \| None` | function | 2135 | Do the roles the SUBJECT BINDS determine at most one value? |
+| `iter_derivation_clauses(rule) -> tuple[dict[str, Any], ...]` | function | 2851 | Present legacy sugar and every explicit clause without changing model bytes. |
+| `AggregateAnalysis` | class | 3013 | The one shared, total interpretation of a structured aggregate. |
+| `analyze_aggregate(rule, variable_primitives, *, limits) -> AggregateAnalysis \| None` | function | 3027 | Analyze an aggregate without assuming schema-valid input. |
+| `analyze_declared_aggregate(model, rule) -> AggregateAnalysis \| None` | function | 3287 | Use the one aggregate policy walk with declared body-role primitives. |
+| `body_components(rule) -> list[frozenset[str]]` | function | 3302 | The connected components of a rule body's join graph, canonically ordered. |
+| `derivation_dependencies(doc) -> dict[str, set[str]]` | function | 3362 | Fact type -> the fact types its rule reads. |
+| `DerivationEdge` | class | 3381 | (no docstring) |
+| `derivation_dependency_edges(doc) -> tuple[DerivationEdge, ...]` | function | 3389 | Keep every labelled atom edge, including duplicate and mixed edges. |
+| `DerivationClassification` | class | 3413 | One structured fact type's stability under the declared operations. |
+| `derivation_dependency_closure(doc, fact_type_id) -> tuple[frozenset[str], bool, str \| None]` | function | 3426 | Return asserted leaves beneath one structured head, failing closed. |
+| `derivation_classifications(doc) -> tuple[DerivationClassification, ...]` | function | 3517 | Classify every structured fact type against every operation touch. |
+| `derivation_strata(doc) -> list[tuple[str, ...]]` | function | 3644 | SCC-condensed, dependency-first deterministic structured strata. |
+| `semantic_validate(doc) -> list[ValidationIssue]` | function | 4716 | Run every layer-2 semantic rule over a parsed model document. |
+| `parse_model_document(data, *, source) -> Any` | function | 4924 | Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict |

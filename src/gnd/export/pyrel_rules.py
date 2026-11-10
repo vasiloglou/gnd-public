@@ -2264,6 +2264,8 @@ def render(model_path: Path, target: str) -> str:
     raw = Path(model_path).read_bytes()
     from gnd.model import ReferenceInputError
     try:
+        from gnd.model._includes import guard_bytes
+        guard_bytes(raw, source=str(model_path), route='pyrel_rules:2267')
         loaded = load_model_bytes(raw, source=str(model_path))
     except (ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise ExportInputError(f"invalid model: {error}") from error

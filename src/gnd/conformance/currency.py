@@ -64,6 +64,8 @@ def model_file_sha256(model_path: str | Path) -> str:
     ``model.sha256``, so the two sides of the comparison cannot drift apart by
     one of them changing how it hashes.
     """
+    from gnd.model._includes import guard_path
+    guard_path(model_path, "conformance.currency")
     path = Path(model_path)
     try:
         return hashlib.sha256(path.read_bytes()).hexdigest()

@@ -1,0 +1,83 @@
+[
+  {
+    "module": "gnd.model",
+    "name": "_rule_id_unique",
+    "historical_home": "gnd.model._validation",
+    "home": "gnd.model._validation",
+    "before": "83bd596d8c1ab049817e8b0d87669f061523d7d1639d14456075b00beb93d534",
+    "after": "12bc24b1da06c7ecd9e149c06dcd489bb99d8df861e5e25bc9bac31085544e8b",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "_rule_temporal_language",
+    "historical_home": "gnd.model._validation",
+    "home": "gnd.model._validation",
+    "before": "e019eb535dbdfb51aef62ce812f0191fde6758412ee95a993cce79dccdd768b5",
+    "after": "103b7fa206683165bf02face125bd8d46e053ccd9cede2a340c8b4eb7328b1fd",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model_bytes",
+    "historical_home": "gnd.model",
+    "home": "gnd.model",
+    "before": "4b51c50fd44d8f683997de0f03e256eec0953c3bed277ee2e198d0bcf422ad26",
+    "after": "82e33d3c4d6ddbc49ec0a2196632a3d38a66aa311bf6153ff99a8511734bb595",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "_load_model_no_follow",
+    "historical_home": "gnd.model",
+    "home": "gnd.model",
+    "before": "65f4e0339539215744296c76ae5d234028d48e03df37c2fe4321872937041dc8",
+    "after": "a5f47fe10efebb934e14ccb729b2115dde19743318603ffb9f932ca661a30e97",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "load_model",
+    "historical_home": "gnd.model",
+    "home": "gnd.model",
+    "before": "6a28d914546798b3908ba6209d75fd5aa430933be4c0a94cd62e3ae58f985c10",
+    "after": "742b7e4b4418ab3c74e704c25ebdd592ea54b89aaa74c5dd80b07b9eb81cc872",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "ReferenceInputError",
+    "historical_home": "gnd.model",
+    "home": "gnd.errors",
+    "before": "9cd76337c71ab3d7b5d5cdaf29fde2d4a3b7d51fc678922272861daebb0d5c8f",
+    "after": "9cd76337c71ab3d7b5d5cdaf29fde2d4a3b7d51fc678922272861daebb0d5c8f",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "_relative",
+    "historical_home": "gnd.model",
+    "home": "gnd.model._paths",
+    "before": "bf78ccec3363f4db78ee6fc57cab6b91e19ee3c76212fe718b6ccaa559dd715a",
+    "after": "bf78ccec3363f4db78ee6fc57cab6b91e19ee3c76212fe718b6ccaa559dd715a",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "retained_root",
+    "historical_home": "gnd.model",
+    "home": "gnd.model._paths",
+    "before": "968d8a9b8a2186624d3d02b6fa3efe76a002eed1e90332fb689dc92cd4177761",
+    "after": "968d8a9b8a2186624d3d02b6fa3efe76a002eed1e90332fb689dc92cd4177761",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  },
+  {
+    "module": "gnd.model",
+    "name": "validate_declarations",
+    "historical_home": "gnd.model",
+    "home": "gnd.model",
+    "before": "e1de4e90da83db7aefdef3f4c6256cde34d7f118286063c7895d8fd153c8d448",
+    "after": "cce02b53cd1de0a876ea865aa81367c3cccaff83db14dce64f03b1613814b147",
+    "reason": "MC1 guarded include resolution, version-5 admission or unchanged dependency-home move; include-free census and MC1 branch controls remain binding."
+  }
+]

@@ -80,6 +80,8 @@ def evaluate(case, result, mechanical, model, refs, snapshot, experiment, run_ro
     model_raw = read_regular_bounded(
         experiment, case.verify.model.path, max_bytes=10 * 1024 * 1024
     )[0]
+    from gnd.model._includes import guard_bytes
+    guard_bytes(model_raw, source=case.verify.model.path, route="exp.session_judgments")
     pop_raw = read_regular_bounded(snapshot, case.verify.subject, max_bytes=10 * 1024 * 1024)[0]
     receipts = read_judgment_receipts(receipts_raw)
     report = {

@@ -1,9 +1,10 @@
 """RF3 shared dependency home; algorithms retain predecessor semantics."""
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_serializer
 
 from gnd.errors import ValidationIssue
 
@@ -13,6 +14,24 @@ class DeonticNote(BaseModel):
 
     text: str
     rationale: str | None = None
+
+
+@dataclass(frozen=True)
+class ElementOrigin:
+    origin: str
+    composed_address: str
+    original_address: str
+    element_id: str | None
+
+
+@dataclass(frozen=True)
+class IncludedFile:
+    id: str
+    path: str
+    sha256: str
+    version: int
+    model_id: str | None
+    source: dict[str, Any] | None
 
 
 class Model(BaseModel):
@@ -43,6 +62,10 @@ class Model(BaseModel):
     #: and a version test would silently make it behave differently.
     operations: list[dict[str, Any]] = Field(default_factory=list)
     reference_populations: list[dict[str, Any]] = Field(default_factory=list)
+    includes: list[dict[str, Any]] = Field(default_factory=list)
+    fact_type_constraints: list[dict[str, Any]] = Field(default_factory=list)
+    _provenance: tuple[ElementOrigin, ...] = PrivateAttr(default=())
+    _included: tuple[IncludedFile, ...] = PrivateAttr(default=())
     _references: Any = PrivateAttr(default=None)
     rejected_proposals: list[dict[str, Any]] = Field(default_factory=list)
     #: Trace-compiled obligations, keyed by operation id (B2). A SIDE TABLE
@@ -64,6 +87,14 @@ class Model(BaseModel):
         document = super().model_dump(*args, **kwargs)
         if not self.reference_populations:
             document.pop("reference_populations", None)
+        return document
+
+    @model_serializer(mode="wrap")
+    def _omit_empty_include_fields(self, handler):
+        document = handler(self)
+        for name in ("includes", "fact_type_constraints"):
+            if not getattr(self, name):
+                document.pop(name, None)
         return document
 
     def compiled_obligations(self, operation_id: str) -> list[dict[str, Any]]:

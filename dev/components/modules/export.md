@@ -16,9 +16,9 @@ Bounded native proposals followed by independent, exact-byte acceptance.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `verify_policy_report(report, model_doc, model_sha, population_sha, process_exit)` | function | 29 | Refuse missing, forged, partial or unsuccessful acceptance evidence. |
-| `execute_application(model_path, input_path, output_path, *, native_python, query_script, query_args…` | function | 199 | Only captured candidate bytes with complete native acceptance are published. |
-| `check_proposal(model_path, input_path, proposal_path, output_path, *, native_python, owned_relation…` | function | 277 | Check a supplied candidate, such as an agent's proposal, with the exported PyRel checker. |
-| `format_result(result)` | function | 337 | Short human summary of an application result; total over any input. |
+| `execute_application(model_path, input_path, output_path, *, native_python, query_script, query_args…` | function | 205 | Only captured candidate bytes with complete native acceptance are published. |
+| `check_proposal(model_path, input_path, proposal_path, output_path, *, native_python, owned_relation…` | function | 285 | Check a supplied candidate, such as an agent's proposal, with the exported PyRel checker. |
+| `format_result(result)` | function | 347 | Short human summary of an application result; total over any input. |
 
 ## gnd.export.emit — `src/gnd/export/emit.py`
 Components: export.pyrel_emit
@@ -27,7 +27,7 @@ Offline publication of a self-contained optional PyRel program.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 18 | Render from one bounded input read; no checker or foreign-runtime import. |
-| `render_pyrel_rules(model_path, target)` | function | 40 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules(model_path, target)` | function | 48 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -149,13 +149,13 @@ Components: export.ilp_service
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `coverage(verdicts, ids) -> dict[str, list[str]]` | function | 281 | Covered, vacuous and unchecked ids for one clause, in manifest order. |
-| `MinedInputs` | class | 511 | The model and one population, loaded from the bytes that are digested. |
-| `MinedTables` | class | 523 | The relation table and the spelled pairs one population yields, built once (IH1-D3 (o)). |
-| `MinedCount` | class | 533 | Every rule mapped, then every rule counted, in rule order. |
-| `load_mined_inputs(model_path, population_path, *, population_sha256) -> MinedInputs` | function | 541 | The model and one population, loaded from the bytes that are digested. |
-| `mined_tables(inputs) -> MinedTables` | function | 575 | The relation table and the spelled pairs of INPUTS' population. |
-| `count_mined_rules(inputs, parsed, *, tables) -> MinedCount` | function | 581 | Map every rule in :data:`ilp_amie.MAPPING_REFUSALS` order, then count every rule. |
+| `coverage(verdicts, ids) -> dict[str, list[str]]` | function | 285 | Covered, vacuous and unchecked ids for one clause, in manifest order. |
+| `MinedInputs` | class | 515 | The model and one population, loaded from the bytes that are digested. |
+| `MinedTables` | class | 527 | The relation table and the spelled pairs one population yields, built once (IH1-D3 (o)). |
+| `MinedCount` | class | 537 | Every rule mapped, then every rule counted, in rule order. |
+| `load_mined_inputs(model_path, population_path, *, population_sha256) -> MinedInputs` | function | 545 | The model and one population, loaded from the bytes that are digested. |
+| `mined_tables(inputs) -> MinedTables` | function | 581 | The relation table and the spelled pairs of INPUTS' population. |
+| `count_mined_rules(inputs, parsed, *, tables) -> MinedCount` | function | 587 | Map every rule in :data:`ilp_amie.MAPPING_REFUSALS` order, then count every rule. |
 
 ## gnd.export.lean — `src/gnd/export/lean.py`
 Components: export.lean_lowering
@@ -163,29 +163,29 @@ Offline lowering of explicit finite carriers and positive acyclic models.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `WorkLimit` | class(ValueError) | 35 | (no docstring) |
-| `scalar(value, primitive)` | function | 39 | (no docstring) |
-| `tuple_expr(values)` | function | 53 | (no docstring) |
-| `list_expr(values)` | function | 57 | (no docstring) |
-| `component(name, index, arity)` | function | 61 | (no docstring) |
-| `constraints(md)` | function | 65 | (no docstring) |
-| `Renderer` | class | 79 | (no docstring) |
-| `Renderer.charge(self, n)` | method | 122 | (no docstring) |
-| `Renderer.add(self, i, v)` | method | 127 | (no docstring) |
-| `Renderer.roles(self, i)` | method | 138 | (no docstring) |
-| `Renderer.rel(self, i, p)` | method | 141 | (no docstring) |
-| `Renderer.row(self, i, row)` | method | 148 | (no docstring) |
-| `Renderer.classify(self)` | method | 156 | (no docstring) |
-| `Renderer.carriers(self)` | method | 243 | (no docstring) |
-| `Renderer.bindings(self, atoms, names)` | method | 288 | (no docstring) |
-| `Renderer.primitive_expr(self, term, bindings, expected)` | method | 311 | (no docstring) |
-| `Renderer.comparison(self, cmp, bindings)` | method | 362 | (no docstring) |
-| `Renderer.joins(self, atoms, names, leaf, guards)` | method | 397 | (no docstring) |
-| `Renderer.clause(self, i, n, c)` | method | 418 | (no docstring) |
-| `Renderer.relation_type(self, i)` | method | 450 | (no docstring) |
-| `Renderer.family(self, n, c, i)` | method | 454 | (no docstring) |
-| `Renderer.render(self)` | method | 538 | (no docstring) |
-| `render_lean(model_bytes, candidate_bytes, *, toolchain, model_format, candidate_format, reference_i…` | function | 789 | (no docstring) |
+| `WorkLimit` | class(ValueError) | 37 | (no docstring) |
+| `scalar(value, primitive)` | function | 41 | (no docstring) |
+| `tuple_expr(values)` | function | 55 | (no docstring) |
+| `list_expr(values)` | function | 59 | (no docstring) |
+| `component(name, index, arity)` | function | 63 | (no docstring) |
+| `constraints(md)` | function | 67 | (no docstring) |
+| `Renderer` | class | 81 | (no docstring) |
+| `Renderer.charge(self, n)` | method | 124 | (no docstring) |
+| `Renderer.add(self, i, v)` | method | 129 | (no docstring) |
+| `Renderer.roles(self, i)` | method | 140 | (no docstring) |
+| `Renderer.rel(self, i, p)` | method | 143 | (no docstring) |
+| `Renderer.row(self, i, row)` | method | 150 | (no docstring) |
+| `Renderer.classify(self)` | method | 158 | (no docstring) |
+| `Renderer.carriers(self)` | method | 245 | (no docstring) |
+| `Renderer.bindings(self, atoms, names)` | method | 290 | (no docstring) |
+| `Renderer.primitive_expr(self, term, bindings, expected)` | method | 313 | (no docstring) |
+| `Renderer.comparison(self, cmp, bindings)` | method | 364 | (no docstring) |
+| `Renderer.joins(self, atoms, names, leaf, guards)` | method | 399 | (no docstring) |
+| `Renderer.clause(self, i, n, c)` | method | 420 | (no docstring) |
+| `Renderer.relation_type(self, i)` | method | 452 | (no docstring) |
+| `Renderer.family(self, n, c, i)` | method | 456 | (no docstring) |
+| `Renderer.render(self)` | method | 540 | (no docstring) |
+| `render_lean(model_bytes, candidate_bytes, *, toolchain, model_format, candidate_format, reference_i…` | function | 791 | (no docstring) |
 
 ## gnd.export.lean_cli — `src/gnd/export/lean_cli.py`
 Components: export.command
@@ -202,8 +202,8 @@ Descriptor-bound Lean input snapshots and exact bundle reconstruction.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `export_lean(model_path, population_path, *, toolchain, reference_root, out, raw, limits)` | function | 16 | (no docstring) |
-| `verify_lean_bundle(bundle_path, *, limits)` | function | 73 | (no docstring) |
+| `export_lean(model_path, population_path, *, toolchain, reference_root, out, raw, limits)` | function | 18 | (no docstring) |
+| `verify_lean_bundle(bundle_path, *, limits)` | function | 79 | (no docstring) |
 
 ## gnd.export.lean_runtime — `src/gnd/export/lean_runtime.py`
 Components: export.lean_compile
@@ -308,13 +308,13 @@ Deterministic offline lowering to Souffle's bounded relational fragment.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Unsupported` | class(ValueError) | 38 | Valid input outside the selected fragment. |
-| `wire(document)` | function | 42 | (no docstring) |
-| `digest(data)` | function | 46 | (no docstring) |
-| `parse(raw, fmt, limits)` | function | 50 | (no docstring) |
-| `token(value, primitive)` | function | 70 | (no docstring) |
-| `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 88 | (no docstring) |
-| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 205 | (no docstring) |
+| `Unsupported` | class(ValueError) | 39 | Valid input outside the selected fragment. |
+| `wire(document)` | function | 43 | (no docstring) |
+| `digest(data)` | function | 47 | (no docstring) |
+| `parse(raw, fmt, limits)` | function | 51 | (no docstring) |
+| `token(value, primitive)` | function | 71 | (no docstring) |
+| `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 89 | (no docstring) |
+| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 206 | (no docstring) |
 
 ## gnd.export.souffle_cli — `src/gnd/export/souffle_cli.py`
 Components: export.command
@@ -331,10 +331,10 @@ Descriptor-bound bundle intake and exclusive manifest-last publication.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `read_file(path, cap)` | function | 12 | (no docstring) |
-| `verify_souffle_bundle(bundle_path, *, limits)` | function | 17 | (no docstring) |
-| `write_souffle_bundle(payload, out, *, raw)` | function | 79 | (no docstring) |
-| `export_souffle(model_path, population_path, *, reference_root, out, raw)` | function | 103 | (no docstring) |
+| `read_file(path, cap)` | function | 14 | (no docstring) |
+| `verify_souffle_bundle(bundle_path, *, limits)` | function | 19 | (no docstring) |
+| `write_souffle_bundle(payload, out, *, raw)` | function | 81 | (no docstring) |
+| `export_souffle(model_path, population_path, *, reference_root, out, raw)` | function | 105 | (no docstring) |
 
 ## gnd.export.souffle_runtime — `src/gnd/export/souffle_runtime.py`
 Components: export.souffle_runtime

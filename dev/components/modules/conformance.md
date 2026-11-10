@@ -39,7 +39,7 @@ Assertion #2 — the manifest's model digest equals the model's digest NOW.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `model_file_sha256(model_path) -> str` | function | 60 | The model's content identity: sha256 over its bytes. |
-| `check_currency(model_path, manifest) -> tuple[Finding, ...]` | function | 79 | Assertion #2: one finding if the model moved without regeneration. |
+| `check_currency(model_path, manifest) -> tuple[Finding, ...]` | function | 81 | Assertion #2: one finding if the model moved without regeneration. |
 
 ## gnd.conformance.integrity — `src/gnd/conformance/integrity.py`
 Components: conformance.integrity

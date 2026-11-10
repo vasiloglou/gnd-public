@@ -78,9 +78,18 @@ def test_deleted_binding_is_observed(monkeypatch):
         assert_bindings(baseline)
 
 
+def mc1_definition(module, name):
+    path = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC1/definition-successors.json'
+    rows = json.loads(path.read_text())
+    matches = [r for r in rows if (r['module'], r['name']) == (module, name)]
+    assert len(matches) <= 1
+    return matches[0] if matches else None
+
+
 @pytest.mark.parametrize('row', inventory(), ids=lambda r: r['module'] + '.' + r['name'])
 def test_original_definition_body_is_verbatim(row):
-    module = homes().get((row['module'], row['name']), row['module'])
+    mc1 = mc1_definition(row['module'], row['name'])
+    module = mc1['home'] if mc1 else homes().get((row['module'], row['name']), row['module'])
     relative = module.replace('.', '/')
     path = ROOT / 'src' / (relative + '.py')
     if not path.is_file():
@@ -98,9 +107,13 @@ def test_original_definition_body_is_verbatim(row):
     from support.rf9_ci_sources import definition_successor
     successor = definition_successor(row['module'], row['name'])
     if successor:
-        assert successor['home'] == module
+        assert successor['home'] == (mc1['historical_home'] if mc1 else module)
         assert successor['before'] == row['sha256'] and successor['reason']
-    assert hashlib.sha256(body.encode()).hexdigest() == (successor['after'] if successor else row['sha256'])
+    expected = successor['after'] if successor else row['sha256']
+    if mc1:
+        assert mc1['before'] == expected and mc1['reason']
+        expected = mc1['after']
+    assert hashlib.sha256(body.encode()).hexdigest() == expected
     value = getattr(importlib.import_module(row['module']), row['name'])
     assert pickle.loads(pickle.dumps(value)) is value
 
@@ -126,6 +139,7 @@ def test_actual_predecessor_validation_and_checker_patches_have_effect(monkeypat
 def split_homes():
     return {ROOT / 'src/gnd' / name for name in (
         'model/__init__.py', 'model/_validation.py', 'model/_operations.py',
+        'model/_includes.py', 'model/_paths.py',
         # IK2 (2026-10-24): induced-provenance rules, split out at the size ceiling.
         'model/_induction.py',
         # Evolve-loading follow-up r2 (2026-10-27): the shared JSON-value walk.

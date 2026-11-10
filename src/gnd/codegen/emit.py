@@ -934,9 +934,12 @@ def emit_project(model: Any, model_path: str, *, skill_name: str | None = None) 
     and the create-once architecture skeleton loads — each raising
     :class:`EmitGateError`.
     """
+    from gnd.model._includes import guard_path
     from gnd.terms import require_non_temporal
 
+    guard_path(model_path, "codegen.emit")
     require_non_temporal(model, "codegen")
+
     stem = extract_stem(model_path)
     package = module_name(stem)
     posix_model = Path(model_path).as_posix()

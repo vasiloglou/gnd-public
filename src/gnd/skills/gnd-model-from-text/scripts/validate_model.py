@@ -211,6 +211,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ERROR at $: model {args.model} could not be read or parsed: {error}")
         return EX_DATAERR
 
+    if isinstance(doc, dict) and any(k in doc for k in ("includes", "fact_type_constraints")):
+        print("include:unsupported-route: use gnd validate to resolve model includes")
+        return EX_DATAERR
     validator = Draft202012Validator(schema)
     errors = sorted(validator.iter_errors(doc), key=lambda e: e.json_path)
     for error in errors:

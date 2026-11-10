@@ -176,7 +176,7 @@ authored), `_provenance: tuple[ElementOrigin, ...]` and
 ```python
 @dataclass(frozen=True)
 class ElementOrigin:
-    origin: str                 # "model" or the include id
+    origin: str                 # "model" or "includes[<include id>]" (r5: no sentinel collision)
     composed_address: str       # "$.fact_types[7]", "$.fact_types[7].constraints[2]"
     original_address: str       # in the origin file, e.g. "$.fact_type_constraints[0].constraints[1]"
     element_id: str | None      # None for an anonymous constraint
@@ -618,3 +618,106 @@ still fails. No prior member's expected answer is regenerated on candidate code.
   grow conflicts with the mandatory MC1 *.orm fixtures. Section 12 admits
   separately enumerated new fixtures without weakening comparisons for
   the frozen 400 historical files. Retain this plan-repair row at close.
+
+### r4 execution clarification: isolated baseline and guard helpers
+
+Delegated amendment (auto=true), 2026-11-09: the frozen 459ca8d2 baseline
+census has completed (400/334/66/1), and its full default suite is running
+in a separate beast-3 checkout. Source capture and launch preceded production
+edits. Local implementation may proceed while that immutable baseline run
+finishes: no baseline file or process imports the candidate checkout. The
+full result is still owed before MC1 completion, never inferred from launch.
+This supersedes the requirement to wait for full-suite completion before
+local source edits; it preserves the exact before/after source boundary.
+
+The shared guard exports `guard_document(document, route)`,
+`guard_bytes(raw, *, source, route)` and `guard_path(path, route)`.
+Each detects declarations using `declares_includes`, then calls
+`refuse_unsupported`; no include resolution is reimplemented. Parse/read
+failures on include-free input fall through to each route's original loader
+and existing error adapter, preserving refusal precedence and spelling.
+
+- 2026-11-09, size stop: the conservative gross count is 763 added
+  production/schema lines (includes synchronized schema bytes and moved
+  bodies), versus a 750-line stop. Source edits paused pending a current
+  owner budget choice. Net count is lower; the retained size-check lists
+  both rather than selecting the more permissive measure after the fact.
+  New tests currently total 832 lines. One failing judgments-API reason
+  propagation case remains unfixed at the pause. No phase completion claimed.
+
+### Owner size ruling (2026-11-09)
+
+Owner response to the measured MC1 size stop, verbatim:
+
+> Raise MC1’s stop to 1,100 source / 1,900 test lines
+
+This supersedes the original 750-source / 1,425-test stop for MC1 only.
+Use the conservative gross source/schema count, including the schema twin
+and moved code, to retain the same measurement basis. Resume implementation
+under the existing auto delegation. Later phase budgets are unchanged.
+
+- MC1 implementation: the first mixed-host warning fixture lacked the
+  common-sense library_entry and therefore failed structurally, not on
+  provenance. Its output is explicitly labelled invalid evidence. After
+  correcting that fixture, the selector-path defect was reproduced on the
+  pre-fix remapper (red-provenance-selector.txt) and passed after the fix.
+- MC1 implementation: the RF6/RF8 historical source pins cannot describe
+  intentionally changed loader/version/guard bodies or new homes. Named
+  successor artifacts bind the prior expected digests and exact new bodies;
+  callable identity, pickle/metadata, source visitation and dirty controls
+  remain in the focused selection. Original evidence is not rewritten.
+- MC1 implementation: new Model metadata annotations and serializer getattr
+  sites add exact dynamic-syntax candidates. The successor inventory adds
+  those counted rows only; the ModelIndex query policy remains unchanged.
+- MC1 implementation: D7 experiment A and B both matched the frozen census;
+  A (one wrapping serializer) is selected. The program-export baseline was
+  independently produced on beast-3 at 459ca8d2 and retained for T51.
+
+### Expanded affected-consumer controls
+
+Add tests/test_rf6_packages.py, tests/test_rf6_query_policy.py,
+tests/test_rf8_sessions.py and the affected public witness/composition,
+conformance, extract, measure and PyRel export suites to impact closure.
+The selected full default candidate gate also executes each ordinary guard
+consumer's suite under the unchanged default exclusions. A skipped historical
+or native control is not claimed as a completed gate. Lint's 13 known reds
+are reproduced at the frozen baseline and retained separately; no new lint
+failure is accepted, and the final record must report the nonzero lint exit.
+
+- MC1 self-audit during independent review: R20's direct service guard passes,
+  but the public batch adapter emits band 70 because the refused BatchResult
+  carries no model digest while the closed report schema requires one. The
+  read-only CLI probe is retained as red-batch-adapter-probe.json. This is a
+  blocking finding; preserve guard-first order and emit the authentic digest
+  only as refusal metadata, never as a positive currency claim. Add a public
+  CLI regression and avoid the adapter's policy reload for this refused route.
+
+### r5: reproduced review repairs and completed implementability sweep
+
+Delegated approval (auto=true), 2026-11-09, under the current named milestone
+authorization. Adopt MC1-review-disposition.md's R1-R9 repairs and the shared
+`include_reason(error) -> str | None` guard-adapter helper. Included origin
+kind is encoded as includes[ID], distinct from the own sentinel model; no
+new reserved ID or public identity/report field is introduced. Deep copy
+recursion maps to include:declaration rather than escaping the total composer.
+The exact digest length is also stated in both synchronized schema copies.
+
+Inventory additions: R31 is direct `render_lean` raw-byte admission; R32 is
+direct `render_souffle` raw-byte admission. Each has its own include-bearing
+refusal and include-free refusal controls. R7's copy-bound helper is separately
+tested, as are API and text/JSON composition checks and the public batch CLI.
+
+The guard-before-hash requirement concerns the route's model identity/currency
+work. The shared bounded reader's internal LeafSnapshot hash is a trusted
+intake control, not a positive model-currency claim, and remains part of that
+reader. A refused batch report still requires its existing closed digest field:
+compute that authentic captured-byte digest only after the guard has refused;
+never load/evaluate the composition or report currency on that path. This is
+a compatibility decision preserving the existing report schema, not a new
+report version or a fabricated digest. Record this clarification as a plan
+repair at close.
+
+The 17 corrected regressions were observed red before repairs and green after.
+Three successor raw legacy controls are also green. The one focused independent
+confirmation remains selected; a green local test is not that review. Preserve
+all earlier rulings and snapshots. MC1's owner-selected 1100/1900 stop remains.

@@ -70,6 +70,14 @@ def run_conformance(model_path: str | Path, project_root: str | Path) -> Conform
     The payload's per-assertion ``ran`` fields say exactly which work completed;
     ``exit_code`` applies the published precedence to the run as a whole.
     """
+    from gnd.model._includes import guard_path
+    try:
+        guard_path(model_path, "conformance.service")
+    except ModelValidationError:
+        payload = build_conformance_payload(model_path, None, None, None,
+            actual_model_sha256=None, gnd_version=resolve_version(),
+            error="include:unsupported-route")
+        return ConformanceServiceResult(payload, _EXIT_ILL_FORMED)
     root = Path(project_root)
     from gnd.terms import uses_temporal
 

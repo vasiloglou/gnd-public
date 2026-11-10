@@ -151,6 +151,8 @@ def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
         raise IlpError(EXIT_ILL_FORMED, f"expected-state: label manifest {labels_path} is in "
                        "expected-state mode; the export learns from class labels (IK5-D2)")
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, "model")
+    from gnd.model._includes import guard_bytes
+    guard_bytes(model_bytes, source=model_path, route='ilp_service:154')
     model = load_model_bytes(model_bytes, source=model_path)
     if model.reference_populations:
         raise IlpError(EXIT_ILL_FORMED, "references: models with declared reference "
@@ -261,6 +263,8 @@ def _load_candidate(prepared: _Prepared, constraints: list[dict[str, Any]], mode
     prepared.reloads.append(len(constraints))
     ops = output.add_operations([(None, c) for c in constraints], prefix="ilp")
     document = output.candidate_document(prepared.document, ops)
+    from gnd.model._includes import guard_bytes
+    guard_bytes(output.candidate_text(document).encode('utf-8'), source=model_path, route='ilp_service:264')
     return load_model_bytes(output.candidate_text(document).encode("utf-8"), source=model_path)
 
 
@@ -550,6 +554,8 @@ def load_mined_inputs(model_path: Path, population_path: Path, *,
     from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
 
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, "model")
+    from gnd.model._includes import guard_bytes
+    guard_bytes(model_bytes, source=model_path, route='ilp_service:553')
     model = load_model_bytes(model_bytes, source=model_path)
     if model.reference_populations:
         raise IlpError(EXIT_ILL_FORMED, "references: models with declared reference "
@@ -750,7 +756,8 @@ def _cmd_import_mined_rules(
         ops = output.add_operations([(None, c) for c in constraints], prefix="mined")
         document = output.candidate_document(inputs.document, ops)
         from gnd.model import load_model_bytes
-
+        from gnd.model._includes import guard_bytes
+        guard_bytes(output.candidate_text(document).encode('utf-8'), source=paths['model'], route='ilp_service:754')
         candidate = load_model_bytes(output.candidate_text(document).encode("utf-8"),
                                      source=paths["model"])
         from gnd.population import load_population_bytes

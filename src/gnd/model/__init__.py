@@ -276,64 +276,67 @@ if TYPE_CHECKING:
 import hashlib
 import os
 import weakref
-from contextlib import contextmanager
+from contextlib import contextmanager as contextmanager
 from typing import Literal
 
 from gnd import artifacts
+from gnd.model._validation import parse_model_document as parse_model_document
 from gnd.values import reference_model_digest
-
-
-def parse_model_document(data: bytes, *, source: str | Path) -> Any:
-    """Parse one bounded model buffer exactly as ``load_model_bytes`` does: strict
-    JSON for a ``.json`` source, otherwise the alias/event guard and then the
-    round-trip YAML reader. The document is returned unvalidated."""
-    from ruamel.yaml.events import AliasEvent
-
-    if len(data) > MAX_MODEL_BYTES:
-        raise ModelLoadError("model exceeds the 10 MiB input cap")
-    text = data.decode("utf-8")
-    if re.search(r"(?m)[|>][-+0-9]{0,2}[ \t]*(?:#.*)?$", text) is None:
-        text = text.rstrip()
-    doc = None
-    if Path(source).suffix == ".json" or text.lstrip().startswith("{"):
-        from gnd.errors import PopulationLoadError
-        from gnd.population import _parse_document_bytes
-
-        try:
-            doc = _parse_document_bytes(data, suffix=".json", source=str(source))
-        except PopulationLoadError as error:
-            from gnd.input_policy import InputRefusal
-
-            if (Path(source).suffix == ".json"
-                    or not isinstance(error.__cause__, json.JSONDecodeError)
-                    or isinstance(error.__cause__, InputRefusal)):
-                raise ModelLoadError("model JSON input refused") from error
-            # A YAML flow mapping may start with an unquoted key.
-    if doc is None:
-        for count, event in enumerate(configure_comment_scanner(YAML(typ="safe")).parse(text), 1):
-            if count > MAX_YAML_EVENTS or isinstance(event, AliasEvent):
-                raise ModelLoadError("model YAML alias/event guard refused input")
-        doc = configure_comment_scanner(YAML(typ="rt")).load(text)
-    return doc
 
 
 def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
     """Validate one immutable bounded buffer; source is diagnostic metadata."""
     doc = parse_model_document(data, source=source)
-    issues = _layer1_structural(doc)
+    from gnd.model._includes import _refuse, declares_includes, parse_declarations
+
+    if declares_includes(doc):
+        if "includes" not in doc:
+            parse_declarations(doc)
+        _refuse("unresolved")
+    return _finish_model(doc)
+
+
+def _finish_model(doc, origins=(), included=()) -> Model:
+    from gnd.model._includes import remap_issues
+
+    issues = remap_issues(_layer1_structural(doc), origins)
     if issues:
         raise ModelValidationError(issues)
-    issues = semantic_validate(dict(doc))
+    issues = remap_issues(semantic_validate(dict(doc)), origins)
     errors = [issue for issue in issues if issue.severity == "error"]
     warnings = [issue for issue in issues if issue.severity == "warning"]
     if errors:
         raise ModelValidationError(errors, warnings)
     model = Model.model_validate({**dict(doc), "warnings": warnings})
 
+    model._provenance = origins
+    model._included = included
     validate_declarations(model)
     _attach_compiled_obligations(model)
     return model
 
+
+
+def _load_model_at(data, *, source, descriptor):
+    from gnd.model._includes import compose, declares_includes
+
+    doc = parse_model_document(data, source=source)
+    if declares_includes(doc):
+        doc, origins, included = compose(doc, descriptor=descriptor, source=source)
+        return _finish_model(doc, origins, included)
+    return load_model_bytes(data, source=source)
+
+
+def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path) -> Model:
+    """Resolve the authored model and bind references under one retained root."""
+    with retained_root(root) as descriptor:
+        model = _load_model_at(data, source=source, descriptor=descriptor)
+        if model.reference_populations:
+            try:
+                model._references = _bind_at(model, descriptor)
+            except Exception as error:
+                raise ReferenceInputError(str(error), model=model) from error
+        return model
 
 def _load_model_no_follow(path: Path) -> Model:
     """Strict path intake for consumers whose contract forbids symlink traversal."""
@@ -343,7 +346,7 @@ def _load_model_no_follow(path: Path) -> Model:
         data, _ = artifacts.read_regular_bounded_at(
             descriptor, path.name, max_bytes=MAX_MODEL_BYTES
         )
-        model = load_model_bytes(data, source=path)
+        model = _load_model_at(data, source=path, descriptor=descriptor)
         if model.reference_populations:
             try:
                 model._references = _bind_at(model, descriptor)
@@ -354,7 +357,6 @@ def _load_model_no_follow(path: Path) -> Model:
 
 def load_model(path: str | Path) -> Model:
     """Read model and reference bytes beneath a single retained directory."""
-    import os
 
     from gnd import artifacts
 
@@ -371,6 +373,9 @@ def load_model(path: str | Path) -> Model:
         raise ModelLoadError("model path is not a regular file")
     with path.open("rb") as handle:
         data = handle.read(MAX_MODEL_BYTES + 1)
+    from gnd.model._includes import _refuse, declares_includes
+    if declares_includes(parse_model_document(data, source=path)):
+        _refuse("unreadable", "$.includes")
     model = load_model_bytes(data, source=path)
     if model.reference_populations:
         raise ReferenceInputError(
@@ -405,12 +410,7 @@ _BOUND = weakref.WeakValueDictionary()
 _COMBINED = weakref.WeakValueDictionary()
 
 
-class ReferenceInputError(ValueError):
-    """A reference boundary refused its input before domain evaluation."""
-
-    def __init__(self, message: str, *, model: Model | None = None):
-        super().__init__(message)
-        self.model = model
+from gnd.errors import ReferenceInputError as ReferenceInputError
 
 
 @dataclass(frozen=True)
@@ -454,36 +454,8 @@ def validate_reference_structure(document: object) -> None:
             stack.extend((v, depth) for v in (node.values() if isinstance(node, dict) else node))
 
 
-def _relative(path: object) -> str:
-    if not isinstance(path, str) or not path or len(path) > 4096:
-        raise ReferenceInputError("reference path is empty or exceeds 4096 characters")
-    parts = path.split("/")
-    if len(parts) > 32 or any(p in {"", ".", ".."} for p in parts):
-        raise ReferenceInputError(
-            "reference path must have at most 32 nonempty relative components"
-        )
-    if "\\" in path or "\x00" in path or re.match(r"^[A-Za-z]:", path):
-        raise ReferenceInputError("reference path is not a confined POSIX relative path")
-    return path
-
-
-@contextmanager
-def retained_root(root: str | Path):
-    """Open every lexical ancestor without following a symlink."""
-    if not hasattr(os, "O_NOFOLLOW") or not hasattr(os, "O_DIRECTORY"):
-        raise ReferenceInputError("safe reference descriptor traversal is unavailable")
-    absolute = Path(root)
-    if not absolute.is_absolute():
-        absolute = Path.cwd() / absolute
-    descriptor = os.open(absolute.anchor, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
-    try:
-        for part in absolute.parts[1:]:
-            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=descriptor)
-            os.close(descriptor)
-            descriptor = next_fd
-        yield descriptor
-    finally:
-        os.close(descriptor)
+from gnd.model._paths import _relative as _relative
+from gnd.model._paths import retained_root as retained_root
 
 
 def validate_declarations(model: Model) -> dict[str, str]:
@@ -496,7 +468,7 @@ def validate_declarations(model: Model) -> dict[str, str]:
             i.severity == "error" for i in semantic_validate(document)
         ):
             raise ReferenceInputError("reference-bearing model structure or semantics are invalid")
-    if declarations and model.version != 4:
+    if declarations and model.version not in {4, 5}:
         raise ReferenceInputError("reference_populations requires model version 4")
     if len(declarations) > 32:
         raise ReferenceInputError("reference file count exceeds 32")

@@ -241,6 +241,8 @@ def build_manifest(
     silently rewrite it — the very destruction the refusal existed to prevent.
     """
     from gnd import resolve_version
+    from gnd.model._includes import guard_path
+    guard_path(model_path, "codegen.manifest")
 
     if entries is None:
         entries = [

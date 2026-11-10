@@ -26,6 +26,8 @@ def _witness_inputs(model_path, population_path, reference_root):
         return raw
 
     mr, pr = read(model_path), read(population_path)
+    from gnd.model._includes import guard_bytes
+    guard_bytes(mr, source=model_path, route='service:29')
     model = load_model_bytes(mr, source=model_path)
     candidate = load_population_bytes(pr, source=population_path, model=model)
     context = bind_declared_references(
@@ -45,8 +47,9 @@ def _composition_lineage(composition, model_path, population_path):
 
     from gnd.anchors import MAX_DOCUMENT_BYTES, read_regular_path
     from gnd.composition import MAX_RECORD_BYTES, lineage_index, parse_record
+    from gnd.model._includes import guard_path
     from gnd.witness.types import WitnessInputError
-
+    guard_path(model_path, "witness.composition")
     raw = read_regular_path(composition, label="composition record", max_bytes=MAX_RECORD_BYTES)
     record = parse_record(raw)
     for path, key in ((model_path, "model_sha256"), (population_path, "population_sha256")):
@@ -96,12 +99,14 @@ def witness_result(model_path, population_path, targets_path, *, reference_root=
         return produce_witness(model, candidate, targets, references=context).model_dump(
             mode="json"
         )
+    except ModelValidationError as error:
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+        return WitnessResult(3, reason=reason).model_dump(mode="json")
     except (
         ValueError,
         TypeError,
         OSError,
         RecursionError,
-        ModelValidationError,
         model_module.ModelLoadError,
         PopulationLoadError,
         YAMLError,
@@ -122,12 +127,14 @@ def replay_result(model_path, population_path, certificate_path, *, reference_ro
         _, _, context, md, pd = _witness_inputs(model_path, population_path, reference_root)
         refs = tuple((o.id, raw) for o, _, raw in context._snapshots) if context else ()
         return replay_witness(md, pd, certificate, reference_inputs=refs).model_dump(mode="json")
+    except ModelValidationError as error:
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+        return WitnessResult(3, reason=reason).model_dump(mode="json")
     except (
         ValueError,
         TypeError,
         OSError,
         RecursionError,
-        ModelValidationError,
         model_module.ModelLoadError,
         PopulationLoadError,
         YAMLError,
@@ -152,6 +159,9 @@ def composed_witness_result(model_path, population_path, targets_path, *, compos
         if model_module.load_model(model_path).reference_populations:
             raise ValueError("a composed population has no reference populations")
         return _stamp_composition(witness_result(model_path, population_path, targets_path), lineage)
+    except ModelValidationError as error:
+        from gnd.witness.types import WitnessResult
+        return WitnessResult(3, reason=error.issues[0].rule_id).model_dump(mode="json")
     except _input_errors():
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
@@ -169,6 +179,9 @@ def composed_replay_result(model_path, population_path, certificate_path, *, com
         lineage = _composition_lineage(composition, model_path, population_path)
         _, _, _, md, pd = _witness_inputs(model_path, population_path, None)
         return replay_witness(md, pd, certificate, composition=lineage).model_dump(mode="json")
+    except ModelValidationError as error:
+        from gnd.witness.types import WitnessResult
+        return WitnessResult(3, reason=error.issues[0].rule_id).model_dump(mode="json")
     except (*_input_errors(), YAMLError):
         return WitnessResult(3, reason="input-invalid").model_dump(mode="json")
 
@@ -242,6 +255,9 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
         result = explain(
             model, candidate, fact_type, row=row, references=context, near_misses=True
         ).to_dict()
+    except ModelValidationError as error:
+        reason = next((i.rule_id for i in error.issues if i.rule_id.startswith("include:")), "input-invalid")
+        return _why_not_envelope(3, "refused", reason)
     except WhyNotWorkError as error:
         return _why_not_envelope(4, "refused", "work-limit", work=error.work)
     except (
@@ -249,7 +265,6 @@ def why_not_result(model_path, population_path, fact_type, *, row_path=None, ref
         TypeError,
         OSError,
         RecursionError,
-        ModelValidationError,
         model_module.ModelLoadError,
         PopulationLoadError,
         YAMLError,

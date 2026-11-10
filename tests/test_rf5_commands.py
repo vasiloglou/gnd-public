@@ -46,6 +46,11 @@ def test_relocated_algorithm_and_qualification_are_unchanged(name):
     from support.rf8_sources import portable_dump
     from support.rf9_ci_sources import body_successor
     successor = body_successor('RF5', name, 'gnd.cli')
+    if name == '_cmd_check_batch':
+        mc1 = json.loads((ROOT / '.gnd-planning/milestones/model-composition/evidence/MC1/batch-controller-successor.json').read_text())
+        assert mc1['name'] == name and mc1['home'] == HOMES[name] and mc1['reason']
+        assert mc1['before'] == successor['after']['algorithm_sha256']
+        successor = {**successor, 'after': {'algorithm_sha256': mc1['after']}}
     if successor:
         assert successor['home'] == HOMES[name] and successor['reason']
         assert hashlib.sha256(portable_dump(DEFINITIONS[name]).encode()).hexdigest() == successor['before']['algorithm_sha256']

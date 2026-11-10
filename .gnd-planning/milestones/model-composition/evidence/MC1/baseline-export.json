@@ -1,0 +1,9 @@
+{
+  "source_commit": "459ca8d2",
+  "source_model": "src/gnd/examples/rule_check/model.orm.yaml",
+  "model_sha256": "e83fcc2bc018bd09d73212f650720b30c750e2d5a405c76b7810bc64626db53b",
+  "runtime_sha256": "6748717f97e26247b364b1ad348e8321689b779e3147c1fda054133033e64f9c",
+  "duckdb_path": ":memory:",
+  "connection": null,
+  "program_sha256": "96b46f7f21586df8269869be9bec3bcacc4f2b93d9ffa09f5bc559dce4944ff2"
+}

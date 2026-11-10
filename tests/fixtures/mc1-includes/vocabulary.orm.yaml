@@ -1,0 +1,25 @@
+version: 2
+source: {kind: fixture}
+object_types:
+  - {id: component, name: Component, kind: entity, reference: {mode: popular, value_type: component_name}}
+  - {id: component_name, name: ComponentName, kind: value, primitive: String}
+  - {id: owner, name: Owner, kind: value, primitive: String}
+fact_types:
+  - id: component_uses_component
+    reading: '{Component} uses {Component}'
+    roles:
+      - {role_name: using, object_type: component}
+      - {role_name: used, object_type: component}
+    constraints:
+      - id: vocabulary_no_self_use
+        type: ring
+        variant: irreflexive
+        modality: deontic
+        source: user-supplied
+        status: confirmed
+        provenance: {user_quote: 'Components should not use themselves.'}
+  - id: component_has_owner
+    reading: '{Component} has {Owner}'
+    roles:
+      - {role_name: component, object_type: component}
+      - {role_name: owner, object_type: owner}

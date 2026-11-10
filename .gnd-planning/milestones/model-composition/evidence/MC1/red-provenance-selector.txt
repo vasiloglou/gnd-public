@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________________ test_T45b_mixed_host_warning_paths ______________________
+tests/test_mc1_model_includes.py:556: in test_T45b_mixed_host_warning_paths
+    assert warnings[0].path == 'includes[vocab]:$.fact_types[id=component_imports_component].constraints[0]'
+E   AssertionError: assert 'includes[voc...onstraints[0]' == 'includes[voc...onstraints[0]'
+E     
+E     - includes[vocab]:$.fact_types[id=component_imports_component].constraints[0]
+E     + includes[vocab]:$.fact_types[0].constraints[0]
+=========================== short test summary info ============================
+FAILED tests/test_mc1_model_includes.py::test_T45b_mixed_host_warning_paths
+1 failed, 119 deselected in 0.15s

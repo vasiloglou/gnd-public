@@ -21,6 +21,14 @@ def render_pyrel(
     """Render from one bounded input read; no checker or foreign-runtime import."""
     text = _read_text(model_path)
     document = _parse_document(text)
+    from gnd.errors import ModelValidationError
+    from gnd.model._includes import guard_document
+
+    from .pyrel_runtime import ExportInputError
+    try:
+        guard_document(document, "export.pyrel")
+    except ModelValidationError as error:
+        raise ExportInputError(str(error)) from error
     from gnd.terms import uses_temporal
 
     if uses_temporal(document):

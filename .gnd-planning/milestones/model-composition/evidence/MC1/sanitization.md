@@ -1,0 +1,1 @@
+Operator home paths in retained text and JSON probe output are replaced with <HOME>. JSON remains valid; this provenance note declares the path-only editing. Approved spec snapshots and the frozen census contain no such paths and remain exact-byte artifacts.

@@ -1,0 +1,44 @@
+Source size against a7c7cf46, before production implementation.
+Conservative gross additions include moved bodies and the synchronized schema copy; normative prose excluded.
+10	0	src/gnd/api.py
+5	0	src/gnd/batch.py
+2	0	src/gnd/checking_service.py
+3	0	src/gnd/codegen/emit.py
+2	0	src/gnd/codegen/manifest.py
+2	0	src/gnd/codegen/service.py
+2	0	src/gnd/conformance/currency.py
+8	0	src/gnd/conformance/service.py
+4	0	src/gnd/discover/service.py
+35	1	src/gnd/documents.py
+11	0	src/gnd/errors.py
+7	0	src/gnd/evolve/service.py
+4	0	src/gnd/exp/session.py
+12	0	src/gnd/exp/session_contract.py
+2	0	src/gnd/exp/session_judgments.py
+2	0	src/gnd/exp/session_replay.py
+10	0	src/gnd/export/applications.py
+8	0	src/gnd/export/emit.py
+8	1	src/gnd/export/ilp_service.py
+5	0	src/gnd/export/lean_io.py
+2	0	src/gnd/export/pyrel_rules.py
+5	1	src/gnd/export/souffle_io.py
+2	0	src/gnd/extract/service.py
+2	0	src/gnd/fidelity/doccheck_service.py
+2	0	src/gnd/fidelity/service.py
+2	0	src/gnd/judgments.py
+6	0	src/gnd/measure/service.py
+47	75	src/gnd/model/__init__.py
+40	2	src/gnd/model/_validation.py
+5	0	src/gnd/rai_import.py
+5	0	src/gnd/recovery/verify.py
+97	7	src/gnd/schema/orm-meta.schema.json
+3	0	src/gnd/skills/gnd-adopt/scripts/verify_migration.py
+3	0	src/gnd/skills/gnd-model-from-text/scripts/validate_model.py
+97	7	src/gnd/skills/gnd-orm-core/references/orm-meta.schema.json
+2	0	src/gnd/witness/io.py
+19	4	src/gnd/witness/service.py
+240	0	src/gnd/model/_includes.py
+42	0	src/gnd/model/_paths.py
+Gross source/schema additions: 763
+Net source/schema additions: 665
+New test lines: 832

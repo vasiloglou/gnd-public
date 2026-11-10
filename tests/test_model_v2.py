@@ -389,7 +389,7 @@ def test_worked_example_bytes_are_the_specification_bytes() -> None:
 def test_schema_copies_stay_byte_identical_and_carry_the_v2_keys() -> None:
     assert CANONICAL_SCHEMA.read_bytes() == VENDORED_SCHEMA.read_bytes()
     schema = json.loads(VENDORED_SCHEMA.read_text(encoding='utf-8'))
-    assert schema['properties']['version'] == {'enum': [1, 2, 3, 4]}
+    assert schema['properties']['version'] == {'enum': [1, 2, 3, 4, 5]}
     assert schema['properties']['operations']['items'] == {'$ref': '#/$defs/operation'}
     defs = schema['$defs']
     for name in ('operation', 'obligation', 'effect', 'dynamic_rule', 'frame', 'atom', 'bindings', 'term', 'source_kind', 'provenance_policy'):

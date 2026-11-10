@@ -119,18 +119,18 @@ Stable in-process access to GND validation and checking reports.
 | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 746 | Read two models and optionally one directory of population documents. |
 | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 930 | Public population sentence view; applied redaction is the default. |
 | `compose(model, directory) -> dict[str, Any]` | function | 958 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 995 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1038 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1067 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1168 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1192 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1207 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1215 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1225 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1234 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1246 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1249 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1252 | (no docstring) |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1001 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1044 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1073 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1181 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1205 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1220 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1228 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1238 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1247 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1259 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1262 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1265 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -273,8 +273,8 @@ Components: check.batch
 | `BatchRow` | class | 52 | (no docstring) |
 | `BatchResult` | class | 62 | (no docstring) |
 | `check_population_directory(model_path, populations_dir, *, compiled_operations) -> BatchResult` | function | 136 | (no docstring) |
-| `build_batch_payload(result) -> dict[str, Any]` | function | 252 | (no docstring) |
-| `canonical_batch_bytes(payload) -> bytes` | function | 287 | (no docstring) |
+| `build_batch_payload(result) -> dict[str, Any]` | function | 257 | (no docstring) |
+| `canonical_batch_bytes(payload) -> bytes` | function | 292 | (no docstring) |
 
 ## gnd.branches — `src/gnd/branches.py`
 Components: check.branches
@@ -437,11 +437,13 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `DeonticNote` | class(BaseModel) | 11 | A retained top-level deontic note from the ORM document. |
-| `Model` | class(BaseModel) | 18 | A loaded, validated ORM conceptual model. |
-| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 63 | (no docstring) |
-| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 69 | The compiled and retained obligations of one operation, in order. |
-| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 85 | Ids of fact types whose ``derivation_rule`` is the structured object |
+| `DeonticNote` | class(BaseModel) | 12 | A retained top-level deontic note from the ORM document. |
+| `ElementOrigin` | class | 20 | (no docstring) |
+| `IncludedFile` | class | 28 | (no docstring) |
+| `Model` | class(BaseModel) | 37 | A loaded, validated ORM conceptual model. |
+| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 86 | (no docstring) |
+| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 100 | The compiled and retained obligations of one operation, in order. |
+| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 116 | Ids of fact types whose ``derivation_rule`` is the structured object |
 
 ## gnd.errors — `src/gnd/errors.py`
 Components: infra.errors
@@ -457,6 +459,7 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `PopulationValidationError` | class(PopulationLoadError) | 56 | Raised when a population document fails D-10 schema validation. |
 | `UnvalidatedPopulationError` | class(Exception) | 87 | :func:`check` was called with a population that never passed layer-2 |
 | `TransitionLoadError` | class(Exception) | 131 | A walk was refused before evaluation. Always exit 3. |
+| `ReferenceInputError` | class(ValueError) | 174 | A reference boundary refused its input before domain evaluation. |
 
 ## gnd.evaluation_feedback — `src/gnd/evaluation_feedback.py`
 Components: check.evaluation_feedback
@@ -641,7 +644,7 @@ Saved external opinions: byte binding and separate admission/repair policy.
 | `normalized(r, sources)` | function | 366 | (no docstring) |
 | `qualification(verdict, expected, floor_value, evidence)` | function | 436 | (no docstring) |
 | `evaluate_judgments(policy, receipts, *, model, candidate, mechanical_report, model_bytes, populatio…` | function | 457 | (no docstring) |
-| `redact_policy(result)` | function | 664 | (no docstring) |
+| `redact_policy(result)` | function | 666 | (no docstring) |
 
 ## gnd.manifest_paths — `src/gnd/manifest_paths.py`
 Components: infra.safe_filesystem
@@ -853,7 +856,7 @@ Deterministic import of the bounded ``rai-orm-from-schema`` dialect.
 | `RaiImportResult` | class | 71 | (no docstring) |
 | `parse_rai_model_bytes(data, *, source) -> MutableMapping[str, Any]` | function | 108 | Parse one plain UTF-8 YAML mapping or raise a named total refusal. |
 | `plan_rai_import(request) -> RaiImportResult` | function | 391 | Read, classify, rewrite and validate without touching ``output_dir``. |
-| `publish_rai_import(request, result) -> None` | function | 651 | Publish the validated pair create-once, with the alias map last. |
+| `publish_rai_import(request, result) -> None` | function | 656 | Publish the validated pair create-once, with the alias map last. |
 
 ## gnd.redaction — `src/gnd/redaction.py`
 Components: infra.report_redaction

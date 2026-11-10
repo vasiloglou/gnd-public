@@ -228,6 +228,8 @@ def _load_model_document(
     from gnd.references import ReferenceInputError
 
     try:
+        from gnd.model._includes import guard_bytes
+        guard_bytes(data, source=model_path, route='service:231')
         model = load_model_bytes(data, source=model_path)
         if declared_references is not None and model.reference_populations != declared_references:
             raise EvolutionError(
@@ -300,6 +302,11 @@ def _parse_model_text(text: str, label: str = "candidate model") -> dict[str, An
         raise EvolutionError(f"{label} validation failed: {error}") from error
     except YAMLError as error:
         raise _yaml_refusal(label, error) from None
+    from gnd.model._includes import guard_document
+    try:
+        guard_document(parsed, "evolve.parse-model-text")
+    except ModelValidationError as error:
+        raise EvolutionError(str(error)) from error
     _guard_yaml_document(text, parsed, label)
     if not isinstance(parsed, dict):
         raise EvolutionError(f"{label} is not a mapping")

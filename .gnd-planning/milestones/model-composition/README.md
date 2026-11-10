@@ -7,12 +7,12 @@ another, pinned by sha256, and adds the project's own rules.
 **Status: plan r3 approved by the owner on 2026-11-09, MD1-MD16 as proposed
 ([plan-gate record](001-plan.md)).** Two Codex rounds ran (r1 revise, 18
 findings; r2 revise, 13), every finding reproduced and applied; r3 was not
-reviewed, because the convergence stop rule fired (plan §11). No phase has
-started; no code is written.
+reviewed, because the convergence stop rule fired (plan §11). Execution now uses the owner's explicit auto delegation. MC1 has a reviewed candidate; its full/default
+comparison and marked census remain pending ([candidate record](006-MC1-candidate.md)).
 
 - [Plan (r3, approved)](notes/model-composition-plan.md)
 - [Plan-gate record](001-plan.md)
-- [MC1 spec (r3, draft, awaiting its owner gate)](notes/phase-MC1-spec.md)
+- [MC1 spec (r5, delegated approval and review repairs)](notes/phase-MC1-spec.md)
 - [Codex review of r1](evidence/plan-review-r1/codex-review.md), with the
   reviewed r1 bytes and the prompt beside it
 - [Codex review of r2](evidence/plan-review-r2/codex-review.md), likewise
@@ -26,4 +26,4 @@ and a review copy of it shown to the owner right after MC1 (MC4-draft).
 Pending decisions: MC1's D1-D8 (spec §7); MD17, the business-level
 tutorial page (plan §10), before MC4.
 
-Next action: the MC1 spec gate (the owner rules D1-D8 and approves the spec), then MC1 implementation under process-phase.
+Next action: finish the selected MC1 candidate comparison on beast-3, then record MC1 before advancing to MC2. Merge and the owner docs reaction remain separate gates.

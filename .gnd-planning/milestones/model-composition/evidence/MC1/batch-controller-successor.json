@@ -1,0 +1,8 @@
+{
+  "name": "_cmd_check_batch",
+  "old": "gnd.cli",
+  "home": "gnd.commands.checking",
+  "before": "53a7b94ef988803347205e2c96a75659a40fb5779584ea942dfeb013d79df319",
+  "after": "568602d0c7a7626050902c810d3a92f8719770b61d5906ad9c05ff06f9a4c114",
+  "reason": "MC1 batch include refusal keeps its authentic digest and skips the post-refusal policy reload; R1 public CLI regression preserves band 3 and the closed schema."
+}

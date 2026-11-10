@@ -570,6 +570,11 @@ def verify_recovery_bundle(
             artifact_name="model.orm.yaml",
             root_identity=root_identity,
         )
+        from gnd.model._includes import guard_bytes
+        try:
+            guard_bytes(model_bytes, source="model.orm.yaml", route="recovery.verify")
+        except ModelValidationError:
+            raise _VerificationFailure("include:unsupported-route", "include:unsupported-route") from None
         model_digest = _sha256(model_bytes)
         if model_digest != outputs["model.orm.yaml"].sha256:
             raise _VerificationFailure("stale-digest", "model.orm.yaml digest differs from report")

@@ -210,6 +210,8 @@ def discover(
     population_bytes = _read_capped(
         population_path, MAX_POPULATION_BYTES, PopulationLoadError, "population"
     )
+    from gnd.model._includes import guard_bytes
+    guard_bytes(model_bytes, source=model_path, route='service:213')
     model = load_model_bytes(model_bytes, source=model_path)
     population = load_population_bytes(population_bytes, source=population_path, model=model)
     basename = population_path.name
@@ -260,6 +262,8 @@ def discover(
     if survivors:
         checked = output.candidate_document(document, output.operations(envelopes))
         try:
+            from gnd.model._includes import guard_bytes
+            guard_bytes(output.candidate_text(checked).encode('utf-8'), source=model_path, route='service:263')
             checked_model = load_model_bytes(
                 output.candidate_text(checked).encode("utf-8"), source=model_path
             )

@@ -292,6 +292,8 @@ def identity(model, candidate, refs):
 def intake(model_document, candidate_document, reference_inputs, *, limits=DEFAULT_LIMITS):
     validate_witness_structure(model_document, limits=limits)
     validate_witness_structure(candidate_document, limits=limits)
+    from gnd.model._includes import guard_document
+    guard_document(model_document, 'witness.io')
     model = load_model_bytes(
         json.dumps(model_document, ensure_ascii=False, allow_nan=False).encode("utf-8"),
         source="model.orm.json",

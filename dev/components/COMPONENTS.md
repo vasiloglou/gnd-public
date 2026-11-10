@@ -23,7 +23,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd synth, synthesize population, generate test data, violating cases, boundary cases, corpus generation
 - status: canonical
 - components: cli.synth_command, synth.service, model.loading, synth.corpus, synth.pool, synth.values, synth.assemble, synth.mutations, synth.prediction, synth.provenance
-- members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.json_document, … +14 more (graph.md)
+- members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.document, … +15 more (graph.md)
 - flow: cli.synth_command -> synth.service -> model.loading -> synth.corpus -> synth.pool -> synth.assemble -> synth.mutations -> synth.prediction -> synth.provenance
 - notes: Boundary and frontier generation branch after baseline resolution through synth.boundary and synth.frontier. Every emitted case is re-checked by the checker before publication.
 
@@ -32,7 +32,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd codegen, generate project, scaffold agent, regenerate project, model to code, ownership manifest
 - status: canonical
 - components: cli.codegen_command, codegen.service, model.loading, codegen.emit, codegen.identifiers, codegen.manifest, codegen.regenerate
-- members_uses: check.population_structure, exp.frontmatter, extract.bundle, extract.manifest, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, … +11 more (graph.md)
+- members_uses: check.population_structure, exp.frontmatter, extract.bundle, extract.manifest, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, … +12 more (graph.md)
 - flow: cli.codegen_command -> codegen.service -> model.loading -> codegen.emit -> codegen.identifiers -> codegen.manifest -> codegen.regenerate
 - notes: A fresh run bypasses the planner part of regeneration. An existing project is classified and reclassified before mutation.
 
@@ -41,7 +41,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd conformance, drift check, generated project agreement, derived file digests, model currency
 - status: canonical
 - components: cli.conformance_command, conformance.command, conformance.service, model.loading, conformance.integrity, codegen.manifest, conformance.currency, conformance.structural, conformance.architecture, conformance.report
-- members_uses: cli.arguments, codegen.emit, codegen.identifiers, extract.bundle, extract.manifest, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, infra.version, … +7 more (graph.md)
+- members_uses: cli.arguments, codegen.emit, codegen.identifiers, extract.bundle, extract.manifest, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, infra.version, … +8 more (graph.md)
 - flow: cli.conformance_command -> conformance.command -> conformance.service -> model.loading -> conformance.integrity -> codegen.manifest -> conformance.currency -> conformance.structural -> conformance.architecture -> conformance.report
 - notes: Green is structural only; extension files are reported as unexamined.
 
@@ -58,7 +58,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd measure, checker measurement, expected state, confusion cells, host labels, promote regression corpus
 - status: canonical
 - components: cli.measure_command, measure.service, measure.labels, model.loading, measure.report, measure.truth, measure.score, measure.coverage, measure.agreement, measure.promote
-- members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, … +17 more (graph.md)
+- members_uses: check.population_structure, checker.evaluate, cli.arguments, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, … +18 more (graph.md)
 - flow: cli.measure_command -> measure.service -> measure.labels -> model.loading -> measure.report -> measure.truth -> measure.score -> measure.coverage -> measure.promote
 - notes: Host class agreement goes through measure.agreement; synthetic corpora come from subsystem.synth.
 
@@ -123,7 +123,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Closed CodegenManifest records and deterministic JSON
 - status: canonical
 - modules: src/gnd/codegen/manifest.py
-- uses: extract.manifest, infra.input_policy, infra.safe_filesystem, infra.version
+- uses: extract.manifest, infra.input_policy, infra.safe_filesystem, infra.version, model.loading
 - used_by: codegen.emit, codegen.regenerate, codegen.service, conformance.architecture, conformance.currency, conformance.integrity, conformance.report, conformance.service, conformance.structural
 - part_of: subsystem.codegen, subsystem.conformance
 - tests: tests/test_codegen_manifest.py
@@ -194,7 +194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Zero or one model-digest-mismatch Finding
 - status: canonical
 - modules: src/gnd/conformance/currency.py
-- uses: codegen.manifest, conformance.integrity
+- uses: codegen.manifest, conformance.integrity, model.loading
 - used_by: conformance.service
 - part_of: subsystem.conformance
 - tests: tests/test_conformance_drift.py
@@ -1387,7 +1387,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Protected authority archive, judgment report/evidence attached to case results, projected feedback and replay validation.
 - status: canonical
 - modules: src/gnd/exp/session_judgments.py
-- uses: exp.session_evidence, infra.artifacts, model.population_loading, semantics.saved_judgments
+- uses: exp.session_evidence, infra.artifacts, model.loading, model.population_loading, semantics.saved_judgments
 - used_by: exp.session_replay, exp.session_runtime
 - tests: tests/test_rf8_sessions.py, tests/test_public_v71_judgment_successor_guards.py
 - notes: Judgment semantics are delegated to gnd.judgments; this component handles session retention, authority checks, feedback and byte-for-byte replay comparison.
@@ -1558,7 +1558,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Python source string; callers own publication.
 - status: canonical
 - modules: src/gnd/export/emit.py
-- uses: export.pyrel_rules, export.pyrel_runtime, model.scalar_terms
+- uses: export.pyrel_rules, export.pyrel_runtime, infra.errors, model.loading, model.scalar_terms
 - used_by: cli.export_command, export.applications
 - tests: tests/test_pyrel_export.py, tests/test_pyrel_native_seam.py
 - notes: The checker runtime is embedded verbatim without importing the foreign runtime during export; render_pyrel_rules delegates to export.pyrel_rules.
@@ -1625,7 +1625,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Published bundle or verified/refused ExportResult.
 - status: canonical
 - modules: src/gnd/export/souffle_io.py
-- uses: export.souffle_lowering, infra.artifacts, model.loading
+- uses: export.souffle_lowering, infra.artifacts, infra.errors, model.loading
 - used_by: export.lean_bundle, export.lean_compile, export.service, export.souffle_runtime
 - tests: tests/test_public_souffle_successors.py, tests/test_public_souffle_input_contract.py, tests/test_disclosure_mode.py
 - notes: Reconstruction compares the whole regenerated file mapping, then reapplies caller ceilings; publication delegates to the artifact directory publisher.
@@ -1651,7 +1651,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: LeanResult with Definitions.lean, ProofObligations.lean, maps, obligations, toolchain, retained inputs and manifest.
 - status: canonical
 - modules: src/gnd/export/lean.py, src/gnd/export/lean_types.py
-- uses: export.souffle_lowering, infra.artifacts, model.loading, witness.schema
+- uses: export.souffle_lowering, infra.artifacts, infra.errors, model.loading, witness.schema
 - used_by: export.lean_bundle, export.lean_compile
 - tests: tests/test_public_lean_export_successors.py, tests/test_public_lean_native_successors.py
 - checked: partial
@@ -1665,7 +1665,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Published or verified LeanResult; malformed, non-reproducing and over-limit bundles are refused.
 - status: canonical
 - modules: src/gnd/export/lean_io.py
-- uses: export.lean_lowering, export.souffle_bundle, infra.artifacts, model.loading, model.reference_binding
+- uses: export.lean_lowering, export.souffle_bundle, infra.artifacts, infra.errors, model.loading, model.reference_binding
 - used_by: export.lean_compile, export.service
 - tests: tests/test_public_lean_export_successors.py, tests/test_public_lean_native_successors.py
 - notes: Verification rerenders once with recorded limits for exact byte equality and again under caller limits. Compatibility import bindings remain in this module; runtime model loading uses the model module's public bound loader.
@@ -1724,27 +1724,27 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.loading
-- does: Load bounded YAML or JSON models and bind immutable reference populations [load_model, bind_population].
-- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried
-- in: Model path or immutable bytes; optional reference root, declared content hashes and validated candidate population.
+- does: Load bounded YAML or JSON models, compose pinned vocabularies and bind immutable reference populations [load_model, bind_population].
+- verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance
+- in: Model path or immutable bytes; optional composition/reference root, declared content hashes and validated candidate population.
 - out: Validated Model with warnings and compiled side table; bound reference context or combined population with occurrence origins.
 - status: canonical
-- modules: src/gnd/model/__init__.py
-- uses: infra.artifacts, infra.errors, infra.input_policy, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +62 more (graph.md)
+- modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
+- uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +66 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
-- notes: This module defines the loader and reference binder as well as re-exporting validation, document conversion and operation compilation helpers. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+- notes: The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
 
 
 ### model.validation
-- does: Validate model schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
+- does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
 - verbs: validate model, structural validation, semantic validation, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
-- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.scalar_terms
+- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.scalar_terms
 - used_by: model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
 - checked: partial
@@ -2155,33 +2155,33 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +50 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +49 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
 
 ### model.document
-- does: Represent loaded ORM model sections, retained warnings, deontic notes and compiled operation obligations [Model].
+- does: Represent loaded ORM sections, include origin metadata, warnings, deontic notes and compiled obligations [Model].
 - verbs: model document, loaded model, ORM sections, model object, conceptual model, deontic notes, validation warnings, compiled obligations, operation obligations, serialize model, structured derivation ids, structured rules, reference populations, Model, DeonticNote, structured_derivation_ids
 - in: Validated model fields and private compiled-obligation attachments
 - out: Frozen-field Pydantic Model objects, serialized documents and ordered structured derivation ids
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.shape_matches, extract.guidelines, infra.report_payloads, … +12 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.shape_matches, extract.guidelines, infra.report_payloads, … +13 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
 
 ### infra.errors
-- does: Share structured validation issues and model, population, transition and unvalidated-check exceptions.
+- does: Share structured validation issues and model, reference-boundary, population, transition and unvalidated-check exceptions.
 - verbs: validation issue, validation errors, error records, model load error, model validation error, population load error, population validation error, transition load error, unvalidated population, validation marker, Pydantic errors, convert issues, exception summary, issue severity, issues_from_validation_error
 - in: Pydantic errors, ValidationIssue lists, population validation-marker state and supplied transition metadata
 - out: Ordered issue records and typed exceptions with retained issues, warnings or supplied metadata
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, evolve.population_check, export.applications, export.ilp_service, export.pyrel_rules, extract.manifest, infra.report_payloads, infra.safe_filesystem, … +11 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, evolve.population_check, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, … +15 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2393,7 +2393,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/population.py
 - uses: check.population_structure, infra.errors, infra.input_policy, infra.safe_filesystem, infra.yaml_comments, model.document, model.population_shape, model.query_index, model.scalar_identity
-- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.plan_apps, … +30 more (graph.md)
+- used_by: check.admission, check.batch, check.evaluation_feedback, check.service, check.snapshot_decision, checker.evaluate, cli.api, cli.dispatch, discover.population_view, discover.service, evolve.population_check, examples.plan_apps, … +31 more (graph.md)
 - part_of: subsystem.check
 - tests: tests/test_population_load.py, tests/test_rf7_consumers.py, tests/test_fu2_population_header.py
 - in: Population path or bytes; optional loaded Model.

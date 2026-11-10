@@ -209,6 +209,9 @@ def _load_model_surface(model_bytes: bytes, path: Path) -> dict[str, Any]:
     if not isinstance(loaded, dict):
         raise Refusal(f"A0: refused, {path} must hold a YAML mapping at the top level")
 
+    if any(k in loaded for k in ("includes", "fact_type_constraints")):
+        raise Refusal("include:unsupported-route: use gnd validate to resolve model includes")
+
     def _ids(section: str) -> set[str]:
         entries = loaded.get(section) or []
         found: set[str] = set()

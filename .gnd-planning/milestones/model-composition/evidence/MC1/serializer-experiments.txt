@@ -1,0 +1,4 @@
+Serializer experiments, in the local candidate checkout, over the frozen 400 baseline members.
+B: model_dump_json exclude override: 0 changed members; sha256 43e1692d7393190243ae551e1001d5a904341c77401fa0184f8c525a497274de
+A: wrap model_serializer: 0 changed members; sha256 43e1692d7393190243ae551e1001d5a904341c77401fa0184f8c525a497274de
+Select proposal A: both measured variants preserve the baseline; A covers both serialization entry points in one serializer.

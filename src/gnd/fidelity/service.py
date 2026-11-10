@@ -82,6 +82,8 @@ def _cmd_fidelity(
     from gnd.synth import paths as _paths
 
     try:
+        from gnd.model._includes import guard_path
+        guard_path(model_path, "fidelity/service.py")
         model = load_model(model_path)
     except ModelValidationError as error:
         for warning in error.warnings:

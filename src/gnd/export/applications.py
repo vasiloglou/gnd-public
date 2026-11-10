@@ -38,6 +38,9 @@ def verify_policy_report(report, model_doc, model_sha, population_sha, process_e
             or type(process_exit) is not int or process_exit != 0
             or report.get('binding') != {'model_sha256': model_sha, 'population_sha256': population_sha}):
         raise ValueError('unsuccessful or misbound policy report')
+    from gnd.model._includes import guard_document
+
+    guard_document(model_doc, "export.application-runtime")
     index = admit_model(model_doc)
     expected = {ref: (c.get('id', ref), c['type'], c.get('modality', 'alethic'))
                 for ref, c, _ in _constraint_entries(index)}
@@ -126,6 +129,9 @@ def _child(argv, home):
 
 
 def _preserve_source(model_doc, source, candidate, owned_relations):
+    from gnd.model._includes import guard_document
+
+    guard_document(model_doc, "export.application-runtime")
     index = admit_model(model_doc)
     facts = index.fact_types
     heads = {name for name, fact in facts.items()
@@ -217,6 +223,8 @@ def execute_application(model_path, input_path, output_path, *, native_python=No
         interpreter = _interpreter(native_python)
         model_bytes = _capture(model_path, INPUT_CAP)
         input_bytes = _capture(input_path, INPUT_CAP)
+        from gnd.model._includes import guard_bytes
+        guard_bytes(model_bytes, source=model_path, route='applications:220')
         load_model_bytes(model_bytes, source=model_path)
         model_doc = _parse_document(model_bytes.decode('utf-8'))
         model_sha = hashlib.sha256(model_bytes).hexdigest()
@@ -292,6 +300,8 @@ def check_proposal(model_path, input_path, proposal_path, output_path, *, native
         model_bytes = _capture(model_path, INPUT_CAP)
         input_bytes = _capture(input_path, INPUT_CAP)
         proposal_bytes = _capture(proposal_path, INPUT_CAP)
+        from gnd.model._includes import guard_bytes
+        guard_bytes(model_bytes, source=model_path, route='applications:295')
         load_model_bytes(model_bytes, source=model_path)
         model_doc = _parse_document(model_bytes.decode('utf-8'))
         model_sha = hashlib.sha256(model_bytes).hexdigest()

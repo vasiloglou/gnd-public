@@ -5,7 +5,9 @@ from pathlib import Path
 
 from gnd import artifacts
 from gnd import model as model_module
+from gnd.errors import ModelValidationError
 from gnd.model import load_model_bytes  # noqa: F401 -- compatibility binding
+from gnd.model._includes import include_reason
 from gnd.references import bind_references  # noqa: F401 -- compatibility binding
 
 from . import lean
@@ -36,6 +38,8 @@ def export_lean(
         # Parse both candidate documents before fragment classification/binding.
         lean.parse(mr, mf, limits)
         lean.parse(pr, pf, limits)
+        from gnd.model._includes import guard_bytes
+        guard_bytes(mr, source=model_path, route='lean_io:39')
         _model, ctx = model_module.load_model_bytes_bound(
             mr, source=model_path, root=reference_root or Path(model_path).parent
         )
@@ -66,6 +70,8 @@ def export_lean(
         except (artifacts.ArtifactError, OSError, ValueError):
             return refused() if os.path.lexists(out) else refused(4, "write-failed")
         return result
+    except ModelValidationError as error:
+        return refused(3, include_reason(error) or "input-invalid")
     except (artifacts.ArtifactError, *lean.INPUT_ERRORS):
         return refused()
 

@@ -1,0 +1,18 @@
+{
+  "tool": "codex CLI0.163.0",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "xhigh",
+  "sandbox": "read-only",
+  "stdin_prompt": true,
+  "session": "01a1c74f-7918-7cd2-8bb0-b7f8b969b712",
+  "target": "86ad71f138bb85d681ec00984530769a9b67a58a",
+  "source": "b7da04b1ead8dbc72e27ac0b3bf945cc7d970244",
+  "exit": 0,
+  "verdict": "APPROVE conditional local close; no unresolved findings in two-finding scope",
+  "budget_used": 2,
+  "budget_maximum": 2,
+  "original_output_sha256": "3750da7630f341a226ec3bdf1d049009d38cbf9fbd5a264ed5f96ac41de502c0",
+  "events_sha256": "80614a227826c72217cb3d669f9424ef1ce7cbdb3f0814be9440aecf822e48f1",
+  "retained_output": ".gnd-planning/milestones/model-composition/notes/close-codex-confirmation.md",
+  "limitations": "unfiltered Markdown scan hit ignored nested worktree; tracked Markdown/twin/mode checks passed; no broad re-execution, publication or races; final ruling metadata outside opinion"
+}

@@ -1,0 +1,1 @@
+Final frontmatter driver initially encountered the provisional64-zero manifest placeholder as a YAML integer. It was replaced before finalization; real manifest SHA and all final citations are strings validated below. Current reference/twin tests had already passed; no provisional digest is accepted as a binding.

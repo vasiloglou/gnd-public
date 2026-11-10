@@ -1,0 +1,123 @@
+{
+  "exit_code": 0,
+  "population": {
+    "facts": {
+      "contract_has_party": [
+        {
+          "contract": "C-1",
+          "party": "Acme Corp."
+        },
+        {
+          "contract": "C-2",
+          "party": "Acme Corp."
+        },
+        {
+          "contract": "C-9",
+          "party": "CANARY-7f3a"
+        }
+      ],
+      "party_is_based_in_city": [
+        {
+          "city": "Lyon",
+          "party": "Acme Corp."
+        }
+      ]
+    },
+    "instances": {},
+    "population": {
+      "covers": [
+        "contract_has_party",
+        "party_is_based_in_city"
+      ],
+      "model": "model.orm.yaml",
+      "model_id": "urn:gnd-fixture:ct2-contracts@1",
+      "source": "agent-output"
+    }
+  },
+  "record": {
+    "facts": [
+      {
+        "fact_type": "contract_has_party",
+        "index": 0,
+        "renamings": [],
+        "sources": [
+          {
+            "fact_index": 0,
+            "fact_type": "contract_has_party",
+            "source": "contract-a"
+          }
+        ]
+      },
+      {
+        "fact_type": "contract_has_party",
+        "index": 1,
+        "renamings": [
+          0
+        ],
+        "sources": [
+          {
+            "fact_index": 0,
+            "fact_type": "contract_has_party",
+            "source": "contract-b"
+          }
+        ]
+      },
+      {
+        "fact_type": "contract_has_party",
+        "index": 2,
+        "renamings": [],
+        "sources": [
+          {
+            "fact_index": 1,
+            "fact_type": "contract_has_party",
+            "source": "contract-b"
+          }
+        ]
+      },
+      {
+        "fact_type": "party_is_based_in_city",
+        "index": 0,
+        "renamings": [
+          1
+        ],
+        "sources": [
+          {
+            "fact_index": 0,
+            "fact_type": "party_is_based_in_city",
+            "source": "contract-a"
+          },
+          {
+            "fact_index": 0,
+            "fact_type": "party_is_based_in_city",
+            "source": "contract-b"
+          }
+        ]
+      }
+    ],
+    "manifest_sha256": "d5a86d5c40b8911d68bff1b04e560c79488bdf75deab08406a5ba51f9a383ef8",
+    "model_sha256": "02d6a6d0cf8953d67c8037ea8c0dc495b9de238f32387727be396f4cff2fa76b",
+    "population_sha256": "f2ed9d5b9a8928b0da132c602e10e72fd1378e84cdef2ccb736e7d3d50313f4a",
+    "schema": "gnd-composition/1",
+    "scope_tags": [
+      {
+        "source": "contract-a",
+        "tag": "2024-agreement"
+      }
+    ],
+    "sources": [
+      {
+        "document_sha256": "4ec2cfeabe973cef6158e79c48fe5f95fcc8fdd866938e347fe450a3e83ff4c6",
+        "id": "contract-a",
+        "population_sha256": "3a18ee3362207c37504f67bf01e7b59f41609fead9408c30cbcaf09fa4d5a229",
+        "sidecar_sha256": "b38c1b625eddb0c38b33cdf8f8ad2d45f08e3fa0025be4ceb54087492da2cf9d"
+      },
+      {
+        "document_sha256": "75a4029c100e7be1f49c682d696a8f53a601a3c70cc94613ca6326e8a8f09234",
+        "id": "contract-b",
+        "population_sha256": "98a6214b993fbdc99ced14b561c3254a061d2d763ce8daf0ed9f0e6a20b2381c",
+        "sidecar_sha256": "276a436688e3fa638efa61b88a14aa80a5852c9689e3f2cdd4f9a2835fda76c3"
+      }
+    ]
+  },
+  "schema": "gnd-compose/1"
+}

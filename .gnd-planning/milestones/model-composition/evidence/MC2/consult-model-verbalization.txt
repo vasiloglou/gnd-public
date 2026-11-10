@@ -1,0 +1,21 @@
+### model.verbalization
+- does: Render deterministic stakeholder text for model declarations and selected derivation rules.
+- verbs: verbalize model, stakeholder review, natural language, ORM declarations, render_model_verbalization, render_rule_verbalizations, rule verbalization, structured derivation, prose rule refusal, stable ordering, constraint provenance, operation description
+- status: canonical
+- modules: src/gnd/model_verbalization.py
+- uses: check.universe, infra.verdict_prose, model.atom_bindings, model.document, model.extraction_vocabulary, model.loading, model.population_sentences, model.query_index, model.reference_schemes, model.scalar_terms
+- used_by: cli.api, evolve.service, recovery.verify
+- part_of: subsystem.recovery
+- tests: tests/test_model_verbalization.py, tests/test_rule_verbalization.py
+- checked: partial
+
+## src/gnd/model_verbalization.py (741 lines): Deterministic, complete stakeholder verbalization of an ORM model.
+  38: VerbalizationError: The caller supplied a value that is not a validated ORM model.
+  544: render_model_verbalization(model) -> str: Render all model semantics in stable-id order with one final newline.
+  676: RuleVerbalization: One derived fact type's rule, rendered or reported as not renderable.
+  685: check_fact_type_selection(fact_types) -> None: The one argument check for a fact-type selection: None or a list or tuple of str.
+  694: render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]: Render each selected derived fact type's rule in stable id order.
+  also defines: _canonical, _display, _object_type_cnl, _fact_type_cnl, _role_ref, _bound_text, _guarded_term, _guarded_atom, _derivation_cnl, _guarded_cnl, _constraint_cnl, _constraint_lines, _term_text, _atom_cnl, _effect_cnl, _obligation_lines, +3 more
+  imports: src/gnd/atoms.py (model.atom_bindings), src/gnd/documents.py (model.document), src/gnd/model/__init__.py (model.loading), src/gnd/model_index.py (model.query_index), src/gnd/refscheme.py (model.reference_schemes), src/gnd/terms.py (model.scalar_terms), src/gnd/universe.py (check.universe), src/gnd/verbalize.py (infra.verdict_prose), src/gnd/verbalize_population.py (model.population_sentences), src/gnd/vocabulary.py (model.extraction_vocabulary)
+  imported by: src/gnd/api.py (cli.api), src/gnd/evolve/service.py (evolve.service), src/gnd/recovery/verify.py (recovery.verify)
+  imported from tests and scripts: 21 file(s): tests/test_evolve_loading.py, tests/test_induced_provenance.py, tests/test_model_guarded.py, tests/test_model_v2.py, tests/test_model_verbalization.py, tests/test_object_type_description.py, +15 more

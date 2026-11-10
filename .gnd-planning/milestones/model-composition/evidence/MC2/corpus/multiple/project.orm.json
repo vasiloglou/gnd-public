@@ -1,0 +1,22 @@
+{
+  "version": 5,
+  "model_id": "urn:gnd-fixture:ct2-contracts@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "rejected_proposals": [],
+  "includes": [
+    {
+      "id": "z-contracts",
+      "path": "contracts-v1.orm.json",
+      "sha256": "0136fc8fe6f4eec6bd9fe95423d97033e2e41023802e46916289ad9f5c4bc22f"
+    },
+    {
+      "id": "a-labels",
+      "path": "labels.orm.json",
+      "sha256": "c1df3dfb3a529ff3cbe65bf1a6e39f10b983e099ab112cf9ecf35b0de3d4e1af"
+    }
+  ]
+}

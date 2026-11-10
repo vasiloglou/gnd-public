@@ -1,0 +1,448 @@
+{
+  "source": "55a7d89a12a5500775602e137ee97bf9559c544c",
+  "note": "49 lexical guard sites reread; nested lexical owners may repeat a call. Every call and enclosing definition is source-bound; this is not proof over arbitrary dynamic callers.",
+  "sites": [
+    {
+      "path": "src/gnd/api.py",
+      "definition": "compose",
+      "definition_sha256": "ed6f5e66096a6690938e85de88359ceaa5859c74d027f07f1d55b89784e43e6e",
+      "call_line": 981,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(raw, source=model, route='api:980')",
+      "file_sha256": "fff9af21fdd7285c9e7b13babad0d525987f1a6de22690787eb2ba8d76acde3c"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "definition": "judgments",
+      "definition_sha256": "8dd86749ce728e9e8c4c80934a415013c95b736d6c6808d6d9e10cbcb8ca1648",
+      "call_line": 1127,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'api.judgments')",
+      "file_sha256": "fff9af21fdd7285c9e7b13babad0d525987f1a6de22690787eb2ba8d76acde3c"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "definition": "judgments",
+      "definition_sha256": "8dd86749ce728e9e8c4c80934a415013c95b736d6c6808d6d9e10cbcb8ca1648",
+      "call_line": 1132,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(mr, source=model_path, route='api:1123')",
+      "file_sha256": "fff9af21fdd7285c9e7b13babad0d525987f1a6de22690787eb2ba8d76acde3c"
+    },
+    {
+      "path": "src/gnd/batch.py",
+      "definition": "check_population_directory",
+      "definition_sha256": "60ea093e683027b783cdfbad9edacfafb53b9aa8febbf7627e1b7baa74ef7c6d",
+      "call_line": 155,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=model_path, route='batch')",
+      "file_sha256": "5af99547532fa55909cb7b65731439bc576a05af59989cb5f47da267fd0d36e3"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "definition": "_composition_view",
+      "definition_sha256": "cde2dc96cae5b91b739bf4aa13e0a6d517a7ca363c7e2b97d090dd4dfa10d3ec",
+      "call_line": 165,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_raw, source=model_coordinate, route='check.composition')",
+      "file_sha256": "60bf9aea74816fc33aa2fce05154c3619f028c20ea6b82ec777631b6d77a2dda"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "definition": "_run_check_raw",
+      "definition_sha256": "fd890dbbe8ecccf64059b6410a19090be69202e13727869ca0a2aa45f15ac8c4",
+      "call_line": 313,
+      "helper": "guard_path",
+      "call": "guard_path(model_input, 'check.composition')",
+      "file_sha256": "60bf9aea74816fc33aa2fce05154c3619f028c20ea6b82ec777631b6d77a2dda"
+    },
+    {
+      "path": "src/gnd/codegen/emit.py",
+      "definition": "emit_project",
+      "definition_sha256": "6af93708668406ed11284fb63715e839324992bb85c1a83f7db979a508303ae1",
+      "call_line": 940,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'codegen.emit')",
+      "file_sha256": "8dbc1d2de294b6076e8ac1724d4c77e656fdf49b93d9d7e0b4e2bd2a2343446b"
+    },
+    {
+      "path": "src/gnd/codegen/manifest.py",
+      "definition": "build_manifest",
+      "definition_sha256": "ea150dd5a60d0bf6a72c8fe09a941d4d3d1397a42a9d4f9253fcda5a2c920e5b",
+      "call_line": 245,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'codegen.manifest')",
+      "file_sha256": "207a1d75e94179b67004a383949dd47246eba488b76b812f14b5bb025b0c4636"
+    },
+    {
+      "path": "src/gnd/codegen/service.py",
+      "definition": "_cmd_codegen",
+      "definition_sha256": "7130b584cd04860ca98cf0939335ae8a1adde90d641574668ee65d58ebcae8a3",
+      "call_line": 111,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'codegen/service.py')",
+      "file_sha256": "8c1a6d06986cbee032e0a8cf64913788de65c059f68a33b83e32b2d6e1e87436"
+    },
+    {
+      "path": "src/gnd/conformance/currency.py",
+      "definition": "model_file_sha256",
+      "definition_sha256": "3f1d6a119e05d2b4485278fc429951626b5dae8117bbe5e8b59f1e09509f269f",
+      "call_line": 68,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'conformance.currency')",
+      "file_sha256": "7d6e8240f4429b6ed2064b8a7a4ef14864d665fb3403806735866d6acf3e889c"
+    },
+    {
+      "path": "src/gnd/conformance/service.py",
+      "definition": "run_conformance",
+      "definition_sha256": "85207b11a01c0ffaad02d03693a8ed5c3df98e67d6098459e85c2fcd289fd47c",
+      "call_line": 75,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'conformance.service')",
+      "file_sha256": "c3c519801168fc7ddae60c67019d353eb0f9a476235117b3ff92b975de5b62e8"
+    },
+    {
+      "path": "src/gnd/discover/service.py",
+      "definition": "discover",
+      "definition_sha256": "69c876f8c9a948bb947d6b50ce479ba1081ab0017f0177bb032d7e377a140005",
+      "call_line": 214,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=model_path, route='service:213')",
+      "file_sha256": "8db8fa51abb08f10d8017807aecdb30780846ba8a750bb0d8e44132794183ec3"
+    },
+    {
+      "path": "src/gnd/discover/service.py",
+      "definition": "discover",
+      "definition_sha256": "69c876f8c9a948bb947d6b50ce479ba1081ab0017f0177bb032d7e377a140005",
+      "call_line": 266,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(output.candidate_text(checked).encode('utf-8'), source=model_path, route='service:263')",
+      "file_sha256": "8db8fa51abb08f10d8017807aecdb30780846ba8a750bb0d8e44132794183ec3"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "definition": "_load_model_document",
+      "definition_sha256": "97d1ed5d92e695ccc9b67ac3c16e48398be7dc3c5bdd7435eadec1efde70d5ac",
+      "call_line": 232,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(data, source=model_path, route='service:231')",
+      "file_sha256": "fbfe347ac422c0c1c93c42057f2e2926088482c7ffc028df7705807d117bd2c1"
+    },
+    {
+      "path": "src/gnd/evolve/service.py",
+      "definition": "_parse_model_text",
+      "definition_sha256": "f82378f46c34e5ee9d5f01f42c5626b27dd731f97bbf5a8a55104dd3ba53972f",
+      "call_line": 307,
+      "helper": "guard_document",
+      "call": "guard_document(parsed, 'evolve.parse-model-text')",
+      "file_sha256": "fbfe347ac422c0c1c93c42057f2e2926088482c7ffc028df7705807d117bd2c1"
+    },
+    {
+      "path": "src/gnd/exp/session.py",
+      "definition": "_copy_bound_model",
+      "definition_sha256": "b4a78a5786688de0ead3324594fe80d1232bd7424729d6b3196f35349d8795e3",
+      "call_line": 302,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(data, source=bound.path, route='exp.copy-bound-model')",
+      "file_sha256": "2c0f751d8cddd3f6ae38021775f33c4ad95af9ff0a4e6408aae02044ecaf260d"
+    },
+    {
+      "path": "src/gnd/exp/session.py",
+      "definition": "_case_models",
+      "definition_sha256": "e9b52ed3c938df33ef0583eee6e8957c99e086378b781909c821821c363f23b4",
+      "call_line": 366,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(data, source=bound.path, route='exp.session')",
+      "file_sha256": "2c0f751d8cddd3f6ae38021775f33c4ad95af9ff0a4e6408aae02044ecaf260d"
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "definition": "_verify_bound_file",
+      "definition_sha256": "88cad40cb5f833f349ef29f20f5673615f0056187a928d92fe964270c948e2c4",
+      "call_line": 1571,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(stream.read(MAX_SESSION_INPUT_BYTES + 1), source=bound.path, route='exp.session-contract')",
+      "file_sha256": "9e49017ab153a81bae29b9e4c828cc4f15b2b3b3b2edcdd6a31ad01b4c135bc5"
+    },
+    {
+      "path": "src/gnd/exp/session_contract.py",
+      "definition": "read_session_contract",
+      "definition_sha256": "bef788d2f8dd111b66a1026d0db93dd7426c55c137f05ed84bb90ea3fab537ae",
+      "call_line": 1686,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(raw, source=model_path, route='session_contract:1677')",
+      "file_sha256": "9e49017ab153a81bae29b9e4c828cc4f15b2b3b3b2edcdd6a31ad01b4c135bc5"
+    },
+    {
+      "path": "src/gnd/exp/session_judgments.py",
+      "definition": "evaluate",
+      "definition_sha256": "8c4220f8c4b54475559aef1fe6fd5007d6f66642a921dc757ec5c57e7dc6c0cb",
+      "call_line": 84,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_raw, source=case.verify.model.path, route='exp.session_judgments')",
+      "file_sha256": "d1ad3e6afca588a26eb31fc0fdac9525f78298cb867a9a90d802a58a5d93dd04"
+    },
+    {
+      "path": "src/gnd/exp/session_replay.py",
+      "definition": "_model",
+      "definition_sha256": "6bef3d69588405ce4109ea5c069e361954521a2f12e0d8ff0b8990aae3c00d3c",
+      "call_line": 67,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(raw, source=bound.path, route='session_replay:68')",
+      "file_sha256": "01e33f39103c22ec0801a1ab5909ea3c3cc8c8882f26b3c22bc3cad206bd5a98"
+    },
+    {
+      "path": "src/gnd/export/applications.py",
+      "definition": "verify_policy_report",
+      "definition_sha256": "5bb8122cc69ca83f20408a3ad9d88fa1952d27b1613fa005980a9ffee1f8cd87",
+      "call_line": 43,
+      "helper": "guard_document",
+      "call": "guard_document(model_doc, 'export.application-runtime')",
+      "file_sha256": "4ef10175a0c1d5129fb2d84870ad379086f5af46f2c8246cc1d866e96a57e4e2"
+    },
+    {
+      "path": "src/gnd/export/applications.py",
+      "definition": "_preserve_source",
+      "definition_sha256": "fd359e3ea5730c8d83aa304c89a73591ef75d1216ab8c3be776e7bd6bdcb6eea",
+      "call_line": 134,
+      "helper": "guard_document",
+      "call": "guard_document(model_doc, 'export.application-runtime')",
+      "file_sha256": "4ef10175a0c1d5129fb2d84870ad379086f5af46f2c8246cc1d866e96a57e4e2"
+    },
+    {
+      "path": "src/gnd/export/applications.py",
+      "definition": "execute_application",
+      "definition_sha256": "3b2de6bfa5e9ce55913686315d66ab9b0d0b2a925c6ec49c9fa3d4be0c8a780d",
+      "call_line": 227,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=model_path, route='applications:220')",
+      "file_sha256": "4ef10175a0c1d5129fb2d84870ad379086f5af46f2c8246cc1d866e96a57e4e2"
+    },
+    {
+      "path": "src/gnd/export/applications.py",
+      "definition": "check_proposal",
+      "definition_sha256": "51b51b98804178ca0b2fd310868809ede9fe535587988b82cc27e55b0721bc94",
+      "call_line": 304,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=model_path, route='applications:295')",
+      "file_sha256": "4ef10175a0c1d5129fb2d84870ad379086f5af46f2c8246cc1d866e96a57e4e2"
+    },
+    {
+      "path": "src/gnd/export/emit.py",
+      "definition": "render_pyrel",
+      "definition_sha256": "efbf17cd523d0fa48cc20e77979d7c5835fa87772429dc142c8562a5389530dd",
+      "call_line": 29,
+      "helper": "guard_document",
+      "call": "guard_document(document, 'export.pyrel')",
+      "file_sha256": "e19eef306cbe8201a6ff63b4ceceeb9acf2e49e18845419548b29288b5b8704d"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "definition": "_prepare",
+      "definition_sha256": "c7b2af6582b0f8702569ee45da3d3f320ac141ddbe2f93b402b7a9c672138ec0",
+      "call_line": 155,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=model_path, route='ilp_service:154')",
+      "file_sha256": "a181d41698daebf791eadeffb1472500ff3096895c14d807656ac3cb3376e8b0"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "definition": "_load_candidate",
+      "definition_sha256": "6c66de8a3d983850c57c0fa2ed2deca65aba39eb2af3feb886ed9892394e6060",
+      "call_line": 267,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(output.candidate_text(document).encode('utf-8'), source=model_path, route='ilp_service:264')",
+      "file_sha256": "a181d41698daebf791eadeffb1472500ff3096895c14d807656ac3cb3376e8b0"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "definition": "load_mined_inputs",
+      "definition_sha256": "9191ec059fd026f1c91446e87d1e9715c25a86431b21c2c49ef9012fd6e99e59",
+      "call_line": 558,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=model_path, route='ilp_service:553')",
+      "file_sha256": "a181d41698daebf791eadeffb1472500ff3096895c14d807656ac3cb3376e8b0"
+    },
+    {
+      "path": "src/gnd/export/ilp_service.py",
+      "definition": "_cmd_import_mined_rules",
+      "definition_sha256": "b1c52c305d73b7388b8c54bf9406b7c281687fb6c41cf4f5adc3e33f24b70cec",
+      "call_line": 760,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(output.candidate_text(document).encode('utf-8'), source=paths['model'], route='ilp_service:754')",
+      "file_sha256": "a181d41698daebf791eadeffb1472500ff3096895c14d807656ac3cb3376e8b0"
+    },
+    {
+      "path": "src/gnd/export/lean.py",
+      "definition": "render_lean",
+      "definition_sha256": "d664dd668de1e2deacd12a36d47b12eef7697819ea9c2338cc4732f8c1f3ac32",
+      "call_line": 802,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=f'model.{model_format}', route='export.lean.raw')",
+      "file_sha256": "d8fb67777509a0c84363993393ab8d133e517f1fd1a3c3e5d8c4554326545e0d"
+    },
+    {
+      "path": "src/gnd/export/lean_io.py",
+      "definition": "export_lean",
+      "definition_sha256": "f9ea1f3b7a20016a87fec8bba729d1edaf56b1d832a676292e2657bb9efdc9f8",
+      "call_line": 42,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(mr, source=model_path, route='lean_io:39')",
+      "file_sha256": "f10d64c9cda098932eba27aa0cafd2db9830a48c09fd37760d55f304856ae10f"
+    },
+    {
+      "path": "src/gnd/export/pyrel_rules.py",
+      "definition": "render",
+      "definition_sha256": "c568f3d42da8dae38e0bd5951850133cc68b270ad9ee9ef721ab9938673af17c",
+      "call_line": 2268,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(raw, source=str(model_path), route='pyrel_rules:2267')",
+      "file_sha256": "21c79e80ab65a5f1ae21d96134b0bca630f9b157fc93ce9beea7807d782aa402"
+    },
+    {
+      "path": "src/gnd/export/souffle.py",
+      "definition": "render_souffle",
+      "definition_sha256": "0ea72745bb2dca47e75e7f371c8a208214c47e8cc07134e532af9257e20f2095",
+      "call_line": 216,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source=f'model.{model_format}', route='export.souffle.raw')",
+      "file_sha256": "11fbd709ae21bf1154f781b3dbde10b25573f089e99e09e6d83734a874ddc217"
+    },
+    {
+      "path": "src/gnd/export/souffle_io.py",
+      "definition": "export_souffle",
+      "definition_sha256": "be3efdcc8b5bae6269f4d0c82bbbf945b8257bb0ba55adde6355f1d8289efe6a",
+      "call_line": 117,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(mr, source=model_path, route='souffle_io:115')",
+      "file_sha256": "6ca9e0ad74c45436ed2fd2b4ef724c90b61687e8af4c5c36261a1acaec66847e"
+    },
+    {
+      "path": "src/gnd/extract/service.py",
+      "definition": "_cmd_extract",
+      "definition_sha256": "a6352d4972608a9652aba32db7c55131e143a263f90909366f76b8499c026d9f",
+      "call_line": 112,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'extract/service.py')",
+      "file_sha256": "300de8330c9561d622c747a21fafa4b7bb26c4804d28f213b3bc05c0b784579c"
+    },
+    {
+      "path": "src/gnd/fidelity/doccheck_service.py",
+      "definition": "_cmd_doccheck",
+      "definition_sha256": "70042eb989c83e736e047c783ed56436dd61b1a9d172e0dafd00e5a4feef4723",
+      "call_line": 49,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'fidelity/doccheck_service.py')",
+      "file_sha256": "08f82010d774f7569542f4358630285f7aee683be65a2db87b27b3b68a365ee9"
+    },
+    {
+      "path": "src/gnd/fidelity/service.py",
+      "definition": "_cmd_fidelity",
+      "definition_sha256": "8cbb83e75c913a84a60af7997c38e3d7c29dc801b5826c6f6e1f45b01f0877d5",
+      "call_line": 86,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'fidelity/service.py')",
+      "file_sha256": "f026530cee7aa79cc630d7853b85a7ae8a2457d7e8615910e91c0cf8f5de89e9"
+    },
+    {
+      "path": "src/gnd/judgments.py",
+      "definition": "evaluate_judgments",
+      "definition_sha256": "27719e382613491b7ab96b131e1781a5a7a029058a0b8c1c8f9bd513e64e1c1a",
+      "call_line": 470,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source='model.orm.yaml', route='judgments')",
+      "file_sha256": "10f4b0ef8e29b012503cf5c57e3f6e5868c89ab08ed6a78008cfeed71f00fac1"
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "definition": "_cmd_measure",
+      "definition_sha256": "b93686dae9a31e3279cef5506383e64030ee6570ad73e9568ab3716e916f59b3",
+      "call_line": 85,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'measure/service.py')",
+      "file_sha256": "ffec7006f8f0db1fcb4e967d19e9bb771e5da3ca8bc03b798503f42d678ac460"
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "definition": "_measure_labels",
+      "definition_sha256": "cb4040b3d6c44dd434270fc98605d6e35cb1e015d82f8e9940df1f82e22d168d",
+      "call_line": 505,
+      "helper": "guard_path",
+      "call": "guard_path(model_file, 'measure.synth')",
+      "file_sha256": "ffec7006f8f0db1fcb4e967d19e9bb771e5da3ca8bc03b798503f42d678ac460"
+    },
+    {
+      "path": "src/gnd/measure/service.py",
+      "definition": "_measure_labels",
+      "definition_sha256": "cb4040b3d6c44dd434270fc98605d6e35cb1e015d82f8e9940df1f82e22d168d",
+      "call_line": 508,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'measure/service.py')",
+      "file_sha256": "ffec7006f8f0db1fcb4e967d19e9bb771e5da3ca8bc03b798503f42d678ac460"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "definition": "guard_bytes",
+      "definition_sha256": "04f3f02cc5a52f7ce20488ae32cb15015301a11c526d59ecfc8daf1ada7a08e0",
+      "call_line": 252,
+      "helper": "guard_document",
+      "call": "guard_document(doc, route)",
+      "file_sha256": "1dde6ff1a18ade207055f162e80cce8290f502db483e2314e1d1d1579f4e4538"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "definition": "guard_path",
+      "definition_sha256": "3f1e8112c49fc07de065daeb702cb03d8dd9b5d5449d225acdceeaf660ae1979",
+      "call_line": 261,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(raw, source=path, route=route)",
+      "file_sha256": "1dde6ff1a18ade207055f162e80cce8290f502db483e2314e1d1d1579f4e4538"
+    },
+    {
+      "path": "src/gnd/rai_import.py",
+      "definition": "plan_rai_import",
+      "definition_sha256": "d828db7738002d8a195fb31a3d1100b1eb890d6228ae595032eb9e68e785f83d",
+      "call_line": 412,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(data, source=request.model_path, route='import.rai-orm')",
+      "file_sha256": "b0e22da6e7bcb050496970889e5be923cd357e54e3de7a983f3e61eae5455bb6"
+    },
+    {
+      "path": "src/gnd/recovery/verify.py",
+      "definition": "verify_recovery_bundle",
+      "definition_sha256": "7c22a35e491779857dc7e23748b07f874769389c9c4485d24249f4e2875ba7c6",
+      "call_line": 575,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(model_bytes, source='model.orm.yaml', route='recovery.verify')",
+      "file_sha256": "91de6d0eff21cf993c19a1641b48f3d3185e2819fcb260acbe345983da7e0f3e"
+    },
+    {
+      "path": "src/gnd/witness/io.py",
+      "definition": "intake",
+      "definition_sha256": "a350dda6e1c6c3059f300d20def29f82791c3d9df80811e17128300e935c5b2f",
+      "call_line": 296,
+      "helper": "guard_document",
+      "call": "guard_document(model_document, 'witness.io')",
+      "file_sha256": "69f8d65e4666877d7451b92bd87277cbeade7c5f7e46f4299a45c3836d57df5c"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "definition": "_witness_inputs",
+      "definition_sha256": "a1e6e15a1d9b3ea7be24fea1d79b9a6ae874ea4de8841e8c1dfdcc94688262f8",
+      "call_line": 30,
+      "helper": "guard_bytes",
+      "call": "guard_bytes(mr, source=model_path, route='service:29')",
+      "file_sha256": "f9e15e4674dcc755dda5befd79a268e48289a20eafa9b29271e329fbf7e618a4"
+    },
+    {
+      "path": "src/gnd/witness/service.py",
+      "definition": "_composition_lineage",
+      "definition_sha256": "539f9d26438905976910b9fdc07434fd01a97e9c859a003cce2c38fd1b5a9719",
+      "call_line": 52,
+      "helper": "guard_path",
+      "call": "guard_path(model_path, 'witness.composition')",
+      "file_sha256": "f9e15e4674dcc755dda5befd79a268e48289a20eafa9b29271e329fbf7e618a4"
+    }
+  ],
+  "hash_convention": "UTF-8 ast.get_source_segment(function), no appended newline; file hash is exact UTF-8 source bytes"
+}

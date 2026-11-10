@@ -1,0 +1,25 @@
+### model.composition
+- does: Compose anchored source populations using explicit renamings and identical-row deduplication with replayable lineage.
+- verbs: compose, verify_composition, parse_manifest, parse_record, lineage_index, merge populations, source lineage, explicit renaming, deduplicate rows, scope tags, composition record, rederive population, verify digests, source binding
+- in: model bytes and source directory with manifest, populations, documents and sidecars
+- out: composed population bytes and canonical value-free lineage record
+- status: canonical
+- modules: src/gnd/composition.py
+- uses: infra.artifacts, model.anchors, model.loading, model.population_loading, model.query_index
+- used_by: check.service, cli.api, witness.service
+- tests: tests/test_composition.py
+
+## src/gnd/composition.py (376 lines): Compose several anchored populations into one population with lineage (CT2).
+  48: CompositionError: A bounded, value-free composition refusal (exit 3).
+  56: Manifest: (no docstring)
+  63: Source: (no docstring)
+  72: Composition: (no docstring)
+  104: parse_manifest(raw) -> Manifest: (no docstring)
+  151: parse_record(raw) -> dict[str, Any]: (no docstring)
+  223: compose(model, model_raw, directory) -> Composition: Compose the sources a manifest names; refuse instead of guessing.
+  358: verify_composition(model, model_raw, population_raw, record, directory) -> Composition: Re-derive a composition from its inputs and compare it with the record.
+  375: lineage_index(record) -> dict[tuple[str, int], list[dict[str, Any]]]: (no docstring)
+  also defines: _sha, _row_key, _scalar, _keys, _json, _lineage_entry, _read, _load_source, MANIFEST_SCHEMA, RECORD_SCHEMA, MAX_MANIFEST_BYTES, MAX_RECORD_BYTES, _ID, _HEX
+  imports: src/gnd/anchors.py (model.anchors), src/gnd/artifacts.py (infra.artifacts), src/gnd/model/__init__.py (model.loading), src/gnd/model_index.py (model.query_index), src/gnd/population.py (model.population_loading)
+  imported by: src/gnd/api.py (cli.api), src/gnd/checking_service.py (check.service), src/gnd/witness/service.py (witness.service)
+  imported from tests and scripts: 2 file(s): tests/test_composition.py, tests/test_rc5_tool_output.py

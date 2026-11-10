@@ -1,0 +1,97 @@
+{
+  "version": 5,
+  "model_id": "urn:gnd-fixture:ct2-contracts@1",
+  "source": {
+    "kind": "text-conversation",
+    "confidence": "standard",
+    "mode": "one-shot"
+  },
+  "object_types": [
+    {
+      "id": "contract",
+      "name": "Contract",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "party",
+      "name": "Party",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "city",
+      "name": "City",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "contract_has_party",
+      "reading": "{Contract} has party {Party}",
+      "roles": [
+        {
+          "object_type": "contract",
+          "role_name": "contract"
+        },
+        {
+          "object_type": "party",
+          "role_name": "party"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "anchored",
+          "role": "party",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "x"
+          }
+        }
+      ]
+    },
+    {
+      "id": "party_is_based_in_city",
+      "reading": "{Party} is based in {City}",
+      "roles": [
+        {
+          "object_type": "party",
+          "role_name": "party"
+        },
+        {
+          "object_type": "city",
+          "role_name": "city"
+        }
+      ],
+      "constraints": [
+        {
+          "type": "uniqueness",
+          "roles": [
+            "party"
+          ],
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "x"
+          }
+        }
+      ]
+    }
+  ],
+  "constraints": [],
+  "operations": [],
+  "includes": [
+    {
+      "id": "contracts",
+      "path": "contracts-v1.orm.json",
+      "sha256": "0136fc8fe6f4eec6bd9fe95423d97033e2e41023802e46916289ad9f5c4bc22f"
+    }
+  ],
+  "rejected_proposals": [],
+  "deontic_notes": [],
+  "warnings": []
+}

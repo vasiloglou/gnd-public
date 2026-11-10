@@ -1,0 +1,5 @@
+{
+  "exit": 0,
+  "stdout_stderr": "reread: subsystem.check (entry not edited): its members changed: cli.checking_command, cli.api, check.service, model.loading\nreread: subsystem.synth (entry not edited): its members changed: model.loading\nreread: subsystem.codegen (entry not edited): its members changed: model.loading\nreread: subsystem.conformance (entry not edited): its members changed: model.loading\nreread: subsystem.measure (entry not edited): its members changed: model.loading\nreread: subsystem.evolve (entry not edited): its members changed: model.loading\nreread: subsystem.recovery (entry not edited): its members changed: model.loading, model.verbalization\nreread: infra.disclosure (entry not edited): src/gnd/disclosure.py\nchanged against 55a7d89a (55a7d89): 78 file(s) differ; 0 to fix, 0 warning(s), 8 to reread\n",
+  "sanitization": "operator home and pytest operator-directory tokens replaced; output otherwise retained"
+}

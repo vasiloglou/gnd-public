@@ -66,6 +66,7 @@ class Model(BaseModel):
     fact_type_constraints: list[dict[str, Any]] = Field(default_factory=list)
     _provenance: tuple[ElementOrigin, ...] = PrivateAttr(default=())
     _included: tuple[IncludedFile, ...] = PrivateAttr(default=())
+    _authored_sha256: str | None = PrivateAttr(default=None)
     _references: Any = PrivateAttr(default=None)
     rejected_proposals: list[dict[str, Any]] = Field(default_factory=list)
     #: Trace-compiled obligations, keyed by operation id (B2). A SIDE TABLE

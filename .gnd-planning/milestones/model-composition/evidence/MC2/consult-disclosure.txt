@@ -1,0 +1,25 @@
+### infra.disclosure
+- does: Resolve customer/internal disclosure policy and gate population-value output at public boundaries.
+- verbs: disclosure mode, customer mode, internal mode, output policy, population values, value emission, disclosure refusal, environment mode, nested invocation, child environment, forward policy, surface registry, GND_DISCLOSURE, values_allowed, resolve, invocation, bearing
+- in: GND_DISCLOSURE environment, invocation context and explicit value-output requests
+- out: Effective mode, allowed-output decisions, child environment additions and classified public surfaces
+- status: canonical
+- modules: src/gnd/disclosure.py
+- uses: (none)
+- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, exp.service, export.service, review.adapters, witness.service
+- tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
+- notes: Customer mode wins over internal mode from either source; forward propagates only the restrictive customer setting.
+
+## src/gnd/disclosure.py (152 lines): The disclosure mode: whether GND emits population values.
+  24: DisclosureRefused: A request for values refused by policy; the message names the option or
+  29: checked_environment(environ) -> str | None: The environment's mode, or None; a malformed value is refused.
+  37: resolve(environ) -> str | None: The effective mode: 'internal', 'customer' or None (unset).
+  46: values_allowed(requested, option) -> bool: Whether a site emits values: customer never (a request is refused),
+  57: forward(environ) -> dict[str, str]: What a spawner adds to a child's environment: only ``customer`` is passed on.
+  63: invocation(mode) -> Iterator[None]: Set the mode for one in-process CLI invocation; the token is reset on exit.
+  75: Surface: (no docstring)
+  149: bearing(leaf) -> bool: Whether a CLI leaf resolves the mode: a site, or one that starts children.
+  also defines: _rows, MODES, ENVIRONMENT, _MODE, _DECLARED, _VIEW, SURFACES
+  imports: (nothing in the package)
+  imported by: src/gnd/api.py (cli.api), src/gnd/cli.py (cli.dispatch), src/gnd/commands/discover.py (cli.discover_command), src/gnd/declared_adapter.py (agent.declared_adapter), src/gnd/exp/session.py (exp.service), src/gnd/export/service.py (export.service), src/gnd/review/adapters.py (review.adapters), src/gnd/solve.py (agent.solve), src/gnd/witness/service.py (witness.service)
+  imported from tests and scripts: 3 file(s): tests/test_disclosure_docs.py, tests/test_disclosure_mode.py, tests/test_why_not_near_misses_public.py

@@ -1,0 +1,11 @@
+Retained opinion; local repository path sanitized to <repo>. One reviewer is one reviewer.
+
+**Verdict: request changes.** Reviewed only `55a7d89a12a5500775602e137ee97bf9559c544c..fdd6f686d1643505ecd95bf99c08c15ae918f7a0`; HEAD matches the candidate.
+
+1. **Blocking — compose can overwrite an included vocabulary.** The new admission at [api.py:986](<repo>/src/gnd/api.py:986) reaches output checks that protect only the main model and composition directory at [checking.py:870](<repo>/src/gnd/commands/checking.py:870). Using the committed anchored fixture, setting either `--out` or `--record` to `contracts-v1.orm.json` returned **0** and passed that dependency to the writer. This reproduction intercepted the writer; no file changed. The actual writer would replace the vocabulary, violating the mandatory “included file is input, never a write target” contract and breaking subsequent pinned loads. Protect resolved dependency targets and aliases before staging.
+
+2. **Completeness — the source-successor evidence names the wrong after commit.** [source-successors.json:63](<repo>/.gnd-planning/milestones/model-composition/evidence/MC2/source-successors.json:63) binds its after observation to `c7fc66dd`. Executed `ast.get_source_segment` hashing yields `fd890dbb…` there; the recorded `db7a6e98…` matches candidate HEAD. The declared observation is therefore unreproducible, although the current body/import controls pass. Correct the attribution and check that binding.
+
+Validation: **39 focused pytest tests passed**, plus read-only probes covering review bytes, unresolved metadata, disclosure samples, compose/replay equality, refusal ordering, serialization, and retained guards. Twenty captured 10 MiB binding comparisons took **0.065455s**; a changed final byte refused before verification.
+
+One reviewer only. No edits, network, credentials, agents, broad suites, or excluded lanes. The sandbox rejected heredoc temporary-file creation; probes succeeded via `python -c`. File-writing tests, logged larger selections, and lint were not rerun.

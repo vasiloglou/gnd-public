@@ -1,0 +1,253 @@
+{
+  "note": "Final completion evidence, including prior rejected attempts; earlier candidate manifest remains bound to its own snapshot. This manifest does not include itself or the completion record.",
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/010-approved-answers.json",
+      "sha256": "087a3cb6f7933c96b148ecea14a32ebf6a7601a99eeb3abf38e780a0cd5c145e"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/010-approved-spec.md",
+      "sha256": "d1d6944b885bd1ac2eeb0b78a1361627b2197032d458e9a5db9fb36e53f05a1a"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/012-approved-answers.json",
+      "sha256": "94e93dce968908f5923c0c303555494b071bebd1a7c35da7259b16b9b63c40a0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/012-approved-spec.md",
+      "sha256": "031fe06dd0da43442a87963bf34aafbce975a9dc6588b1c3bc99febf88fcec77"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/admission-reread.json",
+      "sha256": "fcd40ff001bc4f97eb31159719fa15a34062b49ca5a8aa0bb74c1a6ebb64da16"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/binding-latency.json",
+      "sha256": "729849c5d4bd019eb4ec3de8ea43c3120d837256371a7bfccaaa5624fa364aa3"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/candidate-size.json",
+      "sha256": "0ad8d017c264d9c48df5a945b5d60211546f7bb624353a4d619144d6ffe8fbf9"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/candidate-source-manifest.json",
+      "sha256": "996c000f83479d9a6b70a4a1561cb38b8c8605744bf2a26fd3f598a4c4082cab"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/completion-source-manifest.json",
+      "sha256": "8761a8a20215476ac3d8131322bcb1218f1339076e0ae4777e567e959a7ebec9"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/components-current.json",
+      "sha256": "0c09f839d7cb60d23d6a7810b8bba9a5c39b06d7385c99617aba774885cf053a"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/confirmation-prompt.txt",
+      "sha256": "b8536ac0eeedebd949d806371c45473bdeeb42bab6d0870b95ffcbd748998111"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/consult-composition.txt",
+      "sha256": "b3b7ce1f418b90f444a01111bb552e8680b94b8b9e9f57feb3717b02e83a373c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/consult-disclosure.txt",
+      "sha256": "5659190fbbcc2022ecc797eccd321a4f1245774aaab6160140b3074d4e666c46"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/consult-model-verbalization.txt",
+      "sha256": "e326f1e9184f4e0c193634ff7c57195abbbfded322b2ef8ce907795af371b2ea"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/README.md",
+      "sha256": "9a5faedd5409f99468f9ae49764950b8b67a6c431b26c1af6c5ebddb1eb031df"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composed.population.json",
+      "sha256": "f2ed9d5b9a8928b0da132c602e10e72fd1378e84cdef2ccb736e7d3d50313f4a"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/contract-a/document.txt",
+      "sha256": "4ec2cfeabe973cef6158e79c48fe5f95fcc8fdd866938e347fe450a3e83ff4c6"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/contract-a/population.json",
+      "sha256": "3a18ee3362207c37504f67bf01e7b59f41609fead9408c30cbcaf09fa4d5a229"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/contract-a/population.json.anchors.json",
+      "sha256": "b38c1b625eddb0c38b33cdf8f8ad2d45f08e3fa0025be4ceb54087492da2cf9d"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/contract-b/document.txt",
+      "sha256": "75a4029c100e7be1f49c682d696a8f53a601a3c70cc94613ca6326e8a8f09234"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/contract-b/population.json",
+      "sha256": "98a6214b993fbdc99ced14b561c3254a061d2d763ce8daf0ed9f0e6a20b2381c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/contract-b/population.json.anchors.json",
+      "sha256": "276a436688e3fa638efa61b88a14aa80a5852c9689e3f2cdd4f9a2835fda76c3"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition/manifest.json",
+      "sha256": "d5a86d5c40b8911d68bff1b04e560c79488bdf75deab08406a5ba51f9a383ef8"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/composition.record.json",
+      "sha256": "9624b188f3586ae2d1277c28c66ee893c374f20a385818c37fe2d126e049324d"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/contracts-v1.orm.json",
+      "sha256": "0136fc8fe6f4eec6bd9fe95423d97033e2e41023802e46916289ad9f5c4bc22f"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/include-composed.population.json",
+      "sha256": "f2ed9d5b9a8928b0da132c602e10e72fd1378e84cdef2ccb736e7d3d50313f4a"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/include-composition.record.json",
+      "sha256": "d671fab198743940f760075961877c863a1816741a2707ae11a8aa2fd7018428"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/model.orm.yaml",
+      "sha256": "02d6a6d0cf8953d67c8037ea8c0dc495b9de238f32387727be396f4cff2fa76b"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/anchored/project.orm.json",
+      "sha256": "17b002d6cd3649aaa21853f1c97cd8afa02decf1e3ae10d060bc99f1ea70b676"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/answers.json",
+      "sha256": "94e93dce968908f5923c0c303555494b071bebd1a7c35da7259b16b9b63c40a0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/include-free-compose.expected.json",
+      "sha256": "37577e83dd2cd7242c5027ab96fca889f8f8613c100ea68548c547c08955d582"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/include-free-replay.expected.json",
+      "sha256": "7994b647aec994e108af203105254fc152cc35a29527512470cc83863c8916e1"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/include-free-verbalization.expected.txt",
+      "sha256": "406eee465a73c3930a5196bcf92832deae45edfa105ff6bcea4e4a23784aa024"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/include-verbalization.expected.txt",
+      "sha256": "7623de9bbf7bddf5914098c435a3e3b209f3ec55d48e1e75eda791c16957464c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/multiple/contracts-v1.orm.json",
+      "sha256": "0136fc8fe6f4eec6bd9fe95423d97033e2e41023802e46916289ad9f5c4bc22f"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/multiple/labels.orm.json",
+      "sha256": "c1df3dfb3a529ff3cbe65bf1a6e39f10b983e099ab112cf9ecf35b0de3d4e1af"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/multiple/project.orm.json",
+      "sha256": "580c8b5a402b01b46b2c2fa305c534acce0db623d8317fac062e9bb62b266c8f"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/clean.pop.json",
+      "sha256": "ad9033226a18164a59b7c7c92eaa629436f90b846903071a149669bd6998e1e0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/cycle.pop.json",
+      "sha256": "01814667f288afb1c6ee12782feb17a9159a023a7d8b2f35ed33e880e9522b50"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/flattened.orm.yaml",
+      "sha256": "6c4f1f5155acf4ed068b7c6cf334ae30642352ee23790f58e975c015db26b812"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/project.orm.yaml",
+      "sha256": "4cfa7dee672e7042d37f1b7ed102a7edc04ca496771b0a55f037e8759e9093b0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/self.pop.json",
+      "sha256": "cf331185f7bca362751f50ee778a1489184038ca40473add5d5b0676ab9f56dc"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/owned-inline/vocabulary.orm.yaml",
+      "sha256": "07cca3d30d7652507a322d9dbc775760c1b8981088aa6488aa5f47b1bfa6d90a"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/corpus/unresolved-model.json",
+      "sha256": "ec401661f358f45f0a64eef3b3a4d6502b62c04d12f92698f6bc1edba57becf2"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/dynamic-query-successor.json",
+      "sha256": "eb94aff87df43ed330d6ed91fce81f19d9ea804a42afa81c8227a9f09e5addf0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/extra-controls.json",
+      "sha256": "57f95faec5acb18a4dc4e077fac4d93ff19de2cfc556ae9f507e67e760d45cbc"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/focused-primary.json",
+      "sha256": "4e9519015f59f4a83987c40c21d7b6dc7c3e9f6ae123a00fcc536784028a7538"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/gate-manifest.json",
+      "sha256": "24f9301ab62b25e7c3e479726657fb2e820f0850de024397290e56e75a76e6f0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/lint-comparison.json",
+      "sha256": "ff6a34be0fc5a074a301b33485daba212c66fef0d8b5084c49fabd5ceb2a9806"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/lint-current.json",
+      "sha256": "20070f6f2bfeced2a45eaa6e0d4e84d4ab21cf59c018440bcf99abd592599910"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/red-corpus-comparison.json",
+      "sha256": "8f843d12353b92bea14dd1976e678a9f98ac622302b72820f47f338e49bc389c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/red-corpus-initial.json",
+      "sha256": "4774d0d2b06b36e2fc6a2f6f3f0f94ec20d265e92cb70b72c85d96fb5364c009"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/red-extra-impact.json",
+      "sha256": "201094c3b3149942a4e86e7b3fee71a537691a897f4c68ae1e6f0be6ed2bd8cd"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/red-first-impact.json",
+      "sha256": "7d28bcdd62206379a0ff3381b1b510f60f22efa5f10e70c191a4cf206ca353cb"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-components.json",
+      "sha256": "941fa580f321765289a1f44e2e5d240f780655a58b92eb5630abdac5712c0e17"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-final-cli.json",
+      "sha256": "fbd2614086fdedfff9523f41defa3a2f4521993d5b8982a21b4cdee39ffdc6f0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-focused.json",
+      "sha256": "b9fd41b43a9fe5d4546e07dbffafb9b3000db243af24620e51e0fc32940c32ea"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-impact.json",
+      "sha256": "e7087c7124bd29e6a6580233ce26a0bbd706d1cf8968765eb6a07e7addc13e69"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-lint.json",
+      "sha256": "2e7b04ba890af9d2b7c76d0200bb755f46536c03ae910fed35c94028bef9f2c0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-prompt.txt",
+      "sha256": "ba17ae537f1cd0e7dec77fb2a41929bdbdc83d6b01472d07bdf0ddc85bb43c95"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/review-red.json",
+      "sha256": "ed54a3b2f5384da6f0060bc82afa0f70d274495b2259333ae106973d90a6f5c6"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/source-successors.json",
+      "sha256": "402eb274a0c0764a3a6d9f402947b2e63ee82e2e782bcfee4f8f8aec287badc8"
+    }
+  ]
+}

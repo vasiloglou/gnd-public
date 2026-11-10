@@ -1,0 +1,1 @@
+Contract C-1 is signed by Acme Corp. Acme Corp. is based in Lyon. Note CANARY-7f3a.

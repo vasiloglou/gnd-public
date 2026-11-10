@@ -1,0 +1,28 @@
+{
+  "population": {
+    "model": "project.orm.yaml",
+    "source": "fixture",
+    "covers": [
+      "component_uses_component",
+      "component_has_owner"
+    ]
+  },
+  "facts": {
+    "component_uses_component": [
+      {
+        "using": "a",
+        "used": "b"
+      }
+    ],
+    "component_has_owner": [
+      {
+        "component": "a",
+        "owner": "x"
+      },
+      {
+        "component": "b",
+        "owner": "x"
+      }
+    ]
+  }
+}

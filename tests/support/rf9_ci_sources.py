@@ -8,6 +8,7 @@ SOURCE_SUCCESSORS = EVIDENCE.parents[2] / 'compiled-snapshot-obligations/evidenc
 RETIRED_NAMES = SOURCE_SUCCESSORS.parent / 'retired-names.json'
 PHASE_SUCCESSORS = (
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/model-composition/evidence/MC1/source-successors.json',
+    Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/model-composition/evidence/MC2/source-successors.json',
 )
 
 

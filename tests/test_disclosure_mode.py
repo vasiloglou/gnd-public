@@ -215,7 +215,7 @@ def assert_table(surfaces, keys):
 def test_t13_the_table_is_total_and_live(monkeypatch):
     from gnd.disclosure import SURFACES
     keys = table_keys(monkeypatch)
-    assert sum(k.startswith("gnd ") for k in keys) == 49
+    assert sum(k.startswith("gnd ") for k in keys) == 50  # MC2 model-review leaf
     assert_table(SURFACES, keys)
 
 
@@ -497,7 +497,7 @@ def test_t26_every_mode_and_value_free_leaves_see_no_mode(monkeypatch):
             assert {k: v for k, v in other[0].items() if k != "disclosure"} == \
                    {k: v for k, v in unset[0].items() if k != "disclosure"}, path
         checked += 1
-    assert checked == 49 - 16 - 4   # minus the site leaves and the spawners
+    assert checked == 50 - 16 - 4   # minus the site leaves and the spawners
 
 
 # -- T28-T34b: child processes -------------------------------------------------------------

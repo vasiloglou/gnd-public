@@ -1,0 +1,1 @@
+{"population": {"model": "model.orm.yaml", "model_id": "urn:gnd-fixture:ct2-contracts@1", "source": "agent-output", "covers": ["contract_has_party", "party_is_based_in_city"]}, "instances": {}, "facts": {"contract_has_party": [{"contract": "C-1", "party": "Acme Corp."}], "party_is_based_in_city": [{"party": "Acme Corp.", "city": "Lyon"}]}}

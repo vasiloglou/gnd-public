@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "reason": "MC2 exact terminal source successor, chained after MC1; all historical bytes remain unchanged.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF4",
+      "old": "gnd.api",
+      "name": "_run_check_raw",
+      "home": "gnd.checking_service",
+      "before": {
+        "algorithm_sha256": "1f1a958c0116748d6a4d63259f7bc6384ff7f3c4b4421a72b2ad4f18ac43c3ec",
+        "imports": [
+          "AnchorError",
+          "AnchorSidecar",
+          "CompositionError",
+          "MAX_DOCUMENT_BYTES",
+          "acyclic_extents",
+          "acyclic_extents",
+          "bind_anchors",
+          "bind_population",
+          "calculation_scope",
+          "compare",
+          "compose",
+          "guard_path",
+          "read_anchor_sidecar",
+          "read_regular_path",
+          "refuse_unsupported",
+          "resolve_context",
+          "validate_anchor_sidecar",
+          "verify_composition"
+        ],
+        "raw_sha256": "fd890dbbe8ecccf64059b6410a19090be69202e13727869ca0a2aa45f15ac8c4"
+      },
+      "after": {
+        "algorithm_sha256": "21493c7deeda8412c5c013e8a9cbad967de075bf2d8ce6b4071ba85abfcac65e",
+        "imports": [
+          "AnchorError",
+          "AnchorSidecar",
+          "CompositionError",
+          "MAX_DOCUMENT_BYTES",
+          "acyclic_extents",
+          "acyclic_extents",
+          "bind_anchors",
+          "bind_population",
+          "calculation_scope",
+          "compare",
+          "compose",
+          "read_anchor_sidecar",
+          "read_regular_path",
+          "refuse_unsupported",
+          "resolve_context",
+          "validate_anchor_sidecar",
+          "verify_composition"
+        ],
+        "raw_sha256": "db7a6e988164b9e691569bf8afa9d6f3f109194e48fb22b7f7119920501f85ee"
+      },
+      "reason": "MC2 enables only rooted path composition replay after authenticated loading; retain in-memory refusal and exact body/import controls."
+    }
+  ],
+  "raw_observation_commits": {
+    "after": "fdd6f686d1643505ecd95bf99c08c15ae918f7a0"
+  },
+  "raw_sha256_convention": "New after.raw_sha256: UTF-8 ast.get_source_segment at the bound after commit, excluding the following line terminator. before is the unchanged historical predecessor entry, including its historical raw observation; only its normalized algorithm/import state is compared with the production phase base."
+}

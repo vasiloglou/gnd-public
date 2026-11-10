@@ -119,18 +119,19 @@ Stable in-process access to GND validation and checking reports.
 | `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 746 | Read two models and optionally one directory of population documents. |
 | `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 930 | Public population sentence view; applied redaction is the default. |
 | `compose(model, directory) -> dict[str, Any]` | function | 958 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1001 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1044 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1073 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1181 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1205 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1220 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1228 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1238 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1247 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1259 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1262 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1265 | (no docstring) |
+| `verbalize_model(model) -> str` | function | 1012 | Render the caller's complete model for review, including authored samples. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1021 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1064 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1093 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1201 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1225 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1240 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1248 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1258 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1267 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1279 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1282 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1285 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -429,7 +430,7 @@ The disclosure mode: whether GND emits population values.
 | `forward(environ) -> dict[str, str]` | function | 57 | What a spawner adds to a child's environment: only ``customer`` is passed on. |
 | `invocation(mode) -> Iterator[None]` | function | 63 | Set the mode for one in-process CLI invocation; the token is reset on exit. |
 | `Surface` | class | 75 | (no docstring) |
-| `bearing(leaf) -> bool` | function | 149 | Whether a CLI leaf resolves the mode: a site, or one that starts children. |
+| `bearing(leaf) -> bool` | function | 151 | Whether a CLI leaf resolves the mode: a site, or one that starts children. |
 
 ## gnd.documents — `src/gnd/documents.py`
 Components: model.document
@@ -441,9 +442,9 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `ElementOrigin` | class | 20 | (no docstring) |
 | `IncludedFile` | class | 28 | (no docstring) |
 | `Model` | class(BaseModel) | 37 | A loaded, validated ORM conceptual model. |
-| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 86 | (no docstring) |
-| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 100 | The compiled and retained obligations of one operation, in order. |
-| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 116 | Ids of fact types whose ``derivation_rule`` is the structured object |
+| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 87 | (no docstring) |
+| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 101 | The compiled and retained obligations of one operation, in order. |
+| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 117 | Ids of fact types whose ``derivation_rule`` is the structured object |
 
 ## gnd.errors — `src/gnd/errors.py`
 Components: infra.errors
@@ -710,10 +711,10 @@ Deterministic, complete stakeholder verbalization of an ORM model.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `VerbalizationError` | class(ValueError) | 38 | The caller supplied a value that is not a validated ORM model. |
-| `render_model_verbalization(model) -> str` | function | 544 | Render all model semantics in stable-id order with one final newline. |
-| `RuleVerbalization` | class | 676 | One derived fact type's rule, rendered or reported as not renderable. |
-| `check_fact_type_selection(fact_types) -> None` | function | 685 | The one argument check for a fact-type selection: None or a list or tuple of str. |
-| `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 694 | Render each selected derived fact type's rule in stable id order. |
+| `render_model_verbalization(model) -> str` | function | 563 | Render all model semantics in stable-id order with one final newline. |
+| `RuleVerbalization` | class | 697 | One derived fact type's rule, rendered or reported as not renderable. |
+| `check_fact_type_selection(fact_types) -> None` | function | 706 | The one argument check for a fact-type selection: None or a list or tuple of str. |
+| `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 715 | Render each selected derived fact type's rule in stable id order. |
 
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output

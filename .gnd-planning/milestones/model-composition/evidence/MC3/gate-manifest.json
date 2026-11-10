@@ -1,0 +1,98 @@
+{
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "note": "Frozen before runtime/test implementation; source-state controls and five baseline known-red pins are separate from future MC3 claims.",
+  "files": [
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/015-approved-answers.json",
+      "sha256": "a5511a56355b8268bda19c2cb703c0e679738a91329419fba0fc46ef43eb9b54"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/015-approved-spec.md",
+      "sha256": "0dd46dc6ca905c32ac907d6a4bc858d8a8f0a64bfbed0e4cd4d52f90a8b96ad8"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/acceptance-band-controls.json",
+      "sha256": "917762ec9c137b1eddd5f50804965a113727903a16230e8b4ab6991afa98104c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/admission-reread.json",
+      "sha256": "68a3a74d9d7fa230b2b05162675ff3ca3fa865c565a8d434fd29344c769af89c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/baseline-known-red-bodies.json",
+      "sha256": "3641cceb35aa13798cdb088b08e278b91b65d5fa30410c242ccd840fe18e9239"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/baseline-known-red.json",
+      "sha256": "18e9b3e1ca9d3ab9e8d13c1534c2d1f4eee3da83b0679d51525d247392fcd517"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC3/source-state-controls.json",
+      "sha256": "79b908ce8fcaaeb4258e93a6c4245cc5704d76790e58235c742b912d9e503f58"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/notes/model-composition-plan.md",
+      "sha256": "775b5f16b81283cb5634124254c8ec6df8a53735192af946887db369dda1efe9"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/notes/phase-MC3-spec.md",
+      "sha256": "0dd46dc6ca905c32ac907d6a4bc858d8a8f0a64bfbed0e4cd4d52f90a8b96ad8"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/README.md",
+      "sha256": "2ef28885fc6b703e164f122a6deedacd3538da251e4c7a85fb2a43db8b5769e8"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/answers.json",
+      "sha256": "a5511a56355b8268bda19c2cb703c0e679738a91329419fba0fc46ef43eb9b54"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/clean.pop.json",
+      "sha256": "1de51172697431f3291b85e80dc9b11a2f1f8a56d693b23d6b31fd8edc80d0ac"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/combined.orm.json",
+      "sha256": "14c51311f257748c4a864f1851c6716cfb6f8e1c855b1c31d398782ac10e6185"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/combined.proposal.json",
+      "sha256": "9ea51224fcc69e1276735727e9a1579c1b5079954d745d8bb4600f0b33770bcc"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/cycle.pop.json",
+      "sha256": "5143960734442b8c79dc41658bb1f2b99bb3140f4cedb795485b0765125982ff"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/flattened-negative.orm.json",
+      "sha256": "63b773d121060fefc951e8b3a121a314f27cfde9aa82938e123df2ec1950d5dc"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/flattened.proposal.json",
+      "sha256": "7d9a358e0a8da461428ac8f9a4b543754f6deeedb89740c30efc8f95603ab60e"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/project.orm.json",
+      "sha256": "3ab3b74a782b1340b78ebf786c39c7a44f29a8dda58cb466c0238382bf83bd86"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/repin-only.orm.json",
+      "sha256": "2ea6d19849da0f0d2933c0536a862abb50c2d9fd0491b8b2981eea147a07bb02"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/repin-only.proposal.json",
+      "sha256": "591117102c191a27b15464198367b38557c943aaac41df454338333fd9cd47e4"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/v2-clean.pop.json",
+      "sha256": "e7bdcfa8623612920dcdbc0cb0a9434a7d9f085c66b9fc7b466041e969175ab9"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/vocabulary-v1.orm.json",
+      "sha256": "a7e9566ab1fc3c73fd281fd9b8f5dd94582ea92e6621cf21776c469525a46615"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/vocabulary-v2.orm.json",
+      "sha256": "1d027000f5b2fba5967d8799e5a0b8f97327e74e332d919195a4a4ee657d8584"
+    }
+  ]
+}

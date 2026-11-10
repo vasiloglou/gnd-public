@@ -1,0 +1,13 @@
+{
+  "note": "Measured existing adapter before MC3; not a new include implementation.",
+  "rows": [
+    {
+      "message": "breaking evolution requires explicit acceptance of this exact blast radius",
+      "exit_code": 11
+    },
+    {
+      "message": "accepted blast radius does not match this proposal, current model, candidate model, and ordered report",
+      "exit_code": 11
+    }
+  ]
+}

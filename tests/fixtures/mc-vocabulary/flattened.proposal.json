@@ -1,0 +1,86 @@
+{
+  "schema_version": 3,
+  "proposal_id": "flattened",
+  "expected_model_sha256": "3ab3b74a782b1340b78ebf786c39c7a44f29a8dda58cb466c0238382bf83bd86",
+  "candidate_model": {
+    "media_type": "application/yaml",
+    "encoding": "utf-8",
+    "text": "{\n  \"version\": 5,\n  \"model_id\": \"urn:gnd-fixture:model-composition@1\",\n  \"source\": {\n    \"kind\": \"fixture\"\n  },\n  \"object_types\": [\n    {\n      \"id\": \"component\",\n      \"name\": \"Component\",\n      \"kind\": \"entity\",\n      \"reference\": {\n        \"mode\": \"popular\",\n        \"value_type\": \"component_name\"\n      }\n    },\n    {\n      \"id\": \"component_name\",\n      \"name\": \"ComponentName\",\n      \"kind\": \"value\",\n      \"primitive\": \"String\"\n    },\n    {\n      \"id\": \"owner\",\n      \"name\": \"Owner\",\n      \"kind\": \"value\",\n      \"primitive\": \"String\"\n    }\n  ],\n  \"fact_types\": [\n    {\n      \"id\": \"component_depends_on_component\",\n      \"reading\": \"{Component} depends on {Component}\",\n      \"roles\": [\n        {\n          \"role_name\": \"dependent\",\n          \"object_type\": \"component\"\n        },\n        {\n          \"role_name\": \"dependency\",\n          \"object_type\": \"component\"\n        }\n      ],\n      \"constraints\": [\n        {\n          \"id\": \"vocabulary_no_self_use\",\n          \"type\": \"ring\",\n          \"variant\": \"irreflexive\",\n          \"modality\": \"deontic\",\n          \"source\": \"user-supplied\",\n          \"status\": \"confirmed\",\n          \"provenance\": {\n            \"user_quote\": \"Components should not depend on themselves.\"\n          }\n        },\n        {\n          \"id\": \"project_no_loops\",\n          \"type\": \"ring\",\n          \"variant\": \"acyclic\",\n          \"modality\": \"alethic\",\n          \"source\": \"user-supplied\",\n          \"status\": \"confirmed\",\n          \"remedy\": \"Break the use loop.\",\n          \"provenance\": {\n            \"user_quote\": \"No component may use itself indirectly.\"\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"component_has_owner\",\n      \"reading\": \"{Component} has {Owner}\",\n      \"roles\": [\n        {\n          \"role_name\": \"component\",\n          \"object_type\": \"component\"\n        },\n        {\n          \"role_name\": \"owner\",\n          \"object_type\": \"owner\"\n        }\n      ],\n      \"constraints\": [\n        {\n          \"id\": \"project_owner_required\",\n          \"type\": \"mandatory\",\n          \"role\": \"component\",\n          \"modality\": \"alethic\",\n          \"source\": \"user-supplied\",\n          \"status\": \"confirmed\",\n          \"provenance\": {\n            \"user_quote\": \"Every component must have an owner.\"\n          }\n        }\n      ]\n    }\n  ],\n  \"constraints\": [],\n  \"operations\": [],\n  \"rejected_proposals\": [],\n  \"deontic_notes\": []\n}\n",
+    "sha256": "63b773d121060fefc951e8b3a121a314f27cfde9aa82938e123df2ec1950d5dc"
+  },
+  "operations": [
+    {
+      "operation_id": "repin-components",
+      "kind": "repin-include",
+      "locator": {
+        "locator_kind": "include",
+        "include_id": "components"
+      },
+      "before": {
+        "id": "components",
+        "path": "vocabulary-v1.orm.json",
+        "sha256": "a7e9566ab1fc3c73fd281fd9b8f5dd94582ea92e6621cf21776c469525a46615"
+      },
+      "after": {
+        "id": "components",
+        "path": "vocabulary-v2.orm.json",
+        "sha256": "1d027000f5b2fba5967d8799e5a0b8f97327e74e332d919195a4a4ee657d8584"
+      }
+    },
+    {
+      "operation_id": "remove-old-loop-rule",
+      "kind": "delete",
+      "locator": {
+        "locator_kind": "constraint",
+        "host": "included_fact_type",
+        "host_id": "component_uses_component",
+        "family": "ring",
+        "canonical_before_sha256": "8fec85b55cda8ea099dd9d541bced5562e5429ddadebbe12af02b102ffc83b66",
+        "duplicate_occurrence": 0
+      },
+      "before": {
+        "id": "project_no_loops",
+        "type": "ring",
+        "variant": "acyclic",
+        "modality": "alethic",
+        "source": "user-supplied",
+        "status": "confirmed",
+        "remedy": "Break the use loop.",
+        "provenance": {
+          "user_quote": "No component may use itself indirectly."
+        }
+      }
+    },
+    {
+      "operation_id": "restore-loop-rule",
+      "kind": "add",
+      "locator": {
+        "locator_kind": "constraint",
+        "host": "included_fact_type",
+        "host_id": "component_depends_on_component",
+        "family": "ring",
+        "duplicate_occurrence": 0
+      },
+      "after": {
+        "id": "project_no_loops",
+        "type": "ring",
+        "variant": "acyclic",
+        "modality": "alethic",
+        "source": "user-supplied",
+        "status": "confirmed",
+        "remedy": "Break the use loop.",
+        "provenance": {
+          "user_quote": "No component may use itself indirectly."
+        }
+      }
+    }
+  ],
+  "rationale": "Review the versioned shared component vocabulary and preserve project policy.",
+  "audit": {
+    "actor_id": "example-owner",
+    "origin": "authored MC3 corpus",
+    "requested_at": "2026-11-10T00:00:00+00:00"
+  },
+  "linked_projects": [],
+  "artifacts": []
+}

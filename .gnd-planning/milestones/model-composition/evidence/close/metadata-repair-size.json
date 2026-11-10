@@ -1,0 +1,8 @@
+{
+  "MC4_attributable_test_support_python": 120,
+  "stop": 120,
+  "metadata_patch_lines": 6,
+  "production_python": 0,
+  "source_file": "tests/test_development_scaffold.py",
+  "source_sha256": "292e65af460f69c02e65f99dfef8258ccb79bc7426702bd3490787f1dbf3726d"
+}

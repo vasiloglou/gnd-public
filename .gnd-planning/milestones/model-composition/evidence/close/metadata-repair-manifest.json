@@ -1,0 +1,15 @@
+{
+  ".gnd-planning/milestones/model-composition/notes/close-metadata-repair.md": "ac22264adbaef7cfba2eb3ec5b1e3bebffd76813ea557686589fc9482bc78f84",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-gate.json": "ba5e57416dea7098f541d6d052b322b12293842d6c96b6aac0d511228f2434c0",
+  ".gnd-planning/milestones/model-composition/evidence/close/current-reference-closure.txt": "a8d2735b6e2cbc1520b8950b86c7a202315d6e190e87a50d8b06a7cf306c8f1c",
+  ".gnd-planning/milestones/model-composition/evidence/close/isolated-reference-closure.txt": "8650b302b4406b5484a59f6f8a17396a5077c4e2319279093d2e23190b57c71f",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-controls.txt": "9d22bbc57a16524287a79329d1f0095cf52b041d61905459c7edfd869450f6bf",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-controls-fixed.txt": "77fbd993bb52d5b07474469f9a067c6b421c7134d68e1cd1a10508fab7d16d21",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-reference-fixed.txt": "7a20eee6295224dc03c515c61effeca0082f5cf97cc770f7af5dcd2d4e9fd718",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-size.json": "f05e7d2f492078678a1265596cde06ecf2f1f537a5840ebfb46b966f61046dd7",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-lint.json": "c4fb6ec9775b2181b1b6479d8c2b604337d6f4b38a1c622a0f397e1ba909a049",
+  ".gnd-planning/milestones/model-composition/evidence/close/invalidated-6de7189a-full-partial.txt": "956a61e2e8660b0831fabb0cdd7d319b67c9c39f2de4d2b64caf7a837461385a",
+  ".gnd-planning/milestones/model-composition/evidence/close/frozen-default-failure-set.json": "8444da22643ef7b1b22ad7b29645b92ea60352090831e77f5fdd8831209263fb",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-module.txt": "60d961708eefaa1e77f543fb82b997c5cbd9808f3633114cd304eca1aa339991",
+  ".gnd-planning/milestones/model-composition/evidence/close/metadata-repair-frontmatter.txt": "839a8c0e1d6a36645abf38c475ca338d5d63a2583d6679eec859d7bb154ceed3"
+}

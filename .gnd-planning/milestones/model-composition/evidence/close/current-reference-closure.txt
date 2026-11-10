@@ -1,0 +1,18 @@
+Retained output; operator home/repository paths sanitized; other bytes retained.
+
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_reference_closure_and_declared_bootstrap _________________
+tests/test_development_scaffold.py:225: in test_reference_closure_and_declared_bootstrap
+    check_references(ROOT)
+tests/test_development_scaffold.py:158: in check_references
+    check_document_references(root, path)
+tests/test_development_scaffold.py:149: in check_document_references
+    assert (base / href.split('#')[0]).exists(), (path, href)
+E   AssertionError: (PosixPath('<REPO>/.claude/worktrees/local-ci-execution-cc4b0d/.gnd-planning/milestones/why-not-near-misses/checkpoints/DC2/changes.md'), 'disclosure.md')
+E   assert False
+E    +  where False = exists()
+E    +    where exists = (PosixPath('<REPO>/.claude/worktrees/local-ci-execution-cc4b0d/.gnd-planning/milestones/why-not-near-misses/checkpoints/DC2') / 'disclosure.md').exists
+=========================== short test summary info ============================
+FAILED tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap
+1 failed, 1 passed in 0.35s

@@ -714,3 +714,45 @@ Main after required merges, the independent close opinion, final question sweep
 and exact amended-plan digest ruling remain necessary before milestone/issue95
 completion. No optional certificate, publication or excluded historical replay
 is selected.
+
+
+## 14. Close-discovered retained-draft reference repair (2026-11-10)
+
+Delegated amendment under the same named milestone auto authority, gated before
+implementation by notes/close-metadata-repair.md and its exact gate JSON;
+record027 retains the reproduction and scope. Current-checkout reference scanning
+first encountered an unrelated untracked nested worktree; no user worktree was
+modified. The isolated tracked8efd3409 archive then reproduced a real missing
+origin for Fable's verbatim draft, which uses documentation-relative links.
+
+Use the existing exact origin/hash mapping to interpret that draft from its
+intended docs/tutorials/shared-expense-policies.md home. Retain exactly one
+hash-bound draft-only exception for its proposed ../reference/model-includes.md
+placeholder; final pages already cite the real canonical representation-format
+section. All other draft targets and every other document remain checked. The
+existing changed-snapshot/missing-target controls exercise the new origin entry.
+No historical draft text or opinion is rewritten, no new validator/waiver class
+is introduced, and no runtime/schema/example semantics change.
+
+The patch adds six Python data-table/comment lines, bringing MC4-attributable
+support from the historical114 in record025 to120, exactly its existing stop.
+Production remains0 and prose/SVG759. No further Python growth is authorized by
+this amendment. The first insertion changed a fixture's meaningful dictionary
+order and its existing retained-exception control failed; appending the new
+exception preserves the predecessor's first entry and restores that control.
+
+The in-flight full run at6de7189a was stopped through its exact process tree
+once this metadata input was known to need correction. It has no full result;
+SSH exit255 is not a pytest suite verdict. Earlier completed phase/census results
+remain bound to their snapshots, not relabelled as this corrected candidate.
+Restart the explicitly authorized named candidate default/census after focused
+metadata gates pass. Close remains pending actual full results, required owner
+merges, main evidence and independent close review. Phase review budgets remain
+exhausted and do not cover this new patch; the separately declared close budget
+will inspect it. PR155's pending fixed head is unchanged; draft close PR158
+contains the repair.
+
+The failed first-insertion control log retains one literal trailing-space E-line
+(line12) as verbatim historical output. Delegated acceptance preserves this
+artifact-only whitespace residual, alongside prior009/025 residuals; source
+whitespace checks remain0. Staged verification must reject any other new finding.

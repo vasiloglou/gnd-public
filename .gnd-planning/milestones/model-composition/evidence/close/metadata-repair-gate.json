@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-10",
+  "authority": "process-milestone model-composition auto",
+  "instrument": "prose; existing metadata-table adaptation, no new runtime contract",
+  "spec_sha256": "ac22264adbaef7cfba2eb3ec5b1e3bebffd76813ea557686589fc9482bc78f84",
+  "base_commit": "8efd3409",
+  "red_command": "python -m pytest -q tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap tests/test_development_scaffold.py::test_twins_modes_and_generated_links --tb=short",
+  "red_exit": 1,
+  "isolated_red_output_sha256": "8650b302b4406b5484a59f6f8a17396a5077c4e2319279093d2e23190b57c71f",
+  "test_support_before": 114,
+  "maximum_additions": 6,
+  "stop": 120,
+  "review": "separate existing close budget; no new phase review",
+  "original_isolated_red_output_sha256": "95e0459854cebfd16a5fd9dcd5e4b2921fe68c95f8ccc6bc454b5e01ea60e4a4",
+  "sanitization": "Before implementation, sanitize retained paths and bind both original raw hash and sanitized artifact hash."
+}

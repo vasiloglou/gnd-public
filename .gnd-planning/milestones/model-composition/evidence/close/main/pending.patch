@@ -1,0 +1,49 @@
+diff --git a/src/gnd/skills/gnd-model-evolve/SKILL.md b/src/gnd/skills/gnd-model-evolve/SKILL.md
+index 824c150f..a4f9ae4a 100644
+--- a/src/gnd/skills/gnd-model-evolve/SKILL.md
++++ b/src/gnd/skills/gnd-model-evolve/SKILL.md
+@@ -85,2 +85,3 @@ projects remain unsupported; do not claim generated-project conformance.
+-See the [complete expense command walkthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+-for an executed example. This guidance does not duplicate the proposal grammar.
++For the executed expense example, read the repository walkthrough at
++`docs/how-to/shared-expense-policies-commands.md`.
++This guidance does not duplicate the proposal grammar.
+diff --git a/tests/test_development_scaffold.py b/tests/test_development_scaffold.py
+index 7951de3c..cee7f39c 100644
+--- a/tests/test_development_scaffold.py
++++ b/tests/test_development_scaffold.py
+@@ -62,0 +63,3 @@ RETAINED_EXTERNAL_REFERENCES = {
++    # Verbatim Fable draft's proposed placeholder; final pages cite the format home.
++    Path('.gnd-planning/milestones/model-composition/notes/phase-MC4-fable-draft.md'): {
++        '../reference/model-includes.md'},
+@@ -70,0 +74,3 @@ RETAINED_DOCUMENT_ORIGINS = {
++    MC_HOME / 'notes/phase-MC4-fable-draft.md': (
++        Path('docs/tutorials/shared-expense-policies.md'),
++        '4a3cdd3d4cb802fc91eaa7ebb75ef3f9374c5391eae5a747483eb789b3b05ea7'),
+diff --git a/tests/test_model_v2.py b/tests/test_model_v2.py
+index cfe71698..32eaa674 100644
+--- a/tests/test_model_v2.py
++++ b/tests/test_model_v2.py
+@@ -343 +343,3 @@ def test_the_current_model_is_validated_before_it_is_traversed() -> None:
+-    assert gated < source.index('self._validated_candidate(\n            proposal.candidate_model,')
++    plain_candidate = source.index('self._validated_candidate(')
++    assert gated < plain_candidate < source.index('proposal.candidate_model,', plain_candidate)
++    assert gated < source.index('self._include_candidate(')
+diff --git a/tests/test_public_api.py b/tests/test_public_api.py
+index 1d821db2..6d23e8c9 100644
+--- a/tests/test_public_api.py
++++ b/tests/test_public_api.py
+@@ -16 +16 @@ def test_public_exports_and_current_keyword_signatures():
+-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose")
++    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model",)
+@@ -40,0 +41 @@ def test_public_exports_and_current_keyword_signatures():
++    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model",)
+diff --git a/tests/test_rf1_pin_harness.py b/tests/test_rf1_pin_harness.py
+index e6c27158..9bb23708 100644
+--- a/tests/test_rf1_pin_harness.py
++++ b/tests/test_rf1_pin_harness.py
+@@ -129 +129,3 @@ def test_inventory():
+-            "tests/test_rf1_layering.py::test_layer_ratchet_detects_a_new_pair"}
++            "tests/test_rf1_layering.py::test_layer_ratchet_detects_a_new_pair",
++            "tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[remove]",
++            "tests/test_rf1_cli_pins.py::test_mc3_cli_successor_rejects_missing_or_changed_flag[metavar]"}

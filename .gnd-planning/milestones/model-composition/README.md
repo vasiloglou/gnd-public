@@ -37,3 +37,10 @@ MC4 is locally complete and independently reviewed at6de7189a; PR #155 carries t
 
 - [Final candidate comparison](029-candidate-comparison.md)
 - [Candidate readiness and remaining gates](notes/candidate-readiness.md)
+
+## Post-merge verification — 2026-11-10
+
+The owner authorized MC3 and MC4 in order; both are merged (ed091709, a9b67d8b). [Record030](030-main-verification.md) compares actual main to the tested candidate and records229passing focused main checks. Exactly four test guards and one offline skill prose follow-up remain in PR158; their passing candidate results are not called main results. Independent close review and final PR158 merge/actual-main acceptance remain pending. Issue95 stays open.
+
+- [Current close question sweep](notes/close-final-question-sweep.md)
+- [Close review bundle](notes/close-review-bundle.md)

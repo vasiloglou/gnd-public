@@ -865,3 +865,12 @@ the selected independent close opinion and final milestone ruling/issue95
 closure remain pending. This comparison ruling authorizes none of them.
 
 Raw pytest output retains original diagnostic whitespace at candidate-r2-full-default.txt lines 279, 286, 293, 300, 307. Delegated acceptance preserves those artifact bytes only; authored source and metadata whitespace must remain clean. Current reference checks pass2tests and frontmatter validates114citations;11historical manifests have zero mismatches at their recorded snapshots.
+
+
+## 18. Actual owner merges and close boundary (2026-11-10)
+
+The owner explicitly approved MC3 PR157 at c6dad88d and MC4 PR155 at396f86f3 in that order, then requested main verification and the Codex CLI close review. SHA-guarded merges completed ased091709dcccc92e6316684b62e4a00c3998315a thena9b67d8b3a507dffd219c146c7cb4d5953100a0c. Actual main's complete tree equals the approved MC4 head. This supersedes pending merge statements in prior snapshots without changing their historical scope.
+
+Actual main runtime/schema/models/docs/configuration match the measured final candidate. Exactly five nonplanning files differ: four test guards and the offline model-evolve skill prose repair already gated by027/028. PR158 carries these follow-ups; main does not inherit their passing tests or the candidate's full outcome before that PR merges. All4698 nonplanning tracked paths/modes were compared. Planning-only close bookkeeping receives focused current-context checks. No runtime change or new broad run is authorized by this provenance update.
+
+[Record030](../030-main-verification.md) binds actual main and the exact pending delta. The selected close reviewer judges candidate readiness and actual main evidence separately; any local delegated close ruling must remain conditional on PR158's explicit owner merge and final tree verification. Issue95 remains open until the complete accepted candidate is on main. This sequencing discharges the original on-main completion predicates without inventing merge permission or marking unmerged repairs complete. The separate maximum2-call close review budget from026 remains binding.

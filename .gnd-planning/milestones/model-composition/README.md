@@ -30,3 +30,7 @@ MC4 is locally complete and independently reviewed at6de7189a; PR #155 carries t
 
 - [MC4 final spec gate](024-MC4-gate.md)
 - [MC4 completion](025-phase-MC4.md)
+
+- [Close preparation and final census](026-close-preparation.md)
+- [Inherited question sweep (preparation)](notes/close-question-sweep.md)
+- [Completion predicate and final admission map](notes/close-predicate-map.md)

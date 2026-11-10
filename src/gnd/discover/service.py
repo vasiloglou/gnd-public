@@ -35,6 +35,7 @@ from gnd.discover.candidates import (
 )
 from gnd.discover.support import PopulationView, Work, work_ceiling
 from gnd.errors import ModelLoadError, ModelValidationError, PopulationLoadError
+from gnd.evolve._includes import included_hosts
 from gnd.evolve.service import (
     MAX_EVOLUTION_PROPOSAL_BYTES,
     _operations_reference_set,
@@ -49,7 +50,7 @@ from gnd.exits import (
     EXIT_OK,
     EXIT_USAGE,
 )
-from gnd.model import MAX_MODEL_BYTES, load_model_bytes
+from gnd.model import MAX_MODEL_BYTES, _load_model_bytes_captured
 from gnd.model_index import ModelIndex
 from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
 from gnd.redaction import RedactionPolicy
@@ -176,7 +177,7 @@ def _proposal_bytes(
     result: dict[str, Any], actor: str, requested_at: str, population_path: Path
 ) -> tuple[bytes, bool]:
     """The written proposal, and whether it and its candidate model fit their caps."""
-    ops = output.operations(result["final"]) + result["type_operations"]
+    ops = output.operations(result["final"], included_hosts=included_hosts(result["view"].model)) + result["type_operations"]
     document = output.candidate_document(result["document"], ops)
     model_fits = len(output.candidate_text(document).encode("utf-8")) <= MAX_MODEL_BYTES
     built = output.proposal(
@@ -210,9 +211,7 @@ def discover(
     population_bytes = _read_capped(
         population_path, MAX_POPULATION_BYTES, PopulationLoadError, "population"
     )
-    from gnd.model._includes import guard_bytes
-    guard_bytes(model_bytes, source=model_path, route='service:213')
-    model = load_model_bytes(model_bytes, source=model_path)
+    model = _load_model_bytes_captured(model_bytes, source=model_path)
     population = load_population_bytes(population_bytes, source=population_path, model=model)
     basename = population_path.name
     if len(basename) > MAX_EVIDENCE_REF or _REF.fullmatch(basename) is None:
@@ -260,12 +259,10 @@ def discover(
     emitted: list[Candidate] = []
     near_misses: list[dict[str, Any]] = []
     if survivors:
-        checked = output.candidate_document(document, output.operations(envelopes))
+        checked = output.candidate_document(document, output.operations(envelopes, included_hosts=included_hosts(model)))
         try:
-            from gnd.model._includes import guard_bytes
-            guard_bytes(output.candidate_text(checked).encode('utf-8'), source=model_path, route='service:263')
-            checked_model = load_model_bytes(
-                output.candidate_text(checked).encode("utf-8"), source=model_path
+            checked_model = _load_model_bytes_captured(
+                output.candidate_text(checked).encode("utf-8"), source=model_path, candidate=True
             )
         except (ModelLoadError, ModelValidationError) as error:
             # Never echo the candidate: it may carry population values (R2).

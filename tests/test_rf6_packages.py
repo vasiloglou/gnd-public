@@ -83,7 +83,17 @@ def mc1_definition(module, name):
     rows = json.loads(path.read_text())
     matches = [r for r in rows if (r['module'], r['name']) == (module, name)]
     assert len(matches) <= 1
-    return matches[0] if matches else None
+    selected = matches[0] if matches else None
+    successor_path = ROOT / '.gnd-planning/milestones/model-composition/evidence/MC3/definition-successors.json'
+    successor = json.loads(successor_path.read_text())
+    assert successor['predecessor'] == path.relative_to(ROOT).as_posix()
+    assert successor['predecessor_sha256'] == hashlib.sha256(path.read_bytes()).hexdigest()
+    for row in successor['successors']:
+        if (row['module'], row['name']) == (module, name):
+            assert selected is not None and row['home'] == selected['home'] and row['before'] == selected['after']
+            assert row['reason']
+            selected = {**selected, 'after': row['after'], 'reason': row['reason']}
+    return selected
 
 
 @pytest.mark.parametrize('row', inventory(), ids=lambda r: r['module'] + '.' + r['name'])
@@ -229,3 +239,23 @@ def test_uncaptured_runtime_baseline_reports_unavailable(monkeypatch):
     monkeypatch.setattr(sys, 'version_info', SimpleNamespace(major=99, minor=1))
     with pytest.raises(pytest.skip.Exception, match='No predecessor metadata baseline'):
         runtime_baseline('import-baseline')
+
+
+@pytest.mark.parametrize('damage', ['predecessor', 'before', 'after'])
+def test_mc3_definition_chain_rejects_changed_binding(monkeypatch, damage):
+    selected = next(row for row in inventory() if (row['module'], row['name']) ==
+                    ('gnd.model', 'validate_declarations'))
+    original = Path.read_text
+    def changed(path, *args, **kwargs):
+        source = original(path, *args, **kwargs)
+        if path.name == 'definition-successors.json' and path.parent.name == 'MC3':
+            value = json.loads(source)
+            if damage == 'predecessor':
+                value['predecessor_sha256'] = '0' * 64
+            else:
+                value['successors'][0][damage] = '0' * 64
+            return json.dumps(value)
+        return source
+    monkeypatch.setattr(Path, 'read_text', changed)
+    with pytest.raises(AssertionError):
+        test_original_definition_body_is_verbatim(selected)

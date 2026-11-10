@@ -221,6 +221,39 @@ class EvolutionOperationKind(StrEnum):
     MODIFY = "modify"
     RENAME = "rename"
     DELETE = "delete"
+    REPIN_INCLUDE = "repin-include"
+
+
+class IncludeLocator(_ClosedFrozenModel):
+    locator_kind: Literal["include"] = "include"
+    include_id: str = Field(strict=True, min_length=1, max_length=128)
+
+    def reference(self) -> str:
+        return f"includes[{json.dumps(self.include_id, ensure_ascii=True)}]"
+
+
+def _include_declaration(value: Any) -> None:
+    from gnd.errors import ModelValidationError
+    from gnd.model._includes import parse_declarations
+
+    try:
+        parse_declarations({"version": 5, "includes": [value]})
+    except ModelValidationError as error:
+        raise ValueError("invalid include declaration") from error
+
+
+class IncludeSnapshot(_ClosedFrozenModel):
+    id: str = Field(strict=True, min_length=1, max_length=128)
+    path: str
+    sha256: Sha256String
+    content: CommittedText
+
+    @model_validator(mode="after")
+    def _bound(self) -> IncludeSnapshot:
+        _include_declaration({"id": self.id, "path": self.path, "sha256": self.sha256})
+        if self.sha256 != self.content.sha256:
+            raise ValueError("include snapshot does not match its declaration")
+        return self
 
 
 class ElementLocator(_ClosedFrozenModel):
@@ -250,7 +283,7 @@ class RoleLocator(_ClosedFrozenModel):
 
 class ConstraintLocator(_ClosedFrozenModel):
     locator_kind: Literal["constraint"] = "constraint"
-    host: Literal["model", "fact_type"]
+    host: Literal["model", "fact_type", "included_fact_type"]
     host_id: NonEmptyString | None = None
     family: NonEmptyString
     canonical_before_sha256: Sha256String | None = None
@@ -258,14 +291,15 @@ class ConstraintLocator(_ClosedFrozenModel):
 
     @model_validator(mode="after")
     def _host_identity_is_complete(self) -> ConstraintLocator:
-        if self.host == "fact_type" and self.host_id is None:
+        if self.host != "model" and self.host_id is None:
             raise ValueError("fact_type constraint locators require host_id")
         if self.host == "model" and self.host_id is not None:
             raise ValueError("model constraint locators cannot carry host_id")
         return self
 
     def reference(self) -> str:
-        host = "model" if self.host == "model" else f"fact_types[{self.host_id}]"
+        host = ("model" if self.host == "model" else
+                f"{'fact_type_constraints' if self.host == 'included_fact_type' else 'fact_types'}[{self.host_id}]")
         identity = self.canonical_before_sha256 or "new"
         return f"{host}.constraints[{self.family}:{identity}:{self.duplicate_occurrence}]"
 
@@ -292,7 +326,7 @@ class SourceDocumentLocator(_ClosedFrozenModel):
         return f"source.documents[{self.sha256}]"
 
 
-StableLocator = ElementLocator | RoleLocator | ConstraintLocator | ModelIdentityLocator | SourceDocumentLocator
+StableLocator = ElementLocator | RoleLocator | ConstraintLocator | ModelIdentityLocator | SourceDocumentLocator | IncludeLocator
 
 _SOURCE_DOCUMENT_KEYS = frozenset({"sha256", "label"})
 
@@ -309,6 +343,12 @@ def _refuse_source_documents_before_v3(
         raise ValueError(
             f"source-document operations require {label} schema_version {EVOLUTION_SCHEMA_VERSION}"
         )
+    if schema_version != EVOLUTION_SCHEMA_VERSION and any(
+        isinstance(item.locator, IncludeLocator)
+        or isinstance(item.locator, ConstraintLocator) and item.locator.host == "included_fact_type"
+        for item in operations
+    ):
+        raise ValueError(f"include operations require {label} schema_version {EVOLUTION_SCHEMA_VERSION}")
 
 
 class EvolutionOperation(_ClosedFrozenModel):
@@ -345,11 +385,22 @@ class EvolutionOperation(_ClosedFrozenModel):
         object.__setattr__(self, "before_sha256", actual_before)
         object.__setattr__(self, "after_sha256", actual_after)
 
-        if isinstance(self.locator, ElementLocator):
+        if isinstance(self.locator, IncludeLocator):
+            if self.kind is not EvolutionOperationKind.REPIN_INCLUDE:
+                raise ValueError("include locators require repin-include")
+            for value in (self.before, self.after):
+                _include_declaration(value)
+                if value["id"] != self.locator.include_id:
+                    raise ValueError("include declaration id differs from locator")
+            if self.before == self.after:
+                raise ValueError("repin-include must change path or sha256")
+        elif self.kind is EvolutionOperationKind.REPIN_INCLUDE:
+            raise ValueError("repin-include requires an include locator")
+        elif isinstance(self.locator, ElementLocator):
             if self.before is not None and self.before.get("id") != self.locator.element_id:
                 raise ValueError("before id must match the stable element locator")
             if self.kind is EvolutionOperationKind.RENAME:
-                if self.after.get("id") in {None, self.locator.element_id}:
+                if not isinstance(self.after.get("id"), str) or self.after["id"] == self.locator.element_id:
                     raise ValueError("rename after must carry a distinct stable id")
             elif self.after is not None and self.after.get("id") != self.locator.element_id:
                 raise ValueError("after id must match the stable element locator")
@@ -357,7 +408,7 @@ class EvolutionOperation(_ClosedFrozenModel):
             if self.before is not None and self.before.get("role_name") != self.locator.role_name:
                 raise ValueError("before role_name must match the stable role locator")
             if self.kind is EvolutionOperationKind.RENAME:
-                if self.after.get("role_name") in {None, self.locator.role_name}:
+                if not isinstance(self.after.get("role_name"), str) or self.after["role_name"] == self.locator.role_name:
                     raise ValueError("rename after must carry a distinct role_name")
             elif self.after is not None and self.after.get("role_name") != self.locator.role_name:
                 raise ValueError("after role_name must match the stable role locator")
@@ -397,6 +448,11 @@ class EvolutionOperation(_ClosedFrozenModel):
 
     def reference(self) -> str:
         return self.locator.reference()
+
+
+def breaking_operations(operations) -> bool:
+    return any(item.kind in {EvolutionOperationKind.RENAME, EvolutionOperationKind.DELETE,
+                            EvolutionOperationKind.REPIN_INCLUDE} for item in operations)
 
 
 class EvolutionOperationAudit(_ClosedFrozenModel):
@@ -803,6 +859,7 @@ PolicyCell = Literal[
     "model_identity.modify",
     "source_document.modify",
     "source_document.delete",
+    "include.repin-include",
 ]
 
 #: The four optional preview fields the additive policy writes. They are
@@ -814,7 +871,8 @@ _POLICY_FIELDS = ("policy", "populated_args", "populated", "policy_issues")
 #: Every optional preview field omitted when unset: the policy's four, the
 #: shape report's one (MG3) and the population check's one (UG2), under the
 #: same rule.
-_OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches", "population_check")
+_OPTIONAL_PREVIEW_FIELDS = (*_POLICY_FIELDS, "shape_matches", "population_check",
+                            "before_includes", "candidate_includes")
 
 
 class EvolutionPolicyGapError(Exception):
@@ -970,6 +1028,8 @@ class _EvolutionPreviewV3(_EvolutionPreviewV2):
     policy_issues: tuple[PolicyIssue, ...] | None = None
     shape_matches: tuple[ShapeGroup, ...] | None = None
     population_check: PopulationCheckRecord | None = None
+    before_includes: tuple[IncludeSnapshot, ...] | None = None
+    candidate_includes: tuple[IncludeSnapshot, ...] | None = None
 
 
 class EvolutionPreview(_ClosedFrozenModel):
@@ -990,6 +1050,8 @@ class EvolutionPreview(_ClosedFrozenModel):
     policy_issues: tuple[PolicyIssue, ...] | None = None
     shape_matches: tuple[ShapeGroup, ...] | None = None
     population_check: PopulationCheckRecord | None = None
+    before_includes: tuple[IncludeSnapshot, ...] | None = None
+    candidate_includes: tuple[IncludeSnapshot, ...] | None = None
     preview_sha256: Sha256String
 
     @classmethod
@@ -1033,6 +1095,24 @@ class EvolutionPreview(_ClosedFrozenModel):
     def _bindings_match(self) -> EvolutionPreview:
         if self.proposal.schema_version != self.schema_version:
             raise ValueError("preview and proposal versions must match")
+        if (self.before_includes is None) != (self.candidate_includes is None):
+            raise ValueError("before and candidate include snapshots are set together")
+        if self.before_includes is not None:
+            from gnd.model import parse_model_document
+            from gnd.model._includes import parse_declarations
+
+            if self.schema_version != EVOLUTION_SCHEMA_VERSION:
+                raise ValueError("include snapshots require the current preview version")
+            for blob, snapshots in ((self.before_model, self.before_includes),
+                                    (self.candidate_model, self.candidate_includes)):
+                try:
+                    entries = parse_declarations(parse_model_document(
+                        blob.text.encode("utf-8"), source="model.orm.yaml"))
+                except Exception as error:
+                    raise ValueError("invalid include snapshot declarations") from error
+                if [(s.id, s.path, s.sha256) for s in snapshots] != [
+                        (entry['id'], entry['path'], entry['sha256']) for entry in entries]:
+                    raise ValueError("include snapshots differ from authored declarations")
         policy_values = (self.policy, self.populated_args, self.populated, self.policy_issues)
         if any(value is None for value in policy_values) and any(
             value is not None for value in policy_values
@@ -1063,10 +1143,7 @@ class EvolutionPreview(_ClosedFrozenModel):
             raise ValueError("preview before model differs from expected model identity")
         if tuple(sorted(set(self.affected_references))) != self.affected_references:
             raise ValueError("affected_references must be unique and sorted")
-        expected_breaking = any(
-            operation.kind in {EvolutionOperationKind.RENAME, EvolutionOperationKind.DELETE}
-            for operation in self.proposal.operations
-        )
+        expected_breaking = breaking_operations(self.proposal.operations)
         if self.breaking != expected_breaking:
             raise ValueError("breaking flag does not match proposal operations")
         if self.blast_radius.proposal_sha256 != self.proposal_sha256:
@@ -1450,10 +1527,7 @@ class EvolutionRecord(_EvolutionRecordBase):
             raise ValueError("CAS expected identity differs from old model identity")
         if self.new_model_sha256 != self.cas.observed_model_sha256:
             raise ValueError("CAS observed identity differs from new model identity")
-        breaking = any(
-            operation.kind in {EvolutionOperationKind.RENAME, EvolutionOperationKind.DELETE}
-            for operation in self.operations
-        )
+        breaking = breaking_operations(self.operations)
         if breaking and self.accepted_blast_radius_sha256 != self.blast_radius_sha256:
             raise ValueError("breaking records require the exact accepted blast radius")
         if (

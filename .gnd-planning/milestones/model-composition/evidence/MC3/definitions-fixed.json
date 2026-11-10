@@ -1,0 +1,7 @@
+{
+  "command_scope": "definitions-fixed",
+  "exit_code": 0,
+  "summary": "243 passed in 8.55s",
+  "sanitization": "Operator home, repository and temporary directory prefixes replaced; remaining output retained verbatim.",
+  "output": "........................................................................ [ 29%]\n........................................................................ [ 59%]\n........................................................................ [ 88%]\n...........................                                              [100%]\n243 passed in 8.55s\n"
+}

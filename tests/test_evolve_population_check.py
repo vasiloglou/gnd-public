@@ -537,7 +537,13 @@ def test_t14_order_replay_before_the_population_read() -> None:
     values = inspect.getsource(EvolutionService._policy_values)
     assert values.index("checked = population(effective)") < values.index("population_outcomes=")
     apply_source = inspect.getsource(EvolutionService.apply)
-    assert apply_source.index("_enforce_d12(") < apply_source.index("check_population=check_population")
+    # MC3's include branch performs D12 inside its verified composition helper.
+    include = inspect.getsource(EvolutionService._verified_include_preview)
+    assert '_enforce_d12(' in include
+    include_branch = apply_source[apply_source.index('if include_input:', apply_source.index('live_bytes !=')):]
+    assert include_branch.index('_verified_include_preview(') < include_branch.index('check_population=check_population')
+    legacy = include_branch[include_branch.index('        else:'):]
+    assert legacy.index('_enforce_d12(') < legacy.index('check_population=check_population')
 
 
 def test_t14_a_replay_mismatch_is_reported_before_a_missing_population(tmp_path: Path) -> None:

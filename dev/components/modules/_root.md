@@ -441,10 +441,10 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 | `DeonticNote` | class(BaseModel) | 12 | A retained top-level deontic note from the ORM document. |
 | `ElementOrigin` | class | 20 | (no docstring) |
 | `IncludedFile` | class | 28 | (no docstring) |
-| `Model` | class(BaseModel) | 37 | A loaded, validated ORM conceptual model. |
-| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 87 | (no docstring) |
-| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 101 | The compiled and retained obligations of one operation, in order. |
-| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 117 | Ids of fact types whose ``derivation_rule`` is the structured object |
+| `Model` | class(BaseModel) | 38 | A loaded, validated ORM conceptual model. |
+| `Model.model_dump(self, *args, **kwargs) -> dict[str, Any]` | method | 88 | (no docstring) |
+| `Model.compiled_obligations(self, operation_id) -> list[dict[str, Any]]` | method | 102 | The compiled and retained obligations of one operation, in order. |
+| `structured_derivation_ids(model) -> tuple[str, ...]` | function | 118 | Ids of fact types whose ``derivation_rule`` is the structured object |
 
 ## gnd.errors — `src/gnd/errors.py`
 Components: infra.errors

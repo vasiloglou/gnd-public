@@ -53,6 +53,7 @@ from .models import (
     EvolutionPreview,
     EvolutionProposal,
     EvolutionRecord,
+    IncludeLocator,
     LinkedProject,
     LinkedProjectConformance,
     ModelIdentityLocator,
@@ -64,6 +65,7 @@ from .models import (
     SourceDocumentLocator,
     ValidationEvidence,
     ValidationFinding,
+    breaking_operations,
     canonical_sha256,
     read_evolution_finalization_state_document,
     read_evolution_intent_document,
@@ -102,6 +104,35 @@ __all__ = [
 
 class EvolutionError(Exception):
     """A proposal, stage, CAS, or immutable evidence write was refused."""
+
+
+class EvolutionIncludeError(EvolutionError):
+    """An include input was refused, independent of user-supplied message text."""
+
+    def __init__(self, message):
+        from gnd.verbalize import line_text
+
+        super().__init__(line_text(message))
+
+
+class EvolutionIncludeAnalysis(EvolutionIncludeError):
+    def __init__(self, radius, issues, inputs=()):
+        super().__init__('ANALYSIS-ONLY: candidate composition is invalid')
+        self.radius, self.issues, self.inputs = radius, issues, inputs
+
+
+def _include_input(function, *args, **kwargs):
+    from gnd.errors import ReferenceInputError
+
+    from ._includes import IncludeInputError
+
+    try:
+        return function(*args, **kwargs)
+    except EvolutionIncludeError:
+        raise
+    except (IncludeInputError, ModelValidationError, ModelLoadError, ReferenceInputError,
+            EvolutionError, OSError, ValueError, YAMLError) as error:
+        raise EvolutionIncludeError(str(error)) from error
 
 
 class EvolutionReadOnlyCompatibilityError(EvolutionError):
@@ -208,7 +239,7 @@ def _leaf_identity(anchor: Path, relative: str, *, label: str) -> LeafIdentity:
 
 
 def _load_model_document(
-    data: bytes, *, label: str, model_path: Path, declared_references: Any = None
+    data: bytes, *, label: str, model_path: Path, declared_references: Any = None, historical=None
 ) -> tuple[Any, dict[str, Any]]:
     """Load model bytes, already admitted through a trusted descriptor, as if they
     sat at the workspace model's path ``model_path``; return the model and its
@@ -228,8 +259,21 @@ def _load_model_document(
     from gnd.references import ReferenceInputError
 
     try:
-        from gnd.model._includes import guard_bytes
-        guard_bytes(data, source=model_path, route='service:231')
+        from gnd.model._includes import guard_bytes, include_reason
+        try:
+            guard_bytes(data, source=model_path, route='service:231')
+        except ModelValidationError as error:
+            if include_reason(error) != 'include:unsupported-route':
+                raise
+            from gnd.model import _composed_view
+
+            document = _include_input(parse_model_document, data, source=model_path)
+            if declared_references is not None and document.get('reference_populations', []) != declared_references:
+                raise EvolutionIncludeError('declared operations change reference populations')
+            model = _include_input(_composed_view, data, source=model_path,
+                                   root=model_path.parent, historical=historical)
+            _include_input(_json_document, model.model_dump(exclude={'warnings'}), label=label)
+            return model, _include_input(_json_document, document, label=label)
         model = load_model_bytes(data, source=model_path)
         if declared_references is not None and model.reference_populations != declared_references:
             raise EvolutionError(
@@ -302,11 +346,6 @@ def _parse_model_text(text: str, label: str = "candidate model") -> dict[str, An
         raise EvolutionError(f"{label} validation failed: {error}") from error
     except YAMLError as error:
         raise _yaml_refusal(label, error) from None
-    from gnd.model._includes import guard_document
-    try:
-        guard_document(parsed, "evolve.parse-model-text")
-    except ModelValidationError as error:
-        raise EvolutionError(str(error)) from error
     _guard_yaml_document(text, parsed, label)
     if not isinstance(parsed, dict):
         raise EvolutionError(f"{label} is not a mapping")
@@ -330,6 +369,9 @@ def _constraints(document: dict[str, Any], *, hosted: bool = False) -> list[Any]
         (None, dict(item)) if hosted else dict(item)
         for item in document.get("constraints") or []
     )
+    for attachment in document.get('fact_type_constraints', []):
+        result.extend((attachment['fact_type'], dict(item)) if hosted else dict(item)
+                      for item in attachment['constraints'])
     return result
 
 
@@ -619,9 +661,9 @@ def _delta_element_ids(operation: EvolutionOperation) -> frozenset[str]:
         return frozenset(ids)
     if isinstance(locator, RoleLocator):
         return frozenset({locator.fact_type_id})
-    if isinstance(locator, (ModelIdentityLocator, SourceDocumentLocator)):
+    if isinstance(locator, (ModelIdentityLocator, SourceDocumentLocator, IncludeLocator)):
         return frozenset()
-    if locator.host == "fact_type" and locator.host_id is not None:
+    if locator.host != "model" and locator.host_id is not None:
         return frozenset({locator.host_id})
     return frozenset()
 
@@ -629,6 +671,7 @@ def _delta_element_ids(operation: EvolutionOperation) -> frozenset[str]:
 def _enforce_operations_gate(
     before_document: dict[str, Any],
     proposal: EvolutionProposal,
+    *, include_changes: frozenset[str] = frozenset(),
 ) -> None:
     """The ORM+ v2 evolve gate (A3).
 
@@ -675,6 +718,7 @@ def _enforce_operations_gate(
             for element_id in _delta_element_ids(operation) & existing
         }
     )
+    intersecting = sorted(set(intersecting) | (include_changes & existing))
     if intersecting:
         raise EvolutionOperationsGatedError(
             "evolution operations gated: this proposal puts a delta on "
@@ -994,7 +1038,25 @@ def _apply_declared_operations(
 
     document = deepcopy(before)
     declared: set[str] | None = None  # UG3: built on the first source-document operation
+    attachments = None
     for position, operation in enumerate(operations):
+        if isinstance(operation.locator, IncludeLocator):
+            entries = document.get('includes', [])
+            matches = [i for i, entry in enumerate(entries) if entry['id'] == operation.locator.include_id]
+            dumped = operation.model_dump(mode='json')
+            if len(matches) != 1 or entries[matches[0]] != dumped['before']:
+                raise EvolutionIncludeError('declared before value differs from include locator')
+            entries[matches[0]] = deepcopy(dumped['after'])
+            continue
+        if isinstance(operation.locator, ConstraintLocator) and operation.locator.host == 'included_fact_type':
+            from ._includes import AttachmentReplay
+
+            if attachments is None:
+                attachments = _include_input(AttachmentReplay, document)
+            placed_value = _include_input(attachments.apply, operation)
+            if placed_value is not None:
+                _record_placement(placed, position, operation, *placed_value)
+            continue
         if isinstance(operation.locator, SourceDocumentLocator) and declared is None:
             declared = _declared_digests(document)
         if isinstance(operation.locator, ModelIdentityLocator):
@@ -1033,13 +1095,32 @@ def _apply_declared_operations(
         else:
             collection[index] = deepcopy(declared_after)
             _record_placement(placed, position, operation, collection, collection[index])
+    if attachments is not None:
+        attachments.finish()
     return document
 
 
-def _final_constraint_host(document: dict[str, Any]) -> Callable[[str | None], list[Any] | None]:
+def _final_constraint_host(document: dict[str, Any], candidate=None) -> Callable[[str | None], list[Any] | None]:
     """The constraint list of a host in a replayed document, or None when it is gone (UG2)."""
 
+    attached = {}
+    if candidate is not None and candidate.includes:
+        from gnd.model_index import ModelIndex
+
+        from ._includes import included_hosts
+
+        for entry in document.get('fact_type_constraints', []):
+            attached.setdefault(entry['fact_type'], []).extend(entry['constraints'])
+        included = included_hosts(candidate)
+        for fact in ModelIndex.for_model(candidate).iter_fact_types_shared():
+            if fact['id'] in included:
+                owned = attached.get(fact['id'], [])
+                constraints = fact.get('constraints', [])
+                attached[fact['id']] = list(constraints[:len(constraints) - len(owned)]) + owned
+
     def host(host_id: str | None) -> list[Any] | None:
+        if host_id in attached:
+            return attached[host_id]
         if host_id is None:
             found = document.get("constraints")
         else:
@@ -1061,8 +1142,67 @@ def _record_placement(
 ) -> None:
     if placed is None or not isinstance(operation.locator, ConstraintLocator):
         return
-    host_id = operation.locator.host_id if operation.locator.host == "fact_type" else None
+    host_id = operation.locator.host_id if operation.locator.host != "model" else None
     placed.append((position, host_id, collection, item))
+
+
+def _include_claim_cap(data):
+    if not isinstance(data, bytes) or len(data) > MAX_EVOLUTION_PROPOSAL_BYTES:
+        raise EvolutionIncludeError('evolution proposal exceeds the existing claim byte cap')
+
+
+def _include_snapshot_values(before, candidate):
+    from ._includes import include_snapshots
+
+    return {'before_includes': _include_input(include_snapshots, before),
+            'candidate_includes': _include_input(include_snapshots, candidate)}
+
+
+def _include_radius(proposal, before, view, before_document, candidate_document, *, changed=None,
+                    before_text=None, candidate_text=None):
+    from ._includes import augment_radius, included_delta
+
+    changed = _include_input(included_delta, before, view) if changed is None else changed
+    radius = _build_blast_radius(
+        proposal, before_document=before.model_dump(exclude={'warnings'}),
+        candidate_document=view.document,
+        before_verbalization=render_model_verbalization(before) if before_text is None else before_text,
+        candidate_verbalization=(render_model_verbalization(view.model) if view.model is not None else
+                                 'ANALYSIS-ONLY: invalid candidate composition') if candidate_text is None else candidate_text)
+    return _include_input(augment_radius, radius, proposal, before_document, candidate_document, changed)
+
+
+def _radius_for_models(proposal, before, candidate, before_document, candidate_document,
+                       before_text, candidate_text):
+    if before.includes:
+        from gnd.model._includes import CompositionView
+
+        view = CompositionView(candidate.model_dump(exclude={'warnings'}), candidate._provenance,
+                               candidate._included, (), candidate)
+        return _include_radius(proposal, before, view, before_document, candidate_document,
+                               before_text=before_text, candidate_text=candidate_text)
+    return _build_blast_radius(proposal, before_document=before_document,
+                               candidate_document=candidate_document,
+                               before_verbalization=before_text, candidate_verbalization=candidate_text)
+
+
+def _validation_for(model, candidate):
+    warnings = tuple(
+        ValidationFinding(
+            path=item.path,
+            message=item.message,
+            rule_id=item.rule_id,
+            severity=item.severity,
+        )
+        for item in model.warnings
+    )
+    return ValidationEvidence(
+        valid=True,
+        warnings=warnings,
+        model_sha256=candidate.sha256,
+    )
+
+
 
 
 def _tree_sha256(root: Path, *, relative: str | None = None) -> str:
@@ -1375,20 +1515,7 @@ class EvolutionService:
             model_path=self._model_path,
             declared_references=declared_references,
         )
-        warnings = tuple(
-            ValidationFinding(
-                path=item.path,
-                message=item.message,
-                rule_id=item.rule_id,
-                severity=item.severity,
-            )
-            for item in model.warnings
-        )
-        return model, document, ValidationEvidence(
-            valid=True,
-            warnings=warnings,
-            model_sha256=candidate.sha256,
-        )
+        return model, document, _validation_for(model, candidate)
 
     def preview(
         self,
@@ -1400,6 +1527,7 @@ class EvolutionService:
         shape_report: bool = False,
         check_population: str | None = None,
         expected_population_sha256: str | None = None,
+        previous_includes=None,
     ) -> EvolutionPreview:
         """Validate and bind a proposal without changing any publication leaf.
 
@@ -1460,10 +1588,14 @@ class EvolutionService:
         # to refuse and hand the gate below a document whose shapes nothing has
         # checked -- where `parameters: 1` raises TypeError instead of returning
         # a refusal.
+        from ._includes import enforce_ownership, provided_history
+
+        history = _include_input(provided_history, proposal, previous_includes)
         before_loaded_model, before_document = _load_model_document(
             before_bytes,
             label="current model",
             model_path=self._model_path,
+            historical=history,
         )
 
         # Before the CANDIDATE is validated, deliberately. The gate reads only
@@ -1475,16 +1607,24 @@ class EvolutionService:
         # would therefore answer "your candidate is invalid, go fix the
         # operations", sending the author straight into the other half of the
         # same gate.
+        if before_loaded_model.includes:
+            if proposal.linked_projects:
+                raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
+            _include_input(enforce_ownership, before_loaded_model, before_document, proposal.operations)
         _enforce_operations_gate(before_document, proposal)
 
-        candidate_model, candidate_document, validation = self._validated_candidate(
-            proposal.candidate_model,
-            declared_references=before_loaded_model.reference_populations,
-        )
         placed: list[tuple[int, str | None, list[Any], Any]] = []
-        declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
-        if declared_document != candidate_document:
-            raise EvolutionError("declared operations do not equal the canonical candidate model")
+        if before_loaded_model.includes:
+            candidate_model, candidate_document, validation, declared_document = self._include_candidate(
+                proposal, before_loaded_model, before_document, placed)
+        else:
+            candidate_model, candidate_document, validation = self._validated_candidate(
+                proposal.candidate_model,
+                declared_references=before_loaded_model.reference_populations,
+            )
+            declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
+            if declared_document != candidate_document:
+                raise EvolutionError("declared operations do not equal the canonical candidate model")
         _enforce_d12(before_document, candidate_document)
         # After the gate (18), candidate validation, replay equality and D-12
         # (all 3), so a preview written with issues is otherwise valid (spec D6).
@@ -1524,17 +1664,10 @@ class EvolutionService:
             media_type="text/plain",
         )
         affected = tuple(sorted({operation.reference() for operation in proposal.operations}))
-        blast_radius = _build_blast_radius(
-            proposal,
-            before_document=before_document,
-            candidate_document=candidate_document,
-            before_verbalization=before_verbalization_text,
-            candidate_verbalization=verbalization_text,
-        )
-        breaking = any(
-            operation.kind in {EvolutionOperationKind.RENAME, EvolutionOperationKind.DELETE}
-            for operation in proposal.operations
-        )
+        blast_radius = _radius_for_models(
+            proposal, before_loaded_model, candidate_model, before_document, candidate_document,
+            before_verbalization_text, verbalization_text)
+        breaking = breaking_operations(proposal.operations)
         if accepted_blast_radius_sha256 is not None and (
             not breaking or accepted_blast_radius_sha256 != blast_radius.report_sha256
         ):
@@ -1557,14 +1690,78 @@ class EvolutionService:
             # digest body, so a policy-free preview keeps its digest (MG-R1).
             **policy_values,
             **shape_values,
+            **(_include_snapshot_values(before_loaded_model, candidate_model)
+               if before_loaded_model.includes else {}),
         }
         digest_body = {key: _json_ready(value) for key, value in values.items()}
         digest_body["schema_version"] = proposal.schema_version
-        return EvolutionPreview(
+        preview = EvolutionPreview(
             schema_version=proposal.schema_version,
             **values,
             preview_sha256=canonical_sha256(digest_body),
         )
+        if before_loaded_model.includes:
+            _include_claim_cap(canonical_json_bytes(preview))
+        return preview
+
+    def _include_candidate(self, proposal, before, document, placed):
+        from gnd.model import _composed_view
+
+        from ._includes import included_delta
+
+        if proposal.candidate_model.media_type not in {'application/yaml', 'application/x-yaml'}:
+            raise EvolutionIncludeError('candidate model media type must be application/yaml')
+        candidate = _include_input(_parse_model_text, proposal.candidate_model.text)
+        if candidate.get('reference_populations', []) != before.reference_populations:
+            raise EvolutionIncludeError('declared operations change reference populations')
+        declared = _apply_declared_operations(document, proposal.operations, placed=placed)
+        if declared != candidate:
+            raise EvolutionIncludeError('declared operations do not equal the canonical candidate model')
+        view = _include_input(_composed_view, proposal.candidate_model.text.encode('utf-8'),
+                              source=self._model_path, root=self._model_path.parent, analysis=True)
+        _include_input(_json_document, view.document, label='candidate model')
+        changed = _include_input(included_delta, before, view)
+        _enforce_operations_gate(document, proposal, include_changes=changed)
+        if view.model is None:
+            radius = _include_radius(proposal, before, view, document, candidate, changed=changed)
+            _include_claim_cap(canonical_json_bytes(radius))
+            raise EvolutionIncludeAnalysis(radius, view.issues, (*before._included, *view.included))
+        return view.model, candidate, _validation_for(view.model, proposal.candidate_model), declared
+
+    def _verified_include_preview(self, preview, before_bytes):
+        from ._includes import enforce_ownership, historical_bytes
+
+        if preview.before_includes is None or preview.candidate_includes is None:
+            raise EvolutionIncludeError('invalid missing include snapshots')
+        _include_claim_cap(canonical_json_bytes(preview))
+        if preview.proposal.linked_projects:
+            raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
+        history = _include_input(historical_bytes, preview.proposal, preview.before_includes)
+        before, document = _load_model_document(before_bytes, label='current model at publication',
+                                                model_path=self._model_path, historical=history)
+        _include_input(enforce_ownership, before, document, preview.proposal.operations)
+        _enforce_operations_gate(document, preview.proposal)
+        placed = []
+        candidate, candidate_document, validation, declared = self._include_candidate(
+            preview.proposal, before, document, placed)
+        _enforce_d12(document, candidate_document)
+        from ._includes import exclude_input_outputs
+
+        leaves = ('proposal.json', 'before.orm.yaml', 'candidate.orm.yaml',
+                  'candidate.verbalization.txt', 'preview.json', 'intent.json', 'pending.json', 'record.json')
+        outputs = [self.verbalization_path, *(self.evidence_root / preview.proposal.proposal_id / leaf
+                                             for leaf in leaves)]
+        _include_input(exclude_input_outputs, self._model_path, (*before._included, *candidate._included), outputs)
+        snapshots = _include_snapshot_values(before, candidate)
+        if (snapshots['before_includes'] != preview.before_includes or
+                snapshots['candidate_includes'] != preview.candidate_includes):
+            raise EvolutionIncludeError('include snapshots changed before publication')
+        text = render_model_verbalization(candidate)
+        radius = _radius_for_models(preview.proposal, before, candidate, document,
+                                   candidate_document, render_model_verbalization(before), text)
+        if validation != preview.validation or text != preview.verbalization.text or radius != preview.blast_radius:
+            raise EvolutionIncludeError('include review evidence changed before publication')
+        return before, document, candidate, candidate_document, validation, declared, placed
 
     @staticmethod
     def _policy_values(
@@ -1722,7 +1919,7 @@ class EvolutionService:
             population=population,
             sha256=digest,
             populated=effective,
-            placements=constraint_placements(placed, _final_constraint_host(document)),
+            placements=constraint_placements(placed, _final_constraint_host(document, candidate)),
         )
 
     def _linked_snapshot(
@@ -1945,10 +2142,15 @@ class EvolutionService:
         # Re-run the gate here rather than trusting the preview that carried it:
         # `apply` accepts a preview document, and a hand-built one would
         # otherwise publish exactly the delta the gate exists to refuse.
-        _enforce_operations_gate(
-            _parse_model_text(preview.before_model.text, label="current model"),
-            proposal,
-        )
+        before_authored = _parse_model_text(preview.before_model.text, label="current model")
+        include_input = bool(before_authored.get('includes'))
+        if include_input:
+            if preview.before_includes is None or preview.candidate_includes is None:
+                raise EvolutionIncludeError('invalid missing include snapshots')
+            if proposal.linked_projects:
+                raise EvolutionIncludeError('include:unsupported-route: linked project evolution')
+        else:
+            _enforce_operations_gate(before_authored, proposal)
         live_bytes = _regular_bytes(
             self.allowed_project_root,
             self._model_relative,
@@ -1979,6 +2181,8 @@ class EvolutionService:
                 raise EvolutionError(
                     "stale model CAS: intended bytes exist under a different staged identity"
                 )
+            if include_input:
+                self._verified_include_preview(preview, preview.before_model.text.encode('utf-8'))
             return pending
         if live_sha256 != preview.before_model.sha256:
             raise EvolutionError(
@@ -1988,49 +2192,53 @@ class EvolutionService:
         if live_bytes != preview.before_model.text.encode("utf-8"):
             raise EvolutionError("live model bytes differ from the preview's committed bytes")
 
-        before_loaded_model, before_document = _load_model_document(
-            live_bytes,
-            label="current model at apply",
-            model_path=self._model_path,
-        )
-        # Re-run the additive policy on the bytes about to be published rather
-        # than reading the preview's issue list: anyone can recompute
-        # preview_sha256 over a stripped list, so the re-run is the guard (MG-R3).
-        if preview.policy is not None and preview.population_check is None:
-            self._recheck_policy(before_loaded_model, proposal, preview)
-        candidate_loaded_model, candidate_document, validation = self._validated_candidate(
-            preview.candidate_model,
-            declared_references=before_loaded_model.reference_populations,
-        )
-        placed: list[tuple[int, str | None, list[Any], Any]] = []
-        declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
-        if declared_document != candidate_document:
-            raise EvolutionError(
-                "declared operations do not equal the canonical candidate model at apply"
+        if include_input:
+            (before_loaded_model, before_document, candidate_loaded_model, candidate_document,
+             validation, declared_document, placed) = self._verified_include_preview(preview, live_bytes)
+            if preview.policy is not None:
+                self._recheck_policy(before_loaded_model, proposal, preview,
+                                     check_population=check_population, candidate=candidate_loaded_model,
+                                     placed=placed, document=declared_document)
+        else:
+            before_loaded_model, before_document = _load_model_document(
+                live_bytes,
+                label="current model at apply",
+                model_path=self._model_path,
             )
-        _enforce_d12(before_document, candidate_document)
-        # Under a population check the policy re-run needs the candidate, so it
-        # follows candidate validation, replay equality and D-12 here, the
-        # order preview uses (UG2 spec §6.4). Without one the order above is
-        # unchanged, so flag-free exits do not move.
-        if preview.population_check is not None:
-            self._recheck_policy(
-                before_loaded_model,
-                proposal,
-                preview,
-                check_population=check_population,
-                candidate=candidate_loaded_model,
-                placed=placed,
-                document=declared_document,
+            # Re-run the additive policy on the bytes about to be published rather
+            # than reading the preview's issue list: anyone can recompute
+            # preview_sha256 over a stripped list, so the re-run is the guard (MG-R3).
+            if preview.policy is not None and preview.population_check is None:
+                self._recheck_policy(before_loaded_model, proposal, preview)
+            candidate_loaded_model, candidate_document, validation = self._validated_candidate(
+                preview.candidate_model,
+                declared_references=before_loaded_model.reference_populations,
             )
+            placed: list[tuple[int, str | None, list[Any], Any]] = []
+            declared_document = _apply_declared_operations(before_document, proposal.operations, placed=placed)
+            if declared_document != candidate_document:
+                raise EvolutionError(
+                    "declared operations do not equal the canonical candidate model at apply"
+                )
+            _enforce_d12(before_document, candidate_document)
+            # Under a population check the policy re-run needs the candidate, so it
+            # follows candidate validation, replay equality and D-12 here, the
+            # order preview uses (UG2 spec §6.4). Without one the order above is
+            # unchanged, so flag-free exits do not move.
+            if preview.population_check is not None:
+                self._recheck_policy(
+                    before_loaded_model,
+                    proposal,
+                    preview,
+                    check_population=check_population,
+                    candidate=candidate_loaded_model,
+                    placed=placed,
+                    document=declared_document,
+                )
         candidate_verbalization = render_model_verbalization(candidate_loaded_model)
-        recomputed_blast_radius = _build_blast_radius(
-            proposal,
-            before_document=before_document,
-            candidate_document=candidate_document,
-            before_verbalization=render_model_verbalization(before_loaded_model),
-            candidate_verbalization=candidate_verbalization,
-        )
+        recomputed_blast_radius = _radius_for_models(
+            proposal, before_loaded_model, candidate_loaded_model, before_document, candidate_document,
+            render_model_verbalization(before_loaded_model), candidate_verbalization)
         if validation != preview.validation:
             raise EvolutionError("candidate validation evidence changed before apply")
         if candidate_verbalization != preview.verbalization.text:
@@ -2144,6 +2352,8 @@ class EvolutionService:
             raise EvolutionError("staged candidate verbalization changed before publication")
 
         safe_destination(self.allowed_project_root, self._model_relative)
+        if include_input:
+            self._verified_include_preview(preview, live_bytes)
         try:
             _atomic_write(
                 self.allowed_project_root,
@@ -2314,27 +2524,30 @@ class EvolutionService:
                 "stale finalization: published model has divergent bytes; refusing overwrite or rollback"
             )
 
-        before_loaded, before_document = _load_model_document(
-            before_bytes,
-            label="staged before model at finalize",
-            model_path=self._model_path,
-        )
-        candidate_loaded, candidate_document = _load_model_document(
-            candidate_bytes,
-            label="staged candidate model at finalize",
-            model_path=self._model_path,
-        )
+        include_input = preview.before_includes is not None
+        if include_input:
+            (before_loaded, before_document, candidate_loaded, candidate_document,
+             _validation, _declared, _placed) = self._verified_include_preview(preview, before_bytes)
+        else:
+            before_loaded, before_document = _load_model_document(
+                before_bytes,
+                label="staged before model at finalize",
+                model_path=self._model_path,
+            )
+            if before_loaded.includes:
+                raise EvolutionIncludeError('invalid missing include snapshots')
+            candidate_loaded, candidate_document = _load_model_document(
+                candidate_bytes,
+                label="staged candidate model at finalize",
+                model_path=self._model_path,
+            )
         if _apply_declared_operations(before_document, proposal.operations) != candidate_document:
             raise EvolutionError("declared operations changed before finalization")
         _enforce_d12(before_document, candidate_document)
         candidate_verbalization = render_model_verbalization(candidate_loaded)
-        recomputed_blast_radius = _build_blast_radius(
-            proposal,
-            before_document=before_document,
-            candidate_document=candidate_document,
-            before_verbalization=render_model_verbalization(before_loaded),
-            candidate_verbalization=candidate_verbalization,
-        )
+        recomputed_blast_radius = _radius_for_models(
+            proposal, before_loaded, candidate_loaded, before_document, candidate_document,
+            render_model_verbalization(before_loaded), candidate_verbalization)
         if recomputed_blast_radius != preview.blast_radius:
             raise EvolutionError("blast radius changed before finalization")
         if candidate_verbalization != preview.verbalization.text:

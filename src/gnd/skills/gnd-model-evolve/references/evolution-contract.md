@@ -72,6 +72,7 @@ where applicable. A legacy nested shape is never silently interpreted as current
 | `ConstraintLocator` | host, family, canonical before SHA-256, duplicate occurrence | `HOST.constraints[family:digest:occurrence]` |
 | `ModelIdentityLocator` | exactly `locator_kind: model-identity` | `model.identity` |
 | `SourceDocumentLocator` | `locator_kind: source-document`, the declared document's `sha256` (64 lowercase hex) | `source.documents[sha256]` |
+| `IncludeLocator` | `locator_kind: include`, unstripped `include_id` (1–128 characters) | `includes[<JSON string literal, ensure_ascii=True>]` |
 | `ArtifactLocator` | unique id, kind, safe relative path, content SHA-256, sorted referenced model locators | `artifacts[id]` |
 | `ProjectLocator` | `base: allowed-project-root`, normalized relative POSIX `path` | project coordinate beneath the already-trusted allowed root |
 
@@ -80,9 +81,7 @@ uses the old locator and puts the distinct new identity in `after`.
 
 `ArtifactLocator.artifact_kind` is one of `population`, `provenance`, `verbalization`,
 `generated-code`, `extension-code`, `documentation`, or `supplied-artifact`. It binds a supplied
-identity; evolution does not discover, open, rewrite, or regenerate the artifact. The one file
-evolution opens beyond the model, proposal and preview is the population named by
-`--check-population` ("Population check"), never an artifact locator's path.
+identity; evolution does not discover, open, rewrite, or regenerate the artifact. Additional model inputs are declared includes and explicitly supplied previous include files ("Shared vocabulary evolution"), plus the population named by `--check-population` ("Population check"); artifact locator paths are never opened.
 
 `ProjectLocator` admits exactly the base literal `allowed-project-root`. Its path is lexical data,
 not filesystem authority: it rejects empty, dot, parent, absolute POSIX/Windows/UNC,
@@ -91,20 +90,20 @@ spellings. It does not resolve a path or claim containment.
 
 ### EvolutionOperation
 
-`EvolutionOperationKind` is the closed literal set `add | modify | rename | delete`.
+`EvolutionOperationKind` is the closed literal set `add | modify | rename | delete | repin-include`.
 `StableLocator` is the closed union of `ElementLocator`, `RoleLocator`,
-`ConstraintLocator`, `ModelIdentityLocator`, and `SourceDocumentLocator`; artifact locators bind
+`ConstraintLocator`, `ModelIdentityLocator`, `SourceDocumentLocator`, and `IncludeLocator`; artifact locators bind
 downstream impact rather than a model mutation target.
 
 | Field | Rule |
 |---|---|
 | `operation_id` | unique stable id within the proposal |
-| `kind` | `add`, `modify`, `rename`, or `delete` |
+| `kind` | `add`, `modify`, `rename`, `delete`, or `repin-include` |
 | `locator` | one stable model locator |
 | `before`, `after` | complete canonical element values required by the operation shape |
 | `before_sha256`, `after_sha256` | computed canonical identities; supplied values must match |
 
-Shapes are exact: add has only `after`; delete has only `before`; modify and rename have both.
+Shapes are exact: add has only `after`; delete has only `before`; modify, rename and repin-include have both.
 The ordered operation list must replay from the complete before model to the complete candidate.
 
 `ModelIdentityLocator` has one stricter shape: only `modify` is admitted, and `before` and `after`
@@ -255,6 +254,8 @@ same proposal adds is judged like any other `modify`: declare the element once, 
 | constraint, subject populated | `constraint.populated.add` | admitted iff every differing key weakens or is `rationale` (or `provenance.reviewed_in`); otherwise `constraint.populated.modify` | pre-empted | admitted |
 | model identity | — | `model_identity.modify` | — | — |
 | source document | admitted | `source_document.modify` | pre-empted: refused at proposal read (`3`) | `source_document.delete` |
+
+An include `repin-include` is refused by the additive policy with `include.repin-include`; other include mutations are refused at proposal read.
 
 An element `modify` replaces the whole element, so its cell is an allow-list over the dotted paths
 at which `before` and `after` differ; a path beneath an admitted key (`description.summary`) is
@@ -420,7 +421,7 @@ The report carries `proposal_sha256`, before-model SHA-256, candidate-model SHA-
 by stable reference, and `report_sha256` over that entire body. Apply recomputes the report
 immediately before CAS; a self-consistent but incomplete substituted report is refused.
 
-Rename and delete set `breaking: true`. Their accepted digest must equal this exact report digest.
+Rename, delete and repin-include set `breaking: true`. Their accepted digest must equal this exact report digest.
 Acceptance is invalid after any proposal, current-model, candidate-model, entry, or ordering change.
 
 ## 4. Pending state and final record
@@ -612,3 +613,52 @@ pending identity from the candidate model, preview, intent, or other staged leav
 - Never roll back implicitly. The model CAS is the commit point, and a post-CAS failure remains a
   visible pending transaction until exact finalization succeeds or the owner chooses a separate
   explicit recovery action.
+
+
+## Shared vocabulary evolution
+
+Include declarations and resolution follow the [ORM includes contract](../../gnd-orm-core/references/representation-format.md#model-includes-version-5).
+`repin-include` is admitted only on `IncludeLocator` in schema version 3; both
+values are complete declaration triples with the locator's exact id, and path
+or SHA must change. Add/delete/rename of includes and no-op re-pins are refused.
+Every re-pin is conservatively breaking and requires exact blast-radius acceptance.
+Its additive-policy disposition is defined in the policy matrix above.
+
+Included semantic elements and their constraints are read-only. Owned constraints
+attached to included fact types use `ConstraintLocator.host: included_fact_type`
+and `host_id`; their reference is
+`fact_type_constraints[HOST].constraints[family:digest:occurrence]`. Its canonical
+before digest and duplicate occurrence address only authored attachments, never
+the included prefix. Ordinary `fact_type` locators cannot mutate an included host.
+
+The candidate contains the authored includer. Declared replay must equal it; a
+flattened candidate is refused even if it validates independently. Ownership
+refusals precede operations gating; verified included semantic changes also enter
+the existing operations footprint gate. Changed definitions contribute affected
+owned roots to the conservative blast radius. An invalid composed candidate can
+produce only an analysis-only existing radius (exit 3), with no valid preview or
+staged publication. That radius cannot authorize a later valid proposal.
+
+Include-bearing previews carry ordered `before_includes` and `candidate_includes`
+snapshots: each declaration triple plus `content: CommittedText`, binding exact
+UTF-8 raw bytes under the declared suffix to both content and declaration SHAs.
+Both fields are omitted for include-free previews; older wire readers refuse
+them. Preview identity binds both fields. The existing 10 MiB claim cap remains;
+canonical and CLI pretty output must fit it before publication.
+
+Preview accepts repeatable `--previous-include ID=PATH` or API `previous_includes`
+bytes. At most eight unique declared actual re-pin ids may be supplied, matching
+the longest exact id followed by `=`. Paths are workspace-relative or absolute
+beneath it, capped and no-follow. Only old re-pinned dependencies can use these
+authenticated bytes; untouched dependencies and every candidate dependency are
+verified live. Missing old paths may use history, while existing unsafe ancestors
+or leaves still refuse. Apply rebuild and finalize use the bound snapshots and
+do not need those external backup files again.
+
+Apply checks the authored model CAS before verified composition and ownership.
+It replays, validates and rechecks review identities before staging, then verifies
+the live candidate again after destination checks immediately before model CAS.
+Already-live retry and finalize reverify live candidate dependencies before a
+positive return. Included input spellings and existing aliases cannot be output
+destinations. This is single-leaf CAS, with no multi-file atomicity claim.
+Include-bearing linked-project evolution remains refused.

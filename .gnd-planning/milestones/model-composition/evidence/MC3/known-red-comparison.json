@@ -1,0 +1,13 @@
+{
+  "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC3/baseline-known-red.json",
+  "predecessor_sha256": "18e9b3e1ca9d3ab9e8d13c1534c2d1f4eee3da83b0679d51525d247392fcd517",
+  "same_failure_names": true,
+  "names": [
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+  ],
+  "candidate_summary": "5 failed, 258 passed in 4.17s"
+}

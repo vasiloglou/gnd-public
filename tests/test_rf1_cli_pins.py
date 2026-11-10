@@ -167,35 +167,38 @@ def _assert_successor(lane, key, observed, expected):
         assert canonical(observed) == canonical(expected)
 
 
+def _restore_frozen(parser, node):
+    children = None
+    for action in node['actions']:
+        if action['class'] == '_HelpAction':
+            continue
+        if action['class'] == '_SubParsersAction':
+            children = parser.add_subparsers(dest=action['dest'], required=action['required'])
+            for name, child in node['subcommands'].items():
+                _restore_frozen(children.add_parser(name, help=child['listed_help']), child)
+            continue
+        kwargs = {k: action[k] for k in ('default', 'help')}
+        if action['class'] in {'_StoreAction', '_AppendAction'}:
+            if action['class'] == '_AppendAction':
+                kwargs['action'] = 'append'
+            assert action['const'] is None
+            kwargs.update({k: action[k] for k in ('type', 'choices', 'metavar', 'nargs')})
+        else:
+            assert action['class'] == '_StoreTrueAction'
+            kwargs['action'] = 'store_true'
+        names = action['option_strings'] or [action['dest']]
+        if action['option_strings']:
+            kwargs.update(dest=action['dest'], required=action['required'])
+        parser.add_argument(*names, **kwargs)
+    return children
+
+
 def _model_review_successor():
     """Decode the frozen grammar independently, then add only MC2's literal leaf."""
     base = json.loads(golden_path('cli', 'tree').read_text())['subcommands']['verbalize']
     reference = cli._BandSafeParser(prog=base['prog'], description=base['description'])
 
-    def restore(parser, node):
-        children = None
-        for action in node['actions']:
-            if action['class'] == '_HelpAction':
-                continue
-            if action['class'] == '_SubParsersAction':
-                children = parser.add_subparsers(dest=action['dest'], required=action['required'])
-                for name, child in node['subcommands'].items():
-                    restore(children.add_parser(name, help=child['listed_help']), child)
-                continue
-            kwargs = {k: action[k] for k in ('default', 'help')}
-            if action['class'] == '_StoreAction':
-                assert action['const'] is None
-                kwargs.update({k: action[k] for k in ('type', 'choices', 'metavar', 'nargs')})
-            else:
-                assert action['class'] == '_StoreTrueAction'
-                kwargs['action'] = 'store_true'
-            names = action['option_strings'] or [action['dest']]
-            if action['option_strings']:
-                kwargs.update(dest=action['dest'], required=action['required'])
-            parser.add_argument(*names, **kwargs)
-        return children
-
-    children = restore(reference, base)
+    children = _restore_frozen(reference, base)
     before = _walk(reference, ('gnd', 'verbalize'), {})
     before['listed_help'] = base['listed_help']
     assert canonical(before) == canonical(base)  # Every old field binds before widening.
@@ -216,6 +219,35 @@ def _model_review_successor():
             'exit_probe': {path: {'help': probe([*argv, '--help']),
                                   'unknown_flag': probe([*argv, '--rf1-unknown-flag'])}
                            for path, argv in paths.items()}}
+
+
+def _include_preview_successor():
+    """Restore the frozen predecessor, then add MC3's one literal repeatable flag."""
+    base = copy.deepcopy(json.loads(golden_path('cli', 'tree').read_text())['subcommands']['evolve']['subcommands']['preview'])
+    old = CHECK_POPULATION_SUCCESSOR['preview']
+    base['actions'].insert(old['action_index'], copy.deepcopy(old['action']))
+    reference = cli._BandSafeParser(prog=base['prog'], description=base['description'])
+    _restore_frozen(reference, base)
+    before = _walk(reference, ('gnd', 'evolve', 'preview'), {})
+    before['listed_help'] = base['listed_help']
+    assert canonical(before) == canonical(base)
+    assert reference.format_help() == _check_population_successor('gnd evolve preview', 'help')
+    format_action = reference._actions.pop()
+    assert format_action.dest == 'format'
+    reference._optionals._group_actions.remove(format_action)
+    reference.add_argument('--previous-include', action='append', default=None, metavar='ID=PATH',
+                           help='authenticate old bytes for a repinned include from PATH beneath ROOT; repeatable')
+    reference._actions.append(format_action)
+    reference._optionals._group_actions.append(format_action)
+    after = _walk(reference, ('gnd', 'evolve', 'preview'), {})
+    after['listed_help'] = base['listed_help']
+    def probe(argv):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), pytest.raises(SystemExit) as caught:
+            reference.parse_args(argv)
+        return {'exit': caught.value.code, 'stdout': out.getvalue(), 'stderr': err.getvalue()}
+    return {'tree': after, 'help': reference.format_help(),
+            'exit_probe': {'help': probe(['--help']), 'unknown_flag': probe(['--rf1-unknown-flag'])}}
 
 
 def test_cli_tree(tree):
@@ -244,12 +276,17 @@ def test_cli_tree(tree):
         expected["subcommands"]["evolve"]["subcommands"][command]["actions"].insert(
             successor["action_index"], copy.deepcopy(successor["action"])
         )
+    expected['subcommands']['evolve']['subcommands']['preview'] = _include_preview_successor()['tree']
     expected['subcommands']['verbalize'] = _model_review_successor()['tree']
     _assert_successor("cli", "tree", tree[0], expected)
 
 
 @pytest.mark.parametrize("path", PATHS)
 def test_cli_help(tree, path):
+    if path == 'gnd evolve preview':
+        _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
+                          {'path': path, 'help': _include_preview_successor()['help']})
+        return
     if path in {'gnd verbalize', 'gnd verbalize model'}:
         _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
                           {'path': path, 'help': _model_review_successor()['help'][path]})
@@ -275,6 +312,11 @@ def test_cli_exit_probe(path, monkeypatch):
     argv = path.split()[1:]
     shown = run_main([*argv, "--help"])
     refused = run_main([*argv, "--rf1-unknown-flag"])
+    if path == 'gnd evolve preview':
+        observed = {'help': {'exit': shown.returncode, 'stdout': shown.stdout.decode(), 'stderr': shown.stderr.decode()},
+                    'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}
+        _assert_successor('cli-exit', path, observed, _include_preview_successor()['exit_probe'])
+        return
     if path in {'gnd verbalize', 'gnd verbalize model'}:
         observed = {'help': {'exit': shown.returncode, 'stdout': shown.stdout.decode(), 'stderr': shown.stderr.decode()},
                     'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}
@@ -342,3 +384,16 @@ def test_cli_coverage(tree):
     _structure, parsers, helps = tree
     assert len(parsers) == EXPECTED_PARSERS
     assert sorted(parsers) == PATHS == sorted(helps)
+
+
+@pytest.mark.parametrize('damage', ['remove', 'metavar'])
+def test_mc3_cli_successor_rejects_missing_or_changed_flag(tree, damage):
+    observed = copy.deepcopy(tree[0]['subcommands']['evolve']['subcommands']['preview'])
+    actions = observed['actions']
+    flag = next(action for action in actions if action['dest'] == 'previous_include')
+    if damage == 'remove':
+        actions.remove(flag)
+    else:
+        flag['metavar'] = 'OTHER'
+    with pytest.raises(AssertionError):
+        _assert_successor('cli', 'preview', observed, _include_preview_successor()['tree'])

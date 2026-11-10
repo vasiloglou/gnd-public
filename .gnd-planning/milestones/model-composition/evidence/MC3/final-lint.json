@@ -1,0 +1,97 @@
+{
+  "exit_code": 1,
+  "command": "uv run ruff check src tests --output-format json",
+  "findings": [
+    {
+      "code": "I001",
+      "path": "src/gnd/examples/expense/project/cli/expense_cli.py",
+      "row": 3,
+      "column": 1,
+      "message": "Import block is un-sorted or un-formatted"
+    },
+    {
+      "code": "I001",
+      "path": "tests/test_candidate_ignore.py",
+      "row": 2,
+      "column": 1,
+      "message": "Import block is un-sorted or un-formatted"
+    },
+    {
+      "code": "ISC004",
+      "path": "tests/test_development_scaffold.py",
+      "row": 50,
+      "column": 9,
+      "message": "Unparenthesized implicit string concatenation in collection"
+    },
+    {
+      "code": "ISC004",
+      "path": "tests/test_development_scaffold.py",
+      "row": 52,
+      "column": 9,
+      "message": "Unparenthesized implicit string concatenation in collection"
+    },
+    {
+      "code": "RUF007",
+      "path": "tests/test_figures_render.py",
+      "row": 14,
+      "column": 29,
+      "message": "Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs"
+    },
+    {
+      "code": "I001",
+      "path": "tests/test_m3_population_shape.py",
+      "row": 2,
+      "column": 1,
+      "message": "Import block is un-sorted or un-formatted"
+    },
+    {
+      "code": "FURB167",
+      "path": "tests/test_plan_app_docs.py",
+      "row": 147,
+      "column": 52,
+      "message": "Use of regular expression alias `re.M`"
+    },
+    {
+      "code": "FURB167",
+      "path": "tests/test_plan_app_recordings.py",
+      "row": 112,
+      "column": 58,
+      "message": "Use of regular expression alias `re.M`"
+    },
+    {
+      "code": "FURB167",
+      "path": "tests/test_plan_app_recordings.py",
+      "row": 127,
+      "column": 61,
+      "message": "Use of regular expression alias `re.M`"
+    },
+    {
+      "code": "RUF059",
+      "path": "tests/test_plan_apps.py",
+      "row": 264,
+      "column": 5,
+      "message": "Unpacked variable `core` is never used"
+    },
+    {
+      "code": "I001",
+      "path": "tests/test_public_v71_judgment_successor_guards.py",
+      "row": 74,
+      "column": 5,
+      "message": "Import block is un-sorted or un-formatted"
+    },
+    {
+      "code": "I001",
+      "path": "tests/test_public_v71_judgment_successor_guards.py",
+      "row": 107,
+      "column": 5,
+      "message": "Import block is un-sorted or un-formatted"
+    },
+    {
+      "code": "PERF102",
+      "path": "tests/test_pyrel_recordings.py",
+      "row": 85,
+      "column": 24,
+      "message": "When using only the values of a dict use the `values()` method"
+    }
+  ]
+}

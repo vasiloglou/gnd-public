@@ -1,0 +1,5 @@
+{
+  "question_scope": "MD17 revised high-level component-scanner page, PR155 headb334573c087f4071737e914789457c91743f63b4",
+  "owner_answer": "no it doesn't I don't understand what you mean by the scanner? ask fable from claude to do this task for you. Explain what you want to demonstrate, and ask it to pick an existing demo example, like the expense report or the bookrec or anything else and extend it to show the functionality in the same high level manner",
+  "disposition": "Rejected component/scanner framing. Explicitly delegate authorship to Claude Fable; choose and extend an existing demo with a high-level story. No merge or byte approval."
+}

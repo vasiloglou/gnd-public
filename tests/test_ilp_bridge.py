@@ -403,7 +403,7 @@ def test_t10_validation_order_is_pinned():
     positions = [source.index(token) for token in order]
     assert positions == sorted(positions)
     prepare = inspect.getsource(ilp_service._prepare)
-    order = ["read_label_manifest(", "expected-state", "load_model_bytes(", "bind_manifest(",
+    order = ["read_label_manifest(", "expected-state", "_load_model_bytes_captured(", "bind_manifest(",
              "read_population(", "build_neutral(", "export_tree("]
     positions = [prepare.index(token) for token in order]
     assert positions == sorted(positions)

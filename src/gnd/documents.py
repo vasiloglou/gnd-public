@@ -1,7 +1,7 @@
 """RF3 shared dependency home; algorithms retain predecessor semantics."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_serializer
@@ -32,6 +32,7 @@ class IncludedFile:
     version: int
     model_id: str | None
     source: dict[str, Any] | None
+    raw: bytes = field(default=b"", repr=False, compare=False)
 
 
 class Model(BaseModel):

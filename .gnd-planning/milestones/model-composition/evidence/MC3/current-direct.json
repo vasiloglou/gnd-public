@@ -1,0 +1,8 @@
+{
+  "candidate_commit": "c93506e28d4ba98a96c85223fbad630cf250b550",
+  "command": "uv run pytest -q tests/test_mc3_evolution.py tests/test_mc3_source_observations.py --tb=short",
+  "exit_code": 0,
+  "summary": "91 passed in 9.85s",
+  "sanitization": "Operator home/repository/temp prefixes replaced; remainder retained verbatim.",
+  "output": "........................................................................ [ 79%]\n...................                                                      [100%]\n91 passed in 9.85s\n"
+}

@@ -455,6 +455,7 @@ def _evolve_same_review_identity(reviewed: Any, staged: Any) -> bool:
 def _evolve_error_exit(error: Exception) -> int:
     from gnd.evolve import (
         EvolutionError,
+        EvolutionIncludeError,
         EvolutionOperationsGatedError,
         EvolutionPolicyGapError,
         EvolutionPolicyRefusedError,
@@ -465,6 +466,8 @@ def _evolve_error_exit(error: Exception) -> int:
 
     if isinstance(error, _EvolutionCLIError):
         return error.exit_code
+    if isinstance(error, EvolutionIncludeError):
+        return 3
     # Before the generic EvolutionError arm, and by TYPE rather than by message
     # substring: the gate's refusal text names user-supplied element ids, and a
     # message-family match over those is how an id containing "stale " would
@@ -560,6 +563,32 @@ def _evolve_finish_apply(service: Any, pending: Any, output_format: str) -> int:
     _evolve_emit_claim(record, output_format, stage="finalize")
     return record.conformance_exit_code
 
+def _evolve_previous_includes(workspace, model, relative, proposal, flags):
+    if flags is None or flags == []:
+        return None
+    from gnd.artifacts import sha256_hex
+    from gnd.evolve import EvolutionIncludeError
+    from gnd.evolve._includes import previous_bindings, provided_history
+    from gnd.evolve.service import _include_input, _regular_bytes
+    from gnd.model import parse_model_document
+
+    raw = _regular_bytes(workspace, relative, label='model')
+    if sha256_hex(raw) != proposal.expected_model_sha256:
+        raise _EvolutionCLIError(EXIT_COLLISION, 'stale expected model identity before preview')
+    document = _include_input(parse_model_document, raw, source=model)
+    paths = _include_input(previous_bindings, document, flags)
+    _include_input(provided_history, proposal, {identifier: b'' for identifier in paths})
+    snapshots = {}
+    for identifier, path in paths.items():
+        try:
+            selected = Path(path) if Path(path).is_absolute() else workspace / path
+            _, source = _evolve_workspace_path(workspace, str(selected), label='previous include', required=True)
+        except _EvolutionCLIError as error:
+            raise EvolutionIncludeError(str(error)) from error
+        snapshots[identifier] = _include_input(_regular_bytes, workspace, source, label='previous include')
+    return snapshots
+
+
 def _cmd_evolve_preview(
     model_path: str,
     proposal_path: str,
@@ -572,6 +601,7 @@ def _cmd_evolve_preview(
     populated: list[str] | None = None,
     shape_report: bool = False,
     check_population: str | None = None,
+    previous_include: list[str] | None = None,
 ) -> int:
     """Validate one proposal through ``EvolutionService.preview`` and publish its claim.
 
@@ -579,7 +609,7 @@ def _cmd_evolve_preview(
     refuses operations, so the issues are reviewable; the exit is then 3.
     """
 
-    from gnd.evolve import EvolutionService, read_evolution_proposal
+    from gnd.evolve import EvolutionIncludeAnalysis, EvolutionService, read_evolution_proposal
 
     try:
         _evolve_policy_arguments(policy, populated, check_population)
@@ -606,14 +636,38 @@ def _cmd_evolve_preview(
             evidence_root=records,
             allowed_project_root=workspace,
         )
-        preview = service.preview(
-            proposal,
-            policy=policy,
-            populated=populated or (),
-            shape_report=shape_report,
-            check_population=population_relative,
-        )
+        history = _evolve_previous_includes(workspace, model, _model_relative, proposal, previous_include)
+        try:
+            preview = service.preview(
+                proposal, policy=policy, populated=populated or (), shape_report=shape_report,
+                check_population=population_relative, previous_includes=history,
+            )
+        except EvolutionIncludeAnalysis as error:
+            from gnd.evolve._includes import exclude_input_outputs
+            from gnd.evolve.service import _include_input
+
+            _include_input(exclude_input_outputs, model, error.inputs, (preview_file,))
+            from gnd.evolve.service import _include_claim_cap
+            from gnd.verbalize import line_text
+
+            rendered = _evolve_json_bytes(error.radius)
+            _include_claim_cap(rendered)
+            _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
+            if output_format == 'json':
+                print(rendered.decode('utf-8'), end='')
+            else:
+                print(str(error))
+                for entry in error.radius.entries:
+                    print(line_text(entry.reference))
+            return 3
         rendered = _evolve_json_bytes(preview)
+        if preview.before_includes is not None:
+            from gnd.evolve._includes import exclude_input_outputs
+            from gnd.evolve.service import _include_claim_cap, _include_input
+
+            _include_input(exclude_input_outputs, model,
+                           (*preview.before_includes, *preview.candidate_includes), (preview_file,))
+            _include_claim_cap(rendered)
         _evolve_publish_preview(workspace, preview_file, preview_relative, rendered)
         _evolve_emit_claim(preview, output_format, stage="preview")
         if preview.policy_issues:
@@ -754,6 +808,11 @@ def _cmd_evolve_apply(
         # preview carries it exactly when the reviewed one does, so the
         # equality below still binds every reviewed byte.
         shape_report = reviewed.shape_matches is not None
+        from gnd.evolve._includes import historical_bytes
+        from gnd.evolve.service import _include_input
+
+        history = (_include_input(historical_bytes, proposal, reviewed.before_includes)
+                   if reviewed.before_includes is not None else None)
         fresh = service.preview(
             proposal,
             policy=policy,
@@ -761,6 +820,7 @@ def _cmd_evolve_apply(
             shape_report=shape_report,
             check_population=population_relative,
             expected_population_sha256=_reviewed_population_sha256(reviewed),
+            previous_includes=history,
         )
         if reviewed != fresh:
             raise _EvolutionCLIError(
@@ -787,6 +847,7 @@ def _cmd_evolve_apply(
                 shape_report=shape_report,
                 check_population=population_relative,
                 expected_population_sha256=_reviewed_population_sha256(reviewed),
+            previous_includes=history,
             )
         pending = service.apply(accepted, check_population=population_relative)
         return _evolve_finish_apply(service, pending, output_format)

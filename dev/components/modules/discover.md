@@ -32,13 +32,13 @@ The two outputs of ``gnd discover``: the evolve proposal and the report (IK4 §6
 | --- | --- | --- | --- |
 | `canonical_bytes(document) -> bytes` | function | 35 | (no docstring) |
 | `induced(candidate, *, version, digest, ref) -> dict[str, Any]` | function | 40 | The candidate as an induced, proposed, deontic constraint (IK2 envelope). |
-| `operations(constraints) -> tuple[EvolutionOperation, ...]` | function | 58 | (no docstring) |
-| `add_operations(constraints, *, prefix) -> tuple[EvolutionOperation, ...]` | function | 62 | One ADD operation per (host fact type or None for the top level, constraint). |
-| `candidate_document(before, ops) -> dict[str, Any]` | function | 87 | (no docstring) |
-| `candidate_text(document) -> str` | function | 99 | JSON is a YAML subset; the shipped proposal fixtures carry the same form. |
-| `proposal(*, model_bytes, document, ops, actor, requested_at, population_name, origin, prefix, ratio…` | function | 128 | (no docstring) |
-| `write(path, data) -> None` | function | 156 | Write one output; a symbolic link at ``path`` is refused, never followed. |
-| `render_text(report) -> str` | function | 163 | (no docstring) |
+| `operations(constraints, *, included_hosts) -> tuple[EvolutionOperation, ...]` | function | 58 | (no docstring) |
+| `add_operations(constraints, *, prefix, included_hosts) -> tuple[EvolutionOperation, ...]` | function | 63 | One ADD operation per (host fact type or None for the top level, constraint). |
+| `candidate_document(before, ops) -> dict[str, Any]` | function | 90 | (no docstring) |
+| `candidate_text(document) -> str` | function | 102 | JSON is a YAML subset; the shipped proposal fixtures carry the same form. |
+| `proposal(*, model_bytes, document, ops, actor, requested_at, population_name, origin, prefix, ratio…` | function | 131 | (no docstring) |
+| `write(path, data) -> None` | function | 159 | Write one output; a symbolic link at ``path`` is refused, never followed. |
+| `render_text(report) -> str` | function | 166 | (no docstring) |
 
 ## gnd.discover.service — `src/gnd/discover/service.py`
 Components: discover.service
@@ -46,9 +46,9 @@ Components: discover.service
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `DiscoveryDefect` | class(Exception) | 65 | An internal invariant failed (exit 70). |
-| `near_miss(violations, subjects) -> bool` | function | 69 | IK4-D3: ``1 <= v <= min(32, floor(0.05 d))``. |
-| `discover(model_path, population_path, *, families, max_values, max_pairs, min_support, show_values,…` | function | 197 | Run discovery; return the report fields plus private build inputs. |
+| `DiscoveryDefect` | class(Exception) | 66 | An internal invariant failed (exit 70). |
+| `near_miss(violations, subjects) -> bool` | function | 70 | IK4-D3: ``1 <= v <= min(32, floor(0.05 d))``. |
+| `discover(model_path, population_path, *, families, max_values, max_pairs, min_support, show_values,…` | function | 198 | Run discovery; return the report fields plus private build inputs. |
 
 ## gnd.discover.support — `src/gnd/discover/support.py`
 Components: discover.population_view

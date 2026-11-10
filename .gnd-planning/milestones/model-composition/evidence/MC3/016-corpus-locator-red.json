@@ -1,0 +1,19 @@
+{
+  "note": "Observed after adding only the new schema graph, before evolution service implementation. Existing canonical_sha256 is unchanged from the phase base.",
+  "failures": [
+    {
+      "path": "tests/fixtures/mc-vocabulary/combined.proposal.json",
+      "exit": "parser refusal",
+      "error": "1 validation error for _EvolutionProposalV3\noperations.1\n  Value error, constraint locator does not bind the canonical before value [type=value_error, input_value={'operation_id': 'remove-...e itself indirectly.'}}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error",
+      "old_constraint_sha256": "8fec85b55cda8ea099dd9d541bced5562e5429ddadebbe12af02b102ffc83b66"
+    },
+    {
+      "path": "tests/fixtures/mc-vocabulary/flattened.proposal.json",
+      "exit": "parser refusal",
+      "error": "1 validation error for _EvolutionProposalV3\noperations.1\n  Value error, constraint locator does not bind the canonical before value [type=value_error, input_value={'operation_id': 'remove-...e itself indirectly.'}}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error",
+      "old_constraint_sha256": "8fec85b55cda8ea099dd9d541bced5562e5429ddadebbe12af02b102ffc83b66"
+    }
+  ],
+  "correction": "Use gnd.evolve.models.canonical_sha256 (compact sorted literal-Unicode JSON, no terminal newline), not the artifact file producer whose bytes include a terminal newline.",
+  "corrected_parser_count": 2
+}

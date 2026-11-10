@@ -1,0 +1,24 @@
+{
+  "candidate": "c93506e28d4ba98a96c85223fbad630cf250b550",
+  "exit_code": 0,
+  "intercepted_writes": [
+    {
+      "destination": "proposal.json",
+      "bytes": 3437
+    },
+    {
+      "destination": "vocabulary-v1.orm.json",
+      "bytes": 2583
+    }
+  ],
+  "vocabulary_unchanged_during_probe": true,
+  "scope": "Writes intercepted before mutation; report destination equals a live included input.",
+  "prior_probe": {
+    "candidate": "c93506e28d4ba98a96c85223fbad630cf250b550",
+    "exit_code": 74,
+    "intercepted_writes": [],
+    "vocabulary_unchanged_during_probe": true,
+    "scope": "Writes intercepted before mutation; report destination equals a live included input."
+  },
+  "prior_probe_limit": "Default temporary path hit existing path admission before discovery; repeated under a canonical /private/tmp root."
+}

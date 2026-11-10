@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC3/baseline-known-red-bodies.json",
+  "predecessor_sha256": "3641cceb35aa13798cdb088b08e278b91b65d5fa30410c242ccd840fe18e9239",
+  "reason": "Actual base-to-MC3 fidelity observations only. The five historical RF5 failures remain red; these are not a global source successor.",
+  "rows": [
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_cmd_evolve_apply",
+      "raw_sha256": "06d1d862a687a10a0e9affce5f435325713c8cba0dc1ce2d889ddd6230dc672c",
+      "before_raw_sha256": "06d1d862a687a10a0e9affce5f435325713c8cba0dc1ce2d889ddd6230dc672c",
+      "after_raw_sha256": "6810a4052158f583b02a794a6f139d118ec1df9c49eecda240e64835a0b4e2b4"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_cmd_evolve_preview",
+      "raw_sha256": "a801e9811f484006e9eb862a01b38f2e769cf13f134525f318d284d132ec4416",
+      "before_raw_sha256": "a801e9811f484006e9eb862a01b38f2e769cf13f134525f318d284d132ec4416",
+      "after_raw_sha256": "1eaa2bfbb5a00ebcabe0213c790bca5b8400fd4c092e4d0d16d7022070067853"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_evolve_emit_claim",
+      "raw_sha256": "d8d55e6fba27aef7b80865826a763ded38b91a67221326b75750069174005189",
+      "before_raw_sha256": "d8d55e6fba27aef7b80865826a763ded38b91a67221326b75750069174005189",
+      "after_raw_sha256": "d8d55e6fba27aef7b80865826a763ded38b91a67221326b75750069174005189"
+    },
+    {
+      "path": "src/gnd/evolve/cli_service.py",
+      "name": "_evolve_error_exit",
+      "raw_sha256": "98322237f22a1f3ae978a7a26b661d993e096dcda2263ad03691a124024647e8",
+      "before_raw_sha256": "98322237f22a1f3ae978a7a26b661d993e096dcda2263ad03691a124024647e8",
+      "after_raw_sha256": "c4dc34145a1d2352c32bc3f63803b69d8e3cf8a970bae25a559f0aa2bf085451"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "name": "_cmd_validate",
+      "raw_sha256": "b7aea56b6943d882c26e166314df1ed491e62180d8451cc84b9c4ffa88c6bb30",
+      "before_raw_sha256": "b7aea56b6943d882c26e166314df1ed491e62180d8451cc84b9c4ffa88c6bb30",
+      "after_raw_sha256": "b7aea56b6943d882c26e166314df1ed491e62180d8451cc84b9c4ffa88c6bb30"
+    }
+  ]
+}

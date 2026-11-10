@@ -1,0 +1,7 @@
+{
+  "command_scope": "publication-collision-red",
+  "exit_code": 1,
+  "summary": "1 failed, 38 passed in 2.04s",
+  "sanitization": "Operator home, repository and temporary directory prefixes replaced; remaining output retained verbatim.",
+  "output": "......................................F                                  [100%]\n=================================== FAILURES ===================================\n_______ test_verbalization_destination_cannot_replace_old_included_input _______\ntests/test_mc3_evolution.py:292: in test_verbalization_destination_cannot_replace_old_included_input\n    with pytest.raises(EvolutionIncludeError):\nE   Failed: DID NOT RAISE EvolutionIncludeError\n=========================== short test summary info ============================\nFAILED tests/test_mc3_evolution.py::test_verbalization_destination_cannot_replace_old_included_input\n1 failed, 38 passed in 2.04s\n"
+}

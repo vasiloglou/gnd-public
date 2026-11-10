@@ -1,0 +1,14 @@
+{
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "tracked_runtime_additions": 663,
+  "new_worker_lines": 368,
+  "conservative_retained_extractions": 70,
+  "source_total": 1105,
+  "test_support_gross_additions": 1168,
+  "stops": [
+    1400,
+    1400
+  ],
+  "note": "Extra20 lines conservatively cover extracted validation evidence in addition to the prior50 retained policy/warnings lines; gross additions count moved/indented legacy bodies.",
+  "architecture_configuration_additions": 4
+}

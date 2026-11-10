@@ -1,0 +1,14 @@
+{
+  "tool": "Codex CLI",
+  "version": "0.163.0",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "sandbox": "read-only",
+  "ephemeral": true,
+  "exit_code": 0,
+  "candidate": "c93506e28d4ba98a96c85223fbad630cf250b550",
+  "session_id": "01a1c64e-7881-7f70-bea6-7baa81b037ab",
+  "reported_tokens_used": 168881,
+  "scope": "One first diff review; at most one repair confirmation remains.",
+  "credentials": "Existing CLI authentication; no environment file read by the workflow."
+}

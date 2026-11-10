@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC2/dynamic-query-successor.json",
+  "predecessor_sha256": "eb94aff87df43ed330d6ed91fce81f19d9ea804a42afa81c8227a9f09e5addf0",
+  "reason": "MC3 exact parser/replay/snapshot annotations and raw-authored JSON reads; no ModelIndex policy exception.",
+  "removed": [
+    [
+      "src/gnd/evolve/models.py",
+      "<module>",
+      "Literal['object_types.modify', 'object_types.rename', 'object_types.delete', 'fact_types.modify', 'fact_types.rename', 'fact_types.delete', 'role.add', 'role.modify', 'role.rename', 'role.delete', 'constraint.populated.add', 'constraint.populated.modify', 'model_identity.modify', 'source_document.modify', 'source_document.delete']",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "ConstraintLocator",
+      "Literal['model', 'fact_type']",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/evolve/_includes.py",
+      "__init__",
+      "self.groups[entry['fact_type'], item.get('type'), canonical_sha256(item)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "_row",
+      "self.hosts[host]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "active[-1]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "entry['constraints'][slot]",
+      2
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "self.groups[host, family, locator.canonical_before_sha256]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "self.groups[host, family, operation.after_sha256]",
+      2
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "self.hosts[host]",
+      2
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "self.hosts[host][-1]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "self.rows[active[-1]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "apply",
+      "self.rows[ordinal]",
+      4
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "augment_radius",
+      "new.get(reference)",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "augment_radius",
+      "old.get(reference)",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "enforce_ownership",
+      "fact_positions[host]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "enforce_ownership",
+      "occurrences[key]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "enforce_ownership",
+      "origins[address]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "enforce_ownership",
+      "origins[f'$.fact_types[{position}]']",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "enforce_ownership",
+      "positions[host]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "historical_bytes",
+      "dict[str, bytes]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "include_snapshots",
+      "tuple[IncludeSnapshot, ...]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "included_delta",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "included_delta",
+      "new.get(key)",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "included_delta",
+      "old.get(key)",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "inventory",
+      "by_address[address]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "owned_impact",
+      "document.get(section, [])",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "owned_impact",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "previous_bindings",
+      "Sequence[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "previous_bindings",
+      "binding[len(identifier) + 1:]",
+      2
+    ],
+    [
+      "src/gnd/evolve/_includes.py",
+      "previous_bindings",
+      "dict[str, str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/cli_service.py",
+      "_cmd_evolve_preview",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "<module>",
+      "Literal['object_types.modify', 'object_types.rename', 'object_types.delete', 'fact_types.modify', 'fact_types.rename', 'fact_types.delete', 'role.add', 'role.modify', 'role.rename', 'role.delete', 'constraint.populated.add', 'constraint.populated.modify', 'model_identity.modify', 'source_document.modify', 'source_document.delete', 'include.repin-include']",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "ConstraintLocator",
+      "Literal['model', 'fact_type', 'included_fact_type']",
+      1
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "EvolutionPreview",
+      "tuple[IncludeSnapshot, ...]",
+      2
+    ],
+    [
+      "src/gnd/evolve/models.py",
+      "_EvolutionPreviewV3",
+      "tuple[IncludeSnapshot, ...]",
+      2
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_apply_declared_operations",
+      "entries[matches[0]]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_enforce_operations_gate",
+      "frozenset[str]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_final_constraint_host",
+      "attached.get(fact['id'], [])",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "_final_constraint_host",
+      "constraints[:len(constraints) - len(owned)]",
+      1
+    ],
+    [
+      "src/gnd/evolve/service.py",
+      "host",
+      "attached[host_id]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7429,
+  "result_occurrences": 9268
+}

@@ -67,7 +67,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd evolve, change model, rename element, delete element, blast radius, model CAS, evolution proposal, additive policy, check population
 - status: canonical
 - components: cli.evolve_command, evolve.command, evolve.service, model.loading, evolve.population_check, evolve.policy, evolve.shape_matches, evolve.schema
-- members_uses: checker.evaluate, cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, model.address, model.document, model.json_document, … +8 more (graph.md)
+- members_uses: checker.evaluate, cli.arguments, conformance.report, conformance.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.address, model.document, … +9 more (graph.md)
 - flow: cli.evolve_command -> evolve.command -> evolve.service -> model.loading -> evolve.population_check -> evolve.policy -> evolve.shape_matches -> evolve.schema
 - notes: Apply writes staged evidence before one model compare-and-swap. Finalize reruns conformance on linked projects.
 
@@ -307,7 +307,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: discover.candidates, evolve.schema, evolve.service
 - used_by: discover.service, export.ilp_service
 - tests: tests/test_discover.py, tests/test_discover_type_judgements.py, tests/test_evolve_additive_policy.py
-- notes: add_operations and proposal construction are also reused by the ILP import lane.
+- notes: The shared builder selects included_fact_type for owned additions on verified included hosts and retains the authored includes declaration; ILP uses the same replay. add_operations and proposal construction are also reused by the ILP import lane.
 
 
 ### discover.fact_types
@@ -359,7 +359,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: checker.evaluate, discover.candidates, discover.fact_types, discover.output, discover.population_view, discover.type_evidence, discover.type_judgements, evolve.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_redaction, infra.version, model.loading, model.population_loading, model.query_index, model.reference_binding
 - used_by: cli.discover_command
 - tests: tests/test_discover.py, tests/test_discover_fact_type_family.py, tests/test_discover_type_evidence.py, tests/test_discover_type_judgements.py
-- notes: Discovery proposes additions; it does not publish changes to the source model.
+- notes: Rooted composition supplies semantic checks while candidate/proposal output retains the captured authored includer. Include-free byte loading keeps its resolver variant. Discovery proposes additions; it does not publish changes to the source model.
 - checked: partial
 
 
@@ -584,6 +584,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.dispatch
 - part_of: subsystem.evolve
 - tests: tests/test_rf5_commands.py
+- notes: Preview adds repeatable previous-include ID=PATH admission; apply consumes bound snapshots rather than backup paths.
 
 
 ### cli.exp_command
@@ -917,18 +918,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### evolve.service
-- does: Preview explicit model changes, publish a model CAS, and finalize linked conformance evidence [EvolutionService].
+- does: Preview explicit authored model changes, authenticate shared vocabulary snapshots and ownership, publish a model CAS, and finalize evidence [EvolutionService].
 - verbs: evolve model, preview proposal, apply evolution, finalize evolution, compare and swap, blast radius, breaking change, replay operations, pending finalization, linked conformance, resume interrupted apply, immutable evidence, model drift, read evolution record, population check, constraint placement, declare source document
 - in: Current model bytes, explicit EvolutionProposal or reviewed EvolutionPreview, evidence root, allowed project root.
 - out: EvolutionPreview, pending EvolutionFinalizationState, immutable EvolutionRecord and staged publication evidence.
 - status: canonical
-- modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py
-- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.loading, model.reference_binding, model.verbalization
+- modules: src/gnd/evolve/service.py, src/gnd/evolve/__init__.py, src/gnd/evolve/_includes.py
+- uses: conformance.report, conformance.service, evolve.policy, evolve.population_check, evolve.schema, evolve.shape_matches, infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, infra.verdict_prose, model.document, model.loading, model.query_index, model.reference_binding, model.verbalization
 - used_by: discover.output, discover.service, evolve.command, examples.expense_evolution, export.ilp_service
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_loading.py, tests/test_public_evolution_legacy_readers.py, tests/test_public_evolution_drift_readers.py
 - checked: partial
-- notes: The package initializer re-exports the service and evolution.schema contracts; it adds no implementation. Apply publishes a single model leaf; finalize publishes verbalization and conformance evidence with the record last.
+- notes: The package initializer re-exports the service and evolution.schema contracts; it adds no implementation. The private includes worker owns attachment replay, ownership, dependency impact, snapshot selection and input/output exclusion; canonical resolution remains model.loading. Apply publishes a single model leaf; finalize publishes verbalization and conformance evidence with the record last.
 
 
 ### evolve.schema
@@ -938,12 +939,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Closed frozen Pydantic evidence records and canonical identity digests.
 - status: canonical
 - modules: src/gnd/evolve/models.py
-- uses: infra.input_policy
+- uses: infra.errors, infra.input_policy, model.loading
 - used_by: discover.fact_types, discover.output, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, examples.expense_evolution
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_public_evolution_version_graph.py, tests/test_public_evolution_legacy_readers.py, tests/test_evolve_shape_matches.py, tests/test_evolve_additive_policy.py
 - checked: partial
-- notes: Wire versions 1, 2, and 3 remain readable; the source-document locator is admitted in version 3 only (UG3). Publication eligibility is enforced by evolve.service. Hash serialization here does not append the newline used by review request identities.
+- notes: IncludeLocator, IncludeSnapshot and included_fact_type constraint hosts are current-schema-only additions; include-free previews omit snapshot fields on both serializers. Wire versions 1, 2, and 3 remain readable; the source-document locator is admitted in version 3 only (UG3). Publication eligibility is enforced by evolve.service. Hash serialization here does not append the newline used by review request identities.
 
 
 ### evolve.policy
@@ -957,7 +958,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: evolve.population_check, evolve.service
 - part_of: subsystem.evolve
 - tests: tests/test_evolve_additive_policy.py, tests/test_evolve_population_check.py
-- notes: Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
+- notes: The one operation walk conservatively refuses include re-pins and includes owned included_fact_type hosts in populated subjects. Populated status combines sample rows, reference-population ownership, proposal population artifact references, and explicit arguments; this code never reads a population file. The population check's outcomes arrive as words; the walk stays free of I/O (UG2).
 
 ### evolve.population_check
 - does: Read one population file beneath the workspace, check the candidate model over it once, and give one outcome word per constraint operation for the additive policy [population_outcomes].
@@ -994,12 +995,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Published preview claims or completed evolution claims, stdout diagnostics, and classified exit codes.
 - status: canonical
 - modules: src/gnd/evolve/cli_service.py
-- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, model.loading
+- uses: evolve.population_check, evolve.service, infra.artifacts, infra.exit_codes, infra.safe_filesystem, infra.verdict_prose, model.loading
 - used_by: cli.dispatch, cli.evolve_command, recovery.command
 - part_of: subsystem.evolve
 - tests: tests/test_model_evolution.py, tests/test_evolution_conformance.py, tests/test_evolve_additive_policy.py, tests/test_evolve_shape_matches.py
 - checked: partial
-- notes: These are the handler implementations; commands/evolve.py registers and dispatches them. The apply handler calls both apply and finalize in one invocation.
+- notes: CLI preview accepts authenticated previous include paths; apply rebuild uses only actual repinned history. Preview and analysis outputs exclude included input paths and aliases. These are the handler implementations; commands/evolve.py registers and dispatches them. The apply handler calls both apply and finalize in one invocation.
 
 
 ### recovery.inventory
@@ -1548,7 +1549,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: checker.evaluate, discover.output, discover.population_view, evolve.service, export.ilp_neutral, export.ilp_rewrite, export.learner_registry, export.mined_rules, infra.errors, infra.exit_codes, infra.input_policy, infra.report_redaction, measure.labels, model.loading, model.population_loading
 - used_by: cli.checking_command, cli.export_command
 - tests: tests/test_ilp_bridge.py, tests/test_ilp_amie.py, tests/test_ilp_learners.py, tests/test_ih1_counting.py, tests/test_ih2_ownref.py, tests/test_il6_walk.py
-- notes: Labelled imports recompute checker coverage; mined imports bind facts, recount support, require holding rules and confirm checker pass before proposal publication. Public counting helpers are also usable without admitting the rules; _Mined and _mined_inputs retain identity aliases.
+- notes: Prepare, mined-input and candidate admission compose rooted inputs; generated proposals retain the authored includer and leave vocabulary files unchanged. Labelled imports recompute checker coverage; mined imports bind facts, recount support, require holding rules and confirm checker pass before proposal publication. Public counting helpers are also usable without admitting the rules; _Mined and _mined_inputs retain identity aliases.
 
 
 ### export.pyrel_emit
@@ -1731,10 +1732,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +66 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +67 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
-- notes: The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
+- notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
 
 
 ### model.validation
@@ -2168,9 +2169,9 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.shape_matches, extract.guidelines, infra.report_payloads, … +13 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +14 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
-- notes: Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
+- notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
 
 ### infra.errors
@@ -2181,7 +2182,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, evolve.population_check, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, export.pyrel_emit, export.pyrel_rules, … +15 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, export.lean_lowering, … +17 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2407,7 +2408,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +22 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +23 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2745,7 +2746,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/verbalize.py
 - uses: (none)
-- used_by: check.population_structure, check.snapshot_decision, checker.evaluate, cli.checking_command, cli.dispatch, codegen.emit, conformance.report, extract.guidelines, fidelity.doccheck, fidelity.report, fidelity.service, infra.text_output, … +6 more (graph.md)
+- used_by: check.population_structure, check.snapshot_decision, checker.evaluate, cli.checking_command, cli.dispatch, codegen.emit, conformance.report, evolve.command, evolve.service, extract.guidelines, fidelity.doccheck, fidelity.report, … +8 more (graph.md)
 - tests: tests/test_checker_families.py, tests/test_object_type_description.py, tests/test_popvalidate.py
 - checked: partial
 - notes: _neutralize caps individual rendered values at 512 characters; neutralize_text escapes descriptions without that cap. line_text escapes line/control structure without applying value quotation rules to trusted sentence syntax.

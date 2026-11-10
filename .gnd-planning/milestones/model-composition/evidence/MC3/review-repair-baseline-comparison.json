@@ -1,0 +1,12 @@
+{
+  "candidate_commit": "ebec0980005690f6e23e5e4e806fdfc50b96de85",
+  "same_five_known_failure_names": true,
+  "failure_names": [
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+  ],
+  "same_13_lint_locations": true
+}

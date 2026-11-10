@@ -347,7 +347,7 @@ class ConstraintSubjects:
         # else it reaches, like a model-hosted one: a role_ref into another fact
         # type, or an object type without a role (milestone close R1-F1).
         subjects: set[str] = set()
-        if locator.host == "fact_type" and locator.host_id is not None:
+        if locator.host in {"fact_type", "included_fact_type"} and locator.host_id is not None:
             subjects.add(locator.host_id)
         # Before AND after: a constraint spanning only unpopulated fact
         # types must not be re-pointed at a populated one (review F1).
@@ -483,6 +483,9 @@ def additive_policy_issues(
             if kind is not _ADD:
                 refuse(position, operation, f"source_document.{kind.value}",
                        f"{kind.value} of a declared source document refused")
+            continue
+        if locator_kind == "include":
+            refuse(position, operation, "include.repin-include", "shared vocabulary re-pin refused")
             continue
         # Fail closed: a locator kind with no rule is refused, never admitted.
         raise EvolutionPolicyGapError(locator_kind)

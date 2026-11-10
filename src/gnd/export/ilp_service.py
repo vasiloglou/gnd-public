@@ -143,7 +143,7 @@ class _Prepared:
 def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
     """Manifest, model, binding and the export tree, in the export's order."""
     from gnd.evolve.service import _parse_model_text
-    from gnd.model import MAX_MODEL_BYTES, load_model_bytes
+    from gnd.model import MAX_MODEL_BYTES, _load_model_bytes_captured
     from gnd.redaction import RedactionPolicy
 
     manifest = _labels.read_label_manifest(labels_path)
@@ -151,9 +151,7 @@ def _prepare(model_path: Path, labels_path: Path, target: str) -> _Prepared:
         raise IlpError(EXIT_ILL_FORMED, f"expected-state: label manifest {labels_path} is in "
                        "expected-state mode; the export learns from class labels (IK5-D2)")
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, "model")
-    from gnd.model._includes import guard_bytes
-    guard_bytes(model_bytes, source=model_path, route='ilp_service:154')
-    model = load_model_bytes(model_bytes, source=model_path)
+    model = _load_model_bytes_captured(model_bytes, source=model_path)
     if model.reference_populations:
         raise IlpError(EXIT_ILL_FORMED, "references: models with declared reference "
                        "populations are not exported (IK5 boundary)")
@@ -258,14 +256,13 @@ def _envelope(core: dict[str, Any], induction: dict[str, Any], rationale: str) -
 
 def _load_candidate(prepared: _Prepared, constraints: list[dict[str, Any]], model_path: Path) -> Any:
     from gnd.discover import output
-    from gnd.model import load_model_bytes
+    from gnd.model import _load_model_bytes_captured
 
     prepared.reloads.append(len(constraints))
     ops = output.add_operations([(None, c) for c in constraints], prefix="ilp")
     document = output.candidate_document(prepared.document, ops)
-    from gnd.model._includes import guard_bytes
-    guard_bytes(output.candidate_text(document).encode('utf-8'), source=model_path, route='ilp_service:264')
-    return load_model_bytes(output.candidate_text(document).encode("utf-8"), source=model_path)
+    return _load_model_bytes_captured(output.candidate_text(document).encode("utf-8"),
+                                     source=model_path, candidate=True)
 
 
 def _validated(prepared: _Prepared, constraint: dict[str, Any], index: int, model_path: Path) -> None:
@@ -550,13 +547,11 @@ def load_mined_inputs(model_path: Path, population_path: Path, *,
     parsed, so a population that is not the bound one is ``population-mismatch``,
     not a load failure (IH0 finding F, IH1-D5 (o))."""
     from gnd.evolve.service import _parse_model_text
-    from gnd.model import MAX_MODEL_BYTES, load_model_bytes
+    from gnd.model import MAX_MODEL_BYTES, _load_model_bytes_captured
     from gnd.population import MAX_POPULATION_BYTES, load_population_bytes
 
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, "model")
-    from gnd.model._includes import guard_bytes
-    guard_bytes(model_bytes, source=model_path, route='ilp_service:553')
-    model = load_model_bytes(model_bytes, source=model_path)
+    model = _load_model_bytes_captured(model_bytes, source=model_path)
     if model.reference_populations:
         raise IlpError(EXIT_ILL_FORMED, "references: models with declared reference "
                        "populations are not exported (IK5 boundary)")
@@ -755,11 +750,9 @@ def _cmd_import_mined_rules(
                          "body_size_agrees": agrees})
         ops = output.add_operations([(None, c) for c in constraints], prefix="mined")
         document = output.candidate_document(inputs.document, ops)
-        from gnd.model import load_model_bytes
-        from gnd.model._includes import guard_bytes
-        guard_bytes(output.candidate_text(document).encode('utf-8'), source=paths['model'], route='ilp_service:754')
-        candidate = load_model_bytes(output.candidate_text(document).encode("utf-8"),
-                                     source=paths["model"])
+        from gnd.model import _load_model_bytes_captured
+        candidate = _load_model_bytes_captured(output.candidate_text(document).encode("utf-8"),
+                                              source=paths["model"], candidate=True)
         from gnd.population import load_population_bytes
 
         report = check(candidate, load_population_bytes(inputs.population_bytes,

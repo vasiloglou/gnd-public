@@ -1,0 +1,79 @@
+{
+  "base": "5a083f469d0a14271c3417401c6ae2fd046a165a",
+  "tracked_added_runtime": 308,
+  "new_untracked_runtime": 257,
+  "retained_moved_runtime": 50,
+  "runtime_conservative": 615,
+  "test_support_added": 251,
+  "stop": {
+    "runtime": 600,
+    "test_support": 900
+  },
+  "moved": [
+    {
+      "path": "src/gnd/model/__init__.py",
+      "new_home": "_model_warnings",
+      "retained_moved_lines_not_in_added_count": 10,
+      "line_numbers": [
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309
+      ]
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "new_home": "_validate_reference_document",
+      "retained_moved_lines_not_in_added_count": 40,
+      "line_numbers": [
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        528,
+        529,
+        530,
+        531,
+        532,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        551,
+        552,
+        553,
+        554,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562
+      ]
+    }
+  ],
+  "convention": "Git gross added Python lines plus the complete new helper plus unchanged validation-policy lines extracted into new private function homes that git treats as retained context; no moved line counted twice."
+}

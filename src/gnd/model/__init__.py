@@ -296,7 +296,7 @@ def load_model_bytes(data: bytes, *, source: str | Path) -> Model:
     return _finish_model(doc)
 
 
-def _finish_model(doc, origins=(), included=()) -> Model:
+def _model_warnings(doc, origins):
     from gnd.model._includes import remap_issues
 
     issues = remap_issues(_layer1_structural(doc), origins)
@@ -307,38 +307,88 @@ def _finish_model(doc, origins=(), included=()) -> Model:
     warnings = [issue for issue in issues if issue.severity == "warning"]
     if errors:
         raise ModelValidationError(errors, warnings)
+    return warnings
+
+
+def _finish_model(doc, origins=(), included=(), *, _warnings=None, _references_validated=False) -> Model:
+    warnings = _model_warnings(doc, origins) if _warnings is None else _warnings
     model = Model.model_validate({**dict(doc), "warnings": warnings})
 
     model._provenance = origins
     model._included = included
-    validate_declarations(model)
+    if not _references_validated:
+        validate_declarations(model)
     _attach_compiled_obligations(model)
     return model
 
 
 
-def _load_model_at(data, *, source, descriptor):
-    from gnd.model._includes import compose, declares_includes
+def _load_model_at(data, *, source, descriptor, historical=None, analysis=False):
+    from gnd.model._includes import CompositionView, _refuse, compose, declares_includes
 
     doc = parse_model_document(data, source=source)
     if declares_includes(doc):
-        doc, origins, included = compose(doc, descriptor=descriptor, source=source)
-        model = _finish_model(doc, origins, included)
+        issues = [] if analysis else None
+        doc, origins, included = compose(doc, descriptor=descriptor, source=source,
+                                         historical=historical, issues=issues)
+        if analysis:
+            warnings = []
+            try:
+                warnings = _model_warnings(doc, origins)
+                _validate_reference_document(doc)
+            except ModelValidationError as error:
+                issues.extend(error.issues)
+            except ReferenceInputError as error:
+                issues.append(ValidationIssue(path='$.reference_populations', message=str(error),
+                                              rule_id='evolve:reference-ownership'))
+            if issues:
+                return CompositionView(doc, origins, included, tuple(issues))
+            model = _finish_model(doc, origins, included, _warnings=warnings, _references_validated=True)
+        else:
+            model = _finish_model(doc, origins, included)
         model._authored_sha256 = hashlib.sha256(data).hexdigest()
-        return model
-    return load_model_bytes(data, source=source)
+        return CompositionView(doc, origins, included, (), model) if analysis else model
+    if historical is not None:
+        _refuse('declaration')
+    model = load_model_bytes(data, source=source)
+    return CompositionView(doc, (), (), (), model) if analysis else model
 
 
 def load_model_bytes_composed(data: bytes, *, source: str | Path, root: str | Path) -> Model:
     """Resolve the authored model and bind references under one retained root."""
+    return _composed_view(data, source=source, root=root)
+
+
+def _composed_view(data, *, source, root, historical=None, analysis=False):
     with retained_root(root) as descriptor:
-        model = _load_model_at(data, source=source, descriptor=descriptor)
+        result = _load_model_at(data, source=source, descriptor=descriptor,
+                                historical=historical, analysis=analysis)
+        model = result.model if analysis else result
+        if model is None:
+            return result
         if model.reference_populations:
             try:
                 model._references = _bind_at(model, descriptor)
             except Exception as error:
                 raise ReferenceInputError(str(error), model=model) from error
+        return result
+
+
+def _load_model_bytes_captured(data, *, source, candidate=False):
+    from gnd.model._includes import _refuse, guard_bytes, include_reason
+
+    try:
+        guard_bytes(data, source=source, route='captured-proposal-input')
+    except ModelValidationError as error:
+        if include_reason(error) != 'include:unsupported-route':
+            raise
+        if candidate:
+            return load_model_bytes_composed(data, source=source, root=Path(source).parent)
+        model = _load_model_no_follow(Path(source))
+        if model._authored_sha256 != hashlib.sha256(data).hexdigest():
+            _refuse('hash-mismatch')
         return model
+    return load_model_bytes(data, source=source)
 
 def _load_model_no_follow(path: Path) -> Model:
     """Strict path intake for consumers whose contract forbids symlink traversal."""
@@ -461,22 +511,28 @@ from gnd.model._paths import retained_root as retained_root
 
 
 def validate_declarations(model: Model) -> dict[str, str]:
-    declarations = model.reference_populations
+    document = (model.model_dump(exclude={"warnings"}) if model.reference_populations else
+                {"version": model.version, "reference_populations": model.reference_populations,
+                 "fact_types": model.fact_types, "operations": model.operations})
+    return _validate_reference_document(document)
+
+
+def _validate_reference_document(document) -> dict[str, str]:
+    declarations = document.get("reference_populations", [])
     if declarations:
         from gnd.model import _layer1_structural, semantic_validate
 
-        document = model.model_dump(exclude={"warnings"})
         if _layer1_structural(document) or any(
             i.severity == "error" for i in semantic_validate(document)
         ):
             raise ReferenceInputError("reference-bearing model structure or semantics are invalid")
-    if declarations and model.version not in {4, 5}:
+    if declarations and document.get("version") not in {4, 5}:
         raise ReferenceInputError("reference_populations requires model version 4")
     if len(declarations) > 32:
         raise ReferenceInputError("reference file count exceeds 32")
     ids: set[str] = set()
     owners: dict[str, str] = {}
-    types = {ft["id"]: ft for ft in model.fact_types}
+    types = {ft["id"]: ft for ft in document.get("fact_types", [])}
     for d in declarations:
         if set(d) != {"id", "path", "sha256", "fact_types"}:
             raise ReferenceInputError("reference declaration has missing or extra fields")
@@ -498,7 +554,7 @@ def validate_declarations(model: Model) -> dict[str, str]:
             if types[ft].get("derivation", "base") not in {"base", None}:
                 raise ReferenceInputError("references may own only base fact types")
             owners[ft] = identifier
-    for operation in model.operations:
+    for operation in document.get("operations", []):
         for effect in operation.get("effects", []):
             for action in ("assert", "retract"):
                 if effect.get(action, {}).get("fact_type") in owners:

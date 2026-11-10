@@ -1,0 +1,49 @@
+{
+  "version": 5,
+  "source": {
+    "kind": "fixture"
+  },
+  "includes": [
+    {
+      "id": "components",
+      "path": "vocabulary-v1.orm.json",
+      "sha256": "a7e9566ab1fc3c73fd281fd9b8f5dd94582ea92e6621cf21776c469525a46615"
+    }
+  ],
+  "fact_type_constraints": [
+    {
+      "fact_type": "component_uses_component",
+      "constraints": [
+        {
+          "id": "project_no_loops",
+          "type": "ring",
+          "variant": "acyclic",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "remedy": "Break the use loop.",
+          "provenance": {
+            "user_quote": "No component may use itself indirectly."
+          }
+        }
+      ]
+    },
+    {
+      "fact_type": "component_has_owner",
+      "constraints": [
+        {
+          "id": "project_owner_required",
+          "type": "mandatory",
+          "role": "component",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "provenance": {
+            "user_quote": "Every component must have an owner."
+          }
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-fixture:model-composition@1"
+}

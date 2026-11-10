@@ -1,0 +1,62 @@
+{
+  "uniqueness-internal": {
+    "scope": "concept:Refund",
+    "formula": "COUNT[Refund.refund_by] <= 1",
+    "limit": "Candidate aggregate for each refund's customer. Confirm grouping semantics in OS2."
+  },
+  "uniqueness-external": {
+    "scope": "top",
+    "formula": "NOT EXISTS(Enrolment.student(Student) AND Enrolment.course(Course) AND other.student(Student) AND other.course(Course) AND Enrolment != other)",
+    "limit": "Candidate paired witnesses for the enrolment model's composite uniqueness."
+  },
+  "mandatory": {
+    "scope": "concept:Expense",
+    "formula": "EXISTS(Expense.status)",
+    "limit": "Candidate presence test at the participating concept."
+  },
+  "guarded": {
+    "scope": "relationship:Refund.refund_amount",
+    "formula": "Amount <= 1000",
+    "limit": "Scoped refund policy; modality is carried separately."
+  },
+  "ring": {
+    "scope": "concept:Component",
+    "formula": "NOT EXISTS(Component.imports(Component))",
+    "limit": "Self-loop probe only. The census acyclic rule needs transitive reachability, so syntax acceptance does not cover it."
+  },
+  "subtype-partition": {
+    "scope": "concept:LibraryItem",
+    "formula": "(BookItem OR PeriodicalItem) AND NOT (BookItem AND PeriodicalItem)",
+    "limit": "Probes union and disjointness with the census subtype names."
+  },
+  "value": {
+    "scope": "concept:BookType",
+    "formula": "BookType == 'Reference' OR BookType == 'Circulating'",
+    "limit": "The allowed values in the library example."
+  },
+  "textual": {
+    "scope": "concept:BookItem",
+    "formula": "NOT (BookItem.book_type == 'Reference' AND EXISTS(BookItem.checkout))",
+    "limit": "Manual reading of the library text. There is no generic translation for unconstrained text."
+  },
+  "anchored": {
+    "scope": "relationship:Contract.has_party",
+    "formula": "EXISTS(Party.source_span)",
+    "limit": "Deliberate absent-evidence probe. A source span has no binding in the native ontology projection."
+  },
+  "subset": {
+    "scope": "relationship:Shipment.dispatch_request",
+    "formula": "Warehouse.dispatch_allowed",
+    "limit": "Warehouse projection of the dispatch subset. Population equivalence belongs to OS2."
+  },
+  "exclusion": {
+    "scope": "relationship:Employee.approved_by",
+    "formula": "NOT employee.management_chain(Employee)",
+    "limit": "A negative membership probe over the access case's management closure. This form probes scoped aliases."
+  },
+  "frequency": {
+    "scope": "concept:Student",
+    "formula": "COUNT[Student.enrolls(Course, Term)] <= 6",
+    "limit": "An enrollment-count probe. Its acceptance would not establish grouping by term."
+  }
+}

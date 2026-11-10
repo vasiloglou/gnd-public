@@ -1,0 +1,79 @@
+{
+  "anchored": {
+    "count": 2,
+    "first": [
+      "src/gnd/examples/composition/model.orm.yaml",
+      "/fact_types/0/constraints/0"
+    ]
+  },
+  "exclusion": {
+    "count": 4,
+    "first": [
+      "src/gnd/examples/plan_apps/access/model.orm.json",
+      "/constraints/0"
+    ]
+  },
+  "frequency": {
+    "count": 7,
+    "first": [
+      "src/gnd/examples/plan_apps/course/model.orm.json",
+      "/fact_types/4/constraints/0"
+    ]
+  },
+  "guarded": {
+    "count": 85,
+    "first": [
+      "src/gnd/examples/bookrec/complete.orm.yaml",
+      "/constraints/0"
+    ]
+  },
+  "mandatory": {
+    "count": 48,
+    "first": [
+      "src/gnd/examples/approvals/model.orm.yaml",
+      "/fact_types/0/constraints/1"
+    ]
+  },
+  "ring": {
+    "count": 2,
+    "first": [
+      "src/gnd/examples/plan_apps/access/model.orm.json",
+      "/fact_types/4/constraints/0"
+    ]
+  },
+  "subset": {
+    "count": 25,
+    "first": [
+      "src/gnd/examples/dispatch/model.orm.json",
+      "/constraints/0"
+    ]
+  },
+  "subtype-partition": {
+    "count": 1,
+    "first": [
+      "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "/constraints/2"
+    ]
+  },
+  "textual": {
+    "count": 6,
+    "first": [
+      "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "/constraints/3"
+    ]
+  },
+  "uniqueness": {
+    "count": 93,
+    "first": [
+      "src/gnd/examples/approvals/model.orm.yaml",
+      "/fact_types/0/constraints/0"
+    ]
+  },
+  "value": {
+    "count": 18,
+    "first": [
+      "src/gnd/examples/expense/currency.orm.json",
+      "/constraints/0"
+    ]
+  }
+}

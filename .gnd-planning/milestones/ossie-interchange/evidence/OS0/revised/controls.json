@@ -1,0 +1,16 @@
+{
+  "reading_cases": 209,
+  "original_and_projected_orders_checked": 418,
+  "reordered_cases": 8,
+  "control_multiplicities": [
+    "ManyToOne",
+    "OneToOne"
+  ],
+  "ambiguous_repeated_role": "refused",
+  "require_call_counter_positive": 2,
+  "require_call_counter_negative": 0,
+  "retained_pyrel_require_counts": {
+    "flights": 0,
+    "refunds": 0
+  }
+}

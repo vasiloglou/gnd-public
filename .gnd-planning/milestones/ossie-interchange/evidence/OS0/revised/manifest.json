@@ -1,0 +1,17 @@
+{
+  "E2.json": "7aaafd34ba6e45ce044f12f0b48c187dcb2a05a888e5e1c7bc1c3634d9f11fee",
+  "E4.json": "476e1b75f91c6c1beb4697ecdda97961feff728a379f1119406980288e8f89af",
+  "E6.json": "b465902ea8bed29ea71e1987209459a4830ad1417be988e36a475307e69752df",
+  "README.md": "95b9da5ff3310c93567df2b1263096dd3df6de0a35e44e3cac89e33da5264f12",
+  "census.txt": "a1b22327acbb49bd499c440092d7f94fe58d276ca164cb06364c613a1c355a79",
+  "constraint-census.json": "d299cd2017dd29fa151888bddb75fb90c96add1127e1424eff9e314b279a690a",
+  "controls.json": "111ab802dc51f5f578099fd1dc14dec4d87d378b4ebbc8ff23236843fcba1268",
+  "formulas.json": "ef5b97896eb9d42a5743742d6dd7bb91de8f763b22830bb99ead482fc320dbc5",
+  "gnd-validation.json": "7d534cf020d264e04361aa4fdba02d609483cc660708cd71e82c7bc96d576e23",
+  "inventory.json": "54076d4da4d5dec9f4b1eaf1e71464b0284c0f8d298d3e04baab91a1204005c9",
+  "reproduce/admission.py": "11254766a244024f2e5488ef948d4a969f59132ffd7353f8d29b51cc7f7b4c74",
+  "reproduce/controls.py": "5aaea501e9c8d1d619378681e45746ce851ee9da75492d6aaefdff616b9e3444",
+  "reproduce/formulas.py": "1b32d92f3eb9d9940add8ff2f54e9896f1f8cb8760bfe684ded046e90888a1b6",
+  "reproduce/inventory.py": "a4ae9d06897b03a9fe02fa21803a9bf3a9c684b664277b2769d15b7ac2f0009c",
+  "reproduce/parse.py": "4cb5065d6049082f7f9030a19f7b5392d28c21c89aa8b7cc85542c24f93b7f8d"
+}

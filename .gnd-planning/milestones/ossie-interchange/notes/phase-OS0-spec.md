@@ -196,3 +196,31 @@ its own go-ahead. OS0's delegated approval carries no paid-panel budget.
   under `evidence/OS0/reproduce/`. Execute them from scratch. This
   changes the retained evidence set and preserves the original spec gate's
   experiment definitions. The complete r4 bytes are preserved by the gate.
+
+## Independent review and repairs
+
+The [Claude Code review](phase-OS0-claude-review.md) covered candidate
+`5b998787` and requested changes. The delegated [005 amendment](../005-OS0-spec-amendment.md)
+replaces the earlier scope and control descriptions for the revised
+measurements. Both historical observations and their limits remain above.
+
+- The full roster has 41 tracked models at integration base `54483d03`. Three
+  fail GND admission, and three distinct include roots take the existing
+  `include:unsupported-route` guard. The 14-model run established results
+  only for its depth-one YAML subset.
+- C1 records a proposed mapping disposition for all 11,442 parsed pointers.
+  The new runner rejects duplicate keys. Source admission is a separate
+  measured control. Every pointer in an inadmissible model has a model-level
+  refusal, including the four invalid role names.
+- E2 adds probes for subset, exclusion and frequency. Results describe
+  individual expressions. OS2 must establish their claimed semantics.
+- E4 verified both declaration orders through the pinned parser on 209 fact
+  readings, including eight reordered facts. E6 observes three explicit
+  bidirectional binaries, 54 direct identifier candidates and 237 modality
+  pointers eligible for extension. Missing and incorrectly native modality
+  controls refuse. The remaining 54 active marks belong to whole-model
+  refusals.
+- E3 and E3b still select the converter pin, RelationalAI 1.39.0. An
+  independent AST control confirms the retained source contains zero calls
+  to `require`.
+- The owner confirmed OD6 in [004](../004-owner-OD6.md).

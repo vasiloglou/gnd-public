@@ -28,9 +28,11 @@ cross-check), OS5 (docs and skill), OS6 (upstream converter contribution);
 then close.
 
 The owner approved r3 without a second panel round. PR #159 merged the plan.
-The [OS0 spec gate](002-OS0-spec-gate.md) records delegated approval under the
-milestone execution request. The [OS0 candidate](003-OS0-candidate.md) retains the
-measurements and awaits independent review. The
-[checkpoint](evidence/OS0/CHECKPOINT.md) shows the refunds translation.
+The [OS0 spec gate](002-OS0-spec-gate.md) records delegated approval. The
+[independent review](notes/phase-OS0-claude-review.md) found the first census
+too narrow. The [OS0 phase record](006-phase-OS0.md) closes that phase after
+replaying the expanded 41-model census and parser controls. The
+[refunds checkpoint](evidence/OS0/CHECKPOINT.md) shows the hand translation.
 
-Next: complete the OS0 review and record, then confirm OD6 before the OS1 gate.
+Next: OS1. The [owner confirmed OD6](004-owner-OD6.md). The spec will use the
+revised census and cover the three include roots and three invalid examples.

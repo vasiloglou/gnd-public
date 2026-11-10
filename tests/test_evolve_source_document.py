@@ -484,3 +484,29 @@ def test_r5_a_digest_declared_twice_is_an_ambiguous_target() -> None:
         with pytest.raises(service.EvolutionError, match="is ambiguous: 2 entries declare it") as raised:
             service._apply_declared_operations(before, (operation,))
         assert _evolve_error_exit(raised.value) == 3
+
+
+# --- close review regressions (notes/close-review-reader-2.md) ----------------
+
+
+@pytest.mark.parametrize(("before", "after", "message"), [
+    (None, {"sha256": ROUND, "label": "  "}, "non-blank"),
+    ({"sha256": ANNEX, "label": "annex.txt"}, {"sha256": ROUND, "label": "x.txt"}, "must match the stable locator"),
+])
+def test_close_r2_f7_label_and_before_digest_are_checked_at_the_operation(before: Any, after: Any,
+                                                                          message: str) -> None:
+    from pydantic import ValidationError
+
+    kind = "add" if before is None else "modify"
+    with pytest.raises(ValidationError, match=message):
+        _declaration(kind, ROUND, before=before, after=after)
+
+
+def test_close_r2_f8_delete_then_add_moves_the_entry_to_the_end() -> None:
+    """Replay never reorders on its own; an explicit delete and re-add does, as the contract says."""
+    from gnd.evolve import service
+
+    operations = (_declaration("delete", LEDGER, before=_ledger(), operation_id="op-0"),
+                  _declaration("add", LEDGER, after=_ledger(), operation_id="op-1"))
+    replayed = service._apply_declared_operations(_doc(ROUNDS), operations)
+    assert [entry["label"] for entry in replayed["source"]["documents"]] == ["annex.txt", "ledger.txt"]

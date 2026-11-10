@@ -345,3 +345,24 @@ def test_r4_a_digest_of_the_wrong_type_counts_as_unchecked() -> None:
         span = {"document_sha256": digest, "start": 0, "end": 2, "excerpt_sha256": declared}
         coverage = unattended_span_coverage(_span_doc([span], declared), {"d.txt": text.encode("utf-8")})
         assert (coverage.total, coverage.rehashed) == (1, 0)
+
+
+# --- close review regressions (notes/close-review-reader-2.md) ----------------
+
+
+def test_close_r2_f6_out_of_range_counts_as_rehashed_and_undecodable_as_unchecked() -> None:
+    """The counting table's first and third rows, at the function."""
+    from gnd.model import unattended_span_coverage
+
+    text = "an order has one placing customer"
+    declared = _digest(text)
+    past_end = {"document_sha256": declared, "start": 0, "end": len(text) + 5, "excerpt_sha256": _digest(text)}
+    coverage = unattended_span_coverage(_span_doc([past_end], declared), {"d.txt": text.encode("utf-8")})
+    assert (coverage.total, coverage.rehashed) == (1, 1)
+    raw = b"\xff\xfe not utf-8"
+    import hashlib
+
+    undecodable = hashlib.sha256(raw).hexdigest()
+    span = {"document_sha256": undecodable, "start": 0, "end": 2, "excerpt_sha256": declared}
+    coverage = unattended_span_coverage(_span_doc([span], undecodable), {"d.txt": raw})
+    assert (coverage.total, coverage.rehashed) == (1, 0)

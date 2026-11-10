@@ -1,0 +1,7 @@
+4237 passed, 42 deselected in 961.09s (0:16:01)
+pytest exit 0
+310 tutorial blocks passed
+Build finished in 0.83s
+15232 local links/assets/anchors checked
+All checks passed!
+EXIT 0

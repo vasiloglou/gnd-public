@@ -1,0 +1,2991 @@
+{
+ "rows": {
+  "evolve apply round-1 policy": {
+   "exit": 0,
+   "model": "e2a9d908821474fe4559d6560960c0a8ead82b0fe3a3cd1fe757434a1675bd8e",
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "35dd1b225b7f2388e074d7aa57256e1b1e4b8eea949b9ebe986a16625ead1f32"
+  },
+  "evolve preview bookrec genre": {
+   "exit": 0,
+   "preview": "4aa905a55ddf9e273e141c41c9052ce47fdfabec72f558c56cb638ac072d5e0c",
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4aa905a55ddf9e273e141c41c9052ce47fdfabec72f558c56cb638ac072d5e0c"
+  },
+  "evolve preview round-1 plain": {
+   "exit": 0,
+   "preview": "22b773ff5ac59f15fa2189d23a216d39d2d5dc3e69b943a6527542c3b5a8bee1",
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d919e5c72dc5f8dcd88539779b31b7659843ea808f81ac461ff08cdc45905daf"
+  },
+  "evolve preview round-1 policy": {
+   "exit": 0,
+   "preview": "e95758bdbe027b7fae8883fc2114f462c0c2bea3eb8daf417b46a9606a8ba56a",
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4f9bbb642695daf73f58681d28a74c9ec4983727ba28530e26e41b56f7b067fd"
+  },
+  "evolve preview round-2 plain": {
+   "exit": 0,
+   "preview": "738cff946f90adb0858a217781020b7bfef69e7ca63eed18db8e9faa5cd4eb95",
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "87d0e59f68c923c1ff40d97711e1b38777cdd3417955fc5e364d5260c4889f6f"
+  },
+  "evolve preview round-2 policy": {
+   "exit": 3,
+   "preview": "6b68470f3b99a54a7deffcb143a3f7c8ca79d2cc0c62e4146748c5dccd74bfa8",
+   "stderr": "31d777247fff9f033cbe6e48e6dedf253b77ba5363bcf31da84e84ac6704bac9",
+   "stdout": "ce151b8a4e9971c2df72600cdf0bf87381c0a15e57baef0b2ccdf22506366e12"
+  },
+  "validate --document json unattended/conforming": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c644fece00a7769ead07c655a22ced312dc6239256a3fc70685393240da45758"
+  },
+  "validate --document text unattended/conforming": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "331e4e9a367f96ae669785a942f391559adfcd8eac96745b9faa0fdc846d9200"
+  },
+  "validate json src/gnd/examples/approvals/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4a5d6cb0fcd80c7eccd02e7b4f3fc0d047b46ab95fd9c645fa3586b75583b05d"
+  },
+  "validate json src/gnd/examples/bookrec/complete.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cc762f5c448af4e06aa08d2737e61a8c79fb203aa4cedf6d4f86480bb5cb96fe"
+  },
+  "validate json src/gnd/examples/bookrec/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c975cc788ddd8d355b555ca9226642c597050763c4d86e1f65dd9077cb9b8f4d"
+  },
+  "validate json src/gnd/examples/bookrec/strict.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a436cfba4d7389e42e54eb4440e829e200acd3e90475276e242f542bd9994b55"
+  },
+  "validate json src/gnd/examples/composition/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9b68977b9a4b62220d75382eae9d1cf38cd4475ec27a439a1e33f56078a15fbd"
+  },
+  "validate json src/gnd/examples/disclosure/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f8f93148b34f722b05faafeb444b626f84c0a34fee7ba49740522f6feb4ac858"
+  },
+  "validate json src/gnd/examples/growth/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e4604ce07ddff500ce6fb5087fec9c1423c1b5e8f6b1e71e2cbfd0c39fe002f7"
+  },
+  "validate json src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7edc470b72333f3bbfb17a895e75cdffd92c6ccb7834a17bd93ea25a8461b3a3"
+  },
+  "validate json src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2c2c2d2205d22581f6b4417df060aeff4f1c68f1d24b299dab555cb01265104c"
+  },
+  "validate json src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c5874ae022738d97e203d74580aaf1b9125f2ff119fe17c9a441f007a2a5856d"
+  },
+  "validate json src/gnd/examples/refunds/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a3ccf961d555811b2cfac6f6d5621d59af3507a1a223b39918c3018a7cc1d303"
+  },
+  "validate json src/gnd/examples/rule_check/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "24ac83d286fc13cbc39b70ccb9f2557f6121c93b6ad33fd2e615711fa789480d"
+  },
+  "validate json src/gnd/examples/staffing/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "230d957772d3918fdb8c7c5cd3fd8b719b88bbddc2f6cff151a19cf117e076fe"
+  },
+  "validate json src/gnd/examples/type_judgements/duplicates/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c6121fbfdf97d99a3db1b8feaaba46a4d9db71a3c305c53e3dfe25e66952db31"
+  },
+  "validate json src/gnd/examples/type_judgements/multi-valued/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a21eb7ce37203ca607f36d18e76ec85eec06079b6746e48c663d56c666db82b5"
+  },
+  "validate json src/gnd/skills/gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2e8e482b6f6fe35c659ff19b5aef6efa45747460e5506d73da9f11f23b40f3ba"
+  },
+  "validate json src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8f0b3fb040123a34bf246f9843829eb9f26554f42a526ca4148d2b94fe7adf3e"
+  },
+  "validate json src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "08e5a4c105feae127a063428a04bb89293137404735abdaad3c10f5b2a4f8ad2"
+  },
+  "validate json src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "014ade62f150a1f1ead050159bb129506f61ba2793ec6749166e848f728a2af4"
+  },
+  "validate json src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7f7558201b68fdf56bd67f381b506f8155db7f691a6574ce236386cefd166b0c"
+  },
+  "validate json tests/fixtures/adversarial/models/f05_frequency_external.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "532305b12d6993765af6fbc97669d5817e2991fa9568cf776bb2f994bb444416"
+  },
+  "validate json tests/fixtures/adversarial/models/f05_setfam_join.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3b0c3551395f9c4ec68693c827dfd0fce724e6c4b3943651609fea23484795b8"
+  },
+  "validate json tests/fixtures/adversarial/models/f05_uniqueness_external.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7480fa9d2df9b4df2f4a50c3c2b4934235fc346ab79052e904923abd6e8a7132"
+  },
+  "validate json tests/fixtures/adversarial/models/float_range.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "71b14f6d49ca839ce16032af263fb049b4c053e576d425374d78f29b86b90499"
+  },
+  "validate json tests/fixtures/adversarial/models/hostile_values.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9e153e9202c268a75c0906be195607794908c08cc7437531b9bbeac1d30f5e75"
+  },
+  "validate json tests/fixtures/adversarial/models/model_id_a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a40fabc1eac8711f8e905155b53e56fc4f276c5a594e6068061b1087191ef25a"
+  },
+  "validate json tests/fixtures/adversarial/models/no_observable_subjects.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "569ec0003871abf2e44c6aef57628008b6e73d8b410199fa32562036c6c3fcbc"
+  },
+  "validate json tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e10c3323be3b4224b9da6547b861a53bfd8431c34103a85a3f52c6124687282d"
+  },
+  "validate json tests/fixtures/adversarial/models/omission.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0189e3be86715de742731316cd4fc9aa68635c2cf408d2f59578d37467262bb1"
+  },
+  "validate json tests/fixtures/adversarial/models/partition_exclusive.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "716a6a652da42f5706318b42e14d888556b64ec6fdc3fe8e7ded37170a59e47d"
+  },
+  "validate json tests/fixtures/adversarial/models/partition_flagless.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e06c36636da17982269ab2cfc52469e56f5aea00ec8accdb7b276e9b0c246f5a"
+  },
+  "validate json tests/fixtures/adversarial/models/reference_cardinality.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cb4fc39718ade198e5bd430718026000a07e2cde4a6e983f648024fde486d8ff"
+  },
+  "validate json tests/fixtures/adversarial/models/reference_value_type.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9c31565ee5da4693ce4f3e2fa73a2eefc4719512cd9c363c2eddd51bf2748d19"
+  },
+  "validate json tests/fixtures/adversarial/models/subtype_mandatory.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6ebb5bcc0fd21723dca3cd7c7f603a59e069a7f448f5aef1f70b3321f45097ad"
+  },
+  "validate json tests/fixtures/adversarial/models/textual_alethic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ce3330268aab6b5bff91670dbeae7448857632cde9071b4a5debd96af544ee2f"
+  },
+  "validate json tests/fixtures/adversarial/models/typed_range.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3fbd9d4470e5da722a119df66b0064ceee77bb9ac3b5d16be8aadb85918c5a3b"
+  },
+  "validate json tests/fixtures/adversarial/models/uncomparable_literal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d6fdbe49c32f6936cbe94c5ddb798682e3f10e256d701a93d0d4aa7eb7f74750"
+  },
+  "validate json tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c9247b5798cb10ab4ae52e51d31497add56190d78da914c25248827ef6e78e8b"
+  },
+  "validate json tests/fixtures/adversarial/models/xor_multirole.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a6e039d8314138f33dbbf310cc784fd5caba6908651aa694f93851922304b129"
+  },
+  "validate json tests/fixtures/architecture/static/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9024c10fd370226fa5044527ade4b0f9a06ef4023d04566346332919b6e689cc"
+  },
+  "validate json tests/fixtures/checker/misc.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b1cde7237c0ac8d90f9c307c7542a6b79e57626cf714c4daf3bbd8a564b56143"
+  },
+  "validate json tests/fixtures/checker/ring.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "13cc5c1ba21b8fbb2ef161fdd708026886a512d0f9077af353581baffbb215d9"
+  },
+  "validate json tests/fixtures/checker/setfam.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a689d1741622d977c37ef96f52e16673aced0baa65f194c5186f3ddfebbf0519"
+  },
+  "validate json tests/fixtures/coverage/mixed/v2_operations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "60a734721cdd8a6acb6fe79ee44a32d6dad18bf20371ec74ace0b9d5fb16732e"
+  },
+  "validate json tests/fixtures/coverage/positional/library.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "99b5dc436379cd9a477730994ea243d9b9b5b9576d07b1c62498f4517d9f87d7"
+  },
+  "validate json tests/fixtures/coverage/refused/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a1de6e12a2566fe9acfde12d1f02a97a676f2b8542c84221210e69b46b5fa97a"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/constraint-semiderived-computed-view/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "65304f68724116aeb6801b2bc176fc46099fdd8d2943825e8d6fd3e95cc80a9c"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "190bdbc74bab2fa14cc2c86d8c3ddfb98d86b98c46f0c6ed3a8cce8445c7a53c"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/cost-quadratic-mutation-red/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "504a7c5bc6e33b266ae5d0f6c7e788928b86cc3d561e69a12a4fba8de9f7dcfd"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/eval-bare-dollar-literal/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "55b01b5a7b50874296751b164bec9d00f74a45391c05db16fd5d013d284486b7"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/eval-depth3-dependency-order/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fafdc1fc3b9b1564d9eb0c63ed8664e0bdfc97a4773a32da0165968ca7af62f4"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/eval-negated-present/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a8cfef460e86fc03baf7e14c57cea0cca9e3f02ebdd617a1fba652c7be59a8eb"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3f78934972f6036dccfcd0e0137495003e196e5a6c7598950b4e24bfb384a85f"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "348c0a0e065540ffb3f704a4f7609841beced2d4a5ebbc6bd7c05b02422d76ae"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "09bedcfc97f99fceffeecd7ed02a7f1a0f88dbaf77a8c8318a61d2c1b727adb8"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/obligation-unlisted-derived-empty-computed/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5d1c10aa7a9b54d719f2e8f5bc81b5e2173cc405fcca5112bf144a004571defe"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/wire-text-json-parity/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0babc32b92e38c3657f89f86f67875258cdc9300eedda6aa7fc7bd878c93f6ab"
+  },
+  "validate json tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a38c48b7b561d08efc0c3e0b199662444453ba08c8dc44436559ad2576651ed7"
+  },
+  "validate json tests/fixtures/derivation/cases/a01-string-arm.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8c561b23c285490ce4c219259c45adc072426fa16b29d12958ca0630e143a8ee"
+  },
+  "validate json tests/fixtures/derivation/cases/a02-object-arm.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b3d2e20b588ec8572c48157f6b514fb2a074758b4b99f98f034de160e851d164"
+  },
+  "validate json tests/fixtures/derivation/cases/a03-absent.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "36f8f0d4744b4b8af437771d50106ff7fb30953301e151896fa82a7099c41e07"
+  },
+  "validate json tests/fixtures/derivation/cases/a04-compatible-subtype.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9eeec475480102a3a926d6600a884c8497b86e6c5620860aa48666acca85e72d"
+  },
+  "validate json tests/fixtures/derivation/cases/a05-compatible-numeric.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bcfdae2effe3465fea9cd99d759ef7a033791aa46effb98b7202c101df0a1c22"
+  },
+  "validate json tests/fixtures/derivation/cases/a06-dag-depth-3.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "76aca03fa0f8a6dc64e27c048a2a8e395e69b0da44ce23e19b8a1ee66c71380a"
+  },
+  "validate json tests/fixtures/derivation/cases/a07-component-product.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0c1da94dc4aed284498bd3ac26e634cb3c2243fd217fec6218e4dade08c59961"
+  },
+  "validate json tests/fixtures/derivation/cases/a08-semiderived.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2961e7031534bbdfc10742bed16ca86e74bc7e6ec4aecc43a690ac7346048a9c"
+  },
+  "validate json tests/fixtures/derivation/cases/m01-token-fact-type.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "95b7a25d1fdec42f258b46964f39534c74140528106aa7d6824e8052fb51c83c"
+  },
+  "validate json tests/fixtures/derivation/cases/m02-token-head-variable.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a6e32021105007a5d8adbc328abcf7ee6890df55d4e54d8aac3c5a701ee6e908"
+  },
+  "validate json tests/fixtures/derivation/cases/m03-token-derivation-mode.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a54647a985c3af23a731c5c67fbbb38f8a85aeda60edab419784582371567bcc"
+  },
+  "validate json tests/fixtures/derivation/cases/m04-token-negate-variable.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "156c3dcd82eb57a62abbadee8a6055022af310fb511662cd4ca654ba62a8480c"
+  },
+  "validate json tests/fixtures/derivation/cases/m05-token-storage.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b72667fcc6b3c5f838cc4ad7306a03bdaa4887eb1200eb0a09c091b7d73f419c"
+  },
+  "validate json tests/fixtures/derivation/cases/m06-token-semiderived-mode.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "294d0aed5d9b00c9954fb07d5f300b14c7d4845862055c0db245176e1502a12b"
+  },
+  "validate json tests/fixtures/derivation/cases/m07-token-dag-to-cycle.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d839a6ad4d3066791c2354ba6a924b757116d565d7a911bd0458b76da77c6586"
+  },
+  "validate json tests/fixtures/derivation/cases/m08-token-absent-to-ruleless.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9c7f205206093211da109fb1e68d03cf45b7a0dec5fdb0f5f7f62bf833157dd0"
+  },
+  "validate json tests/fixtures/derivation/cases/m09-token-type-clash.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fe9423eb2308b219ad27b3680ee8941b3f9ce0ccaf8115282c210d2ffa0e44e4"
+  },
+  "validate json tests/fixtures/derivation/cases/r01-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9f37daacd1b01a7856bdf34fa134d432a41f10ab5c4959aba30ed38af88fcf20"
+  },
+  "validate json tests/fixtures/derivation/cases/r02-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "46a1dfd8d6ffaacb3acaeb068b750ecb24b1d68b94edf55d0005e6e2cf5ff886"
+  },
+  "validate json tests/fixtures/derivation/cases/r03-head-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f5ce2f10247fdfcaa4e7a6f38f4a9e78daa439c3a05a12040cf0364a743c08a8"
+  },
+  "validate json tests/fixtures/derivation/cases/r04-negate-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "45637a35a56468e00e76a7c0a28f1dc96389712907fdcd3e9e0f6ac4196dd7fe"
+  },
+  "validate json tests/fixtures/derivation/cases/r05-rule-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "78e28d55cfe8f505dffa38eb115ae9d00c6c4b00d5d13d162ea437aba8fc7096"
+  },
+  "validate json tests/fixtures/derivation/cases/r06-rule-extra-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "79e275edeea70a5a043f9b2897c5f06410883ca6c032776ce0fcd378b4dbdd16"
+  },
+  "validate json tests/fixtures/derivation/cases/r07-body-missing.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ccfaa1f5a20e6b36f46b1c859e58a51a1c4d99c8b9b9b34a2bf5ff5a6ef17d37"
+  },
+  "validate json tests/fixtures/derivation/cases/r08-body-not-array.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7014f26961e3b3814cc51705631ab4a8f4565956f8878ba087daffa9108a1b1d"
+  },
+  "validate json tests/fixtures/derivation/cases/r09-body-empty.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "540e2cdc4373ac1826683e248adbeada20fbd9d086fdfcda4123b143c1e45ad6"
+  },
+  "validate json tests/fixtures/derivation/cases/r10-atom-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3db52ed7c0141f516bf373136c89680717800ca67313253ce38f400be9e3444f"
+  },
+  "validate json tests/fixtures/derivation/cases/r11-negate-not-array.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b25a3b6f400c92cceb3cd87b8c9e6bd2d35c989faa289f18f041c432652a08e6"
+  },
+  "validate json tests/fixtures/derivation/cases/r12-head-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "06ab0194f54217827aa73481a22e6df98da4126f34af0dfc2380c32ee78b9056"
+  },
+  "validate json tests/fixtures/derivation/cases/r13-head-empty.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0cde3f8b07374baab61d67b121c2a9c44cc9fa72cf43ce7cfaeda9189a10fc4d"
+  },
+  "validate json tests/fixtures/derivation/cases/r14-atom-role-missing.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "60c74b4f233f049ff422ffef327d89a157a652fe1f06a1e81a202222fb53dc31"
+  },
+  "validate json tests/fixtures/derivation/cases/r15-atom-role-extra.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c090c51e82e5d68f16f938c83f0ad99b61bb7f294b6e63e032be662d6f6982d4"
+  },
+  "validate json tests/fixtures/derivation/cases/r16-head-role-missing.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0457d3a1fbd14e91699881b900e3f74a1b5fef17ef3bd79e01d116741e1e67b1"
+  },
+  "validate json tests/fixtures/derivation/cases/r17-head-role-extra.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "788bc65fa6ab4ce6d22efdf4c70ffb41441e939f274a86040f5a6520f537a58b"
+  },
+  "validate json tests/fixtures/derivation/cases/r18-head-unbound.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7b2a956d49699c5dca6b924ef99e160474008958dd05b2e4a8de611b3c16338d"
+  },
+  "validate json tests/fixtures/derivation/cases/r19-negate-unbound.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a80e080679f7a8c8fd5ad8a53c64df35e5b1601d96d38145d021273abe646063"
+  },
+  "validate json tests/fixtures/derivation/cases/r20-component-unused.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "78dffa52e3bba04ec3ed27fa555df556bc3d793f849482d8a6b687a85ea67fb2"
+  },
+  "validate json tests/fixtures/derivation/cases/r21-head-literal-string.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9312c398037ef753306e3d5784e69f7639493b8ddfe6f1e5eb1a767dbd5e7ba6"
+  },
+  "validate json tests/fixtures/derivation/cases/r22-head-literal-number.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c6fefb2ddab9052fa22f40c6fb8dc3f6e64303562442783540f8d6d60c226fd3"
+  },
+  "validate json tests/fixtures/derivation/cases/r23-head-literal-boolean.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "08e2886b51c21475a7ab13437db9964127f95872ec6790a59050c049dc412bad"
+  },
+  "validate json tests/fixtures/derivation/cases/r24-head-malformed-variable.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3da77d28ed311927edc19ca5d8b5b0278435c5ef9345bc936457ad5081291d3c"
+  },
+  "validate json tests/fixtures/derivation/cases/r25-type-repeated-within-atom.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e1ee690ccc397a4cd9483523917c14fcbab90d1b5a5ce3d3ccdd2a6a3a804d01"
+  },
+  "validate json tests/fixtures/derivation/cases/r26-type-across-positive-atoms.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "70548177a03299e965e9a3b6f6c4f441c2b2e66fd4048115e57641e9345cf3d0"
+  },
+  "validate json tests/fixtures/derivation/cases/r27-type-positive-vs-negated.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "aac4c8090e608352c7de82c59553465a2b4f02e9ab8e482b4095686511631951"
+  },
+  "validate json tests/fixtures/derivation/cases/r28-type-body-vs-head.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cb38b05f462b6fe1405e8740b3e0ff11b5490ce468c84d63cd880696e2ae6f23"
+  },
+  "validate json tests/fixtures/derivation/cases/r29-self-loop.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "82450113f383cf035bdc3c53e1f57338176a79e9a7218ffa0e0fead914908ebc"
+  },
+  "validate json tests/fixtures/derivation/cases/r30-cycle-2.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "95a13ffec7a6bd58537fcc18a50100cb5cec74aba20b51d212f80a28338a7a39"
+  },
+  "validate json tests/fixtures/derivation/cases/r31-cycle-3.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "97f9dc6b8ebeb59e685748cbb05205f208bff745907f0ae61c916d79ce2b3fc9"
+  },
+  "validate json tests/fixtures/derivation/cases/r32-opaque-dependency-positive.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c265b8aae5d4ac382c9c42cf85836c9cf5cfa942cbc32ccbea13ba75c1e1563b"
+  },
+  "validate json tests/fixtures/derivation/cases/r33-opaque-dependency-negated.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c22b71ec5520101f279e141638dbf75a6267bdd3499022d2b93a4d487f22a620"
+  },
+  "validate json tests/fixtures/derivation/cases/r34-rule-on-asserted.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f700fb3e180719144ddc3ea695651c36b9e87215cfa448cb950aac244552b8fb"
+  },
+  "validate json tests/fixtures/derivation/cases/r35-storage-contradiction.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "43543c659c7dff0c586940e6ef80fdd5b75ea7c245598e47750cd33b9fb31bb7"
+  },
+  "validate json tests/fixtures/derivation/cases/r36-structured-on-object-type.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "631b4245248e412cecb537c3ed5203b93288ab319e423e9aee671a5d40d856c1"
+  },
+  "validate json tests/fixtures/derivation/cases/r37-operations-plus-derivation.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "934724a37231f698863e878bac05d25d24d6540cb3bd83c281298fd5b45d2dd6"
+  },
+  "validate json tests/fixtures/derivation/cases/r38-aggregate-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "58eb1d1d6fe98122e0bdb5088da3ad2c4d17629eafd3c8b377689c2ba8147604"
+  },
+  "validate json tests/fixtures/derivation/cases/r39-sum-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6990a6e6d45091da1782d87abb4f3db9282db26b57aa6286af96e0da79b3d10f"
+  },
+  "validate json tests/fixtures/derivation/cases/r40-disjunction-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f868c02d670f0f8bd016d1963f595f134d270123bd1f2267bfedd7bec7a2ec31"
+  },
+  "validate json tests/fixtures/derivation/cases/r41-arithmetic-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f5c24bc0b4fd6c1b14b95ddd70bc9598a8f71b62691f9981ece41b9c102e3bd4"
+  },
+  "validate json tests/fixtures/derivation/cases/r42-precedence-ref-before-shape.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bcaca14d25d3db3cd0e431f1e7d486204cf5f40b636b3d1fcfbb4652079acb21"
+  },
+  "validate json tests/fixtures/derivation/cases/r43-precedence-shape-before-graph.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c4cd319ee1ab33368c00680b9a98cd1956a511f11884e581e6d3fb652a318af7"
+  },
+  "validate json tests/fixtures/evolve-policy/base.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "743007e3aea98c11db764f82dc4db373ed0be663ae0f8e2a0cccc888bfc2cb1e"
+  },
+  "validate json tests/fixtures/fu1-term-reasons/models/terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3f1a4b9a644f3a23994c3dac4cba6da0e7e6f12f8113e367eec6dc9ffc4abd16"
+  },
+  "validate json tests/fixtures/fu3-derived-ring/models/ring.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e63ea1768dd7dfcbb26d72b60320d5d4a6a15b95d73db1ba1795f2f58f8e2df4"
+  },
+  "validate json tests/fixtures/guarded/models/alethic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "44caab3865313544211b7782fc4e90a6d9665bbedb01144d3498f7dafd150b1c"
+  },
+  "validate json tests/fixtures/guarded/models/deontic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7e0890611a353711cc3d8cbfd17db83ba0cb29d9ff8564f1b61acd640fcaab7b"
+  },
+  "validate json tests/fixtures/guarded/models/disconnected.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "27dab11fa3e5fd148f3e2c9ced78e458cfcb11f54f318bd37874919ec32fafd8"
+  },
+  "validate json tests/fixtures/guarded/models/join.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9f57321ab15db02403eb0d11a59b070af10ea802c3d35024a5ade2e17c18cb6f"
+  },
+  "validate json tests/fixtures/guarded/models/submission.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fbd7b248c1dc4b3141a6e93549ad9d3eb725ca334d8f87ed8040e7ab5c004f97"
+  },
+  "validate json tests/fixtures/guarded/models/undecidable.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "848b50ec33fc627e638252cbb830ebb50e090c47b45c600124c98eb84de820c6"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a7dc1f00e47a6d78502e3014426cbda246919f009734292a02e4ef53b2c2c952"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8f951d626047987434ebb1678a34d4c4d8d376c88cdcb22e12e2ccdc646b6266"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8376dfc453738674af8e0bcc249fe5287e88d7f918b1ae29dc1bd9ed9b884dba"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "58fc6585e6ede609af9eea03785d370e329722476b85f3314fb8e5f1bf763d06"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/ownref-object.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8c05b41a474ab083e9a2cdffc7e2733655b7b58c14e6856eb78c78c7099f3963"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/ownref-string.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "453637944e0c4be8500325acf20237270b22db5f31e26cb042628a23a942f3d1"
+  },
+  "validate json tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ce9a48f5edb280266a9655428f57331ce08997e87b191a12c73600ab135198a8"
+  },
+  "validate json tests/fixtures/ilp_learners/close/cyclic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c295bc0e1386e5f1c726fb128d1718de0a4cd128d0cff50d23a6aa41dd372000"
+  },
+  "validate json tests/fixtures/ilp_learners/close/family.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "290bcad81e722a4865786610a671969a6063f842431cc3d1a1a873f11f0c46a9"
+  },
+  "validate json tests/fixtures/ilp_learners/close/multi.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4211b1c2af6d58811c378451fdbd081d3517545be386b635aeb7f622427a397a"
+  },
+  "validate json tests/fixtures/ilp_learners/close/orders.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2d791cee6956f1fbccd44eac4c515a562ab830535e41b81d4b8fe6cffee14de6"
+  },
+  "validate json tests/fixtures/ilp_learners/close/ownref.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "76e35569f9a88983a78708cc64fc667291d509ccec2f4f02abeed21ebc9b41c1"
+  },
+  "validate json tests/fixtures/ilp_learners/close/staffing-swapped.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "acd1e2f90aa17c03c79eb743887e973458643be16ee7224cc6e42bdcfc35e757"
+  },
+  "validate json tests/fixtures/ilp_learners/close/subtype.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b520e5de09842b1fe4d686f1c0aefda6ebc1c79a888beb716df9f69e2b6bda65"
+  },
+  "validate json tests/fixtures/ilp_learners/il4/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "705a3932114c89db580648ebf53c629c0e12f65c165dc8e8049f83833c711355"
+  },
+  "validate json tests/fixtures/induced_knowledge/ik3-corpus/labels.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b00adde6b69512e32485f71861e85feab09df672f173b8e8e3fcd0f53a9d89c6"
+  },
+  "validate json tests/fixtures/induced_knowledge/ik4-corpus/staff-declared.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "361be1d2a25e0da9ebc39fca2d1e2679c975f54fd155a10c69a8a3fb88b7ce93"
+  },
+  "validate json tests/fixtures/induced_knowledge/ik4-corpus/staff.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a22ce73dee8e564b86793d0efd6056b94aee2a3343b9581023c169834821c6a2"
+  },
+  "validate json tests/fixtures/induced_knowledge/ik5-corpus/orders.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "48f5b33aef8b16b5125ebdf232d88b2f0e5206bee528838da9fa1c11e3e840c4"
+  },
+  "validate json tests/fixtures/migration/base/v2_migration_corpus.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3b1c910d4927b318948e7832202f99c03817aea619f774238a7ab0084efec305"
+  },
+  "validate json tests/fixtures/models/dispatch.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0894484dd4dce8362970737f513a3e64dbc61590ff4b1dea18e980ccb33b5625"
+  },
+  "validate json tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "010d46bb8533519584632e5e656adf199abaf697b02644429166d47b68832686"
+  },
+  "validate json tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7ed6b3919df235889893766cdfac78a30d9f83828b5e8cff515dddd50dfc93ce"
+  },
+  "validate json tests/fixtures/models/invalid/duplicate_role_names_cross_type.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6627322861cf619878a3844c9365166e282312f5cb2122e78e64462c221dc656"
+  },
+  "validate json tests/fixtures/models/invalid/role_seq_arity.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "34c6ec664c7c23395fbe7b4841df406929f91ee46447c669383a34285ae6f157"
+  },
+  "validate json tests/fixtures/models/invalid/role_seq_type_compat.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e42055cb27ca8b5c5cd5d925086847f8d46199130f0059f68dbe3d734812f6f4"
+  },
+  "validate json tests/fixtures/models/keywords.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "dbaee1d471d904770d466d66223353e5f7098315dc346314facf77d80cbb62a6"
+  },
+  "validate json tests/fixtures/models/library.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "08bbbeff2d319f774c8d8543350ee8d943e50c08044fc2caa865c5ec1b23e28e"
+  },
+  "validate json tests/fixtures/models/v2_operations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b65830ee4348dd889c5a79df2b4804e6284c4a3bee06b6a0a20f7128b4f7838f"
+  },
+  "validate json tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "691180b0b4083fae7c614946767c879496c266c13e0ef044def40bcc4a4f12b4"
+  },
+  "validate json tests/fixtures/phase3-consumers/eligibility.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "81d7a4ab0b8b592e99d2f40119bfe8296d6a463635b6b44c15c6be414d6979ef"
+  },
+  "validate json tests/fixtures/phase3-consumers/legacy-derived.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a324eab9231d516402a38c293351c1fc36452ffb8ea039c170e05bccd2c5fe6c"
+  },
+  "validate json tests/fixtures/public-adapter-cases/shapes/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d97dee5198c6f8c8b7e0b5e4200e2c7964e597b7d5a55889683e7d0606b7c162"
+  },
+  "validate json tests/fixtures/public-adapter-cases/untyped/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8a3df4848c2b19bc83d59b5dd51e7fc52f46a423dfa6cbeec205ebeecc6815e7"
+  },
+  "validate json tests/fixtures/public-applicability/c01/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0de41b2b6d6d3f65f5bebb36fff84c8efc4a2368acb359193dc5ea8c6e351832"
+  },
+  "validate json tests/fixtures/public-binding-reports/reports/models/different-version.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e5040482b369d6fff6602875c27584f7530f4b52b15c5f8ed1241787f49f572a"
+  },
+  "validate json tests/fixtures/public-binding-reports/reports/models/nonstructured.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bd04941bcf651cad60272e5ee9c33fb42b02e8a4ffaa9191df6363fd923ea755"
+  },
+  "validate json tests/fixtures/public-binding-reports/reports/models/same-version-different-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e8c586f445abeb86adce9489f0ef320d411adc6855c9d24ddb76738bc2d3f65f"
+  },
+  "validate json tests/fixtures/public-binding-reports/reports/models/structured.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "57aa472df6bf637076e56d3a166553e470991270de9dbf61b26861c3bd17d5e0"
+  },
+  "validate json tests/fixtures/public-bridge/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "406501e3151a1f69eb0d1370c689f0f84a08ccb0475d0cf779c31defbac01056"
+  },
+  "validate json tests/fixtures/public-bridge/fixtures/c02/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1615879603a6237487da66c623f0b753b41b947c749484cdbbe87077ef6fdd1c"
+  },
+  "validate json tests/fixtures/public-bridge/fixtures/c04/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7ab1df9447391dc61f51de9b242e41907f454ddb144ca58f03b1d9f704736edd"
+  },
+  "validate json tests/fixtures/public-bridge/fixtures/c06/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2df2b92aefcb18c1e09e3ef392bd3155dac84989b47102bc32b932fea9ac07b1"
+  },
+  "validate json tests/fixtures/public-bridge/fixtures/c07/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a1e7c8c6abcee810896fa5a7eb7310411557ce2eb5b339e73e22ff625fd248c9"
+  },
+  "validate json tests/fixtures/public-composition-digests/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ca2f3168d17517dcc888cccf4165c11c2b9f989550af2b18f8d919fc4c1c0aba"
+  },
+  "validate json tests/fixtures/public-composition-digests/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "01aa444e9b78b177906fb014e78ab49cd93e474d691272e143b2ffae6058a658"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/constraint-one-final-walk/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "be744eb6f8ee25b27bd95925909382f29e367b6b6406b70aafd7c4daf6e2c56b"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8e3a5ec2d5e0c284bf1fe4fd72b8d2f296cec564e8f050328fd26e0fb6ce9eda"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/cost-disconnected-counted/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2bf403798e0d8830b11d165b47b476e2dd6cb407f645282de55c827cae6ff438"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/eval-disconnected-product/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e94756c34afaceea062c97bffada092297a1d4c3282630dc77ddcd0a23edfbe9"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-exact/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8b924baedbac31b3cb1a0ec7130ad5a93ab6c8330ef8233e9c6c06d6f5765d62"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-missing/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1a43e6ddaacbc50908eb98105a5264b06ab6963b7dd0d614a92dbd98ffc96635"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "49dd156aec4b48f59980a5bc2bd98fa11643a6c7c05f858a6976a61ba638c706"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/wire-v4-check-internal/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8cea8e31efa7abc264b5f3b8916a1c9238caa47a2ff3af12a32b62f282e9abf1"
+  },
+  "validate json tests/fixtures/public-derivation-evaluator-controls/cases/witness-missing-canonical/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9bed2401a8605d7fc743e8bb818db6e13b13f49ef14fe71d1606102583c74072"
+  },
+  "validate json tests/fixtures/public-emitter-trust-controls/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ce029984d5d7e90fb75dd54413124d7c0fdfdbf6a665c2bc72fd5339457f4132"
+  },
+  "validate json tests/fixtures/public-emitter21/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "be913691871ea03309957722e47f5a615db828a6af66bc1346c5bfac4fd10961"
+  },
+  "validate json tests/fixtures/public-generated-examples/bookrec/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7fcaa6966d9790fd900a73faf9acb9e9cc7a1514848232cb595dc797d87d7e38"
+  },
+  "validate json tests/fixtures/public-generated-examples/expense/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c93e196fa78b13e4bf9f2c394500b767e10dcb397255c4401db4db91e37e48eb"
+  },
+  "validate json tests/fixtures/public-launch-phase-2/invalid.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "10f44ec8b3eb4977c4b1940da9577e6446f31a8a45f23b24df62b631c5a6ad82"
+  },
+  "validate json tests/fixtures/public-launch-phase-2/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "57493f1e66dd46577b2a0d4bd44207be01940b7b184504628fbd5b705d77199b"
+  },
+  "validate json tests/fixtures/public-launch-phase-2/textual.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "18f43e63fa90ebe87e124da310c40c022db6c18e09efa3166432818a7d884785"
+  },
+  "validate json tests/fixtures/public-phase1-trace/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ce1f75c8751331ecc93075aff5d5d5a29eaea6da206fa2831046f71c4adcd6c9"
+  },
+  "validate json tests/fixtures/public-semantic-partition/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e584fa24ffb0e128e37dbb0b358513448a506f5907295b8996ad4bb0ca1e0e94"
+  },
+  "validate json tests/fixtures/public-semantic-shapes/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ce1c42a80c2d5f533a318527c12fd2cf0a5aabcc7be61d49f0e5973642ae0815"
+  },
+  "validate json tests/fixtures/public-snapshot-counterexamples/joins-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2ce262d43cb60f7c16b7ea433ddf42f89d07e64b55ac0a9dd71c3513e8e6f5ab"
+  },
+  "validate json tests/fixtures/public-transition-contract/v2_expense.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "005034bfaeb88d148124776df0ebfb1152161c7e54219a997d024c0921453133"
+  },
+  "validate json tests/fixtures/public-transition-trace/expense/rejecting-models/bad-role-ref.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7445cc972a7f0727568533afe890e92887dcc834d303fd54142e12f9490ca086"
+  },
+  "validate json tests/fixtures/public-transition-trace/expense/v2_expense.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fb5030dcb6a526b85bf6edf0fb3434ef3171f04e95f6b0d7bb2aae57b2e5a1cb"
+  },
+  "validate json tests/fixtures/public-walk-floor/session/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bc9bbdf34704fd4a2ed4f74155a3968a1d07295a7110f9339738016fefae913e"
+  },
+  "validate json tests/fixtures/pyrel-oracle/basics.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ef91cfe501f742cad4b601ef4e777d8366044556dbdff8c4041ba8e2c441f8be"
+  },
+  "validate json tests/fixtures/rc1-rule-ids/models/components-positional.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4c507d5b4af15cad7c90524c8479d8d48283709db98ac9bf546786008d2b0054"
+  },
+  "validate json tests/fixtures/rc1-rule-ids/models/components.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "33bce769470a17e8ce34e50e096d965b97e773b3acaff5518799e57810b11184"
+  },
+  "validate json tests/fixtures/rc1-rule-ids/models/exact-terms-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b6d9b5aee1d24a1f657b605d927d3f36156b9a653ebc1cd0ccafc941b7c3e85f"
+  },
+  "validate json tests/fixtures/rc1-rule-ids/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "87fe7be6659cf5b8017b4c61a4864592cb0255df4053e46f37ad024245ac2bae"
+  },
+  "validate json tests/fixtures/rc1-rule-ids/models/reference/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b5e847099e0f0aa4ba3964ed54eedb4210847fcb8160be6606fe02b4b6d9a4ea"
+  },
+  "validate json tests/fixtures/rc1-rule-ids/models/temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "581909b9ff3318a0c56ad02c2faf51f3469bd05994d2aac74d768c0de932af2b"
+  },
+  "validate json tests/fixtures/rc2-acyclic/models/graph-composite.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f1a5bb314b58eec4c14de6d2acf632c4442a7cbaa97d24698cd6309698b82ed6"
+  },
+  "validate json tests/fixtures/rc2-acyclic/models/graph.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3e9b55b22ad2508e06fe894abf43db67eee812d231f8953ff68735f25fa423bb"
+  },
+  "validate json tests/fixtures/rc3-baseline/models/derivations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8da22c872ba6d12c6406bbfe40959c46a9d7030f20077aa5b0afc74f09bb09e2"
+  },
+  "validate json tests/fixtures/rc3-baseline/models/graph.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b4435739d1aede6803162acef63e3ecc250896d71364fc3ccdf9fb3900767a8e"
+  },
+  "validate json tests/fixtures/rc3-baseline/models/temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e6ad4f089b5fa06a4c03edc0c5cc481db6d336c96f36fd16a33543e98dec73e0"
+  },
+  "validate json tests/fixtures/rc4-allow-vacuous/models/graph.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "538e7b5180fdcab3abc5895580e1a17c016273f6fa2120802546366962b5dfbc"
+  },
+  "validate json tests/fixtures/rc5-tool-output/models/catalog.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d5de386ee69a6cf3ba9215eb27609734b897979ce7e481d72fe03924d1936030"
+  },
+  "validate json tests/fixtures/reference-corpus/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "dc80b0212705e0da1efc2d5e309c89b20584fcd81f7d032d745f66eb1d7d3140"
+  },
+  "validate json tests/fixtures/reference-corpus/release/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4204d3fa49a6f17a20a2726df834f11d13a8d0e56a98ca3edc5c285233c3539e"
+  },
+  "validate json tests/fixtures/reference-legacy/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cf818050b8e640029f62281de4df13c12ddb3bc1438a5999e9a80f3dc6c1c0a6"
+  },
+  "validate json tests/fixtures/reference-legacy/release/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d8bc6b7da92001db246bcfa6f3ad8c71d899aecf3b709c9ee70b884ca3fbd0fc"
+  },
+  "validate json tests/fixtures/rof1-projected-text/models/contacts-invalid.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "67d04ce6bae589127ca45c6d0f72bb8c9f6ce1f7f8131c5a4a700e9401de7f30"
+  },
+  "validate json tests/fixtures/rof1-projected-text/models/contacts-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1852beefba9f3211f42e75ba197c56db05e70c099e4ea810f298ba954b334dc4"
+  },
+  "validate json tests/fixtures/rof1-projected-text/models/directory-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f19753925f6c7e93932641408ecac551ffe2caa7fb646c476912348d7ec144f5"
+  },
+  "validate json tests/fixtures/rof1-projected-text/models/service-temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cbbe7c46f31f145dedb61005f6722d4bf697aed503851d074117e1cbc3da00af"
+  },
+  "validate json tests/fixtures/rof1-projected-text/models/terms-temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fd5d15d3cf6ea83221a32c973437e1bbdab76034e5b16c712447034f4f3e5f3c"
+  },
+  "validate json tests/fixtures/rof2-projected-text/models/accounts-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "58c5ca908c39924617707e7153f8505a9fba9370a9dd74407518a8837442853f"
+  },
+  "validate json tests/fixtures/rof2-projected-text/models/dynamic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "51d689b8d71ceb718de175f98d389640158df392f22bfc2783af8ddaa3228e01"
+  },
+  "validate json tests/fixtures/rof2-projected-text/models/service-temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "238afcd7d7cc4cb02663968eac50b009ee441eefe8282d51da3a969ec4461a41"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/dates-and-text.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c88bb16baee2043e3abf58fdb686b4e845d718b0b1782a7701cf2d28d1206353"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/floats.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c73793087b40938f5b6ca4233644a389ce5b610204085e3193b92c9fa81742fb"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/operations-a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "775080f68386e0b4b7448a405aa55314eb51af78557f8c65cf2eb448a715113d"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/operations-b.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "580486641b5c56d9247a0136413d203a855a8b5519d4d8e11ab3acdf4614cd31"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/plain-small.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a2d294b4af1abe20de80eb8db35df0dea88aaf05a9dc210924394a7e8ce44403"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/reference-operations/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cf46c884c6e15dbcd0e329863d6a268aa64e97fb060c7177d7c8d8db23a487d4"
+  },
+  "validate json tests/fixtures/rof3-model-identity/models/reference/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7a9e9dfd211f13d35f820c0db51b2cea59cb47f41ca68c4604dce0771bc51a1a"
+  },
+  "validate json tests/fixtures/rof4-accept-identities/models/approvals/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7592409013c78707cb6b8730435935d5c600786b340376a0ef40476be341d9ec"
+  },
+  "validate json tests/fixtures/rof4-accept-identities/models/nonstructured/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2a296a1ca692b817946b951bb5d563311b3d2759455f83cae40df91b792a810e"
+  },
+  "validate json tests/fixtures/rof4-accept-identities/models/reference/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5baa1ce7342424b5e1a58df421872ce54a1a9d68aa4a713afc1cc85439df707d"
+  },
+  "validate json tests/fixtures/skeleton/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9abcab8fed095b5fc245fbeca9110a41b38f3e2bd692b842bb32606485e4006d"
+  },
+  "validate json tests/fixtures/synth-external-uniqueness/external-exhausted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7b4eabc4d576e6e701ea5930f3e8963468bacacdae96a2f67ba7fa637b03af27"
+  },
+  "validate json tests/fixtures/synth-external-uniqueness/external-pair.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f690d9617e3e3b18bc043b655e1f6c17aedb1941c1a000ce08f60704e8b8bf4b"
+  },
+  "validate json tests/fixtures/synth-external-uniqueness/external-second.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3077c33e5d678a9d57fefb053f1364eb8220e046b5f341acdc2ad452091c8bd9"
+  },
+  "validate json tests/fixtures/synth-external-uniqueness/external-single.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6a69bdf9aa4b5451385e454b266a30146f37e2c3addc502c456c74c9dd40461e"
+  },
+  "validate json tests/fixtures/synth-external-uniqueness/mandatory-exhausted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "50868d99a98587ea6d02ef81c5194a039488b130e26e8c73a725d638a2f347a3"
+  },
+  "validate json tests/fixtures/synth-external-uniqueness/mandatory-one-to-one.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "42d467a998461ec7c59a4e20ff6f1c21e760e553a30fc8c157b49c280a4ae35d"
+  },
+  "validate json tests/fixtures/type-judgements/multi-valued/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b492e72f205dd87086aa9421ce1055fc77da2971931e22744a5bae01e76d9f53"
+  },
+  "validate json tests/fixtures/type-judgements/round-two/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "54f82a7841ca8f88c5f9b1c73c438b0aa878ee2ab97af93bff1738509e4c85c0"
+  },
+  "validate json tests/fixtures/unattended/conforming.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c644fece00a7769ead07c655a22ced312dc6239256a3fc70685393240da45758"
+  },
+  "validate json tests/fixtures/v51-extraction-boundary/models/mixed.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "aeb9cc518162559e6ba0f239496833ea1c55c658fdf95a3be573f9c3c361369e"
+  },
+  "validate json tests/fixtures/v51-generated-project/alpha/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a0f89e9c0d33d46106a337af619c44b24bfbd6323a22aef78308665bb81fd63c"
+  },
+  "validate json tests/fixtures/v51-generated-project/beta/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "80407a1704ffc369ed7dd1c541b3c645aa5883819772985ca6316c6c2ea52d2f"
+  },
+  "validate json tests/fixtures/v6-assurance/cases/expense-approval/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c11a0684e0a9d5f36812f3190d7c7bc22a21027a03da51aa879b9d64cc276d0f"
+  },
+  "validate json tests/fixtures/v6-assurance/cases/recommendation-completeness/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3849f26b3ff65d9a05d0d6ced09a2aa9f2fb8487d37aaf3c174baae5266b1328"
+  },
+  "validate json tests/fixtures/v6-assurance/cases/separation-of-duties/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3b3c854b7ecda2f0fbe00b0ea5e1ad276f05237c4f5f412d084b3b3d59d4d35c"
+  },
+  "validate json tests/fixtures/v61-phase1/batch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "403bdfe251d2efcd862c97e43a52a095ecb090853a771b21d53a86f78de9035e"
+  },
+  "validate json tests/fixtures/v61-phase1/import/identity.expected.model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "42e9b003969925884b2058ed48ef0c5cf0805dc0c349cb71a00e32ec4dcc740c"
+  },
+  "validate json tests/fixtures/v61-phase1/import/identity.source.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6ad896cdc05e8c04ccb43f0a74cfb8c176241d34c270fc3e9fb71abe90a5339b"
+  },
+  "validate json tests/fixtures/v61-phase1/import/mutations/modality-no-default.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e2b4ea317abbfbedfd9fc030fbf353b02fb28dec7ab425e79277a090db6a293b"
+  },
+  "validate json tests/fixtures/v61-phase1/import/mutations/outside-four-classes.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "563b8503127722e3e14b2179e1b849a0d4adaace5ab53134a5d828752082508a"
+  },
+  "validate json tests/fixtures/v61-phase1/import/mutations/ring-missing-target.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fe054854fe6441a3cfadb89c42191cca270f8fe52a26131b1724538f9733aea9"
+  },
+  "validate json tests/fixtures/v61-phase1/import/mutations/role-collision.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2c74a9418a5174d7ca0198903142632f451ea600d4f37d5979617030c10bc27a"
+  },
+  "validate json tests/fixtures/v61-phase1/import/provenance.source.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c7e8346669d4a32536393224f8ce1bd6eff09183ff27210733eef86c6bd71d02"
+  },
+  "validate json tests/fixtures/v61-phase1/import/ring.source.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7585d71195d94fed5ade46fe39f6c7d2d9ccdc4575ebf5c4e7af0579705d2c9c"
+  },
+  "validate json tests/fixtures/v61-phase1/import/role-name.source.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5d64cada6ac2853ebb53593b2139c4af2e64ed21800907ef8a304c2580b8a17f"
+  },
+  "validate json tests/fixtures/v61-phase4/models/fact-type-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "02df85fc98e2c597a17cdf075995962dcd8eb6fbb944ed32890b89de5d38180e"
+  },
+  "validate json tests/fixtures/v61-phase4/models/no-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bce6e7525b417b614ac1ae7d3e269eff9094a32179fcd4e0b14c5ddf6c444469"
+  },
+  "validate json tests/fixtures/v61-phase4/models/operation-flow-declarations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "df713b40e2fb57933ee01598c1ffc71d5b91407c789dfffe894842f7427d3582"
+  },
+  "validate json tests/fixtures/v61-phase4/models/redundant-declarations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "359a2dcd05ec0cc7b8ec57b91cf8254c957615cc4079d07a4a7d13c04aaa91ae"
+  },
+  "validate json tests/fixtures/v61-phase4/models/role-declaration-unchecked.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d4f3ff9f723c0c63a3b676316faee95ef81ddeb089da46bbb195288c1737b3c0"
+  },
+  "validate json tests/fixtures/v61-phase4/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "03d8a7fdfc26dc4b28f742e896e2a5a647b6026cccf01ca3ec6ece8d3816c3af"
+  },
+  "validate json tests/fixtures/v61-phase4/models/witness-declarations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a740eb4089769f527b079c0ea422d5759082893bf2f6a0b7d949f26fe4dbaa55"
+  },
+  "validate json tests/fixtures/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e59486b8ff690165d348bbfee97e117ec495e21b8f866cfd9b19f0a35f16195b"
+  },
+  "validate json tests/fixtures/v62-phase2/models/dynamic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4cdfb09722455d91eae574d72b4245ba281f4749941be76d7971f17e2fd3bc7c"
+  },
+  "validate json tests/fixtures/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "95f7c008374e5e341a0508498e3b97a345c4bcb18ee1f416b84605ce7079c279"
+  },
+  "validate json tests/fixtures/v62-phase4/models/aggregates.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7041b4619df4123ee62571c930ce03db4194bdecfd08fe52330732d7e4945019"
+  },
+  "validate json tests/fixtures/v62-phase5/models/floats.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bbb684dc1aae3f363b61ee9c961a060147564f971ce7356ea4612cbb03b29cfa"
+  },
+  "validate json tests/fixtures/v62-phase6/models/existential-guard.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9e33fd00243a6ecc4eef21f48314322e3d20aa5e0f23c7a32694e8322379868d"
+  },
+  "validate json tests/fixtures/v70-phase1/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c4ac9e3eeca16e37f5754a5706086e7ce89fc6acc98b5d71e226fe8bb07276c7"
+  },
+  "validate json tests/fixtures/v70-phase2/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ea2cd255f365e41c7315d261bf5320023594a754b8ba3590e89ce27e1170fe45"
+  },
+  "validate json tests/fixtures/v70-phase3/join-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "78f6b3c7cbfb1b9c960fd8d5a83c262b58d7cbbdc1289f520a37711a1b350f73"
+  },
+  "validate json tests/fixtures/v70-phase3/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b725f25a3761597c7872344d579f09b4a12675ccbdeb5c2921ee20fa9f03914e"
+  },
+  "validate json tests/fixtures/v70-phase4/negation.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3dd3dc02eccacd9c38e51fd0ccea91991e221d6f65717b00646e16d529287953"
+  },
+  "validate json tests/fixtures/v70-phase4/positive.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "97ee42f23ccbd3b867034add0913dee03fb999c495abe516a5db01779fc05af1"
+  },
+  "validate json tests/fixtures/v70-phase4/recursive.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "839d2f7178ab34ead7cfc1333109c9c051b910e04d7a9537708d48d2a308837c"
+  },
+  "validate json tests/fixtures/v70-phase5/bad-inverse.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5fbd136dff4340464b08e0625136679e80069ad18711767ea329fc2dd295a734"
+  },
+  "validate json tests/fixtures/v70-phase5/private.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4a40305751dc66b67001f8b9acdb4c121cc8652a5d6ebc4df2592fcdf20a6f7c"
+  },
+  "validate json tests/fixtures/v70-phase5/public.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5dfc4c22edeaad8b01b6c58032d56637abe97d9961b946704d0e63d8baf46f96"
+  },
+  "validate json tests/fixtures/v70-phase6/negation-a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5d9415e0c28e96f24d823e98a7faa0ed70ab9a09ba66dbca01ab0b99ff038f11"
+  },
+  "validate json tests/fixtures/v70-phase6/negation-b.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "79a95a2b756565672497e50cc102a5c287f1c27a0d9ecdfd36c7662473eaab5c"
+  },
+  "validate json tests/fixtures/v70-phase6/range-a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "668762452f434c9d5fb6bc24c50623d97aee7a5fd0436f1b36ef40656cf22a37"
+  },
+  "validate json tests/fixtures/v70-phase6/range-b.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "803d89256555d97b909013cdf62bcb86743a3a32d36934622eb8dd4f511028e7"
+  },
+  "validate json tests/fixtures/v71/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4fdbfcb728c0e29aad3aab60957c1ed7406cd99c9273ff5644cf3805b76751f9"
+  },
+  "validate json tests/fixtures/v71/phase1/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c8d17beee65c18846b53cc033f64681d868e05e357cd1a4f36a370120eaf7341"
+  },
+  "validate json tests/fixtures/v71/phase1/release/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "930bc32b037601efb18e9559cc849e6a9cf803b6c6f33022b67af43ce1b44164"
+  },
+  "validate json tests/fixtures/v71/phase2/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "75c1f3f76e06d82404b1ae0c6dc66f5d7730d69a9139ee5d292dd8431f09ea22"
+  },
+  "validate json tests/fixtures/v71/phase3/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bc56162704f7dbebae1d00491d8fd4ed9700b2ab5aae0373cd72818f6fd62f2c"
+  },
+  "validate json tests/fixtures/v71/phase4/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8ceabc6cc0dbd31049bd6dfe898ed39fc8d6d8bfab56a604464f6877173c47d1"
+  },
+  "validate json tests/fixtures/v71/phase4/dispatch/owned-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "53468725c5bede9dcdb04513fbd5139ed9f9ff2bb91f722861c0a66157961314"
+  },
+  "validate json tests/fixtures/v71/phase4/dispatch/reference-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3b4c106b8c8e0d694df5dafb54029177ea082ebc6fa7eedff4d8b8db6c5f9adb"
+  },
+  "validate text src/gnd/examples/approvals/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a68aa26e6ff366b54d7e300f9e19aa69bb1e3350dcdf865648b3674ff3a63790"
+  },
+  "validate text src/gnd/examples/bookrec/complete.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "29e98a9b16c8758554aec2d44acc5b9a4db2ad3c08f9fc135585f4fbbb47778d"
+  },
+  "validate text src/gnd/examples/bookrec/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "433de4323cda0c42776c0fa4e8649f03130483a83b69489758a0000af839aadc"
+  },
+  "validate text src/gnd/examples/bookrec/strict.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d0f2f6fc4584bdcf3bd297f3e285686371d04f55740af0b4e3c2b368e8bf6ec8"
+  },
+  "validate text src/gnd/examples/composition/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "489942fdff500a4887df92d88bc3c4c619efce20982b305c1f693392aa892f1a"
+  },
+  "validate text src/gnd/examples/disclosure/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b8d8e3c88ad4825a928f4ee6d19f91004c6938b9e89d3950569eb61001496d6e"
+  },
+  "validate text src/gnd/examples/growth/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1011638f6f353ac589828dc453f12493f6954c7516bbccc610d85fa51557323a"
+  },
+  "validate text src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "749292b9e4200acccd162a218b6fd24ac561cda8c63a30b0b648d8fe18b26d4a"
+  },
+  "validate text src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "10280ea0c078e95586b64ae7a9b0c716ba20c8713957f2ded88c0154d93ad251"
+  },
+  "validate text src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b1c18c8e0bfeacfe96850dacac539ab0556c7bf4240f3b44d38d09de8d63b197"
+  },
+  "validate text src/gnd/examples/refunds/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ad6c25841af807cdb855b9739851a2bf6ce50ef6e2229b9ad2c44bb1ff31f274"
+  },
+  "validate text src/gnd/examples/rule_check/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cb34b9c5f24e6b797aee48154aea587e04473947da47b5c71fe604eb6be52b0d"
+  },
+  "validate text src/gnd/examples/staffing/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f7e526a3dead1d270f624532424be72aebac4e081caaee3b15cc36c006d23e86"
+  },
+  "validate text src/gnd/examples/type_judgements/duplicates/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6e24a09211385c78238b753a3cc9ffd95e4cbe5fffe420cc58f3f8c2913bd6db"
+  },
+  "validate text src/gnd/examples/type_judgements/multi-valued/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "149fea0e836a0629d8f90b4084a72dc0ae9140b635b7ae0edfe35d120a5bce5e"
+  },
+  "validate text src/gnd/skills/gnd-model-from-text/evals/expected/synthetic_good_user.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "affbeb5246b5498c6e6bf7681dc65712b6cb910276b00dbb1d2d288c04bf5d98"
+  },
+  "validate text src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a131e56ea28a2b498b7b22bdede2f681068bd315d00338bf467df61229cdbce3"
+  },
+  "validate text src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f170c6fbd67f894d3d792aeda7200f5a52a960bf7c87e38eb82ee4a6f2af4cae"
+  },
+  "validate text src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "46b0400651f9835d55e2006bbe46d75106f19e272cd2fbe6f00e3292ecadef38"
+  },
+  "validate text src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8ffd15fa386eb904aa292ae4134a6f7acb2ace6fd8f7d428ea55b152c402a68b"
+  },
+  "validate text tests/fixtures/adversarial/models/f05_frequency_external.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6693844fdbb54d913dec7e91d7e9a1d5ef82f0dd5fa693460b8c121857b69c07"
+  },
+  "validate text tests/fixtures/adversarial/models/f05_setfam_join.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "48e072961053b85d2fa7f8b884bc249a4346755f9e21bc4a796218fbfc500b81"
+  },
+  "validate text tests/fixtures/adversarial/models/f05_uniqueness_external.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5d06d4500ed9cdd1714645915c8786f0ec1916f4fd7fc258d9616936a1933509"
+  },
+  "validate text tests/fixtures/adversarial/models/float_range.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a9ac77d2410c3fc2706682fa13489bbbb2c5093c049791fa5215418df4aa2f56"
+  },
+  "validate text tests/fixtures/adversarial/models/hostile_values.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f6fa5bd2910ecded2f9c6595e51e487f4e25b60a77a2193a0bb5168d2e4192f4"
+  },
+  "validate text tests/fixtures/adversarial/models/model_id_a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0301f55f60f17f69839d2910cf2362605a7671f9fa77ef20c07795ac648ed5da"
+  },
+  "validate text tests/fixtures/adversarial/models/no_observable_subjects.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "25b921cab2531d488b4b31334695a9a3f2fb20771840c913d800b44527e3fc13"
+  },
+  "validate text tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e47b00cc05214be2b3d18640bbd63b29afdeb61722d63a687714c3de43455911"
+  },
+  "validate text tests/fixtures/adversarial/models/omission.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f24bc621090b92957f3d8fa10796822b172b575858b3ffb27781af88591760be"
+  },
+  "validate text tests/fixtures/adversarial/models/partition_exclusive.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "138628b662a0822bea7a8ef3332635952bb82db3fc3849567c6fae1d03c2bcd5"
+  },
+  "validate text tests/fixtures/adversarial/models/partition_flagless.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2d05c2f8a56809f8561b3681a305907b61b4fceeaa368437d969c5b87b07ec7f"
+  },
+  "validate text tests/fixtures/adversarial/models/reference_cardinality.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9939bd53c3d3e07f77b49ac941986c093e9adf6cc32b27d3ac72e028ea485d2f"
+  },
+  "validate text tests/fixtures/adversarial/models/reference_value_type.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "215e3668b4758abc4d181e4fbb4e1d41654fd047f654884bf7c50fe43b61a1ea"
+  },
+  "validate text tests/fixtures/adversarial/models/subtype_mandatory.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b0c6a1853688de86f03fc73712f1602775364e67fdd97792de20abdcc64277ca"
+  },
+  "validate text tests/fixtures/adversarial/models/textual_alethic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fab9027e685c7b0386da90c6588b51934088c3c31c4ce92dc93045bdabbb5aa6"
+  },
+  "validate text tests/fixtures/adversarial/models/typed_range.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "473f03e4c9faf79bd37c808d52014c64a5445b645ff9264f3b610492971d2619"
+  },
+  "validate text tests/fixtures/adversarial/models/uncomparable_literal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e6281562d9e6984be3047007449dbfc317b0e600ff385d61973f730e51985165"
+  },
+  "validate text tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "acd050874cc79e76af5059c9fe9ceb872172c3cfe7f9905e723644ba92ababe7"
+  },
+  "validate text tests/fixtures/adversarial/models/xor_multirole.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7a2e58f43ac5fa53e4ff588c58cdde2c252a8a5c79d3e31014da8553fcf1111d"
+  },
+  "validate text tests/fixtures/architecture/static/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "39ed3a8c6d844fafb31ff509f1d555b8cbe8e41ad2cb6e7017495f741f398241"
+  },
+  "validate text tests/fixtures/checker/misc.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f8018717285c9e284a51bfd3587991b198deea519e1470fbdc8b4889ea96063d"
+  },
+  "validate text tests/fixtures/checker/ring.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9526019cd58fcc341342a6928e0a63e817434791c759df3f3487624a607f372e"
+  },
+  "validate text tests/fixtures/checker/setfam.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ea335ad015dd179d33f87edf4bfbbde76eb2b57d10c45bbec911e671bd9bed1b"
+  },
+  "validate text tests/fixtures/coverage/mixed/v2_operations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8d03f1899ccf7f0ad25ad0c8e19c61603af983d28e1cba13518272ad5e75dad0"
+  },
+  "validate text tests/fixtures/coverage/positional/library.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fb3f0e33f18ea1598459e58c01b05c0a658c0080c63d99d05eaf378709cd812f"
+  },
+  "validate text tests/fixtures/coverage/refused/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c63112193834fdf7ed2cb885ff780f71cb93b0432a53dd8fc2851bcae0937c3e"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/constraint-semiderived-computed-view/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "223f1be26f55f9614201067f63427b93eca70c7db35e9533631418b264cde992"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8f278a50c858f60046926927f26a0dfc617b0f249c4273e543cdab64fa39bfbe"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/cost-quadratic-mutation-red/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bfd2e3ff4456da6701e60b2b51e272b97115b7880eddc447a9bb13b228c06540"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/eval-bare-dollar-literal/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1e9f49e619d4a78c451d4c190a4a16d105311486a5a4229ec0e8dc96242f4b43"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/eval-depth3-dependency-order/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2da1fe91b6d1938fe38135832de24592a1994f353fbab98e6a0adf0d1d4e145b"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/eval-negated-present/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c4a96b91ceb00f6494ee2a3ce1f309dfb06150116c550ef1b564d67827bfd74a"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d8bb37fc3e63ea282df609a83052296739a16a338166d0cd6331485f8902cd5d"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "12300e4ce1ebd6ebebc20d1da1bcc8727e56bc94fa75533f29b2c5807d19a2dd"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "22091064fe840048b35633718d27e4917afbdd119919d4806a0d495d32720d73"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/obligation-unlisted-derived-empty-computed/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2a06cbd984f4109ca2372163cf9649f2f76ecd53393f80f0347a5a5487bc2792"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/wire-text-json-parity/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "89718475e6784ac80b1c762595c1eeef5268e1cf9d48a8f04c640cbb6f9590a2"
+  },
+  "validate text tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e7e3a59636e93d30cc1bf1904a529e4394878a84b1fa0a66849969855fbe9c65"
+  },
+  "validate text tests/fixtures/derivation/cases/a01-string-arm.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "adfe1cb3c7d46ef73dc2fcb639b285f629c1c878c83bd21b4dc8f8e4a5f865a2"
+  },
+  "validate text tests/fixtures/derivation/cases/a02-object-arm.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f762c9a7e83c3cd270dc7b4b248eebcfed78beae184d65501bbb2c9010c79445"
+  },
+  "validate text tests/fixtures/derivation/cases/a03-absent.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "25558ca6569ff5ea2877398d739fb1cd0cbe47eabd4359f2ce5544b9489145e9"
+  },
+  "validate text tests/fixtures/derivation/cases/a04-compatible-subtype.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a9ba73a3c3d6703658fb2b4471e36298184cbd99a27d35e34dd73f415b058dcd"
+  },
+  "validate text tests/fixtures/derivation/cases/a05-compatible-numeric.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9694deb8d9ca5831075a1ad65b839720745675e6a2dd5aec97273a217c3998bb"
+  },
+  "validate text tests/fixtures/derivation/cases/a06-dag-depth-3.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "09323beabf4dc05122a7ebdfbab7978a29205764976d24fdbde796120b390060"
+  },
+  "validate text tests/fixtures/derivation/cases/a07-component-product.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9fd5e77eec2c3be17e64a835b8bda8018a6e80912d7d0459a30af01bf1a773e1"
+  },
+  "validate text tests/fixtures/derivation/cases/a08-semiderived.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6165c2e89730b980a8485df49d486914289558f1a1f5a817df1cad0817e0c826"
+  },
+  "validate text tests/fixtures/derivation/cases/m01-token-fact-type.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b5d194c34cb0ff820431a745ee9b6b10a5d81ec31e1329145d6d0da82d9192b7"
+  },
+  "validate text tests/fixtures/derivation/cases/m02-token-head-variable.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0c48220436f9bb1521f8e5e712a94ad9263e22f390329fa09bc3210b1199caec"
+  },
+  "validate text tests/fixtures/derivation/cases/m03-token-derivation-mode.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f5a95ddc00ec3d780bc42e85b28ee08ba36d45058c3e58f395d4f7618830d05a"
+  },
+  "validate text tests/fixtures/derivation/cases/m04-token-negate-variable.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "12ab5a0126d8be1fb305114ed9001c3bdcb5e134e25f37753e9055fe55df8841"
+  },
+  "validate text tests/fixtures/derivation/cases/m05-token-storage.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7d9fb872927518ec32604b428c19b9e59e7f650491242917e2bebf76d791d219"
+  },
+  "validate text tests/fixtures/derivation/cases/m06-token-semiderived-mode.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f66b1456495213121d6b8fa1c389e9dc3a814573c01b158dfcd070d4d4ae4c6b"
+  },
+  "validate text tests/fixtures/derivation/cases/m07-token-dag-to-cycle.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f05307938337d2e3f27bca9255454e05762a3a5c394ced16e2956a9d3128fe37"
+  },
+  "validate text tests/fixtures/derivation/cases/m08-token-absent-to-ruleless.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1f983d9d9e20944ea3cc8c2a1020befae2b588bb6ea9d1a4a603a94c36e25221"
+  },
+  "validate text tests/fixtures/derivation/cases/m09-token-type-clash.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6e42663960dd71bd60dc503949dfede8be903958319e0242e4abf8af919d9dc2"
+  },
+  "validate text tests/fixtures/derivation/cases/r01-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "14fbaf1aca21afc3f15a5d6557e55f078d7f0de587d13836ccc8fa4f29a6eb3b"
+  },
+  "validate text tests/fixtures/derivation/cases/r02-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5d9d7cf614680278e4c2ff39e3b3b1c72f59b37474e4eb88f8a430f2441a5e08"
+  },
+  "validate text tests/fixtures/derivation/cases/r03-head-role-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1c7431a0129a8ae75ec4c3f7d9fec7f6ea793d2b6b37bcde0f463bfeddc59fdc"
+  },
+  "validate text tests/fixtures/derivation/cases/r04-negate-fact-type-undeclared.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "36ebcb343e57b94fe08d1cef23dcfca91aae281b58342a1b339bbba0feb97ded"
+  },
+  "validate text tests/fixtures/derivation/cases/r05-rule-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "032ac81ea48b0784a40f249fbe8c1545537fe682baf62496346c90606eff10c2"
+  },
+  "validate text tests/fixtures/derivation/cases/r06-rule-extra-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2b976791e9a916f578e0d1b15ee5412cddb29ea9e806375ebd14101f40fadb4e"
+  },
+  "validate text tests/fixtures/derivation/cases/r07-body-missing.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e72ddc8affcf40f9279129650d6ea1e557cf98979e44ab0ee9392a92b9aaf1a6"
+  },
+  "validate text tests/fixtures/derivation/cases/r08-body-not-array.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "db9441d805541d18802d2d6c16b7cf525b493fa80a4ebd2cef271d4d901a8a7e"
+  },
+  "validate text tests/fixtures/derivation/cases/r09-body-empty.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f528bc8e3b2219291a4d2f199c6d1ced44f015167a41ff010ef42b046c488d74"
+  },
+  "validate text tests/fixtures/derivation/cases/r10-atom-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c26f6c132f7adc26e2e66fb1b27435a488ee85c1c7efd1fe437bb18502e75b78"
+  },
+  "validate text tests/fixtures/derivation/cases/r11-negate-not-array.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5595998f18c270e9dcaccba27e6d1348f39b30b934bf17263e8bd4d5d1d0ec0f"
+  },
+  "validate text tests/fixtures/derivation/cases/r12-head-not-mapping.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4e84c98d2ef8ea50148a4186eba3aa6340b9b941a4dfd4b825ebda06e1809f29"
+  },
+  "validate text tests/fixtures/derivation/cases/r13-head-empty.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "72e6e04a2d5465547ea62668599797d1fd1f61cf0fc4e49485768e9ff2b93924"
+  },
+  "validate text tests/fixtures/derivation/cases/r14-atom-role-missing.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cc773cbdf432bc0a5ab1d1ec98b9e4a680dfb5385e18441f162dc3bc48a15b57"
+  },
+  "validate text tests/fixtures/derivation/cases/r15-atom-role-extra.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "19c8aedf1950d0c59bde5a69700baeaae102e22b147219f9a287f78f99ba35bf"
+  },
+  "validate text tests/fixtures/derivation/cases/r16-head-role-missing.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9721dc80c2a9eb48280c2a74f55dabe99231c9262960e993ce6bc744f00cc3d7"
+  },
+  "validate text tests/fixtures/derivation/cases/r17-head-role-extra.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b1de45ad2b90649eb3adf51e5c88f48e9c7038661799766ea9f4e78ab84044b1"
+  },
+  "validate text tests/fixtures/derivation/cases/r18-head-unbound.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "540da1af132cb800c2b858fecd62189071425877089449fdd267dfa43bc9bcc5"
+  },
+  "validate text tests/fixtures/derivation/cases/r19-negate-unbound.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b923f51642041029949779c8fe2ba4aa604eff04b79f5a885d059169f5fb1d0d"
+  },
+  "validate text tests/fixtures/derivation/cases/r20-component-unused.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "083fe30bb3e52adbb41528c598dc4b5a4c20dfd5c94ec943a076f37119ee4cc1"
+  },
+  "validate text tests/fixtures/derivation/cases/r21-head-literal-string.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1bcf7701a8e48285792cce828ffdb4d17de33b7dc002b1c6055d1f2e067356f0"
+  },
+  "validate text tests/fixtures/derivation/cases/r22-head-literal-number.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0c189e9e1195f2f54b677110564f7fd469edcc18a474ee61d9de0442990af737"
+  },
+  "validate text tests/fixtures/derivation/cases/r23-head-literal-boolean.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7428b545e4a2aaf6402c37b1926e8dc908616c09ad981d4feeb9117e71d7c97c"
+  },
+  "validate text tests/fixtures/derivation/cases/r24-head-malformed-variable.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1bcf7701a8e48285792cce828ffdb4d17de33b7dc002b1c6055d1f2e067356f0"
+  },
+  "validate text tests/fixtures/derivation/cases/r25-type-repeated-within-atom.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "aeb65efd9687d0c3cc2aee5255fa52fa39e837d1282af2c09946508bea35b86c"
+  },
+  "validate text tests/fixtures/derivation/cases/r26-type-across-positive-atoms.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2990b3f65cd538353b945b40993a9702ecff4afcddd872d43ecec9206df2e4fe"
+  },
+  "validate text tests/fixtures/derivation/cases/r27-type-positive-vs-negated.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e476263cf6cb31c0efd58f2eac14b7134f1f19d3cd4fb2e6196386f1840d66a8"
+  },
+  "validate text tests/fixtures/derivation/cases/r28-type-body-vs-head.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d2696cccb6d0d8a5d35aacd75569626ad0a21ad3946f86e69719c85fc4d25b2a"
+  },
+  "validate text tests/fixtures/derivation/cases/r29-self-loop.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c86c83ed57582797ce1009a276894eded70e0aaeecbad3a127b28c42e19d2884"
+  },
+  "validate text tests/fixtures/derivation/cases/r30-cycle-2.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7a033643eb5ccc50087a9e4ddd8c4be3de6f933cc70b598011d66d22d4d9432e"
+  },
+  "validate text tests/fixtures/derivation/cases/r31-cycle-3.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b0d08c1ab8ff03dc8823d9e28ec55a46462701f19622cf8ec7e4c9b0542ac524"
+  },
+  "validate text tests/fixtures/derivation/cases/r32-opaque-dependency-positive.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4b4f147ba43498172b3556c9a86693a2c9634b091cc7af1c88a8e8a3439d9e77"
+  },
+  "validate text tests/fixtures/derivation/cases/r33-opaque-dependency-negated.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "aecd093caa2b4187b048114a5a7e6b1e07a73eb247d03c86848ea6feedd627b3"
+  },
+  "validate text tests/fixtures/derivation/cases/r34-rule-on-asserted.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f66b1456495213121d6b8fa1c389e9dc3a814573c01b158dfcd070d4d4ae4c6b"
+  },
+  "validate text tests/fixtures/derivation/cases/r35-storage-contradiction.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7d9fb872927518ec32604b428c19b9e59e7f650491242917e2bebf76d791d219"
+  },
+  "validate text tests/fixtures/derivation/cases/r36-structured-on-object-type.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8c5541e2c95b57b758d995fe448da5499089a2958657b7239c4355dc5bee5849"
+  },
+  "validate text tests/fixtures/derivation/cases/r37-operations-plus-derivation.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "661054f70e4f56209bfa7b9dab678befb2dd40beee76bddc457d59515c44aacc"
+  },
+  "validate text tests/fixtures/derivation/cases/r38-aggregate-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d668115aee50c8bc59b54e07e7afaaadae2b73ea6945b76715bb6151e7f52d64"
+  },
+  "validate text tests/fixtures/derivation/cases/r39-sum-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d6ca73dc4e764bf8a843ae29b9c524f19be72e3de7934a95b5b1c5f581ec22b0"
+  },
+  "validate text tests/fixtures/derivation/cases/r40-disjunction-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "26db221d1ac8ca319a69a7e395a972dc0b25831af12369dfb194b054ed45ab02"
+  },
+  "validate text tests/fixtures/derivation/cases/r41-arithmetic-key.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7600af95f7c05500de446ab71c74be6157a8471e130735c00dde7c8c5989900f"
+  },
+  "validate text tests/fixtures/derivation/cases/r42-precedence-ref-before-shape.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2ec45da4c1517a836c69baa68bcd9edff6d611347a4e556c6c6828cd1d597356"
+  },
+  "validate text tests/fixtures/derivation/cases/r43-precedence-shape-before-graph.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f66b1456495213121d6b8fa1c389e9dc3a814573c01b158dfcd070d4d4ae4c6b"
+  },
+  "validate text tests/fixtures/evolve-policy/base.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c764d84c7a1be0993f60fd7e0ea1075910feaf81d6a1f59b33f2edc9d7827601"
+  },
+  "validate text tests/fixtures/fu1-term-reasons/models/terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4bbc3ed5859fcbacd3bede106e12e656774bb9df991a25b649300540e8b9ea7f"
+  },
+  "validate text tests/fixtures/fu3-derived-ring/models/ring.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4018c80f9dd5e4d4563395ed16f22094b2260c73f787cf09202dfc21cee24108"
+  },
+  "validate text tests/fixtures/guarded/models/alethic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5fa351170b5c0bb78773a6811a1e09039e323a0c32b2ee63f82e68210103325a"
+  },
+  "validate text tests/fixtures/guarded/models/deontic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6a9e882719f5ae3cbed827496533d25ae79575954a000adc0ee37d13c24a7840"
+  },
+  "validate text tests/fixtures/guarded/models/disconnected.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b61ddae12cf5bb89a998f569cf34132369c41c0fac17c40204be427e684b9ff0"
+  },
+  "validate text tests/fixtures/guarded/models/join.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "dc2d6b5014772821231cde986fe0390ab14442dad27e29d4f46a416c8e6105bc"
+  },
+  "validate text tests/fixtures/guarded/models/submission.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ce39a774d70b29a52b34bd00dc77b0b5d383dec7a8205927596f62fb62467126"
+  },
+  "validate text tests/fixtures/guarded/models/undecidable.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d9f4a164f2c23871460b96343d85911cf0e1ad923cc524ea11710f615be9fe7d"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5eae2df3c6ccea39701d7811936ebdea405da71773aeebec18ea5e75997be618"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0e2c67b6c09e3ea296f1936f5ba0262a77622989e9f7d6e008835853ebfa36c9"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0017c6bfa19462783c612132842bba17eb63a2c5ad30512f16fe77df419e4e4a"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "61cedad2dbab7adb12d0edb24d3113f64f36cef4f1366b94399b2def4211ead5"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/ownref-object.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0ccddd6216bf15b9ce78620ebe63ecc81105aa9cbab23b924a7db05945a04103"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/ownref-string.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "be8b5ae3cf328361049bed07a9767e01dc455d3e568a84d682828d2fdd05a63e"
+  },
+  "validate text tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "138ce53378b0084fe17032a43b26c805d272fa763bd27ff2d53cb16dd5bff804"
+  },
+  "validate text tests/fixtures/ilp_learners/close/cyclic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fc0d2c26e9ff5c7ea61ea100ac6264042ce6d4f25659760b9ee3675d02313add"
+  },
+  "validate text tests/fixtures/ilp_learners/close/family.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "370142254b33f5ddb749df754e61b1d6d47b8d1088ca5573266764ab9d09f2e6"
+  },
+  "validate text tests/fixtures/ilp_learners/close/multi.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5bdfe8473f070107a32d43c612c98c2777cdf78a90bad63429aba1c7dd68c47f"
+  },
+  "validate text tests/fixtures/ilp_learners/close/orders.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6194a23c8c74d7171a0dddfde453339e7e7839c854e8badda013f6bc90db287e"
+  },
+  "validate text tests/fixtures/ilp_learners/close/ownref.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cef05aa91f6b00051cbf67befb1c539d5c2dfe65cce3a1251ed9bc49b89bfa70"
+  },
+  "validate text tests/fixtures/ilp_learners/close/staffing-swapped.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1650543871020bf591b067e9da0ce05d6c6f11062c7f1a01732262c593775ffa"
+  },
+  "validate text tests/fixtures/ilp_learners/close/subtype.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "02d551247a4422e88d92a86be5db1a3f57a041049eba2928260caffb7abf539d"
+  },
+  "validate text tests/fixtures/ilp_learners/il4/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ebf54e0b5373b75c3a5d5f71a7da886b0f71aa327317f5a81f93961d490eb0fe"
+  },
+  "validate text tests/fixtures/induced_knowledge/ik3-corpus/labels.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "16755ce80285177b955ed2ae6fc27abd78834d0710265988081026e77154eea8"
+  },
+  "validate text tests/fixtures/induced_knowledge/ik4-corpus/staff-declared.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "972a88c7dcce3b2f19c7d5b2f61a0db90a0dc863cb23b5ab4b95def3cf43a27a"
+  },
+  "validate text tests/fixtures/induced_knowledge/ik4-corpus/staff.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f2f77745893c28280f849951cccb565073259e05162307be8407fa72ff9f30bb"
+  },
+  "validate text tests/fixtures/induced_knowledge/ik5-corpus/orders.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "91f7ac958d3275606bd5a13b34e2b5c0f06aae38700e7036b46181f999766894"
+  },
+  "validate text tests/fixtures/migration/base/v2_migration_corpus.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3c7cc3c6bc5b08feb620e3fd9ceed26032a9f088a09c3906f3cad07c5a7f7ec7"
+  },
+  "validate text tests/fixtures/models/dispatch.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "06c0932f349c342b48f89e51e0073263fabdea845e9c91fd447dff3acac2ed66"
+  },
+  "validate text tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ea5a3bb04d803c4c52c1b562bec86ed7131c6bbbc1bad5e70cac46ab438d6aa4"
+  },
+  "validate text tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f080d0f6f8cd5c4e8869dc5d7c3cf8a32ac730623bffd3a1bff7a0c3da1f4f38"
+  },
+  "validate text tests/fixtures/models/invalid/duplicate_role_names_cross_type.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b3dcb6cb4aff845ae210fe62d0ea96e2f9030dfa693211645449154ecaf9e9af"
+  },
+  "validate text tests/fixtures/models/invalid/role_seq_arity.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a46055cc99fdb91d31b8d92200dbb23c42b7095497eab0845bc7563be5d43b96"
+  },
+  "validate text tests/fixtures/models/invalid/role_seq_type_compat.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8a6800a2987c1c06c5a7bcae0d65ea8f4653ce8cd03dba9d7002ff79463b113b"
+  },
+  "validate text tests/fixtures/models/keywords.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7dcd25f82d46b816b426912ab39cf9755def4a9f0a9d2a818a6f6a0d25ebc56a"
+  },
+  "validate text tests/fixtures/models/library.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d4f1c831c84208bdab151555fb1a2a297f430b5272c0586a0fc43db7be4ff17f"
+  },
+  "validate text tests/fixtures/models/v2_operations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "32de55b785b769690b8f1eae4ba93fb7206b4987918f9706558c06cc048f103e"
+  },
+  "validate text tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3784d85adeae8e9e775be596adf9780486928e6b15dd4460946cf439b3a60904"
+  },
+  "validate text tests/fixtures/phase3-consumers/eligibility.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4dddb59f23a0599a3b4ab37e7f9f2c04b7b11a0d2f56f54d8e8bf5580d4bd883"
+  },
+  "validate text tests/fixtures/phase3-consumers/legacy-derived.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "54dd84f0eb5e02c536d9e38fd143d9333472cf41fe99ec4061df65456f729576"
+  },
+  "validate text tests/fixtures/public-adapter-cases/shapes/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "3b44fa9662e0f10968d7fb97a287b1aa12a12baacc18bdbcdb5e2ae97ac775db"
+  },
+  "validate text tests/fixtures/public-adapter-cases/untyped/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c838bb94d86a59d8eb9aadc81a4b1bac01e38e275a1482d267ca0a45461f0340"
+  },
+  "validate text tests/fixtures/public-applicability/c01/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0188f12dc7e90ec3f17591d2bfab693a1fd26134326f6d7c59ada92975801577"
+  },
+  "validate text tests/fixtures/public-binding-reports/reports/models/different-version.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "da1675a6601c6fb0598a6ae216155d748ebf3f81ebbc3f377aaee6cfa5d32d95"
+  },
+  "validate text tests/fixtures/public-binding-reports/reports/models/nonstructured.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2138fc31171e4475902ce46554d0e66fe316f6e55a1752e7c60d946d784c1c4c"
+  },
+  "validate text tests/fixtures/public-binding-reports/reports/models/same-version-different-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5df829139938992eeebbe77b62f84aaa82e041db1159b99a7a5d05d8c6c4c6bb"
+  },
+  "validate text tests/fixtures/public-binding-reports/reports/models/structured.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9a98018f65c2422197d3ec9917037722a30b009f17741f115b8f2acc90cf2305"
+  },
+  "validate text tests/fixtures/public-bridge/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2706f134d6cccfa85e4112cc445ae955bfbb6855723f5f11c46ca8027f9050ee"
+  },
+  "validate text tests/fixtures/public-bridge/fixtures/c02/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7c4625e396b5c1ad38a678603e8cdfce66737264a42d53224772ba0df63d1c02"
+  },
+  "validate text tests/fixtures/public-bridge/fixtures/c04/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8817ec58fcd58ef19a93ff7cfc01ea8f6176b2c46cf2c4c363fdf9659f31a994"
+  },
+  "validate text tests/fixtures/public-bridge/fixtures/c06/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "dd297ffe27e8e9c2ba68dd3f93f489fad1c8945d80d38f866577a245958ff5df"
+  },
+  "validate text tests/fixtures/public-bridge/fixtures/c07/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8ea3edef11484a9d381c2c93238c938d95f4bedee848cfb129d97dca7526b47a"
+  },
+  "validate text tests/fixtures/public-composition-digests/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9b704c05ab87dbffc195fc6754dbba89dd82dcd8f33e962b1ffa46a7723d5ece"
+  },
+  "validate text tests/fixtures/public-composition-digests/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2f0cd01836ea9b26e0f825b4182b53155ad426994ab41141f961c31b402891b1"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/constraint-one-final-walk/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "64d498bec43c996c04eaf287d53456a4429081b4fd1efe07db3f10ebfba7d1ae"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/cost-chain-counted/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f414498951dee4153e9bf25673fdfd68a5b7f304a0d6371e72e9a4c2758016cb"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/cost-disconnected-counted/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "83c34dde615fc781a3aba611a474c5ca9713834df37fb66a85879ff5934b46ef"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/eval-disconnected-product/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "409ae51bf1cdba368b96e9c977daebef153a2579099c4bb95d8cf513979fbc08"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-exact/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "da74cecef4714e63c7bc533bd9687f2e0599e79e642533eef4d3cacfc7a561ee"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-missing/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d8989ebcb488b67e53718c485fdafed90b58c4599d10019901845ba4f8086c46"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-surplus/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c4635de2437193bac969ec796a64a61f04db91530b045d42aa9e3997e31a93c1"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/wire-v4-check-internal/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e9bef3b42360ad9e41755207e474456b0dcd744c92ccabc9547faf262646dc7a"
+  },
+  "validate text tests/fixtures/public-derivation-evaluator-controls/cases/witness-missing-canonical/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "82ae49a822e4c27d7e783d1b2a76d1f7abc53b95beb1163269efa7053ad81a11"
+  },
+  "validate text tests/fixtures/public-emitter-trust-controls/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ee70d3834e6d46e88a649042547094597c0fc6defc6f7c2da3a57f0e9d77feed"
+  },
+  "validate text tests/fixtures/public-emitter21/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bdee3d44b01a8fff49406e5f98736d2475f8897432cee6112d06f8423fe5421c"
+  },
+  "validate text tests/fixtures/public-generated-examples/bookrec/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0977c03f6788d6bf49f1b2ae01eb7d53b966865080d47910d830978c3bb99d1a"
+  },
+  "validate text tests/fixtures/public-generated-examples/expense/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7edc90949a5dc101030d6752df7ebe836d2c952af08f5045a95ae99a9431f31c"
+  },
+  "validate text tests/fixtures/public-launch-phase-2/invalid.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a7708248d9c282dd1dd83cde98a6bd122e029137c4602fde664931780213d3cb"
+  },
+  "validate text tests/fixtures/public-launch-phase-2/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "67a163f0f686e62bdbafdba247364f97980319b0ca4f3b31e1f3a7288683d35b"
+  },
+  "validate text tests/fixtures/public-launch-phase-2/textual.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5bd356f5cf73b2406cf824126f78a5c5c4ec9e6f4adfa401ba5e50575b07451a"
+  },
+  "validate text tests/fixtures/public-phase1-trace/fixtures/c01/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a1bdbe855d61ffcb20c0bbaeb142227a8a345101d5e5313df11a3b8353eeb7f1"
+  },
+  "validate text tests/fixtures/public-semantic-partition/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c91bc06bba52dc357f5c98b04cee043eecd7c0964760277a6eb97cdcab7d4c23"
+  },
+  "validate text tests/fixtures/public-semantic-shapes/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "04854af505f664a7e7c992086b93a66b47778865a02dfe1aa8ecd7e68b6e6c11"
+  },
+  "validate text tests/fixtures/public-snapshot-counterexamples/joins-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c829ef89b3b42cb6e83bb96201fbde4fa6bcb6936b898433d11b05c0fcb0d5a0"
+  },
+  "validate text tests/fixtures/public-transition-contract/v2_expense.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b53889484b0105a17b009c1394912a87a613318a69db8309dd3024590511e195"
+  },
+  "validate text tests/fixtures/public-transition-trace/expense/rejecting-models/bad-role-ref.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e4d06105a360bb44f91b8fe843ad393e046d4ba35c4afc4e27eab2d07a770904"
+  },
+  "validate text tests/fixtures/public-transition-trace/expense/v2_expense.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a5af69e8fc114dc856bdfb1a882fff0fab1f2ddb8986a89f00b07be7c07b2ee3"
+  },
+  "validate text tests/fixtures/public-walk-floor/session/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2bacceea4be046d6a2d392e5ec3561770474c90e7a5d227e9ee91ad390ffd379"
+  },
+  "validate text tests/fixtures/pyrel-oracle/basics.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b496c8f867414edca4c42481384eff763e016cc816e38801b0a8604dc86bde93"
+  },
+  "validate text tests/fixtures/rc1-rule-ids/models/components-positional.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c24d7cbacb49c6f810a45bdc3048159178c83c25834ef4d2490bb6d8d919610f"
+  },
+  "validate text tests/fixtures/rc1-rule-ids/models/components.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "96a4e677c406472da977d38fbe493c4e170c35fd2f0c398c9cea875379b63957"
+  },
+  "validate text tests/fixtures/rc1-rule-ids/models/exact-terms-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5c8b1755ab7d36dc00ba2357b48f32d263c3998f4fcb049652a8936978611d3c"
+  },
+  "validate text tests/fixtures/rc1-rule-ids/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4152531f35f8d6b827d06d1fb94696b45bf24cb06743691be7b2466f068f2685"
+  },
+  "validate text tests/fixtures/rc1-rule-ids/models/reference/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "87a06575155b86fbf7665948e8b4f80cfb56e5b26bdd01082c5dc248857a8e84"
+  },
+  "validate text tests/fixtures/rc1-rule-ids/models/temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "9298f84b7291fd0544d46b84cc7514bf2116e46e480669eeb5a0100fc01afa07"
+  },
+  "validate text tests/fixtures/rc2-acyclic/models/graph-composite.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f9422976f41a925ee001017ccb4415c70d9107ace8cb30d17c6943359ee43af3"
+  },
+  "validate text tests/fixtures/rc2-acyclic/models/graph.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "36c97ba0e85ca8155f62a8d218f2ccc7525ec2958470b0f0a87a9acb2457f6ad"
+  },
+  "validate text tests/fixtures/rc3-baseline/models/derivations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c37e4b74f265481600058169ebb27d4880b98928a3801aa8d6cf8fb93e31e4b3"
+  },
+  "validate text tests/fixtures/rc3-baseline/models/graph.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "afaab6d3ca5d6470bf52ffac6df2a6b388962a7837fe17df4ca21b50e0aefb7d"
+  },
+  "validate text tests/fixtures/rc3-baseline/models/temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4a0a324f3754c3dddac73334484de08ff340edf63747407f25305ce850c54331"
+  },
+  "validate text tests/fixtures/rc4-allow-vacuous/models/graph.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "5f92d0aa1923050afef3a4055e5c73ebc5ba3828fca4c8a308d47aadb27fb957"
+  },
+  "validate text tests/fixtures/rc5-tool-output/models/catalog.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "7c2a73851bb3da23c1322b51a99afd73eae99a029aec52167434d5fb76fdb478"
+  },
+  "validate text tests/fixtures/reference-corpus/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f8f2a29273f404894f2b906eb80550b705920e46d8a06fd94376421f5ababb3e"
+  },
+  "validate text tests/fixtures/reference-corpus/release/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "70e9fe2621d7eb6ca4cc8a827c617b35f281db595199074812d7dbb07fc48141"
+  },
+  "validate text tests/fixtures/reference-legacy/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a21013ffd9d402b77c288489dcd3294efc0514c323d13b11dd77e039e5e306d6"
+  },
+  "validate text tests/fixtures/reference-legacy/release/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8f0f4576ca22c2f67d9ada0bc6c747af13e6befc5ea59693b994fc656110e3c9"
+  },
+  "validate text tests/fixtures/rof1-projected-text/models/contacts-invalid.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "991a1afca59c5f7121b68f1d7b1b8d94ce5bed4012a17c455b5bc4630344b7de"
+  },
+  "validate text tests/fixtures/rof1-projected-text/models/contacts-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "868f078425b8b79fa2523ed9d3290115dd011a49e86460ba9ecdacc67a2dbb86"
+  },
+  "validate text tests/fixtures/rof1-projected-text/models/directory-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c8f1da7d0485faa5be515a5738f2cf56e5771c404275b7e009c78fd653848e8a"
+  },
+  "validate text tests/fixtures/rof1-projected-text/models/service-temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0019a54a057e7ab185bf7fb489ec826deb660ae842ce67b8fc6e92bfb8de148c"
+  },
+  "validate text tests/fixtures/rof1-projected-text/models/terms-temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "161acd72df98245b78405af92f8c267be1cd8753b0e8ef7512bdffedbeb82793"
+  },
+  "validate text tests/fixtures/rof2-projected-text/models/accounts-redacted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f5e5d21c8f856446b22deb615ea44400a02c92cf3873f41b64340ba7f2a47613"
+  },
+  "validate text tests/fixtures/rof2-projected-text/models/dynamic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "efaba2bd8b246719763d7299194558506eaf2487ab67adf2f16b21c7d842a1fe"
+  },
+  "validate text tests/fixtures/rof2-projected-text/models/service-temporal.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f6ff43c6e7d65747e3583639f9a2e93117d16095d57690fb4c65b3c840d9eae8"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/dates-and-text.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4e6731bc51c4dc2b3ee15b642dd48520c773ac21158cc9b13d4982a34b81b796"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/floats.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "83f00b0c4aabb0b9f33e758cf9d4d520f396ff3d4fc0d728f2ec4028aec78b9f"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/operations-a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4f733c110832b1ec934953b4792a797226d71ad61ababd068c152bf25d80f761"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/operations-b.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "01c63fb7ddec12a4c14cefbb0d6b2141e104ccf317b07bed127972d7d0f0fb95"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/plain-small.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e0096302cedfd29dec60628bfd6f2eaebbcf3c24f717e0fa6c4e521078f0a42d"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/reference-operations/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6e82cd665b1c6918ba3c0f0d153ced7695e12585c03e19c01574fe02817152a8"
+  },
+  "validate text tests/fixtures/rof3-model-identity/models/reference/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2ebc9ef691c09f6d53053cf73d9d3e3eaf1bb85ffb10413eb2e24e5123531c1c"
+  },
+  "validate text tests/fixtures/rof4-accept-identities/models/approvals/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cec59ce1d97862e5fcd8f9ef742522b77d225fc391ecd9bf419deb450adb2d3c"
+  },
+  "validate text tests/fixtures/rof4-accept-identities/models/nonstructured/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "261c027c492e732d7e985e2a25edb8372403e4158d5373e9e2508880cbd74fb3"
+  },
+  "validate text tests/fixtures/rof4-accept-identities/models/reference/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6b9b09407388a8232941096b93b65efad4debc088dd74d49f975e281f018fa44"
+  },
+  "validate text tests/fixtures/skeleton/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b1280c955f5e67a90733d442f2049ae85972a192f6f7d9125bebc193e9213788"
+  },
+  "validate text tests/fixtures/synth-external-uniqueness/external-exhausted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "10522cf535b836f08820aa36fe97193fe74dc9cd4fbd736d86d6460b838968d8"
+  },
+  "validate text tests/fixtures/synth-external-uniqueness/external-pair.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4f89bf8fdc40f9228a472e81094011fb519d2cf2e952e93b7849c160f22fb9fb"
+  },
+  "validate text tests/fixtures/synth-external-uniqueness/external-second.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "accd6cc501619f71ffdc1d89853a496e7c272ab325707de6eb574b418e6ef52d"
+  },
+  "validate text tests/fixtures/synth-external-uniqueness/external-single.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "96f0992b268fd0ac7fcc7134a10dc048a07c4e92eb875a6d53e30768c01706f1"
+  },
+  "validate text tests/fixtures/synth-external-uniqueness/mandatory-exhausted.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a846c17f39503b07264e2327871d04dcaf6dd916e60c466ceacab3c0c804e8dc"
+  },
+  "validate text tests/fixtures/synth-external-uniqueness/mandatory-one-to-one.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "11dcd3650fe5fa737a7740ed78e4ad715a6bba19e79aeba52ff60c41f09f5104"
+  },
+  "validate text tests/fixtures/type-judgements/multi-valued/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bb9f0a09d8179104c05b56c2a3808aa9ce3503c1385bb2d4a0f793f3097af60c"
+  },
+  "validate text tests/fixtures/type-judgements/round-two/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6eec861c844ae829d60f708edc63f6c356cf979c5b6875aacd85db7f12917794"
+  },
+  "validate text tests/fixtures/unattended/conforming.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "331e4e9a367f96ae669785a942f391559adfcd8eac96745b9faa0fdc846d9200"
+  },
+  "validate text tests/fixtures/v51-extraction-boundary/models/mixed.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6083b2d938cbf7ae38305b1b13b8a8cf55d2710da6012bacaff3ac90804e21c3"
+  },
+  "validate text tests/fixtures/v51-generated-project/alpha/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1d8565b595a64704d455345432532b4d3def7d6bc0ecbe3b23a22fa6def7722b"
+  },
+  "validate text tests/fixtures/v51-generated-project/beta/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "bc93cdefe4cfdbe9f46b302526e12900ac38e759ea22d76bad69bad0ee975448"
+  },
+  "validate text tests/fixtures/v6-assurance/cases/expense-approval/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "cadb74b65d1b55c0ad285a23a06acefe7eee6d696009e9e9135b721e65001eb7"
+  },
+  "validate text tests/fixtures/v6-assurance/cases/recommendation-completeness/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "796d5b3858e5e41089374c63939f4012db004c6ff3f3c6c08c0846cc14c9786f"
+  },
+  "validate text tests/fixtures/v6-assurance/cases/separation-of-duties/conforming/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c5a0a9f028b95cfa16f1bc6abb715ae8416ff16d3e7aabf862714ac75c7cde33"
+  },
+  "validate text tests/fixtures/v61-phase1/batch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1f8fd5f9df584a9896527c0822c1d7d0bc6ef795d3e9d17bae9769e861a73f27"
+  },
+  "validate text tests/fixtures/v61-phase1/import/identity.expected.model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a3037b0452378eaa5d0f15fd2755c709917c5eeb42ec92930fb79b9497fa5cca"
+  },
+  "validate text tests/fixtures/v61-phase1/import/identity.source.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4c8c3c2e170b0dfd24390986e59143c1e7c703680fc9690f744ded24742f7583"
+  },
+  "validate text tests/fixtures/v61-phase1/import/mutations/modality-no-default.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "425cf3e9b3ae194253abebb5c881fd2bd7ca51bf18e44ec5c70ac811aa2e3888"
+  },
+  "validate text tests/fixtures/v61-phase1/import/mutations/outside-four-classes.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fc6e5683679dc4d7c2d11943b9698ec017258908cb9e195a4ee71872e47e6058"
+  },
+  "validate text tests/fixtures/v61-phase1/import/mutations/ring-missing-target.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "52a8a6681d81478e974483937840e7e18c9e9e7a2a0e9c90a914b6d963c48901"
+  },
+  "validate text tests/fixtures/v61-phase1/import/mutations/role-collision.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c816f2cdbbb4115ec7fc9ea131bde4593f76926068bd3433789475d87d699354"
+  },
+  "validate text tests/fixtures/v61-phase1/import/provenance.source.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "a00bff45a51fabb3f910b3e339a3ceb584b4451c85137e617d829b1423df0fd5"
+  },
+  "validate text tests/fixtures/v61-phase1/import/ring.source.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "022aabb6fd534a7027a85bac15a3191d322dcb403d0d8d029aadbba22ebf6902"
+  },
+  "validate text tests/fixtures/v61-phase1/import/role-name.source.orm.yaml": {
+   "exit": 3,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4f6332d2a7c7dfd8cb29d0c4c791526fdf15565636f2c106d9928de3945ab58a"
+  },
+  "validate text tests/fixtures/v61-phase4/models/fact-type-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ca53b876d446828f6eefce8876e25c9b37736bfa5814c2511837be24074e4d46"
+  },
+  "validate text tests/fixtures/v61-phase4/models/no-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "acf38ca871538e715295ba883f2030a0b3bba9b853ca28ca9a2a72020972238c"
+  },
+  "validate text tests/fixtures/v61-phase4/models/operation-flow-declarations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "1c313bd579da0f1b5d69b404a65025164460b28ec7eabbe46ef886c991519a81"
+  },
+  "validate text tests/fixtures/v61-phase4/models/redundant-declarations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "06d887379235a293c2c825a300135818f0ac9c33b4c93ddb4c63ab2382c9862a"
+  },
+  "validate text tests/fixtures/v61-phase4/models/role-declaration-unchecked.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "065b75c4025a9a2dce9a606edd06669ebd498adb7aad588ef46586b235b1c2da"
+  },
+  "validate text tests/fixtures/v61-phase4/models/role-declaration.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "234daca776d69cb0d23d36c8983031b52bd278309731da61dca1ab6d16eebf7d"
+  },
+  "validate text tests/fixtures/v61-phase4/models/witness-declarations.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "dbcf8a74cda212c9f764574d5319bda158f782d863b2bc2d5acd2735f54902ce"
+  },
+  "validate text tests/fixtures/v62-phase1/models/static.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2eda9032b5acb8fec87b959f16985114d74687fd0496bc81a83784fd34ff34c5"
+  },
+  "validate text tests/fixtures/v62-phase2/models/dynamic.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "506695a12ce85c6282be39f872634924db782709ec1e311bb15ff6f2f6b9b8d2"
+  },
+  "validate text tests/fixtures/v62-phase3/models/exact-terms.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8a84ba6b0e06e92ac75094130e5ce5f7eebf9c9ee104983fa48fd6ff54281829"
+  },
+  "validate text tests/fixtures/v62-phase4/models/aggregates.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "2133614735b33458bca65652d735d2aca44a80c9d8f42c43753649ee048c50a3"
+  },
+  "validate text tests/fixtures/v62-phase5/models/floats.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "074dc359b71b56f650548fed75895e7f2b077ce2fd0b9977ad34da840d8d1644"
+  },
+  "validate text tests/fixtures/v62-phase6/models/existential-guard.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "99d6001a658ce4e479e755a9d6d1feb28ce692c8a81ad9652a81e7224ddca2f8"
+  },
+  "validate text tests/fixtures/v70-phase1/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f05ebb8c51696e839190d804cacbb838634f9155b67bfad6ab5d0055dc700dd5"
+  },
+  "validate text tests/fixtures/v70-phase2/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "345e0d0af5d96a2c6274bf22028ba4a7d10a502dcb4d42b40bbaf4d63d1aaa4b"
+  },
+  "validate text tests/fixtures/v70-phase3/join-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "83f9f15d07c94697839c6edfeb80ef8c67ae8627a6c5f640cd662718f5d7b745"
+  },
+  "validate text tests/fixtures/v70-phase3/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "d340a4c7025dfe3e3f0bdc9b4c45fe5b82388bd6b532fe4e85295dbd2b44156f"
+  },
+  "validate text tests/fixtures/v70-phase4/negation.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c5be5cf2032c70cc44ba9504d5c44a1bcf5e451c3fcc21f2bb3b87fde33881fe"
+  },
+  "validate text tests/fixtures/v70-phase4/positive.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "130d508f440a2df391a52b57c7d1e483912d3540cf7465f512910b5c8113959f"
+  },
+  "validate text tests/fixtures/v70-phase4/recursive.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "fb0bd253a9b6880c34f42816663cf8e4e79d9c2261151f53d735a08c6b57a65e"
+  },
+  "validate text tests/fixtures/v70-phase5/bad-inverse.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "03fbcee824af88c8809a01177a7a68182e85cfa24f79f8c3b9b3a2a1dd2f998c"
+  },
+  "validate text tests/fixtures/v70-phase5/private.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "4333e181fe99686b08ba511122a1bcaf77e2bf5fc8873fe91636bdeec693d470"
+  },
+  "validate text tests/fixtures/v70-phase5/public.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "f7c1095cb0d7162413a5317750672a2d38bc6267b65243975f16725b8d239610"
+  },
+  "validate text tests/fixtures/v70-phase6/negation-a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "206b0f3043c67243b71de9b8f04e48499a82599f1d3457f2fe6f5d3047b68ede"
+  },
+  "validate text tests/fixtures/v70-phase6/negation-b.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "70e1e642d21872cec6d6a1689f17cacdd750eafab41d828f49a9f6e1c209cd86"
+  },
+  "validate text tests/fixtures/v70-phase6/range-a.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8a183d16dd6ca856d4e154c6a7a7157e28d3569240fe5ecce06a17ea01da9473"
+  },
+  "validate text tests/fixtures/v70-phase6/range-b.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "0657569c4575b288db4d9f0251fad83fb667cdafa93fe968b7327defd4b26d32"
+  },
+  "validate text tests/fixtures/v71/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e807da2981b2492dcf50d2b607e26267331b40de65b9580d5ff8bc8ef4445823"
+  },
+  "validate text tests/fixtures/v71/phase1/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "34e7ede196cbbc8eebb7de8040aed9560925498990868cb8b38942f6b50c4abe"
+  },
+  "validate text tests/fixtures/v71/phase1/release/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "b31001a0fe8a4767e1ffd0c479cd780e0bf76a5d2bcca1993ef129b613b7532b"
+  },
+  "validate text tests/fixtures/v71/phase2/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "c1f95e02a6cd2d3f49cba022a366cbcab5eb624dd908598ccddef6fe8461e238"
+  },
+  "validate text tests/fixtures/v71/phase3/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "e190a95e3c7e1781c1975aa04e966b926cbd2749e3c918189d7724479a0585c7"
+  },
+  "validate text tests/fixtures/v71/phase4/dispatch/model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "8cc2dac8b7cd12b6752f536b4151a589d215120a6064e59438393146fb4c11b3"
+  },
+  "validate text tests/fixtures/v71/phase4/dispatch/owned-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "6cad0e11b068270925216a08bdce5a336fc2b939bce7fd347197978bccda84c0"
+  },
+  "validate text tests/fixtures/v71/phase4/dispatch/reference-model.orm.yaml": {
+   "exit": 0,
+   "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "stdout": "ffd4187953c5e562439d11970b46dfe6af9ef618f0ebecba6f02b6aacf2ad9f6"
+  }
+ },
+ "tree": "6d7b5327892dafe2ed6b24a023be8a305b77efc3"
+}

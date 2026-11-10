@@ -122,8 +122,9 @@ digest is a different document, deleted and added. Replay appends an `add` at th
 after refusing a digest already declared ("source document is already declared"), and refuses an
 `add` on a model with no `source.documents` list ("the model declares no source.documents to append
 to"). A `modify` or `delete` needs exactly one entry with the digest (two are refused as ambiguous) and
-compares it with `before`. No operation
-reorders the list, so a candidate that only reorders it fails replay equality. The locator
+compares it with `before`. Replay never reorders the list on its own: a `delete` followed by an
+`add` of the same digest moves that entry to the end, explicitly,
+and a candidate that only reorders it fails replay equality. The locator
 contributes no object/fact-type element id and adds no blast-radius entry; the always-present
 `model` entry keeps the report non-empty.
 
@@ -236,8 +237,8 @@ share that implementation.
 **Populated.** A fact type is populated when it has `sample_population` rows, when a declared
 reference population owns it, when a `population` artifact locator in the proposal references
 `fact_types[ID]`, or when `--populated ID` names it. A `--populated` id that names no fact type of
-the current model exits `3`. A model-hosted constraint's subjects are the fact types its role
-references and rule atoms name, in `before` and `after` alike, and, for a constraint that ranges
+the current model exits `3`. A constraint's subjects are its host fact type, when it is hosted on
+one, and the fact types its role references and rule atoms name, in `before` and `after` alike, and, for a constraint that ranges
 over an object type without a role (`value` or `cardinality` with `object_type` and no `role_ref`,
 `subtype-partition`'s `supertype` and `subtypes`), every fact type with a role played by that
 object type, by a subtype of it, or by an entity it identifies as reference value type. It counts

@@ -737,3 +737,54 @@ def test_r9_a_vacuous_verdict_leaves_the_refusal(tmp_path: Path) -> None:
                               check_population="pop.json")
     assert preview.policy_issues[0].detail.endswith("; population: vacuous")
     assert preview.population_check.admitted == ()
+
+
+# --- milestone close review regressions (notes/close-review-reader-1.md) ------
+
+_HOSTED_REACH = {
+    # Hosted on customer_places_order, but over every order: order also plays in
+    # order_has_amount (populated, no fact in the file) and order_has_channel (sample rows).
+    "object-scoped": {"type": "value", "object_type": "order", "range": {"min": 1, "max": 10}},
+    # Hosted on customer_places_order, but its role_ref names order_has_channel (sample rows).
+    "foreign-role-ref": {"type": "value", "object_type": "channel",
+                         "role_ref": {"fact_type": "order_has_channel", "role": "channel"}, "allowed": ["web"]},
+}
+
+
+@pytest.mark.parametrize("shape", sorted(_HOSTED_REACH))
+def test_close_r1_f1_a_hosted_constraint_ranges_past_its_host(tmp_path: Path, shape: str) -> None:
+    """A fact-type-hosted constraint's subjects are its host plus everything it reaches (close R1-F1)."""
+    constraint = {**_HOSTED_REACH[shape], "source": "llm-inferred", "status": "proposed", "modality": "deontic",
+                  **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("customer_places_order", None, "value"), after=constraint),)
+    service, proposal, _ = _service_workspace(tmp_path, operations, _population({"customer_places_order": PLACEMENTS}))
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order", "order_has_amount"),
+                              check_population="pop.json")
+    assert [issue.cell for issue in preview.policy_issues] == ["constraint.populated.add"]
+    assert preview.policy_issues[0].detail.endswith("; population: sample-rows")
+    assert preview.population_check.admitted == ()
+
+
+def test_close_r1_f1_flag_free_a_hosted_object_scoped_constraint_on_an_empty_host_is_refused(tmp_path: Path) -> None:
+    """The MG2 walk without the option: the host is empty, but the constraint reaches populated fact types."""
+    constraint = {**_HOSTED_REACH["object-scoped"], "source": "llm-inferred", "status": "proposed",
+                  "modality": "deontic", **LLM_TEXT}
+    operations = (_op("add", _constraint_locator("order_has_memo", None, "value"), after=constraint),)
+    service, proposal, _ = _service_workspace(tmp_path, operations)
+    preview = service.preview(proposal, policy="additive", populated=("customer_places_order",))
+    assert [issue.cell for issue in preview.policy_issues] == ["constraint.populated.add"]
+
+
+@pytest.mark.parametrize(("status", "modality", "eligible"), [
+    ("proposed", "deontic", True), ("confirmed", "deontic", False), ("proposed", "alethic", False),
+])
+def test_close_r1_f3_only_a_proposed_deontic_constraint_is_eligible(status: str, modality: str,
+                                                                     eligible: bool) -> None:
+    """Each half of the eligibility test can fail on its own (close R1-F3: both mutants survived)."""
+    from gnd.evolve import EvolutionOperationKind
+    from gnd.evolve.policy import _population_eligible
+
+    constraint = {"type": "uniqueness", "roles": ["order"], "source": "user-supplied", "status": status,
+                  "modality": modality, "provenance": {"user_quote": "Said by the owner."}}
+    operation = _op("add", _constraint_locator("customer_places_order", None, "uniqueness"), after=constraint)
+    assert _population_eligible(operation, EvolutionOperationKind.ADD) is eligible

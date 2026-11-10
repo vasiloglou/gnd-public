@@ -306,10 +306,10 @@ class ConstraintSubjects:
     """The fact types a constraint operation ranges over, before and after (MG2).
 
     One definition, shared by the policy walk and the population check (UG2),
-    so "populated subject" means the same thing in both. A fact-type-hosted
-    constraint's subject is its host; a model-hosted constraint's subjects are
-    the fact types its role references and rule atoms name, plus every fact
-    type played by an object type it ranges over without a role.
+    so "populated subject" means the same thing in both. A constraint's
+    subjects are its host fact type, if it has one, plus the fact types its
+    role references and rule atoms name, plus every fact type played by an
+    object type it ranges over without a role.
     """
 
     def __init__(self, index: ModelIndex) -> None:
@@ -343,11 +343,14 @@ class ConstraintSubjects:
 
     def of(self, operation: Any) -> set[str]:
         locator = operation.locator
-        if locator.host == "fact_type":
-            return {locator.host_id} if locator.host_id is not None else set()
+        # A fact-type-hosted constraint ranges over its host and over anything
+        # else it reaches, like a model-hosted one: a role_ref into another fact
+        # type, or an object type without a role (milestone close R1-F1).
+        subjects: set[str] = set()
+        if locator.host == "fact_type" and locator.host_id is not None:
+            subjects.add(locator.host_id)
         # Before AND after: a constraint spanning only unpopulated fact
         # types must not be re-pointed at a populated one (review F1).
-        subjects: set[str] = set()
         _role_ref_fact_types(operation.before, subjects)
         _role_ref_fact_types(operation.after, subjects)
         subjects |= self._playing(_object_scoped_types(operation.before) | _object_scoped_types(operation.after))

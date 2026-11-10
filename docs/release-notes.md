@@ -64,7 +64,12 @@ every span is re-hashed, a run without `--document`, and a model without the
 unattended mode are unchanged. See "Unattended source" in the `gnd-orm-core`
 representation format.
 
-### A growth round can declare its source document (issue 104)
+A correction rides along: a `--document` refusal (exit 3) on a model with a
+redaction policy or reference populations now prints the same projected report
+as that model's other validate results, in JSON and text. Before, it printed a
+report without the projection, which failed the report schema.
+
+### A growth round can declare its source document (issues 74 and 104)
 
 An unattended model's growth round can now declare the document its new spans
 cite, inside the round: a `source-document` operation in `gnd evolve`

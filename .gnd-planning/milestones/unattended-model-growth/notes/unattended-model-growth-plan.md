@@ -547,9 +547,26 @@ manifest; the packaged skill file inventory and prose pins.
 | UG-Q6 | `project.md` says there is no component index (line 25) and also that it lives in `dev/components/` with a pre-PR `changed --strict` run (last section). Which governs? The plan applies the second | owner / maintainer |
 | UG-Q7 | The issues carry downstream tracker labels (`GR-T…`). The plan and README cite issue numbers only; should the labels be restored anywhere? | owner |
 
+## Close note `(c1)`, 2026-11-09 (plan repairs at the milestone close)
+
+Raised by the phase records and the close review ([007-close.md](../007-close.md)). The text
+above is kept as approved; each row below amends it, with the earlier wording quoted.
+
+| Section | Earlier wording | Amendment | Raised by |
+|---|---|---|---|
+| Status line | "No phase has a spec approval. No code is written, no issue is closed or commented on." | Every phase UG1 to UG4 has an approved spec, a record and a merged PR (123, 147, 149, 151). Issues 74, 75 and 76 are closed (2026-11-08); 104 is open | close reader 4 (R4-F13) |
+| §0 UG-R1 | parity "byte-identical to `12daa5b7`" | About twenty unrelated pull requests merged after `12daa5b7`. Parity is measured between `6d7b5327` (main just before PR 147, the first code PR) and `ad454305` (main after PR 149, the last); only this milestone's PRs lie between them. UG4 changed no code | the close parity table |
+| §0 UG-R1 carve-out | one `warnings` entry on a `--document` run with an unchecked span | A second, corrective difference: a `--document` refusal (exit 3) on a model with a redaction policy or reference populations now carries the projected report its other results carry (UG3 review finding 1). Stated in the release notes | close reader 2 (R2-F5) |
+| §2.2 and the contract's "Populated" paragraph | the contract defined subjects for a model-hosted constraint only; the code took a fact-type-hosted constraint's subject to be its host alone | A constraint's subjects are its host fact type, when it has one, plus the fact types its role references and rule atoms name, plus every fact type played by an object type it ranges over without a role. Repaired in code and contract at the close | close reader 1 (R1-F1, blocking) |
+| §4 UG2, §5, §6 (RF1 goldens "re-pinned") | re-pin the RF1 goldens | Each phase added a successor fixture and left the historical goldens and `MANIFEST_SHA256` unchanged (UG2 F-i4, UG3-D13) | UG2 and UG3 specs |
+| §4 UG2 size "400 to 650 source lines" | estimate | 747 added; the estimate omitted apply plumbing and review fixes | 003-phase-UG2.md |
+| §8 "UG-D1 asks again" | the close instrument is asked again | UG-D1 (a) governed the close: four local readers, the maintained panel stated as the project's bar | the close |
+| §9 UG4 row (full `run_tutorials.py`) | full run per phase | UG4 ran the growth group; the full run (310 blocks) ran in the close gate | 006-phase-UG4.md |
+
 ## Revision history
 
 - r1, 2026-11-07: first draft by a planning session. Not reviewed. Not approved.
 - r1.1, 2026-11-07: owner decision rulings recorded in §10 (relayed, tagged `(o1)`), conditional text made definite. Not reviewed. Not approved.
 - r1.2, 2026-11-07: plan review round 1 (four local readers over r1.1) applied; see [plan-review-r1-disposition.md](plan-review-r1-disposition.md). Not re-read after the repairs.
 - r1.2 approved, 2026-11-07: owner approval at the plan gate ("approved all", relayed), recorded in [001-plan.md](../001-plan.md). Status wording only; no other byte changed. No confirmation review round was run.
+- close note `(c1)`, 2026-11-09: plan repairs at the milestone close, above. No other byte changed.

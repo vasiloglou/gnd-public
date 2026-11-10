@@ -36,7 +36,8 @@ normative in the
 
 ## The guarantee's condition
 
-`apply` must repeat the preview's `--policy` and `--populated`. It exits 3
+`apply` must repeat the preview's `--policy` and `--populated`, and any
+`--check-population` ([below](#admitting-a-constraint-on-clean-data)). It exits 3
 when they differ from the reviewed preview's, in either direction, before
 the retry branch and before it rebuilds the preview. It then rebuilds the preview with those options, so a
 preview whose `policy_issues` were edited exits 11 like any other stale

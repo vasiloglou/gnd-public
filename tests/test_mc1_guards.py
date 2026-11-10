@@ -47,9 +47,12 @@ def test_cli_guards(tmp_path, route):
 def test_R6_population_compose(tmp_path):
     from gnd.api import compose
     path, _, _ = write_case(tmp_path)
+    # MC2 supports rooted composition; stale pins still precede population IO.
+    vocabulary = tmp_path / 'vocab.orm.json'
+    vocabulary.write_bytes(vocabulary.read_bytes() + b' ')
     result = compose(path, tmp_path / 'absent')
     assert result['exit_code'] == 3
-    assert result['error']['message'] == 'include:unsupported-route'
+    assert result['error']['message'] == 'include:hash-mismatch'
 
 
 def test_R2_witness_inputs(tmp_path):

@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator
+from ruamel.yaml.error import YAMLError
 
 from gnd import api as api_module
 from gnd import input_policy as _rf7_input
@@ -25,7 +26,7 @@ from gnd.commands._output import (
     print_vacuous_acceptance,
 )
 from gnd.exits import EXIT_COLLISION, EXIT_INTERNAL, EXIT_IO, EXIT_NO_INPUT, EXIT_USAGE
-from gnd.model import ModelValidationError, load_model
+from gnd.model import ModelLoadError, ModelValidationError, load_model
 
 _DEFAULT_CHECK = check
 
@@ -345,6 +346,25 @@ def _print_lineage(payload: dict) -> None:
     for fact in (payload.get("composition") or {}).get("lineage", []):
         sources = ", ".join(f"{item['source']}:{item['fact_type']}#{item['fact_index']}" for item in fact["sources"])
         print(f"lineage {fact['fact_type']}#{fact['index']}: {sources}")
+
+
+def _cmd_verbalize_model(model_path: str) -> int:
+    try:
+        text = api_module.verbalize_model(model_path)
+    except FileNotFoundError as error:
+        print(f"MISSING: {verbalize.line_text(error)}", file=sys.stderr)
+        return EXIT_NO_INPUT
+    except ModelValidationError as error:
+        _print_issues(error.issues)
+        return 3
+    except (ModelLoadError, YAMLError, OSError, ValueError, TypeError, RecursionError) as error:
+        print(f"ERROR: {verbalize.line_text(error)}", file=sys.stderr)
+        return 3
+    except Exception as error:  # noqa: BLE001 -- unexpected defects retain the internal band
+        print(f"INTERNAL ERROR: {verbalize.line_text(error)}", file=sys.stderr)
+        return EXIT_INTERNAL
+    print(text, end='')
+    return 0
 
 
 def _cmd_verbalize_population(
@@ -928,7 +948,13 @@ def _register_verbalize(subparsers):
     verbalize_population_parser.add_argument("--format", choices=("text", "jsonl"), default="text")
     _add_unredacted_argument(verbalize_population_parser)
 
-    return {'verbalize_parser': verbalize_parser, 'verbalize_population_parser': verbalize_population_parser}
+    verbalize_model_parser = verbalize_targets.add_parser(
+        "model", help="Render the complete model for review."
+    )
+    verbalize_model_parser.add_argument("model")
+
+    return {'verbalize_parser': verbalize_parser, 'verbalize_population_parser': verbalize_population_parser,
+            'verbalize_model_parser': verbalize_model_parser}
 
 
 def add_parsers(subparsers, *, command: str | None = None):
@@ -1011,6 +1037,8 @@ def handle(args, parsers) -> int:
         return _cmd_rai_import(args.model, args.out, source_artifact, args.source_commit)
 
     if args.command == "verbalize":
+        if args.verbalize_target == 'model':
+            return _cmd_verbalize_model(args.model)
         if (args.anchors is None) != (args.document is None):
             verbalize_population_parser.error("--anchors and --document must be supplied together")
         return _cmd_verbalize_population(

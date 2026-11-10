@@ -60,15 +60,33 @@ def test_C03_rooted_compose_and_replay(corpus):
     assert replay['exit_code'] == ANSWERS[3]['replay_exit'], replay
     plain = api.check(a / 'model.orm.yaml', a / 'composed.population.json',
                       composition=a / 'composition.record.json', sources=a / 'composition')
-    allowed = {'model', 'model_identity', 'model_sha256', 'model_version', 'population', 'population_sha256'}
-    assert {k: v for k, v in replay.items() if k not in allowed} == {
-        k: v for k, v in plain.items() if k not in allowed}
+    expected_model = Model.model_validate(read(corpus / 'unresolved-model.json'))
+    expected_dump = expected_model.model_dump(exclude={'warnings', 'operations', 'reference_populations'})
+    assert replay['model_digest'] == 'sha256:' + hashlib.sha256(
+        repr(expected_dump).encode('utf-8', 'surrogatepass')).hexdigest()
+    assert plain['model_digest'] == read(corpus / 'include-free-replay.expected.json')['model_digest']
+    for payload, model_name, population_name, record_name in (
+        (replay, 'project.orm.json', 'include-composed.population.json', 'include-composition.record.json'),
+        (plain, 'model.orm.yaml', 'composed.population.json', 'composition.record.json'),
+    ):
+        assert payload['model'] == str(a / model_name)
+        assert payload['population'] == str(a / population_name)
+        record_bytes = (json.dumps(read(a / record_name), sort_keys=True, separators=(',', ':'),
+                                   ensure_ascii=False, allow_nan=False) + '\n').encode()
+        assert payload['composition']['record_sha256'] == hashlib.sha256(record_bytes).hexdigest()
+    assert replay['composition']['lineage'] == plain['composition']['lineage']
+    allowed = {'model', 'population', 'model_digest'}
+    left, right = ({k: v for k, v in payload.items() if k not in allowed}
+                   for payload in (replay, plain))
+    left['composition'] = {k: v for k, v in left['composition'].items() if k != 'record_sha256'}
+    right['composition'] = {k: v for k, v in right['composition'].items() if k != 'record_sha256'}
+    assert left == right
     assert result['record']['model_sha256'] == hashlib.sha256((a / 'project.orm.json').read_bytes()).hexdigest()
 
 
 @pytest.mark.parametrize('route', ['compose', 'replay'])
 def test_C04_tampered_pin_precedes_derivation(corpus, monkeypatch, route):
-    import gnd.composition as composition
+    from gnd import composition
     a = corpus / 'anchored'
     (a / 'contracts-v1.orm.json').write_bytes((a / 'contracts-v1.orm.json').read_bytes() + b' ')
     monkeypatch.setattr(composition, 'compose', lambda *a, **k: pytest.fail('population derivation reached'))
@@ -84,7 +102,7 @@ def test_C04_tampered_pin_precedes_derivation(corpus, monkeypatch, route):
 
 def test_C05_authored_snapshot_race_refuses(corpus, monkeypatch):
     import gnd.checking_service as service
-    import gnd.composition as composition
+    from gnd import composition
     a = corpus / 'anchored'
     original = service._resolve_model
     seen = []
@@ -138,7 +156,8 @@ def test_C10_malformed_model_cli(corpus, raw):
     path.write_bytes(raw)
     result = cli(path)
     assert result.returncode == ANSWERS[10]['cli_exit']
-    assert not result.stdout
+    assert '=== Header ===' not in result.stdout.decode()
+    assert 'ERROR' in (result.stdout + result.stderr).decode()
 
 
 def test_C11_controls_do_not_forge_headers(corpus):
@@ -182,3 +201,237 @@ def test_new_review_surface_modes(corpus, mode):
     result = run_main([*args, 'verbalize', 'model', str(path)])
     assert result.returncode == 0
     assert result.stdout.decode() == (corpus / 'include-verbalization.expected.txt').read_text()
+
+
+@pytest.mark.parametrize('damage', ['no-metadata', 'id', 'path', 'sha256', 'missing-fields', 'extra', 'orphan'])
+def test_unresolved_header_variants(corpus, damage):
+    model = load_model(corpus / 'anchored/project.orm.json')
+    if damage == 'no-metadata':
+        model._included = ()
+    elif damage == 'missing-fields':
+        model.includes[0].clear()
+    elif damage == 'extra':
+        model.includes.append(dict(model.includes[0]))
+    elif damage == 'orphan':
+        model.includes.clear()
+        model.fact_type_constraints.append({'fact_type': 'missing', 'constraints': [{}]})
+    else:
+        model.includes[0][damage] = ['hostile', {'shape': None}]
+    with pytest.raises(ModelValidationError) as caught:
+        render_model_verbalization(model)
+    assert caught.value.issues[0].rule_id == 'include:unresolved'
+
+
+@pytest.mark.parametrize('name,expected', [
+    ('FileNotFoundError', 66), ('ModelLoadError', 3), ('YAMLError', 3),
+    ('OSError', 3), ('ValueError', 3), ('TypeError', 3), ('RecursionError', 3), ('RuntimeError', 70),
+])
+def test_model_cli_exception_bands(monkeypatch, capsys, name, expected):
+    import builtins
+
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.commands.checking import _cmd_verbalize_model
+    from gnd.errors import ModelLoadError
+
+    kind = {'YAMLError': YAMLError, 'ModelLoadError': ModelLoadError}.get(name, getattr(builtins, name, None))
+
+    def fail(_):
+        raise kind('bad\nFORGED\x1b')
+
+    monkeypatch.setattr(api, 'verbalize_model', fail)
+    assert _cmd_verbalize_model('model.orm.json') == expected
+    out = capsys.readouterr()
+    assert not out.out and '\\nFORGED' in out.err and '\\x1b' in out.err
+    assert not any(line.startswith('FORGED') for line in out.err.splitlines())
+
+
+def test_plain_cli_preserves_text(corpus):
+    result = cli(corpus / 'anchored/model.orm.yaml')
+    assert result.returncode == 0
+    assert result.stdout.decode() == (corpus / 'include-free-verbalization.expected.txt').read_text()
+
+
+def test_private_authored_binding_is_not_serialized(corpus):
+    from gnd.model import load_model_bytes_composed
+
+    path = corpus / 'anchored/project.orm.json'
+    model = load_model(path)
+    expected = read(corpus / 'unresolved-model.json')
+    assert model._authored_sha256 == hashlib.sha256(path.read_bytes()).hexdigest()
+    assert load_model_bytes_composed(path.read_bytes(), source=path, root=path.parent)._authored_sha256 == model._authored_sha256
+    assert model.model_dump() == expected
+    assert model.model_dump_json() == Model.model_validate(expected).model_dump_json()
+    assert load_model(path.parent / 'model.orm.yaml')._authored_sha256 is None
+
+
+def test_header_layer_bounded_latency(monkeypatch):
+    import time
+
+    from gnd import model_verbalization as renderer
+    from gnd.documents import IncludedFile
+
+    declarations = [{'id': f'{i:0128d}', 'path': ('x' * 127 + '/') * 31 + 'x' * 128,
+                     'sha256': 'a' * 64} for i in range(8)]
+    model = Model(version=5, object_types=[], fact_types=[], includes=declarations)
+    model._included = tuple(IncludedFile(d['id'], d['path'], d['sha256'], 1, None, None) for d in declarations)
+    monkeypatch.setattr(renderer, 'load_model', lambda *a, **k: pytest.fail('header layer loaded a file'))
+    start = time.monotonic()
+    for _ in range(1000):
+        lines = renderer._include_lines(model)
+    elapsed = time.monotonic() - start
+    assert len(lines) == 8 and elapsed < 3, elapsed
+
+
+def test_legacy_malformed_compose_loader_lookup(corpus, monkeypatch):
+    from gnd.errors import ModelLoadError
+
+    path = corpus / 'bad.orm.json'
+    path.write_bytes(b'{')
+    seen = []
+
+    def legacy(raw, *, source):
+        seen.append((raw, source))
+        raise ModelLoadError('legacy refusal')
+
+    monkeypatch.setattr(api.model_module, 'load_model_bytes', legacy)
+    monkeypatch.setattr(api.model_module, 'load_model_bytes_composed', lambda *a, **k: pytest.fail('rooted loader reached'))
+    result = api.compose(path, corpus)
+    assert seen == [(b'{', path)] and result['exit_code'] == 3
+    assert result['error']['message'] == 'invalid model'
+
+
+def test_plain_snapshot_cannot_pair_with_new_include(corpus, monkeypatch):
+    from gnd import checking_service as service
+    from gnd import composition
+
+    a = corpus / 'anchored'
+    original = service._resolve_model
+
+    def replace(value, **kwargs):
+        result = original(value, **kwargs)
+        (a / 'model.orm.yaml').write_bytes((a / 'project.orm.json').read_bytes())
+        return result
+
+    monkeypatch.setattr(service, '_resolve_model', replace)
+    monkeypatch.setattr(composition, 'verify_composition', lambda *a, **k: pytest.fail('record verify reached'))
+    result = api.check(a / 'model.orm.yaml', a / 'composed.population.json',
+                       composition=a / 'composition.record.json', sources=a / 'composition')
+    assert result['exit_code'] == 3 and 'include:unsupported-route' in json.dumps(result)
+
+
+def test_reference_composition_remains_refused(tmp_path):
+    from test_mc1_model_includes import split_existing
+
+    source = ROOT / 'tests/fixtures/reference-corpus/dispatch'
+    shutil.copytree(source / 'references', tmp_path / 'references')
+    path, _, _ = split_existing(tmp_path, source / 'model.orm.yaml')
+    assert load_model(path).reference_populations
+    result = api.compose(path, tmp_path / 'absent-composition')
+    assert result['exit_code'] == 3
+    assert result['error']['message'] == 'composition:invalid: composition with reference populations is unsupported'
+    assert result['error'] == api.compose(source / 'model.orm.yaml', tmp_path / 'absent-composition')['error']
+
+
+def test_authored_model_examples_remain_visible_in_customer_mode(corpus):
+    path = corpus / 'anchored/project.orm.json'
+    vocabulary = path.parent / 'contracts-v1.orm.json'
+    shared = read(vocabulary)
+    shared['fact_types'][0]['sample_population'] = [
+        {role['role_name']: 'AUTHORED_SAMPLE_CANARY' for role in shared['fact_types'][0]['roles']}]
+    vocabulary.write_text(json.dumps(shared))
+    own = read(path)
+    own['includes'][0]['sha256'] = hashlib.sha256(vocabulary.read_bytes()).hexdigest()
+    path.write_text(json.dumps(own))
+    ordinary = api.verbalize_model(path)
+    assert 'AUTHORED_SAMPLE_CANARY' in ordinary
+    with disclosure.invocation('customer'):
+        assert api.verbalize_model(path) == ordinary
+    result = run_main(['--disclosure', 'customer', 'verbalize', 'model', str(path)])
+    assert result.returncode == 0 and result.stdout.decode() == ordinary
+
+
+@pytest.mark.parametrize('missing', [False, True])
+def test_model_cli_include_refusals_do_not_render(corpus, missing):
+    path = corpus / 'anchored/project.orm.json'
+    vocabulary = path.parent / 'contracts-v1.orm.json'
+    if missing:
+        vocabulary.unlink()
+    else:
+        vocabulary.write_bytes(vocabulary.read_bytes() + b' ')
+    result = cli(path)
+    assert result.returncode == 3 and b'=== Header ===' not in result.stdout
+    expected = b'include:unreadable' if missing else b'include:hash-mismatch'
+    assert expected in result.stdout + result.stderr
+
+
+def test_rooted_composition_cli_writes_only_after_success(corpus, tmp_path):
+    a = corpus / 'anchored'
+    out, record = tmp_path / 'population.json', tmp_path / 'record.json'
+    args = ['compose', str(a / 'project.orm.json'), str(a / 'composition')]
+    result = run_main([*args, '--out', str(out), '--record', str(record)])
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert read(out) == read(a / 'include-composed.population.json')
+    assert read(record) == read(a / 'include-composition.record.json')
+    checked = run_main(['check', str(a / 'project.orm.json'), str(out), '--composition',
+                        str(record), '--sources', str(a / 'composition'), '--format', 'json'])
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    (a / 'contracts-v1.orm.json').unlink()
+    refused_out, refused_record = tmp_path / 'refused.json', tmp_path / 'refused-record.json'
+    refused = run_main([*args, '--out', str(refused_out), '--record', str(refused_record)])
+    assert refused.returncode == 3 and b'include:unreadable' in refused.stdout + refused.stderr
+    assert not refused_out.exists() and not refused_record.exists()
+
+
+def test_T11_capped_authored_byte_binding_latency(corpus, monkeypatch):
+    import time
+
+    from gnd import anchors
+    from gnd.checking_service import _composition_view
+    from gnd.composition import CompositionError
+
+    a = corpus / 'anchored'
+    path = a / 'project.orm.json'
+    raw = path.read_bytes().ljust(anchors.MAX_DOCUMENT_BYTES, b' ')
+    path.write_bytes(raw)
+    model = load_model(path)
+    assert model._authored_sha256 == hashlib.sha256(raw).hexdigest()
+    record = read(a / 'include-composition.record.json')
+    record['model_sha256'] = model._authored_sha256
+    captured = [raw]
+    calls = []
+
+    def read_snapshot(_path, *, label, max_bytes):
+        assert label == 'model' and max_bytes == anchors.MAX_DOCUMENT_BYTES
+        return captured[0]
+
+    def verify(*args):
+        calls.append(args)
+        return 'verified-sentinel'
+
+    monkeypatch.setattr(anchors, 'read_regular_path', read_snapshot)
+    start = time.monotonic()
+    for _ in range(20):
+        derived, _ = _composition_view(model, path, 'pop.json', b'{}', record, a / 'composition', verify)
+        assert derived == 'verified-sentinel'
+    elapsed = time.monotonic() - start
+    assert len(calls) == 20 and elapsed < 3, elapsed
+    captured[0] = raw[:-1] + b'\t'
+    with pytest.raises(CompositionError, match='model changed'):
+        _composition_view(model, path, 'pop.json', b'{}', record, a / 'composition', verify)
+    assert len(calls) == 20
+    print(f'20 capped authored-byte comparisons: {elapsed:.6f}s < 3s')
+
+
+@pytest.mark.parametrize('route', ['codegen', 'conformance'])
+def test_T8_changed_vocabulary_never_claims_currency(corpus, tmp_path, route):
+    path = corpus / 'anchored/project.orm.json'
+    before = path.read_bytes()
+    vocabulary = path.parent / 'contracts-v1.orm.json'
+    vocabulary.write_bytes(vocabulary.read_bytes() + b' ')
+    out = tmp_path / 'output'
+    args = ([route, str(path), '--out', str(out)] if route == 'codegen'
+            else [route, str(path), str(out), '--format', 'json'])
+    result = run_main(args)
+    assert result.returncode == 3 and b'include:unsupported-route' in result.stdout + result.stderr
+    assert not out.exists() and path.read_bytes() == before

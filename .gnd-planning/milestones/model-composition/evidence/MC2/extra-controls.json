@@ -1,0 +1,5 @@
+{
+  "exit": 0,
+  "stdout_stderr": "........................................................................ [ 83%]\n..............                                                           [100%]\n86 passed in 2.37s\n",
+  "sanitization": "operator home and pytest operator-directory tokens replaced; output otherwise retained"
+}

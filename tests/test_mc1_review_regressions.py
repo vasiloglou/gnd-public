@@ -27,19 +27,26 @@ def test_R1_public_batch():
 
 
 @pytest.mark.parametrize('kind',['api','text','json'])
-def test_R2_composition_adapter(kind):
+def test_R2_composition_adapter(kind, tmp_path):
+    import shutil
+
     from support.cli_runner import run_main
 
     from gnd.api import check
-    path,pop=FIXTURE/'project.orm.yaml',FIXTURE/'clean.pop.json'
+    # MC2's exact successor: supported rooted replay still refuses stale pins first.
+    copied = tmp_path / 'fixture'
+    shutil.copytree(FIXTURE, copied)
+    shared = copied / 'vocabulary.orm.yaml'
+    shared.write_bytes(shared.read_bytes() + b' ')
+    path,pop=copied/'project.orm.yaml',copied/'clean.pop.json'
     if kind=='api':
         result=check(path,pop,composition='absent',sources='absent')
         assert result['exit_code']==3
-        assert 'include:unsupported-route' in str(result)
+        assert 'include:hash-mismatch' in str(result)
     else:
         result=run_main(['check',str(path),str(pop),'--composition','absent','--sources','absent','--format',kind])
         assert result.returncode==3
-        assert b'include:unsupported-route' in result.stdout+result.stderr
+        assert b'include:hash-mismatch' in result.stdout+result.stderr
 
 
 @pytest.mark.parametrize('kind',['lean','souffle'])

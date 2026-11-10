@@ -162,7 +162,11 @@ def _composition_view(model, model_coordinate, population_coordinate, population
 
     model_raw = read(model_coordinate, "model", MAX_DOCUMENT_BYTES)
     from gnd.model._includes import guard_bytes
-    guard_bytes(model_raw, source=model_coordinate, route="check.composition")
+    if getattr(model, 'includes', ()):
+        if hashlib.sha256(model_raw).hexdigest() != model._authored_sha256:
+            raise CompositionError("the model changed after its include snapshot was loaded")
+    else:
+        guard_bytes(model_raw, source=model_coordinate, route="check.composition")
     population_raw = population_bytes if population_bytes is not None else read(
         population_coordinate, "composed population", MAX_DOCUMENT_BYTES)
     if isinstance(composition, dict):
@@ -305,12 +309,9 @@ def _run_check_raw(
 
     try:
         if composition is not None:
-            from gnd.model._includes import guard_path, refuse_unsupported
-            if isinstance(model_input, Model):
-                if model_input.includes or model_input.fact_type_constraints:
-                    refuse_unsupported("check.composition")
-            else:
-                guard_path(model_input, "check.composition")
+            from gnd.model._includes import refuse_unsupported
+            if isinstance(model_input, Model) and (model_input.includes or model_input.fact_type_constraints):
+                refuse_unsupported("check.composition")
         model, _ = _resolve_model(model_input)
     except ModelValidationError as error:
         return _finalize(

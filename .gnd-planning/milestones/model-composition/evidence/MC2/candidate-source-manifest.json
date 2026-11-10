@@ -1,0 +1,107 @@
+{
+  "base": "55a7d89a12a5500775602e137ee97bf9559c544c",
+  "source_files": [
+    {
+      "path": "dev/components/COMPONENTS.md",
+      "sha256": "744291a9394b06542eaeba3f4f8c5358c5c1846825670d4e0b094fe49f8492df"
+    },
+    {
+      "path": "dev/components/graph.md",
+      "sha256": "9ec50b027d522717df9f4851b577ef8ceed4c7993f618812f618e4770861b5d6"
+    },
+    {
+      "path": "dev/components/modules/_root.md",
+      "sha256": "7319d1b89aa803318daf9ffcd31ae41d240c69b2246c6b65e206fe74c43202c3"
+    },
+    {
+      "path": "dev/components/modules/commands.md",
+      "sha256": "bf584f02fff8d6cc95a9e188fcb4d021b3ca8238af5b04c1f2101ef3ef6d4a4d"
+    },
+    {
+      "path": "dev/components/modules/model.md",
+      "sha256": "58f20a468571c86538f8061170214d6180ef3bd891972aaa01ea58223ea66fb0"
+    },
+    {
+      "path": "docs/reference/disclosure.md",
+      "sha256": "7e7f80ef257ab59f3472a5e2c9fe1bf8ce44e9558c30e5bb51b78e8d7700b9a7"
+    },
+    {
+      "path": "src/gnd/api.py",
+      "sha256": "a06a97bcf9000af0f68039026f914bae1fc821e75e19347d58711bb3864bd9c1"
+    },
+    {
+      "path": "src/gnd/checking_service.py",
+      "sha256": "af98fab53cd3fdc1cfa68264b09f5444323cf01c1e85ac1f74b808a2fd59f0fc"
+    },
+    {
+      "path": "src/gnd/commands/checking.py",
+      "sha256": "4001918ff1ab99f87249d06d30172825b31eb12e8c1591f4a4d7eca8c6a84c91"
+    },
+    {
+      "path": "src/gnd/disclosure.py",
+      "sha256": "eb4289d0a4fd724f43296941d114d9d73a68d041dece017682d44ac2183148d1"
+    },
+    {
+      "path": "src/gnd/documents.py",
+      "sha256": "cf82f9bd1e50d565b16cdd5d8df236ab61be7058db8c50c9a584f0782c59916f"
+    },
+    {
+      "path": "src/gnd/model/__init__.py",
+      "sha256": "305debf92a00f2e03bc0bea81bfd34469cb93db77f317719728aabfc788e568a"
+    },
+    {
+      "path": "src/gnd/model/_includes.py",
+      "sha256": "decd16aee01e5c26e64b8bd35c0984faddd989531203c8e58eb2559ae005e2f1"
+    },
+    {
+      "path": "src/gnd/model_verbalization.py",
+      "sha256": "d98ac04685cebe431d2f3d5c70f5b24ea79795fe336b90f04f2260ab57e765e6"
+    },
+    {
+      "path": "tests/support/pyrel_application_successors.py",
+      "sha256": "34e10181a252ac9a9b26ad967a8f963b4aecb6cba3ffaee75380b9f63f46a4ef"
+    },
+    {
+      "path": "tests/support/rf9_ci_sources.py",
+      "sha256": "d0b5adbb015ef7a1b26f61bc3b379cd7766600a2428be2d07524f5a5a0796e95"
+    },
+    {
+      "path": "tests/test_disclosure_mode.py",
+      "sha256": "01cd1da01e627b7c91b3176a603aedfcad665ed97c49524db0e1a761ead742ed"
+    },
+    {
+      "path": "tests/test_mc1_guards.py",
+      "sha256": "4013506e8611c23cea421cceb9404123baa184757e3a7e4e0aa276f95783009b"
+    },
+    {
+      "path": "tests/test_mc1_review_regressions.py",
+      "sha256": "d8f5923601870e8b98a0021fe94a890869830faf233d6c51d5a12b9719d224cb"
+    },
+    {
+      "path": "tests/test_mc2_consumers.py",
+      "sha256": "00b0bce11c99e949139ee511880914011a97aa8b487022897a827423cf6ff723"
+    },
+    {
+      "path": "tests/test_rf1_cli_pins.py",
+      "sha256": "38ac0ffa6d373418d39b87c46638f682b7a36150469583f82c7cfc5d1095186f"
+    },
+    {
+      "path": "tests/test_rf5_commands.py",
+      "sha256": "76427085c1816cb83c78c441a3b9d831863ebe5499fb98e16cd1eeec938d918a"
+    },
+    {
+      "path": "tests/test_v61_phase2_api.py",
+      "sha256": "734df98e86d57e06db93e34d015dc7a487bc1da7607a6668b2cf55b1f9d98041"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/source-successors.json",
+      "sha256": "78c841e5c7c1da37d3f0604430a78e472f733b14f5dcd10c7a8fe85ec42d9bd4"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC2/dynamic-query-successor.json",
+      "sha256": "eb94aff87df43ed330d6ed91fce81f19d9ea804a42afa81c8227a9f09e5addf0"
+    }
+  ],
+  "focused_primary": "1863 passed in 98.19s (0:01:38)",
+  "post_primary_additions": "T11 capped byte binding and T8 changed-vocabulary controls appended; extra API/docs/direct selection has86 passes. Existing primary test bodies unchanged except mechanical API-export/doc synchronization in separate files."
+}

@@ -508,8 +508,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.checking_command
-- does: Register and dispatch model validation, population checks, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population
+- does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms.
+- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population, verbalize model, complete model review
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1727,7 +1727,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - does: Load bounded YAML or JSON models, compose pinned vocabularies and bind immutable reference populations [load_model, bind_population].
 - verbs: load model, parse model document, read YAML, read JSON, load_model_bytes, bind references, reference populations, bind_population, reference ownership, retained root, reference digest, candidate facts, combine populations, resolve context, invocation binding, candidate label and producer carried, model includes, shared vocabulary, pinned vocabulary, compose model, guard unsupported route, element provenance
 - in: Model path or immutable bytes; optional composition/reference root, declared content hashes and validated candidate population.
-- out: Validated Model with warnings and compiled side table; bound reference context or combined population with occurrence origins.
+- out: Validated Model with warnings, include provenance/private authored-byte binding and compiled side table; bound reference context or combined population.
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
@@ -2040,7 +2040,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.service
 - does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
-- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration
+- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding
 - in: model and population paths or loaded objects; check options
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
@@ -2054,10 +2054,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.api
-- does: Expose in-process validation and population checking reports with receipts and reusable evaluation sessions.
-- verbs: validate, validate with source documents, check, transition, diff, verbalize, verbalize_rules, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
+- does: Expose model review text and in-process checking reports with receipts and reusable evaluation sessions.
+- verbs: validate, validate with source documents, check, transition, diff, verbalize, verbalize_rules, verbalize_model, compose, judgments, check_with_receipt, CheckReceipt, ReceiptRefused, EvaluationSession, witness, replay, why_not, check_with_feedback, observe, in process API
 - in: paths or loaded GND objects; per-operation options
-- out: report dictionaries; optional in-process receipt or session feedback
+- out: report dictionaries or complete model review text; optional in-process receipt or session feedback
 - status: canonical
 - modules: src/gnd/api.py
 - uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
@@ -2163,7 +2163,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 ### model.document
 - does: Represent loaded ORM sections, include origin metadata, warnings, deontic notes and compiled obligations [Model].
 - verbs: model document, loaded model, ORM sections, model object, conceptual model, deontic notes, validation warnings, compiled obligations, operation obligations, serialize model, structured derivation ids, structured rules, reference populations, Model, DeonticNote, structured_derivation_ids
-- in: Validated model fields and private compiled-obligation attachments
+- in: Validated model fields, private include origins/authored-byte binding and compiled-obligation attachments
 - out: Frozen-field Pydantic Model objects, serialized documents and ordered structured derivation ids
 - status: canonical
 - modules: src/gnd/documents.py
@@ -2435,8 +2435,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.verbalization
-- does: Render deterministic stakeholder text for model declarations and selected derivation rules.
-- verbs: verbalize model, stakeholder review, natural language, ORM declarations, render_model_verbalization, render_rule_verbalizations, rule verbalization, structured derivation, prose rule refusal, stable ordering, constraint provenance, operation description
+- does: Render deterministic stakeholder text for composed models with loader-resolved include headers and selected derivation rules.
+- verbs: verbalize model, stakeholder review, natural language, ORM declarations, render_model_verbalization, render_rule_verbalizations, rule verbalization, structured derivation, prose rule refusal, stable ordering, constraint provenance, operation description, include header, pinned vocabulary review, unresolved include model
 - status: canonical
 - modules: src/gnd/model_verbalization.py
 - uses: check.universe, infra.verdict_prose, model.atom_bindings, model.document, model.extraction_vocabulary, model.loading, model.population_sentences, model.query_index, model.reference_schemes, model.scalar_terms
@@ -3561,7 +3561,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - validation marker: infra.errors, model.population_loading, model.population_sentences, model.scalar_identity, semantics.snapshot_adapter
 - value domain: discover.candidates, discover.population_view, synth.value_domain
 - variable binding: model.scalar_terms, synth.guarded
-- verbalize model: export.ilp_prompt, model.verbalization
+- verbalize model: cli.checking_command, export.ilp_prompt, model.verbalization
 - verdict counts: check.evaluation_feedback, checker.reports
 - version dispatch: exp.schema, exp.session_profile
 - version probe: agent.invocation, examples.session_agents

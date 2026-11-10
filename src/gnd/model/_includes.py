@@ -37,6 +37,11 @@ def _refuse(reason, path='$', detail='') -> NoReturn:
         path=path, message=code + (': ' + detail if detail else ''), rule_id=code)])
 
 
+def refuse_unresolved() -> NoReturn:
+    """Refuse a consumer's include Model without matching resolver metadata."""
+    _refuse('unresolved')
+
+
 def declares_includes(document: object) -> bool:
     return isinstance(document, Mapping) and any(
         key in document for key in ('includes', 'fact_type_constraints'))

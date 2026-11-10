@@ -1,0 +1,10 @@
+{
+  "base": "55a7d89a12a5500775602e137ee97bf9559c544c",
+  "runtime_gross": 92,
+  "test_support_gross": 524,
+  "stops": {
+    "runtime": 375,
+    "test_support": 600
+  },
+  "convention": "Gross added Python lines, including existing-test/support edits; raw narrated/expected data is separate."
+}

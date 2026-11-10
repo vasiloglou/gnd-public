@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/model-composition/evidence/MC1/dynamic-query-successor.json",
+  "predecessor_sha256": "f82259fc39ee5dfdafb1ad6ed2fad24ee237d5138f5665f1a6a6d7c7cdecb186",
+  "reason": "MC2 exact type/header syntax candidates only; no shared ModelIndex query-policy exception.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/api.py",
+      "verbalize_model",
+      "os.PathLike[str]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_include_lines",
+      "entry.get(key)",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_include_lines",
+      "entry['sha256'][:12]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_include_lines",
+      "list[str]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7394,
+  "result_occurrences": 9223
+}

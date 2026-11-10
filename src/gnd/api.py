@@ -121,7 +121,7 @@ from gnd.witness.service import (
     witness_inputs as _witness_inputs,  # noqa: F401 -- compatibility surface
 )
 
-__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose")  # noqa: RUF022 - approved stable order
+__all__ = ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose", "verbalize_model")  # noqa: RUF022 - approved stable order
 
 
 
@@ -977,13 +977,18 @@ def compose(
         return {"schema": "gnd-compose/1", "exit_code": 3,
                 "error": {"kind": "input", "message": "model could not be read safely"}}
     try:
-        from gnd.model._includes import guard_bytes
-        guard_bytes(raw, source=model, route='api:980')
-        selected = model_module.load_model_bytes(raw, source=model)
+        from gnd.model._includes import guard_bytes, include_reason
+        try:
+            guard_bytes(raw, source=model, route='api:980')
+        except ModelValidationError as error:
+            if include_reason(error) != 'include:unsupported-route':
+                raise
+            selected = model_module.load_model_bytes_composed(raw, source=model, root=Path(model).parent)
+        else:
+            selected = model_module.load_model_bytes(raw, source=model)
     except ModelValidationError as error:
-        if any(i.rule_id == "include:unsupported-route" for i in error.issues):
-            return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "include:unsupported-route"}}
-        return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}
+        return {"schema": "gnd-compose/1", "exit_code": 3,
+                "error": {"kind": "input", "message": include_reason(error) or "invalid model"}}
     except Exception:  # noqa: BLE001 -- one value-free refusal for an invalid model
         return {"schema": "gnd-compose/1", "exit_code": 3, "error": {"kind": "input", "message": "invalid model"}}
     try:
@@ -996,6 +1001,15 @@ def compose(
         "population": _rf7_input.loads(composed.population_bytes),
         "record": composed.record,
     }
+
+
+def verbalize_model(model: str | os.PathLike[str] | Model) -> str:
+    """Render the caller's complete model for review, including authored samples."""
+    from gnd.model_verbalization import render_model_verbalization
+
+    _check_model_input(model)
+    selected, _ = _resolve_model(model)
+    return render_model_verbalization(selected)
 
 
 def verbalize_rules(

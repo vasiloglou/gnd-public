@@ -35,11 +35,12 @@ def _assert_subset(payload: dict[str, object], expected: dict[str, object]) -> N
 def test_public_all_is_exact() -> None:
     api = _api()
     # Keep the ordered inventory exact, including IE3's additive session API.
-    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused', 'EvaluationSession', 'why_not', 'DisclosureRefused', 'verbalize_rules', 'compose')
+    assert api.__all__ == ('validate', 'check', 'transition', 'verbalize', 'diff', 'witness', 'replay', 'check_with_receipt', 'CheckReceipt', 'ReceiptRefused', 'EvaluationSession', 'why_not', 'DisclosureRefused', 'verbalize_rules', 'compose', 'verbalize_model')
     assert {name for name in vars(api) if not name.startswith('_')} >= set(api.__all__)
 
 def test_public_signatures_are_stable() -> None:
     api = _api()
+    assert tuple(inspect.signature(api.verbalize_model).parameters) == ('model',)
     assert tuple(inspect.signature(api.validate).parameters) == ('model', 'unredacted', 'references')
     assert tuple(inspect.signature(api.check).parameters) == ('model', 'population', 'compiled_operations', 'unredacted', 'anchors', 'document', 'population_bytes', 'admission', 'references', 'composition', 'sources')
     compiled = inspect.signature(api.check).parameters['compiled_operations']

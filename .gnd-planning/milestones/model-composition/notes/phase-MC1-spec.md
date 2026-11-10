@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-Draft r3, **awaiting the owner's spec gate**. The plan gate passed on
+r4, **delegated approval (auto=true), 2026-11-09**; exact bytes bound in 002-execution-gate.md. The plan gate passed on
 2026-11-09 (plan r3 approved, MD1-MD16 as proposed; [record](../001-plan.md)).
-Implementable once the owner rules D1-D8 and approves this spec. No code is
-written before that.
+D1-D8 are ruled as proposed by delegated approval (auto=true), authorized by
+the current owner request for the whole model-composition milestone.
+Implementation follows the baseline capture and the ruling in record 002.
 
 ## 2. Provenance
 
@@ -533,3 +534,87 @@ counted) and 950 test lines plus fixtures and the census baseline. Stop line
 This prose. The fixture corpus is authored during implementation; its answer
 key lives in the test module, not in the fixture directory's README, so a
 later blind pass is possible.
+
+
+## 12. Execution amendment r4 and implementability sweep (2026-11-09)
+
+Delegated rulings (auto=true), current owner authorization:
+`process-milestone model-composition auto`. D1-D8: adopt every proposal;
+D7 remains a measurement choice with the stated fallback. Optional further
+spec review omitted: the previous convergence stop stands. One Codex CLI
+reviewer is selected for phase diffs by plan section 8; the owner now also
+explicitly selects one Codex CLI reviewer for close, overriding the panel
+requirement. One reviewer is one reviewer.
+
+Approval instrument: prose, retaining section 11's choice. This departs
+from the corpus-first default because the existing spec already fixes T1-T51
+and their expected exits, twice-reviewed plan/spec snapshots fix the prior
+answers, and MC1 must still retain pre-implementation red refusal evidence.
+A separate corpus approval would duplicate those answer decisions; it would
+not replace the hostile-shape, compound-fault, identity, scaling-mutant or
+compatibility controls. New implementation cases remain separately identified.
+
+The implementability sweep identified two acyclic-home repairs:
+
+- Move `parse_model_document(data: bytes, *, source: str | Path) -> Any`
+  verbatim into `gnd.model._validation`, retaining an explicit identity alias
+  in `gnd.model`. `_includes.parse_included` imports its defining home.
+- Move `ReferenceInputError` unchanged into `gnd.errors`, preserving its
+  public `__module__ = "gnd.model"` and explicit alias in `gnd.model`.
+  `_paths` imports it from errors. Its model annotation is type-only.
+
+Both moves enter the historical shim inventory and source scan coverage.
+They add no new refusal spelling and no runtime import allowance. These
+repairs supersede section 6.10 only as to these two defining homes.
+
+Additional sweep decisions: guarded routes retain their existing error
+adapters; guards supply a shared `ModelValidationError` issue before work,
+and adapters must preserve its reason. No unrelated parser becomes stricter.
+The declared-order validation stages remain as section 6.2; included JSON
+suffixes retain their parser semantics. Own attachments are validated once
+at their authored location and once in the composed target context; the
+collision walk counts each active constraint once, at its composed location.
+The scaling timing isolates merge/id indexing from existing schema/semantic
+validation, with warm-up and repeated medians for each workload and mutant.
+
+All milestone rules 0.1-0.7 are discharged: one loader resolver, admission
+inventory guards, census-frozen include-free variants, no included-file
+writer, no new freshness claim, measured identities/refusals, and the
+750-source/1,425-test stop. No per-phase publication or merge is delegated.
+The dependency remains: full baseline and census captured before production
+edits; MC2 and MC3 do not begin before MC1's completed record and review.
+
+### Verification-selection ledger
+
+Each run expects exit 0 unless an explicit negative control is named.
+No evidence is inherited as a current-byte pass.
+
+| Obligation | Disposition | Command / evidence | Input boundary | Invalidation / justification |
+|---|---|---|---|---|
+| MC1-C1..C11 direct tests | run | focused command in section 8 | loader, schema, identities, fixtures | rerun for changed behavior; covers every new branch |
+| Route consumers | run | `uv run pytest -q tests/test_mc1_guards.py tests/test_evolve_loading.py tests/test_pyrel_export.py tests/test_public_reference_budget.py --tb=short`; add each actual guarded route's direct tests when its adapter is edited | guard predicate and each public adapter | every admission point gets its own parameter id; enumerate any newly found sites in the implementation findings |
+| Import layers | run | `uv run pytest -q tests/test_rf8_structure.py::test_graph_and_each_dirty_direction --tb=short` | source modules, tools/gnd_layers.json | no runtime SCC, wrong-way edge or missing home |
+| Lint | run | `uv run ruff check src tests` | all source and tests under configured ruff | required project lint; record known-red separately if observed |
+| Components | run | `python3 scripts/components_index.py changed --base d2d6309b --strict` | component entries, generated views, changed modules | regenerate with code; reread each changed component |
+| MC1-C5 census | run, explicitly selected by owner 2026-11-09 | `uv run pytest -q -m "evidence or census" tests/test_mc1_census.py --tb=short` on beast-3; producer baseline at 459ca8d2 | tracked *.orm.yaml/*.orm.json manifest, per-observable outputs, source and toolchain | compare baseline/candidate values and refusals; dirty negative control must fail |
+| Full default compatibility | run, explicitly selected by owner 2026-11-09 | `uv run pytest -q --tb=short` on beast-3 at 459ca8d2 and candidate | locked dependencies, default addopts, all default tests | preserve lane exclusions; compare known reds and new failures; skipped lanes establish no pass |
+| Other excluded lanes | cadence | separately selected CI/owner lane | native/provider/distribution/proof/historical data | no selection for unrelated historical or certification work |
+
+The baseline archive uses `git archive 459ca8d2` and a manifest produced by
+`git ls-tree -r --name-only 459ca8d2`. The committed producer accepts that
+manifest for archive execution (there is no .git inside an archive), retaining
+exact relative paths. Candidate collection uses `git ls-files`; only original
+baseline members are compared, with new MC1 fixture membership separately
+printed and tested. This explicitly amends section 6.8's blanket membership
+rule, which otherwise conflicts with section 8's required new *.orm fixtures:
+MC1 additions are not historical baseline members. A missing baseline member
+still fails. No prior member's expected answer is regenerated on candidate code.
+
+## 13. Implementation findings
+
+- 2026-11-09, preparation: parser and exception initializer dependencies,
+  resolved by section 12 before implementation; no source edited at discovery.
+- 2026-11-09, preparation: requiring the census's tracked-file set never to
+  grow conflicts with the mandatory MC1 *.orm fixtures. Section 12 admits
+  separately enumerated new fixtures without weakening comparisons for
+  the frozen 400 historical files. Retain this plan-repair row at close.

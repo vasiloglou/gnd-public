@@ -1,0 +1,24 @@
+........................F............................................... [ 37%]
+......F................................................................. [ 75%]
+...............................................                          [100%]
+=================================== FAILURES ===================================
+_______ test_every_relative_skill_link_resolves_inside_the_resource_tree _______
+tests/test_packaged_skills.py:111: in test_every_relative_skill_link_resolves_inside_the_resource_tree
+    assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
+E   AssertionError: the skill routing graph is not the pinned inventory.
+E       missing (1): gnd-orm-core/SKILL.md -> references/representation-format.md#model-includes-version-5
+E       extra   (0): 
+E     Set difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.
+E   assert (not [('gnd-orm-core/SKILL.md', 'references/representation-format.md#model-includes-version-5')])
+__________ test_plain_short_prose_without_exit_codes[grow-a-model.md] __________
+tests/test_plan_app_docs.py:41: in test_plain_short_prose_without_exit_codes
+    assert len(paragraph.split()) <= 90, paragraph[:80]
+E   AssertionError: The preview file is still written, so the refusal can be read by a program as we
+E   assert 141 <= 90
+E    +  where 141 = len(['The', 'preview', 'file', 'is', 'still', 'written,', ...])
+E    +    where ['The', 'preview', 'file', 'is', 'still', 'written,', ...] = <built-in method split of str object at 0xa6385fc00>()
+E    +      where <built-in method split of str object at 0xa6385fc00> = 'The preview file is still written, so the refusal can be read by a program as well as a person; its `policy_issues` c...ws in the current model, and the population check never clears a rule over such a fact type, so round 2 stays refused.'.split
+=========================== short test summary info ============================
+FAILED tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]
+2 failed, 189 passed in 2.70s

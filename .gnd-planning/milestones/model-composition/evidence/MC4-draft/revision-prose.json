@@ -1,0 +1,6 @@
+{
+  "command": ".venv/bin/pytest -q tests/test_plan_app_docs.py -k 'share-a-vocabulary or shared-component-vocabulary' --tb=short",
+  "exit_code": 0,
+  "output": ".......                                                                  [100%]\n7 passed, 72 deselected in 0.08s\n",
+  "sanitization": "Repository/home path tokens replaced; output otherwise retained."
+}

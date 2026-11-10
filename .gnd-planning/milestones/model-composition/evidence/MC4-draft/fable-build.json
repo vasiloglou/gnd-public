@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "output": "Build started\nBuild finished in 0.50s\nNo issues found\n",
+  "sanitization": "Repository/home/temp/pytest-operator tokens replaced; output otherwise retained."
+}

@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "output": "..............                                                           [100%]\n14 passed, 72 deselected in 0.07s\n",
+  "sanitization": "Repository/home/temp/pytest-operator tokens replaced; output otherwise retained."
+}

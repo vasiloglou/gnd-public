@@ -1,0 +1,23 @@
+You are the explicitly requested Claude/Fable documentation author for GND's model-composition milestone. Work read-only and return the finished writing in your final response. Do not edit files, run commands, use network, read credentials or any .env, create agents, or change Git state. You may use Read/Glob/Grep only for the named existing demo/docs/spec below.
+
+The owner rejected TWO documentation attempts about a component 'scanner'. Their latest exact reaction:
+"no it doesn't I don't understand what you mean by the scanner? ask fable from claude to do this task for you. Explain what you want to demonstrate, and ask it to pick an existing demo example, like the expense report or the bookrec or anything else and extend it to show the functionality in the same high level manner"
+
+YOUR TASK: choose an existing user-facing demo (expense reports, book recommendations, or a demonstrably better existing app), extend its actual story, and author a high-level documentation page in the existing style. Do not revise or rescue the scanner/Checkout/Platform story. Lead with a concrete human problem and the value, not schema hashes, a scanner, or generic two-file mechanics.
+
+WHAT THE IMPLEMENTED FEATURE MUST DEMONSTRATE:
+A reusable model defines shared concepts/relationships ('vocabulary'). Each project includes and pins that model, then adds its own rules without copying or modifying those shared definitions. Loading/checking/verbalizing sees the complete composed model. A rule can be attached to a relationship defined in the included model, with the project's own finding/remedy. Two teams or policies may share the same concepts and apply different rules. The planned update half lets a shared model change at a new versioned path, shows a preview naming a project rule broken by that update, then one combined pin/rule repair publishes and checks. MC1/MC2 are implemented/merged; MC3 update/publication work is incomplete, so label that half planned and supply an exact proposed demonstration, never fabricate current outputs or claim commands ran.
+
+Please read enough of these existing resources to choose an example grounded in real files:
+- docs/expense/ and src/gnd/examples/expense/ (the expense-report demo)
+- docs/bookrec/ and src/gnd/examples/bookrec/ (book recommendations; verify actual source path)
+- docs/tutorials/learn-rules.md and/or docs/tutorials/course-planner.md for high-level agent-driven style
+- .gnd-planning/milestones/model-composition/notes/phase-MC3-spec.md for accepted capability/boundaries (not prose to copy)
+- src/gnd/skills/gnd-orm-core/references/representation-format.md, section Model includes (version 5), if needed to ensure proposed model split is feasible.
+
+Deliver:
+1. Briefly choose the demo and explain why a nontechnical reader will understand the benefit.
+2. A complete publishable high-level tutorial page, with a concrete situation, a simple diagram specification, plain requests the reader can give their agent, and meaningful before/after results. No Python/shell/YAML plumbing on this main page. Ground results in current demo facts or explicitly label new proposed facts/results pending verification. Prompts are suggested requests, not invented recordings. No benchmark claims or made-up agent transcript. Distinguish advisory warnings from blocking violations.
+3. An implementer handoff: exact existing files/concepts/rules to reuse; smallest shared/project model split; proposed input facts and expected findings/remedies; concrete future shared-definition update and broken-rule/repair scenario; supporting how-to commands/data that Codex should create and actually run before presenting results as observed. Explain any required additional fact type rather than quietly inventing existing support.
+
+The outcome is a page a reader of the expense/bookrec docs will understand without knowing what a scanner is. Avoid implementation nouns in the narrative unless they are essential. Use short clear prose, a human stakes/consequence, and the existing product vocabulary. Keep normative schema rules in their original home; link, do not duplicate.

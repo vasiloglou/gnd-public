@@ -86,6 +86,18 @@ CSDP here is for a model that does not exist yet, from natural language. Two nei
 
 **Working principle:** propose, never assert. Every constraint that isn't directly stated by the user is a *candidate* validated in conversation.
 
+### Author a vocabulary for several projects
+
+When the user wants shared definitions, author a standalone-valid vocabulary
+and keep project-specific policy in each project's own model. Follow the
+[model includes reference](../gnd-orm-core/references/representation-format.md#model-includes-version-5) for the file contract.
+Ship each vocabulary edition at a new local versioned path; validate it before
+offering projects its exact raw-file pin. The
+[shared expense tutorial](https://github.com/vasiloglou/gnd-public/blob/main/docs/tutorials/shared-expense-policies.md)
+shows two teams choosing different rules over the same definitions.
+For changes to an existing project's pin or rules, offer the explicit
+`gnd-model-evolve` workflow; do not silently edit or invoke another skill.
+
 ### Step 0 — Interaction-mode opener
 
 Before eliciting examples, ask the user:

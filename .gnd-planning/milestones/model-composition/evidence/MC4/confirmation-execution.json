@@ -1,0 +1,15 @@
+{
+  "tool": "Codex CLI",
+  "version": "0.163.0",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "sandbox": "read-only",
+  "ephemeral": true,
+  "candidate": "6de7189a47dfc11a385dd60de0f0ebb942dfa452",
+  "scope": "9f3d22f7..6de7189a and immediate neighbors only",
+  "session_id": "01a1c67d-7c87-7332-b43d-03b7566ba223",
+  "exit_code": 0,
+  "disposition": "approve",
+  "budget": "2/2 exhausted",
+  "credentials": "Existing auth; no env file read."
+}

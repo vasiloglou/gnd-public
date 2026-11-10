@@ -1,0 +1,148 @@
+{
+  "note": "Actual independent JSON observations over shipped data; displayed text separately replayed by unchanged tutorial runner. Expected outcomes were narrated before the check. Vocabulary bytes remain identical to the original checkpoint pin.",
+  "rows": [
+    {
+      "project": "checkout",
+      "state": "before",
+      "exit_code": 1,
+      "counts": {
+        "pass": 0,
+        "fail": 1,
+        "warning": 0,
+        "unchecked": 0,
+        "vacuous": 0
+      },
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[component_imports_component].constraints[0]",
+          "address": "constraint:no_import_loops",
+          "addressing": "declared-id",
+          "remedy": "Break the loop: move the shared code into a lower component both can import.",
+          "constraint_type": "ring",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "verdict": "fail",
+          "message": "The relation 'component_imports_component' is acyclic \u2014 violated: 2 strongly connected groups (sizes 2, 2) hold 4 edges.",
+          "offending_facts": [
+            [
+              "api",
+              "auth"
+            ],
+            [
+              "auth",
+              "api"
+            ],
+            [
+              "search",
+              "util"
+            ],
+            [
+              "util",
+              "search"
+            ]
+          ],
+          "reason_code": null,
+          "novelty": null,
+          "row_novelty": null
+        }
+      ],
+      "vocabulary_sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    },
+    {
+      "project": "checkout",
+      "state": "after",
+      "exit_code": 0,
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "warning": 0,
+        "unchecked": 0,
+        "vacuous": 0
+      },
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[component_imports_component].constraints[0]",
+          "address": "constraint:no_import_loops",
+          "addressing": "declared-id",
+          "remedy": "Break the loop: move the shared code into a lower component both can import.",
+          "constraint_type": "ring",
+          "modality": "alethic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "verdict": "pass",
+          "message": "The relation 'component_imports_component' is acyclic \u2014 satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "novelty": null,
+          "row_novelty": null
+        }
+      ],
+      "vocabulary_sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    },
+    {
+      "project": "platform",
+      "state": "before",
+      "exit_code": 0,
+      "counts": {
+        "pass": 0,
+        "fail": 0,
+        "warning": 1,
+        "unchecked": 0,
+        "vacuous": 0
+      },
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[component_has_owner].constraints[0]",
+          "address": "constraint:every_component_has_an_owner",
+          "addressing": "declared-id",
+          "remedy": "Add the owning team to the component's catalog entry.",
+          "constraint_type": "mandatory",
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "verdict": "warning",
+          "message": "Each component must play the 'component' role in 'component_has_owner' \u2014 violated: 'metrics' plays no such fact.",
+          "offending_facts": [
+            "metrics"
+          ],
+          "reason_code": null,
+          "novelty": null,
+          "row_novelty": null
+        }
+      ],
+      "vocabulary_sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    },
+    {
+      "project": "platform",
+      "state": "after",
+      "exit_code": 0,
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "warning": 0,
+        "unchecked": 0,
+        "vacuous": 0
+      },
+      "verdicts": [
+        {
+          "constraint_ref": "fact_types[component_has_owner].constraints[0]",
+          "address": "constraint:every_component_has_an_owner",
+          "addressing": "declared-id",
+          "remedy": "Add the owning team to the component's catalog entry.",
+          "constraint_type": "mandatory",
+          "modality": "deontic",
+          "source": "user-supplied",
+          "status": "confirmed",
+          "verdict": "pass",
+          "message": "Each component must play the 'component' role in 'component_has_owner' \u2014 satisfied.",
+          "offending_facts": [],
+          "reason_code": null,
+          "novelty": null,
+          "row_novelty": null
+        }
+      ],
+      "vocabulary_sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    }
+  ]
+}

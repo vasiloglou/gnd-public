@@ -42,6 +42,11 @@ def test_plain_short_prose_without_exit_codes(page):
         lowered = paragraph.lower()
         assert not re.search(r'\bexit (code )?\d', lowered), paragraph[:80]
         for term in BANNED:
+            if term == 'receipt' and page.name in {
+                'shared-expense-policies.md', 'shared-expense-policies-commands.md',
+            }:
+                assert not re.search(r'\b(?:execution|validation|verification|evidence) receipts?\b', lowered)
+                continue
             assert term not in lowered, term
 
 

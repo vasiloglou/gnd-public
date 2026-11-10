@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "output": "shared-expense-policies-commands.md: selected executable blocks passed\n19 tutorial blocks passed\n",
+  "sanitization": "Repository/home/temp/pytest-operator tokens replaced; output otherwise retained."
+}

@@ -1,0 +1,147 @@
+{
+  "source_files": [
+    {
+      "path": "docs/tutorials/shared-expense-policies.md",
+      "sha256": "45c4bf6774d581ebad27a4cb2411e619f3e65c3fefcf64f444225e582d6b2944"
+    },
+    {
+      "path": "docs/how-to/shared-expense-policies-commands.md",
+      "sha256": "a973e7b9b55d976fb57fdec5cb433cbcce855450393b45af03e7a051dfbf2267"
+    },
+    {
+      "path": "docs/assets/applications/expense-teams.svg",
+      "sha256": "fd489e4fa525c2869ab44afc58808a8d75f378a3060bb3421ef07c1cd9b431f4"
+    },
+    {
+      "path": "tests/test_plan_app_docs.py",
+      "sha256": "f35424335566c1417ef56a841b8929112e9e32ae3c89d5b7a996ef9adffc7f10"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/notes/phase-MC4-spec.md",
+      "sha256": "26e981654cccd4ac8665caacc91446d4ec76af78c29a308496ce139b90d1f544"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/notes/phase-MC4-fable-draft.md",
+      "sha256": "4a3cdd3d4cb802fc91eaa7ebb75ef3f9374c5391eae5a747483eb789b3b05ea7"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/engineering-approval.population.json",
+      "sha256": "7127b11b2f50b037058d14c0cca0248aca1ac1445c7db453d06b5ddfaa54d2a7"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/engineering-dinner.population.json",
+      "sha256": "05ba840c2702fe7d72f25f8895db45037477a1808e1eb1c83c7b50e6282d9199"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/engineering-missing-receipt.population.json",
+      "sha256": "7c707582bb4bd494dec031999c1b7244471d4d74defa4d2b4f3308cb6913138d"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/engineering-seed.population.json",
+      "sha256": "c2bd383cf3d4a8fa47600c0adc917f4b0c61c8127f1dcc25bfd94525311e8720"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/engineering.orm.json",
+      "sha256": "e25a74c13c072eecb0fa1dd777d39ac89e1ccca687e9f2dc111662f512b59632"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales-approval.population.json",
+      "sha256": "0b4d8e6254e62134bf4bfb3f9148a9d55ad4bf1ff2f700e9586fa54a303aa03d"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales-dinner.population.json",
+      "sha256": "4abc24119083ca032a43d3c098bad3d559d89ff288af233479937a59ba909796"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales-missing-receipt.population.json",
+      "sha256": "ea18c15b419c4a26d121c4e0071cebcf956f5c5b942a3098652665b361a2e03b"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales-seed.population.json",
+      "sha256": "821acc399a74d317fe053cb29ed4957fc5dc301ea7a6b0ffb160a5472c108e39"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/sales.orm.json",
+      "sha256": "c4d11f9c02f637b6f3fe04342e540d0a3f78cbf0fa73d91811ad29e1b036a647"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "sha256": "6ae0d1130e5c6fec871fd9ca51e92178ea260abf2d87c8aee96d1e2216963817"
+    },
+    {
+      "path": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "sha256": "194543c6d7a7ab3de7d6bf932fafb34dd6591d3f23a87159ba204e85d69bcd5c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-build.json",
+      "sha256": "c64554d4408dcb4e5fa9912a7b798f271f2543856718c561327d284ccf7a2c6b"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-check-observations.json",
+      "sha256": "3c2b5fe15cdc9c24a2b0db650fa92bd6e62c4b5f3a98b3571697b591cebc659c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-components.json",
+      "sha256": "2e38f66ddbbe5104a6b0daf2d97e64b57ba10a7307f03f58469a2a1a77a53793"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-example-scan-red.json",
+      "sha256": "80902ee6dc0fe9a679a5a09084b6bd0bb15461bd3e622d79c45d329bdde93519"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-owner-reaction.json",
+      "sha256": "615c2c9d77a1ae0a7f0d0a02ce4e0244a91826b856d8725573016a1d1d4cd9f0"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-prose-final.json",
+      "sha256": "0840ac63258a66618b602ca8464ba58189cab30fc1c84986f249234dfdfe57fd"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-prose-initial.json",
+      "sha256": "72cc0e529bc2e942b143a452de11f9d357d77e29b99f112b82ea76335de0c136"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-render-config.toml",
+      "sha256": "b567724432373ca1a9372ef9804e02339fdee542970447fbeb8dda06c78bbd60"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-request.txt",
+      "sha256": "99615fbd7c1b78e55ce1ad0f615d84a801716bd121d39a157b18cb79ed99bccc"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-response.json",
+      "sha256": "9f911774bf9176a57fbb2768703273b0cb9668c1feeb4105eb36e82236e0f670"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-tutorial-records.json",
+      "sha256": "a34293841610b5e5d529b5447f6beebe538416b990e5b1e85c46b0bfebc114a1"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/fable-tutorial.json",
+      "sha256": "01d0454b0d4dd3219ba88623ad2c4c1a7e9cb46c82b0de3319428b645a57ee34"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/run-expense.py",
+      "sha256": "63e12720fd232c1a689f86e944edbf63841057a00cf89a2ad66b9fc32fb9a634"
+    }
+  ],
+  "authorship": {
+    "tool": "Claude CLI --model fable",
+    "canonical_model": "claude-fable-5-2",
+    "status": "success, is_error:false",
+    "scope": "One read-only writing/handoff call; not the independent phase reviewer. Proposed results were subsequently measured by the driving agent."
+  },
+  "outside_history": [
+    {
+      "kind": "viewport screenshot",
+      "location": "<visualizations>/mc4-fable-expense-review.png",
+      "sha256": "0869d494b6a220c9539737dba015ee14fd3968dd9ab62b602ef2b79e67411141"
+    },
+    {
+      "kind": "rendered HTML",
+      "location": "<temporary-site>/tutorials/shared-expense-policies/index.html",
+      "sha256": "d8c77ca79eb0f8006e4a35312b2fc2a938042802c3ed0f9408034afb822646aa"
+    }
+  ],
+  "limitation": "Temporary rendered artifacts may expire; committed source, exact author output and execution observations remain."
+}

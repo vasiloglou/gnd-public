@@ -1,0 +1,5 @@
+{
+  "exit_code": 0,
+  "output": "changed against origin/main (720053f): 56 file(s) differ; 0 to fix, 0 warning(s), 0 to reread\n",
+  "sanitization": "Repository/home/temp/pytest-operator tokens replaced; output otherwise retained."
+}

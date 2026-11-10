@@ -1,0 +1,13 @@
+{
+  "reason": "Three trailing spaces left by removing expected labels were stripped after the first manifest. A repeated build/prose gate completed; an assertion expecting byte-identical HTML failed before evidence metadata refresh. Orchestration then mistakenly continued to commit/push. This successor corrects attribution without rewriting record019 or its evidence.",
+  "source_mismatches": [
+    {
+      "path": "docs/tutorials/shared-expense-policies.md",
+      "recorded": "45c4bf6774d581ebad27a4cb2411e619f3e65c3fefcf64f444225e582d6b2944",
+      "current": "89ff2e1f66198832aaa74ce525a6e054f7380f31da3f23e76a7b73ff47db6cb3"
+    }
+  ],
+  "old_rendered_html_sha256": "d8c77ca79eb0f8006e4a35312b2fc2a938042802c3ed0f9408034afb822646aa",
+  "current_rendered_html_sha256": "5489a8f1a38f3e5d977ef567e8e8cd0d956d09b2a9ecc17c1b1b7de8919985d6",
+  "runtime_or_demo_data_changed": false
+}

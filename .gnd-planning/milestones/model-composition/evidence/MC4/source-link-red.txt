@@ -1,0 +1,9 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_retained_entry_points_link_current_source ________________
+tests/test_mc4_expense.py:45: in test_retained_entry_points_link_current_source
+    assert 'tree/main/src/gnd/examples/expense/teams' in text
+E   AssertionError: assert 'tree/main/src/gnd/examples/expense/teams' in '# Run the shared-policy example\n\nThe current review copy uses the expense demo:\n[Two teams, one expense form](../t...es](https://github.com/vasiloglou/gnd-public/tree/codex/model-composition-docs-draft/src/gnd/examples/expense/teams)\n'
+=========================== short test summary info ============================
+FAILED tests/test_mc4_expense.py::test_retained_entry_points_link_current_source
+1 failed in 0.16s

@@ -1,6 +1,6 @@
 ---
 name: gnd-model-evolve
-description: Safely evolves an existing valid GND ORM model through explicit add, modify, rename, or delete operations, complete digest-bound blast-radius review, model CAS publication, live linked-project conformance, and idempotent finalization. Use when asked to change or migrate model.orm.yaml, rename or remove model elements, review downstream impact before a breaking model edit, apply an approved evolution proposal, resume an interrupted post-CAS evolution, or finalize its D-13 evidence record. Not for greenfield model authoring, population checking, code generation, or automatic repair.
+description: Safely evolves an existing valid GND ORM model through explicit add, modify, rename, delete, or include re-pin operations, complete digest-bound blast-radius review, model CAS publication, live linked-project conformance, and idempotent finalization. Use when asked to change or migrate model.orm.yaml, rename or remove model elements, review downstream impact before a breaking model edit, apply an approved evolution proposal, resume an interrupted post-CAS evolution, or finalize its D-13 evidence record. Not for greenfield model authoring, population checking, code generation, or automatic repair.
 ---
 
 # GND Model Evolve
@@ -11,7 +11,7 @@ Evolve one existing valid `model.orm.yaml` through the public staged sequence:
 
 1. write one closed proposal with a complete candidate model;
 2. preview and review the full validation, verbalization, and blast radius;
-3. explicitly accept the exact report for any rename or delete;
+3. explicitly accept the exact report for any rename, delete, or include re-pin;
 4. apply, which performs the model compare-and-swap (CAS) and then completes the verbalization,
    live linked-project conformance, and the immutable change record in the same invocation;
 5. finalize only to complete a transaction an interrupted apply left pending.
@@ -65,6 +65,25 @@ window mechanism 2 exists to make visible. Use the commands.
 Declare every dependent edit. A renamed object type does not silently authorize role, reading,
 constraint, population, or downstream-artifact edits. If the declared operations do not replay
 to the complete candidate byte-for-byte, stop and repair the proposal.
+
+### Move a project to a shared vocabulary edition
+
+Read the [model includes reference](../gnd-orm-core/references/representation-format.md#model-includes-version-5)
+and the required evolution contract before authoring a re-pin proposal.
+Keep versioned shared files available. Preview the edition change first; if the
+new composition is invalid, use its analysis report to identify the project's
+broken rules, then propose the re-pin and those rule repairs together. An
+analysis report is not publication authority. Review the valid combined preview
+and explicitly accept its exact report digest, including for a path-only or
+byte-only re-pin. Apply writes the authored project model; shared inputs remain
+read-only. Do not replace the project file with the flattened composition.
+
+When old bytes are unavailable at their original path, use the contract's
+`--previous-include ID=PATH` route with a supplied historical file. Candidate
+and untouched inputs still require live verification. Include-bearing linked
+projects remain unsupported; do not claim generated-project conformance.
+See the [complete expense command walkthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
+for an executed example. This guidance does not duplicate the proposal grammar.
 
 ### Add a structured-derived fact type and bump identity atomically
 

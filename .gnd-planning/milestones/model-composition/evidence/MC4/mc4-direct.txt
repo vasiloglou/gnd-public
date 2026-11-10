@@ -1,0 +1,13 @@
+....F..s..............................................                   [100%]
+=================================== FAILURES ===================================
+_______ test_every_relative_skill_link_resolves_inside_the_resource_tree _______
+tests/test_packaged_skills.py:111: in test_every_relative_skill_link_resolves_inside_the_resource_tree
+    assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
+E   AssertionError: the skill routing graph is not the pinned inventory.
+E       missing (1): gnd-orm-core/SKILL.md -> references/representation-format.md#model-includes-version-5
+E       extra   (0): 
+E     Set difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.
+E   assert (not [('gnd-orm-core/SKILL.md', 'references/representation-format.md#model-includes-version-5')])
+=========================== short test summary info ============================
+FAILED tests/test_packaged_skills.py::test_every_relative_skill_link_resolves_inside_the_resource_tree
+1 failed, 52 passed, 1 skipped in 0.62s

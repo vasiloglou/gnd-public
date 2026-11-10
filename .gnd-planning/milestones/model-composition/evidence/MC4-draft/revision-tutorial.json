@@ -1,0 +1,6 @@
+{
+  "command": ".venv/bin/python .gnd-planning/milestones/model-composition/evidence/MC4-draft/run.py /tmp/mc4-revised-receipt-final.json",
+  "exit_code": 0,
+  "output": "share-a-vocabulary.md: selected executable blocks passed\n11 tutorial blocks passed\n",
+  "sanitization": "Repository/home path tokens replaced; output otherwise retained."
+}

@@ -27,6 +27,7 @@ a guide illustrates one construct and is not a complete loadable model.
 | Artifact or concern | Authoritative reference |
 |---|---|
 | Model YAML/JSON, operations, derivations, temporal terms, references | [Representation format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md) |
+| Shared vocabulary and project-owned rules | [Model includes (version 5)](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#model-includes-version-5) |
 | Constraint families and checkability | [Constraint reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md) |
 | Populations, typing, coverage and verdict bands | [Population format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/population-format.md) |
 | Rule origins, proposal status and modality | [Provenance and modality](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/provenance-and-modality.md) |

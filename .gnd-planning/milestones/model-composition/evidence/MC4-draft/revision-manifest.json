@@ -1,0 +1,105 @@
+{
+  "source_files": [
+    {
+      "path": "docs/tutorials/shared-component-vocabulary.md",
+      "sha256": "ee0650a744d3416c4734add14bacfdc82e742f5750296b8abef90610c538ba48"
+    },
+    {
+      "path": "docs/how-to/share-a-vocabulary.md",
+      "sha256": "be74bf296ca94323dccb35b5f3ea86092422bd9d3cccf614550c3a3b59155bf5"
+    },
+    {
+      "path": "docs/assets/applications/shared-vocabulary-teams.svg",
+      "sha256": "c80b434628c888bd157a17e5ca92d457beb48146ffc811510d18135c22faf362"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/notes/phase-MC4-spec.md",
+      "sha256": "ef566a7a4df1940c026b501cb128064dd0577df133857a35c19d4ff7346cba2e"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/owner-reaction.json",
+      "sha256": "aad136fc1b86aaa355b4f3908f5f37d8b3c8fef65acca669819a6e78b8f6b735"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/checkout/after.population.yaml",
+      "sha256": "2aa78c992dfe60da7f812dabe2da9fd890bd53b867f54703b279d1ef73c6e493"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/checkout/before.population.yaml",
+      "sha256": "ffcda1d715cdf3afb139757db4f257b34eaf853157bbd75126f0fb9a95ea4201"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/checkout/project.orm.yaml",
+      "sha256": "b83530d395a413ead934bd52c6cbdbe74c7bb447a6994ec03b08c3200d86a078"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/checkout/vocabulary/components-v1.orm.yaml",
+      "sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/platform/after.population.yaml",
+      "sha256": "132137ebdf46d4b526d86df35c8d5c699112ede705b3205402b9a4386cdfc80a"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/platform/before.population.yaml",
+      "sha256": "306d2624e201b12d38e54f7ac1c4a1a34fb4b37053de4a4a5f354b6abe8821fd"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/platform/project.orm.yaml",
+      "sha256": "3d75f73af0871d45433c7c0bc66edf62c15dc4244c9f44e974877d23128e65e4"
+    },
+    {
+      "path": "src/gnd/examples/model_composition/platform/vocabulary/components-v1.orm.yaml",
+      "sha256": "512e10fb72a3e5c029000872ed85238006e7f851c1d24c0bca8fed05380479b3"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-build.json",
+      "sha256": "d4f41f47eca4188fc7ebec8b73f81e489673d7d04f1b8c2f253b4bf1bc6524ec"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-example-scan-red.json",
+      "sha256": "a1e1b47b60e43daddd1d5832289d5c8b53c898b687eefa530cf027a424afe1a8"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-observations.json",
+      "sha256": "3c9c5ccbb211573d1d868714b4b8202643cd814072972682177f99673f9f71fe"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-prose-initial.json",
+      "sha256": "40750ccc9312b8ec36a4833d8acb02d62972a478e815ecfee1ac4dd914de058c"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-prose.json",
+      "sha256": "2bb9f99967a7b8688904a57645d0c2cc28855fcc2c1d30782dc0b9b2f6eaf3f3"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-render-config.toml",
+      "sha256": "b567724432373ca1a9372ef9804e02339fdee542970447fbeb8dda06c78bbd60"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-tutorial-receipt.json",
+      "sha256": "b84d76055fd2f70eb31a62a2793a95803113dd5be85218d25dd4f0212330de33"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-tutorial.json",
+      "sha256": "61abf8d6cfd13f45fc35eb6c1c0d46bd4328c12fb42da187e09c6c65cc396cce"
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/MC4-draft/revision-components.json",
+      "sha256": "4b5054fdf4ed91be8977ef34e01c35ee769c8bb87e74d75eac0e655af774cdec"
+    }
+  ],
+  "outside_history": [
+    {
+      "kind": "screenshot",
+      "location": "<visualizations>/mc4-shared-teams-review.png",
+      "sha256": "965a6c852b739dad352f071df895fd74b78cf2a6e22e495ae70da9de06d93c84"
+    },
+    {
+      "kind": "rendered HTML",
+      "location": "<temporary-site>/tutorials/shared-component-vocabulary/index.html",
+      "sha256": "561abeed3a7b6084f661cc631d4055021117fd517b92ae9e8be226d4c9a53d5b"
+    }
+  ],
+  "limitation": "Outside-history rendered artifacts may expire; committed source/config, run outputs and their hashes are retained."
+}

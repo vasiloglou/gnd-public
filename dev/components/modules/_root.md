@@ -929,8 +929,8 @@ Public filesystem seams; variants retain predecessor behavior.
 | `LeafIdentity` | class(BaseModel) | 261 | Leaf identity captured by planning and revalidated at mutation time. |
 | `NotRegularFileError` | class(OSError) | 529 | A caller path names a FIFO, socket, device or directory, not a regular file. |
 | `publish_new_files(outputs) -> None` | function | 533 | Stage a create-once set, then publish in the caller's order. |
-| `open_regular(path) -> int` | function | 586 | Open a caller path for reading; never block waiting for a FIFO writer. |
-| `file_sha256(path) -> str` | function | 603 | Stream a stable regular leaf; never block waiting for a FIFO writer. |
+| `open_regular(path) -> int` | function | 606 | Open a caller path for reading; never block waiting for a FIFO writer. |
+| `file_sha256(path) -> str` | function | 623 | Stream a stable regular leaf; never block waiting for a FIFO writer. |
 
 ## gnd.semantic_adapter — `src/gnd/semantic_adapter.py`
 Components: semantics.snapshot_adapter

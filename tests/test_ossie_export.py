@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections import Counter
+import os
 from concurrent.futures import ThreadPoolExecutor
 from importlib.resources import files
 from pathlib import Path
@@ -12,6 +12,7 @@ from time import monotonic
 
 import pytest
 from jsonschema import Draft202012Validator
+from ruamel.yaml import YAML
 
 from gnd import cli, safefs
 from gnd.errors import ModelValidationError
@@ -78,7 +79,7 @@ def test_census_export(relative):
         assert metadata["model_identity"] == identity
         assert metadata["document_sha256"] == digest
     rows = report["dispositions"]
-    assert Counter(row["pointer"] for row in rows) == Counter(_pointers(authored))
+    assert [row["pointer"] for row in rows] == list(_pointers(authored))
     retained = set()
     for group in sidecar["elements"].values():
         for pointer, entry in group.items():
@@ -162,7 +163,7 @@ def test_role_permutation_and_multiplicity(tmp_path, both):
     assert "/source/a~1b~0c" in sidecar["elements"][""]
 
 
-def test_identifying_relationships():
+def test_identifying_relationships(tmp_path):
     source = ROOT / "src/gnd/skills/gnd-model-from-text/examples"
     library = render_ossie(source / "library_with_subtypes.orm.yaml", output_format="json")
     concepts = {c["concept"]: c for c in json.loads(library.document)["ontology"]}
@@ -175,10 +176,20 @@ def test_identifying_relationships():
     ]
     assert relation["multiplicity"] == "OneToOne"
 
-    refs = render_ossie(source / "reference_scheme_elicitation.orm.yaml", output_format="json")
-    concepts = {c["concept"]: c for c in json.loads(refs.document)["ontology"]}
-    assert concepts["Task"]["identify_by"] == ["task_in_project", "task_has_name"]
+    composite = source / "reference_scheme_elicitation.orm.yaml"
+    doc = json.loads(render_ossie(composite, output_format="json").document)
+    concepts = {c["concept"]: c for c in doc["ontology"]}
+    assert "identify_by" not in concepts["Task"]
     assert concepts["gnd_date"]["extends"] == ["Date"]
+
+    authored = json_document(parse_model_document(composite.read_bytes(), source=composite))
+    link = next(fact for fact in authored["fact_types"] if fact["id"] == "task_in_project")
+    link["constraints"].append({"type": "uniqueness", "roles": ["task"], **MODALITY})
+    target = tmp_path / "functional.json"
+    target.write_text(json.dumps(authored))
+    doc = json.loads(render_ossie(target, output_format="json").document)
+    task = next(c for c in doc["ontology"] if c["concept"] == "Task")
+    assert task["identify_by"] == ["task_in_project", "task_has_name"]
 
 
 def test_vendored_ontology_bytes_match_os0_pin():
@@ -230,6 +241,7 @@ def test_cli_loss_and_strict_policy(tmp_path, capsys):
         ("oversized", 3),
         ("include", 3),
         ("alias", 74),
+        ("sidecar-alias", 74),
         ("missing-parent", 74),
     ],
 )
@@ -245,8 +257,9 @@ def test_cli_refusal_order_and_outputs(tmp_path, kind, expected, capsys):
         model.write_bytes(b" " * (MAX_MODEL_BYTES + 1))
     elif kind == "include":
         model.write_text('{"version": 5, "includes": [{"path": "missing.orm.yaml"}]}')
-    elif kind == "alias":
-        extra = ["--loss-report", str(output)]
+    elif kind in {"alias", "sidecar-alias"}:
+        alias = output if kind == "alias" else output.with_name(output.name + ".gnd.json")
+        extra = ["--loss-report", str(alias)]
     elif kind == "missing-parent":
         extra = ["--loss-report", str(tmp_path / "missing" / "report.json")]
     assert cli.main(["export", "ossie", str(model), "--out", str(output), *extra]) == expected
@@ -319,3 +332,206 @@ def test_projection_time_bound(tmp_path):
     ontology, _ = _ontology(source, model)
     assert len(ontology["ontology"][1]["relationships"]) == 400
     assert monotonic() - start < 4.0
+
+
+def test_census_roster_matches_phase_selection():
+    assert len(CENSUS) == len(set(CENSUS)) == 41
+    assert (
+        sum(
+            "includes" in parse_model_document((ROOT / path).read_bytes(), source=path)
+            for path in CENSUS
+        )
+        == 3
+    )
+
+
+def test_missing_object_type_names_use_ids(tmp_path):
+    source = _synthetic(tmp_path)
+    authored = json.loads(source.read_bytes())
+    for obj in authored["object_types"]:
+        del obj["name"]
+    source.write_text(json.dumps(authored))
+    bundle = render_ossie(source, output_format="json")
+    assert {c["concept"] for c in json.loads(bundle.document)["ontology"]} == {"entry", "elapsed"}
+
+
+def test_yaml_11_compatibility_for_role_names(tmp_path):
+    source = _synthetic(tmp_path, two_directions=True)
+    authored = json.loads(source.read_bytes())
+    authored["fact_types"][0]["roles"][1]["role_name"] = "on"
+    authored["fact_types"][0]["constraints"][0]["roles"] = ["on"]
+    source.write_text(json.dumps(authored))
+    bundle = render_ossie(source, output_format="yaml")
+    reader = YAML(typ="safe", pure=True)
+    reader.version = (1, 1)
+    doc = reader.load(bundle.document)
+    assert doc["ontology"][0]["relationships"][0]["roles"][0]["name"] == "on"
+    ONTOLOGY.validate(doc)
+
+
+def test_strict_keeps_empty_population_containers(tmp_path):
+    source = _synthetic(tmp_path)
+    authored = json.loads(source.read_bytes())
+    authored["version"] = 4
+    authored["reference_populations"] = []
+    authored["fact_types"][0]["sample_population"] = []
+    source.write_text(json.dumps(authored))
+    bundle = render_ossie(source, output_format="json", strict=True)
+    rows = {
+        row["pointer"]: row["disposition"] for row in json.loads(bundle.loss_report)["dispositions"]
+    }
+    assert rows["/reference_populations"] == rows["/fact_types/0/sample_population"] == "extension"
+
+
+def test_deontic_and_proposed_uniqueness_stay_in_sidecar():
+    samples = ROOT / "src/gnd/examples/plan_apps/skill-sessions"
+    for relative, facts in (
+        ("claude-default/run-2/model.orm.json", {"course_has_title", "course_has_credits"}),
+        (
+            "claude-haiku/run-1/model.orm.yaml",
+            {"student_has_id", "course_has_code", "term_has_label"},
+        ),
+    ):
+        bundle = render_ossie(samples / relative, output_format="json")
+        ontology = json.loads(bundle.document)
+        found = [
+            rel
+            for c in ontology["ontology"]
+            for rel in c.get("relationships", ())
+            if rel["name"] in facts
+        ]
+        assert {rel["name"] for rel in found} == facts
+        assert all("multiplicity" not in rel for rel in found)
+
+
+def test_cyclic_subtypes_refuse_before_publication(tmp_path, capsys):
+    source = tmp_path / "cycle.json"
+    source.write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "object_types": [
+                    {
+                        "id": "a",
+                        "name": "A",
+                        "kind": "entity",
+                        "subtype_of": ["b"],
+                        "inherits_reference": False,
+                    },
+                    {
+                        "id": "b",
+                        "name": "B",
+                        "kind": "entity",
+                        "subtype_of": ["a"],
+                        "inherits_reference": False,
+                    },
+                ],
+                "fact_types": [],
+            }
+        )
+    )
+    destination = tmp_path / "out.yaml"
+    assert cli.main(["export", "ossie", str(source), "--out", str(destination)]) == 3
+    assert "ossie:cyclic-subtypes" in capsys.readouterr().err
+    assert {p.name for p in tmp_path.iterdir()} == {"cycle.json"}
+
+
+@pytest.mark.parametrize("kind", ["directory", "fifo", "depth", "non-json"])
+def test_input_boundaries(tmp_path, kind, capsys):
+    model = tmp_path / "input.yaml"
+    if kind == "directory":
+        model.mkdir()
+    elif kind == "fifo":
+        os.mkfifo(model)
+    elif kind == "depth":
+        model.write_text("source: " + "[" * 600 + "0" + "]" * 600)
+    else:
+        model.write_text(
+            "version: 1\nobject_types: [{id: a, kind: value, primitive: String}]\n"
+            "fact_types: []\nsource: {timestamp: 2026-11-10}\n"
+        )
+    out = tmp_path / "out.yaml"
+    assert cli.main(["export", "ossie", str(model), "--out", str(out)]) == 3
+    if kind in {"directory", "fifo"}:
+        assert "not a regular file" in capsys.readouterr().err
+    assert {p.name for p in tmp_path.iterdir()} == {"input.yaml"}
+
+
+@pytest.mark.parametrize("when", ["before-withdrawal", "after-identity-check"])
+def test_rollback_preserves_a_racing_replacement(tmp_path, monkeypatch, when):
+    original_link = safefs.os.link
+    original_stat = safefs.os.stat
+    rollback_started = False
+    replaced = False
+
+    def replace():
+        nonlocal replaced
+        replaced = True
+        replacement = tmp_path / "replacement"
+        replacement.write_bytes(b"another writer")
+        safefs.os.replace(replacement, tmp_path / "sidecar")
+
+    def link(source, dest, **kwargs):
+        nonlocal rollback_started
+        if dest == "ontology":
+            rollback_started = True
+            if when == "before-withdrawal":
+                replace()
+            raise OSError("marker failure")
+        return original_link(source, dest, **kwargs)
+
+    def stat(name, **kwargs):
+        observed = original_stat(name, **kwargs)
+        if rollback_started and not replaced and kwargs.get("dir_fd") is not None:
+            replace()
+        return observed
+
+    monkeypatch.setattr(safefs.os, "link", link)
+    monkeypatch.setattr(safefs.os, "stat", stat)
+    with pytest.raises(OSError, match="marker failure"):
+        safefs.publish_new_files(
+            [(tmp_path / name, b"ours") for name in ("report", "sidecar", "ontology")]
+        )
+    assert replaced
+    assert (tmp_path / "sidecar").read_bytes() == b"another writer"
+    assert {leaf.name for leaf in tmp_path.iterdir()} == {"sidecar"}
+
+
+@pytest.mark.parametrize("staging_fsync", [1, 2, 3])
+def test_no_publication_if_a_staged_write_fails(tmp_path, monkeypatch, staging_fsync):
+    original = safefs.os.fsync
+    calls = 0
+
+    def fsync(descriptor):
+        nonlocal calls
+        calls += 1
+        if calls == staging_fsync:
+            raise OSError("staging fault")
+        return original(descriptor)
+
+    monkeypatch.setattr(safefs.os, "fsync", fsync)
+    with pytest.raises(OSError, match="staging fault"):
+        safefs.publish_new_files(
+            [(tmp_path / name, b"ours") for name in ("report", "sidecar", "ontology")]
+        )
+    assert not list(tmp_path.iterdir())
+
+
+def test_proposed_alethic_uniqueness_is_not_projected_as_multiplicity(tmp_path):
+    source = _synthetic(tmp_path)
+    authored = json.loads(source.read_bytes())
+    constraint = authored["fact_types"][0]["constraints"][0]
+    constraint.update(
+        source="llm-inferred",
+        status="proposed",
+        rationale="Proposed independently of the confirmed rules.",
+        provenance={"rationale_world_fact": "A hypothetical unique reading."},
+    )
+    source.write_text(json.dumps(authored))
+    bundle = render_ossie(source, output_format="json")
+    ontology = json.loads(bundle.document)
+    assert "multiplicity" not in ontology["ontology"][0]["relationships"][0]
+    by_pointer = {
+        row["pointer"]: row["disposition"] for row in json.loads(bundle.loss_report)["dispositions"]
+    }
+    assert by_pointer["/fact_types/0/constraints/0"] == "extension"

@@ -161,7 +161,7 @@ def _register_export(subparsers):
     ossie_parser.add_argument("--out", required=True, help="new ontology file path")
     ossie_parser.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
     ossie_parser.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
-    ossie_parser.add_argument("--strict", action="store_true", help="refuse any export with lost elements")
+    ossie_parser.add_argument("--strict", action="store_true", help="refuse any export with a refused disposition")
 
     return {'export_parser': export_parser, 'pyrel_parser': pyrel_parser, 'ilp_parser': ilp_parser}
 

@@ -1831,7 +1831,7 @@ Apache Ossie ontology document, version `0.3.0.dev0`, using the
 `ontology/ontology.json` schema from commit
 `ee89dbdc2844d8b7d293ed42c8613928bb99505f`. The optional parser oracle comes
 from `apache/ossie-converters` at
-`83ddc294c8840f5f497a2bdbec2348a128fc2254`. YAML is the default. Select
+`83ddc294c8840f5f497a2bdbec2348a128fc2254`. YAML is the default and uses 1.1-compatible scalar spelling. Select
 `--format json` for canonical JSON. The source loader refuses include-bearing
 models with `include:unsupported-route` before resolving their dependencies.
 
@@ -1840,16 +1840,16 @@ models with `include:unsupported-route` before resolving their dependencies.
 | Object types and subtypes | EntityType or ValueType concepts, with subtype parents in `extends`. Safe unique names are preserved. Other names get deterministic ID-based aliases. |
 | Value primitives | The corresponding Ossie built-in, with Number projected as Decimal and Duration as Integer. The sidecar retains those source types and Binary. |
 | Popular and general references | A generated binary OneToOne relationship and an `identify_by` entry. |
-| External references | `identify_by` on suitable binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
+| External references | `identify_by` on functional binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
 | Fact types and readings | One relationship under its first-role concept. The forward placeholders bind by source role position. Explicit inverse qualifiers bind by role name. A bare binary inverse reverses the bindings. Additional roles have explicit names. |
-| Internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
+| Confirmed alethic internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
 | Other constraints, derivations, provenance, modality and operations | The source values travel in the sidecar. |
 
 The report at `FILE.loss.json` (overridable with `--loss-report`) uses
 `gnd-ossie-loss/1`. Each RFC 6901 pointer, including the root and containers,
 has one disposition and a reason from the packaged schema. A `native`
 row describes a core projection. An `extension` row carries GND-specific
-shape or value. A `refused` row names an omitted element. Population
+shape or value. A `refused` row names an omitted element. Nonempty population
 subtrees are refused as `population:out-of-scope`. The report and sidecar
 omit the refused values. A successful export may contain refusals in the
 report. `--strict` rejects an export with any refusal before publication.

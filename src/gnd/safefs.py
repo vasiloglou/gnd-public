@@ -567,15 +567,35 @@ def publish_new_files(outputs: Sequence[tuple[Path, bytes]]) -> None:
                 os.link(temp, name, src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)
                 published.append((directory, name, identity))
                 os.fsync(directory)
-        except BaseException:
+        except BaseException as error:
+            failures = []
             for directory, name, identity in reversed(published):
                 try:
-                    item = os.stat(name, dir_fd=directory, follow_symlinks=False)
-                except FileNotFoundError:
-                    continue
-                if (item.st_dev, item.st_ino) == identity:
-                    os.unlink(name, dir_fd=directory)
+                    _withdraw_published_file(directory, name, identity)
+                except OSError as failure:
+                    failures.append(str(failure))
+            if failures:
+                raise OSError("output rollback failed: " + "; ".join(failures)) from error
             raise
+
+
+def _withdraw_published_file(directory: int, name: str, identity: tuple[int, int]) -> None:
+    # First withdraw one entry atomically. A path-level stat followed by
+    # unlink could delete a replacement made between those operations.
+    withdrawn = _temp_name()
+    try:
+        _rename_noreplace(directory, name, directory, withdrawn)
+    except FileNotFoundError:
+        return
+    item = os.stat(withdrawn, dir_fd=directory, follow_symlinks=False)
+    if (item.st_dev, item.st_ino) == identity:
+        os.unlink(withdrawn, dir_fd=directory)
+    else:
+        try:
+            _rename_noreplace(directory, withdrawn, directory, name)
+        except FileExistsError as error:
+            raise OSError(f"preserved racing replacement of {name} as {withdrawn}") from error
+    os.fsync(directory)
 
 
 def _discard_staged_file(directory: int, name: str) -> None:

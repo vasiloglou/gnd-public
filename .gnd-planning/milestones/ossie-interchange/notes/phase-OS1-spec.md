@@ -166,3 +166,35 @@ oracle lane and any new authenticated review send require their own selection.
   position and concurrent create-once calls.
 - The external oracle harness prepends the pinned parser's source path within
   its isolated interpreter. The external gate needs a separate selection.
+
+## Independent review and repairs
+
+The [Claude Code review](phase-OS1-claude-review.md) read candidate
+`050a2f62` with the owner's explicit authorization. The owner separately
+selected the pinned OS1 oracle. The initial oracle gate exited 0. The
+reviewer's statement that it had yet to run describes the candidate's
+retained record and the reviewer's observation.
+
+Delegated implementation rulings under the current auto scope (2026-11-10):
+
+- Native multiplicity uses confirmed alethic uniqueness. A deontic rule or
+  proposal retains its original metadata and scope in the sidecar. Exporting
+  either as hard multiplicity strengthens the projected ontology.
+- Composite identification requires each selected binary link to be
+  functional in the identifying direction. Incomplete or nonfunctional
+  schemes remain reconstructible through the sidecar.
+- Preserve empty population markers in the sidecar. Nonempty population
+  subtrees continue to use the refused disposition. Strict mode checks the
+  resulting dispositions.
+- Default unnamed object types to their IDs before allocating aliases.
+  Emit YAML 1.1-compatible scalars for the pinned readers. Reuse the regular
+  file intake and YAML depth guard.
+
+The rollback race reproduced when a caller replaced a just-published
+companion after its identity check. Rollback now withdraws each candidate
+entry atomically, checks the withdrawn inode and restores a foreign
+replacement without overwriting a later destination. The interruption
+boundary in the approved spec still applies.
+
+The phase record binds these amendments, the measured regressions and the
+final gate outputs.

@@ -238,7 +238,7 @@ def _ossie_export_successor():
     ossie.add_argument("--out", required=True, help="new ontology file path")
     ossie.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
     ossie.add_argument("--format", choices=("yaml", "json"), default="yaml", help="ontology format (default: yaml)")
-    ossie.add_argument("--strict", action="store_true", help="refuse any export with lost elements")
+    ossie.add_argument("--strict", action="store_true", help="refuse any export with a refused disposition")
     leaf = _walk(ossie, ("gnd", "export", "ossie"), {})
     leaf["listed_help"] = help_text
     choices.append("ossie")

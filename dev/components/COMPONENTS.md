@@ -1559,7 +1559,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: ontology, sidecar and loss report bytes
 - status: canonical
 - modules: src/gnd/export/ossie.py
-- uses: infra.artifacts, model.json_document, model.loading, model.query_index, model.scalar_identity
+- uses: infra.artifacts, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py
 
@@ -2168,7 +2168,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +49 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +50 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2513,7 +2513,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.verification, extract.manifest, extract.service, … +11 more (graph.md)
+- used_by: cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, extract.manifest, … +12 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.

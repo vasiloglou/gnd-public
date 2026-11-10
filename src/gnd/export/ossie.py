@@ -4,9 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import re
-import stat
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from functools import lru_cache
@@ -17,12 +15,15 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
+from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
+from gnd.input_policy import guard_yaml
 from gnd.model import MAX_MODEL_BYTES, json_document, load_model_bytes, parse_model_document
 from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
 from gnd.model_index import ModelIndex
+from gnd.safefs import NotRegularFileError, open_regular
 from gnd.values import ModelIdentityError, model_identity
 
 _VERSION = "0.3.0.dev0"
@@ -53,13 +54,18 @@ def _schema() -> Draft202012Validator:
 
 
 def _read_model(path: Path):
-    # Open nonblocking so a FIFO cannot block before the regular-file check.
-    fd = os.open(path, os.O_RDONLY | getattr(os, "O_NONBLOCK", 0))
-    with os.fdopen(fd, "rb") as stream:
-        if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
-            raise OssieInputError("model path is not a regular file")
+    try:
+        descriptor = open_regular(path)
+    except NotRegularFileError as error:
+        raise OssieInputError("model path is not a regular file") from error
+    with open(descriptor, "rb") as stream:
         raw = stream.read(MAX_MODEL_BYTES + 1)
-    doc = parse_model_document(raw, source=path)
+    try:
+        if path.suffix != ".json":
+            guard_yaml(raw, max_bytes=MAX_MODEL_BYTES)
+        doc = parse_model_document(raw, source=path)
+    except (YAMLError, ValueError, RecursionError, OverflowError) as error:
+        raise OssieInputError("invalid model syntax or input limit exceeded") from error
     guard_document(doc, "export.ossie")
     model = load_model_bytes(raw, source=path)
     try:
@@ -69,11 +75,13 @@ def _read_model(path: Path):
 
 
 def _names(objects):
-    counts = Counter(obj["name"] for obj in objects.values())
+    counts = Counter(obj.get("name", oid) for oid, obj in objects.items())
     names = {
         oid: name
         for oid, obj in objects.items()
-        if (name := obj["name"]) not in _BUILTINS and counts[name] == 1 and _ALIAS.fullmatch(name)
+        if (name := obj.get("name", oid)) not in _BUILTINS
+        and counts[name] == 1
+        and _ALIAS.fullmatch(name)
     }
     used = set(names.values()) | _BUILTINS
     for oid in objects:
@@ -98,7 +106,12 @@ def _role_order(fact):
     roles = tuple(role["role_name"] for role in fact["roles"])
     determinant_constraints = defaultdict(list)
     for i, constraint in enumerate(fact.get("constraints", ())):
-        if constraint["type"] == "uniqueness" and constraint.get("scope", "internal") == "internal":
+        if (
+            constraint["type"] == "uniqueness"
+            and constraint.get("scope", "internal") == "internal"
+            and constraint.get("modality") == "alethic"
+            and constraint.get("status") == "confirmed"
+        ):
             determinant_constraints[frozenset(constraint["roles"])].append(i)
     if len(roles) < 2:
         return roles, None, ()
@@ -153,26 +166,26 @@ def _relationship(fact, names, order):
     return result, inverse
 
 
-def _add_references(
-    objects, components, names, relationship_owners, facts, constraints, mapped, indexes
-):
+def _add_references(objects, components, names, functional_links, constraints, mapped, indexes):
     # Pre-index composite UC candidates by their shared identifying entity.
     composite = {}
     for i, constraint in enumerate(constraints):
-        if constraint.get("type") != "uniqueness" or constraint.get("scope") != "external":
+        if (
+            constraint.get("type") != "uniqueness"
+            or constraint.get("scope") != "external"
+            or constraint.get("modality") != "alethic"
+            or constraint.get("status") != "confirmed"
+        ):
             continue
         links = []
         entity = None
         for ref in constraint.get("role_refs", ()):
             fact_id = ref["fact_type"]
-            fact = facts[fact_id]
-            owner = relationship_owners[fact_id]
-            roles = fact["roles"]
-            if (
-                len(roles) != 2
-                or roles[0]["object_type"] != owner
-                or roles[1]["role_name"] != ref["role"]
-            ):
+            link = functional_links.get(fact_id)
+            if link is None:
+                break
+            owner, dependent_role = link
+            if dependent_role != ref["role"]:
                 break
             if entity is not None and owner != entity:
                 break
@@ -259,7 +272,7 @@ def _ontology(document, model):
         target = ("ontology", i)
         mapped[source] = _NATIVE_LITERAL
         mapped[(*source, "kind")] = _NATIVE_LITERAL
-        if names[oid] == obj["name"]:
+        if names[oid] == obj.get("name"):
             mapped[(*source, "name")] = _copy((*target, "concept"))
         parents = obj.get("subtype_of") or ()
         if parents:
@@ -279,8 +292,7 @@ def _ontology(document, model):
             mapped[(*source, "description", "summary")] = _copy((*target, "description"))
         components[oid] = component
 
-    facts = {}
-    owners = {}
+    functional_links = {}
     for i, fact in enumerate(document.get("fact_types", ())):
         order, multiplicity, constraints = _role_order(fact)
         role_source = {role["role_name"]: role for role in fact["roles"]}
@@ -314,10 +326,16 @@ def _ontology(document, model):
                 mapped[path] = _NATIVE_LITERAL
             for k in range(len(constraint["roles"])):
                 mapped[(*cpath, "roles", k)] = _NATIVE_LITERAL
-        facts[fact["id"]] = fact
-        owners[fact["id"]] = owner
+        if len(order) == 2 and multiplicity:
+            functional_links[fact["id"]] = (owner, order[1])
     _add_references(
-        objects, components, names, owners, facts, document.get("constraints", ()), mapped, indexes
+        objects,
+        components,
+        names,
+        functional_links,
+        document.get("constraints", ()),
+        mapped,
+        indexes,
     )
 
     _inherit_identifiers(objects, components, indexes, mapped)
@@ -339,11 +357,10 @@ def _metadata(document, mapped):
 
     def visit(value, path=(), owner="", refusal=False):
         nonlocal refused
-        refusal = (
-            refusal
-            or path == ("reference_populations",)
-            or (len(path) == 3 and path[0] == "fact_types" and path[2] == "sample_population")
+        population = path == ("reference_populations",) or (
+            len(path) == 3 and path[0] == "fact_types" and path[2] == "sample_population"
         )
+        refusal = refusal or (population and bool(value))
         if isinstance(value, dict) and isinstance(value.get("id"), str):
             owner = value["id"]
         pointer = _pointers(*path)
@@ -388,6 +405,7 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) 
         data = canonical_json_bytes(ontology)
     elif output_format == "yaml":
         yaml = YAML(typ="safe", pure=True)
+        yaml.version = (1, 1)
         yaml.default_flow_style = False
         yaml.sort_base_mapping_type_on_output = False
         stream = StringIO()

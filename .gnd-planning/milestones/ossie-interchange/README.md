@@ -35,5 +35,9 @@ replaying the expanded 41-model census and parser controls. The
 [refunds checkpoint](evidence/OS0/CHECKPOINT.md) shows the hand translation.
 
 The [owner confirmed OD6](004-owner-OD6.md). The
-[OS1 exporter candidate](008-OS1-candidate.md) passes its local checks over the
-revised census. Next: the independent OS1 diff review and opt-in oracle gate.
+[OS1 phase record](009-phase-OS1.md) closes the exporter after independent
+review, focused regressions and the pinned validator/parser lane. Draft PR
+[#160](https://github.com/vasiloglou/gnd-public/pull/160) carries the work.
+
+Next: prepare the OS2 formula corpus before implementing the renderer. The
+early OS5 documentation checkpoint can use the closed OS1 output.

@@ -82,8 +82,9 @@ When old bytes are unavailable at their original path, use the contract's
 `--previous-include ID=PATH` route with a supplied historical file. Candidate
 and untouched inputs still require live verification. Include-bearing linked
 projects remain unsupported; do not claim generated-project conformance.
-See the [complete expense command walkthrough](https://github.com/vasiloglou/gnd-public/blob/main/docs/how-to/shared-expense-policies-commands.md)
-for an executed example. This guidance does not duplicate the proposal grammar.
+For the executed expense example, read the repository walkthrough at
+`docs/how-to/shared-expense-policies-commands.md`.
+This guidance does not duplicate the proposal grammar.
 
 ### Add a structured-derived fact type and bump identity atomically
 

@@ -1,0 +1,42 @@
+{
+  "candidate": "8e5ff18180dba6d85e636c857eb2216c0d35b03a",
+  "exit": 1,
+  "summary": "14 failed, 18787 passed, 801 deselected, 1 warning in 2536.74s (0:42:16)",
+  "failure_names": [
+    "tests/test_measure_offline.py::test_model_evolve_skill_is_offline_and_preserves_write_authority",
+    "tests/test_model_v2.py::test_the_current_model_is_validated_before_it_is_traversed",
+    "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+    "tests/test_public_api.py::test_public_exports_and_current_keyword_signatures",
+    "tests/test_rf1_pin_harness.py::test_inventory",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]",
+    "tests/test_rf9_ci_repairs.py::test_python_fence_parser_refuses_malformed_code",
+    "tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[```text\\nimport",
+    "tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[>",
+    "tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[-"
+  ],
+  "added_failures": [
+    "tests/test_measure_offline.py::test_model_evolve_skill_is_offline_and_preserves_write_authority",
+    "tests/test_model_v2.py::test_the_current_model_is_validated_before_it_is_traversed",
+    "tests/test_public_api.py::test_public_exports_and_current_keyword_signatures",
+    "tests/test_rf1_pin_harness.py::test_inventory",
+    "tests/test_rf9_ci_repairs.py::test_python_fence_parser_refuses_malformed_code",
+    "tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[-",
+    "tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[>",
+    "tests/test_rf9_ci_repairs.py::test_review_container_and_text_fence_boundaries[```text\\nimport"
+  ],
+  "baseline_failures": [
+    "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+    "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+  ],
+  "accepted": false,
+  "raw_before_sanitization_sha256": "cc18a7b8937482d2eed98462fb461530879cff4dd6449cc379294e0a0eb05f04",
+  "tracked_after_status": ""
+}

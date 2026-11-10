@@ -1,0 +1,17 @@
+{
+  "authority": "process-milestone model-composition auto",
+  "date": "2026-11-10",
+  "scope": "D1-D5 as gated prose",
+  "spec_sha256": "ed7030d7867626825b66707cada706e26f7f535ae9a83b696a18681d3e76dcd3",
+  "base": "8e5ff18180dba6d85e636c857eb2216c0d35b03a",
+  "focused_red_exit": 1,
+  "focused_red_summary": "8 failed, 7 passed in 1.07s",
+  "focused_red_sha256": "e2a15032a47e80e969f9a455b80c8295890de03078d6d5232a93d1dd56069ad0",
+  "original_raw_red_sha256": "4ff1d63db370b6f03bd79296928bdfdab20cba50f7dc5d4171719dd4119cccdd",
+  "budgets": {
+    "MC2_test_stop": 600,
+    "MC3_test_stop": 1400,
+    "MC4_test_stop": 120
+  },
+  "phase_review_budget": "no new phase review; separate existing close instrument still owed"
+}

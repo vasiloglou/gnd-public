@@ -756,3 +756,46 @@ The failed first-insertion control log retains one literal trailing-space E-line
 (line12) as verbatim historical output. Delegated acceptance preserves this
 artifact-only whitespace residual, alongside prior009/025 residuals; source
 whitespace checks remain0. Staged verification must reject any other new finding.
+
+
+## 15. Complete default comparison rejection and narrow follow-ups (2026-11-10)
+
+Candidate8e5ff181's complete named default run is rejected:14failed,
+18787passed,801deselected,1warning in2536.74s, exit1. It contains the six
+frozen failures plus eight additions; no new expected baseline or waiver is
+adopted. Record028 and the preimplementation final-suite-repair prose gate
+retain the full traces and independently reproduced8fail/7pass focused set.
+
+Five added failures share one cause: MC4 introduced an example HTTPS URL into
+the offline evolution skill; replace it with the local repository walkthrough
+path, keeping the no-HTTP/network guards unchanged. Three other additions are
+exact current compatibility instruments omitted from earlier impact closure:
+MC2's new public verbalize_model export, MC3's indented plain/include candidate
+branches, and MC3's two unlisted CLI mutation-control meta cases. Preserve the
+old export tuple prefix and all old keyword checks; add only the intended
+export/signature. Preserve validated-current→gate→both-candidate order and
+argument binding without indentation coupling. Enumerate only those two meta
+case IDs; keep historical inventory rows, golden files and manifest unchanged.
+Unknown extra cases still refuse. Runtime/source semantics, schemas, models,
+populations, CLI grammar, digests and report formats are unchanged by this repair.
+
+Budget accounting is explicit by originating obligation, not transferred to
+MC4: MC2 adds2test lines (563→565, stop600); MC3 adds6 (1218→1224, stop1400).
+MC4 Python remains120/120; its prose increases by one net line within1050.
+The combined post-MC3 branch test/support diff is128 =120MC4 +2MC2 +6MC3.
+Do not report that combined128 as120 or hide these follow-ups. Prior phase
+counts/opinions remain historical; the separate close review must inspect new
+bytes. No phase size ceiling is raised and no additional phase review selected.
+
+All418 selected affected checks pass after the repairs. Actual guard liveness
+probes reject missing/extra/reordered API exports, gate-after-candidates order,
+unknown inventory nodes and missing cli_tree. These prove guard sensitivity,
+not a full-suite or runtime result. Strict build/site/component checks pass;
+13lint findings remain with the existing checkpoint offset. A new complete
+named beast-3 candidate default/census run is required before comparison
+acceptance; six frozen failure identities remain the immutable target.
+
+The two retained rejected-output artifacts contain49 literal pytest E-only
+trailing-space lines. Preserve those exact raw bytes as an explicit artifact-only
+residual under the existing009/025/027 retention policy. Current staged author,
+runtime and test source checks must remain0; no blanket whitespace waiver.

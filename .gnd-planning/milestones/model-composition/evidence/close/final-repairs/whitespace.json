@@ -1,0 +1,207 @@
+{
+  "command": "git diff --cached --check",
+  "exit": 2,
+  "accepted_raw_output_lines": [
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 270
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 273
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 278
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 280
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 299
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 306
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 313
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 320
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 327
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 334
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 341
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 350
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 353
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 358
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 360
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 368
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 371
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 376
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 378
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 386
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 389
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 394
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 396
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 404
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 407
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 412
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt",
+      "line": 414
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 9
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 12
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 17
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 19
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 30
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 37
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 46
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 49
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 54
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 56
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 64
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 67
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 72
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 74
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 82
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 85
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 90
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 92
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 100
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 103
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 108
+    },
+    {
+      "path": ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt",
+      "line": 110
+    }
+  ],
+  "counts": {
+    ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/8e5ff181-rejected-full.txt": 27,
+    ".gnd-planning/milestones/model-composition/evidence/close/final-repairs/focused-before.txt": 22
+  },
+  "scope": "Only literal pytest E plus whitespace in two retained rejected-run logs; no author/runtime/source waiver."
+}

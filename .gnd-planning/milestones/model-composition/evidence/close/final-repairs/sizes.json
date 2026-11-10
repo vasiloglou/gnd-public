@@ -1,0 +1,22 @@
+{
+  "MC2": {
+    "old": 563,
+    "followup": 2,
+    "current": 565,
+    "stop": 600
+  },
+  "MC3": {
+    "old": 1218,
+    "followup": 6,
+    "current": 1224,
+    "stop": 1400
+  },
+  "MC4": {
+    "current": 120,
+    "stop": 120,
+    "no_python_followup": true
+  },
+  "post_MC3_all_python_support_gross": 128,
+  "reconciliation": "128 = 120 MC4 + 2 MC2 public-API followup + 6 MC3 order/instrument followup; no cap changes/transfers",
+  "production_python_followup": 0
+}

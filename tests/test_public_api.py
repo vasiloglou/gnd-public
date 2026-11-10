@@ -13,7 +13,7 @@ FIXTURES = Path(__file__).parent / "fixtures/public-launch-phase-2"
 
 
 def test_public_exports_and_current_keyword_signatures():
-    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose")
+    assert api.__all__ == ("validate", "check", "transition", "verbalize", "diff", "witness", "replay", "check_with_receipt", "CheckReceipt", "ReceiptRefused", "EvaluationSession", "why_not", "DisclosureRefused", "verbalize_rules", "compose") + ("verbalize_model",)
     expected = {
         "validate": ("model", "unredacted", "references"),
         "check": ("model", "population", "compiled_operations", "unredacted", "anchors", "document", "population_bytes", "admission", "references", "composition", "sources"),
@@ -38,6 +38,7 @@ def test_public_exports_and_current_keyword_signatures():
     assert tuple(signature.parameters) == ("model", "fact_types")
     assert signature.parameters["fact_types"].kind is inspect.Parameter.KEYWORD_ONLY
     assert signature.parameters["fact_types"].default is None
+    assert tuple(inspect.signature(api.verbalize_model).parameters) == ("model",)
 
 
 def test_loaded_model_validation_rechecks_nested_mutation():

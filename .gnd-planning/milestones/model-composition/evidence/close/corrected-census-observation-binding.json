@@ -1,0 +1,12 @@
+{
+  "candidate_commit": "8e5ff18180dba6d85e636c857eb2216c0d35b03a",
+  "producer_raw_sha256": "8c751a61b1a2160257b35dfec8d61f5c811acf4cd01f86a88690b76dc627fedb",
+  "retained_bytes_path": ".gnd-planning/milestones/model-composition/evidence/close/final-census.json",
+  "equal_byte_for_byte": true,
+  "original_members": 400,
+  "original_observable_mismatches": 0,
+  "candidate_members": 423,
+  "additions": 23,
+  "dispositions_path": ".gnd-planning/milestones/model-composition/evidence/close/census-comparison.json",
+  "reason": "No model or loader byte changed in metadata repair; independent new producer bytes exactly equal the already retained full output. No duplicate data file or baseline regeneration."
+}

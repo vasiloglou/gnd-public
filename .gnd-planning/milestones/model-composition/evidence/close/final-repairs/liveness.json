@@ -1,0 +1,11 @@
+{
+  "api_clean": "pass",
+  "api_missing": "rejected",
+  "api_extra": "rejected",
+  "api_reordered": "rejected",
+  "order_clean": "pass",
+  "gate_after_candidates": "rejected",
+  "inventory_clean": "pass",
+  "inventory_unknown": "rejected",
+  "inventory_missing_cli_tree": "rejected"
+}

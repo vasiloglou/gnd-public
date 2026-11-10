@@ -1,0 +1,33 @@
+{
+  "baseline": {
+    "failed": [
+      "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+    ],
+    "passed": 18392,
+    "deselected": 799,
+    "warnings": 1,
+    "elapsed": "2324.31s (0:38:44)"
+  },
+  "candidate": {
+    "failed": [
+      "tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_apply]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_evolve_preview]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_cmd_validate]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_emit_claim]",
+      "tests/test_rf5_commands.py::test_relocated_algorithm_and_qualification_are_unchanged[_evolve_error_exit]"
+    ],
+    "passed": 18609,
+    "deselected": 801,
+    "warnings": 1,
+    "elapsed": "3941.86s (1:05:41)"
+  },
+  "added_failures": [],
+  "removed_failures": [],
+  "claim": "exact observed failure-set equality; both suites remain nonzero"
+}

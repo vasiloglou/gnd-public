@@ -1,0 +1,4 @@
+Full tracked git archive at a7c7cf46.
+stale or missing: dev/components/modules/tools.md
+no component: src/gnd/checker/_composed.py (add it to the modules of an entry in dev/components/COMPONENTS.md)
+exit 1

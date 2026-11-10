@@ -1783,7 +1783,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - in: Model and population carrying its current validation marker; optional bound references, anchors, documents or composition lineage.
 - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
 - status: canonical
-- modules: src/gnd/checker/__init__.py, src/gnd/checker/_core.py
+- modules: src/gnd/checker/__init__.py, src/gnd/checker/_core.py, src/gnd/checker/_composed.py
 - uses: check.branches, check.compiled_obligations, check.constraint_families, check.snapshot_decision, check.universe, checker.reports, infra.errors, infra.input_policy, infra.verdict_prose, model.address, model.anchor_identity, model.anchors, model.atom_bindings, model.document, model.loading, model.population_loading, model.query_index, model.scalar_identity, model.scalar_terms, semantics.extensions, semantics.phase1_slice
 - used_by: assurance.policy, check.admission, check.batch, check.service, cli.api, cli.checking_command, cli.dispatch, discover.service, evolve.population_check, exp.acceptance, export.ilp_service, export.verification, … +19 more (graph.md)
 - part_of: subsystem.check

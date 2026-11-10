@@ -1,0 +1,14 @@
+{
+  "base": "a7c7cf46",
+  "candidate": "64a42f1243e55dab05ec43c19ceb882e7bee13d7",
+  "count_convention": "gross additions; source includes moved Python and both synchronized schemas; tests count Python tests/support, fixtures reported separately",
+  "source_gross": 818,
+  "source_net": 713,
+  "test_support_gross": 1392,
+  "test_support_net": 1386,
+  "fixture_gross": 173,
+  "owner_stop": {
+    "source": 1100,
+    "test": 1900
+  }
+}

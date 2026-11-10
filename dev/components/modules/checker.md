@@ -10,7 +10,7 @@ Deterministic constraint checker with the 5-state verdict lattice.
 | --- | --- | --- | --- |
 
 ## gnd.checker._composed — `src/gnd/checker/_composed.py`
-Components: unassigned
+Components: checker.evaluate
 CT2 composed-anchor checking (composition-and-type-induction milestone).
 
 | Symbol | Kind | Line | Summary |

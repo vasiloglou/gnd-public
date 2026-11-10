@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-r4, **delegated approval (auto=true), 2026-11-09**; exact bytes bound in 002-execution-gate.md. The plan gate passed on
+r5, **locally completed under delegated approval (auto=true), 2026-11-10**; [phase record](../008-phase-MC1.md). Records002–005 retain the exact earlier approval snapshots and amendments. The original r4 gate was bound in 002-execution-gate.md. The plan gate passed on
 2026-11-09 (plan r3 approved, MD1-MD16 as proposed; [record](../001-plan.md)).
 D1-D8 are ruled as proposed by delegated approval (auto=true), authorized by
 the current owner request for the whole model-composition milestone.
@@ -731,3 +731,7 @@ The initial beast-3 candidate full run finished:25 failed,18564 passed,801 desel
 The one bounded test/inventory review approved with no findings; it executed read-only AST/hash and synthetic chain/body controls, not pytest or lint. A later self-audit found the optional new after.raw_sha256 observations included a terminal newline while the predecessor's ast.get_source_segment convention excludes it. The newly added raw-observation case was observed red, then those two after hashes were corrected and bound explicitly to c7fc66dd. Before observations remain unchanged. This small evidence correction and its new test are outside the earlier opinion's exact bytes; no further review round is selected. Publishing a wrong byte checksum is not deferred completeness work.
 
 The first strengthened checksum checker overreached by also rebinding inherited before.raw_sha256 to a7c7cf46. The inherited _run_check_raw raw observation predates later source spelling, although its normalized algorithm/import pins match the base. That failed check is retained as an invalid before-attribution premise. The corrected instrument verifies only the newly authored after.raw_sha256 observations against c7fc66dd and keeps inherited before entries exactly tied to the digest-checked predecessor; it does not silently rewrite historical raw observations.
+
+### Completed corrected comparison (2026-11-10)
+
+Corrected candidate64a42f12 on beast-3 finished: 6 failed, 18609 passed, 801 deselected, 1 warning in 3941.86s (1:05:41),exit1. The exact named failure set equals the six frozen baseline failures; no added or removed failure. The marked census has2 passes over400 original members and3 additions. Resource-cache inventories before and after are empty and tracked status is clean. Production/schema bytes remain c7fc66dd. Record008 binds current evidence and the delegated local completion ruling. The final catalog-only cleanup assigns the pre-existing composed-anchor checker to checker.evaluate; full catalog strict now exits0. Its initially missing assignment was reproduced on the complete a7c7cf46 archive. Neither independent review opinion is broadened to the later checksum control or catalog metadata.

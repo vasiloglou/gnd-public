@@ -20,7 +20,8 @@ start a model from one.
 - **Export.** `gnd export ossie MODEL --out ONTOLOGY.yaml` writes three files:
   the ontology, a sidecar (`ONTOLOGY.yaml.gnd.json`) that keeps the GND details
   Ossie has no place for, and a loss report (`ONTOLOGY.yaml.loss.json`) that
-  lists each source field and how it was handled. `--format json` writes JSON.
+  lists each source field and how it was handled. `--format json` writes JSON,
+  and `--loss-report PATH` puts the report elsewhere (import takes it too).
   Example populations are omitted and listed in the report; `--strict` stops
   the export when any field would be refused.
 - **Import.** `gnd import ossie ONTOLOGY.yaml --out MODEL.json` writes a GND

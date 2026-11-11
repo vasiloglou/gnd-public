@@ -232,6 +232,13 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None):
     except TimeoutExpired:
         result.update(exit=124, diagnostics=["ossie-oracle: converter timed out"])
         return result
+    if (
+        "ossie-oracle: socket guard self-test passed" not in conversion.stdout.splitlines()
+        or "ossie-oracle: network attempt after setup" in conversion.stderr.splitlines()
+    ):
+        result.update(exit=3, diagnostics=["ossie-oracle: socket guard verification failed"])
+        return result
+    result["socket_guard"] = "self-test-passed-no-audited-network-attempt"
     result["exit"] = conversion.returncode
     result["diagnostics"] = [
         line.replace(str(oracle.root), "$ORACLE").replace(str(root), "$CASE")
@@ -256,12 +263,12 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None):
     result["pyrel_sha256"] = hashlib.sha256(generated).hexdigest()
     result["calls"] = {
         name: counts[name]
-        for name in ("Concept", "Property", "Relationship", "identify_by", "define", "require")
+        for name in ("Concept", "Property", "Relationship", "identify_by", "define", "where", "require", "not_")
     }
     result["declaration_difference"] = ontology_declarations(authored).difference(observed)
     if counts["require"] == 0:
         result["limitations"].extend(
-            {**formula, "reason": "converter-dropped-requires"}
+            {**formula, "reason": "no-require-in-emitted-source"}
             for formula in formulas if formula["field"] == "requires"
         )
     return result
@@ -366,6 +373,9 @@ def test_offline_consumer_census_and_formula_controls(oracle, tmp_path):
         assert {"reason": known[case["case"]][0]} in case["limitations"], case
     for case in [*isolated, requires_control]:
         assert case["exit"] == 0 and not case["declaration_difference"], case
+    for case in cases:
+        if case["exit"] == 0:
+            assert case["calls"]["require"] == 0, case
     assert {"reason": "consumer-derivation-codegen"} in full_corpus["limitations"], full_corpus
     assert requires_control["calls"]["require"] == 0
     assert len(requires_control["limitations"]) == len(requires_control["formulas"]) > 0

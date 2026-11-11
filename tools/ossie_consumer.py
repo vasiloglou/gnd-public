@@ -76,6 +76,7 @@ def pyrel_declarations(source: bytes) -> Declarations:
             concepts[name] += 1
 
     parents, relationships, identifiers = Counter(), Counter(), Counter()
+    identifier_calls = 0
     for target, call in _assignments(tree):
         if call.func.attr == "Concept":
             for keyword in call.keywords:
@@ -96,17 +97,35 @@ def pyrel_declarations(source: bytes) -> Declarations:
         if not isinstance(call.func, ast.Attribute) or call.func.attr != "identify_by":
             continue
         owner = _name(call.func.value, bindings)
+        if not call.args or call.keywords:
+            raise ValueError("unsupported identify_by declaration in pinned consumer source")
+        identifier_calls += 1
         for argument in call.args:
             if not isinstance(argument, ast.Attribute):
                 raise TypeError("unsupported identifier in pinned consumer source")
             relationship_owner = _name(argument.value, bindings)
             name = argument.attr if relationship_owner == owner else f"{relationship_owner}.{argument.attr}"
             identifiers[(owner, name)] += 1
+    counts = _call_counts(tree)
+    if (
+        concepts.total() != counts["Concept"]
+        or relationships.total() != counts["Property"] + counts["Relationship"]
+        or identifier_calls != counts["identify_by"]
+    ):
+        raise ValueError("unmatched declaration calls in pinned consumer source")
     return Declarations(concepts, parents, relationships, identifiers)
 
 
+def _call_counts(tree: ast.Module) -> Counter:
+    counts = Counter()
+    for call in ast.walk(tree):
+        if isinstance(call, ast.Call):
+            if isinstance(call.func, ast.Attribute):
+                counts[call.func.attr] += 1
+            elif isinstance(call.func, ast.Name):
+                counts[call.func.id] += 1
+    return counts
+
+
 def call_counts(source: bytes) -> Counter:
-    return Counter(
-        call.func.attr for call in ast.walk(ast.parse(source))
-        if isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute)
-    )
+    return _call_counts(ast.parse(source))

@@ -36,11 +36,12 @@ class OssieOracle:
                 timeout=15,
             )
             assert result.stdout.strip() == commit, repo
-            subprocess.run(
-                ["git", "-C", str(self.root / repo), "diff", "--quiet", "HEAD", "--"],
+            status = subprocess.run(
+                ["git", "-C", str(self.root / repo), "status", "--porcelain", "--untracked-files=normal"],
                 check=True,
                 timeout=15,
             )
+            assert not status.stdout, repo
         schema = self.root / "ossie/ontology/ontology.json"
         assert hashlib.sha256(schema.read_bytes()).hexdigest() == SCHEMA_SHA256
 
@@ -87,18 +88,33 @@ os.environ["RAI_CONFIG_FILE_PATH"] = str(checkout / "relationalai/tests/config/r
 sys.path[:0] = [str(checkout / "ontology/src"), str(checkout / "relationalai/src")]
 
 
-def refuse_connection(event, args):
-    if event in {"socket.connect", "socket.getaddrinfo"}:
+conversion_started = False
+
+
+def refuse_network(event, args):
+    if event in {
+        "socket.connect", "socket.getaddrinfo", "socket.gethostbyname",
+        "socket.gethostbyaddr", "socket.getnameinfo", "socket.sendto", "socket.sendmsg",
+    }:
+        if conversion_started:
+            print("ossie-oracle: network attempt after setup", file=sys.stderr, flush=True)
         raise RuntimeError("ossie-oracle: offline socket refused")
 
 
-sys.addaudithook(refuse_connection)
-try:
-    socket.getaddrinfo("example.invalid", 443)
-except RuntimeError as error:
-    assert str(error) == "ossie-oracle: offline socket refused"
-else:
-    raise AssertionError("offline socket control was inactive")
+sys.addaudithook(refuse_network)
+for attempt in (
+    lambda: socket.getaddrinfo("example.invalid", 443),
+    lambda: sys.audit("socket.sendto", None, ("example.invalid", 443)),
+    lambda: sys.audit("socket.connect", None, ("example.invalid", 443)),
+):
+    try:
+        attempt()
+    except RuntimeError as error:
+        assert str(error) == "ossie-oracle: offline socket refused"
+    else:
+        raise AssertionError("offline socket control was inactive")
+print("ossie-oracle: socket guard self-test passed", flush=True)
+conversion_started = True
 
 assert importlib.metadata.version("relationalai") == "1.39.0"
 from ossie_ontology.parser import OssieParser

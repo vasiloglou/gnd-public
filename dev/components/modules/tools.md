@@ -283,7 +283,7 @@ Compare Ossie declarations with the pinned consumer's PyRel source AST.
 | `Declarations.difference(self, received) -> dict` | method | 18 | (no docstring) |
 | `ontology_declarations(document) -> Declarations` | function | 29 | Read declaration identities directly from the exported JSON ontology. |
 | `pyrel_declarations(source) -> Declarations` | function | 63 | Extract names and edges without importing or executing emitted Python. |
-| `call_counts(source) -> Counter` | function | 108 | (no docstring) |
+| `call_counts(source) -> Counter` | function | 130 | (no docstring) |
 
 ## tools.ossie_oracle — `tools/ossie_oracle.py`
 Components: tools.ossie_oracle
@@ -293,9 +293,9 @@ Run the pinned standalone Ossie validator and parser without runtime dependencie
 | --- | --- | --- | --- |
 | `OssieOracle` | class | 26 | (no docstring) |
 | `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
-| `OssieOracle.validate(self, path) -> subprocess.CompletedProcess[str]` | method | 47 | (no docstring) |
-| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 56 | (no docstring) |
-| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 119 | Emit PyRel source in the isolated process, without executing that source. |
+| `OssieOracle.validate(self, path) -> subprocess.CompletedProcess[str]` | method | 48 | (no docstring) |
+| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 57 | (no docstring) |
+| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 135 | Emit PyRel source in the isolated process, without executing that source. |
 
 ## tools.plan_app_bot — `tools/plan_app_bot.py`
 Components: unassigned

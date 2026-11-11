@@ -49,3 +49,30 @@ def test_os0_refund_snapshot_is_compared_without_a_converter():
     ontology = YAML(typ="safe").load((evidence / "refunds.yaml").read_bytes())
     snapshot = (evidence / "E3-refunds.pyrel.txt").read_bytes()
     assert not ontology_declarations(ontology).difference(pyrel_declarations(snapshot))
+
+
+def test_concept_literal_is_compared_separately_from_the_binding():
+    expected = ontology_declarations({"ontology": [{"concept": "Code"}]})
+    actual = pyrel_declarations(b'Code = m.Concept("Changed")')
+    assert expected.difference(actual) == {"concepts": {"missing": ["Code"], "extra": ["Changed"]}}
+
+
+def test_ignorable_syntax_cannot_hide_declaration_calls():
+    import pytest
+
+    for source in (
+        b'Code = m.Concept("Code")\nm.Concept("Rogue")',
+        b'Code = m.Concept("Code")\nif enabled: m.Concept("Rogue")',
+        b'Code = m.Concept("Code")\nRogue = Concept("Rogue")',
+    ):
+        with pytest.raises(ValueError, match="unmatched declaration"):
+            pyrel_declarations(source)
+
+
+def test_identifier_edges_allow_multiple_calls_on_one_concept():
+    source = b"""
+Pair = m.Concept("Pair")
+Pair.identify_by(Pair.left)
+Pair.identify_by(Pair.right)
+"""
+    assert pyrel_declarations(source).identifiers == {("Pair", "left"): 1, ("Pair", "right"): 1}

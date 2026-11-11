@@ -1,0 +1,1578 @@
+{
+  "cases": [
+    {
+      "calls": {
+        "Concept": 9,
+        "Property": 6,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/approvals/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 19,
+        "sha256": "10e873f1787c186e7b96ba4a1a0157a2ee51be711848a6b6d2e340e772676918",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "904f660db1b4b66ef210f33ff0fbb8fafa197d3727bdcf7bff1dd3fe672840cc",
+      "pyrel_sha256": "ca4ec8ef068507ed5a135ee9c55599fa62f1f78dbcf1329f2c32449521c9cdfe",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 5,
+        "Property": 3,
+        "Relationship": 7,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 10,
+        "sha256": "b1edd2a3c6c6cd35a7edec386b509f96808f1ca7cefea1c6885567efc0e821e1",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "668b7791fae0112954d9f4bf1324e1d9d28bdf24740cb0d3178930fd29c098c5",
+      "pyrel_sha256": "404286e408375b0aa5afff63b1da54910c9097e5a1595412b92c6c519001f15b",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 5,
+        "Property": 3,
+        "Relationship": 5,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/bookrec/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 5,
+        "sha256": "a44f28217708bb38e28d7bccfed2130332ceee9471295d7eb96feabecc68e29e",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "5da17ab5018d22c9e6c1a066117a704a67995e1e364d8776e7f0a8b5aaa8ce98",
+      "pyrel_sha256": "270f1d518404adafca8e73ff088c9bb9c903cfadf4185a2f466898a93cf2dcbb",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 5,
+        "Property": 3,
+        "Relationship": 5,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 5,
+        "sha256": "0a5ee7bffb8d72832e8e622ca9f1e29b70edb335cd2ac2f6752ee5339562523d",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "5da17ab5018d22c9e6c1a066117a704a67995e1e364d8776e7f0a8b5aaa8ce98",
+      "pyrel_sha256": "270f1d518404adafca8e73ff088c9bb9c903cfadf4185a2f466898a93cf2dcbb",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "case": "src/gnd/examples/composition/model.orm.yaml",
+      "diagnostics": [
+        "AssertionError: entity var contract should be bound by a type-membership Lookup"
+      ],
+      "exit": 1,
+      "formulas": [
+        {
+          "field": "derived_by",
+          "formula": "Contract.contract_has_party.party_is_based_in_city",
+          "pointer": "/ontology/0/relationships/1/derived_by/0"
+        }
+      ],
+      "gnd_rules": {
+        "refused": "contract_has_party#0: family 'anchored' is a later phase of the rules programs",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "reason": "consumer-derivation-codegen"
+        }
+      ],
+      "ontology_sha256": "6d7de8beb30ecbd3214312deb3ae68a9a4bcb096332774ae2321e915409056f7",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 2,
+        "Property": 1,
+        "Relationship": 0,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/disclosure/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 1,
+        "sha256": "bb30989964e5fd0f2d8372d618be36ad7081456b7ef70235107bd03900dcb415",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "3f6ae05e5d6228ac22692d816a41099f0672df55aa2af29766878880e3f77fb1",
+      "pyrel_sha256": "6dadb71d5b6b330b7a6e75fd92a39574c139e141bcdf8d232aefedce8220cdd0",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 1,
+        "Relationship": 8,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/dispatch/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 6,
+        "sha256": "2ce6bcb23f5df00a9295f25de916e44b83c275418e158297ed3b7c6cf8ff4fe4",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "5a10470e394b4701a5f8114e36da38d1b7288d49af7063e9aef0316f56f7f835",
+      "pyrel_sha256": "086b2610f4ab6c16aa27ac233d6563b258220d58957b715c3b1390bcedf58a32",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 7,
+        "Property": 6,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/expense/currency.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Currency == 'EUR'",
+          "pointer": "/ontology/6/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 22,
+        "sha256": "a0f7e402e5b5b791ddc0c12c368029c3af406ad98a10130ac84f140d568cebdb",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Currency == 'EUR'",
+          "pointer": "/ontology/6/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "dcdcbf60b3133ba773c5e54bc45e605be4715c07bb4ce2ef769e88bc522014ab",
+      "pyrel_sha256": "8e71e888e4d9501fadc0744863fa056bb098bc0a23d82c5237967c0bb161061e",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 5,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/expense/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 19,
+        "sha256": "bb0a741c87f4542b992cdb47effec3bed1fa7cec5ba84582ab06cda8ceea390a",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "42527b6162824ba54fda53d5b0587d1497dc7f55364eee4429df854c1a0b2ff3",
+      "pyrel_sha256": "29fbae0ffc2f27a1b25294751929d8021945efe141609e0832b93c360acb3ec9",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 5,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/expense/project/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 19,
+        "sha256": "bb0a741c87f4542b992cdb47effec3bed1fa7cec5ba84582ab06cda8ceea390a",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "42527b6162824ba54fda53d5b0587d1497dc7f55364eee4429df854c1a0b2ff3",
+      "pyrel_sha256": "29fbae0ffc2f27a1b25294751929d8021945efe141609e0832b93c360acb3ec9",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 7,
+        "Property": 6,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 14,
+        "sha256": "9f4b1cdc5f58135bf8813432cfdd52cb12cccfb3bec54fdc17ee0f09fec2e57f",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "3860ceb623b2aa0e73c628f0e62340f620c17c596174ba4f5ebb76d5cfe479b3",
+      "pyrel_sha256": "ea6d9f2ec832cf2c5ca1c7ecce88fceb4591e06e66f1749b6aeb05478ddbc15d",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 7,
+        "Property": 6,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 14,
+        "sha256": "570d6ee72ee5533291eaf5cee7dacf491567f98093808e69e1f1eedf1c2f23c6",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Category == 'meals' OR Category == 'training' OR Category == 'travel' OR Category == 'equipment'",
+          "pointer": "/ontology/4/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Chain == 'team-lead' OR Chain == 'finance'",
+          "pointer": "/ontology/5/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "3d2065bf2b9416f2b8f650451332bf306056813a534e230f0daa41334b384fef",
+      "pyrel_sha256": "6bc08057d6375270566139adc20073bbe4b2a8037b5c0f089f3e03ff4eed4cff",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 5,
+        "Property": 2,
+        "Relationship": 3,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/growth/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 2,
+        "sha256": "1fc4c168148c6bc894c87c249013056cbdc8d78a0dcd5cbf1e7448cfaeedadeb",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "dcfbfaaa2f5980b8ff0d32e346a4bfda1555802f114c8c54d9b8a9029dc66ec5",
+      "pyrel_sha256": "040612d7a2ead1279ce491aa4c8dadbf9d66f3703654c9a1a1f02ab5385e7bc3",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 4,
+        "Property": 3,
+        "Relationship": 4,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 12,
+        "sha256": "024613352241970e983516c2b2f89b3bbffaefced572dee0faddeef156c551e3",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "0a5a682b552ecc973dc79200aa2331a4eb5fee4bf43a21980e47b510f1349f0f",
+      "pyrel_sha256": "95cce1f4f37768d73c3709c331ab09cc5cf21a0aa5125b95f13b9b842d5a5b11",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 3,
+        "Relationship": 5,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 9,
+        "sha256": "319fd923fb0d5fceadcadcce441169c9f0bf5a5e1bcb0f76acb82f7fd8711c78",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "02584e96da1921c7600298457147ae5f3da5b1f9257998d48115c19806645f85",
+      "pyrel_sha256": "21b8e69b30f5d34969082603599da03364bba090f9b726d4e83858567337ad67",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 9,
+        "Property": 4,
+        "Relationship": 7,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 20,
+        "sha256": "5112c649f5b8c913f7abe58d75635fa7e782adb75be738711ec08d6a39a33c37",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "15904aff3606a7e68acf3d5195794cc89be0157f91e1efc8ba08fd258692b9fd",
+      "pyrel_sha256": "77d67676301b7d5d680b27f0d88cdfeee6114a2723b3732efc8cf10875a14a60",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 4,
+        "Property": 2,
+        "Relationship": 3,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 7,
+        "sha256": "919a4af8e921fbf3fa78d96ec0bce168001c3583c6e1b85104563df1727a7aa0",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "002977dbef6a8a089f901aa3b9b9a1371ec13d32e90fc533482bc76b8d607ceb",
+      "pyrel_sha256": "9274eb6db63f8867a3f7aa71c75137b06905245c694d333627004f67c958ea27",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 9,
+        "Property": 4,
+        "Relationship": 7,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 20,
+        "sha256": "178491070e6ebb788ce5df186d94b2aef74b423fee85490398afda7c6989c97d",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "15904aff3606a7e68acf3d5195794cc89be0157f91e1efc8ba08fd258692b9fd",
+      "pyrel_sha256": "77d67676301b7d5d680b27f0d88cdfeee6114a2723b3732efc8cf10875a14a60",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 9,
+        "Property": 4,
+        "Relationship": 7,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 20,
+        "sha256": "899fcc4498a03d551961211f75230a95c94c0e929e146a9483cf70ba554f270c",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "15904aff3606a7e68acf3d5195794cc89be0157f91e1efc8ba08fd258692b9fd",
+      "pyrel_sha256": "77d67676301b7d5d680b27f0d88cdfeee6114a2723b3732efc8cf10875a14a60",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 11,
+        "Property": 7,
+        "Relationship": 6,
+        "define": 0,
+        "identify_by": 4,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 22,
+        "sha256": "99d4a07d4ce5fa352936a8d3ffef989fd382560fe2081ad1f4777cef870c6935",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "f8c3841726dd40366c377a7123c3dcbd087d8fdd499b30cc0ece9c643a3a965d",
+      "pyrel_sha256": "09f47d57e957c20c461bdfd15ac9d712a282279cec4400195e8250a653980c58",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 10,
+        "Property": 4,
+        "Relationship": 8,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 23,
+        "sha256": "3a6e10251acdfdc9ff4d76466742510070b0f087fbf46eabb2fa428a4d2df9e5",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "54aa94af3f3f2ec3496481101aca38719d6f1d06087bead09defc571a3db15b8",
+      "pyrel_sha256": "6063c3c80bfccce8654f65dfc59e3c5f2830c6c6aa56fa2f8470dd38dfffcfb1",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 9,
+        "Property": 4,
+        "Relationship": 11,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 20,
+        "sha256": "596053d9ff5dee72f323d3e027a95e544bb8846a1c5e857a672fc44f9bd75f06",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "3c82d66a1183c0f4c9837e65abd523b8dc23aa056b8f3d41a9a1b9ca819aabf5",
+      "pyrel_sha256": "ef5dbfbf6af2d118522eb1dbd3280cb5a85dbd8ad58c7f061296555f3343edee",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 7,
+        "Property": 4,
+        "Relationship": 7,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Season == 'spring' OR Season == 'fall'",
+          "pointer": "/ontology/4/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 22,
+        "sha256": "89c2509ea705513fd7ac084d02d75fa3d8368f65548e481f5fe17cccf09d8ea9",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Season == 'spring' OR Season == 'fall'",
+          "pointer": "/ontology/4/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "5d274681682773cd3724cd1cb9eadfb3f51c06ca3832ecaf1dd9894d5650e2a7",
+      "pyrel_sha256": "4372fc200972883395049f73e603eb6a8acb9e2fe17e3d5323df0526479ae78c",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 10,
+        "Property": 6,
+        "Relationship": 9,
+        "define": 0,
+        "identify_by": 4,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 13,
+        "sha256": "ff329ff1704222a37f62e2fa25aa9361a2e9dc62d0b943c742336dcc5f52ad19",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "a5550c1ba341bd2aa1d74ee06cbe3d1eafeb07b856f3d819a4c8bf6af1314a18",
+      "pyrel_sha256": "3dd3128032397176794a57fd1a20554dfc38135ba4150d153207eaf28760c669",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 3,
+        "Property": 0,
+        "Relationship": 4,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/quoted_claims/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 2,
+        "sha256": "d99367f5d46eb4e0ecb7da5d6086a63ee2359c074c9470acb357119ff63c3bb9",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "b05559ca49fe2b55f34e51b3556289d8c0f07c11f9f59da3d7d69cf245356b61",
+      "pyrel_sha256": "13e27918f150b552b5b4bcb493f704d0bb772670f95b6b294b428e45d1b01356",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 3,
+        "Relationship": 2,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/refunds/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 2,
+        "sha256": "df08bed09e94463e89b6a94f3e0c4e35f2028b49470973bc8381c4f50d952283",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "e9893b1078bb0eff8bc8e9cfa7e9c675b6e683bfb913cca524d1e1f8a107307c",
+      "pyrel_sha256": "3c68233cba25a0259d20751db11e791fd048ca6360cb3aea2992fd6a228648ef",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 1,
+        "Relationship": 8,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/release/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 6,
+        "sha256": "ff971a355b2f437f287f0a4f47383992913f958a9dbcb490b11a27c05c63731c",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "f5bef501733c7aa3a3451f0a5a4dfaa10028c57630427b25d36931b855af10d7",
+      "pyrel_sha256": "959970456ae05e1a1ff6ea911557706380769475af5798c641ddc70cd85df34a",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 1,
+        "Property": 0,
+        "Relationship": 3,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/release_governance/approval-proof/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Release.requested",
+          "pointer": "/ontology/0/relationships/1/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Release.reviewed",
+          "pointer": "/ontology/0/relationships/2/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Release.requested",
+          "pointer": "/ontology/0/relationships/2/requires/1"
+        }
+      ],
+      "gnd_rules": {
+        "require": 3,
+        "sha256": "741a43aca6417bdec95ca44ce0798982598fcc0752edc3d1791e0af5fd1d5527",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Release.requested",
+          "pointer": "/ontology/0/relationships/1/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Release.reviewed",
+          "pointer": "/ontology/0/relationships/2/requires/0",
+          "reason": "no-require-in-emitted-source"
+        },
+        {
+          "field": "requires",
+          "formula": "Release.requested",
+          "pointer": "/ontology/0/relationships/2/requires/1",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "a8fb79edf658824ed24bf8738202b2f21843db780e386eb48664e8fb790f04ba",
+      "pyrel_sha256": "643b5a9be42b6c6ee08e76ee9ae0102652f24104d15d6a529cf129855e2ff54b",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 3,
+        "Property": 0,
+        "Relationship": 10,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 12,
+        "sha256": "ccc0b833d8320fff0837852957eccf1110683886b149f573e690f0be917a134d",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "7e51fa9cf40bc6cb9858212078bf46620765ac1d1f1d9a2c8f9dfa7356e724ed",
+      "pyrel_sha256": "7a83cfa2378dece6a7ad1092ac74ef7c22d35d79d49dce169901a0811b588c40",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 3,
+        "Property": 1,
+        "Relationship": 2,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/release_governance/policy/model.orm.json",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 3,
+        "sha256": "19f3d00fe91da0072c0c7562249963207d819073b470f51bd03e04f85083140d",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "880b481fb08fe0d3d1dd0978543efd8252686ff51f783f74cdbd49a77ee5ea31",
+      "pyrel_sha256": "dbc2c27d762675f22931ebaa2458c75edc98d8a80d1baca9c40e1c93d3faf7d2",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 5,
+        "Property": 1,
+        "Relationship": 4,
+        "define": 0,
+        "identify_by": 1,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/rule_check/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 4,
+        "sha256": "993af337c51cfea662f0b6206b693a893d50477d324b42739a9cdf892edfd9cb",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "cf07a1079a4f21f499bc4904478b17f819068a601003873dcaea5de2154bc48f",
+      "pyrel_sha256": "6ead4b92e5d7aa3bd4808fa9ca13db58c4f5277e16fe58a5131cc654bd13e95e",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 6,
+        "Property": 3,
+        "Relationship": 6,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/staffing/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 0,
+        "sha256": "5f24df99a11555f38ee7a55302559e5356c8ca1f57df7fdf29e383f96dd9dac3",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "377483870cbf986c18a5e4034d1c7f8734944c441591dcc62e12086adc38922f",
+      "pyrel_sha256": "d386b3995ffc047c4304e54509f0caa159e8f0908cbc3e767fec7fb65a238dbe",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 4,
+        "Property": 0,
+        "Relationship": 3,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/type_judgements/duplicates/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 0,
+        "sha256": "1340c902ca3b997e8f73e72cfa7da25ee2fe2825327fa3d91f88ec2340be9158",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "878d34009b9d8c12cab08ce2147bb459806d4d1c90c02dd9090d670821a33bb5",
+      "pyrel_sha256": "60b575e29dbad881ea2f1ea8c6e55a0d0b0a62773ab036e2f88f03c512ca387a",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 4,
+        "Property": 0,
+        "Relationship": 3,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "require": 0,
+        "sha256": "e5c5f510cf0e8a080d1dbeea7cfd833326d714009e9f111cfadf6f1ee139e049",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "42b70a8a4ebbb683972598e628679d7bec953b35ff79ade83a9ff6f70164a5cb",
+      "pyrel_sha256": "82ad513b22cf3177e1d999ebb321c67a5b88ac18c850483b1dd8ebb6bec34529",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "case": "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "diagnostics": [
+        "[Invalid identify_by] Property LibraryItem.gnd_reference have the first field be PeriodicalItem"
+      ],
+      "exit": 1,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "BookType == 'Reference' OR BookType == 'Circulating'",
+          "pointer": "/ontology/3/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "refused": "object type 'book_item' is a subtype; subtype universes are a later phase of the rules programs",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "reason": "consumer-inherited-identifier"
+        }
+      ],
+      "ontology_sha256": "34c19228e13e0f688c0c83d77b241befc1e5bfd87c049b64aba9cf2d83cb672b",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 7,
+        "Property": 6,
+        "Relationship": 0,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Rating == 'G' OR Rating == 'PG' OR Rating == 'PG-13' OR Rating == 'R' OR Rating == 'NC-17'",
+          "pointer": "/ontology/6/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "require": 10,
+        "sha256": "a8f681a7f2dacd4e7f57aaac16fb1972f3cb603c2b8e5db5cbb376cf3ae20395",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Rating == 'G' OR Rating == 'PG' OR Rating == 'PG-13' OR Rating == 'R' OR Rating == 'NC-17'",
+          "pointer": "/ontology/6/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "b77d550f85a17da0cae3aa544701588607f0b729dab9d3aa98e0aa767b43de10",
+      "pyrel_sha256": "25e8a9a1bb61b261012078ef1010b6e70e353037c30fd88afd4626ce0f58da8f",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 7,
+        "Property": 6,
+        "Relationship": 1,
+        "define": 0,
+        "identify_by": 4,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "Grade == 'A' OR Grade == 'B' OR Grade == 'C' OR Grade == 'D' OR Grade == 'F' OR Grade == 'I' OR Grade == 'W'",
+          "pointer": "/ontology/5/requires/0"
+        }
+      ],
+      "gnd_rules": {
+        "refused": "constraints_0: external uniqueness is a later phase of the rules programs",
+        "target": "lqp"
+      },
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "Grade == 'A' OR Grade == 'B' OR Grade == 'C' OR Grade == 'D' OR Grade == 'F' OR Grade == 'I' OR Grade == 'W'",
+          "pointer": "/ontology/5/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "51fda9801b069750ac2f0c1b5b7ac15e510fb6a0f8b32a5bc17551e81b7187dd",
+      "pyrel_sha256": "b53a40cc87ddc64c7c4980a254f39499e0fc2ed081356b70c6a12b748ffedfda",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 9,
+        "Property": 7,
+        "Relationship": 2,
+        "define": 0,
+        "identify_by": 2,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "gnd_rules": {
+        "refused": "constraints_0: external uniqueness is a later phase of the rules programs",
+        "target": "lqp"
+      },
+      "limitations": [],
+      "ontology_sha256": "cacddfee01d22c3a3fb27e5a85c86f21875786bed0da4295d99bd4aa3187e23a",
+      "pyrel_sha256": "2db7ae0fe4baeed44df84a6d200cd2505d56109b953f47f660c29a6d8ac83ff5",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    }
+  ],
+  "converter_commit": "83ddc294c8840f5f497a2bdbec2348a128fc2254",
+  "full_formula_corpus": {
+    "case": "reviewed-formula-corpus",
+    "diagnostics": [
+      "AssertionError: entity var account should be bound by a type-membership Lookup"
+    ],
+    "exit": 1,
+    "formulas": [
+      {
+        "field": "requires",
+        "formula": "COUNT[Account] <= 2",
+        "pointer": "/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "balance <= 100",
+        "pointer": "/ontology/0/relationships/0/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_registered",
+        "pointer": "/ontology/0/relationships/1/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_registered",
+        "pointer": "/ontology/0/relationships/1/requires/1"
+      },
+      {
+        "field": "requires",
+        "formula": "NOT EXISTS(Account.account_flagged)",
+        "pointer": "/ontology/0/relationships/1/requires/2"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_active",
+        "pointer": "/ontology/0/relationships/2/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Account != recommended",
+        "pointer": "/ontology/0/relationships/4/requires/0"
+      },
+      {
+        "field": "derived_by",
+        "formula": "Account.account_classified.category_band",
+        "pointer": "/ontology/0/relationships/6/derived_by/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Category == 'Retail' OR Category == 'Business'",
+        "pointer": "/ontology/2/requires/0"
+      }
+    ],
+    "gnd_rules": {
+      "require": 12,
+      "sha256": "e3ca8815a35ae1881036ed7917d9fffa281cf1bce1172e6b058859d9824f9440",
+      "target": "lqp"
+    },
+    "limitations": [
+      {
+        "reason": "consumer-derivation-codegen"
+      }
+    ],
+    "ontology_sha256": "e785c48f43d10bc7b1cfaf142008c02a41ed27d7ea9b435f114b7d6a7ebea525",
+    "socket_guard": "self-test-passed-no-audited-network-attempt"
+  },
+  "isolations": [
+    {
+      "calls": {
+        "Concept": 3,
+        "Property": 1,
+        "Relationship": 2,
+        "define": 0,
+        "identify_by": 0,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/examples/composition/model.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [],
+      "isolation_removed": [
+        {
+          "pointer": "/ontology/0/relationships/1/derived_by",
+          "value": [
+            "Contract.contract_has_party.party_is_based_in_city"
+          ]
+        }
+      ],
+      "limitations": [],
+      "ontology_sha256": "efd43ae9c1357b2c9c7cf13cf999ee0d4410fdd99ad2991d3aa146e3ece03cf3",
+      "pyrel_sha256": "514fcd8e153b0787a752a962a79c34e6fa2d310fdc671b720aa5f3cdb1506809",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "calls": {
+        "Concept": 11,
+        "Property": 8,
+        "Relationship": 0,
+        "define": 0,
+        "identify_by": 3,
+        "not_": 0,
+        "require": 0,
+        "where": 0
+      },
+      "case": "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "declaration_difference": {},
+      "diagnostics": [],
+      "exit": 0,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "BookType == 'Reference' OR BookType == 'Circulating'",
+          "pointer": "/ontology/3/requires/0"
+        }
+      ],
+      "isolation_removed": [
+        {
+          "pointer": "/ontology/1/identify_by",
+          "value": [
+            "gnd_reference"
+          ]
+        },
+        {
+          "pointer": "/ontology/2/identify_by",
+          "value": [
+            "gnd_reference"
+          ]
+        }
+      ],
+      "limitations": [
+        {
+          "field": "requires",
+          "formula": "BookType == 'Reference' OR BookType == 'Circulating'",
+          "pointer": "/ontology/3/requires/0",
+          "reason": "no-require-in-emitted-source"
+        }
+      ],
+      "ontology_sha256": "dbd2b65aed1cce74ad210009b42fdae439b0c794f35efefc3d50936d61c3c744",
+      "pyrel_sha256": "28b4a61b3a6fd36ec1cdb0c22ddd0a7949656b88530f4f7edeac80f7676aa420",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    }
+  ],
+  "ossie_commit": "ee89dbdc2844d8b7d293ed42c8613928bb99505f",
+  "refusal_controls": [
+    {
+      "case": "OR",
+      "diagnostics": [
+        "NotImplementedError: Disjunction (OR) in formula body is not yet supported"
+      ],
+      "exit": 1,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "COUNT[Account] <= 2",
+          "pointer": "/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "balance <= 100",
+          "pointer": "/ontology/0/relationships/0/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Account.account_registered",
+          "pointer": "/ontology/0/relationships/1/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Account.account_registered",
+          "pointer": "/ontology/0/relationships/1/requires/1"
+        },
+        {
+          "field": "requires",
+          "formula": "NOT EXISTS(Account.account_flagged)",
+          "pointer": "/ontology/0/relationships/1/requires/2"
+        },
+        {
+          "field": "requires",
+          "formula": "Account.account_active",
+          "pointer": "/ontology/0/relationships/2/requires/0"
+        },
+        {
+          "field": "derived_by",
+          "formula": "Account.account_active OR Account.account_registered",
+          "pointer": "/ontology/0/relationships/3/derived_by/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Account != recommended",
+          "pointer": "/ontology/0/relationships/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Category == 'Retail' OR Category == 'Business'",
+          "pointer": "/ontology/2/requires/0"
+        }
+      ],
+      "limitations": [],
+      "ontology_sha256": "f9f4452488e7b9d1078a379c90b3bec85053add9583d863ecb415fc6100056aa",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    },
+    {
+      "case": "EXISTS",
+      "diagnostics": [
+        "NotImplementedError: EXISTS in formula body is not yet supported"
+      ],
+      "exit": 1,
+      "formulas": [
+        {
+          "field": "requires",
+          "formula": "COUNT[Account] <= 2",
+          "pointer": "/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "balance <= 100",
+          "pointer": "/ontology/0/relationships/0/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Account.account_registered",
+          "pointer": "/ontology/0/relationships/1/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Account.account_registered",
+          "pointer": "/ontology/0/relationships/1/requires/1"
+        },
+        {
+          "field": "requires",
+          "formula": "NOT EXISTS(Account.account_flagged)",
+          "pointer": "/ontology/0/relationships/1/requires/2"
+        },
+        {
+          "field": "requires",
+          "formula": "Account.account_active",
+          "pointer": "/ontology/0/relationships/2/requires/0"
+        },
+        {
+          "field": "derived_by",
+          "formula": "EXISTS(Account.account_active)",
+          "pointer": "/ontology/0/relationships/3/derived_by/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Account != recommended",
+          "pointer": "/ontology/0/relationships/4/requires/0"
+        },
+        {
+          "field": "requires",
+          "formula": "Category == 'Retail' OR Category == 'Business'",
+          "pointer": "/ontology/2/requires/0"
+        }
+      ],
+      "limitations": [],
+      "ontology_sha256": "1d9260f0c44809145b9fc1c954ed519f22ed13b3ea657f588ada8011719469a9",
+      "socket_guard": "self-test-passed-no-audited-network-attempt"
+    }
+  ],
+  "relationalai_version": "1.39.0",
+  "relationalai_wheel_sha256": "33cbf6bc1a2ad598ffa4960bc0ddada1eab0a719de61ad6cc48ab378845126c7",
+  "requires_control": {
+    "calls": {
+      "Concept": 4,
+      "Property": 0,
+      "Relationship": 8,
+      "define": 0,
+      "identify_by": 0,
+      "not_": 0,
+      "require": 0,
+      "where": 0
+    },
+    "case": "requires-only-corpus",
+    "declaration_difference": {},
+    "diagnostics": [],
+    "exit": 0,
+    "formulas": [
+      {
+        "field": "requires",
+        "formula": "COUNT[Account] <= 2",
+        "pointer": "/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "balance <= 100",
+        "pointer": "/ontology/0/relationships/0/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_registered",
+        "pointer": "/ontology/0/relationships/1/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_registered",
+        "pointer": "/ontology/0/relationships/1/requires/1"
+      },
+      {
+        "field": "requires",
+        "formula": "NOT EXISTS(Account.account_flagged)",
+        "pointer": "/ontology/0/relationships/1/requires/2"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_active",
+        "pointer": "/ontology/0/relationships/2/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Account != recommended",
+        "pointer": "/ontology/0/relationships/4/requires/0"
+      },
+      {
+        "field": "requires",
+        "formula": "Category == 'Retail' OR Category == 'Business'",
+        "pointer": "/ontology/2/requires/0"
+      }
+    ],
+    "isolation_removed": [
+      {
+        "pointer": "/ontology/0/relationships/6/derived_by",
+        "value": [
+          "Account.account_classified.category_band"
+        ]
+      }
+    ],
+    "limitations": [
+      {
+        "field": "requires",
+        "formula": "COUNT[Account] <= 2",
+        "pointer": "/requires/0",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "balance <= 100",
+        "pointer": "/ontology/0/relationships/0/requires/0",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_registered",
+        "pointer": "/ontology/0/relationships/1/requires/0",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_registered",
+        "pointer": "/ontology/0/relationships/1/requires/1",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "NOT EXISTS(Account.account_flagged)",
+        "pointer": "/ontology/0/relationships/1/requires/2",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "Account.account_active",
+        "pointer": "/ontology/0/relationships/2/requires/0",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "Account != recommended",
+        "pointer": "/ontology/0/relationships/4/requires/0",
+        "reason": "no-require-in-emitted-source"
+      },
+      {
+        "field": "requires",
+        "formula": "Category == 'Retail' OR Category == 'Business'",
+        "pointer": "/ontology/2/requires/0",
+        "reason": "no-require-in-emitted-source"
+      }
+    ],
+    "ontology_sha256": "fec17b4e5618b1b84694305d37d0e10a67f718223163fffa93564c6c6fe4f3b8",
+    "pyrel_sha256": "7cee35c13dd4e0abe4eb8053e4d7c43268ef184d1d570e99705c7c4d58e9c712",
+    "socket_guard": "self-test-passed-no-audited-network-attempt"
+  },
+  "schema": "gnd-ossie-consumer-observations/1"
+}

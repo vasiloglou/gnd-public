@@ -1,0 +1,13 @@
+# Six-shard default lane on beast-3 at 2a9bd6b8 (before the review and docs fixes; finished 2026-11-11T05:13:46Z)
+2026-11-11T05:13:46Z
+rn0 shard0: 3682 passed, 53 deselected in 462.40s (0:07:42) shard exit=0 
+rn0 shard1: 1 failed, 2921 passed, 152 deselected in 413.31s (0:06:53) shard exit=1 
+rn0 shard2: 2833 passed, 130 deselected in 321.78s (0:05:21) shard exit=0 
+rn0 shard3: 2 failed, 4081 passed, 88 deselected in 816.65s (0:13:36) shard exit=1 
+rn0 shard4: 2651 passed, 282 deselected in 252.52s (0:04:12) shard exit=0 
+rn0 shard5: 2826 passed, 145 deselected, 1 warning, 2 errors in 582.40s (0:09:42) shard exit=1 
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap
+FAILED tests/test_disclosure_docs.py::test_page_table_equals_the_code
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]

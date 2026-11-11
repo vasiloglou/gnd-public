@@ -430,7 +430,7 @@ The disclosure mode: whether GND emits population values.
 | `forward(environ) -> dict[str, str]` | function | 57 | What a spawner adds to a child's environment: only ``customer`` is passed on. |
 | `invocation(mode) -> Iterator[None]` | function | 63 | Set the mode for one in-process CLI invocation; the token is reset on exit. |
 | `Surface` | class | 75 | (no docstring) |
-| `bearing(leaf) -> bool` | function | 155 | Whether a CLI leaf resolves the mode: a site, or one that starts children. |
+| `bearing(leaf) -> bool` | function | 156 | Whether a CLI leaf resolves the mode: a site, or one that starts children. |
 
 ## gnd.documents — `src/gnd/documents.py`
 Components: model.document

@@ -47,16 +47,18 @@ index 13b57b58..b4bb741a 100644
  GND keeps its `Duration` type, which counts whole days. Ossie receives an
  integer value type and the sidecar preserves its original GND meaning.
 diff --git a/docs/how-to/shared-expense-policies-commands.md b/docs/how-to/shared-expense-policies-commands.md
-index 1e901543..2d8edca8 100644
+index 1e901543..0b5eb21a 100644
 --- a/docs/how-to/shared-expense-policies-commands.md
 +++ b/docs/how-to/shared-expense-policies-commands.md
-@@ -2,8 +2,7 @@
+@@ -2,8 +2,9 @@
  
  These are the commands behind [Two teams, one expense form](../tutorials/shared-expense-policies.md).
  The example extends the shipped expense demo with two policies and receipt facts.
 -Use a development checkout for the unreleased feature; see
 -[development setup](../installation.md).
-+The feature is in GND 0.3.0 and later; see [installation](../installation.md).
++The feature is in GND 0.3.0 and later. Install it with pip in an activated
++virtual environment, as the [installation page](../installation.md) shows, so
++that `python` and `gnd` below are the same installation.
  
  !!! info "Files on GitHub"
  
@@ -170,7 +172,7 @@ index 8f516061..328d56ad 100644
  | Native/provider extras | Optional, unmeasured in this preparation |
  
 diff --git a/docs/tutorials/shared-expense-policies.md b/docs/tutorials/shared-expense-policies.md
-index 43e5d00d..76da0d94 100644
+index 43e5d00d..33e31d41 100644
 --- a/docs/tutorials/shared-expense-policies.md
 +++ b/docs/tutorials/shared-expense-policies.md
 @@ -53,8 +53,8 @@ A team's policy never copies a shared definition and cannot change one. It says
@@ -179,7 +181,7 @@ index 43e5d00d..76da0d94 100644
  
 -**Before you start.** Use a checkout of a development checkout for the unreleased example, as the
 -[installation page](../installation.md) shows and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
-+**Before you start.** Install GND 0.3.0 or later, as the
++**Before you start.** Install GND 0.3.0 or later with pip in an activated virtual environment, as the
 +[installation page](../installation.md) shows, and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
  shows. The [commands page](../how-to/shared-expense-policies-commands.md) has
  the copy step and every command behind the requests below.

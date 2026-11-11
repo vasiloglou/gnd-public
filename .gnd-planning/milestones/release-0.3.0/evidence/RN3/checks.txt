@@ -1,39 +1,64 @@
-# RN3 checks T1, T3, T4, T5 on a scratch clone of main b913d43e (package content equal to the candidate 4c07c0e6), 2026-11-11
+# RN3 checks on a scratch clone of main b913d43e (package content equal to the candidate 4c07c0e6), 2026-11-11, after the review fixes
 ## T1 order A: main, tag, release-files
- 11 files changed, 29 insertions(+), 34 deletions(-)
+ 11 files changed, 31 insertions(+), 34 deletions(-)
 ## T1 order B: main, release-files, tag
- 11 files changed, 29 insertions(+), 34 deletions(-)
+ 11 files changed, 31 insertions(+), 34 deletions(-)
 ## T3, T4: all three, date replaced
-41 passed in 0.26s
+133 passed in 0.47s
 pytest exit 0
-no stale release-state text (19 allowlisted hits, route token, build 4c07c0e6)
+no stale release-state text (20 allowlisted hits, route token, build 4c07c0e6, published 2026-11-12)
 check exit 0
 ## T5a: placeholder left in place
-1 failed, 40 passed in 0.26s
+1 failed, 132 passed in 5.56s
 pytest exit 1
 placeholder left in place: docs/release-notes.md:3:Version 0.3.0, published on PUBLICATION_DATE, is the latest release; 0.2.0 and
 placeholder left in place: docs/release-notes.md:8:## 0.3.0 (PUBLICATION_DATE)
+missing: docs/release-notes.md line 3 is not 'Version 0.3.0, published on <DATE>, is the latest release; 0.2.0 and'
 stale: docs/compatibility.md:0.2.0 and 0.3.0 are published (0.3.0 on PUBLICATION_DATE). For the next version,
-missing: docs/release-notes.md opening 'Version 0.3.0, published on <DATE>, is the latest release'
-missing: exactly one '## 0.3.0 (<DATE>)' heading in docs/release-notes.md
 check exit 1
 ## T5b: main patch without its RELEASED hunk
-3 failed, 38 passed in 0.26s
+3 failed, 130 passed in 0.44s
 pytest exit 1
 ## T5c: unpatched tree
-README.md has no 0.3.0 install pin: are the post-publication patches applied?
-check exit 2
-## T5d: one pin left at 0.2.0 after RELEASED moves
-1 failed, 40 passed in 0.25s
+stale: docs/release-notes.md:first. Version 0.3.0 is prepared and not published. Releases follow the
+stale: docs/release-notes.md:## 0.3.0 (prepared, not published)
+stale: docs/release-notes.md:Everything in this section is on `main` after 0.2.0 and is not in any published
+stale: docs/release-notes.md:unsupported. This feature requires the development checkout.
+check exit 1
+## T5d: one pin left at 0.2.0 (docs/index.md)
+1 failed, 132 passed in 0.45s
 pytest exit 1
 stale release-state text:
 stale: docs/index.md:uv tool install get-nick-done==0.2.0
 check exit 1
-## T5e: main patch only (no tag, no release files), date replaced
-41 passed in 0.25s
+## T5e: main patch only, date replaced
+133 passed in 0.43s
 pytest exit 0
 stale release-state text:
 stale: docs/installation.md:[v0.2.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
 stale: docs/installation.md:python -m pip install /path/to/get_nick_done-0.2.0-py3-none-any.whl
 stale: docs/marketplace-plugins.md:commands above work. The `v0.2.0` tag contains both the Python release and these
 check exit 1
+## H8: only the README pin left at 0.2.0
+stale release-state text:
+missing: README.md has no 0.3.0 install pin (are the post-publication patches applied?)
+stale: README.md:uv tool install get-nick-done==0.2.0
+check exit 1
+## H4: a 'requires the development checkout' sentence added to a how-to page
+stale release-state text:
+stale: docs/how-to/shared-expense-policies-commands.md:This feature requires the development checkout.
+check exit 1
+## H5: a competing 'latest release' statement prepended to the notes' opening
+stale release-state text:
+missing: docs/release-notes.md line 3 is not 'Version 0.3.0, published on <DATE>, is the latest release; 0.2.0 and'
+check exit 1
+## H6a: compatibility page gives another date
+stale release-state text:
+missing: docs/compatibility.md does not give the opening's date, 2026-11-12, for 0.3.0
+check exit 1
+## H6b: notes heading gives another date
+stale release-state text:
+missing: exactly one '## 0.3.0 (2026-11-12)' heading in docs/release-notes.md (the opening's date)
+check exit 1
+## usage error
+check exit 2

@@ -59,7 +59,16 @@ Observed 2026-11-11 unless stated.
 
 1. **Package ownership and release authority.** Account-side; not readable
    by this session. 0.1.0 and 0.2.0 were uploaded by the owner with a token.
-   Repository: visibility `public`, default branch `main`.
+   1. **Repository review before the upload** (`docs/releasing.md`: "repository
+      visibility/content/history review"). *Observed:* visibility `public`,
+      default branch `main`. *Open:* a review of what the release points to,
+      its content and history, is the owner's and is not recorded here. For
+      0.2.0 the owner accepted this as a residual at the close.
+   2. **Target-only contributor realpaths** (`docs/releasing.md` asks the
+      dossier to record them). *Not recorded:* this dossier lists none, as
+      the 0.2.0 dossier listed none. What exists: the acceptance file's
+      `test_target_only_contributor_lifecycle` passed for both wheels in
+      RN2's run.
 2. **Breaking changes are in the notes** (`docs/compatibility.md`). Starting
    points in the 0.3.0 section, not a complete list: "GND 0.2.0 cannot read a
    version 5 model"; "GND 0.2.0 refuses these proposals and previews"; "GND
@@ -90,9 +99,13 @@ Observed 2026-11-11 unless stated.
 5. **Tag** the candidate commit, annotated as `v0.2.0` is. *Observed:* remote
    tags `v0.1.0` and `v0.2.0` only.
 
+   Run these in a checkout of the repository, not in the candidate
+   directory, which is not a git repository:
+
    ```sh
-   git tag -a v0.3.0 4c07c0e6a623263048cb675d237046ebb239cb32 -m "get-nick-done 0.3.0"
-   git push origin v0.3.0
+   git -C <repository checkout> fetch origin
+   git -C <repository checkout> tag -a v0.3.0 4c07c0e6a623263048cb675d237046ebb239cb32 -m "get-nick-done 0.3.0"
+   git -C <repository checkout> push origin v0.3.0
    ```
 
 6. **GitHub release** with the wheel, the sdist and a checksum file, as
@@ -115,10 +128,13 @@ Observed 2026-11-11 unless stated.
      is done.
    - [post-publication-release-files.patch](post-publication-release-files.patch):
      once action 6 attached the files.
-   - Then `sh stale-text-check.sh token` must exit 0 and
-     `tests/test_release_version.py` must pass. The check exits 1 until all
-     three patches are in, because the page text they replace names the
-     0.2.0 tag and release.
+   - Then, from the repository root,
+     `sh .gnd-planning/milestones/release-0.3.0/evidence/RN3/stale-text-check.sh token`
+     must exit 0 and `tests/test_release_version.py` must pass. The check
+     exits 1 until all three patches are in, because the page text they
+     replace names the 0.2.0 tag and release. It also requires the notes'
+     opening, the notes' heading and the compatibility page to give the same
+     date.
    - The patches were made against main `b913d43e`. If `git apply --check`
      fails later, regenerate the conflicting hunk; the check shows what is
      left.

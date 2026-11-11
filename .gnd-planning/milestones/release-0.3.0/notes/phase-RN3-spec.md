@@ -242,3 +242,31 @@ publication (main patch).
    | 72 | "Official service references checked during preparation (2026-10-03)" | historical |
 
    No hit is stale, so the page is not edited.
+
+## 14. Review findings (2026-11-11, appended)
+
+One reviewer, Codex, over `evidence/RN3/` at `aa806c76`
+([retained output](phase-RN3-codex-review.md)): `revise`, 9 findings. Each
+was checked before it was accepted.
+
+| Finding | Checked | Triage | Fix |
+|---|---|---|---|
+| H1 the tag commands follow a `cd` into the candidate directory, which is not a git repository | yes | blocking: the owner's command would fail | the tag commands use `git -C <repository checkout>` |
+| H2 the dossier omitted the repository content and history review and the contributor realpaths that `docs/releasing.md` names | yes: lines 44 to 52 of that page | hardening | both are listed as open or not recorded, with what exists |
+| H3 the reworded shared-expense pages allowed the `uv tool` install, but the commands page runs `python -c 'import gnd, ...'` | yes: line 16 of the commands page | blocking: the documented route would fail at the copy step | both pages say to install with pip in an activated virtual environment |
+| H4 the check's pattern missed a "requires the development checkout" sentence outside the notes | yes: the reviewer's counterexample passed the old check | hardening | the pattern includes `development checkout`; the one legitimate line is allowlisted |
+| H5 the opening sentence was searched anywhere in the notes | yes | hardening | line 3 must be the sentence, and the opening may hold one "latest release" statement |
+| H6 date normalisation hid a stale or inconsistent date | yes | hardening | one date is taken from the opening; the heading and the compatibility page must give the same one |
+| H7 search errors were lost in pipelines | yes | hardening | each `git grep` writes to a file and its own status is read |
+| H8 a missing README pin exited 2 | yes | hardening | it is a stale-text problem, exit 1 |
+| H9 the dossier's invocation of the check had no path | yes | hardening | the repository-relative path is given |
+
+After the fixes the retained [checks.txt](../evidence/RN3/checks.txt) shows:
+both apply orders give the same 11-file diff; the patched and dated tree
+gives pytest exit 0 and check exit 0; and every control exits non-zero,
+including the reviewer's five counterexamples (H4, H5, H6 twice, H8). No fix
+was re-reviewed.
+
+**Corrects §8 T5 and finding 3 of §13, kept as written above.** The
+unpatched tree now makes the check exit 1 with its stale lines listed, not 2:
+exit 2 is kept for usage and search errors only.

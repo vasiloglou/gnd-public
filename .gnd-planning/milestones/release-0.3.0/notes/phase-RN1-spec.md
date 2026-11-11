@@ -383,12 +383,16 @@ by reading `git diff v0.2.0 -- src`; the record's table is rebuilt that way.
 - The lane at `a46952b5` (after the review fixes) listed the 2 known errors
   and one failure this phase caused:
   `tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap`.
-  The retained review output quotes test code (`]({link})`) and a mutant
-  input (`[x](explanation/ossie.md)`), which the reference check reads as
-  links. Both strings are now in `RETAINED_EXTERNAL_REFERENCES` for that one
+  The retained review output quotes one line of test code and one mutant
+  input that have the shape of a markdown link, which the reference check
+  reads as links. Both strings are now in `RETAINED_EXTERNAL_REFERENCES` for that one
   file, as verbatim reviewer text; the review file is not edited. The focused
   gate had run before the review file existed.
 - After `a46952b5` the notes gained one sentence
   (`include:unsupported-route`, commit `7fba7d9e`): a route that does not
   support a model with includes refuses it. Confirmed by running the Ossie
   exporter on the packaged `sales.orm.json`.
+- The lane at `40af7c87` failed the same test again, on this file: the
+  paragraph above first repeated the two quoted strings. It now describes
+  them without their link syntax. The scaffold test had been run before that
+  paragraph was written, not after.

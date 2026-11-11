@@ -402,3 +402,29 @@ Each finding was checked before it was accepted.
 The reviewer could not run the suite, reach PyPI, GitHub environments or
 beast-3; N5, part of N6 and N22 stand on this session's observations only.
 r2's repairs have no review opinion.
+
+## 12. Amendment proposed after E1 (2026-11-11 UTC; not ruled)
+
+Raised by experiment E1 ([results](../evidence/e1/README.md)). The approved r2
+wording is kept above; this section changes nothing until the owner rules.
+
+**Finding.** N20 and N26 said main has two red default-lane tests. The base
+lane at `2490dd77` has 26 failures and the 2 known errors. None existed at the
+0.2.0 close (`483b49ea`); 6 are present after the model-composition close
+(`54a47612`); 20 more after PR 160 and PR 161. Twenty-four of the 26 are the
+structure and inventory guards of AGENTS.md: the layer map, the command pins,
+the exact query-policy list, the disclosure leaf table, the skill routing
+inventory, the identity-site list, and the wheel packaging guard, which says
+`gnd/ossie-loss-report.schema.json` has no guard (risk R5 made concrete).
+
+**What is not known.** Which of the 24 are stale pins that need re-recording
+and which are real violations of the rule a guard protects (for example,
+direct model reads in the Ossie modules where AGENTS.md prefers `ModelIndex`,
+or imports the layer map forbids). E1 did not examine that.
+
+| ID | Question | Proposal | Cost of the other reading |
+|---|---|---|---|
+| RN-D12 | Does 0.3.0 wait for main's default lane to be repaired? | Yes: a new phase RN0, before RN1, with its own spec and owner gate. It classifies each of the 24 as stale pin or real violation, re-records the first kind with the reason, repairs the second kind or registers a counted exception where the repository's rules allow one, and adds the missing packaging guard. RN1 keeps M10 and M11 and its approved scope. RN2 does not build until the base lane shows only the 2 known errors | Releasing with the guards red ships code the repository's own checks reject, leaves R5 without its guard, and makes every later lane comparison start from 26 failures. Folding the repair into RN1 mixes source-structure work into a phase approved for content only |
+
+Until RN-D12 is ruled, RN1 stays blocked: the digests it must list are taken
+on a base that RN0 would change.

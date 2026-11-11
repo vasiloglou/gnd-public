@@ -1,0 +1,3 @@
+tests/fixtures/public-coverage-goldens/corpus.json.gz
+tests/fixtures/public-legacy-codegen/closure.json.gz
+tests/fixtures/public-measure-corpus/workspace.json.gz

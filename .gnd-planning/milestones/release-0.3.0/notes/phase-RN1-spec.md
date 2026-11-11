@@ -2,10 +2,11 @@
 
 ## 1. Status
 
-**Blocked draft r2, 2026-11-10. Not implementable.** It needs, in order: the
-plan gate; experiment E1 (§6), which has not run; the owner's ruling on D2's
-per-file handling after E1; then this spec's own owner gate. No code is
-written.
+**Blocked draft r2, 2026-11-10; E1 appended 2026-11-11 (§12). Not
+implementable.** The plan gate is passed and E1 has run. It now needs: the
+owner's ruling on the plan amendment E1 raised (plan §12: main's lane is red
+by 26); the moved digests measured in a scratch copy (§12, still owed); then
+this spec's own owner gate. No code is written.
 
 ## 2. Provenance
 
@@ -185,3 +186,55 @@ uv run ruff check
 
 Unresolved: the beast-3 shard invocation (the script copy and its PATH fix),
 and the files E1 adds to the focused gate.
+
+## 12. E1 results (2026-11-11 UTC, appended; the experiment is the one recorded in §6)
+
+Retained outputs and method: [evidence/e1](../evidence/e1/README.md).
+
+| Tree | Passed | Failed | Errors |
+|---|---|---|---|
+| base, main `2490dd77` | 18,971 | 26 | 2 |
+| bumped, M1 to M3 only | 18,936 | 61 | 2 |
+
+Thirty-five ids fail only at the bump; none of the base failures disappears.
+
+### 12.1 Classification of the 35
+
+| Test (failures) | Class | Handling |
+|---|---|---|
+| `test_release_version.py` (4): agreement, its control, the notes drift case, the publication-claim case | expected: the notes have no 0.3.0 heading on the E1 tree | M6 and M7; no test edit |
+| `test_rf1_semantic_pins.py::test_synth` (8), `test_tp2_shared_fact_types.py` (1) | current-output record | (b), as RR1 spec §13.1 |
+| `test_object_type_description.py` (4) | current-output record | (b) |
+| `test_rf2_pre_move_pins.py::test_measure_output_bytes` (1) | current-output record | (b), through `measure-successor.json` |
+| `test_ik6_walk.py::test_t2` (1) | current-output record | (b) |
+| `test_fidelity_stub_gate.py` (1) | current-output record | (b) |
+| `test_public_extract_controls.py` (5) | current-output record | (b) |
+| `test_public_coverage_goldens.py` (3) | current-output record | (b) |
+| `test_public_measurement_publication.py` (2) | current-output record | (b) |
+| `test_public_measure_corpus.py` (1) | current-output record | (b) |
+| `test_public_legacy_codegen_pins.py` (1) | current-output record | (b) |
+| `test_public_book_runtime.py` (1), `test_public_book_skills.py` (1) | current-output record | (b) |
+| `test_public_expense_current.py` (1) | current-output record | (b) |
+
+The 31 non-release ids are the same ids as the 31 method-(b) failures of the
+0.2.0 bump, so D2's ruled method covers every one and no file raises the new
+question D2 reserved. The 16 `test_extract` ids of the 0.2.0 bump do not fail:
+method (a) holds. M5 is therefore the same set of sites as RR1's M5b to M5n
+(31 files, 7 gzip containers at that time); its size estimate is the measured
+size of that edit.
+
+**Still owed before the gate:** the moved digests, old and new, measured by
+applying M5 in a scratch copy, as `evidence/e1/moved-digests.md`. Not done
+yet, because the amendment below may change the base the digests are taken
+on.
+
+### 12.2 A premise of this spec is refuted
+
+§3 and D4 assume main has two red default-lane tests. The base lane has 26
+(evidence README, with attribution: 0 at the 0.2.0 close, 6 after model
+composition, 26 after the Ossie merge). M10 and M11 cover two of them. The
+other 24 are structure and inventory guards and are outside this spec as
+approved. T7 as written still works (it compares lists), but RN1-C7's "no
+known failure of its own" does not hold for the candidate. The plan carries
+the proposed amendment (plan §12); this spec changes only after the owner
+rules on it.

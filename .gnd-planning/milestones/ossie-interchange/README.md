@@ -63,3 +63,6 @@ The [independent close panel](032-panel.md) reached quorum and requested
 revisions. The [effective close amendment](notes/close-amendments-r2.md)
 records the measured acceptance scope. The [close-readiness record](033-close-readiness.md)
 defines verification on GND main after the owner's merge decision.
+
+The [milestone close record](034-milestone-close.md) records successful
+verification on merged GND main and the delegated close ruling.

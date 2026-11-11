@@ -86,6 +86,37 @@ choices put to them in the session:
   `uv run pytest -q -o addopts='' tests/test_public_built_inventory.py`: 17
   passed. `twine check` passes on the wheel and the sdist.
 
+## After the merge
+
+The owner asked for both pull requests to be merged ("merge everything",
+2026-11-11). Pull request 186 (issue 172) merged as `b53b208a` and pull
+request 185 as `dc7348e4`. The owner then asked for the issues to be closed:
+104 is closed with the comment below, and 169 and 171 to 177 are closed with
+a note each. Issue 170 stays open.
+
+Checks on `main` at `dc7348e4`, which holds both changes:
+
+- **Full default lane:** 19,062 passed, 0 failed, 2 errors, in six shards on
+  beast-3 (macOS 27.0.1, Python 3.13.18, uv 0.13.7). The run was on a trial
+  merge whose tree is identical to `dc7348e4`. The 2 errors are the two
+  `tests/test_public_optional.py` errors known on `main`. 19,016 before, plus
+  35 tests from pull request 185 and 11 from 186.
+- **Release acceptance:** `GND_CANDIDATE_DIR=<candidate> uv run pytest -q -o
+  addopts='' tests/test_release_acceptance.py`: 16 passed, on this session's
+  machine (macOS, Python 3.14.3), with a candidate built from `dc7348e4`:
+  wheel sha256 `0a194e8b…8b4f`, sdist `23bc2761…ce65`, the comparison wheel
+  identical to the release wheel.
+- **An earlier acceptance run** on the branch of pull request 185, before the
+  merge, ended 15 passed and 1 failed:
+  `test_installed_behavior_families[release]` reached its 1,200-second limit
+  while another test job loaded the machine. The `[comparison]` case of the
+  same test passed on a byte-identical wheel, and the test passed in the run
+  above. It is recorded here as a timeout under load, not as a defect.
+
+This section replaces the first item of "Not covered" below: release
+acceptance has now run. The opt-in lanes and the documentation site build are
+still not run.
+
 ## Issue 104: the comment to post after the merge
 
 The owner ruled "Post and close". The text below replaces the follow-up that

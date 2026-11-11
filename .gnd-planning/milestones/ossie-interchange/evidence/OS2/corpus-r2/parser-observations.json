@@ -1,0 +1,104 @@
+{
+  "balance_ceiling": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "relationship:Account.account_balance",
+        "formula": "balance <= 100"
+      }
+    ]
+  },
+  "balance_required": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "EXISTS(Account.account_balance)"
+      }
+    ]
+  },
+  "balance_count": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "COUNT[Account.account_balance] <= 2"
+      }
+    ]
+  },
+  "active_registered": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      }
+    ]
+  },
+  "activity_registry": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      },
+      {
+        "scope": "relationship:Account.account_registered",
+        "formula": "Account.account_active"
+      }
+    ]
+  },
+  "active_not_flagged": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "NOT EXISTS(Account.account_flagged)"
+      }
+    ]
+  },
+  "no_self_recommendation": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "relationship:Account.account_recommends",
+        "formula": "Account != recommended"
+      }
+    ]
+  },
+  "category_codes": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "concept:Category",
+        "formula": "Category == 'Retail' OR Category == 'Business'"
+      }
+    ]
+  },
+  "account_cap": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "ontology",
+        "formula": "COUNT[Account] <= 2"
+      }
+    ]
+  },
+  "derivation:account_band": {
+    "exit": 0,
+    "placements": [
+      {
+        "scope": "relationship:Account.account_band",
+        "formula": "Account.account_classified.category_band"
+      }
+    ]
+  },
+  "malformed-count": {
+    "exit": 1,
+    "diagnostic": "ValueError: ('Unable to parse:', LexToken(GREATER,'>',1,14))"
+  },
+  "r1-derivation": {
+    "exit": 1,
+    "diagnostic": "ValueError: Relationship 'category_band' signature mismatch in the formula 'Account.account_classified.category_band(band)': expected (Category, Band) got (Band)"
+  }
+}

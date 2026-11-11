@@ -2,8 +2,8 @@
 
 ## 1. Status
 
-Draft r1, 2026-11-10. The corpus awaits independent semantic review. The
-approved corpus must be committed before renderer implementation.
+Delegated spec gate, 2026-11-10. The reviewed and repaired corpus is bound
+in record 011 before the renderer.
 
 ## 2. Provenance
 
@@ -124,3 +124,38 @@ in several hundred lines.
 
 [Corpus r1](../evidence/OS2/corpus-r1/README.md), split from its expected
 verdict file. The phase remains before its delegated spec gate.
+
+## R2 review disposition and supported shapes
+
+The independent reader confirmed r1's 20 verdicts and required
+discriminating cases. The [approved r2 corpus](../evidence/OS2/corpus-r2/README.md)
+adds nine cases and scope/formula pairs, and keeps the r1 artifact intact.
+
+- C1 uses ontology-level `COUNT[Concept]` with a third Account visible in a
+  fact. The pinned parser and its ontology-level aggregate fixture confirm
+  scope. The projection supports the corpus's object cardinality upper bound.
+- C2's global-count counterexample is retained. Frequency stays in the
+  sidecar because the duplicate-row witness fails GND frequency but
+  satisfies the set-valued Ossie count. Mandatory stays in the sidecar
+  because the covered empty relation is vacuous in GND.
+- C3 limits derivation lowering to an ordered chain of two binary positive
+  atoms. The first atom's last role equals the second's first role. The
+  derived head binds the endpoints in its projected order. The renderer
+  emits the dotted path without a final argument list. Multi-row, empty,
+  missing and spurious claims distinguish its semantics.
+- C4 supports confirmed alethic value enums of safely representable strings.
+  Both admitted strings now occur in separate passing cases.
+- C5 supports a comparison between a scoped integer variable and integer
+  literal using the reviewed `<=` shape. The boundary 100 passes.
+- C6 limits subset, equality and exclusion to unary same-player scopes.
+  The equality cases isolate both directions. The ring form is a
+  same-player binary irreflexivity comparison.
+- C7 requires projected names and exact role identities. Formulas needing
+  unsafe identifier tokens or unknown typed bindings keep the original source.
+- C8 pairs each scope and formula and checks the named verdict only.
+  Implementation tests cover deontic and proposed rules, unsupported
+  operand forms and whole-group fallback.
+
+All added or changed placements retain source spelling through the existing
+sidecar. Syntax probes and checker results are separate. The approved
+corpus does not claim general execution equivalence for other forms.

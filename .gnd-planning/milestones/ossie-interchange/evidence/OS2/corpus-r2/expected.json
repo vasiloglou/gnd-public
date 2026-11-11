@@ -1,0 +1,374 @@
+{
+  "guard-pass": {
+    "rule": "balance_ceiling",
+    "verdict": "pass",
+    "reason": "Both balances are at most 100.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_balance",
+        "formula": "balance <= 100"
+      }
+    ],
+    "projection": "formula"
+  },
+  "guard-fail": {
+    "rule": "balance_ceiling",
+    "verdict": "fail",
+    "reason": "a2 has balance 120.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_balance",
+        "formula": "balance <= 100"
+      }
+    ],
+    "projection": "formula"
+  },
+  "mandatory-pass": {
+    "rule": "balance_required",
+    "verdict": "pass",
+    "reason": "Both accounts have a balance tuple.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "EXISTS(Account.account_balance)"
+      }
+    ],
+    "projection": "extension"
+  },
+  "mandatory-fail": {
+    "rule": "balance_required",
+    "verdict": "fail",
+    "reason": "a2 remains in the account roster and has no balance tuple.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "EXISTS(Account.account_balance)"
+      }
+    ],
+    "projection": "extension"
+  },
+  "frequency-pass": {
+    "rule": "balance_count",
+    "verdict": "pass",
+    "reason": "Each account has only one balance value.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "COUNT[Account.account_balance] <= 2"
+      }
+    ],
+    "projection": "extension"
+  },
+  "frequency-fail": {
+    "rule": "balance_count",
+    "verdict": "fail",
+    "reason": "a1 has three distinct balance values.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "COUNT[Account.account_balance] <= 2"
+      }
+    ],
+    "projection": "extension"
+  },
+  "subset-pass": {
+    "rule": "active_registered",
+    "verdict": "pass",
+    "reason": "The active account a1 is registered.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      }
+    ],
+    "projection": "formula"
+  },
+  "subset-fail": {
+    "rule": "active_registered",
+    "verdict": "fail",
+    "reason": "a1 is active and only a2 is registered.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      }
+    ],
+    "projection": "formula"
+  },
+  "equality-pass": {
+    "rule": "activity_registry",
+    "verdict": "pass",
+    "reason": "Both unary relations contain a1 only.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      },
+      {
+        "scope": "relationship:Account.account_registered",
+        "formula": "Account.account_active"
+      }
+    ],
+    "projection": "formula",
+    "directions": [
+      "pass",
+      "pass"
+    ]
+  },
+  "equality-fail": {
+    "rule": "activity_registry",
+    "verdict": "fail",
+    "reason": "a2 is registered and inactive, so the second direction fails.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      },
+      {
+        "scope": "relationship:Account.account_registered",
+        "formula": "Account.account_active"
+      }
+    ],
+    "projection": "formula",
+    "directions": [
+      "pass",
+      "fail"
+    ]
+  },
+  "exclusion-pass": {
+    "rule": "active_not_flagged",
+    "verdict": "pass",
+    "reason": "The active and flagged relations contain different accounts.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "NOT EXISTS(Account.account_flagged)"
+      }
+    ],
+    "projection": "formula"
+  },
+  "exclusion-fail": {
+    "rule": "active_not_flagged",
+    "verdict": "fail",
+    "reason": "a1 is active and flagged.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "NOT EXISTS(Account.account_flagged)"
+      }
+    ],
+    "projection": "formula"
+  },
+  "ring-pass": {
+    "rule": "no_self_recommendation",
+    "verdict": "pass",
+    "reason": "a1 recommends a different account.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_recommends",
+        "formula": "Account != recommended"
+      }
+    ],
+    "projection": "formula"
+  },
+  "ring-fail": {
+    "rule": "no_self_recommendation",
+    "verdict": "fail",
+    "reason": "a1 recommends itself.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_recommends",
+        "formula": "Account != recommended"
+      }
+    ],
+    "projection": "formula"
+  },
+  "value-pass": {
+    "rule": "category_codes",
+    "verdict": "pass",
+    "reason": "The only category is Retail.",
+    "placements": [
+      {
+        "scope": "concept:Category",
+        "formula": "Category == 'Retail' OR Category == 'Business'"
+      }
+    ],
+    "projection": "formula"
+  },
+  "value-fail": {
+    "rule": "category_codes",
+    "verdict": "fail",
+    "reason": "Wholesale is outside the allowed categories.",
+    "placements": [
+      {
+        "scope": "concept:Category",
+        "formula": "Category == 'Retail' OR Category == 'Business'"
+      }
+    ],
+    "projection": "formula"
+  },
+  "cardinality-pass": {
+    "rule": "account_cap",
+    "verdict": "pass",
+    "reason": "Exactly two accounts are present.",
+    "placements": [
+      {
+        "scope": "ontology",
+        "formula": "COUNT[Account] <= 2"
+      }
+    ],
+    "projection": "formula"
+  },
+  "cardinality-fail": {
+    "rule": "account_cap",
+    "verdict": "fail",
+    "reason": "a3 is visible in the Account roster and in a balance tuple, so there are three Accounts.",
+    "placements": [
+      {
+        "scope": "ontology",
+        "formula": "COUNT[Account] <= 2"
+      }
+    ],
+    "projection": "formula"
+  },
+  "derivation-pass": {
+    "rule": "derivation:account_band",
+    "verdict": "pass",
+    "reason": "a1 is Retail, Retail is ordinary, and the sole claim is a1 in ordinary.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_band",
+        "formula": "Account.account_classified.category_band"
+      }
+    ],
+    "projection": "formula"
+  },
+  "derivation-fail": {
+    "rule": "derivation:account_band",
+    "verdict": "fail",
+    "reason": "Only Retail joins a1 to ordinary. Its missing claim and the spurious premium claim both fail; a cross product would incorrectly admit premium.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_band",
+        "formula": "Account.account_classified.category_band"
+      }
+    ],
+    "projection": "formula"
+  },
+  "frequency-scope-pass": {
+    "rule": "balance_count",
+    "verdict": "pass",
+    "reason": "Three links globally, but each account has at most two.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "COUNT[Account.account_balance] <= 2"
+      }
+    ],
+    "projection": "extension"
+  },
+  "frequency-duplicate-fail": {
+    "rule": "balance_count",
+    "verdict": "fail",
+    "reason": "GND counts three repeated rows. Ossie collapses them into one link, so this shape stays in the sidecar.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "COUNT[Account.account_balance] <= 2"
+      }
+    ],
+    "projection": "extension"
+  },
+  "mandatory-empty-vacuous": {
+    "rule": "balance_required",
+    "verdict": "vacuous",
+    "reason": "The covered balance list is empty. GND reports vacuous, while the Ossie existence condition would fail for the present accounts.",
+    "placements": [
+      {
+        "scope": "concept:Account",
+        "formula": "EXISTS(Account.account_balance)"
+      }
+    ],
+    "projection": "extension"
+  },
+  "guard-boundary-pass": {
+    "rule": "balance_ceiling",
+    "verdict": "pass",
+    "reason": "The boundary value 100 is included.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_balance",
+        "formula": "balance <= 100"
+      }
+    ],
+    "projection": "formula"
+  },
+  "value-business-pass": {
+    "rule": "category_codes",
+    "verdict": "pass",
+    "reason": "Business is the second admitted enum value.",
+    "placements": [
+      {
+        "scope": "concept:Category",
+        "formula": "Category == 'Retail' OR Category == 'Business'"
+      }
+    ],
+    "projection": "formula"
+  },
+  "equality-forward-fail": {
+    "rule": "activity_registry",
+    "verdict": "fail",
+    "reason": "a2 is active and unregistered; the reverse direction still holds.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_active",
+        "formula": "Account.account_registered"
+      },
+      {
+        "scope": "relationship:Account.account_registered",
+        "formula": "Account.account_active"
+      }
+    ],
+    "projection": "formula",
+    "directions": [
+      "fail",
+      "pass"
+    ]
+  },
+  "derivation-missing-fail": {
+    "rule": "derivation:account_band",
+    "verdict": "fail",
+    "reason": "The join produces a1 ordinary and the asserted extension is empty.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_band",
+        "formula": "Account.account_classified.category_band"
+      }
+    ],
+    "projection": "formula"
+  },
+  "derivation-many-pass": {
+    "rule": "derivation:account_band",
+    "verdict": "pass",
+    "reason": "Two distinct join keys yield exactly the two stated pairs.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_band",
+        "formula": "Account.account_classified.category_band"
+      }
+    ],
+    "projection": "formula"
+  },
+  "derivation-empty-pass": {
+    "rule": "derivation:account_band",
+    "verdict": "pass",
+    "reason": "The two input relations have no shared category and the expected extension is empty.",
+    "placements": [
+      {
+        "scope": "relationship:Account.account_band",
+        "formula": "Account.account_classified.category_band"
+      }
+    ],
+    "projection": "formula"
+  }
+}

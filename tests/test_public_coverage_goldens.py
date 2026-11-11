@@ -20,6 +20,10 @@ from typing import Any
 
 import pytest
 from support.cli_runner import run_main
+from support.recorded_version import as_recorded
+
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 
 _COVERAGE_HOLDER = tempfile.TemporaryDirectory(prefix="gnd-public-coverage-goldens-")
 CORPUS = Path(_COVERAGE_HOLDER.name)
@@ -95,7 +99,7 @@ def test_coverage_payload_matches_committed_golden_bytes(name: str) -> None:
         ["coverage", *answer["arguments"], "--format", "json"],
     )
     assert code == 0, stderr
-    assert stdout.encode("utf-8") == golden.read_bytes()
+    assert as_recorded(stdout.encode("utf-8"), RECORDED_AT) == golden.read_bytes()
 
 
 @pytest.mark.parametrize("name", TREES)

@@ -13,8 +13,12 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from jsonschema import Draft202012Validator
+from support.recorded_version import live_version
 
 from gnd.conformance.report import load_conformance_schema
+
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 
 JsonObject = dict[str, Any]
 CONFORMANCE_VALIDATOR = Draft202012Validator(load_conformance_schema())
@@ -94,7 +98,9 @@ def test_expense_generated_project_is_current_after_conversion() -> None:
     )
     CONFORMANCE_VALIDATOR.validate(live)
     assert code == 0
-    assert live == committed
+    # Issue 172: the payload was recorded at RECORDED_AT; the live one names the installed version.
+    assert live["gnd_version"] == live_version()
+    assert {**live, "gnd_version": RECORDED_AT} == committed
 
     for name in ("baseline.json", "post-evolution.json"):
         relative = f"examples/expense-tracker/conformance/{name}"

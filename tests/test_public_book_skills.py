@@ -12,7 +12,8 @@ import sys
 from pathlib import Path, PurePosixPath
 
 import pytest
-from test_public_book_runtime import _workspace
+from support.recorded_version import tree_at_live_version
+from test_public_book_runtime import RECORDED_AT, RECORDED_MEMBERS, _workspace
 
 from gnd.report import legacy_report_projection
 
@@ -31,16 +32,24 @@ def _install_fixtures():
     assert len(expanded) <= 65536
     payload = json.loads(expanded)
     assert payload["schema_version"] == 1 and len(payload["members"]) == 7
+    recorded = {}
     for name, member in payload["members"].items():
         path = PurePosixPath(name)
         assert path.parts and not path.is_absolute() and ".." not in path.parts and path.as_posix() == name
         data = base64.b64decode(member["data"], validate=True)
         assert len(data) <= 16384 and hashlib.sha256(data).hexdigest() == member["sha256"]
         assert member["mode"] == 420
-        target = REPO_ROOT.joinpath(*path.parts)
+        recorded[name] = data
+    # Issue 172: the walkthrough cites the digest of a conformance payload that carries the
+    # version. That payload is a member of the runtime container, so both are moved together
+    # and the citation follows the payload it was checked against. A member of this container
+    # replaces the runtime member of the same name, as it does on disk.
+    moved = tree_at_live_version({**RECORDED_MEMBERS, **recorded}, RECORDED_AT)
+    for name in recorded:
+        target = REPO_ROOT.joinpath(*PurePosixPath(name).parts)
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(data)
-        target.chmod(member["mode"])
+        target.write_bytes(moved[name])
+        target.chmod(420)
 _install_fixtures()
 
 

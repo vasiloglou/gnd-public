@@ -16,6 +16,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from support.recorded_version import live_version, structure, tree_as_recorded, unordered_structure
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLE = ROOT / "src/gnd/examples/refunds"
@@ -45,15 +46,58 @@ runner = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(runner)
 
 
-def walk_digests(cwd: Path) -> dict[str, str]:
-    """Run the commands page in cwd and return each written file's digest, the run directory normalized."""
+# Issue 172: the version the goldens were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
+#: The two files in which the version feeds digests of parts of the file itself. An induced
+#: constraint's provenance names the inducer and its version; the candidate model, each
+#: operation's element digest, the proposal named after the model's digest, the blast-radius
+#: report and the preview that binds them all follow from it. Only the product can re-derive
+#: those, so away from RECORDED_AT these two files are pinned by their structure: every byte
+#: except the version values and the digests, and which digests are equal to which. The
+#: preview also lists its blast-radius entries and its verbalization lines in the order of
+#: such a digest, so its structure is taken without the order of its lines.
+SELF_CITING = {"discovered.json": structure, "discovered.preview.json": unordered_structure}
+
+
+def assert_stated_digests_bind(cwd: Path) -> None:
+    """The digests the proposal and its preview state are the digests of what they name."""
+    from gnd.evolve.models import canonical_sha256
+
+    def text_sha(part):
+        return hashlib.sha256(part["text"].encode("utf-8")).hexdigest()
+
+    proposal = json.loads((cwd / "discovered.json").read_bytes())
+    preview = json.loads((cwd / "discovered.preview.json").read_bytes())
+    candidate = proposal["candidate_model"]
+    assert candidate["sha256"] == text_sha(candidate)
+    assert proposal["proposal_id"] == "discover-" + candidate["sha256"][:16]
+    assert preview["proposal"] == proposal
+    assert preview["proposal_sha256"] == canonical_sha256(proposal)
+    assert preview["candidate_model"] == candidate
+    assert preview["validation"]["model_sha256"] == candidate["sha256"]
+    assert preview["verbalization"]["sha256"] == text_sha(preview["verbalization"])
+    report = dict(preview["blast_radius"])
+    assert report.pop("report_sha256") == canonical_sha256(report)
+    assert report["proposal_sha256"] == preview["proposal_sha256"]
+    assert report["candidate_model_sha256"] == candidate["sha256"]
+    body = dict(preview)
+    assert body.pop("preview_sha256") == canonical_sha256(body)
+
+
+def walk_digests(cwd: Path) -> tuple[dict[str, str], dict[str, str]]:
+    """Run the commands page in cwd. Return each written file's digest as recorded, and the
+    structural digest of the self-citing files; the run directory is normalized in both."""
     python = Path(os.environ.get("GND_TUTORIAL_PYTHON", sys.executable)).absolute()
     assert runner.run_pages(runner.groups(ROOT)["induced"], cwd, python) > 0
-    digests = {}
-    for name in WRITTEN:
-        text = runner.without_run_dir((cwd / name).read_bytes(), cwd)
-        digests[name] = hashlib.sha256(text).hexdigest()
-    return digests
+    assert_stated_digests_bind(cwd)
+    raw = {name: (cwd / name).read_bytes() for name in WRITTEN}
+    written = tree_as_recorded(raw, RECORDED_AT)
+
+    def digest(data: bytes) -> str:
+        return hashlib.sha256(runner.without_run_dir(data, cwd)).hexdigest()
+
+    return ({name: digest(written[name]) for name in WRITTEN},
+            {name: digest(form(raw[name])) for name, form in SELF_CITING.items()})
 
 
 def test_t2_the_walk_writes_the_golden_files_under_two_hash_seeds(tmp_path, monkeypatch):
@@ -63,7 +107,37 @@ def test_t2_the_walk_writes_the_golden_files_under_two_hash_seeds(tmp_path, monk
         monkeypatch.setenv("PYTHONHASHSEED", seed)
         runs.append(walk_digests(tmp_path / f"seed-{seed}"))
     assert runs[0] == runs[1]
-    assert runs[0] == golden["files"]
+    exact, structural = runs[0]
+    assert structural == golden["structure"]
+    if live_version() != RECORDED_AT:
+        # The exact digests of the self-citing files hold at the recorded version only.
+        exact = {**exact, **{name: golden["files"][name] for name in SELF_CITING}}
+    assert exact == golden["files"]
+
+
+def test_t2_the_structural_form_keeps_everything_but_versions_and_digest_values():
+    a, b, c = "a" * 64, "b" * 64, "c" * 16
+    text = (f'{{"gnd_version": "9.9.9", "x": "{a}", "y": "{b}", "z": "{a}", "id": "discover-{c}", '
+            f'"inducer": {{"name": "gnd-discover", "version": "9.9.9"}}, "other": {{"name": "learner", "version": "9.9.9"}}}}')
+    assert structure(text.encode()) == (
+        b'{"gnd_version": "<V>", "x": "<sha256:0>", "y": "<sha256:1>", "z": "<sha256:0>", "id": "discover-<hex16:0>", '
+        b'"inducer": {"name": "gnd-discover", "version": "<V>"}, "other": {"name": "learner", "version": "9.9.9"}}')
+    assert structure(text.replace("9.9.9", "1.0.0", 1).encode()) == structure(text.encode())
+    assert structure(text.replace(a, "d" * 64).encode()) == structure(text.encode())
+    # A changed word, a digest that stops matching another, or another tool's version all show.
+    assert structure(text.replace('"x"', '"w"').encode()) != structure(text.encode())
+    assert structure(text.replace(f'"z": "{a}"', f'"z": "{b}"').encode()) != structure(text.encode())
+    assert structure(text.replace('"learner", "version": "9.9.9"', '"learner", "version": "1"').encode()) != structure(text.encode())
+    # The unordered form gives up the order of lines and nothing else.
+    # Digests are named within a line, so two digests of one line still match or differ.
+    rows = [{"ref": f"c[{d * 64}] is {d * 64}", "text": f"line {d}\nmore"} for d in "abc"]
+    listed = unordered_structure(json.dumps({"entries": rows}).encode())
+    assert unordered_structure(json.dumps({"entries": rows[::-1]}).encode()) == listed
+    assert unordered_structure(json.dumps({"entries": rows[:2]}).encode()) != listed
+    changed = [{**rows[0], "ref": f"c[{'a' * 64}] is {'d' * 64}"}, *rows[1:]]
+    assert unordered_structure(json.dumps({"entries": changed}).encode()) != listed
+    reworded = [{**rows[0], "text": "line a\nless"}, *rows[1:]]
+    assert unordered_structure(json.dumps({"entries": reworded}).encode()) != listed
 
 
 def test_t2_the_goldens_name_exactly_the_written_files():

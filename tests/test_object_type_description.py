@@ -20,11 +20,14 @@ import pytest
 from jsonschema import Draft202012Validator
 from ruamel.yaml import YAML
 from support.cli_runner import run_main
+from support.recorded_version import tree_as_recorded
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MODELS = REPO_ROOT / "tests" / "fixtures" / "models"
 LIBRARY = MODELS / "library.orm.yaml"
 BASELINE = REPO_ROOT / "tests" / "fixtures" / "induced_knowledge" / "ik1-baseline.json"
+# Issue 172: the version rows 4 and 5 of the baseline were recorded at.
+IK1_RECORDED_AT = "0.3.0"
 EVOLUTION_FIXTURE = REPO_ROOT / "tests" / "fixtures" / "phase4_reference" / "evolution.json"
 L = 4096
 MARKER = "ZZ-EXTRA-MARKER-7f3a"
@@ -599,9 +602,17 @@ def _capture(stem: str) -> dict[str, str]:
         assert _run([*gnd, "extract", "--out", f"{temp}/x", fixture])[0] == 0
         rows["3"] = _sha((Path(temp) / "x" / f"{stem}.projection.schema.json").read_bytes())
         assert _run([*gnd, "codegen", "--out", f"{temp}/p", fixture])[0] == 0
-        rows["4"] = _sha((Path(temp) / "p" / ".gnd-codegen.json").read_bytes().replace(temp.encode(), b"<T>"))
         code, out = _run([*gnd, "conformance", "--format", "json", fixture, f"{temp}/p"])
         assert code == 0
+        # Issue 172: rows 4 and 5 were recorded at IK1_RECORDED_AT. The manifest carries the
+        # version and the digest of a file that carries it, and the conformance payload cites
+        # the same file, so the project and the payload are taken as written at that version.
+        project = Path(temp) / "p"
+        tree = {path.relative_to(project).as_posix(): path.read_bytes()
+                for path in sorted(project.rglob("*")) if path.is_file()}
+        tree = tree_as_recorded({**tree, "<conformance stdout>": out}, IK1_RECORDED_AT)
+        rows["4"] = _sha(tree[".gnd-codegen.json"].replace(temp.encode(), b"<T>"))
+        out = tree["<conformance stdout>"]
         out = re.sub(rb'("gnd_version"\s*:\s*)"[^"]*"', rb'\1"<V>"', out.replace(temp.encode(), b"<T>"))
         rows["5"] = _sha(out)
     rows["6"] = _sha(_run([*gnd, "diff", "--format", "json", fixture, fixture])[1])

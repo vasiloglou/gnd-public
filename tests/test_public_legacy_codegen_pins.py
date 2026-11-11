@@ -9,7 +9,12 @@ import json
 import tempfile
 from pathlib import Path
 
+from support.recorded_version import tree_as_recorded
+
 from gnd.cli import main
+
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 
 
 def _public_legacy_codegen():
@@ -49,7 +54,10 @@ def test_legacy_string_codegen_bytes_are_pinned(tmp_path: Path) -> None:
     with contextlib.redirect_stdout(stdout), contextlib.chdir(CORPUS):
         code = main(["codegen", "legacy-derived.orm.yaml", "--out", str(out)])
     assert code == 0
-    generated = _tree_bytes(out)
+    # Issue 172: the answer tree was recorded at RECORDED_AT. The fresh tree is compared as
+    # written at that version: its version fields, and the manifest's digest of the one file
+    # that carries one, checked against that file before it is re-derived.
+    generated = tree_as_recorded(_tree_bytes(out), RECORDED_AT)
     expected = _tree_bytes(ANSWER)
     assert sorted(generated) == sorted(expected)
     for relpath, data in expected.items():

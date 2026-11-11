@@ -1,0 +1,29 @@
+version: 2
+model_id: urn:gnd:ga3:architecture@1
+source: {kind: text-conversation, confidence: standard, mode: one-shot}
+object_types:
+  - {id: component, name: Component, kind: value, primitive: String}
+  - {id: area, name: Area, kind: value, primitive: String}
+  - {id: rank, name: Rank, kind: value, primitive: Integer}
+  - {id: flag, name: Flag, kind: value, primitive: Boolean}
+fact_types:
+  - id: component_uses
+    reading: "{Component} uses {Component}"
+    roles:
+      - {object_type: component, role_name: source}
+      - {object_type: component, role_name: target}
+  - id: component_in_area
+    reading: "{Component} is in {Area}"
+    roles:
+      - {object_type: component, role_name: component}
+      - {object_type: area, role_name: area}
+  - id: rank_enables
+    reading: "{Rank} enables {Flag}"
+    roles:
+      - {object_type: rank, role_name: rank}
+      - {object_type: flag, role_name: flag}
+  - id: rank_ready
+    reading: "{Rank} is ready with {Flag}"
+    roles:
+      - {object_type: rank, role_name: rank}
+      - {object_type: flag, role_name: flag}

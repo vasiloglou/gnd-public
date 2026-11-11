@@ -1,0 +1,25 @@
+{
+  "population": {
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd:ga3:architecture@1",
+    "source": "fixture",
+    "covers": ["component_uses", "component_in_area", "rank_enables", "rank_ready"]
+  },
+  "facts": {
+    "component_uses": [
+      {"source": "a", "target": "b"},
+      {"source": "a", "target": "c"},
+      {"source": "a", "target": "legacy"},
+      {"source": "old", "target": "legacy"}
+    ],
+    "component_in_area": [
+      {"component": "a", "area": "cli"},
+      {"component": "b", "area": "cli"},
+      {"component": "c", "area": "cli"},
+      {"component": "old", "area": "core"},
+      {"component": "legacy", "area": "core"}
+    ],
+    "rank_enables": [{"rank": 7, "flag": true}],
+    "rank_ready": [{"rank": 7, "flag": true}]
+  }
+}

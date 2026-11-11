@@ -89,30 +89,46 @@ def test_t5_unscoped_index_reads_stay_cheap():
     assert time.perf_counter() - started < 1.0
 
 
-def test_each_converted_reader_builds_the_index_once_per_call(models, monkeypatch):
-    """Frequency control: a converted read must not move inside a loop."""
+def _count_reads(monkeypatch, reader, model):
+    calls = []
+    original = ModelIndex.iter_fact_types_shared
+    monkeypatch.setattr(ModelIndex, 'iter_fact_types_shared',
+                        lambda self: calls.append(1) or original(self))
+    reader(model)
+    monkeypatch.setattr(ModelIndex, 'iter_fact_types_shared', original)
+    return len(calls)
+
+
+def test_each_converted_reader_reads_the_fact_types_once_per_call(models, monkeypatch):
+    """Frequency control: a converted read must not move inside a loop.
+
+    It counts reads of the fact types, not constructions of the index: a reader that
+    built the index repeatedly without reading it would pass.
+    """
     from gnd.codegen.emit import render_skill_document
     from gnd.coverage import _element_universe
     from gnd.diff import _structured
     from gnd.extract.projection import _build_projection
     from gnd.synth.frontier import frontier_codes_for
+    from gnd.vocabulary import render_verbalization
 
-    calls = []
-    original = ModelIndex.iter_fact_types_shared
-    monkeypatch.setattr(ModelIndex, 'iter_fact_types_shared',
-                        lambda self: calls.append(1) or original(self))
     readers = {
         '_structured': _structured,
         'frontier_codes_for': frontier_codes_for,
         '_build_projection': _build_projection,
         '_element_universe': _element_universe,
+        'render_verbalization': render_verbalization,
         'render_skill_document': lambda model: render_skill_document(
             model, model_path='m.orm.yaml', package='pkg', stem='m'),
     }
-    model = load_model(LARGEST)
+    # The skill document reads fact types only for a model with a structured derivation.
+    structured = next(model for _, model in models
+                      if len(model.fact_types) > 1 and any(isinstance(row.get('derivation_rule'), dict) for row in model.fact_types))
     for name, reader in readers.items():
-        calls.clear()
-        reader(model)
-        # The skill document reads fact types only when the model has a structured derivation.
-        expected = {0, 1} if name == 'render_skill_document' else {1}
-        assert len(calls) in expected, (name, len(calls))
+        assert _count_reads(monkeypatch, reader, structured) == 1, name
+
+    def looped(model):  # negative control: one read per fact type
+        for _ in model.fact_types:
+            list(ModelIndex.for_model(model).iter_fact_types_shared())
+
+    assert _count_reads(monkeypatch, looped, structured) == len(structured.fact_types) > 1

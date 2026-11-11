@@ -283,3 +283,24 @@ keeps its separate owner authorization.
     functions are judged by the full lane only. R2's request for recorded
     baseline bytes for all ten, and for a per-caller indexing-frequency
     control, was not done.
+15. **R2's remainder was applied after the first PR push.**
+    `evidence/compare_outputs.py` digests the outputs of six converted
+    functions over the 225 loadable models, once importing the source tree of
+    `793618f1` and once the head tree; the 1,350 digests are equal
+    (`evidence/outputs-head.json`). A frequency test counts reads of the fact
+    types per call, with a negative control.
+16. **Second review, R3 (reproduced): the index reads a dump, not the live
+    rows.** For a `Model` built in code whose rows hold a value that
+    `model_dump()` alters (the reviewer's case: a zero-field dataclass as
+    `derivation_rule`), `_structured` returned `True` at base and returns
+    `False` at head. T1 could not see this: every fixture is loaded from YAML,
+    where the dump equals the rows. This holds for every `ModelIndex` read in
+    the repository, not only these ten. It is recorded as a limit, not
+    repaired: the supported input is a model whose rows are plain JSON
+    values, which is what `load_model` produces.
+17. **R4 applied in part.** The frequency test now uses a model with a
+    structured rule, so the skill-document read runs, covers six readers and
+    has a negative control. It counts reads of the fact types, not
+    constructions of the index, and does not cover the four readers that sit
+    inside commands.
+18. **R5 applied:** the README binds each gate result to the commit it ran on.

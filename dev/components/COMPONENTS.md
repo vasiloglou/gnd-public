@@ -2590,6 +2590,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - notes: No callers appear in the supplied package/test/script inventory; this helper does not itself check evidence freshness.
 
 
+### tools.ossie_oracle
+- does: Run pinned Ossie tools in isolated subprocesses and compare converter declarations with the exported ontology.
+- verbs: Ossie oracle, offline converter, PyRel declaration comparison, consumer limitations, parser validation, pinned ontology
+- status: canonical
+- modules: tools/ossie_oracle.py, tools/ossie_consumer.py
+- uses: (none)
+- used_by: (none)
+- tests: tests/test_ossie_consumer.py, tests/test_ossie_external_oracle.py
+- notes: Converter execution is opt-in. The declaration comparison is static and leaves the product loss report independent of the consumer.
+
+
 ### model.ossie_import
 - does: Read a pinned Apache Ossie ontology or bound GND bundle offline and produce an admitted ORM model and a per-pointer loss report.
 - verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, plan_ossie_import

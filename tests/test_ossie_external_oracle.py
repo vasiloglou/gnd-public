@@ -170,3 +170,152 @@ def test_pinned_formula_keywords_are_case_sensitive(oracle, tmp_path):
     path.write_text(json.dumps(ontology))
     refused = oracle.parse(path)
     assert refused.returncode == 1 and "Unable to parse" in refused.stderr
+
+
+def _consumer_formulas(document):
+    scopes = [("", document)]
+    for i, concept in enumerate(document["ontology"]):
+        pointer = f"/ontology/{i}"
+        scopes.append((pointer, concept))
+        scopes.extend(
+            (f"{pointer}/relationships/{j}", rel)
+            for j, rel in enumerate(concept.get("relationships", ()))
+        )
+    return [
+        {"pointer": f"{pointer}/{field}/{i}", "field": field, "formula": formula}
+        for pointer, scope in scopes
+        for field in ("requires", "derived_by")
+        for i, formula in enumerate(scope.get(field, ()))
+    ]
+
+
+def _consumer_compare(oracle, root, name, document, gnd_model=None):
+    import hashlib
+    from subprocess import TimeoutExpired
+
+    from gnd.errors import ModelLoadError, ModelValidationError
+    from gnd.export.pyrel_rules import render as render_rules
+    from gnd.export.pyrel_runtime import ExportInputError
+    from tools.ossie_consumer import call_counts, ontology_declarations, pyrel_declarations
+    from tools.ossie_oracle import convert_offline
+
+    root.mkdir()
+    path = root / "ontology.json"
+    source = root / "consumer.py"
+    path.write_bytes(document)
+    authored = json.loads(document)
+    formulas = _consumer_formulas(authored)
+    result = {
+        "case": name,
+        "ontology_sha256": hashlib.sha256(document).hexdigest(),
+        "formulas": formulas,
+        "limitations": [],
+    }
+    if gnd_model is not None:
+        try:
+            rules = render_rules(gnd_model, "duckdb").encode()
+        except (ExportInputError, ModelLoadError, ModelValidationError) as error:
+            result["gnd_rules"] = {"refused": str(error)}
+        else:
+            result["gnd_rules"] = {
+                "require": call_counts(rules)["require"],
+                "sha256": hashlib.sha256(rules).hexdigest(),
+            }
+
+    try:
+        conversion = convert_offline(oracle, path, source)
+    except TimeoutExpired:
+        result.update(exit=124, diagnostics=["ossie-oracle: converter timed out"])
+        return result
+    result["exit"] = conversion.returncode
+    result["diagnostics"] = [
+        line.replace(str(oracle.root), "$ORACLE").replace(str(root), "$CASE")
+        for line in conversion.stderr.splitlines()
+        if "Warning:" in line or line.startswith(("ValueError:", "NotImplementedError:", "KeyError:", "AssertionError:", "TypeError:", "RuntimeError:"))
+    ]
+    if conversion.returncode != 0:
+        if not result["diagnostics"]:
+            result["diagnostics"] = conversion.stderr.splitlines()[-1:]
+        return result
+
+    try:
+        generated = source.read_bytes()
+        counts = call_counts(generated)
+        observed = pyrel_declarations(generated)
+    except (OSError, SyntaxError, TypeError, ValueError) as error:
+        result.update(exit=3, diagnostics=[f"ossie-oracle: invalid generated source ({type(error).__name__})"])
+        return result
+    result["pyrel_sha256"] = hashlib.sha256(generated).hexdigest()
+    result["calls"] = {
+        name: counts[name]
+        for name in ("Concept", "Property", "Relationship", "identify_by", "define", "require")
+    }
+    result["declaration_difference"] = ontology_declarations(authored).difference(observed)
+    if counts["require"] == 0:
+        result["limitations"].extend(
+            {**formula, "reason": "converter-dropped-requires"}
+            for formula in formulas if formula["field"] == "requires"
+        )
+    return result
+
+
+def test_offline_consumer_census_and_formula_controls(oracle, tmp_path):
+    import hashlib
+
+    from tools.ossie_oracle import CONVERTERS_COMMIT, OSSIE_COMMIT
+
+    os0 = ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS0"
+    wheel = "relationalai-1.39.0-py3-none-any.whl"
+    expected = json.loads((os0 / "pins.json").read_bytes())["relationalai_wheels_sha256"][wheel]
+    assert hashlib.sha256((oracle.root / wheel).read_bytes()).hexdigest() == expected
+
+    cases = []
+    for i, relative in enumerate(CENSUS):
+        if relative in INCLUDE_ROOTS:
+            continue
+        model = ROOT / relative
+        bundle = render_ossie(model, output_format="json")
+        cases.append(_consumer_compare(oracle, tmp_path / f"case-{i}", relative, bundle.document, model))
+    assert len(cases) == 38
+
+    corpus_path = (
+        ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS2/corpus-r2/model.orm.json"
+    )
+    corpus = render_ossie(corpus_path, output_format="json").document
+    positive = _consumer_compare(oracle, tmp_path / "positive", "reviewed-formula-corpus", corpus, corpus_path)
+    controls = []
+    for operator, formula in {
+        "OR": "Account.account_active OR Account.account_registered",
+        "EXISTS": "EXISTS(Account.account_active)",
+    }.items():
+        mutated = json.loads(corpus)
+        for concept in mutated["ontology"]:
+            for relationship in concept.get("relationships", ()):
+                relationship.pop("derived_by", None)
+                if relationship["name"] == "account_flagged":
+                    relationship["derived_by"] = [formula]
+        controls.append(_consumer_compare(
+            oracle, tmp_path / operator, operator, json.dumps(mutated).encode(),
+        ))
+
+    evidence = {
+        "schema": "gnd-ossie-consumer-observations/1",
+        "ossie_commit": OSSIE_COMMIT,
+        "converter_commit": CONVERTERS_COMMIT,
+        "relationalai_version": "1.39.0",
+        "relationalai_wheel_sha256": expected,
+        "cases": cases,
+        "positive_control": positive,
+        "refusal_controls": controls,
+    }
+    out = os.environ.get("GND_OSSIE_CONSUMER_OUTPUT")
+    if out:
+        Path(out).write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
+
+    failures = [row for row in cases if row["exit"] or row["declaration_difference"]]
+    assert not failures, [(row["case"], row.get("declaration_difference"), row["diagnostics"]) for row in failures]
+    assert positive["exit"] == 0 and not positive["declaration_difference"], positive
+    assert positive["calls"]["define"] >= 1 and positive["limitations"], positive
+    for case in controls:
+        assert case["exit"] != 0
+        assert any("NotImplementedError:" in line and case["case"] in line for line in case["diagnostics"]), case

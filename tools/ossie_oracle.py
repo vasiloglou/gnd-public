@@ -73,3 +73,64 @@ class OssieOracle:
             cwd=self.root,
             env={"PATH": os.defpath, "HOME": str(self.root), "PYTHONUTF8": "1"},
         )
+
+
+_CONVERT = r"""
+import importlib.metadata
+import os
+import socket
+import sys
+from pathlib import Path
+
+checkout, document, output = map(Path, sys.argv[1:])
+os.environ["RAI_CONFIG_FILE_PATH"] = str(checkout / "relationalai/tests/config/raiconfig.yaml")
+sys.path[:0] = [str(checkout / "ontology/src"), str(checkout / "relationalai/src")]
+
+
+def refuse_connection(event, args):
+    if event in {"socket.connect", "socket.getaddrinfo"}:
+        raise RuntimeError("ossie-oracle: offline socket refused")
+
+
+sys.addaudithook(refuse_connection)
+try:
+    socket.getaddrinfo("example.invalid", 443)
+except RuntimeError as error:
+    assert str(error) == "ossie-oracle: offline socket refused"
+else:
+    raise AssertionError("offline socket control was inactive")
+
+assert importlib.metadata.version("relationalai") == "1.39.0"
+from ossie_ontology.parser import OssieParser
+from ossie_relationalai import OssieToRelationalAIConverter, declared_table
+from relationalai.semantics.metamodel.pyrel_codegen import to_pyrel
+
+model = OssieToRelationalAIConverter.convert(
+    OssieParser().parse(document),
+    table_provider=declared_table,
+)
+source = to_pyrel(model.base_model().to_metamodel()).encode("utf-8")
+if len(source) > 10 * 1024 * 1024:
+    raise ValueError("ossie-oracle: generated source exceeds size cap")
+output.write_bytes(source)
+"""
+
+
+def convert_offline(
+    oracle: OssieOracle,
+    document: Path,
+    output: Path,
+    *,
+    checkout: Path | None = None,
+    python: Path | None = None,
+) -> subprocess.CompletedProcess[str]:
+    """Emit PyRel source in the isolated process, without executing that source."""
+    source = checkout or oracle.root / "converters"
+    config = source / "relationalai/tests/config/raiconfig.yaml"
+    assert hashlib.sha256(config.read_bytes()).hexdigest() == (
+        "bd5ee17aa037bfcf87de1f0800e7fa737e2f922ba62facc351414ace26b15276"
+    )
+    return oracle._run(
+        python or oracle.root / "c/bin/python", "-I", "-c", _CONVERT,
+        source.resolve(), document.resolve(), output.resolve(),
+    )

@@ -84,7 +84,7 @@ RN3 is done and recorded ([record](005-phase-RN3.md)): the
 post-publication patches and a stale-text check. Review: one reviewer
 (Codex, `revise`, H1 to H9, all fixed).
 
-**get-nick-done 0.3.0 is published** (2026-11-11T15:36:42Z; [record](006-publication.md)): the served files equal the retained `4c07c0e6` candidate, tag `v0.3.0` and the GitHub release exist, and the post-publication patches are applied. The milestone close is next.
+**get-nick-done 0.3.0 is published** (2026-11-11T15:36:42Z; [record](006-publication.md)): the served files equal the retained `4c07c0e6` candidate, tag `v0.3.0` and the GitHub release exist, and the post-publication patches are applied. PR 167 merged as `7d86dc35`. The [milestone close](007-milestone-close.md) is drafted and **not ruled**: the closing lane at `7d86dc35` is clean (19,016 passed, the 2 known errors), the close review has not run, and the sweep's proposed dispositions await the owner.
 
 Before that: the three preparation phases were completed with nothing published. The
 publication stage is the owner's (RN-D5): check the files and the version,

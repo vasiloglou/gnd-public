@@ -60,7 +60,9 @@ unsupported. This feature requires the development checkout.
   `version: 5` and uses two new fields, `includes` and `fact_type_constraints`
   ([formats](reference/formats.md)). **GND 0.2.0 cannot read a version 5
   model**: its schema refuses the version and both fields. Models at earlier
-  versions are unchanged.
+  versions are unchanged. A command that does not support such a model yet
+  refuses it with `include:unsupported-route` before it loads anything;
+  `gnd export ossie` and `gnd export pyrel` are among them.
 - **Evolving an included vocabulary.** A proposal can re-pin an include
   (`repin-include`), and a preview of such a model carries `before_includes`
   and `candidate_includes`. `gnd evolve preview --previous-include ID=PATH`

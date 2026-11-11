@@ -83,6 +83,8 @@ def main():
                 result["added_require_tasks"] = (
                     result["metamodel_require_tasks"] - baseline["metamodel_require_tasks"]
                 )
+            if result.get("added_require_tasks") == 1 and result.get("calls", {}).get("require") == 0:
+                result["source_omission"] = "RelationalAI 1.39.0 omits this value-only tuple requirement"
             controls.append(result)
 
     args.out.write_text(json.dumps({
@@ -97,8 +99,12 @@ def main():
     assert len(cases) == 38 and len(controls) == 8
     assert all(not row.get("declaration_difference") for row in [*cases, *controls])
     reviewed = json.loads((MILESTONE / "evidence/OS4/reviewed/consumer-limitations.json").read_bytes())
-    baseline_failures = {row["case"] for row in reviewed["cases"] if row["exit"]}
-    assert {row["case"] for row in cases if row["exit"]} == baseline_failures
+    baseline_failures = {row["case"]: row for row in reviewed["cases"] if row["exit"]}
+    actual_failures = {row["case"]: row for row in cases if row["exit"]}
+    assert actual_failures.keys() == baseline_failures.keys()
+    for name, failed in actual_failures.items():
+        assert failed["exit"] == baseline_failures[name]["exit"]
+        assert set(baseline_failures[name]["diagnostics"]) <= set(failed["diagnostics"])
     assert all(row["exit"] == 0 for row in controls)
     assert all(row["calls"]["require"] == 0 for row in controls)
     expected_refusals = {

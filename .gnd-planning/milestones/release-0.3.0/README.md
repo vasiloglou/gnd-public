@@ -9,12 +9,14 @@ record](001-plan-gate.md)). r1 was reviewed by one
 reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
 not re-reviewed. No phase spec is approved. `auto=false`.**
 
-- [Plan (r2, approved; §12 amendment proposed, not ruled)](notes/release-0.3.0-plan.md)
+- [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
+- [RN0 spec (awaiting owner review)](notes/phase-RN0-spec.md)
 - [RN1 spec (blocked draft r2)](notes/phase-RN1-spec.md)
 - [Codex review of r1](evidence/plan-review-r1/codex-review.md)
 - [E1 results: the bump moves 35 tests; main's lane is red by 26](evidence/e1/README.md)
 
-Phases: RN1 candidate content (version, lock, manifests, release notes with
+Phases: RN0 repair of main's default lane (added by the §12 amendment); RN1
+candidate content (version, lock, manifests, release notes with
 the Ossie block); RN2 candidate build and installed acceptance; RN3
 publication hand-over; then a publication stage of owner acts (RN-D5, ruled),
 each on the owner's request at that time; close.
@@ -31,5 +33,10 @@ the 0.2.0 bump, plus 4 release-version cases the notes edit settles. It also
 showed main's default lane red by 26 tests: 6 since model composition, 20
 more since the Ossie merge.
 
-Next action: the owner rules RN-D12 (plan §12): repair main's lane in a new
-phase RN0 before RN1, or not.
+RN-D12 ruled (owner, 2026-11-10): "Yes, add RN0". RN0's spec classifies the
+24 red guards: 11 are stale counts, pins or inventories and one is a missing
+guard entry; 12 report real findings in the Ossie modules (entry-point
+imports without a policy row, two query budgets exceeded, JSON read outside
+the shared reader, identity sites outside the exact lists).
+
+Next action: the owner rules the RN0 spec gate and its decisions D1 to D6.

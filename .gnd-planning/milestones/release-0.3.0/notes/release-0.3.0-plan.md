@@ -403,7 +403,7 @@ The reviewer could not run the suite, reach PyPI, GitHub environments or
 beast-3; N5, part of N6 and N22 stand on this session's observations only.
 r2's repairs have no review opinion.
 
-## 12. Amendment proposed after E1 (2026-11-11 UTC; not ruled)
+## 12. Amendment after E1 (2026-11-11 UTC; approved by the owner: "Yes, add RN0", 2026-11-10 local)
 
 Raised by experiment E1 ([results](../evidence/e1/README.md)). The approved r2
 wording is kept above; this section changes nothing until the owner rules.
@@ -426,5 +426,10 @@ or imports the layer map forbids). E1 did not examine that.
 |---|---|---|---|
 | RN-D12 | Does 0.3.0 wait for main's default lane to be repaired? | Yes: a new phase RN0, before RN1, with its own spec and owner gate. It classifies each of the 24 as stale pin or real violation, re-records the first kind with the reason, repairs the second kind or registers a counted exception where the repository's rules allow one, and adds the missing packaging guard. RN1 keeps M10 and M11 and its approved scope. RN2 does not build until the base lane shows only the 2 known errors | Releasing with the guards red ships code the repository's own checks reject, leaves R5 without its guard, and makes every later lane comparison start from 26 failures. Folding the repair into RN1 mixes source-structure work into a phase approved for content only |
 
-Until RN-D12 is ruled, RN1 stays blocked: the digests it must list are taken
-on a base that RN0 would change.
+**Ruled (o, 2026-11-10): "Yes, add RN0"**, answering "Should 0.3.0 wait for
+a repair phase (RN0) that gets main's test lane green first?". The phase order
+is RN0, RN1, RN2, RN3, publication stage, close. RN0's spec is
+[phase-RN0-spec.md](phase-RN0-spec.md) and needs its own owner gate.
+
+RN1 stays blocked until RN0 is on main: the digests it must list are taken on
+a base that RN0 changes.

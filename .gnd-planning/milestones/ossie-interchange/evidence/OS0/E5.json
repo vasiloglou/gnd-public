@@ -1,0 +1,99 @@
+{
+  "limits": "Validating pinned upstream examples and one fault pair. The check order is observed for these faults only.",
+  "valid": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "ossie/examples/flights.ontology.yaml"
+      ],
+      "exit": 0,
+      "stdout": "Validation PASSED: flights.ontology.yaml\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "ossie/examples/flights.ontology.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    }
+  },
+  "undeclared_role_concept": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "input/e5-unknown-role.yaml"
+      ],
+      "exit": 1,
+      "stdout": "\nValidation FAILED with 1 error(s):\n\n  [Reference] Relationship 'CancelationReason.code' has a role played by unknown concept 'GndOs0Undeclared'\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e5-unknown-role.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValueError: Role concept 'GndOs0Undeclared' in relationship 'CancelationReason.code' is not declared in the ontology.\n",
+      "stderr": ""
+    }
+  },
+  "unknown_role_and_wrong_version_type": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "input/e5-schema-and-name.yaml"
+      ],
+      "exit": 1,
+      "stdout": "\nValidation FAILED with 2 error(s):\n\n  [Schema] version: 700 is not of type 'string'\n  [Schema] version: '0.3.0.dev0' was expected\n\nSemantic checks skipped until schema errors are fixed.\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e5-schema-and-name.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValidationError: 1 validation error for OssieSpec\nversion\n  Input should be a valid string [type=string_type, input_value=700, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.14/v/string_type\n",
+      "stderr": ""
+    }
+  },
+  "authored_refunds": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "cases/refunds.yaml"
+      ],
+      "exit": 0,
+      "stdout": "Validation PASSED: refunds.yaml\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "cases/refunds.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    }
+  }
+}

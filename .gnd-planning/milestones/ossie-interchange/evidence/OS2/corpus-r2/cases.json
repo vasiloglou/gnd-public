@@ -1,0 +1,360 @@
+{
+  "base": {
+    "instances": {
+      "account": [
+        "a1",
+        "a2"
+      ]
+    },
+    "facts": {
+      "account_balance": [
+        {
+          "account": "a1",
+          "balance": 40
+        },
+        {
+          "account": "a2",
+          "balance": 60
+        }
+      ],
+      "account_active": [
+        {
+          "account": "a1"
+        }
+      ],
+      "account_registered": [
+        {
+          "account": "a1"
+        }
+      ],
+      "account_flagged": [
+        {
+          "account": "a2"
+        }
+      ],
+      "account_recommends": [
+        {
+          "account": "a1",
+          "recommended": "a2"
+        }
+      ],
+      "account_classified": [
+        {
+          "account": "a1",
+          "category": "Retail"
+        }
+      ],
+      "category_band": [
+        {
+          "category": "Retail",
+          "band": "ordinary"
+        }
+      ],
+      "account_band": [
+        {
+          "account": "a1",
+          "band": "ordinary"
+        }
+      ]
+    },
+    "population": {
+      "model": "model.orm.json",
+      "model_id": "ossie_semantic_cases",
+      "source": "fixture",
+      "covers": [
+        "account_balance",
+        "account_active",
+        "account_registered",
+        "account_flagged",
+        "account_recommends",
+        "account_classified",
+        "category_band",
+        "account_band"
+      ]
+    }
+  },
+  "cases": {
+    "guard-pass": {},
+    "guard-fail": {
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 40
+          },
+          {
+            "account": "a2",
+            "balance": 120
+          }
+        ]
+      }
+    },
+    "mandatory-pass": {},
+    "mandatory-fail": {
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 40
+          }
+        ]
+      }
+    },
+    "frequency-pass": {},
+    "frequency-fail": {
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 10
+          },
+          {
+            "account": "a1",
+            "balance": 20
+          },
+          {
+            "account": "a1",
+            "balance": 30
+          },
+          {
+            "account": "a2",
+            "balance": 60
+          }
+        ]
+      }
+    },
+    "subset-pass": {},
+    "subset-fail": {
+      "facts": {
+        "account_registered": [
+          {
+            "account": "a2"
+          }
+        ]
+      }
+    },
+    "equality-pass": {},
+    "equality-fail": {
+      "facts": {
+        "account_registered": [
+          {
+            "account": "a1"
+          },
+          {
+            "account": "a2"
+          }
+        ]
+      }
+    },
+    "exclusion-pass": {},
+    "exclusion-fail": {
+      "facts": {
+        "account_flagged": [
+          {
+            "account": "a1"
+          }
+        ]
+      }
+    },
+    "ring-pass": {},
+    "ring-fail": {
+      "facts": {
+        "account_recommends": [
+          {
+            "account": "a1",
+            "recommended": "a1"
+          }
+        ]
+      }
+    },
+    "value-pass": {},
+    "value-fail": {
+      "facts": {
+        "account_classified": [
+          {
+            "account": "a1",
+            "category": "Wholesale"
+          }
+        ]
+      }
+    },
+    "cardinality-pass": {},
+    "cardinality-fail": {
+      "instances": {
+        "account": [
+          "a1",
+          "a2",
+          "a3"
+        ]
+      },
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 40
+          },
+          {
+            "account": "a2",
+            "balance": 60
+          },
+          {
+            "account": "a3",
+            "balance": 70
+          }
+        ]
+      }
+    },
+    "derivation-pass": {},
+    "derivation-fail": {
+      "facts": {
+        "account_band": [
+          {
+            "account": "a1",
+            "band": "premium"
+          }
+        ],
+        "category_band": [
+          {
+            "category": "Retail",
+            "band": "ordinary"
+          },
+          {
+            "category": "Business",
+            "band": "premium"
+          }
+        ]
+      }
+    },
+    "frequency-scope-pass": {
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 10
+          },
+          {
+            "account": "a1",
+            "balance": 20
+          },
+          {
+            "account": "a2",
+            "balance": 30
+          }
+        ]
+      }
+    },
+    "frequency-duplicate-fail": {
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 40
+          },
+          {
+            "account": "a1",
+            "balance": 40
+          },
+          {
+            "account": "a1",
+            "balance": 40
+          },
+          {
+            "account": "a2",
+            "balance": 60
+          }
+        ]
+      }
+    },
+    "mandatory-empty-vacuous": {
+      "facts": {
+        "account_balance": []
+      }
+    },
+    "guard-boundary-pass": {
+      "facts": {
+        "account_balance": [
+          {
+            "account": "a1",
+            "balance": 100
+          },
+          {
+            "account": "a2",
+            "balance": 60
+          }
+        ]
+      }
+    },
+    "value-business-pass": {
+      "facts": {
+        "account_classified": [
+          {
+            "account": "a1",
+            "category": "Business"
+          }
+        ]
+      }
+    },
+    "equality-forward-fail": {
+      "facts": {
+        "account_active": [
+          {
+            "account": "a1"
+          },
+          {
+            "account": "a2"
+          }
+        ]
+      }
+    },
+    "derivation-missing-fail": {
+      "facts": {
+        "account_band": []
+      }
+    },
+    "derivation-many-pass": {
+      "facts": {
+        "account_classified": [
+          {
+            "account": "a1",
+            "category": "Retail"
+          },
+          {
+            "account": "a2",
+            "category": "Business"
+          }
+        ],
+        "category_band": [
+          {
+            "category": "Retail",
+            "band": "ordinary"
+          },
+          {
+            "category": "Business",
+            "band": "premium"
+          }
+        ],
+        "account_band": [
+          {
+            "account": "a1",
+            "band": "ordinary"
+          },
+          {
+            "account": "a2",
+            "band": "premium"
+          }
+        ]
+      }
+    },
+    "derivation-empty-pass": {
+      "facts": {
+        "category_band": [
+          {
+            "category": "Business",
+            "band": "premium"
+          }
+        ],
+        "account_band": []
+      }
+    }
+  }
+}

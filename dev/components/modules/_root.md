@@ -716,6 +716,16 @@ Deterministic, complete stakeholder verbalization of an ORM model.
 | `check_fact_type_selection(fact_types) -> None` | function | 706 | The one argument check for a fact-type selection: None or a list or tuple of str. |
 | `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 715 | Render each selected derived fact type's rule in stable id order. |
 
+## gnd.ossie_import — `src/gnd/ossie_import.py`
+Components: model.ossie_import
+Bounded, offline import of the pinned Apache Ossie ontology dialect.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
+| `OssieImportResult` | class | 58 | (no docstring) |
+| `plan_ossie_import(path) -> OssieImportResult` | function | 647 | Admit one standalone ontology or bound bundle without network access. |
+
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output
 (no docstring)
@@ -923,13 +933,14 @@ Public filesystem seams; variants retain predecessor behavior.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `InstallError` | class(Exception) | 24 | Base for every failure this module raises. |
-| `InstallPathError` | class(InstallError) | 28 | A relative path would resolve outside its target root, or is not relative. |
-| `safe_destination(root, relpath) -> Path` | function | 87 | The destination ``root / relpath``, or :class:`InstallPathError`. |
-| `LeafIdentity` | class(BaseModel) | 260 | Leaf identity captured by planning and revalidated at mutation time. |
-| `NotRegularFileError` | class(OSError) | 528 | A caller path names a FIFO, socket, device or directory, not a regular file. |
-| `open_regular(path) -> int` | function | 532 | Open a caller path for reading; never block waiting for a FIFO writer. |
-| `file_sha256(path) -> str` | function | 549 | Stream a stable regular leaf; never block waiting for a FIFO writer. |
+| `InstallError` | class(Exception) | 25 | Base for every failure this module raises. |
+| `InstallPathError` | class(InstallError) | 29 | A relative path would resolve outside its target root, or is not relative. |
+| `safe_destination(root, relpath) -> Path` | function | 88 | The destination ``root / relpath``, or :class:`InstallPathError`. |
+| `LeafIdentity` | class(BaseModel) | 261 | Leaf identity captured by planning and revalidated at mutation time. |
+| `NotRegularFileError` | class(OSError) | 529 | A caller path names a FIFO, socket, device or directory, not a regular file. |
+| `publish_new_files(outputs) -> None` | function | 533 | Stage a create-once set, then publish in the caller's order. |
+| `open_regular(path) -> int` | function | 606 | Open a caller path for reading; never block waiting for a FIFO writer. |
+| `file_sha256(path) -> str` | function | 623 | Stream a stable regular leaf; never block waiting for a FIFO writer. |
 
 ## gnd.semantic_adapter — `src/gnd/semantic_adapter.py`
 Components: semantics.snapshot_adapter

@@ -1,0 +1,322 @@
+{
+  "version": 1,
+  "model_id": "ossie_semantic_cases",
+  "object_types": [
+    {
+      "id": "account",
+      "name": "Account",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "amount",
+      "name": "Amount",
+      "kind": "value",
+      "primitive": "Integer"
+    },
+    {
+      "id": "category",
+      "name": "Category",
+      "kind": "value",
+      "primitive": "String"
+    },
+    {
+      "id": "band",
+      "name": "Band",
+      "kind": "value",
+      "primitive": "String"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "account_balance",
+      "reading": "{Account} has balance {Amount}",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        },
+        {
+          "role_name": "balance",
+          "object_type": "amount"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "balance_required",
+          "type": "mandatory",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "An authored semantics control."
+          },
+          "role": "account"
+        },
+        {
+          "id": "balance_count",
+          "type": "frequency",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "An authored semantics control."
+          },
+          "scope": "internal",
+          "roles": [
+            "account"
+          ],
+          "bound": {
+            "max": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "account_active",
+      "reading": "{Account} is active",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        }
+      ]
+    },
+    {
+      "id": "account_registered",
+      "reading": "{Account} is registered",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        }
+      ]
+    },
+    {
+      "id": "account_flagged",
+      "reading": "{Account} is flagged",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        }
+      ]
+    },
+    {
+      "id": "account_recommends",
+      "reading": "{Account} recommends {Account}",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        },
+        {
+          "role_name": "recommended",
+          "object_type": "account"
+        }
+      ],
+      "constraints": [
+        {
+          "id": "no_self_recommendation",
+          "type": "ring",
+          "source": "explicit",
+          "status": "confirmed",
+          "modality": "alethic",
+          "provenance": {
+            "user_quote": "An authored semantics control."
+          },
+          "variant": "irreflexive"
+        }
+      ]
+    },
+    {
+      "id": "account_classified",
+      "reading": "{Account} is classified as {Category}",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        },
+        {
+          "role_name": "category",
+          "object_type": "category"
+        }
+      ]
+    },
+    {
+      "id": "category_band",
+      "reading": "{Category} belongs to {Band}",
+      "roles": [
+        {
+          "role_name": "category",
+          "object_type": "category"
+        },
+        {
+          "role_name": "band",
+          "object_type": "band"
+        }
+      ]
+    },
+    {
+      "id": "account_band",
+      "reading": "{Account} is in band {Band}",
+      "roles": [
+        {
+          "role_name": "account",
+          "object_type": "account"
+        },
+        {
+          "role_name": "band",
+          "object_type": "band"
+        }
+      ],
+      "derivation": "derived",
+      "derivation_rule": {
+        "body": [
+          {
+            "fact_type": "account_classified",
+            "bind": {
+              "account": "$a",
+              "category": "$c"
+            }
+          },
+          {
+            "fact_type": "category_band",
+            "bind": {
+              "category": "$c",
+              "band": "$b"
+            }
+          }
+        ],
+        "head": {
+          "account": "$a",
+          "band": "$b"
+        }
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "balance_ceiling",
+      "type": "guarded",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "An authored semantics control."
+      },
+      "antecedent": [
+        {
+          "fact_type": "account_balance",
+          "bind": {
+            "account": "$a",
+            "balance": "$n"
+          }
+        }
+      ],
+      "consequent": {
+        "comparison": {
+          "left": "$n",
+          "operator": "<=",
+          "right": 100
+        }
+      }
+    },
+    {
+      "id": "active_registered",
+      "type": "subset",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "An authored semantics control."
+      },
+      "subset_role_seq": [
+        {
+          "fact_type": "account_active",
+          "role": "account"
+        }
+      ],
+      "superset_role_seq": [
+        {
+          "fact_type": "account_registered",
+          "role": "account"
+        }
+      ]
+    },
+    {
+      "id": "activity_registry",
+      "type": "equality",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "An authored semantics control."
+      },
+      "role_seq_a": [
+        {
+          "fact_type": "account_active",
+          "role": "account"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "account_registered",
+          "role": "account"
+        }
+      ]
+    },
+    {
+      "id": "active_not_flagged",
+      "type": "exclusion",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "An authored semantics control."
+      },
+      "role_seq_a": [
+        {
+          "fact_type": "account_active",
+          "role": "account"
+        }
+      ],
+      "role_seq_b": [
+        {
+          "fact_type": "account_flagged",
+          "role": "account"
+        }
+      ]
+    },
+    {
+      "id": "category_codes",
+      "type": "value",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "An authored semantics control."
+      },
+      "object_type": "category",
+      "allowed": [
+        "Retail",
+        "Business"
+      ]
+    },
+    {
+      "id": "account_cap",
+      "type": "cardinality",
+      "source": "explicit",
+      "status": "confirmed",
+      "modality": "alethic",
+      "provenance": {
+        "user_quote": "An authored semantics control."
+      },
+      "scope": "object",
+      "object_type": "account",
+      "bound": {
+        "max": 2
+      }
+    }
+  ]
+}

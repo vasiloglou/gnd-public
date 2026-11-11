@@ -1,0 +1,59 @@
+{
+  "limits": "Source reading bindings and n-1 determinants; OSSIE consumer interpretation is separate.",
+  "fact_types": 65,
+  "non_prefix": [
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "fact": "expense_reimbursed",
+      "role_order": [
+        "expense",
+        "amount",
+        "paid_on"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ]
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml",
+      "fact": "employee_works_on_project",
+      "role_order": [
+        "employee",
+        "project"
+      ],
+      "determinants": [
+        [
+          "employee",
+          "project"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "employee",
+          "project"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "employee",
+          "project"
+        ]
+      ]
+    }
+  ],
+  "reorders": [],
+  "exceptions": [],
+  "synthetic_control": "B determines A; preserved reading order A, B. Unknown role refuses."
+}

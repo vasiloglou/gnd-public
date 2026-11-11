@@ -498,6 +498,14 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.ossie": {
+      "lane": "export",
+      "layer": "lanes"
+    },
+    "gnd.export.ossie_formulas": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.pyrel_rules": {
       "lane": "export",
       "layer": "lanes"
@@ -746,6 +754,9 @@
     },
     "gnd.proof_kernel": {
       "layer": "infrastructure"
+    },
+    "gnd.ossie_import": {
+      "layer": "entry"
     },
     "gnd.rai_import": {
       "layer": "entry"

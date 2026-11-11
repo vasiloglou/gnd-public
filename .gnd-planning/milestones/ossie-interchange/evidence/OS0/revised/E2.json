@@ -1,0 +1,145 @@
+{
+  "limits": "These are parser and scope probes. Acceptance does not establish formula equivalence.",
+  "positive_control": {
+    "command": [
+      "b/bin/python",
+      "parse.py",
+      "input/e2-control.yaml"
+    ],
+    "exit": 0,
+    "stdout": "OssieParser accepted the ontology\n",
+    "stderr": ""
+  },
+  "negative_control": {
+    "command": [
+      "b/bin/python",
+      "parse.py",
+      "input/e2-malformed.yaml"
+    ],
+    "exit": 1,
+    "stdout": "ValueError: ('Unable to parse:', LexToken(GREATER,'>',1,23))\n",
+    "stderr": ""
+  },
+  "probes": {
+    "uniqueness-internal": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-uniqueness-internal.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    },
+    "uniqueness-external": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-uniqueness-external.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValueError: Undefined relationship 'other.student' in the formula 'NOT EXISTS(Enrolment.student(Student) AND Enrolment.course(Course) AND other.student(Student) AND other.course(Course) AND Enrolment != other)'\n",
+      "stderr": ""
+    },
+    "mandatory": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-mandatory.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    },
+    "guarded": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-guarded.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    },
+    "ring": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-ring.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    },
+    "subtype-partition": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-subtype-partition.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValueError: ('Unable to parse:', LexToken(OR,'OR',1,10))\n",
+      "stderr": ""
+    },
+    "value": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-value.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    },
+    "textual": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-textual.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValueError: ('Unable to parse:', LexToken(EQUALS,'==',1,24))\n",
+      "stderr": ""
+    },
+    "anchored": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-anchored.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValueError: Undefined relationship 'Party.source_span' in the formula 'EXISTS(Party.source_span)'\n",
+      "stderr": ""
+    },
+    "subset": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-subset.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    },
+    "exclusion": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-exclusion.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValueError: Var 'system' in the head not found in the body of the formula 'NOT employee.management_chain(Employee)'\n",
+      "stderr": ""
+    },
+    "frequency": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e2-frequency.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    }
+  }
+}

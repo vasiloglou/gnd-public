@@ -2,13 +2,12 @@
 
 ## 1. Status
 
-Awaiting owner review (draft r3, 2026-11-10). Implementable once the plan
-and this spec are approved. OS0 writes no product code.
+Ready for delegated spec approval (r4, 2026-11-10). OS0 measures pinned upstream behavior and writes planning evidence.
 
 ## 2. Provenance
 
-- Plan: [ossie-interchange-plan.md](ossie-interchange-plan.md) r2, §4 OS0,
-  §0, §2.1 and §10. Unreviewed.
+- Plan: [ossie-interchange-plan.md](ossie-interchange-plan.md) r3, §4 OS0,
+  §0, §2.1 and §10. The plan gate records the owner's r3 approval and the earlier r2 review.
 - r2 applies the owner's rulings of 2026-11-10 (`(o)`): OD8 adds E3b on
   relationalai 2.0.1 and answers D1, OD4 makes E4 count exceptions, and OD2
   is decided by E1.
@@ -19,7 +18,7 @@ and this spec are approved. OS0 writes no product code.
 - Upstream bytes read on 2026-11-10: apache/ossie
   `ee89dbdc2844d8b7d293ed42c8613928bb99505f`, apache/ossie-converters
   `83ddc294c8840f5f497a2bdbec2348a128fc2254`.
-- No review has run over this spec.
+- No review has run over this spec. r4 clarifies controls and evidence before execution (delegated, 2026-11-10).
 
 ## 3. Obligations
 
@@ -30,6 +29,8 @@ and this spec are approved. OS0 writes no product code.
 | OS0-C3 measurement-dependent rulings settled (OD2 by E1, OD4 exceptions by E4, OneToOne and modality by E6, relationalai target by E3/E3b) | plan §4, §10 (o) | §6 step 5 |
 | R7 pin | plan §0 | §6 step 1 |
 | R9 credential-free | plan §0, AGENTS.md | §6 step 2: oracle environments live outside the repository; no `.env` read |
+| pin oracles, isolate dependency versions, record positive and negative controls | plan §6 and §9 | §6 steps 1–4 and §8 |
+| carry forward OD6's explicit confirmation requirement | plan §10 and 001 plan gate | OS1 gate |
 | checkpoint before completion | owner feedback 2026-10-14 | §6 step 6 |
 
 ## 4. Standing rules
@@ -41,8 +42,9 @@ and this spec are approved. OS0 writes no product code.
    upstream `validate.py` reports faults, as input to OS3's order.
 4. One walk: the inventory is produced by one walk over every JSON pointer of
    each census model (p2 F3), checked against every `$defs` element
-   kind of `orm-meta.schema.json`, with a coverage assertion that every kind
-   was visited.
+   kind of `orm-meta.schema.json`, with a coverage assertion that every definition is accounted for.
+   Definitions with no matching census occurrence are explicitly reported as
+   absent. These rows carry zero observations.
 5. One home: the measured mapping table goes in the plan's §2.1 (amended with
    provenance). No second copy.
 6. Measure: this phase is the measurement.
@@ -51,8 +53,10 @@ and this spec are approved. OS0 writes no product code.
 
 Each of E1–E6 and E3b has a recorded result. The inventory covers 100% of
 the JSON pointers of the census models, each with exactly one disposition. OD2, OD4's exceptions
-and the `relationalai` target version are settled from recorded results. Nothing under `src/` or `tests/` changes (`git diff --stat
-main -- src tests` is empty).
+and the `relationalai` target version are settled from recorded results.
+Compare `src/` and `tests/` against the exact OS0 base d5156595. The measured
+mapping is an evidence-backed addendum to plan §2.1 and supplies the inputs to
+OS1–OS4. Carry its incorporation into the canonical plan to milestone close.
 
 ## 6. Design (steps)
 
@@ -74,14 +78,20 @@ main -- src tests` is empty).
 3. **Census and inventory.** Census: `src/gnd/examples/*/model.orm.yaml`
    (and the other `*.orm.yaml` in those directories) and
    `src/gnd/skills/gnd-model-from-text/examples/*.orm.yaml`. The exact list
-   is written to `evidence/OS0/census.txt`. For each JSON pointer, the
-   inventory records its element kind, id and one proposed disposition (plan
-   §2.1; p2 F3). Population pointers are `refused` with reason
+   is written to `evidence/OS0/census.txt`. Enumerate the tracked files matching
+   the two exact directory-depth globs, hash the source bytes, and retain the
+   root, container and scalar pointers in RFC 6901 form. The inventory records
+   the kind, nearest ID and one disposition per pointer (plan §2.1; p2 F3).
+   Unresolved formula candidates, objectification and GND-only metadata go in
+   the extension pending OS1–OS2's semantic checks. Count each reachable
+   schema reference at the instance location and report a count for every
+   definition. Cross-check pointer coverage and duplicate counts per document.
+   Population pointers are `refused` with reason
    `population:out-of-scope` (p2 F1).
 4. **Experiments** (designed here, before they run):
    - **E1** Validate a minimal ontology with `custom_extensions` on a concept
      and on a relationship against `ontology.json` (env A). Liveness: the
-     same document without the field must pass. Limits: this shows schema
+     same document without the field must pass. Test the two locations independently. Limits: this shows schema
      admission only, not that consumers keep the field.
    - **E2** For each constraint kind present in the census, hand-write one
      `requires` formula and parse it with `OssieParser` (env B). A kind
@@ -112,23 +122,28 @@ main -- src tests` is empty).
      binary with uniqueness on one role only must not be classified
      `OneToOne`. Limits: inventory only, with nothing exported.
    - **E5** Run `validate.py` on `examples/flights.ontology.yaml` (expect
-     pass) and on a copy with an undeclared concept reference (expect fail).
-     If either end does not score, the oracle is not live and OS1's oracle
+     exit 0) and on a copy with an undeclared concept reference (expect exit 1),
+     and exercise both documents independently through the parser. Record
+     each observed rejection site, including whether schema validation runs
+     before name checks. If either end does not score, the oracle is not live and OS1's oracle
      lane is redesigned.
 5. **Settle the conditional rulings.** Record which branch of OD2 E1
    selects, OD4's exception count from E4, E6's OneToOne and modality counts,
    and the `relationalai` version for
-   OS4 and OS6 from E3/E3b. Each is stated in counts or exit codes.
+   OS4 and OS6 from E3/E3b. Keep 1.39.0 if both versions produce equivalent
+   declarations, since it is the converter's pin. If only 2.0.1 works, target
+   it and disclose the override. If neither works, record the observed blocker.
+   Each result is stated in counts or exit codes.
 6. **Checkpoint for the owner.** One short page shows a census model, its
    hand-written Ossie document, the validator verdict and the converter's
-   PyRel. It goes to the owner before OS1's spec is written.
+   PyRel. Retain it in the evidence directory and present it to the owner before OS1's spec is written.
 
 ## 7. Decisions
 
 | ID | Question | Readings and cost |
 |---|---|---|
 | D1 | May OS0 install the proprietary `relationalai==1.39.0` in a scratch environment for E3? | yes: E3 runs. No: E3 is skipped, and OS4 stays blocked until it runs. **Ruling (o, 2026-11-10):** yes, and also 2.0.1 ("you can also try relationalai 2.0"; plan OD8) |
-| D2 | Evidence retention | commit the inventory, pins and results under `evidence/OS0/` (proposed); upstream source is never copied in |
+| D2 | Evidence retention | commit the inventory, pins, results, authored fixtures and reproduction instructions under `evidence/OS0/`; upstream sources stay in scratch. Prior wording: proposed, open. Delegated decision (2026-11-10): adopt this retention scope. |
 
 ## 8. Tests
 
@@ -136,9 +151,9 @@ None in the repository. Evidence files with expected outcomes:
 
 | Evidence | Expected |
 |---|---|
-| `pins.json` | two commits, five digests |
-| `census.txt`, `inventory.json` | every JSON pointer listed with exactly one disposition; coverage of all `$defs` kinds asserted |
-| `E1.json`–`E6.json`, `E3b.json` | each with a result, a liveness pair and limits |
+| `pins.json` | two commits, five upstream file digests and two RelationalAI wheel digests |
+| `census.txt`, `inventory.json` | exit 0 for exact unique pointer coverage and a census occurrence count or explicit absence for every `$defs` entry |
+| `E1.json`–`E6.json`, `E3b.json` | exit 0 for the measurement runner, with per-case exits retained for both oracle controls and observations. The inventory controls must distinguish single-direction and bidirectional uniqueness, and detect a missing modality disposition. |
 
 ## 9. Out of scope
 
@@ -152,4 +167,60 @@ No product lines.
 
 ## 11. Approval instrument
 
-This prose.
+This prose. Retain the exact digest and delegated ruling in the OS0 spec-gate
+record before executing the measurements.
+
+The phase uses no new runtime module or component. The required phase diff
+review is one independent reader in a different harness over the evidence and
+claims. The plan's light panel remains the selected close instrument and needs
+its own go-ahead. OS0's delegated approval carries no paid-panel budget.
+
+## Execution findings
+
+- Three packaged examples fail the baseline GND validation route on four
+  camel-case role names. The census keeps their exact source bytes and
+  accounts for every pointer. The inventory is about source shapes.
+  Export admission for these examples needs a correction before OS1-C1.
+- The 62 metaschema definitions are accounted for. The exact census
+  exercises 35 and leaves 27 unobserved. Census data cannot establish
+  behavior on those 27.
+- There is no census binary with a uniqueness on each role. The E6
+  bidirectional and single-direction witnesses are authored controls.
+- E4 found two internal uniqueness declarations outside the n−1 prefix.
+  The ternary reimbursement fact has a determinant smaller than n−1.
+  The employee/project fact declares full-tuple uniqueness, already
+  inherent in Ossie relationship set semantics. Neither can be translated
+  by a role permutation into the proposed ManyToOne mapping.
+- Delegated evidence-retention amendment (2026-11-10). In addition to the
+  r4 artifacts, retain the measurement scripts as reproducibility files
+  under `evidence/OS0/reproduce/`. Execute them from scratch. This
+  changes the retained evidence set and preserves the original spec gate's
+  experiment definitions. The complete r4 bytes are preserved by the gate.
+
+## Independent review and repairs
+
+The [Claude Code review](phase-OS0-claude-review.md) covered candidate
+`5b998787` and requested changes. The delegated [005 amendment](../005-OS0-spec-amendment.md)
+replaces the earlier scope and control descriptions for the revised
+measurements. Both historical observations and their limits remain above.
+
+- The full roster has 41 tracked models at integration base `54483d03`. Three
+  fail GND admission, and three distinct include roots take the existing
+  `include:unsupported-route` guard. The 14-model run established results
+  only for its depth-one YAML subset.
+- C1 records a proposed mapping disposition for all 11,442 parsed pointers.
+  The new runner rejects duplicate keys. Source admission is a separate
+  measured control. Every pointer in an inadmissible model has a model-level
+  refusal, including the four invalid role names.
+- E2 adds probes for subset, exclusion and frequency. Results describe
+  individual expressions. OS2 must establish their claimed semantics.
+- E4 verified both declaration orders through the pinned parser on 209 fact
+  readings, including eight reordered facts. E6 observes three explicit
+  bidirectional binaries, 54 direct identifier candidates and 237 modality
+  pointers eligible for extension. Missing and incorrectly native modality
+  controls refuse. The remaining 54 active marks belong to whole-model
+  refusals.
+- E3 and E3b still select the converter pin, RelationalAI 1.39.0. An
+  independent AST control confirms the retained source contains zero calls
+  to `require`.
+- The owner confirmed OD6 in [004](../004-owner-OD6.md).

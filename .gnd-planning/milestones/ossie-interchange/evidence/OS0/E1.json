@@ -1,0 +1,76 @@
+{
+  "limits": "Validation and parser admission only. The converter's preservation of an extension is untested.",
+  "baseline": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "input/e1-baseline.yaml"
+      ],
+      "exit": 0,
+      "stdout": "Validation PASSED: e1-baseline.yaml\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e1-baseline.yaml"
+      ],
+      "exit": 0,
+      "stdout": "OssieParser accepted the ontology\n",
+      "stderr": ""
+    }
+  },
+  "concept": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "input/e1-concept.yaml"
+      ],
+      "exit": 1,
+      "stdout": "\nValidation FAILED with 1 error(s):\n\n  [Schema] ontology -> 1: Additional properties are not allowed ('custom_extensions' was unexpected)\n\nSemantic checks skipped until schema errors are fixed.\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e1-concept.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValidationError: 1 validation error for OssieSpec\nontology.1.custom_extensions\n  Extra inputs are not permitted [type=extra_forbidden, input_value={'gnd': {'test': True}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden\n",
+      "stderr": ""
+    }
+  },
+  "relationship": {
+    "validator": {
+      "command": [
+        "a/bin/python",
+        "ossie/validation/validate.py",
+        "--schema",
+        "ossie/ontology/ontology.json",
+        "input/e1-relationship.yaml"
+      ],
+      "exit": 1,
+      "stdout": "\nValidation FAILED with 1 error(s):\n\n  [Schema] ontology -> 1 -> relationships -> 0: Additional properties are not allowed ('custom_extensions' was unexpected)\n\nSemantic checks skipped until schema errors are fixed.\n",
+      "stderr": ""
+    },
+    "parser": {
+      "command": [
+        "b/bin/python",
+        "parse.py",
+        "input/e1-relationship.yaml"
+      ],
+      "exit": 1,
+      "stdout": "ValidationError: 1 validation error for OssieSpec\nontology.1.relationships.0.custom_extensions\n  Extra inputs are not permitted [type=extra_forbidden, input_value={'gnd': {'test': True}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/extra_forbidden\n",
+      "stderr": ""
+    }
+  },
+  "OD2": "digest-bound-sidecar"
+}

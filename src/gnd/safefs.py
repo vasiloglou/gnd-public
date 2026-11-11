@@ -8,7 +8,8 @@ import os
 import stat
 import sys
 import tempfile
-from contextlib import suppress
+from collections.abc import Sequence
+from contextlib import ExitStack, suppress
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Literal
 
@@ -527,6 +528,79 @@ read_regular_bounded_at = _artifacts.read_regular_bounded_at
 
 class NotRegularFileError(OSError):
     """A caller path names a FIFO, socket, device or directory, not a regular file."""
+
+
+def publish_new_files(outputs: Sequence[tuple[Path, bytes]]) -> None:
+    """Stage a create-once set, then publish in the caller's order.
+
+    Put the commit marker last. Roll back this invocation's links on a
+    synchronous failure. A process or machine interruption before the marker
+    can leave uncommitted companions.
+    """
+    with ExitStack() as cleanup:
+        staged: list[tuple[int, str, str, tuple[int, int]]] = []
+        targets: set[tuple[int, int, str]] = set()
+        for path, data in outputs:
+            target = path.absolute()
+            if not target.name:
+                raise OSError("output needs a file name")
+            directory = artifact_open_root(target.parent)
+            cleanup.callback(os.close, directory)
+            parent = os.fstat(directory)
+            identity = (parent.st_dev, parent.st_ino, target.name)
+            if identity in targets:
+                raise OSError("output paths must name distinct files")
+            targets.add(identity)
+            temp = _temp_name()
+            descriptor = os.open(temp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, FILE_MODE, dir_fd=directory)
+            cleanup.callback(_discard_staged_file, directory, temp)
+            with os.fdopen(descriptor, "wb") as stream:
+                stream.write(data)
+                stream.flush()
+                os.fsync(stream.fileno())
+                item = os.fstat(stream.fileno())
+            staged.append((directory, temp, target.name, (item.st_dev, item.st_ino)))
+
+        published: list[tuple[int, str, tuple[int, int]]] = []
+        try:
+            for directory, temp, name, identity in staged:
+                os.link(temp, name, src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)
+                published.append((directory, name, identity))
+                os.fsync(directory)
+        except BaseException as error:
+            failures = []
+            for directory, name, identity in reversed(published):
+                try:
+                    _withdraw_published_file(directory, name, identity)
+                except OSError as failure:
+                    failures.append(str(failure))
+            if failures:
+                raise OSError("output rollback failed: " + "; ".join(failures)) from error
+            raise
+
+
+def _withdraw_published_file(directory: int, name: str, identity: tuple[int, int]) -> None:
+    # First withdraw one entry atomically. A path-level stat followed by
+    # unlink could delete a replacement made between those operations.
+    withdrawn = _temp_name()
+    try:
+        _rename_noreplace(directory, name, directory, withdrawn)
+    except FileNotFoundError:
+        return
+    item = os.stat(withdrawn, dir_fd=directory, follow_symlinks=False)
+    if (item.st_dev, item.st_ino) == identity:
+        os.unlink(withdrawn, dir_fd=directory)
+    else:
+        try:
+            _rename_noreplace(directory, withdrawn, directory, name)
+        except FileExistsError as error:
+            raise OSError(f"preserved racing replacement of {name} as {withdrawn}") from error
+    os.fsync(directory)
+
+
+def _discard_staged_file(directory: int, name: str) -> None:
+    with suppress(FileNotFoundError):
+        os.unlink(name, dir_fd=directory)
 
 
 def open_regular(path: str | Path) -> int:

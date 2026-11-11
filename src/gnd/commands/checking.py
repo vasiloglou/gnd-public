@@ -546,6 +546,31 @@ from pathlib import PurePosixPath, PureWindowsPath
 from gnd.commands._arguments import _add_format_argument, _add_unredacted_argument
 
 
+def _cmd_import_ossie(model: str, out: str, loss_report: str | None) -> int:
+    from gnd.artifacts import ArtifactError
+    from gnd.exits import EXIT_ILL_FORMED
+    from gnd.ossie_import import OssieImportError, plan_ossie_import
+    from gnd.safefs import publish_new_files
+
+    try:
+        result = plan_ossie_import(Path(model))
+    except OssieImportError as error:
+        print(error.rule_id, file=sys.stderr)
+        return EXIT_ILL_FORMED
+    try:
+        publish_new_files([
+            (Path(loss_report or out + ".loss.json"), result.loss_report),
+            (Path(out), result.model),
+        ])
+    except FileExistsError:
+        print("ossie-import:output-exists", file=sys.stderr)
+        return EXIT_COLLISION
+    except (ArtifactError, OSError, ValueError):
+        print("ossie-import:output", file=sys.stderr)
+        return EXIT_ILL_FORMED
+    return 0
+
+
 def _register_import(subparsers):
     import_parser = subparsers.add_parser(
         "import", help="import a supported foreign ORM dialect create-once"
@@ -641,8 +666,16 @@ def _register_import(subparsers):
     )
     _add_format_argument(mined_import_parser)
 
+    ossie_import_parser = import_subparsers.add_parser(
+        "ossie", help="import a pinned Apache Ossie ontology and write a loss report"
+    )
+    ossie_import_parser.add_argument("model", help="path to the source Ossie JSON or YAML ontology")
+    ossie_import_parser.add_argument("--out", required=True, help="new GND ORM model path")
+    ossie_import_parser.add_argument("--loss-report", help="new loss report path (default: OUT.loss.json)")
+
     return {'import_parser': import_parser, 'rai_import_parser': rai_import_parser,
-            'ilp_import_parser': ilp_import_parser, 'mined_import_parser': mined_import_parser}
+            'ilp_import_parser': ilp_import_parser, 'mined_import_parser': mined_import_parser,
+            'ossie_import_parser': ossie_import_parser}
 
 
 def _ilp_actor(text: str) -> str:
@@ -1019,6 +1052,9 @@ def handle(args, parsers) -> int:
             target=args.target, out=args.out, actor=args.actor,
             requested_at=args.requested_at, output_format=args.format,
         )
+
+    if args.command == "import" and args.import_command == "ossie":
+        return _cmd_import_ossie(args.model, args.out, args.loss_report)
 
     if args.command == "import":
         source_artifact = args.source_artifact

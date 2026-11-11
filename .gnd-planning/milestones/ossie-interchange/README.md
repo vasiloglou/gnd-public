@@ -19,7 +19,7 @@ export exits 0 with a loss report; contribute `requires` → `require`
 upstream (new phase OS6); and OS0 also tries relationalai 2.0. `auto=false`.
 
 - [Plan r3](notes/ossie-interchange-plan.md)
-- [OS0 spec r3 (draft)](notes/phase-OS0-spec.md)
+- [OS0 spec r4](notes/phase-OS0-spec.md)
 - [Light-panel review of r2](evidence/plan-review-r2/PANEL-REVIEW.md)
 
 Phases: OS0 (pin, measure, decide; no code), OS1 (export core), OS2
@@ -27,6 +27,39 @@ Phases: OS0 (pin, measure, decide; no code), OS1 (export core), OS2
 cross-check), OS5 (docs and skill), OS6 (upstream converter contribution);
 then close.
 
-Next: the OS0 spec gate (D2 still open). The owner approved r3 without a
-second panel round. The panel evidence and
-these files are uncommitted.
+The owner approved r3 without a second panel round. PR #159 merged the plan.
+The [OS0 spec gate](002-OS0-spec-gate.md) records delegated approval. The
+[independent review](notes/phase-OS0-claude-review.md) found the first census
+too narrow. The [OS0 phase record](006-phase-OS0.md) closes that phase after
+replaying the expanded 41-model census and parser controls. The
+[refunds checkpoint](evidence/OS0/CHECKPOINT.md) shows the hand translation.
+
+The [owner confirmed OD6](004-owner-OD6.md). The
+[OS1 phase record](009-phase-OS1.md) closes the exporter after independent
+review, focused regressions and the pinned validator/parser lane. Draft PR
+[#160](https://github.com/vasiloglou/gnd-public/pull/160) carries the work.
+
+The [OS2 phase record](014-phase-OS2.md) closes the formula renderer after
+independent implementation review and replay. The
+[corpus gate](011-OS2-spec-gate.md) was committed before rendering.
+The [early OS5 checkpoint](notes/OS5-draft-checkpoint.md) uses the closed
+OS1 exporter.
+
+The [OS3 phase record](020-phase-OS3.md) closes the importer after review
+and verifies all 38 eligible round trips. The
+[OS4 phase record](021-phase-OS4.md) closes the pinned comparison after
+independent review. It records 36 intact conversions, two refusals,
+and separate isolation controls.
+
+The [OS5 phase record](025-phase-OS5.md) closes the explanation,
+refunds walkthrough and skill guidance after review and local checks.
+
+The [OS6 phase record](030-phase-OS6.md) records the tested patch and the
+owner-approved [upstream PR #162](https://github.com/apache/ossie-converters/pull/162).
+The [close candidate](031-close-candidate.md) assembles the seven phase
+records and proposes plan amendments for the independent close review.
+
+The [independent close panel](032-panel.md) reached quorum and requested
+revisions. The [effective close amendment](notes/close-amendments-r2.md)
+records the measured acceptance scope. The [close-readiness record](033-close-readiness.md)
+defines verification on GND main after the owner's merge decision.

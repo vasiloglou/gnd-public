@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "run_sha256": "92a3d82a7dc5fa1d55f79c05572393b4efce9caaa131fda100f24a2b917f5c3d",
+  "summary": "Five of six seats returned valid revise responses. Gemini returned no JSON response. The findings concern closure conditions and evidence scope, including census reports, formula and import coverage, and upstream generated source.",
+  "agreed_concerns": [
+    {
+      "group_id": "main",
+      "severity": "high",
+      "title": "Bind closure to verification on merged main",
+      "summary": "Specify the merged-main test and documentation checks, the separate owner merge gate, and who records the results.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-main-verification-undefined"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-on-main-verification-ungated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "close-main-merge-verification-pending"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "residual-gates-not-consolidated"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "emission",
+      "severity": "high",
+      "title": "Reconcile predicate 9 with generated PyRel evidence",
+      "summary": "Amend predicate 9 as well as OS6-C2. Record the exact published head, entity-scoped source controls, value-tuple metamodel results, and retained source omission.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "os6-source-emission-scope-for-gnd-census"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "os6-source-emission"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os6-source-emission-scope-and-commit"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "formula",
+      "severity": "high",
+      "title": "State formula shape coverage and corpus provenance",
+      "summary": "List the supported families and case pairs, the pre-renderer corpus commit, and the fallback boundary.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "formula-shape-coverage-unbounded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os2-formula-kind-coverage-unscoped"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "import",
+      "severity": "high",
+      "title": "Account for refusal order, input bounds and admission",
+      "summary": "Cite the named OS3 cap, hostile-input, refusal and order controls for predicate 5.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate5-totality-unaccounted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os3-totality-not-evidenced"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "authority",
+      "severity": "high",
+      "title": "Record amendment authority separately from advisory findings",
+      "summary": "Record a scoped owner or delegated amendment ruling with the exact digest. Keep merge and final acceptance separate.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "amendment-adoption-authority"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "amendment-adoption-owner-ruling-missing"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "temporal",
+      "severity": "medium",
+      "title": "Explain the temporal round-trip comparison",
+      "summary": "Cite the temporal GND diff preflight and define the full authored-document equality check for those four inputs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "temporal-diff-premise-unexplained"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "temporal-roundtrip-diff-substitution-unjustified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "roundtrip-diff-instrument-substituted"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "docs",
+      "severity": "medium",
+      "title": "Bind documentation scope and page-policy baseline",
+      "summary": "Cite the affected pages and reproduce or qualify the out-of-scope paragraph-policy finding.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "page-policy-failure-preexisting-unverified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "docs-negative-claims-and-page-policy-baseline"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "codex",
+      "concern_id": "census-dispositions"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "sweep-missing-carryovers"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "os4-consumer-limitation-record"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "os0-measurement-rulings-unrecorded"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "census-denominator-derivation"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "fix-main",
+      "title": "Bind closure to verification on merged main",
+      "action": "Specify the merged-main test and documentation checks, the separate owner merge gate, and who records the results.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-main-verification-undefined"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-on-main-verification-ungated"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "close-main-merge-verification-pending"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "residual-gates-not-consolidated"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "close-main-verification-undefined",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "close-on-main-verification-ungated",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "close-main-merge-verification-pending",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "residual-gates-not-consolidated",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ],
+      "rank": 1
+    },
+    {
+      "fix_id": "fix-emission",
+      "title": "Reconcile predicate 9 with generated PyRel evidence",
+      "action": "Amend predicate 9 as well as OS6-C2. Record the exact published head, entity-scoped source controls, value-tuple metamodel results, and retained source omission.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "os6-source-emission-scope-for-gnd-census"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "os6-source-emission"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os6-source-emission-scope-and-commit"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "os6-source-emission-scope-for-gnd-census",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "os6-source-emission",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os6-source-emission-scope-and-commit",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ],
+      "rank": 2
+    },
+    {
+      "fix_id": "fix-include",
+      "title": "Explicitly scope per-pointer loss reports",
+      "action": "Amend predicate 3 to require per-pointer reporting for 38 admitted inputs and named whole-input refusal for the three include inputs.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "census-dispositions"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "census-dispositions",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ],
+      "rank": 3
+    },
+    {
+      "fix_id": "fix-formula",
+      "title": "State formula shape coverage and corpus provenance",
+      "action": "List the supported families and case pairs, the pre-renderer corpus commit, and the fallback boundary.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "formula-shape-coverage-unbounded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os2-formula-kind-coverage-unscoped"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "formula-shape-coverage-unbounded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os2-formula-kind-coverage-unscoped",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 4
+    },
+    {
+      "fix_id": "fix-import",
+      "title": "Account for refusal order, input bounds and admission",
+      "action": "Cite the named OS3 cap, hostile-input, refusal and order controls for predicate 5.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate5-totality-unaccounted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os3-totality-not-evidenced"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "predicate5-totality-unaccounted",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os3-totality-not-evidenced",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 5
+    },
+    {
+      "fix_id": "fix-authority",
+      "title": "Record amendment authority separately from advisory findings",
+      "action": "Record a scoped owner or delegated amendment ruling with the exact digest. Keep merge and final acceptance separate.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "amendment-adoption-authority"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "amendment-adoption-owner-ruling-missing"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "amendment-adoption-authority",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "amendment-adoption-owner-ruling-missing",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 6
+    },
+    {
+      "fix_id": "fix-temporal",
+      "title": "Explain the temporal round-trip comparison",
+      "action": "Cite the temporal GND diff preflight and define the full authored-document equality check for those four inputs.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "temporal-diff-premise-unexplained"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "temporal-roundtrip-diff-substitution-unjustified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "roundtrip-diff-instrument-substituted"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "temporal-diff-premise-unexplained",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "temporal-roundtrip-diff-substitution-unjustified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "roundtrip-diff-instrument-substituted",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "glm"
+      ],
+      "rank": 7
+    },
+    {
+      "fix_id": "fix-docs",
+      "title": "Bind documentation scope and page-policy baseline",
+      "action": "Cite the affected pages and reproduce or qualify the out-of-scope paragraph-policy finding.",
+      "concerns": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "page-policy-failure-preexisting-unverified"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "docs-negative-claims-and-page-policy-baseline"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "glm",
+          "concern_id": "page-policy-failure-preexisting-unverified",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "docs-negative-claims-and-page-policy-baseline",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "glm"
+      ],
+      "rank": 8
+    },
+    {
+      "fix_id": "fix-carryovers",
+      "title": "Name the upstream and documentation carryovers",
+      "action": "Record upstream PR state and exact head, and the unrelated page-policy failure with a target.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "sweep-missing-carryovers"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "sweep-missing-carryovers",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude"
+      ],
+      "rank": 9
+    },
+    {
+      "fix_id": "fix-consumer",
+      "title": "Bind the offline consumer report",
+      "action": "Record what intact means, the four compared declaration categories, the pinned report and its consumer keys.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os4-consumer-limitation-record"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os4-consumer-limitation-record",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 10
+    },
+    {
+      "fix_id": "fix-measurements",
+      "title": "Bind the sidecar and SDK selection to OS0",
+      "action": "Cite the E1 and E3b measurements, and the pin and wheel digest used for later gates.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os0-measurement-rulings-unrecorded"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "os0-measurement-rulings-unrecorded",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 11
+    },
+    {
+      "fix_id": "fix-roster",
+      "title": "Trace the 41 inputs to their source roots",
+      "action": "Cite the frozen roster and selection criteria for the census.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "census-denominator-derivation"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "census-denominator-derivation",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "rank": 12
+    }
+  ]
+}

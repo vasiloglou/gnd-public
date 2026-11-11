@@ -1,0 +1,9 @@
+{
+  "limits": "Inventory and ontology.md Multiplicities semantics; no exported document or population run.",
+  "one_to_one": [],
+  "constraint_modality_extensions": {
+    "alethic": 73,
+    "deontic": 4
+  },
+  "controls": "Both uniqueness directions produce OneToOne. Dropping one produces ManyToOne."
+}

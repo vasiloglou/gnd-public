@@ -1,0 +1,390 @@
+{
+  "limits": "Inventory and ontology.md Multiplicities semantics; no exported document or population run.",
+  "one_to_one": [
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_has_id",
+      "role_order": [
+        "student",
+        "student_id"
+      ],
+      "determinants": [
+        [
+          "student"
+        ],
+        [
+          "student_id"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "student_id"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "OneToOne",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} has id {StudentId:student_id}",
+          "projected_order_pattern": "{Student} has id {StudentId:student_id}",
+          "roles": [
+            "student",
+            "student_id"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_has_code",
+      "role_order": [
+        "course",
+        "course_code"
+      ],
+      "determinants": [
+        [
+          "course"
+        ],
+        [
+          "course_code"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course_code"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "OneToOne",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} has code {CourseCode:course_code}",
+          "projected_order_pattern": "{Course} has code {CourseCode:course_code}",
+          "roles": [
+            "course",
+            "course_code"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "term_has_label",
+      "role_order": [
+        "term",
+        "term_label"
+      ],
+      "determinants": [
+        [
+          "term"
+        ],
+        [
+          "term_label"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "term_label"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "OneToOne",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Term} has label {TermLabel:term_label}",
+          "projected_order_pattern": "{Term} has label {TermLabel:term_label}",
+          "roles": [
+            "term",
+            "term_label"
+          ]
+        }
+      }
+    }
+  ],
+  "projected_direct_identifiers": [
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "object_type": "expense",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "object_type": "approver",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "object_type": "workday_submission",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "object_type": "user",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "object_type": "book",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "object_type": "user",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "object_type": "book",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "object_type": "user",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "object_type": "book",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "object_type": "expense",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "object_type": "expense",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "object_type": "expense",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "object_type": "expense",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "object_type": "expense",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/growth/model.orm.yaml",
+      "object_type": "customer",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/growth/model.orm.yaml",
+      "object_type": "order",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "object_type": "employee",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "object_type": "system",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "object_type": "patient",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "object_type": "drug",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "object_type": "term",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "object_type": "lease",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "object_type": "term",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "object_type": "term",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "object_type": "term",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "object_type": "grade",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "object_type": "term",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "object_type": "term",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "object_type": "student",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "object_type": "course",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "object_type": "trip",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "object_type": "hotel",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "object_type": "activity",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "object_type": "period",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/refunds/model.orm.yaml",
+      "object_type": "refund",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/refunds/model.orm.yaml",
+      "object_type": "customer",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/rule_check/model.orm.yaml",
+      "object_type": "component",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "object_type": "staff",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "object_type": "team",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "object_type": "site",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "object_type": "movie",
+      "multiplicity": "OneToOne"
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "object_type": "director",
+      "multiplicity": "OneToOne"
+    }
+  ],
+  "constraint_modality_extensions": {
+    "alethic": 215,
+    "deontic": 22
+  },
+  "constraint_modality_unprojected": {
+    "alethic": 53,
+    "deontic": 1
+  },
+  "controls": {
+    "two_uniqueness_directions": "OneToOne",
+    "one_uniqueness_direction": "ManyToOne",
+    "omitted_modality": "refused",
+    "native_modality": "refused"
+  }
+}

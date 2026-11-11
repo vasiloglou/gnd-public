@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GND Ossie loss report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "model_identity", "document_sha256", "dispositions"],
+  "properties": {
+    "schema": {"const": "gnd-ossie-loss/1"},
+    "model_identity": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "document_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dispositions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pointer", "disposition", "reason"],
+        "properties": {
+          "pointer": {"type": "string", "pattern": "^(?:/(?:[^~/]|~[01])*)*$"},
+          "disposition": {"enum": ["native", "requires", "extension", "refused"]},
+          "reason": {"enum": ["projection", "projected-with-source-spelling", "formula", "gnd-source", "population:out-of-scope"]}
+        },
+        "allOf": [
+          {"if": {"properties": {"disposition": {"const": "native"}}}, "then": {"properties": {"reason": {"enum": ["projection", "projected-with-source-spelling"]}}}},
+          {"if": {"properties": {"disposition": {"const": "requires"}}}, "then": {"properties": {"reason": {"const": "formula"}}}},
+          {"if": {"properties": {"disposition": {"const": "extension"}}}, "then": {"properties": {"reason": {"const": "gnd-source"}}}},
+          {"if": {"properties": {"disposition": {"const": "refused"}}}, "then": {"properties": {"reason": {"const": "population:out-of-scope"}}}}
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "anchored": {
+    "count": 2,
+    "first": [
+      "src/gnd/examples/composition/model.orm.yaml",
+      "/fact_types/0/constraints/0"
+    ]
+  },
+  "guarded": {
+    "count": 13,
+    "first": [
+      "src/gnd/examples/bookrec/complete.orm.yaml",
+      "/constraints/0"
+    ]
+  },
+  "mandatory": {
+    "count": 23,
+    "first": [
+      "src/gnd/examples/approvals/model.orm.yaml",
+      "/fact_types/0/constraints/1"
+    ]
+  },
+  "ring": {
+    "count": 1,
+    "first": [
+      "src/gnd/examples/rule_check/model.orm.yaml",
+      "/fact_types/0/constraints/0"
+    ]
+  },
+  "subtype-partition": {
+    "count": 1,
+    "first": [
+      "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "/constraints/2"
+    ]
+  },
+  "textual": {
+    "count": 2,
+    "first": [
+      "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "/constraints/1"
+    ]
+  },
+  "uniqueness": {
+    "count": 31,
+    "first": [
+      "src/gnd/examples/approvals/model.orm.yaml",
+      "/fact_types/0/constraints/0"
+    ]
+  },
+  "value": {
+    "count": 4,
+    "first": [
+      "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml",
+      "/constraints/0"
+    ]
+  }
+}

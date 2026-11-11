@@ -101,7 +101,7 @@ fact_types:
 
   - id: enrolment_occurred_on
     reading: "{Enrolment} occurred on {Date}"
-    roles: [{ object_type: enrolment, role_name: enrolment }, { object_type: date, role_name: occurredOn }]
+    roles: [{ object_type: enrolment, role_name: enrolment }, { object_type: date, role_name: occurred_on }]
     constraints:
       - { type: uniqueness, roles: [enrolment], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 22 } }
       - { type: mandatory, role: enrolment, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 24 } }

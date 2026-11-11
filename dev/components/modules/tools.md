@@ -273,6 +273,30 @@ A loopback OpenAI-compatible gateway that lets a small hosted model drive a GND 
 | `Gateway.log_message(self, *args) -> None` | method | 96 | (no docstring) |
 | `main() -> None` | function | 100 | (no docstring) |
 
+## tools.ossie_consumer — `tools/ossie_consumer.py`
+Components: tools.ossie_oracle
+Compare Ossie declarations with the pinned consumer's PyRel source AST.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `Declarations` | class | 12 | (no docstring) |
+| `Declarations.difference(self, received) -> dict` | method | 18 | (no docstring) |
+| `ontology_declarations(document) -> Declarations` | function | 29 | Read declaration identities directly from the exported JSON ontology. |
+| `pyrel_declarations(source) -> Declarations` | function | 63 | Extract names and edges without importing or executing emitted Python. |
+| `call_counts(source) -> Counter` | function | 130 | (no docstring) |
+
+## tools.ossie_oracle — `tools/ossie_oracle.py`
+Components: tools.ossie_oracle
+Run the pinned standalone Ossie validator and parser without runtime dependencies.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `OssieOracle` | class | 26 | (no docstring) |
+| `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
+| `OssieOracle.validate(self, path) -> subprocess.CompletedProcess[str]` | method | 48 | (no docstring) |
+| `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 57 | (no docstring) |
+| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 139 | Emit PyRel source in the isolated process, without executing that source. |
+
 ## tools.plan_app_bot — `tools/plan_app_bot.py`
 Components: unassigned
 A model behind a plan app's bot interface: Claude Code, or a small model on OpenRouter.

@@ -87,7 +87,7 @@ object_types:
 fact_types:
   - id: project_has_start_date
     reading: "{Project} has start date {Date}"
-    roles: [{ object_type: project, role_name: project }, { object_type: date, role_name: startDate }]
+    roles: [{ object_type: project, role_name: project }, { object_type: date, role_name: start_date }]
     constraints:
       - { type: uniqueness, roles: [project], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 16 } }
       - { type: mandatory, role: project, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 20 } }
@@ -101,7 +101,7 @@ fact_types:
 
   - id: employee_has_full_name
     reading: "{Employee} has full name {FullName}"
-    roles: [{ object_type: employee, role_name: employee }, { object_type: full_name, role_name: fullName }]
+    roles: [{ object_type: employee, role_name: employee }, { object_type: full_name, role_name: full_name }]
     constraints:
       - { type: uniqueness, roles: [employee], source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 4, dialogue_turn: 17 } }
       - { type: mandatory, role: employee, source: explicit, status: confirmed, modality: alethic, provenance: { csdp_step: 5, dialogue_turn: 21 } }

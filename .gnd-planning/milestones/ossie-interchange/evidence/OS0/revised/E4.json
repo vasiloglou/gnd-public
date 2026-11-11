@@ -1,0 +1,4249 @@
+{
+  "limits": "Source reading bindings and n-1 determinants; OSSIE consumer interpretation is separate.",
+  "fact_types": 209,
+  "non_prefix": [
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "fact": "expense_reimbursed",
+      "role_order": [
+        "expense",
+        "amount",
+        "paid_on"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "expense"
+          ],
+          "reason": "determinant-size"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is reimbursed {ReimbursementAmount:amount} on {PaidOn:paid_on}",
+          "projected_order_pattern": "{Expense} is reimbursed {ReimbursementAmount:amount} on {PaidOn:paid_on}",
+          "roles": [
+            "expense",
+            "amount",
+            "paid_on"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_is_approved",
+      "role_order": [
+        "expense"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "expense"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "fact": "expense_is_approved",
+      "role_order": [
+        "expense"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "expense"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "fact": "expense_is_approved",
+      "role_order": [
+        "expense"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "expense"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_is_approved",
+      "role_order": [
+        "expense"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "expense"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_is_approved",
+      "role_order": [
+        "expense"
+      ],
+      "determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "expense"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "expense"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "expense"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "grade_of",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "fact": "payment_due",
+      "role_order": [
+        "lease",
+        "amount",
+        "day"
+      ],
+      "determinants": [
+        [
+          "day",
+          "lease"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "day",
+          "lease"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "lease",
+        "day",
+        "amount"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Lease} has {Amount:amount} due on {Day:day}",
+          "projected_order_pattern": "{Lease} has {Amount:amount} due on {Day:day}",
+          "roles": [
+            "lease",
+            "amount",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "grade_of",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "grade_of",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "student_received_grade_in_course",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} received {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} received {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_needs_course",
+      "role_order": [
+        "course",
+        "prerequisite"
+      ],
+      "determinants": [
+        [
+          "course",
+          "prerequisite"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "prerequisite"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "course",
+          "prerequisite"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "course",
+            "prerequisite"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_offered_in_term",
+      "role_order": [
+        "course",
+        "term"
+      ],
+      "determinants": [
+        [
+          "course",
+          "term"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "term"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "course",
+          "term"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "course",
+            "term"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Term:term}",
+          "projected_order_pattern": "{Course} is offered in {Term:term}",
+          "roles": [
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_enrolled_in_course_for_term",
+      "role_order": [
+        "student",
+        "course",
+        "term"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student",
+          "term"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student",
+          "term"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "course",
+          "student",
+          "term"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "course",
+            "student",
+            "term"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} is enrolled in {Course:course} for {Term:term}",
+          "projected_order_pattern": "{Student} is enrolled in {Course:course} for {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_passed_course",
+      "role_order": [
+        "student",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "course",
+            "student"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} has passed {Course:course}",
+          "projected_order_pattern": "{Student} has passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_received_grade_for_course",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} received {Grade:grade} for {Course:course}",
+          "projected_order_pattern": "{Student} received {Grade:grade} for {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_has_id",
+      "role_order": [
+        "student",
+        "student_id"
+      ],
+      "determinants": [
+        [
+          "student"
+        ],
+        [
+          "student_id"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "student_id"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "OneToOne",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} has id {StudentId:student_id}",
+          "projected_order_pattern": "{Student} has id {StudentId:student_id}",
+          "roles": [
+            "student",
+            "student_id"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_has_code",
+      "role_order": [
+        "course",
+        "course_code"
+      ],
+      "determinants": [
+        [
+          "course"
+        ],
+        [
+          "course_code"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course_code"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "OneToOne",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} has code {CourseCode:course_code}",
+          "projected_order_pattern": "{Course} has code {CourseCode:course_code}",
+          "roles": [
+            "course",
+            "course_code"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "term_has_label",
+      "role_order": [
+        "term",
+        "term_label"
+      ],
+      "determinants": [
+        [
+          "term"
+        ],
+        [
+          "term_label"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "term_label"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "OneToOne",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Term} has label {TermLabel:term_label}",
+          "projected_order_pattern": "{Term} has label {TermLabel:term_label}",
+          "roles": [
+            "term",
+            "term_label"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "course_needs_course",
+      "role_order": [
+        "course",
+        "prerequisite"
+      ],
+      "determinants": [
+        [
+          "course",
+          "prerequisite"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "prerequisite"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "course",
+          "prerequisite"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "course",
+            "prerequisite"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "stays",
+      "role_order": [
+        "trip",
+        "hotel",
+        "night"
+      ],
+      "determinants": [
+        [
+          "night",
+          "trip"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "night",
+          "trip"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "trip",
+        "night",
+        "hotel"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} stays at {Hotel:hotel} on the night of {Day:night}",
+          "projected_order_pattern": "{Trip} stays at {Hotel:hotel} on the night of {Day:night}",
+          "roles": [
+            "trip",
+            "hotel",
+            "night"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "booked_slot",
+      "role_order": [
+        "trip",
+        "activity",
+        "day",
+        "period"
+      ],
+      "determinants": [
+        [
+          "day",
+          "period",
+          "trip"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "day",
+          "period",
+          "trip"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "trip",
+        "day",
+        "period",
+        "activity"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} has {Activity:activity} on {Day:day} in the {Period:period}",
+          "projected_order_pattern": "{Trip} has {Activity:activity} on {Day:day} in the {Period:period}",
+          "roles": [
+            "trip",
+            "activity",
+            "day",
+            "period"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "fact": "item_has_attribute_induced_0",
+      "role_order": [
+        "entity",
+        "value"
+      ],
+      "determinants": [
+        [
+          "entity",
+          "value"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "entity",
+          "value"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "entity",
+          "value"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "entity",
+            "value"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} is tagged {AttributeValue:value}",
+          "projected_order_pattern": "{Item} is tagged {AttributeValue:value}",
+          "roles": [
+            "entity",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "fact": "item_has_label",
+      "role_order": [
+        "item",
+        "label"
+      ],
+      "determinants": [
+        [
+          "item",
+          "label"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "item",
+          "label"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [
+        [
+          "item",
+          "label"
+        ]
+      ],
+      "non_native_determinants": [
+        {
+          "roles": [
+            "item",
+            "label"
+          ],
+          "reason": "full-tuple-set-semantics"
+        }
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} has label {Label:label}",
+          "projected_order_pattern": "{Item} has label {Label:label}",
+          "roles": [
+            "item",
+            "label"
+          ]
+        }
+      }
+    }
+  ],
+  "reorders": [
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "grade_of",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "fact": "payment_due",
+      "role_order": [
+        "lease",
+        "amount",
+        "day"
+      ],
+      "determinants": [
+        [
+          "day",
+          "lease"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "day",
+          "lease"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "lease",
+        "day",
+        "amount"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Lease} has {Amount:amount} due on {Day:day}",
+          "projected_order_pattern": "{Lease} has {Amount:amount} due on {Day:day}",
+          "roles": [
+            "lease",
+            "amount",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "grade_of",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "grade_of",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "student_received_grade_in_course",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} received {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} received {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_received_grade_for_course",
+      "role_order": [
+        "student",
+        "grade",
+        "course"
+      ],
+      "determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "course",
+          "student"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "student",
+        "course",
+        "grade"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} received {Grade:grade} for {Course:course}",
+          "projected_order_pattern": "{Student} received {Grade:grade} for {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "stays",
+      "role_order": [
+        "trip",
+        "hotel",
+        "night"
+      ],
+      "determinants": [
+        [
+          "night",
+          "trip"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "night",
+          "trip"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "trip",
+        "night",
+        "hotel"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} stays at {Hotel:hotel} on the night of {Day:night}",
+          "projected_order_pattern": "{Trip} stays at {Hotel:hotel} on the night of {Day:night}",
+          "roles": [
+            "trip",
+            "hotel",
+            "night"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "booked_slot",
+      "role_order": [
+        "trip",
+        "activity",
+        "day",
+        "period"
+      ],
+      "determinants": [
+        [
+          "day",
+          "period",
+          "trip"
+        ]
+      ],
+      "non_prefix_determinants": [
+        [
+          "day",
+          "period",
+          "trip"
+        ]
+      ],
+      "not_expressible_as_n_minus_one": [],
+      "multiplicity": "ManyToOne",
+      "reordered_roles": [
+        "trip",
+        "day",
+        "period",
+        "activity"
+      ],
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} has {Activity:activity} on {Day:day} in the {Period:period}",
+          "projected_order_pattern": "{Trip} has {Activity:activity} on {Day:day} in the {Period:period}",
+          "roles": [
+            "trip",
+            "activity",
+            "day",
+            "period"
+          ]
+        }
+      }
+    }
+  ],
+  "exceptions": [],
+  "reading_checks": [
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "fact": "expense_has_status",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has status {ExpenseStatus:status}",
+          "projected_order_pattern": "{Expense} has status {ExpenseStatus:status}",
+          "roles": [
+            "expense",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "fact": "expense_approved_by",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved by {Approver:approver}",
+          "projected_order_pattern": "{Expense} is approved by {Approver:approver}",
+          "roles": [
+            "expense",
+            "approver"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "fact": "expense_submitted_to_workday",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is submitted to Workday as {WorkdaySubmission:submission}",
+          "projected_order_pattern": "{Expense} is submitted to Workday as {WorkdaySubmission:submission}",
+          "roles": [
+            "expense",
+            "submission"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/approvals/model.orm.yaml",
+      "fact": "expense_reimbursed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is reimbursed {ReimbursementAmount:amount} on {PaidOn:paid_on}",
+          "projected_order_pattern": "{Expense} is reimbursed {ReimbursementAmount:amount} on {PaidOn:paid_on}",
+          "roles": [
+            "expense",
+            "amount",
+            "paid_on"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "recommendation",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} is recommended {Book:book}",
+          "projected_order_pattern": "{User} is recommended {Book:book}",
+          "roles": [
+            "user",
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "user_rated_book",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} rated {Book:book}",
+          "projected_order_pattern": "{User} rated {Book:book}",
+          "roles": [
+            "user",
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "user_is_minor",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} is a minor",
+          "projected_order_pattern": "{User} is a minor",
+          "roles": [
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "book_rated_adult",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} is adult-rated",
+          "projected_order_pattern": "{Book} is adult-rated",
+          "roles": [
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "book_has_genre",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} has primary genre {Genre:genre}",
+          "projected_order_pattern": "{Book} has primary genre {Genre:genre}",
+          "roles": [
+            "book",
+            "genre"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "user_prefers_genre",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} prefers {Genre:genre}",
+          "projected_order_pattern": "{User} prefers {Genre:genre}",
+          "roles": [
+            "user",
+            "genre"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "book_is_blocked_for",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} is blocked for {User:user}",
+          "projected_order_pattern": "{Book} is blocked for {User:user}",
+          "roles": [
+            "book",
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/complete.orm.yaml",
+      "fact": "book_is_eligible",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} is eligible for {User:user}",
+          "projected_order_pattern": "{Book} is eligible for {User:user}",
+          "roles": [
+            "book",
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "fact": "recommendation",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} is recommended {Book:book}",
+          "projected_order_pattern": "{User} is recommended {Book:book}",
+          "roles": [
+            "user",
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "fact": "user_rated_book",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} rated {Book:book}",
+          "projected_order_pattern": "{User} rated {Book:book}",
+          "roles": [
+            "user",
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "fact": "user_is_minor",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} is a minor",
+          "projected_order_pattern": "{User} is a minor",
+          "roles": [
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "fact": "book_rated_adult",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} is adult-rated",
+          "projected_order_pattern": "{Book} is adult-rated",
+          "roles": [
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "fact": "book_has_genre",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} has primary genre {Genre:genre}",
+          "projected_order_pattern": "{Book} has primary genre {Genre:genre}",
+          "roles": [
+            "book",
+            "genre"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/model.orm.yaml",
+      "fact": "user_prefers_genre",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} prefers {Genre:genre}",
+          "projected_order_pattern": "{User} prefers {Genre:genre}",
+          "roles": [
+            "user",
+            "genre"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "fact": "recommendation",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} is recommended {Book:book}",
+          "projected_order_pattern": "{User} is recommended {Book:book}",
+          "roles": [
+            "user",
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "fact": "user_rated_book",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} rated {Book:book}",
+          "projected_order_pattern": "{User} rated {Book:book}",
+          "roles": [
+            "user",
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "fact": "user_is_minor",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} is a minor",
+          "projected_order_pattern": "{User} is a minor",
+          "roles": [
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "fact": "book_rated_adult",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} is adult-rated",
+          "projected_order_pattern": "{Book} is adult-rated",
+          "roles": [
+            "book"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "fact": "book_has_genre",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Book} has primary genre {Genre:genre}",
+          "projected_order_pattern": "{Book} has primary genre {Genre:genre}",
+          "roles": [
+            "book",
+            "genre"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/bookrec/strict.orm.yaml",
+      "fact": "user_prefers_genre",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{User} prefers {Genre:genre}",
+          "projected_order_pattern": "{User} prefers {Genre:genre}",
+          "roles": [
+            "user",
+            "genre"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/composition/model.orm.yaml",
+      "fact": "contract_has_party",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Contract} has party {Party:party}",
+          "projected_order_pattern": "{Contract} has party {Party:party}",
+          "roles": [
+            "contract",
+            "party"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/composition/model.orm.yaml",
+      "fact": "party_is_based_in_city",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Party} is based in {City:city}",
+          "projected_order_pattern": "{Party} is based in {City:city}",
+          "roles": [
+            "party",
+            "city"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/composition/model.orm.yaml",
+      "fact": "contract_is_in_city",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Contract} is in {City:city}",
+          "projected_order_pattern": "{Contract} is in {City:city}",
+          "roles": [
+            "contract",
+            "city"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/disclosure/model.orm.yaml",
+      "fact": "has_email",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{CustomerCode} has email {EmailAddress:email}",
+          "projected_order_pattern": "{CustomerCode} has email {EmailAddress:email}",
+          "roles": [
+            "customer",
+            "email"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_request",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Shipment} relates {Warehouse:node}",
+          "projected_order_pattern": "{Shipment} relates {Warehouse:node}",
+          "roles": [
+            "job",
+            "node"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_allowed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Warehouse}",
+          "projected_order_pattern": "{Warehouse}",
+          "roles": [
+            "node"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_due",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Shipment} relates {CalendarDay:day}",
+          "projected_order_pattern": "{Shipment} relates {CalendarDay:day}",
+          "roles": [
+            "job",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_start",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Shipment} relates {CalendarDay:day}",
+          "projected_order_pattern": "{Shipment} relates {CalendarDay:day}",
+          "roles": [
+            "job",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_window",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Shipment} relates {ShippingWindow:days}",
+          "projected_order_pattern": "{Shipment} relates {ShippingWindow:days}",
+          "roles": [
+            "job",
+            "days"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_leg",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Warehouse} relates {Warehouse:target}",
+          "projected_order_pattern": "{Warehouse} relates {Warehouse:target}",
+          "roles": [
+            "source",
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_reachable",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Warehouse} relates {Warehouse:target}",
+          "projected_order_pattern": "{Warehouse} relates {Warehouse:target}",
+          "roles": [
+            "source",
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_metric",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Shipment} relates {Quantity:value}",
+          "projected_order_pattern": "{Shipment} relates {Quantity:value}",
+          "roles": [
+            "job",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/dispatch/model.orm.json",
+      "fact": "dispatch_flag",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Shipment} relates {Approved:value}",
+          "projected_order_pattern": "{Shipment} relates {Approved:value}",
+          "roles": [
+            "job",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_submitted_by_employee",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "projected_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "roles": [
+            "expense",
+            "employee"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_has_amount",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has {Amount:amount}",
+          "projected_order_pattern": "{Expense} has {Amount:amount}",
+          "roles": [
+            "expense",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_in_category",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is in {Category:category}",
+          "projected_order_pattern": "{Expense} is in {Category:category}",
+          "roles": [
+            "expense",
+            "category"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_is_approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_approved_by_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "projected_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "roles": [
+            "expense",
+            "chain"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/currency.orm.json",
+      "fact": "expense_has_currency",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is denominated in {Currency:currency}",
+          "projected_order_pattern": "{Expense} is denominated in {Currency:currency}",
+          "roles": [
+            "expense",
+            "currency"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "fact": "expense_submitted_by_employee",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "projected_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "roles": [
+            "expense",
+            "employee"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "fact": "expense_has_amount",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has {Amount:amount}",
+          "projected_order_pattern": "{Expense} has {Amount:amount}",
+          "roles": [
+            "expense",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "fact": "expense_in_category",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is in {Category:category}",
+          "projected_order_pattern": "{Expense} is in {Category:category}",
+          "roles": [
+            "expense",
+            "category"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "fact": "expense_is_approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/model.orm.json",
+      "fact": "expense_approved_by_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "projected_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "roles": [
+            "expense",
+            "chain"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "fact": "expense_submitted_by_employee",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "projected_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "roles": [
+            "expense",
+            "employee"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "fact": "expense_has_amount",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has {Amount:amount}",
+          "projected_order_pattern": "{Expense} has {Amount:amount}",
+          "roles": [
+            "expense",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "fact": "expense_in_category",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is in {Category:category}",
+          "projected_order_pattern": "{Expense} is in {Category:category}",
+          "roles": [
+            "expense",
+            "category"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "fact": "expense_is_approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/project/model.orm.json",
+      "fact": "expense_approved_by_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "projected_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "roles": [
+            "expense",
+            "chain"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_submitted_by_employee",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "projected_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "roles": [
+            "expense",
+            "employee"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_has_amount",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has {Amount:amount}",
+          "projected_order_pattern": "{Expense} has {Amount:amount}",
+          "roles": [
+            "expense",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_in_category",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is in {Category:category}",
+          "projected_order_pattern": "{Expense} is in {Category:category}",
+          "roles": [
+            "expense",
+            "category"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_is_approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_approved_by_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "projected_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "roles": [
+            "expense",
+            "chain"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v1.orm.json",
+      "fact": "expense_has_receipt",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has {Receipt:receipt}",
+          "projected_order_pattern": "{Expense} has {Receipt:receipt}",
+          "roles": [
+            "expense",
+            "receipt"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_submitted_by_employee",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "projected_order_pattern": "{Expense} is submitted by {Employee:employee}",
+          "roles": [
+            "expense",
+            "employee"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_has_amount",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} has {Amount:amount}",
+          "projected_order_pattern": "{Expense} has {Amount:amount}",
+          "roles": [
+            "expense",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_in_category",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is in {Category:category}",
+          "projected_order_pattern": "{Expense} is in {Category:category}",
+          "roles": [
+            "expense",
+            "category"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_is_approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved",
+          "projected_order_pattern": "{Expense} is approved",
+          "roles": [
+            "expense"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_approved_by_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "projected_order_pattern": "{Expense} is approved by {Chain:chain}",
+          "roles": [
+            "expense",
+            "chain"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/expense/teams/shared/expense-v2.orm.json",
+      "fact": "expense_supported_by_document",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Expense} is supported by {Document:document}",
+          "projected_order_pattern": "{Expense} is supported by {Document:document}",
+          "roles": [
+            "expense",
+            "document"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/growth/model.orm.yaml",
+      "fact": "order_placed_by_customer",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Order} is placed by {Customer:customer}",
+          "projected_order_pattern": "{Order} is placed by {Customer:customer}",
+          "roles": [
+            "order",
+            "customer"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/growth/model.orm.yaml",
+      "fact": "order_arrives_via_channel",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Order} arrives via {Channel:channel}",
+          "projected_order_pattern": "{Order} arrives via {Channel:channel}",
+          "roles": [
+            "order",
+            "channel"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/growth/model.orm.yaml",
+      "fact": "customer_is_active",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Customer} is active",
+          "projected_order_pattern": "{Customer} is active",
+          "roles": [
+            "customer"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "fact": "reports_to",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Employee} reports to {Employee:manager}",
+          "projected_order_pattern": "{Employee} reports to {Employee:manager}",
+          "roles": [
+            "employee",
+            "manager"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "fact": "approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Employee} is approved for {System:system}",
+          "projected_order_pattern": "{Employee} is approved for {System:system}",
+          "roles": [
+            "employee",
+            "system"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "fact": "approved_by",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Employee} approves {Employee:employee}'s access to {System:system}",
+          "projected_order_pattern": "{Employee} approves {Employee:employee}'s access to {System:system}",
+          "roles": [
+            "approver",
+            "employee",
+            "system"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "fact": "has_access",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Employee} has access to {System:system}",
+          "projected_order_pattern": "{Employee} has access to {System:system}",
+          "roles": [
+            "employee",
+            "system"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/access/model.orm.json",
+      "fact": "management_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Employee} is managed, directly or through a chain, by {Employee:manager}",
+          "projected_order_pattern": "{Employee} is managed, directly or through a chain, by {Employee:manager}",
+          "roles": [
+            "employee",
+            "manager"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "fact": "prescribed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Patient} is prescribed {Drug:drug}",
+          "projected_order_pattern": "{Patient} is prescribed {Drug:drug}",
+          "roles": [
+            "patient",
+            "drug"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "fact": "refill_interval",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Drug} may be refilled every {Days:days}",
+          "projected_order_pattern": "{Drug} may be refilled every {Days:days}",
+          "roles": [
+            "drug",
+            "days"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "fact": "last_refill",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Patient} last got {Drug:drug} on {Day:day}",
+          "projected_order_pattern": "{Patient} last got {Drug:drug} on {Day:day}",
+          "roles": [
+            "patient",
+            "drug",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "fact": "refill",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Patient} gets {Drug:drug} on {Day:day}",
+          "projected_order_pattern": "{Patient} gets {Drug:drug} on {Day:day}",
+          "roles": [
+            "patient",
+            "drug",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "fact": "interacts",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Drug} interacts with {Drug:other}",
+          "projected_order_pattern": "{Drug} interacts with {Drug:other}",
+          "roles": [
+            "drug",
+            "other"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/clinic/model.orm.json",
+      "fact": "interacting_pair",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Drug} and {Drug:other} interact, either way round",
+          "projected_order_pattern": "{Drug} and {Drug:other} interact, either way round",
+          "roles": [
+            "drug",
+            "other"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "course_needs",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "course_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is worth {Credits:credits}",
+          "projected_order_pattern": "{Course} is worth {Credits:credits}",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "offered",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Term:term}",
+          "projected_order_pattern": "{Course} is offered in {Term:term}",
+          "roles": [
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "passed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} passed {Course:course}",
+          "projected_order_pattern": "{Student} passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "enrolls",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} enrolls in {Course:course} in {Term:term}",
+          "projected_order_pattern": "{Student} enrolls in {Course:course} in {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "grade_of",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "prerequisite_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}, directly or through a chain",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}, directly or through a chain",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/course/model.orm.json",
+      "fact": "term_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} takes {TotalCredits:total} credits in {Term:term}",
+          "projected_order_pattern": "{Student} takes {TotalCredits:total} credits in {Term:term}",
+          "roles": [
+            "student",
+            "total",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "fact": "lease_starts",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Lease} starts on {Day:day}",
+          "projected_order_pattern": "{Lease} starts on {Day:day}",
+          "roles": [
+            "lease",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "fact": "lease_ends",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Lease} ends on {Day:day}",
+          "projected_order_pattern": "{Lease} ends on {Day:day}",
+          "roles": [
+            "lease",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "fact": "monthly_rent",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Lease} has a monthly rent of {Amount:amount}",
+          "projected_order_pattern": "{Lease} has a monthly rent of {Amount:amount}",
+          "roles": [
+            "lease",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/lease/model.orm.json",
+      "fact": "payment_due",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Lease} has {Amount:amount} due on {Day:day}",
+          "projected_order_pattern": "{Lease} has {Amount:amount} due on {Day:day}",
+          "roles": [
+            "lease",
+            "amount",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "course_needs",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "course_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is worth {Credits:credits}",
+          "projected_order_pattern": "{Course} is worth {Credits:credits}",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "offered",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Term:term}",
+          "projected_order_pattern": "{Course} is offered in {Term:term}",
+          "roles": [
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "passed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} passed {Course:course}",
+          "projected_order_pattern": "{Student} passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "enrolls",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} enrolls in {Course:course} in {Term:term}",
+          "projected_order_pattern": "{Student} enrolls in {Course:course} in {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "grade_of",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "prerequisite_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}, directly or through a chain",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}, directly or through a chain",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json",
+      "fact": "term_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} takes {TotalCredits:total} credits in {Term:term}",
+          "projected_order_pattern": "{Student} takes {TotalCredits:total} credits in {Term:term}",
+          "roles": [
+            "student",
+            "total",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "course_needs",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "course_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is worth {Credits:credits}",
+          "projected_order_pattern": "{Course} is worth {Credits:credits}",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "offered",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Term:term}",
+          "projected_order_pattern": "{Course} is offered in {Term:term}",
+          "roles": [
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "passed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} passed {Course:course}",
+          "projected_order_pattern": "{Student} passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "enrolls",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} enrolls in {Course:course} in {Term:term}",
+          "projected_order_pattern": "{Student} enrolls in {Course:course} in {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "grade_of",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} got {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "prerequisite_chain",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}, directly or through a chain",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}, directly or through a chain",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json",
+      "fact": "term_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} takes {TotalCredits:total} credits in {Term:term}",
+          "projected_order_pattern": "{Student} takes {TotalCredits:total} credits in {Term:term}",
+          "roles": [
+            "student",
+            "total",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "course_has_title",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} has title {CourseTitle:title}",
+          "projected_order_pattern": "{Course} has title {CourseTitle:title}",
+          "roles": [
+            "course",
+            "title"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "course_has_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is worth {Credits:credits} credits",
+          "projected_order_pattern": "{Course} is worth {Credits:credits} credits",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "course_needs_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "course_offered_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Term:term}",
+          "projected_order_pattern": "{Course} is offered in {Term:term}",
+          "roles": [
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "course_requires_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} requires {Course:prerequisite}",
+          "projected_order_pattern": "{Course} requires {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "student_passed_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} passed {Course:course}",
+          "projected_order_pattern": "{Student} passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "student_enrolled_in_course_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} is enrolled in {Course:course} in {Term:term}",
+          "projected_order_pattern": "{Student} is enrolled in {Course:course} in {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "student_received_grade_in_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} received {Grade:grade} in {Course:course}",
+          "projected_order_pattern": "{Student} received {Grade:grade} in {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml",
+      "fact": "student_carries_credits_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} carries {CreditTotal:total} credits in {Term:term}",
+          "projected_order_pattern": "{Student} carries {CreditTotal:total} credits in {Term:term}",
+          "roles": [
+            "student",
+            "total",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_has_title",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} has {CourseTitle:title}",
+          "projected_order_pattern": "{Course} has {CourseTitle:title}",
+          "roles": [
+            "course",
+            "title"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_has_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is worth {CreditCount:credits}",
+          "projected_order_pattern": "{Course} is worth {CreditCount:credits}",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_needs_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_requires_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} requires {Course:prerequisite}",
+          "projected_order_pattern": "{Course} requires {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "course_offered_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Term:term}",
+          "projected_order_pattern": "{Course} is offered in {Term:term}",
+          "roles": [
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_enrolled_in_course_for_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} is enrolled in {Course:course} for {Term:term}",
+          "projected_order_pattern": "{Student} is enrolled in {Course:course} for {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_passed_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} has passed {Course:course}",
+          "projected_order_pattern": "{Student} has passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_received_grade_for_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} received {Grade:grade} for {Course:course}",
+          "projected_order_pattern": "{Student} received {Grade:grade} for {Course:course}",
+          "roles": [
+            "student",
+            "grade",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json",
+      "fact": "student_carries_credit_load_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} carries {CreditLoad:load} in {Term:term}",
+          "projected_order_pattern": "{Student} carries {CreditLoad:load} in {Term:term}",
+          "roles": [
+            "student",
+            "load",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_has_id",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} has id {StudentId:student_id}",
+          "projected_order_pattern": "{Student} has id {StudentId:student_id}",
+          "roles": [
+            "student",
+            "student_id"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_has_code",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} has code {CourseCode:course_code}",
+          "projected_order_pattern": "{Course} has code {CourseCode:course_code}",
+          "roles": [
+            "course",
+            "course_code"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "term_has_label",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Term} has label {TermLabel:term_label}",
+          "projected_order_pattern": "{Term} has label {TermLabel:term_label}",
+          "roles": [
+            "term",
+            "term_label"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_has_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is worth {Credits:credits} credits",
+          "projected_order_pattern": "{Course} is worth {Credits:credits} credits",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_needs_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_offered_in_season",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Season:season}",
+          "projected_order_pattern": "{Course} is offered in {Season:season}",
+          "roles": [
+            "course",
+            "season"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "term_has_season",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Term} is a {Season:season} term",
+          "projected_order_pattern": "{Term} is a {Season:season} term",
+          "roles": [
+            "term",
+            "season"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_enrolled_in_course_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} enrolled in {Course:course} in {Term:term}",
+          "projected_order_pattern": "{Student} enrolled in {Course:course} in {Term:term}",
+          "roles": [
+            "student",
+            "course",
+            "term"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_passed_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} passed {Course:course}",
+          "projected_order_pattern": "{Student} passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_course_grade",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} in {Course:course} got grade {Grade:grade}",
+          "projected_order_pattern": "{Student} in {Course:course} got grade {Grade:grade}",
+          "roles": [
+            "student",
+            "course",
+            "grade"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "course_transitively_needs_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} transitively needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} transitively needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml",
+      "fact": "student_credits_in_term",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} in {Term:term} takes {Credits:credits} credits",
+          "projected_order_pattern": "{Student} in {Term:term} takes {Credits:credits} credits",
+          "roles": [
+            "student",
+            "term",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "course_has_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} has {Credits:credits} credits",
+          "projected_order_pattern": "{Course} has {Credits:credits} credits",
+          "roles": [
+            "course",
+            "credits"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "course_needs_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "course_needs_course_transitively",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} transitively needs {Course:prerequisite}",
+          "projected_order_pattern": "{Course} transitively needs {Course:prerequisite}",
+          "roles": [
+            "course",
+            "prerequisite"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "course_offered_in_season",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Course} is offered in {Season:season}",
+          "projected_order_pattern": "{Course} is offered in {Season:season}",
+          "roles": [
+            "course",
+            "season"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "student_enrolled_in_course_in_season",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} enrolled in {Course:course} in {Season:season}",
+          "projected_order_pattern": "{Student} enrolled in {Course:course} in {Season:season}",
+          "roles": [
+            "student",
+            "course",
+            "season"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "student_term_credits",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} takes {Credits:credits} credits in {Season:season}",
+          "projected_order_pattern": "{Student} takes {Credits:credits} credits in {Season:season}",
+          "roles": [
+            "student",
+            "credits",
+            "season"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "student_passed_course",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} passed {Course:course}",
+          "projected_order_pattern": "{Student} passed {Course:course}",
+          "roles": [
+            "student",
+            "course"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "student_has_grade",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} in {Course:course} received {Grade:grade}",
+          "projected_order_pattern": "{Student} in {Course:course} received {Grade:grade}",
+          "roles": [
+            "student",
+            "course",
+            "grade"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml",
+      "fact": "student_is_admitted",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Student} is admitted",
+          "projected_order_pattern": "{Student} is admitted",
+          "roles": [
+            "student"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "trip_starts",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} starts on {Day:day}",
+          "projected_order_pattern": "{Trip} starts on {Day:day}",
+          "roles": [
+            "trip",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "trip_ends",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} ends on {Day:day}",
+          "projected_order_pattern": "{Trip} ends on {Day:day}",
+          "roles": [
+            "trip",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "budget",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} has a budget of {Euros:euros}",
+          "projected_order_pattern": "{Trip} has a budget of {Euros:euros}",
+          "roles": [
+            "trip",
+            "euros"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "nightly_price",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Hotel} costs {Euros:euros} a night",
+          "projected_order_pattern": "{Hotel} costs {Euros:euros} a night",
+          "roles": [
+            "hotel",
+            "euros"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "activity_price",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Activity} costs {Euros:euros}",
+          "projected_order_pattern": "{Activity} costs {Euros:euros}",
+          "roles": [
+            "activity",
+            "euros"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "activity_slot",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Activity} takes place on {Day:day} in the {Period:period}",
+          "projected_order_pattern": "{Activity} takes place on {Day:day} in the {Period:period}",
+          "roles": [
+            "activity",
+            "day",
+            "period"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "stays",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} stays at {Hotel:hotel} on the night of {Day:night}",
+          "projected_order_pattern": "{Trip} stays at {Hotel:hotel} on the night of {Day:night}",
+          "roles": [
+            "trip",
+            "hotel",
+            "night"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "books",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} books {Activity:activity}",
+          "projected_order_pattern": "{Trip} books {Activity:activity}",
+          "roles": [
+            "trip",
+            "activity"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "hotel_total",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} spends {Euros:euros} on hotels",
+          "projected_order_pattern": "{Trip} spends {Euros:euros} on hotels",
+          "roles": [
+            "trip",
+            "euros"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "activity_total",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} spends {Euros:euros} on activities",
+          "projected_order_pattern": "{Trip} spends {Euros:euros} on activities",
+          "roles": [
+            "trip",
+            "euros"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/plan_apps/trip/model.orm.json",
+      "fact": "booked_slot",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Trip} has {Activity:activity} on {Day:day} in the {Period:period}",
+          "projected_order_pattern": "{Trip} has {Activity:activity} on {Day:day} in the {Period:period}",
+          "roles": [
+            "trip",
+            "activity",
+            "day",
+            "period"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/quoted_claims/model.orm.json",
+      "fact": "quote",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Quotation} appears in {Work:work}",
+          "projected_order_pattern": "{Quotation} appears in {Work:work}",
+          "roles": [
+            "quote",
+            "work"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/quoted_claims/model.orm.json",
+      "fact": "authored",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Work} was written by {Person:person}",
+          "projected_order_pattern": "{Work} was written by {Person:person}",
+          "roles": [
+            "work",
+            "person"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/quoted_claims/model.orm.json",
+      "fact": "reviewed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Work} was reviewed by {Person:reviewer}",
+          "projected_order_pattern": "{Work} was reviewed by {Person:reviewer}",
+          "roles": [
+            "work",
+            "reviewer"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/quoted_claims/model.orm.json",
+      "fact": "certified",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Quotation} is certified as said by {Person:person}",
+          "projected_order_pattern": "{Quotation} is certified as said by {Person:person}",
+          "roles": [
+            "quote",
+            "person"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/refunds/model.orm.yaml",
+      "fact": "refund_by",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Refund} is requested by {Customer:customer}",
+          "projected_order_pattern": "{Refund} is requested by {Customer:customer}",
+          "roles": [
+            "refund",
+            "customer"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/refunds/model.orm.yaml",
+      "fact": "refund_amount",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Refund} is for {Amount:amount}",
+          "projected_order_pattern": "{Refund} is for {Amount:amount}",
+          "roles": [
+            "refund",
+            "amount"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/refunds/model.orm.yaml",
+      "fact": "refund_channel",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Refund} is paid by {Channel:channel}",
+          "projected_order_pattern": "{Refund} is paid by {Channel:channel}",
+          "roles": [
+            "refund",
+            "channel"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_request",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} relates {Service:node}",
+          "projected_order_pattern": "{Release} relates {Service:node}",
+          "roles": [
+            "job",
+            "node"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_allowed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service}",
+          "projected_order_pattern": "{Service}",
+          "roles": [
+            "node"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_due",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} relates {CalendarDay:day}",
+          "projected_order_pattern": "{Release} relates {CalendarDay:day}",
+          "roles": [
+            "job",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_start",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} relates {CalendarDay:day}",
+          "projected_order_pattern": "{Release} relates {CalendarDay:day}",
+          "roles": [
+            "job",
+            "day"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_window",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} relates {ReleaseWindow:days}",
+          "projected_order_pattern": "{Release} relates {ReleaseWindow:days}",
+          "roles": [
+            "job",
+            "days"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_leg",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service} relates {Service:target}",
+          "projected_order_pattern": "{Service} relates {Service:target}",
+          "roles": [
+            "source",
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_reachable",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service} relates {Service:target}",
+          "projected_order_pattern": "{Service} relates {Service:target}",
+          "roles": [
+            "source",
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_metric",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} relates {Priority:value}",
+          "projected_order_pattern": "{Release} relates {Priority:value}",
+          "roles": [
+            "job",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release/model.orm.json",
+      "fact": "release_flag",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} relates {Approved:value}",
+          "projected_order_pattern": "{Release} relates {Approved:value}",
+          "roles": [
+            "job",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/approval-proof/model.orm.json",
+      "fact": "requested",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release}",
+          "projected_order_pattern": "{Release}",
+          "roles": [
+            "release"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/approval-proof/model.orm.json",
+      "fact": "reviewed",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release}",
+          "projected_order_pattern": "{Release}",
+          "roles": [
+            "release"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/approval-proof/model.orm.json",
+      "fact": "approved",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release}",
+          "projected_order_pattern": "{Release}",
+          "roles": [
+            "release"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "dependency",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service} {Service:dependency}",
+          "projected_order_pattern": "{Service} {Service:dependency}",
+          "roles": [
+            "service",
+            "dependency"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "deployable",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service}",
+          "projected_order_pattern": "{Service}",
+          "roles": [
+            "service"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "vulnerable",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service}",
+          "projected_order_pattern": "{Service}",
+          "roles": [
+            "component"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "request",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} {Service:service}",
+          "projected_order_pattern": "{Release} {Service:service}",
+          "roles": [
+            "release",
+            "service"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "reachable",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service} {Service:dependency}",
+          "projected_order_pattern": "{Service} {Service:dependency}",
+          "roles": [
+            "service",
+            "dependency"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "exposure",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service} {Service:component}",
+          "projected_order_pattern": "{Service} {Service:component}",
+          "roles": [
+            "service",
+            "component"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "affected",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service}",
+          "projected_order_pattern": "{Service}",
+          "roles": [
+            "service"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "unaffected",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service}",
+          "projected_order_pattern": "{Service}",
+          "roles": [
+            "service"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "vulnerability_count",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Service} {Count:count}",
+          "projected_order_pattern": "{Service} {Count:count}",
+          "roles": [
+            "service",
+            "count"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/dependencies/model.orm.json",
+      "fact": "blocked",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} {Service:service}",
+          "projected_order_pattern": "{Release} {Service:service}",
+          "roles": [
+            "release",
+            "service"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/policy/model.orm.json",
+      "fact": "request",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} {Service:service} {Person:requester}",
+          "projected_order_pattern": "{Release} {Service:service} {Person:requester}",
+          "roles": [
+            "release",
+            "service",
+            "requester"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/policy/model.orm.json",
+      "fact": "approval",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Release} {Person:reviewer}",
+          "projected_order_pattern": "{Release} {Person:reviewer}",
+          "roles": [
+            "release",
+            "reviewer"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/release_governance/policy/model.orm.json",
+      "fact": "authorized",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Person}",
+          "projected_order_pattern": "{Person}",
+          "roles": [
+            "reviewer"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/rule_check/model.orm.yaml",
+      "fact": "component_imports_component",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Component} imports {Component:imported}",
+          "projected_order_pattern": "{Component} imports {Component:imported}",
+          "roles": [
+            "importer",
+            "imported"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/rule_check/model.orm.yaml",
+      "fact": "component_is_in_area",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Component} is in {Area:area}",
+          "projected_order_pattern": "{Component} is in {Area:area}",
+          "roles": [
+            "component",
+            "area"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/rule_check/model.orm.yaml",
+      "fact": "component_has_owner",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Component} has owner {Owner:owner}",
+          "projected_order_pattern": "{Component} has owner {Owner:owner}",
+          "roles": [
+            "component",
+            "owner"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/rule_check/model.orm.yaml",
+      "fact": "component_ships_in_release",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Component} ships in {Release:release}",
+          "projected_order_pattern": "{Component} ships in {Release:release}",
+          "roles": [
+            "component",
+            "release"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "fact": "works_in",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Staff} works in {Team:team}",
+          "projected_order_pattern": "{Staff} works in {Team:team}",
+          "roles": [
+            "staff",
+            "team"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "fact": "team_site",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Team} sits at {Site:site}",
+          "projected_order_pattern": "{Team} sits at {Site:site}",
+          "roles": [
+            "team",
+            "site"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "fact": "based_at",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Staff} is based at {Site:site}",
+          "projected_order_pattern": "{Staff} is based at {Site:site}",
+          "roles": [
+            "staff",
+            "site"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "fact": "parks_at",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Staff} parks at {Site:site}",
+          "projected_order_pattern": "{Staff} parks at {Site:site}",
+          "roles": [
+            "staff",
+            "site"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "fact": "is_contractor",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Staff} is a contractor",
+          "projected_order_pattern": "{Staff} is a contractor",
+          "roles": [
+            "staff"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/staffing/model.orm.yaml",
+      "fact": "mentors",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Staff} mentors {Staff:mentee}",
+          "projected_order_pattern": "{Staff} mentors {Staff:mentee}",
+          "roles": [
+            "mentor",
+            "mentee"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/duplicates/model.orm.yaml",
+      "fact": "item_has_attribute",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} has attribute {AttributeName:name} with value {AttributeValue:value}",
+          "projected_order_pattern": "{Item} has attribute {AttributeName:name} with value {AttributeValue:value}",
+          "roles": [
+            "item",
+            "name",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/duplicates/model.orm.yaml",
+      "fact": "item_has_attribute_induced_0",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} has dimension {AttributeValue:value}",
+          "projected_order_pattern": "{Item} has dimension {AttributeValue:value}",
+          "roles": [
+            "entity",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/duplicates/model.orm.yaml",
+      "fact": "item_has_colour",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} has colour {Colour:colour}",
+          "projected_order_pattern": "{Item} has colour {Colour:colour}",
+          "roles": [
+            "item",
+            "colour"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "fact": "item_has_attribute",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} has attribute {AttributeName:name} with value {AttributeValue:value}",
+          "projected_order_pattern": "{Item} has attribute {AttributeName:name} with value {AttributeValue:value}",
+          "roles": [
+            "item",
+            "name",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "fact": "item_has_attribute_induced_0",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} is tagged {AttributeValue:value}",
+          "projected_order_pattern": "{Item} is tagged {AttributeValue:value}",
+          "roles": [
+            "entity",
+            "value"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml",
+      "fact": "item_has_label",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Item} has label {Label:label}",
+          "projected_order_pattern": "{Item} has label {Label:label}",
+          "roles": [
+            "item",
+            "label"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "fact": "movie_has_title",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Movie} has title {Title:title}",
+          "projected_order_pattern": "{Movie} has title {Title:title}",
+          "roles": [
+            "movie",
+            "title"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "fact": "movie_directed_by_director",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Movie} directed by {Director:director}",
+          "projected_order_pattern": "{Movie} directed by {Director:director}",
+          "roles": [
+            "movie",
+            "director"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "fact": "movie_released_in_year",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Movie} released in {Year:year}",
+          "projected_order_pattern": "{Movie} released in {Year:year}",
+          "roles": [
+            "movie",
+            "year"
+          ]
+        }
+      }
+    },
+    {
+      "model": "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml",
+      "fact": "movie_has_rating",
+      "readings": {
+        "reading": {
+          "original_order_pattern": "{Movie} has rating {Rating:rating}",
+          "projected_order_pattern": "{Movie} has rating {Rating:rating}",
+          "roles": [
+            "movie",
+            "rating"
+          ]
+        }
+      }
+    }
+  ],
+  "controls": {
+    "reordered_roles": [
+      "b",
+      "a"
+    ],
+    "preserved_reading_roles": [
+      "a",
+      "b"
+    ],
+    "incomplete_reading": "refused"
+  }
+}

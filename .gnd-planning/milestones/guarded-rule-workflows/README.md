@@ -15,4 +15,5 @@ Generated cases (GW3), relational discovery (GW4), and mined-rule constants
 (GW1) are [deferred](notes/guarded-rule-workflows-plan.md#7-deferred-and-out-of-scope).
 The standard panel reviewed r2. The [review disposition](notes/plan-review-disposition.md)
 records the first round and the r3 changes. The [delegated plan gate](001-plan-gate.md) is recorded.
-[GW0](003-phase-GW0.md) is implemented and reviewed. GW2 is next.
+[GW0](003-phase-GW0.md) and [GW2](005-phase-GW2.md) are implemented and
+reviewed. The [close outcome](notes/close-outcome.md) awaits the standard panel.

@@ -1,0 +1,62 @@
+{
+  "source_commit": "e02345d375b21361a5aa0633d748043d381e93fe",
+  "wheel": "get_nick_done-0.3.0-py3-none-any.whl",
+  "wheel_sha256": "e920ac9570ccfda790e79d75df76a8916045bc9a1b19eec13ba1078ea71a57c7",
+  "python": "3.14.3",
+  "module_origin": "venv/lib/python3.14/site-packages/gnd/__init__.py",
+  "observations": {
+    "diagnostics": {
+      "argv": [
+        "check",
+        "model.orm.yaml",
+        "population.yaml",
+        "--guarded-diagnostics"
+      ],
+      "exit": 0,
+      "report_sha256": "adb64540bd0e87aecd3a0970afa61938a0cc3f6fc8d6872cc5d8bd6fe3f0699a"
+    },
+    "validate": {
+      "argv": [
+        "validate",
+        "model.orm.yaml"
+      ],
+      "exit": 0,
+      "report_sha256": "bc2f6e873200072b9287bd3c45199cc4514dca8fff70eb9e2195c7b0c6d505a5"
+    },
+    "edition_comparison": {
+      "argv": [
+        "check",
+        "head.orm.yaml",
+        "population.yaml",
+        "--baseline-model",
+        "base.orm.yaml"
+      ],
+      "exit": 0,
+      "report_sha256": "dc0d627c08902eb7e961411a981f2389054d0dd1b839791dc12c7fb24207a6ff"
+    }
+  },
+  "guarded_antecedents": {
+    "constraint:antecedent_typo": {
+      "binding_count": 0,
+      "first_empty_atom_index": 0
+    },
+    "constraint:consequent_typo": {
+      "binding_count": 1,
+      "first_empty_atom_index": null
+    }
+  },
+  "literal_warning_paths": [
+    "$.constraints[1].antecedent[0].bind[area]",
+    "$.constraints[2].consequent.absence.bind[area]"
+  ],
+  "edition_comparison": {
+    "address": "constraint:local_imports",
+    "base_check_exit": 1,
+    "head_check_exit": 1,
+    "delta_counts": {
+      "base_only": 42,
+      "head_only": 0,
+      "standing": 1
+    }
+  }
+}

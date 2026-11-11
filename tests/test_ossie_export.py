@@ -535,3 +535,22 @@ def test_proposed_alethic_uniqueness_is_not_projected_as_multiplicity(tmp_path):
         row["pointer"]: row["disposition"] for row in json.loads(bundle.loss_report)["dispositions"]
     }
     assert by_pointer["/fact_types/0/constraints/0"] == "extension"
+
+
+def test_rn0_k1_ossie_surfaces_are_every_mode_because_exports_carry_model_literals():
+    """RN0 review K1: an export writes value-constraint literals in every disclosure mode.
+
+    The table must not call these commands value-free while that is so. The sample and
+    reference populations are omitted; the literals a constraint names are not.
+    """
+    from gnd import disclosure
+
+    source = MILESTONE / "evidence/OS2/corpus-r2/model.orm.json"
+    unset = render_ossie(source, output_format="json", strict=True)
+    with disclosure.invocation("customer"):
+        customer = render_ossie(source, output_format="json", strict=True)
+    assert b"'Retail'" in customer.document
+    assert (customer.document, customer.sidecar, customer.loss_report) == (
+        unset.document, unset.sidecar, unset.loss_report)
+    for leaf in ("gnd export ossie", "gnd import ossie"):
+        assert disclosure.SURFACES[leaf].kind == "every-mode", leaf

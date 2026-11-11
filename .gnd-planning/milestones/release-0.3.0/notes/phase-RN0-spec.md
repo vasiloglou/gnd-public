@@ -252,3 +252,29 @@ digest.
 Size, measured: 49 insertions and 34 deletions across four source files (the
 three Ossie modules and 4 lines in `src/gnd/disclosure.py`), against an
 estimate of about 55 changed lines.
+
+## Review findings (2026-11-11, appended)
+
+One reviewer, Codex, over `2490dd77..2a9bd6b8`
+([retained output](phase-RN0-codex-review.md)): `revise`, 2 findings. Both
+were reproduced before they were accepted.
+
+| Finding | Reproduced | Triage | Fix |
+|---|---|---|---|
+| K1 the two Ossie commands were classed `value-free`, and they are not | yes: under `disclosure.invocation("customer")` a strict export of `ossie-interchange/evidence/OS2/corpus-r2/model.orm.json` writes `'Retail'` into the ontology and a literal `100` into the sidecar; a default (non-strict) export of a model with sample populations succeeds, so "a model with populations is refused" was false too | blocking: a wrong row in the disclosure table | both rows are `every-mode` with notes that say what is written. Regression test `tests/test_ossie_export.py::test_rn0_k1_ossie_surfaces_are_every_mode_because_exports_carry_model_literals`, run red against `2a9bd6b8` (`1 failed`) before the fix |
+| K2 the query successor's reason said thirteen exporter reads were removed | yes: nine exporter occurrences were replaced and five importer reads were consolidated into one | hardening: the counts were right, the sentence was not | the reason is corrected in `evidence/RN0/query-successor.json` |
+
+**Corrects finding 2 above, kept as written.** Finding 2 argued `value-free`
+from the population refusal. That argument was wrong in two ways: the refusal
+happens only under `--strict`, and populations are not the only values a model
+holds. A default export omits sample and reference populations (checked on the
+growth example: none of its four sample values appears in any output) but
+writes constraint literals and description text, and an import restores
+whatever its sidecar carries.
+
+**What K1 leaves open, outside this phase.** The reviewer also showed that a
+model whose fact type declares `redact: true` still has its constraint
+literals and descriptions exported, in customer mode as in any other. RN0 does
+not change what an export writes (§9). The table now tells the truth about it;
+whether Ossie export should honor a redaction policy is a product question for
+the owner, raised in the record.

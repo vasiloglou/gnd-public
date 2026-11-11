@@ -86,6 +86,37 @@ choices put to them in the session:
   `uv run pytest -q -o addopts='' tests/test_public_built_inventory.py`: 17
   passed. `twine check` passes on the wheel and the sdist.
 
+## Issue 104: the comment to post after the merge
+
+The owner ruled "Post and close". The text below replaces the follow-up that
+`milestones/unattended-model-growth/notes/ug4-issue-followups.md` drafted and
+never posted; that note is history and stays as written.
+
+> Follow-up to the disposition above.
+>
+> - Item 5, second option, is on main (PR 147). `gnd evolve preview --policy
+>   additive --check-population FILE` admits a new constraint, or a change to
+>   one whose differing keys all strengthen, weaken or are admitted, on a fact
+>   type that already holds facts, when the constraint is `proposed` and
+>   `deontic`, `FILE` holds facts for every populated fact type it ranges over
+>   and none has sample rows, and the constraint's own verdict over `FILE` is
+>   `pass`. The admission holds relative to `FILE`; the constraint stays
+>   advisory. `apply` repeats the option and refuses a changed file (exit 11).
+>   Rules: the evolution contract, "Population check".
+> - A round can declare its own source document inside `evolve` (PR 149), and
+>   the unattended-growth procedure says when to use the population check
+>   (PR 151).
+> - Item 4: the reply shape now gives the entry shape of a derived fact type,
+>   with its quote (PR 185). It is the model's fact type shape with a
+>   structured rule and no rows. The guidance test builds one, and
+>   `gnd validate --document` admits the model.
+> - Still inspected prose, as the milestone close accepted: the checks table
+>   (item 3) and the cue tables (item 1) have no executable check, and the
+>   reply shape has no schema file.
+>
+> Records: `.gnd-planning/milestones/unattended-model-growth/007-close.md` and
+> `.gnd-planning/maintenance/2026-11-11-open-issues/README.md`.
+
 ## Not covered
 
 - Release acceptance (`tests/test_release_acceptance.py`) reads the committed

@@ -61,5 +61,8 @@ PR 163 is merged (main `f9f502d9`, 2026-11-11); main declares 0.3.0. RN2's
 spec is drafted with its five probes measured on the 0.3.0 tree and on the
 published 0.2.0 wheel.
 
-Next action: the owner rules the RN2 spec gate and its decisions D1 to D6
-(D5 is the Ossie oracle lane).
+Ruled (owner, 2026-11-11): the opt-in Ossie oracle lane is not run for 0.3.0
+(RN2 D5, RN1 D7).
+
+Next action: the owner rules the RN2 spec gate and its decisions D1 to D4 and
+D6.

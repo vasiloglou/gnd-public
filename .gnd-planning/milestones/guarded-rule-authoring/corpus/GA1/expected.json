@@ -1,0 +1,8 @@
+{
+  "atom": {"failing": "fail", "passing": "pass"},
+  "absence": {"failing": "fail", "passing": "pass"},
+  "exists": {"failing": "warning", "passing": "pass"},
+  "comparison": {"failing": "fail", "passing": "pass"},
+  "unserved": {"reason": "no-failing-case", "cases": []},
+  "mixed": {"exit": 0, "ordinary": ["mandatory", "ring"], "measure_full": 3, "measure_scoped": 0}
+}

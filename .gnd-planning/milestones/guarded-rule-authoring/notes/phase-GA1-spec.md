@@ -1,12 +1,12 @@
 # GA1 · Generate guarded rule cases · draft r1
 
-**Awaiting owner review.** The plan and first-phase gates are pending.
+**Delegated approval (auto=true), 2026-11-11.** The corpus and decisions below govern GA1.
 
 ## 2. Provenance
 
 [Plan r2](guarded-rule-authoring-plan.md), [GR-D8](https://github.com/vasiloglou/gnd-public/issues/179),
 and the predecessor's [close](../../guarded-rule-workflows/006-milestone-close.md).
-No independent review has run.
+The plan gate approved r2. Optional spec review was omitted.
 
 ## 3. Obligations
 
@@ -50,8 +50,12 @@ either side of the predicate. Independently verify the target rule and
 its antecedent, then use the checker to confirm the two outcomes. A case
 manifest records rule ID, kind, population path, binding count, target
 verdict, other findings and per-rule refusal reason. Use seed and declared rule order to make the corpus reproducible.
-Propose at most 128 candidate attempts per rule within the existing
-guarded-oracle work limit. Finish the corpus in the existing staged-output
+Propose at most 128 attempts and 100,000 construction and oracle visits per guard, and
+1,000,000 such visits per run. Charge role, join and candidate visits.
+A spent run budget yields search-limit for remaining guards in model
+order. Preserve already served cases and ordinary generation. Fact
+consequents retain a shared antecedent assignment. Comparison pairs
+can use distinct assignments to the same antecedent. Finish the corpus in the existing staged-output
 path before exposing it. The proposed report shape is:
 
 ```json
@@ -79,8 +83,16 @@ pair per served rule. Preserve checker/oracle disagreement as quarantine
 under exit 6. A written mixed report with some unavailable rules exits 0.
 Invalid input exits 3 and a generator invariant failure exits 5.
 
-For mixed models, keep ordinary supported constraints independently
-scorable on an explicitly bound scope. The case report identifies the
+For mixed models, the ordinary lane removes guarded constraints, writes
+`ordinary/scoped.orm.yaml` and generates an ordinary `--class all` corpus
+under `ordinary/corpus`. Record original-to-scoped constraint refs plus
+both model digests. Use seed 0 if no seed is supplied. This first lane
+accepts at most 128 total constraints and 256 fact types, and asserted
+scalar facts. Report ordinary lane failure as an explicit reason. The
+case manifest lives at `guarded-cases.json`. Write guarded files under
+`cases/` and a disagreement under `quarantine/`. Each saved case records
+other non-pass findings. Publish in a fresh output root. Reject an
+existing root to preserve artifacts from other synth commands. The case report identifies the
 input model, the scoped model and unavailable guarded expectations.
 The existing measure path retains its full-expectation requirement.
 
@@ -99,7 +111,9 @@ modalities. Exercise typo-preserving construction, disjoint roles, vacuity,
 unsupported guards, exhaustion, oracle/checker disagreement and stable
 artifact digests. Verify mandatory and ring cases on the same mixed model
 as an unserved guard. Verify existing synth and measure controls under the
-default lane. Pin exact focused commands before the spec gate. The
+default lane. Focused gate:
+`uv run pytest -q tests/test_synth_guarded_cases.py tests/test_synth_conforming.py tests/test_synth_expectation_independence.py tests/test_synth_mutate.py`.
+The phase also runs affected report, CLI, layer, query and scaffold guards. The
 expected bands are 0 for produced pairs and honest partial availability,
 3 for malformed input, 5 for generator invariant failure, and 6 for
 checker/oracle disagreement. Add a targeted malformed and a known
@@ -115,5 +129,7 @@ Estimate 250–450 runtime lines plus fixtures, schema and focused tests.
 
 ## 11. Approval instrument
 
-Approve the exact spec and a small corpus with a separate expected-outcome
-key before implementation.
+Delegated approval under the [plan gate](../001-plan-gate.md).
+The [corpus brief](../corpus/GA1/README.md) and [answer key](../corpus/GA1/expected.json)
+pin the decisive outcomes. The shipped example reproduction establishes
+the red baseline. The red harness must precede implementation.

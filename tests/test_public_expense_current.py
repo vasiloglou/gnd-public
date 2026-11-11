@@ -22,7 +22,7 @@ def _public_expense_workspace():
     path = Path(__file__).parent / "fixtures/public-expense-current/workspace.json.gz"
     assert path.is_file() and not path.is_symlink()
     with path.open("rb") as stream: packed = stream.read(128 * 1024 + 1)
-    assert len(packed) <= 128 * 1024 and hashlib.sha256(packed).hexdigest() == '33bcf3ed3f570547bf1af9e90c4a765aa36be28528262663f74a0b2d623a4498'
+    assert len(packed) <= 128 * 1024 and hashlib.sha256(packed).hexdigest() == '3e1357009928fd66c3a06f247a156319badacda62b4413f6a4c5cdcb4a0684ab'
     with gzip.GzipFile(fileobj=io.BytesIO(packed)) as stream: expanded = stream.read(256 * 1024 + 1)
     assert len(expanded) <= 256 * 1024
     doc = json.loads(expanded)

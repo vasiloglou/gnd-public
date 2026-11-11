@@ -20,7 +20,7 @@ def _workspace():
     with fixture.open("rb") as stream:
         compressed = stream.read(128 * 1024 + 1)
     assert len(compressed) <= 128 * 1024
-    assert hashlib.sha256(compressed).hexdigest() == "71df5a418f39ef86f142ebfd4c2f85a5b8224ab2f6ed6935e3663b46838500b4"
+    assert hashlib.sha256(compressed).hexdigest() == "49a384ddd0825db4e77db8eed2bc08cc1dc4fcf84522bc9e26310125bc4840d5"
     with gzip.GzipFile(fileobj=io.BytesIO(compressed)) as stream:
         expanded = stream.read(2 * 1024 * 1024 + 1)
     assert len(expanded) <= 2 * 1024 * 1024

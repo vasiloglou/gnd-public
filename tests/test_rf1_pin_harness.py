@@ -26,7 +26,7 @@ from support.rf1_pins import (
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = PINS_ROOT / "goldens.sha256"
 # The manifest's own digest: changing any golden edits this line too (SM1).
-MANIFEST_SHA256 = "118e80d4de443d71561bbad95a7294cd96c9ad8697f6dcf348f6e08fcaaf9ae2"  # ROF1 + RR1 merge: projected check text and version-blind pins
+MANIFEST_SHA256 = "839d7d9d8e6db9aca815e90efbc033ee9a57ffc1c67e4e9df795d2a3a5aa44be"  # ROF1 + RR1 merge: projected check text and version-blind pins
 
 _SPEC = importlib.util.spec_from_file_location("rf1_pins_tool", ROOT / "tools" / "rf1_pins.py")
 tool = importlib.util.module_from_spec(_SPEC)

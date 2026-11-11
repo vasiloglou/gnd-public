@@ -4,8 +4,8 @@
     "size_bytes": 64025
   },
   "after": {
-    "sha256": "5adc71d3cd88a357af31d8aaa9a359846f83258df31e3bb030bfdc0c98a10d26",
+    "sha256": "506af420a1f3ba7db177118cbee2f98ca8a9263656f505cade6ceeac364c7b70",
     "size_bytes": 64085
   },
-  "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts and counts unchanged; release 0.2.0: the recorded gnd_version moves from 0.1.0 to 0.2.0 and nothing else"
+  "reason": "Owner-requested issue #34 request 2: role-scoped value constraint messages name their role and fact type; verdicts and counts unchanged; release 0.2.0: the recorded gnd_version moves from 0.1.0 to 0.2.0 and nothing else; release 0.3.0: the recorded gnd_version moves from 0.2.0 to 0.3.0 and nothing else"
 }

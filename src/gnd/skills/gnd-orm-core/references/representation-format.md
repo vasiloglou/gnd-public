@@ -1843,7 +1843,27 @@ models with `include:unsupported-route` before resolving their dependencies.
 | External references | `identify_by` on functional binary relationships sharing the first-role entity. Unsupported reference details travel in the sidecar. |
 | Fact types and readings | One relationship under its first-role concept. The forward placeholders bind by source role position. Explicit inverse qualifiers bind by role name. A bare binary inverse reverses the bindings. Additional roles have explicit names. |
 | Confirmed alethic internal uniqueness | OneToOne for both directions of a binary. ManyToOne for an n−1 determinant, with the dependent role last. Reading bindings retain source order even when declaration roles move. |
-| Other constraints, derivations, provenance, modality and operations | The source values travel in the sidecar. |
+| Reviewed constraints and derivations | `requires` and `derived_by` at the scope described below. |
+| Other source rules, provenance, modality and operations | The source values travel in the sidecar. |
+
+The formula projection supports confirmed alethic rules in these shapes.
+A binary relationship can require an integer second-role value to be at
+most a literal, or forbid a self-link between two roles of the same type.
+Unary relations over the same object type support subset, equality and
+exclusion, with both equality directions published as one group. A
+String value concept can declare a finite enum of representable string
+literals. Ontology scope can limit the cardinality of a named object type.
+A derived binary can use a positive chain of two asserted binaries where
+the first last-role binding is the second first-role binding and the
+derived endpoints match the projected role order.
+
+The loss report marks those formula pointers with `requires` and reason
+`formula`. The sidecar retains their original GND syntax and policy
+metadata. Frequency retains its GND semantics in the sidecar because GND
+counts repeated rows and Ossie relationships use sets. Mandatory rules
+also stay in the sidecar because GND can report vacuity for an empty
+covered relationship. Other unverified rule shapes take the extension
+disposition as a complete group.
 
 The report at `FILE.loss.json` (overridable with `--loss-report`) uses
 `gnd-ossie-loss/1`. Each RFC 6901 pointer, including the root and containers,

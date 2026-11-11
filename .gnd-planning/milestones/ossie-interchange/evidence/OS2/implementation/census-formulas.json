@@ -1,0 +1,335 @@
+{
+  "src/gnd/examples/approvals/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 239,
+      "native": 94
+    }
+  },
+  "src/gnd/examples/bookrec/complete.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 170,
+      "native": 93
+    }
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 105,
+      "native": 75
+    }
+  },
+  "src/gnd/examples/bookrec/strict.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 105,
+      "native": 75
+    }
+  },
+  "src/gnd/examples/composition/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 1,
+    "dispositions": {
+      "extension": 39,
+      "native": 44,
+      "requires": 15
+    }
+  },
+  "src/gnd/examples/disclosure/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 19,
+      "native": 23
+    }
+  },
+  "src/gnd/examples/dispatch/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 117,
+      "native": 106,
+      "refused": 8
+    }
+  },
+  "src/gnd/examples/expense/currency.orm.json": {
+    "requires": 3,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 337,
+      "native": 101,
+      "requires": 19
+    }
+  },
+  "src/gnd/examples/expense/model.orm.json": {
+    "requires": 2,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 310,
+      "native": 84,
+      "requires": 14
+    }
+  },
+  "src/gnd/examples/expense/project/model.orm.json": {
+    "requires": 2,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 310,
+      "native": 84,
+      "requires": 14
+    }
+  },
+  "src/gnd/examples/expense/teams/engineering.orm.json": {
+    "refusal": "include:unsupported-route"
+  },
+  "src/gnd/examples/expense/teams/sales-v2.orm.json": {
+    "refusal": "include:unsupported-route"
+  },
+  "src/gnd/examples/expense/teams/sales.orm.json": {
+    "refusal": "include:unsupported-route"
+  },
+  "src/gnd/examples/expense/teams/shared/expense-v1.orm.json": {
+    "requires": 2,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 175,
+      "native": 101,
+      "requires": 14
+    }
+  },
+  "src/gnd/examples/expense/teams/shared/expense-v2.orm.json": {
+    "requires": 2,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 175,
+      "native": 101,
+      "requires": 14
+    }
+  },
+  "src/gnd/examples/growth/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 30,
+      "native": 48,
+      "refused": 7
+    }
+  },
+  "src/gnd/examples/plan_apps/access/model.orm.json": {
+    "requires": 1,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 197,
+      "native": 71,
+      "requires": 3
+    }
+  },
+  "src/gnd/examples/plan_apps/clinic/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 199,
+      "native": 91
+    }
+  },
+  "src/gnd/examples/plan_apps/course/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 369,
+      "native": 126
+    }
+  },
+  "src/gnd/examples/plan_apps/lease/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 183,
+      "native": 62
+    }
+  },
+  "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-1/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 370,
+      "native": 126
+    }
+  },
+  "src/gnd/examples/plan_apps/skill-sessions-evolve/claude-haiku/run-2/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 370,
+      "native": 126
+    }
+  },
+  "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-1/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 451,
+      "native": 152,
+      "refused": 10
+    }
+  },
+  "src/gnd/examples/plan_apps/skill-sessions/claude-default/run-2/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 540,
+      "native": 139,
+      "refused": 41
+    }
+  },
+  "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-1/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 390,
+      "native": 162,
+      "refused": 104
+    }
+  },
+  "src/gnd/examples/plan_apps/skill-sessions/claude-haiku/run-2/model.orm.yaml": {
+    "requires": 1,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 433,
+      "native": 127,
+      "refused": 39,
+      "requires": 6
+    }
+  },
+  "src/gnd/examples/plan_apps/trip/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 248,
+      "native": 167
+    }
+  },
+  "src/gnd/examples/quoted_claims/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 36,
+      "native": 49
+    }
+  },
+  "src/gnd/examples/refunds/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 45,
+      "native": 59
+    }
+  },
+  "src/gnd/examples/release/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 117,
+      "native": 106,
+      "refused": 8
+    }
+  },
+  "src/gnd/examples/release_governance/approval-proof/model.orm.json": {
+    "requires": 3,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 32,
+      "native": 23,
+      "requires": 30
+    }
+  },
+  "src/gnd/examples/release_governance/dependencies/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 126,
+      "native": 91
+    }
+  },
+  "src/gnd/examples/release_governance/policy/model.orm.json": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 48,
+      "native": 44
+    }
+  },
+  "src/gnd/examples/rule_check/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 83,
+      "native": 58
+    }
+  },
+  "src/gnd/examples/staffing/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 21,
+      "native": 79
+    }
+  },
+  "src/gnd/examples/type_judgements/duplicates/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 26,
+      "native": 47
+    }
+  },
+  "src/gnd/examples/type_judgements/multi-valued/model.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 52,
+      "native": 47
+    }
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml": {
+    "requires": 1,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 175,
+      "native": 116,
+      "requires": 6
+    }
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/movie_catalog.orm.yaml": {
+    "requires": 1,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 163,
+      "native": 82,
+      "refused": 40,
+      "requires": 9
+    }
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/objectification_in_enrollment.orm.yaml": {
+    "requires": 1,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 144,
+      "native": 91,
+      "requires": 11
+    }
+  },
+  "src/gnd/skills/gnd-model-from-text/examples/reference_scheme_elicitation.orm.yaml": {
+    "requires": 0,
+    "derived_by": 0,
+    "dispositions": {
+      "extension": 191,
+      "native": 119
+    }
+  }
+}

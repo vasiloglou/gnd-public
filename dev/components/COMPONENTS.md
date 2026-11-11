@@ -1553,15 +1553,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.ossie
-- does: Project an admitted ORM model to a pinned Ossie ontology and bind a loss report and reconstruction sidecar [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal
+- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar [render_ossie].
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by
 - in: standalone model path and output format
 - out: ontology, sidecar and loss report bytes
 - status: canonical
-- modules: src/gnd/export/ossie.py
-- uses: infra.artifacts, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
+- modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
+- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
 - used_by: cli.export_command
-- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py
+- tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
 
 
 ### export.pyrel_emit
@@ -1599,7 +1599,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/export/pyrel_rules.py
 - uses: export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, semantics.transitions
-- used_by: examples.plan_apps, export.pyrel_emit
+- used_by: examples.plan_apps, export.ossie, export.pyrel_emit
 - tests: tests/test_pyrel_rules.py, tests/test_pyrel_rules_calendar.py, tests/test_pyrel_rules_derivations.py, tests/test_pyrel_rules_families.py, tests/test_pyrel_rules_plans.py, tests/test_plan_apps.py
 - checked: partial
 - notes: This is a separate renderer from the applications checker; DuckDB evaluates denial queries because it does not enforce require. Generated LQP programs are labelled engine-unverified; unsupported semantics are refused during lowering.

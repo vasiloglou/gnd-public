@@ -502,6 +502,10 @@
       "lane": "export",
       "layer": "lanes"
     },
+    "gnd.export.ossie_formulas": {
+      "lane": "export",
+      "layer": "lanes"
+    },
     "gnd.export.pyrel_rules": {
       "lane": "export",
       "layer": "lanes"

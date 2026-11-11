@@ -159,3 +159,20 @@ adds nine cases and scope/formula pairs, and keeps the r1 artifact intact.
 All added or changed placements retain source spelling through the existing
 sidecar. Syntax probes and checker results are separate. The approved
 corpus does not claim general execution equivalence for other forms.
+
+## Implementation findings
+
+The new renderer uses projected role identities and the existing per-rule
+PyRel lowering. The strict PyRel entry point retains its preflight, iteration
+and diagnostic order. The common source index caches value-type participants
+and reference rosters. The before/after render comparison covers 162 targets.
+
+The candidate emits 19 requires and one derived_by expression across the 38
+eligible census inputs. The corpus renderer reproduces every approved
+formula/scope pair. Unsupported, deontic and proposed rules retain their
+source fields. The partial cardinality group test prevents an upper bound
+from shipping by itself when the lower bound has no approved lowering.
+
+The selected pinned parser accepts all emitted census documents and the
+combined corpus. Its malformed emitted-formula control refuses. A distinct
+independent review of the implementation diff remains pending.

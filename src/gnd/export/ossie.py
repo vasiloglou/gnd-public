@@ -18,6 +18,7 @@ from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
+from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
 from gnd.input_policy import guard_yaml
 from gnd.model import MAX_MODEL_BYTES, json_document, load_model_bytes, parse_model_document
 from gnd.model._documents import ModelValueError
@@ -293,6 +294,7 @@ def _ontology(document, model):
         components[oid] = component
 
     functional_links = {}
+    projected_relations = {}
     for i, fact in enumerate(document.get("fact_types", ())):
         order, multiplicity, constraints = _role_order(fact)
         role_source = {role["role_name"]: role for role in fact["roles"]}
@@ -303,6 +305,13 @@ def _ontology(document, model):
         rels = components[owner].setdefault("relationships", [])
         target = ("ontology", indexes[owner], "relationships", len(rels))
         rels.append(relationship)
+        projected_relations[fact["id"]] = ProjectedRelation(
+            names[owner],
+            tuple(role_source),
+            order,
+            {name: role["object_type"] for name, role in role_source.items()},
+            relationship,
+        )
         source = ("fact_types", i)
         for path in (source, (*source, "reading"), (*source, "roles")):
             mapped[path] = _NATIVE_LITERAL
@@ -347,6 +356,7 @@ def _ontology(document, model):
     }
     if document.get("model_id"):
         mapped[("model_id",)] = _copy(("name",))
+    place_formulas(document, ontology, components, projected_relations, mapped)
     return ontology, mapped
 
 
@@ -355,7 +365,7 @@ def _metadata(document, mapped):
     elements = defaultdict(dict)
     refused = False
 
-    def visit(value, path=(), owner="", refusal=False):
+    def visit(value, path=(), owner="", refusal=False, formula=False):
         nonlocal refused
         population = path == ("reference_populations",) or (
             len(path) == 3 and path[0] == "fact_types" and path[2] == "sample_population"
@@ -375,7 +385,10 @@ def _metadata(document, mapped):
             refused = True
             disposition, reason = "refused", _POPULATION_REFUSAL
         else:
-            disposition, reason, target = mapped.get(path, ("extension", "gnd-source", None))
+            fallback = (
+                ("requires", "formula", None) if formula else ("extension", "gnd-source", None)
+            )
+            disposition, reason, target = mapped.get(path, fallback)
             if isinstance(value, dict):
                 entry = {"kind": "object"}
             elif isinstance(value, list):
@@ -387,7 +400,7 @@ def _metadata(document, mapped):
             elements[owner][pointer] = entry
         rows.append({"pointer": pointer, "disposition": disposition, "reason": reason})
         for key, child in children:
-            visit(child, (*path, key), owner, refusal)
+            visit(child, (*path, key), owner, refusal, disposition == "requires")
 
     visit(document)
     return rows, dict(elements), refused

@@ -39,7 +39,8 @@ The [owner confirmed OD6](004-owner-OD6.md). The
 review, focused regressions and the pinned validator/parser lane. Draft PR
 [#160](https://github.com/vasiloglou/gnd-public/pull/160) carries the work.
 
-Next: independently review the [OS2 formula corpus](010-OS2-corpus-candidate.md)
-before implementing the renderer. The
-[early OS5 documentation checkpoint](notes/OS5-draft-checkpoint.md) shows the
-closed OS1 exporter.
+The [OS2 formula renderer candidate](012-OS2-renderer-candidate.md) passes
+its focused and selected parser gates. The [corpus gate](011-OS2-spec-gate.md)
+was committed first. Next: the independent OS2 implementation review.
+The [early OS5 checkpoint](notes/OS5-draft-checkpoint.md) uses the closed
+OS1 exporter.

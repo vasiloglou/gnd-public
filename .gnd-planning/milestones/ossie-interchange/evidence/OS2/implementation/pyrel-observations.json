@@ -1,0 +1,488 @@
+{
+  "src/gnd/examples/bookrec/complete.orm.yaml:duckdb": {
+    "sha256": "7a0c3981397877ff04f8adede7ac87fc0c39e3fcec18ac845f198991c6204198"
+  },
+  "src/gnd/examples/bookrec/complete.orm.yaml:lqp": {
+    "sha256": "b1edd2a3c6c6cd35a7edec386b509f96808f1ca7cefea1c6885567efc0e821e1"
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml:duckdb": {
+    "sha256": "38e35522b5b504792ade87f4edfcbfadb05d0d07adff83a7cfd0cb6283962dbb"
+  },
+  "src/gnd/examples/bookrec/model.orm.yaml:lqp": {
+    "sha256": "a44f28217708bb38e28d7bccfed2130332ceee9471295d7eb96feabecc68e29e"
+  },
+  "src/gnd/examples/bookrec/strict.orm.yaml:duckdb": {
+    "sha256": "ed95cda8d4a97ab1cac13cddaf31f9ec77532fa777e9f52e56126138e0236da2"
+  },
+  "src/gnd/examples/bookrec/strict.orm.yaml:lqp": {
+    "sha256": "0a5ee7bffb8d72832e8e622ca9f1e29b70edb335cd2ac2f6752ee5339562523d"
+  },
+  "src/gnd/examples/expense/currency.orm.json:duckdb": {
+    "sha256": "89488cf3bbecc1a2f53d32da33bac5f63813bdcc43d9e552bdc7f0f9dcd6ce18"
+  },
+  "src/gnd/examples/expense/currency.orm.json:lqp": {
+    "sha256": "a0f7e402e5b5b791ddc0c12c368029c3af406ad98a10130ac84f140d568cebdb"
+  },
+  "src/gnd/examples/expense/model.orm.json:duckdb": {
+    "sha256": "32e2dd5f9882f4ad92f69f37b6a5a4cde14064720fb9f55c50c89cda8453b554"
+  },
+  "src/gnd/examples/expense/model.orm.json:lqp": {
+    "sha256": "bb0a741c87f4542b992cdb47effec3bed1fa7cec5ba84582ab06cda8ceea390a"
+  },
+  "src/gnd/examples/plan_apps/access/model.orm.json:duckdb": {
+    "sha256": "025238a97c957b152885f9cb068a323ab5107f71f9fd52b738f1fec4b5ba8506"
+  },
+  "src/gnd/examples/plan_apps/access/model.orm.json:lqp": {
+    "sha256": "024613352241970e983516c2b2f89b3bbffaefced572dee0faddeef156c551e3"
+  },
+  "src/gnd/examples/plan_apps/clinic/model.orm.json:duckdb": {
+    "sha256": "728699c829c14e384be0f78b88d427dae3dace9137d8b8ea7f12fb39d142226d"
+  },
+  "src/gnd/examples/plan_apps/clinic/model.orm.json:lqp": {
+    "sha256": "319fd923fb0d5fceadcadcce441169c9f0bf5a5e1bcb0f76acb82f7fd8711c78"
+  },
+  "src/gnd/examples/plan_apps/course/model.orm.json:duckdb": {
+    "sha256": "75c4741a0c426f00b41012d9b70ef72abb00cdc0404a33e4fe5289a86b0e7235"
+  },
+  "src/gnd/examples/plan_apps/course/model.orm.json:lqp": {
+    "sha256": "5112c649f5b8c913f7abe58d75635fa7e782adb75be738711ec08d6a39a33c37"
+  },
+  "src/gnd/examples/plan_apps/lease/model.orm.json:duckdb": {
+    "sha256": "e65e27534a4379fee4791771443d67a43f0e62a7d9c8008d8cf09c289b27aa5e"
+  },
+  "src/gnd/examples/plan_apps/lease/model.orm.json:lqp": {
+    "sha256": "919a4af8e921fbf3fa78d96ec0bce168001c3583c6e1b85104563df1727a7aa0"
+  },
+  "src/gnd/examples/plan_apps/trip/model.orm.json:duckdb": {
+    "sha256": "ea3a8bad3123fdeae58dc5164fe9d99643a80cd9794246cb71477d22200eb351"
+  },
+  "src/gnd/examples/plan_apps/trip/model.orm.json:lqp": {
+    "sha256": "ff329ff1704222a37f62e2fa25aa9361a2e9dc62d0b943c742336dcc5f52ad19"
+  },
+  "tests/fixtures/pyrel-oracle/basics.orm.yaml:duckdb": {
+    "sha256": "c45e376b9205afa7c6aeb5f432580f063ad086d9571bf9645f2fca6a0afc2ade"
+  },
+  "tests/fixtures/pyrel-oracle/basics.orm.yaml:lqp": {
+    "sha256": "0166da54adf57680720b2815ca9d16b16441cb32b1c14137270bb51b23ecf0a1"
+  },
+  "tests/fixtures/pyrel-rules-calendar/clinic.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/clinic.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/refonly/model.orm.json:duckdb": {
+    "sha256": "c9b5debfd4d9acd28a202d4056b2e0f211906f47637b6a9a111700ab853da81c"
+  },
+  "tests/fixtures/pyrel-rules-calendar/refonly/model.orm.json:lqp": {
+    "sha256": "f2c4aa94f20cfab3b854617a30624a9c5d46ffddc67d9557fd77c3a0d290d248"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/D7_body_unpadded_literal/model.orm.json:duckdb": {
+    "refused": "the date literal '2000-2-29' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/D7_body_unpadded_literal/model.orm.json:lqp": {
+    "refused": "the date literal '2000-2-29' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/E2_deontic_oor_only/model.orm.json:duckdb": {
+    "sha256": "e22842fa9ed23a0c4ae77ab1ca8b414ba35e6a562bdaf0b8032c631e38efb095"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/E2_deontic_oor_only/model.orm.json:lqp": {
+    "sha256": "b19b63f11c1a9613439e27606d875a92b3a1a3b55cd2e6d8b1ed3172729a8cea"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/E3_alethic_oor_only/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/E3_alethic_oor_only/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/F1_date_families/model.orm.json:duckdb": {
+    "sha256": "faedcd29e000011d574dde1e65e820736b3127ea6a028d5e6f100bf98c6fe525"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/F1_date_families/model.orm.json:lqp": {
+    "sha256": "7e784818e84d808acabce96784cd0461fa6133972a2a18c22a355b3c17a2312d"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/G2_nondate_string/model.orm.json:duckdb": {
+    "refused": "the date literal 'soon' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/G2_nondate_string/model.orm.json:lqp": {
+    "refused": "the date literal 'soon' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/G_invalid_iso/model.orm.json:duckdb": {
+    "refused": "the date literal '2024-02-30' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/G_invalid_iso/model.orm.json:lqp": {
+    "refused": "the date literal '2024-02-30' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/H2_unpadded_in_atom/model.orm.json:duckdb": {
+    "refused": "the date literal '2024-3-01' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/H2_unpadded_in_atom/model.orm.json:lqp": {
+    "refused": "the date literal '2024-3-01' is not a YYYY-MM-DD date; GND compares it with dates as text, which the rules programs do not reproduce"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/J3_allowed_unpadded/model.orm.json:duckdb": {
+    "sha256": "1277a5d8adf8f2ec1402a37a30ef477efe0ccdcf36dd08e62e79ac26e78086de"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/J3_allowed_unpadded/model.orm.json:lqp": {
+    "sha256": "e068ee21eb70506abe70a34ba3c3bf571b116ef72ff0da19c52d5a944066feb5"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/J4_allowed_nondate/model.orm.json:duckdb": {
+    "sha256": "272ce765d9f65b2866870e475ad103d518ed38c62543f7a4a5afd0cf8448014f"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/J4_allowed_nondate/model.orm.json:lqp": {
+    "sha256": "308b0bcb226a624a46887a3128b79dc8d5deae20c7f7b6e75f90cd6c39b38624"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K0_instances_day_20240229/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K0_instances_day_20240229/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K1_instances_day_2024-1-01/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K1_instances_day_2024-1-01/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K2_instances_days_-1/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K2_instances_days_-1/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K3_instances_days_2000000/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K3_instances_days_2000000/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K5_instances_days_True/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K5_instances_days_True/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K6_integer_roster_float/model.orm.json:duckdb": {
+    "sha256": "514f177f4fe89307627a62e1c58a5cbaf40c0b09d112626159571d89ed9cc546"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/K6_integer_roster_float/model.orm.json:lqp": {
+    "sha256": "95444d63b4cf912acd4dc456a64d3e893c23b778013e7a8333575859924b8967"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/N2_empty_date_sub_side/model.orm.json:duckdb": {
+    "sha256": "c3dd395f6a9995deaf35a28b0cf04473509e8e52a88e4e842bcf9b5b9ce4bf56"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/N2_empty_date_sub_side/model.orm.json:lqp": {
+    "sha256": "028eba162f00566311384d28b09a2b1f76cacd382e6d071072ff3b93dcfc1313"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/N3_empty_derived_date_side/model.orm.json:duckdb": {
+    "sha256": "7d49c2f933fa475dd14ffe6f7b78f76bdb5248f268425718d380c01822442cbd"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/N3_empty_derived_date_side/model.orm.json:lqp": {
+    "sha256": "0f38818e2379cf3d1bdfaf77867e460f0e3d1a53bd21280f646a48cb665a228e"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/R7_ref_owns_derived/model.orm.json:duckdb": {
+    "refused": "invalid model: references may own only base fact types"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/R7_ref_owns_derived/model.orm.json:lqp": {
+    "refused": "invalid model: references may own only base fact types"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/Z2/model.orm.json:duckdb": {
+    "sha256": "4e2e9589b3425e8a25674cabb5b6cf67918b71108d2c844904e4369344da3afb"
+  },
+  "tests/fixtures/pyrel-rules-calendar/review/Z2/model.orm.json:lqp": {
+    "sha256": "370ee7eb6e3f2ac577f24e40721e233b29ce5200e04506e32ee17365c88b83d1"
+  },
+  "tests/fixtures/pyrel-rules-calendar/workload.orm.json:duckdb": {
+    "sha256": "3b8274bd1b29a770dc074764d1dec0e107583b48c54211d79c85ef20a5478cbd"
+  },
+  "tests/fixtures/pyrel-rules-calendar/workload.orm.json:lqp": {
+    "sha256": "493e5d4ee45c6780eee8d0bdab1dfbbdaf9ed56dc68a5ae3e8312724dc69580e"
+  },
+  "tests/fixtures/pyrel-rules-derivations/mutual.orm.json:duckdb": {
+    "sha256": "d3aa18792a2ca0de8c291b15520f318d75c7a7c181899309ed53ca85872794f7"
+  },
+  "tests/fixtures/pyrel-rules-derivations/mutual.orm.json:lqp": {
+    "sha256": "503abfaa306228f13c772ecd78b787c8169e09d13ae9e71d185615bce1b69643"
+  },
+  "tests/fixtures/pyrel-rules-derivations/orders.orm.json:duckdb": {
+    "sha256": "18472623322b4cb860cd337fdf4e590e82e1e2cf0c7b07d80d45a8e70132b0e4"
+  },
+  "tests/fixtures/pyrel-rules-derivations/orders.orm.json:lqp": {
+    "sha256": "b72dd17e401102a9fd89fd33d4f15f4e8d21a5dd91f25c83606d8ea183db3291"
+  },
+  "tests/fixtures/pyrel-rules-derivations/registrar-derived.orm.json:duckdb": {
+    "sha256": "b2ae778df86d6f2031ed16d700fa9f81b2bf3cd6a8c38e08b8be6d265dea1c04"
+  },
+  "tests/fixtures/pyrel-rules-derivations/registrar-derived.orm.json:lqp": {
+    "sha256": "94726033f66fbf6ff8939edb3905428588efd431452fd071ac883ef98e1f32c2"
+  },
+  "tests/fixtures/pyrel-rules-derivations/registrar-semiderived.orm.json:duckdb": {
+    "sha256": "7c46ee839e328dea659a178f42043f6d9ba2c077b5371274c017e6861c67bd38"
+  },
+  "tests/fixtures/pyrel-rules-derivations/registrar-semiderived.orm.json:lqp": {
+    "sha256": "42c5f02246e84841ad31a53aecb391251550d0c44ac850067b06a0664705420b"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/der.orm.json:duckdb": {
+    "sha256": "42609d99a3843f1d49b17343cd0d85565148d2adc3a708b7d958eefc29e284cd"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/der.orm.json:lqp": {
+    "sha256": "56e1f99dbc9834e3bb31f333e45f74e7cd1de798e9ff90a5a42cd25ddc3054db"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/fl.orm.json:duckdb": {
+    "refused": "tenth: arithmetic on Float values (0.1) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/fl.orm.json:lqp": {
+    "refused": "tenth: arithmetic on Float values (0.1) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/misc.orm.json:duckdb": {
+    "refused": "xn: comparing a Float variable with an Integer variable is a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/misc.orm.json:lqp": {
+    "refused": "xn: comparing a Float variable with an Integer variable is a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/names3.orm.json:duckdb": {
+    "sha256": "311c456e3637d9d995960e724d6a2fd3bb0cfb257a1b91d82a320d0298b566ac"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/names3.orm.json:lqp": {
+    "sha256": "f37fdf01aaa06effb949136b75c8bdbb8cf4fe64d99d1b58686f68d8e9e4249c"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/num.orm.json:duckdb": {
+    "refused": "absorb: arithmetic on Float values ($a) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/num.orm.json:lqp": {
+    "refused": "absorb: arithmetic on Float values ($a) is exact in GND and binary in PyRel; the rules programs refuse it (later phase)"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/rec_swap.orm.json:duckdb": {
+    "sha256": "96f790befb9e6dbac658612e9ec10420585e1616b7c3cde3edf541998d8270b7"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/rec_swap.orm.json:lqp": {
+    "sha256": "68fb559d5d18429bce6bd15ac02781641dc53aee0eee1b087afa4e1e12dbfb69"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/ring.orm.json:duckdb": {
+    "sha256": "3445d0f28b6375ffcafe45c58f7d43ffae78054a9c0a4dd2b0bd91d2b2138015"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/ring.orm.json:lqp": {
+    "sha256": "1e54752ce31396ff98640cfcd7da494d481ccb63576769404f34256f9103fde4"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/scc.orm.json:duckdb": {
+    "sha256": "decc44bea2d78053e9df48a7a88643fcd307ea2108f2b740cf0744fd5125ced6"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/scc.orm.json:lqp": {
+    "sha256": "0b4d25f7bdee66d237174ec1864cfcf02ed11b8a183d81bc5c433157d3b0287c"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/xswap.orm.json:duckdb": {
+    "sha256": "040fe88c77a8c427abf6274e9fc69271c18c8d7a2bcf0da1896a60f57ea11c54"
+  },
+  "tests/fixtures/pyrel-rules-derivations/review/xswap.orm.json:lqp": {
+    "sha256": "80fe7d02166a56a361ec45717ba94e8c099368d0ef07b3cd7defedab03744a85"
+  },
+  "tests/fixtures/pyrel-rules-families/cardinality.orm.json:duckdb": {
+    "sha256": "f502d2d7215281c815418073cb48375495b93279894204bf790ed5258189b8f6"
+  },
+  "tests/fixtures/pyrel-rules-families/cardinality.orm.json:lqp": {
+    "sha256": "79497939049e8ac314544cbf3f70e976fc10803cfd4da88bf7d1bbc4cc4d56a8"
+  },
+  "tests/fixtures/pyrel-rules-families/equality.orm.json:duckdb": {
+    "sha256": "45562a809386a5c78258b5df0e2304296b453c356ba672e78d3e136d6fda3a9b"
+  },
+  "tests/fixtures/pyrel-rules-families/equality.orm.json:lqp": {
+    "sha256": "7231e2369f239f047c96562efa31be8933051fbaa6d69f789667c50e629f85a3"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusion.orm.json:duckdb": {
+    "sha256": "e8de3f6e023d8e9142325da8e18e8ad0a971b9c41b2a8be910da9876feda963a"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusion.orm.json:lqp": {
+    "sha256": "117f80b82b6d446ca9058f1697e3004ecb554e4fec2a16be44291a91bf54cb31"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusive-or-multi.orm.json:duckdb": {
+    "refused": "xor_multi_teach_take: exclusive-or over multi-role sequences is checked by GND only for its exclusion half (unchecked otherwise); the rules programs refuse it"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusive-or-multi.orm.json:lqp": {
+    "refused": "xor_multi_teach_take: exclusive-or over multi-role sequences is checked by GND only for its exclusion half (unchecked otherwise); the rules programs refuse it"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusive-or.orm.json:duckdb": {
+    "sha256": "d27e9db4f8c4fc17de2d759b90897678a9f0fd9b30b51067f0dcc76590b13b7b"
+  },
+  "tests/fixtures/pyrel-rules-families/exclusive-or.orm.json:lqp": {
+    "sha256": "bc0177aee3123d1c0236c5424bc6f8c80337daa38ea33b8bdbd7b7c290516dcc"
+  },
+  "tests/fixtures/pyrel-rules-families/frequency.orm.json:duckdb": {
+    "sha256": "8c7c08eac16549b12b7fef1eecc6065b7c403be9885641eb375f210f3f1ea18c"
+  },
+  "tests/fixtures/pyrel-rules-families/frequency.orm.json:lqp": {
+    "sha256": "1caf88af8a66c853440bdfbc2e654a6643ff50ce24ee9d24558914dac04099ef"
+  },
+  "tests/fixtures/pyrel-rules-families/mandatory-disjunctive.orm.json:duckdb": {
+    "sha256": "989848d0605647b13faf562189649dbd88e96f1a12d3f68f849cd1c65707e981"
+  },
+  "tests/fixtures/pyrel-rules-families/mandatory-disjunctive.orm.json:lqp": {
+    "sha256": "730ae79907d78ff9f39ffb7efa4585d1cfdbc9d2ef34d3252974907fa3a81001"
+  },
+  "tests/fixtures/pyrel-rules-families/review/frequency-integer.orm.json:duckdb": {
+    "sha256": "9c328fe8b9a1fc5a87fe32381e49b75c4db1fc9ebaa67bfaf1a2199bccc5bec9"
+  },
+  "tests/fixtures/pyrel-rules-families/review/frequency-integer.orm.json:lqp": {
+    "sha256": "7e87eb2b47cb711e54605ad7c90a14c9723f5e7b51385bf3ff54feb2b8072e3c"
+  },
+  "tests/fixtures/pyrel-rules-families/review/helper-collision.orm.json:duckdb": {
+    "refused": "fact type 'likes_reverse' has the name of a relation the rules programs generate (<fact>_reverse, <fact>_closure, <fact>_derived, <fact>_claimed, <id>_plays, <id>_allowed, <type>_any); rename it"
+  },
+  "tests/fixtures/pyrel-rules-families/review/helper-collision.orm.json:lqp": {
+    "refused": "fact type 'likes_reverse' has the name of a relation the rules programs generate (<fact>_reverse, <fact>_closure, <fact>_derived, <fact>_claimed, <id>_plays, <id>_allowed, <type>_any); rename it"
+  },
+  "tests/fixtures/pyrel-rules-families/review/inclusive-or-integer.orm.json:duckdb": {
+    "sha256": "e3d089181e1e9de8dd3426d289c04b4a071441feeef33a0471464a181111e5c6"
+  },
+  "tests/fixtures/pyrel-rules-families/review/inclusive-or-integer.orm.json:lqp": {
+    "sha256": "91d3d4b21c71616662c5e2259f885458ed9a8691dd9d00d4185d8399a57c4114"
+  },
+  "tests/fixtures/pyrel-rules-families/review/refuse-external-frequency.orm.json:duckdb": {
+    "refused": "ef: external frequency is a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules-families/review/refuse-external-frequency.orm.json:lqp": {
+    "refused": "ef: external frequency is a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules-families/review/refuse-external-uniqueness.orm.json:duckdb": {
+    "refused": "eu: external uniqueness is a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules-families/review/refuse-external-uniqueness.orm.json:lqp": {
+    "refused": "eu: external uniqueness is a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules-families/review/ring-integer.orm.json:duckdb": {
+    "sha256": "46ce1457ed0c4943f5c70000eecb1a9c1b51194d946fb2491692d54ef7ea2ebb"
+  },
+  "tests/fixtures/pyrel-rules-families/review/ring-integer.orm.json:lqp": {
+    "sha256": "f45f6a04238fac5fe21201420d7f7b3df4a42f6abacfeb64ffd64a6314996640"
+  },
+  "tests/fixtures/pyrel-rules-families/review/textual-with-exclusion.orm.json:duckdb": {
+    "sha256": "21616168b7fe0c6c7a95cfb86544b7df66d9ee198ed9a3add50f70977413c74b"
+  },
+  "tests/fixtures/pyrel-rules-families/review/textual-with-exclusion.orm.json:lqp": {
+    "sha256": "46f2db1f3a66d416679319953ac47d35af7d383b0e3a76c74ef14b9eb4df4947"
+  },
+  "tests/fixtures/pyrel-rules-families/review/textual.orm.json:duckdb": {
+    "sha256": "398d27966241ad6eb9868391ae9a0f72569d5aa6c502d9f0ca558dc18eba115f"
+  },
+  "tests/fixtures/pyrel-rules-families/review/textual.orm.json:lqp": {
+    "sha256": "c033f3d3711b05e2a280dbc64a056eae16006b8ac898ffb65e11a1e405eee05e"
+  },
+  "tests/fixtures/pyrel-rules-families/review/value-roster-pass.orm.json:duckdb": {
+    "sha256": "b9a7c5ca945a83eb82dba1623b5ba312884ad1d28c47df8b96242892b3ca0d89"
+  },
+  "tests/fixtures/pyrel-rules-families/review/value-roster-pass.orm.json:lqp": {
+    "sha256": "41595e242c879a18836bfeaf9a6a9c80e25d49f7707c7fb4cb15f8332c061b5d"
+  },
+  "tests/fixtures/pyrel-rules-families/review/value-roster.orm.json:duckdb": {
+    "sha256": "8c2f5f5cdd3de3dfe0c39eb7255fa081eec3ee0cdb0d2a9e6eb41d8c73b759d0"
+  },
+  "tests/fixtures/pyrel-rules-families/review/value-roster.orm.json:lqp": {
+    "sha256": "79a4cf1fe0a5c6a12c8e75368b50cbd38bde4d6cdecd2aee0d1ab4a63d2e86bc"
+  },
+  "tests/fixtures/pyrel-rules-families/ring.orm.json:duckdb": {
+    "sha256": "223585c2b5a40c6be4a8d5a81ffab1df54c29b820085ca26b7b5cee2b6761527"
+  },
+  "tests/fixtures/pyrel-rules-families/ring.orm.json:lqp": {
+    "sha256": "fe528903fe783dbc5c08c304f7dccf73a0c13032a78217d0fe0fa14905573d3c"
+  },
+  "tests/fixtures/pyrel-rules-families/value.orm.json:duckdb": {
+    "sha256": "93bdaabe21bb7cc1b9f3dea55b00253a924a5b811504015acc3a23245840b57c"
+  },
+  "tests/fixtures/pyrel-rules-families/value.orm.json:lqp": {
+    "sha256": "cd74a34249f55733270f2f5bc739683ffbe3001f15806afa52e0a025897356fe"
+  },
+  "tests/fixtures/pyrel-rules-plans/refused-dispatch-ops/model.orm.json:duckdb": {
+    "refused": "fact type 'dispatch_reachable' is derived from reference facts in a model with operations; GND's plan walk computes it empty in later states (a checker bug), so there is no verdict to match"
+  },
+  "tests/fixtures/pyrel-rules-plans/refused-dispatch-ops/model.orm.json:lqp": {
+    "refused": "fact type 'dispatch_reachable' is derived from reference facts in a model with operations; GND's plan walk computes it empty in later states (a checker bug), so there is no verdict to match"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar-nonfunctional.orm.json:duckdb": {
+    "sha256": "26fc5c1b38861e93303bd7ffcf8ef1f754628090cef9d53d3ee2036c2839a54a"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar-nonfunctional.orm.json:lqp": {
+    "sha256": "8e74536dc8aaf86d1ab766c98d6e951c674befa0b1ad3f082b874e16ddd52328"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar-semiderived.orm.json:duckdb": {
+    "sha256": "ac7327158e73333bc1520e7c69a5f76e6bae54a5deb756732ca404b725662243"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar-semiderived.orm.json:lqp": {
+    "sha256": "83e9f29d451c29503bb05b6765034bb2dda00353892ec48b4050e4e7414b609c"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar.orm.json:duckdb": {
+    "sha256": "dfa0f9d5990be1da944cd1ccf0407ff06b132aec344bb58b3d1a4666a8cb031c"
+  },
+  "tests/fixtures/pyrel-rules-plans/registrar.orm.json:lqp": {
+    "sha256": "5dbad69f9fa6ea1e6c28e0520b8881e197e5a1186e0b27c6cfe0c0b16f3afc25"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/dynbind.orm.json:duckdb": {
+    "sha256": "72ff9ff15433910d2f4e5e9592fbc5646a38455c0783b5c8e3c712d395905a50"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/dynbind.orm.json:lqp": {
+    "sha256": "257432e32bc7c9c6c0bae8467ca5e559bdf2b935a4ae2afb04bcade176d2d15b"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/lab.orm.json:duckdb": {
+    "sha256": "d48c92840e9da3ba2a7730b9d132a9890226d066308ea265e62959dfa9c6711d"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/lab.orm.json:lqp": {
+    "sha256": "d1c9b2059c0460be11c27681591be01440202fcb3b799ea72853e927a0995cc3"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/lab3.orm.json:duckdb": {
+    "sha256": "4f628c5c01837a1abe1fd35a688c106a6f0fdfd1b1a2953d4b862f03d95e0019"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/lab3.orm.json:lqp": {
+    "sha256": "e11d6f3438a3f77798c3df66eeeb6dbeff785a1570b1c18159bc4f9e967e4c6b"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/steps.orm.json:duckdb": {
+    "sha256": "108ddd1051d75e2121b3c398458fd42545d0a1b0dc08e6c194f57aa8ccc3fdd3"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/steps.orm.json:lqp": {
+    "sha256": "bacd0a2caa68142095d8f208e377f11ede07ba80ac9bca0f0db790005e298105"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/steps2.orm.json:duckdb": {
+    "sha256": "7827fc47c45e5fcdb41cd000d908086057b20d0a12fad633e67822cb17c3912b"
+  },
+  "tests/fixtures/pyrel-rules-plans/review/steps2.orm.json:lqp": {
+    "sha256": "a6b3349b4daffe0fc4478ecc8f9302209035964b070bed41665b28d8dea11c89"
+  },
+  "tests/fixtures/pyrel-rules/disc.orm.json:duckdb": {
+    "refused": "disc: a disconnected antecedent is left unchecked by GND; the rules programs refuse it rather than cross-join it"
+  },
+  "tests/fixtures/pyrel-rules/disc.orm.json:lqp": {
+    "refused": "disc: a disconnected antecedent is left unchecked by GND; the rules programs refuse it rather than cross-join it"
+  },
+  "tests/fixtures/pyrel-rules/invalid.orm.json:duckdb": {
+    "refused": "invalid model: model validation failed: $.constraints[4].antecedent[0]: atom for fact type 'member' omits declared roles ['team']"
+  },
+  "tests/fixtures/pyrel-rules/invalid.orm.json:lqp": {
+    "refused": "invalid model: model validation failed: $.constraints[4].antecedent[0]: atom for fact type 'member' omits declared roles ['team']"
+  },
+  "tests/fixtures/pyrel-rules/names.orm.json:duckdb": {
+    "sha256": "dfbac214dcfdd6fca015cfd9bd9f48937965b35ca9e1681924f6e3d7412020b3"
+  },
+  "tests/fixtures/pyrel-rules/names.orm.json:lqp": {
+    "sha256": "e0839906d342c8522ea0a78a2fec8787b1d4bb6e411d6dc6c59b08757c921862"
+  },
+  "tests/fixtures/pyrel-rules/names2.orm.json:duckdb": {
+    "sha256": "b4549e292fdcc118b95b333ad2999c5d9c17d75d3130f1af420320c7082e9b5b"
+  },
+  "tests/fixtures/pyrel-rules/names2.orm.json:lqp": {
+    "sha256": "cecdc6e8a8e7cbb5a6b8bd3e0f7b638a86603ef3108a11f8339f6bc52145f41d"
+  },
+  "tests/fixtures/pyrel-rules/probe.orm.json:duckdb": {
+    "sha256": "ed9fafd8627d73ba27b464db0e6be26ee21f5bf6c4292ab9a0856a2928075276"
+  },
+  "tests/fixtures/pyrel-rules/probe.orm.json:lqp": {
+    "sha256": "b04ffddac66c1b62673f49e08300f0afbb8174c7004983005d7e439694a00b98"
+  },
+  "tests/fixtures/pyrel-rules/span.orm.json:duckdb": {
+    "sha256": "20ecef2e01022914f66a056bc383dc01d151d3028a12be455e9b3545124cde68"
+  },
+  "tests/fixtures/pyrel-rules/span.orm.json:lqp": {
+    "sha256": "1690ea1eccd62bf2aa98435d766c6e0a67c41eb270f39152bfacd8c1760dbaf0"
+  },
+  "tests/fixtures/pyrel-rules/sub.orm.json:duckdb": {
+    "refused": "object type 'manager' is a subtype; subtype universes are a later phase of the rules programs"
+  },
+  "tests/fixtures/pyrel-rules/sub.orm.json:lqp": {
+    "refused": "object type 'manager' is a subtype; subtype universes are a later phase of the rules programs"
+  }
+}

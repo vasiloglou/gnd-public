@@ -231,9 +231,21 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 39 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 44 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 396 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 40 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 45 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 409 | Render three deterministic artifacts from one bounded, admitted model read. |
+
+## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
+Components: export.ossie
+Place the reviewed subset of requirement and derivation shapes in Ossie scopes.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `ProjectedRelation` | class | 52 | (no docstring) |
+| `ProjectedRelation.arguments(self, atom) -> tuple[Any, ...]` | method | 59 | (no docstring) |
+| `ProjectedRelation.path(self) -> str` | method | 63 | (no docstring) |
+| `ProjectedRelation.token(self, position) -> str` | method | 66 | (no docstring) |
+| `place_formulas(document, ontology, components, relations, mapped)` | function | 255 | Mutate the ontology and disposition index only after a complete group lowers. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules
@@ -246,11 +258,13 @@ Render a model's rules as a readable PyRel program, as requirements.
 | `Compare` | class | 73 | (no docstring) |
 | `Check` | class | 80 | (no docstring) |
 | `Requirement` | class | 88 | (no docstring) |
-| `spanning_uniqueness(doc) -> list[str]` | function | 615 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
-| `requirements(doc, model) -> list[Requirement]` | function | 752 | Lower every supported constraint to requirements, in model order. One walk for all families. |
-| `require_text(req, names, model) -> str` | function | 978 | (no docstring) |
-| `denial_text(req, names, model) -> str` | function | 990 | (no docstring) |
-| `render(model_path, target) -> str` | function | 2261 | (no docstring) |
+| `spanning_uniqueness(doc) -> list[str]` | function | 625 | Uniqueness constraints over every role: only duplicate rows can break them (see the programs' header). |
+| `constraint_context(doc) -> _Model` | function | 762 | Index the admitted source for lowerers that assign their own constraint IDs. |
+| `constraint_requirements(model, c, fact_id) -> list[Requirement]` | function | 767 | Lower one admitted constraint through the shared requirement IR. |
+| `requirements(doc, model) -> list[Requirement]` | function | 811 | Lower every supported constraint to requirements, in model order. One walk for all families. |
+| `require_text(req, names, model) -> str` | function | 1000 | (no docstring) |
+| `denial_text(req, names, model) -> str` | function | 1012 | (no docstring) |
+| `render(model_path, target) -> str` | function | 2287 | (no docstring) |
 
 ## gnd.export.pyrel_runtime — `src/gnd/export/pyrel_runtime.py`
 Components: export.pyrel_runtime

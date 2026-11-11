@@ -106,3 +106,20 @@ def test_yaml_role_name_is_a_string_in_both_upstream_readers(oracle, tmp_path):
     for read in (oracle.validate, oracle.parse):
         result = read(output)
         assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_pinned_parser_accepts_exported_os2_corpus(oracle, tmp_path):
+    source = (
+        ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS2/corpus-r2/model.orm.json"
+    )
+    result = render_ossie(source, output_format="json")
+    path = tmp_path / "ontology.json"
+    path.write_bytes(result.document)
+    parsed = oracle.parse(path)
+    assert parsed.returncode == 0, parsed.stdout + parsed.stderr
+
+    document = json.loads(result.document)
+    document["requires"].append("COUNT[Account >")
+    path.write_text(json.dumps(document))
+    refused = oracle.parse(path)
+    assert refused.returncode == 1 and "Unable to parse" in refused.stderr

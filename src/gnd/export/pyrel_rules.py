@@ -129,12 +129,21 @@ def _with_constraint_ids(doc: dict[str, Any]) -> dict[str, Any]:
 class _Model:
     """Model queries go through the read-only ModelIndex snapshot (RF6 query policy)."""
 
-    def __init__(self, doc: dict[str, Any]):
-        self.doc = _with_constraint_ids(doc)
+    def __init__(self, doc: dict[str, Any], *, strict_ids: bool = True):
+        self.doc = _with_constraint_ids(doc) if strict_ids else doc
         self.index = ModelIndex(None, doc)
         self.objects = self.index.object_types_by_id()
         self._roles = self.index.role_object_types()
         self.facts = {fact_id: self.index.fact_type(fact_id) for fact_id in self._roles}
+        self.reference_values = {
+            oid: (obj.get("reference") or {}).get("value_type")
+            for oid, obj in self.objects.items()
+        }
+        self.reference_rosters: dict[str, list[str]] = {}
+        for oid in sorted(self.reference_values):
+            if reference := self.reference_values[oid]:
+                self.reference_rosters.setdefault(reference, []).append(oid)
+        self._players: dict[str, list[tuple[str, str]]] | None = None
         self.helpers: dict[str, dict[str, Any]] = {}
         self.unchecked: list[dict[str, str]] = []   # textual rules: listed, never evaluated (as GND)
         # structured derived heads, lower strata first; each gets <head>_derived (computed) and, when
@@ -187,14 +196,16 @@ class _Model:
 
     def plays(self, object_id: str) -> list[tuple[str, str]]:
         """Every (fact type, role) whose values belong to the object type, with reference widening."""
-        found = []
-        for fact_id in self.facts:
-            for role in self.roles(fact_id):
-                role_ot = role.get("object_type")
-                reference = (self.objects.get(role_ot, {}).get("reference") or {}).get("value_type")
-                if role_ot == object_id or reference == object_id:
-                    found.append((fact_id, role["role_name"]))
-        return found
+        if self._players is None:
+            self._players = {}
+            for fact_id, roles in self._roles.items():
+                for role, role_type in roles.items():
+                    self._players.setdefault(role_type, []).append((fact_id, role))
+                    reference = self.reference_values.get(role_type)
+                    if reference and reference != role_type:
+                        self._players.setdefault(reference, []).append((fact_id, role))
+        return list(self._players.get(object_id, ()))
+
 
 
 def _quote(constraint: dict[str, Any]) -> str:
@@ -400,8 +411,7 @@ def _value(model: _Model, c: dict[str, Any]) -> Requirement:
 
 def _rosters(model: _Model, object_id: str) -> list[str]:
     """The instances keys that populate an object type: its own, and entities it is the reference value of."""
-    return [object_id] + sorted(o for o, obj in model.objects.items()
-                                if (obj.get("reference") or {}).get("value_type") == object_id)
+    return [object_id, *model.reference_rosters.get(object_id, ())]
 
 
 def _sequence_names(seq: list[dict[str, Any]]) -> list[str]:
@@ -749,10 +759,59 @@ def _derivation(model: _Model, head: str) -> list[Requirement]:
     return found
 
 
+def constraint_context(doc: dict[str, Any]) -> _Model:
+    """Index the admitted source for lowerers that assign their own constraint IDs."""
+    return _Model(doc, strict_ids=False)
+
+
+def constraint_requirements(
+    model: _Model, c: dict[str, Any], fact_id: str | None = None
+) -> list[Requirement]:
+    """Lower one admitted constraint through the shared requirement IR."""
+    family = c["type"] if fact_id is not None else c.get("type")
+    if fact_id is not None:
+        if family == "mandatory":
+            return [_mandatory(model, c, fact_id)]
+        if family == "uniqueness":
+            if c.get("scope") == "external":
+                raise ExportInputError(f"{c['id']}: external uniqueness is a later phase of the rules programs")
+            lowered = _uniqueness(model, c, fact_id)
+            return [] if lowered is None else [lowered]
+        if family == "frequency":
+            if c.get("scope") == "external":
+                raise ExportInputError(f"{c['id']}: external frequency is a later phase of the rules programs")
+            return _frequency(model, c, fact_id)
+        if family == "ring":
+            return _ring(model, c, fact_id)
+        raise ExportInputError(f"{c['id']}: family {family!r} is a later phase of the rules programs")
+    if family == "guarded":
+        return _guarded(model, c)
+    if family == "subset":
+        return [_subset(model, c)]
+    if family == "value":
+        return [_value(model, c)]
+    if family == "mandatory-disjunctive":
+        return _mandatory_disjunctive(model, c)
+    if family == "equality":
+        return _equality(model, c)
+    if family == "exclusion":
+        return _exclusion(model, c)
+    if family == "exclusive-or":
+        return _exclusive_or(model, c)
+    if family == "cardinality":
+        return _cardinality(model, c)
+    if family in ("uniqueness", "frequency") and c.get("scope") == "external":
+        raise ExportInputError(f"{c.get('id')}: external {family} is a later phase of the rules programs")
+    if family == "textual":
+        model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"]})
+        return []
+    raise ExportInputError(f"{c.get('id')}: family {family!r} is a later phase of the rules programs")
+
+
 def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requirement]:
     """Lower every supported constraint to requirements, in model order. One walk for all families.
 
-    Helper relations the lowering needs are registered on ``model``; pass the model you render with.
+    Helper relations the lowering needs are registered on `model`; pass the model you render with.
     """
     model = model if model is not None else _Model(doc)
     _refuse_unsupported_model(doc)
@@ -760,46 +819,9 @@ def requirements(doc: dict[str, Any], model: _Model | None = None) -> list[Requi
     for fact_id, fact in model.facts.items():
         for index, c in enumerate(fact.get("constraints") or []):
             c = {**c, "id": c.get("id") or f"{fact_id}#{index}"}
-            if c["type"] == "mandatory":
-                found.append(_mandatory(model, c, fact_id))
-            elif c["type"] == "uniqueness":
-                if c.get("scope") == "external":
-                    raise ExportInputError(f"{c['id']}: external uniqueness is a later phase of the rules programs")
-                lowered = _uniqueness(model, c, fact_id)
-                if lowered is not None:
-                    found.append(lowered)
-            elif c["type"] == "frequency":
-                if c.get("scope") == "external":
-                    raise ExportInputError(f"{c['id']}: external frequency is a later phase of the rules programs")
-                found += _frequency(model, c, fact_id)
-            elif c["type"] == "ring":
-                found += _ring(model, c, fact_id)
-            else:
-                raise ExportInputError(f"{c['id']}: family {c['type']!r} is a later phase of the rules programs")
+            found += constraint_requirements(model, c, fact_id)
     for c in model.doc.get("constraints", []):   # model.doc carries the default ids
-        family = c.get("type")
-        if family == "guarded":
-            found += _guarded(model, c)
-        elif family == "subset":
-            found.append(_subset(model, c))
-        elif family == "value":
-            found.append(_value(model, c))
-        elif family == "mandatory-disjunctive":
-            found += _mandatory_disjunctive(model, c)
-        elif family == "equality":
-            found += _equality(model, c)
-        elif family == "exclusion":
-            found += _exclusion(model, c)
-        elif family == "exclusive-or":
-            found += _exclusive_or(model, c)
-        elif family == "cardinality":
-            found += _cardinality(model, c)
-        elif family in ("uniqueness", "frequency") and c.get("scope") == "external":
-            raise ExportInputError(f"{c.get('id')}: external {family} is a later phase of the rules programs")
-        elif family == "textual":
-            model.unchecked.append({"id": c["id"], "modality": c["modality"], "expression": c["expression"]})
-        else:
-            raise ExportInputError(f"{c.get('id')}: family {family!r} is a later phase of the rules programs")
+        found += constraint_requirements(model, c)
     for head in model.derived:
         found += _derivation(model, head)
     found = [_unswapped(model, r) for r in found]
@@ -1120,6 +1142,10 @@ def _clauses(rule: dict[str, Any]) -> list[dict[str, Any]]:
     return [{"body": c.get("body", []), "negate": c.get("negate", []),
              "where": [*c.get("where", []), *rule.get("where", [])] if "clauses" in rule else c.get("where", []),
              "head": c.get("head") or rule["head"], "aggregate": rule.get("aggregate")} for c in clauses]
+
+
+normalize_derivation_clauses = _clauses
+lower_rule_atom = _atom
 
 
 _FN = {"add": "({} + {})", "sub": "({} - {})", "mul": "({} * {})", "neg": "(-{})", "abs": "std_math.abs({})"}

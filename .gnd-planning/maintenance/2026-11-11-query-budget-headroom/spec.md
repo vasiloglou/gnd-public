@@ -298,6 +298,7 @@ keeps its separate owner authorization.
     the repository, not only these ten. It is recorded as a limit, not
     repaired: the supported input is a model whose rows are plain JSON
     values, which is what `load_model` produces.
+    **Owner ruling (o), 2026-11-11: "Accept the limit".**
 17. **R4 applied in part.** The frequency test now uses a model with a
     structured rule, so the skill-document read runs, covers six readers and
     has a negative control. It counts reads of the fact types, not

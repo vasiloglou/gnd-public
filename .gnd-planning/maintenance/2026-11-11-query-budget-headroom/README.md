@@ -31,7 +31,8 @@ test with a stand-in object.
   loadable fixtures agree. For a `Model` built in code whose rows hold a
   value that `model_dump()` alters, such as a dataclass instance, a converted
   function sees the dumped value. This is true of every `ModelIndex` read in
-  the repository; it is recorded here, not repaired.
+  the repository; it is recorded here, not repaired. **The owner accepted
+  this limit on 2026-11-11 ("Accept the limit").**
 
 ## Evidence that outputs did not move
 
@@ -52,7 +53,7 @@ Two rounds, one Codex reviewer each. One reviewer is one reviewer.
 |---|---|---|---|
 | R1 (high) | [1](codex-review.md) | `fact_type_scope` is called with a `SimpleNamespace` by an existing test; the conversion raises `TypeError` | reproduced; the site was reverted and replaced |
 | R2 (medium) | 1 | the new tests cover three of ten functions, record no baseline bytes, accept an exception change, and cannot see mutation or indexing frequency | applied: the exception change is stated and pinned; a no-mutation test, the base-versus-head comparison and a frequency test were added. Four command-internal functions remain covered by the default lane only |
-| R3 (medium) | [2](codex-review-2.md) | for a `Model` built in code with a value the dump alters, `_structured` changes its answer | reproduced; recorded as a limit above, not repaired |
+| R3 (medium) | [2](codex-review-2.md) | for a `Model` built in code with a value the dump alters, `_structured` changes its answer | reproduced; recorded as a limit above, not repaired; accepted by the owner (2026-11-11) |
 | R4 (medium) | 2 | the frequency test never ran the skill-document read, counted reads and not index constructions, and covered five readers | partly applied: a structured model, six readers and a negative control. It still counts reads, not constructions |
 | R5 (low) | 2 | the README's gate results were not bound to commits and one sentence was stale | applied below |
 

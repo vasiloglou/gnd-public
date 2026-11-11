@@ -4,7 +4,7 @@
 
 ## 2. Provenance
 
-[Plan r1](guarded-rule-authoring-plan.md), [GR-D8](https://github.com/vasiloglou/gnd-public/issues/179),
+[Plan r2](guarded-rule-authoring-plan.md), [GR-D8](https://github.com/vasiloglou/gnd-public/issues/179),
 and the predecessor's [close](../../guarded-rule-workflows/006-milestone-close.md).
 No independent review has run.
 

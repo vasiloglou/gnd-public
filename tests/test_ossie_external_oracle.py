@@ -193,7 +193,7 @@ def _consumer_formulas(document):
     ]
 
 
-def _consumer_compare(oracle, root, name, document, gnd_model=None):
+def _consumer_compare(oracle, root, name, document, gnd_model=None, *, checkout=None):
     import hashlib
     from subprocess import TimeoutExpired
 
@@ -228,7 +228,7 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None):
             }
 
     try:
-        conversion = convert_offline(oracle, path, source)
+        conversion = convert_offline(oracle, path, source, checkout=checkout)
     except TimeoutExpired:
         result.update(exit=124, diagnostics=["ossie-oracle: converter timed out"])
         return result

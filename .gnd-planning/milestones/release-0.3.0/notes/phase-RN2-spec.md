@@ -258,3 +258,53 @@ predecessor's retained one.
   `sha256:8aa0003dfd4f7f07ed9987b9595fdc3c3113846bac227c5fe4cdfa64a597cc4f`
   both from `--identity` and in the Ossie import report. The test compares
   the two values with each other and does not pin this literal.
+
+## 13. Implementation findings, part one (2026-11-11, appended)
+
+1. **M2 as designed, with two differences.** `copy_packaged` takes the target
+   name as a sixth argument, and one helper, `acceptance_inputs`, prepares all
+   probe inputs; the corpus copies come from the `installed` fixture's
+   git-archived checkout, not from the working tree, so an untracked file
+   cannot fill a gap.
+2. **Trial builds.** Three local builds from three commits of this branch (uv
+   0.10.10, Python 3.14) gave the same release wheel sha256,
+   `143890ee…751b`, and each comparison wheel equals its release wheel. These
+   are trials, not the candidate: the candidate is built from the merge
+   commit (D1).
+3. **T3, red first.** Over the retained 0.2.0 candidate files the new carries
+   test fails for both wheels at its first assertion, the installed version
+   (`'gnd 0.2.0' == 'gnd 0.3.0'`); see `evidence/RN2/t3-red-on-0.2.0.txt`. The
+   first version of the test copied its inputs before it checked the version
+   and failed on a missing packaged example instead, so the version check was
+   moved first.
+4. **T1 and T2 on a trial build**, under the macOS sandbox: `4 passed, 14
+   deselected`, before and after the review fixes.
+
+### Review of the part-one diff (one reviewer)
+
+Codex over `f9f502d9..b8afdaa6 -- tests`
+([retained output](phase-RN2-codex-review.md)): `revise`, 7 findings.
+
+| Finding | Checked | Triage | Disposition |
+|---|---|---|---|
+| G1 the policy issue's operation index was not asserted | yes: the issue rows carry `operation_index` | hardening | asserted for the plain and the violating preview |
+| G2 the multiplicity was read from a separate JSON export, not the YAML one | yes | hardening | the YAML file is parsed by the installed interpreter with the wheel's own YAML dependency |
+| G3 the restored model's bytes were never measured | yes | blocking for the claim "restores the model" | `validate restored.orm.json --identity` must equal the source identity |
+| G4 the identity checks could not tell a full identity from one over names only | yes: the reviewer's in-memory implementation passed the old checks | hardening | a changed rule (`right: 1000` to `right: 5`) must move the identity. Not done: no independently derived digest of the refunds model is pinned; the format's own test vectors (`tests/test_rof3_model_identity.py`) are the independent check of the algorithm |
+| G5 installing a wheel resolves its dependencies from the index | yes: `uv pip install` of the local wheel is not offline | accepted limit | the claim is narrowed: the tests need the index for dependencies, as the file's existing tests do, in addition to the hash-checked 0.2.0 wheel |
+| G6 the 0.2.0 version message was matched by prefix | yes | hardening | the full message is asserted |
+| G7 two asserted literals have no normative home | yes: `gnd-ossie-import-loss/1` and the rule name `binding` are not in the format reference; it defines `gnd-ossie-loss/1`, `gnd-ossie-sidecar/1` and the form `ossie-import:<rule>` | hardening | the tests assert the three the reference defines and drop the two it does not. That the import report's schema name and the rule names are undocumented is an open question for the record |
+
+No fix has a separate pre-fix red run: G3 and G4 would need a broken
+implementation to be red, which the reviewer built in memory and this session
+did not. The tightened tests were rerun on a third trial build: `4 passed`.
+
+**Corrects §6, T1 table, kept as written above.** The Q1 rows "schema
+`gnd-ossie-import-loss/1`" and "stderr `ossie-import:binding`" are asserted in
+the weaker, documented forms just described.
+
+5. **The whole acceptance file on a trial build** (commit `b8afdaa6`'s tests,
+   this Mac, Python 3.14, uv 0.10.10, under the sandbox): `18 passed in
+   900.13s (0:15:00)`. The fourteen existing tests, the 0.1.0 controls among
+   them, pass on a 0.3.0 wheel. This is not V4: V4 runs on the candidate, on
+   beast-3, with Python 3.11.

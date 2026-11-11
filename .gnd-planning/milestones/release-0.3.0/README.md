@@ -10,7 +10,7 @@ reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
 not re-reviewed. No phase spec is approved. `auto=false`.**
 
 - [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
-- [RN2 spec (awaiting owner review)](notes/phase-RN2-spec.md)
+- [RN2 spec (approved 2026-11-11)](notes/phase-RN2-spec.md); [part-one review](notes/phase-RN2-codex-review.md)
 - [RN0 record](002-phase-RN0.md); [RN0 spec (approved 2026-11-10)](notes/phase-RN0-spec.md); [diff review](notes/phase-RN0-codex-review.md)
 - [RN1 record](003-phase-RN1.md); [RN1 spec (approved 2026-11-11)](notes/phase-RN1-spec.md); [diff review](notes/phase-RN1-codex-review.md); [moved digests](evidence/e1/moved-digests.md)
 - [Codex review of r1](evidence/plan-review-r1/codex-review.md)
@@ -64,5 +64,11 @@ published 0.2.0 wheel.
 Ruled (owner, 2026-11-11): the opt-in Ossie oracle lane is not run for 0.3.0
 (RN2 D5, RN1 D7).
 
-Next action: the owner rules the RN2 spec gate and its decisions D1 to D4 and
-D6.
+RN2's spec was approved by the owner on 2026-11-11 ("Approve, start RN2").
+Part one is done: the two installed-wheel tests and their inputs, red on the
+0.2.0 files and green on a local trial build of 0.3.0 (the whole acceptance
+file: 18 passed). Review: one reviewer (Codex, `revise`, G1 to G7, disposed
+in the spec).
+
+Next action: the owner merges PR 164. That merge commit is the candidate
+(RN2 D1); the build and the acceptance run on beast-3 follow from it.

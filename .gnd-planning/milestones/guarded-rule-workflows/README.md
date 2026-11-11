@@ -1,17 +1,17 @@
 # Guarded rule workflows
 
-Draft opened 2026-11-11 against GND 0.3.0. The four issues cover rule examples,
-rule-edition comparison, joined discovery, and typed constants in mined rules.
+Draft r2, 2026-11-11. The issue author's priority update puts guarded-rule
+diagnostics first and rule-edition comparison second.
 
-| Phase | Issue | Deliverable |
-|---|---|---|
-| GW1 | [GR-D11](https://github.com/vasiloglou/gnd-public/issues/182) | Import mined rules with typed constants and verify their support |
-| GW2 | [GR-D9](https://github.com/vasiloglou/gnd-public/issues/180) | Compare findings under two rule editions on the same population |
-| GW3 | [GR-D8](https://github.com/vasiloglou/gnd-public/issues/179) | Generate a failing case and an active passing case for a guarded rule |
-| GW4 | [GR-D10](https://github.com/vasiloglou/gnd-public/issues/181) | Discover guarded rules across a binary relation and a classifier |
+| Order | Phase | Issue | Deliverable |
+|---|---|---|---|
+| 1 | GW0 | [GR-D12](https://github.com/vasiloglou/gnd-public/issues/183) | Report when a guarded rule matched nothing and flag out-of-domain literals during validation |
+| 2 | GW2 | [GR-D9](https://github.com/vasiloglou/gnd-public/issues/180) | Compare findings under two rule editions on the same population |
 
 [Milestone plan](notes/guarded-rule-workflows-plan.md) ·
-[GW1 draft spec](notes/phase-GW1-spec.md)
+[GW0 draft spec](notes/phase-GW0-spec.md)
 
-The plan awaits instrument selection and review. GW1 awaits the plan and phase
-owner gates. The execution default is `auto=false`.
+Generated cases (GW3), relational discovery (GW4), and mined-rule constants
+(GW1) are [deferred](notes/guarded-rule-workflows-plan.md#7-deferred-and-out-of-scope).
+The plan awaits independent review and owner approval. Implementation also
+requires the phase's owner gate. The execution default is `auto=false`.

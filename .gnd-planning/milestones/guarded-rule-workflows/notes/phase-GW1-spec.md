@@ -1,6 +1,6 @@
 # GW1 · Typed constants in mined rules · draft r1
 
-**Awaiting owner review.** Implementation requires the plan and GW1 spec gates.
+**Deferred.** Historical draft from plan r1. Plan r2 moved GW1 out of the active milestone. A future selection requires a current spec and owner gate.
 
 ## 2. Provenance
 

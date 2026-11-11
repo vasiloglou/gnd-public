@@ -1,7 +1,15 @@
 # Ossie interchange in GND
 
-GND exports and imports Apache Ossie ontology documents, version
-`0.3.0.dev0`. The export schema and validation tool come from Apache Ossie
+Apache Ossie is an open source project that defines a file format for
+ontologies, meaning the business concepts in a domain and the relationships
+between them. If an Ossie ontology already exists for your domain, you can
+import it and use its concepts and relationships as the starting point for a
+GND model. If your model lives in GND, as the refunds example does, you can
+export its vocabulary and relationships so that another tool or team works
+from the same names and connections.
+
+GND supports Ossie ontology version `0.3.0.dev0`. The export schema and
+validation tool come from Apache Ossie
 `ee89dbdc2844d8b7d293ed42c8613928bb99505f`. The parser used for the
 export check comes from Apache Ossie Converters
 `83ddc294c8840f5f497a2bdbec2348a128fc2254`.

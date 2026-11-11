@@ -72,5 +72,5 @@ at 58%; the first sharded G2 had 2 failures in `tests/test_rf4_peripheral.py`
 
 ## Not done
 
-- Nothing is committed and no PR is open.
+- Committed as `2c82a9af`; PR 187 is open and not merged.
 - Issue 170 stays open until the owner merges.

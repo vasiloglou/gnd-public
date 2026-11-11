@@ -47,7 +47,16 @@
      "constraint": {"type": "value", "object_type": "expiry_date", "range": {"min": "1900-01-01"}},
      "quote": "expiry date", "rationale": "Library entry date-contemporary: a reasonable contemporary date range."}
   ],
-  "derived_fact_types": [],
+  "derived_fact_types": [
+    {"id": "policy_is_covered", "reading": "{Policy} is covered",
+     "roles": [{"object_type": "policy", "role_name": "policy"}],
+     "derivation": "derived", "storage": "computed",
+     "derivation_rule": {
+       "body": [{"fact_type": "policy_has_cover_level", "bind": {"policy": "$p", "cover_level": "$c"}}],
+       "head": {"policy": "$p"}},
+     "quote": "A covered policy is a policy that has a cover level",
+     "rationale": "A defined term computed from a fact the model already holds."}
+  ],
   "open_questions": [
     {"step": 6, "note": "The text gives no limit on the cover period.", "quote": "expiry date"}
   ]

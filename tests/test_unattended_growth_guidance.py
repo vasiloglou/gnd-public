@@ -80,6 +80,15 @@ def _translate(reply: dict[str, Any], raw: bytes) -> dict[str, Any]:
         }
         fact_types.append(element)
 
+    for entry in reply.get("derived_fact_types", ()):   # the acceptance replay builds replies without it
+        # A derived fact type is the model's own fact type shape with a structured rule. It
+        # holds no rows: its facts follow from the rule, so there is nothing to sample.
+        assert isinstance(entry["derivation_rule"], dict), "an opaque rule is an open question, not a proposal"
+        assert "rows" not in entry
+        element = {k: v for k, v in entry.items() if k not in {"quote", "rationale"}}
+        element["provenance"] = {"spans": spans(entry), "rationale": entry["rationale"]}
+        fact_types.append(element)
+
     top_level: list[dict[str, Any]] = []
     for entry in reply["constraints"]:
         constraint = copy.deepcopy(entry["constraint"])
@@ -127,6 +136,21 @@ def test_the_reply_shape_builds_a_model_that_validates(tmp_path: Path) -> None:
     constraints = [c for f in model["fact_types"] for c in f.get("constraints", [])] + model["constraints"]
     assert {(c["status"], c["modality"]) for c in constraints} == {("proposed", "deontic")}
     assert {c["source"] for c in constraints} == {"llm-inferred", "common-sense"}
+    # Issue 104, ask 4: a derived fact type travels in the same reply, with its quote.
+    (derived,) = [f for f in model["fact_types"] if f.get("derivation") == "derived"]
+    assert derived["id"] == "policy_is_covered" and isinstance(derived["derivation_rule"], dict)
+    assert len(derived["provenance"]["spans"]) == 1 and "sample_population" not in derived
+
+
+def test_a_derived_fact_type_without_its_quote_does_not_validate(tmp_path: Path) -> None:
+    """The quote is what `gnd validate --document` holds a derived fact type to, like any element."""
+    reply = json.loads(REPLY.read_text(encoding="utf-8"))
+    model = _translate(reply, DOCUMENT.read_bytes())
+    (derived,) = [f for f in model["fact_types"] if f.get("derivation") == "derived"]
+    del derived["provenance"]["spans"]
+    exit_code, payload = _validate(model, tmp_path)
+    assert exit_code != 0
+    assert any("policy_is_covered" in json.dumps(issue) for issue in payload["issues"]), payload["issues"]
 
 
 def test_a_quote_the_document_does_not_contain_is_dropped_not_guessed() -> None:
@@ -143,7 +167,7 @@ def test_the_reference_example_has_the_fixture_reply_shape() -> None:
     example = json.loads(block.group(1))
     reply = json.loads(REPLY.read_text(encoding="utf-8"))
     assert set(example) == set(reply)
-    for key in ("object_types", "fact_types", "subtype_links", "constraints", "open_questions"):
+    for key in ("object_types", "fact_types", "subtype_links", "constraints", "derived_fact_types", "open_questions"):
         assert example[key], key
         assert set(example[key][0]) <= set(reply[key][0]) | {"quote_occurrence"}, key
 

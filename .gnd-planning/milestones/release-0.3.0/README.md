@@ -1,13 +1,13 @@
 # release-0.3.0
 
-Planning opened 2026-11-10 on the owner's request to cut a new version now
-that Ossie interchange is on main. 0.2.0 is the latest published version;
-nothing here is published.
+Opened 2026-11-10 on the owner's request to cut a new version now that Ossie
+interchange is on main. **get-nick-done 0.3.0 is published** (PyPI,
+2026-11-11T15:36:42Z; tag `v0.3.0`; GitHub release). The
+[milestone close](007-milestone-close.md) is drafted and reviewed, and
+**not ruled**.
 
-**Status: plan r2 approved by the owner on 2026-11-10 ([plan-gate
-record](001-plan-gate.md)). r1 was reviewed by one
-reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
-not re-reviewed. No phase spec is approved. `auto=false`.**
+The paragraphs further down are the milestone's history in the order it
+happened; each was true when written.
 
 - [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
 - [RN3 record](005-phase-RN3.md); [dossier](evidence/RN3/dossier.md); [RN3 spec (approved 2026-11-11)](notes/phase-RN3-spec.md); [review](notes/phase-RN3-codex-review.md)
@@ -84,7 +84,7 @@ RN3 is done and recorded ([record](005-phase-RN3.md)): the
 post-publication patches and a stale-text check. Review: one reviewer
 (Codex, `revise`, H1 to H9, all fixed).
 
-**get-nick-done 0.3.0 is published** (2026-11-11T15:36:42Z; [record](006-publication.md)): the served files equal the retained `4c07c0e6` candidate, tag `v0.3.0` and the GitHub release exist, and the post-publication patches are applied. PR 167 merged as `7d86dc35`. The [milestone close](007-milestone-close.md) is drafted and **not ruled**: the closing lane at `7d86dc35` is clean (19,016 passed, the 2 known errors), the close review has not run, and the sweep's proposed dispositions await the owner.
+**get-nick-done 0.3.0 is published** (2026-11-11T15:36:42Z; [record](006-publication.md)): the served files equal the retained `4c07c0e6` candidate, tag `v0.3.0` and the GitHub release exist, and the post-publication patches are applied. PR 167 merged as `7d86dc35`. The [milestone close](007-milestone-close.md) is drafted and **not ruled**: the closing lane at `7d86dc35` is clean (19,016 passed, the 2 known errors); the close review ran (one Codex reviewer, the owner's choice; `revise`, L1 to L8, all applied; [retained](notes/close-codex-review.md)); the sweep's proposed dispositions await the owner.
 
 Before that: the three preparation phases were completed with nothing published. The
 publication stage is the owner's (RN-D5): check the files and the version,

@@ -30,6 +30,10 @@ RETAINED_EXTERNAL_REFERENCES = {
     # Verbatim reviewer output quoting test code and a mutant input; neither is a document link.
     Path('.gnd-planning/milestones/release-0.3.0/notes/phase-RN1-codex-review.md'): {
         '{link}', 'explanation/ossie.md'},
+    # Verbatim close-review output quoting one table row of the close record, whose link is
+    # relative to that record's directory.
+    Path('.gnd-planning/milestones/release-0.3.0/notes/close-codex-review.md'): {
+        '004-phase-RN2.md'},
     Path('.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/baseline-report.md'): {
         '/private/tmp/gnd-local-ci-20261006-d6f1e8a/' + name
         for name in (

@@ -53,8 +53,8 @@ A team's policy never copies a shared definition and cannot change one. It says
 which edition of the shared model it builds on, the way a contract cites the
 2026 edition of a handbook and not just "the handbook".
 
-**Before you start.** Use a checkout of a development checkout for the unreleased example, as the
-[installation page](../installation.md) shows and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
+**Before you start.** Install GND 0.3.0 or later with pip in an activated virtual environment, as the
+[installation page](../installation.md) shows, and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
 shows. The [commands page](../how-to/shared-expense-policies-commands.md) has
 the copy step and every command behind the requests below.
 

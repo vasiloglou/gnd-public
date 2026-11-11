@@ -10,7 +10,7 @@ With [uv](https://docs.astral.sh/uv/getting-started/installation/), install GND 
 a command-line tool:
 
 ```sh
-uv tool install get-nick-done==0.2.0
+uv tool install get-nick-done==0.3.0
 uv tool update-shell
 ```
 
@@ -22,7 +22,7 @@ Alternatively, use pip in a virtual environment:
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install get-nick-done==0.2.0
+python -m pip install get-nick-done==0.3.0
 gnd --help
 ```
 
@@ -111,11 +111,11 @@ runtime versions aligned.
 ## Install a release artifact
 
 You can instead download the wheel and checksums from the
-[v0.2.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.2.0).
+[v0.3.0 release](https://github.com/vasiloglou/gnd-public/releases/tag/v0.3.0).
 Install it in an activated virtual environment:
 
 ```sh
-python -m pip install /path/to/get_nick_done-0.2.0-py3-none-any.whl
+python -m pip install /path/to/get_nick_done-0.3.0-py3-none-any.whl
 ```
 
 ## Contributor checkout

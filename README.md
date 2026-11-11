@@ -138,6 +138,7 @@ assert bad["exit_code"] == 1 and good["exit_code"] == 0
   conformance checks, and model evolution with a blast-radius preview.
 - **Round-trips documents.** Render a document from facts with planted distractors,
   extract facts back, and check both directions.
+- **Shares pinned [Ossie ontologies](docs/explanation/ossie.md).** Export and restore GND models with per-field loss reports.
 - **Exports to other engines.** Soufflé Datalog, Lean definitions with explicit proof
   obligations, PyRel programs, and independently replayable witnesses.
 - **Gets a second opinion.** A six-seat review panel across Claude, Codex, Qwen, Gemini,

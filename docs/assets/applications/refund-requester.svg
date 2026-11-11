@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="116" viewBox="0 0 600 116" role="img" aria-labelledby="title description">
+  <title id="title">Refund requester</title>
+  <desc id="description">Each refund has at most one requesting customer. A customer can request several refunds.</desc>
+  <rect x="0" y="0" width="600" height="116" rx="12" fill="#f4f8fc"/>
+  <rect x="20" y="34" width="136" height="54" rx="8" fill="#143a56"/>
+  <rect x="444" y="34" width="136" height="54" rx="8" fill="#143a56"/>
+  <path d="M156 61H436m-10-8 10 8-10 8" fill="none" stroke="#366681" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle">
+    <g fill="white" font-size="18" font-weight="600">
+      <text x="88" y="67">Refund</text>
+      <text x="512" y="67">Customer</text>
+    </g>
+    <g fill="#143a56" font-size="15">
+      <text x="300" y="49">requested by</text>
+      <text x="300" y="84">at most one per refund</text>
+    </g>
+  </g>
+</svg>

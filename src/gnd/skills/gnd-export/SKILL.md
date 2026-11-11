@@ -1,6 +1,6 @@
 ---
 name: gnd-export
-description: Exports finite Lean models with unproved obligations, finite grounded witnesses, or explicitly selected bounded standalone Souffle derivation programs. Native compilation/execution and positive proof replay are separate optional claims; never source truth, completeness or assurance.
+description: Exports and imports pinned Apache Ossie ontologies with loss reports. Exports finite Lean models with unproved obligations, finite grounded witnesses, or explicitly selected bounded standalone Souffle derivation programs. Native compilation/execution and positive proof replay are separate optional claims; never source truth, completeness or assurance.
 ---
 
 # Derivation program and finite witness export
@@ -58,3 +58,16 @@ Compilation is separately selected with `gnd export lean-compile NEW_DIR
 --executable LAKE --json`; `--elaborate-stubs` records stub elaboration separately.
 Neither operation proves a theorem. The selected positive acyclic finite profile,
 refusals, exact propositions and ceilings are in the export boundary above.
+
+## Ossie interchange
+
+Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to create the ontology,
+`ONTOLOGY.yaml.gnd.json` sidecar and `ONTOLOGY.yaml.loss.json` loss report.
+Inspect refused pointers before sharing. Use `--strict` when a refusal
+should prevent writing the bundle. Keep the three files together for a
+GND round trip with `gnd import ossie ONTOLOGY.yaml --out MODEL.json`.
+
+Use the [normative Ossie mapping and file format](../gnd-orm-core/references/representation-format.md#ossie-interchange)
+for supported declarations, pins, output formats and import rules.
+The ordinary CLI routes run offline. Select any external consumer
+verification separately.

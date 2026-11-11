@@ -516,3 +516,12 @@ quoted. The prior question and readings are kept in each row.
   disposition unit (2), G4 OS6 close (2), G5 phase graph (2) and G6 OD range
   (3); 13 views came from a single seat. Every fix was applied as the
   synthesis proposed. The repaired bytes carry no review opinion.
+
+## 12. Close amendment
+
+The 2026-11-10 [close amendment](close-amendments-r2.md) governs the
+measured acceptance scope for predicates 1–6 and 9 and OS6-C2.
+It retains the r3 wording above and identifies the raising phase
+records and review findings. [Record 033](../033-close-readiness.md)
+records the delegated amendment ruling and the remaining merged-main
+verification condition.

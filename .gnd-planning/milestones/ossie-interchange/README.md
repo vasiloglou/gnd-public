@@ -58,3 +58,8 @@ The [OS6 phase record](030-phase-OS6.md) records the tested patch and the
 owner-approved [upstream PR #162](https://github.com/apache/ossie-converters/pull/162).
 The [close candidate](031-close-candidate.md) assembles the seven phase
 records and proposes plan amendments for the independent close review.
+
+The [independent close panel](032-panel.md) reached quorum and requested
+revisions. The [effective close amendment](notes/close-amendments-r2.md)
+records the measured acceptance scope. The [close-readiness record](033-close-readiness.md)
+defines verification on GND main after the owner's merge decision.

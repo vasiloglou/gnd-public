@@ -1,0 +1,13 @@
+diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
+index 7a53a26c..8b5e1dd2 100644
+--- a/docs/marketplace-plugins.md
++++ b/docs/marketplace-plugins.md
+@@ -50,7 +50,7 @@ it there if that client does not share the CLI installation.
+ These commands use GND's repository marketplace. They do not submit GND to an
+ Anthropic or OpenAI curated directory. Until the repository is public, GitHub
+ access is required. The marketplace files must be merged into `main` before the
+-commands above work. The `v0.2.0` tag contains both the Python release and these
++commands above work. The `v0.3.0` tag contains both the Python release and these
+ marketplace entries; the commands above use `main`.
+ 
+ ## Existing skill installations

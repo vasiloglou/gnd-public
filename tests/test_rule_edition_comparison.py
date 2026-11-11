@@ -317,3 +317,29 @@ def test_comparison_requires_population_before_io(tmp_path):
     result = run_main(["check", "missing.orm.yaml", "--baseline-model", "missing-base.orm.yaml"], cwd=tmp_path)
     assert result.returncode == 64
     assert b"population" in result.stderr
+
+
+def test_repeated_fact_type_cannot_hide_a_changed_binding(tmp_path):
+    base, head = _write(tmp_path)
+    base_rule, = base["constraints"]
+    head_rule, = head["constraints"]
+    base_rule["antecedent"].append(copy.deepcopy(head_rule["antecedent"][1]))
+    head_rule["antecedent"].append({
+        "fact_type": IMPORT, "bind": {"importer": "$target", "imported": "$tail"},
+    })
+    base_rule["consequent"]["comparison"].update(left="$target", right="db")
+    head_rule["consequent"]["comparison"].update(left="$target", right="api")
+    (tmp_path / "base.orm.yaml").write_text(json.dumps(base))
+    (tmp_path / "head.orm.yaml").write_text(json.dumps(head))
+    population_path = tmp_path / "population.yaml"
+    population = json.loads(population_path.read_text())
+    population["facts"][IMPORT].extend([
+        {"importer": "caller0", "imported": "db"},
+        {"importer": "db", "imported": "leaf"},
+    ])
+    population_path.write_text(json.dumps(population))
+    result = _compare(tmp_path)
+    assert result.returncode == 4
+    row, = json.loads(result.stdout)["rules"]
+    assert row["reason"] == "binding-alignment-ambiguous"
+    assert row["delta"] is None

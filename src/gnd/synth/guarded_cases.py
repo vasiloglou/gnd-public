@@ -21,6 +21,17 @@ GUARD_WORK = 100_000
 RUN_WORK = 1_000_000
 ATTEMPTS = 128
 PRIMITIVES = frozenset({"String", "Boolean", "Integer", "Float", "Number", "Binary"})
+COMPARISON_PAIRS = (
+    (0, 0),
+    (-1, 1),
+    (1, -1),
+    ("a", "a"),
+    ("a", "b"),
+    ("b", "a"),
+    (False, False),
+    (False, True),
+    (True, False),
+)
 Facts = dict[str, list[dict[str, Any]]]
 
 
@@ -119,20 +130,18 @@ def _assignment(domains, comparison, attempt, rng, budget, *, initial=None):
                 None,
             )
             other = comparison.get("right" if side == "left" else "left")
-            # Literal and adjacent numeric values make equality and ordered
-            # boundaries reachable even in very wide domains.
-            preferred = (
-                _preferred(other)
-                if side and other is not None and variable_name(other) is None
-                else []
-            )
-            if side and variable_name(other) is not None:
-                preferred = [0, -1, 1, "", "a", False, True]
-            if attempt < len(preferred) and preferred[attempt] is not None:
-                value = preferred[
-                    (attempt + (side == "right" and variable_name(other) is not None))
-                    % len(preferred)
-                ]
+            other_name = variable_name(other)
+            # Sample equality and both orders deliberately. Independent draws
+            # almost never meet on equality in a wide numeric domain.
+            preferred = []
+            if side and other_name is not None:
+                preferred = [pair[int(side == "right")] for pair in COMPARISON_PAIRS]
+            elif side and other is not None:
+                preferred = _preferred(other)
+            if attempt < len(preferred):
+                value = preferred[attempt]
+            elif other_name in assignment and attempt % 2 == 0:
+                value = assignment[other_name]
             else:
                 try:
                     value = rng.choice(occurrences).draw(rng)
@@ -190,6 +199,20 @@ def _outcome(facts, antecedent, kind, payload, witnesses, budget):
                 holds = not holds
         satisfied = satisfied and holds
     return satisfied, Candidate(facts, len(distinct))
+
+
+def confirmation_work(pair, guards, budget):
+    """Charge an upper bound on the checker's guarded joins."""
+    for case in pair:
+        for _, guard, _ in guards:
+            prefixes = 1
+            witness = (guard.get("consequent") or {}).get("exists") or {}
+            atoms = [*(guard.get("antecedent") or ()), *(witness.get("atoms") or ())]
+            for atom in atoms:
+                rows = len(case.facts.get(atom["fact_type"], ()))
+                charge(budget, 1 + rows * len(atom_bind(atom)))
+                prefixes *= rows
+                charge(budget, prefixes)
 
 
 def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget: _WorkBudget):

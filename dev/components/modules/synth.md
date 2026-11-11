@@ -90,14 +90,15 @@ Bounded construction and independent labels for asserted guarded cases.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `SearchLimit` | class(Exception) | 27 | (no docstring) |
-| `UnsupportedShape` | class(Exception) | 31 | (no docstring) |
-| `Domain` | class | 36 | (no docstring) |
-| `Domain.accepts(self, value, budget) -> bool` | method | 40 | (no docstring) |
-| `Domain.draw(self, rng) -> Any` | method | 51 | (no docstring) |
-| `Candidate` | class | 62 | (no docstring) |
-| `charge(budget, count) -> None` | function | 67 | (no docstring) |
-| `build_pair(model, index, rule, rng, budget)` | function | 195 | Return an independently evaluated failure and active pass, or a reason. |
+| `SearchLimit` | class(Exception) | 38 | (no docstring) |
+| `UnsupportedShape` | class(Exception) | 42 | (no docstring) |
+| `Domain` | class | 47 | (no docstring) |
+| `Domain.accepts(self, value, budget) -> bool` | method | 51 | (no docstring) |
+| `Domain.draw(self, rng) -> Any` | method | 62 | (no docstring) |
+| `Candidate` | class | 73 | (no docstring) |
+| `charge(budget, count) -> None` | function | 78 | (no docstring) |
+| `confirmation_work(pair, guards, budget)` | function | 204 | Charge an upper bound on the checker's guarded joins. |
+| `build_pair(model, index, rule, rng, budget)` | function | 218 | Return an independently evaluated failure and active pass, or a reason. |
 
 ## gnd.synth.guarded_service — `src/gnd/synth/guarded_service.py`
 Components: synth.service

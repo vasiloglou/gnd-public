@@ -64,6 +64,9 @@ def test_guarded_pairs_and_ordinary_corpus(tmp_path):
         if rule["rule_id"] != "comparison":
             assert antecedent_rows[0] == antecedent_rows[1]
             assert [row["area"] for row in antecedent_rows[0]] == ["core"]
+    assert report["ordinary"]["omitted_guarded_refs"] == [
+        row["constraint_ref"] for row in report["rules"]
+    ]
     ordinary = out / "ordinary/corpus"
     index = json.loads((ordinary / "index.json").read_bytes())
     assert all(name in json.dumps(index) for name in expected["mixed"]["ordinary"])
@@ -194,10 +197,12 @@ def test_run_limit_preserves_a_served_pair(tmp_path, monkeypatch):
 
     model = load_model(EXAMPLE)
     index = ModelIndex.for_model(model)
-    first_rule = next(rule for _, rule, _ in index.iter_constraints() if rule["type"] == "guarded")
+    guards = [row for row in index.iter_constraints() if row[1]["type"] == "guarded"]
+    first_rule = guards[0][1]
     budget = _WorkBudget()
     pair, reason = guarded_cases.build_pair(model, index, first_rule, Random(0), budget)
     assert pair and reason is None
+    guarded_cases.confirmation_work(pair, guards, budget)
     monkeypatch.setattr(guarded_cases, "RUN_WORK", budget.used)
     out = tmp_path / "out"
     assert _guarded_run(EXAMPLE, out).returncode == 0
@@ -221,3 +226,67 @@ def test_guarded_case_invariant_failure_aborts_before_publication(tmp_path, monk
     assert result.returncode == 5
     assert b"injected case admission failure" in result.stdout
     assert not out.exists()
+
+
+def test_comparison_between_two_integer_variables_can_generate_equality(tmp_path):
+    document = YAML(typ="safe").load(EXAMPLE)
+    for object_type in document["object_types"]:
+        if object_type["id"] in {"area", "release"}:
+            object_type["primitive"] = "Integer"
+    rule = document["constraints"][0]
+    rule["antecedent"].append(
+        {
+            "fact_type": "component_ships_in_release",
+            "bind": {"component": "$c", "release": "$r"},
+        }
+    )
+    rule["consequent"] = {"comparison": {"operator": "=", "left": "$a", "right": "$r"}}
+    document["constraints"] = [rule]
+    model = tmp_path / "integer-model.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    out = tmp_path / "out"
+    assert _guarded_run(model, out).returncode == 0
+    result = json.loads((out / "guarded-cases.json").read_bytes())["rules"][0]
+    assert result["reason"] is None
+    assert [case["verdict"] for case in result["cases"]] == ["fail", "pass"]
+
+
+def test_explosive_collateral_guard_is_refused_before_checker(tmp_path, monkeypatch):
+    from gnd.synth import guarded_service
+
+    document = YAML(typ="safe").load(EXAMPLE)
+    target = document["constraints"][0]
+    target["antecedent"][0]["bind"]["area"] = "core"
+    target["consequent"] = {
+        "atom": {
+            "fact_type": "component_is_in_area",
+            "bind": {"component": "$c", "area": "extra"},
+        }
+    }
+    collateral = {
+        **deepcopy(target),
+        "id": "wide_collateral_join",
+        "antecedent": [
+            {"fact_type": "component_is_in_area", "bind": {"component": "$c", "area": f"$v{i}"}}
+            for i in range(18)
+        ],
+        "consequent": {"comparison": {"operator": "=", "left": "$v0", "right": "$v1"}},
+    }
+    document["constraints"] = [target, collateral]
+    model = tmp_path / "wide.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    original = guarded_service.check
+
+    def bounded_check(model, population):
+        assert len(population.facts.get("component_is_in_area", [])) < 2, (
+            "candidate allows 2**18 bindings in another guard"
+        )
+        return original(model, population)
+
+    monkeypatch.setattr(guarded_service, "check", bounded_check)
+    out = tmp_path / "out"
+    assert _guarded_run(model, out).returncode == 0
+    manifest = json.loads((out / "guarded-cases.json").read_bytes())
+    assert manifest["rules"][0]["reason"] == "search-limit"
+    assert manifest["rules"][0]["cases"] == []
+    assert (out / manifest["ordinary"]["corpus"] / "index.json").is_file()

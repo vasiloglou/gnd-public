@@ -133,3 +133,15 @@ Delegated approval under the [plan gate](../001-plan-gate.md).
 The [corpus brief](../corpus/GA1/README.md) and [answer key](../corpus/GA1/expected.json)
 pin the decisive outcomes. The shipped example reproduction establishes
 the red baseline. The red harness must precede implementation.
+
+## 12. Implementation findings
+
+The preceding approved spec is retained. These findings were appended during
+implementation.
+
+| Finding | Reproduction and disposition |
+|---|---|
+| Two wide integer domains made independent random draws miss equality. | The two-integer comparison test on the initial candidate yielded `search-limit`. Deliberate equal and ordered candidate pairs now exercise both sides of equality. |
+| A tiny target population could give a different guard an exponential join. | The collateral regression showed a two-row case entering checker confirmation against eighteen independent variable positions. Both cases now pass a charged upper-bound check before checker entry. |
+| The YAML event guard can raise a parser exception before the model loader normalizes it. | The malformed fixture reproduced a traceback. The route returns exit 3 and leaves the destination absent. |
+| The new format must emit a single JSON document even when ordinary synthesis runs. | The ordinary lane now receives a JSON payload sink. The guarded manifest owns the only public response. |

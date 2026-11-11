@@ -103,7 +103,9 @@ consequents share an antecedent assignment across the two cases. Comparison
 cases can use different values for the same antecedent roles. Models may
 contain up to 128 constraints and 256 fact types. Each guard gets up to 128
 attempts and 100,000 construction and evaluation visits, with 1,000,000
-visits shared across the run.
+visits shared across the run. Before calling the checker, synthesis charges
+an upper bound on the guarded joins in each candidate.
+A pair that exceeds this bound is reported as `search-limit`.
 
 The output root contains `guarded-cases.json` (schema
 `gnd-guarded-cases/1`). It records the validated source model digest
@@ -124,7 +126,8 @@ An unserved rule has an empty case array and one of these reasons.
 
 The manifest's `ordinary` entry describes the ordinary `--class all` corpus,
 its scoped model, both model digests and a map from original to scoped
-constraint references. Run measure with the scoped model.
+constraint references. The entry lists omitted guarded references in
+`omitted_guarded_refs`. Run measure with the scoped model.
 
 ```sh
 gnd measure guarded-examples/ordinary/scoped.orm.yaml \

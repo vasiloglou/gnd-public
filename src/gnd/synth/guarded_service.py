@@ -148,7 +148,14 @@ def run_guarded_cases(model_path, out, seed, output_format, synth):
 
     try:
         model = load_model(model_path)
-    except (OSError, ModelLoadError, ModelValidationError, ReferenceInputError, UnicodeDecodeError, YAMLError) as error:
+    except (
+        OSError,
+        ModelLoadError,
+        ModelValidationError,
+        ReferenceInputError,
+        UnicodeDecodeError,
+        YAMLError,
+    ) as error:
         return result(EXIT_ILL_FORMED, error=str(error))
     index = ModelIndex.for_model(model)
     covers = list(index.role_object_types())
@@ -166,10 +173,9 @@ def run_guarded_cases(model_path, out, seed, output_format, synth):
     remaining = guarded_cases.RUN_WORK
     root = transaction.stage_root
     rules = []
+    guards = [row for row in constraints if row[1]["type"] == "guarded"]
     try:
-        for ref, rule, fact_type in constraints:
-            if rule["type"] != "guarded":
-                continue
+        for ref, rule, fact_type in guards:
             cases = []
             row = {"rule_id": rule.get("id"), "constraint_ref": ref, "cases": cases, "reason": None}
             position = len(rules)
@@ -184,6 +190,11 @@ def run_guarded_cases(model_path, out, seed, output_format, synth):
             else:
                 budget = _WorkBudget(limit=min(remaining, guarded_cases.GUARD_WORK))
                 pair, row["reason"] = guarded_cases.build_pair(model, index, rule, rng, budget)
+                if pair is not None:
+                    try:
+                        guarded_cases.confirmation_work(pair, guards, budget)
+                    except guarded_cases.SearchLimit:
+                        pair, row["reason"] = None, "search-limit"
                 remaining -= budget.used
             if pair is None:
                 continue
@@ -224,6 +235,7 @@ def run_guarded_cases(model_path, out, seed, output_format, synth):
             ordinary, code = {"reason": "reference-populations-unsupported"}, 0
         else:
             ordinary, code = _ordinary_corpus(model, constraints, root, seed, synth)
+        ordinary["omitted_guarded_refs"] = [ref for ref, _, _ in guards]
         if code == EXIT_QUARANTINE:
             move(root / "ordinary/corpus/quarantine", root / "quarantine")
             relative = "quarantine/ordinary.json"

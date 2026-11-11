@@ -226,7 +226,8 @@ def test_target_only_contributor_lifecycle(installed):
 
 # The wheel PyPI serves for the published 0.1.0, historical data like RELEASED in
 # tests/test_release_version.py: the negative control installs exactly this file.
-PUBLISHED_WHEEL_SHA256 = {'0.1.0': 'cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183'}
+PUBLISHED_WHEEL_SHA256 = {'0.1.0': 'cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183',
+                          '0.2.0': 'e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4'}
 MODEL, HEAD, BASE, FIXED = (f'catalog/{n}' for n in [
     'model.orm.yaml', 'head.population.yaml', 'base.population.yaml', 'fixed.population.yaml'])
 REMEDIES = {
@@ -438,3 +439,188 @@ def test_published_0_1_0_lacks_rule_check(installed, published_0_1_0, tmp_path):
     assert sorted(published, key=str) == sorted(current, key=str)
     (cycle,) = acyclic_verdict(reports[0])['offending_facts']
     assert acyclic_verdict(reports[1])['offending_facts'] == [cycle] and cycle[0] == cycle[-1]
+
+
+# -- release-0.3.0 RN2: what 0.3.0 adds, from the installed wheel (probes Q1 to Q5) --
+
+ACCEPTANCE_INPUTS = 'tests/fixtures/release-acceptance/0.3.0'
+OSSIE_FILES = ['gnd/schema/ossie/PINNED.json', 'gnd/schema/ossie/core-spec.json',
+               'gnd/schema/ossie/ontology.json', 'gnd/ossie-loss-report.schema.json']
+Q4_PREVIEW = ['evolve', 'preview', 'model.orm.yaml', 'proposal.json', '--workspace', '.',
+              '--records', 'records', '--format', 'json', '--policy', 'additive',
+              '--populated', 'customer_places_order']
+SPANS_UNCHECKED = '1 of 10 source spans were not re-hashed'
+YAML_TO_JSON = ('import json,sys; from ruamel.yaml import YAML; '
+                "print(json.dumps(YAML(typ='safe').load(open(sys.argv[1], encoding='utf-8'))))")
+
+
+@pytest.fixture(scope='module')
+def published_0_2_0(tmp_path_factory):
+    """The PyPI 0.2.0 wheel, hash-checked and installed in a fresh venv outside the checkout."""
+    outside = tmp_path_factory.mktemp('published-0.2.0').resolve()
+    env = {k: v for k, v in os.environ.items()
+           if k in {'PATH', 'SYSTEMROOT', 'TMPDIR', 'LANG', 'LC_ALL'}}
+    env.update(HOME=str(outside / 'home'), PYTHONNOUSERSITE='1')
+    Path(env['HOME']).mkdir()
+    with urllib.request.urlopen('https://pypi.org/pypi/get-nick-done/0.2.0/json', timeout=60) as response:
+        (item,) = [u for u in json.load(response)['urls'] if u['packagetype'] == 'bdist_wheel']
+    with urllib.request.urlopen(item['url'], timeout=60) as response:
+        body = response.read()
+    assert hashlib.sha256(body).hexdigest() == PUBLISHED_WHEEL_SHA256['0.2.0'], item['url']
+    wheel = outside / item['filename']
+    wheel.write_bytes(body)
+    venv = outside / 'venv'
+    run(['uv', 'venv', '--python', sys.executable, venv], outside, env)
+    run(['uv', 'pip', 'install', '--python', venv / 'bin/python', wheel], outside, env)
+    return venv / 'bin/python', env
+
+
+def copy_packaged(python, prefix, env, work, relative, name):
+    """Copy one file or directory of the installed gnd package into work/name."""
+    program = ('import shutil,sys; from importlib.resources import files; '
+               "source = files('gnd').joinpath(*sys.argv[1].split('/')); "
+               '(shutil.copytree if source.is_dir() else shutil.copyfile)(str(source), sys.argv[2])')
+    run([*prefix, python, '-I', '-c', program, relative, work / name], work, env)
+    return work / name
+
+
+def acceptance_inputs(python, prefix, env, checkout, work):
+    """The probe inputs: packaged examples from the wheel, corpus copies from the tracked checkout."""
+    work.mkdir(parents=True, exist_ok=True)
+    (work / 'q1').mkdir()
+    copy_packaged(python, prefix, env, work, 'examples/refunds/model.orm.yaml', 'q1/model.orm.yaml')
+    copy_packaged(python, prefix, env, work, 'examples/expense/teams', 'q3')
+    for name in ('q4', 'q5'):
+        shutil.copytree(checkout / ACCEPTANCE_INPUTS / name, work / name)
+    (work / 'q4/records').mkdir()
+    return work
+
+
+def identity(result):
+    """The digest `gnd validate --identity` printed, checked against the document it printed."""
+    first, second = result.stdout.splitlines()
+    match = re.fullmatch(r'MODEL IDENTITY (sha256:[0-9a-f]{64}) \(identity_version 2\)', first)
+    assert match, first
+    assert match.group(1) == 'sha256:' + hashlib.sha256((second + '\n').encode('utf-8')).hexdigest()
+    return match.group(1)
+
+
+def test_installed_0_3_0_carries(candidate, installed, tmp_path):
+    _outside, checkout, python, wheel, env, prefix = installed
+    version = declared_version(checkout)
+    assert version == '0.3.0', 'these probes describe 0.3.0; a later version writes its own'
+    # The installed package is the declared version, before any probe input is touched.
+    assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {version}'
+    work = acceptance_inputs(python, prefix, env, checkout, tmp_path / 'work')
+
+    def new(cwd, *args, expected):
+        return gnd(python, prefix, env, work / cwd, *args, expected=expected)
+
+    # The Ossie schemas are package data; a wheel without them breaks only when installed.
+    with zipfile.ZipFile(wheel) as archive:
+        names = set(archive.namelist())
+    assert set(OSSIE_FILES) <= names, sorted(set(OSSIE_FILES) - names)
+
+    # Q1: an Ossie export writes three files, and an import with its sidecar restores the model.
+    q1 = work / 'q1'
+    new('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'o.yaml', expected=0)
+    assert sorted(p.name for p in q1.iterdir()) == ['model.orm.yaml', 'o.yaml', 'o.yaml.gnd.json', 'o.yaml.loss.json']
+    # The exported YAML itself, read by the YAML library the wheel depends on (review G2).
+    concepts = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON, 'o.yaml'], q1, env))['ontology']
+    (refund_by,) = [r for c in concepts for r in c.get('relationships', ()) if r['name'] == 'refund_by']
+    assert refund_by['multiplicity'] == 'ManyToOne'
+    # The two companion files carry the schema names the format reference gives them (review G7).
+    assert json.loads((q1 / 'o.yaml.gnd.json').read_text(encoding='utf-8'))['schema'] == 'gnd-ossie-sidecar/1'
+    assert json.loads((q1 / 'o.yaml.loss.json').read_text(encoding='utf-8'))['schema'] == 'gnd-ossie-loss/1'
+    new('q1', 'import', 'ossie', 'o.yaml', '--out', 'restored.orm.json', expected=0)
+    report = json.loads((q1 / 'restored.orm.json.loss.json').read_text(encoding='utf-8'))
+    assert report['source_identity_verified'] is True
+    # Q1 control: the sidecar binds the ontology's bytes, so a changed ontology is refused and nothing is written.
+    edit(q1 / 'o.yaml', 'name: refund_by', 'name: refund_bx', q1 / 'changed.yaml')
+    for suffix in ('.gnd.json', '.loss.json'):
+        shutil.copyfile(q1 / ('o.yaml' + suffix), q1 / ('changed.yaml' + suffix))
+    refused = new('q1', 'import', 'ossie', 'changed.yaml', '--out', 'changed.orm.json', expected=3)
+    assert 'ossie-import:' in refused.stderr   # the reference names the form, not each rule (review G7)
+    assert not (q1 / 'changed.orm.json').exists() and not (q1 / 'changed.orm.json.loss.json').exists()
+
+    # Q2: the identity is the sha256 of the document printed with it, and it is the one the import reported.
+    refunds = identity(new('q1', 'validate', 'model.orm.yaml', '--identity', expected=0))
+    assert report['source_model_identity'] == refunds
+    # The restored file is a model with the source's identity, measured here and not taken
+    # from the import's own report (review G3).
+    assert identity(new('q1', 'validate', 'restored.orm.json', '--identity', expected=0)) == refunds
+    # Q2 controls: a renamed object type and a changed rule each move the identity (review G4).
+    edit(q1 / 'model.orm.yaml', 'name: Refund\n', 'name: RefundX\n', q1 / 'renamed.orm.yaml')
+    edit(q1 / 'model.orm.yaml', 'right: 1000 }', 'right: 5 }', q1 / 'limit.orm.yaml')
+    moved = {identity(new('q1', 'validate', name, '--identity', expected=0))
+             for name in ('renamed.orm.yaml', 'limit.orm.yaml')}
+    assert len(moved) == 2 and refunds not in moved
+
+    # Q3: a version 5 model with a pinned include validates; a wrong pin is refused.
+    assert 'OK: sales.orm.json is a valid GND ORM model' in new('q3', 'validate', 'sales.orm.json', expected=0).stdout
+    sales = json.loads((work / 'q3/sales.orm.json').read_text(encoding='utf-8'))
+    assert sales['version'] == 5 and len(sales['includes']) == 1
+    edit(work / 'q3/sales.orm.json', sales['includes'][0]['sha256'], '0' * 64, work / 'q3/badpin.orm.json')
+    wrong = json.loads(new('q3', 'validate', 'badpin.orm.json', '--format', 'json', expected=3).stdout)
+    assert [(i['path'], i['rule_id']) for i in wrong['issues']] == [('$.includes[0]', 'include:hash-mismatch')]
+
+    # Q4: under the additive policy a new rule on a populated fact type is refused, admitted
+    # on a population that satisfies it, and refused on one that violates it (UG2 cases C01, C03).
+    def preview(name, *extra, expected):
+        new('q4', *Q4_PREVIEW, '--out', name, *extra, expected=expected)
+        return json.loads((work / 'q4' / name).read_text(encoding='utf-8'))
+
+    plain = preview('plain.json', expected=3)
+    assert [(i['operation_index'], i['cell']) for i in plain['policy_issues']] == [(0, 'constraint.populated.add')]
+    clean = preview('clean.json', '--check-population', 'populations/clean.json', expected=0)
+    assert clean['policy_issues'] == []
+    assert [row['operation_index'] for row in clean['population_check']['admitted']] == [0]
+    violating = preview('violating.json', '--check-population', 'populations/violating.json', expected=3)
+    assert [(i['operation_index'], i['cell']) for i in violating['policy_issues']] == [(0, 'constraint.populated.add')]
+    assert violating['population_check']['admitted'] == []
+
+    # Q5: an unchecked source span is a warning, and an error under --require-documents (UG3 cases A2a, A3, A4).
+    def spans(*extra, expected):
+        return json.loads(new('q5', 'validate', 'model.orm.yaml', '--document', 'ledger.txt', *extra,
+                              '--format', 'json', expected=expected).stdout)
+
+    warned = spans(expected=0)
+    assert [(w['rule_id'], w['severity']) for w in warned['warnings']] == [('unattended:spans-unchecked', 'warning')]
+    assert SPANS_UNCHECKED in warned['warnings'][0]['message'] and warned['issues'] == []
+    required = spans('--require-documents', expected=3)
+    assert [(i['rule_id'], i['path']) for i in required['issues']] == [('unattended:spans-unchecked', '$.source.documents')]
+    assert SPANS_UNCHECKED in required['issues'][0]['message']
+    covered = spans('--document', 'annex.txt', '--require-documents', expected=0)
+    assert covered['issues'] == [] and covered['warnings'] == []
+
+
+def test_published_0_2_0_lacks_0_3_0_features(installed, published_0_2_0, tmp_path):
+    _outside, checkout, python, _wheel, env, prefix = installed
+    old_python, old_env = published_0_2_0
+    work = acceptance_inputs(python, prefix, env, checkout, tmp_path / 'work')
+
+    def old(cwd, *args, expected):
+        return gnd(old_python, prefix, old_env, work / cwd, *args, expected=expected)
+
+    assert old('.', '--version', expected=0).stdout.strip() == 'gnd 0.2.0'
+    # Q1: both Ossie commands are new.
+    assert "invalid choice: 'ossie'" in old('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'o.yaml', expected=64).stderr
+    assert "invalid choice: 'ossie'" in old('q1', 'import', 'ossie', 'o.yaml', '--out', 'r.json', expected=64).stderr
+    assert sorted(p.name for p in (work / 'q1').iterdir()) == ['model.orm.yaml']
+    # Q2: --identity is new.
+    assert 'unrecognized arguments: --identity' in old('q1', 'validate', 'model.orm.yaml', '--identity', expected=64).stderr
+    # Q3: model format version 5 is new, as the 0.3.0 notes say: 0.2.0 refuses the version.
+    refused = json.loads(old('q3', 'validate', 'sales.orm.json', '--format', 'json', expected=3).stdout)
+    assert any(i['path'] == '$.version' and i['message'] == '5 is not one of [1, 2, 3, 4]'
+               for i in refused['issues']), refused['issues']
+    # Q4: --check-population is new; the refusal it lifts is not.
+    assert 'unrecognized arguments: --check-population' in old(
+        'q4', *Q4_PREVIEW, '--out', 'clean.json', '--check-population', 'populations/clean.json', expected=64).stderr
+    old('q4', *Q4_PREVIEW, '--out', 'plain.json', expected=3)
+    plain = json.loads((work / 'q4/plain.json').read_text(encoding='utf-8'))
+    assert [i['cell'] for i in plain['policy_issues']] == ['constraint.populated.add']
+    # Q5: --require-documents and the unchecked-span count are new.
+    assert 'unrecognized arguments: --require-documents' in old(
+        'q5', 'validate', 'model.orm.yaml', '--document', 'ledger.txt', '--require-documents', expected=64).stderr
+    silent = old('q5', 'validate', 'model.orm.yaml', '--document', 'ledger.txt', '--format', 'json', expected=0)
+    assert 'spans-unchecked' not in silent.stdout + silent.stderr

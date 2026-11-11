@@ -1,0 +1,49 @@
+{
+  "artifacts": [],
+  "audit": {
+    "actor_id": "owner:fixture",
+    "origin": "test_evolve_population_check",
+    "requested_at": "2026-11-09T12:00:00Z"
+  },
+  "candidate_model": {
+    "encoding": "utf-8",
+    "media_type": "application/yaml",
+    "sha256": "f8df522aac5529749aef4ae5f973e42af9572c19572f0483c6ace7c92e7726fd",
+    "text": "{\"version\":1,\"model_id\":\"ug2-orders\",\"source\":{\"kind\":\"fixture\"},\"object_types\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"customer_id\"}},{\"id\":\"customer_id\",\"name\":\"CustomerId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"order\",\"name\":\"Order\",\"kind\":\"entity\",\"reference\":{\"mode\":\"popular\",\"value_type\":\"order_id\"}},{\"id\":\"order_id\",\"name\":\"OrderId\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"amount\",\"name\":\"Amount\",\"kind\":\"value\",\"primitive\":\"Integer\"},{\"id\":\"channel\",\"name\":\"Channel\",\"kind\":\"value\",\"primitive\":\"String\"},{\"id\":\"memo\",\"name\":\"Memo\",\"kind\":\"value\",\"primitive\":\"String\"}],\"fact_types\":[{\"id\":\"customer_places_order\",\"reading\":\"{Customer} places {Order}\",\"roles\":[{\"object_type\":\"customer\",\"role_name\":\"customer\"},{\"object_type\":\"order\",\"role_name\":\"order\"}],\"constraints\":[{\"type\":\"value\",\"object_type\":\"order\",\"role_ref\":{\"fact_type\":\"customer_places_order\",\"role\":\"order\"},\"range\":{\"min\":1,\"max\":1000},\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"Order numbers are small positive integers.\",\"provenance\":{\"rationale_world_fact\":\"Order numbers are assigned sequentially from one.\"}},{\"type\":\"uniqueness\",\"roles\":[\"order\"],\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"Each order is placed by one customer.\",\"provenance\":{\"rationale_world_fact\":\"An order has one buyer.\"}}]},{\"id\":\"order_has_amount\",\"reading\":\"{Order} has {Amount}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"amount\",\"role_name\":\"amount\"}],\"constraints\":[{\"type\":\"value\",\"object_type\":\"amount\",\"role_ref\":{\"fact_type\":\"order_has_amount\",\"role\":\"amount\"},\"range\":{\"min\":0,\"max\":1000},\"source\":\"llm-inferred\",\"status\":\"proposed\",\"modality\":\"deontic\",\"rationale\":\"Amounts are non-negative and bounded.\",\"provenance\":{\"rationale_world_fact\":\"Retail amounts are bounded.\"}}]},{\"id\":\"order_has_memo\",\"reading\":\"{Order} has {Memo}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"memo\",\"role_name\":\"memo\"}]},{\"id\":\"order_has_channel\",\"reading\":\"{Order} arrives by {Channel}\",\"roles\":[{\"object_type\":\"order\",\"role_name\":\"order\"},{\"object_type\":\"channel\",\"role_name\":\"channel\"}],\"sample_population\":[{\"order\":10,\"channel\":\"web\"},{\"order\":11,\"channel\":\"phone\"}],\"provenance\":{\"rationale\":\"Two rows seen in the first extraction round.\"}}]}\n"
+  },
+  "expected_model_sha256": "1a8db33084817e9e418b4fb06d9ac08bfc6876d460fb1b9e908639cdaecae314",
+  "linked_projects": [],
+  "operations": [
+    {
+      "after": {
+        "modality": "deontic",
+        "provenance": {
+          "rationale_world_fact": "An order has one buyer."
+        },
+        "rationale": "Each order is placed by one customer.",
+        "roles": [
+          "order"
+        ],
+        "source": "llm-inferred",
+        "status": "proposed",
+        "type": "uniqueness"
+      },
+      "after_sha256": "8ef44a3ea4a76844345b20d85d42d0ba99c5fede8991ccbb8b532c30f4dc7fa7",
+      "before": null,
+      "before_sha256": null,
+      "kind": "add",
+      "locator": {
+        "canonical_before_sha256": null,
+        "duplicate_occurrence": 0,
+        "family": "uniqueness",
+        "host": "fact_type",
+        "host_id": "customer_places_order",
+        "locator_kind": "constraint"
+      },
+      "operation_id": "op-0"
+    }
+  ],
+  "proposal_id": "ug2-c01",
+  "rationale": "UG2 corpus case.",
+  "schema_version": 3
+}

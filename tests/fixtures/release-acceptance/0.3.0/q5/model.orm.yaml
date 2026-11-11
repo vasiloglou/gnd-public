@@ -1,0 +1,91 @@
+# UG3 corpus, part A. Two declared documents; the annex is cited by one ELEMENT span
+# (fact type customer_listed). Every other span cites ledger.txt.
+version: 1
+model_id: ug3-span-element
+source:
+  kind: prose
+  mode: unattended
+  reviewer: none
+  documents:
+  - {sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, label: ledger.txt}
+  - {sha256: 69897fa97fa34393398757221b81b99c4fad230ffc46c28cd1dd8d088061d5e4, label: annex.txt}
+object_types:
+- id: customer
+  name: Customer
+  kind: entity
+  reference: {mode: popular, value_type: customer_no}
+  provenance:
+    spans:
+    - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 31, end: 40, excerpt_sha256: 21eb2153dd1483cd67a621fb2c7b2f65b2ca46c64a49e49be4b939a1f0c844f8}
+- id: customer_no
+  name: CustomerNo
+  kind: value
+  primitive: Integer
+  provenance:
+    spans:
+    - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 112, end: 122, excerpt_sha256: 7ec17d2e9ee4f734690133c8fec7337293b0e6806c671e6c7b52115040a64429}
+- id: order
+  name: Order
+  kind: entity
+  reference: {mode: popular, value_type: order_no}
+  provenance:
+    spans:
+    - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 45, end: 51, excerpt_sha256: 1c168adb00d208e42f93314529f1fa9c0427eb63233ceda95a5db52b7012a719}
+- id: order_no
+  name: OrderNo
+  kind: value
+  primitive: Integer
+  provenance:
+    spans:
+    - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 89, end: 97, excerpt_sha256: f233406be2691f49576332ee729e162f2ac42058fee6dd7b017acfc13759d4a0}
+fact_types:
+- id: order_placed_by_customer
+  reading: '{Order} is placed by {Customer}'
+  roles:
+  - {object_type: order, role_name: order}
+  - {object_type: customer, role_name: customer}
+  sample_population:
+  - {order: 10, customer: 1}
+  - {order: 11, customer: 2}
+  provenance:
+    spans:
+    - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 53, end: 88, excerpt_sha256: f12c031e779715b7c8dcd98788ddef673f64e858e7d428f76382095b13b88dd7}
+    sample_spans:
+    - row: 0
+      span: {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 89, end: 123, excerpt_sha256: d2ad43151733e3f82dd1851dbfa883fd2aa2708795d6843b002b9b7d12806abc}
+    - row: 1
+      span: {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 124, end: 158, excerpt_sha256: 1a38a1f25c55db72d5b8b17da30efa7cb4707293e4fed3641f90c7fee8c67ad0}
+  constraints:
+  - type: uniqueness
+    roles: [order]
+    source: llm-inferred
+    status: proposed
+    modality: deontic
+    rationale: The text says an order has one placing customer.
+    provenance:
+      rationale_world_fact: An order has one placing customer.
+      spans:
+      - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 159, end: 193, excerpt_sha256: 245df4e11a9a12dfd3312633517d3a3ecd2d63396391d98100ca4c3369c6892e}
+  - type: mandatory
+    role: order
+    source: sample
+    status: proposed
+    modality: deontic
+    rationale: Every sampled order has a placing customer.
+    provenance:
+      spans:
+      - {document_sha256: 6cec7fe354bc7c620fccfeece167c43dec11096669d934a54ce5ef8fffd155e8, start: 53, end: 88, excerpt_sha256: f12c031e779715b7c8dcd98788ddef673f64e858e7d428f76382095b13b88dd7}
+  - type: mandatory
+    role: customer
+    source: common-sense
+    status: proposed
+    modality: deontic
+    rationale: A ledger customer is recorded because they placed something.
+    provenance: {library_entry: ledger-party-participates}
+- id: customer_listed
+  reading: '{Customer} is listed'
+  roles:
+  - {object_type: customer, role_name: customer}
+  provenance:
+    spans:
+    - {document_sha256: 69897fa97fa34393398757221b81b99c4fad230ffc46c28cd1dd8d088061d5e4, start: 97, end: 132, excerpt_sha256: 4dbbe1a905e7195159860a8f5ad984cdf733cc72a27c86e71450c78d64714809}

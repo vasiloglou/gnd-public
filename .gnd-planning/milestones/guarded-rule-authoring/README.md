@@ -11,9 +11,11 @@ The owner selected all three follow-ups on 2026-11-11 after the
 
 [Plan](notes/guarded-rule-authoring-plan.md) · [GA1 spec](notes/phase-GA1-spec.md) · [GA1 result](003-phase-GA1.md)
 
-The delegated plan gate and all three phase gates are recorded. The
-standard close panel follows the final impact run.
+The delegated milestone close is recorded after all three phase gates
+and the standard plan and close panels.
 
 [GA2 spec](notes/phase-GA2-spec.md) · [GA2 result](005-phase-GA2.md)
 
 [GA3 spec](notes/phase-GA3-spec.md) · [GA3 result](007-phase-GA3.md)
+
+[Milestone close](008-milestone-close.md) · [Draft PR #190](https://github.com/vasiloglou/gnd-public/pull/190)

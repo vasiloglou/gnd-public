@@ -1,0 +1,34 @@
+{
+  "source_commit": "618141de9975c4ef30871a979532654267a15de6",
+  "clean_before_and_after": true,
+  "ignored_files_under_src": 0,
+  "observed_rebuild_argv": [
+    "uv",
+    "build",
+    "--wheel",
+    "--offline",
+    "--out-dir",
+    "rebuild",
+    "source"
+  ],
+  "rebuild_sha256": "a04ca98ca3044ee4e870e435d0274c01637ee31c35cecdf7907d3ae434f9dab5",
+  "installed_payloads": {
+    "base_only": {
+      "distribution": "get-nick-done",
+      "version": "0.3.0",
+      "matched_wheel_entries": 1145,
+      "wheel_sha256": "a04ca98ca3044ee4e870e435d0274c01637ee31c35cecdf7907d3ae434f9dab5"
+    },
+    "synth_extra": {
+      "distribution": "get-nick-done",
+      "version": "0.3.0",
+      "matched_wheel_entries": 1145,
+      "wheel_sha256": "a04ca98ca3044ee4e870e435d0274c01637ee31c35cecdf7907d3ae434f9dab5"
+    }
+  },
+  "executed_scripts": {
+    "candidate_installed_smoke_sha256": "1fecbf1beb95dbc9ada445ee02c9630607a67dbc59bcda1317dd27e5c557d66c",
+    "verify_installed_sha256": "83da7111ebc0a7a7969d7e7d3e35b20aa3a3b15a93f31a3c4e32accb4c194665"
+  },
+  "isolated_model_sha256": "286b51710381af6cddec075e907437073a5ae05f07d8945d1eb3d48cc96ab872"
+}

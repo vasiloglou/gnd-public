@@ -9,7 +9,7 @@ The owner selected all three follow-ups on 2026-11-11 after the
 | GA2 | [GR-D10](https://github.com/vasiloglou/gnd-public/issues/181) | Discover guarded rules from joined facts |
 | GA3 | [GR-D11](https://github.com/vasiloglou/gnd-public/issues/182) | Import and verify typed constants in mined rules |
 
-[Plan](notes/guarded-rule-authoring-plan.md) · [GA1 draft spec](notes/phase-GA1-spec.md)
+[Plan](notes/guarded-rule-authoring-plan.md) · [GA1 spec](notes/phase-GA1-spec.md) · [GA1 result](003-phase-GA1.md)
 
 Scope approved. The plan and first-phase draft await the milestone's
 review and implementation gates.

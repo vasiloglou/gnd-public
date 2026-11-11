@@ -22,6 +22,15 @@ hide:
 <figcaption class="caption">You ask for a payment. The agent answers with a plan: operations over the model, not prose. GND checks the plan, names the precondition that failed, and the agent resubmits a plan that passes. <a href="agents/plans.md">Run this example yourself →</a> · <a href="tutorials/course-planner.md">Build an app like it, with real recorded sessions →</a></figcaption>
 </figure>
 
+## Share and reuse ontologies with Apache Ossie
+
+GND imports and exports Apache Ossie ontology files. Start a GND model
+from an ontology your team already uses, or share your GND model's business
+concepts and relationships with another team or tool.
+
+[See what GND carries across](explanation/ossie.md) ·
+[Try it with the refunds model](how-to/share-an-ossie-ontology.md)
+
 ## How it works
 
 <div class="steps" markdown>

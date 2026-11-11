@@ -724,7 +724,7 @@ Bounded, offline import of the pinned Apache Ossie ontology dialect.
 | --- | --- | --- | --- |
 | `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
 | `OssieImportResult` | class | 58 | (no docstring) |
-| `plan_ossie_import(path) -> OssieImportResult` | function | 622 | Admit one standalone ontology or bound bundle without network access. |
+| `plan_ossie_import(path) -> OssieImportResult` | function | 647 | Admit one standalone ontology or bound bundle without network access. |
 
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output

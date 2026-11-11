@@ -181,8 +181,8 @@ class _NameGraph:
             raise OssieImportError("cycle") from None
         self._budget = max(2_048, 32 * (len(components) + sum(map(len, self.parents.values()))))
         self._cache = {}
-        for name, concept in self.concepts.items():
-            for identifier in concept.get("identify_by", ()):
+        for name in self.order:
+            for identifier in self.concepts[name].get("identify_by", ()):
                 if self.resolve(name, identifier) is None:
                     raise OssieImportError("reference")
 
@@ -202,6 +202,12 @@ class _NameGraph:
             if self._budget < 0:
                 raise OssieImportError("reference-budget")
             seen.add(current)
+            cached = (current, relationship)
+            if cached in self._cache:
+                if self._cache[cached] is not None:
+                    found = self._cache[cached]
+                    break
+                continue
             local = self.relationships.get(current, {})
             if relationship in local:
                 found = (current, local[relationship])
@@ -284,18 +290,30 @@ def _source_dispositions(report, retained):
         ]
     rows = report["dispositions"]
     seen = set()
+    refused = {}
     for row in rows:
         path = row["pointer"]
-        _tokens(path)
-        if path in seen or ((path in retained) == (row["disposition"] == "refused")):
+        parts = _tokens(path)
+        is_refused = row["disposition"] == "refused"
+        if path in seen or ((path in retained) == is_refused):
             raise OssieImportError("report-pointer")
         seen.add(path)
+        if is_refused:
+            refused[path] = parts
     if retained - seen:
         raise OssieImportError("report-pointer")
+    for path, parts in refused.items():
+        population_root = parts == ("reference_populations",) or (
+            len(parts) == 3 and parts[0] == "fact_types"
+            and _INDEX.fullmatch(parts[1]) and parts[2] == "sample_population"
+        )
+        parent = path.rsplit("/", 1)[0]
+        if parent not in (retained if population_root else refused):
+            raise OssieImportError("report-pointer")
     return rows
 
 
-def _bounded_model(document, expected_identity=None) -> bytes:
+def _bounded_model(document, source_identity, *, require_identity: bool) -> tuple[bytes, bool]:
     encoder = json.JSONEncoder(
         ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")
     )
@@ -316,14 +334,15 @@ def _bounded_model(document, expected_identity=None) -> bytes:
         admitted = load_model_bytes(data, source="restored.orm.json")
     except (ModelLoadError, ModelValidationError, ValueError, RecursionError, OverflowError):
         raise OssieImportError("model") from None
-    if expected_identity is not None:
+    identity_verified = False
+    if source_identity is not None:
         try:
-            restored_identity = model_identity(admitted)
+            identity_verified = model_identity(admitted) == source_identity
         except ModelIdentityError:
             raise OssieImportError("model-identity") from None
-        if restored_identity != expected_identity:
+        if require_identity and not identity_verified:
             raise OssieImportError("model-identity")
-    return data
+    return data, identity_verified
 
 
 class _Identifiers:
@@ -429,7 +448,12 @@ def _concepts(graph, ids, digest, projected):
     return available, used_builtins
 
 
-def _foreign_reading(text, source_roles, ids):
+def _foreign_reading(readings, source_roles, ids):
+    if not readings:
+        raise OssieImportError("reading")
+    text = readings[0]
+    if re.search(r"[{}]", _ROLE_TOKEN.sub("", text)):
+        raise OssieImportError("reading")
     positions = defaultdict(list)
     for i, pair in enumerate(source_roles):
         positions[pair].append(i)
@@ -459,7 +483,7 @@ def _foreign_fact(owner, relationship, ids, available, names, digest, path, proj
     if any(concept not in available for concept, _ in source_roles):
         return None
     try:
-        reading, order = _foreign_reading(relationship["verbalizes"][0], source_roles, ids)
+        reading, order = _foreign_reading(relationship["verbalizes"], source_roles, ids)
     except OssieImportError:
         return None
     roles = _Identifiers()
@@ -538,7 +562,7 @@ def _foreign_identifiers(graph, ids, available, projected):
                 if available.get(player, {}).get("kind") == "value":
                     try:
                         _foreign_reading(
-                            relationship["verbalizes"][0], [(name, None), (player, roles[0].get("name"))], ids
+                            relationship["verbalizes"], [(name, None), (player, roles[0].get("name"))], ids
                         )
                     except OssieImportError:
                         pass
@@ -595,13 +619,14 @@ def _foreign(document, graph, digest):
     return result, _foreign_rows(document, projected)
 
 
-def _loss_report_bytes(digest, source_identity, rows) -> bytes:
+def _loss_report_bytes(digest, source_identity, identity_verified, rows) -> bytes:
     # Serialize each row once and cap the total before a foreign tree can
     # amplify to a large report through repeated pointer prefixes.
     empty = canonical_json_bytes({
         "schema": "gnd-ossie-import-loss/1",
         "document_sha256": digest,
         "source_model_identity": source_identity,
+        "source_identity_verified": identity_verified,
         "dispositions": [],
     })
     prefix, _, suffix = empty.partition(b'"dispositions":[]')
@@ -629,7 +654,7 @@ def plan_ossie_import(path: Path) -> OssieImportResult:
     digest = hashlib.sha256(raw).hexdigest()
     sidecar_raw = _read(path.with_name(path.name + ".gnd.json"), "sidecar-input", optional=True)
     source_identity = None
-    expected_identity = None
+    require_identity = False
     if sidecar_raw is None:
         model, rows = _foreign(ontology, graph, digest)
     else:
@@ -644,7 +669,8 @@ def plan_ossie_import(path: Path) -> OssieImportResult:
                 raise OssieImportError("report-binding")
         model, retained = _restore(sidecar, ontology)
         rows = _source_dispositions(report, retained)
-        if report is not None and all(row["disposition"] != "refused" for row in rows):
-            expected_identity = source_identity
-    model_bytes = _bounded_model(model, expected_identity)
-    return OssieImportResult(model_bytes, _loss_report_bytes(digest, source_identity, rows))
+        require_identity = report is not None and all(row["disposition"] != "refused" for row in rows)
+    model_bytes, identity_verified = _bounded_model(model, source_identity, require_identity=require_identity)
+    return OssieImportResult(
+        model_bytes, _loss_report_bytes(digest, source_identity, identity_verified, rows)
+    )

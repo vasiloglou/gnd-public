@@ -44,3 +44,9 @@ independent implementation review and replay. The
 [corpus gate](011-OS2-spec-gate.md) was committed before rendering.
 The [early OS5 checkpoint](notes/OS5-draft-checkpoint.md) uses the closed
 OS1 exporter.
+
+The [OS3 phase record](020-phase-OS3.md) closes the importer after review
+and verifies all 38 eligible round trips. The
+[OS4 consumer gate candidate](018-OS4-consumer-candidate.md) records the
+pinned converter's 36 intact conversions, two refusals, and separate
+isolation controls. Its independent review is pending.

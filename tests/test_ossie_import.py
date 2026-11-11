@@ -193,18 +193,23 @@ def test_dangling_sidecar_is_a_refusal(bundle):
 
 
 def test_pinned_flights_foreign_provenance_and_losses(tmp_path):
+    from importlib.resources import files
+
+    pin = json.loads(files("gnd").joinpath("schema/ossie/PINNED.json").read_bytes())
     result = plan_ossie_import(FLIGHTS)
     document = json.loads(result.model)
     rows = json.loads(result.loss_report)["dispositions"]
     assert len(rows) == len({row["pointer"] for row in rows})
-    assert Counter(row["disposition"] for row in rows).keys() == {"native", "refused"}
+    assert Counter(row["disposition"] for row in rows) == {"native": 607, "refused": 146}
+    assert len(document["object_types"]) == 45
+    assert len(document["fact_types"]) == 48
     assert {c["name"] for c in document["object_types"]} >= {"Airport", "State", "Carrier"}
     constraints = [c for f in document["fact_types"] for c in f.get("constraints", ())]
-    assert len(constraints) >= 10
+    assert len(constraints) == 55
     assert all(
         c["source"] == "imported"
         and c["status"] == "proposed"
-        and c["provenance"]["commit"] == "ee89dbdc2844d8b7d293ed42c8613928bb99505f"
+        and c["provenance"]["commit"] == pin["commit"]
         and c["provenance"]["artifact"] == "examples/flights.ontology.yaml"
         and c["provenance"]["anchor"].startswith("multiplicity: ")
         for c in constraints
@@ -302,3 +307,156 @@ def test_reference_cycle_and_inherited_identifier(bundle, tmp_path):
     assert concepts["child"]["subtype_of"] == ["root"]
     rows = {r["pointer"]: r for r in json.loads(result.loss_report)["dispositions"]}
     assert rows["/ontology/2/identify_by/0"]["disposition"] == "refused"
+
+
+@pytest.mark.parametrize("verbalizes", [[], ["{Code} relates {Code:target} }"]])
+def test_bad_foreign_reading_refuses_one_relationship(tmp_path, verbalizes):
+    path = _write(tmp_path / "ontology.json", {
+        "version": "0.3.0.dev0", "name": "ReadingControls",
+        "ontology": [{
+            "concept": "Code", "type": "ValueType", "extends": ["String"],
+            "relationships": [{
+                "name": "related", "roles": [{"concept": "Code", "name": "target"}],
+                "verbalizes": verbalizes,
+            }],
+        }],
+    })
+    result = plan_ossie_import(path)
+    assert json.loads(result.model)["fact_types"] == []
+    rows = {row["pointer"]: row for row in json.loads(result.loss_report)["dispositions"]}
+    assert rows["/ontology/0/relationships/0"]["disposition"] == "refused"
+
+
+@pytest.mark.parametrize("pointer", ["/nonexistent", "/reference_populations/0/id"])
+def test_invented_refusal_cannot_hide_an_identity_mismatch(bundle, pointer):
+    path, sidecar, report = bundle
+    metadata = json.loads(sidecar.read_bytes())
+    metadata["elements"]["code"]["/object_types/0/primitive"] = {
+        "kind": "literal", "value": "Integer",
+    }
+    _write(sidecar, metadata)
+    claims = json.loads(report.read_bytes())
+    claims["dispositions"].append({
+        "pointer": pointer, "disposition": "refused", "reason": "population:out-of-scope",
+    })
+    _write(report, claims)
+    _assert_refusal(path, "report-pointer")
+
+
+def test_reportless_source_identity_match_is_explicit(bundle):
+    path, sidecar, report = bundle
+    report.unlink()
+    verified = json.loads(plan_ossie_import(path).loss_report)
+    assert verified["source_identity_verified"] is True
+    metadata = json.loads(sidecar.read_bytes())
+    metadata["elements"]["code"]["/object_types/0/primitive"] = {
+        "kind": "literal", "value": "Integer",
+    }
+    _write(sidecar, metadata)
+    unverified = json.loads(plan_ossie_import(path).loss_report)
+    assert unverified["source_model_identity"] == verified["source_model_identity"]
+    assert unverified["source_identity_verified"] is False
+
+
+def test_inherited_identifier_lookup_reuses_work(tmp_path):
+    from time import monotonic
+
+    root = {
+        "concept": "Base", "type": "EntityType", "identify_by": ["key"],
+        "relationships": [{
+            "name": "key", "roles": [{"concept": "String"}],
+            "verbalizes": ["{Base} has {String}"],
+        }],
+    }
+    chain = [
+        {
+            "concept": f"Type{i}", "type": "EntityType",
+            "extends": ["Base" if i == 0 else f"Type{i - 1}"], "identify_by": ["key"],
+        }
+        for i in range(160)
+    ]
+    path = _write(tmp_path / "ontology.json", {
+        "version": "0.3.0.dev0", "name": "InheritanceControls", "ontology": [*reversed(chain), root],
+    })
+    started = monotonic()
+    restored = plan_ossie_import(path)
+    assert len(json.loads(restored.model)["object_types"]) == len(chain) + 2
+    assert monotonic() - started < 4
+
+
+def test_reference_work_budget_bounds_distinct_ancestry_searches(tmp_path):
+    from time import monotonic
+
+    count = 300
+    root = {
+        "concept": "Base", "type": "EntityType",
+        "relationships": [
+            {"name": f"key{i}", "verbalizes": ["{Base} has an identifier"]}
+            for i in range(count)
+        ],
+    }
+    chain = [
+        {
+            "concept": f"Type{i}", "type": "EntityType",
+            "extends": ["Base" if i == 0 else f"Type{i - 1}"], "identify_by": [f"key{i}"],
+        }
+        for i in range(count)
+    ]
+    path = _write(tmp_path / "ontology.json", {
+        "version": "0.3.0.dev0", "name": "BudgetControls", "ontology": [root, *chain],
+    })
+    started = monotonic()
+    _assert_refusal(path, "reference-budget")
+    assert monotonic() - started < 4
+
+
+def test_restored_output_size_caps(monkeypatch):
+    from gnd import ossie_import
+
+    monkeypatch.setattr(ossie_import, "MAX_BYTES", 512)
+    oversized = "x" * 1100
+    with pytest.raises(OssieImportError, match="ossie-import:model-size"):
+        ossie_import._bounded_model({"description": oversized}, None, require_identity=False)
+    with pytest.raises(OssieImportError, match="ossie-import:loss-size"):
+        ossie_import._loss_report_bytes("0" * 64, None, False, [{"pointer": "/" + oversized}])
+
+
+def test_refuses_sidecar_header_and_deep_pointer(bundle):
+    path, sidecar, _ = bundle
+    metadata = json.loads(sidecar.read_bytes())
+    _write(sidecar, dict(metadata, schema="unknown"))
+    _assert_refusal(path, "sidecar-header")
+    metadata["elements"]["code"]["/part" * 65] = {"kind": "literal", "value": None}
+    _write(sidecar, metadata)
+    _assert_refusal(path, "sidecar-pointer")
+
+
+def test_vendored_core_reference_admits_ai_context(bundle, tmp_path):
+    path, _, _ = bundle
+    document = json.loads(path.read_bytes())
+    document["ai_context"] = {"instructions": "Use Code for an identifier."}
+    foreign = _write(tmp_path / "foreign.json", document)
+    imported = plan_ossie_import(foreign)
+    rows = {row["pointer"]: row for row in json.loads(imported.loss_report)["dispositions"]}
+    assert rows["/ai_context/instructions"]["disposition"] == "refused"
+
+
+@pytest.mark.parametrize("variant,rule", [
+    ("concept", "concept-name"), ("relationship", "relationship-name"), ("empty", "foreign-empty"),
+])
+def test_closed_foreign_name_refusals(tmp_path, variant, rule):
+    concept = {
+        "concept": "Code", "type": "ValueType", "extends": ["String"],
+        "relationships": [{"name": "listed", "verbalizes": ["{Code} is listed"]}],
+    }
+    ontology = [concept]
+    if variant == "concept":
+        ontology.append(dict(concept, description="Another Code."))
+    elif variant == "relationship":
+        concept["relationships"].append({"name": "listed", "verbalizes": ["{Code} is recorded"]})
+    else:
+        ontology = [{"concept": "Record", "type": "EntityType"}]
+    path = _write(tmp_path / "ontology.json", {
+        "version": "0.3.0.dev0", "name": "NameControls", "ontology": ontology,
+    })
+    _assert_refusal(path, rule)

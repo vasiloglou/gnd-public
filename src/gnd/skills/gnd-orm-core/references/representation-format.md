@@ -1898,9 +1898,11 @@ failure and 74 on an I/O refusal.
 `gnd import ossie FILE --out MODEL` accepts an Ossie ontology in JSON or
 YAML. If `FILE.gnd.json` is present, the reader verifies the exact ontology
 SHA-256 and restores GND source pointers. It checks an adjacent
-`FILE.loss.json` against the sidecar when that report is present. A report
-with no refusals also enables verification of the restored model identity.
-Keep the ontology and sidecar together when you need a GND round trip.
+`FILE.loss.json` against the sidecar when that report is present. Import
+always compares the restored identity with the sidecar's source identity.
+A mismatch is a refusal when the accompanying report claims a lossless
+export. When import proceeds, `source_identity_verified` states whether
+the restored identity matched. Keep the ontology and sidecar together when you need a GND round trip.
 Exported omissions remain omissions on import.
 
 Without a sidecar, import admits the supported declarations of a foreign

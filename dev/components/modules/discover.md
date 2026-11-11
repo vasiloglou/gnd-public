@@ -24,6 +24,20 @@ Candidate generation and the suppression catalogue (IK4 spec §6).
 | `Catalogue.rule(self, candidate) -> str \| None` | method | 304 | The first catalogue row that suppresses ``candidate``, or None. |
 | `redundancy(emitted) -> tuple[list[Candidate], dict[str, int]]` | function | 334 | Candidate-against-candidate rules, applied after admission, in spec order. |
 
+## gnd.discover.joined — `src/gnd/discover/joined.py`
+Components: discover.joined
+Bounded discovery of guards over a binary relation and classifier.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `Settings` | class | 24 | (no docstring) |
+| `Refused` | class(ValueError) | 32 | An unavailable joined family with a closed report reason. |
+| `Work` | class | 37 | (no docstring) |
+| `Work.charge(self, count) -> None` | method | 40 | (no docstring) |
+| `configure(relation, classifier, marker, max_pairs) -> Settings` | function | 57 | (no docstring) |
+| `guard_key(core) -> str` | function | 113 | Deterministic key ignoring authored envelope and positional identity. |
+| `generate(view, settings, *, eligible, redacted)` | function | 212 | Compute candidates and independent support before the discovery checker. |
+
 ## gnd.discover.output — `src/gnd/discover/output.py`
 Components: discover.output
 The two outputs of ``gnd discover``: the evolve proposal and the report (IK4 §6).

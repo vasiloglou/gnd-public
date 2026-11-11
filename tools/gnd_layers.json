@@ -337,6 +337,10 @@
       "lane": "discover",
       "layer": "lanes"
     },
+    "gnd.discover.joined": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
     "gnd.discover.support": {
       "lane": "discover",
       "layer": "lanes"

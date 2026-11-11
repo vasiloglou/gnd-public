@@ -167,7 +167,7 @@ def _assert_successor(lane, key, observed, expected):
         assert canonical(observed) == canonical(expected)
 
 
-def _restore_frozen(parser, node):
+def _restore_frozen(parser, node, *, types=None):
     children = None
     for action in node['actions']:
         if action['class'] == '_HelpAction':
@@ -184,7 +184,8 @@ def _restore_frozen(parser, node):
             assert action['const'] is None
             kwargs.update({k: action[k] for k in ('type', 'choices', 'metavar', 'nargs')})
             if kwargs['type'] is not None:
-                kwargs['type'] = {'builtins.int': int, 'gnd.cli._positive_int': cli._positive_int}[kwargs['type']]
+                known = {'builtins.int': int, 'gnd.cli._positive_int': cli._positive_int}
+                kwargs['type'] = (types or {}).get(kwargs['type']) or known[kwargs['type']]
         else:
             assert action['class'] == '_StoreTrueAction'
             kwargs['action'] = 'store_true'
@@ -342,6 +343,37 @@ def _guarded_cases_synth_successor():
     return base, parser
 
 
+def _guarded_join_discover_successor():
+    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["discover"]
+    actions = base["actions"]
+    next(action for action in actions if action["dest"] == "families")["help"] = (
+        "comma-separated subset of the seven default families; add fact-type or guarded-join to opt in"
+    )
+    for flag, metavar, help_, type_ in (
+        ("joined-relation", "FACT:SOURCE:TARGET",
+         "guarded-join family: binary relation and endpoint roles", None),
+        ("joined-classifier", "FACT:ENTITY:CLASS",
+         "guarded-join family: binary classifier and its roles", None),
+        ("joined-marker", "FACT:ENTITY:VALUE=JSON",
+         "guarded-join family: restrict same-class candidates by a target marker", None),
+        ("max-directed-pairs", "N",
+         "guarded-join family: most ordered class pairs considered (default 256)",
+         "gnd.commands.discover._at_least.<locals>.parse"),
+    ):
+        actions.insert(-1, {
+            "class": "_StoreAction", "dest": flag.replace("-", "_"), "option_strings": ["--" + flag],
+            "default": None, "const": None, "choices": None, "metavar": metavar, "nargs": None,
+            "required": False, "type": type_, "help": help_,
+        })
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    # The probe parses only help and an unknown option. Conversion semantics
+    # are exercised by the direct discover command fixtures.
+    _restore_frozen(parser, base, types={
+        action["type"]: str for action in actions if action["type"] is not None
+    })
+    return base, parser
+
+
 def _guarded_successor_probe(parser):
     result = {}
     for name, arguments in (("help", ["--help"]), ("unknown_flag", ["--rf1-unknown-flag"])):
@@ -357,6 +389,7 @@ def test_cli_tree(tree):
     expected = json.loads(golden_path("cli", "tree").read_text())
     expected["subcommands"]["check"] = _guarded_workflows_check_successor()[0]
     expected["subcommands"]["synth"] = _guarded_cases_synth_successor()[0]
+    expected["subcommands"]["discover"] = _guarded_join_discover_successor()[0]
     expected["subcommands"]["validate"]["actions"].insert(
         IDENTITY_SUCCESSOR["action_index"], copy.deepcopy(IDENTITY_SUCCESSOR["action"])
     )
@@ -388,6 +421,10 @@ def test_cli_help(tree, path):
     if path in {'gnd verbalize', 'gnd verbalize model'}:
         _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
                           {'path': path, 'help': _model_review_successor()['help'][path]})
+        return
+    if path == "gnd discover":
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": _guarded_join_discover_successor()[1].format_help()})
         return
     if path == "gnd synth":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -431,7 +468,7 @@ def test_cli_exit_probe(path, monkeypatch):
                     'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}
         _assert_successor('cli-exit', path, observed, _model_review_successor()['exit_probe'][path])
         return
-    if path in ("gnd check", "gnd validate", "gnd synth"):
+    if path in ("gnd check", "gnd validate", "gnd synth", "gnd discover"):
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
             "unknown_flag": {
@@ -440,7 +477,9 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        successors = {"gnd check": _guarded_workflows_check_successor, "gnd synth": _guarded_cases_synth_successor}
+        successors = {"gnd check": _guarded_workflows_check_successor,
+                      "gnd synth": _guarded_cases_synth_successor,
+                      "gnd discover": _guarded_join_discover_successor}
         expected = (VALIDATE_DOCUMENTS_SUCCESSOR["exit_probe"] if path == "gnd validate"
                     else _guarded_successor_probe(successors[path]()[1]))
         _assert_successor("cli-exit", path, observed, expected)

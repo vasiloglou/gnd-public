@@ -131,6 +131,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/guarded-rule-workflows/evidence/GW0/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-workflows/evidence/GW2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-authoring/evidence/GA1/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/guarded-rule-authoring/evidence/GA2/dynamic-query-successor.json',
 ]
 
 

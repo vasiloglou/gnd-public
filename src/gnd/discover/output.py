@@ -184,6 +184,9 @@ def render_text(report: dict[str, Any]) -> str:
         lines.append(f"FACT TYPES {len(family['proposed'])}")
         lines.extend(f"  {row['fact_type']} support={row['support']['numerator']}" for row in family["proposed"])
         lines.extend(f"  shape of {row['existing']}" for row in family["shape_matches"])
+    if "joined_rules" in report:
+        joined = report["joined_rules"]
+        lines.append(f"GUARDED JOIN {joined['reason'] or 'compared=' + str(joined['compared'])}")
     lines.append(f"WORK total={report['work']['total']}")
     lines.append(f"PROPOSAL {report['proposal'] or '(none)'}")
     return "\n".join(lines) + "\n"

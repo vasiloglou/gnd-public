@@ -280,7 +280,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/discover/support.py
 - uses: check.universe, model.document, model.population_loading, model.query_index, semantics.snapshot_adapter, semantics.snapshot_ir
-- used_by: discover.candidates, discover.fact_types, discover.service, discover.type_evidence, export.ilp_service
+- used_by: discover.candidates, discover.fact_types, discover.joined, discover.service, discover.type_evidence, export.ilp_service
 - tests: tests/test_discover.py, tests/test_discover_fact_type_family.py, tests/test_discover_type_evidence.py
 - notes: The same typed identity and view are reused by ILP import orchestration.
 
@@ -293,8 +293,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/discover/candidates.py
 - uses: check.universe, discover.population_view, model.query_index
-- used_by: discover.output, discover.service
+- used_by: discover.joined, discover.output, discover.service
 - tests: tests/test_discover.py
+
+
+### discover.joined
+- does: Mine bounded guarded rules over a binary relation and complete endpoint classifications.
+- verbs: guarded join, joined discovery, directed class pairs, target marker, relation support
+- in: Validated population view, explicit role coordinates and a directed pair cap.
+- out: Independently counted guarded candidates and joined-family work or refusal metadata.
+- status: canonical
+- modules: src/gnd/discover/joined.py
+- uses: check.population_structure, discover.candidates, discover.population_view, infra.input_policy
+- used_by: discover.service
+- tests: tests/test_discover_guarded_join.py
 
 
 ### discover.output
@@ -356,7 +368,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Discovery report/build inputs or command outputs and exit code
 - status: canonical
 - modules: src/gnd/discover/__init__.py, src/gnd/discover/service.py
-- uses: checker.evaluate, discover.candidates, discover.fact_types, discover.output, discover.population_view, discover.type_evidence, discover.type_judgements, evolve.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_redaction, infra.version, model.loading, model.population_loading, model.query_index, model.reference_binding
+- uses: checker.evaluate, discover.candidates, discover.fact_types, discover.joined, discover.output, discover.population_view, discover.type_evidence, discover.type_judgements, evolve.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_redaction, infra.version, model.loading, model.population_loading, model.query_index, model.reference_binding
 - used_by: cli.discover_command
 - tests: tests/test_discover.py, tests/test_discover_fact_type_family.py, tests/test_discover_type_evidence.py, tests/test_discover_type_judgements.py
 - notes: Rooted composition supplies semantic checks while candidate/proposal output retains the captured authored includer. Include-free byte loading keeps its resolver variant. Discovery proposes additions; it does not publish changes to the source model.
@@ -2169,7 +2181,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +51 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +52 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2489,7 +2501,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/popvalidate.py
 - uses: check.universe, infra.errors, infra.input_policy, infra.verdict_prose, model.document, model.extraction_scope, model.query_index, model.scalar_terms
-- used_by: check.admission, codegen.emit, measure.coverage, model.population_loading, model.population_sentences, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.pool, synth.prediction, … +2 more (graph.md)
+- used_by: check.admission, codegen.emit, discover.joined, measure.coverage, model.population_loading, model.population_sentences, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.pool, … +3 more (graph.md)
 - tests: tests/test_popvalidate.py
 - in: Parsed population document and Model.
 - out: Ordered ValidationIssue list including warning severity.

@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "reason": "GA2 selects explicit typed role coordinates and binds joined support to check verdicts.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-authoring/evidence/GA1/dynamic-query-successor.json",
+  "predecessor_sha256": "4649d6488b4c1822ecd8daee69bbaeb372ab1f2f874f89d53d146d623d89e3fd",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/discover/joined.py",
+      "<module>",
+      "tuple[str, str, str]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_atom",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_atom",
+      "tuple[Role, Role]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_candidate",
+      "hashlib.sha256(guard_key(core).encode()).hexdigest()[:24]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "_PRIMITIVE_PREDICATES.get(primitive)",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "class_values[destination]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "class_values[origin]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "dict[Identity, Any]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "dict[Identity, set[Identity]]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "memberships[member]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "outgoing[origin]",
+      2
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_generate",
+      "set[Identity]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_roles",
+      "roles[first]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_roles",
+      "roles[second]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_roles",
+      "view.roles.get(fact, ())",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_rows",
+      "row[first.name]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_rows",
+      "row[second.name]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_rows",
+      "tuple[Role, Role]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "_rows",
+      "view.population.facts.get(first.fact_type, ())",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "classify",
+      "memberships.get(entity)",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "guard_key",
+      "dict[str, Any]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7639,
+  "result_occurrences": 9503
+}

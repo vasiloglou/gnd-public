@@ -56,8 +56,8 @@ Components: cli.discover_command
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `add_parsers(subparsers, *, command)` | function | 123 | (no docstring) |
-| `handle(args, parsers) -> int` | function | 136 | (no docstring) |
+| `add_parsers(subparsers, *, command)` | function | 131 | (no docstring) |
+| `handle(args, parsers) -> int` | function | 144 | (no docstring) |
 
 ## gnd.commands.doccheck — `src/gnd/commands/doccheck.py`
 Components: cli.doccheck_command

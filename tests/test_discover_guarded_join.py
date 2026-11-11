@@ -96,8 +96,20 @@ def test_joined_discovery_counts_directed_pairs_and_marks_counterexamples(tmp_pa
         misses[key] = {name: row[name] for name in ("subjects", "violations", "counterexamples")}
     assert misses == {k: v for k, v in EXPECTED["unmarked"].items() if k != "forbidden_app_core"}
     assert result["joined_rules"]["reason"] is None
+    assert result["rejected"]["warning"] == 4
     preview = run_main(
-        ["evolve", "preview", str(model), str(proposal), "--workspace", str(tmp_path)]
+        [
+            "evolve",
+            "preview",
+            str(model),
+            str(proposal),
+            "--workspace",
+            str(tmp_path),
+            "--records",
+            str(tmp_path / "records"),
+            "--out",
+            str(tmp_path / "preview.json"),
+        ]
     )
     assert preview.returncode == 0, (preview.stdout, preview.stderr)
 
@@ -123,3 +135,96 @@ def test_joined_discovery_marker_and_separate_directed_cap(tmp_path):
     row = result["emitted"][0]
     assert row["support"] == EXPECTED["marked"]["same_class"]
     assert row["constraint"]["antecedent"][-1]["fact_type"] == MARKER
+
+
+def test_joined_discovery_refuses_missing_ambiguous_and_uncovered_inputs(tmp_path):
+    for option, reason in (
+        ("missing", "missing-classification"),
+        ("ambiguous", "ambiguous-classification"),
+        ("uncovered", "uncovered-fact-type"),
+    ):
+        folder = tmp_path / option
+        folder.mkdir()
+        model, population = _population(folder, **{option: True})
+        proposal, report = _discover(folder, model, population, *SELECTORS)
+        assert report["joined_rules"]["reason"] == reason
+        assert report["emitted"] == report["near_misses"] == []
+        assert not proposal.exists()
+
+
+def test_joined_work_limit_preserves_other_families(tmp_path, monkeypatch):
+    from gnd.discover import joined
+
+    model, population = _population(tmp_path)
+    monkeypatch.setattr(joined, "MAX_WORK", 55)
+    flags = [*SELECTORS]
+    flags[1] += ",uniqueness"
+    _, report = _discover(tmp_path, model, population, *flags)
+    family = report["joined_rules"]
+    assert family["reason"] == "work-limit"
+    assert family["compared"] == 2 and family["first_omitted_ordinal"] == 2
+    assert family["work"]["visits"] <= family["work"]["ceiling"] == 55
+    assert report["bounds"]["families"] == ["uniqueness", "guarded-join"]
+    assert all(row["family"] == "uniqueness" for row in report["emitted"])
+    assert report["work"]["uniqueness"] > 0
+
+
+def test_joined_discovery_declared_rule_is_suppressed(tmp_path):
+    import shutil
+
+    from ruamel.yaml import YAML
+
+    first, second = tmp_path / "first", tmp_path / "second"
+    first.mkdir()
+    second.mkdir()
+    model, population = _population(first)
+    _, initial = _discover(first, model, population, *SELECTORS)
+    document = YAML(typ="safe").load(model)
+    declared = initial["emitted"][0]["constraint"]
+    declared["id"] = "authored_guard"
+    document["constraints"].append(declared)
+    existing = second / model.name
+    with existing.open("w", encoding="utf-8") as stream:
+        YAML(typ="safe").dump(document, stream)
+    copied = second / population.name
+    shutil.copyfile(population, copied)
+    proposal, report = _discover(second, existing, copied, *SELECTORS)
+    assert report["suppressed"]["declared"] == 1
+    assert report["emitted"] == []
+    assert not proposal.exists()
+
+
+def test_unmarked_same_class_is_admitted_for_all_inside_edges(tmp_path):
+    model, population = _population(tmp_path)
+    document = json.loads(population.read_bytes())
+    del document["facts"][RELATION][20]
+    population.write_text(json.dumps(document), encoding="utf-8")
+    _, report = _discover(tmp_path, model, population, *SELECTORS)
+    same = [row for row in report["emitted"] if "atom" in row["constraint"]["consequent"]]
+    assert len(same) == 1
+    assert same[0]["support"] == {"numerator": 21, "denominator": 21}
+    assert same[0]["constraint"]["id"].startswith("gj_")
+
+
+def test_bad_joined_marker_is_a_usage_error_before_input_reads(tmp_path):
+    result = run_main(
+        [
+            "discover",
+            "missing.model",
+            "missing.population",
+            *SELECTORS,
+            "--joined-marker",
+            f'{MARKER}:component:owner="$variable"',
+            "--actor",
+            "ga2-test",
+            "--requested-at",
+            "2026-11-11T00:00:00Z",
+            "--out",
+            str(tmp_path / "proposal.json"),
+            "--report",
+            str(tmp_path / "report.json"),
+        ]
+    )
+    assert result.returncode == 64
+    assert b"reserved dollar" in result.stderr
+    assert list(tmp_path.iterdir()) == []

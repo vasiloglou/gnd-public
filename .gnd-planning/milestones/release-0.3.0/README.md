@@ -84,7 +84,9 @@ RN3 is done and recorded ([record](005-phase-RN3.md)): the
 post-publication patches and a stale-text check. Review: one reviewer
 (Codex, `revise`, H1 to H9, all fixed).
 
-**The three preparation phases are complete. Nothing is published.** The
+**get-nick-done 0.3.0 is published** (2026-11-11T15:36:42Z; [record](006-publication.md)): the served files equal the retained `4c07c0e6` candidate, tag `v0.3.0` and the GitHub release exist, and the post-publication patches are applied. The milestone close is next.
+
+Before that: the three preparation phases were completed with nothing published. The
 publication stage is the owner's (RN-D5): check the files and the version,
 upload, tag, GitHub release; then the served-file check and the
 post-publication pull request, each on the owner's request.

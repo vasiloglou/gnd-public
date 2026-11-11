@@ -131,6 +131,8 @@ def main():
 
     artifacts = [manifest_path, isolated_manifest, discover_report, ga2 / "proposal.json",
                  proposal, facts, ga3 / "reported.json"]
+    inputs = [ga1 / "model.orm.yaml", ga1 / "isolated.json", ga2 / "model.orm.yaml",
+              ga2 / "population.json", ga3 / "model.orm.yaml", ga3 / "population.json", ga3 / "rules.tsv"]
     write_json(receipt, {
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip(),
         "wheel": wheel.name,
@@ -138,7 +140,7 @@ def main():
         "lock_sha256": digest(repo / "uv.lock"),
         "python": capture.stdout.decode().strip(),
         "imported_from_installed_environment": True,
-        "inputs": {name: digest(corpus / name) for name in ("model.orm.yaml", "population.json", "rules.tsv")},
+        "inputs": {str(path.relative_to(root)): digest(path) for path in inputs},
         "commands": runs,
         "artifacts": {str(path.relative_to(root)): digest(path) for path in artifacts},
     })

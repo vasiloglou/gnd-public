@@ -94,3 +94,11 @@ and an installed smoke.
 Delegated under the [plan gate](../001-plan-gate.md), 2026-11-11.
 GA2 evidence precedes this gate. Phase diff review and the standard
 milestone close panel remain separate gates.
+
+## 12. Implementation findings
+
+The old m4 fixture's typed literals now reach support mismatch at seven
+holding pairs out of eight. Its original recorded bytes remain pinned.
+The first base-wheel smoke reproduced an optional dependency traceback
+in GA1. The guarded CLI now reports exit 5 and the replay installs the
+synth extra before exercising the three workflows.

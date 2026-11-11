@@ -4,7 +4,8 @@ Planning opened 2026-11-10 on the owner's request to cut a new version now
 that Ossie interchange is on main. 0.2.0 is the latest published version;
 nothing here is published.
 
-**Status: plan r2 is a draft awaiting the plan gate. r1 was reviewed by one
+**Status: plan r2 approved by the owner on 2026-11-10 ([plan-gate
+record](001-plan-gate.md)). r1 was reviewed by one
 reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
 not re-reviewed. No phase spec is approved. `auto=false`.**
 
@@ -24,4 +25,5 @@ RN-D0 and RN-D3 to RN-D11 ruled as proposed (owner, 2026-11-10, "Approve as
 proposed"). RN1 is blocked on experiment E1, which runs only after the plan
 gate, and on the per-file handling ruled after it.
 
-Next action: the owner rules the plan gate over r2.
+Next action: experiment E1 (what the 0.3.0 bump moves), then the RN1 spec's
+own owner gate.

@@ -1,6 +1,8 @@
 # Release 0.3.0
 
-r2, 2026-11-10. **Draft, awaiting the plan gate.** r1 (sha256 `f21e6bce…4a77`,
+r2, 2026-11-10. **Approved by the owner at the plan gate on 2026-11-10
+("Approve r2"; [plan-gate record](../001-plan-gate.md)); approves no phase
+spec.** r1 (sha256 `f21e6bce…4a77`,
 uncommitted) was reviewed by one reviewer, Codex (disposition `revise`, 9
 findings; [record](../evidence/plan-review-r1/codex-review.md)); §11 disposes
 each. **r2 repairs r1 and carries no review opinion of its own**; it was not

@@ -11,7 +11,7 @@ not re-reviewed. No phase spec is approved. `auto=false`.**
 
 - [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
 - [RN0 record](002-phase-RN0.md); [RN0 spec (approved 2026-11-10)](notes/phase-RN0-spec.md); [diff review](notes/phase-RN0-codex-review.md)
-- [RN1 spec (blocked draft r2)](notes/phase-RN1-spec.md)
+- [RN1 spec (draft r3, awaiting owner review)](notes/phase-RN1-spec.md)
 - [Codex review of r1](evidence/plan-review-r1/codex-review.md)
 - [E1 results: the bump moves 35 tests; main's lane is red by 26](evidence/e1/README.md)
 
@@ -46,5 +46,7 @@ the default lane at `326a1900` lists only the 2 known errors and RN1's two
 tests. Review: one reviewer (Codex, `revise`, K1 and K2, both fixed). The
 opt-in Ossie oracle lane did not run.
 
-Next action: the owner merges PR 162, then RN1 (the 0.3.0 bump) resumes from
-main.
+PR 162 is merged (main `d7317d25`, 2026-11-11). RN1's spec is draft r3 with
+its measured inputs ([moved digests](evidence/e1/moved-digests.md)).
+
+Next action: the owner rules the RN1 spec gate and its decisions D6 and D7.

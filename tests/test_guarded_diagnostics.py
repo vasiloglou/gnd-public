@@ -176,3 +176,37 @@ def test_literal_domain_applies_only_to_declared_role(tmp_path):
     assert not _validation._rule_guarded_literal_domain(model)
     domain["role_ref"] = {"fact_type": AREA, "role": "area"}
     assert len(_validation._rule_guarded_literal_domain(model)) == 1
+
+
+def test_diagnostic_flag_adds_no_antecedent_join(tmp_path, monkeypatch):
+    from gnd import correspondence
+
+    _write(tmp_path, ["active_pass", "join_loss"])
+    original = correspondence._indexed_guarded_bindings
+    calls = 0
+
+    def counted(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(correspondence, "_indexed_guarded_bindings", counted)
+    args = ["check", "model.orm.yaml", "population.yaml", "--format", "json"]
+    assert run_main([*args, "--rule-ids"], cwd=tmp_path).returncode == 0
+    assert calls == 2
+    assert run_main([*args, "--guarded-diagnostics"], cwd=tmp_path).returncode == 0
+    assert calls == 4
+
+
+def test_schema_rejects_nonempty_count_with_an_empty_atom(tmp_path):
+    _write(tmp_path, ["active_pass"])
+    result = run_main(
+        ["check", "model.orm.yaml", "population.yaml", "--guarded-diagnostics", "--format", "json"],
+        cwd=tmp_path,
+    )
+    report = json.loads(result.stdout)
+    validator = Draft202012Validator(load_report_schema())
+    assert validator.is_valid(report)
+    guarded = next(row for row in report["verdicts"] if row["constraint_type"] == "guarded")
+    guarded["guarded_antecedent"]["first_empty_atom_index"] = 0
+    assert not validator.is_valid(report)

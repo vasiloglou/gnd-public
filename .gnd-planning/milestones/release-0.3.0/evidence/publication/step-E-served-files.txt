@@ -1,0 +1,19 @@
+# Step E: served files and a fresh index install, get-nick-done 0.3.0
+2026-11-11T15:37:52Z
+info.version 0.3.0 | files served: ['get_nick_done-0.3.0-py3-none-any.whl', 'get_nick_done-0.3.0.tar.gz']
+get_nick_done-0.3.0-py3-none-any.whl | served sha256 == retained 143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b | size 2948039 | uploaded 2026-11-11T15:36:42.218661Z | yanked False
+get_nick_done-0.3.0.tar.gz | served sha256 == retained 5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42 | size 2292882 | uploaded 2026-11-11T15:36:44.297911Z | yanked False
+comparison exit 0
+install exit 0
+gnd 0.3.0
+gnd --help exit 0
+ossie schema files present: True
+dispatch example files: ['model.orm.json', 'references', 'repaired.pop.json', 'seed.pop.json']
+Exported Ossie ontology to o.yaml
+export exit 0
+import exit 0
+model.orm.yaml o.yaml o.yaml.gnd.json o.yaml.loss.json restored.orm.json restored.orm.json.loss.json 
+source_identity_verified: True
+simple index versions: ['0.1.0', '0.2.0', '0.3.0']
+files: ['get_nick_done-0.1.0-py3-none-any.whl', 'get_nick_done-0.1.0.tar.gz', 'get_nick_done-0.2.0-py3-none-any.whl', 'get_nick_done-0.2.0.tar.gz', 'get_nick_done-0.3.0-py3-none-any.whl', 'get_nick_done-0.3.0.tar.gz']
+2026-11-11T15:38:01Z

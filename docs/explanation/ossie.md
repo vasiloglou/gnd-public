@@ -28,8 +28,9 @@ Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to share the ontology.
 The sidecar preserves GND details, and the loss report shows how each
 source field was handled. Keep the sidecar beside the ontology for a
 GND round trip. `gnd import ossie ONTOLOGY.yaml --out MODEL.json` restores
-those details when the sidecar is present. A foreign ontology imports
-through the supported projection and gets its own loss report.
+those details when the sidecar is present. What the export omitted stays
+omitted: a model with example populations comes back without them. A foreign
+ontology imports through the supported projection and gets its own loss report.
 
 GND keeps its `Duration` type, which counts whole days. Ossie receives an
 integer value type and the sidecar preserves its original GND meaning.

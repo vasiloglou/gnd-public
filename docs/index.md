@@ -150,7 +150,7 @@ install into both agents:
 <p class="pills"><span>Claude Code</span><span>Codex</span><span>Agent Skills format</span><span>Python ≥ 3.11</span></p>
 
 ```sh
-uv tool install get-nick-done==0.2.0
+uv tool install get-nick-done==0.3.0
 uv tool update-shell
 ```
 

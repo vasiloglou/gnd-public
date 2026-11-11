@@ -1,10 +1,9 @@
 # Compatibility and version policy
 
-Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions 0.1.0
-and 0.2.0 are published (0.2.0 on 2026-11-08). Version 0.3.0 is prepared and
-not published; on 2026-11-11 the package index listed only 0.1.0 and 0.2.0, so
-0.3.0 was free. Confirm service ownership and that the version is still free
-before candidate freeze and again before any upload. Milestone numbers are not package versions.
+Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions 0.1.0,
+0.2.0 and 0.3.0 are published (0.3.0 on 2026-11-11). For the next version,
+confirm service ownership and that the version is still free before candidate
+freeze and again before any upload. Milestone numbers are not package versions.
 
 Preserve documented schemas, exit bands and deterministic behavior unless an
 explicit reviewed compatibility decision says otherwise. Record breaking changes

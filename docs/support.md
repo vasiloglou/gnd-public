@@ -10,7 +10,7 @@ The repository is public. No paid support SLA is offered.
 | Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0 |
 | macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0 |
 | macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |
-| Any profile, prepared 0.3.0 package | Not signed off; no profile is observed for 0.3.0 yet |
+| macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.3.0 candidate built from `4c07c0e6` |
 | Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |
 | Native/provider extras | Optional, unmeasured in this preparation |
 

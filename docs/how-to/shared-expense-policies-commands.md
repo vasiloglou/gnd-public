@@ -2,8 +2,9 @@
 
 These are the commands behind [Two teams, one expense form](../tutorials/shared-expense-policies.md).
 The example extends the shipped expense demo with two policies and receipt facts.
-Use a development checkout for the unreleased feature; see
-[development setup](../installation.md).
+The feature is in GND 0.3.0 and later. Install it with pip in an activated
+virtual environment, as the [installation page](../installation.md) shows, so
+that `python` and `gnd` below are the same installation.
 
 !!! info "Files on GitHub"
 

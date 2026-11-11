@@ -1,16 +1,14 @@
 # Release notes and milestones
 
-Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
-first. Version 0.3.0 is prepared and not published. Releases follow the
-[release procedure](releasing.md). Changes on `main` after a release are listed
-in an `Unreleased:` section until the next one.
+Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and
+0.1.0 came before it. Releases follow the [release procedure](releasing.md).
+Changes on `main` after a release are listed in an `Unreleased:` section until
+the next one.
 
-## 0.3.0 (prepared, not published)
+## 0.3.0 (2026-11-11)
 
-Everything in this section is on `main` after 0.2.0 and is not in any published
-package. Until the release is published, install from a checkout of the
-repository to use it. The first block is Apache Ossie interchange; the blocks
-after it are the other changes since 0.2.0.
+Everything in this section is new since 0.2.0. The first block is Apache Ossie
+interchange; the blocks after it are the other changes.
 
 ### Apache Ossie interchange
 
@@ -54,7 +52,7 @@ Engineering and Sales using different policies, then Sales moving to a new
 Finance edition while Engineering stays on the old one. The
 [command walkthrough](how-to/shared-expense-policies-commands.md) runs every step.
 Generated-app and linked-project conformance routes for these models remain
-unsupported. This feature requires the development checkout.
+unsupported.
 
 - **New model format, version 5.** A model that includes a vocabulary declares
   `version: 5` and uses two new fields, `includes` and `fact_type_constraints`

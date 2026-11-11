@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Versions that exist on the package index. Publication adds the new version
 # here, in the same patch that moves the install pins (historical data: the one
 # literal of its kind in the tests).
-RELEASED = {"0.1.0", "0.2.0"}
+RELEASED = {"0.1.0", "0.2.0", "0.3.0"}
 
 MANIFESTS = (
     ".claude-plugin/plugin.json",

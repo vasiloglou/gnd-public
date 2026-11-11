@@ -11,7 +11,7 @@ The command below installs the published runtime. If your plugin comes from a
 same commit instead, as [Updates](#updates) shows.
 
 ```sh
-uv tool install get-nick-done==0.2.0
+uv tool install get-nick-done==0.3.0
 uv tool update-shell
 ```
 
@@ -50,7 +50,7 @@ it there if that client does not share the CLI installation.
 These commands use GND's repository marketplace. They do not submit GND to an
 Anthropic or OpenAI curated directory. Until the repository is public, GitHub
 access is required. The marketplace files must be merged into `main` before the
-commands above work. The `v0.2.0` tag contains both the Python release and these
+commands above work. The `v0.3.0` tag contains both the Python release and these
 marketplace entries; the commands above use `main`.
 
 ## Existing skill installations
@@ -69,9 +69,7 @@ the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
 and runtime version aligned. Plugin users do not need `gnd install --sync`.
 
 If the plugin comes from a `main` that has unreleased changes, `uv tool upgrade`
-installs only the latest release. That is the case now: the plugin on `main` is
-version 0.3.0, which is prepared and not published, and the package index has
-0.2.0. Install the runtime from a checkout of the
+installs only the latest release. Install the runtime from a checkout of the
 commit your plugin came from (`main` if you added the marketplace from `main`),
 as the [course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
 

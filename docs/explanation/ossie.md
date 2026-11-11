@@ -1,9 +1,9 @@
 # Ossie interchange in GND
 
 GND exports and imports Apache Ossie ontology documents, version
-`0.3.0.dev0`. The validator and schema are pinned to Apache Ossie
-`ee89dbdc2844d8b7d293ed42c8613928bb99505f`. The parser and optional
-RelationalAI converter are pinned to Apache Ossie Converters
+`0.3.0.dev0`. The export schema and validation tool come from Apache Ossie
+`ee89dbdc2844d8b7d293ed42c8613928bb99505f`. The parser used for the
+export check comes from Apache Ossie Converters
 `83ddc294c8840f5f497a2bdbec2348a128fc2254`.
 
 The supported scope is the ontology layer. It covers concepts, their
@@ -30,15 +30,18 @@ Use `--strict` when any refusal should stop the export.
 
 ## Where PyRel fits
 
-PyRel is optional. You can export and import using GND alone. In the
-offline check with RelationalAI 1.39.0, the pinned converter matched
-the compared declarations for 36 of the 38 eligible exports. The other
-two exposed limits involving inherited identifiers and a derivation
-chain. The converter also omitted `requires` expressions from its output.
+PyRel is optional. You can export and import using GND alone. The offline
+check used the same Ossie Converters commit with RelationalAI 1.39.0.
+It generated PyRel source for 36 of the 38 eligible exports. Concept
+names, parent links, relationship names and identifier links matched the
+exported declarations. The converter refused one inherited identifier,
+and the SDK could not generate source for one derivation chain. The
+emitted source contained no `require` calls.
 
-GND can generate its own PyRel rules for supported models. The converter
-check compares the emitted declarations, and GND checks formula cases
-against hand-authored verdicts. Those checks cover different behavior.
+GND can generate its own PyRel rules for supported models. The formula
+test corpus compares GND checker results with hand-authored verdicts,
+and the Ossie parser checks the corresponding formula syntax. Executing
+Ossie formulas is outside the scope of those checks.
 
 - [Share the refunds example](../how-to/share-an-ossie-ontology.md)
 - [What PyRel is, and when you need it](what-is-pyrel.md)

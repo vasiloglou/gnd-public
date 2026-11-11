@@ -15,7 +15,8 @@ From the GND repository, give the `/gnd` skill this prompt:
 > represents who requested a refund. Then import it and compare the
 > restored model with the original.
 
-Run these commands in the repository:
+With GND installed, run these commands from the repository root.
+Use new output names for another run.
 
 ```sh
 gnd export ossie src/gnd/examples/refunds/model.orm.yaml --out refunds.ossie.yaml
@@ -26,6 +27,18 @@ gnd diff src/gnd/examples/refunds/model.orm.yaml restored.orm.json
 The output relationship `refund_by` is many-to-one. One customer can
 request several refunds. Each refund has at most one requesting customer.
 
+Here is the exported relationship:
+
+```yaml
+name: refund_by
+verbalizes:
+- '{Refund} is requested by {Customer:customer}'
+roles:
+- concept: Customer
+  name: customer
+multiplicity: ManyToOne
+```
+
 ![Each refund has at most one requesting customer.](../assets/applications/refund-requester.svg)
 
 | File | What it gives you |
@@ -33,10 +46,14 @@ request several refunds. Each refund has at most one requesting customer.
 | `refunds.ossie.yaml` | The ontology you can share with an Ossie reader. |
 | `refunds.ossie.yaml.gnd.json` | The GND details needed to restore the original model, including the policy about refund amounts. |
 | `refunds.ossie.yaml.loss.json` | A list of source fields and how the export handled each one. |
+| `restored.orm.json` | The restored GND model. |
+| `restored.orm.json.loss.json` | The import report, including whether the restored model matched the source identity. |
 
-The diff reports the same model identity for both files. It also reports
-that each version contains the same two rules. Keep the ontology and its
-companion files together if a recipient plans to import it into GND.
+The diff reports the same model identity for both files and compares
+each of the two rules in both directions. For a GND restore, keep the
+companion files with an exact copy of the original ontology. Reformatting
+the ontology changes the bytes the sidecar verifies. The companions
+carry source details beyond the shared ontology.
 
 For other models, check the loss report before sharing. For example, a
 model's example data can be omitted and listed as refused. Add `--strict`

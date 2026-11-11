@@ -66,6 +66,8 @@ Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to create the ontology,
 Inspect refused pointers before sharing. Use `--strict` when a refusal
 should prevent writing the bundle. Keep the three files together for a
 GND round trip with `gnd import ossie ONTOLOGY.yaml --out MODEL.json`.
+Preserve the ontology bytes so import can verify the sidecar binding.
+The import report is written to `MODEL.json.loss.json` by default.
 
 Use the [normative Ossie mapping and file format](../gnd-orm-core/references/representation-format.md#ossie-interchange)
 for supported declarations, pins, output formats and import rules.

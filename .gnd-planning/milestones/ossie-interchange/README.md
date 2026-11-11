@@ -50,3 +50,6 @@ and verifies all 38 eligible round trips. The
 [OS4 phase record](021-phase-OS4.md) closes the pinned comparison after
 independent review. It records 36 intact conversions, two refusals,
 and separate isolation controls.
+
+The [OS5 phase record](025-phase-OS5.md) closes the explanation,
+refunds walkthrough and skill guidance after review and local checks.

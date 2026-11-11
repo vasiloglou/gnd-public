@@ -434,12 +434,11 @@ is RN0, RN1, RN2, RN3, publication stage, close. RN0's spec is
 RN1 stays blocked until RN0 is on main: the digests it must list are taken on
 a base that RN0 changes.
 
-## 13. Close amendment (2026-11-11; proposed with the draft close, not ruled)
+## 13. Close amendment (2026-11-11; approved by the owner with the close: "Accept and merge", 2026-11-11)
 
 Raised by the draft close record
 [`007-milestone-close.md`](../007-milestone-close.md). The wording above is
-kept; this section says how the close reads it, and changes nothing until the
-owner rules.
+kept; this section says how the close reads it.
 
 | Clause | Wording (kept above) | Read at the close as |
 |---|---|---|

@@ -2,9 +2,8 @@
 
 Opened 2026-11-10 on the owner's request to cut a new version now that Ossie
 interchange is on main. **get-nick-done 0.3.0 is published** (PyPI,
-2026-11-11T15:36:42Z; tag `v0.3.0`; GitHub release). The
-[milestone close](007-milestone-close.md) is drafted and reviewed, and
-**not ruled**.
+2026-11-11T15:36:42Z; tag `v0.3.0`; GitHub release). **The milestone is closed:** the owner approved the
+[close](007-milestone-close.md) as proposed ("Accept and merge", 2026-11-11).
 
 The paragraphs further down are the milestone's history in the order it
 happened; each was true when written.

@@ -42,6 +42,12 @@ gates:
   - command: "ruling: owner, close review instrument"
     exit: "n/a -- ruling"
     output: "\"One Codex reviewer\" (2026-11-11, in this session)"
+  - command: "ruling: owner approved .gnd-planning/milestones/release-0.3.0/007-milestone-close.md sha256 e03b8bd44dc77ca13f5628f3088c928a979b8618321f3040b95b4f004509fb9d (the draft at 27c4fc93, PR 168)"
+    exit: "n/a -- ruling"
+    output: "\"Accept and merge\" (owner, 2026-11-11, in this session), answering \"Accept the close as proposed and merge PR 168?\""
+  - command: "ruling: owner approved .gnd-planning/milestones/release-0.3.0/notes/release-0.3.0-plan.md section 13 sha256 15b40656bca22f6fafcebe4f7c889ce52cc2415191aa4e9b5346f303eb9aaabb (at 27c4fc93)"
+    exit: "n/a -- ruling"
+    output: "the same answer, \"Accept and merge\" (owner, 2026-11-11)"
 slow_cadence:
   command: 'uv run pytest -q -m "evidence or census"'
   trigger: "explicit owner request"
@@ -87,8 +93,11 @@ evidence:
 
 # Claim
 
-**This is a draft; the owner has not ruled on it.** The close review (one
-Codex reviewer, the owner's choice) is done and its findings are applied.
+**The owner approved this close as proposed** ("Accept and merge",
+2026-11-11, in this session, over the draft at `27c4fc93`, sha256
+`e03b8bd4…fb9d`). The close review (one Codex reviewer, the
+owner's choice) ran before the ruling and its findings are applied. The
+rulings are recorded at the end.
 
 GND 0.3.0 is published and main is in its post-publication state. The four
 phases (RN0 to RN3) are on main, each with an owner-approved spec, a record
@@ -131,9 +140,9 @@ release on that request. No announcement was made.
 | 4 | candidate installs outside the checkout and carries the RN-D9 items; 0.2.0 refuses them | RN2 (T1, T2) | yes |
 | 5 | release acceptance exits 0 over the retained files | RN2 V4: 18 passed | yes |
 | 6 | at the RN3 checkpoint: dossier written, patches prepared and not applied | RN3 | yes |
-| 7 | no phase uploaded, tagged, released, created `pypi` or changed `.github` | the gates above: `.github` diff empty since `2490dd77`; environments `github-pages` only; 0 `release.yml` runs. The upload, tag and release are the publication stage's | the prohibition holds as written, read with plan §13 (proposed). The audit part is weaker than the plan asked: the baseline observations (plan N6; RN2's V8) and the first closing checks exist only as summaries in the records; one dated verbatim transcript is retained, taken at the close ([remote state](evidence/close/remote-state-2026-11-11.txt)). Repository settings and the PyPI publisher configuration are not audited |
+| 7 | no phase uploaded, tagged, released, created `pypi` or changed `.github` | the gates above: `.github` diff empty since `2490dd77`; environments `github-pages` only; 0 `release.yml` runs. The upload, tag and release are the publication stage's | the prohibition holds as written, read with plan §13 (approved by the owner, 2026-11-11). The audit part is weaker than the plan asked: the baseline observations (plan N6; RN2's V8) and the first closing checks exist only as summaries in the records; one dated verbatim transcript is retained, taken at the close ([remote state](evidence/close/remote-state-2026-11-11.txt)). Repository settings and the PyPI publisher configuration are not audited |
 | 8 | published; served files compared; index install exercised; the post-publication patch on main | 006; PR 167 merged as `7d86dc35` | yes |
-| 9 | approved spec, verbatim gate and one reviewer per phase; every open question disposed | the records; the sweep below | pending this close's rulings |
+| 9 | approved spec, verbatim gate and one reviewer per phase; every open question disposed | the records; the sweep below | yes: the per-phase part holds, the close review ran, and every sweep row is closed, carried to a named target, retired or accepted by the owner |
 
 ## Gate output (verbatim)
 
@@ -191,56 +200,57 @@ the only tracked file outside `.gnd-planning/` this close changes.
 
 ## Open-questions sweep
 
-"Proposed" marks a disposition the owner has not ruled.
+Dispositions marked "(owner, 2026-11-11)" were proposals in the draft and were
+ruled by the owner's "Accept and merge".
 
 | Item | Raised | Disposition |
 |---|---|---|
 | Does the GitHub release attach the wheel, sdist and checksums? | plan §10 | closed: it does (006) |
-| RN-D7: the version-independent fixtures refactor, carried to an issue | plan §10, 003 | **proposed: carried** to the next release-preparation milestone; the issue is not filed, and filing it needs the owner's go-ahead. `evidence/RN1/rerecord.py` reduces the cost meanwhile |
+| RN-D7: the version-independent fixtures refactor, carried to an issue | plan §10, 003 | **carried (owner, 2026-11-11)** to the next release-preparation milestone; the issue is not filed, and filing it needs the owner's go-ahead. `evidence/RN1/rerecord.py` reduces the cost meanwhile |
 | The two red tests on main (N20, N26) | plan, 002 | closed: RN1 (003) |
 | The 24 red structure guards | E1, plan §12 | closed: RN0 (002) |
-| Structure guards are in no phase's focused gate | 002 | **proposed: carried** to the owner as a rule for `project.md` or a required check; this milestone's own phases ran them by hand after RN0 |
-| Both query-policy budgets are full (365 of 365, 310 of 310) | 002 | **proposed: carried**, to be ruled before the next milestone that adds source code: raise the ceilings or refactor |
-| The disclosure class of the two Ossie commands (`every-mode`) is not owner-ruled | 002 | **proposed: accepted** as recorded; the rows state what the commands do, and the reference page says so |
-| An Ossie export writes constraint literals and descriptions for a fact type marked `redact` | 002, 003, 005 | **proposed: carried** as an issue for a later release; the 0.3.0 notes and the disclosure reference state the behavior |
-| The opt-in `ossie_oracle` lane after RN0's edits | 002 D5, 003 D7, 004 D5 | closed by ruling: not run for 0.3.0 ("Skip it for 0.3.0"). **Proposed: accepted residual**, with RN0's byte comparison and the installed probe as the evidence in its place |
+| Structure guards are in no phase's focused gate | 002 | **carried (owner, 2026-11-11)** to the owner as a rule for `project.md` or a required check; this milestone's own phases ran them by hand after RN0 |
+| Both query-policy budgets are full (365 of 365, 310 of 310) | 002 | **carried (owner, 2026-11-11)**, to be ruled before the next milestone that adds source code: raise the ceilings or refactor |
+| The disclosure class of the two Ossie commands (`every-mode`) is not owner-ruled | 002 | **accepted (owner, 2026-11-11)** as recorded; the rows state what the commands do, and the reference page says so |
+| An Ossie export writes constraint literals and descriptions for a fact type marked `redact` | 002, 003, 005 | **carried (owner, 2026-11-11)** as an issue for a later release; the 0.3.0 notes and the disclosure reference state the behavior |
+| The opt-in `ossie_oracle` lane after RN0's edits | 002 D5, 003 D7, 004 D5 | closed by ruling: not run for 0.3.0 ("Skip it for 0.3.0"). **Accepted residual (owner, 2026-11-11)**, with RN0's byte comparison and the installed probe as the evidence in its place |
 | The three files under `src/gnd/schema/ossie/` had no packaging check | 002 | closed: RN2's artifact row reads them from the wheel's file list, and the index install found them (006) |
-| The re-record's capture ran under Python 3.14 only | 003 | **proposed: accepted residual**; the moved goldens are not interpreter-keyed, and the closing lane ran on beast-3's Python |
-| Notes completeness rests on one reviewer and an options audit | 003, 005 | **proposed: accepted residual**; a missed note can still be added on main |
+| The re-record's capture ran under Python 3.14 only | 003 | **accepted residual (owner, 2026-11-11)**; the moved goldens are not interpreter-keyed, and the closing lane ran on beast-3's Python |
+| Notes completeness rests on one reviewer and an options audit | 003, 005 | **accepted residual (owner, 2026-11-11)**; a missed note can still be added on main |
 | `docs/explanation/ossie.md` on what an import restores | 003 | closed: PR 167 |
-| The Ossie import report's schema name and the `ossie-import` rule names are not in the format reference | 004 | **proposed: carried** as a docs issue |
-| The 0.1.0 control in the acceptance file still downloads from PyPI | 004 D4 | **proposed: carried** to the next release milestone: decide whether to retire the oldest control |
-| Installing a wheel in the acceptance tests resolves dependencies from the index | 004 (G5) | **proposed: accepted residual**, as for 0.2.0 |
-| Profiles: formal acceptance on macOS 27 arm64 with Python 3.11 (beast-3); a trial acceptance run and the published-package install on macOS 26 arm64 with Python 3.14; no Ubuntu, no Windows | 004, 005, 006 | **proposed: accepted residual**; `docs/support.md` names only the formal acceptance profile |
-| `docs/releasing.md` line 17 names only 0.1.0 as published by token upload | 005 | **proposed: carried**, a one-line docs edit for the owner to approve, since the page is normative |
-| Repository content and history review; target-only contributor realpaths | 005 (H2) | **proposed: accepted residuals**, as the owner accepted the first for 0.2.0; neither is recorded |
-| The stale-text check and the patches are rewritten by hand at each release | 005 | **proposed: carried** to the next release milestone |
+| The Ossie import report's schema name and the `ossie-import` rule names are not in the format reference | 004 | **carried (owner, 2026-11-11)** as a docs issue |
+| The 0.1.0 control in the acceptance file still downloads from PyPI | 004 D4 | **carried (owner, 2026-11-11)** to the next release milestone: decide whether to retire the oldest control |
+| Installing a wheel in the acceptance tests resolves dependencies from the index | 004 (G5) | **accepted residual (owner, 2026-11-11)**, as for 0.2.0 |
+| Profiles: formal acceptance on macOS 27 arm64 with Python 3.11 (beast-3); a trial acceptance run and the published-package install on macOS 26 arm64 with Python 3.14; no Ubuntu, no Windows | 004, 005, 006 | **accepted residual (owner, 2026-11-11)**; `docs/support.md` names only the formal acceptance profile |
+| `docs/releasing.md` line 17 names only 0.1.0 as published by token upload | 005 | **carried (owner, 2026-11-11)**, a one-line docs edit for the owner to approve, since the page is normative |
+| Repository content and history review; target-only contributor realpaths | 005 (H2) | **accepted residuals (owner, 2026-11-11)**, as the owner accepted the first for 0.2.0; neither is recorded |
+| The stale-text check and the patches are rewritten by hand at each release | 005 | **carried (owner, 2026-11-11)** to the next release milestone |
 | Package ownership and release authority | 005 | accepted as observed: the upload with the stored credentials was accepted by PyPI, which shows upload rights, not ownership |
 | The full lane on the patched tree | 006 | closed: the closing lane above |
-| `twine check`: the package has no long description | 006 | **proposed: carried**: adding a `readme` to `pyproject.toml` changes package metadata and belongs to the next release |
+| `twine check`: the package has no long description | 006 | **carried (owner, 2026-11-11)**: adding a `readme` to `pyproject.toml` changes package metadata and belongs to the next release |
 | Announcements | plan §7, 005, 006 | retired: outside this milestone; none made |
-| The owner uploads by hand; an agent session is refused the tag and the release | plan RN-D5, N19 | closed by RN-D13; read by plan §13 (proposed) |
+| The owner uploads by hand; an agent session is refused the tag and the release | plan RN-D5, N19 | closed by RN-D13; read by plan §13 (approved by the owner, 2026-11-11) |
 | RN1 had to wait for RN0's merge and take its moved digests on the RN0 tree | 002 | closed: 003 and its spec §13 (digests measured on `d7317d25`) |
 | RN2's spec was unwritten and waited for RN1's merge | 003 | closed: 004 |
 | RN3 owed the dossier, the patches, the support row and the publication actions | 004 | closed: 005 (dossier, patches); 006 (support row applied, publication) |
-| The close owed its record, the sweep and the closing lane | 006 | lane closed above; record and sweep **pending this close's ruling** |
-| The plan's reviewed r1 bytes are not in history, and the approved r2 was not re-reviewed | 001 | **proposed: accepted residual**; the reviewer's output confirms both r1 digests |
-| The plan reviewer could not run the suite or reach PyPI, GitHub environments or beast-3 | 001 | **proposed: accepted residual**; those rows rested on the session's observations, later repeated in 004 and here |
+| The close owed its record, the sweep and the closing lane | 006 | closed: the lane above, this record and this sweep, approved by the owner (2026-11-11) |
+| The plan's reviewed r1 bytes are not in history, and the approved r2 was not re-reviewed | 001 | **accepted residual (owner, 2026-11-11)**; the reviewer's output confirms both r1 digests |
+| The plan reviewer could not run the suite or reach PyPI, GitHub environments or beast-3 | 001 | **accepted residual (owner, 2026-11-11)**; those rows rested on the session's observations, later repeated in 004 and here |
 | The count of four unresolved planning links was the reviewer's; the session had reproduced one | 001 | closed: RN1 measured all four with the test's own walk (003, spec M11) |
-| Two count literals changed in RN0 are covered only by the set assertions beside them | 002 | **proposed: accepted residual** |
-| Ossie byte equality was shown on the census and two examples, not for every model | 002 | **proposed: accepted residual**; the reviewer found no counterexample |
-| Lint: repository-wide `ruff` findings predate the milestone; RN0 and RN1 recorded a narrower lint gate than RN0's spec named | 002 spec, 003 spec | **proposed: accepted residual**; no phase added a finding. The repository-wide count (182) is **proposed: carried** as maintenance |
-| Five gzip containers were re-recorded by editing the stored document; equality with live output rests on their owning tests | 003 | **proposed: accepted residual**; those tests pass in the closing lane |
+| Two count literals changed in RN0 are covered only by the set assertions beside them | 002 | **accepted residual (owner, 2026-11-11)** |
+| Ossie byte equality was shown on the census and two examples, not for every model | 002 | **accepted residual (owner, 2026-11-11)**; the reviewer found no counterexample |
+| Lint: repository-wide `ruff` findings predate the milestone; RN0 and RN1 recorded a narrower lint gate than RN0's spec named | 002 spec, 003 spec | **accepted residual (owner, 2026-11-11)**; no phase added a finding. The repository-wide count (182) is **carried (owner, 2026-11-11)** as maintenance |
+| Five gzip containers were re-recorded by editing the stored document; equality with live output rests on their owning tests | 003 | **accepted residual (owner, 2026-11-11)**; those tests pass in the closing lane |
 | Version availability was a dated observation needing a recheck immediately before upload | 003, 004 | closed: 006 (404 at 15:36:31Z, upload at 15:36:41Z) |
 | The retained candidate lives outside git; history holds its identities, not its bytes | 004 | closed in substance: the same bytes are now on PyPI and attached to the GitHub release, with matching digests |
 | Candidate acceptance is not the published files' identity | 004 | closed: step E (006) |
-| The installed identity probe pins no independently derived digest | 004 | **proposed: accepted residual**; the format's own vectors test the algorithm |
-| RN2's tightened checks have no separate pre-fix red run; the session did not rebuild the reviewer's broken implementations | 004 spec | **proposed: accepted residual** |
-| RN2 part two (the build and the run) was not reviewed | 004 | **proposed: accepted residual**; it is commands and retained output |
-| Review fixes in RN0, RN1, RN2 part one and RN3 were not re-reviewed | 002, 003, 004, 005 | **proposed: accepted residual**; the closing lane and this close review ran after them |
-| The default lanes were single runs on one machine, with uv 0.13.7 on beast-3 | 002, 003 | **proposed: accepted residual**; five lanes on the final trees agree |
+| The installed identity probe pins no independently derived digest | 004 | **accepted residual (owner, 2026-11-11)**; the format's own vectors test the algorithm |
+| RN2's tightened checks have no separate pre-fix red run; the session did not rebuild the reviewer's broken implementations | 004 spec | **accepted residual (owner, 2026-11-11)** |
+| RN2 part two (the build and the run) was not reviewed | 004 | **accepted residual (owner, 2026-11-11)**; it is commands and retained output |
+| Review fixes in RN0, RN1, RN2 part one and RN3 were not re-reviewed | 002, 003, 004, 005 | **accepted residual (owner, 2026-11-11)**; the closing lane and this close review ran after them |
+| The default lanes were single runs on one machine, with uv 0.13.7 on beast-3 | 002, 003 | **accepted residual (owner, 2026-11-11)**; five lanes on the final trees agree |
 | RN3's patches depended on the `b913d43e` tree, the check's allowlist on that text, and the date was a stand-in | 005 | closed: 006 applied all three to `2165ccf1` with the date 2026-11-11; the check exits 0 |
-| The first step-E run failed on a cached 404 and its output was not retained | 006 | **proposed: accepted residual**; the rerun is retained. Lesson recorded: poll the version endpoint before comparing |
+| The first step-E run failed on a cached 404 and its output was not retained | 006 | **accepted residual (owner, 2026-11-11)**; the rerun is retained. Lesson recorded: poll the version endpoint before comparing |
 | RN-D11's other opt-in lanes (`evidence`, `census` and the rest) did not run | plan, all records | closed by ruling: excluded for this milestone (RN-D11) |
 | Refuted in RN0: the disclosure failures were missing rows, not a stale count; the first `value-free` class was wrong (a default export does not refuse populations, and populations are not the only values); the focused gate omitted the disclosure docs test; the skill-link repair needed a chained successor, not regeneration; the dynamic inventory gained 133 rows, not 132; the successor's reason miscounted the reads (nine exporter reads replaced, five importer reads consolidated) | 002, RN0 spec | closed: each is corrected in 002 or its spec, with review K1 and K2 |
 | Refuted in RN1: two paragraphs were over the limit, not one; the approved notes said an import restores the original model; reconciliation by pull request missed four changes; the planning-link test was twice reported from a run made too early | 003 | closed: each is corrected in 003, with review F1 to F5 |
@@ -250,8 +260,8 @@ the only tracked file outside `.gnd-planning/` this close changes.
 
 ## Plan repair
 
-Plan §13 (appended 2026-11-11, proposed) reads RN-D5 and the publication
-stage against RN-D13. The earlier amendment, §12, was approved by the owner
+Plan §13 (appended 2026-11-11) reads RN-D5 and the publication stage against
+RN-D13. The owner approved it with the close; its heading now records that. The earlier amendment, §12, was approved by the owner
 ("Yes, add RN0").
 
 ## Refactoring review
@@ -291,5 +301,13 @@ stage against RN-D13. The earlier amendment, §12, was approved by the owner
 
 - **Close review instrument:** "One Codex reviewer" (2026-11-11, in this
   session).
-- **Not ruled yet:** the proposed dispositions of the sweep; plan §13; this
-  close.
+- **Every remaining decision:** "Accept and merge" (owner, 2026-11-11, in
+  this session), answering "Accept the close as proposed and merge PR 168?",
+  asked over PR 168 at `27c4fc93`. It rules:
+  - every disposition the draft marked "proposed", as proposed: the accepted
+    residuals and the carried items, each with the target its row names;
+  - plan §13 as approved;
+  - this close as approved;
+  - the merge of PR 168.
+- **Not ruled here:** filing any carried item as a GitHub issue, and any
+  announcement. Both remain the owner's.

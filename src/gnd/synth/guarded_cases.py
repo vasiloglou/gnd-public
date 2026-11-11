@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from collections import defaultdict
 from dataclasses import dataclass
+from itertools import chain
 from random import Random
 from typing import Any
 
@@ -206,9 +207,11 @@ def confirmation_work(pair, guards, budget):
     for case in pair:
         for _, guard, _ in guards:
             prefixes = 1
-            witness = (guard.get("consequent") or {}).get("exists") or {}
-            atoms = [*(guard.get("antecedent") or ()), *(witness.get("atoms") or ())]
-            for atom in atoms:
+            consequent = guard.get("consequent") or {}
+            exists = consequent.get("exists") or {}
+            head = consequent.get("atom") or consequent.get("absence")
+            witnesses = (head,) if head is not None else exists.get("atoms") or ()
+            for atom in chain(guard.get("antecedent") or (), witnesses):
                 rows = len(case.facts.get(atom["fact_type"], ()))
                 charge(budget, 1 + rows * len(atom_bind(atom)))
                 prefixes *= rows

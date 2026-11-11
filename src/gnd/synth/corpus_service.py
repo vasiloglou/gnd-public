@@ -7,6 +7,7 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 from gnd import input_policy as _rf7_input
+from gnd.safefs import rename_noreplace
 
 
 class IndexValidationError(ValueError):
@@ -167,12 +168,11 @@ class _SynthCorpusTransaction:
         if not self._active:
             raise OSError("synthesis transaction is no longer active")
         if self.fresh:
-            self.final_root.mkdir()
+            parent_fd = os.open(self.final_root.parent, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
             try:
-                os.replace(self.stage_root, self.final_root)
-            except OSError:
-                self.final_root.rmdir()
-                raise
+                rename_noreplace(parent_fd, self.stage_root.name, parent_fd, self.final_root.name)
+            finally:
+                os.close(parent_fd)
             self._active = False
             return
         backup = self.stage_root.with_name(self.stage_root.name + ".backup")

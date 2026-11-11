@@ -69,7 +69,17 @@ def test_guarded_pairs_and_ordinary_corpus(tmp_path):
     ]
     ordinary = out / "ordinary/corpus"
     index = json.loads((ordinary / "index.json").read_bytes())
-    assert all(name in json.dumps(index) for name in expected["mixed"]["ordinary"])
+    targets = {
+        "mandatory": "fact_types[component_has_owner].constraints[0]",
+        "ring": "fact_types[component_imports_component].constraints[0]",
+    }
+    for family in expected["mixed"]["ordinary"]:
+        assert any(
+            row["class"] == "violating"
+            and row.get("target") == targets[family]
+            and (ordinary / row["population"]).is_file()
+            for row in index["populations"]
+        )
     for candidate, outcome in [
         (model, "measure_full"),
         (out / "ordinary/scoped.orm.yaml", "measure_scoped"),
@@ -290,3 +300,68 @@ def test_explosive_collateral_guard_is_refused_before_checker(tmp_path, monkeypa
     assert manifest["rules"][0]["reason"] == "search-limit"
     assert manifest["rules"][0]["cases"] == []
     assert (out / manifest["ordinary"]["corpus"] / "index.json").is_file()
+
+
+def test_fresh_corpus_has_no_visible_empty_root(tmp_path, monkeypatch):
+    import os
+
+    from gnd.synth.corpus_service import _SynthCorpusTransaction
+
+    root = tmp_path / "corpus"
+    transaction = _SynthCorpusTransaction(root, fresh=True)
+    (transaction.stage_root / "complete").write_text("complete", encoding="utf-8")
+    original = os.replace
+
+    def replace(src, dst, **kwargs):
+        assert not root.exists()
+        return original(src, dst, **kwargs)
+
+    monkeypatch.setattr(os, "replace", replace)
+    try:
+        transaction.commit()
+    finally:
+        transaction.abort()
+    assert (root / "complete").read_text(encoding="utf-8") == "complete"
+
+
+def test_confirmation_work_accounts_for_atom_and_absence_witnesses():
+    import pytest
+
+    from gnd.synth.guarded import _WorkBudget
+    from gnd.synth.guarded_cases import Candidate, SearchLimit, confirmation_work
+
+    antecedent = [{"fact_type": "a", "bind": {"name": "$x"}}]
+    head = {"fact_type": "b", "bind": {"name": "$x"}}
+    case = Candidate({"a": [{"name": "a"}], "b": [{"name": "a"}, {"name": "b"}]}, 1)
+    for kind in ("atom", "absence"):
+        guards = [("constraints[0]", {"antecedent": antecedent, "consequent": {kind: head}}, None)]
+        with pytest.raises(SearchLimit):
+            confirmation_work((case,), guards, _WorkBudget(limit=3))
+
+
+def test_fact_type_local_guard_is_invalid_model_input(tmp_path):
+    document = YAML(typ="safe").load(EXAMPLE)
+    guard = document["constraints"].pop()
+    document["fact_types"][0]["constraints"].append(guard)
+    model = tmp_path / "local-guard.json"
+    model.write_text(json.dumps(document), encoding="utf-8")
+    out = tmp_path / "out"
+    assert _guarded_run(model, out).returncode == 3
+    assert not out.exists()
+
+
+def test_fresh_publication_preserves_another_writer(tmp_path):
+    import pytest
+
+    from gnd.synth.corpus_service import _SynthCorpusTransaction
+
+    root = tmp_path / "corpus"
+    transaction = _SynthCorpusTransaction(root, fresh=True)
+    (transaction.stage_root / "complete").write_text("candidate", encoding="utf-8")
+    root.mkdir()
+    try:
+        with pytest.raises(FileExistsError):
+            transaction.commit()
+    finally:
+        transaction.abort()
+    assert list(root.iterdir()) == []

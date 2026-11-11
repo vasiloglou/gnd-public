@@ -44,8 +44,8 @@
         "algorithm_sha256": "cc94ccd95c6136eecd07433b2ccd49f14ad30a9b1faae09c7f788e016064e434"
       },
       "after": {
-        "raw_sha256": "d4ff5222a59eaaa1adfb65aeec1856a8d8507aa025593c35445b3f6b9431d554",
-        "algorithm_sha256": "c329d9d73a440bbac85623439b828ccb0746c3b2eeaea4629549eb9b771af9e4"
+        "raw_sha256": "7ac40616ae2358ccffa4f8e6d5fce4b1778e2508608647449d97942bc11f9d68",
+        "algorithm_sha256": "4ace59299ece8edd7ba8193952b7674ef138e2f88cec20e1f3d9f4f7ec218017"
       },
       "reason": "Add an opt-in fresh-root publication guard for guarded case corpora."
     }

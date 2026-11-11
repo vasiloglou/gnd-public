@@ -2514,7 +2514,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +15 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +16 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -3035,7 +3035,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Validated records and resolved artifact pairs, staged/published corpus trees or a merged index.json; typed manifest and path errors.
 - status: canonical
 - modules: src/gnd/synth/corpus_service.py
-- uses: infra.input_policy, synth.paths
+- uses: infra.input_policy, infra.safe_filesystem, synth.paths
 - used_by: cli.dispatch, measure.service, synth.service
 - part_of: subsystem.synth
 - tests: tests/test_synth_conforming.py, tests/test_measure_offline.py

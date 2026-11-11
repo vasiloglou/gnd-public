@@ -145,3 +145,6 @@ implementation.
 | A tiny target population could give a different guard an exponential join. | The collateral regression showed a two-row case entering checker confirmation against eighteen independent variable positions. Both cases now pass a charged upper-bound check before checker entry. |
 | The YAML event guard can raise a parser exception before the model loader normalizes it. | The malformed fixture reproduced a traceback. The route returns exit 3 and leaves the destination absent. |
 | The new format must emit a single JSON document even when ordinary synthesis runs. | The ordinary lane now receives a JSON payload sink. The guarded manifest owns the only public response. |
+| Fresh-root creation briefly exposed an empty corpus. | The review reproduction intercepted the publication and saw the empty root. Fresh mode now uses the existing exclusive directory rename. A competing writer keeps its root. |
+| Checker preflight omitted witnesses for atom and absence. | The reviewer regression showed both passing a budget exhausted by their antecedents alone. The preflight now charges every supported witness atom as well. |
+| The reviewer proposed that a fact-type-local guard survives scoping. | The normal model validator returns exit 3 for that input before generation. The meta-schema admits guarded constraints only at top level. |

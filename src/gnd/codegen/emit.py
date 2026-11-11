@@ -102,6 +102,7 @@ from gnd.extract.projection import project
 from gnd.extract.refscheme import applicable_set
 from gnd.extract.vocabulary import reading_text, render_verbalization
 from gnd.model import structured_derivation_ids
+from gnd.model_index import ModelIndex
 from gnd.synth import paths as _paths
 from gnd.verbalize import _neutralize, line_text
 
@@ -746,7 +747,7 @@ def render_skill_document(
                 "|---|---|",
             ]
         )
-        for fact_type in model.fact_types:
+        for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
             fact_id = str(fact_type.get("id"))
             if fact_id not in structured:
                 continue

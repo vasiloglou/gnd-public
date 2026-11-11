@@ -128,34 +128,34 @@ Closed, digest-bound contracts for data-driven experiment sessions.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `AdapterParameters` | class(BaseModel) | 120 | Non-secret model parameters committed by a schema-v6 contract. |
-| `AdapterDeclaration` | class(BaseModel) | 128 | Contract selection of one trusted local adapter policy. |
-| `CaseRole` | class(StrEnum) | 137 | (no docstring) |
-| `SessionContractError` | class(Exception) | 142 | A session contract could not be safely loaded and verified. |
-| `DigestBoundPath` | class(BaseModel) | 158 | One experiment-relative file whose exact bytes are committed. |
-| `ProtectedPath` | class(BaseModel) | 170 | One compact path/digest seal for a protected candidate file. |
-| `ExpectedOutput` | class(DigestBoundPath) | 179 | One declared expected output, addressed by digest. |
-| `VerifyCase` | class(BaseModel) | 226 | The fixed GND verifier operation for one candidate-relative subject. |
-| `TransitionVerifyCase` | class(BaseModel) | 236 | A candidate-owned transition walk with one digest-bound pre-state. |
-| `CoverageFloor` | class(BaseModel) | 256 | Minimum checker-observed population for one declared model fact type. |
-| `ExactBytesAcceptance` | class(BaseModel) | 265 | Acceptance by verifier success and byte-exact declared outputs. |
-| `ConstraintSatisfactionAcceptance` | class(BaseModel) | 282 | Acceptance by checker band zero plus checker-reported coverage floors. |
-| `RequiredOperation` | class(BaseModel) | 327 | One operation whose single submitted step must contain this subset. |
-| `WalkAcceptance` | class(BaseModel) | 336 | Required and forbidden operation floors over an accepted walk. |
-| `TransitionAcceptance` | class(BaseModel) | 376 | Acceptance by the band of one transition verifier invocation. |
-| `JudgmentGate` | class(BaseModel) | 391 | (no docstring) |
-| `SessionCase` | class(BaseModel) | 405 | Normalized required or diagnostic row in the fixed case denominator. |
-| `TestsAcceptance` | class(BaseModel) | 534 | Acceptance by a sealed, explicitly named JUnit test set. |
-| `PatchCollection` | class(BaseModel) | 877 | (no docstring) |
-| `PatchArtifact` | class(BaseModel) | 891 | (no docstring) |
-| `CandidateEdits` | class(BaseModel) | 897 | (no docstring) |
-| `RankingMetric` | class(BaseModel) | 922 | (no docstring) |
-| `DataDrivenContract` | class(BaseModel) | 1052 | Version-dispatched contract normalized for the session runtime. |
-| `DataDrivenContract.profile(self) -> SessionProfile` | method | 1076 | Runtime-only shared capabilities; selection never mutates model equality. |
-| `DataDrivenContract.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1084 | Dispatch the closed wire version before parsing either schema. |
-| `DataDrivenContract.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1135 | Route JSON through the version dispatcher above. |
-| `DataDrivenContract.required_cases(self) -> tuple[SessionCase, ...]` | method | 1216 | Required cases in their contract order. |
-| `read_session_contract(path, *, experiment_root, experiment_id) -> DataDrivenContract` | function | 1605 | Load, close, path-check, and recompute every contract byte binding. |
+| `AdapterParameters` | class(BaseModel) | 121 | Non-secret model parameters committed by a schema-v6 contract. |
+| `AdapterDeclaration` | class(BaseModel) | 129 | Contract selection of one trusted local adapter policy. |
+| `CaseRole` | class(StrEnum) | 138 | (no docstring) |
+| `SessionContractError` | class(Exception) | 143 | A session contract could not be safely loaded and verified. |
+| `DigestBoundPath` | class(BaseModel) | 159 | One experiment-relative file whose exact bytes are committed. |
+| `ProtectedPath` | class(BaseModel) | 171 | One compact path/digest seal for a protected candidate file. |
+| `ExpectedOutput` | class(DigestBoundPath) | 180 | One declared expected output, addressed by digest. |
+| `VerifyCase` | class(BaseModel) | 227 | The fixed GND verifier operation for one candidate-relative subject. |
+| `TransitionVerifyCase` | class(BaseModel) | 237 | A candidate-owned transition walk with one digest-bound pre-state. |
+| `CoverageFloor` | class(BaseModel) | 257 | Minimum checker-observed population for one declared model fact type. |
+| `ExactBytesAcceptance` | class(BaseModel) | 266 | Acceptance by verifier success and byte-exact declared outputs. |
+| `ConstraintSatisfactionAcceptance` | class(BaseModel) | 283 | Acceptance by checker band zero plus checker-reported coverage floors. |
+| `RequiredOperation` | class(BaseModel) | 328 | One operation whose single submitted step must contain this subset. |
+| `WalkAcceptance` | class(BaseModel) | 337 | Required and forbidden operation floors over an accepted walk. |
+| `TransitionAcceptance` | class(BaseModel) | 377 | Acceptance by the band of one transition verifier invocation. |
+| `JudgmentGate` | class(BaseModel) | 392 | (no docstring) |
+| `SessionCase` | class(BaseModel) | 406 | Normalized required or diagnostic row in the fixed case denominator. |
+| `TestsAcceptance` | class(BaseModel) | 535 | Acceptance by a sealed, explicitly named JUnit test set. |
+| `PatchCollection` | class(BaseModel) | 878 | (no docstring) |
+| `PatchArtifact` | class(BaseModel) | 892 | (no docstring) |
+| `CandidateEdits` | class(BaseModel) | 898 | (no docstring) |
+| `RankingMetric` | class(BaseModel) | 923 | (no docstring) |
+| `DataDrivenContract` | class(BaseModel) | 1053 | Version-dispatched contract normalized for the session runtime. |
+| `DataDrivenContract.profile(self) -> SessionProfile` | method | 1077 | Runtime-only shared capabilities; selection never mutates model equality. |
+| `DataDrivenContract.model_validate(cls, obj, *args, **kwargs) -> Self` | method | 1085 | Dispatch the closed wire version before parsing either schema. |
+| `DataDrivenContract.model_validate_json(cls, json_data, *args, **kwargs) -> Self` | method | 1136 | Route JSON through the version dispatcher above. |
+| `DataDrivenContract.required_cases(self) -> tuple[SessionCase, ...]` | method | 1217 | Required cases in their contract order. |
+| `read_session_contract(path, *, experiment_root, experiment_id) -> DataDrivenContract` | function | 1606 | Load, close, path-check, and recompute every contract byte binding. |
 
 ## gnd.exp.session_control — `src/gnd/exp/session_control.py`
 Components: exp.service

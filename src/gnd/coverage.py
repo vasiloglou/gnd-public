@@ -716,7 +716,7 @@ def _element_universe(
     for operation in model.operations:
         elements.append((operation_address(str(operation["id"])), "operation", "declared-id"))
     structured = set(structured_derivation_ids(model))
-    for fact_type in model.fact_types:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
         fact_type_id = str(fact_type["id"])
         elements.append((fact_type_address(fact_type_id), "fact_type", "declared-id"))
         if fact_type_id in structured:

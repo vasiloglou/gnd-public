@@ -24,27 +24,27 @@ The model -> file-tree emitter: deterministic, self-parsing, provider-free.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `EmitGateError` | class(RuntimeError) | 195 | The emitter built a tree that violates one of its own invariants. |
-| `ProjectExistsError` | class(FileExistsError) | 209 | The target directory exists and is not empty. |
-| `SkillNameError` | class(ValueError) | 220 | A generated skill name violates the Agent Skills directory contract. |
-| `provider_import_offenders(sources) -> dict[str, list[str]]` | function | 246 | ``{relpath: [library, ...]}`` for every provider/network import found. |
-| `scan_tree_for_provider_imports(root) -> dict[str, list[str]]` | function | 277 | :func:`provider_import_offenders` over every ``.py`` under ``root``. |
-| `assert_emitted_python_parses(files) -> None` | function | 287 | ``ast.parse`` every emitted ``.py``, or raise :class:`EmitGateError`. |
-| `GeneratedFile` | class | 317 | One emitted file: its relpath, its whole text, and who owns it. |
-| `GeneratedProject` | class | 326 | Everything ``gnd codegen`` would write, before anything is written. |
-| `GeneratedProject.relpaths(self) -> tuple[str, ...]` | method | 336 | (no docstring) |
-| `GeneratedProject.derived(self) -> tuple[GeneratedFile, ...]` | method | 340 | (no docstring) |
-| `GeneratedProject.extensions(self) -> tuple[GeneratedFile, ...]` | method | 344 | (no docstring) |
-| `extract_stem(model_path) -> str` | function | 348 | The slugged filename stem the artifact bundle's four files share. |
-| `render_tools_module(model, *, model_path, package) -> str` | function | 413 | ``tools.py``: one module-level function per fact type, 100% derived. |
-| `render_package_init(model, *, model_path, package) -> str` | function | 501 | The generated package's ``__init__.py`` — a re-export, nothing more. |
-| `render_skill_document(model, *, model_path, package, stem, skill_name) -> str` | function | 569 | The whole ``SKILL.md``, frontmatter included, emitted by code. |
-| `render_architecture_contract(artifact_relpaths) -> str` | function | 854 | Render the create-once contract seeded from emitted artifact paths. |
-| `render_smoke_module() -> str` | function | 874 | Render the create-once smoke module: three lines, all behaviour delegated. |
-| `smoke_module_relpath(discriminator) -> str` | function | 891 | The one home for the emitted smoke module's path. |
-| `smoke_module_pattern() -> str` | function | 907 | The glob every emitted smoke module matches, whatever its project. |
-| `emit_project(model, model_path, *, skill_name) -> GeneratedProject` | function | 923 | Describe the whole tree for ``model`` — WITHOUT writing anything. |
-| `write_project(project_, out_root, *, manifest_text, parent_fd, parent_path, root_parts, root_fd) ->…` | function | 1186 | Publish ``project_`` under ``out_root`` atomically, or raise. |
+| `EmitGateError` | class(RuntimeError) | 196 | The emitter built a tree that violates one of its own invariants. |
+| `ProjectExistsError` | class(FileExistsError) | 210 | The target directory exists and is not empty. |
+| `SkillNameError` | class(ValueError) | 221 | A generated skill name violates the Agent Skills directory contract. |
+| `provider_import_offenders(sources) -> dict[str, list[str]]` | function | 247 | ``{relpath: [library, ...]}`` for every provider/network import found. |
+| `scan_tree_for_provider_imports(root) -> dict[str, list[str]]` | function | 278 | :func:`provider_import_offenders` over every ``.py`` under ``root``. |
+| `assert_emitted_python_parses(files) -> None` | function | 288 | ``ast.parse`` every emitted ``.py``, or raise :class:`EmitGateError`. |
+| `GeneratedFile` | class | 318 | One emitted file: its relpath, its whole text, and who owns it. |
+| `GeneratedProject` | class | 327 | Everything ``gnd codegen`` would write, before anything is written. |
+| `GeneratedProject.relpaths(self) -> tuple[str, ...]` | method | 337 | (no docstring) |
+| `GeneratedProject.derived(self) -> tuple[GeneratedFile, ...]` | method | 341 | (no docstring) |
+| `GeneratedProject.extensions(self) -> tuple[GeneratedFile, ...]` | method | 345 | (no docstring) |
+| `extract_stem(model_path) -> str` | function | 349 | The slugged filename stem the artifact bundle's four files share. |
+| `render_tools_module(model, *, model_path, package) -> str` | function | 414 | ``tools.py``: one module-level function per fact type, 100% derived. |
+| `render_package_init(model, *, model_path, package) -> str` | function | 502 | The generated package's ``__init__.py`` — a re-export, nothing more. |
+| `render_skill_document(model, *, model_path, package, stem, skill_name) -> str` | function | 570 | The whole ``SKILL.md``, frontmatter included, emitted by code. |
+| `render_architecture_contract(artifact_relpaths) -> str` | function | 855 | Render the create-once contract seeded from emitted artifact paths. |
+| `render_smoke_module() -> str` | function | 875 | Render the create-once smoke module: three lines, all behaviour delegated. |
+| `smoke_module_relpath(discriminator) -> str` | function | 892 | The one home for the emitted smoke module's path. |
+| `smoke_module_pattern() -> str` | function | 908 | The glob every emitted smoke module matches, whatever its project. |
+| `emit_project(model, model_path, *, skill_name) -> GeneratedProject` | function | 924 | Describe the whole tree for ``model`` — WITHOUT writing anything. |
+| `write_project(project_, out_root, *, manifest_text, parent_fd, parent_path, root_parts, root_fd) ->…` | function | 1187 | Publish ``project_`` under ``out_root`` atomically, or raise. |
 
 ## gnd.codegen.identifiers — `src/gnd/codegen/identifiers.py`
 Components: codegen.identifiers

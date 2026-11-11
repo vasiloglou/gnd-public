@@ -41,6 +41,7 @@ from gnd.measure.score import Observation, score_run
 from gnd.measure.truth import ExpectationMissingError, expectation_for, resolve_constraint_ref
 from gnd.model import Model
 from gnd.model_identity import stable_model_identifier
+from gnd.model_index import ModelIndex
 from gnd.synth.provenance import Sidecar
 from gnd.values import model_digest, model_identity_matches
 
@@ -301,7 +302,7 @@ def build_measurement_report(
                 ),
             ]
         )
-        for fact_type in model.fact_types
+        for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
         for rule in [fact_type.get("derivation_rule")]
         if isinstance(rule, dict)
     )

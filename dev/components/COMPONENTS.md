@@ -32,7 +32,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd codegen, generate project, scaffold agent, regenerate project, model to code, ownership manifest
 - status: canonical
 - components: cli.codegen_command, codegen.service, model.loading, codegen.emit, codegen.identifiers, codegen.manifest, codegen.regenerate
-- members_uses: check.population_structure, exp.frontmatter, extract.bundle, extract.manifest, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, … +12 more (graph.md)
+- members_uses: check.population_structure, exp.frontmatter, extract.bundle, extract.manifest, extract.projection, extract.reference_schemes, extract.vocabulary, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.safe_filesystem, … +13 more (graph.md)
 - flow: cli.codegen_command -> codegen.service -> model.loading -> codegen.emit -> codegen.identifiers -> codegen.manifest -> codegen.regenerate
 - notes: A fresh run bypasses the planner part of regeneration. An existing project is classified and reclassified before mutation.
 
@@ -84,7 +84,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd exp, experiment session, session contract, run agent against verifier, close experiment, retained attempts
 - status: canonical
 - components: cli.exp_command, exp.command, exp.spec, exp.schema, exp.adapter_policy, exp.service, exp.declared_invocation, agent.declared_adapter, exp.acceptance, exp.close
-- members_uses: agent.invocation, assurance.evidence, assurance.policy, assurance.transport, check.branches, checker.evaluate, cli.arguments, conformance.integrity, conformance.report, conformance.service, exp.conclusions, exp.evidence_paths, … +24 more (graph.md)
+- members_uses: agent.invocation, assurance.evidence, assurance.policy, assurance.transport, check.branches, checker.evaluate, cli.arguments, conformance.integrity, conformance.report, conformance.service, exp.conclusions, exp.evidence_paths, … +25 more (graph.md)
 - notes: Version 7 and 8 patch sessions go through exp.session_runtime and the session store. Verifier branches use exp.verifier_environment or exp.tests_runner.
 
 ### subsystem.witness
@@ -137,7 +137,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: GeneratedProject descriptions or published project paths
 - status: canonical
 - modules: src/gnd/codegen/__init__.py, src/gnd/codegen/emit.py, src/gnd/codegen/docstrings.py
-- uses: check.population_structure, codegen.identifiers, codegen.manifest, codegen.regenerate, exp.frontmatter, extract.bundle, extract.projection, extract.reference_schemes, extract.vocabulary, infra.safe_filesystem, infra.verdict_prose, infra.version, model.architecture, model.loading, model.scalar_terms, synth.paths
+- uses: check.population_structure, codegen.identifiers, codegen.manifest, codegen.regenerate, exp.frontmatter, extract.bundle, extract.projection, extract.reference_schemes, extract.vocabulary, infra.safe_filesystem, infra.verdict_prose, infra.version, model.architecture, model.loading, model.query_index, model.scalar_terms, synth.paths
 - used_by: codegen.service, conformance.structural
 - part_of: subsystem.codegen
 - tests: tests/test_codegen_emit.py, tests/test_codegen_derivation.py, tests/test_codegen_manifest.py, tests/test_codegen_smoke_naming.py
@@ -383,7 +383,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Audited per-model JSON Schema or ProjectionGateError
 - status: canonical
 - modules: src/gnd/extract/projection.py
-- uses: model.scalar_terms
+- uses: model.query_index, model.scalar_terms
 - used_by: codegen.emit, codegen.service, extract.service
 - part_of: subsystem.extract
 - tests: tests/test_extract_projection.py, tests/test_codegen_emit.py, tests/test_object_type_description.py
@@ -826,7 +826,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: versioned measurement payload or escaped text report
 - status: canonical
 - modules: src/gnd/measure/report.py
-- uses: checker.evaluate, infra.input_policy, infra.report_redaction, infra.verdict_prose, measure.coverage, measure.score, measure.truth, model.address, model.labels, model.loading, model.scalar_identity, synth.assemble, synth.frontier, synth.provenance
+- uses: checker.evaluate, infra.input_policy, infra.report_redaction, infra.verdict_prose, measure.coverage, measure.score, measure.truth, model.address, model.labels, model.loading, model.query_index, model.scalar_identity, synth.assemble, synth.frontier, synth.provenance
 - used_by: measure.service
 - part_of: subsystem.measure
 - tests: tests/test_measure_offline.py, tests/test_measure_labels.py, tests/test_measure_coverage.py, tests/test_measure_negative_control.py
@@ -1142,7 +1142,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Normalized DataDrivenContract or SessionContractError
 - status: canonical
 - modules: src/gnd/exp/session_contract.py
-- uses: exp.session_profile, extract.manifest, infra.artifacts, infra.bounded_json, infra.input_policy, model.loading, semantics.transitions
+- uses: exp.session_profile, extract.manifest, infra.artifacts, infra.bounded_json, infra.input_policy, model.loading, model.query_index, semantics.transitions
 - used_by: cli.exp_command, exp.acceptance, exp.adapter_policy, exp.candidate_patch, exp.close, exp.command, exp.expectation_author, exp.service, exp.session_evidence, exp.session_replay, exp.session_runtime, exp.session_store, … +1 more (graph.md)
 - part_of: subsystem.experiment
 - tests: tests/test_exp_session_contract.py, tests/test_public_local_adapter_policy_controls.py
@@ -2339,7 +2339,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Bound opinion admission, mechanical-and-opinion admission, repair and review-required decisions with per-judge qualifications
 - status: canonical
 - modules: src/gnd/judgments.py
-- uses: check.admission, infra.artifacts, infra.bounded_json, infra.safe_filesystem, model.loading, model.population_loading
+- uses: check.admission, infra.artifacts, infra.bounded_json, infra.safe_filesystem, model.loading, model.population_loading, model.query_index
 - used_by: cli.api, exp.session_judgments
 - tests: tests/test_public_v71_full_judgments.py, tests/test_public_v71_judgment_successor_guards.py, tests/test_v72_phase4_json_input.py, tests/test_disclosure_mode.py
 - checked: partial
@@ -2353,7 +2353,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Differential report with entailment rows, population bands, directional separators, derivation differences and synthesis refusals
 - status: canonical
 - modules: src/gnd/diff.py
-- uses: check.service, checker.evaluate, extract.source_anchors, infra.artifacts, model.address, model.loading, model.population_loading, model.population_sentences, model.reference_binding, model.scalar_terms, synth.assemble, synth.boundary
+- uses: check.service, checker.evaluate, extract.source_anchors, infra.artifacts, model.address, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_terms, synth.assemble, synth.boundary
 - used_by: cli.api, cli.checking_command
 - tests: tests/test_v70_phase6_corpus.py, tests/test_v70_phase6_adversarial.py, tests/test_v70_phase6_review.py, tests/test_public_semantic_boundaries.py
 - notes: Undecided entailment is retained explicitly; structured-rule or fixed-reference models refuse synthesis while supplied populations can still be compared.
@@ -2421,7 +2421,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, discover.candidates, … +24 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +32 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2806,7 +2806,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Deterministic vocabulary text ending in one newline; reading_text substitutes placeholder type names and role qualifiers.
 - status: canonical
 - modules: src/gnd/vocabulary.py
-- uses: check.universe, infra.verdict_prose, model.reference_schemes
+- uses: check.universe, infra.verdict_prose, model.query_index, model.reference_schemes
 - used_by: export.ilp_prompt, extract.vocabulary, model.verbalization
 - tests: tests/test_extract_vocabulary.py, tests/test_object_type_description.py
 - notes: Withholds constraint prose, modalities, provenance and operation obligations; composite identification still reads external reference identity. The pure re-export shim src/gnd/extract/vocabulary.py should be merged into this entry by the writer handling that module.
@@ -3022,7 +3022,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: BoundaryCase records tagged no-subjects or unchecked and NotDerivable records for unavailable constructions or routes.
 - status: canonical
 - modules: src/gnd/synth/frontier.py
-- uses: check.branches, checker.evaluate, model.loading, model.population_loading, synth.assemble, synth.boundary, synth.mutations
+- uses: check.branches, checker.evaluate, model.loading, model.population_loading, model.query_index, synth.assemble, synth.boundary, synth.mutations
 - used_by: measure.coverage, measure.report, synth.service
 - tests: tests/test_measure_coverage.py, tests/test_measure_derivation.py, tests/test_synth_boundary.py
 - notes: No-subjects candidates are filtered by independent expected_state; unchecked candidates are discovered by observing the checker over the baseline and boundary candidates. Registry scope excludes exact-term, guarded-exists and opt-in compiled-subset routes from the predecessor frontier contract.

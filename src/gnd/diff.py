@@ -14,6 +14,7 @@ from gnd.artifacts import sha256_hex as _digest
 from gnd.checker import _compare, _identity_token, _partial_compatible, structured_extension_view
 from gnd.extract.anchors import vocabulary_digest
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.population import PopulationLoadError, load_population_bytes
 from gnd.verbalize_population import (
     PopulationVerbalizationError,
@@ -285,7 +286,7 @@ def description_annotations(model_a: Model, model_b: Model) -> list[dict[str, An
 
 
 def _structured(model: Model) -> bool:
-    return any(fact.get("derivation_rule") for fact in model.fact_types)
+    return any(fact.get("derivation_rule") for fact in ModelIndex.for_model(model).iter_fact_types_shared())
 
 
 def diff_models(

@@ -20,6 +20,7 @@ from gnd.artifacts import (
 from gnd.json_input import JsonInputRefusal, bounded_json, validate_json_value
 from gnd.manifest_paths import manifest_path_issue
 from gnd.model import load_model_bytes
+from gnd.model_index import ModelIndex
 from gnd.population import load_population_bytes
 
 MAX_JUDGMENT_WORK = 100000
@@ -525,7 +526,7 @@ def evaluate_judgments(
     }
     targets = {(t["fact_type"], t["index"]) for t in p["targets"]}
     supplied_types = {
-        ft["id"] for ft in model.fact_types if ft.get("derivation", "supplied") == "supplied"
+        ft["id"] for ft in ModelIndex.for_model(model).iter_fact_types_shared() if ft.get("derivation", "supplied") == "supplied"
     }
     for ft, index in targets:
         if (

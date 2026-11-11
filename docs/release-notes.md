@@ -25,9 +25,11 @@ start a model from one.
   the export when any field would be refused.
 - **Import.** `gnd import ossie ONTOLOGY.yaml --out MODEL.json` writes a GND
   model and its own loss report. With the sidecar beside an unchanged ontology,
-  the original model is restored and the report says whether its identity
-  matched. An ontology from another tool imports through the supported
-  projection. Import opens no network connection.
+  the model content the export kept is restored, and the report says whether
+  the restored model's identity matched the source's. What the export omitted
+  stays omitted: a model with sample or reference populations comes back
+  without them, and its identity does not match. An ontology from another tool
+  imports through the supported projection. Import opens no network connection.
 - **Scope.** The ontology layer of Ossie `0.3.0.dev0`, pinned to Apache Ossie
   commit `ee89dbdc`: concepts, relationships and a documented subset of
   constraint formulas. Ossie's semantic models, mappings and query interfaces
@@ -52,6 +54,21 @@ Finance edition while Engineering stays on the old one. The
 [command walkthrough](how-to/shared-expense-policies-commands.md) runs every step.
 Generated-app and linked-project conformance routes for these models remain
 unsupported. This feature requires the development checkout.
+
+- **New model format, version 5.** A model that includes a vocabulary declares
+  `version: 5` and uses two new fields, `includes` and `fact_type_constraints`
+  ([formats](reference/formats.md)). **GND 0.2.0 cannot read a version 5
+  model**: its schema refuses the version and both fields. Models at earlier
+  versions are unchanged.
+- **Evolving an included vocabulary.** A proposal can re-pin an include
+  (`repin-include`), and a preview of such a model carries `before_includes`
+  and `candidate_includes`. `gnd evolve preview --previous-include ID=PATH`
+  supplies the old bytes of a re-pinned include. GND 0.2.0 refuses these
+  proposals and previews.
+- **Model review.** `gnd verbalize model MODEL` and `gnd.api.verbalize_model`
+  print a review of the complete model. They print the same text in every
+  [disclosure mode](reference/disclosure.md), authored sample populations
+  included.
 
 ### Model identity a caller can recompute (issue 111)
 
@@ -97,6 +114,12 @@ admitted, never a path or a value. A preview that carries the new
 `population_check` field is refused by older GND readers. Rules and exits:
 [admitting a constraint on clean data](reference/evolve-policy.md#admitting-a-constraint-on-clean-data).
 
+One rule is stricter, with or without the option. A constraint written inside
+a fact type now counts every fact type it reaches, not only the one that holds
+it. Under `--policy additive`, a new constraint on an empty fact type that also
+ranges over a populated one is refused (`constraint.populated.add`), where
+0.2.0 admitted it.
+
 ### Unchecked source spans are counted (issue 74)
 
 `gnd validate MODEL --document DOC` on an unattended model now says how many
@@ -125,6 +148,12 @@ exists in proposal `schema_version` 3 only. **GND 0.2.0 cannot read a proposal
 that declares a source document**: it refuses it (exit 3). Proposals without
 the operation are unchanged. See [the additive
 policy](reference/evolve-policy.md#source-documents).
+
+The packaged unattended growth procedure of `gnd-model-from-text` also says
+what to do when a round's report names an existing fact type with the same
+shape as an added one. The host reuses the existing fact type, or keeps both
+and writes the reason in `provenance.rationale`, or keeps both with an open
+question, and logs which it did.
 
 ### Fixes and internal changes
 

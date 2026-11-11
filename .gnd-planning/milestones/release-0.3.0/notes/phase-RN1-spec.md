@@ -349,3 +349,29 @@ lane can see beyond the 31.
 8. **Lint.** The two findings `ruff` reports in
    `tests/test_development_scaffold.py` (lines 50 and 52) are on the base
    tree; the lines this phase adds have none.
+
+## Review findings (2026-11-11, appended)
+
+One reviewer, Codex, over `d7317d25..73884f6c` outside `.gnd-planning/`
+([retained output](phase-RN1-codex-review.md)): `revise`, 7 findings. Each was
+reproduced before it was accepted.
+
+| Finding | Reproduced | Triage | Fix |
+|---|---|---|---|
+| F1 the notes said an import with its sidecar restores the original model | yes: exporting and importing the growth example gives `source_identity_verified: false` and no `sample_population`; the format reference says "Exported omissions remain omissions on import" | blocking: a false sentence in the notes. It was in the block the owner approved, taken from the explanation page, which says "restores those details" | the Import bullet now says the kept content is restored, that omissions stay omitted and that the identity then does not match |
+| F2 no note for model format version 5 and its incompatibility with 0.2.0 | yes: the schema diff since `v0.2.0` adds `includes`, `fact_type_constraints` and version 5; the evolution contract documents `repin-include`, `before_includes`, `candidate_includes`; `--previous-include` is in `gnd evolve preview --help` | blocking: `docs/compatibility.md` requires incompatibilities in the notes | three bullets under "Shared definitions" |
+| F3 no note for the stricter additive rule | yes: `tests/test_evolve_population_check.py::test_close_r1_f1_flag_free_...` and the unattended-model-growth close (R1-F1) record that the flag-free walk admitted such a constraint before the fix | blocking: a behavior change against 0.2.0 | a paragraph under "Constraints admitted on clean data" |
+| F4 `gnd verbalize model` and `gnd.api.verbalize_model` unnamed | yes: both exist; the disclosure table rows say every mode | hardening | a bullet under "Shared definitions" |
+| F5 the unattended procedure's "Acting on a shape match" unnoted | yes: the section is new since `v0.2.0` | completeness, done because it is one paragraph | a paragraph under "A growth round can declare its source document" |
+| F6 the headline check accepted a link outside the headline block | yes: the old helper accepts that input (run against `73884f6c`), the new one refuses it | hardening | the link is searched inside the block; mutant `link-in-a-later-block` |
+| F7 the page check accepted a row observing another version, and a publication claim on the plugin page | yes: both inputs accepted at `73884f6c`, refused now | hardening | the observation must name the declared version; the plugin page is scanned for a claim; mutants `support-observes-another`, `plugins-claim` |
+
+**Corrects the approved notes text of §6, kept as written above.** The Import
+bullet's sentence "the original model is restored" was wrong for any model
+with populations. The owner approved that wording; the corrected wording is in
+the phase record for the owner to see.
+
+**Refutes plan RN1-C3's method as the spec applied it.** The reconciliation
+started from the present notes and the list of pull requests. F2 to F5 are
+changes inside pull requests that already had a note. The reviewer found them
+by reading `git diff v0.2.0 -- src`; the record's table is rebuilt that way.

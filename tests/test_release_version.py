@@ -265,17 +265,22 @@ def assert_notes_name_the_headline_change(notes: str, version: str) -> None:
         return
     heading, link = HEADLINE_BLOCK[version]
     section = version_section(notes, version)
-    subsections = [line for line in section.splitlines() if line.startswith("### ")]
-    assert subsections and subsections[0] == heading, f"the {version} notes do not open with {heading!r}"
-    assert f"]({link})" in section, f"the {version} notes do not link {link}"
+    lines = section.splitlines()
+    starts = [i for i, line in enumerate(lines) if line.startswith("### ")]
+    assert starts and lines[starts[0]] == heading, f"the {version} notes do not open with {heading!r}"
+    block = "\n".join(lines[starts[0]:starts[1] if len(starts) > 1 else len(lines)])
+    assert f"]({link})" in block, f"the {version} headline block does not link {link}"
 
 
 def assert_prepared_version_is_stated(declared: str, released: set[str], support: str, plugins: str) -> None:
     """While `declared` is unpublished, the support and plugin pages must say so."""
     if declared in released:
         return
-    assert re.search(rf"\b{re.escape(declared)}\b[^|\n]*\|[^|\n]*[Nn]o profile is observed", support), (
+    version = re.escape(declared)
+    assert re.search(rf"\b{version}\b[^|\n]*\|[^|\n]*[Nn]o profile is observed for {version}\b", support), (
         f"docs/support.md has no row saying no profile is observed for {declared}")
+    claim = re.compile(rf"\b{version}\b[^.\n]*\b(?:is|was|has been|are|were) (?:now )?(?:published|released|installable|available(?: on| from)?)", re.IGNORECASE)
+    assert not claim.search(plugins), f"docs/marketplace-plugins.md says {declared} is published"
     assert re.search(rf"\b{re.escape(declared)}\b[^.\n]*\bnot published\b", plugins), (
         f"docs/marketplace-plugins.md does not say {declared} is not published")
     assert "git clone https://github.com/vasiloglou/gnd-public.git" in plugins, (
@@ -290,12 +295,14 @@ def test_notes_section_names_the_headline_change():
     assert_notes_name_the_headline_change(_page("docs/release-notes.md"), declared_version())
 
 
-@pytest.mark.parametrize("mutation", ["no-block", "block-not-first", "no-link"])
+@pytest.mark.parametrize("mutation", ["no-block", "block-not-first", "no-link", "link-in-a-later-block"])
 def test_a_notes_section_without_its_headline_is_refused(mutation):
     section = {
         "no-block": "## 0.3.0 (prepared, not published)\n\n### Fixes\n\n[x](explanation/ossie.md)\n",
         "block-not-first": "## 0.3.0 (prepared, not published)\n\n### Fixes\n\n### Apache Ossie interchange\n\n[x](explanation/ossie.md)\n",
         "no-link": "## 0.3.0 (prepared, not published)\n\n### Apache Ossie interchange\n\nNo link here.\n",
+        # review F6: the link must be inside the headline block, not anywhere in the section
+        "link-in-a-later-block": "## 0.3.0 (prepared, not published)\n\n### Apache Ossie interchange\n\nNo link.\n\n### Fixes\n\n[x](explanation/ossie.md)\n",
     }[mutation]
     notes = section + "\n## 0.2.0 (2026-11-08)\n\n### Apache Ossie interchange\n\n[x](explanation/ossie.md)\n"
     with pytest.raises(AssertionError):
@@ -310,7 +317,7 @@ def test_support_and_plugin_pages_state_the_prepared_version():
         declared_version(), RELEASED, _page("docs/support.md"), _page("docs/marketplace-plugins.md"))
 
 
-@pytest.mark.parametrize("mutation", ["empty-support", "support-other-version", "plugins-silent", "plugins-no-route"])
+@pytest.mark.parametrize("mutation", ["empty-support", "support-other-version", "support-observes-another", "plugins-silent", "plugins-no-route", "plugins-claim"])
 def test_pages_silent_about_the_prepared_version_are_refused(mutation):
     support = "| Any profile, prepared 9.9.9 package | Not signed off; no profile is observed for 9.9.9 yet |\n"
     plugins = ("The plugin on `main` is version 9.9.9, which is prepared and not published.\n"
@@ -321,6 +328,10 @@ def test_pages_silent_about_the_prepared_version_are_refused(mutation):
         support = ""
     elif mutation == "support-other-version":
         support = support.replace("9.9.9", "8.8.8")
+    elif mutation == "support-observes-another":   # review F7
+        support = "| prepared 9.9.9 | no profile is observed for 0.2.0 |\n"
+    elif mutation == "plugins-claim":              # review F7
+        plugins += "Version 9.9.9 is published on PyPI.\n"
     elif mutation == "plugins-silent":
         plugins = "git clone https://github.com/vasiloglou/gnd-public.git\n"
     else:

@@ -402,6 +402,39 @@ def _cmd_verbalize_population(
         print(f"FACT {verbalize.path_segment(ref['fact_type'])}[{ref['index']}]: {row['sentence']}{suffix}")
     return 0
 
+
+def _cmd_compare_rule_editions(head: str, population: str, base: str, output_format: str) -> int:
+    from gnd.checking_service import compare_rule_editions
+
+    exit_code, payload = compare_rule_editions(head, population, base)
+    if output_format == "json":
+        report_module.emit(payload)
+        return exit_code
+    print(f"RULE EDITIONS {base} -> {head}")
+    if payload["reason"] is not None:
+        print(f"Comparison: {payload['reason']}")
+    for side in ("base", "head"):
+        if payload[side]["exit_code"] is not None:
+            print(f"{side} check exit {payload[side]['exit_code']}")
+    for issue in payload["issues"]:
+        print(f"{issue['side']} {issue['path']}: {issue['message']} [{issue['rule_id']}]")
+    for row in payload["rules"]:
+        delta = row["delta"]
+        detail = row["reason"] or ""
+        if delta is not None:
+            detail = (
+                f"{len(delta['base_only'])} base-only, {len(delta['head_only'])} head-only, "
+                f"{len(delta['standing'])} standing"
+            )
+        print(f"{row['address']} [{row['pairing']}] {detail}".rstrip())
+        if delta is not None:
+            for direction in ("base_only", "head_only"):
+                for witness in delta[direction]:
+                    value = json.dumps(witness, sort_keys=True, separators=(",", ":"))
+                    print(f"  {direction.replace('_', '-')} {value}")
+    return exit_code
+
+
 def _cmd_diff(
     model_a: str, model_b: str, populations: str | None, output_format: str,
     unredacted: bool, seed: int,
@@ -870,6 +903,11 @@ def _register_check(subparsers):
         help="mark each violation new or standing against the population BASE; implies --rule-ids",
     )
     check_parser.add_argument(
+        "--baseline-model",
+        metavar="BASE",
+        help="compare rule editions on one population by declared rule ID and offending binding",
+    )
+    check_parser.add_argument(
         "--allow-vacuous",
         action="store_true",
         help="exit 0 when vacuous rules are the only shortfall; implies --rule-ids",
@@ -1109,7 +1147,10 @@ def handle(args, parsers) -> int:
         return _cmd_compose(args.model, args.directory, args.out, args.record)
 
     if args.command == "check":
-        if args.rule_ids or args.baseline is not None or args.allow_vacuous or args.guarded_diagnostics:
+        if (
+            args.rule_ids or args.baseline is not None or args.allow_vacuous
+            or args.guarded_diagnostics or args.baseline_model is not None
+        ):
             conflicting = [
                 flag
                 for flag, value in (
@@ -1122,6 +1163,13 @@ def handle(args, parsers) -> int:
                 )
                 if value is not None
             ]
+            if args.baseline_model is not None:
+                conflicting.extend(flag for flag, enabled in (
+                    ("--baseline", args.baseline is not None), ("--rule-ids", args.rule_ids),
+                    ("--allow-vacuous", args.allow_vacuous), ("--guarded-diagnostics", args.guarded_diagnostics),
+                ) if enabled)
+                if conflicting:
+                    check_parser.error(f"--baseline-model excludes {', '.join(conflicting)}")
             if conflicting:
                 check_parser.error(
                     f"{'--baseline' if args.baseline is not None else '--allow-vacuous' if args.allow_vacuous else '--guarded-diagnostics' if args.guarded_diagnostics else '--rule-ids'} applies to one "
@@ -1225,6 +1273,9 @@ def handle(args, parsers) -> int:
             args.transition,
             args.format,
         )
+
+    if args.baseline_model is not None:
+        return _cmd_compare_rule_editions(args.model, args.population, args.baseline_model, args.format)
 
     return _cmd_check(
         args.model,

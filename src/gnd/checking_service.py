@@ -954,3 +954,89 @@ mint_execution = _mint_execution
 
 # Historical lookup name for the unchanged CLI assurance closure.
 _certify_assurance = certify_assurance
+
+
+@_index_scoped
+def compare_rule_editions(
+    head_path: str, population_path: str, base_path: str,
+) -> tuple[int, dict[str, Any]]:
+    """Evaluate one captured population under two editions and compare rule findings."""
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.anchors import vocabulary_digest
+    from gnd.baseline import EditionComparisonLimit, compare_editions
+    from gnd.errors import ModelLoadError, PopulationLoadError
+
+    payload: dict[str, Any] = {
+        "schema_version": "gnd-rule-edition-comparison/1",
+        "exit_code": 3,
+        "reason": None,
+        "population": population_path,
+        "population_sha256": None,
+        "base": {"model": base_path, "model_digest": None, "exit_code": None},
+        "head": {"model": head_path, "model_digest": None, "exit_code": None},
+        "issues": [],
+        "rules": [],
+    }
+
+    def refuse(reason: str, side: str | None = None, issues=(), *, exit_code: int = 3):
+        payload["exit_code"] = exit_code
+        payload["reason"] = reason
+        payload["issues"] = [
+            {"side": side, "path": issue.path, "rule_id": issue.rule_id, "message": issue.message}
+            for issue in issues
+        ]
+        return exit_code, payload
+
+    models = {}
+    for side, path in (("base", base_path), ("head", head_path)):
+        try:
+            model = load_model(path)
+        except ModelValidationError as error:
+            return refuse(f"{side}-model-ill-formed", side, error.issues)
+        except (ModelLoadError, OSError, YAMLError, ValueError, RecursionError):
+            return refuse(f"{side}-model-ill-formed", side)
+        refusal = _rule_ids_refusal(model)
+        if refusal is not None:
+            return refuse(f"{side}-model-unsupported", side, (refusal,))
+        models[side] = model
+
+    if vocabulary_digest(models["base"]) != vocabulary_digest(models["head"]):
+        return refuse("vocabulary-mismatch")
+    try:
+        raw = read_population_bytes(population_path)
+    except (PopulationLoadError, OSError):
+        return refuse("population-ill-formed")
+    payload["population_sha256"] = hashlib.sha256(raw).hexdigest()
+
+    populations = {}
+    for side, model in models.items():
+        try:
+            populations[side] = load_population_bytes(raw, source=population_path, model=model)
+        except PopulationValidationError as error:
+            return refuse(f"{side}-population-ill-formed", side, error.issues)
+        except (PopulationLoadError, OSError, YAMLError, ValueError, RecursionError):
+            return refuse(f"{side}-population-ill-formed", side)
+
+    reports = {}
+    constraints = {}
+    for side, model in models.items():
+        result = run_check(model, populations[side], rule_ids=True)
+        if result.exit_code not in (0, 1, 2, 4):
+            return refuse(f"{side}-check-refused", side, result.issues, exit_code=result.exit_code)
+        report = result.payload
+        payload[side].update(model_digest=report["model_digest"], exit_code=result.exit_code)
+        reports[side] = report["verdicts"]
+        constraints[side] = {
+            ref: constraint for ref, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+        }
+    try:
+        rules, incomplete = compare_editions(
+            reports["base"], reports["head"], constraints["base"], constraints["head"],
+        )
+    except EditionComparisonLimit:
+        return refuse("comparison-work-limit", exit_code=4)
+    payload["rules"] = rules
+    payload["exit_code"] = 4 if incomplete else 0
+    payload["reason"] = "incomplete-comparison" if incomplete else None
+    return payload["exit_code"], payload

@@ -316,6 +316,9 @@
     },
     {
       "$ref": "#/$defs/guarded_diagnostics_report"
+    },
+    {
+      "$ref": "#/$defs/rule_edition_comparison"
     }
   ],
   "$defs": {
@@ -5686,6 +5689,239 @@
         },
         "allow_vacuous": {
           "$ref": "#/$defs/rule_ids_report/properties/allow_vacuous"
+        }
+      }
+    },
+    "edition_check_side": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "model_digest",
+        "exit_code"
+      ],
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "model_digest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2,
+            4,
+            null
+          ]
+        }
+      }
+    },
+    "edition_verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_ref",
+        "constraint_type",
+        "verdict",
+        "modality"
+      ],
+      "properties": {
+        "constraint_ref": {
+          "type": "string"
+        },
+        "constraint_type": {
+          "$ref": "#/$defs/verdict/properties/constraint_type"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict/properties/verdict"
+        },
+        "modality": {
+          "$ref": "#/$defs/verdict/properties/modality"
+        }
+      }
+    },
+    "edition_rule_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address",
+        "pairing",
+        "base",
+        "head",
+        "reason",
+        "delta"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "pairing": {
+          "enum": [
+            "paired",
+            "added",
+            "removed",
+            "unpaired"
+          ]
+        },
+        "base": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/edition_verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/edition_verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "delta": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "base_only",
+                "head_only",
+                "standing"
+              ],
+              "properties": {
+                "base_only": {
+                  "type": "array",
+                  "items": {}
+                },
+                "head_only": {
+                  "type": "array",
+                  "items": {}
+                },
+                "standing": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "base",
+                      "head"
+                    ],
+                    "properties": {
+                      "base": {},
+                      "head": {}
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "rule_edition_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "exit_code",
+        "reason",
+        "population",
+        "population_sha256",
+        "base",
+        "head",
+        "issues",
+        "rules"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "gnd-rule-edition-comparison/1"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            3,
+            4,
+            70
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "population": {
+          "type": "string"
+        },
+        "population_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "base": {
+          "$ref": "#/$defs/edition_check_side"
+        },
+        "head": {
+          "$ref": "#/$defs/edition_check_side"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "side",
+              "path",
+              "rule_id",
+              "message"
+            ],
+            "properties": {
+              "side": {
+                "enum": [
+                  "base",
+                  "head",
+                  null
+                ]
+              },
+              "path": {
+                "type": "string"
+              },
+              "rule_id": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edition_rule_comparison"
+          }
         }
       }
     }

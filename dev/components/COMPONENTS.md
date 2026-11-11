@@ -509,12 +509,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.checking_command
 - does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review
+- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/checking.py, src/gnd/commands/__init__.py
-- uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.ossie_import, model.rai_import
+- uses: assurance.transport, check.batch, check.element_coverage, check.service, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.ossie_import, model.rai_import
 - used_by: cli.dispatch
 - part_of: subsystem.check
 - tests: tests/test_rf5_commands.py, tests/test_reference_transition_text.py
@@ -1944,7 +1944,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/atoms.py
 - uses: (none)
-- used_by: check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter
+- used_by: check.baseline, check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter
 - tests: tests/test_atom_bind.py
 
 
@@ -1989,12 +1989,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.baseline
 - does: Compare a head check with a baseline check by rule address and canonical offending row, marking violations new, standing or resolved [compare].
-- verbs: baseline, new violations, standing violations, resolved violations, novelty, row novelty, compare two checks, diff violations between populations, CI gate adoption, baseline_key, positional keys
+- verbs: baseline, new violations, standing violations, resolved violations, novelty, row novelty, compare two checks, diff violations between populations, CI gate adoption, baseline_key, positional keys, edition comparison, declared rule pairing, guard variable projection, directional binding deltas
 - in: Version-15 verdict views (ref, verdict, modality, rows) of head and base, and each ref's address and addressing.
 - out: Per-verdict novelty and row novelty, the baseline block's counts, and the two flags the exit band reads.
 - status: canonical
 - modules: src/gnd/baseline.py
-- uses: infra.artifacts
+- uses: infra.artifacts, model.atom_bindings, model.scalar_terms
 - used_by: check.service, infra.report_payloads
 - part_of: subsystem.check
 - tests: tests/test_rc3_baseline.py
@@ -2054,13 +2054,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.service
 - does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
-- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, guarded diagnostics report
+- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, guarded diagnostics report, same-population rule edition comparison
 - in: model and population paths or loaded objects; check options
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
 - modules: src/gnd/checking_service.py
-- uses: assurance.evidence, assurance.policy, check.admission, check.baseline, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
-- used_by: cli.api, infra.text_output, model.diff
+- uses: assurance.evidence, assurance.policy, check.admission, check.baseline, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.errors, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
+- used_by: cli.api, cli.checking_command, infra.text_output, model.diff
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
 - checked: partial
@@ -2195,7 +2195,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, … +19 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +20 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2700,7 +2700,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/terms.py
 - uses: infra.errors
-- used_by: check.applicability, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, export.mined_rules, … +16 more (graph.md)
+- used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +17 more (graph.md)
 - tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py
 - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
 

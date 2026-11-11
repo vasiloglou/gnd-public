@@ -259,6 +259,8 @@ Compare a head check with a baseline check (``gnd check --baseline``).
 | `Comparison` | class | 33 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
 | `baseline_key(address, row) -> Key` | function | 59 | The one key every family's offending row is compared by. |
 | `compare(head, base, addresses) -> Comparison` | function | 70 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
+| `EditionComparisonLimit` | class(Exception) | 111 | The rule-edition comparison exhausted its work budget. |
+| `compare_editions(base_verdicts, head_verdicts, base_constraints, head_constraints) -> tuple[list[di…` | function | 158 | Compare side-local observations by declared ID and canonical witness identity. |
 
 ## gnd.batch — `src/gnd/batch.py`
 Components: check.batch
@@ -300,6 +302,7 @@ Shared checking, admission and report orchestration below entry points.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
+| `compare_rule_editions(head_path, population_path, base_path) -> tuple[int, dict[str, Any]]` | function | 960 | Evaluate one captured population under two editions and compare rule findings. |
 
 ## gnd.cli — `src/gnd/cli.py`
 Components: cli.dispatch

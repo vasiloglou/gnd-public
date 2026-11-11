@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "reason": "GW2 uses typed rule comparison payloads and guarded projection.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-workflows/evidence/GW0/dynamic-query-successor.json",
+  "predecessor_sha256": "63d426d9169b5e8686e0fa3300b2405bf61932507cb1b3b1ece374c90c37cc76",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "Callable[[int], None]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "Mapping[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "dict[str, str]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "other.get(role)",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "pairs[a]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "right.get(fact)",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "right[fact]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "tuple[str, ...]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "_guarded_projection",
+      "tuple[tuple[str, ...], tuple[str, ...]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "Mapping[str, Any]",
+      4
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "Mapping[str, Mapping[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "Sequence[Mapping[str, Any]]",
+      2
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "b[key]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "base.get(address)",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "base_constraints[left['constraint_ref']]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "head.get(address)",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "head_constraints[right['constraint_ref']]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "compare_editions",
+      "tuple[list[dict[str, Any]], bool]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "keys",
+      "row[name]",
+      1
+    ],
+    [
+      "src/gnd/baseline.py",
+      "summary",
+      "row[name]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "compare_rule_editions",
+      "dict[str, Any]",
+      2
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "compare_rule_editions",
+      "payload[side]",
+      2
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "compare_rule_editions",
+      "populations[side]",
+      1
+    ],
+    [
+      "src/gnd/checking_service.py",
+      "compare_rule_editions",
+      "tuple[int, dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_cmd_compare_rule_editions",
+      "delta[direction]",
+      1
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_cmd_compare_rule_editions",
+      "payload[side]",
+      2
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_cmd_compare_rule_editions",
+      "row[side]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7591,
+  "result_occurrences": 9452
+}

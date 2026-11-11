@@ -111,27 +111,27 @@ Stable in-process access to GND validation and checking reports.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `CheckReceipt` | class | 135 | Proof, held in this process only, that GND checked a population against a model. |
-| `ReceiptRefused` | class(ValueError) | 163 | A checked pre-state receipt cannot be reused for this transition. |
-| `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 171 | Return the check payload and an opaque, in-process CheckReceipt. |
-| `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 668 | Validate a model path or reuse a loaded model, returning its report. |
-| `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 680 | Check one population and return the same payload emitted by the CLI. |
-| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 746 | Read two models and optionally one directory of population documents. |
-| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 930 | Public population sentence view; applied redaction is the default. |
-| `compose(model, directory) -> dict[str, Any]` | function | 958 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model) -> str` | function | 1012 | Render the caller's complete model for review, including authored samples. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1021 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1064 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1093 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1201 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1225 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1240 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1248 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1258 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1267 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1279 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1282 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1285 | (no docstring) |
+| `CheckReceipt` | class | 138 | Proof, held in this process only, that GND checked a population against a model. |
+| `ReceiptRefused` | class(ValueError) | 166 | A checked pre-state receipt cannot be reused for this transition. |
+| `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 174 | Return the check payload and an opaque, in-process CheckReceipt. |
+| `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 671 | Validate a model path or reuse a loaded model, returning its report. |
+| `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 683 | Check one population and return the same payload emitted by the CLI. |
+| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
+| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
+| `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
+| `verbalize_model(model) -> str` | function | 1015 | Render the caller's complete model for review, including authored samples. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1024 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1067 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1096 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1204 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1228 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1243 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1251 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1261 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1270 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1282 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1285 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1288 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -255,10 +255,12 @@ Compare a head check with a baseline check (``gnd check --baseline``).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `VerdictView` | class | 23 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
-| `Comparison` | class | 33 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
-| `baseline_key(address, row) -> Key` | function | 59 | The one key every family's offending row is compared by. |
-| `compare(head, base, addresses) -> Comparison` | function | 70 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
+| `VerdictView` | class | 24 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
+| `Comparison` | class | 34 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
+| `baseline_key(address, row) -> Key` | function | 60 | The one key every family's offending row is compared by. |
+| `compare(head, base, addresses) -> Comparison` | function | 71 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
+| `EditionComparisonLimit` | class(Exception) | 113 | The rule-edition comparison exhausted its work budget. |
+| `compare_editions(base_verdicts, head_verdicts, base_constraints, head_constraints) -> tuple[list[di…` | function | 164 | Compare side-local observations by declared ID and canonical witness identity. |
 
 ## gnd.batch — `src/gnd/batch.py`
 Components: check.batch
@@ -300,6 +302,7 @@ Shared checking, admission and report orchestration below entry points.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
+| `compare_rule_editions(head_path, population_path, base_path) -> tuple[int, dict[str, Any]]` | function | 960 | Evaluate one captured population under two editions and compare rule findings. |
 
 ## gnd.cli — `src/gnd/cli.py`
 Components: cli.dispatch
@@ -354,22 +357,22 @@ Authoritative Phase 3 snapshot decision and public-value projection.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `CorrespondedFinding` | class | 55 | (no docstring) |
-| `SnapshotDecision` | class | 68 | (no docstring) |
-| `ProjectedFinding` | class | 76 | (no docstring) |
-| `SnapshotProjection` | class | 89 | (no docstring) |
-| `CompletedVerifyRoute` | class | 98 | (no docstring) |
-| `RefusedVerifyRoute` | class | 106 | (no docstring) |
-| `ReferenceJoinLimit` | class(ValueError) | 387 | Attempted reference-lane join work exceeded its invocation budget. |
-| `ReferenceJoinWork` | class | 392 | (no docstring) |
-| `ReferenceJoinWork.charge(self) -> None` | method | 395 | (no docstring) |
-| `evaluation_snapshot(snapshot, family) -> SnapshotIR` | function | 842 | The snapshot a constraint of ``family`` is evaluated over. |
-| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1053 | (no docstring) |
-| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1117 | (no docstring) |
-| `project_finding(finding, observation) -> ProjectedFinding` | function | 1132 | (no docstring) |
-| `project_witness(observation, index, *, scope_id, constraint_id, family, witness, witness_keys) -> t…` | function | 1168 | Each witness row with its scalars replaced by their admitted public values. |
-| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1208 | (no docstring) |
-| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1228 | (no docstring) |
-| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1255 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
+| `SnapshotDecision` | class | 70 | (no docstring) |
+| `ProjectedFinding` | class | 78 | (no docstring) |
+| `SnapshotProjection` | class | 93 | (no docstring) |
+| `CompletedVerifyRoute` | class | 102 | (no docstring) |
+| `RefusedVerifyRoute` | class | 110 | (no docstring) |
+| `ReferenceJoinLimit` | class(ValueError) | 391 | Attempted reference-lane join work exceeded its invocation budget. |
+| `ReferenceJoinWork` | class | 396 | (no docstring) |
+| `ReferenceJoinWork.charge(self) -> None` | method | 399 | (no docstring) |
+| `evaluation_snapshot(snapshot, family) -> SnapshotIR` | function | 859 | The snapshot a constraint of ``family`` is evaluated over. |
+| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1076 | (no docstring) |
+| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1140 | (no docstring) |
+| `project_finding(finding, observation) -> ProjectedFinding` | function | 1157 | (no docstring) |
+| `project_witness(observation, index, *, scope_id, constraint_id, family, witness, witness_keys) -> t…` | function | 1195 | Each witness row with its scalars replaced by their admitted public values. |
+| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1235 | (no docstring) |
+| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1255 | (no docstring) |
+| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1282 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
 
 ## gnd.coverage — `src/gnd/coverage.py`
 Components: check.element_coverage
@@ -948,15 +951,14 @@ Admitted snapshot -> immutable semantic inputs, without verdict evaluation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ValueOrigin` | class | 81 | (no docstring) |
-| `SnapshotObservation` | class | 93 | (no docstring) |
-| `AdaptedSnapshot` | class | 106 | (no docstring) |
-| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 118 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
-| `adapt_constraint(constraint, fact_type, ref, model) -> IRConstraint` | function | 379 | Total over constraint JSON shapes; refusals never become empty successful predicates. |
-| `universe_of(object_type_id, model, population) -> IRRoster` | function | 530 | The production universe walk, retaining every occurrence and its order. |
-| `adapt_snapshot(model, population, *, effective_facts) -> SnapshotIR` | function | 648 | (no docstring) |
-| `adapt_snapshot_observed(model, population, *, effective_facts, effective_lineage) -> AdaptedSnapshot` | function | 800 | Retain the exact value origins beside the immutable semantic snapshot. |
-| `correspondence_scope(adapted) -> tuple[str, tuple[IRRefusal, ...]]` | function | 982 | Fail closed when any admitted value needed by the snapshot was refused. |
+| `ValueOrigin` | class | 82 | (no docstring) |
+| `SnapshotObservation` | class | 94 | (no docstring) |
+| `AdaptedSnapshot` | class | 107 | (no docstring) |
+| `adapt_constraint(constraint, fact_type, ref, model) -> IRConstraint` | function | 322 | Total over constraint JSON shapes; refusals never become empty successful predicates. |
+| `universe_of(object_type_id, model, population) -> IRRoster` | function | 473 | The production universe walk, retaining every occurrence and its order. |
+| `adapt_snapshot(model, population, *, effective_facts) -> SnapshotIR` | function | 591 | (no docstring) |
+| `adapt_snapshot_observed(model, population, *, effective_facts, effective_lineage) -> AdaptedSnapshot` | function | 743 | Retain the exact value origins beside the immutable semantic snapshot. |
+| `correspondence_scope(adapted) -> tuple[str, tuple[IRRefusal, ...]]` | function | 925 | Fail closed when any admitted value needed by the snapshot was refused. |
 
 ## gnd.semantic_ir — `src/gnd/semantic_ir.py`
 Components: semantics.snapshot_ir
@@ -1263,13 +1265,14 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 217 | (no docstring) |
-| `ModelIdentityError` | class(ValueError) | 227 | A loaded model that has no canonical identity, or a version it does not define. |
-| `model_identity_document(model) -> dict[str, Any]` | function | 271 | The canonical identity document of a loaded model. |
-| `model_identity_bytes(model) -> bytes` | function | 284 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
-| `model_identity(model, version) -> str` | function | 289 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
-| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 304 | Which identity of ``model`` the ``supplied`` value names, or None. |
-| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 334 | The identities :func:`model_identity_matches` accepts, legacy first. |
+| `reference_model_digest(model) -> str` | function | 222 | (no docstring) |
+| `ModelIdentityError` | class(ValueError) | 232 | A loaded model that has no canonical identity, or a version it does not define. |
+| `model_identity_document(model) -> dict[str, Any]` | function | 276 | The canonical identity document of a loaded model. |
+| `model_identity_bytes(model) -> bytes` | function | 289 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
+| `model_identity(model, version) -> str` | function | 294 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
+| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 309 | Which identity of ``model`` the ``supplied`` value names, or None. |
+| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 339 | The identities :func:`model_identity_matches` accepts, legacy first. |
+| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 381 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

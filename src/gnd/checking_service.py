@@ -239,8 +239,9 @@ def _run_check_raw(
     rule_ids: bool = False,
     baseline: str | os.PathLike[str] | None = None,
     allow_vacuous: bool = False,
+    guarded_diagnostics: bool = False,
 ) -> _RunResult:
-    rule_ids = rule_ids or baseline is not None or allow_vacuous
+    rule_ids = rule_ids or baseline is not None or allow_vacuous or guarded_diagnostics
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
     population_coordinate = (
         None
@@ -266,7 +267,7 @@ def _run_check_raw(
         warnings: list[ValidationIssue] | None = None,
         error: BaseException | None = None,
     ) -> dict[str, Any]:
-        return report_module.build_check_payload(
+        payload = report_module.build_check_payload(
             exit_code,
             model_coordinate,
             population_coordinate,
@@ -282,6 +283,17 @@ def _run_check_raw(
             baseline=compared if wire_version == 15 else None,
             allow_vacuous=allow_vacuous and wire_version == 15,
         )
+        if guarded_diagnostics and wire_version == 15:
+            payload["schema_version"] = 16
+            if report is not None:
+                for row, verdict in zip(payload["verdicts"], report.verdicts, strict=True):
+                    if verdict.constraint_type == "guarded":
+                        row["guarded_antecedent"] = {
+                            "binding_count": verdict.binding_count,
+                            "first_empty_atom_index": verdict.first_empty_atom_index,
+                        }
+        return payload
+
 
     def refuse_rule_ids(refused: Model) -> _RunResult | None:
         """The --rule-ids refusal for a model version 15 cannot describe, at version 7."""
@@ -837,8 +849,9 @@ def _run_check(
     rule_ids: bool = False,
     baseline: str | os.PathLike[str] | None = None,
     allow_vacuous: bool = False,
+    guarded_diagnostics: bool = False,
 ) -> _RunResult:
-    if (rule_ids or baseline is not None or allow_vacuous) and (admission or compiled_operations):
+    if (rule_ids or baseline is not None or allow_vacuous or guarded_diagnostics) and (admission or compiled_operations):
         raise ValueError("rule_ids applies to the plain snapshot check only")
     if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
@@ -859,6 +872,7 @@ def _run_check(
         rule_ids=rule_ids,
         **({"baseline": baseline} if baseline is not None else {}),
         **({"allow_vacuous": True} if allow_vacuous else {}),
+        **({"guarded_diagnostics": True} if guarded_diagnostics else {}),
     )
     if admission:
         from gnd.admission import build_admission, wire_verdicts
@@ -940,3 +954,90 @@ mint_execution = _mint_execution
 
 # Historical lookup name for the unchanged CLI assurance closure.
 _certify_assurance = certify_assurance
+
+
+@_index_scoped
+def compare_rule_editions(
+    head_path: str, population_path: str, base_path: str,
+) -> tuple[int, dict[str, Any]]:
+    """Evaluate one captured population under two editions and compare rule findings."""
+    from ruamel.yaml.error import YAMLError
+
+    from gnd.anchors import vocabulary_digest
+    from gnd.baseline import EditionComparisonLimit, compare_editions
+    from gnd.errors import ModelLoadError, PopulationLoadError
+
+    payload: dict[str, Any] = {
+        "schema_version": "gnd-rule-edition-comparison/1",
+        "exit_code": 3,
+        "reason": None,
+        "population": population_path,
+        "population_sha256": None,
+        "base": {"model": base_path, "model_digest": None, "exit_code": None},
+        "head": {"model": head_path, "model_digest": None, "exit_code": None},
+        "issues": [],
+        "rules": [],
+    }
+
+    def refuse(reason: str, side: str | None = None, issues=(), *, exit_code: int = 3):
+        payload["exit_code"] = exit_code
+        payload["reason"] = reason
+        payload["issues"] = [
+            {"side": side, "path": issue.path, "rule_id": issue.rule_id, "message": issue.message}
+            for issue in issues
+        ]
+        return exit_code, payload
+
+    models = {}
+    for side, path in (("base", base_path), ("head", head_path)):
+        try:
+            model = load_model(path)
+        except ModelValidationError as error:
+            return refuse(f"{side}-model-ill-formed", side, error.issues)
+        except (ModelLoadError, OSError, YAMLError, ValueError, RecursionError):
+            return refuse(f"{side}-model-ill-formed", side)
+        refusal = _rule_ids_refusal(model)
+        if refusal is not None:
+            return refuse(f"{side}-model-unsupported", side, (refusal,))
+        models[side] = model
+
+    if vocabulary_digest(models["base"]) != vocabulary_digest(models["head"]):
+        return refuse("vocabulary-mismatch")
+    try:
+        raw = read_population_bytes(population_path)
+    except (PopulationLoadError, OSError):
+        return refuse("population-ill-formed")
+    payload["population_sha256"] = hashlib.sha256(raw).hexdigest()
+
+    populations = {}
+    for side, model in models.items():
+        try:
+            populations[side] = load_population_bytes(raw, source=population_path, model=model)
+        except PopulationValidationError as error:
+            return refuse(f"{side}-population-ill-formed", side, error.issues)
+        except (PopulationLoadError, OSError, YAMLError, ValueError, RecursionError):
+            return refuse("population-ill-formed")
+
+    reports = {}
+    constraints = {}
+    for side, model in models.items():
+        result = run_check(model, populations[side], rule_ids=True)
+        if result.exit_code not in (0, 1, 2, 4):
+            return refuse(f"{side}-check-refused", side, result.issues, exit_code=3 if result.exit_code == 3 else EXIT_INTERNAL)
+        report = result.payload
+        payload[side].update(model_digest=report["model_digest"], exit_code=result.exit_code)
+        reports[side] = report["verdicts"]
+        constraints[side] = {
+            ref: constraint for ref, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+        }
+    try:
+        rules, incomplete = compare_editions(
+            reports["base"], reports["head"], constraints["base"], constraints["head"],
+        )
+    except EditionComparisonLimit:
+        return refuse("comparison-work-limit", exit_code=4)
+    incomplete = incomplete or any(payload[side]["exit_code"] == 4 for side in ("base", "head"))
+    payload["rules"] = rules
+    payload["exit_code"] = 4 if incomplete else 0
+    payload["reason"] = "incomplete-comparison" if incomplete else None
+    return payload["exit_code"], payload

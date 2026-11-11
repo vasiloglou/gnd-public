@@ -298,21 +298,50 @@ def _include_preview_successor():
             'exit_probe': {'help': probe(['--help']), 'unknown_flag': probe(['--rf1-unknown-flag'])}}
 
 
+def _guarded_workflows_check_successor():
+    """Restore RC4's frozen check parser, then add the two reviewed flags."""
+    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["check"]
+    for action in base["actions"]:
+        if action["help"] == argparse.SUPPRESS:
+            action["help"] = argparse.SUPPRESS
+    for successor in (COMPILED_SUCCESSOR, RULE_IDS_SUCCESSOR, BASELINE_SUCCESSOR, ALLOW_VACUOUS_SUCCESSOR):
+        base["actions"].insert(successor["action_index"], copy.deepcopy(successor["action"]))
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    _restore_frozen(parser, base)
+    assert parser.format_help() == ALLOW_VACUOUS_SUCCESSOR["help"]
+    # Restore the argument group order by declaring the actions in the frozen tree
+    # before reconstructing the final reference parser.
+    edition = dict(
+        BASELINE_SUCCESSOR["action"], dest="baseline_model", option_strings=["--baseline-model"],
+        help="compare rule editions on one population by declared rule ID and offending binding",
+    )
+    diagnostics = dict(
+        ALLOW_VACUOUS_SUCCESSOR["action"], dest="guarded_diagnostics",
+        option_strings=["--guarded-diagnostics"],
+        help="report version 16: include antecedent binding diagnostics; implies --rule-ids",
+    )
+    base["actions"].insert(ALLOW_VACUOUS_SUCCESSOR["action_index"], edition)
+    base["actions"].insert(ALLOW_VACUOUS_SUCCESSOR["action_index"] + 2, diagnostics)
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    _restore_frozen(parser, base)
+    return base, parser
+
+
+def _guarded_workflows_check_probe():
+    _, parser = _guarded_workflows_check_successor()
+    result = {}
+    for name, arguments in (("help", ["--help"]), ("unknown_flag", ["--rf1-unknown-flag"])):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), pytest.raises(SystemExit) as caught:
+            parser.parse_args(arguments)
+        result[name] = {"exit": caught.value.code, "stdout": out.getvalue(), "stderr": err.getvalue()}
+    return result
+
+
 def test_cli_tree(tree):
     # Preserve RF1's historical bytes; approve only this additive successor.
     expected = json.loads(golden_path("cli", "tree").read_text())
-    expected["subcommands"]["check"]["actions"].insert(
-        COMPILED_SUCCESSOR["action_index"], copy.deepcopy(COMPILED_SUCCESSOR["action"])
-    )
-    expected["subcommands"]["check"]["actions"].insert(
-        RULE_IDS_SUCCESSOR["action_index"], copy.deepcopy(RULE_IDS_SUCCESSOR["action"])
-    )
-    expected["subcommands"]["check"]["actions"].insert(
-        BASELINE_SUCCESSOR["action_index"], copy.deepcopy(BASELINE_SUCCESSOR["action"])
-    )
-    expected["subcommands"]["check"]["actions"].insert(
-        ALLOW_VACUOUS_SUCCESSOR["action_index"], copy.deepcopy(ALLOW_VACUOUS_SUCCESSOR["action"])
-    )
+    expected["subcommands"]["check"] = _guarded_workflows_check_successor()[0]
     expected["subcommands"]["validate"]["actions"].insert(
         IDENTITY_SUCCESSOR["action_index"], copy.deepcopy(IDENTITY_SUCCESSOR["action"])
     )
@@ -347,7 +376,7 @@ def test_cli_help(tree, path):
         return
     if path == "gnd check":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
-                          {"path": path, "help": ALLOW_VACUOUS_SUCCESSOR["help"]})
+                          {"path": path, "help": _guarded_workflows_check_successor()[1].format_help()})
         return
     if path == "gnd validate":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -392,8 +421,8 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        successor = ALLOW_VACUOUS_SUCCESSOR if path == "gnd check" else VALIDATE_DOCUMENTS_SUCCESSOR
-        _assert_successor("cli-exit", path, observed, successor["exit_probe"])
+        expected = _guarded_workflows_check_probe() if path == "gnd check" else VALIDATE_DOCUMENTS_SUCCESSOR["exit_probe"]
+        _assert_successor("cli-exit", path, observed, expected)
         return
     if path in CHECK_POPULATION_PATHS:
         observed = {

@@ -509,7 +509,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.checking_command
 - does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review
+- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, guarded diagnostics, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review, baseline model, compare rule editions
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1753,12 +1753,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.validation
 - does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
-- verbs: validate model, structural validation, semantic validation, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
 - modules: src/gnd/model/_validation.py, src/gnd/model/_induction.py, src/gnd/model/_unattended.py
-- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.scalar_terms
+- uses: check.universe, infra.errors, infra.graphs, infra.input_policy, infra.verdict_prose, infra.yaml_comments, model.anchors, model.atom_bindings, model.document, model.population_loading, model.query_index, model.reference_resolution, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
 - used_by: model.loading, model.operation_obligations, semantics.extensions
 - tests: tests/test_model_validation.py, tests/test_model_v2.py, tests/test_induced_provenance.py, tests/test_derivation_rule.py
 - checked: partial
@@ -1793,7 +1793,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### checker.evaluate
 - does: Check validated populations with reference, opaque and source-anchor handling [check, check_partial, check_with_anchors].
-- verbs: check population, evaluate constraints, deterministic verdict, snapshot checking, check_partial, opaque facts, partial knowledge, exact term unavailable, reference populations, source anchors, composed anchors, derivation evaluation, constraint coverage, compiled operations, structured_extension_facts, offending facts, correspondence projection, vacuous constraint, acyclic_extents, version-15 acyclic extent
+- verbs: check population, evaluate constraints, deterministic verdict, snapshot checking, check_partial, opaque facts, partial knowledge, exact term unavailable, reference populations, source anchors, composed anchors, derivation evaluation, constraint coverage, compiled operations, structured_extension_facts, offending facts, correspondence projection, vacuous constraint, acyclic_extents, version-15 acyclic extent, guarded binding metadata
 - in: Model and population carrying its current validation marker; optional bound references, anchors, documents or composition lineage.
 - out: CheckReport with constraint and derivation verdicts, fact-type coverage and internal semantic projection or refusal information.
 - status: canonical
@@ -1808,7 +1808,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### checker.reports
 - does: Represent five-state constraint verdicts, count results and select the checker exit band [CheckReport, band].
-- verbs: CheckReport, ConstraintVerdict, CoverageEntry, Phase1Trace, verdict lattice, verdict counts, exit band, band precedence, alethic failure, unevaluated alethic, vacuous result, deontic warning, registered branch, reason code, snapshot projection, derivation verdict, baseline band, band with baseline, allow vacuous, accept vacuous rules
+- verbs: CheckReport, ConstraintVerdict, CoverageEntry, Phase1Trace, verdict lattice, verdict counts, exit band, band precedence, alethic failure, unevaluated alethic, vacuous result, deontic warning, registered branch, reason code, snapshot projection, derivation verdict, baseline band, band with baseline, allow vacuous, accept vacuous rules, internal guarded observations
 - in: Registered branch-addressed constraint verdicts, derivation verdicts, coverage and optional internal semantic projection.
 - out: Validated report objects, five-state counts and band 0, 1, 2 or 4 with recorded composition branches.
 - status: canonical
@@ -1932,7 +1932,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/address.py
 - uses: (none)
-- used_by: check.admission, check.applicability, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, semantics.snapshot_adapter, … +3 more (graph.md)
+- used_by: check.admission, check.applicability, check.baseline, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, … +4 more (graph.md)
 - tests: tests/test_address.py
 
 
@@ -1944,7 +1944,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/atoms.py
 - uses: (none)
-- used_by: check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter
+- used_by: check.baseline, check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter
 - tests: tests/test_atom_bind.py
 
 
@@ -1989,12 +1989,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.baseline
 - does: Compare a head check with a baseline check by rule address and canonical offending row, marking violations new, standing or resolved [compare].
-- verbs: baseline, new violations, standing violations, resolved violations, novelty, row novelty, compare two checks, diff violations between populations, CI gate adoption, baseline_key, positional keys
+- verbs: baseline, new violations, standing violations, resolved violations, novelty, row novelty, compare two checks, diff violations between populations, CI gate adoption, baseline_key, positional keys, edition comparison, declared rule pairing, guard variable projection, directional binding deltas
 - in: Version-15 verdict views (ref, verdict, modality, rows) of head and base, and each ref's address and addressing.
 - out: Per-verdict novelty and row novelty, the baseline block's counts, and the two flags the exit band reads.
 - status: canonical
 - modules: src/gnd/baseline.py
-- uses: infra.artifacts
+- uses: infra.artifacts, model.address, model.atom_bindings, model.scalar_terms
 - used_by: check.service, infra.report_payloads
 - part_of: subsystem.check
 - tests: tests/test_rc3_baseline.py
@@ -2054,12 +2054,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.service
 - does: Orchestrate population checks, anchor binding, admission, assurance, projected reports and version-15 rule-id, baseline and vacuous-acceptance runs [run_check].
-- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding
+- verbs: run_check, run_check_raw, rule ids, report version 15, rule_ids refusal, declared identities, acyclic extents, baseline comparison, allow vacuous, check_report, resolve_model, resolve_population, project_result, reference_wrap, certify_assurance, check population, admission report, compiled operations, composed anchors, redact report, reference origins, report orchestration, rooted composition replay, authored model snapshot binding, guarded diagnostics report, same-population rule edition comparison
 - in: model and population paths or loaded objects; check options
 - out: RunResult holding report payload, JSON, band and execution context
 - status: canonical
 - modules: src/gnd/checking_service.py
-- uses: assurance.evidence, assurance.policy, check.admission, check.baseline, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
+- uses: assurance.evidence, assurance.policy, check.admission, check.baseline, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.errors, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
 - used_by: cli.api, infra.text_output, model.diff
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
@@ -2195,7 +2195,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, … +19 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +20 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2268,7 +2268,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### check.snapshot_decision
 - does: Evaluate adapted snapshot constraints into semantic decisions and project witnesses onto admitted public origins.
-- verbs: snapshot decision, constraint evaluation, correspondence, semantic verdict, acceptance ready, band composition, witness projection, public values, fact occurrences, origin selection, guarded constraints, indexed evaluation, reference join limit, branch evidence, correspond_snapshot, evaluate_snapshot, project_snapshot, project_finding, acyclic extents, acyclic_extents, in-group edges, project_witness, evaluation_snapshot
+- verbs: snapshot decision, constraint evaluation, correspondence, semantic verdict, acceptance ready, band composition, witness projection, public values, fact occurrences, origin selection, guarded constraints, antecedent binding count, first empty atom, indexed evaluation, reference join limit, branch evidence, correspond_snapshot, evaluate_snapshot, project_snapshot, project_finding, acyclic extents, acyclic_extents, in-group edges, project_witness, evaluation_snapshot
 - in: Model and validated population or adapted snapshot; effective facts, lineage and optional variant aliases
 - out: SnapshotDecision and SnapshotProjection with findings, bands, counts, semantic decisions and fact coordinates
 - status: canonical
@@ -2421,7 +2421,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +32 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +33 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2433,7 +2433,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_queries.py
 - uses: (none)
-- used_by: check.universe, model.query_index, semantics.extensions
+- used_by: check.universe, model.query_index, model.validation, semantics.extensions
 - tests: tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py
 - notes: Both accepted variant names currently use strict inheritance semantics; callers still select their variant explicitly.
 
@@ -2641,17 +2641,17 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/semantic_ir.py
 - uses: (none)
-- used_by: check.admission, check.branches, check.snapshot_decision, discover.population_view, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
+- used_by: check.admission, check.branches, check.snapshot_decision, discover.population_view, model.scalar_identity, model.validation, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py
 - notes: Constructing these values establishes no proof or verdict; relation-source and refusal fields retain input meaning.
 
 
 ### semantics.snapshot_adapter
 - does: Adapt validated populations into typed immutable snapshots with optional exact value-origin observations.
-- verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal
+- verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal, canonical scalar compatibility alias
 - status: canonical
 - modules: src/gnd/semantic_adapter.py
-- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, infra.input_policy, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_ir, semantics.snapshot_spec
+- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_ir, semantics.snapshot_spec
 - used_by: check.admission, check.snapshot_decision, discover.population_view, semantics.temporal_guards, semantics.witness_origins
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py, tests/test_public_adapter_derivation.py
 - checked: partial
@@ -2686,7 +2686,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/semantic_spec.py
 - uses: check.constraint_families, infra.graphs, semantics.snapshot_ir
-- used_by: assurance.policy, check.snapshot_decision, semantics.indexed_rows, semantics.snapshot_adapter, semantics.temporal_guards
+- used_by: assurance.policy, check.snapshot_decision, model.validation, semantics.indexed_rows, semantics.snapshot_adapter, semantics.temporal_guards
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_ik4_indexed_set_families.py
 - checked: partial
 - notes: Executable reference semantics are distinct from production correspondence and the indexed row providers; this catalog reading establishes no current proof claim.
@@ -2700,7 +2700,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/terms.py
 - uses: infra.errors
-- used_by: check.applicability, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, export.mined_rules, … +16 more (graph.md)
+- used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +17 more (graph.md)
 - tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py
 - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
 
@@ -2720,13 +2720,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.scalar_identity
 - does: Define ORM scalar identity, typed literals and content digests binding populations, models and reference declarations, and decide whether a supplied model identity names a model (legacy or canonical).
-- verbs: scalar identity, identity key, boolean distinction, numeric equality, identity set, typed literals, legacy literals, canonical values, ISO dates, population content digest, model digest, reference model digest, validation marker, nested mutation, canonical digest, identity_key, reference_model_digest, canonical model identity, identity version, model_identity, model_identity_document, model_identity_bytes, ModelIdentityError, model identity match, either identity, accept supplied digest, model_identity_matches, accepted_model_identities, IdentityMatch
+- verbs: scalar identity, canonical scalar, identity key, boolean distinction, numeric equality, identity set, typed literals, legacy literals, canonical values, ISO dates, population content digest, model digest, reference model digest, validation marker, nested mutation, canonical digest, identity_key, reference_model_digest, canonical model identity, identity version, model_identity, model_identity_document, model_identity_bytes, ModelIdentityError, model identity match, either identity, accept supplied digest, model_identity_matches, accepted_model_identities, IdentityMatch
 - in: Scalar or tuple values, primitive names, JSON-like model data, Model and Population objects.
 - out: Typed identity keys and sets, interpreted literals or rejection sentinel, canonical JSON-compatible values and SHA256 identity strings.
 - status: canonical
 - modules: src/gnd/values.py
-- uses: infra.artifacts, infra.errors, model.document
-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, … +7 more (graph.md)
+- uses: infra.artifacts, infra.errors, infra.input_policy, model.document, semantics.snapshot_ir
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, … +8 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 

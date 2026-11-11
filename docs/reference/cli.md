@@ -23,6 +23,8 @@ for a process. It is accepted only at the root.
 | `gnd check MODEL POPULATION --rule-ids --format json` | Report version 15: each verdict carries its rule's declared id and remedy when present, else its position and `null` ([rule-check report](rule-check-report.md)) |
 | `gnd check MODEL POPULATION --baseline BASE --format json` | Marks each violation new or standing against BASE; exit 1 only for new must-hold violations, while vacuous and undecided rules keep their own exits ([how-to](../how-to/adopt-rules-with-a-baseline.md)) |
 | `gnd check MODEL POPULATION --allow-vacuous --format json` | Exits 0 when vacuous rules are the only shortfall |
+| `gnd check MODEL POPULATION --guarded-diagnostics --format json` | Reports guarded antecedent binding counts and first empty atoms. See [rule-check reports](rule-check-report.md). |
+| `gnd check HEAD POPULATION --baseline-model BASE --format json` | Compares offending findings by rule ID across editions. See [rule-check reports](rule-check-report.md). |
 | `gnd check MODEL POPULATION --admission --format json` | The check plus an asserted-occurrence admission partition |
 | `gnd check MODEL --populations DIR` | Batch checking of population files |
 | `gnd check MODEL --pre PRE --steps STEPS --post POST --format json` | Audit of a declared operation walk |

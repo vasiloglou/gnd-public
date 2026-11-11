@@ -313,6 +313,12 @@
     },
     {
       "$ref": "#/$defs/rule_ids_report"
+    },
+    {
+      "$ref": "#/$defs/guarded_diagnostics_report"
+    },
+    {
+      "$ref": "#/$defs/rule_edition_comparison"
     }
   ],
   "$defs": {
@@ -5459,6 +5465,463 @@
         },
         "allow_vacuous": {
           "type": "boolean"
+        }
+      }
+    },
+    "verdict_v16": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_ref",
+        "address",
+        "addressing",
+        "remedy",
+        "constraint_type",
+        "modality",
+        "source",
+        "status",
+        "verdict",
+        "message",
+        "offending_facts",
+        "reason_code",
+        "novelty",
+        "row_novelty"
+      ],
+      "properties": {
+        "constraint_ref": {
+          "$ref": "#/$defs/verdict_v15/properties/constraint_ref"
+        },
+        "address": {
+          "$ref": "#/$defs/verdict_v15/properties/address"
+        },
+        "addressing": {
+          "$ref": "#/$defs/verdict_v15/properties/addressing"
+        },
+        "remedy": {
+          "$ref": "#/$defs/verdict_v15/properties/remedy"
+        },
+        "constraint_type": {
+          "$ref": "#/$defs/verdict_v15/properties/constraint_type"
+        },
+        "modality": {
+          "$ref": "#/$defs/verdict_v15/properties/modality"
+        },
+        "source": {
+          "$ref": "#/$defs/verdict_v15/properties/source"
+        },
+        "status": {
+          "$ref": "#/$defs/verdict_v15/properties/status"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict_v15/properties/verdict"
+        },
+        "message": {
+          "$ref": "#/$defs/verdict_v15/properties/message"
+        },
+        "offending_facts": {
+          "$ref": "#/$defs/verdict_v15/properties/offending_facts"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/verdict_v15/properties/reason_code"
+        },
+        "novelty": {
+          "$ref": "#/$defs/verdict_v15/properties/novelty"
+        },
+        "row_novelty": {
+          "$ref": "#/$defs/verdict_v15/properties/row_novelty"
+        },
+        "guarded_antecedent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "binding_count",
+            "first_empty_atom_index"
+          ],
+          "properties": {
+            "binding_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "first_empty_atom_index": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "if": {
+            "properties": {
+              "binding_count": {
+                "const": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_empty_atom_index": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "constraint_type": {
+            "const": "guarded"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "guarded_antecedent"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "guarded_antecedent"
+          ]
+        }
+      }
+    },
+    "guarded_diagnostics_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "tool",
+        "command",
+        "outcome",
+        "exit_code",
+        "acceptance_ready",
+        "model",
+        "model_digest",
+        "population",
+        "counts",
+        "verdicts",
+        "derivations",
+        "coverage",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "warnings",
+        "error",
+        "transition",
+        "assurance",
+        "baseline",
+        "allow_vacuous"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 16
+        },
+        "tool": {
+          "$ref": "#/$defs/rule_ids_report/properties/tool"
+        },
+        "command": {
+          "$ref": "#/$defs/rule_ids_report/properties/command"
+        },
+        "outcome": {
+          "$ref": "#/$defs/rule_ids_report/properties/outcome"
+        },
+        "exit_code": {
+          "$ref": "#/$defs/rule_ids_report/properties/exit_code"
+        },
+        "acceptance_ready": {
+          "$ref": "#/$defs/rule_ids_report/properties/acceptance_ready"
+        },
+        "model": {
+          "$ref": "#/$defs/rule_ids_report/properties/model"
+        },
+        "model_digest": {
+          "$ref": "#/$defs/rule_ids_report/properties/model_digest"
+        },
+        "population": {
+          "$ref": "#/$defs/rule_ids_report/properties/population"
+        },
+        "counts": {
+          "$ref": "#/$defs/rule_ids_report/properties/counts"
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verdict_v16"
+          }
+        },
+        "derivations": {
+          "$ref": "#/$defs/rule_ids_report/properties/derivations"
+        },
+        "coverage": {
+          "$ref": "#/$defs/rule_ids_report/properties/coverage"
+        },
+        "extraction": {
+          "$ref": "#/$defs/rule_ids_report/properties/extraction"
+        },
+        "issues": {
+          "$ref": "#/$defs/rule_ids_report/properties/issues"
+        },
+        "issues_total": {
+          "$ref": "#/$defs/rule_ids_report/properties/issues_total"
+        },
+        "issues_truncated": {
+          "$ref": "#/$defs/rule_ids_report/properties/issues_truncated"
+        },
+        "warnings": {
+          "$ref": "#/$defs/rule_ids_report/properties/warnings"
+        },
+        "error": {
+          "$ref": "#/$defs/rule_ids_report/properties/error"
+        },
+        "transition": {
+          "$ref": "#/$defs/rule_ids_report/properties/transition"
+        },
+        "assurance": {
+          "$ref": "#/$defs/rule_ids_report/properties/assurance"
+        },
+        "baseline": {
+          "$ref": "#/$defs/rule_ids_report/properties/baseline"
+        },
+        "allow_vacuous": {
+          "$ref": "#/$defs/rule_ids_report/properties/allow_vacuous"
+        }
+      }
+    },
+    "edition_check_side": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "model_digest",
+        "exit_code"
+      ],
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "model_digest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2,
+            4,
+            null
+          ]
+        }
+      }
+    },
+    "edition_verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_ref",
+        "constraint_type",
+        "verdict",
+        "modality"
+      ],
+      "properties": {
+        "constraint_ref": {
+          "type": "string"
+        },
+        "constraint_type": {
+          "$ref": "#/$defs/verdict/properties/constraint_type"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict/properties/verdict"
+        },
+        "modality": {
+          "$ref": "#/$defs/verdict/properties/modality"
+        }
+      }
+    },
+    "edition_rule_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address",
+        "pairing",
+        "base",
+        "head",
+        "reason",
+        "delta"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "pairing": {
+          "enum": [
+            "paired",
+            "added",
+            "removed",
+            "unpaired"
+          ]
+        },
+        "base": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/edition_verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/edition_verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "delta": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "base_only",
+                "head_only",
+                "standing"
+              ],
+              "properties": {
+                "base_only": {
+                  "type": "array",
+                  "items": {}
+                },
+                "head_only": {
+                  "type": "array",
+                  "items": {}
+                },
+                "standing": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "base",
+                      "head"
+                    ],
+                    "properties": {
+                      "base": {},
+                      "head": {}
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "rule_edition_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "exit_code",
+        "reason",
+        "population",
+        "population_sha256",
+        "base",
+        "head",
+        "issues",
+        "rules"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "gnd-rule-edition-comparison/1"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            3,
+            4,
+            70
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "population": {
+          "type": "string"
+        },
+        "population_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "base": {
+          "$ref": "#/$defs/edition_check_side"
+        },
+        "head": {
+          "$ref": "#/$defs/edition_check_side"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "side",
+              "path",
+              "rule_id",
+              "message"
+            ],
+            "properties": {
+              "side": {
+                "enum": [
+                  "base",
+                  "head",
+                  null
+                ]
+              },
+              "path": {
+                "type": "string"
+              },
+              "rule_id": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edition_rule_comparison"
+          }
         }
       }
     }

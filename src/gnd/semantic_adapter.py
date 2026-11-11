@@ -13,7 +13,6 @@ from dataclasses import dataclass, replace
 from datetime import date, datetime  # noqa: F401 -- historical compatibility binding
 from typing import Any
 
-from gnd import input_policy as _rf7_input
 from gnd import semantic_spec, universe
 from gnd import values as scalar_values
 from gnd.address import positional_constraint_ref
@@ -52,6 +51,8 @@ from gnd.semantic_ir import (
     SnapshotIR,
 )
 from gnd.universe import resolve_primitive
+
+canonical_scalar = scalar_values.canonical_scalar
 
 # Authored constraint families have adapter hooks. Generated compiled findings
 # share the snapshot report surface but are evaluated by their own composer.
@@ -113,64 +114,6 @@ class _ObservedPopulation:
     covers: Sequence[str]
     instances: Mapping[str, Sequence[Any]]
     facts: Mapping[str, Sequence[Mapping[str, Any]]]
-
-
-def canonical_scalar(value: object, primitive: str | None) -> Scalar | Opaque | None:
-    """Exact identity plus optional ordering coordinates; never stringify a type mismatch."""
-    if isinstance(value, dict) and set(value) == {"$opaque"}:
-        label = value["$opaque"]
-        if isinstance(label, str) and label:
-            return Opaque(label)
-        return None
-    if type(value) is bool:
-        if primitive in _NUMERIC:
-            return None
-        return Scalar("boolean", "true" if value else "false", 0, 1, False, "boolean")
-    if isinstance(value, (int, float)):
-        value = int(value) if isinstance(value, int) else float(value)
-        if isinstance(value, float) and not math.isfinite(value):
-            return None
-        numerator, denominator = value.as_integer_ratio()
-        return Scalar(
-            "number", f"{numerator}/{denominator}", numerator, denominator, True, "number"
-        )
-    if isinstance(value, str):
-        value = str(value)
-        if primitive == "Date":
-            try:
-                ordinal = date.fromisoformat(value).toordinal()
-            except ValueError:
-                return None
-            return Scalar("date", value, ordinal, 1, True, "string")
-        if primitive == "DateTime":
-            try:
-                parsed = _rf7_input.parse_datetime(value)
-                offset = parsed.utcoffset()
-            except ValueError:
-                return None
-            microseconds = (
-                ((parsed.toordinal() - 1) * 24 + parsed.hour) * 3600
-                + parsed.minute * 60
-                + parsed.second
-            ) * 1_000_000 + parsed.microsecond
-            if offset is not None:
-                # Integer arithmetic also handles UTC instants outside datetime's
-                # representable local-year range; astimezone would overflow.
-                microseconds -= (
-                    offset.days * 86400 + offset.seconds
-                ) * 1_000_000 + offset.microseconds
-            return Scalar(
-                "datetime-aware" if offset is not None else "datetime-naive",
-                value,
-                microseconds,
-                1,
-                True,
-                "string",
-            )
-        return Scalar("string", value, 0, 1, False, "string")
-    if value is None:
-        return Scalar("null", "null", 0, 1, False, "null")
-    return None
 
 
 class _ShapeError(ValueError):

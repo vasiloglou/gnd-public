@@ -2412,6 +2412,169 @@ def _rule_guarded_role_claim(doc: dict[str, Any]) -> list[ValidationIssue]:
     return issues
 
 
+_GUARDED_LITERAL_DOMAIN_WORK = 100_000
+
+
+def _rule_guarded_literal_domain(doc: dict[str, Any]) -> list[ValidationIssue]:
+    """Diagnose literal bindings excluded by a declared role or object domain."""
+    from itertools import chain
+
+    from gnd.model_index import ModelIndex
+    from gnd.model_queries import _identifying_id, _resolve_reference
+    from gnd.semantic_ir import Scalar
+    from gnd.semantic_spec import scalar_identical, scalar_range_state
+    from gnd.values import canonical_scalar
+
+    guards = list(_iter_guarded_constraints(doc))
+    if not guards:
+        return []
+    fact_types = doc.get("fact_types")
+    object_types = doc.get("object_types")
+    if not isinstance(fact_types, list) or not isinstance(object_types, list):
+        return []
+    facts = [
+        dict(fact, roles=[role for role in fact["roles"] if isinstance(role, dict)])
+        for fact in fact_types
+        if isinstance(fact, dict) and isinstance(fact.get("roles"), list)
+    ]
+    objects = [
+        obj for obj in object_types if isinstance(obj, dict)
+        and isinstance(obj.get("subtype_of", []), list)
+        and isinstance(obj.get("reference", {}), dict)
+    ]
+    index = ModelIndex(None, {"fact_types": facts, "object_types": objects})
+    roles = index.role_object_types()
+    objects_by_id = index.object_types_by_id()
+    parents = _supertype_parents({"object_types": objects})
+    by_role: dict[tuple[str, str], list[tuple[str, dict]]] = {}
+    by_type: dict[str, list[tuple[str, dict]]] = {}
+    for position, domain in enumerate(doc["constraints"]):
+        if not isinstance(domain, dict) or domain.get("type") != "value":
+            continue
+        target = domain.get("object_type")
+        if not isinstance(target, str) or target not in objects_by_id:
+            continue
+        ref = domain.get("role_ref")
+        entry = (f"constraints[{position}]", domain)
+        if ref is None:
+            by_type.setdefault(target, []).append(entry)
+        elif isinstance(ref, dict):
+            fact, role = ref.get("fact_type"), ref.get("role")
+            if isinstance(fact, str) and isinstance(role, str):
+                by_role.setdefault((fact, role), []).append(entry)
+    if not by_type and not by_role:
+        return []
+
+    remaining = _GUARDED_LITERAL_DOMAIN_WORK
+    issues: list[ValidationIssue] = []
+    type_domains: dict[str, list[list[tuple[str, dict]]]] = {}
+    tested: dict[tuple[str, str, str], bool] = {}
+
+    def charge() -> None:
+        nonlocal remaining
+        remaining -= 1
+        if remaining < 0:
+            raise _GuardedLiteralDomainLimit
+
+    def domains_for_type(role_type: str) -> list[list[tuple[str, dict]]]:
+        if role_type not in type_domains:
+            pending = [role_type]
+            if by_type:
+                denoting = _resolve_reference(role_type, objects_by_id, parents, set(), _identifying_id)
+                if denoting is not None:
+                    pending.append(denoting)
+            seen = set()
+            while pending:
+                charge()
+                current = pending.pop()
+                if current not in seen:
+                    seen.add(current)
+                    pending.extend(parents.get(current, ()))
+            type_domains[role_type] = [
+                by_type[target] for target in sorted(seen) if target in by_type
+            ]
+        return type_domains[role_type]
+
+    def excluded(value: Any, raw: Scalar, domain: dict) -> bool:
+        allowed = domain.get("allowed")
+        if isinstance(allowed, list) and allowed:
+            for item in allowed:
+                charge()
+                scalar = canonical_scalar(item, None)
+                if not isinstance(scalar, Scalar) or scalar_identical(raw, scalar):
+                    return False
+            return True
+        ranges = [domain["range"]] if "range" in domain else domain.get("ranges")
+        if not isinstance(ranges, list) or not ranges:
+            return False
+        primitive = index.primitive(domain["object_type"], variant="truthy")
+        scalar = canonical_scalar(value, primitive)
+        if not isinstance(scalar, Scalar):
+            return False
+        for bounds in ranges:
+            charge()
+            if not isinstance(bounds, dict):
+                return False
+            lower, upper = bounds.get("min"), bounds.get("max")
+            minimum = canonical_scalar(lower, primitive) if lower is not None else None
+            maximum = canonical_scalar(upper, primitive) if upper is not None else None
+            lo, hi = bounds.get("min_inclusive", True), bounds.get("max_inclusive", True)
+            if (minimum is not None and not isinstance(minimum, Scalar)
+                or maximum is not None and not isinstance(maximum, Scalar)
+                or lower is not None and minimum is None or upper is not None and maximum is None
+                or type(lo) is not bool or type(hi) is not bool):
+                return False
+            if scalar_range_state(scalar, minimum, maximum, lo, hi) != 0:
+                return False
+        return True
+
+    for ref, guard in guards:
+        for suffix, atom in _iter_guarded_atoms(guard):
+            if not isinstance(atom, dict) or not isinstance(atom.get("fact_type"), str):
+                continue
+            fact = atom["fact_type"]
+            for role, value in atom_bind(atom).items():
+                role_type = roles.get(fact, {}).get(role)
+                if role_type not in objects_by_id or _variable_name(value) is not None:
+                    continue
+                if type(value) not in (bool, int, float, str):
+                    continue
+                raw = canonical_scalar(value, None)
+                if not isinstance(raw, Scalar):
+                    continue
+                path = f"{ref}{suffix}.bind[{role}]"
+                try:
+                    domains = chain(
+                        by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
+                    )
+                    restricting = []
+                    for domain_ref, domain in domains:
+                        charge()
+                        key = domain_ref, raw.identity_kind, raw.token
+                        if key not in tested:
+                            tested[key] = excluded(value, raw, domain)
+                        if tested[key]:
+                            restricting.append(domain_ref)
+                except _GuardedLiteralDomainLimit:
+                    issues.append(ValidationIssue(
+                        path=path, severity="warning",
+                        rule_id="semantic:guarded-literal-domain-work-limit",
+                        message="Guarded literal domain validation reached its work limit.",
+                    ))
+                    return issues
+                if restricting:
+                    issues.append(ValidationIssue(
+                        path=path, severity="warning",
+                        rule_id="semantic:guarded-literal-outside-domain",
+                        message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
+                    ))
+    return issues
+
+
+class _GuardedLiteralDomainLimit(Exception):
+    """The model-level domain lint budget was exhausted."""
+
+
 def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every guarded consequent variable is bound by its antecedent or exists atom."""
     issues: list[ValidationIssue] = []
@@ -4710,6 +4873,7 @@ _SEMANTIC_RULES = (
     # --- MG5 unattended source mode, appended last for the same reason; it
     # returns nothing unless source.mode is unattended (MG-R1).
     _rule_unattended,
+    _rule_guarded_literal_domain,
 )
 
 

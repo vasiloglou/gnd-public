@@ -62,6 +62,8 @@ class CorrespondedFinding:
     witness: tuple[tuple[Scalar, ...], ...]
     witness_keys: tuple[str, ...]
     applicable_scope_ids: tuple[str, ...]
+    binding_count: int | None = None
+    first_empty_atom_index: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -83,6 +85,8 @@ class ProjectedFinding:
     witness: PublicWitness
     applicable_scope_ids: tuple[str, ...]
     fact_refs: tuple[tuple[str, int], ...] = ()
+    binding_count: int | None = None
+    first_empty_atom_index: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -402,48 +406,55 @@ def _indexed_guarded_bindings(
     constraint: IRConstraint,
     snapshot: SnapshotIR,
     work: ReferenceJoinWork | None = None,
-) -> tuple[bool, tuple[str, ...], tuple[tuple[Scalar, ...], ...]]:
+) -> tuple[bool, tuple[str, ...], tuple[tuple[Scalar, ...], ...], tuple[int | None, int | None]]:
     """Join a connected guarded antecedent by canonical-identity hash indexes."""
     names = semantic_spec.guarded_variable_names(constraint)
     name_positions = {name: position for position, name in enumerate(names)}
     bindings: list[tuple[Scalar | None, ...]] = [tuple(None for _name in names)]
     bound_positions: set[int] = set()
+    first_empty = None
+    populated = True
+    available = True
 
     for atom_index, atom in enumerate(constraint.antecedent):
         fact_position = semantic_spec.snapshot_fact_index(snapshot, atom.fact_type)
         relation_position = semantic_spec.snapshot_relation_index(snapshot, atom.fact_type)
         if fact_position < 0 or relation_position < 0:
-            return False, names, ()
+            return False, names, (), (None, None)
         fact = snapshot.fact_types[fact_position]
         relation = snapshot.relations[relation_position]
+        populated = populated and bool(relation.rows)
+        available = available and not relation.refusals and (
+            bool(relation.rows) or atom.fact_type in snapshot.covers
+        )
         if len(atom.bindings) != len(fact.roles):
-            return False, names, ()
+            return False, names, (), (None, None)
 
         terms: list[tuple[int, Any]] = []
         candidate_positions: set[int] = set()
         for role, term in atom.bindings:
             column = semantic_spec.fact_role_index(fact, role)
             if column < 0 or not term.valid:
-                return False, names, ()
+                return False, names, (), (None, None)
             terms.append((column, term))
             if term.kind == "variable":
                 position = name_positions.get(term.variable)
                 if position is None:
-                    return False, names, ()
+                    return False, names, (), (None, None)
                 candidate_positions.add(position)
             elif term.kind != "literal" or term.literal is None:
-                return False, names, ()
+                return False, names, (), (None, None)
 
         candidates: list[tuple[Scalar | None, ...]] = []
         for row in relation.rows:
             if len(row) != len(fact.roles) or any(value is None for value in row):
-                return False, names, ()
+                return False, names, (), (None, None)
             candidate: list[Scalar | None] = [None] * len(names)
             matches = True
             for column, term in terms:
                 value = row[column]
                 if value is None:
-                    return False, names, ()
+                    return False, names, (), (None, None)
                 if term.kind == "literal":
                     if not semantic_spec.scalar_identical(value, term.literal):
                         matches = False
@@ -463,6 +474,8 @@ def _indexed_guarded_bindings(
                 for _candidate in candidates:
                     work.charge()
             bindings = candidates
+            if not bindings:
+                first_empty = 0
             bound_positions = candidate_positions
             continue
 
@@ -496,14 +509,18 @@ def _indexed_guarded_bindings(
                     merged[position] = candidate[position]
                 joined.append(tuple(merged))
         bindings = joined
+        if not bindings and first_empty is None:
+            first_empty = atom_index
         bound_positions |= candidate_positions
 
     complete: list[tuple[Scalar, ...]] = []
     for binding in bindings:
         if any(value is None for value in binding):
-            return False, names, ()
+            return False, names, (), (None, None)
         complete.append(tuple(value for value in binding if value is not None))
-    return True, names, _canonical_rows(complete)
+    rows = _canonical_rows(complete)
+    observation = (len(rows), first_empty if populated else None) if available else (None, None)
+    return True, names, rows, observation
 
 
 def _indexed_guarded_verdict(
@@ -866,12 +883,14 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
     guarded_bindings: tuple[tuple[Scalar, ...], ...] | None = None
     guarded_names: tuple[str, ...] = ()
     guarded_valid = False
+    binding_count, first_empty_atom_index = None, None
     work_exceeded = False
     if constraint.family == "guarded" and temporal is None:
         try:
-            guarded_valid, guarded_names, guarded_bindings = _indexed_guarded_bindings(
-                constraint, semantic_snapshot, reference_work
+            guarded_valid, guarded_names, guarded_bindings, observation = _indexed_guarded_bindings(
+                constraint, adapted.snapshot, reference_work
             )
+            binding_count, first_empty_atom_index = observation
         except ReferenceJoinLimit:
             work_exceeded = True
     if work_exceeded:
@@ -965,6 +984,8 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
         ),
     )
     record_branch(scope_id, outcome=verdict)
+    if constraint.refused == "opaque-value":
+        binding_count = None
     return CorrespondedFinding(
             scope_id=scope_id,
             constraint_id=constraint.ref,
@@ -975,6 +996,8 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
             witness=witness,
             witness_keys=witness_keys,
             applicable_scope_ids=(scope_id,),
+            binding_count=binding_count,
+            first_empty_atom_index=first_empty_atom_index if binding_count == 0 else None,
         )
 
 
@@ -1126,6 +1149,8 @@ def project_reference_limit(
         witness=(),
         applicable_scope_ids=(scope,),
         fact_refs=_subject_occurrences(finding.constraint_id, observation),
+        binding_count=None,
+        first_empty_atom_index=None,
     )
 
 
@@ -1162,6 +1187,8 @@ def project_finding(
         ),
         finding.applicable_scope_ids,
         tuple(sorted(coordinates)),
+        finding.binding_count,
+        finding.first_empty_atom_index,
     )
 
 

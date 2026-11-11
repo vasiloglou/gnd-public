@@ -122,3 +122,58 @@ existing version message.
   reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
 - `source: tool-output` and `producer` are population header fields: see the
   [population format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/population-format.md).
+
+## Guarded antecedent diagnostics
+
+`gnd check MODEL POPULATION --guarded-diagnostics` uses the plain
+rule-check scope above and implies `--rule-ids`. It can be combined with
+`--baseline` and `--allow-vacuous`. The JSON report uses version 16. Its
+guarded verdicts include:
+
+```json
+{"guarded_antecedent": {"binding_count": 0, "first_empty_atom_index": 1}}
+```
+
+`binding_count` counts the distinct bindings from the completed antecedent
+join. It is null when the join is unavailable, including an empty relation
+whose coverage was omitted. A covered empty relation gives zero. When all
+antecedent relations have available rows and the join produces no binding,
+`first_empty_atom_index` identifies the first prefix with no matches in
+declared atom order, starting at zero. Otherwise the index is null. A
+complete antecedent can have a known count even if the consequent is
+undecided. These fields leave verdicts and exit bands as reported by the
+same check without this option. Text output lists the same observations.
+
+For authoring-time findings on literal values, see the ORM
+[constraint reference](../../src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
+
+## Comparing two rule editions
+
+Run `gnd check HEAD POPULATION --baseline-model BASE --format json` to compare
+the findings of two models against the same captured population bytes.
+Both models must use the same vocabulary and be eligible for the plain
+rule-ID check. The population must be valid under both editions. If the
+editions declare different model IDs, omit the optional population
+`model_id` header to use the population with both.
+
+The `gnd-rule-edition-comparison/1` result includes the population SHA-256,
+each side's model digest and check band, and the rule rows. Rules pair by
+declared address. The pairing is `paired`, `added`, `removed`, or
+`unpaired` for an anonymous rule. Each side carries its own positional
+reference, family, verdict and modality. An available `delta` holds
+`base_only`, `head_only` and `standing` offending bindings. A rowless
+failure is represented by null. Standing entries retain both original
+bindings. For guarded rules, shared unambiguous antecedent roles align
+variables across editions. The shared projection must cover every variable
+of at least one edition and keep distinct bindings separate. An ambiguous
+mapping or a collision withholds that rule's delta and supplies a reason.
+
+Exit 0 means the comparison completed, even if either side failed its
+ordinary check. Exit 3 identifies invalid input or incompatible vocabulary.
+Exit 4 means the comparison was incomplete. An unchecked rule, an
+ambiguous alignment, or a projection collision is identified on its row. A side check at
+exit 4 also leaves the overall comparison incomplete.
+Exhausting the comparison's 1,000,000-unit work budget yields an empty rule
+list and `comparison-work-limit`. The text form lists the directional
+bindings and the side check bands. This option is exclusive with
+`--baseline`, other rule-ID output flags, and other check arms.

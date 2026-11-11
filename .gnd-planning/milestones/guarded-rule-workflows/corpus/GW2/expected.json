@@ -1,0 +1,6 @@
+{
+  "base_check": {"exit": 1, "offending": 43},
+  "head_check": {"exit": 1, "offending": 1},
+  "forward": {"exit": 0, "base_only": 42, "head_only": 0, "standing": 1},
+  "reverse": {"exit": 0, "base_only": 0, "head_only": 42, "standing": 1}
+}

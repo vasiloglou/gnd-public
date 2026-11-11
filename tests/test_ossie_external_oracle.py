@@ -172,7 +172,7 @@ def test_pinned_formula_keywords_are_case_sensitive(oracle, tmp_path):
     assert refused.returncode == 1 and "Unable to parse" in refused.stderr
 
 
-def _consumer_formulas(document):
+def _consumer_scopes(document):
     scopes = [("", document)]
     for i, concept in enumerate(document["ontology"]):
         pointer = f"/ontology/{i}"
@@ -181,9 +181,13 @@ def _consumer_formulas(document):
             (f"{pointer}/relationships/{j}", rel)
             for j, rel in enumerate(concept.get("relationships", ()))
         )
+    return scopes
+
+
+def _consumer_formulas(document):
     return [
         {"pointer": f"{pointer}/{field}/{i}", "field": field, "formula": formula}
-        for pointer, scope in scopes
+        for pointer, scope in _consumer_scopes(document)
         for field in ("requires", "derived_by")
         for i, formula in enumerate(scope.get(field, ()))
     ]
@@ -213,11 +217,12 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None):
     }
     if gnd_model is not None:
         try:
-            rules = render_rules(gnd_model, "duckdb").encode()
+            rules = render_rules(gnd_model, "lqp").encode()
         except (ExportInputError, ModelLoadError, ModelValidationError) as error:
-            result["gnd_rules"] = {"refused": str(error)}
+            result["gnd_rules"] = {"target": "lqp", "refused": str(error)}
         else:
             result["gnd_rules"] = {
+                "target": "lqp",
                 "require": call_counts(rules)["require"],
                 "sha256": hashlib.sha256(rules).hexdigest(),
             }
@@ -231,11 +236,14 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None):
     result["diagnostics"] = [
         line.replace(str(oracle.root), "$ORACLE").replace(str(root), "$CASE")
         for line in conversion.stderr.splitlines()
-        if "Warning:" in line or line.startswith(("ValueError:", "NotImplementedError:", "KeyError:", "AssertionError:", "TypeError:", "RuntimeError:"))
+        if "Warning:" in line or line.startswith((
+            "ValueError:", "NotImplementedError:", "KeyError:", "AssertionError:",
+            "TypeError:", "RuntimeError:", "[Invalid identify_by]",
+        ))
     ]
     if conversion.returncode != 0:
         if not result["diagnostics"]:
-            result["diagnostics"] = conversion.stderr.splitlines()[-1:]
+            result["diagnostics"] = [conversion.stderr.splitlines()[-1].strip()] if conversion.stderr else []
         return result
 
     try:
@@ -259,6 +267,18 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None):
     return result
 
 
+def _consumer_isolate(oracle, root, name, document, field, owners=None):
+    projection = json.loads(document)
+    removed = []
+    for pointer, scope in _consumer_scopes(projection):
+        if field in scope and (owners is None or scope.get("concept") in owners):
+            removed.append({"pointer": f"{pointer}/{field}", "value": scope.pop(field)})
+    assert removed
+    result = _consumer_compare(oracle, root, name, json.dumps(projection).encode())
+    result["isolation_removed"] = removed
+    return result
+
+
 def test_offline_consumer_census_and_formula_controls(oracle, tmp_path):
     import hashlib
 
@@ -269,20 +289,46 @@ def test_offline_consumer_census_and_formula_controls(oracle, tmp_path):
     expected = json.loads((os0 / "pins.json").read_bytes())["relationalai_wheels_sha256"][wheel]
     assert hashlib.sha256((oracle.root / wheel).read_bytes()).hexdigest() == expected
 
+    composition = "src/gnd/examples/composition/model.orm.yaml"
+    library = "src/gnd/skills/gnd-model-from-text/examples/library_with_subtypes.orm.yaml"
+    known = {
+        composition: ("consumer-derivation-codegen", "should be bound by a type-membership Lookup"),
+        library: ("consumer-inherited-identifier", "[Invalid identify_by] Property LibraryItem.gnd_reference"),
+    }
     cases = []
+    isolated = []
     for i, relative in enumerate(CENSUS):
         if relative in INCLUDE_ROOTS:
             continue
         model = ROOT / relative
         bundle = render_ossie(model, output_format="json")
-        cases.append(_consumer_compare(oracle, tmp_path / f"case-{i}", relative, bundle.document, model))
+        result = _consumer_compare(oracle, tmp_path / f"case-{i}", relative, bundle.document, model)
+        if relative in known:
+            reason, diagnostic = known[relative]
+            if result["exit"] == 1 and any(diagnostic in line for line in result["diagnostics"]):
+                result["limitations"].append({"reason": reason})
+            field = "derived_by" if relative == composition else "identify_by"
+            owners = None if relative == composition else {"BookItem", "PeriodicalItem"}
+            isolated.append(_consumer_isolate(
+                oracle, tmp_path / f"isolated-{i}", relative, bundle.document, field, owners,
+            ))
+        cases.append(result)
     assert len(cases) == 38
 
     corpus_path = (
         ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS2/corpus-r2/model.orm.json"
     )
     corpus = render_ossie(corpus_path, output_format="json").document
-    positive = _consumer_compare(oracle, tmp_path / "positive", "reviewed-formula-corpus", corpus, corpus_path)
+    full_corpus = _consumer_compare(
+        oracle, tmp_path / "formula-corpus", "reviewed-formula-corpus", corpus, corpus_path,
+    )
+    if full_corpus["exit"] == 1 and any(
+        "should be bound by a type-membership Lookup" in line for line in full_corpus["diagnostics"]
+    ):
+        full_corpus["limitations"].append({"reason": "consumer-derivation-codegen"})
+    requires_control = _consumer_isolate(
+        oracle, tmp_path / "requires-control", "requires-only-corpus", corpus, "derived_by",
+    )
     controls = []
     for operator, formula in {
         "OR": "Account.account_active OR Account.account_registered",
@@ -305,7 +351,9 @@ def test_offline_consumer_census_and_formula_controls(oracle, tmp_path):
         "relationalai_version": "1.39.0",
         "relationalai_wheel_sha256": expected,
         "cases": cases,
-        "positive_control": positive,
+        "full_formula_corpus": full_corpus,
+        "isolations": isolated,
+        "requires_control": requires_control,
         "refusal_controls": controls,
     }
     out = os.environ.get("GND_OSSIE_CONSUMER_OUTPUT")
@@ -313,9 +361,15 @@ def test_offline_consumer_census_and_formula_controls(oracle, tmp_path):
         Path(out).write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n")
 
     failures = [row for row in cases if row["exit"] or row["declaration_difference"]]
-    assert not failures, [(row["case"], row.get("declaration_difference"), row["diagnostics"]) for row in failures]
-    assert positive["exit"] == 0 and not positive["declaration_difference"], positive
-    assert positive["calls"]["define"] >= 1 and positive["limitations"], positive
+    assert {row["case"] for row in failures} == known.keys(), failures
+    for case in failures:
+        assert {"reason": known[case["case"]][0]} in case["limitations"], case
+    for case in [*isolated, requires_control]:
+        assert case["exit"] == 0 and not case["declaration_difference"], case
+    assert {"reason": "consumer-derivation-codegen"} in full_corpus["limitations"], full_corpus
+    assert requires_control["calls"]["require"] == 0
+    assert len(requires_control["limitations"]) == len(requires_control["formulas"]) > 0
+    assert full_corpus["gnd_rules"]["require"] > 0
     for case in controls:
         assert case["exit"] != 0
         assert any("NotImplementedError:" in line and case["case"] in line for line in case["diagnostics"]), case

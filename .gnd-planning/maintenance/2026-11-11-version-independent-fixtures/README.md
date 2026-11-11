@@ -93,6 +93,13 @@ does not bind.
   not moved into agreement; a broken citation is not repaired.
 - **Lint:** the changed files pass `uv run ruff check`.
 
+## After the merge
+
+Merged as `b53b208a` (pull request 186). The full default lane and release
+acceptance on `main` with both changes are in
+`../2026-11-11-open-issues/README.md`, "After the merge": 19,062 passed and
+16 passed.
+
 ## Not covered
 
 - The trial bumps moved the version in the five homes and reinstalled the

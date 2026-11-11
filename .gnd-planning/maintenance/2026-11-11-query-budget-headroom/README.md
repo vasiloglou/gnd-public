@@ -90,7 +90,11 @@ Earlier runs, kept for the account: one unsharded G2 was killed at 58%; the
 first sharded G2 had 2 failures in `tests/test_rf4_peripheral.py` (finding 9
 in the spec), which the revert removed.
 
-## Not done
+## Closed
 
-- PR 187 is open and not merged.
-- Issue 170 stays open until the owner merges.
+- PR 187 was merged on the owner's instruction ("merge", 2026-11-11), merge
+  commit `c1ccd513`.
+- Issue 170 was closed on the owner's instruction ("Close issue 170",
+  2026-11-11).
+- Still true of the merged bytes: no single run of the whole default lane
+  exited 0, and the answers to review findings R3 to R5 were not re-reviewed.

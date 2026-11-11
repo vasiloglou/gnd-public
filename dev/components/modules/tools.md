@@ -295,7 +295,7 @@ Run the pinned standalone Ossie validator and parser without runtime dependencie
 | `OssieOracle.check_pins(self) -> None` | method | 29 | (no docstring) |
 | `OssieOracle.validate(self, path) -> subprocess.CompletedProcess[str]` | method | 48 | (no docstring) |
 | `OssieOracle.parse(self, path) -> subprocess.CompletedProcess[str]` | method | 57 | (no docstring) |
-| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 135 | Emit PyRel source in the isolated process, without executing that source. |
+| `convert_offline(oracle, document, output, *, checkout, python) -> subprocess.CompletedProcess[str]` | function | 139 | Emit PyRel source in the isolated process, without executing that source. |
 
 ## tools.plan_app_bot — `tools/plan_app_bot.py`
 Components: unassigned

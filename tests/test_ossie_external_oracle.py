@@ -239,6 +239,12 @@ def _consumer_compare(oracle, root, name, document, gnd_model=None, *, checkout=
         result.update(exit=3, diagnostics=["ossie-oracle: socket guard verification failed"])
         return result
     result["socket_guard"] = "self-test-passed-no-audited-network-attempt"
+    if checkout is not None:
+        prefix = "ossie-oracle: metamodel require tasks: "
+        for line in conversion.stdout.splitlines():
+            if line.startswith(prefix):
+                result["metamodel_require_tasks"] = int(line.removeprefix(prefix))
+                break
     result["exit"] = conversion.returncode
     result["diagnostics"] = [
         line.replace(str(oracle.root), "$ORACLE").replace(str(root), "$CASE")

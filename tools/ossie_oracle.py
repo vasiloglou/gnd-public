@@ -119,13 +119,17 @@ conversion_started = True
 assert importlib.metadata.version("relationalai") == "1.39.0"
 from ossie_ontology.parser import OssieParser
 from ossie_relationalai import OssieToRelationalAIConverter, declared_table
+from relationalai.semantics.metamodel.metamodel import Require
 from relationalai.semantics.metamodel.pyrel_codegen import to_pyrel
 
 model = OssieToRelationalAIConverter.convert(
     OssieParser().parse(document),
     table_provider=declared_table,
 )
-source = to_pyrel(model.base_model().to_metamodel()).encode("utf-8")
+metamodel = model.base_model().to_metamodel()
+count = sum(isinstance(task, Require) for task in metamodel.root.body)
+print(f"ossie-oracle: metamodel require tasks: {count}", flush=True)
+source = to_pyrel(metamodel).encode("utf-8")
 if len(source) > 10 * 1024 * 1024:
     raise ValueError("ossie-oracle: generated source exceeds size cap")
 output.write_bytes(source)

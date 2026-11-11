@@ -31,7 +31,7 @@ def _variant(corpus, selected):
         requires = scope.pop("requires", ())
         scope.pop("derived_by", None)
         for i, formula in enumerate(requires):
-            if selected["pointer"] == f"{pointer}/requires/{i}":
+            if selected is not None and selected["pointer"] == f"{pointer}/requires/{i}":
                 scope["requires"] = [formula]
     return json.dumps(document).encode()
 
@@ -67,6 +67,11 @@ def main():
             cases.append(_consumer_compare(
                 oracle, scratch / f"case-{i}", relative, document, model, checkout=checkout,
             ))
+        baseline = _consumer_compare(
+            oracle, scratch / "formula-baseline", "no-formulas",
+            _variant(corpus, None), checkout=checkout,
+        )
+        assert baseline["exit"] == 0 and not baseline["declaration_difference"]
         controls = []
         for i, formula in enumerate(formulas):
             result = _consumer_compare(
@@ -74,6 +79,10 @@ def main():
                 _variant(corpus, formula), checkout=checkout,
             )
             result["original_formula"] = formula
+            if "metamodel_require_tasks" in result:
+                result["added_require_tasks"] = (
+                    result["metamodel_require_tasks"] - baseline["metamodel_require_tasks"]
+                )
             controls.append(result)
 
     args.out.write_text(json.dumps({
@@ -82,11 +91,31 @@ def main():
         "local_converter_commit": commit,
         "relationalai_version": "1.39.0",
         "census": cases,
+        "isolation_baseline": baseline,
         "isolated_formulas": controls,
     }, indent=2, sort_keys=True) + "\n")
     assert len(cases) == 38 and len(controls) == 8
     assert all(not row.get("declaration_difference") for row in [*cases, *controls])
-    assert any(row.get("calls", {}).get("require") for row in controls)
+    reviewed = json.loads((MILESTONE / "evidence/OS4/reviewed/consumer-limitations.json").read_bytes())
+    baseline_failures = {row["case"] for row in reviewed["cases"] if row["exit"]}
+    assert {row["case"] for row in cases if row["exit"]} == baseline_failures
+    assert all(row["exit"] == 0 for row in controls)
+    assert all(row["calls"]["require"] == 0 for row in controls)
+    expected_refusals = {
+        "COUNT[Account] <= 2": "ontology-level requires are not supported",
+        "Category == 'Retail' OR Category == 'Business'": "needs a finite instance relation",
+    }
+    refused = set()
+    for row in controls:
+        formula = row["original_formula"]["formula"]
+        if formula in expected_refusals:
+            assert row["added_require_tasks"] == 0
+            assert any(expected_refusals[formula] in warning for warning in row["diagnostics"])
+            refused.add(formula)
+        else:
+            assert row["added_require_tasks"] == 1
+            assert not row["diagnostics"]
+    assert refused == expected_refusals.keys()
 
 
 if __name__ == "__main__":

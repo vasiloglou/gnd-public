@@ -10,6 +10,7 @@ reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
 not re-reviewed. No phase spec is approved. `auto=false`.**
 
 - [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
+- [RN2 spec (awaiting owner review)](notes/phase-RN2-spec.md)
 - [RN0 record](002-phase-RN0.md); [RN0 spec (approved 2026-11-10)](notes/phase-RN0-spec.md); [diff review](notes/phase-RN0-codex-review.md)
 - [RN1 record](003-phase-RN1.md); [RN1 spec (approved 2026-11-11)](notes/phase-RN1-spec.md); [diff review](notes/phase-RN1-codex-review.md); [moved digests](evidence/e1/moved-digests.md)
 - [Codex review of r1](evidence/plan-review-r1/codex-review.md)
@@ -56,5 +57,9 @@ prepared and not published, and the default lane at `d78e576c` clean
 (19,016 passed, the 2 known errors). Review: one reviewer (Codex, `revise`,
 F1 to F7, all fixed).
 
-Next action: the owner merges PR 163 and answers D7 (the Ossie oracle lane);
-then RN2's spec (candidate build and installed acceptance).
+PR 163 is merged (main `f9f502d9`, 2026-11-11); main declares 0.3.0. RN2's
+spec is drafted with its five probes measured on the 0.3.0 tree and on the
+published 0.2.0 wheel.
+
+Next action: the owner rules the RN2 spec gate and its decisions D1 to D6
+(D5 is the Ossie oracle lane).

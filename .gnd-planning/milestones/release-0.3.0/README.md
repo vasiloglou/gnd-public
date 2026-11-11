@@ -10,7 +10,8 @@ reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
 not re-reviewed. No phase spec is approved. `auto=false`.**
 
 - [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
-- [RN2 record](004-phase-RN2.md); [RN3 spec (awaiting owner review)](notes/phase-RN3-spec.md)
+- [RN3 record](005-phase-RN3.md); [dossier](evidence/RN3/dossier.md); [RN3 spec (approved 2026-11-11)](notes/phase-RN3-spec.md); [review](notes/phase-RN3-codex-review.md)
+- [RN2 record](004-phase-RN2.md)
 - [RN2 spec (approved 2026-11-11)](notes/phase-RN2-spec.md); [part-one review](notes/phase-RN2-codex-review.md)
 - [RN0 record](002-phase-RN0.md); [RN0 spec (approved 2026-11-10)](notes/phase-RN0-spec.md); [diff review](notes/phase-RN0-codex-review.md)
 - [RN1 record](003-phase-RN1.md); [RN1 spec (approved 2026-11-11)](notes/phase-RN1-spec.md); [diff review](notes/phase-RN1-codex-review.md); [moved digests](evidence/e1/moved-digests.md)
@@ -77,8 +78,13 @@ built and accepted** ([record](004-phase-RN2.md)): wheel sha256
 and release acceptance on beast-3 with Python 3.11: 18 passed. Nothing is
 published.
 
-RN3's spec is drafted: the hand-over dossier, three unapplied
-post-publication patches and a stale-text check.
+RN3's spec was approved by the owner on 2026-11-11 ("Merge and approve").
+RN3 is done and recorded ([record](005-phase-RN3.md)): the
+[hand-over dossier](evidence/RN3/dossier.md), three unapplied
+post-publication patches and a stale-text check. Review: one reviewer
+(Codex, `revise`, H1 to H9, all fixed).
 
-Next action: the owner merges PR 165 (the RN2 record) and rules the RN3 spec
-gate and its decisions D1 to D5.
+**The three preparation phases are complete. Nothing is published.** The
+publication stage is the owner's (RN-D5): check the files and the version,
+upload, tag, GitHub release; then the served-file check and the
+post-publication pull request, each on the owner's request.

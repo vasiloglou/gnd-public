@@ -716,6 +716,16 @@ Deterministic, complete stakeholder verbalization of an ORM model.
 | `check_fact_type_selection(fact_types) -> None` | function | 706 | The one argument check for a fact-type selection: None or a list or tuple of str. |
 | `render_rule_verbalizations(model, *, fact_types) -> tuple[RuleVerbalization, ...]` | function | 715 | Render each selected derived fact type's rule in stable id order. |
 
+## gnd.ossie_import — `src/gnd/ossie_import.py`
+Components: model.ossie_import
+Bounded, offline import of the pinned Apache Ossie ontology dialect.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
+| `OssieImportResult` | class | 58 | (no docstring) |
+| `plan_ossie_import(path) -> OssieImportResult` | function | 622 | Admit one standalone ontology or bound bundle without network access. |
+
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output
 (no docstring)

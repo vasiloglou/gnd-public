@@ -14,7 +14,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: gnd check, check population, validate population, constraint verdicts, snapshot check, evaluate constraints, report violations
 - status: canonical
 - components: cli.dispatch, cli.checking_command, cli.api, check.service, model.loading, model.population_loading, checker.evaluate, check.admission, check.baseline, checker.reports
-- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +78 more (graph.md)
+- members_uses: agent.solve, assurance.evidence, assurance.policy, assurance.transport, check.batch, check.branches, check.calculation_scope, check.compiled_obligations, check.constraint_families, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, … +79 more (graph.md)
 - flow: cli.dispatch -> cli.checking_command -> cli.api -> check.service -> model.loading -> model.population_loading -> checker.evaluate -> check.admission -> checker.reports
 - notes: Extension calculation, semantic snapshot adapters and redaction branch inside check.service and checker.evaluate. Anchored and composed checks add anchor binding before evaluation. Under `--rule-ids` (report version 15) the service adds declared rule identity, remedies and acyclic extents; `--baseline` checks the base population too and compares the two in check.baseline, and the exit band then comes from `band(report, comparison, allow_vacuous=)`.
 
@@ -509,12 +509,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.checking_command
 - does: Register and dispatch validation, population checks, complete model review, transitions, composition, import, diff and coverage CLI arms.
-- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import rai orm, import mined rules, verbalize population, verbalize model, complete model review
+- verbs: validate model, model identity, require documents, unchecked source spans, check population, rule ids, baseline check, allow vacuous, declared rule identity, remedy text, snapshot checks, batch checks, audit transition, plan transition, compose populations, compare models, coverage evidence, import ossie, import rai orm, import mined rules, verbalize population, verbalize model, complete model review
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/checking.py, src/gnd/commands/__init__.py
-- uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.rai_import
+- uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.ossie_import, model.rai_import
 - used_by: cli.dispatch
 - part_of: subsystem.check
 - tests: tests/test_rf5_commands.py, tests/test_reference_transition_text.py
@@ -1562,6 +1562,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
+- notes: The three output artifacts use the importer's input size cap.
 
 
 ### export.pyrel_emit
@@ -1744,7 +1745,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +68 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +69 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1772,7 +1773,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/_documents.py
 - uses: (none)
-- used_by: export.ossie, model.loading
+- used_by: export.ossie, model.loading, model.ossie_import
 - tests: tests/test_evolve_loading.py
 - notes: Strict JSON-domain conversion, permissive YAML preservation and JSON-encoder compatibility share one recursive walk with explicit switches. gnd.model re-exports this capability.
 
@@ -1905,7 +1906,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +61 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +62 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -2168,7 +2169,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +50 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +51 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2194,7 +2195,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, … +18 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, export.lean_bundle, … +19 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2513,7 +2514,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, extract.manifest, … +12 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +14 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -2588,6 +2589,16 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: (none)
 - notes: No callers appear in the supplied package/test/script inventory; this helper does not itself check evidence freshness.
 
+
+### model.ossie_import
+- does: Read a pinned Apache Ossie ontology or bound GND bundle offline and produce an admitted ORM model and a per-pointer loss report.
+- verbs: import ossie, foreign ontology, ontology name graph, sidecar restore, loss accounting, digest binding, pin reference, imported provenance, plan_ossie_import
+- status: canonical
+- modules: src/gnd/ossie_import.py
+- uses: infra.artifacts, infra.errors, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.scalar_identity
+- used_by: cli.checking_command
+- tests: tests/test_ossie_import.py
+- notes: The admitted plan contains only output bytes. The CLI publishes the report first and the model last.
 
 ### model.rai_import
 - does: Normalize the admitted RAI schema dialect into validated ORM YAML and a digest-bound alias map.
@@ -2704,7 +2715,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/values.py
 - uses: infra.artifacts, infra.errors, model.document
-- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.population_loading, … +6 more (graph.md)
+- used_by: check.admission, check.compiled_obligations, check.element_coverage, check.universe, checker.evaluate, cli.api, export.ossie, infra.text_output, measure.report, measure.service, model.loading, model.ossie_import, … +7 more (graph.md)
 - tests: tests/test_population_load.py, tests/test_checker_families.py, tests/test_transition_report.py, tests/test_rf3_moves.py, tests/test_rof3_model_identity.py
 - notes: Shared defining home for helpers exposed under historical checker, transition, population and references names; these aliases are not duplicate implementations. Population/model validation digests use repr (legacy); the canonical model identity (version 2 for plain models, version 1 for reference-bearing ones, defined in the gnd-orm-core representation format) uses canonical JSON and refuses an unrepresentable model with ModelIdentityError.
 
@@ -3376,7 +3387,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - coverage omission: synth.frontier, synth.mutations
 - declared adapter: agent.declared_adapter, exp.session_profile, exp.session_runtime
 - derived relations: export.pyrel_rules, semantics.extensions
-- digest binding: exp.schema, fidelity.service
+- digest binding: exp.schema, fidelity.service, model.ossie_import
 - disclosure mode: cli.discover_command, cli.dispatch, export.service, infra.disclosure
 - dispatch handler: cli.codegen_command, cli.conformance_command, cli.doccheck_command, cli.evolve_command, cli.exp_command, cli.export_command, cli.extract_command, cli.fidelity_command, cli.judgments_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.synth_command, cli.verify_command, cli.witness_command
 - distinct identifiers: synth.identity, synth.pool
@@ -3425,6 +3436,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - identity_key: extract.scalar_identity, model.anchor_identity, model.scalar_identity
 - immutable evidence: evolve.service, exp.session_store
 - import mined rules: cli.checking_command, export.ilp_service
+- import ossie: cli.checking_command, model.ossie_import
+- imported provenance: model.ossie_import, model.rai_import
 - induced provenance: discover.output, export.ilp_service
 - input refusal: semantics.snapshot_adapter, witness.service
 - install skills: cli.lifecycle_command, install.skill_lifecycle

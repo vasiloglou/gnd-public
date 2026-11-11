@@ -755,6 +755,9 @@
     "gnd.proof_kernel": {
       "layer": "infrastructure"
     },
+    "gnd.ossie_import": {
+      "layer": "entry"
+    },
     "gnd.rai_import": {
       "layer": "entry"
     },

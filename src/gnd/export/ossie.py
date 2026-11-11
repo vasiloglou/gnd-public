@@ -19,7 +19,7 @@ from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
 from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
-from gnd.input_policy import guard_yaml
+from gnd.input_policy import MAX_BYTES, guard_yaml
 from gnd.model import MAX_MODEL_BYTES, json_document, load_model_bytes, parse_model_document
 from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
@@ -437,4 +437,6 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) 
         )
     except (ModelIdentityError, UnicodeEncodeError, ValueError) as error:
         raise OssieInputError("model has no encodable interchange identity") from error
+    if max(len(data), len(sidecar), len(report)) > MAX_BYTES:
+        raise OssieInputError("ossie:output-size")
     return OssieArtifacts(data, sidecar, report)

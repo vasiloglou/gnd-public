@@ -15,6 +15,7 @@ rai-agent-skills ORM skills (https://github.com/RelationalAI/rai-agent-skills,
 branch an-orm-skill), Copyright 2026 RelationalAI, licensed under the
 Apache License, Version 2.0.
 
-The vendored ontology schema in gnd/schema/ossie/ontology.json is from
+The vendored schemas in gnd/schema/ossie/ and the pinned Flights example
+in .gnd-planning/milestones/ossie-interchange/evidence/OS3/ are from
 Apache Ossie (incubating), commit ee89dbdc2844d8b7d293ed42c8613928bb99505f,
 Copyright The Apache Software Foundation, under the Apache License, Version 2.0.

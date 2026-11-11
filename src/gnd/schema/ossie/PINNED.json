@@ -3,5 +3,9 @@
   "commit": "ee89dbdc2844d8b7d293ed42c8613928bb99505f",
   "upstream_path": "ontology/ontology.json",
   "sha256": "c94c6ee9831a65aac52c52353072c2480c04c43a49139ed8ebafc90a2d9b9588",
-  "version": "0.3.0.dev0"
+  "version": "0.3.0.dev0",
+  "core_reference": {
+    "upstream_path": "core-spec/ossie-schema.json",
+    "sha256": "729ef2ce7e8bc4c3c50fef8e1aa106ee9356add13e67cf38f97772314afea950"
+  }
 }

@@ -1892,3 +1892,32 @@ entries. An interruption before the ontology appears can leave uncommitted
 companions. Exit codes are 0 on success, 3 on input or strict-policy refusal,
 11 on output collision, 66 on missing input, 70 on an internal rendering
 failure and 74 on an I/O refusal.
+
+### Import a pinned ontology
+
+`gnd import ossie FILE --out MODEL` accepts an Ossie ontology in JSON or
+YAML. If `FILE.gnd.json` is present, the reader verifies the exact ontology
+SHA-256 and restores GND source pointers. It checks an adjacent
+`FILE.loss.json` against the sidecar when that report is present. A report
+with no refusals also enables verification of the restored model identity.
+Keep the ontology and sidecar together when you need a GND round trip.
+Exported omissions remain omissions on import.
+
+Without a sidecar, import admits the supported declarations of a foreign
+ontology. It uses deterministic GND IDs, direct references through a
+single supported identifying link, subtype links and first readings that
+bind every role of a supported relationship. Unsupported composite identifiers
+are recorded as refusals. Root entities that need one of those identifiers
+and relationships that refer to those entities are omitted. Formulas,
+mappings and additional readings receive per-pointer refusals. The exact
+pinned Flights example carries verifiable Apache Ossie provenance for its
+projected multiplicities. Multiplicity declarations from unversioned
+foreign inputs are reported as refusals.
+
+The reader validates with vendored schemas and caps each input at 10 MiB.
+Export applies the same limit to its three artifacts. The import command
+publishes a JSON model and `MODEL.loss.json` together, or uses the report
+path given by `--loss-report`. The report names its source digest and
+available source model identity, and records one disposition per tracked
+pointer. Exit 3 gives a value-free `ossie-import:<rule>` refusal. Exit 11
+indicates an output collision.

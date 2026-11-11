@@ -89,3 +89,26 @@ Before that: the three preparation phases were completed with nothing published.
 publication stage is the owner's (RN-D5): check the files and the version,
 upload, tag, GitHub release; then the served-file check and the
 post-publication pull request, each on the owner's request.
+
+## Follow-ups filed after the close (2026-11-11)
+
+On the owner's request ("Yes, file them"), the items the close carried are
+filed as issues in `vasiloglou/gnd-public`:
+
+| Issue | Carried item |
+|---|---|
+| 169 | Ossie export writes constraint literals and descriptions of a redacted fact type |
+| 170 | both query-policy budgets are full |
+| 171 | structure and inventory guards are in no phase gate |
+| 172 | version-independent fixtures (owner ruling RN-D7) |
+| 173 | the Ossie import report's schema name and the `ossie-import` rule names are not in the format reference |
+| 174 | `docs/releasing.md` names only 0.1.0 as published by token upload |
+| 175 | the package has no long description |
+| 176 | release tooling rewritten by hand: the stale-text check, the patches, the 0.1.0 control |
+| 177 | repository-wide `ruff check` does not exit 0 |
+
+**Correction to the close record, which is not edited.** Its sweep row on lint
+says no phase added a finding. Measured when issue 177 was filed: the
+repository-wide count is 186, not 182. The four extra findings are in
+`evidence/RN0/t4-digests.py`, a script this milestone retained as evidence.
+No source or test file gained one.

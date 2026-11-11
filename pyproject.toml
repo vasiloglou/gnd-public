@@ -5,6 +5,12 @@
 name = "get-nick-done"
 version = "0.3.0"
 description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+# Issue 175: without this key the wheel and sdist carry no long description and
+# the PyPI project page shows no text. PYPI.md is a short description written
+# for that page: every link in it is absolute, because PyPI does not resolve the
+# repository README's relative links or its image, and it names no version, so a
+# release does not edit it. tests/test_package_description.py holds both rules.
+readme = "PYPI.md"
 authors = [
     { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
 ]

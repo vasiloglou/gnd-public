@@ -1,9 +1,34 @@
 # Release notes and milestones
 
-Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and
-0.1.0 came before it. Releases follow the [release procedure](releasing.md).
-Changes on `main` after a release are listed in an `Unreleased:` section until
-the next one.
+Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and 0.1.0
+came before it. Releases follow the [release procedure](releasing.md). Changes
+on `main` after a release are listed in an `Unreleased:` section until the next
+one.
+
+## Unreleased: export note, import reference and package description
+
+These changes are on `main` after 0.3.0 and are not in any published package.
+Install from a checkout of the repository to use them.
+
+- **Ossie export and `redact`** (issue 169): `gnd export ossie` prints a note
+  with the number of fact types that declare `redact`. The exported files do
+  not change. `redact` withholds population values from reports, and an export
+  carries the model's own text and no population, so a redacted fact type's
+  reading, constraints and provenance text are exported in every
+  [disclosure mode](reference/disclosure.md), as
+  [Ossie interchange](explanation/ossie.md) explains.
+- **Ossie import reference** (issue 173): the
+  [representation format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md)
+  defines the import report, `gnd-ossie-import-loss/1`, and names all 29
+  `ossie-import:<rule>` refusals, so a caller can branch on them.
+- **Package description** (issue 175): the package declares a long description.
+  The PyPI page of the next release will show it.
+- **Reply shape for unattended growth** (issue 104): the reply a host asks a
+  model for now gives the entry shape of a derived fact type, with its quote.
+- **Release procedure** (issues 174 and 176): the
+  [release procedure](releasing.md) names the command that moves the pages
+  after a publication, and says that every release through 0.3.0 was published
+  by a token upload.
 
 ## 0.3.0 (2026-11-11)
 

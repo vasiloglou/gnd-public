@@ -1,0 +1,127 @@
+f9b2a9c9bc56da27a52bdae7e1b7c0903fd81cd2a4fff3299df2ee67c4080bae  .gnd-planning/milestones/ossie-interchange/notes/ossie-interchange-plan.md
+6fb364cc2a1b0ab4a05377aea206f1442a3a5461f7053bae56811b792cd09536  .gnd-planning/milestones/ossie-interchange/031-close-candidate.md
+3a4699088e3e183d2a0c7df2e18dbb91533a7233f6021901379cbd52712f5080  .gnd-planning/milestones/ossie-interchange/notes/close-amendments.md
+001-plan-gate.md
+002-OS0-spec-gate.md
+003-OS0-candidate.md
+004-owner-OD6.md
+005-OS0-spec-amendment.md
+006-phase-OS0.md
+007-OS1-spec-gate.md
+008-OS1-candidate.md
+009-phase-OS1.md
+010-OS2-corpus-candidate.md
+011-OS2-spec-gate.md
+012-OS2-renderer-candidate.md
+013-OS3-spec-gate.md
+014-phase-OS2.md
+015-OS3-import-candidate.md
+016-OS4-spec-gate.md
+017-OS4-spec-amendment.md
+018-OS4-consumer-candidate.md
+019-OS3-spec-amendment.md
+020-phase-OS3.md
+021-phase-OS4.md
+022-OS5-spec-gate.md
+023-OS5-docs-candidate.md
+024-OS6-spec-gate.md
+025-phase-OS5.md
+026-OS6-local-candidate.md
+027-OS6-spec-amendment.md
+028-OS6-reviewed-scope-candidate.md
+029-OS6-publication-candidate.md
+030-phase-OS6.md
+031-close-candidate.md
+README.md
+evidence
+notes
+.gnd-planning/milestones/ossie-interchange/006-phase-OS0.md
+.gnd-planning/milestones/ossie-interchange/009-phase-OS1.md
+.gnd-planning/milestones/ossie-interchange/021-phase-OS4.md
+.gnd-planning/milestones/ossie-interchange/014-phase-OS2.md:41:so another review round is unnecessary for this phase. The repairs carry
+.gnd-planning/milestones/ossie-interchange/017-OS4-spec-amendment.md:31:carry the plan repair to milestone close. Keep the same version and
+.gnd-planning/milestones/ossie-interchange/006-phase-OS0.md:120:## Open questions and refuted premises
+.gnd-planning/milestones/ossie-interchange/006-phase-OS0.md-121-
+.gnd-planning/milestones/ossie-interchange/006-phase-OS0.md-122-- **OS1, example admission.** Four camel-case roles in three skill examples
+--
+.gnd-planning/milestones/ossie-interchange/009-phase-OS1.md:126:## Open questions
+.gnd-planning/milestones/ossie-interchange/009-phase-OS1.md-127-
+.gnd-planning/milestones/ossie-interchange/009-phase-OS1.md-128-- **OS2:** constraints and derivations remain in the sidecar pending the
+--
+.gnd-planning/milestones/ossie-interchange/021-phase-OS4.md:45:## Refactoring review and open question
+.gnd-planning/milestones/ossie-interchange/021-phase-OS4.md-46-
+.gnd-planning/milestones/ossie-interchange/021-phase-OS4.md-47-Keep declaration extraction and call reconciliation in the static AST
+---
+execution belong to later gates. No product source or tests changed.
+
+## Open questions and refuted premises
+
+- **OS1, example admission.** Four camel-case roles in three skill examples
+  produce exit 3. Repair the shipped fixture names and retain the old
+  observation. The existing include guard refuses the three include roots
+  as permitted by predicate 7. Carry the distinction into the OS1 gate.
+- **OS2, constraints and derivations.** Formula probe failures cannot settle
+  kind-level expressibility. Evaluate semantics on the prior-authored case
+  corpus before committing the renderer.
+- **Close, census plan text.** Reconcile predicate 1 with the original
+  depth-one YAML spec, the broadened Git roster and the explicit include
+  route. Preserve the original findings and amendment provenance.
+===
+retaining the withdrawn foreign entry under a private sibling name.
+
+## Open questions
+
+- **OS2:** constraints and derivations remain in the sidecar pending the
+  corpus-first formula gate. Preserve the original modality and status.
+- **OS3:** reconstruct the retained source shape using the digest-bound
+  sidecar and refuse tampered bindings before admission.
+- **OS5:** present the required early explanation checkpoint, then integrate
+  the final interoperability wording at its gate.
+===
+Results: `5 passed, 49 deselected` and `1 passed, 48 deselected in
+40.82s`. Ruff, the strict component index and diff whitespace checks
+passed. All audited socket guards passed their self-test and no
+after-setup network attempt was observed.
+
+## Refactoring review and open question
+
+Keep declaration extraction and call reconciliation in the static AST
+reader. The converter environment and network guard live in the same
+subprocess wrapper. Only the opt-in test compares runtime observations;
+the exporter has no consumer dependency.
+
+| Question | Target |
+|---|---|
+| Plan predicate 6 expected all 38 intact exports to convert. The pinned experiment refutes that premise. | Milestone close amends predicate 6 to require all 38 attempts, exact declaration identities on the 36 successful conversions, and the two evidenced refusals. |
+| Can the upstream converter emit requirements? | OS6 tests the local contribution independently of the pinned result. |
+.gnd-planning/milestones/ossie-interchange/027-OS6-spec-amendment.md:11:roles, a value concept, or ontology scope. The stock decompiler emits
+.gnd-planning/milestones/ossie-interchange/027-OS6-spec-amendment.md:14:instance relation for enumeration or global counting.
+# OS6 compiled requirements and source boundary
+
+Delegated approval (auto=true), 2026-11-10, under the named milestone.
+This amends OS6-C2 of the [approved phase spec](024-OS6-spec-gate.md)
+after the authorized offline replay refuted the assumed SDK source
+behavior. The original criterion is retained in the milestone plan
+for the close record.
+
+The RelationalAI 1.39.0 source generator needs an entity anchor in a
+requirement's domain. The original isolated GND formulas use value
+roles, a value concept, or ontology scope. The stock decompiler emits
+none of their requirements. Compiling a primitive concept membership
+as a domain produces a cast. Such a cast does not supply a finite
+instance relation for enumeration or global counting.
+
+The amended gate measures both the metamodel and emitted PyRel. Each
+supported relationship formula must add exactly one scoped requirement
+relative to the no-formulas control. Global cardinality and value
+concept enumeration must emit a warning and add no requirement.
+Preserve the decompiler omission in the consumer report. Positive
+controls require actual emitted PyRel for an entity-anchored scalar
+comparison and enumeration. Rebuilding the emitted source must
+preserve both requirements. The Flights snapshot must contain the two
+entity-anchored route requirements.
+
+The original OS4 consumer evidence and its pinned converter remain the
+basis for the product compatibility claim. The local contribution uses
+the same SDK and records a separate converter commit. The publication
+choice and independent review are unchanged.

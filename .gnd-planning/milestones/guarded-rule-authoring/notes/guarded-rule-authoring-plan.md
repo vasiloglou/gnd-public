@@ -153,3 +153,15 @@ The owner selected all three issue scopes and the standard panel.
 GA1's separate manifest and scoped measurement boundary, GA2's complete
 functional classification requirement, and GA3's asserted literal-head
 exception are proposed in r2 for confirmation under the delegated gate.
+
+## Close amendments · 2026-11-11
+
+The r2 text above is retained as reviewed history. The
+[delegated plan gate](../001-plan-gate.md) identifies its approved bytes.
+The following dispositions describe the final behavior.
+
+| Prior wording | Disposition |
+|---|---|
+| “Each served guard has a checker-confirmed failure and a checker-confirmed pass sharing an antecedent binding with the failure.” | Fact-changing pairs share an antecedent assignment. A comparison can use different operand values while both populations match the same antecedent shape. The plan gate explains why a deterministic comparison on an identical assignment cannot produce both outcomes. [GA1 spec](phase-GA1-spec.md) |
+| “Cap directed class pairs with `--max-pairs`” | The confirmation disposition chose a separate `--max-directed-pairs` flag. The unordered set-comparison limit retains its prior meaning. [GA2 spec](phase-GA2-spec.md) |
+| “Pin an aggregate recount limit in GA3.” | GA3 pins 10,000,000 aggregate units and retains the 1,000,000-row product limit per rule. [GA3 spec](phase-GA3-spec.md) |

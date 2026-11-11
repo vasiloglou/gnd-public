@@ -70,5 +70,11 @@ Part one is done: the two installed-wheel tests and their inputs, red on the
 file: 18 passed). Review: one reviewer (Codex, `revise`, G1 to G7, disposed
 in the spec).
 
-Next action: the owner merges PR 164. That merge commit is the candidate
-(RN2 D1); the build and the acceptance run on beast-3 follow from it.
+PR 164 is merged; the candidate commit is `4c07c0e6`. **The 0.3.0 candidate is
+built and accepted** ([record](004-phase-RN2.md)): wheel sha256
+`143890ee…751b`, sdist `5e40d9e3…4c42`, a second build on beast-3 identical,
+and release acceptance on beast-3 with Python 3.11: 18 passed. Nothing is
+published.
+
+Next action: RN3's spec (the hand-over dossier and the post-publication
+patches), then its owner gate.

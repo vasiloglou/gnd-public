@@ -308,3 +308,27 @@ the weaker, documented forms just described.
    900.13s (0:15:00)`. The fourteen existing tests, the 0.1.0 controls among
    them, pass on a 0.3.0 wheel. This is not V4: V4 runs on the candidate, on
    beast-3, with Python 3.11.
+
+## 14. Implementation findings, part two (2026-11-11, appended)
+
+1. **The candidate commit** is `4c07c0e6a623263048cb675d237046ebb239cb32`, the
+   merge of PR 164 (owner: "Merge PR 164").
+2. **V1.** `git log f9f502d9..4c07c0e6 -- src docs` is empty and the diff of
+   `src`, `docs`, `pyproject.toml`, `uv.lock`, LICENSE and NOTICE is empty;
+   the notes have no `Unreleased` heading. PyPI at 2026-11-11T14:52:10Z lists
+   0.1.0 and 0.2.0, and the 0.3.0 endpoint returns 404.
+3. **B1** on this Mac (uv 0.10.10, Python 3.14.4, macOS 26.6.2 arm64), at
+   14:52:21Z: wheel `143890ee…751b`, sdist `5e40d9e3…4c42`, comparison wheel
+   equal to the wheel. `SHA256SUMS` verifies.
+4. **B2** on beast-3 (uv 0.10.10, macOS 27.0.1 arm64): its `SHA256SUMS` is
+   identical to B1's, sdist included.
+5. **V4** on beast-3 over B1's files, from a clean checkout at the candidate
+   commit, Python 3.11.18: `18 passed in 846.58s (0:14:06)`.
+6. **The script ended `failed`.** Its last step, added for V5, called `uvx`,
+   which was not on the script's PATH (only `uv` was linked). V4 had exited 0
+   before it. V5 was then run by hand with the same uv 0.10.10 binary
+   (`uv tool run --from <wheel> gnd --version`) on beast-3 and with `uvx` on
+   this Mac: both print `gnd 0.3.0`.
+7. **V7.** PyPI at 15:08:14Z: unchanged. **V8.** `.github` diff empty; remote
+   tags `v0.1.0` and `v0.2.0` only; releases v0.1.0 and v0.2.0; 0
+   `release.yml` runs; environments `github-pages` only.

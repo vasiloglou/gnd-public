@@ -1,0 +1,108 @@
+# beast-3 run log of evidence/RN2/beast3-script.sh (B2 and V4), 2026-11-11. The home directory is replaced by <home> (edited, declared here).
+# The script ends 'failed' at its last added step: uvx was not on its PATH. V4 had already exited 0. V5 was then run by hand; see the phase record.
++./script.sh:14> date -u +%FT%TZ
+2026-11-11T14:53:07Z
++./script.sh:14> sw_vers
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
++./script.sh:14> uname -m
+arm64
++./script.sh:16> UVBIN=+./script.sh:16> <home>/.local/bin/uvx --from 'uv==0.10.10' python -c 'import uv; print(uv.find_uv_bin())'
++./script.sh:16> UVBIN=<home>/.cache/uv/archive-v0/rQhOTCnVaB-qgTZH/bin/uv 
++./script.sh:17> echo 'uv binary: <home>/.cache/uv/archive-v0/rQhOTCnVaB-qgTZH/bin/uv'
+uv binary: <home>/.cache/uv/archive-v0/rQhOTCnVaB-qgTZH/bin/uv
++./script.sh:18> mkdir -p uvbin
++./script.sh:18> ln -s <home>/.cache/uv/archive-v0/rQhOTCnVaB-qgTZH/bin/uv uvbin/uv
++./script.sh:19> export PATH=<home>/gnd-release/0.3.0/4c07c0e6/run1/uvbin:/usr/bin:/bin:/usr/sbin:/sbin
++./script.sh:20> uv --version
+uv 0.10.10 (8c730aaad 2026-03-13)
++./script.sh:22> cd <home>/gnd-release/0.3.0/4c07c0e6/candidate-b1
++./script.sh:22> shasum -a 256 -c SHA256SUMS
+release/get_nick_done-0.3.0-py3-none-any.whl: OK
+release/get_nick_done-0.3.0.tar.gz: OK
+comparison/get_nick_done-0.3.0-py3-none-any.whl: OK
++./script.sh:23> cat <home>/gnd-release/0.3.0/4c07c0e6/candidate-b1/SOURCE_COMMIT
++./script.sh:23> test 4c07c0e6a623263048cb675d237046ebb239cb32 '=' 4c07c0e6a623263048cb675d237046ebb239cb32
++./script.sh:24> git clone -q -b rn2-candidate <home>/gnd-release/0.3.0/4c07c0e6/c.bundle checkout/gnd-public
++./script.sh:25> git -C checkout/gnd-public checkout -q --detach 4c07c0e6a623263048cb675d237046ebb239cb32
++./script.sh:26> git -C checkout/gnd-public rev-parse HEAD
++./script.sh:26> test 4c07c0e6a623263048cb675d237046ebb239cb32 '=' 4c07c0e6a623263048cb675d237046ebb239cb32
++./script.sh:27> git -C checkout/gnd-public status --porcelain
++./script.sh:27> test -z ''
++./script.sh:29> mkdir -p b2/src
++./script.sh:30> git -C checkout/gnd-public archive 4c07c0e6a623263048cb675d237046ebb239cb32
++./script.sh:30> tar -x -C b2/src
++./script.sh:31> cd b2/src
++./script.sh:32> uv build --out-dir ../candidate/release
+Building source distribution (uv build backend)...
+Building wheel from source distribution (uv build backend)...
+Successfully built ../candidate/release/get_nick_done-0.3.0.tar.gz
+Successfully built ../candidate/release/get_nick_done-0.3.0-py3-none-any.whl
++./script.sh:33> mkdir -p ../candidate/source
++./script.sh:34> tar -xzf ../candidate/release/get_nick_done-0.3.0.tar.gz -C ../candidate/source
++./script.sh:35> uv build --wheel ../candidate/source/get_nick_done-0.3.0 --out-dir <home>/gnd-release/0.3.0/4c07c0e6/run1/b2/src/../candidate/comparison
+Building wheel (uv build backend)...
+Successfully built ../candidate/comparison/get_nick_done-0.3.0-py3-none-any.whl
++./script.sh:36> rm -f ../candidate/release/.gitignore ../candidate/comparison/.gitignore
++./script.sh:37> echo 4c07c0e6a623263048cb675d237046ebb239cb32
++./script.sh:38> python3 --version
++./script.sh:38> uv --version
++./script.sh:39> cd ../candidate
++./script.sh:40> shasum -a 256 release/get_nick_done-0.3.0-py3-none-any.whl release/get_nick_done-0.3.0.tar.gz comparison/get_nick_done-0.3.0-py3-none-any.whl
++./script.sh:41> shasum -a 256 -c SHA256SUMS
+release/get_nick_done-0.3.0-py3-none-any.whl: OK
+release/get_nick_done-0.3.0.tar.gz: OK
+comparison/get_nick_done-0.3.0-py3-none-any.whl: OK
++./script.sh:42> cat SHA256SUMS BUILD_PROFILE
+143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b  release/get_nick_done-0.3.0-py3-none-any.whl
+5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42  release/get_nick_done-0.3.0.tar.gz
+143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b  comparison/get_nick_done-0.3.0-py3-none-any.whl
+Python 3.9.6
+uv 0.10.10 (8c730aaad 2026-03-13)
++./script.sh:43> diff <home>/gnd-release/0.3.0/4c07c0e6/candidate-b1/SHA256SUMS SHA256SUMS
++./script.sh:44> echo 'B1 and B2 SHA256SUMS identical'
+B1 and B2 SHA256SUMS identical
++./script.sh:46> cd <home>/gnd-release/0.3.0/4c07c0e6/run1/checkout/gnd-public
++./script.sh:47> uv sync --locked --group dev --python 3.11
+Using CPython 3.11.18
+Creating virtual environment at: .venv
+Resolved 32 packages in 1ms
+   Building get-nick-done @ file://<home>/gnd-release/0.3.0/4c07c0e6/run1/checkout/gnd-public
+      Built get-nick-done @ file://<home>/gnd-release/0.3.0/4c07c0e6/run1/checkout/gnd-public
+Prepared 1 package in 4ms
+Installed 20 packages in 33ms
+ + annotated-types==0.8.0
+ + attrs==26.1.0
+ + duckdb==1.5.5
+ + faker==40.36.0
+ + get-nick-done==0.3.0 (from file://<home>/gnd-release/0.3.0/4c07c0e6/run1/checkout/gnd-public)
+ + iniconfig==2.3.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + packaging==26.3
+ + pluggy==1.6.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pytest==9.1.1
+ + referencing==0.37.0
+ + rpds-py==2026.6.3
+ + ruamel-yaml==0.19.1
+ + ruff==0.16.2
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
++./script.sh:48> uv run python --version
+Python 3.11.18
++./script.sh:49> date -u +%FT%TZ
+2026-11-11T14:53:12Z
++./script.sh:50> GND_CANDIDATE_DIR=<home>/gnd-release/0.3.0/4c07c0e6/candidate-b1 uv run pytest -q -o 'addopts=' tests/test_release_acceptance.py '--tb=short'
+..................                                                       [100%]
+18 passed in 846.58s (0:14:06)
++./script.sh:51> echo 'V4 exit=0'
+V4 exit=0
++./script.sh:53> uvx --from <home>/gnd-release/0.3.0/4c07c0e6/candidate-b1/release/get_nick_done-0.3.0-py3-none-any.whl gnd --version
+./script.sh:53: command not found: uvx
++./script.sh:53> echo 'STOPPED at line 53 (exit 127)'
+STOPPED at line 53 (exit 127)
++./script.sh:53> echo failed

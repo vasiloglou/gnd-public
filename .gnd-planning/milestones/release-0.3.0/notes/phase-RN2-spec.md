@@ -2,10 +2,12 @@
 
 ## 1. Status
 
-**Awaiting owner review, 2026-11-11.** Draft r1. D5 is ruled (the Ossie oracle
-lane is not run for 0.3.0); D1 to D4 and D6 are open, and the spec itself is
-not approved.
-No implementation file is created or edited, and nothing is built.
+**Owner-decided (2026-11-11): approved, D1 to D4 and D6 as recommended**
+("Approve, start RN2", answering "Approve the rest of the RN2 spec (D1 to D4,
+D6) as recommended?"); D5 was ruled earlier the same day (not run). The
+approved bytes are r1 at commit `53785bc8`, sha256 `9fc68562775878116a2d5463462c5c7cd2789dd5280027770abf49854c835aa3`. Implementation
+follows in two parts (normative order): the tests, then, after the owner's
+merge fixes the candidate commit, the build.
 
 ## 2. Provenance
 
@@ -176,12 +178,12 @@ predecessor's retained script (`rule-check-release/evidence/RR2/beast3-script-ru
 
 | ID | Question | Readings and cost | Recommendation |
 |---|---|---|---|
-| D1 | Which commit is the candidate? | (a) the main merge commit of the pull request that adds M2, so the candidate's own tree holds the tests that accept it; the phase pauses there for the owner's merge. (b) main as it is now, `f9f502d9`, with M2 merged afterwards: one pause fewer, but the candidate's tree lacks its own acceptance test, and a later prepare run on that commit could not repeat the probes | (a), as for 0.2.0 |
-| D2 | Where are the candidate files kept? | (a) outside git, at `~/gnd-release/0.3.0/<C short>/` on this Mac with a copy on beast-3; the record commits `SHA256SUMS`, `SOURCE_COMMIT`, `BUILD_PROFILE`. (b) commit the files (about 6.5 MB) | (a), as for 0.2.0 |
-| D3 | Where does the 0.2.0 control run? | (a) inside the acceptance file, fetching the published wheel and checking its hash, as the 0.1.0 control does; every later prepare run repeats it and needs the index. (b) a one-off recorded run | (a) |
-| D4 | The existing 0.1.0 rule-check tests in the same file | (a) keep them: they still pass on the 0.3.0 candidate and still download 0.1.0. (b) retire the 0.1.0 control now that 0.2.0 is the baseline: an edit to a test the predecessor's owner accepted | (a) |
+| D1 | Which commit is the candidate? | (a) the main merge commit of the pull request that adds M2, so the candidate's own tree holds the tests that accept it; the phase pauses there for the owner's merge. (b) main as it is now, `f9f502d9`, with M2 merged afterwards: one pause fewer, but the candidate's tree lacks its own acceptance test, and a later prepare run on that commit could not repeat the probes | (a), as for 0.2.0 **Ruled (o, 2026-11-11): as recommended** |
+| D2 | Where are the candidate files kept? | (a) outside git, at `~/gnd-release/0.3.0/<C short>/` on this Mac with a copy on beast-3; the record commits `SHA256SUMS`, `SOURCE_COMMIT`, `BUILD_PROFILE`. (b) commit the files (about 6.5 MB) | (a), as for 0.2.0 **Ruled (o, 2026-11-11): as recommended** |
+| D3 | Where does the 0.2.0 control run? | (a) inside the acceptance file, fetching the published wheel and checking its hash, as the 0.1.0 control does; every later prepare run repeats it and needs the index. (b) a one-off recorded run | (a) **Ruled (o, 2026-11-11): as recommended** |
+| D4 | The existing 0.1.0 rule-check tests in the same file | (a) keep them: they still pass on the 0.3.0 candidate and still download 0.1.0. (b) retire the 0.1.0 control now that 0.2.0 is the baseline: an edit to a test the predecessor's owner accepted | (a) **Ruled (o, 2026-11-11): as recommended** |
 | D5 | The opt-in `ossie_oracle` lane (RN1 D7; RN0 D5 was approved as "run it once") | (a) run it on the candidate commit before B1; needs the pinned checkout's path in `GND_OSSIE_ORACLE_ROOT`, which this session does not have. (b) not run for 0.3.0: the changed exporter is covered by the default-lane Ossie tests, RN0's byte comparison over the census and Q1. The dossier then says the pinned upstream validator has not seen the 0.3.0 exporter | the owner's call; (a) if the path can be given. **Ruled (o, 2026-11-11): (b), not run for 0.3.0** ("Skip it for 0.3.0", answering the three options this session gave: supply the path, rebuild the scratch directory, or skip). The dossier (RN3) states that the pinned upstream validator and parser have not been rerun since RN0, with RN0's byte comparison as the supporting evidence. This also answers RN1's D7 |
-| D6 | A review over this spec before implementation? | the owner's call; the diff gets one independent reviewer either way | none |
+| D6 | A review over this spec before implementation? | the owner's call; the diff gets one independent reviewer either way | none **Ruled (o, 2026-11-11): as recommended** |
 
 ## 8. Tests
 

@@ -426,7 +426,13 @@ def test_t1_the_seven_sites_call_the_helper_and_nothing_else_does() -> None:
 
 def test_t1_only_the_exact_sites_still_compare_a_computed_digest() -> None:
     comparing = {(path, fn.name) for path, fn in _functions() if _compares_a_computed_digest(fn)}
-    assert comparing == {("model/__init__.py", "resolve_context"), ("population.py", "matches_validation_marker")}
+    # RN0 (D3, owner 2026-11-10): the Ossie importer compares the restored model's canonical
+    # identity with the sidecar's, which the sidecar format defines as canonical only.
+    assert comparing == {
+        ("model/__init__.py", "resolve_context"),
+        ("population.py", "matches_validation_marker"),
+        ("ossie_import.py", "_bounded_model"),
+    }
 
 
 def test_t1_exact_copy_and_plan_sites_are_unchanged() -> None:
@@ -447,8 +453,14 @@ def test_t1_consumers_never_call_the_canonical_identity_directly() -> None:
         for path, fn in _functions()
         if path != "values.py" and any(_calls(fn, name) for name in ("model_identity", "model_identity_bytes"))
     }
-    # Only the producer (gnd validate --identity) reads the canonical bytes itself.
-    assert direct <= {("output.py", "_print_model_identity")}
+    # Only producers read the canonical bytes themselves: gnd validate --identity, and
+    # (RN0, D3) the Ossie exporter, which writes the identity into the sidecar, and the
+    # Ossie importer, which recomputes it for the restored model.
+    assert direct <= {
+        ("output.py", "_print_model_identity"),
+        ("export/ossie.py", "render_ossie"),
+        ("ossie_import.py", "_bounded_model"),
+    }
 
 
 # --------------------------------------------------------------------------- #

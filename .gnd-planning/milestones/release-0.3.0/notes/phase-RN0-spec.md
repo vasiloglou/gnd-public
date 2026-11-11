@@ -2,8 +2,10 @@
 
 ## 1. Status
 
-**Awaiting owner review, 2026-11-10.** Draft r1. Decisions D1 to D6 are open.
-No implementation file is created or edited.
+**Owner-decided (2026-11-10): approved, D1 to D6 as recommended** ("Approve as
+recommended", answering "Approve the RN0 spec with decisions D1 to D6 as
+recommended?"). The approved bytes are r1 at commit `99fbdbcd`, sha256
+`d3a83b559bceec3f7b00bbf7f5c7b8534204cd99954e73ab0859fecb7f37436a`. Implementation follows; findings are appended below.
 
 ## 2. Provenance
 
@@ -117,14 +119,14 @@ its successors, identity matching in `gnd.values`.
 
 ## 7. Decisions
 
-| ID | Question | Readings and what each costs | Recommendation |
+| ID | Question | Readings and what each costs | Recommendation; ruling |
 |---|---|---|---|
-| D1 | How do the two Ossie commands satisfy the entry-point rule? | (a) six exact exception rows with reasons, as `gnd.rai_import` and the other thin adapters have: no source change. (b) new service modules (`gnd.export.ossie_service`, and one for import) bound as service targets: about 60 source lines moved, the shape the rule prefers for new work. Neither changes a command's exit code | (a) |
-| D2 | The Ossie modules exceed both query budgets (378 against 365; 315 against 310). | (a) reduce the reads in source (M8) until both budgets hold, and record what remains as counted rows. The room is 1 occurrence in each budget, so nearly every read must go; whether that is reachable is not known until it is tried. If it is not, the phase stops and returns to the owner with the measured numbers. (b) raise both ceilings by the measured excess and record all 14 as counted rows: no source change, and the two pinned ceilings (365, and the literal `(310, 320)`) move for the first time. (c) raise the ceilings only for the five foreign-document reads, which are not model queries, and reduce the exporter's eight in source | (a), with the stop stated; (c) is the fallback I would bring back if (a) does not fit |
-| D3 | Identity sites in the Ossie modules | (a) the importer compares through `model_identity_matches` and joins the pinned site list (7 to 8); the exporter is added to the producer set beside `_print_model_identity`. The importer would then accept a sidecar bound by either identity. (b) both are added to the exact lists as they are, canonical identity only. The readings differ in behavior: under (a) an import whose sidecar carries the legacy digest verifies; under (b) it does not | (b) for behavior: the Ossie sidecar format says it carries the canonical identity, and widening what an import accepts is a product change this phase should not make. Under (b) no source changes for M10; two test sets gain an entry each, with the reason |
-| D4 | Approval instrument | this prose, or a fixture corpus first. The 24 failing guards and the existing Ossie tests are already the corpus; the phase adds no format, exit contract or predicate | prose |
-| D5 | Rerun the opt-in `ossie_oracle` lane after the source edits? | The ossie-interchange close rests on that lane for the pinned validator and parser. M8 and M9 change the bytes it tested. Running it needs the lane's pinned inputs on this machine and is an opt-in lane the owner selects. Not running it leaves the 0.3.0 Ossie code checked by the default-lane Ossie tests only | run it once, on the RN0 tree, if its inputs are present offline; if they are not, say so and stop for a ruling |
-| D6 | A review over this spec before implementation? | the owner's call; the phase diff gets one independent reviewer either way | none |
+| D1 | How do the two Ossie commands satisfy the entry-point rule? | (a) six exact exception rows with reasons, as `gnd.rai_import` and the other thin adapters have: no source change. (b) new service modules (`gnd.export.ossie_service`, and one for import) bound as service targets: about 60 source lines moved, the shape the rule prefers for new work. Neither changes a command's exit code | (a) **Ruled (o, 2026-11-10): as recommended** |
+| D2 | The Ossie modules exceed both query budgets (378 against 365; 315 against 310). | (a) reduce the reads in source (M8) until both budgets hold, and record what remains as counted rows. The room is 1 occurrence in each budget, so nearly every read must go; whether that is reachable is not known until it is tried. If it is not, the phase stops and returns to the owner with the measured numbers. (b) raise both ceilings by the measured excess and record all 14 as counted rows: no source change, and the two pinned ceilings (365, and the literal `(310, 320)`) move for the first time. (c) raise the ceilings only for the five foreign-document reads, which are not model queries, and reduce the exporter's eight in source | (a), with the stop stated; (c) is the fallback I would bring back if (a) does not fit **Ruled (o, 2026-11-10): as recommended** |
+| D3 | Identity sites in the Ossie modules | (a) the importer compares through `model_identity_matches` and joins the pinned site list (7 to 8); the exporter is added to the producer set beside `_print_model_identity`. The importer would then accept a sidecar bound by either identity. (b) both are added to the exact lists as they are, canonical identity only. The readings differ in behavior: under (a) an import whose sidecar carries the legacy digest verifies; under (b) it does not | (b) for behavior: the Ossie sidecar format says it carries the canonical identity, and widening what an import accepts is a product change this phase should not make. Under (b) no source changes for M10; two test sets gain an entry each, with the reason **Ruled (o, 2026-11-10): as recommended** |
+| D4 | Approval instrument | this prose, or a fixture corpus first. The 24 failing guards and the existing Ossie tests are already the corpus; the phase adds no format, exit contract or predicate | prose **Ruled (o, 2026-11-10): as recommended** |
+| D5 | Rerun the opt-in `ossie_oracle` lane after the source edits? | The ossie-interchange close rests on that lane for the pinned validator and parser. M8 and M9 change the bytes it tested. Running it needs the lane's pinned inputs on this machine and is an opt-in lane the owner selects. Not running it leaves the 0.3.0 Ossie code checked by the default-lane Ossie tests only | run it once, on the RN0 tree, if its inputs are present offline; if they are not, say so and stop for a ruling **Ruled (o, 2026-11-10): as recommended** |
+| D6 | A review over this spec before implementation? | the owner's call; the phase diff gets one independent reviewer either way | none **Ruled (o, 2026-11-10): as recommended** |
 
 ## 8. Tests
 
@@ -184,3 +186,69 @@ Unresolved: the beast-3 shard invocation is the E1 script
 (`evidence/e1/README.md`); the `ossie_oracle` inputs' location (D5): the lane reads its pinned checkout
 from the `GND_OSSIE_ORACLE_ROOT` environment variable, which is not set in
 this session.
+
+## Implementation findings, recorded as they were found (2026-11-10)
+
+Baselines taken at `2490dd77` before the first edit: T2 gave `352 passed, 88
+deselected`; a script exported every census model plus the refunds and growth
+examples in JSON and YAML, strict and not, and imported each non-strict export
+with and without its sidecar, recording 316 digest or refusal rows (sha256 of
+the listing `d6558d00…18fa`).
+
+1. **D2 fits, with nothing to spare.** The exporter now takes fact types from
+   `ModelIndex.iter_fact_types()` and role names and object types from
+   `ModelIndex.role_object_types()`, and constraint role lists from
+   `ModelIndex.constraint_roles`; `place_formulas` receives the fact types
+   from its caller. The importer reads a foreign relationship's roles through
+   one accessor, `_relationship_roles`. Measured after the edit: 365 of 365
+   and 310 of 310. One counted row is added
+   (`evidence/RN0/query-successor.json`). **Both budgets are now full: the
+   next direct read anywhere in the package fails the guard.** Before the
+   edit, the index rows were compared with the authored document on the 38
+   census models that load: equal fact types and equal role order on all 38.
+2. **Refutes §6, the disclosure row.** The spec read the two disclosure
+   failures as a stale count "if the two new leaves are in the table". They
+   were not: `gnd export ossie` and `gnd import ossie` had no row in
+   `gnd.disclosure.SURFACES`. With the count corrected the table test named
+   both as missing. Both are added as `value-free`, with the note "model
+   structure only; a model with populations is refused". Evidence for the
+   class: the exporter refuses a model that carries a sample or reference
+   population (`population:out-of-scope`; 16 of the 316 baseline rows), the
+   importer writes a model from an ontology, and the peers `export pyrel` and
+   `import rai-orm` are `value-free`. This is a source change the spec did not
+   list (2 lines in `src/gnd/disclosure.py`) and a classification the owner
+   has not ruled; it is an open question in the record.
+3. **Refutes §6, the skill-link row in part.** The pinned set lacked one edge,
+   as read. The count is kept as a chain (`MC3`, `MC4`), so the repair adds
+   `RN0_OSSIE_EDGE` and `RN0_RELATIVE_LINK_COUNT` after `MC4` and leaves
+   `EXPECTED_RELATIVE_LINKS` untouched, instead of regenerating it as M4 said.
+4. **M3 as designed.** Five rows in `evidence/RN0/source-successors.json`,
+   registered in `tests/support/rf9_ci_sources.py`. `git log -L` gives the
+   causes: UG3a for `_cmd_validate`; UG2 and MC3 for `_cmd_evolve_apply` and
+   `_cmd_evolve_preview`; UG2 for `_evolve_emit_claim`; UG2, UG3b and MC3 for
+   `_evolve_error_exit`. The bodies themselves are not changed by RN0.
+5. **M5.** The dynamic inventory gains 133 rows (144 occurrences) and loses
+   one; 7,561 distinct rows, 9,411 occurrences. It is 133 and not the 132 of
+   §6 because the new accessor adds one.
+6. **M9.** `json` is no longer imported by `src/gnd/export/ossie.py`.
+7. **D3 (b) needed no source change**, as the spec expected; two sets in
+   `tests/test_rof4_accept_identities.py` gain entries with their reason.
+8. **Component index.** `scripts/components_index.py write` regenerated two
+   module pages (6 lines, line numbers and one signature). The three entries
+   to reread (`export.ossie`, `model.ossie_import`, `infra.disclosure`)
+   describe behavior this phase did not change and are left as they are.
+9. **Lint.** `uv run ruff check` over the whole repository reports 182 errors
+   on the base tree and on this tree alike; over `src` and the changed test
+   files it reports one, in `src/gnd/examples/expense/project/cli/expense_cli.py`,
+   which this phase does not touch. T6 is therefore recorded as "no new
+   finding", not exit 0.
+
+Results on the changed tree: the ten guard files, `583 passed, 1 deselected`
+(base: `24 failed, 559 passed, 1 deselected`); T2, `352 passed, 88
+deselected`; T4, the 316-row listing is byte-identical, and the control (one
+role renamed in a scratch copy of the refunds model) changes the ontology
+digest.
+
+Size, measured: 49 insertions and 34 deletions across four source files (the
+three Ossie modules and 4 lines in `src/gnd/disclosure.py`), against an
+estimate of about 55 changed lines.

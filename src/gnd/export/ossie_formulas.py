@@ -262,8 +262,11 @@ def _supported_shape(constraint, relations):
     return True
 
 
-def place_formulas(document, ontology, components, relations, mapped):
-    """Mutate the ontology and disposition index only after a complete group lowers."""
+def place_formulas(document, ontology, components, relations, mapped, fact_types):
+    """Mutate the ontology and disposition index only after a complete group lowers.
+
+    ``fact_types`` is the model's fact types in document order, from the caller's ModelIndex.
+    """
     context = constraint_context(document)
     objects = context.objects
     parents = {parent for obj in objects.values() for parent in obj.get("subtype_of", ())}
@@ -295,7 +298,7 @@ def place_formulas(document, ontology, components, relations, mapped):
         for key in _METADATA & constraint.keys():
             mapped[(*path, key)] = ("extension", "gnd-source", None)
 
-    for i, fact in enumerate(document.get("fact_types", ())):
+    for i, fact in enumerate(fact_types):
         for j, constraint in enumerate(fact.get("constraints", ())):
             place(constraint, ("fact_types", i, "constraints", j), fact["id"])
         if "derivation_rule" in fact:

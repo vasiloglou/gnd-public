@@ -231,9 +231,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 40 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 45 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 409 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 39 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 44 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 412 | Render three deterministic artifacts from one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -245,7 +245,7 @@ Place the reviewed subset of requirement and derivation shapes in Ossie scopes.
 | `ProjectedRelation.arguments(self, atom) -> tuple[Any, ...]` | method | 61 | (no docstring) |
 | `ProjectedRelation.path(self) -> str` | method | 65 | (no docstring) |
 | `ProjectedRelation.token(self, position) -> str` | method | 68 | (no docstring) |
-| `place_formulas(document, ontology, components, relations, mapped)` | function | 265 | Mutate the ontology and disposition index only after a complete group lowers. |
+| `place_formulas(document, ontology, components, relations, mapped, fact_types)` | function | 265 | Mutate the ontology and disposition index only after a complete group lowers. |
 
 ## gnd.export.pyrel_rules — `src/gnd/export/pyrel_rules.py`
 Components: export.pyrel_rules

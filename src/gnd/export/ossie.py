@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -19,7 +18,7 @@ from ruamel.yaml.error import YAMLError
 
 from gnd.artifacts import canonical_json_bytes
 from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
-from gnd.input_policy import MAX_BYTES, guard_yaml
+from gnd.input_policy import MAX_BYTES, guard_yaml, loads
 from gnd.model import MAX_MODEL_BYTES, json_document, load_model_bytes, parse_model_document
 from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
@@ -51,7 +50,7 @@ class OssieArtifacts:
 @lru_cache(maxsize=1)
 def _schema() -> Draft202012Validator:
     resource = files("gnd").joinpath("schema", "ossie", "ontology.json")
-    return Draft202012Validator(json.loads(resource.read_bytes()))
+    return Draft202012Validator(loads(resource.read_bytes()))
 
 
 def _read_model(path: Path):
@@ -103,8 +102,8 @@ def _copy(target):
     return "native", "projection", target
 
 
-def _role_order(fact):
-    roles = tuple(role["role_name"] for role in fact["roles"])
+def _role_order(fact, role_types):
+    roles = tuple(role_types)
     determinant_constraints = defaultdict(list)
     for i, constraint in enumerate(fact.get("constraints", ())):
         if (
@@ -113,7 +112,7 @@ def _role_order(fact):
             and constraint.get("modality") == "alethic"
             and constraint.get("status") == "confirmed"
         ):
-            determinant_constraints[frozenset(constraint["roles"])].append(i)
+            determinant_constraints[frozenset(ModelIndex.constraint_roles(constraint))].append(i)
     if len(roles) < 2:
         return roles, None, ()
     if len(roles) == 2 and all(frozenset({role}) in determinant_constraints for role in roles):
@@ -135,8 +134,8 @@ def _role_order(fact):
     return roles, None, ()
 
 
-def _verbalizes(fact, role_tokens):
-    roles = [role["role_name"] for role in fact["roles"]]
+def _verbalizes(fact, role_tokens, role_types):
+    roles = list(role_types)
     forward = iter(roles)
     readings = [_PLACEHOLDER.sub(lambda _match: role_tokens[next(forward)], fact["reading"])]
     inverse = fact.get("inverse_reading")
@@ -154,13 +153,13 @@ def _verbalizes(fact, role_tokens):
     return readings, False
 
 
-def _relationship(fact, names, order):
-    by_role = {role["role_name"]: names[role["object_type"]] for role in fact["roles"]}
+def _relationship(fact, names, order, role_types):
+    by_role = {role: names[object_type] for role, object_type in role_types.items()}
     first, *additional = order
     roles = [{"concept": by_role[role], "name": role} for role in additional]
     tokens = {first: "{" + by_role[first] + "}"}
     tokens.update({role: f"{{{by_role[role]}:{role}}}" for role in additional})
-    readings, inverse = _verbalizes(fact, tokens)
+    readings, inverse = _verbalizes(fact, tokens, role_types)
     result = {"name": fact["id"], "verbalizes": readings}
     if roles:
         result["roles"] = roles
@@ -256,7 +255,11 @@ def _inherit_identifiers(objects, components, indexes, mapped):
 
 
 def _ontology(document, model):
-    objects = ModelIndex.for_model(model).object_types_by_id()
+    index = ModelIndex.for_model(model)
+    objects = index.object_types_by_id()
+    # Role name -> object type per fact type, in declared role order.
+    role_types_by_fact = index.role_object_types()
+    fact_types = list(index.iter_fact_types())
     names = _names(objects)
     if not names:
         raise OssieInputError("an Ossie ontology requires at least one concept")
@@ -295,11 +298,11 @@ def _ontology(document, model):
 
     functional_links = {}
     projected_relations = {}
-    for i, fact in enumerate(document.get("fact_types", ())):
-        order, multiplicity, constraints = _role_order(fact)
-        role_source = {role["role_name"]: role for role in fact["roles"]}
-        owner = role_source[order[0]]["object_type"]
-        relationship, inverse = _relationship(fact, names, order)
+    for i, fact in enumerate(fact_types):
+        role_types = role_types_by_fact[fact["id"]]
+        order, multiplicity, constraints = _role_order(fact, role_types)
+        owner = role_types[order[0]]
+        relationship, inverse = _relationship(fact, names, order, role_types)
         if multiplicity:
             relationship["multiplicity"] = multiplicity
         rels = components[owner].setdefault("relationships", [])
@@ -307,9 +310,9 @@ def _ontology(document, model):
         rels.append(relationship)
         projected_relations[fact["id"]] = ProjectedRelation(
             names[owner],
-            tuple(role_source),
+            tuple(role_types),
             order,
-            {name: role["object_type"] for name, role in role_source.items()},
+            dict(role_types),
             relationship,
         )
         source = ("fact_types", i)
@@ -319,8 +322,8 @@ def _ontology(document, model):
         if inverse:
             mapped[(*source, "inverse_reading")] = _NATIVE_LITERAL
         role_positions = {role: index for index, role in enumerate(order)}
-        for j, role in enumerate(fact["roles"]):
-            projected_index = role_positions[role["role_name"]]
+        for j, role_name in enumerate(role_types):
+            projected_index = role_positions[role_name]
             path = (*source, "roles", j)
             mapped[path] = _NATIVE_LITERAL
             mapped[(*path, "object_type")] = _NATIVE_LITERAL
@@ -333,7 +336,7 @@ def _ontology(document, model):
             constraint = fact["constraints"][j]
             for path in (cpath, (*cpath, "type"), (*cpath, "roles"), (*cpath, "scope")):
                 mapped[path] = _NATIVE_LITERAL
-            for k in range(len(constraint["roles"])):
+            for k in range(len(ModelIndex.constraint_roles(constraint))):
                 mapped[(*cpath, "roles", k)] = _NATIVE_LITERAL
         if len(order) == 2 and multiplicity:
             functional_links[fact["id"]] = (owner, order[1])
@@ -356,7 +359,7 @@ def _ontology(document, model):
     }
     if document.get("model_id"):
         mapped[("model_id",)] = _copy(("name",))
-    place_formulas(document, ontology, components, projected_relations, mapped)
+    place_formulas(document, ontology, components, projected_relations, mapped, fact_types)
     return ontology, mapped
 
 

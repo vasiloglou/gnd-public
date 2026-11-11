@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "reason": "release-0.3.0 RN0: exact terminal source successors for five command bodies changed by UG2, UG3 and MC3 and left unchained; chained after MC2; all historical bytes remain unchanged.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_validate",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "512b92d740c4a6145d8576d08e443cef9cc870e8a717417e3ded7d1fde8aaf70",
+        "algorithm_sha256": "5f95550fc1516ce0419b5375246d9d87224b10c50059bc3be72536e4302cf133"
+      },
+      "after": {
+        "raw_sha256": "b7aea56b6943d882c26e166314df1ed491e62180d8451cc84b9c4ffa88c6bb30",
+        "algorithm_sha256": "2f2def2982e82f3e91c5e4f3e40b8cf45c30ff4fc6f6b224a5668c0e4a5534df"
+      },
+      "reason": "unattended-model-growth UG3a (747c1ba5, 8e7819a1): gnd validate takes --require-documents, and the document walk returns a rebuilt result with the unchecked-span entry for this handler to print; without --document and --require-documents the handler is unchanged. Chained after the MG5/ROF row. Recorded by release-0.3.0 RN0: the pin was left unchained when the change merged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_evolve_apply",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "6c882adc904f2b6f4f55a41d27bf06dd1b59abcbd0a902134690d7a61930b1f0",
+        "algorithm_sha256": "f654e1f15fd104291546bfed642a39e61d347b32e613f013c9ace2d27e645577"
+      },
+      "after": {
+        "raw_sha256": "6810a4052158f583b02a794a6f139d118ec1df9c49eecda240e64835a0b4e2b4",
+        "algorithm_sha256": "e2338595413cc00d97acf1f25531dfb5fc79e5bedf2af6573d9940611ad5ad4d"
+      },
+      "reason": "unattended-model-growth UG2 (2518e8fe, e0e6790c): an optional check_population keyword must agree with the reviewed preview and is passed to the re-preview and to apply with the reviewed population digest; model-composition MC3 (c93506e2): the reviewed preview's include history is passed as previous_includes. Without those options the handler is unchanged. Recorded by release-0.3.0 RN0: the pin was left unchained when the changes merged."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_evolve_preview",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "f662961b08692eea281ca8b3eb9801b92d5b99136eebf8d81e724b581de8ece1",
+        "algorithm_sha256": "0f0cdc755794f81e13b1bca5931d8d09848f5f11811c16d90f495d9ab74795ba"
+      },
+      "after": {
+        "raw_sha256": "1eaa2bfbb5a00ebcabe0213c790bca5b8400fd4c092e4d0d16d7022070067853",
+        "algorithm_sha256": "8d1e5da054985a61e065387474e375e6dc3a63911510e8b266a8151009098956"
+      },
+      "reason": "unattended-model-growth UG2 (2518e8fe): an optional check_population keyword is validated and passed to the preview; model-composition MC3 (c93506e2): an optional previous_include keyword supplies include history, an include-analysis refusal publishes its radius and exits 3, and include inputs are excluded from the preview output. Without those options the handler is unchanged. Recorded by release-0.3.0 RN0."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_emit_claim",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "5a1f7c6fbcda590700caa5c4fb537a675711cde62aff4b844511d71d58f3d03d",
+        "algorithm_sha256": "b0741502bd8b6bd318f475952b7b136f456d677b2b66a872788baf7c9c1fcc1e"
+      },
+      "after": {
+        "raw_sha256": "d8d55e6fba27aef7b80865826a763ded38b91a67221326b75750069174005189",
+        "algorithm_sha256": "5d01fd5e33cc95eeb4b3ecf9f1921c56915046ca3bf25513eb170849e2245644"
+      },
+      "reason": "unattended-model-growth UG2 (2518e8fe): the text claim also prints the population digest and one population-admitted line per admitted operation when the claim carries a population check; a claim without one prints as before. Recorded by release-0.3.0 RN0."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_evolve_error_exit",
+      "home": "gnd.evolve.cli_service",
+      "before": {
+        "raw_sha256": "6dde9b9d92729302755ce38da26f36a8cb9ddc7683611d5c1d7c1fe64216b16d",
+        "algorithm_sha256": "268e3378ca15973bd683570ae60677dab4ea698f9e79731d0b8c270a92ba8e67"
+      },
+      "after": {
+        "raw_sha256": "c4dc34145a1d2352c32bc3f63803b69d8e3cf8a970bae25a559f0aa2bf085451",
+        "algorithm_sha256": "abf1d555addd5afd7f5a4090550f9ee6d2d00f1bd6ac0ed152b2d202547679fa"
+      },
+      "reason": "unattended-model-growth UG2 (2518e8fe): EvolutionPopulationError returns its own exit code; UG3b (2dea8a81): EvolutionPolicyGapError maps to exit 3; model-composition MC3 (c93506e2): EvolutionIncludeError maps to exit 3. Every other branch is unchanged. Recorded by release-0.3.0 RN0."
+    }
+  ],
+  "raw_observation_commits": {
+    "after": "2490dd775e830dccf4b0ee862407f822f88fb56d"
+  },
+  "raw_sha256_convention": "New after.raw_sha256: UTF-8 ast.get_source_segment at the bound after commit, excluding the following line terminator. before is the unchanged historical predecessor entry, including its historical raw observation; only its normalized algorithm/import state is compared with the production phase base."
+}

@@ -9,6 +9,7 @@ RETIRED_NAMES = SOURCE_SUCCESSORS.parent / 'retired-names.json'
 PHASE_SUCCESSORS = (
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/model-composition/evidence/MC1/source-successors.json',
     Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/model-composition/evidence/MC2/source-successors.json',
+    Path(__file__).resolve().parents[2] / '.gnd-planning/milestones/release-0.3.0/evidence/RN0/source-successors.json',
 )
 
 

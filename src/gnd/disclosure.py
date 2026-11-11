@@ -112,6 +112,10 @@ SURFACES: Mapping[str, Surface] = {
         "export souffle-verify", "extract", "import ilp-rules", "import mined-rules",
         "import rai-orm", "install", "recovery inventory", "recovery verify", "review finalize",
         "synth", "uninstall")]),
+    # Ossie interchange moves model structure only: export refuses a model that carries
+    # populations (population:out-of-scope) and import writes a model from an ontology.
+    **_rows("value-free", ["gnd export ossie", "gnd import ossie"],
+            note="model structure only; a model with populations is refused"),
     **{f"api:{name}": Surface(**_DECLARED) for name in (
         "validate", "check", "diff", "verbalize", "transition", "check_with_receipt", "judgments")},
     **{f"api:EvaluationSession.{name}": Surface(**_DECLARED, note="delegates to the gnd.api function")

@@ -288,6 +288,36 @@
       "source": "gnd.commands.discover",
       "target": "gnd.disclosure",
       "reason": "CT4: gnd discover --show-values resolves the disclosure mode at the command boundary before the discover service runs; no values are read here."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.ossie_import",
+      "reason": "release-0.3.0 RN0 (D1): the Ossie import command is a thin adapter that calls plan_ossie_import and publishes its files; this exact dependency is the import planner and its refusal class. Recorded after PR 160."
+    },
+    {
+      "source": "gnd.commands.checking",
+      "target": "gnd.safefs",
+      "reason": "release-0.3.0 RN0 (D1): the Ossie import command is a thin adapter that calls plan_ossie_import and publishes its files; this exact dependency publishes the model and loss report as new files without overwriting. Recorded after PR 160."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.artifacts",
+      "reason": "release-0.3.0 RN0 (D1): the Ossie export command is a thin adapter that calls render_ossie and publishes its files; this exact dependency supplies the ArtifactError refusal of an unwritable output. Recorded after PR 160."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.errors",
+      "reason": "release-0.3.0 RN0 (D1): the Ossie export command is a thin adapter that calls render_ossie and publishes its files; this exact dependency supplies the model load and validation refusals it maps to exit bands. Recorded after PR 160."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.export.ossie",
+      "reason": "release-0.3.0 RN0 (D1): the Ossie export command is a thin adapter that calls render_ossie and publishes its files; this exact dependency is the renderer and its input refusal class. Recorded after PR 160."
+    },
+    {
+      "source": "gnd.commands.export",
+      "target": "gnd.safefs",
+      "reason": "release-0.3.0 RN0 (D1): the Ossie export command is a thin adapter that calls render_ossie and publishes its files; this exact dependency publishes the ontology, sidecar and loss report as new files without overwriting. Recorded after PR 160."
     }
   ],
   "service_bindings": {

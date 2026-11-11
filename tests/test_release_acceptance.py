@@ -507,12 +507,13 @@ def test_installed_0_3_0_carries(candidate, installed, tmp_path):
     _outside, checkout, python, wheel, env, prefix = installed
     version = declared_version(checkout)
     assert version == '0.3.0', 'these probes describe 0.3.0; a later version writes its own'
+    # The installed package is the declared version, before any probe input is touched.
+    assert gnd(python, prefix, env, tmp_path, '--version', expected=0).stdout.strip() == f'gnd {version}'
     work = acceptance_inputs(python, prefix, env, checkout, tmp_path / 'work')
 
     def new(cwd, *args, expected):
         return gnd(python, prefix, env, work / cwd, *args, expected=expected)
 
-    assert new('.', '--version', expected=0).stdout.strip() == f'gnd {version}'
     # The Ossie schemas are package data; a wheel without them breaks only when installed.
     with zipfile.ZipFile(wheel) as archive:
         names = set(archive.namelist())

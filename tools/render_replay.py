@@ -24,7 +24,7 @@ import textwrap
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "figures"))
-from svgkit import DARK, LIGHT, MONO, SANS  # noqa: E402
+from svgkit import DARK, LIGHT, MONO, SANS
 
 WIDTH, COLUMNS, LINE, TOP, PAD = 760, 96, 17, 46, 18
 STEP_SECONDS, MAX_LINES = 0.22, 120

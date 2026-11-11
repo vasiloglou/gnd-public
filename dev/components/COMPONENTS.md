@@ -1553,13 +1553,13 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.ossie
-- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar [render_ossie].
-- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by
+- does: Project an admitted ORM model and supported formulas to a pinned Ossie ontology with a loss report and reconstruction sidecar, and count the fact types that declare redact [render_ossie].
+- verbs: ossie export, ontology projection, loss report, sidecar, role reordering, many-to-one, one-to-one, identify_by, source pointers, population refusal, requires formula, derived_by, redact count
 - in: standalone model path and output format
 - out: ontology, sidecar and loss report bytes
 - status: canonical
 - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
-- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
+- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
 - notes: The three output artifacts use the importer's input size cap.
@@ -2629,7 +2629,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/redaction.py
 - uses: check.branches, check.compiled_obligations, infra.artifacts, model.atom_bindings, model.loading, model.scalar_terms
-- used_by: check.service, cli.api, cli.checking_command, discover.service, exp.service, export.ilp_service, export.mined_rules, export.verification, infra.report_payloads, infra.text_output, measure.report, measure.service, … +1 more (graph.md)
+- used_by: check.service, cli.api, cli.checking_command, discover.service, exp.service, export.ilp_service, export.mined_rules, export.ossie, export.verification, infra.report_payloads, infra.text_output, measure.report, … +2 more (graph.md)
 - tests: tests/test_v62_phase1_redaction.py, tests/test_public_redaction_reports.py
 - checked: partial
 - notes: Projection copies the completed payload after verdict evaluation; project_failure builds a separate witness-free failure envelope.

@@ -14,7 +14,8 @@ decision; preparing a release configures and runs neither.
 **Token upload of retained files.** The owner uploads the release wheel and
 sdist that a preparation retained, after `sha256sum -c SHA256SUMS` passes,
 with the owner's own PyPI credentials. The uploaded bytes are the bytes that
-were validated. This is how 0.1.0 was published.
+were validated. Every release through 0.3.0 (0.1.0, 0.2.0 and 0.3.0) was
+published this way.
 
 **The workflow with Trusted Publishing.** Sign in to
 [PyPI account publishing](https://pypi.org/manage/account/publishing/) and add a
@@ -68,6 +69,34 @@ stop announcements, record affected files/version, notify through authorized
 support channels, and choose a corrected new version or service-supported yank.
 Never claim already distributed bytes were private or silently replace them.
 Keep the incident and correction linked; source retirement is a separate action.
+
+## After publication: move the pages
+
+When the served files are confirmed, move the pages from the prepared state to
+the published one with one command:
+
+```sh
+uv run python tools/release_text.py publish --date YYYY-MM-DD --built COMMIT --profile "OS, Python, uv"
+```
+
+`--built` is the first eight digits of the candidate's commit, and `--profile`
+is the profile that release acceptance observed. The command moves the install
+pins, the release link and wheel name, the tag sentence, the version paragraph
+of the compatibility page, the opening and the heading of the release notes,
+the support row and `RELEASED` in `tests/test_release_version.py`. It writes
+nothing when it cannot make every edit.
+
+It then lists the lines that still describe the earlier state, such as a page
+that tells readers to install from a checkout. Those lines were written for
+this release, so rewrite each one by hand. Run `uv run python tools/release_text.py check` until
+it lists nothing. The default test lane runs the same check
+(`tests/test_release_text.py`), so a page cannot return to the earlier wording
+between releases.
+
+Release acceptance keeps one negative control. It installs the release before
+the candidate from PyPI and shows that each new probe fails there. A release
+that adds probes replaces the previous control with one against the release
+before it.
 
 Official service references checked during preparation (2026-10-03):
 [PyPI publisher setup](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)

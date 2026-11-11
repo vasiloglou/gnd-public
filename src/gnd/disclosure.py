@@ -114,7 +114,8 @@ SURFACES: Mapping[str, Surface] = {
         "synth", "uninstall")]),
     "gnd export ossie": Surface(
         "every-mode",
-        note="writes the model's constraint literals and descriptions; populations are omitted and reported"),
+        note="writes the model's constraint literals and descriptions, also for a fact type that declares "
+             "redact, and prints a count of those; populations are omitted and reported"),
     "gnd import ossie": Surface(
         "every-mode", note="restores whatever model content the ontology and its sidecar carry"),
     **{f"api:{name}": Surface(**_DECLARED) for name in (

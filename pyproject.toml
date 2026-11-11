@@ -5,6 +5,12 @@
 name = "get-nick-done"
 version = "0.3.0"
 description = "GND — Get Nick Done: ORM-grounded agentic development runtime (model authoring, population checking)"
+# Issue 175: without this key the wheel and sdist carry no long description and
+# the PyPI project page shows no text. PYPI.md is a short description written
+# for that page: every link in it is absolute, because PyPI does not resolve the
+# repository README's relative links or its image, and it names no version, so a
+# release does not edit it. tests/test_package_description.py holds both rules.
+readme = "PYPI.md"
 authors = [
     { name = "Nikolaos Vasiloglou", email = "nvasil@gmail.com" }
 ]
@@ -106,11 +112,32 @@ target-version = "py311"
 # proves that erasing its contract-only calls returns it to
 # src/gnd/proof_kernel.py statement for statement, and that file IS linted. A
 # ruff autofix here would break that identity, which is the whole gate.
+#
+# .gnd-planning/ holds the scripts a milestone or maintenance pass retained as
+# evidence: probes, captures, census and re-record scripts. Records bind many of
+# them by SHA-256, and each one is the command a record says was run, so a lint
+# fix would change what the record points at. They are excluded for the same
+# reason as the experiment attempts above. A script that is meant to be reused
+# belongs under tools/ or tests/, where it is linted.
+#
+# scripts/components_index.py is delivered from dev-tools (.devtools.toml) and
+# bound by .devtools-receipt.json. A lint fix to it is made in dev-tools and
+# arrives through the sync, never by a local edit.
 extend-exclude = [
     "**/EXP-*/runs/*/attempts/**",
     "**/EXP-*/candidate/**",
     "proof/v6/phase1/generated/**",
+    ".gnd-planning/**",
+    "scripts/components_index.py",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# This file is a byte copy of src/gnd/examples/expense/extension.py, which the
+# tutorial copies into the generated project (tests/test_expense_tutorial.py
+# compares the two). Beside its own `cli` package, isort reads `cli.reporting`
+# as first-party and wants the blank line before `gnd.api` removed; in
+# extension.py's directory the same bytes are sorted correctly.
+"src/gnd/examples/expense/project/cli/expense_cli.py" = ["I001"]
 
 [dependency-groups]
 dev = [

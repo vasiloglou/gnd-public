@@ -224,10 +224,13 @@ def test_target_only_contributor_lifecycle(installed):
 # docs/reference/rule-check-report.md and docs/how-to/adopt-rules-with-a-baseline.md,
 # which replays the same example; the RR2 spec (§6) cites each line.
 
-# The wheel PyPI serves for the published 0.1.0, historical data like RELEASED in
-# tests/test_release_version.py: the negative control installs exactly this file.
-PUBLISHED_WHEEL_SHA256 = {'0.1.0': 'cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183',
-                          '0.2.0': 'e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4'}
+# The wheel PyPI serves for the release before the candidate, historical data like
+# RELEASED in tests/test_release_version.py: the negative control installs exactly
+# this file. Acceptance keeps a negative control only against that one release
+# (issue 176, owner ruling of 2026-11-11). The control against 0.1.0, which showed
+# that the rule-check probes below measure what 0.2.0 added, was retired with it:
+# the probes stay as regressions, and its record is rule-check-release RR2.
+PUBLISHED_WHEEL_SHA256 = {'0.2.0': 'e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4'}
 MODEL, HEAD, BASE, FIXED = (f'catalog/{n}' for n in [
     'model.orm.yaml', 'head.population.yaml', 'base.population.yaml', 'fixed.population.yaml'])
 REMEDIES = {
@@ -282,19 +285,18 @@ def acyclic_verdict(report):
     return verdict
 
 
-@pytest.fixture(scope='module')
-def published_0_1_0(tmp_path_factory):
-    """The PyPI 0.1.0 wheel, hash-checked and installed in a fresh venv outside the checkout."""
-    outside = tmp_path_factory.mktemp('published-0.1.0').resolve()
+def published_wheel(tmp_path_factory, version):
+    """The PyPI wheel of `version`, hash-checked and installed in a fresh venv outside the checkout."""
+    outside = tmp_path_factory.mktemp(f'published-{version}').resolve()
     env = {k: v for k, v in os.environ.items()
            if k in {'PATH', 'SYSTEMROOT', 'TMPDIR', 'LANG', 'LC_ALL'}}
     env.update(HOME=str(outside / 'home'), PYTHONNOUSERSITE='1')
     Path(env['HOME']).mkdir()
-    with urllib.request.urlopen('https://pypi.org/pypi/get-nick-done/0.1.0/json', timeout=60) as response:
+    with urllib.request.urlopen(f'https://pypi.org/pypi/get-nick-done/{version}/json', timeout=60) as response:
         (item,) = [u for u in json.load(response)['urls'] if u['packagetype'] == 'bdist_wheel']
     with urllib.request.urlopen(item['url'], timeout=60) as response:
         body = response.read()
-    assert hashlib.sha256(body).hexdigest() == PUBLISHED_WHEEL_SHA256['0.1.0'], item['url']
+    assert hashlib.sha256(body).hexdigest() == PUBLISHED_WHEEL_SHA256[version], item['url']
     wheel = outside / item['filename']
     wheel.write_bytes(body)
     venv = outside / 'venv'
@@ -403,44 +405,6 @@ def test_installed_rule_check_carries(candidate, installed, tmp_path):
         assert {n.split('/')[0] for n in archive.getnames()} == {f'get_nick_done-{declared}'}
 
 
-def test_published_0_1_0_lacks_rule_check(installed, published_0_1_0, tmp_path):
-    _outside, _checkout, python, _wheel, env, prefix = installed
-    old_python, old_env = published_0_1_0
-    copy_example(python, prefix, env, tmp_path)
-
-    def old(*args, expected):
-        return gnd(old_python, prefix, old_env, tmp_path, 'check', *args, '--format', 'json', expected=expected)
-
-    # The three flags are new: 0.1.0's parser refuses them (exit 64, not 2: RR2 spec §13).
-    for flags in [['--rule-ids'], ['--baseline', BASE], ['--allow-vacuous']]:
-        assert f'unrecognized arguments: {flags[0]}' in old(MODEL, HEAD, *flags, expected=64).stderr
-    # `remedy` is new: 0.1.0's model schema refuses it.
-    issues = json.loads(old(MODEL, HEAD, expected=3).stdout)['issues']
-    assert any(i['path'] == '$.constraints[0]' and i['rule_id'] == 'jsonschema:unevaluatedProperties'
-               and 'remedy' in i['message'] for i in issues), issues
-    # `tool-output` and `producer` are new: on a model 0.1.0 accepts, the population is refused.
-    model = tmp_path / MODEL
-    text, removed = re.subn(r'(?m)^ *remedy: .*\n', '', model.read_text(encoding='utf-8'))
-    assert removed == len(REMEDIES)
-    (tmp_path / 'catalog/plain.orm.yaml').write_text(text, encoding='utf-8')
-    issues = json.loads(old('catalog/plain.orm.yaml', HEAD, expected=3).stdout)['issues']
-    assert any(i['path'] == '$.population' and 'producer' in i['message'] for i in issues), issues
-    assert any(i['path'] == '$.population.source' and 'tool-output' in i['message'] for i in issues), issues
-    # Without the new flags and fields nothing changed: both releases agree on input both accept.
-    head, removed = re.subn(r'(?m)^  producer: .*\n', '', (tmp_path / HEAD).read_text(encoding='utf-8'))
-    assert removed == 1 and head.count('source: tool-output') == 1
-    fixture = 'catalog/fixture.population.yaml'
-    (tmp_path / fixture).write_text(head.replace('source: tool-output', 'source: fixture'), encoding='utf-8')
-    reports = [json.loads(old('catalog/plain.orm.yaml', fixture, expected=1).stdout),
-               gnd_json(python, prefix, env, tmp_path, 'catalog/plain.orm.yaml', fixture, expected=1)]
-    assert [r['schema_version'] for r in reports] == [7, 7]
-    assert reports[0]['counts'] == reports[1]['counts']
-    published, current = ([(v['constraint_ref'], v['verdict'], v['offending_facts']) for v in r['verdicts']] for r in reports)
-    assert sorted(published, key=str) == sorted(current, key=str)
-    (cycle,) = acyclic_verdict(reports[0])['offending_facts']
-    assert acyclic_verdict(reports[1])['offending_facts'] == [cycle] and cycle[0] == cycle[-1]
-
-
 # -- release-0.3.0 RN2: what 0.3.0 adds, from the installed wheel (probes Q1 to Q5) --
 
 ACCEPTANCE_INPUTS = 'tests/fixtures/release-acceptance/0.3.0'
@@ -456,23 +420,7 @@ YAML_TO_JSON = ('import json,sys; from ruamel.yaml import YAML; '
 
 @pytest.fixture(scope='module')
 def published_0_2_0(tmp_path_factory):
-    """The PyPI 0.2.0 wheel, hash-checked and installed in a fresh venv outside the checkout."""
-    outside = tmp_path_factory.mktemp('published-0.2.0').resolve()
-    env = {k: v for k, v in os.environ.items()
-           if k in {'PATH', 'SYSTEMROOT', 'TMPDIR', 'LANG', 'LC_ALL'}}
-    env.update(HOME=str(outside / 'home'), PYTHONNOUSERSITE='1')
-    Path(env['HOME']).mkdir()
-    with urllib.request.urlopen('https://pypi.org/pypi/get-nick-done/0.2.0/json', timeout=60) as response:
-        (item,) = [u for u in json.load(response)['urls'] if u['packagetype'] == 'bdist_wheel']
-    with urllib.request.urlopen(item['url'], timeout=60) as response:
-        body = response.read()
-    assert hashlib.sha256(body).hexdigest() == PUBLISHED_WHEEL_SHA256['0.2.0'], item['url']
-    wheel = outside / item['filename']
-    wheel.write_bytes(body)
-    venv = outside / 'venv'
-    run(['uv', 'venv', '--python', sys.executable, venv], outside, env)
-    run(['uv', 'pip', 'install', '--python', venv / 'bin/python', wheel], outside, env)
-    return venv / 'bin/python', env
+    return published_wheel(tmp_path_factory, '0.2.0')
 
 
 def copy_packaged(python, prefix, env, work, relative, name):

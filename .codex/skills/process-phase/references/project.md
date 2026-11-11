@@ -110,8 +110,26 @@ skill text this repository wrote for itself, before the shared text replaced it.
 - The broad-lane command is `uv run pytest -q -m "evidence or census"`. Reserve
   `census` for exhaustive tracked-tree assertions and `evidence` for historical
   bytes, fixed-commit replays and retained-output pins.
-- The record's verbatim gate output includes the lint gate. The skill text named
-  no command for it; ruff is the linter `pyproject.toml` configures.
+- Structure and inventory guards, issue 171: a phase or maintenance pass that
+  changes any file outside `.gnd-planning/` adds the guard files below to its
+  focused gate, beside its direct tests, and records their summary line. They
+  hold the entry-point import policy, the query budgets, the bounded-reader and
+  identity inventories, the disclosure table and its page, the packaged-skill
+  manifests and the scaffold links. Two milestones closed with green focused
+  gates while 26 of these tests were red on `main`, because no gate named them.
+  The whole list takes about two minutes.
+
+  ```bash
+  uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short
+  ```
+
+  `tests/test_gate_guard_list.py` reads this block: it fails when a named file
+  is missing or the two copies of this page differ. A new guard file is added
+  to the block in the commit that adds the file.
+- The record's verbatim gate output includes the lint gate. The lint gate is
+  `uv run ruff check` over the whole repository, which exits 0 since issue 177
+  (2026-11-11); a phase no longer names a narrower file list. `pyproject.toml`
+  says what is excluded and why.
 - Do not introduce `pytest-xdist` as a semantic change merely to make a health
   check faster.
 - Frozen v5.1 report-golden replay, explicit request only. The 664-row,

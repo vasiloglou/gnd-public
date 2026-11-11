@@ -1876,6 +1876,14 @@ subtrees are refused as `population:out-of-scope`. The report and sidecar
 omit the refused values. A successful export may contain refusals in the
 report. `--strict` rejects an export with any refusal before publication.
 
+A `redact` declaration on a fact type or a role does not change the export.
+It withholds population values from reports, and an export carries no
+population. The readings, constraints and provenance text of a redacted fact
+type are written like any other, in every disclosure mode. When the model
+declares `redact`, the command prints one note on standard error with the
+number of fact types that declare it. The note names no fact type and no
+value, and the exit code stays 0.
+
 The `FILE.gnd.json` sidecar uses `gnd-ossie-sidecar/1`. Both metadata files
 contain the model's canonical `model_identity` and the bare hexadecimal
 SHA-256 of the exact ontology bytes, `document_sha256`. Sidecar `elements`
@@ -1923,3 +1931,72 @@ path given by `--loss-report`. The report names its source digest and
 available source model identity, and records one disposition per tracked
 pointer. Exit 3 gives a value-free `ossie-import:<rule>` refusal. Exit 11
 indicates an output collision.
+
+### The import loss report
+
+The import report uses `gnd-ossie-import-loss/1`. It is a different document
+from the export report, which uses `gnd-ossie-loss/1`, and it is not checked
+against the packaged export report schema. Its members are:
+
+| Member | Value |
+|---|---|
+| `schema` | `gnd-ossie-import-loss/1` |
+| `document_sha256` | The bare hexadecimal SHA-256 of the exact ontology bytes that were read. |
+| `source_model_identity` | The sidecar's `model_identity`, or `null` for an ontology without a sidecar. |
+| `source_identity_verified` | `true` when the restored model's identity equals `source_model_identity`, otherwise `false`. It is `false` without a sidecar. |
+| `dispositions` | One row per tracked pointer, each with `pointer`, `disposition` and `reason`. |
+
+With a sidecar and an adjacent export report, the rows are the export
+report's rows, unchanged, and their pointers address the GND source. With a
+sidecar and no report, every restored source pointer has the disposition
+`extension` and the reason `gnd-source`. Without a sidecar, the pointers
+address the ontology document, and each row is one of these:
+
+| Disposition | Reason | Meaning |
+|---|---|---|
+| `native` | `projection` | The import read this node into the model. |
+| `refused` | `foreign:unsupported` | The import omitted this node. |
+| `refused` | `foreign:decimal-domain` | A value concept extends the built-in Decimal. The link is omitted. |
+
+### Import refusal rules
+
+An import that is refused prints one line, `ossie-import:<rule>`, on standard
+error and writes nothing. The line never contains a value from the input. The
+exit code is 3, except for `output-exists`, which exits 11. These are all the
+rules. A caller may branch on them.
+
+| Rule | The import refuses when |
+|---|---|
+| `input` | The ontology file is missing, is not a regular file or cannot be read. |
+| `input-size` | The ontology file is larger than 10 MiB. |
+| `syntax` | The ontology is not JSON or YAML that the input policy admits, or it holds text that UTF-8 cannot encode. |
+| `schema` | The ontology does not validate against the pinned Ossie ontology schema. |
+| `concept-name` | Two concepts share a name, or a concept uses the name of a built-in type. |
+| `relationship-name` | Two relationships of one concept share a name. |
+| `reference` | An `extends` parent or a role concept is not declared, or an `identify_by` entry names no relationship of the concept or its ancestors. |
+| `cycle` | The `extends` links form a cycle. |
+| `reference-budget` | Resolving `identify_by` entries through the `extends` links exceeds the work limit. |
+| `sidecar-input` | The sidecar exists and is not a regular file or cannot be read. |
+| `sidecar-input-size` | The sidecar is larger than 10 MiB. |
+| `sidecar-syntax` | The sidecar is not JSON that the input policy admits. |
+| `sidecar-header` | The sidecar does not have exactly the four members `schema`, `model_identity`, `document_sha256` and `elements`, its schema name is not `gnd-ossie-sidecar/1`, or an identity or digest is malformed. |
+| `binding` | The sidecar's `document_sha256` is not the digest of the ontology bytes. |
+| `sidecar-entry` | An `elements` group or entry has the wrong shape, an entry has an unknown `kind` or extra members, or a `copy` entry points at a value that is not a scalar. |
+| `sidecar-pointer` | A source pointer is malformed, too deep, repeated or has no parent entry, the array indices under one entry are not consecutive from 0, a scalar entry has children, the root entry is missing, or a `copy` entry points at nothing in the ontology. |
+| `report-input` | The adjacent export report exists and is not a regular file or cannot be read. |
+| `report-input-size` | The adjacent export report is larger than 10 MiB. |
+| `report-syntax` | The adjacent export report is not JSON that the input policy admits. |
+| `report-schema` | The adjacent export report does not validate against the packaged `gnd-ossie-loss/1` schema. |
+| `report-binding` | The report's `model_identity` or `document_sha256` differs from the sidecar's. |
+| `report-pointer` | The report repeats a pointer, omits a restored pointer, marks a restored pointer as refused or an absent one as kept, or holds a refused pointer whose parent does not account for it. |
+| `foreign-empty` | An ontology without a sidecar yields no object type that the import supports. |
+| `model` | The restored or projected document cannot be serialized, or GND does not admit it as a model. |
+| `model-size` | The restored or projected model reaches 10 MiB. |
+| `model-identity` | The restored model's identity cannot be computed, or it differs from the sidecar's while the adjacent report records no refusal. |
+| `loss-size` | The import report would exceed 20 MiB. |
+| `output-exists` | An output path already exists. Exit 11. |
+| `output` | The model and report cannot be published for another reason. |
+
+A relationship of a foreign ontology whose first reading does not bind each
+role once is not a refusal of the import. The relationship is omitted and its
+pointers are reported as `foreign:unsupported`.

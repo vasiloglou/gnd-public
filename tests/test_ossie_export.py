@@ -554,3 +554,68 @@ def test_rn0_k1_ossie_surfaces_are_every_mode_because_exports_carry_model_litera
         unset.document, unset.sidecar, unset.loss_report)
     for leaf in ("gnd export ossie", "gnd import ossie"):
         assert disclosure.SURFACES[leaf].kind == "every-mode", leaf
+
+
+
+# Issue 169, owner ruling of 2026-11-11 ("Keep, and say so"): `redact` does not change
+# an export. The command says how many fact types declare it, and nothing else moves.
+
+def _redact_model(tmp_path, *, fact_types=("account_classified",), roles=(("account_balance", "balance"),)):
+    """The semantics corpus model with `redact` declared on the named fact types and roles."""
+    document = json.loads((MILESTONE / "evidence/OS2/corpus-r2/model.orm.json").read_bytes())
+    for fact in document["fact_types"]:
+        if fact["id"] in fact_types:
+            fact["redact"] = True
+        for role in fact["roles"]:
+            if (fact["id"], role["role_name"]) in roles:
+                role["redact"] = True
+    tmp_path.mkdir(exist_ok=True)
+    path = tmp_path / "model.orm.json"
+    path.write_text(json.dumps(document), encoding="utf-8")
+    return path
+
+
+def test_issue_169_a_redacted_fact_type_is_exported_unchanged_and_counted(tmp_path):
+    from gnd import disclosure
+
+    source = _redact_model(tmp_path)
+    unset = render_ossie(source, output_format="json", strict=True)
+    with disclosure.invocation("customer"):
+        customer = render_ossie(source, output_format="json", strict=True)
+    with disclosure.invocation("internal"):
+        internal = render_ossie(source, output_format="json", strict=True)
+    assert unset == customer == internal
+    # Fact-type level and role level both count; the six undeclared fact types do not.
+    assert unset.redacted_fact_types == 2
+    # The redacted fact type's reading and the literals of its role's value constraint are written.
+    assert b"is classified as" in unset.document and b"'Retail'" in unset.document
+    assert b'"Business"' in unset.sidecar
+    # The ontology is the one the same model gives without the declarations.
+    plain = render_ossie(
+        _redact_model(tmp_path / "plain", fact_types=(), roles=()), output_format="json", strict=True)
+    assert plain.redacted_fact_types == 0
+    assert plain.document == unset.document
+
+
+@pytest.mark.parametrize("mode", [None, "internal", "customer"])
+def test_issue_169_the_command_notes_the_count_and_never_a_name_or_value(tmp_path, mode, monkeypatch, capsys):
+    if mode is None:
+        monkeypatch.delenv("GND_DISCLOSURE", raising=False)
+    else:
+        monkeypatch.setenv("GND_DISCLOSURE", mode)
+
+    def export(name, **declared):
+        out = tmp_path / f"{name}.json"
+        code = cli.main([
+            "export", "ossie", str(_redact_model(tmp_path / name, **declared)),
+            "--out", str(out), "--format", "json"])
+        assert code == 0 and out.is_file()
+        return capsys.readouterr().err
+
+    noted = export("both")
+    assert noted.startswith("note: 2 fact types declare `redact`. ")
+    assert "does not change an export" in noted and "loss report" in noted
+    for hidden in ("account_classified", "account_balance", "Retail", "Business", "is classified"):
+        assert hidden not in noted, hidden
+    assert export("none", fact_types=(), roles=()) == ""
+    assert export("one", roles=()).startswith("note: 1 fact type declares `redact`. ")

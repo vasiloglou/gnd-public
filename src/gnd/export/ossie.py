@@ -45,6 +45,10 @@ class OssieArtifacts:
     document: bytes
     sidecar: bytes
     loss_report: bytes
+    #: How many fact types declare ``redact``, on the fact type or on a role. The
+    #: export carries their readings, constraints and provenance text unchanged
+    #: (issue 169); the command says so with this count and no name or value.
+    redacted_fact_types: int = 0
 
 
 @lru_cache(maxsize=1)
@@ -442,4 +446,7 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) 
         raise OssieInputError("model has no encodable interchange identity") from error
     if max(len(data), len(sidecar), len(report)) > MAX_BYTES:
         raise OssieInputError("ossie:output-size")
-    return OssieArtifacts(data, sidecar, report)
+    from gnd.redaction import RedactionPolicy
+
+    declared = {row.fact_type for row in RedactionPolicy.from_model(model).declarations}
+    return OssieArtifacts(data, sidecar, report, len(declared))

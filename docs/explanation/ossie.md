@@ -32,6 +32,13 @@ those details when the sidecar is present. What the export omitted stays
 omitted: a model with example populations comes back without them. A foreign
 ontology imports through the supported projection and gets its own loss report.
 
+An export is the model's own text. A fact type or role marked `redact` keeps
+its reading, constraints and provenance text in the export, in every
+[disclosure mode](../reference/disclosure.md): `redact` withholds population
+values from reports, and an export carries no population. The command prints a
+note with the number of fact types that declare `redact`, so you can decide
+before you share the files.
+
 GND keeps its `Duration` type, which counts whole days. Ossie receives an
 integer value type and the sidecar preserves its original GND meaning.
 The export report also records omissions, such as example populations.

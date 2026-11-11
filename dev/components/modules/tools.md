@@ -387,6 +387,27 @@ Record Claude Code running a GND skill on an example's rules, every run kept.
 | `finish(out, finished_later) -> int` | function | 194 | The leak search, then the manifest. On a hit the run folders are removed and only results.json stays. |
 | `main() -> int` | function | 216 | (no docstring) |
 
+## tools.release_text — `tools/release_text.py`
+Components: unassigned
+Publication-day text: move the pages from "prepared" to "published", and check them.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `ReleaseTextError` | class(Exception) | 83 | An input the tool cannot work from. |
+| `version_key(version) -> tuple[int, ...]` | function | 87 | (no docstring) |
+| `declared_version(root) -> str` | function | 91 | (no docstring) |
+| `released_versions(root) -> list[str]` | function | 95 | The published versions, oldest first, from their one home in the tests. |
+| `notes_opening(declared, date, released) -> str` | function | 112 | The first paragraph of the release notes once `declared` is published. |
+| `compatibility_paragraph(declared, date, released) -> str` | function | 127 | The first paragraph of the compatibility page once `declared` is published. |
+| `support_row(declared, built, profile) -> str` | function | 137 | (no docstring) |
+| `page_files(root) -> list[str]` | function | 157 | README.md and every text file under docs/, except the release notes. |
+| `stale_lines(root, declared, released) -> list[str]` | function | 167 | Lines that name an older version or use prepared-state wording and are not standing. |
+| `notes_problems(root, declared, released) -> list[str]` | function | 194 | (no docstring) |
+| `presence_problems(root, declared) -> list[str]` | function | 219 | The pins, the links and the support row name the declared version. |
+| `problems(root) -> list[str]` | function | 247 | Everything that still describes the state before the declared version was published. |
+| `publish(root, *, date, built, profile) -> list[str]` | function | 260 | Make the publication-day edits for the declared version. Return the files changed. |
+| `main(argv) -> int` | function | 334 | (no docstring) |
+
 ## tools.render_replay — `tools/render_replay.py`
 Components: unassigned
 Render a recorded session as an animated SVG replay, in the hero figure's visual language.

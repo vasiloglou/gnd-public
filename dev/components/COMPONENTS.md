@@ -2898,7 +2898,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/values.py
 - uses: check.population_structure, infra.input_policy, model.scalar_terms
-- used_by: synth.guarded, synth.prediction, synth.value_domain
+- used_by: synth.guarded, synth.prediction, synth.service, synth.value_domain
 - part_of: subsystem.synth
 - tests: tests/test_synth_values.py, tests/test_rf1_helper_pins.py, tests/test_rf7_consumers.py
 - notes: PRIMITIVES comes from the vendored meta-schema; unconstrained dates use fixed anchors for seed reproduction.
@@ -3061,7 +3061,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Ordinary synth artifacts or a guarded case manifest, matched populations and scoped ordinary corpus. A checker disagreement retains quarantine evidence.
 - status: canonical
 - modules: src/gnd/synth/service.py, src/gnd/synth/guarded_service.py
-- uses: checker.evaluate, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.loading, model.population_loading, model.query_index, model.scalar_terms, synth.assemble, synth.boundary, synth.corpus, synth.frontier, synth.guarded, synth.mutations, synth.paths, synth.pool, synth.provenance
+- uses: checker.evaluate, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.loading, model.population_loading, model.query_index, model.scalar_terms, synth.assemble, synth.boundary, synth.corpus, synth.frontier, synth.guarded, synth.mutations, synth.paths, synth.pool, synth.provenance, synth.values
 - used_by: cli.dispatch, cli.synth_command
 - part_of: subsystem.synth
 - tests: tests/test_synth_conforming.py, tests/test_synth_mutate.py, tests/test_synth_boundary.py, tests/test_synth_false_pass_quarantine.py, tests/test_synth_derivation_refusal.py, tests/test_synth_guarded_cases.py

@@ -23,6 +23,7 @@ from gnd.synth.corpus_service import _SynthCorpusTransaction
 from gnd.synth.guarded import _WorkBudget
 from gnd.synth.paths import safe_output_path
 from gnd.synth.provenance import validated_model_sha256
+from gnd.synth.values import SynthDependencyError
 
 
 def _digest(model):
@@ -256,6 +257,8 @@ def run_guarded_cases(model_path, out, seed, output_format, synth):
             },
         )
         transaction.commit()
+    except SynthDependencyError as error:
+        return result(EXIT_GENERATOR, error=str(error))
     except PopulationLoadError as error:
         return result(
             EXIT_GENERATOR, error=f"generated guarded population did not validate: {error}"

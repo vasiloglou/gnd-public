@@ -8,14 +8,16 @@ each public command's exit and streams, and the output artifact digests.
 ```sh
 candidate=$(mktemp -d)
 uv build --wheel --offline --out-dir "$candidate/dist"
-uv export --locked --offline --no-dev --no-emit-project --format requirements-txt \
+uv export --locked --offline --no-dev --no-emit-project --extra synth --format requirements-txt \
   --output-file "$candidate/runtime.txt" --quiet
 uv venv --offline "$candidate/venv"
+set -- "$candidate"/dist/*.whl
+ga_wheel=$1
 uv pip install --offline --python "$candidate/venv/bin/python" \
-  --constraints "$candidate/runtime.txt" "$candidate"/dist/*.whl
+  --constraints "$candidate/runtime.txt" "${ga_wheel}[synth]"
 env -u PYTHONPATH "$candidate/venv/bin/python" -I \
   .gnd-planning/milestones/guarded-rule-authoring/evidence/GA3/installed-smoke.py \
-  "$PWD" "$candidate"/dist/*.whl "$candidate/runs" "$candidate/receipt.json"
+  "$PWD" "$ga_wheel" "$candidate/runs" "$candidate/receipt.json"
 ```
 
 GA1 exercises the shipped model and an isolated repeated-variable guard.

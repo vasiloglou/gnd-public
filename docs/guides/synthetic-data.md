@@ -89,7 +89,8 @@ define the current generation and evidence contract.
 gnd synth model.orm.yaml --guarded-cases --out guarded-examples --seed 17
 ```
 
-Use a fresh output directory. The default seed for this mode is 0.
+Use a fresh output directory and install the `synth` extra
+(`pip install "get-nick-done[synth]"`). The default seed for this mode is 0.
 For each supported rule, the command constructs an active failure and an active pass.
 An active case has at least one binding that satisfies the antecedent.
 The independent synthesis evaluator predicts the target verdict and counts

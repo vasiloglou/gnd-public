@@ -106,7 +106,7 @@ Admission, checker confirmation and publication for guarded case corpora.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `run_guarded_cases(model_path, out, seed, output_format, synth)` | function | 132 | (no docstring) |
+| `run_guarded_cases(model_path, out, seed, output_format, synth)` | function | 133 | (no docstring) |
 
 ## gnd.synth.identity — `src/gnd/synth/identity.py`
 Components: synth.identity

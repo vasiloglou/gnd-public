@@ -365,3 +365,17 @@ def test_fresh_publication_preserves_another_writer(tmp_path):
     finally:
         transaction.abort()
     assert list(root.iterdir()) == []
+
+
+def test_guarded_cases_require_synth_extra_with_a_cli_error(tmp_path, monkeypatch):
+    from gnd.synth import values
+
+    def unavailable():
+        raise values.SynthDependencyError()
+
+    monkeypatch.setattr(values, "_require_faker", unavailable)
+    out = tmp_path / "out"
+    result = _guarded_run(EXAMPLE, out)
+    assert result.returncode == 5
+    assert b"get-nick-done[synth]" in result.stdout
+    assert not out.exists()

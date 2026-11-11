@@ -411,11 +411,11 @@ Conservative, read-only comparison of two models over one vocabulary.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `DiffError` | class(ValueError) | 25 | A diff input violates its contract. |
-| `compare_constraints(model_a, model_b) -> list[dict[str, Any]]` | function | 132 | Compare ordered constraint pairs within their family and subject. |
-| `compare_population(model_a, model_b, population_bytes, *, source, population_ref, origin) -> dict[s…` | function | 223 | Load the same bytes independently under both models and compare results. |
-| `description_annotations(model_a, model_b) -> list[dict[str, Any]]` | function | 271 | One entry per object type whose description differs, extras included (D12). |
-| `diff_models(model_a, model_b, *, populations, synthesize, seed) -> dict[str, Any]` | function | 291 | Produce a bounded differential report without mutating either model. |
+| `DiffError` | class(ValueError) | 26 | A diff input violates its contract. |
+| `compare_constraints(model_a, model_b) -> list[dict[str, Any]]` | function | 133 | Compare ordered constraint pairs within their family and subject. |
+| `compare_population(model_a, model_b, population_bytes, *, source, population_ref, origin) -> dict[s…` | function | 224 | Load the same bytes independently under both models and compare results. |
+| `description_annotations(model_a, model_b) -> list[dict[str, Any]]` | function | 272 | One entry per object type whose description differs, extras included (D12). |
+| `diff_models(model_a, model_b, *, populations, synthesize, seed) -> dict[str, Any]` | function | 292 | Produce a bounded differential report without mutating either model. |
 
 ## gnd.disclosure — `src/gnd/disclosure.py`
 Components: infra.disclosure
@@ -622,30 +622,30 @@ Saved external opinions: byte binding and separate admission/repair policy.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `JudgmentInputError` | class(ValueError) | 31 | (no docstring) |
-| `refuse(reason, message)` | function | 37 | (no docstring) |
-| `obj(value, keys)` | function | 41 | (no docstring) |
-| `integer(value, minimum)` | function | 46 | (no docstring) |
-| `text(value, cap)` | function | 51 | (no docstring) |
-| `digest(value)` | function | 56 | (no docstring) |
-| `path(value)` | function | 61 | (no docstring) |
-| `number(value, unit)` | function | 67 | (no docstring) |
-| `cap(value, maximum, reason)` | function | 76 | (no docstring) |
-| `parse(raw, maximum)` | function | 81 | (no docstring) |
-| `floor(value)` | function | 91 | (no docstring) |
-| `policy_shape(doc)` | function | 107 | (no docstring) |
-| `answer_shape(a)` | function | 152 | (no docstring) |
-| `receipt_shape(r)` | function | 242 | (no docstring) |
-| `JudgmentPolicy` | class | 300 | (no docstring) |
-| `JudgmentReceipt` | class | 306 | (no docstring) |
-| `read_judgment_policy(raw)` | function | 318 | (no docstring) |
-| `read_judgment_receipts(raw)` | function | 324 | (no docstring) |
-| `judgment_receipt_digest(receipt)` | function | 341 | (no docstring) |
-| `judgment_fact_digest(fact_type, index, roles)` | function | 350 | (no docstring) |
-| `normalized(r, sources)` | function | 366 | (no docstring) |
-| `qualification(verdict, expected, floor_value, evidence)` | function | 436 | (no docstring) |
-| `evaluate_judgments(policy, receipts, *, model, candidate, mechanical_report, model_bytes, populatio…` | function | 457 | (no docstring) |
-| `redact_policy(result)` | function | 666 | (no docstring) |
+| `JudgmentInputError` | class(ValueError) | 32 | (no docstring) |
+| `refuse(reason, message)` | function | 38 | (no docstring) |
+| `obj(value, keys)` | function | 42 | (no docstring) |
+| `integer(value, minimum)` | function | 47 | (no docstring) |
+| `text(value, cap)` | function | 52 | (no docstring) |
+| `digest(value)` | function | 57 | (no docstring) |
+| `path(value)` | function | 62 | (no docstring) |
+| `number(value, unit)` | function | 68 | (no docstring) |
+| `cap(value, maximum, reason)` | function | 77 | (no docstring) |
+| `parse(raw, maximum)` | function | 82 | (no docstring) |
+| `floor(value)` | function | 92 | (no docstring) |
+| `policy_shape(doc)` | function | 108 | (no docstring) |
+| `answer_shape(a)` | function | 153 | (no docstring) |
+| `receipt_shape(r)` | function | 243 | (no docstring) |
+| `JudgmentPolicy` | class | 301 | (no docstring) |
+| `JudgmentReceipt` | class | 307 | (no docstring) |
+| `read_judgment_policy(raw)` | function | 319 | (no docstring) |
+| `read_judgment_receipts(raw)` | function | 325 | (no docstring) |
+| `judgment_receipt_digest(receipt)` | function | 342 | (no docstring) |
+| `judgment_fact_digest(fact_type, index, roles)` | function | 351 | (no docstring) |
+| `normalized(r, sources)` | function | 367 | (no docstring) |
+| `qualification(verdict, expected, floor_value, evidence)` | function | 437 | (no docstring) |
+| `evaluate_judgments(policy, receipts, *, model, candidate, mechanical_report, model_bytes, populatio…` | function | 458 | (no docstring) |
+| `redact_policy(result)` | function | 667 | (no docstring) |
 
 ## gnd.manifest_paths — `src/gnd/manifest_paths.py`
 Components: infra.safe_filesystem
@@ -1358,8 +1358,8 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reading_text(reading) -> str` | function | 17 | A reading with placeholders instantiated as type names — ``{X}`` becomes |
-| `render_verbalization(model) -> str` | function | 95 | The constraint-blind verbalization document for ``model``. |
+| `reading_text(reading) -> str` | function | 18 | A reading with placeholders instantiated as type names — ``{X}`` becomes |
+| `render_verbalization(model) -> str` | function | 96 | The constraint-blind verbalization document for ``model``. |
 
 ## gnd.yaml_comments — `src/gnd/yaml_comments.py`
 Components: infra.yaml_comments

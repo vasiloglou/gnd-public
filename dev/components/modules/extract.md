@@ -63,9 +63,9 @@ The closed, shape-only per-model projection and its recursive allowlist gate.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ProjectionGateError` | class(ValueError) | 69 | The built projection failed the allowlist audit. |
-| `audit_allowlist(schema) -> list[tuple[str, str, str]]` | function | 217 | Every allowlist violation in ``schema`` as ``(json_path, keyword, reason)``. |
-| `project(model) -> dict[str, Any]` | function | 306 | The audited, closed, shape-only projection for ``model``. |
+| `ProjectionGateError` | class(ValueError) | 71 | The built projection failed the allowlist audit. |
+| `audit_allowlist(schema) -> list[tuple[str, str, str]]` | function | 219 | Every allowlist violation in ``schema`` as ``(json_path, keyword, reason)``. |
+| `project(model) -> dict[str, Any]` | function | 308 | The audited, closed, shape-only projection for ``model``. |
 
 ## gnd.extract.refscheme — `src/gnd/extract/refscheme.py`
 Components: extract.reference_schemes

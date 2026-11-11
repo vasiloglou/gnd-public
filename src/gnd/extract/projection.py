@@ -31,6 +31,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from gnd.model_index import ModelIndex
+
 __all__ = ["ProjectionGateError", "audit_allowlist", "project"]
 
 #: The published keyword table (PANEL-4, verbatim) — module-level DATA a
@@ -249,7 +251,7 @@ def _build_projection(model: Any) -> dict[str, Any]:
     }
     fact_properties: dict[str, Any] = {}
     owned = {ft for declaration in model.reference_populations for ft in declaration["fact_types"]}
-    for fact_type in model.fact_types:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
         if fact_type["id"] in owned:
             continue
         roles = [str(role["role_name"]) for role in (fact_type.get("roles") or [])]

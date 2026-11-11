@@ -64,11 +64,11 @@ The two case kinds the three population labels do not name.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `frontier_codes_for(model) -> tuple[str, ...]` | function | 146 | Add source-only reasons without widening the pinned legacy frontier. |
-| `reason_codes_by_family() -> dict[str, tuple[str, ...]]` | function | 174 | ``family -> the band-4 reason codes the family's OWN branch can emit``. |
-| `no_subjects_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 304 | Populations that reach evaluation with an EMPTY subject set. |
-| `unchecked_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 624 | One population per band-4 route THIS model reaches, asserting its code. |
-| `enumerate_frontier(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 699 | Both frontier kinds for one model, in a stable order. |
+| `frontier_codes_for(model) -> tuple[str, ...]` | function | 147 | Add source-only reasons without widening the pinned legacy frontier. |
+| `reason_codes_by_family() -> dict[str, tuple[str, ...]]` | function | 175 | ``family -> the band-4 reason codes the family's OWN branch can emit``. |
+| `no_subjects_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 305 | Populations that reach evaluation with an EMPTY subject set. |
+| `unchecked_cases(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 625 | One population per band-4 route THIS model reaches, asserting its code. |
+| `enumerate_frontier(model, baseline_doc, rng) -> tuple[list[BoundaryCase], list[NotDerivable]]` | function | 700 | Both frontier kinds for one model, in a stable order. |
 
 ## gnd.synth.guarded — `src/gnd/synth/guarded.py`
 Components: synth.guarded

@@ -42,6 +42,7 @@ from gnd.exp.session_profile import (
 )
 from gnd.extract.manifest import ManifestError, manifest_path_issue, open_manifest_relative_path
 from gnd.model import ModelLoadError, ModelValidationError, ValidationIssue, load_model
+from gnd.model_index import ModelIndex
 
 __all__ = [
     "AdapterDeclaration",
@@ -1768,7 +1769,7 @@ def read_session_contract(
                         )
                     )
                     continue
-                model_fact_types[model_path] = {fact_type["id"] for fact_type in model.fact_types}
+                model_fact_types[model_path] = {fact_type["id"] for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()}
             known = model_fact_types[model_path]
             for floor_index, floor in enumerate(case.acceptance.coverage):
                 if floor.fact_type not in known:

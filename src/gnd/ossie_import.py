@@ -99,12 +99,17 @@ def _parse(data: bytes, rule: str, *, yaml: bool = False):
 def _schemas():
     package = files("gnd")
     root = package.joinpath(*_SCHEMA_HOME)
-    ontology = json.loads(root.joinpath("ontology.json").read_bytes())
-    core = Resource.from_contents(json.loads(root.joinpath("core-spec.json").read_bytes()))
+    ontology = loads(root.joinpath("ontology.json").read_bytes())
+    core = Resource.from_contents(loads(root.joinpath("core-spec.json").read_bytes()))
     # Registry() refuses unregistered retrieval. No URI in user input opens a connection.
     registry = Registry().with_resource(_CORE_URI, core)
-    report = json.loads(package.joinpath("ossie-loss-report.schema.json").read_bytes())
+    report = loads(package.joinpath("ossie-loss-report.schema.json").read_bytes())
     return Draft202012Validator(ontology, registry=registry), Draft202012Validator(report)
+
+
+def _relationship_roles(relationship):
+    """The additional roles of one foreign Ossie relationship; the format omits the key for none."""
+    return relationship.get("roles", ())
 
 
 def _schema_check(document, validator, rule: str) -> None:
@@ -166,7 +171,7 @@ class _NameGraph:
                 if target not in declared:
                     raise OssieImportError("reference")
             for rel in relations:
-                if any(role["concept"] not in declared for role in rel.get("roles", ())):
+                if any(role["concept"] not in declared for role in _relationship_roles(rel)):
                     raise OssieImportError("reference")
         try:
             self.order = tuple(
@@ -478,7 +483,7 @@ def _foreign_reading(readings, source_roles, ids):
 
 
 def _foreign_fact(owner, relationship, ids, available, names, digest, path, projected):
-    additional = relationship.get("roles", ())
+    additional = _relationship_roles(relationship)
     source_roles = [(owner, None), *((role["concept"], role.get("name")) for role in additional)]
     if any(concept not in available for concept, _ in source_roles):
         return None
@@ -502,7 +507,7 @@ def _foreign_fact(owner, relationship, ids, available, names, digest, path, proj
     if len(relationship["verbalizes"]) == 1:
         projected[(*path, "verbalizes")] = ("native", "projection")
     if "roles" in relationship:
-        for child in _walk(relationship["roles"], (*path, "roles")):
+        for child in _walk(_relationship_roles(relationship), (*path, "roles")):
             projected[child] = ("native", "projection")
 
     multiplicity = relationship.get("multiplicity")
@@ -556,7 +561,7 @@ def _foreign_identifiers(graph, ids, available, projected):
         identifiers = item.get("identify_by", ())
         if len(identifiers) == 1:
             relationship = graph.relationships[name].get(identifiers[0])
-            roles = relationship.get("roles", ()) if relationship is not None else ()
+            roles = _relationship_roles(relationship) if relationship is not None else ()
             if len(roles) == 1:
                 player = roles[0]["concept"]
                 if available.get(player, {}).get("kind") == "value":
@@ -595,7 +600,7 @@ def _foreign(document, graph, digest):
             if fact is not None:
                 facts.append(fact)
                 used_builtins.update(
-                    r["concept"] for r in relationship.get("roles", ()) if r["concept"] in _BUILTINS
+                    r["concept"] for r in _relationship_roles(relationship) if r["concept"] in _BUILTINS
                 )
 
     objects = [available[name] for name in graph.concepts if name in available]

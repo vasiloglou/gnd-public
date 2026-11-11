@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/report-output-fidelity/evidence/ROF3/query-successor.json",
+  "predecessor_sha256": "251b0a8d32f4dcbdbf82670f755ff5e48aa7a61ae194493c985a1dd87b726d36",
+  "reason": "release-0.3.0 RN0 (D2, owner-approved 2026-11-10): the Ossie importer reads the additional roles of a foreign Ossie relationship through one accessor, _relationship_roles. The key is the Ossie format's own roles key on a foreign document, not a GND model query. The exporter's nine direct reads from PR 160 are replaced by reads through ModelIndex, and the importer's five are consolidated into that one accessor. One counted read is added; both budgets are now full (365 of 365, 310 of 310); no ceiling changes.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/ossie_import.py",
+      "_relationship_roles",
+      "relationship.get('roles', ())",
+      1
+    ]
+  ],
+  "result_distinct_rows": 297,
+  "result_occurrences": 365,
+  "original_metric_current": 310
+}

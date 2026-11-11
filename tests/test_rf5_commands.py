@@ -120,7 +120,7 @@ def test_all_parser_paths_receive_command_handlers(monkeypatch):
     from test_rf1_cli_pins import _root, _walk
     parsers = {}
     _walk(_root(monkeypatch), ('gnd',), parsers)
-    assert len(parsers) == 59  # MC2 adds `gnd verbalize model`; prior paths retained.
+    assert len(parsers) == 61  # MC2 adds `gnd verbalize model`; RN0 records `gnd export ossie` and `gnd import ossie`.
     for path in parsers:
         if path != 'gnd':
             assert callable(parsers[' '.join(path.split()[:2])].get_default('handler')), path

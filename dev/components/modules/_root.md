@@ -430,7 +430,7 @@ The disclosure mode: whether GND emits population values.
 | `forward(environ) -> dict[str, str]` | function | 57 | What a spawner adds to a child's environment: only ``customer`` is passed on. |
 | `invocation(mode) -> Iterator[None]` | function | 63 | Set the mode for one in-process CLI invocation; the token is reset on exit. |
 | `Surface` | class | 75 | (no docstring) |
-| `bearing(leaf) -> bool` | function | 151 | Whether a CLI leaf resolves the mode: a site, or one that starts children. |
+| `bearing(leaf) -> bool` | function | 156 | Whether a CLI leaf resolves the mode: a site, or one that starts children. |
 
 ## gnd.documents — `src/gnd/documents.py`
 Components: model.document
@@ -724,7 +724,7 @@ Bounded, offline import of the pinned Apache Ossie ontology dialect.
 | --- | --- | --- | --- |
 | `OssieImportError` | class(ValueError) | 49 | A value-free refusal at a documented import boundary. |
 | `OssieImportResult` | class | 58 | (no docstring) |
-| `plan_ossie_import(path) -> OssieImportResult` | function | 647 | Admit one standalone ontology or bound bundle without network access. |
+| `plan_ossie_import(path) -> OssieImportResult` | function | 652 | Admit one standalone ontology or bound bundle without network access. |
 
 ## gnd.output — `src/gnd/output.py`
 Components: infra.text_output

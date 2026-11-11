@@ -35,6 +35,10 @@ MC4_INCLUDE_EDGES = {
 }
 MC4_RELATIVE_LINKS = MC3_RELATIVE_LINKS | MC4_INCLUDE_EDGES
 MC4_RELATIVE_LINK_COUNT = MC3_RELATIVE_LINK_COUNT + 2
+# RN0 (release-0.3.0) records the edge the Ossie export skill text added (PR 160).
+RN0_OSSIE_EDGE = ('gnd-export/SKILL.md', '../gnd-orm-core/references/representation-format.md#ossie-interchange')
+RN0_RELATIVE_LINKS = MC4_RELATIVE_LINKS | {RN0_OSSIE_EDGE}
+RN0_RELATIVE_LINK_COUNT = MC4_RELATIVE_LINK_COUNT + 1
 
 
 RELATIVE_LINK_RE = re.compile(b'\\]\\((\\.\\./[^)\\s]+)\\)')
@@ -105,10 +109,10 @@ def test_every_relative_skill_link_resolves_inside_the_resource_tree() -> None:
             if resolved not in entries and resolved not in directories:
                 unresolved.append(f'{rel} -> {target} (resolved: {resolved})')
     assert not unresolved, 'cross-skill relative links point nowhere:\n  ' + '\n  '.join(unresolved)
-    missing = sorted(MC4_RELATIVE_LINKS - edges)
-    extra = sorted(edges - MC4_RELATIVE_LINKS)
+    missing = sorted(RN0_RELATIVE_LINKS - edges)
+    extra = sorted(edges - RN0_RELATIVE_LINKS)
     assert not missing and (not extra), f'the skill routing graph is not the pinned inventory.\n  missing ({len(missing)}): ' + ', '.join((f'{s} -> {t}' for s, t in missing)) + f'\n  extra   ({len(extra)}): ' + ', '.join((f'{s} -> {t}' for s, t in extra)) + '\nSet difference, not arithmetic: a removed route and an unrelated new one cancel in a count and are both named here. If the change is intentional, regenerate EXPECTED_RELATIVE_LINKS per its comment.'
-    assert checked == MC4_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {EXPECTED_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
+    assert checked == RN0_RELATIVE_LINK_COUNT, f'checked {checked} relative links, expected {EXPECTED_RELATIVE_LINK_COUNT}. These links are sibling-relative by design (D-07) and survive the tree move by construction. With the graph pinned as a set above, this count is the non-vacuity floor and the loose multiplicity guard: it moves when an existing route is mentioned more or fewer times.'
 
 def test_pep723_validator_sibling_schema_ships() -> None:
     root = _skills_root()

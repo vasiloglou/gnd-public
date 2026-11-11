@@ -87,3 +87,32 @@ def test_t5_unscoped_index_reads_stay_cheap():
         assert sum(1 for _ in ModelIndex.for_model(model).iter_fact_types_shared()) == 19
     # Measured 0.003 s for ten calls at the spec's base; the bound is two orders looser.
     assert time.perf_counter() - started < 1.0
+
+
+def test_each_converted_reader_builds_the_index_once_per_call(models, monkeypatch):
+    """Frequency control: a converted read must not move inside a loop."""
+    from gnd.codegen.emit import render_skill_document
+    from gnd.coverage import _element_universe
+    from gnd.diff import _structured
+    from gnd.extract.projection import _build_projection
+    from gnd.synth.frontier import frontier_codes_for
+
+    calls = []
+    original = ModelIndex.iter_fact_types_shared
+    monkeypatch.setattr(ModelIndex, 'iter_fact_types_shared',
+                        lambda self: calls.append(1) or original(self))
+    readers = {
+        '_structured': _structured,
+        'frontier_codes_for': frontier_codes_for,
+        '_build_projection': _build_projection,
+        '_element_universe': _element_universe,
+        'render_skill_document': lambda model: render_skill_document(
+            model, model_path='m.orm.yaml', package='pkg', stem='m'),
+    }
+    model = load_model(LARGEST)
+    for name, reader in readers.items():
+        calls.clear()
+        reader(model)
+        # The skill document reads fact types only when the model has a structured derivation.
+        expected = {0, 1} if name == 'render_skill_document' else {1}
+        assert len(calls) in expected, (name, len(calls))

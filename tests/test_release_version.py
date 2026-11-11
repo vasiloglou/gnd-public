@@ -242,3 +242,88 @@ def test_a_left_placeholder_is_refused():
     assert_no_date_placeholder_once_released("0.2.0", {"0.1.0", "0.2.0"}, {"notes": "## 0.2.0 (2026-11-09)"})
     with pytest.raises(AssertionError):
         assert_no_date_placeholder_once_released("0.2.0", {"0.1.0", "0.2.0"}, {"notes": f"## 0.2.0 ({DATE_PLACEHOLDER})"})
+
+
+# -- release-0.3.0 RN1: what the prepared version's pages must say (review P7) --
+
+HEADLINE_BLOCK = {"0.3.0": ("### Apache Ossie interchange", "explanation/ossie.md")}
+
+
+def version_section(notes: str, version: str) -> str:
+    """The text of one version's `##` section of the release notes."""
+    lines = notes.splitlines()
+    start = next((i for i, line in enumerate(lines)
+                  if (m := VERSION_HEADING.match(line)) and m.group(1) == version), None)
+    assert start is not None, f"no notes heading for {version}"
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
+    return "\n".join(lines[start:end])
+
+
+def assert_notes_name_the_headline_change(notes: str, version: str) -> None:
+    """A version with a declared headline opens its section with that block and its link."""
+    if version not in HEADLINE_BLOCK:
+        return
+    heading, link = HEADLINE_BLOCK[version]
+    section = version_section(notes, version)
+    subsections = [line for line in section.splitlines() if line.startswith("### ")]
+    assert subsections and subsections[0] == heading, f"the {version} notes do not open with {heading!r}"
+    assert f"]({link})" in section, f"the {version} notes do not link {link}"
+
+
+def assert_prepared_version_is_stated(declared: str, released: set[str], support: str, plugins: str) -> None:
+    """While `declared` is unpublished, the support and plugin pages must say so."""
+    if declared in released:
+        return
+    assert re.search(rf"\b{re.escape(declared)}\b[^|\n]*\|[^|\n]*[Nn]o profile is observed", support), (
+        f"docs/support.md has no row saying no profile is observed for {declared}")
+    assert re.search(rf"\b{re.escape(declared)}\b[^.\n]*\bnot published\b", plugins), (
+        f"docs/marketplace-plugins.md does not say {declared} is not published")
+    assert "git clone https://github.com/vasiloglou/gnd-public.git" in plugins, (
+        "docs/marketplace-plugins.md does not give the repository install route")
+
+
+def _page(name: str) -> str:
+    return (ROOT / name).read_text(encoding="utf-8")
+
+
+def test_notes_section_names_the_headline_change():
+    assert_notes_name_the_headline_change(_page("docs/release-notes.md"), declared_version())
+
+
+@pytest.mark.parametrize("mutation", ["no-block", "block-not-first", "no-link"])
+def test_a_notes_section_without_its_headline_is_refused(mutation):
+    section = {
+        "no-block": "## 0.3.0 (prepared, not published)\n\n### Fixes\n\n[x](explanation/ossie.md)\n",
+        "block-not-first": "## 0.3.0 (prepared, not published)\n\n### Fixes\n\n### Apache Ossie interchange\n\n[x](explanation/ossie.md)\n",
+        "no-link": "## 0.3.0 (prepared, not published)\n\n### Apache Ossie interchange\n\nNo link here.\n",
+    }[mutation]
+    notes = section + "\n## 0.2.0 (2026-11-08)\n\n### Apache Ossie interchange\n\n[x](explanation/ossie.md)\n"
+    with pytest.raises(AssertionError):
+        assert_notes_name_the_headline_change(notes, "0.3.0")
+    good = "## 0.3.0 (prepared, not published)\n\n### Apache Ossie interchange\n\n[x](explanation/ossie.md)\n"
+    assert_notes_name_the_headline_change(good, "0.3.0")   # the control: the rule can pass
+    assert_notes_name_the_headline_change(notes, "0.2.0")  # a version with no declared headline
+
+
+def test_support_and_plugin_pages_state_the_prepared_version():
+    assert_prepared_version_is_stated(
+        declared_version(), RELEASED, _page("docs/support.md"), _page("docs/marketplace-plugins.md"))
+
+
+@pytest.mark.parametrize("mutation", ["empty-support", "support-other-version", "plugins-silent", "plugins-no-route"])
+def test_pages_silent_about_the_prepared_version_are_refused(mutation):
+    support = "| Any profile, prepared 9.9.9 package | Not signed off; no profile is observed for 9.9.9 yet |\n"
+    plugins = ("The plugin on `main` is version 9.9.9, which is prepared and not published.\n"
+               "git clone https://github.com/vasiloglou/gnd-public.git\n")
+    assert_prepared_version_is_stated("9.9.9", {"0.1.0"}, support, plugins)   # the control
+    assert_prepared_version_is_stated("9.9.9", {"0.1.0", "9.9.9"}, "", "")    # once released: nothing required
+    if mutation == "empty-support":
+        support = ""
+    elif mutation == "support-other-version":
+        support = support.replace("9.9.9", "8.8.8")
+    elif mutation == "plugins-silent":
+        plugins = "git clone https://github.com/vasiloglou/gnd-public.git\n"
+    else:
+        plugins = plugins.splitlines()[0] + "\n"
+    with pytest.raises(AssertionError):
+        assert_prepared_version_is_stated("9.9.9", {"0.1.0"}, support, plugins)

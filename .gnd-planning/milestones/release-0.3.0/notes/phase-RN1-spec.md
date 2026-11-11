@@ -2,11 +2,12 @@
 
 ## 1. Status
 
-**Awaiting owner review, 2026-11-11.** Draft r3. Every input it was blocked on
-exists: the plan gate is passed, RN0 is on main (`d7317d25`), E1 has run
-(§12), and the moved digests are measured (§13). Decisions D1 to D5 carry the
-owner's plan rulings; D6 and D7 are new and open. No implementation file is
-created or edited.
+**Owner-decided (2026-11-11): approved, with D6 as recommended** ("Approve,
+start RN1", answering "Approve the RN1 spec, with the redaction sentence in
+the notes (D6) as recommended?"). The approved bytes are r3 at commit
+`e34059b4`, sha256 `89312abe14c8a1dfa360632c0b9d9add3be02406ac5a2d10af22e4ae6ff7eba8`. D7 stays open; it does not block this phase and
+must be answered before RN2. Implementation follows; findings are appended
+below.
 
 ## 2. Provenance
 
@@ -171,7 +172,7 @@ None added. The notes heading must carry "not published" while 0.3.0 is not in
 | D4 | The two red tests on main (plan RN-D10) | fix both here, each as its own commit (M10, M11), or leave them as known failures | **Ruled (o, 2026-11-10): as proposed** ("Approve as proposed", answering "How do you rule on the open plan decisions RN-D0 and RN-D3 to RN-D11?"): fix both (o). The ruling was given when M11 meant editing the links; after the review M11 registers the snapshots instead and changes no evidence (r1). The owner sees this change at the plan gate |
 | D5 | Notes shape (plan RN-D3) | as §6, or the present sections renamed in place | **Ruled (o, 2026-11-10): as proposed** ("Approve as proposed", answering "How do you rule on the open plan decisions RN-D0 and RN-D3 to RN-D11?"): as §6 (o). The Ossie block's wording is approved with this spec |
 
-| D6 | Does the 0.3.0 notes block state that Ossie export does not honor `redact` (RN0 open question)? | (a) yes, one sentence under "Disclosure", as drafted in §6: users learn it before they share a file; the behavior itself is unchanged. (b) say nothing in the notes; the reference page already says it. (c) hold 0.3.0 until export honors `redact`: a product change with its own phase, not planned | open; (a) recommended |
+| D6 | Does the 0.3.0 notes block state that Ossie export does not honor `redact` (RN0 open question)? | (a) yes, one sentence under "Disclosure", as drafted in §6: users learn it before they share a file; the behavior itself is unchanged. (b) say nothing in the notes; the reference page already says it. (c) hold 0.3.0 until export honors `redact`: a product change with its own phase, not planned | **Ruled (o, 2026-11-11): (a)**, with the spec approval |
 | D7 | The opt-in `ossie_oracle` lane after RN0's source edits (RN0 D5, not yet answered) | run it before RN2 builds the candidate, which needs the pinned checkout's path in `GND_OSSIE_ORACLE_ROOT`; or accept for 0.3.0 that the changed exporter is checked by the default-lane Ossie tests and RN0's byte comparison only. RN1 changes no Ossie source, so this does not block RN1 | open; it must be answered before RN2 |
 
 ## 8. Tests
@@ -317,3 +318,34 @@ The six-shard default lane on the scratch tree (M1 to M3 and M5, commit
 case, the publication-claim case), which need the 0.3.0 notes heading and the
 compatibility sentence (M6, M7). No other test fails, so M5 moves nothing the
 lane can see beyond the 31.
+
+## Implementation findings, recorded as they were found (2026-11-11)
+
+1. **M1 to M3.** `uv lock --check` exits 0 after the one-line lock edit.
+2. **M5 and T11.** `rerecord.py` ran in the repository from a temporary
+   `_work` directory, since removed; it stopped no family. All 30 files have
+   the sha256 of the New column of `evidence/e1/moved-digests.md` (0
+   mismatches).
+3. **Refutes M10.** The spec said one paragraph of
+   `docs/how-to/grow-a-model.md` is over the limit. There are two: the test
+   stops at the first, so the second (115 words, "A program that proposes
+   only fact types...") was hidden. Both are split at a sentence boundary with
+   no word changed. A walk over every checked page with the test's own
+   `prose` function finds no other paragraph over 90 words.
+4. **M11 as designed.** Two registry entries; the test's own parametrized
+   cases (`none`, `changed-snapshot`, `missing-target`) run for both.
+5. **M4.** Two helpers and six test functions (three parametrized) are added
+   to `tests/test_release_version.py`. Run against the base pages, T9 fails
+   with "the 0.3.0 notes do not open with '### Apache Ossie interchange'" and
+   T10 with "docs/support.md has no row saying no profile is observed for
+   0.3.0". The existing cases are unchanged.
+6. **M6.** The notes block is the approved text with its links restored. The
+   "Fixes" list gains four entries (Python 3.14 prepared-policy reuse, null
+   `derivations`, the example role names, the disclosure reference). The
+   reconciliation table is in the phase record.
+7. **M9.** The plugin page already told a `main` user to install from the
+   repository; one sentence now says that this is the present state and
+   names 0.3.0 as prepared and not published.
+8. **Lint.** The two findings `ruff` reports in
+   `tests/test_development_scaffold.py` (lines 50 and 52) are on the base
+   tree; the lines this phase adds have none.

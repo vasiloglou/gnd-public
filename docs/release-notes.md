@@ -1,13 +1,45 @@
 # Release notes and milestones
 
 Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
-first. Releases follow the [release procedure](releasing.md). Changes on `main`
-after a release are listed in an `Unreleased:` section until the next one.
+first. Version 0.3.0 is prepared and not published. Releases follow the
+[release procedure](releasing.md). Changes on `main` after a release are listed
+in an `Unreleased:` section until the next one.
 
-## Unreleased: model identity, projected text, and unattended growth
+## 0.3.0 (prepared, not published)
 
-These changes are on `main` after 0.2.0 and are not in any published package.
-Install from a checkout of the repository to use them.
+Everything in this section is on `main` after 0.2.0 and is not in any published
+package. Until the release is published, install from a checkout of the
+repository to use it. The first block is Apache Ossie interchange; the blocks
+after it are the other changes since 0.2.0.
+
+### Apache Ossie interchange
+
+GND can share a model as an [Apache Ossie](explanation/ossie.md) ontology and
+start a model from one.
+
+- **Export.** `gnd export ossie MODEL --out ONTOLOGY.yaml` writes three files:
+  the ontology, a sidecar (`ONTOLOGY.yaml.gnd.json`) that keeps the GND details
+  Ossie has no place for, and a loss report (`ONTOLOGY.yaml.loss.json`) that
+  lists each source field and how it was handled. `--format json` writes JSON.
+  Example populations are omitted and listed in the report; `--strict` stops
+  the export when any field would be refused.
+- **Import.** `gnd import ossie ONTOLOGY.yaml --out MODEL.json` writes a GND
+  model and its own loss report. With the sidecar beside an unchanged ontology,
+  the original model is restored and the report says whether its identity
+  matched. An ontology from another tool imports through the supported
+  projection. Import opens no network connection.
+- **Scope.** The ontology layer of Ossie `0.3.0.dev0`, pinned to Apache Ossie
+  commit `ee89dbdc`: concepts, relationships and a documented subset of
+  constraint formulas. Ossie's semantic models, mappings and query interfaces
+  are outside it.
+- **Disclosure.** Both commands behave the same in every
+  [disclosure mode](reference/disclosure.md). An export writes the model's
+  constraint literals and description text, also for a fact type marked
+  `redact`. Read the loss report before you share an export.
+
+Start with [sharing the refunds example](how-to/share-an-ossie-ontology.md).
+The mapping is in the `gnd-orm-core` representation format, "Ossie
+interchange"; see [formats](reference/formats.md).
 
 ### Shared definitions, project-owned policies (issue 95)
 
@@ -110,6 +142,23 @@ policy](reference/evolve-policy.md#source-documents).
   were private and had no remaining caller.
 - **Test timing** (tests only, issue 117): two timing-sensitive tests no longer
   fail under load.
+- **Prepared-policy reuse on Python 3.14**: incremental evaluation rechecks
+  each non-primitive part of a prepared policy's key before reusing it. On
+  Python 3.14, which caches a tuple's hash, a key part that had become
+  unhashable was served from the cache; it now takes the unprepared path, as
+  on 3.13.
+- **A null `derivations` is read as absent**: a report, a session snapshot or
+  a diff row with `"derivations": null`, which the report schema allows, no
+  longer stops `gnd coverage --check` with a traceback, is no longer reported
+  by a session as an invalid verifier payload, and no longer fails the
+  redaction projection of a diff.
+- **Packaged modeling examples**: four role names in three
+  `gnd-model-from-text` examples are now snake case (`issue_number`,
+  `occurred_on`, `start_date`, `full_name`), like every other role name in the
+  examples. A copy of an example made before this release keeps the old names.
+- **Disclosure reference**: the [disclosure reference](reference/disclosure.md)
+  lists `gnd export ossie` and `gnd import ossie` among the outputs that are
+  the same in every mode.
 
 ## 0.2.0 (2026-11-08)
 

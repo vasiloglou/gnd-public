@@ -69,7 +69,9 @@ the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
 and runtime version aligned. Plugin users do not need `gnd install --sync`.
 
 If the plugin comes from a `main` that has unreleased changes, `uv tool upgrade`
-installs only the latest release. Install the runtime from a checkout of the
+installs only the latest release. That is the case now: the plugin on `main` is
+version 0.3.0, which is prepared and not published, and the package index has
+0.2.0. Install the runtime from a checkout of the
 commit your plugin came from (`main` if you added the marketplace from `main`),
 as the [course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
 

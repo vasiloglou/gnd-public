@@ -124,7 +124,7 @@ Do not route them to a customer.
 | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
 | `gnd compose`, `gnd.api.compose` | the caller's own composed population; the composition record carries no value | Its inputs are your own populations; refusals name sources and indexes, never values. |
 | `gnd verbalize model`, `gnd.api.verbalize_model` | the caller's complete model review, including authored sample populations | Its input is your own model; it takes no supplied population. |
-| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A fact type's `redact` setting does not change the export. |
+| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A `redact` declaration withholds population values from reports. It does not change the export, which prints a note counting the fact types that declare it. |
 | `gnd import ossie` | whatever model content the ontology and its sidecar carry | Its inputs are your own files. |
 
 ## Child processes

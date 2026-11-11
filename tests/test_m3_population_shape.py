@@ -1,10 +1,13 @@
 """Positive shape acceleration never broadens the authoritative schema."""
 from __future__ import annotations
+
 import copy
 import json
 from pathlib import Path
+
 import pytest
 from jsonschema import Draft202012Validator
+
 from gnd import population
 from gnd.errors import ValidationIssue
 from gnd.model import load_model

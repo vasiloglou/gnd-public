@@ -264,7 +264,16 @@ read the reply, and `gnd validate --document` is the only gate.
      "cue": "exactly one", "quote": "Each policy has exactly one expiry date",
      "rationale": "The text gives each policy one expiry date."}
   ],
-  "derived_fact_types": [],
+  "derived_fact_types": [
+    {"id": "policy_is_dated", "reading": "{Policy} is dated",
+     "roles": [{"object_type": "policy", "role_name": "policy"}],
+     "derivation": "derived", "storage": "computed",
+     "derivation_rule": {
+       "body": [{"fact_type": "policy_expires_on_expiry_date", "bind": {"policy": "$p", "expiry_date": "$d"}}],
+       "head": {"policy": "$p"}},
+     "quote": "A dated policy is a policy that has an expiry date",
+     "rationale": "A defined term computed from a fact the model already holds."}
+  ],
   "open_questions": [
     {"step": 6, "note": "The text gives a limit in prose that was not typed.", "quote": "within the notice period"}
   ]
@@ -278,7 +287,7 @@ read the reply, and `gnd validate --document` is the only gate.
 | `rows` | One entry per sample row; `quote` becomes the row's `sample_spans` entry (U6 needs every row named once) |
 | `subtype_links` | Sets `subtype_of` and `inherits_reference` on the subtype, appends the span to its `provenance.spans`, puts `rationale` in `provenance.rationale` |
 | `constraints` | `host` is a fact type id, or `model` for a top-level constraint. `constraint` is the constraint body as the [constraint reference](../../gnd-orm-core/references/constraint-reference.md) gives it, without `source`, `status`, `modality` or `provenance`. The host writes those: `text-cue` is `llm-inferred` with `rationale_world_fact` set to `cue`, `rows` is `sample`, `library` is `common-sense` with `library_entry`; always `proposed` and `deontic` |
-| `derived_fact_types` | Structured relational rules only |
+| `derived_fact_types` | The model's fact type shape with `derivation: derived`, `storage: computed` and a structured `derivation_rule`, the object form that `representation-format.md` defines under derived fact types. `quote` is the sentence that defines the term and becomes `provenance.spans`; `rationale` goes to `provenance.rationale`. No `rows`: its facts follow from the rule, so it holds no sample. A rule the grammar cannot express is an `open_questions` entry, never a string rule |
 | `open_questions` | Anything the evidence does not settle. Not written to the model; kept in the host's log for the owner |
 
 ## Constraints on fact types that already hold facts

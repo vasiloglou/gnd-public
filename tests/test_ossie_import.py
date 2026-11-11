@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import ast
 import copy
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -460,3 +462,72 @@ def test_closed_foreign_name_refusals(tmp_path, variant, rule):
         "version": "0.3.0.dev0", "name": "NameControls", "ontology": ontology,
     })
     _assert_refusal(path, rule)
+
+
+# Issue 173: the format reference defines the import report's schema name and every refusal rule.
+
+REFERENCE = ROOT / "src/gnd/skills/gnd-orm-core/references/representation-format.md"
+#: Raised and caught inside the foreign import: one relationship is omitted, nothing is refused
+#: (test_bad_foreign_reading_refuses_one_relationship).
+INTERNAL_RULES = {"reading"}
+
+
+def _coded_import_rules():
+    """Every rule name the import can raise or print, read from the two source files."""
+    rules = set()
+    tree = ast.parse((ROOT / "src/gnd/ossie_import.py").read_text(encoding="utf-8"))
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+            continue
+        name = node.func.id
+        if name == "OssieImportError":
+            (argument,) = node.args
+            if isinstance(argument, ast.Constant):
+                rules.add(argument.value)
+            else:
+                # The two forwarding sites: `rule` itself, and `f"{rule}-size"` in `_read`.
+                assert ast.unparse(argument) in {"rule", "f'{rule}-size'"}, ast.unparse(argument)
+        elif name in {"_read", "_parse", "_schema_check"}:
+            position = 2 if name == "_schema_check" else 1
+            rule = node.args[position]
+            assert isinstance(rule, ast.Constant), ast.unparse(node)
+            rules.add(rule.value)
+            if name == "_read":
+                rules.add(rule.value + "-size")
+    handler = (ROOT / "src/gnd/commands/checking.py").read_text(encoding="utf-8")
+    rules.update(re.findall(r'"ossie-import:([a-z-]+)"', handler))
+    return rules
+
+
+def _reference_import_rules():
+    text = REFERENCE.read_text(encoding="utf-8")
+    section = text.split("### Import refusal rules", 1)[1].split("\n### ", 1)[0]
+    return re.findall(r"^\| `([a-z-]+)` \|", section, flags=re.MULTILINE)
+
+
+def test_the_reference_names_every_import_refusal_rule():
+    documented = _reference_import_rules()
+    assert len(documented) == len(set(documented)), "a rule is listed twice"
+    coded = _coded_import_rules()
+    assert INTERNAL_RULES <= coded
+    assert set(documented) == coded - INTERNAL_RULES
+    assert len(documented) == 29
+
+
+def test_the_reference_names_the_import_report_schema_and_its_reasons(tmp_path):
+    text = REFERENCE.read_text(encoding="utf-8")
+    section = text.split("### The import loss report", 1)[1].split("\n### ", 1)[0]
+    path = tmp_path / "flights.ontology.yaml"
+    path.write_bytes(FLIGHTS.read_bytes())
+    report = json.loads(plan_ossie_import(path).loss_report)
+    assert f"`{report['schema']}`" in section and report["schema"] == "gnd-ossie-import-loss/1"
+    for member in report:
+        assert f"| `{member}` |" in section, member
+    pairs = {(row["disposition"], row["reason"]) for row in report["dispositions"]}
+    source = (ROOT / "src/gnd/ossie_import.py").read_text(encoding="utf-8")
+    reasons = set(re.findall(r'"(foreign:[a-z-]+)"', source))
+    assert reasons == {"foreign:unsupported", "foreign:decimal-domain"}
+    assert pairs <= {("native", "projection"), *(("refused", reason) for reason in reasons)}
+    for disposition, reason in pairs | {("refused", reason) for reason in reasons}:
+        assert f"| `{disposition}` | `{reason}` |" in section, (disposition, reason)
+

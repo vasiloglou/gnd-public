@@ -6,9 +6,12 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from support.recorded_version import as_recorded
 
 from gnd.cli import main
 
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MODEL = REPO_ROOT / 'tests' / 'fixtures' / 'checker' / 'setfam.orm.yaml'
 ROUNDTRIP = REPO_ROOT / 'tests' / 'fixtures' / 'roundtrip'
@@ -37,7 +40,7 @@ def test_the_committed_artifact_bundle_is_not_stale(tmp_path: Path) -> None:
     committed = sorted(path.name for path in ARTIFACTS.iterdir())
     assert committed == [f'{STEM}.applicable.json', f'{STEM}.artifacts.json', f'{STEM}.projection.schema.json']
     for rel in committed:
-        assert (ARTIFACTS / rel).read_bytes() == (fresh / rel).read_bytes(), f'tests/fixtures/roundtrip/artifacts/{rel} is stale — regenerate with: uv run python tests/fixtures/roundtrip/build_fixtures.py'
+        assert (ARTIFACTS / rel).read_bytes() == as_recorded((fresh / rel).read_bytes(), RECORDED_AT), f'tests/fixtures/roundtrip/artifacts/{rel} is stale — regenerate with: uv run python tests/fixtures/roundtrip/build_fixtures.py'
 
 def test_stub_extractor_scores_below_one_precision(tmp_path: Path) -> None:
     payload = run('hoover', tmp_path)

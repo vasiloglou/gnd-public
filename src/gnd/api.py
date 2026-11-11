@@ -472,7 +472,7 @@ def _run_transition_raw(
         multi_clause = any(
             isinstance(rule := fact_type.get("derivation_rule"), dict)
             and "clauses" in rule
-            for fact_type in model.fact_types
+            for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
         )
         if multi_clause:
             transition_module.assert_dynamic_derivation_coverage(

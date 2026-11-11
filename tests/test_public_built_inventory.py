@@ -320,3 +320,19 @@ def test_public_built_surfaces_agree_with_current_inventory(
         assert len(entries) == 70
         assert len(_skill_names(entries)) == 18
     assert surfaces["source"] == surfaces["sdist"] == surfaces["wheel"]
+
+
+def test_the_built_package_carries_the_declared_description(built_artifacts: tuple[Path, Path]) -> None:
+    """Issue 175: the wheel metadata and the sdist carry the declared description file's text."""
+    import email
+    import tomllib
+
+    readme = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["readme"]
+    expected = (REPO_ROOT / readme).read_text(encoding="utf-8")
+    wheel, sdist = built_artifacts
+    with zipfile.ZipFile(wheel) as archive:
+        (name,) = [n for n in archive.namelist() if n.endswith(".dist-info/METADATA")]
+        metadata = email.message_from_bytes(archive.read(name))
+    assert metadata["Description-Content-Type"] == "text/markdown"
+    assert metadata.get_payload(decode=True).decode("utf-8").strip() == expected.strip()
+    assert readme in _sdist_names(sdist)

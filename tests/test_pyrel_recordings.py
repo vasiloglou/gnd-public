@@ -82,7 +82,7 @@ def test_results_match_manifest(domain):
     results = json.loads((_recordings(domain) / 'results.json').read_text())
     manifest = _manifest(domain)
     recorded = {(row['variant'], row['run']): row for row in results['sessions']}
-    for name, entry in manifest['recordings'].items():
+    for entry in manifest['recordings'].values():
         row = recorded[(entry['variant'], entry['run'])]
         assert row['disposition'] == entry['result'] and row['bands'] == entry['bands']
         assert len(row['bands']) == row['attempts'] <= results['max_attempts']

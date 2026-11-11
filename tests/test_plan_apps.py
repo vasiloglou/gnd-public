@@ -261,7 +261,7 @@ def test_f4_emit_post_to_an_unusable_path_is_not_read_as_a_violation(tmp_path, w
     from gnd.export.pyrel_rules import render
     program = tmp_path / 'rules.py'
     program.write_text(render(APPS / 'lease/model.orm.json', 'duckdb'))
-    core, app, plan = _plan(tmp_path, 'lease', json.loads((APPS / 'lease/plans/attempt-2.steps.json').read_text())['steps'])
+    _core, app, plan = _plan(tmp_path, 'lease', json.loads((APPS / 'lease/plans/attempt-2.steps.json').read_text())['steps'])
     target = tmp_path / 'exists.json' if where == 'exists' else tmp_path / 'nodir/x.json'
     if where == 'exists':
         target.write_text('{}')

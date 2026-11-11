@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 from types import SimpleNamespace
 
+from support.recorded_version import tree_as_recorded
 from test_measure_offline import MODEL, corpus  # noqa: F401 -- fixture reuse
 
 from gnd import cli
@@ -16,6 +17,8 @@ from gnd.synth import frontier
 
 ROOT = Path(__file__).resolve().parents[1]
 ANSWERS = ROOT / "tests/fixtures/rf2-pins/pre-move.json"
+# Issue 172: the version the measure successor was recorded at.
+RECORDED_AT = "0.3.0"
 
 
 def pin(name, value):
@@ -79,7 +82,13 @@ def test_measure_output_bytes(corpus, tmp_path):  # noqa: F811 -- imported fixtu
     target = tmp_path / "measurement.json"
     assert cli.main(["measure", str(MODEL), "--populations", str(corpus),
                      "--format", "json", "--out", str(target)]) == 0
-    raw = target.read_bytes()
+    # Issue 172: the successor pins the bytes written at RECORDED_AT. The corpus is
+    # synthesized for this test, so its sidecars carry the version and the payload cites
+    # their digests: the payload is taken together with the corpus it cites.
+    files = {path.relative_to(corpus).as_posix(): path.read_bytes()
+             for path in sorted(Path(corpus).rglob("*")) if path.is_file()}
+    assert "<payload>" not in files
+    raw = tree_as_recorded({**files, "<payload>": target.read_bytes()}, RECORDED_AT)["<payload>"]
     pin("measure_output_bytes", {"sha256": hashlib.sha256(raw).hexdigest(),
                                  "size_bytes": len(raw)})
 

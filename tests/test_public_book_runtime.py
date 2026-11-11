@@ -20,11 +20,17 @@ import pytest
 from jsonschema import Draft202012Validator
 from public_example_helpers import guarded_binding_counts, ref_to_id
 from ruamel.yaml import YAML
+from support.recorded_version import tree_at_live_version
 
 from gnd.conformance.report import load_conformance_schema
 from gnd.report import legacy_report_projection, load_report_schema
 
 _sha256 = lambda raw: hashlib.sha256(raw).hexdigest()
+# Issue 172: the version the container's project was recorded at, and its members as recorded.
+RECORDED_AT = "0.3.0"
+RECORDED_MEMBERS: dict[str, bytes] = {}
+
+
 def _workspace():
     fixture = Path(__file__).parent / "fixtures/public-book-runtime/workspace.json.gz"
     assert fixture.is_file() and not fixture.is_symlink()
@@ -39,19 +45,28 @@ def _workspace():
     assert payload["schema_version"] == 1 and len(payload["members"]) == 46
     holder = tempfile.TemporaryDirectory(prefix="gnd-public-book-runtime-")
     root = Path(holder.name)
-    members = {}
+    recorded = {}
     for value, member in payload["members"].items():
         relative = PurePosixPath(value)
         assert relative.parts and not relative.is_absolute() and ".." not in relative.parts
         assert relative.as_posix() == value
         data = base64.b64decode(member["data"], validate=True)
         assert len(data) <= 64 * 1024 and _sha256(data) == member["sha256"]
-        destination = root.joinpath(*relative.parts)
+        assert member["mode"] in {0o644, 0o755}
+        recorded[value] = data
+    # Issue 172: the container holds the project as the product wrote it at RECORDED_AT, and
+    # the checks above are over those bytes. The product is then run over the project, and it
+    # reads the version and the digests it wrote, so the project is unpacked as the product
+    # writes it today: the version field of the files that carry one, and each digest that
+    # cites such a file, checked against that file before it is re-derived.
+    members = tree_at_live_version(recorded, RECORDED_AT)
+    for value, data in members.items():
+        destination = root.joinpath(*PurePosixPath(value).parts)
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(data)
-        assert member["mode"] in {0o644, 0o755}
-        destination.chmod(member["mode"])
-        members[value] = data
+        destination.chmod(payload["members"][value]["mode"])
+    RECORDED_MEMBERS.clear()
+    RECORDED_MEMBERS.update(recorded)
     return holder, root, members
 _HOLDER, REPO_ROOT, _MEMBERS = _workspace()
 BOOKREC = REPO_ROOT / "examples/bookrec"

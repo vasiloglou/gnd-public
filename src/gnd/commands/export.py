@@ -101,6 +101,18 @@ def _cmd_export_ossie(model: str, out: str, *, loss_report: str | None, output_f
         print(f"Ossie output failure: {error}", file=sys.stderr)
         return EXIT_IO
     print(f"Exported Ossie ontology to {out}")
+    if bundle.redacted_fact_types:
+        # Issue 169, owner ruling of 2026-11-11: `redact` withholds population values
+        # from reports and does not change an export of the model's own text.
+        count = bundle.redacted_fact_types
+        subject = "1 fact type declares" if count == 1 else f"{count} fact types declare"
+        print(
+            f"note: {subject} `redact`. The export carries the readings, constraints and "
+            "provenance text of every fact type, redacted or not; `redact` withholds "
+            "population values from reports and does not change an export. "
+            "Read the loss report before you share these files.",
+            file=sys.stderr,
+        )
     return 0
 
 

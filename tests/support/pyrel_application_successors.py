@@ -13,6 +13,7 @@ QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/rule-check-adoption/evidence/RC2/query-successor.json',
     ROOT / '.gnd-planning/milestones/report-output-fidelity/evidence/ROF3/query-successor.json',
     ROOT / '.gnd-planning/milestones/release-0.3.0/evidence/RN0/query-successor.json',
+    ROOT / '.gnd-planning/maintenance/2026-11-11-query-budget-headroom/query-successor.json',
 ]
 
 

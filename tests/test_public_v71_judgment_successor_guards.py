@@ -71,8 +71,9 @@ def test_v8_reconstruction_checks_terminal_admission(tmp_path):
 
 
 def test_source_replacement_between_stat_and_open_is_refused(tmp_path, monkeypatch):
-    from gnd import artifacts
     from tests.support.v71_judgment_cases import public
+
+    from gnd import artifacts
 
     b = bundle("dispatch", tmp_path)
     original = artifacts.os.open
@@ -107,9 +108,9 @@ def test_answer_kind_boundaries_are_closed(tmp_path, variant):
     from importlib.resources import files
 
     from jsonschema import Draft202012Validator
+    from tests.support.v71_judgment_cases import attach_evidence
 
     from gnd.judgments import read_judgment_receipts
-    from tests.support.v71_judgment_cases import attach_evidence
 
     b = bundle("dispatch", tmp_path)
     kind = (

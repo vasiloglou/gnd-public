@@ -86,7 +86,7 @@ def summary(session: str) -> list[dict]:
     of a malformed plan, and the bot's note or decline. The app prints notes on one line, and the checker's
     verdict is the last verdict line of the block, after anything the bot wrote."""
     attempts = []
-    for block in re.split(r"^attempt \d+\n", session, flags=re.M)[1:]:
+    for block in re.split(r"^attempt \d+\n", session, flags=re.MULTILINE)[1:]:
         lines = block.splitlines()
         verdicts = [VERDICT.match(line) for line in lines if VERDICT.match(line)]
         failures = sorted({(m.group(2), m.group(3)) for m in map(FAILURE.match, lines) if m})
@@ -297,11 +297,11 @@ def write_readme(out: Path) -> None:
     text = [
         "# Recorded runs: real models behind the plan apps", "",
         f"Recorded {results['recorded']} under the gate record `{results['gate']}`. Each run is one",
-        f"`app.py ask QUESTION --attempts {results['attempts_per_run']} --backend {results['backend']}` with the model "
-        "behind `tools/plan_app_bot.py`.", "Every run is listed in `results.json`; none was dropped. "
-        "`manifest.json` binds each file by SHA-256.", "",
-        f"Outcomes per model and app, over {results['runs_per_model_and_example']} runs "
-        "(the served model ids are in brackets):", "",
+        (f"`app.py ask QUESTION --attempts {results['attempts_per_run']} --backend {results['backend']}` with the model "
+        "behind `tools/plan_app_bot.py`."), ("Every run is listed in `results.json`; none was dropped. "
+        "`manifest.json` binds each file by SHA-256."), "",
+        (f"Outcomes per model and app, over {results['runs_per_model_and_example']} runs "
+        "(the served model ids are in brackets):"), "",
         "- **first**: accepted at the first attempt;",
         "- **repaired-rule**: refused on a rule (exit 1), then accepted after the feedback;",
         "- **repaired-format**: only malformed plans (exit 3) or unusable answers before acceptance;",
@@ -317,8 +317,8 @@ def write_readme(out: Path) -> None:
         "## What a run folder holds", "",
         "- `session.txt`: what the app printed, with paths shortened to `<workspace>` and `<tmp>`;",
         "- `reply-NN.json`: the model's raw reply to attempt NN, with usage.", "",
-        f"Claude Code reported ${sum(r.get('claude_cost_usd') or 0 for r in rows):.2f} for its runs; OpenRouter "
-        f"reported ${openrouter_cost(out, rows):.4f}.", "",
+        (f"Claude Code reported ${sum(r.get('claude_cost_usd') or 0 for r in rows):.2f} for its runs; OpenRouter "
+        f"reported ${openrouter_cost(out, rows):.4f}."), "",
         "## Sources changed since the recording", "",
         *[f"- `{source}`: {why}" for source, why in sorted(manifest.get("drift", {}).items())], "",
     ]

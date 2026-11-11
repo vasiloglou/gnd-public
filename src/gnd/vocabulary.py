@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from gnd.model_index import ModelIndex
 from gnd.refscheme import reference_identity
 from gnd.universe import resolve_primitive
 from gnd.verbalize import _neutralize, description_lines, line_text
@@ -120,7 +121,7 @@ def render_verbalization(model: Any) -> str:
         lines.extend(f"  {label}: '{text}'" for label, text in description_lines(object_type.get("description")))
     lines.append("")
     lines.append("=== Fact Types ===")
-    for fact_type in model.fact_types:
+    for fact_type in ModelIndex.for_model(model).iter_fact_types_shared():
         lines.append(reading_text(fact_type.get("reading")))
         for role in fact_type.get("roles") or []:
             oid = str(role.get("object_type"))

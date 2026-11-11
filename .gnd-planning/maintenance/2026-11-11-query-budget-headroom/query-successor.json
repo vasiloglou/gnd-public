@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/release-0.3.0/evidence/RN0/query-successor.json",
+  "predecessor_sha256": "dcd97f4b5b89d8a21fd485523dc5d1afca6f07b778956da6183ad4b51cda82b8",
+  "reason": "Query-budget headroom maintenance (2026-11-11, issue 170; owner ruling \"Move reads\", spec approved \"Approve as proposed\"): ten read-only model.fact_types reads, each reached once per command or once per loaded model, and letting no row leave its function, now read through ModelIndex.for_model(model).iter_fact_types_shared(). Ten counted reads are removed and none added; both budgets have ten free (355 of 365, 300 of 310); no ceiling or baseline changes.",
+  "removed": [
+    [
+      "src/gnd/api.py",
+      "_run_transition_raw",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/codegen/emit.py",
+      "render_skill_document",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/coverage.py",
+      "_element_universe",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/diff.py",
+      "_structured",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/exp/session_contract.py",
+      "read_session_contract",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/extract/projection.py",
+      "_build_projection",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/judgments.py",
+      "evaluate_judgments",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/measure/report.py",
+      "build_measurement_report",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/synth/frontier.py",
+      "frontier_codes_for",
+      "model.fact_types",
+      1
+    ],
+    [
+      "src/gnd/vocabulary.py",
+      "render_verbalization",
+      "model.fact_types",
+      1
+    ]
+  ],
+  "added": [],
+  "result_distinct_rows": 287,
+  "result_occurrences": 355,
+  "original_metric_current": 300
+}

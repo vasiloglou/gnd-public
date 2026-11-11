@@ -48,6 +48,7 @@ from typing import Any
 
 from gnd.checker import IMPLEMENTED_FAMILIES, check
 from gnd.model import Model
+from gnd.model_index import ModelIndex
 from gnd.semantic_registry import REGISTRY, Branch
 from gnd.synth.assemble import (
     _constraint_iter_with_ref,
@@ -147,7 +148,7 @@ def frontier_codes_for(model: Model) -> tuple[str, ...]:
     """Add source-only reasons without widening the pinned legacy frontier."""
     anchored = any(
         constraint.get("type") == "anchored"
-        for fact_type in model.fact_types
+        for fact_type in ModelIndex.for_model(model).iter_fact_types_shared()
         for constraint in fact_type.get("constraints") or []
     )
     return tuple(sorted(set(BAND4_REASON_CODES) | (

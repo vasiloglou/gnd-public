@@ -149,7 +149,7 @@ def test_the_course_page_quotes_haikus_session_as_recorded():
              if p.get('type') == 'tool_use' and p['name'] == 'Edit' and p['input']['file_path'].endswith('.yaml')]
     denials = next(e for e in events if e['type'] == 'result')['permission_denials']
     page = (ROOT / 'docs/tutorials/course-planner.md').read_text(encoding='utf-8')
-    for line in re.findall(r'^ERROR at .*$', page, re.M):
+    for line in re.findall(r'^ERROR at .*$', page, re.MULTILINE):
         assert line in results, line
     for edit in edits:
         before = re.search(r'"(.*)"', edit['old_string']).group(1)

@@ -12,6 +12,10 @@ import tempfile
 from pathlib import Path, PurePosixPath
 
 import pytest
+from support.recorded_version import as_recorded
+
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 
 
 def _workspace():
@@ -202,7 +206,7 @@ def test_a_relocated_corpus_reproduces_the_committed_payload_byte_for_byte(tmp_p
 
     assert result.returncode == 0, result.stdout + result.stderr
     committed = MEASUREMENTS / "full_vocabulary.faker.json"
-    assert out.read_bytes() == committed.read_bytes(), (
+    assert as_recorded(out.read_bytes(), RECORDED_AT) == committed.read_bytes(), (
         "a relocated corpus changed the payload — a published path is still a "
         "function of the invocation rather than of the corpus"
     )

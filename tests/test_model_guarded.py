@@ -329,9 +329,17 @@ def test_u04_guarded_verbalization_is_a_pinned_if_then_pattern() -> None:
 def test_every_registered_guarded_error_rule_has_a_rejecting_case() -> None:
     covered = {rule_id for _, _, rule_id in REJECTING_CASES}
     registered = set()
+    advisory = set()
     for rule in model_module._SEMANTIC_RULES:
         identifiers = set(re.findall('rule_id="([^"]+)"', inspect.getsource(rule)))
         if identifiers and next(iter(identifiers)).startswith('semantic:guarded-'):
-            assert 'severity="warning"' not in inspect.getsource(rule)
-            registered.update(identifiers)
+            if rule.__name__ == "_rule_guarded_literal_domain":
+                assert 'severity="warning"' in inspect.getsource(rule)
+                advisory.update(identifiers)
+            else:
+                assert 'severity="warning"' not in inspect.getsource(rule)
+                registered.update(identifiers)
+    assert advisory == {
+        "semantic:guarded-literal-outside-domain", "semantic:guarded-literal-domain-work-limit",
+    }
     assert registered <= covered, 'Assertion did not hold.'

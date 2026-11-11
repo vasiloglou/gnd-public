@@ -271,7 +271,7 @@ def _declared_from_payload(
     payload: dict,
 ) -> dict[str, tuple[str, str | None, str, str | None]] | None:
     """(address, remedy, message, novelty) per positional ref, read back from a version-15 payload."""
-    if payload.get("schema_version") != 15:
+    if payload.get("schema_version") not in (15, 16):
         return None
     return {
         row["constraint_ref"]: (row["address"], row["remedy"], row["message"], row["novelty"])
@@ -294,6 +294,7 @@ def _cmd_check(
     rule_ids: bool = False,
     baseline: str | None = None,
     allow_vacuous: bool = False,
+    guarded_diagnostics: bool = False,
 ) -> int:
     result = api_module._run_check(
         model_path,
@@ -308,6 +309,7 @@ def _cmd_check(
         **({"rule_ids": True} if rule_ids else {}),
         **({"baseline": baseline} if baseline is not None else {}),
         **({"allow_vacuous": True} if allow_vacuous else {}),
+        **({"guarded_diagnostics": True} if guarded_diagnostics else {}),
     )
     if output_format == "json":
         if result.execution is not None:
@@ -329,6 +331,17 @@ def _cmd_check(
         _print_report(result.report, _declared_from_payload(result.payload))
         print_baseline(result.payload.get("baseline"))
         print_vacuous_acceptance(result.payload)
+        if guarded_diagnostics:
+            for row in result.payload["verdicts"]:
+                observation = row.get("guarded_antecedent")
+                if observation is None:
+                    continue
+                count = observation["binding_count"]
+                index = observation["first_empty_atom_index"]
+                detail = "unavailable" if count is None else str(count)
+                if index is not None:
+                    detail += f" (first empty antecedent atom {index})"
+                print(f"GUARDED {row['address']}: bindings={detail}")
         if admission:
             _print_admission_text(result.payload.get("report", result.payload))
         _print_lineage(result.payload)
@@ -861,6 +874,11 @@ def _register_check(subparsers):
         action="store_true",
         help="exit 0 when vacuous rules are the only shortfall; implies --rule-ids",
     )
+    check_parser.add_argument(
+        "--guarded-diagnostics",
+        action="store_true",
+        help="report version 16: include antecedent binding diagnostics; implies --rule-ids",
+    )
     _add_format_argument(check_parser)
     _add_unredacted_argument(check_parser)
 
@@ -1091,7 +1109,7 @@ def handle(args, parsers) -> int:
         return _cmd_compose(args.model, args.directory, args.out, args.record)
 
     if args.command == "check":
-        if args.rule_ids or args.baseline is not None or args.allow_vacuous:
+        if args.rule_ids or args.baseline is not None or args.allow_vacuous or args.guarded_diagnostics:
             conflicting = [
                 flag
                 for flag, value in (
@@ -1106,7 +1124,7 @@ def handle(args, parsers) -> int:
             ]
             if conflicting:
                 check_parser.error(
-                    f"{'--baseline' if args.baseline is not None else '--allow-vacuous' if args.allow_vacuous else '--rule-ids'} applies to one "
+                    f"{'--baseline' if args.baseline is not None else '--allow-vacuous' if args.allow_vacuous else '--guarded-diagnostics' if args.guarded_diagnostics else '--rule-ids'} applies to one "
                     f"plain snapshot check; it excludes {', '.join(conflicting)}"
                 )
         if (args.composition is None) != (args.sources is None):
@@ -1222,5 +1240,6 @@ def handle(args, parsers) -> int:
         rule_ids=args.rule_ids,
         baseline=args.baseline,
         allow_vacuous=args.allow_vacuous,
+        **({"guarded_diagnostics": True} if args.guarded_diagnostics else {}),
     )
 

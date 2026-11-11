@@ -24,12 +24,12 @@ Deterministic constraint checker with the 5-state verdict lattice.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `check_legacy(model, population) -> CheckReport` | function | 331 | Check a population against every constraint in the model. |
-| `JoinAmbiguousError` | class(Exception) | 1061 | A fact type offers multiple same-type candidates for one join anchor. |
-| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1424 | Return the computed structured extensions as fact-shaped rows. |
-| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1956 | (no docstring) |
-| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1974 | (no docstring) |
-| `check_partial(model, population) -> CheckReport` | function | 1999 | Evaluate opaque input with the three-valued internal extension view. |
-| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2008 | Use the same opaque semantics when an anchored check is requested. |
+| `JoinAmbiguousError` | class(Exception) | 1063 | A fact type offers multiple same-type candidates for one join anchor. |
+| `structured_extension_facts(model, population) -> Mapping[str, tuple[Mapping[str, extension_core.Sca…` | function | 1426 | Return the computed structured extensions as fact-shaped rows. |
+| `check_with_anchors(model, population, *, anchors, document_bytes) -> CheckReport` | function | 1958 | (no docstring) |
+| `check(model, population, *, references, compiled_operations) -> CheckReport` | function | 1976 | (no docstring) |
+| `check_partial(model, population) -> CheckReport` | function | 2001 | Evaluate opaque input with the three-valued internal extension view. |
+| `check_with_anchors_partial(model, population, *, anchors, document_bytes) -> CheckReport` | function | 2010 | Use the same opaque semantics when an anchored check is requested. |
 
 ## gnd.checker._reports — `src/gnd/checker/_reports.py`
 Components: checker.reports
@@ -38,11 +38,11 @@ Existing checker reports section; historical facade retained.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ConstraintVerdict` | class(BaseModel) | 15 | One verdict for one constraint. |
-| `CoverageEntry` | class(BaseModel) | 63 | Declared-coverage status and fact count for one fact type. |
-| `Phase1Trace` | class | 71 | The v6.0 Phase 1 evidence lane for one complete in-scope result. |
-| `CheckReport` | class(BaseModel) | 87 | The full set of per-constraint verdicts for one (model, population) pair. |
-| `CheckReport.has_alethic_fail(self) -> bool` | method | 110 | (no docstring) |
-| `CheckReport.has_vacuous(self) -> bool` | method | 116 | (no docstring) |
-| `CheckReport.has_unevaluated_alethic(self) -> bool` | method | 120 | (no docstring) |
-| `CheckReport.counts(self) -> dict[str, int]` | method | 132 | (no docstring) |
-| `band(report, baseline, allow_vacuous) -> int` | function | 141 | Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08). |
+| `CoverageEntry` | class(BaseModel) | 65 | Declared-coverage status and fact count for one fact type. |
+| `Phase1Trace` | class | 73 | The v6.0 Phase 1 evidence lane for one complete in-scope result. |
+| `CheckReport` | class(BaseModel) | 89 | The full set of per-constraint verdicts for one (model, population) pair. |
+| `CheckReport.has_alethic_fail(self) -> bool` | method | 112 | (no docstring) |
+| `CheckReport.has_vacuous(self) -> bool` | method | 118 | (no docstring) |
+| `CheckReport.has_unevaluated_alethic(self) -> bool` | method | 122 | (no docstring) |
+| `CheckReport.counts(self) -> dict[str, int]` | method | 134 | (no docstring) |
+| `band(report, baseline, allow_vacuous) -> int` | function | 143 | Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08). |

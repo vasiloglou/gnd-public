@@ -122,3 +122,27 @@ existing version message.
   reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
 - `source: tool-output` and `producer` are population header fields: see the
   [population format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/population-format.md).
+
+## Guarded antecedent diagnostics
+
+`gnd check MODEL POPULATION --guarded-diagnostics` uses the plain
+rule-check scope above and implies `--rule-ids`. It can be combined with
+`--baseline` and `--allow-vacuous`. The JSON report uses version 16. Its
+guarded verdicts include:
+
+```json
+{"guarded_antecedent": {"binding_count": 0, "first_empty_atom_index": 1}}
+```
+
+`binding_count` counts the distinct bindings from the completed antecedent
+join. It is null when the join is unavailable, including an empty relation
+whose coverage was omitted. A covered empty relation gives zero. When all
+antecedent relations have available rows and the join produces no binding,
+`first_empty_atom_index` identifies the first prefix with no matches in
+declared atom order, starting at zero. Otherwise the index is null. A
+complete antecedent can have a known count even if the consequent is
+undecided. These fields leave verdicts and exit bands as reported by the
+same check without this option. Text output lists the same observations.
+
+For authoring-time findings on literal values, see the ORM
+[constraint reference](../../src/gnd/skills/gnd-orm-core/references/constraint-reference.md).

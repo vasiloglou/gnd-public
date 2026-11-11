@@ -239,8 +239,9 @@ def _run_check_raw(
     rule_ids: bool = False,
     baseline: str | os.PathLike[str] | None = None,
     allow_vacuous: bool = False,
+    guarded_diagnostics: bool = False,
 ) -> _RunResult:
-    rule_ids = rule_ids or baseline is not None or allow_vacuous
+    rule_ids = rule_ids or baseline is not None or allow_vacuous or guarded_diagnostics
     model_coordinate = None if isinstance(model_input, Model) else _path(model_input, name="model")
     population_coordinate = (
         None
@@ -266,7 +267,7 @@ def _run_check_raw(
         warnings: list[ValidationIssue] | None = None,
         error: BaseException | None = None,
     ) -> dict[str, Any]:
-        return report_module.build_check_payload(
+        payload = report_module.build_check_payload(
             exit_code,
             model_coordinate,
             population_coordinate,
@@ -282,6 +283,17 @@ def _run_check_raw(
             baseline=compared if wire_version == 15 else None,
             allow_vacuous=allow_vacuous and wire_version == 15,
         )
+        if guarded_diagnostics and wire_version == 15:
+            payload["schema_version"] = 16
+            if report is not None:
+                for row, verdict in zip(payload["verdicts"], report.verdicts, strict=True):
+                    if verdict.constraint_type == "guarded":
+                        row["guarded_antecedent"] = {
+                            "binding_count": verdict.binding_count,
+                            "first_empty_atom_index": verdict.first_empty_atom_index,
+                        }
+        return payload
+
 
     def refuse_rule_ids(refused: Model) -> _RunResult | None:
         """The --rule-ids refusal for a model version 15 cannot describe, at version 7."""
@@ -837,8 +849,9 @@ def _run_check(
     rule_ids: bool = False,
     baseline: str | os.PathLike[str] | None = None,
     allow_vacuous: bool = False,
+    guarded_diagnostics: bool = False,
 ) -> _RunResult:
-    if (rule_ids or baseline is not None or allow_vacuous) and (admission or compiled_operations):
+    if (rule_ids or baseline is not None or allow_vacuous or guarded_diagnostics) and (admission or compiled_operations):
         raise ValueError("rule_ids applies to the plain snapshot check only")
     if (admission or compiled_operations) and evaluator is None:
         evaluator = checker_module.check_partial
@@ -859,6 +872,7 @@ def _run_check(
         rule_ids=rule_ids,
         **({"baseline": baseline} if baseline is not None else {}),
         **({"allow_vacuous": True} if allow_vacuous else {}),
+        **({"guarded_diagnostics": True} if guarded_diagnostics else {}),
     )
     if admission:
         from gnd.admission import build_admission, wire_verdicts

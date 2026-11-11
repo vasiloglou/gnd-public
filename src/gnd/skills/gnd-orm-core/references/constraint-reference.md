@@ -661,3 +661,14 @@ Which modality the authoring skill should *write* for a given source/status is t
 
 ---
 *Adapted from the rai-agent-skills ORM skills (branch an-orm-skill).*
+
+## Guarded atom literal domains
+
+Model validation reports `semantic:guarded-literal-outside-domain` at a
+literal binding when an applicable declared value enumeration or range
+definitively excludes it. This applies to guarded antecedent, positive,
+absence and existential atoms, with the value constraint scoped to the
+role or to the applicable object type. The advisory finding preserves
+model admission. If the domain walk reaches its work limit, validation
+reports `semantic:guarded-literal-domain-work-limit` at the first unfinished
+binding.

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gnd.dev/schema/report.schema.json",
   "title": "GND check/validate/verify JSON payload (D-10, D-11, D-12)",
-  "description": "Draft 2020-12 schema for the `--format json` payload emitted by `python -m gnd check`, `python -m gnd validate`, and `python -m gnd verify`. This is a runtime OUTPUT contract, not an interchange format \u2014 it is deliberately vendored-only and lives outside src/gnd/schema/, which tests/test_schema_sync.py holds byte-identical to the gnd-orm-core canonical references. One of two closed fixed-shape tagged records is emitted on every exit path that carries a verdict (0, 1, 2, 3, 4, 70); exit 64 (argparse usage error) deliberately emits none. Version 3 preserves the original keys and forbids `derivations`; version 4 requires it. Within either variant every key is always present with an empty default, and `outcome` is the exit discriminator. Bump `schema_version` on any breaking change.",
+  "description": "Draft 2020-12 schema for the `--format json` payload emitted by `python -m gnd check`, `python -m gnd validate`, and `python -m gnd verify`. This is a runtime OUTPUT contract, not an interchange format — it is deliberately vendored-only and lives outside src/gnd/schema/, which tests/test_schema_sync.py holds byte-identical to the gnd-orm-core canonical references. One of two closed fixed-shape tagged records is emitted on every exit path that carries a verdict (0, 1, 2, 3, 4, 70); exit 64 (argparse usage error) deliberately emits none. Version 3 preserves the original keys and forbids `derivations`; version 4 requires it. Within either variant every key is always present with an empty default, and `outcome` is the exit discriminator. Bump `schema_version` on any breaking change.",
   "oneOf": [
     {
       "$ref": "#/$defs/legacy_reference_report"
@@ -313,6 +313,9 @@
     },
     {
       "$ref": "#/$defs/rule_ids_report"
+    },
+    {
+      "$ref": "#/$defs/guarded_diagnostics_report"
     }
   ],
   "$defs": {
@@ -1191,7 +1194,7 @@
         },
         "source": {
           "type": "string",
-          "description": "The constraint's declared provenance origin (R-01), read from the constraint itself: explicit | sample | common-sense | llm-inferred | user-supplied | imported (v2). PANEL-3 scoping: only source + status are surfaced; the full provenance block (user_quote etc.) is deliberately NOT copied into reports \u2014 additionalProperties:false enforces the exclusion."
+          "description": "The constraint's declared provenance origin (R-01), read from the constraint itself: explicit | sample | common-sense | llm-inferred | user-supplied | imported (v2). PANEL-3 scoping: only source + status are surfaced; the full provenance block (user_quote etc.) is deliberately NOT copied into reports — additionalProperties:false enforces the exclusion."
         },
         "status": {
           "type": "string",
@@ -1224,7 +1227,7 @@
     "extraction": {
       "type": "object",
       "additionalProperties": false,
-      "description": "The extractor half of `gnd verify` (R-03''/PANEL-3): its fidelity record, kept SEPARATE from the checker's verdicts so the full verifier's two error sources are never blended. Present as {} on every `check`/`validate` payload \u2014 populated only by `gnd verify` (whose builder and tests enforce populated-ness on that path); deliberately NO required list here so the empty object validates.",
+      "description": "The extractor half of `gnd verify` (R-03''/PANEL-3): its fidelity record, kept SEPARATE from the checker's verdicts so the full verifier's two error sources are never blended. Present as {} on every `check`/`validate` payload — populated only by `gnd verify` (whose builder and tests enforce populated-ness on that path); deliberately NO required list here so the empty object validates.",
       "properties": {
         "state": {
           "enum": [
@@ -2292,7 +2295,7 @@
             "vacuous"
           ],
           "additionalProperties": false,
-          "description": "Verdict tally, passed through unchanged from CheckReport.counts() \u2014 the same dict the text renderer prints, so the two renderings can never disagree.",
+          "description": "Verdict tally, passed through unchanged from CheckReport.counts() — the same dict the text renderer prints, so the two renderings can never disagree.",
           "properties": {
             "pass": {
               "type": "integer",
@@ -4540,7 +4543,7 @@
             "vacuous"
           ],
           "additionalProperties": false,
-          "description": "Verdict tally, passed through unchanged from CheckReport.counts() \u2014 the same dict the text renderer prints, so the two renderings can never disagree.",
+          "description": "Verdict tally, passed through unchanged from CheckReport.counts() — the same dict the text renderer prints, so the two renderings can never disagree.",
           "properties": {
             "pass": {
               "type": "integer",
@@ -5459,6 +5462,230 @@
         },
         "allow_vacuous": {
           "type": "boolean"
+        }
+      }
+    },
+    "verdict_v16": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraint_ref",
+        "address",
+        "addressing",
+        "remedy",
+        "constraint_type",
+        "modality",
+        "source",
+        "status",
+        "verdict",
+        "message",
+        "offending_facts",
+        "reason_code",
+        "novelty",
+        "row_novelty"
+      ],
+      "properties": {
+        "constraint_ref": {
+          "$ref": "#/$defs/verdict_v15/properties/constraint_ref"
+        },
+        "address": {
+          "$ref": "#/$defs/verdict_v15/properties/address"
+        },
+        "addressing": {
+          "$ref": "#/$defs/verdict_v15/properties/addressing"
+        },
+        "remedy": {
+          "$ref": "#/$defs/verdict_v15/properties/remedy"
+        },
+        "constraint_type": {
+          "$ref": "#/$defs/verdict_v15/properties/constraint_type"
+        },
+        "modality": {
+          "$ref": "#/$defs/verdict_v15/properties/modality"
+        },
+        "source": {
+          "$ref": "#/$defs/verdict_v15/properties/source"
+        },
+        "status": {
+          "$ref": "#/$defs/verdict_v15/properties/status"
+        },
+        "verdict": {
+          "$ref": "#/$defs/verdict_v15/properties/verdict"
+        },
+        "message": {
+          "$ref": "#/$defs/verdict_v15/properties/message"
+        },
+        "offending_facts": {
+          "$ref": "#/$defs/verdict_v15/properties/offending_facts"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/verdict_v15/properties/reason_code"
+        },
+        "novelty": {
+          "$ref": "#/$defs/verdict_v15/properties/novelty"
+        },
+        "row_novelty": {
+          "$ref": "#/$defs/verdict_v15/properties/row_novelty"
+        },
+        "guarded_antecedent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "binding_count",
+            "first_empty_atom_index"
+          ],
+          "properties": {
+            "binding_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "first_empty_atom_index": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "if": {
+            "properties": {
+              "binding_count": {
+                "const": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_empty_atom_index": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "constraint_type": {
+            "const": "guarded"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "guarded_antecedent"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "guarded_antecedent"
+          ]
+        }
+      }
+    },
+    "guarded_diagnostics_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "tool",
+        "command",
+        "outcome",
+        "exit_code",
+        "acceptance_ready",
+        "model",
+        "model_digest",
+        "population",
+        "counts",
+        "verdicts",
+        "derivations",
+        "coverage",
+        "extraction",
+        "issues",
+        "issues_total",
+        "issues_truncated",
+        "warnings",
+        "error",
+        "transition",
+        "assurance",
+        "baseline",
+        "allow_vacuous"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 16
+        },
+        "tool": {
+          "$ref": "#/$defs/rule_ids_report/properties/tool"
+        },
+        "command": {
+          "$ref": "#/$defs/rule_ids_report/properties/command"
+        },
+        "outcome": {
+          "$ref": "#/$defs/rule_ids_report/properties/outcome"
+        },
+        "exit_code": {
+          "$ref": "#/$defs/rule_ids_report/properties/exit_code"
+        },
+        "acceptance_ready": {
+          "$ref": "#/$defs/rule_ids_report/properties/acceptance_ready"
+        },
+        "model": {
+          "$ref": "#/$defs/rule_ids_report/properties/model"
+        },
+        "model_digest": {
+          "$ref": "#/$defs/rule_ids_report/properties/model_digest"
+        },
+        "population": {
+          "$ref": "#/$defs/rule_ids_report/properties/population"
+        },
+        "counts": {
+          "$ref": "#/$defs/rule_ids_report/properties/counts"
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verdict_v16"
+          }
+        },
+        "derivations": {
+          "$ref": "#/$defs/rule_ids_report/properties/derivations"
+        },
+        "coverage": {
+          "$ref": "#/$defs/rule_ids_report/properties/coverage"
+        },
+        "extraction": {
+          "$ref": "#/$defs/rule_ids_report/properties/extraction"
+        },
+        "issues": {
+          "$ref": "#/$defs/rule_ids_report/properties/issues"
+        },
+        "issues_total": {
+          "$ref": "#/$defs/rule_ids_report/properties/issues_total"
+        },
+        "issues_truncated": {
+          "$ref": "#/$defs/rule_ids_report/properties/issues_truncated"
+        },
+        "warnings": {
+          "$ref": "#/$defs/rule_ids_report/properties/warnings"
+        },
+        "error": {
+          "$ref": "#/$defs/rule_ids_report/properties/error"
+        },
+        "transition": {
+          "$ref": "#/$defs/rule_ids_report/properties/transition"
+        },
+        "assurance": {
+          "$ref": "#/$defs/rule_ids_report/properties/assurance"
+        },
+        "baseline": {
+          "$ref": "#/$defs/rule_ids_report/properties/baseline"
+        },
+        "allow_vacuous": {
+          "$ref": "#/$defs/rule_ids_report/properties/allow_vacuous"
         }
       }
     }

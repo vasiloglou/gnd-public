@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "reason": "GW0 indexed guarded join result adds typed report metadata.",
+  "predecessor": ".gnd-planning/milestones/release-0.3.0/evidence/RN0/dynamic-query-successor.json",
+  "predecessor_sha256": "b7cd2f9c7e6f048b7b4e1bed5ea13d8ff19f4c4aba8d5bec89c6d2fa74730d75",
+  "removed": [
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_bindings",
+      "tuple[bool, tuple[str, ...], tuple[tuple[Scalar, ...], ...]]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_bindings",
+      "tuple[bool, tuple[str, ...], tuple[tuple[Scalar, ...], ...], tuple[int | None, int | None]]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_bindings",
+      "tuple[int | None, int | None]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7562,
+  "result_occurrences": 9412
+}

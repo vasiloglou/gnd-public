@@ -406,6 +406,8 @@ def check_legacy(model: Model, population: Population) -> CheckReport:
             "message": message,
             "offending_facts": witness,
             "reason_code": finding.reason_code,
+            "binding_count": finding.binding_count,
+            "first_empty_atom_index": finding.first_empty_atom_index,
         }
         verdicts.append(
             ConstraintVerdict.model_validate(

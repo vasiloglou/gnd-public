@@ -354,22 +354,22 @@ Authoritative Phase 3 snapshot decision and public-value projection.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `CorrespondedFinding` | class | 55 | (no docstring) |
-| `SnapshotDecision` | class | 68 | (no docstring) |
-| `ProjectedFinding` | class | 76 | (no docstring) |
-| `SnapshotProjection` | class | 89 | (no docstring) |
-| `CompletedVerifyRoute` | class | 98 | (no docstring) |
-| `RefusedVerifyRoute` | class | 106 | (no docstring) |
-| `ReferenceJoinLimit` | class(ValueError) | 387 | Attempted reference-lane join work exceeded its invocation budget. |
-| `ReferenceJoinWork` | class | 392 | (no docstring) |
-| `ReferenceJoinWork.charge(self) -> None` | method | 395 | (no docstring) |
-| `evaluation_snapshot(snapshot, family) -> SnapshotIR` | function | 842 | The snapshot a constraint of ``family`` is evaluated over. |
-| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1053 | (no docstring) |
-| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1117 | (no docstring) |
-| `project_finding(finding, observation) -> ProjectedFinding` | function | 1132 | (no docstring) |
-| `project_witness(observation, index, *, scope_id, constraint_id, family, witness, witness_keys) -> t…` | function | 1168 | Each witness row with its scalars replaced by their admitted public values. |
-| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1208 | (no docstring) |
-| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1228 | (no docstring) |
-| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1255 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
+| `SnapshotDecision` | class | 70 | (no docstring) |
+| `ProjectedFinding` | class | 78 | (no docstring) |
+| `SnapshotProjection` | class | 93 | (no docstring) |
+| `CompletedVerifyRoute` | class | 102 | (no docstring) |
+| `RefusedVerifyRoute` | class | 110 | (no docstring) |
+| `ReferenceJoinLimit` | class(ValueError) | 391 | Attempted reference-lane join work exceeded its invocation budget. |
+| `ReferenceJoinWork` | class | 396 | (no docstring) |
+| `ReferenceJoinWork.charge(self) -> None` | method | 399 | (no docstring) |
+| `evaluation_snapshot(snapshot, family) -> SnapshotIR` | function | 859 | The snapshot a constraint of ``family`` is evaluated over. |
+| `evaluate_snapshot(adapted, *, variant_aliases, reference_work) -> SnapshotDecision` | function | 1076 | (no docstring) |
+| `project_reference_limit(finding, observation) -> ProjectedFinding` | function | 1140 | (no docstring) |
+| `project_finding(finding, observation) -> ProjectedFinding` | function | 1157 | (no docstring) |
+| `project_witness(observation, index, *, scope_id, constraint_id, family, witness, witness_keys) -> t…` | function | 1195 | Each witness row with its scalars replaced by their admitted public values. |
+| `project_snapshot(decision, observation) -> SnapshotProjection` | function | 1235 | (no docstring) |
+| `correspond_snapshot(model, population, *, effective_facts, effective_lineage, variant_aliases) -> t…` | function | 1255 | (no docstring) |
+| `acyclic_extents(model, population, refs) -> dict[str, tuple[list[list[Any]], str]]` | function | 1282 | Report version 15 (RC2): each failing acyclic ref's in-group edges and message. |
 
 ## gnd.coverage — `src/gnd/coverage.py`
 Components: check.element_coverage
@@ -948,15 +948,14 @@ Admitted snapshot -> immutable semantic inputs, without verdict evaluation.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `ValueOrigin` | class | 81 | (no docstring) |
-| `SnapshotObservation` | class | 93 | (no docstring) |
-| `AdaptedSnapshot` | class | 106 | (no docstring) |
-| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 118 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
-| `adapt_constraint(constraint, fact_type, ref, model) -> IRConstraint` | function | 379 | Total over constraint JSON shapes; refusals never become empty successful predicates. |
-| `universe_of(object_type_id, model, population) -> IRRoster` | function | 530 | The production universe walk, retaining every occurrence and its order. |
-| `adapt_snapshot(model, population, *, effective_facts) -> SnapshotIR` | function | 648 | (no docstring) |
-| `adapt_snapshot_observed(model, population, *, effective_facts, effective_lineage) -> AdaptedSnapshot` | function | 800 | Retain the exact value origins beside the immutable semantic snapshot. |
-| `correspondence_scope(adapted) -> tuple[str, tuple[IRRefusal, ...]]` | function | 982 | Fail closed when any admitted value needed by the snapshot was refused. |
+| `ValueOrigin` | class | 82 | (no docstring) |
+| `SnapshotObservation` | class | 94 | (no docstring) |
+| `AdaptedSnapshot` | class | 107 | (no docstring) |
+| `adapt_constraint(constraint, fact_type, ref, model) -> IRConstraint` | function | 322 | Total over constraint JSON shapes; refusals never become empty successful predicates. |
+| `universe_of(object_type_id, model, population) -> IRRoster` | function | 473 | The production universe walk, retaining every occurrence and its order. |
+| `adapt_snapshot(model, population, *, effective_facts) -> SnapshotIR` | function | 591 | (no docstring) |
+| `adapt_snapshot_observed(model, population, *, effective_facts, effective_lineage) -> AdaptedSnapshot` | function | 743 | Retain the exact value origins beside the immutable semantic snapshot. |
+| `correspondence_scope(adapted) -> tuple[str, tuple[IRRefusal, ...]]` | function | 925 | Fail closed when any admitted value needed by the snapshot was refused. |
 
 ## gnd.semantic_ir — `src/gnd/semantic_ir.py`
 Components: semantics.snapshot_ir
@@ -1263,13 +1262,14 @@ RF3 shared dependency home; algorithms retain predecessor semantics.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `reference_model_digest(model) -> str` | function | 217 | (no docstring) |
-| `ModelIdentityError` | class(ValueError) | 227 | A loaded model that has no canonical identity, or a version it does not define. |
-| `model_identity_document(model) -> dict[str, Any]` | function | 271 | The canonical identity document of a loaded model. |
-| `model_identity_bytes(model) -> bytes` | function | 284 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
-| `model_identity(model, version) -> str` | function | 289 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
-| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 304 | Which identity of ``model`` the ``supplied`` value names, or None. |
-| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 334 | The identities :func:`model_identity_matches` accepts, legacy first. |
+| `reference_model_digest(model) -> str` | function | 222 | (no docstring) |
+| `ModelIdentityError` | class(ValueError) | 232 | A loaded model that has no canonical identity, or a version it does not define. |
+| `model_identity_document(model) -> dict[str, Any]` | function | 276 | The canonical identity document of a loaded model. |
+| `model_identity_bytes(model) -> bytes` | function | 289 | The canonical bytes the identity hashes; :class:`ModelIdentityError` if there are none. |
+| `model_identity(model, version) -> str` | function | 294 | ``sha256:<hex>`` over :func:`model_identity_bytes`: the model's canonical identity. |
+| `model_identity_matches(supplied, model, *, prefixed) -> IdentityMatch \| None` | function | 309 | Which identity of ``model`` the ``supplied`` value names, or None. |
+| `accepted_model_identities(model, *, prefixed) -> tuple[str, ...]` | function | 339 | The identities :func:`model_identity_matches` accepts, legacy first. |
+| `canonical_scalar(value, primitive) -> Scalar \| Opaque \| None` | function | 381 | Exact identity plus optional ordering coordinates; never stringify a type mismatch. |
 
 ## gnd.verbalize — `src/gnd/verbalize.py`
 Components: infra.verdict_prose

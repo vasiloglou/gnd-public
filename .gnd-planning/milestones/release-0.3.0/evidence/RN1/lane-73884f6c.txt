@@ -1,0 +1,11 @@
+# Six-shard default lane on beast-3 at 73884f6c (before the review fixes)
+2026-11-11T06:52:03Z
+73884f6c3bcb2743c0dce1c00cdaa84b4a11c5ac
+rn1 shard0: 3682 passed, 53 deselected in 463.27s (0:07:43) (shard exit=0)
+rn1 shard1: 2937 passed, 152 deselected in 414.85s (0:06:54) (shard exit=0)
+rn1 shard2: 2833 passed, 130 deselected in 323.32s (0:05:23) (shard exit=0)
+rn1 shard3: 4083 passed, 88 deselected in 815.91s (0:13:35) (shard exit=0)
+rn1 shard4: 2652 passed, 282 deselected in 254.19s (0:04:14) (shard exit=0)
+rn1 shard5: 2826 passed, 145 deselected, 1 warning, 2 errors in 583.86s (0:09:43) (shard exit=1)
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid

@@ -375,3 +375,20 @@ the phase record for the owner to see.
 started from the present notes and the list of pull requests. F2 to F5 are
 changes inside pull requests that already had a note. The reviewer found them
 by reading `git diff v0.2.0 -- src`; the record's table is rebuilt that way.
+
+## Lane findings (2026-11-11, appended)
+
+- The lane at `73884f6c` (before the review fixes) listed only the 2 known
+  errors: N20 and N26 are repaired and the bump adds no failure.
+- The lane at `a46952b5` (after the review fixes) listed the 2 known errors
+  and one failure this phase caused:
+  `tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap`.
+  The retained review output quotes test code (`]({link})`) and a mutant
+  input (`[x](explanation/ossie.md)`), which the reference check reads as
+  links. Both strings are now in `RETAINED_EXTERNAL_REFERENCES` for that one
+  file, as verbatim reviewer text; the review file is not edited. The focused
+  gate had run before the review file existed.
+- After `a46952b5` the notes gained one sentence
+  (`include:unsupported-route`, commit `7fba7d9e`): a route that does not
+  support a model with includes refuses it. Confirmed by running the Ossie
+  exporter on the packaged `sales.orm.json`.

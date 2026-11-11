@@ -27,6 +27,9 @@ CT_HOME = Path('.gnd-planning/milestones/composition-and-type-induction')
 # part of reference closure. Exempt only its enumerated targets, not arbitrary
 # absolute paths or every link under evidence/.
 RETAINED_EXTERNAL_REFERENCES = {
+    # Verbatim reviewer output quoting test code and a mutant input; neither is a document link.
+    Path('.gnd-planning/milestones/release-0.3.0/notes/phase-RN1-codex-review.md'): {
+        '{link}', 'explanation/ossie.md'},
     Path('.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/baseline-report.md'): {
         '/private/tmp/gnd-local-ci-20261006-d6f1e8a/' + name
         for name in (

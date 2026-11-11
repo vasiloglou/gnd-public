@@ -1,0 +1,10 @@
+{
+  "active_pass": {"verdict": "pass", "binding_count": 1, "first_empty_atom_index": null},
+  "active_fail": {"verdict": "fail", "binding_count": 1, "first_empty_atom_index": null},
+  "antecedent_typo": {"verdict": "pass", "binding_count": 0, "first_empty_atom_index": 0},
+  "join_loss": {"verdict": "pass", "binding_count": 0, "first_empty_atom_index": 1},
+  "consequent_typo": {"verdict": "pass", "binding_count": 1, "first_empty_atom_index": null},
+  "covered_empty": {"verdict": "vacuous", "binding_count": 0, "first_empty_atom_index": null},
+  "omitted_empty": {"verdict": "vacuous", "binding_count": null, "first_empty_atom_index": null},
+  "validate_typos": {"exit": 0, "warning": "semantic:guarded-literal-outside-domain", "paths": ["constraints[1].antecedent[0].bind[area]", "constraints[2].consequent.absence.bind[area]"]}
+}

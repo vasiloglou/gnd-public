@@ -1,6 +1,6 @@
 # GW0 · Guarded rule diagnostics · draft r1
 
-**Awaiting owner review.** Implementation requires the plan and GW0 spec gates.
+**Delegated approval (auto=true), 2026-11-11.** The corpus and the decisions below govern implementation.
 
 ## 2. Provenance
 
@@ -8,7 +8,7 @@
 [GR-D12](https://github.com/vasiloglou/gnd-public/issues/183),
 the [correction to GR-D8](https://github.com/vasiloglou/gnd-public/issues/179#issuecomment-6805758864),
 and the [RC4 vacuity spec](../../rule-check-adoption/notes/phase-RC4-spec.md).
-Baseline `793618f1`. Independent review has yet to run on these bytes.
+Baseline `793618f1`. Plan r3 passed the independent review bar. Optional spec review was omitted under the delegated phase protocol.
 
 ## 3. Obligations
 
@@ -66,8 +66,8 @@ Existing check failures and indeterminate cases retain their exit bands.
 `_indexed_guarded_bindings(constraint: IRConstraint, snapshot: SnapshotIR, work: ReferenceJoinWork | None = None)`
 result with the optional first empty-prefix index. Record it in declared
 antecedent order when the running join first becomes empty. Preserve later
-checks for an invalid atom or unavailable relation. Publish it only when all
-antecedent relations are covered, available and populated. Use the size of
+checks for an invalid atom or unavailable relation. Publish it only when all antecedent relations are available and populated.
+Require a numeric count for a completed join under explicit or default coverage. Use the size of
 the canonical distinct binding set already returned by the join. An
 available covered empty relation yields count zero with a null index.
 Unknown evaluation or omitted coverage yields null for both. A complete
@@ -115,9 +115,10 @@ Variables, unresolved roles and malformed or undecidable domains do not
 produce an exclusion for that domain. Cover both modalities as diagnostics.
 Use current scalar and range helpers without a reverse layer import. If
 needed, move only shared scalar predicates to their allowed lower-level home
-and keep the existing identity aliases. Set an explicit bounded-work
-policy for many distinct literal/domain pairs in the gated spec, including
-observable behavior if the limit is reached.
+and keep the existing identity aliases. Charge one unit per domain application and per allowed item or range inspected,
+with a 100,000-unit ceiling. After exhaustion emit
+`semantic:guarded-literal-domain-work-limit` at the first unfinished binding
+and stop the lint walk. Previously established warnings remain visible.
 
 **M4 · Docs and compatibility.** Put the wire and supported routes in
 `docs/reference/rule-check-report.md` and the static domain semantics in the
@@ -132,7 +133,9 @@ intentional model warning on affected literals.
 | D1 | Keep zero-bindings over populated sources as `pass` and add structured diagnostic evidence | Check retains band 0 for that rule. Changing it to `vacuous` would change the default band and the effect of `--allow-vacuous`. |
 | D2 | Use a new opt-in report version on the current plain rule-check scope | Consumers can adopt the field without sending expanded rows to existing strict version-15 readers. Extending other check routes requires their own evidence and wire contracts. |
 | D3 | Warn for definitive declared-domain exclusion on either modality | Existing models remain loadable and the author sees the exact bad site. Treating it as an error would make existing models fail admission with exit 3. |
-| D4 | Select a validation work limit and observable exhaustion rule | The budget must bound domain membership and range work without silently treating a skipped check as a clean result. Set the number and expected output before implementation. |
+| D4 | Cap domain work at 100,000 units and warn once on exhaustion | The validator keeps its advisory exit and explicitly reports incomplete lint. The stress test injects a smaller budget and measures charged operations. |
+
+D1–D4 were accepted by delegated approval (auto=true) on 2026-11-11.
 
 ## 8. Tests
 
@@ -171,7 +174,10 @@ phase record.
 
 ## 11. Approval instrument
 
-Owner decision on this spec and its four decision rows, including the
-exact work-budget rule, after the reviewed plan gate. Phase execution then
-requires the focused gates, independent diff and refactoring reviews,
-and the phase record.
+Delegated approval (auto=true), 2026-11-11, under the owner’s milestone
+invocation and [plan gate](../001-plan-gate.md). The
+[corpus brief](../corpus/GW0/README.md) and separate
+[answer key](../corpus/GW0/expected.json) fix the decisive cases. The
+existing lane must exhibit the two silent passes and lack of static
+findings before the new route is implemented. The core results, report
+wire and validation budgets are specified in §§5–8.

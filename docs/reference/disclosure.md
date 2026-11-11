@@ -124,6 +124,8 @@ Do not route them to a customer.
 | `gnd doccheck` | the population values a rendered document misses | Its input is your own rendering case. |
 | `gnd compose`, `gnd.api.compose` | the caller's own composed population; the composition record carries no value | Its inputs are your own populations; refusals name sources and indexes, never values. |
 | `gnd verbalize model`, `gnd.api.verbalize_model` | the caller's complete model review, including authored sample populations | Its input is your own model; it takes no supplied population. |
+| `gnd export ossie` | the model's constraint literals and description text, in the ontology and its sidecar; sample and reference populations are omitted and listed in the loss report | Its input is your own model. A fact type's `redact` setting does not change the export. |
+| `gnd import ossie` | whatever model content the ontology and its sidecar carry | Its inputs are your own files. |
 
 ## Child processes
 
@@ -211,7 +213,7 @@ exactly one row. A test keeps this table equal to the code.
 | `gnd.api`: `witness`, `replay`, `why_not`, `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | `gnd.export.service`: `export_lean`, `export_souffle`, `run_souffle`, `souffle_witness` | every value: raw under `internal`, value-free under `customer`; `--raw` or `raw=True`, where taken, refused under `customer` |
 | Command: `gnd discover` | one named value option, `gnd discover --show-values`: values under `internal`, as requested when unset, the option refused under `customer`; every other output the same in every mode |
-| Command: `gnd exp run` (starts processes), `gnd export ilp`, `gnd fidelity`, `gnd doccheck`, `gnd compose`, `gnd verbalize model` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
+| Command: `gnd exp run` (starts processes), `gnd export ilp`, `gnd fidelity`, `gnd doccheck`, `gnd compose`, `gnd verbalize model`, `gnd export ossie`, `gnd import ossie` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | `gnd.api`: `EvaluationSession.check_with_feedback`, `EvaluationSession.observe`, `compose`, `verbalize_model` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | Output kind: `session-feedback`, `session-attempt`, `session-result` | the same in every mode (see [outputs the same in every mode](#outputs-that-are-the-same-in-every-mode)) |
 | Command: `gnd solve` (starts processes), `gnd review panel` (starts processes), `gnd review panel-light` (starts processes), `gnd codegen`, `gnd conformance`, `gnd coverage`, `gnd doctor`, `gnd evolve apply`, `gnd evolve finalize`, `gnd evolve preview`, `gnd exp author-expectation`, `gnd exp close`, `gnd exp init`, `gnd exp validate`, `gnd export lean-compile`, `gnd export lean-verify`, `gnd export pyrel`, `gnd export souffle-verify`, `gnd extract`, `gnd import ilp-rules`, `gnd import mined-rules`, `gnd import rai-orm`, `gnd install`, `gnd recovery inventory`, `gnd recovery verify`, `gnd review finalize`, `gnd synth`, `gnd uninstall` | emits no population values |

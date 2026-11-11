@@ -278,3 +278,15 @@ literals and descriptions exported, in customer mode as in any other. RN0 does
 not change what an export writes (§9). The table now tells the truth about it;
 whether Ossie export should honor a redaction policy is a product question for
 the owner, raised in the record.
+
+## Lane finding (2026-11-11, appended)
+
+The six-shard lane at `2a9bd6b8` (before the review fixes) gave the 2 known
+errors, N20, N26 and one failure this phase caused:
+`tests/test_disclosure_docs.py::test_page_table_equals_the_code`. The
+reference page `docs/reference/disclosure.md` repeats the disclosure table and
+is checked against the code; the focused gate did not include that test. The
+page now lists both commands in its summary table, and its "outputs that are
+the same in every mode" table says what each writes, including that a fact
+type's `redact` setting does not change an Ossie export. This is a docs edit
+the spec did not list (3 lines). The test is added to the focused gate.

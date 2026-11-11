@@ -207,7 +207,6 @@ class _Model:
         return list(self._players.get(object_id, ()))
 
 
-
 def _quote(constraint: dict[str, Any]) -> str:
     provenance = constraint.get("provenance") or {}
     return str(provenance.get("user_quote") or provenance.get("user_note") or constraint.get("id", ""))

@@ -1847,13 +1847,15 @@ models with `include:unsupported-route` before resolving their dependencies.
 | Other source rules, provenance, modality and operations | The source values travel in the sidecar. |
 
 The formula projection supports confirmed alethic rules in these shapes.
+Players are String value types without subtype or supertype links, with
+an Integer value type in the compared role for the integer guard.
 A binary relationship can require an integer second-role value to be at
 most a literal, or forbid a self-link between two roles of the same type.
 Unary relations over the same object type support subset, equality and
 exclusion, with both equality directions published as one group. A
 String value concept can declare a finite enum of representable string
 literals. Ontology scope can limit the cardinality of a named object type.
-A derived binary can use a positive chain of two asserted binaries where
+A derived binary can use one clause with a positive chain of two asserted binaries where
 the first last-role binding is the second first-role binding and the
 derived endpoints match the projected role order.
 

@@ -170,3 +170,179 @@ def test_scaled_formula_projection_time_bound(tmp_path):
     ontology, _ = _ontology(authored, model)
     assert sum(len(concept.get("requires", ())) for concept in ontology["ontology"]) == 1_000
     assert monotonic() - start < 4.0
+
+
+def _render_authored(tmp_path, document):
+    path = tmp_path / "changed.orm.json"
+    path.write_text(json.dumps(document))
+    return render_ossie(path, output_format="json")
+
+
+def test_formula_excludes_governance_fields(tmp_path):
+    authored = json.loads(SOURCE.read_bytes())
+    authored["constraints"][0].update(owner="host", allowed_fixes=["add-fact"])
+    rows = _rows(_render_authored(tmp_path, authored))
+    assert rows["/constraints/0"] == "requires"
+    for child in ("owner", "allowed_fixes", "allowed_fixes/0"):
+        assert rows[f"/constraints/0/{child}"] == "extension"
+
+
+@pytest.mark.parametrize("variant", ("entity", "subtype", "supertype", "multi_clause"))
+def test_reviewed_player_and_clause_boundary(tmp_path, variant):
+    authored = json.loads(SOURCE.read_bytes())
+    account = authored["object_types"][0]
+    if variant == "entity":
+        account.pop("primitive")
+        account.update(kind="entity", reference={"mode": "general", "value_type": "category"})
+    elif variant == "subtype":
+        account.update(subtype_of=["category"], inherits_reference=False)
+    elif variant == "supertype":
+        authored["object_types"].append(
+            dict(account, id="member", name="Member", subtype_of=["account"], inherits_reference=False)
+        )
+    else:
+        rule = authored["fact_types"][7]["derivation_rule"]
+        body = rule.pop("body")
+        rule["clauses"] = [{"body": body}, {"body": body}]
+    rows = _rows(_render_authored(tmp_path, authored))
+    assert rows["/fact_types/7/derivation_rule"] == "extension"
+    if variant != "multi_clause":
+        for i in (0, 1, 2, 3, 5):
+            assert rows[f"/constraints/{i}"] == "extension"
+        assert rows["/fact_types/4/constraints/0"] == "extension"
+    assert rows["/constraints/4"] == ("extension" if variant == "subtype" else "requires")
+
+
+def test_equality_rolls_back_a_successful_first_direction(tmp_path, monkeypatch):
+    from gnd.export.ossie_formulas import ProjectedRelation, _Unprojected
+
+    original = ProjectedRelation.path
+    attempted = []
+
+    def refuse_second(relation):
+        attempted.append(relation.target["name"])
+        if len(attempted) == 2:
+            raise _Unprojected
+        return original(relation)
+
+    authored = json.loads(SOURCE.read_bytes())
+    authored["constraints"] = [authored["constraints"][2]]
+    authored["fact_types"] = authored["fact_types"][:5]
+    monkeypatch.setattr(ProjectedRelation, "path", refuse_second)
+    result = _render_authored(tmp_path, authored)
+    assert len(attempted) == 2 and len(set(attempted)) == 2
+    assert _rows(result)["/constraints/0"] == "extension"
+    assert not any(text.startswith("Account.") for _, _, text in _formula_counts(json.loads(result.document)))
+
+
+def test_projected_roles_bind_guard_and_chain_after_determinant_reordering(tmp_path):
+    authored = json.loads(SOURCE.read_bytes())
+    for i, first, reading in (
+        (0, "account", "{Amount} is the balance of {Account}"),
+        (5, "account", "{Category} classifies {Account}"),
+        (6, "category", "{Band} groups {Category}"),
+        (7, "account", "{Band} contains {Account}"),
+    ):
+        fact = authored["fact_types"][i]
+        fact["roles"].reverse()
+        fact["reading"] = reading
+        fact.setdefault("constraints", []).append({
+            "id": f"determinant_{i}", "type": "uniqueness", "roles": [first],
+            "modality": "alethic", "source": "explicit", "status": "confirmed",
+            "provenance": {"user_quote": "An authored determinant."},
+        })
+    result = _render_authored(tmp_path, authored)
+    formulas = _formula_counts(json.loads(result.document))
+    baseline = _formula_counts(json.loads(render_ossie(SOURCE, output_format="json").document))
+    assert formulas == baseline
+    rows = _rows(result)
+    assert rows["/constraints/0"] == rows["/fact_types/7/derivation_rule"] == "requires"
+
+
+def test_shared_requirement_entry_points_keep_named_parts():
+    from gnd.export.pyrel_rules import constraint_context, constraint_requirements
+
+    source = json.loads(SOURCE.read_bytes())
+    context = constraint_context(source)
+    assert constraint_requirements(context, source["constraints"][0])[0].check.compare.right == 100
+    equality = constraint_requirements(context, source["constraints"][2])
+    assert [requirement.domain[0].relation for requirement in equality] == [
+        "account_active", "account_registered",
+    ]
+    ring = constraint_requirements(context, source["fact_types"][4]["constraints"][0], "account_recommends")
+    assert ring[0].check.compare.operator == "!="
+
+
+def test_comparison_kind_is_checked_before_emission(tmp_path, monkeypatch):
+    from dataclasses import replace
+
+    from gnd.export import ossie_formulas
+
+    lower = ossie_formulas.constraint_requirements
+
+    def unsupported_kind(*args):
+        requirements = lower(*args)
+        return [
+            replace(row, check=replace(row.check, kind="absent"))
+            if row.check.kind == "compare" else row
+            for row in requirements
+        ]
+
+    monkeypatch.setattr(ossie_formulas, "constraint_requirements", unsupported_kind)
+    rows = _rows(_render_authored(tmp_path, json.loads(SOURCE.read_bytes())))
+    assert rows["/constraints/0"] == rows["/constraints/5"] == "extension"
+    assert rows["/fact_types/4/constraints/0"] == "extension"
+
+
+def test_derived_on_derived_source_is_an_extension(tmp_path):
+    authored = json.loads(SOURCE.read_bytes())
+    derived = dict(authored["fact_types"][5], id="classification_claim", derivation="derived")
+    authored["fact_types"][7]["derivation_rule"]["body"][0]["fact_type"] = derived["id"]
+    derived["derivation_rule"] = {
+        "body": [{"fact_type": "account_classified", "bind": {"account": "$a", "category": "$c"}}],
+        "head": {"account": "$a", "category": "$c"},
+    }
+    authored["fact_types"].append(derived)
+    rows = _rows(_render_authored(tmp_path, authored))
+    assert rows["/fact_types/7/derivation_rule"] == "extension"
+    assert rows["/fact_types/8/derivation_rule"] == "extension"
+
+
+def test_shared_index_and_lowering_work_for_scaled_mixed_formulas(tmp_path, monkeypatch):
+    from gnd.export import ossie_formulas
+
+    authored = json.loads(SOURCE.read_bytes())
+    count = 180
+    guarded, subset, *_, value, cardinality = authored["constraints"]
+    authored["constraints"] = [
+        dict(rule, id=f"rule_{index}_{rule['id']}")
+        for index in range(count)
+        for rule in (guarded, subset, value, cardinality)
+    ]
+    ring, chain = (authored["fact_types"][index] for index in (4, 7))
+    for i in range(count):
+        ring_rule = dict(ring["constraints"][0], id=f"ring_rule_{i}")
+        authored["fact_types"].extend(
+            (dict(ring, id=f"ring_{i}", constraints=[ring_rule]), dict(chain, id=f"chain_{i}"))
+        )
+    calls = Counter()
+    index = ossie_formulas.constraint_context
+    lower = ossie_formulas.constraint_requirements
+
+    def indexed(*args):
+        calls["indexed"] += 1
+        return index(*args)
+
+    def lowered(*args):
+        calls[args[1]["type"]] += 1
+        return lower(*args)
+
+    monkeypatch.setattr(ossie_formulas, "constraint_context", indexed)
+    monkeypatch.setattr(ossie_formulas, "constraint_requirements", lowered)
+    result = _render_authored(tmp_path, authored)
+    assert calls == {
+        "indexed": 1, "guarded": count, "subset": count, "value": count,
+        "cardinality": count, "ring": count + 1,
+    }
+    formulas = _formula_counts(json.loads(result.document))
+    assert sum(formulas.values()) == 6 * count + 2

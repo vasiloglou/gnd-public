@@ -108,18 +108,65 @@ def test_yaml_role_name_is_a_string_in_both_upstream_readers(oracle, tmp_path):
         assert result.returncode == 0, result.stdout + result.stderr
 
 
-def test_pinned_parser_accepts_exported_os2_corpus(oracle, tmp_path):
+@pytest.mark.parametrize("scope", ("ontology", "concept", "relationship", "derivation"))
+def test_pinned_parser_accepts_exported_os2_corpus(oracle, tmp_path, scope):
     source = (
         ROOT / ".gnd-planning/milestones/ossie-interchange/evidence/OS2/corpus-r2/model.orm.json"
     )
     result = render_ossie(source, output_format="json")
     path = tmp_path / "ontology.json"
     path.write_bytes(result.document)
-    parsed = oracle.parse(path)
-    assert parsed.returncode == 0, parsed.stdout + parsed.stderr
+    for read in (oracle.validate, oracle.parse):
+        accepted = read(path)
+        assert accepted.returncode == 0, accepted.stdout + accepted.stderr
 
     document = json.loads(result.document)
-    document["requires"].append("COUNT[Account >")
+    concepts = document["ontology"]
+    relationships = [rel for concept in concepts for rel in concept.get("relationships", ())]
+    targets = {
+        "ontology": document["requires"],
+        "concept": next(concept["requires"] for concept in concepts if "requires" in concept),
+        "relationship": next(rel["requires"] for rel in relationships if "requires" in rel),
+        "derivation": next(rel["derived_by"] for rel in relationships if "derived_by" in rel),
+    }
+    targets[scope][0] = "COUNT[Account >"
     path.write_text(json.dumps(document))
+    refused = oracle.parse(path)
+    assert refused.returncode == 1 and "Unable to parse" in refused.stderr
+
+
+def test_pinned_formula_keywords_are_case_sensitive(oracle, tmp_path):
+    from tests.test_ossie_formulas import SOURCE
+
+    document = json.loads(SOURCE.read_bytes())
+    balance = document["fact_types"][0]
+    balance["roles"][1]["role_name"] = "count"
+    document["constraints"][0]["antecedent"][0]["bind"]["count"] = (
+        document["constraints"][0]["antecedent"][0]["bind"].pop("balance")
+    )
+    for constraint in document["constraints"]:
+        for key in ("role_seq_a", "role_seq_b"):
+            for role in constraint.get(key, ()):
+                if role["fact_type"] == "account_active":
+                    role["fact_type"] = "exists"
+    document = json.loads(json.dumps(document).replace('"account_active"', '"exists"'))
+    source = tmp_path / "source.orm.json"
+    source.write_text(json.dumps(document))
+    ontology = json.loads(render_ossie(source, output_format="json").document)
+    account = ontology["ontology"][0]
+    assert account["relationships"][0]["requires"] == ["count <= 100"]
+    assert any(
+        "Account.exists" in rel.get("requires", ()) for rel in account["relationships"]
+    )
+    path = tmp_path / "ontology.json"
+    path.write_text(json.dumps(ontology))
+    accepted = oracle.parse(path)
+    assert accepted.returncode == 0, accepted.stdout + accepted.stderr
+
+    relationship = account["relationships"][0]
+    relationship["roles"][0]["name"] = "COUNT"
+    relationship["verbalizes"][0] = relationship["verbalizes"][0].replace(":count", ":COUNT")
+    relationship["requires"] = ["COUNT <= 100"]
+    path.write_text(json.dumps(ontology))
     refused = oracle.parse(path)
     assert refused.returncode == 1 and "Unable to parse" in refused.stderr

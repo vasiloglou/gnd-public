@@ -450,6 +450,8 @@ Q4_PREVIEW = ['evolve', 'preview', 'model.orm.yaml', 'proposal.json', '--workspa
               '--records', 'records', '--format', 'json', '--policy', 'additive',
               '--populated', 'customer_places_order']
 SPANS_UNCHECKED = '1 of 10 source spans were not re-hashed'
+YAML_TO_JSON = ('import json,sys; from ruamel.yaml import YAML; '
+                "print(json.dumps(YAML(typ='safe').load(open(sys.argv[1], encoding='utf-8'))))")
 
 
 @pytest.fixture(scope='module')
@@ -521,31 +523,38 @@ def test_installed_0_3_0_carries(candidate, installed, tmp_path):
 
     # Q1: an Ossie export writes three files, and an import with its sidecar restores the model.
     q1 = work / 'q1'
-    (q1 / 'as-json').mkdir()
     new('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'o.yaml', expected=0)
-    assert sorted(p.name for p in q1.iterdir() if p.is_file()) == ['model.orm.yaml', 'o.yaml', 'o.yaml.gnd.json', 'o.yaml.loss.json']
-    new('q1', 'export', 'ossie', 'model.orm.yaml', '--out', 'as-json/o.json', '--format', 'json', expected=0)
-    concepts = json.loads((q1 / 'as-json/o.json').read_text(encoding='utf-8'))['ontology']
+    assert sorted(p.name for p in q1.iterdir()) == ['model.orm.yaml', 'o.yaml', 'o.yaml.gnd.json', 'o.yaml.loss.json']
+    # The exported YAML itself, read by the YAML library the wheel depends on (review G2).
+    concepts = json.loads(run([*prefix, python, '-I', '-c', YAML_TO_JSON, 'o.yaml'], q1, env))['ontology']
     (refund_by,) = [r for c in concepts for r in c.get('relationships', ()) if r['name'] == 'refund_by']
     assert refund_by['multiplicity'] == 'ManyToOne'
-    shutil.rmtree(q1 / 'as-json')
+    # The two companion files carry the schema names the format reference gives them (review G7).
+    assert json.loads((q1 / 'o.yaml.gnd.json').read_text(encoding='utf-8'))['schema'] == 'gnd-ossie-sidecar/1'
+    assert json.loads((q1 / 'o.yaml.loss.json').read_text(encoding='utf-8'))['schema'] == 'gnd-ossie-loss/1'
     new('q1', 'import', 'ossie', 'o.yaml', '--out', 'restored.orm.json', expected=0)
     report = json.loads((q1 / 'restored.orm.json.loss.json').read_text(encoding='utf-8'))
-    assert report['schema'] == 'gnd-ossie-import-loss/1' and report['source_identity_verified'] is True
-    assert (q1 / 'restored.orm.json').is_file()
+    assert report['source_identity_verified'] is True
     # Q1 control: the sidecar binds the ontology's bytes, so a changed ontology is refused and nothing is written.
     edit(q1 / 'o.yaml', 'name: refund_by', 'name: refund_bx', q1 / 'changed.yaml')
     for suffix in ('.gnd.json', '.loss.json'):
         shutil.copyfile(q1 / ('o.yaml' + suffix), q1 / ('changed.yaml' + suffix))
     refused = new('q1', 'import', 'ossie', 'changed.yaml', '--out', 'changed.orm.json', expected=3)
-    assert 'ossie-import:binding' in refused.stderr
+    assert 'ossie-import:' in refused.stderr   # the reference names the form, not each rule (review G7)
     assert not (q1 / 'changed.orm.json').exists() and not (q1 / 'changed.orm.json.loss.json').exists()
 
     # Q2: the identity is the sha256 of the document printed with it, and it is the one the import reported.
     refunds = identity(new('q1', 'validate', 'model.orm.yaml', '--identity', expected=0))
     assert report['source_model_identity'] == refunds
+    # The restored file is a model with the source's identity, measured here and not taken
+    # from the import's own report (review G3).
+    assert identity(new('q1', 'validate', 'restored.orm.json', '--identity', expected=0)) == refunds
+    # Q2 controls: a renamed object type and a changed rule each move the identity (review G4).
     edit(q1 / 'model.orm.yaml', 'name: Refund\n', 'name: RefundX\n', q1 / 'renamed.orm.yaml')
-    assert identity(new('q1', 'validate', 'renamed.orm.yaml', '--identity', expected=0)) != refunds
+    edit(q1 / 'model.orm.yaml', 'right: 1000 }', 'right: 5 }', q1 / 'limit.orm.yaml')
+    moved = {identity(new('q1', 'validate', name, '--identity', expected=0))
+             for name in ('renamed.orm.yaml', 'limit.orm.yaml')}
+    assert len(moved) == 2 and refunds not in moved
 
     # Q3: a version 5 model with a pinned include validates; a wrong pin is refused.
     assert 'OK: sales.orm.json is a valid GND ORM model' in new('q3', 'validate', 'sales.orm.json', expected=0).stdout
@@ -562,12 +571,12 @@ def test_installed_0_3_0_carries(candidate, installed, tmp_path):
         return json.loads((work / 'q4' / name).read_text(encoding='utf-8'))
 
     plain = preview('plain.json', expected=3)
-    assert [i['cell'] for i in plain['policy_issues']] == ['constraint.populated.add']
+    assert [(i['operation_index'], i['cell']) for i in plain['policy_issues']] == [(0, 'constraint.populated.add')]
     clean = preview('clean.json', '--check-population', 'populations/clean.json', expected=0)
     assert clean['policy_issues'] == []
     assert [row['operation_index'] for row in clean['population_check']['admitted']] == [0]
     violating = preview('violating.json', '--check-population', 'populations/violating.json', expected=3)
-    assert [i['cell'] for i in violating['policy_issues']] == ['constraint.populated.add']
+    assert [(i['operation_index'], i['cell']) for i in violating['policy_issues']] == [(0, 'constraint.populated.add')]
     assert violating['population_check']['admitted'] == []
 
     # Q5: an unchecked source span is a warning, and an error under --require-documents (UG3 cases A2a, A3, A4).
@@ -602,7 +611,8 @@ def test_published_0_2_0_lacks_0_3_0_features(installed, published_0_2_0, tmp_pa
     assert 'unrecognized arguments: --identity' in old('q1', 'validate', 'model.orm.yaml', '--identity', expected=64).stderr
     # Q3: model format version 5 is new, as the 0.3.0 notes say: 0.2.0 refuses the version.
     refused = json.loads(old('q3', 'validate', 'sales.orm.json', '--format', 'json', expected=3).stdout)
-    assert any(i['path'] == '$.version' and '5 is not one of' in i['message'] for i in refused['issues']), refused['issues']
+    assert any(i['path'] == '$.version' and i['message'] == '5 is not one of [1, 2, 3, 4]'
+               for i in refused['issues']), refused['issues']
     # Q4: --check-population is new; the refusal it lifts is not.
     assert 'unrecognized arguments: --check-population' in old(
         'q4', *Q4_PREVIEW, '--out', 'clean.json', '--check-population', 'populations/clean.json', expected=64).stderr

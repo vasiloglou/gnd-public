@@ -182,3 +182,42 @@ def test_malformed_guarded_input_leaves_no_output(tmp_path):
     out = tmp_path / "out"
     assert _guarded_run(model, out).returncode == 3
     assert not out.exists()
+
+
+def test_run_limit_preserves_a_served_pair(tmp_path, monkeypatch):
+    from random import Random
+
+    from gnd.model import load_model
+    from gnd.model_index import ModelIndex
+    from gnd.synth import guarded_cases
+    from gnd.synth.guarded import _WorkBudget
+
+    model = load_model(EXAMPLE)
+    index = ModelIndex.for_model(model)
+    first_rule = next(rule for _, rule, _ in index.iter_constraints() if rule["type"] == "guarded")
+    budget = _WorkBudget()
+    pair, reason = guarded_cases.build_pair(model, index, first_rule, Random(0), budget)
+    assert pair and reason is None
+    monkeypatch.setattr(guarded_cases, "RUN_WORK", budget.used)
+    out = tmp_path / "out"
+    assert _guarded_run(EXAMPLE, out).returncode == 0
+    report = json.loads((out / "guarded-cases.json").read_bytes())
+    served, refused = report["rules"]
+    assert len(served["cases"]) == 2
+    assert refused["reason"] == "search-limit"
+    assert (out / report["ordinary"]["corpus"] / "index.json").is_file()
+
+
+def test_guarded_case_invariant_failure_aborts_before_publication(tmp_path, monkeypatch):
+    from gnd.errors import PopulationLoadError
+    from gnd.synth import guarded_service
+
+    def refuse(*args, **kwargs):
+        raise PopulationLoadError("injected case admission failure")
+
+    monkeypatch.setattr(guarded_service, "load_population_bytes", refuse)
+    out = tmp_path / "out"
+    result = _guarded_run(EXAMPLE, out)
+    assert result.returncode == 5
+    assert b"injected case admission failure" in result.stdout
+    assert not out.exists()

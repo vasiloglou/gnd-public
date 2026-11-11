@@ -1,0 +1,16 @@
+# Six-shard default lane on beast-3 at scratch commit 7923ac98 (main d7317d25 plus M1 to M3 and M5; not in this repository); finished 2026-11-11T06:28:23Z
+2026-11-11T06:28:23Z
+m5 shard0: 3682 passed, 53 deselected in 459.81s (0:07:39) (shard exit=0)
+m5 shard1: 5 failed, 2917 passed, 152 deselected in 412.29s (0:06:52) (shard exit=1)
+m5 shard2: 2833 passed, 130 deselected in 321.62s (0:05:21) (shard exit=0)
+m5 shard3: 1 failed, 4082 passed, 88 deselected in 812.93s (0:13:32) (shard exit=1)
+m5 shard4: 2652 passed, 282 deselected in 251.95s (0:04:11) (shard exit=0)
+m5 shard5: 2826 passed, 145 deselected, 1 warning, 2 errors in 582.32s (0:09:42) (shard exit=1)
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid
+FAILED tests/test_development_scaffold.py::test_reference_closure_and_declared_bootstrap
+FAILED tests/test_plan_app_docs.py::test_plain_short_prose_without_exit_codes[grow-a-model.md]
+FAILED tests/test_release_version.py::test_agreement_control_passes_on_an_unmutated_copy
+FAILED tests/test_release_version.py::test_drift_is_refused[notes]
+FAILED tests/test_release_version.py::test_lock_manifests_and_notes_agree_with_pyproject
+FAILED tests/test_release_version.py::test_notes_and_compatibility_do_not_claim_publication

@@ -27,6 +27,9 @@ CT_HOME = Path('.gnd-planning/milestones/composition-and-type-induction')
 # part of reference closure. Exempt only its enumerated targets, not arbitrary
 # absolute paths or every link under evidence/.
 RETAINED_EXTERNAL_REFERENCES = {
+    # Verbatim reviewer output quoting test code and a mutant input; neither is a document link.
+    Path('.gnd-planning/milestones/release-0.3.0/notes/phase-RN1-codex-review.md'): {
+        '{link}', 'explanation/ossie.md'},
     Path('.gnd-planning/milestones/code-refactoring/evidence/RF9-ci-repair/baseline-report.md'): {
         '/private/tmp/gnd-local-ci-20261006-d6f1e8a/' + name
         for name in (
@@ -70,7 +73,15 @@ RETAINED_EXTERNAL_REFERENCES = {
 IE_HOME = Path('.gnd-planning/milestones/incremental-evaluation')
 IK_HOME = Path('.gnd-planning/milestones/induced-knowledge')
 MC_HOME = Path('.gnd-planning/milestones/model-composition')
+OS_HOME = Path('.gnd-planning/milestones/ossie-interchange')
 RETAINED_DOCUMENT_ORIGINS = {
+    # release-0.3.0 RN1: two ossie-interchange spec snapshots, pinned by their phase records.
+    OS_HOME / 'evidence/OS1/spec-r1.md': (
+        OS_HOME / 'notes/phase-OS1-spec.md',
+        'b17b774364ce381b5ff3173a0b5546b377fec7a2044275ae31c45fc39a853353'),
+    OS_HOME / 'evidence/OS0/spec-r4.md': (
+        OS_HOME / 'notes/phase-OS0-spec.md',
+        '47b62ba0eac4edb5772e4886b5b1a360343a6cfc9a5330e24e6f4cb4b1c5eefd'),
     MC_HOME / 'notes/phase-MC4-fable-draft.md': (
         Path('docs/tutorials/shared-expense-policies.md'),
         '4a3cdd3d4cb802fc91eaa7ebb75ef3f9374c5391eae5a747483eb789b3b05ea7'),

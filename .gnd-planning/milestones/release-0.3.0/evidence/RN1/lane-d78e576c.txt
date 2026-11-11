@@ -1,0 +1,12 @@
+# Six-shard default lane on beast-3 at d78e576cd4fd5a83e452e26589953b645bcae33e
+# Instrument: evidence/e1/README.md. First line is the finish time, second the commit checked out in shard 0.
+2026-11-11T07:40:05Z
+d78e576cd4fd5a83e452e26589953b645bcae33e
+rn1end shard0: 3682 passed, 53 deselected in 465.65s (0:07:45) (shard exit=0)
+rn1end shard1: 2940 passed, 152 deselected in 420.57s (0:07:00) (shard exit=0)
+rn1end shard2: 2833 passed, 130 deselected in 328.35s (0:05:28) (shard exit=0)
+rn1end shard3: 4083 passed, 88 deselected in 825.05s (0:13:45) (shard exit=0)
+rn1end shard4: 2652 passed, 282 deselected in 257.72s (0:04:17) (shard exit=0)
+rn1end shard5: 2826 passed, 145 deselected, 1 warning, 2 errors in 587.81s (0:09:47) (shard exit=1)
+ERROR tests/test_public_optional.py::test_base_wheel_refuses_missing_synth_extra_and_still_checks
+ERROR tests/test_public_optional.py::test_declared_synth_extra_is_seeded_and_loader_valid

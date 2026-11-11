@@ -19,7 +19,7 @@ def _workspace():
     fixture = Path(__file__).parent / "fixtures/public-extract-controls/workspace.json.gz"
     assert fixture.is_file() and not fixture.is_symlink()
     raw = fixture.read_bytes()
-    assert len(raw) <= 32768 and hashlib.sha256(raw).hexdigest() == '9e9f3c1688060253297b4627585cf23da801304eb0ab06b484485d70e85a178c'
+    assert len(raw) <= 32768 and hashlib.sha256(raw).hexdigest() == '10d1d72476e9df41212a0093c7515ab391d2ab95f54101f79346f7ebcf67a430'
     with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:
         expanded = stream.read(131073)
     assert len(expanded) <= 131072

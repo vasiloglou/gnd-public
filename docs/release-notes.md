@@ -1,13 +1,48 @@
 # Release notes and milestones
 
 Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
-first. Releases follow the [release procedure](releasing.md). Changes on `main`
-after a release are listed in an `Unreleased:` section until the next one.
+first. Version 0.3.0 is prepared and not published. Releases follow the
+[release procedure](releasing.md). Changes on `main` after a release are listed
+in an `Unreleased:` section until the next one.
 
-## Unreleased: model identity, projected text, and unattended growth
+## 0.3.0 (prepared, not published)
 
-These changes are on `main` after 0.2.0 and are not in any published package.
-Install from a checkout of the repository to use them.
+Everything in this section is on `main` after 0.2.0 and is not in any published
+package. Until the release is published, install from a checkout of the
+repository to use it. The first block is Apache Ossie interchange; the blocks
+after it are the other changes since 0.2.0.
+
+### Apache Ossie interchange
+
+GND can share a model as an [Apache Ossie](explanation/ossie.md) ontology and
+start a model from one.
+
+- **Export.** `gnd export ossie MODEL --out ONTOLOGY.yaml` writes three files:
+  the ontology, a sidecar (`ONTOLOGY.yaml.gnd.json`) that keeps the GND details
+  Ossie has no place for, and a loss report (`ONTOLOGY.yaml.loss.json`) that
+  lists each source field and how it was handled. `--format json` writes JSON,
+  and `--loss-report PATH` puts the report elsewhere (import takes it too).
+  Example populations are omitted and listed in the report; `--strict` stops
+  the export when any field would be refused.
+- **Import.** `gnd import ossie ONTOLOGY.yaml --out MODEL.json` writes a GND
+  model and its own loss report. With the sidecar beside an unchanged ontology,
+  the model content the export kept is restored, and the report says whether
+  the restored model's identity matched the source's. What the export omitted
+  stays omitted: a model with sample or reference populations comes back
+  without them, and its identity does not match. An ontology from another tool
+  imports through the supported projection. Import opens no network connection.
+- **Scope.** The ontology layer of Ossie `0.3.0.dev0`, pinned to Apache Ossie
+  commit `ee89dbdc`: concepts, relationships and a documented subset of
+  constraint formulas. Ossie's semantic models, mappings and query interfaces
+  are outside it.
+- **Disclosure.** Both commands behave the same in every
+  [disclosure mode](reference/disclosure.md). An export writes the model's
+  constraint literals and description text, also for a fact type marked
+  `redact`. Read the loss report before you share an export.
+
+Start with [sharing the refunds example](how-to/share-an-ossie-ontology.md).
+The mapping is in the `gnd-orm-core` representation format, "Ossie
+interchange"; see [formats](reference/formats.md).
 
 ### Shared definitions, project-owned policies (issue 95)
 
@@ -20,6 +55,23 @@ Finance edition while Engineering stays on the old one. The
 [command walkthrough](how-to/shared-expense-policies-commands.md) runs every step.
 Generated-app and linked-project conformance routes for these models remain
 unsupported. This feature requires the development checkout.
+
+- **New model format, version 5.** A model that includes a vocabulary declares
+  `version: 5` and uses two new fields, `includes` and `fact_type_constraints`
+  ([formats](reference/formats.md)). **GND 0.2.0 cannot read a version 5
+  model**: its schema refuses the version and both fields. Models at earlier
+  versions are unchanged. A command that does not support such a model yet
+  refuses it with `include:unsupported-route` before it loads anything;
+  `gnd export ossie` and `gnd export pyrel` are among them.
+- **Evolving an included vocabulary.** A proposal can re-pin an include
+  (`repin-include`), and a preview of such a model carries `before_includes`
+  and `candidate_includes`. `gnd evolve preview --previous-include ID=PATH`
+  supplies the old bytes of a re-pinned include. GND 0.2.0 refuses these
+  proposals and previews.
+- **Model review.** `gnd verbalize model MODEL` and `gnd.api.verbalize_model`
+  print a review of the complete model. They print the same text in every
+  [disclosure mode](reference/disclosure.md), authored sample populations
+  included.
 
 ### Model identity a caller can recompute (issue 111)
 
@@ -65,6 +117,12 @@ admitted, never a path or a value. A preview that carries the new
 `population_check` field is refused by older GND readers. Rules and exits:
 [admitting a constraint on clean data](reference/evolve-policy.md#admitting-a-constraint-on-clean-data).
 
+One rule is stricter, with or without the option. A constraint written inside
+a fact type now counts every fact type it reaches, not only the one that holds
+it. Under `--policy additive`, a new constraint on an empty fact type that also
+ranges over a populated one is refused (`constraint.populated.add`), where
+0.2.0 admitted it.
+
 ### Unchecked source spans are counted (issue 74)
 
 `gnd validate MODEL --document DOC` on an unattended model now says how many
@@ -94,6 +152,12 @@ that declares a source document**: it refuses it (exit 3). Proposals without
 the operation are unchanged. See [the additive
 policy](reference/evolve-policy.md#source-documents).
 
+The packaged unattended growth procedure of `gnd-model-from-text` also says
+what to do when a round's report names an existing fact type with the same
+shape as an added one. The host reuses the existing fact type, or keeps both
+and writes the reason in `provenance.rationale`, or keeps both with an open
+question, and logs which it did.
+
 ### Fixes and internal changes
 
 - **Discover on an unattended model** (issue 148): `gnd discover` no longer
@@ -110,6 +174,23 @@ policy](reference/evolve-policy.md#source-documents).
   were private and had no remaining caller.
 - **Test timing** (tests only, issue 117): two timing-sensitive tests no longer
   fail under load.
+- **Prepared-policy reuse on Python 3.14**: incremental evaluation rechecks
+  each non-primitive part of a prepared policy's key before reusing it. On
+  Python 3.14, which caches a tuple's hash, a key part that had become
+  unhashable was served from the cache; it now takes the unprepared path, as
+  on 3.13.
+- **A null `derivations` is read as absent**: a report, a session snapshot or
+  a diff row with `"derivations": null`, which the report schema allows, no
+  longer stops `gnd coverage --check` with a traceback, is no longer reported
+  by a session as an invalid verifier payload, and no longer fails the
+  redaction projection of a diff.
+- **Packaged modeling examples**: four role names in three
+  `gnd-model-from-text` examples are now snake case (`issue_number`,
+  `occurred_on`, `start_date`, `full_name`), like every other role name in the
+  examples. A copy of an example made before this release keeps the old names.
+- **Disclosure reference**: the [disclosure reference](reference/disclosure.md)
+  lists `gnd export ossie` and `gnd import ossie` among the outputs that are
+  the same in every mode.
 
 ## 0.2.0 (2026-11-08)
 

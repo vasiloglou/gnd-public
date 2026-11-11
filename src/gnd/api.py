@@ -38,6 +38,9 @@ from gnd.checking_service import (
     certify_assurance as _certify_assurance,
 )
 from gnd.checking_service import (
+    compare_rule_editions as _compare_rule_editions,  # noqa: F401 -- CLI gateway
+)
+from gnd.checking_service import (
     finalize as _finalize,
 )
 from gnd.checking_service import (

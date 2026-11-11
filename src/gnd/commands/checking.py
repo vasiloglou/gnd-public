@@ -404,9 +404,7 @@ def _cmd_verbalize_population(
 
 
 def _cmd_compare_rule_editions(head: str, population: str, base: str, output_format: str) -> int:
-    from gnd.checking_service import compare_rule_editions
-
-    exit_code, payload = compare_rule_editions(head, population, base)
+    exit_code, payload = api_module._compare_rule_editions(head, population, base)
     if output_format == "json":
         report_module.emit(payload)
         return exit_code
@@ -426,7 +424,11 @@ def _cmd_compare_rule_editions(head: str, population: str, base: str, output_for
                 f"{len(delta['base_only'])} base-only, {len(delta['head_only'])} head-only, "
                 f"{len(delta['standing'])} standing"
             )
-        print(f"{row['address']} [{row['pairing']}] {detail}".rstrip())
+        outcomes = " ".join(
+            f"{side}={result['verdict']}/{result['modality']}"
+            for side in ("base", "head") if (result := row[side]) is not None
+        )
+        print(f"{row['address']} [{row['pairing']}] {outcomes} {detail}".rstrip())
         if delta is not None:
             for direction in ("base_only", "head_only"):
                 for witness in delta[direction]:

@@ -514,7 +514,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: registered parsers or the selected command exit code
 - status: canonical
 - modules: src/gnd/commands/checking.py, src/gnd/commands/__init__.py
-- uses: assurance.transport, check.batch, check.element_coverage, check.service, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.ossie_import, model.rai_import
+- uses: assurance.transport, check.batch, check.element_coverage, checker.evaluate, cli.api, cli.arguments, export.ilp_service, infra.artifacts, infra.exit_codes, infra.input_policy, infra.output, infra.report_payloads, infra.report_redaction, infra.safe_filesystem, infra.verdict_prose, infra.version, model.anchors, model.diff, model.loading, model.ossie_import, model.rai_import
 - used_by: cli.dispatch
 - part_of: subsystem.check
 - tests: tests/test_rf5_commands.py, tests/test_reference_transition_text.py
@@ -1932,7 +1932,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/address.py
 - uses: (none)
-- used_by: check.admission, check.applicability, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, semantics.snapshot_adapter, … +3 more (graph.md)
+- used_by: check.admission, check.applicability, check.baseline, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, … +4 more (graph.md)
 - tests: tests/test_address.py
 
 
@@ -1994,7 +1994,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Per-verdict novelty and row novelty, the baseline block's counts, and the two flags the exit band reads.
 - status: canonical
 - modules: src/gnd/baseline.py
-- uses: infra.artifacts, model.atom_bindings, model.scalar_terms
+- uses: infra.artifacts, model.address, model.atom_bindings, model.scalar_terms
 - used_by: check.service, infra.report_payloads
 - part_of: subsystem.check
 - tests: tests/test_rc3_baseline.py
@@ -2060,7 +2060,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/checking_service.py
 - uses: assurance.evidence, assurance.policy, check.admission, check.baseline, check.branches, check.calculation_scope, check.compiled_obligations, check.snapshot_decision, checker.evaluate, infra.artifacts, infra.errors, infra.exit_codes, infra.report_payloads, infra.report_redaction, model.address, model.anchors, model.composition, model.loading, model.population_loading, model.query_index, model.reference_binding, model.scalar_terms, semantics.transitions
-- used_by: cli.api, cli.checking_command, infra.text_output, model.diff
+- used_by: cli.api, infra.text_output, model.diff
 - part_of: subsystem.check
 - tests: tests/test_report_json.py, tests/test_public_exact_scope_guards.py, tests/test_v71_phase4_successors.py
 - checked: partial

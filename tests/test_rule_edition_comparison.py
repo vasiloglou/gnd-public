@@ -144,7 +144,7 @@ def test_invalid_population_bytes(tmp_path):
     (tmp_path / "population.yaml").write_text("{")
     result = _compare(tmp_path)
     assert result.returncode == 3
-    assert json.loads(result.stdout)["reason"] == "base-population-ill-formed"
+    assert json.loads(result.stdout)["reason"] == "population-ill-formed"
 
 
 def test_population_is_read_once_and_work_exhaustion_has_no_partial_delta(tmp_path, monkeypatch):
@@ -249,3 +249,71 @@ def test_population_header_is_validated_against_each_edition(tmp_path):
     del population["population"]["model_id"]
     population_path.write_text(json.dumps(population))
     assert _compare(tmp_path).returncode == 0
+
+
+def test_unmatched_variables_on_both_sides_withhold_delta(tmp_path):
+    base, head = _write(tmp_path)
+    owner_fact = YAML(typ="safe").load((EXAMPLE / "model.orm.yaml").read_text())["fact_types"][2]
+    owner_fact.pop("constraints")
+    owner_id = owner_fact["id"]
+    for side, model in (("base", base), ("head", head)):
+        model["fact_types"].append(copy.deepcopy(owner_fact))
+        if side == "base":
+            model["constraints"][0]["antecedent"].append({
+                "fact_type": owner_id, "bind": {"component": "$source", "owner": "$old_only"},
+            })
+        (tmp_path / f"{side}.orm.yaml").write_text(json.dumps(model))
+    path = tmp_path / "population.yaml"
+    population = json.loads(path.read_text())
+    population["population"]["covers"].append(owner_id)
+    population["facts"][owner_id] = [{"component": "caller0", "owner": "platform"}]
+    path.write_text(json.dumps(population))
+    result = _compare(tmp_path)
+    assert result.returncode == 4
+    row, = json.loads(result.stdout)["rules"]
+    assert row["reason"] == "binding-alignment-ambiguous"
+    assert row["delta"] is None
+
+
+def test_existing_diff_keeps_its_same_band_gap_behavior(tmp_path):
+    _write(tmp_path)
+    population_dir = tmp_path / "facts"
+    population_dir.mkdir()
+    (population_dir / "population.yaml").write_bytes((tmp_path / "population.yaml").read_bytes())
+    result = run_main(
+        ["diff", "base.orm.yaml", "head.orm.yaml", "--populations", "facts", "--format", "json"],
+        cwd=tmp_path,
+    )
+    assert result.returncode == 0
+    report = json.loads(result.stdout)
+    population, = report["populations"]
+    assert population["a_to_b"] == population["b_to_a"] == []
+
+
+def test_missing_or_unknown_verdict_cannot_create_a_directional_delta():
+    from gnd.baseline import compare_editions
+
+    rows, incomplete = compare_editions([_verdict("fail", [1])], [_verdict("unknown")], {}, {})
+    assert incomplete and rows[0]["reason"] == "unknown-verdict"
+    assert rows[0]["delta"] is None
+    constraints = {"constraints[0]": {"id": "test", "type": "value", "modality": "alethic"}}
+    rows, incomplete = compare_editions([_verdict("fail", [1])], [], constraints, constraints)
+    assert incomplete and rows[0]["reason"] == "missing-verdict"
+    assert rows[0]["pairing"] == "paired"
+    assert rows[0]["delta"] is None
+
+
+def test_guarded_rowless_and_rowed_failure_are_incomparable():
+    from gnd.baseline import compare_editions
+
+    left = dict(_verdict("fail", [{"$a": "core"}]), constraint_type="guarded")
+    right = dict(_verdict("fail"), constraint_type="guarded")
+    rows, incomplete = compare_editions([left], [right], {}, {})
+    assert incomplete and rows[0]["reason"] == "binding-shape-unavailable"
+    assert rows[0]["delta"] is None
+
+
+def test_comparison_requires_population_before_io(tmp_path):
+    result = run_main(["check", "missing.orm.yaml", "--baseline-model", "missing-base.orm.yaml"], cwd=tmp_path)
+    assert result.returncode == 64
+    assert b"population" in result.stderr

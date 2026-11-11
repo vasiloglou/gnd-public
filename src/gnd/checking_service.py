@@ -1016,14 +1016,14 @@ def compare_rule_editions(
         except PopulationValidationError as error:
             return refuse(f"{side}-population-ill-formed", side, error.issues)
         except (PopulationLoadError, OSError, YAMLError, ValueError, RecursionError):
-            return refuse(f"{side}-population-ill-formed", side)
+            return refuse("population-ill-formed")
 
     reports = {}
     constraints = {}
     for side, model in models.items():
         result = run_check(model, populations[side], rule_ids=True)
         if result.exit_code not in (0, 1, 2, 4):
-            return refuse(f"{side}-check-refused", side, result.issues, exit_code=result.exit_code)
+            return refuse(f"{side}-check-refused", side, result.issues, exit_code=3 if result.exit_code == 3 else EXIT_INTERNAL)
         report = result.payload
         payload[side].update(model_digest=report["model_digest"], exit_code=result.exit_code)
         reports[side] = report["verdicts"]
@@ -1036,6 +1036,7 @@ def compare_rule_editions(
         )
     except EditionComparisonLimit:
         return refuse("comparison-work-limit", exit_code=4)
+    incomplete = incomplete or any(payload[side]["exit_code"] == 4 for side in ("base", "head"))
     payload["rules"] = rules
     payload["exit_code"] = 4 if incomplete else 0
     payload["reason"] = "incomplete-comparison" if incomplete else None

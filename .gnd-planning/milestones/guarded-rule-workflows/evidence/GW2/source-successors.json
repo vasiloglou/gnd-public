@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "reason": "GW0 diagnostic forwarding and report projection.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_check",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "4d45820eeaccc6887947cd67c0c461475e674a4a808b9052335ea6a829457586",
+        "algorithm_sha256": "60385328c32f4ece7a124c571c46f5dc73eb570ad099e99a14577af0eee16fb7"
+      },
+      "after": {
+        "raw_sha256": "36636b18aacfc339526e9c0f835160814cc6a739ec2f52e5c5971fff78ac314e",
+        "algorithm_sha256": "0205e56be5f917c74e4d5ece361899511c52360b07a4360b1817e5d6c779b6f0"
+      },
+      "reason": "GW0 explicitly forwards the opt-in guarded report and renders its metadata."
+    }
+  ]
+}

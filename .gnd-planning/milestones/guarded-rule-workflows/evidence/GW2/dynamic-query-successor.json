@@ -147,7 +147,7 @@
       "src/gnd/checking_service.py",
       "compare_rule_editions",
       "payload[side]",
-      1
+      2
     ],
     [
       "src/gnd/checking_service.py",
@@ -172,8 +172,14 @@
       "_cmd_compare_rule_editions",
       "payload[side]",
       2
+    ],
+    [
+      "src/gnd/commands/checking.py",
+      "_cmd_compare_rule_editions",
+      "row[side]",
+      1
     ]
   ],
-  "result_distinct_rows": 7590,
-  "result_occurrences": 9450
+  "result_distinct_rows": 7591,
+  "result_occurrences": 9452
 }

@@ -111,27 +111,27 @@ Stable in-process access to GND validation and checking reports.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `CheckReceipt` | class | 135 | Proof, held in this process only, that GND checked a population against a model. |
-| `ReceiptRefused` | class(ValueError) | 163 | A checked pre-state receipt cannot be reused for this transition. |
-| `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 171 | Return the check payload and an opaque, in-process CheckReceipt. |
-| `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 668 | Validate a model path or reuse a loaded model, returning its report. |
-| `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 680 | Check one population and return the same payload emitted by the CLI. |
-| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 746 | Read two models and optionally one directory of population documents. |
-| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 930 | Public population sentence view; applied redaction is the default. |
-| `compose(model, directory) -> dict[str, Any]` | function | 958 | Compose a composition directory's sources into one population (CT2). |
-| `verbalize_model(model) -> str` | function | 1012 | Render the caller's complete model for review, including authored samples. |
-| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1021 | Render derived fact types' rules in GND's controlled language. |
-| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1064 | Audit a declared post, or compute it when ``post`` is omitted. |
-| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1093 | Evaluate saved opinions without obtaining any external judgment. |
-| `EvaluationSession` | class | 1201 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
-| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1225 | (no docstring) |
-| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1240 | (no docstring) |
-| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1248 | (no docstring) |
-| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1258 | Validate whole ordered relation replacements between evaluations. |
-| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1267 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
-| `EvaluationSession.reset(self) -> None` | method | 1279 | (no docstring) |
-| `EvaluationSession.close(self) -> None` | method | 1282 | (no docstring) |
-| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1285 | (no docstring) |
+| `CheckReceipt` | class | 138 | Proof, held in this process only, that GND checked a population against a model. |
+| `ReceiptRefused` | class(ValueError) | 166 | A checked pre-state receipt cannot be reused for this transition. |
+| `check_with_receipt(model, population, *, unredacted) -> tuple[dict[str, Any], CheckReceipt]` | function | 174 | Return the check payload and an opaque, in-process CheckReceipt. |
+| `validate(model, *, unredacted, references) -> dict[str, Any]` | function | 671 | Validate a model path or reuse a loaded model, returning its report. |
+| `check(model, population, *, compiled_operations, unredacted, anchors, document, population_bytes, a…` | function | 683 | Check one population and return the same payload emitted by the CLI. |
+| `diff(model_a, model_b, *, populations, unredacted, seed, references, references_b) -> dict[str, Any]` | function | 749 | Read two models and optionally one directory of population documents. |
+| `verbalize(model, population, *, anchors, document, population_bytes, unredacted) -> dict[str, Any]` | function | 933 | Public population sentence view; applied redaction is the default. |
+| `compose(model, directory) -> dict[str, Any]` | function | 961 | Compose a composition directory's sources into one population (CT2). |
+| `verbalize_model(model) -> str` | function | 1015 | Render the caller's complete model for review, including authored samples. |
+| `verbalize_rules(model, *, fact_types) -> dict[str, Any]` | function | 1024 | Render derived fact types' rules in GND's controlled language. |
+| `transition(model, pre, steps, post, *, unredacted, references, pre_receipt) -> dict[str, Any]` | function | 1067 | Audit a declared post, or compute it when ``post`` is omitted. |
+| `judgments(model_path, population_path, policy_path, receipts_path, *, trusted_root, reference_root,…` | function | 1096 | Evaluate saved opinions without obtaining any external judgment. |
+| `EvaluationSession` | class | 1204 | Opt-in bounded reuse for related checks; reports keep ordinary API semantics. |
+| `EvaluationSession.check(self, population, *, compiled_operations, unredacted, anchors, document, po…` | method | 1228 | (no docstring) |
+| `EvaluationSession.check_with_receipt(self, population, *, unredacted) -> tuple[dict[str, Any], Chec…` | method | 1243 | (no docstring) |
+| `EvaluationSession.transition(self, pre, steps, post, *, unredacted, references, pre_receipt) -> dic…` | method | 1251 | (no docstring) |
+| `EvaluationSession.observe(self, population, replacements) -> Population` | method | 1261 | Validate whole ordered relation replacements between evaluations. |
+| `EvaluationSession.check_with_feedback(self, population, *, attempt) -> tuple[dict[str, Any], dict[s…` | method | 1270 | Check and return separate bounded counts; attempt numbering is lifetime-scoped. |
+| `EvaluationSession.reset(self) -> None` | method | 1282 | (no docstring) |
+| `EvaluationSession.close(self) -> None` | method | 1285 | (no docstring) |
+| `EvaluationSession.stats(self) -> dict[str, int]` | method | 1288 | (no docstring) |
 
 ## gnd.applicability — `src/gnd/applicability.py`
 Components: check.applicability
@@ -255,12 +255,12 @@ Compare a head check with a baseline check (``gnd check --baseline``).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `VerdictView` | class | 23 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
-| `Comparison` | class | 33 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
-| `baseline_key(address, row) -> Key` | function | 59 | The one key every family's offending row is compared by. |
-| `compare(head, base, addresses) -> Comparison` | function | 70 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
-| `EditionComparisonLimit` | class(Exception) | 111 | The rule-edition comparison exhausted its work budget. |
-| `compare_editions(base_verdicts, head_verdicts, base_constraints, head_constraints) -> tuple[list[di…` | function | 158 | Compare side-local observations by declared ID and canonical witness identity. |
+| `VerdictView` | class | 24 | One verdict as version 15 reports it: its positional ref, outcome and rows. |
+| `Comparison` | class | 34 | Novelty per head verdict, the baseline block's counts, and the band's two inputs. |
+| `baseline_key(address, row) -> Key` | function | 60 | The one key every family's offending row is compared by. |
+| `compare(head, base, addresses) -> Comparison` | function | 71 | Judge each head violation against the base; ``addresses`` maps ref -> (address, addressing). |
+| `EditionComparisonLimit` | class(Exception) | 113 | The rule-edition comparison exhausted its work budget. |
+| `compare_editions(base_verdicts, head_verdicts, base_constraints, head_constraints) -> tuple[list[di…` | function | 164 | Compare side-local observations by declared ID and canonical witness identity. |
 
 ## gnd.batch — `src/gnd/batch.py`
 Components: check.batch

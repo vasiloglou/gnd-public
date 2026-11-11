@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any
 
+from gnd.address import declared_constraint_address
 from gnd.artifacts import canonical_json_bytes
 
 #: A rule's address and one canonical offending row, or None for a row-less failure.
@@ -106,6 +107,7 @@ def compare(
 
 
 EDITION_COMPARISON_WORK = 1_000_000
+_EDITION_VERDICTS = frozenset({"pass", "vacuous", "fail", "warning", "unchecked"})
 
 
 class EditionComparisonLimit(Exception):
@@ -122,11 +124,15 @@ def _guarded_projection(
     base_atoms = base["antecedent"]
     head_atoms = head["antecedent"]
     charge(sum(1 + len(atom_bind(atom)) for atoms in (base_atoms, head_atoms) for atom in atoms))
-    if base_atoms == head_atoms:
-        names = tuple(sorted({
-            f"${name}" for atom in base_atoms for term in atom_bind(atom).values()
+    def variable_names(atoms):
+        return {
+            name for atom in atoms for term in atom_bind(atom).values()
             if (name := variable_name(term)) is not None
-        }))
+        }
+
+    base_names = variable_names(base_atoms)
+    if base_atoms == head_atoms:
+        names = tuple(f"${name}" for name in sorted(base_names))
         return names, names
 
     def unique_atoms(atoms):
@@ -149,7 +155,7 @@ def _guarded_projection(
                 continue
             if pairs.setdefault(a, b) != b or reverse.setdefault(b, a) != a:
                 return None
-    if not pairs:
+    if not pairs or (pairs.keys() != base_names and reverse.keys() != variable_names(head_atoms)):
         return None
     names = sorted(pairs)
     return tuple(f"${a}" for a in names), tuple(f"${pairs[a]}" for a in names)
@@ -170,7 +176,23 @@ def compare_editions(
         if remaining < 0:
             raise EditionComparisonLimit
 
-    charge(len(base_verdicts) + len(head_verdicts))
+    charge(len(base_verdicts) + len(head_verdicts) + len(base_constraints) + len(head_constraints))
+
+    def observations(rows, constraints):
+        observed = {row["constraint_ref"] for row in rows}
+        missing = []
+        for ref, rule in constraints.items():
+            if ref not in observed:
+                address, addressing = declared_constraint_address(ref, rule)
+                missing.append({
+                    "address": address, "addressing": addressing, "constraint_ref": ref,
+                    "constraint_type": rule["type"], "modality": rule["modality"],
+                    "verdict": "unchecked", "missing_observation": True,
+                })
+        return [*rows, *missing]
+
+    base_verdicts = observations(base_verdicts, base_constraints)
+    head_verdicts = observations(head_verdicts, head_constraints)
 
     def declared(rows):
         return {row["address"]: row for row in rows if row["addressing"] == "declared-id"}
@@ -178,7 +200,19 @@ def compare_editions(
     def summary(row):
         if row is None:
             return None
-        return {name: row[name] for name in ("constraint_ref", "constraint_type", "verdict", "modality")}
+        return {
+            **{name: row[name] for name in ("constraint_ref", "constraint_type", "modality")},
+            "verdict": row["verdict"] if row["verdict"] in _EDITION_VERDICTS else "unchecked",
+        }
+
+    def unavailable(row):
+        if row is None:
+            return None
+        if row.get("missing_observation"):
+            return "missing-verdict"
+        if row["verdict"] not in _EDITION_VERDICTS:
+            return "unknown-verdict"
+        return "unchecked" if row["verdict"] == "unchecked" else None
 
     def witness_rows(row):
         if row is None or row["verdict"] not in ("fail", "warning"):
@@ -216,21 +250,24 @@ def compare_editions(
     incomplete = False
     for address, left, right, unpaired_side in candidates:
         pairing = "unpaired" if unpaired_side else "added" if left is None else "removed" if right is None else "paired"
-        reason = "unchecked" if any(row and row["verdict"] == "unchecked" for row in (left, right)) else None
+        reason = unavailable(left) or unavailable(right)
         delta = None
         if reason is None and not unpaired_side:
             a_rows, b_rows = witness_rows(left), witness_rows(right)
             a_keys, b_keys = None, None
             if a_rows and b_rows and left["constraint_type"] != right["constraint_type"]:
                 reason = "constraint-family-changed"
-            elif a_rows and b_rows and left["constraint_type"] == "guarded" and a_rows != (None,) and b_rows != (None,):
-                projection = _guarded_projection(
-                    base_constraints[left["constraint_ref"]], head_constraints[right["constraint_ref"]], charge,
-                )
-                if projection is None:
-                    reason = "binding-alignment-ambiguous"
-                else:
-                    a_keys, b_keys = projection
+            elif a_rows and b_rows and left["constraint_type"] == "guarded":
+                if (a_rows == (None,)) != (b_rows == (None,)):
+                    reason = "binding-shape-unavailable"
+                elif a_rows != (None,):
+                    projection = _guarded_projection(
+                        base_constraints[left["constraint_ref"]], head_constraints[right["constraint_ref"]], charge,
+                    )
+                    if projection is None:
+                        reason = "binding-alignment-ambiguous"
+                    else:
+                        a_keys, b_keys = projection
             if reason is None:
                 a, b = keys(a_rows, a_keys), keys(b_rows, b_keys)
                 if a is None or b is None:

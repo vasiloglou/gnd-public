@@ -164,13 +164,15 @@ reference, family, verdict and modality. An available `delta` holds
 `base_only`, `head_only` and `standing` offending bindings. A rowless
 failure is represented by null. Standing entries retain both original
 bindings. For guarded rules, shared unambiguous antecedent roles align
-variables across editions. A projection that merges distinct bindings
-withholds that rule's delta and supplies a reason.
+variables across editions. The shared projection must cover every variable
+of at least one edition and keep distinct bindings separate. An ambiguous
+mapping or a collision withholds that rule's delta and supplies a reason.
 
 Exit 0 means the comparison completed, even if either side failed its
 ordinary check. Exit 3 identifies invalid input or incompatible vocabulary.
 Exit 4 means the comparison was incomplete. An unchecked rule, an
-ambiguous alignment, or a projection collision is identified on its row.
+ambiguous alignment, or a projection collision is identified on its row. A side check at
+exit 4 also leaves the overall comparison incomplete.
 Exhausting the comparison's 1,000,000-unit work budget yields an empty rule
 list and `comparison-work-limit`. The text form lists the directional
 bindings and the side check bands. This option is exclusive with

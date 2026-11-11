@@ -14,5 +14,10 @@
  },
  "normalized": "run directory replaced by <run> before hashing",
  "page": "docs/how-to/learn-rules-commands.md",
- "schema": "ik6-walk-goldens/1"
+ "schema": "ik6-walk-goldens/1",
+ "structure": {
+  "discovered.json": "74a7a62b97b31fd45ef5823153de3ed5591faea3e0ade258c999fd224f2db404",
+  "discovered.preview.json": "7271e1a30c5f6f38b9ab2e2c6bba48ce679258ef0440b6116e8f5d9fb5601494"
+ },
+ "structure_normalized": "version values replaced by <V> and each distinct digest by a numbered name, then as files; discovered.preview.json as its sorted lines, because it orders its parts by a digest"
 }

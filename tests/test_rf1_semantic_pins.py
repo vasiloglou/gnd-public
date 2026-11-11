@@ -11,6 +11,7 @@ from pathlib import Path
 import pytest
 from ruamel.yaml import YAML
 from support.cli_runner import run_main, run_process
+from support.recorded_version import as_recorded
 from support.rf1_pins import (
     LARGE_RESULT_BYTES,
     encode,
@@ -36,6 +37,8 @@ from gnd.extract import vocabulary
 from gnd.synth import assemble, boundary, mutate
 
 ROOT = Path(__file__).resolve().parents[1]
+# Issue 172: the version the sem-synth goldens were recorded at.
+SYNTH_RECORDED_AT = "0.3.0"
 CASES = load_cases()
 CORPUS = CASES["corpus"]
 META = ROOT / "src/gnd/schema/orm-meta.schema.json"
@@ -384,9 +387,13 @@ def test_synth(model_path, tmp_path):
     observed = _run(["synth", model_path, "--class", "all", "--seed", "0", "--out", str(out), "--format", "json"])
     # A synth corpus is hundreds of files; each is pinned by digest and size, while
     # the oracle's expected states are pinned in full by test_oracle.
-    observed["files"] = (
-        {path.relative_to(out).as_posix(): {"sha256": sha256_hex(path.read_bytes()), "bytes": path.stat().st_size}
+    # Issue 172: a sidecar carries the version, so each file is pinned as written at
+    # SYNTH_RECORDED_AT. No synth file cites another's digest; only the field moves.
+    written = (
+        {path.relative_to(out).as_posix(): as_recorded(path.read_bytes(), SYNTH_RECORDED_AT)
          for path in sorted(out.rglob("*")) if path.is_file()}
         if out.is_dir() else None
     )
+    observed["files"] = written and {
+        name: {"sha256": sha256_hex(data), "bytes": len(data)} for name, data in written.items()}
     assert_golden("sem-synth", _id(model_path), scrub(observed, {str(tmp_path.resolve()): "<tmp>", str(tmp_path): "<tmp>"}))

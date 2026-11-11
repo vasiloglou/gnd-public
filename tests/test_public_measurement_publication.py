@@ -6,7 +6,10 @@ import sys
 from pathlib import Path
 
 import pytest
+from support.recorded_version import as_recorded
 
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PHASE_DIR = REPO_ROOT / 'tests/fixtures/public-launch-phase-3/measurement'
 COMMITTED_CORPUS = PHASE_DIR / '02-corpus'
@@ -26,7 +29,7 @@ def test_each_committed_payload_reproduces_byte_for_byte(name, pool, model_path,
     rerun = tmp_path / 'rerun.json'
     result = subprocess.run([sys.executable, '-m', 'gnd', 'measure', str(model_path.relative_to(REPO_ROOT)), '--populations', str((COMMITTED_CORPUS / name / pool).relative_to(REPO_ROOT)), '--format', 'json', '--out', str(rerun)], capture_output=True, text=True, cwd=str(REPO_ROOT), check=False)
     assert result.returncode == 0, result.stdout + result.stderr
-    assert rerun.read_bytes() == committed.read_bytes(), f'{name}.{pool}.json did not reproduce byte-for-byte over its own subtree'
+    assert as_recorded(rerun.read_bytes(), RECORDED_AT) == committed.read_bytes(), f'{name}.{pool}.json did not reproduce byte-for-byte over its own subtree'
 
 @pytest.mark.parametrize(('name', 'pool', 'model_path'), COMMITTED_PAIRS, ids=lambda v: str(v))
 def test_each_payload_represents_exactly_one_model_pool_pair(name, pool, model_path):

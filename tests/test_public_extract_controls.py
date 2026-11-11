@@ -13,6 +13,10 @@ from pathlib import Path, PurePosixPath
 import pytest
 from support.cli_runner import run_main
 from support.digests import sha256_bytes as _sha256
+from support.recorded_version import as_recorded, tree_as_recorded
+
+# Issue 172: the version these outputs were recorded at. A version bump does not re-record them.
+RECORDED_AT = "0.3.0"
 
 
 def _workspace():
@@ -52,6 +56,21 @@ def _tree_digests(root: Path) -> dict[str, str]:
         for path in sorted(root.rglob("*"))
         if path.is_file()
     }
+
+
+def _fresh_tree_digests(root: Path) -> dict[str, str]:
+    """Digests of a tree the product just wrote, taken as written at RECORDED_AT (issue 172).
+
+    The answer key holds digests of files that carry the version, and of a manifest that
+    cites one of them. Each cited digest is checked against the cited file before it is
+    re-derived, so a broken link still fails.
+    """
+    files = {
+        path.relative_to(root).as_posix(): path.read_bytes()
+        for path in sorted(root.rglob("*"))
+        if path.is_file()
+    }
+    return {name: _sha256(data) for name, data in tree_as_recorded(files, RECORDED_AT).items()}
 
 
 def _run(arguments: list[str], *, cwd: Path = REPO_ROOT) -> tuple[int, str]:
@@ -100,7 +119,7 @@ def test_pre_phase_extract_bundles_are_byte_identical(
     assert _sha256(_normalized_stdout(stdout, tmp_path).encode("utf-8")) == expected[
         "stdout_sha256"
     ]
-    assert _tree_digests(out) == expected["files"]
+    assert _fresh_tree_digests(out) == expected["files"]
 
 
 def test_legacy_opaque_codegen_tree_is_byte_identical(tmp_path: Path) -> None:
@@ -120,7 +139,7 @@ def test_legacy_opaque_codegen_tree_is_byte_identical(tmp_path: Path) -> None:
     assert _sha256(_normalized_stdout(stdout, tmp_path).encode("utf-8")) == expected[
         "stdout_sha256"
     ]
-    assert _tree_digests(out) == expected["files"]
+    assert _fresh_tree_digests(out) == expected["files"]
 
 
 @pytest.mark.parametrize("case_name", ["faithful", "hoover"])
@@ -147,7 +166,7 @@ def test_pre_phase_setfam_fidelity_is_byte_identical(
         ]
     )
     assert code == expected["exit"] == 0
-    assert _sha256(stdout.encode("utf-8")) == expected["output_sha256"]
+    assert _sha256(as_recorded(stdout.encode("utf-8"), RECORDED_AT)) == expected["output_sha256"]
 
 
 def test_roundtrip_fixture_roster_and_bytes_are_exact() -> None:

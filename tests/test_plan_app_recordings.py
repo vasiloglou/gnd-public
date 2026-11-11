@@ -109,7 +109,7 @@ def test_each_row_is_the_summary_of_its_session():
     for row in RESULTS['runs']:
         session = (_folder(row) / 'session.txt').read_text(encoding='utf-8')
         assert recorder.summary(session) == row['attempts'], row['model'] + '/' + row['example'] + str(row['run'])
-        assert len(re.findall(r'^attempt \d+$', session, re.M)) == len(row['attempts'])
+        assert len(re.findall(r'^attempt \d+$', session, re.MULTILINE)) == len(row['attempts'])
 
 
 def test_acceptance_and_app_exit_follow_from_the_attempts():
@@ -124,7 +124,7 @@ def test_acceptance_and_app_exit_follow_from_the_attempts():
 def test_each_reply_answers_its_attempt_and_its_plan_is_the_one_printed():
     for row in RESULTS['runs']:
         session = (_folder(row) / 'session.txt').read_text(encoding='utf-8')
-        blocks = re.split(r'^attempt \d+\n', session, flags=re.M)[1:]
+        blocks = re.split(r'^attempt \d+\n', session, flags=re.MULTILINE)[1:]
         for n, (attempt, block) in enumerate(zip(row['attempts'], blocks), 1):
             reply = json.loads((_folder(row) / f'reply-{n:02d}.json').read_text(encoding='utf-8'))
             assert reply['attempt'] == n

@@ -30,15 +30,15 @@ EXAMPLE = ROOT / "src/gnd/examples/plan_apps/course"
 MODELS = {"claude-haiku": "haiku", "claude-default": None}
 TURNS = [
     "/gnd:gnd-model-from-text rules.md",
-    "MVP-fast. The rules file is complete: model what it states, including what the registrar does, "
-    "and ask me only about what it leaves open.",
+    ("MVP-fast. The rules file is complete: model what it states, including what the registrar does, "
+    "and ask me only about what it leaves open."),
 ]
 AGREE = "Yes, as you propose."
 
 
 def _cap_is_six(model: Path) -> bool:
     """The evolve session is done when no rule compares a total with 18 any more and one compares it with 6."""
-    from ruamel.yaml import YAML   # reads JSON and YAML models alike
+    from ruamel.yaml import YAML  # reads JSON and YAML models alike
     document = YAML(typ="safe").load(model.read_text(encoding="utf-8"))
     rights = [((c.get("consequent") or {}).get("comparison") or {}).get("right")
               for c in document.get("constraints") or [] if isinstance(c, dict)]
@@ -48,8 +48,8 @@ def _cap_is_six(model: Path) -> bool:
 SKILLS = {   # declared before any run; gate record 019 and its amendments name each one
     "model-from-text": {"files": ["rules.md"], "turns": TURNS, "agree": AGREE, "done": lambda model: True},
     "model-evolve": {"files": ["rules.md", "model.orm.json"],
-                     "turns": ["/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every "
-                               "student."],
+                     "turns": [("/gnd:gnd-model-evolve Lower the credit cap from 18 to 6 credits a term, for every "
+                               "student.")],
                      "agree": "Yes, apply it.", "done": _cap_is_six},
 }
 MAX_TURNS = 6

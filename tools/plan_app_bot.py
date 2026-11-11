@@ -111,7 +111,7 @@ def ask_openrouter(model: str, text: str) -> tuple[str, dict]:
 
 def plan_text(reply: str) -> str:
     """The reply as the app reads it. One courtesy only: a JSON object wrapped in a code fence is unwrapped."""
-    fenced = re.fullmatch(r"\s*```(?:json)?\s*(\{.*\})\s*```\s*", reply, re.S)
+    fenced = re.fullmatch(r"\s*```(?:json)?\s*(\{.*\})\s*```\s*", reply, re.DOTALL)
     return fenced.group(1) if fenced else reply
 
 

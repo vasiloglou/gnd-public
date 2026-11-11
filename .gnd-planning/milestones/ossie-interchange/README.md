@@ -53,3 +53,8 @@ and separate isolation controls.
 
 The [OS5 phase record](025-phase-OS5.md) closes the explanation,
 refunds walkthrough and skill guidance after review and local checks.
+
+The [OS6 phase record](030-phase-OS6.md) records the tested patch and the
+owner-approved [upstream PR #162](https://github.com/apache/ossie-converters/pull/162).
+The [close candidate](031-close-candidate.md) assembles the seven phase
+records and proposes plan amendments for the independent close review.

@@ -433,3 +433,15 @@ is RN0, RN1, RN2, RN3, publication stage, close. RN0's spec is
 
 RN1 stays blocked until RN0 is on main: the digests it must list are taken on
 a base that RN0 changes.
+
+## 13. Close amendment (2026-11-11; approved by the owner with the close: "Accept and merge", 2026-11-11)
+
+Raised by the draft close record
+[`007-milestone-close.md`](../007-milestone-close.md). The wording above is
+kept; this section says how the close reads it.
+
+| Clause | Wording (kept above) | Read at the close as |
+|---|---|---|
+| RN-D5 | "a stage of owner acts and read-only checks, each on its own request; route proposed as for 0.1.0 and 0.2.0 (the owner's token upload of the retained files)" | The owner asked this session to publish (RN-D13, [publication record](../006-publication.md)). The upload, the tag and the GitHub release were run by the session on that request, with the credentials stored on the owner's machine. The route is unchanged: the retained files, by token. |
+| §4, publication stage | "The owner uploads the retained files with their own token, pushes the tag and creates the GitHub release. The session prepares the exact commands (N19)." | As above. N19's expectation that an agent session would be refused the tag and the release did not hold. |
+| Predicate 7 | "No phase uploaded anything, created a tag, a GitHub release or the `pypi` environment, or changed `.github/`." | Holds as written: RN0 to RN3 did none of these. The publication stage is not a phase. |

@@ -1,0 +1,64 @@
+# Read-only remote state at the release-0.3.0 close. Each block: the command, its output verbatim, its exit.
+# These are fresh runs for retention. The same checks were first run at 2026-11-11T15:41:04Z; that output was summarized in the draft close and not retained.
+
+$ date -u +%FT%TZ
+2026-11-11T16:17:58Z
+
+$ git fetch origin
+[exit 0]
+
+$ git rev-parse origin/main
+7d86dc35f5888c3adb1b7386962f88b184b4e31e
+[exit 0]
+
+$ git diff --stat 2490dd77 origin/main -- .github
+[exit 0]
+
+$ git diff --stat 4c07c0e6 origin/main -- src pyproject.toml uv.lock LICENSE NOTICE
+[exit 0]
+
+$ gh api repos/vasiloglou/gnd-public/environments -q [.environments[].name]
+["github-pages"]
+[exit 0]
+
+$ gh run list --repo vasiloglou/gnd-public --workflow release.yml --json databaseId -q length
+0
+[exit 0]
+
+$ gh release list --repo vasiloglou/gnd-public
+GND v0.3.0	Latest	v0.3.0	2026-11-11T15:38:27Z
+GND v0.2.0		v0.2.0	2026-11-09T03:19:04Z
+GND v0.1.0		v0.1.0	2026-10-12T04:06:31Z
+[exit 0]
+
+$ gh release view v0.3.0 --repo vasiloglou/gnd-public --json isDraft,isPrerelease,tagName,assets -q {isDraft,isPrerelease,tagName,assets:[.assets[]|{name,size,digest}]}
+{"assets":[{"digest":"sha256:143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b","name":"get_nick_done-0.3.0-py3-none-any.whl","size":2948039},{"digest":"sha256:5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42","name":"get_nick_done-0.3.0.tar.gz","size":2292882},{"digest":"sha256:39fa670ab175086ee187f5f4ed3544d72d18482bd18e89a437eaf6d4c55dcdc9","name":"SHA256SUMS.txt","size":196}],"isDraft":false,"isPrerelease":false,"tagName":"v0.3.0"}
+[exit 0]
+
+$ git ls-remote --tags origin
+75eda93f314e7ef82578ab4ee212d5e6d964fd71	refs/tags/v0.1.0
+d84ad6d5cca021aa572751223d7c640d2b261055	refs/tags/v0.2.0
+7c0f4d0e320ff7976296d785077280d180ea688e	refs/tags/v0.2.0^{}
+257a8bb3cc0ec5f0746e95d72b5d11cb5acdb185	refs/tags/v0.3.0
+4c07c0e6a623263048cb675d237046ebb239cb32	refs/tags/v0.3.0^{}
+[exit 0]
+
+$ gh pr list --repo vasiloglou/gnd-public --state open --json number -q length
+1
+[exit 0]
+
+$ curl -s https://pypi.org/simple/get-nick-done/ -H 'Accept: application/vnd.pypi.simple.v1+json' | python3 (versions; filename, sha256, yanked per file)
+['0.1.0', '0.2.0', '0.3.0']
+get_nick_done-0.1.0-py3-none-any.whl cc91decaf86d081fa023179792646900ac8f23c3cd1758e339006a4dab1ac183 False
+get_nick_done-0.1.0.tar.gz f47abb4505969ab69a9a7cdf5da9e071ff511b1b50f1b728154699f55c3a8f86 False
+get_nick_done-0.2.0-py3-none-any.whl e323c19e303f3b7fe9cbe7528e68021d271589ce0b91fd54bd76b2b919a069e4 False
+get_nick_done-0.2.0.tar.gz f85818ead9cb651ae397ecd3ab50f87fdf5f9f7c7bada58a659cea2cb99e5104 False
+get_nick_done-0.3.0-py3-none-any.whl 143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b False
+get_nick_done-0.3.0.tar.gz 5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42 False
+[exit 0]
+
+$ curl -s https://pypi.org/pypi/get-nick-done/0.3.0/json | python3 (info.version; filename, sha256, size, upload time, yanked per url)
+0.3.0
+get_nick_done-0.3.0-py3-none-any.whl 143890eed5e30e19619cd5c1106bddae6283c672d5c63200018fb23157c6751b 2948039 2026-11-11T15:36:42.218661Z False
+get_nick_done-0.3.0.tar.gz 5e40d9e358ef49d335a4b0cf2c0919aff73a029076efa4f7c706b30109034c42 2292882 2026-11-11T15:36:44.297911Z False
+[exit 0]

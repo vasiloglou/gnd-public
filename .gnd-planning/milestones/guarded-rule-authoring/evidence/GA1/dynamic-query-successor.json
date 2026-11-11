@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/guarded-rule-workflows/evidence/GW2/dynamic-query-successor.json",
+  "predecessor_sha256": "ec962a108155a78ea7e1fa06cc43c1107e115727938a115478775625ce70bd3d",
+  "reason": "GA1 indexes asserted roles and atom bindings for bounded case construction.",
+  "removed": [],
+  "added": [
+    [
+      "src/gnd/synth/guarded.py",
+      "join_atoms",
+      "row[role]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "<module>",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "<module>",
+      "dict[str, list[dict[str, Any]]]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "<module>",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "Domain",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "Domain",
+      "list[dict[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "assignment[name]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "comparison.get('right' if side == 'left' else 'left')",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "comparison.get(key)",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "preferred[(attempt + (side == 'right' and variable_name(other) is not None)) % len(preferred)]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "preferred[attempt]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "dict[str, list[Domain]]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "dict[tuple[str, str], Domain]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "domains[key]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "list[Domain]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "roles[ftid]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "roles[ftid][role]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "tuple[str, str]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_domains",
+      "variables[name]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_facts",
+      "assignment.get(variable_name(term), term)",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_facts",
+      "dict[str, set[tuple]]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_facts",
+      "keys[ftid]",
+      2
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_facts",
+      "row[role]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_facts",
+      "set[tuple]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_preferred",
+      "list[Any]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "build_pair",
+      "payload[side]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7616,
+  "result_occurrences": 9479
+}

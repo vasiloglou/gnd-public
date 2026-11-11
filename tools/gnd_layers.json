@@ -873,6 +873,14 @@
       "lane": "synth",
       "layer": "lanes"
     },
+    "gnd.synth.guarded_cases": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.guarded_service": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
     "gnd.synth.identity": {
       "lane": "synth",
       "layer": "lanes"

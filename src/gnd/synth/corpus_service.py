@@ -111,18 +111,21 @@ def _validate_index_document(document: Any) -> dict[str, Any]:
 class _SynthCorpusTransaction:
     """Build a corpus off-tree and publish it only as one directory swap."""
 
-    def __init__(self, final_root: Path) -> None:
+    def __init__(self, final_root: Path, *, fresh: bool = False) -> None:
         import shutil
         import tempfile
 
         self.final_root = final_root
+        self.fresh = fresh
+        if fresh and (final_root.exists() or final_root.is_symlink()):
+            raise FileExistsError(f"corpus root already exists: {final_root}")
         self.final_root.parent.mkdir(parents=True, exist_ok=True)
         self.stage_root = Path(
             tempfile.mkdtemp(prefix=f".{final_root.name}.synth-", dir=final_root.parent)
         )
         self._active = True
         try:
-            if final_root.exists():
+            if not fresh and final_root.exists():
                 if not final_root.is_dir():
                     raise OSError(f"corpus root {final_root} is not a directory")
                 shutil.copytree(final_root, self.stage_root, dirs_exist_ok=True)
@@ -163,6 +166,15 @@ class _SynthCorpusTransaction:
 
         if not self._active:
             raise OSError("synthesis transaction is no longer active")
+        if self.fresh:
+            self.final_root.mkdir()
+            try:
+                os.replace(self.stage_root, self.final_root)
+            except OSError:
+                self.final_root.rmdir()
+                raise
+            self._active = False
+            return
         backup = self.stage_root.with_name(self.stage_root.name + ".backup")
         moved_existing = False
         try:

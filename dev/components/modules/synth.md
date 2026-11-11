@@ -56,7 +56,7 @@ Components: synth.corpus
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `IndexValidationError` | class(ValueError) | 12 | The synthesis corpus manifest is not a supported closed document. |
-| `CorpusPathError` | class(Exception) | 195 | An ``index.json`` entry does not resolve to a file inside the corpus root. |
+| `CorpusPathError` | class(Exception) | 207 | An ``index.json`` entry does not resolve to a file inside the corpus root. |
 
 ## gnd.synth.frontier — `src/gnd/synth/frontier.py`
 Components: synth.frontier
@@ -76,13 +76,36 @@ Independent, narrow witness helpers for guarded-exists synthesis.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `modular_repair_plan(constraint) -> dict[str, Any] \| None` | function | 36 | Describe the one narrow synthesis shape: two joined atoms and a |
-| `has_private_exists_sources(model, constraint) -> bool` | function | 139 | Whether this exists rule alone reads its witness source relations. |
-| `join_atoms(facts, atoms, initial, *, budget) -> list[dict[str, Any]] \| None` | function | 206 | Join atom role bindings by ORM scalar identity, independently of checker IR. |
-| `antecedent_bindings(constraint, facts, *, budget) -> list[dict[str, Any]] \| None` | function | 250 | (no docstring) |
-| `guarded_atoms_connected(atoms) -> bool` | function | 262 | Whether the variable-only atom list has one connected join graph. |
-| `exists_witness_shape_supported(constraint) -> bool` | function | 293 | Whether the independent exists oracle can interpret this shape. |
-| `exists_witness(constraint, facts, *, covered_fact_types) -> bool \| None` | function | 343 | Return whether every antecedent binding has a witness, or ``None`` if |
+| `modular_repair_plan(constraint) -> dict[str, Any] \| None` | function | 37 | Describe the one narrow synthesis shape: two joined atoms and a |
+| `has_private_exists_sources(model, constraint) -> bool` | function | 140 | Whether this exists rule alone reads its witness source relations. |
+| `join_atoms(facts, atoms, initial, *, budget, scalar_terms) -> list[dict[str, Any]] \| None` | function | 207 | Join atom role bindings by ORM scalar identity, independently of checker IR. |
+| `antecedent_bindings(constraint, facts, *, budget) -> list[dict[str, Any]] \| None` | function | 257 | (no docstring) |
+| `guarded_atoms_connected(atoms) -> bool` | function | 269 | Whether the variable-only atom list has one connected join graph. |
+| `exists_witness_shape_supported(constraint) -> bool` | function | 300 | Whether the independent exists oracle can interpret this shape. |
+| `exists_witness(constraint, facts, *, covered_fact_types) -> bool \| None` | function | 350 | Return whether every antecedent binding has a witness, or ``None`` if |
+
+## gnd.synth.guarded_cases — `src/gnd/synth/guarded_cases.py`
+Components: synth.guarded
+Bounded construction and independent labels for asserted guarded cases.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `SearchLimit` | class(Exception) | 27 | (no docstring) |
+| `UnsupportedShape` | class(Exception) | 31 | (no docstring) |
+| `Domain` | class | 36 | (no docstring) |
+| `Domain.accepts(self, value, budget) -> bool` | method | 40 | (no docstring) |
+| `Domain.draw(self, rng) -> Any` | method | 51 | (no docstring) |
+| `Candidate` | class | 62 | (no docstring) |
+| `charge(budget, count) -> None` | function | 67 | (no docstring) |
+| `build_pair(model, index, rule, rng, budget)` | function | 195 | Return an independently evaluated failure and active pass, or a reason. |
+
+## gnd.synth.guarded_service — `src/gnd/synth/guarded_service.py`
+Components: synth.service
+Admission, checker confirmation and publication for guarded case corpora.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `run_guarded_cases(model_path, out, seed, output_format, synth)` | function | 132 | (no docstring) |
 
 ## gnd.synth.identity — `src/gnd/synth/identity.py`
 Components: synth.identity
@@ -196,6 +219,7 @@ Components: synth.service
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
+| `run_guarded_cases(model_path, out, seed, output_format) -> int` | function | 794 | Dispatch the opt-in guarded mode with the ordinary synthesis lane. |
 
 ## gnd.synth.value_domain — `src/gnd/synth/value_domain.py`
 Components: synth.value_domain

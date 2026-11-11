@@ -34,6 +34,7 @@ def _emit_boundary_corpus(
     fail: Any,
     abort_quarantine: Any,
     filename_suffix: str = "",
+    emit_payload=None,
 ) -> int | None:
     """Derive, admit and write the boundary class (D-06). ``None`` on success.
 
@@ -44,6 +45,8 @@ def _emit_boundary_corpus(
     """
     import hashlib as _hashlib
     from random import Random
+
+    emit_payload = report_module.emit if emit_payload is None else emit_payload
 
     from gnd.checker import band as _cb
     from gnd.synth import assemble as _assemble
@@ -130,7 +133,7 @@ def _emit_boundary_corpus(
             except OSError as error:
                 return fail(EXIT_IO, f"could not publish quarantine: {error}")
             if output_format == "json":
-                report_module.emit(
+                emit_payload(
                     {
                         "command": "synth",
                         "exit_code": EXIT_QUARANTINE,
@@ -224,6 +227,8 @@ def _cmd_synth(
     seeds: int,
     output_format: str,
     baseline_seed: int | None = None,
+    *,
+    emit_payload=None,
 ) -> int:
     """Generate labelled synthetic populations for a model (DATA-01).
 
@@ -257,13 +262,14 @@ def _cmd_synth(
     from gnd.synth import poolfile as _poolfile
     from gnd.synth import provenance as _prov
 
+    emit_payload = report_module.emit if emit_payload is None else emit_payload
     transaction: _SynthCorpusTransaction | None = None
 
     def fail(code: int, message: str) -> int:
         if transaction is not None:
             transaction.abort()
         if output_format == "json":
-            report_module.emit({"command": "synth", "exit_code": code, "error": message})
+            emit_payload({"command": "synth", "exit_code": code, "error": message})
         else:
             print(f"ERROR: {message}")
         return code
@@ -420,7 +426,7 @@ def _cmd_synth(
         except OSError as error:
             return fail(EXIT_IO, f"could not publish quarantine: {error}")
         if output_format == "json":
-            report_module.emit(
+            emit_payload(
                 {
                     "command": "synth",
                     "exit_code": EXIT_QUARANTINE,
@@ -620,7 +626,7 @@ def _cmd_synth(
                 except OSError as error:
                     return fail(EXIT_IO, f"could not publish quarantine: {error}")
                 if output_format == "json":
-                    report_module.emit(
+                    emit_payload(
                         {
                             "command": "synth",
                             "exit_code": EXIT_QUARANTINE,
@@ -710,6 +716,7 @@ def _cmd_synth(
                     fail=fail,
                     abort_quarantine=abort_quarantine,
                     filename_suffix=filename_suffix,
+                    emit_payload=emit_payload,
                 )
                 if outcome is not None:
                     return outcome
@@ -750,7 +757,7 @@ def _cmd_synth(
     isolating_fraction = isolating_count / len(violating_entries) if violating_entries else None
 
     if output_format == "json":
-        report_module.emit(
+        emit_payload(
             {
                 "command": "synth",
                 "exit_code": 0,
@@ -783,6 +790,13 @@ def _cmd_synth(
             )
         print(f"  pool: {pool_rel} ({pool.sha256[:16]})")
     return 0
+
+def run_guarded_cases(model_path: str, out: str, seed: int | None, output_format: str) -> int:
+    """Dispatch the opt-in guarded mode with the ordinary synthesis lane."""
+    from gnd.synth import guarded_service
+
+    return guarded_service.run_guarded_cases(model_path, out, seed, output_format, _cmd_synth)
+
 
 _emit_boundary_corpus.__module__ = "gnd.cli"
 _bind_synth_not_derivable.__module__ = "gnd.cli"

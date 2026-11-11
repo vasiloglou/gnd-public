@@ -183,6 +183,8 @@ def _restore_frozen(parser, node):
                 kwargs['action'] = 'append'
             assert action['const'] is None
             kwargs.update({k: action[k] for k in ('type', 'choices', 'metavar', 'nargs')})
+            if kwargs['type'] is not None:
+                kwargs['type'] = {'builtins.int': int, 'gnd.cli._positive_int': cli._positive_int}[kwargs['type']]
         else:
             assert action['class'] == '_StoreTrueAction'
             kwargs['action'] = 'store_true'
@@ -327,8 +329,20 @@ def _guarded_workflows_check_successor():
     return base, parser
 
 
-def _guarded_workflows_check_probe():
-    _, parser = _guarded_workflows_check_successor()
+def _guarded_cases_synth_successor():
+    base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["synth"]
+    base["actions"].insert(-1, {
+        "class": "_StoreTrueAction", "dest": "guarded_cases", "option_strings": ["--guarded-cases"],
+        "default": False, "const": True, "choices": None, "metavar": None, "nargs": 0,
+        "required": False, "type": None,
+        "help": "generate active failing and passing cases for guarded rules in a fresh corpus",
+    })
+    parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])
+    _restore_frozen(parser, base)
+    return base, parser
+
+
+def _guarded_successor_probe(parser):
     result = {}
     for name, arguments in (("help", ["--help"]), ("unknown_flag", ["--rf1-unknown-flag"])):
         out, err = io.StringIO(), io.StringIO()
@@ -342,6 +356,7 @@ def test_cli_tree(tree):
     # Preserve RF1's historical bytes; approve only this additive successor.
     expected = json.loads(golden_path("cli", "tree").read_text())
     expected["subcommands"]["check"] = _guarded_workflows_check_successor()[0]
+    expected["subcommands"]["synth"] = _guarded_cases_synth_successor()[0]
     expected["subcommands"]["validate"]["actions"].insert(
         IDENTITY_SUCCESSOR["action_index"], copy.deepcopy(IDENTITY_SUCCESSOR["action"])
     )
@@ -373,6 +388,10 @@ def test_cli_help(tree, path):
     if path in {'gnd verbalize', 'gnd verbalize model'}:
         _assert_successor('cli-help', path, {'path': path, 'help': tree[2][path]},
                           {'path': path, 'help': _model_review_successor()['help'][path]})
+        return
+    if path == "gnd synth":
+        _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
+                          {"path": path, "help": _guarded_cases_synth_successor()[1].format_help()})
         return
     if path == "gnd check":
         _assert_successor("cli-help", path, {"path": path, "help": tree[2][path]},
@@ -412,7 +431,7 @@ def test_cli_exit_probe(path, monkeypatch):
                     'unknown_flag': {'exit': refused.returncode, 'stdout': refused.stdout.decode(), 'stderr': refused.stderr.decode()}}
         _assert_successor('cli-exit', path, observed, _model_review_successor()['exit_probe'][path])
         return
-    if path in ("gnd check", "gnd validate"):
+    if path in ("gnd check", "gnd validate", "gnd synth"):
         observed = {
             "help": {"exit": shown.returncode, "stdout": shown.stdout.decode(), "stderr": shown.stderr.decode()},
             "unknown_flag": {
@@ -421,7 +440,9 @@ def test_cli_exit_probe(path, monkeypatch):
                 "stderr": refused.stderr.decode(),
             },
         }
-        expected = _guarded_workflows_check_probe() if path == "gnd check" else VALIDATE_DOCUMENTS_SUCCESSOR["exit_probe"]
+        successors = {"gnd check": _guarded_workflows_check_successor, "gnd synth": _guarded_cases_synth_successor}
+        expected = (VALIDATE_DOCUMENTS_SUCCESSOR["exit_probe"] if path == "gnd validate"
+                    else _guarded_successor_probe(successors[path]()[1]))
         _assert_successor("cli-exit", path, observed, expected)
         return
     if path in CHECK_POPULATION_PATHS:

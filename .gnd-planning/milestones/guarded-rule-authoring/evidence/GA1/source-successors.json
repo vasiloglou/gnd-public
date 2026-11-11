@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "reason": "GA1 uses the ordinary synthesis lane with a private payload sink.",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_emit_boundary_corpus",
+      "home": "gnd.synth.service",
+      "before": {
+        "raw_sha256": "53fb95d9ede2385cb0615e20eb6cd91b2793a7c475f31eebf653f95395706428",
+        "algorithm_sha256": "e49aac21a510e7b6bc2264030d5138519c25b32d2a8b95840f172512b4498fd8"
+      },
+      "after": {
+        "raw_sha256": "7355e957456ed242e49b944b5e10c73c10dc855b25e8824a5216017e01840315",
+        "algorithm_sha256": "99cafa224a1c79ab836d699f1c81db3439557f630bfc87df0474fa9d347da440"
+      },
+      "reason": "Forward an optional JSON payload sink for scoped ordinary synthesis."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_synth",
+      "home": "gnd.synth.service",
+      "before": {
+        "raw_sha256": "9101684ff73d67c24a76748d86821de6f06ed8c8a45bfb584fcd31b5e5dbf7b5",
+        "algorithm_sha256": "6de71ba1b100792a9f8578e97d3c05f05b851a4d3a4ecef7409926611c70e201"
+      },
+      "after": {
+        "raw_sha256": "df5dc1679bc09ca9331b39b5ae6f434246b285c56c6476f27cbe827b149ed7bf",
+        "algorithm_sha256": "ba3a0150b99a9ac12451253aac67439764c817137b7949b8cc7b69740c76b648"
+      },
+      "reason": "Forward an optional JSON payload sink for scoped ordinary synthesis."
+    },
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_SynthCorpusTransaction",
+      "home": "gnd.synth.corpus_service",
+      "before": {
+        "raw_sha256": "97a848adabbb0e6395697858f2b684a8baf7ea99ecdd56579391d95083b33bdb",
+        "algorithm_sha256": "cc94ccd95c6136eecd07433b2ccd49f14ad30a9b1faae09c7f788e016064e434"
+      },
+      "after": {
+        "raw_sha256": "d4ff5222a59eaaa1adfb65aeec1856a8d8507aa025593c35445b3f6b9431d554",
+        "algorithm_sha256": "c329d9d73a440bbac85623439b828ccb0746c3b2eeaea4629549eb9b771af9e4"
+      },
+      "reason": "Add an opt-in fresh-root publication guard for guarded case corpora."
+    }
+  ]
+}

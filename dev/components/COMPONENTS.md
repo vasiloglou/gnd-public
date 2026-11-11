@@ -716,8 +716,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.synth_command
-- does: Register population synthesis classes, pools and seeds before dispatching generation [add_parsers; handle].
-- verbs: synth command, synthetic populations, conforming cases, violating cases, boundary cases, pool artifact, random seed, baseline seed, seed variants, register parser, dispatch handler
+- does: Register population synthesis classes, guarded case mode, pools and seeds before dispatching generation [add_parsers; handle].
+- verbs: synth command, synthetic populations, conforming cases, violating cases, boundary cases, guarded case corpus, pool artifact, random seed, baseline seed, seed variants, register parser, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1932,7 +1932,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/address.py
 - uses: (none)
-- used_by: check.admission, check.applicability, check.baseline, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, … +4 more (graph.md)
+- used_by: check.admission, check.applicability, check.baseline, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, … +5 more (graph.md)
 - tests: tests/test_address.py
 
 
@@ -1944,7 +1944,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/atoms.py
 - uses: (none)
-- used_by: check.baseline, check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter
+- used_by: check.baseline, check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter, synth.guarded
 - tests: tests/test_atom_bind.py
 
 
@@ -2182,7 +2182,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +14 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +15 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
@@ -2195,7 +2195,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +20 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +21 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2421,7 +2421,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +33 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +35 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2514,7 +2514,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +14 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +15 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -2886,7 +2886,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/values.py
 - uses: check.population_structure, infra.input_policy, model.scalar_terms
-- used_by: synth.prediction, synth.value_domain
+- used_by: synth.guarded, synth.prediction, synth.value_domain
 - part_of: subsystem.synth
 - tests: tests/test_synth_values.py, tests/test_rf1_helper_pins.py, tests/test_rf7_consumers.py
 - notes: PRIMITIVES comes from the vendored meta-schema; unconstrained dates use fixed anchors for seed reproduction.
@@ -2900,7 +2900,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/value_domain.py
 - uses: model.loading, model.query_index, synth.identity, synth.values
-- used_by: synth.assemble, synth.constructive, synth.pool, synth.prediction
+- used_by: synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.prediction
 - tests: tests/test_synth_values.py, tests/test_poolfile.py, tests/test_synth_mutate.py, tests/test_rf6_index.py
 - notes: Multiple constraints are conjoined while ranges inside one constraint are alternatives; in_range retains its historical _in_range alias and metadata.
 
@@ -2932,14 +2932,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### synth.guarded
-- does: Independently join guarded atoms and test bounded existential witnesses, including narrow modular repair shapes [exists_witness].
-- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding
+- does: Construct and independently evaluate guarded-rule case pairs and bounded existential witnesses [build_pair, exists_witness].
+- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, active passing case
 - in: Guarded constraint, raw fact rows, optional covered fact types; model for private-source analysis.
 - out: Bindings, a modular repair plan or witness true/false/None; None represents unsupported or unavailable work.
 - status: canonical
-- modules: src/gnd/synth/guarded.py
-- uses: model.scalar_terms, synth.identity
-- used_by: synth.assemble, synth.constructive, synth.mutations, synth.prediction
+- modules: src/gnd/synth/guarded.py, src/gnd/synth/guarded_cases.py
+- uses: model.atom_bindings, model.document, model.query_index, model.scalar_terms, synth.identity, synth.value_domain, synth.values
+- used_by: synth.assemble, synth.constructive, synth.mutations, synth.prediction, synth.service
 - tests: tests/test_v62_phase6_synth_measure.py, tests/test_v62_phase6_evaluation.py
 - notes: Uses scalar identity and public exact-term comparison without calling the checker; the independent work ceiling is 100000 units.
 
@@ -3030,7 +3030,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### synth.corpus
 - does: Validate and resolve corpus manifests, merge index records and stage corpus publication [_SynthCorpusTransaction, _merge_index].
-- verbs: corpus manifest, index validation, closed schema, corpus path, resolve index, duplicate artifact, sidecar pairing, merge index, stable sorting, corpus transaction, staged directory, rollback, publish quarantine, atomic index, _SynthCorpusTransaction, _merge_index
+- verbs: corpus manifest, index validation, closed schema, corpus path, resolve index, duplicate artifact, sidecar pairing, merge index, stable sorting, corpus transaction, staged directory, fresh root, rollback, publish quarantine, atomic index, _SynthCorpusTransaction, _merge_index
 - in: Corpus root, untrusted index document and paths, generated artifact records and not-derivable records.
 - out: Validated records and resolved artifact pairs, staged/published corpus trees or a merged index.json; typed manifest and path errors.
 - status: canonical
@@ -3039,20 +3039,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - used_by: cli.dispatch, measure.service, synth.service
 - part_of: subsystem.synth
 - tests: tests/test_synth_conforming.py, tests/test_measure_offline.py
-- notes: Shared by synth and measure; historical names identify gnd.cli for compatibility. The directory publication transaction and the reader-facing manifest/path validation share one file.
+- notes: Shared by synth and measure; historical names identify gnd.cli for compatibility. The directory publication transaction supports both merging existing corpus trees and requiring a fresh output root.
 
 
 ### synth.service
 - does: Orchestrate synthetic corpus generation, provenance, quarantine retention and publication for gnd synth [_cmd_synth].
 - verbs: synth command, _cmd_synth, synthetic corpus, conforming corpus, violating corpus, boundary corpus, multiple seeds, baseline seed, random seed, deterministic reproduction, materialize pool, provenance sidecar, quarantine retention, discrepancy artifact, generator manifest, corpus publication
 - in: Model path, output root, requested class, optional pool and baseline seed, seed count and output format.
-- out: Corpus populations, pools, sidecars and index.json; JSON/text summary and exit code, or retained quarantine artifacts on mismatch.
+- out: Ordinary synth artifacts or a guarded case manifest, matched populations and scoped ordinary corpus. A checker disagreement retains quarantine evidence.
 - status: canonical
-- modules: src/gnd/synth/service.py
-- uses: checker.evaluate, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.version, model.loading, model.population_loading, model.scalar_terms, synth.assemble, synth.boundary, synth.corpus, synth.frontier, synth.mutations, synth.paths, synth.pool, synth.provenance
+- modules: src/gnd/synth/service.py, src/gnd/synth/guarded_service.py
+- uses: checker.evaluate, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.loading, model.population_loading, model.query_index, model.scalar_terms, synth.assemble, synth.boundary, synth.corpus, synth.frontier, synth.guarded, synth.mutations, synth.paths, synth.pool, synth.provenance
 - used_by: cli.dispatch, cli.synth_command
 - part_of: subsystem.synth
-- tests: tests/test_synth_conforming.py, tests/test_synth_mutate.py, tests/test_synth_boundary.py, tests/test_synth_false_pass_quarantine.py, tests/test_synth_derivation_refusal.py
+- tests: tests/test_synth_conforming.py, tests/test_synth_mutate.py, tests/test_synth_boundary.py, tests/test_synth_false_pass_quarantine.py, tests/test_synth_derivation_refusal.py, tests/test_synth_guarded_cases.py
 - notes: Coordinates the requested classes over cached baselines and a staged corpus transaction; command argument registration belongs to commands/synth.py outside this group. Refuses unsupported reference/temporal inputs and selected structured derivation forms before generation.
 
 

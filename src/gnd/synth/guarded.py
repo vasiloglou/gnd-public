@@ -11,8 +11,9 @@ from collections.abc import Collection, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
+from gnd.atoms import atom_bind
 from gnd.synth.identity import scalar_identity
-from gnd.terms import compare_terms
+from gnd.terms import compare_terms, variable_name
 
 # This deliberately sits below production's 200,000-unit ceiling. The
 # independent nested-loop oracle does not count candidate rows, index probes,
@@ -209,24 +210,30 @@ def join_atoms(
     initial: Mapping[str, Any] | None = None,
     *,
     budget: _WorkBudget | None = None,
+    scalar_terms: bool = False,
 ) -> list[dict[str, Any]] | None:
     """Join atom role bindings by ORM scalar identity, independently of checker IR."""
     budget = budget or _WorkBudget()
     partials = [dict(initial or {})]
     for atom in atoms:
         fact_type = atom.get("fact_type")
-        role_bindings = atom.get("bind")
+        role_bindings = atom_bind(atom) if scalar_terms else atom.get("bind")
         if not isinstance(fact_type, str) or not isinstance(role_bindings, Mapping):
             return []
         rows = facts.get(fact_type, ())
         next_partials: list[dict[str, Any]] = []
         for partial in partials:
             for row in rows:
-                if not budget.consume():
+                if not budget.consume(1 + len(role_bindings) if scalar_terms else 1):
                     return None
                 candidate = dict(partial)
                 valid = True
                 for role, variable in role_bindings.items():
+                    if scalar_terms and variable_name(variable) is None:
+                        if role in row and scalar_identity(row[role]) == scalar_identity(variable):
+                            continue
+                        valid = False
+                        break
                     if not isinstance(role, str) or not isinstance(variable, str):
                         valid = False
                         break

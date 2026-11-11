@@ -33,8 +33,8 @@ from gnd.export.ilp import IlpError
 
 __all__ = [
     "ADAPTER_VERSION", "COUNT_REFUSALS", "EXPORT_REFUSALS", "FORMULA", "MAPPING_REFUSALS",
-    "MAX_ATOMS", "MAX_DIGITS", "MAX_JOIN_ROWS", "MAX_RULES", "MAX_TEXT", "Counts", "MinedRule",
-    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "provenance",
+    "MAX_ATOMS", "MAX_DIGITS", "MAX_JOIN_ROWS", "MAX_RECOUNT_WORK", "MAX_RULES", "MAX_TEXT", "Counts", "MinedRule",
+    "canonical", "count", "extract_rules", "family", "mapped", "parse_rules", "provenance", "recount_work",
     "reference_primitives", "relation_table", "render", "render_tables", "spell",
 ]
 
@@ -47,6 +47,7 @@ MAX_RULES = 256
 MAX_ATOMS = 4
 MAX_DIGITS = 18
 MAX_JOIN_ROWS = 1_000_000
+MAX_RECOUNT_WORK = 10_000_000
 FORMULA = "std-confidence-head-pairs"
 #: The export's refusals: its own two, then the shared neutral form's (IH0 finding J).
 EXPORT_REFUSALS = ("no-relations", "unrepresentable", "opaque", "too-large")
@@ -54,7 +55,7 @@ EXPORT_REFUSALS = ("no-relations", "unrepresentable", "opaque", "too-large")
 #: join check (``ilp_rewrite.check_join_types``), and ``own-reference-join``
 #: refuses a join through an own-reference subtype, which the count cannot meet
 #: as the checker does (IH2, IH-D1 (b)).
-MAPPING_REFUSALS = ("open-world-head", "unknown-predicate", "constant-atom", "reflexive-atom",
+MAPPING_REFUSALS = ("open-world-head", "unknown-predicate", "constant-atom", "constant-spelling", "reflexive-atom",
                     "recursion", "unbound-head", "disconnected-body", "type-confused-join",
                     "own-reference-join")
 #: The counting's and admission's refusals in check order (D11 (o): holds only).
@@ -67,6 +68,8 @@ _FIGURE = re.compile(rf"-?[0-9]{{1,{MAX_DIGITS}}}(?:\.[0-9]{{1,{MAX_DIGITS}}})?"
 _SIZE = re.compile(rf"-1|[0-9]{{1,{MAX_DIGITS}}}")
 _FUNCTIONAL = re.compile(r"-1|\?[a-z]")
 _ESCAPES = {"\\": "\\\\", "\t": "\\t", "\n": "\\n"}
+_UNESCAPE = {encoded: raw for raw, encoded in _ESCAPES.items()}
+_INTEGER_LITERAL = re.compile(r"0|-?[1-9][0-9]*")
 
 
 # -- export ------------------------------------------------------------------
@@ -328,13 +331,18 @@ def parse_rules(text: str) -> list[dict[str, Any]]:
 
 
 def extract_rules(stdout: str) -> str:
-    """The rule lines of AMIE's stdout, shared by the live script and its replay.
-
-    A rule line starts with ``?``; AMIE's settings, header and progress lines do
-    not. The lines are kept verbatim and in printed order; an empty result is
-    ``""`` (import ``none``)."""
-    lines = [line for line in stdout.split("\n") if line.startswith("?")]
+    """Keep variable- and constant-first rule rows in AMIE's printed order."""
+    lines = []
+    for line in stdout.split("\n"):
+        rule, tab, _ = line.partition("\t")
+        words = rule.split()
+        if line.startswith("?") or (tab and words and ":" in words[0] and "=>" in words):
+            lines.append(line)
     return "".join(f"{line}\n" for line in lines)
+
+
+def _variable(term: str) -> bool:
+    return _VARIABLE.fullmatch(term) is not None
 
 
 def canonical(body: list[list[str]], head: list[str]) -> tuple[tuple[str, str, str], ...]:
@@ -347,7 +355,7 @@ def canonical(body: list[list[str]], head: list[str]) -> tuple[tuple[str, str, s
         names: dict[str, str] = {}
 
         def name(term: str, names: dict[str, str] = names) -> str:
-            return names.setdefault(term, f"?{len(names)}") if term.startswith("?") else term
+            return names.setdefault(term, f"?{len(names)}") if _variable(term) else term
 
         forms.append(tuple((name(s), r, name(o)) for s, r, o in [*order, head]))
     return min(forms)
@@ -379,6 +387,34 @@ def _mapping(name: str, index: int, detail: str) -> IlpError:
     return IlpError(EXIT_ILL_FORMED, f"rule {index}: {name}: {detail}")
 
 
+def _constant(term: str, entry: Relation, position: int, index: int) -> str | int | bool:
+    """Invert the exporter for one role, and require its exact spelling."""
+    from gnd.popvalidate import _PRIMITIVE_PREDICATES
+
+    family_name, separator, payload = term.partition(":")
+    primitives = entry.primitives[position]
+    kinds = {_kind(primitive) for primitive in primitives}
+    if not separator or family_name != entry.families[position] or len(kinds) != 1:
+        raise _mapping("constant-atom", index, "literal lacks the role's unambiguous export family")
+    kind = next(iter(kinds))
+    try:
+        if kind == "boolean":
+            value: str | int | bool = {"true": True, "false": False}[payload]
+        elif kind == "number":
+            if len(payload.removeprefix("-")) > 4300 or _INTEGER_LITERAL.fullmatch(payload) is None:
+                raise ValueError
+            value = int(payload)
+        else:
+            value = re.sub(r"\\.", lambda match: _UNESCAPE[match[0]], payload)
+        if not all(_PRIMITIVE_PREDICATES[primitive](value) for primitive in primitives):
+            raise ValueError
+        if spell(family_name, value, where="rule literal") != term:
+            raise ValueError
+    except (IlpError, KeyError, OverflowError, ValueError):
+        raise _mapping("constant-atom", index, "literal is outside the role's canonical export spelling") from None
+    return value
+
+
 def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
            uncovered: Mapping[str, Relation], shape: dict[str, Any],
            closures: Mapping[str, frozenset[str]]) -> MinedRule:
@@ -394,32 +430,43 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
     for _subject, relation, _obj in atoms:
         if relation not in relations:
             raise _mapping("unknown-predicate", index, f"{relation} is not a relation of the export")
+    decoded = [
+        tuple("$" + term[1:] if _variable(term) else _constant(term, relations[relation], position, index)
+              for position, term in enumerate((subject, obj)))
+        for subject, relation, obj in atoms
+    ]
+    for (subject, _relation, obj), operands in zip(atoms, decoded, strict=True):
+        for raw, value in zip((subject, obj), operands, strict=True):
+            if not _variable(raw) and isinstance(value, str) and value.startswith("$"):
+                raise _mapping("constant-spelling", index, "a decoded string starts with the reserved dollar prefix")
     for subject, relation, obj in atoms:
-        for term in (subject, obj):
-            if not term.startswith("?"):
-                raise _mapping("constant-atom", index, f"{relation} holds a constant")
-    for subject, relation, obj in atoms:
-        if subject == obj:
+        if subject == obj and _variable(subject):
             raise _mapping("reflexive-atom", index, f"{relation} joins {subject} with itself")
-    if any(relation == head[1] for _s, relation, _o in body):
+    variable_head = _variable(head[0]) and _variable(head[2])
+    if head in body or (variable_head and any(relation == head[1] for _s, relation, _o in body)):
         raise _mapping("recursion", index, f"the head relation {head[1]} is in the body")
-    bound = {term for subject, _r, obj in body for term in (subject, obj)}
+    body_variables = [{term for term in (s, o) if _variable(term)} for s, _r, o in body]
+    bound = set().union(*body_variables)
     for term in (head[0], head[2]):
-        if term not in bound:
+        if _variable(term) and term not in bound:
             raise _mapping("unbound-head", index, f"head variable {term} is not in the body")
-    # The checker evaluates a connected antecedent only (review 1): join the body's
-    # atoms through shared variables and require one component.
+    # Constants constrain rows, while only variables connect body atoms.
     reached, frontier = set(), [0]
     while frontier:
         atom = frontier.pop()
         if atom not in reached:
             reached.add(atom)
-            terms = {body[atom][0], body[atom][2]}
-            frontier += [k for k, (s, _r, o) in enumerate(body) if k not in reached and terms & {s, o}]
+            frontier += [k for k, names in enumerate(body_variables)
+                         if k not in reached and body_variables[atom] & names]
     if len(reached) != len(body):
         raise _mapping("disconnected-body", index, "the body's atoms share no variable across parts")
-    joins = [{"predicate": relation, "args": [{"var": "_"}, {"var": subject}, {"var": obj}]}
-             for subject, relation, obj in atoms]
+    joins = [
+        {"predicate": relation, "args": [{"var": "_"}, *(
+            {"var": term} if _variable(term) else {"const": value}
+            for term, value in zip((subject, obj), operands, strict=True)
+        )]}
+        for (subject, relation, obj), operands in zip(atoms, decoded, strict=True)
+    ]
     try:
         check_join_types(joins, [], index, shape, closures=closures)
     except IlpError as error:
@@ -434,6 +481,8 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
     for subject, relation, obj in atoms:
         entry = relations[relation]
         for term, name, kinds in zip((subject, obj), entry.families, entry.primitives, strict=True):
+            if not _variable(term):
+                continue
             names, seen = spanned.setdefault(term, (set(), set()))
             names.add(name)
             seen.update(kinds)
@@ -445,13 +494,13 @@ def mapped(rule: dict[str, Any], index: int, relations: Mapping[str, Relation],
             raise _mapping("own-reference-join", index, f"variable {term} joins references of "
                            f"{' and '.join(sorted(seen))} in one family, which the count spells alike")
 
-    def atom(subject: str, relation: str, obj: str) -> dict[str, Any]:
+    def atom(relation: str, operands: tuple) -> dict[str, Any]:
         entry = relations[relation]
-        return {"fact_type": entry.fact_type,
-                "bind": {entry.roles[0]: "$" + subject[1:], entry.roles[1]: "$" + obj[1:]}}
+        return {"fact_type": entry.fact_type, "bind": dict(zip(entry.roles, operands, strict=True))}
 
-    core = {"type": "guarded", "antecedent": [atom(*a) for a in body],
-            "consequent": {"atom": atom(*head)}}
+    core = {"type": "guarded", "antecedent": [
+        atom(relation, operands) for (_s, relation, _o), operands in zip(body, decoded[:-1], strict=True)
+    ], "consequent": {"atom": atom(head[1], decoded[-1])}}
     return MinedRule(core, tuple(body), head)
 
 
@@ -481,31 +530,44 @@ class Counts:
     satisfied: tuple[tuple[str, str], ...]
 
 
-def count(rule: MinedRule, facts: Mapping[str, list[tuple[str, str]]], index: int, *,
-          limit: int = MAX_JOIN_ROWS) -> Counts:
-    """Numerator and denominator over distinct head pairs (spec §6 "Counting").
-
-    The join's work is bounded by the product of the body relations' sizes,
-    refused ``too-large`` above ``limit`` before it runs."""
-    sizes = 1
+def recount_work(rule: MinedRule, facts: Mapping[str, list[tuple[str, str]]], index: int, *,
+                 limit: int = MAX_JOIN_ROWS) -> int:
+    """Bound join prefixes, distinct projection and two scans of the head relation."""
+    sizes, visits = 1, 0
     for _subject, relation, _obj in rule.body:
         sizes *= max(len(facts[relation]), 1)
         if sizes > limit:
             raise IlpError(EXIT_ILL_FORMED, f"rule {index}: too-large: the body's join could reach "
                            f"more than {limit} rows")
+        visits += sizes
+    # Each reached pair can be projected, tested for membership, and used
+    # for provenance. The head relation is scanned for membership and IDs.
+    return visits + 3 * sizes + 2 * len(facts[rule.head[1]])
+
+
+def count(rule: MinedRule, facts: Mapping[str, list[tuple[str, str]]], index: int, *,
+          limit: int = MAX_JOIN_ROWS) -> Counts:
+    """Recount distinct exported head pairs reached by literal-aware body joins."""
+    recount_work(rule, facts, index, limit=limit)
     bindings: list[dict[str, str]] = [{}]
     for subject, relation, obj in rule.body:
+        variable_subject, variable_object = _variable(subject), _variable(obj)
         extended = []
         for binding in bindings:
             for s, o in facts[relation]:
                 joined = dict(binding)
-                # setdefault binds a fresh variable and tests a bound one, so an atom
-                # whose two ends are one variable needs s == o.
-                if joined.setdefault(subject, s) == s and joined.setdefault(obj, o) == o:
-                    extended.append(joined)
+                if (joined.setdefault(subject, s) if variable_subject else subject) != s:
+                    continue
+                if (joined.setdefault(obj, o) if variable_object else obj) != o:
+                    continue
+                extended.append(joined)
         bindings = extended
     head_subject, head_relation, head_object = rule.head
+    variable_subject, variable_object = _variable(head_subject), _variable(head_object)
     held = set(facts[head_relation])
-    reached = list(dict.fromkeys((b[head_subject], b[head_object]) for b in bindings))
+    reached = dict.fromkeys((
+        binding[head_subject] if variable_subject else head_subject,
+        binding[head_object] if variable_object else head_object,
+    ) for binding in bindings)
     satisfied = tuple(pair for pair in reached if pair in held)
     return Counts(len(satisfied), len(reached), satisfied)

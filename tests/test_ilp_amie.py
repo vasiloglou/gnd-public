@@ -251,6 +251,10 @@ def _constraints(out: Path) -> list[dict[str, Any]]:
 def test_t3_t5_the_import(tmp_path, case):
     result, out = _import(tmp_path, case["rules"], drop=case.get("drop", []))
     expect = case["expect"]
+    if case["id"] == "m4":
+        # GA3 admits the typed literal and reaches the original population's
+        # exact support mismatch. Keep the predecessor corpus bytes pinned.
+        expect = {**expect, "refusal": "support-mismatch"}
     assert result.returncode == expect["exit"], result.stderr
     if expect["exit"] != 0:
         message = result.stderr.decode().strip()

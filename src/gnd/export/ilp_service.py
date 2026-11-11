@@ -596,6 +596,12 @@ def count_mined_rules(inputs: MinedInputs, parsed: list[dict[str, Any]], *,
     closures = _ilp.type_closures(inputs.model)
     rules = tuple(_amie.mapped(rule, index, tables.relations, tables.uncovered, shape, closures)
                   for index, rule in enumerate(parsed))
+    work = 0
+    for index, rule in enumerate(rules):
+        work += _amie.recount_work(rule, tables.facts, index, limit=_amie.MAX_JOIN_ROWS)
+        if work > _amie.MAX_RECOUNT_WORK:
+            raise IlpError(EXIT_ILL_FORMED, f"rule {index}: too-large: aggregate recount could exceed "
+                           f"{_amie.MAX_RECOUNT_WORK} work units")
     counts = tuple(_amie.count(rule, tables.facts, index, limit=_amie.MAX_JOIN_ROWS)
                    for index, rule in enumerate(rules))
     return MinedCount(tables, rules, counts)

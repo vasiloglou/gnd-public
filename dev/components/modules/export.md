@@ -58,23 +58,24 @@ AMIE-style mined rules: the typed triple export and the Horn-rule reader (ilp-le
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `family(model) -> dict[str, str]` | function | 74 | Each object type's family: the least top-type id, in code-point order, of the |
-| `reference_primitives(model) -> dict[str, frozenset[str]]` | function | 115 | Each object type's reference primitives: a value type's own primitive; an |
-| `spell(family_name, value, *, where) -> str` | function | 145 | ``<family>:<value>``, the one spelling the export and the count share; the |
-| `Relation` | class | 162 | One exported relation: its fact type, its two role names, their object types, |
-| `relation_table(model, covers) -> tuple[dict[str, Relation], dict[str, Relation],                   …` | function | 173 | Exported relations, uncovered binary relations, and skipped fact types with reasons. |
-| `pairs(relations, population) -> dict[str, list[tuple[str, str]]]` | function | 206 | Each relation's facts as spelled (subject, object) pairs, in population row order. |
-| `canonical_bytes(document) -> bytes` | function | 221 | (no docstring) |
-| `render(model, population, population_sha256) -> dict[str, bytes]` | function | 225 | ``amie/facts.tsv`` and ``amie/relations.json`` for one population. |
-| `render_tables(relations, skipped, facts, population_sha256) -> dict[str, bytes]` | function | 239 | :func:`render` over a relation table and pairs already built, so the mined |
-| `parse_rules(text) -> list[dict[str, Any]]` | function | 278 | AMIE's printed rule lines to rules; anything else is ``unparsable`` (spec §6). |
-| `extract_rules(stdout) -> str` | function | 330 | The rule lines of AMIE's stdout, shared by the live script and its replay. |
-| `canonical(body, head) -> tuple[tuple[str, str, str], ...]` | function | 340 | A rule up to variable renaming and body order: the least renaming over every |
-| `MinedRule` | class | 359 | One rule after the mapping: its constraint core and its typed atoms. |
-| `mapped(rule, index, relations, uncovered, shape, closures) -> MinedRule` | function | 382 | The mapping table of spec §6, in :data:`MAPPING_REFUSALS` order. |
-| `provenance(head_pairs, satisfied, fact_id, fact_type) -> list[str]` | function | 460 | Each satisfied head pair's first fact, named by FACT_ID, in satisfied order. |
-| `Counts` | class | 475 | Distinct head pairs: those the body reaches (denominator) and those that hold. |
-| `count(rule, facts, index, *, limit) -> Counts` | function | 484 | Numerator and denominator over distinct head pairs (spec §6 "Counting"). |
+| `family(model) -> dict[str, str]` | function | 77 | Each object type's family: the least top-type id, in code-point order, of the |
+| `reference_primitives(model) -> dict[str, frozenset[str]]` | function | 118 | Each object type's reference primitives: a value type's own primitive; an |
+| `spell(family_name, value, *, where) -> str` | function | 148 | ``<family>:<value>``, the one spelling the export and the count share; the |
+| `Relation` | class | 165 | One exported relation: its fact type, its two role names, their object types, |
+| `relation_table(model, covers) -> tuple[dict[str, Relation], dict[str, Relation],                   …` | function | 176 | Exported relations, uncovered binary relations, and skipped fact types with reasons. |
+| `pairs(relations, population) -> dict[str, list[tuple[str, str]]]` | function | 209 | Each relation's facts as spelled (subject, object) pairs, in population row order. |
+| `canonical_bytes(document) -> bytes` | function | 224 | (no docstring) |
+| `render(model, population, population_sha256) -> dict[str, bytes]` | function | 228 | ``amie/facts.tsv`` and ``amie/relations.json`` for one population. |
+| `render_tables(relations, skipped, facts, population_sha256) -> dict[str, bytes]` | function | 242 | :func:`render` over a relation table and pairs already built, so the mined |
+| `parse_rules(text) -> list[dict[str, Any]]` | function | 281 | AMIE's printed rule lines to rules; anything else is ``unparsable`` (spec §6). |
+| `extract_rules(stdout) -> str` | function | 333 | Keep variable- and constant-first rule rows in AMIE's printed order. |
+| `canonical(body, head) -> tuple[tuple[str, str, str], ...]` | function | 348 | A rule up to variable renaming and body order: the least renaming over every |
+| `MinedRule` | class | 367 | One rule after the mapping: its constraint core and its typed atoms. |
+| `mapped(rule, index, relations, uncovered, shape, closures) -> MinedRule` | function | 418 | The mapping table of spec §6, in :data:`MAPPING_REFUSALS` order. |
+| `provenance(head_pairs, satisfied, fact_id, fact_type) -> list[str]` | function | 509 | Each satisfied head pair's first fact, named by FACT_ID, in satisfied order. |
+| `Counts` | class | 524 | Distinct head pairs: those the body reaches (denominator) and those that hold. |
+| `recount_work(rule, facts, index, *, limit) -> int` | function | 533 | Bound join prefixes, distinct projection and two scans of the head relation. |
+| `count(rule, facts, index, *, limit) -> Counts` | function | 548 | Recount distinct exported head pairs reached by literal-aware body joins. |
 
 ## gnd.export.ilp_asp — `src/gnd/export/ilp_asp.py`
 Components: export.ilasp

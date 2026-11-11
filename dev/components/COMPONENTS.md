@@ -1539,15 +1539,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.mined_rules
-- does: Export typed AMIE triples, map mined Horn rules to guarded constraints and count distinct head-pair support [count].
-- verbs: AMIE triples, Horn rules, mined rules, typed relations, subtype families, reference primitives, parse_rules, map rule, head pairs, standard confidence, support count, provenance facts, canonical rule, own reference join, render_tables
+- does: Export typed AMIE triples, map mined Horn rules with typed literals to guarded constraints and count distinct head-pair support [count].
+- verbs: AMIE triples, Horn rules, mined rules, typed relations, subtype families, reference primitives, parse_rules, map rule, head pairs, standard confidence, support count, provenance facts, canonical rule, own reference join, render_tables, typed literal, aggregate recount
 - in: Model and covered population, AMIE printed rule lines or typed relation/pair tables.
 - out: amie/facts.tsv and relations.json bytes, parsed rules, guarded cores, support counts and satisfied fact ids.
 - status: canonical
 - modules: src/gnd/export/ilp_amie.py
-- uses: export.ilp_neutral, export.ilp_rewrite, infra.exit_codes, infra.report_redaction, model.query_index, model.scalar_terms
+- uses: check.population_structure, export.ilp_neutral, export.ilp_rewrite, infra.exit_codes, infra.report_redaction, model.query_index, model.scalar_terms
 - used_by: export.ilp_service, export.learner_registry
-- tests: tests/test_ilp_amie.py, tests/test_ih1_counting.py, tests/test_ih2_ownref.py
+- tests: tests/test_ilp_amie.py, tests/test_ih1_counting.py, tests/test_ih2_ownref.py, tests/test_ilp_amie_constants.py
 - notes: Only covered binary asserted fact types become mining relations; mapping refuses unsupported or incompatible joins before bounded counting. Counting returns evidence for rules whether or not they hold; admission belongs to export.ilp_service.
 
 
@@ -2501,7 +2501,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/popvalidate.py
 - uses: check.universe, infra.errors, infra.input_policy, infra.verdict_prose, model.document, model.extraction_scope, model.query_index, model.scalar_terms
-- used_by: check.admission, codegen.emit, discover.joined, measure.coverage, model.population_loading, model.population_sentences, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.pool, … +3 more (graph.md)
+- used_by: check.admission, codegen.emit, discover.joined, export.mined_rules, measure.coverage, model.population_loading, model.population_sentences, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, … +4 more (graph.md)
 - tests: tests/test_popvalidate.py
 - in: Parsed population document and Model.
 - out: Ordered ValidationIssue list including warning severity.

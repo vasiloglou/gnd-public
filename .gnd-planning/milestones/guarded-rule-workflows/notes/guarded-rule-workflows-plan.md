@@ -1,8 +1,10 @@
-# Guarded rule workflows · plan r2
+# Guarded rule workflows · plan r3
 
-**Status — draft, 2026-11-11.** The owner set the issue order. Plan review
-has yet to run because no instrument was selected. The plan and phase gates
-are pending. Execution defaults to `auto=false`.
+**Status — draft, 2026-11-11.** The owner set the issue order. The owner selected the
+standard GND review panel for plan and close and delegated this milestone’s
+approval gates with `auto=true`. Round 1 reviewed r2. The revised r3 bytes
+await round 2 and the delegated plan gate. See the [review
+disposition](plan-review-disposition.md).
 
 ## Goal and completion predicates
 
@@ -16,8 +18,9 @@ declared value domains, then expose the findings a rule edit hides or adds.
 - GW2 accounts for 42 removed bindings in a 43-to-1 narrowing even when both
   editions report an alethic failure. Added and removed rules and undecided
   outcomes are individually identifiable.
-- Both phases retain focused public command evidence, compatibility checks,
-  docs and an installed-candidate smoke. Closure accounts for both issue
+- Both phases retain focused public command evidence, compatibility checks
+  and docs. GW2 runs one installed-candidate smoke covering both issues.
+  Closure accounts for both issue
   criteria and records the three deferred items.
 
 ## 0. Binding design rules
@@ -79,10 +82,14 @@ shared projection for a narrowing edit. Derive the mapping from unchanged
 antecedent atom/role sites, verified against unambiguous renamed variables;
 added diagnostic variables must not turn the retained binding into a false
 addition or removal. The phase spec must pin the comparable fragment and
-test an ambiguous projection. Mark an undecided or unalignable rule
-incomparable and suppress inferred deltas for it. Proposed command precedence
+test an ambiguous projection. Require that the shared projection preserve
+distinct binding identity within each side’s witness set. Mark a rule
+incomparable if a projection collides, alignment is ambiguous, or a side
+is undecided. Suppress inferred deltas for that rule. Proposed command precedence
 is 3 for ill-formed input, then 4 for an incomplete comparison, then 0 for
-a completed comparison. The two check bands belong in the result.
+a completed comparison, including widening and a vacuous side. The two
+check bands belong in the result. The edition comparison is informational.
+The existing population baseline retains its ratchet exit behavior.
 
 ## 3. Dependencies and artifact homes
 
@@ -107,8 +114,8 @@ separate component-index Review can be selected independently.
 
 | Order | Phase | Acceptance criteria |
 |---|---|---|
-| 1 | **GW0 · E1–E4** | E1 reports exact counts for matching, failing and empty antecedents. E2 identifies the first empty prefix over populated sources and preserves unavailable, coverage and empty-relation distinctions. E3 emits located domain findings in both typo fixtures and covers role/type scope, ranges and typed identity. E4 preserves existing report behavior and validates the new wire and text output. |
-| 2 | **GW2 · B1–B3** | B1 reports 42 removed bindings and one standing binding in the same band, and reverses directions when models are swapped. B2 covers reorder, deletion, addition, warning/modality flip, rowless failure and typed projection controls. B3 covers ill-formed input, vocabulary mismatch, undecided on either side, option precedence, baseline/diff parity and an installed-candidate smoke of both issues. |
+| 1 | **GW0 · E1–E4** | E1 reports exact counts for matching, failing and empty antecedents. E2 identifies the first empty prefix over populated sources and preserves unavailable, coverage and empty-relation distinctions. E3 emits located domain findings in both typo fixtures and covers role/type scope, ranges and typed identity. E4 preserves existing report behavior, validates the new wire and text output, and gates diagnostic join overhead and literal-domain validation work. |
+| 2 | **GW2 · B1–B3** | B1 reports 42 removed bindings and one standing binding in the same band, and reports 42 additions when models are swapped. Both completed comparisons exit 0. B2 covers reorder, deletion, addition, warning/modality flip, rowless failure, typed projection, and collisions between distinct bindings. B3 covers ill-formed input, vocabulary mismatch, undecided on either side, option precedence, a vacuous side, baseline/diff parity, comparison work exhaustion, and an installed-candidate smoke of both issues. |
 
 ## 5. Documentation, skill and compatibility surfaces
 
@@ -163,7 +170,10 @@ and owner acceptance separately.
 | GW2 | New edition CLI/schema tests plus RC3 baseline, RC1 rule IDs, guarded witness and diff consumers. Pin directional payloads and exits, then exercise both issues against an installed candidate from a clean target. |
 
 GW2's spec will select exact commands and work ceilings before
-implementation. Both phases use the default pytest lane, affected Ruff
+implementation. Use two evaluations plus hash-based comparison over their
+witnesses. Gate the new work separately with a high-fanout control and a
+predeclared comparison budget. Exhaustion yields exit 4 and explicit
+incompleteness. Both phases use the default pytest lane, affected Ruff
 checks and the strict component-index change check. Historical
 evidence/native/provider lanes and certification have separate triggers.
 
@@ -174,4 +184,4 @@ evidence/native/provider lanes and certification have separate triggers.
 | Priority and active scope | Owner direction, 2026-11-11. GR-D12 first, GR-D9 second. GR-D8 and GR-D10 deferred. GR-D11 has no execution priority assigned and is carried with them. |
 | GW0 report and validation contract | Proposed. Select opt-in wire version, preserve zero-binding pass and use a located validation warning. See GW0 §7 for the tradeoffs. |
 | GW2 interface and comparison identity | Proposed. Approve the entry point and exit policy, then pin comparable guarded binding projections and ambiguous-case handling in its spec. |
-| Plan and close review | Instrument selection pending under the project hook. |
+| Plan and close review | Standard GND review panel selected by the owner. Round 1 reviewed r2. See the [review disposition](plan-review-disposition.md) for outcomes and the two-round plan budget. |

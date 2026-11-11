@@ -4,7 +4,7 @@
 
 ## 2. Provenance
 
-[Plan r2](guarded-rule-workflows-plan.md) §§0–6 and 8–10,
+[Plan r3](guarded-rule-workflows-plan.md) §§0–6 and 8–10,
 [GR-D12](https://github.com/vasiloglou/gnd-public/issues/183),
 the [correction to GR-D8](https://github.com/vasiloglou/gnd-public/issues/179#issuecomment-6805758864),
 and the [RC4 vacuity spec](../../rule-check-adoption/notes/phase-RC4-spec.md).

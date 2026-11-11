@@ -1,6 +1,6 @@
 # Guarded rule workflows
 
-Draft r2, 2026-11-11. The issue author's priority update puts guarded-rule
+Draft r3, 2026-11-11. The issue author's priority update puts guarded-rule
 diagnostics first and rule-edition comparison second.
 
 | Order | Phase | Issue | Deliverable |
@@ -13,5 +13,6 @@ diagnostics first and rule-edition comparison second.
 
 Generated cases (GW3), relational discovery (GW4), and mined-rule constants
 (GW1) are [deferred](notes/guarded-rule-workflows-plan.md#7-deferred-and-out-of-scope).
-The plan awaits independent review and owner approval. Implementation also
-requires the phase's owner gate. The execution default is `auto=false`.
+The standard panel reviewed r2. The [review disposition](notes/plan-review-disposition.md)
+records the first round and the r3 changes. The delegated plan and phase gates
+are pending under `auto=true`.

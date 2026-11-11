@@ -10,6 +10,7 @@ reviewer (Codex, `revise`, 9 findings, all accepted and applied in r2); r2 was
 not re-reviewed. No phase spec is approved. `auto=false`.**
 
 - [Plan (r2, approved; §12 amendment approved 2026-11-10)](notes/release-0.3.0-plan.md)
+- [RN2 record](004-phase-RN2.md); [RN3 spec (awaiting owner review)](notes/phase-RN3-spec.md)
 - [RN2 spec (approved 2026-11-11)](notes/phase-RN2-spec.md); [part-one review](notes/phase-RN2-codex-review.md)
 - [RN0 record](002-phase-RN0.md); [RN0 spec (approved 2026-11-10)](notes/phase-RN0-spec.md); [diff review](notes/phase-RN0-codex-review.md)
 - [RN1 record](003-phase-RN1.md); [RN1 spec (approved 2026-11-11)](notes/phase-RN1-spec.md); [diff review](notes/phase-RN1-codex-review.md); [moved digests](evidence/e1/moved-digests.md)
@@ -76,5 +77,8 @@ built and accepted** ([record](004-phase-RN2.md)): wheel sha256
 and release acceptance on beast-3 with Python 3.11: 18 passed. Nothing is
 published.
 
-Next action: RN3's spec (the hand-over dossier and the post-publication
-patches), then its owner gate.
+RN3's spec is drafted: the hand-over dossier, three unapplied
+post-publication patches and a stale-text check.
+
+Next action: the owner merges PR 165 (the RN2 record) and rules the RN3 spec
+gate and its decisions D1 to D5.

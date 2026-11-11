@@ -208,6 +208,7 @@ def discover(
     joined_settings: joined.Settings | None = None,
 ) -> dict[str, Any]:
     """Run discovery; return the report fields plus private build inputs."""
+    joined.require_family(families, joined_settings)
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, ModelLoadError, "model")
     population_bytes = _read_capped(
         population_path, MAX_POPULATION_BYTES, PopulationLoadError, "population"
@@ -308,7 +309,11 @@ def discover(
             subjects = candidate.subjects
             if candidate.family == joined.FAMILY and (
                 observed is None or observed.binding_count != subjects.count
+                or len(observed.offending_facts) != subjects.violations
                 or verdict != ("warning" if subjects.violations else "pass")
+                or (near_miss(subjects.violations, subjects.count) and not joined.matches_counterexamples(
+                    view, joined_settings, subjects.counterexamples, observed.offending_facts,
+                ))
             ):
                 raise DiscoveryDefect(f"{ref} disagrees with joined discovery support or verdict")
             if verdict == "pass":
@@ -479,6 +484,11 @@ def _cmd_discover(
     shape_judgements: str | None = None,
     joined_settings: joined.Settings | None = None,
 ) -> int:
+    try:
+        joined.require_family(families, joined_settings)
+    except ValueError as error:
+        _stderr(str(error))
+        return EXIT_USAGE
     model_path, population_path = Path(model), Path(population)
     out_path, report_path = Path(out), Path(report)
     evidence_path = None if type_evidence is None else Path(type_evidence)

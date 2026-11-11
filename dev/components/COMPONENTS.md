@@ -304,14 +304,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Independently counted guarded candidates and joined-family work or refusal metadata.
 - status: canonical
 - modules: src/gnd/discover/joined.py
-- uses: check.population_structure, discover.candidates, discover.population_view, infra.input_policy
+- uses: check.population_structure, discover.candidates, discover.population_view, infra.input_policy, model.atom_bindings
 - used_by: discover.service
 - tests: tests/test_discover_guarded_join.py
 
 
 ### discover.output
 - does: Build induced constraint envelopes and replayable evolution proposals with deterministic reports [proposal, add_operations].
-- verbs: induced provenance, deontic proposal, add_operations, evolution proposal, candidate_document, candidate_text, canonical_bytes, YAML serialization, JSON report, render_text, evidence digest, proposal audit
+- verbs: induced provenance, deontic proposal, add_operations, evolution proposal, candidate_document, candidate_text, canonical_bytes, YAML serialization, JSON report, render_text, evidence digest, proposal audit, joined refusal text
 - in: Candidate constraints or ADD operations, source model bytes and audit metadata
 - out: EvolutionProposal, replayed model document, serialized bytes and report text
 - status: canonical
@@ -363,7 +363,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### discover.service
 - does: Check population-induced constraints and emit reviewed-evolution inputs, reports and optional type evidence [discover].
-- verbs: discover, _cmd_discover, induce constraints, checker admission, near misses, support counting, work budget, type evidence, judgement replay, proposal trimming, output collisions, reference populations, redacted discovery
+- verbs: discover, _cmd_discover, induce constraints, checker admission, near misses, support counting, work budget, type evidence, judgement replay, proposal trimming, output collisions, reference populations, redacted discovery, guarded support confirmation
 - in: Model/population paths, family limits, output paths and optional judgement inputs
 - out: Discovery report/build inputs or command outputs and exit code
 - status: canonical
@@ -562,7 +562,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.discover_command
 - does: Validate discovery options and disclosure before dispatching constraint and fact type proposals [handle].
-- verbs: discover constraints, induce rules, fact type proposals, duplicate judgements, shape judgements, type evidence, minimum support, disclosure mode, request actor, request time, family selection, parse flags
+- verbs: discover constraints, induce rules, fact type proposals, duplicate judgements, shape judgements, type evidence, minimum support, disclosure mode, request actor, request time, family selection, parse flags, joined role selectors
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1956,7 +1956,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/atoms.py
 - uses: (none)
-- used_by: check.baseline, check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter, synth.guarded
+- used_by: check.baseline, check.universe, checker.evaluate, discover.joined, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter, synth.guarded
 - tests: tests/test_atom_bind.py
 
 

@@ -26,7 +26,7 @@
     [
       "src/gnd/discover/joined.py",
       "_candidate",
-      "hashlib.sha256(guard_key(core).encode()).hexdigest()[:24]",
+      "hashlib.sha256(key.encode()).hexdigest()[:24]",
       1
     ],
     [
@@ -130,8 +130,68 @@
       "guard_key",
       "dict[str, Any]",
       1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "roles[source_name]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "roles[target_name]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "row[source_name]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "row[target_name]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "rows[position]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "view.population.facts[fact]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "matches_counterexamples",
+      "view.roles[fact]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "require_family",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "signature",
+      "consequent[kind]",
+      1
+    ],
+    [
+      "src/gnd/discover/joined.py",
+      "signature",
+      "dict[str, int]",
+      1
     ]
   ],
-  "result_distinct_rows": 7639,
-  "result_occurrences": 9503
+  "result_distinct_rows": 7649,
+  "result_occurrences": 9513
 }

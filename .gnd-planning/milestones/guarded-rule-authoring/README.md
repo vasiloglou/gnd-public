@@ -13,3 +13,5 @@ The owner selected all three follow-ups on 2026-11-11 after the
 
 Scope approved. The plan and first-phase draft await the milestone's
 review and implementation gates.
+
+[GA2 spec](notes/phase-GA2-spec.md) · [GA2 result](005-phase-GA2.md)

@@ -30,13 +30,15 @@ Bounded discovery of guards over a binary relation and classifier.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Settings` | class | 24 | (no docstring) |
-| `Refused` | class(ValueError) | 32 | An unavailable joined family with a closed report reason. |
-| `Work` | class | 37 | (no docstring) |
-| `Work.charge(self, count) -> None` | method | 40 | (no docstring) |
-| `configure(relation, classifier, marker, max_pairs) -> Settings` | function | 57 | (no docstring) |
-| `guard_key(core) -> str` | function | 113 | Deterministic key ignoring authored envelope and positional identity. |
-| `generate(view, settings, *, eligible, redacted)` | function | 212 | Compute candidates and independent support before the discovery checker. |
+| `Settings` | class | 25 | (no docstring) |
+| `Refused` | class(ValueError) | 33 | An unavailable joined family with a closed report reason. |
+| `Work` | class | 38 | (no docstring) |
+| `Work.charge(self, count) -> None` | method | 41 | (no docstring) |
+| `require_family(families, settings) -> None` | function | 47 | The joined family and its explicit selectors must travel together. |
+| `matches_counterexamples(view, settings, counterexamples, offending)` | function | 53 | Check the reported row IDs against independently produced checker bindings. |
+| `configure(relation, classifier, marker, max_pairs) -> Settings` | function | 87 | (no docstring) |
+| `guard_key(core) -> str \| None` | function | 143 | Identity of a joined candidate shape, modulo variable names and atom order. |
+| `generate(view, settings, *, eligible, redacted)` | function | 260 | Compute candidates and independent support before the discovery checker. |
 
 ## gnd.discover.output — `src/gnd/discover/output.py`
 Components: discover.output

@@ -6,10 +6,11 @@ import hashlib
 import json
 from collections import defaultdict
 from dataclasses import dataclass
-from itertools import islice, product
+from itertools import islice, permutations, product
 from typing import Any
 
 from gnd import input_policy
+from gnd.atoms import atom_bind
 from gnd.discover.candidates import Candidate
 from gnd.discover.support import Identity, PopulationView, Role, _subjects, identity, json_native
 from gnd.popvalidate import _PRIMITIVE_PREDICATES
@@ -41,6 +42,35 @@ class Work:
         if self.visits + count > MAX_WORK:
             raise Refused("work-limit")
         self.visits += count
+
+
+def require_family(families: tuple[str, ...], settings: Settings | None) -> None:
+    """The joined family and its explicit selectors must travel together."""
+    if (FAMILY in families) != (settings is not None):
+        raise ValueError("guarded-join needs both family selection and joined selectors")
+
+
+def matches_counterexamples(view, settings, counterexamples, offending):
+    """Check the reported row IDs against independently produced checker bindings."""
+    fact, source_name, target_name = settings.relation
+    roles = {role.name: role for role in view.roles[fact]}
+    source, target = roles[source_name], roles[target_name]
+    witnessed = {
+        (identity(binding["$a"], source.primitive), identity(binding["$b"], target.primitive))
+        for binding in offending
+        if isinstance(binding, dict) and "$a" in binding and "$b" in binding
+    }
+    rows = view.population.facts[fact]
+    for ref in counterexamples:
+        position = int(ref.rsplit("#", 1)[1])
+        row = rows[position]
+        key = (
+            identity(row[source_name], source.primitive),
+            identity(row[target_name], target.primitive),
+        )
+        if key not in witnessed:
+            return False
+    return True
 
 
 def _coordinates(value: str) -> Coordinates:
@@ -110,20 +140,38 @@ def _atom(roles: tuple[Role, Role], first: Any, second: Any) -> dict[str, Any]:
     return {"fact_type": a.fact_type, "bind": {a.name: first, b.name: second}}
 
 
-def guard_key(core: dict[str, Any]) -> str:
-    """Deterministic key ignoring authored envelope and positional identity."""
-    return json.dumps(
-        [core.get("antecedent"), core.get("consequent")],
-        sort_keys=True,
-        ensure_ascii=False,
-        separators=(",", ":"),
-        allow_nan=False,
-    )
+def guard_key(core: dict[str, Any]) -> str | None:
+    """Identity of a joined candidate shape, modulo variable names and atom order."""
+    antecedent = core.get("antecedent") or ()
+    consequent = core.get("consequent") or {}
+    kind = next(iter(consequent), "")
+    if len(antecedent) not in (2, 3) or kind not in {"atom", "absence"}:
+        return None
+
+    def signature(order):
+        names: dict[str, int] = {}
+
+        def term_key(term):
+            if isinstance(term, str) and term.startswith("$"):
+                return ("var", names.setdefault(term, len(names)))
+            return ("literal", identity(term, None))
+
+        def atom_key(atom):
+            return atom["fact_type"], [
+                (role, term_key(term)) for role, term in sorted(atom_bind(atom).items())
+            ]
+
+        canonical = [[atom_key(atom) for atom in order], kind, atom_key(consequent[kind])]
+        return json.dumps(canonical, ensure_ascii=False, separators=(",", ":"))
+
+    return min(signature(order) for order in permutations(antecedent))
 
 
 def _candidate(antecedent, consequent, order):
     core = {"type": "guarded", "antecedent": antecedent, "consequent": consequent}
-    core["id"] = "gj_" + hashlib.sha256(guard_key(core).encode()).hexdigest()[:24]
+    key = guard_key(core)
+    assert key is not None
+    core["id"] = "gj_" + hashlib.sha256(key.encode()).hexdigest()[:24]
     return Candidate(FAMILY, None, core, _subjects(order))
 
 

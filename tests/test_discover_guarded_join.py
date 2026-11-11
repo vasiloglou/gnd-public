@@ -182,6 +182,10 @@ def test_joined_discovery_declared_rule_is_suppressed(tmp_path):
     document = YAML(typ="safe").load(model)
     declared = initial["emitted"][0]["constraint"]
     declared["id"] = "authored_guard"
+    names = {"$a": "$source", "$b": "$target"}
+    declared["antecedent"].reverse()
+    for atom in [*declared["antecedent"], declared["consequent"]["absence"]]:
+        atom["bind"] = {role: names.get(term, term) for role, term in atom["bind"].items()}
     document["constraints"].append(declared)
     existing = second / model.name
     with existing.open("w", encoding="utf-8") as stream:
@@ -228,3 +232,53 @@ def test_bad_joined_marker_is_a_usage_error_before_input_reads(tmp_path):
     assert result.returncode == 64
     assert b"reserved dollar" in result.stderr
     assert list(tmp_path.iterdir()) == []
+
+
+def test_joined_service_rejects_family_and_settings_mismatches(tmp_path):
+    import pytest
+
+    from gnd.discover import joined, service
+
+    model, population = _population(tmp_path)
+    settings = joined.configure(SELECTORS[3], SELECTORS[5], None, None)
+    for families, config in [(("value",), settings), ((joined.FAMILY,), None)]:
+        with pytest.raises(ValueError, match="guarded-join"):
+            service.discover(
+                model,
+                population,
+                families=families,
+                max_values=20,
+                max_pairs=256,
+                joined_settings=config,
+            )
+
+
+def test_joined_discovery_rejects_checker_witness_disagreement(tmp_path, monkeypatch):
+    import pytest
+
+    from gnd.discover import joined, service
+
+    model, population = _population(tmp_path)
+    settings = joined.configure(SELECTORS[3], SELECTORS[5], None, None)
+    original = service.check
+
+    def wrong_witness(*args, **kwargs):
+        report = original(*args, **kwargs)
+        warning = next(
+            row
+            for row in report.verdicts
+            if row.binding_count == 21 and len(row.offending_facts) == 1
+        )
+        warning.offending_facts = [{**warning.offending_facts[0], "$b": "core0"}]
+        return report
+
+    monkeypatch.setattr(service, "check", wrong_witness)
+    with pytest.raises(service.DiscoveryDefect, match="disagrees"):
+        service.discover(
+            model,
+            population,
+            families=(joined.FAMILY,),
+            max_values=20,
+            max_pairs=256,
+            joined_settings=settings,
+        )

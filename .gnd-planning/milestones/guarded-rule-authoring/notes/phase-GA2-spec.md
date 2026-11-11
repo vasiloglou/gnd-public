@@ -94,3 +94,12 @@ corpus and documentation.
 Delegated under the [plan gate](../001-plan-gate.md), 2026-11-11.
 The selected panel applies to plan and close. Phase diff review follows
 implementation. GA1 evidence was checked before opening this gate.
+
+## 12. Implementation findings
+
+| Finding | Disposition |
+|---|---|
+| The first proposal preview fixture omitted its required record and preview output paths. | The CLI usage refusal was reproduced. The control now previews successfully using the existing command contract. |
+| Matching warning and binding count could hide a different violation. | An injected checker warning with the same count but a different row passed the first implementation. Admission now checks the number of violating bindings and resolves displayed counterexample IDs to the checker witnesses. |
+| Direct service calls could supply a family without selectors, or selectors without the family. | Both mismatched combinations were accepted in the reviewer reproduction. The service now rejects them before reading inputs. |
+| Declared-rule suppression depended on variable names and antecedent order. | A reordered, renamed copy of the emitted guard still generated a proposal. Small joined shapes now use an order- and name-independent typed key. |

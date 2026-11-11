@@ -1,0 +1,201 @@
+diff --git a/README.md b/README.md
+index 0a9cd7c6..827c2226 100644
+--- a/README.md
++++ b/README.md
+@@ -48,7 +48,7 @@ final state either way.
+ Requires Python 3.11 or newer. With [uv](https://docs.astral.sh/uv/getting-started/installation/):
+ 
+ ```sh
+-uv tool install get-nick-done==0.2.0
++uv tool install get-nick-done==0.3.0
+ uv tool update-shell
+ ```
+ 
+diff --git a/docs/compatibility.md b/docs/compatibility.md
+index aecef4a0..65c1cbd3 100644
+--- a/docs/compatibility.md
++++ b/docs/compatibility.md
+@@ -1,10 +1,9 @@
+ # Compatibility and version policy
+ 
+-Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions 0.1.0
+-and 0.2.0 are published (0.2.0 on 2026-11-08). Version 0.3.0 is prepared and
+-not published; on 2026-11-11 the package index listed only 0.1.0 and 0.2.0, so
+-0.3.0 was free. Confirm service ownership and that the version is still free
+-before candidate freeze and again before any upload. Milestone numbers are not package versions.
++Distribution `get-nick-done`, import and CLI `gnd` remain stable. Versions 0.1.0,
++0.2.0 and 0.3.0 are published (0.3.0 on PUBLICATION_DATE). For the next version,
++confirm service ownership and that the version is still free before candidate
++freeze and again before any upload. Milestone numbers are not package versions.
+ 
+ Preserve documented schemas, exit bands and deterministic behavior unless an
+ explicit reviewed compatibility decision says otherwise. Record breaking changes
+diff --git a/docs/explanation/ossie.md b/docs/explanation/ossie.md
+index 13b57b58..b4bb741a 100644
+--- a/docs/explanation/ossie.md
++++ b/docs/explanation/ossie.md
+@@ -28,8 +28,9 @@ Use `gnd export ossie MODEL --out ONTOLOGY.yaml` to share the ontology.
+ The sidecar preserves GND details, and the loss report shows how each
+ source field was handled. Keep the sidecar beside the ontology for a
+ GND round trip. `gnd import ossie ONTOLOGY.yaml --out MODEL.json` restores
+-those details when the sidecar is present. A foreign ontology imports
+-through the supported projection and gets its own loss report.
++those details when the sidecar is present. What the export omitted stays
++omitted: a model with example populations comes back without them. A foreign
++ontology imports through the supported projection and gets its own loss report.
+ 
+ GND keeps its `Duration` type, which counts whole days. Ossie receives an
+ integer value type and the sidecar preserves its original GND meaning.
+diff --git a/docs/how-to/shared-expense-policies-commands.md b/docs/how-to/shared-expense-policies-commands.md
+index 1e901543..0b5eb21a 100644
+--- a/docs/how-to/shared-expense-policies-commands.md
++++ b/docs/how-to/shared-expense-policies-commands.md
+@@ -2,8 +2,9 @@
+ 
+ These are the commands behind [Two teams, one expense form](../tutorials/shared-expense-policies.md).
+ The example extends the shipped expense demo with two policies and receipt facts.
+-Use a development checkout for the unreleased feature; see
+-[development setup](../installation.md).
++The feature is in GND 0.3.0 and later. Install it with pip in an activated
++virtual environment, as the [installation page](../installation.md) shows, so
++that `python` and `gnd` below are the same installation.
+ 
+ !!! info "Files on GitHub"
+ 
+diff --git a/docs/index.md b/docs/index.md
+index 4620a932..455280c8 100644
+--- a/docs/index.md
++++ b/docs/index.md
+@@ -150,7 +150,7 @@ install into both agents:
+ <p class="pills"><span>Claude Code</span><span>Codex</span><span>Agent Skills format</span><span>Python ≥ 3.11</span></p>
+ 
+ ```sh
+-uv tool install get-nick-done==0.2.0
++uv tool install get-nick-done==0.3.0
+ uv tool update-shell
+ ```
+ 
+diff --git a/docs/installation.md b/docs/installation.md
+index 69a79968..eed4119b 100644
+--- a/docs/installation.md
++++ b/docs/installation.md
+@@ -10,7 +10,7 @@ With [uv](https://docs.astral.sh/uv/getting-started/installation/), install GND
+ a command-line tool:
+ 
+ ```sh
+-uv tool install get-nick-done==0.2.0
++uv tool install get-nick-done==0.3.0
+ uv tool update-shell
+ ```
+ 
+@@ -22,7 +22,7 @@ Alternatively, use pip in a virtual environment:
+ ```sh
+ python3 -m venv .venv
+ source .venv/bin/activate
+-python -m pip install get-nick-done==0.2.0
++python -m pip install get-nick-done==0.3.0
+ gnd --help
+ ```
+ 
+diff --git a/docs/marketplace-plugins.md b/docs/marketplace-plugins.md
+index ecf27aa9..7a53a26c 100644
+--- a/docs/marketplace-plugins.md
++++ b/docs/marketplace-plugins.md
+@@ -11,7 +11,7 @@ The command below installs the published runtime. If your plugin comes from a
+ same commit instead, as [Updates](#updates) shows.
+ 
+ ```sh
+-uv tool install get-nick-done==0.2.0
++uv tool install get-nick-done==0.3.0
+ uv tool update-shell
+ ```
+ 
+@@ -69,9 +69,7 @@ the Python runtime with `uv tool upgrade get-nick-done`. Keep the plugin version
+ and runtime version aligned. Plugin users do not need `gnd install --sync`.
+ 
+ If the plugin comes from a `main` that has unreleased changes, `uv tool upgrade`
+-installs only the latest release. That is the case now: the plugin on `main` is
+-version 0.3.0, which is prepared and not published, and the package index has
+-0.2.0. Install the runtime from a checkout of the
++installs only the latest release. Install the runtime from a checkout of the
+ commit your plugin came from (`main` if you added the marketplace from `main`),
+ as the [course planner tutorial](tutorials/course-planner.md#what-youll-build) does:
+ 
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index a074bbb5..a7946f04 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -1,16 +1,14 @@
+ # Release notes and milestones
+ 
+-Version 0.2.0, published on 2026-11-08, is the latest release; 0.1.0 was the
+-first. Version 0.3.0 is prepared and not published. Releases follow the
+-[release procedure](releasing.md). Changes on `main` after a release are listed
+-in an `Unreleased:` section until the next one.
++Version 0.3.0, published on PUBLICATION_DATE, is the latest release; 0.2.0 and
++0.1.0 came before it. Releases follow the [release procedure](releasing.md).
++Changes on `main` after a release are listed in an `Unreleased:` section until
++the next one.
+ 
+-## 0.3.0 (prepared, not published)
++## 0.3.0 (PUBLICATION_DATE)
+ 
+-Everything in this section is on `main` after 0.2.0 and is not in any published
+-package. Until the release is published, install from a checkout of the
+-repository to use it. The first block is Apache Ossie interchange; the blocks
+-after it are the other changes since 0.2.0.
++Everything in this section is new since 0.2.0. The first block is Apache Ossie
++interchange; the blocks after it are the other changes.
+ 
+ ### Apache Ossie interchange
+ 
+@@ -54,7 +52,7 @@ Engineering and Sales using different policies, then Sales moving to a new
+ Finance edition while Engineering stays on the old one. The
+ [command walkthrough](how-to/shared-expense-policies-commands.md) runs every step.
+ Generated-app and linked-project conformance routes for these models remain
+-unsupported. This feature requires the development checkout.
++unsupported.
+ 
+ - **New model format, version 5.** A model that includes a vocabulary declares
+   `version: 5` and uses two new fields, `includes` and `fact_type_constraints`
+diff --git a/docs/support.md b/docs/support.md
+index 8f516061..328d56ad 100644
+--- a/docs/support.md
++++ b/docs/support.md
+@@ -10,7 +10,7 @@ The repository is public. No paid support SLA is offered.
+ | Ubuntu, Python 3.11, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0 |
+ | macOS, Python 3.13, uv 0.10.10 | Observed in Phase 3 acceptance of 0.1.0 |
+ | macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.2.0 candidate built from `7c0f4d0e` |
+-| Any profile, prepared 0.3.0 package | Not signed off; no profile is observed for 0.3.0 yet |
++| macOS 27 arm64, Python 3.11, uv 0.10.10 | Observed in release acceptance of the 0.3.0 candidate built from `4c07c0e6` |
+ | Other Python >=3.11 / OS | Metadata compatibility only, unmeasured |
+ | Native/provider extras | Optional, unmeasured in this preparation |
+ 
+diff --git a/docs/tutorials/shared-expense-policies.md b/docs/tutorials/shared-expense-policies.md
+index 43e5d00d..33e31d41 100644
+--- a/docs/tutorials/shared-expense-policies.md
++++ b/docs/tutorials/shared-expense-policies.md
+@@ -53,8 +53,8 @@ A team's policy never copies a shared definition and cannot change one. It says
+ which edition of the shared model it builds on, the way a contract cites the
+ 2026 edition of a handbook and not just "the handbook".
+ 
+-**Before you start.** Use a checkout of a development checkout for the unreleased example, as the
+-[installation page](../installation.md) shows and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
++**Before you start.** Install GND 0.3.0 or later with pip in an activated virtual environment, as the
++[installation page](../installation.md) shows, and add the Claude Code plugin as the [plugin page](../marketplace-plugins.md)
+ shows. The [commands page](../how-to/shared-expense-policies-commands.md) has
+ the copy step and every command behind the requests below.
+ 
+diff --git a/tests/test_release_version.py b/tests/test_release_version.py
+index 64550085..422f27e0 100644
+--- a/tests/test_release_version.py
++++ b/tests/test_release_version.py
+@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
+ # Versions that exist on the package index. Publication adds the new version
+ # here, in the same patch that moves the install pins (historical data: the one
+ # literal of its kind in the tests).
+-RELEASED = {"0.1.0", "0.2.0"}
++RELEASED = {"0.1.0", "0.2.0", "0.3.0"}
+ 
+ MANIFESTS = (
+     ".claude-plugin/plugin.json",

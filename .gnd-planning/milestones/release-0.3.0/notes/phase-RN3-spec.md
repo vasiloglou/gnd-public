@@ -2,8 +2,10 @@
 
 ## 1. Status
 
-**Awaiting owner review, 2026-11-11.** Draft r1. Decisions D1 to D5 are open.
-No implementation file is created or edited.
+**Owner-decided (2026-11-11): approved, D1 to D5 as recommended** ("Merge and
+approve", answering "Merge PR 165 and approve the RN3 spec as recommended?").
+The approved bytes are r1 at commit `6618e643`, sha256 `aa5cbbcf535d741da7b58d17575a5483852113b60c42c79478a72818d752dde7`.
+Implementation follows; findings are appended below.
 
 ## 2. Provenance
 
@@ -118,11 +120,11 @@ None added. The order of owner actions is `docs/releasing.md`'s.
 
 | ID | Question | Readings and cost | Recommendation |
 |---|---|---|---|
-| D1 | The support row after publication | (a) one row for the observed 0.3.0 profile (macOS 27 arm64, Python 3.11, uv 0.10.10, candidate `4c07c0e6`), keeping the 0.2.0 row; (b) replace the 0.2.0 row | (a) |
-| D2 | The two shared-expense pages that say "unreleased" | (a) the patch rewords them to say the feature is in 0.3.0; (b) leave them, since a checkout still works | (a): after publication the sentence sends users to a checkout they no longer need |
-| D3 | `docs/explanation/ossie.md` says an import "restores those details when the sidecar is present" (RN1 open question) | (a) add one sentence now, in this phase, that omitted populations stay omitted: a docs edit on main after the candidate commit, which does not change the package's code but does change the sdist's docs if rebuilt; (b) put it in the post-publication patch; (c) leave it | (b): the candidate's bytes stay the accepted ones and the page is fixed with the other docs |
-| D4 | The undocumented Ossie literals (RN2 review G7) and the unfiled fixtures-refactor issue (RN-D7) | (a) the dossier lists both as known; filing issues is the owner's go-ahead at publication; (b) file both issues now | (a) |
-| D5 | A review over this spec before implementation? | the owner's call | none; the diff gets one reviewer |
+| D1 | The support row after publication | (a) one row for the observed 0.3.0 profile (macOS 27 arm64, Python 3.11, uv 0.10.10, candidate `4c07c0e6`), keeping the 0.2.0 row; (b) replace the 0.2.0 row | (a) **Ruled (o, 2026-11-11): as recommended** |
+| D2 | The two shared-expense pages that say "unreleased" | (a) the patch rewords them to say the feature is in 0.3.0; (b) leave them, since a checkout still works | (a): after publication the sentence sends users to a checkout they no longer need **Ruled (o, 2026-11-11): as recommended** |
+| D3 | `docs/explanation/ossie.md` says an import "restores those details when the sidecar is present" (RN1 open question) | (a) add one sentence now, in this phase, that omitted populations stay omitted: a docs edit on main after the candidate commit, which does not change the package's code but does change the sdist's docs if rebuilt; (b) put it in the post-publication patch; (c) leave it | (b): the candidate's bytes stay the accepted ones and the page is fixed with the other docs **Ruled (o, 2026-11-11): as recommended** |
+| D4 | The undocumented Ossie literals (RN2 review G7) and the unfiled fixtures-refactor issue (RN-D7) | (a) the dossier lists both as known; filing issues is the owner's go-ahead at publication; (b) file both issues now | (a) **Ruled (o, 2026-11-11): as recommended** |
+| D5 | A review over this spec before implementation? | the owner's call | none; the diff gets one reviewer **Ruled (o, 2026-11-11): as recommended** |
 
 ## 8. Tests
 
@@ -187,3 +189,84 @@ outside `docs/release-notes.md` and `docs/development`, classified:
 
 In `docs/release-notes.md`: lines 4, 8, 10, 11 and 57 are stale at
 publication (main patch).
+
+## 13. Implementation findings (2026-11-11, appended)
+
+1. **Base.** PR 165 merged as `b913d43e`. `git diff 4c07c0e6 b913d43e`
+   outside `.gnd-planning/` is empty, so the patches, made against
+   `b913d43e`, apply to the candidate commit's docs as well.
+2. **M2.** Three patches under `evidence/RN3/`: the main one touches 11 files
+   (29 insertions, 34 deletions with the other two). Differences from §6:
+   - the tag patch changes one sentence, not two: `docs/installation.md`
+     already says "the latest release tag" and names no version;
+   - under D3 (b) the main patch also adds one sentence to
+     `docs/explanation/ossie.md` saying that what an export omitted stays
+     omitted;
+   - the two shared-expense pages are reworded to "GND 0.3.0 and later"; the
+     commands page copies its files out of the installed package, so no
+     checkout is needed after publication.
+3. **M3.** `stale-text-check.sh` takes the one argument `token`. Its
+   allowlist is the 19 hits the search gives on the fully patched and dated
+   scratch tree, each read and judged right after publication or historical.
+   Unlike the predecessor's, it exits 2 when the README has no 0.3.0 pin
+   (patches not applied), and exits 1 until all three patches are in.
+4. **M1.** The dossier gives the owner's commands for checking the files and
+   the version, the upload, the tag and the GitHub release, and a draft
+   release body (`github-release-notes.md`) in the shape of v0.2.0's. No
+   command was run. The v0.2.0 tag is annotated with the message
+   "get-nick-done 0.2.0"; the dossier's tag command follows it.
+5. **T1, T3, T4, T5** ([checks.txt](../evidence/RN3/checks.txt)), on a
+   scratch clone of `b913d43e`:
+   - both apply orders give the same 11-file diff;
+   - all three patches with the date replaced: `41 passed`, check exit 0;
+   - placeholder left: pytest exit 1, check exit 1;
+   - `RELEASED` hunk dropped: pytest exit 1 (3 failed);
+   - unpatched tree: check exit 2;
+   - one pin left at 0.2.0: pytest exit 1, check exit 1;
+   - main patch alone: pytest exit 0, check exit 1 (the 0.2.0 tag and
+     release text is still there).
+   The first run of these controls printed the exit status of `tail`, not of
+   the check; the retained file is the rerun with the real exit codes.
+6. **M4, `docs/releasing.md` inventory** (`grep -n -i -E` for version
+   numbers, "next", "phase", dates, "TestPyPI", "private", "token"): seven
+   hits.
+
+   | Line | Text | Class |
+   |---|---|---|
+   | 14 | "Token upload of retained files." | current |
+   | 17 | "This is how 0.1.0 was published." | historical and true; incomplete, since 0.2.0 went the same way. Not stale; left as is, and listed in the record for the owner |
+   | 35 | "PyPI API token is needed" (the Trusted Publishing route needs none) | current |
+   | 54 | "TestPyPI is omitted by delegated decision" | current |
+   | 65 | "after a token upload, run that step's commands by hand" | current |
+   | 69 | "Never claim already distributed bytes were private" | current |
+   | 72 | "Official service references checked during preparation (2026-10-03)" | historical |
+
+   No hit is stale, so the page is not edited.
+
+## 14. Review findings (2026-11-11, appended)
+
+One reviewer, Codex, over `evidence/RN3/` at `aa806c76`
+([retained output](phase-RN3-codex-review.md)): `revise`, 9 findings. Each
+was checked before it was accepted.
+
+| Finding | Checked | Triage | Fix |
+|---|---|---|---|
+| H1 the tag commands follow a `cd` into the candidate directory, which is not a git repository | yes | blocking: the owner's command would fail | the tag commands use `git -C <repository checkout>` |
+| H2 the dossier omitted the repository content and history review and the contributor realpaths that `docs/releasing.md` names | yes: lines 44 to 52 of that page | hardening | both are listed as open or not recorded, with what exists |
+| H3 the reworded shared-expense pages allowed the `uv tool` install, but the commands page runs `python -c 'import gnd, ...'` | yes: line 16 of the commands page | blocking: the documented route would fail at the copy step | both pages say to install with pip in an activated virtual environment |
+| H4 the check's pattern missed a "requires the development checkout" sentence outside the notes | yes: the reviewer's counterexample passed the old check | hardening | the pattern includes `development checkout`; the one legitimate line is allowlisted |
+| H5 the opening sentence was searched anywhere in the notes | yes | hardening | line 3 must be the sentence, and the opening may hold one "latest release" statement |
+| H6 date normalisation hid a stale or inconsistent date | yes | hardening | one date is taken from the opening; the heading and the compatibility page must give the same one |
+| H7 search errors were lost in pipelines | yes | hardening | each `git grep` writes to a file and its own status is read |
+| H8 a missing README pin exited 2 | yes | hardening | it is a stale-text problem, exit 1 |
+| H9 the dossier's invocation of the check had no path | yes | hardening | the repository-relative path is given |
+
+After the fixes the retained [checks.txt](../evidence/RN3/checks.txt) shows:
+both apply orders give the same 11-file diff; the patched and dated tree
+gives pytest exit 0 and check exit 0; and every control exits non-zero,
+including the reviewer's five counterexamples (H4, H5, H6 twice, H8). No fix
+was re-reviewed.
+
+**Corrects §8 T5 and finding 3 of §13, kept as written above.** The
+unpatched tree now makes the check exit 1 with its stale lines listed, not 2:
+exit 2 is kept for usage and search errors only.

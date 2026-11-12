@@ -12,7 +12,7 @@
       "name": "gnd",
       "source": "./",
       "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
-      "version": "0.3.0"
+      "version": "0.3.1"
     }
   ]
 }

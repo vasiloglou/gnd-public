@@ -102,3 +102,26 @@ Official service references checked during preparation (2026-10-03):
 [PyPI publisher setup](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
 and [GitHub workflow artifacts](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts).
 These describe setup and storage, not a configured or validated production identity.
+
+## Tag-only versions
+
+A version can be released as a GitHub tag alone, with no upload to the package
+index; 0.3.1 was released this way. A tag-only version gets none of the
+candidate, acceptance and dossier steps above, and the install pins keep naming
+the latest version on PyPI. In one pull request:
+
+1. Set the version in `pyproject.toml`, the editable entry of `uv.lock` and the
+   three plugin manifests.
+2. Add the version to `TAGGED` in `tests/test_release_version.py`. It must be
+   above every version in `RELEASED`.
+3. Rename the `Unreleased:` section of the release notes to
+   `## X.Y.Z (tagged YYYY-MM-DD, not published on PyPI)`, and give in it the
+   install command `uv tool install "git+https://github.com/vasiloglou/gnd-public@vX.Y.Z"`.
+4. Add the tag sentence to the release notes opening and to the version
+   paragraph of the compatibility page. `tools/release_text.py check` prints
+   the exact paragraphs it expects.
+
+After the owner merges the pull request, push an annotated tag `vX.Y.Z` on the
+merge commit. A later index release that passes the tag-only version drops its
+sentence from both paragraphs; `publish` refuses a version that is still in
+`TAGGED`.

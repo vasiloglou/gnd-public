@@ -710,6 +710,8 @@ does not name is unknown, which is different from a list that is declared but em
 
 ## Next steps
 
+- Continue offline with [chapter 8](08-guarded-rules.md): add a guarded rule
+  and prove it judges something. It does not need the PyRel environment.
 - Write rules for your own domain with
   [gnd-model-from-text](../agents/model-from-text.md), then build the same kind of app.
 - Drive your own coding assistant against the same model and checker. That is a

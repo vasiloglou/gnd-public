@@ -1,0 +1,78 @@
+{
+  "source_commit": "618141de9975c4ef30871a979532654267a15de6",
+  "clean_tree_before_and_after": true,
+  "python": "3.14.3",
+  "lock_sha256": "2e2614c5a639652005aa48677b12c2fa93af44f3b81c8c1ecbdc7e1b3b0bd517",
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_synth_guarded_cases.py",
+    "tests/test_synth_conforming.py",
+    "tests/test_synth_expectation_independence.py",
+    "tests/test_synth_mutate.py",
+    "tests/test_measure_coverage.py",
+    "tests/test_synth_false_pass_quarantine.py",
+    "tests/test_discover_guarded_join.py",
+    "tests/test_discover.py",
+    "tests/test_ilp_amie_constants.py",
+    "tests/test_ilp_amie.py",
+    "tests/test_ih1_counting.py",
+    "tests/test_ih2_ownref.py",
+    "tests/test_ilp_learners.py",
+    "tests/test_public_guarded_consequent_matrix.py",
+    "tests/test_guarded_diagnostics.py",
+    "tests/test_rule_edition_comparison.py",
+    "tests/test_rf1_cli_pins.py",
+    "tests/test_rf1_layering.py",
+    "tests/test_rf5_commands.py",
+    "tests/test_rf6_query_policy.py",
+    "tests/test_query_budget_headroom.py",
+    "tests/test_development_scaffold.py",
+    "-p",
+    "no:cacheprovider",
+    "--tb=short"
+  ],
+  "environment": {
+    "PYTHONPATH": "source/src",
+    "UV_OFFLINE": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "summary": "1023 passed, 5 deselected in 232.40s (0:03:52)",
+  "stdout_sha256": "9d4c90612d183683303ef477bfa50588bbcd024c78db30206352f72378ac6504",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "deselected": [
+    {
+      "node_id": "tests/test_ilp_amie.py::test_live_amie_mines_the_committed_rules",
+      "markers": [
+        "live"
+      ]
+    },
+    {
+      "node_id": "tests/test_ilp_learners.py::test_a1_t2_every_threshold_enumerates_on_an_unbound_argument",
+      "markers": [
+        "live"
+      ]
+    },
+    {
+      "node_id": "tests/test_ilp_learners.py::test_a2_t3_clingo_grounds_every_threshold",
+      "markers": [
+        "live"
+      ]
+    },
+    {
+      "node_id": "tests/test_ilp_learners.py::test_a2_t4_no_two_thresholds_are_pointless",
+      "markers": [
+        "live"
+      ]
+    },
+    {
+      "node_id": "tests/test_development_scaffold.py::test_manifest_bytes_modes_and_sizes",
+      "markers": [
+        "evidence"
+      ]
+    }
+  ]
+}

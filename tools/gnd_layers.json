@@ -337,6 +337,10 @@
       "lane": "discover",
       "layer": "lanes"
     },
+    "gnd.discover.joined": {
+      "lane": "discover",
+      "layer": "lanes"
+    },
     "gnd.discover.support": {
       "lane": "discover",
       "layer": "lanes"
@@ -870,6 +874,14 @@
       "layer": "lanes"
     },
     "gnd.synth.guarded": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.guarded_cases": {
+      "lane": "synth",
+      "layer": "lanes"
+    },
+    "gnd.synth.guarded_service": {
       "lane": "synth",
       "layer": "lanes"
     },

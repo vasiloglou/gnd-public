@@ -21,7 +21,7 @@ from gnd import input_policy as _rf7_input
 from gnd import resolve_version
 from gnd.artifacts import ArtifactError
 from gnd.checker import check
-from gnd.discover import output, types
+from gnd.discover import joined, output, types
 from gnd.discover import type_evidence as evidence
 from gnd.discover import type_judgements as judgements
 from gnd.discover.candidates import (
@@ -205,8 +205,10 @@ def discover(
     min_support: int = 20,
     show_values: bool = False,
     show_digests: bool = True,
+    joined_settings: joined.Settings | None = None,
 ) -> dict[str, Any]:
     """Run discovery; return the report fields plus private build inputs."""
+    joined.require_family(families, joined_settings)
     model_bytes = _read_capped(model_path, MAX_MODEL_BYTES, ModelLoadError, "model")
     population_bytes = _read_capped(
         population_path, MAX_POPULATION_BYTES, PopulationLoadError, "population"
@@ -225,19 +227,42 @@ def discover(
     eligible, skipped_fact_types = _eligible(view, document)
     if types.FAMILY in families:
         types.generic_declarations(view)  # an invalid declaration refuses first
+    redacted = RedactionPolicy.from_model(model).effective_roles
     generated = generate(
         view, families=families, fact_types=eligible, max_values=max_values,
         max_pairs=max_pairs,
-        redacted=RedactionPolicy.from_model(model).effective_roles,
+        redacted=redacted,
         derived_object_types=_derived_object_types(view),
     )
+    joined_report = None
+    declared_guards = set()
+    if joined_settings is not None:
+        joined_candidates, joined_report = joined.generate(
+            view, joined_settings, eligible=eligible, redacted=redacted
+        )
+        declared = list(ModelIndex.for_model(model).iter_constraints_shared())
+        declared_guards = {
+            joined.guard_key(constraint)
+            for _, constraint, _ in declared if constraint.get("type") == "guarded"
+        }
+        declared_ids = {constraint.get("id") for _, constraint, _ in declared}
+        if any(
+            c.core["id"] in declared_ids and joined.guard_key(c.core) not in declared_guards
+            for c in joined_candidates
+        ):
+            joined_report["reason"] = "rule-id-collision"
+        else:
+            generated.candidates.extend(joined_candidates)
     catalogue = Catalogue(view, model)
     suppressed = dict.fromkeys(CATALOGUE + REDUNDANCY, 0)
     suppressed["redundant-frequency"] = generated.redundant_frequency
     rejected = {"vacuous": 0, "unchecked": 0, "fail": 0, "warning": 0}
     survivors: list[Candidate] = []
     for candidate in generated.candidates:
-        rule = catalogue.rule(candidate)
+        if candidate.family == joined.FAMILY:
+            rule = "declared" if joined.guard_key(candidate.core) in declared_guards else None
+        else:
+            rule = catalogue.rule(candidate)
         if rule is not None:
             suppressed[rule] += 1
             continue
@@ -277,10 +302,20 @@ def discover(
             report = check(checked_model, checked_population, references=references)
         except Exception as error:
             raise DiscoveryDefect(f"the check run failed ({type(error).__name__})") from error
-        verdicts = {v.constraint_ref: v.verdict for v in report.verdicts}
+        verdicts = {v.constraint_ref: v for v in report.verdicts}
         for candidate, ref in zip(survivors, _refs(survivors, _base_counts(model)), strict=True):
-            verdict = verdicts.get(ref)
+            observed = verdicts.get(ref)
+            verdict = None if observed is None else observed.verdict
             subjects = candidate.subjects
+            if candidate.family == joined.FAMILY and (
+                observed is None or observed.binding_count != subjects.count
+                or len(observed.offending_facts) != subjects.violations
+                or verdict != ("warning" if subjects.violations else "pass")
+                or (near_miss(subjects.violations, subjects.count) and not joined.matches_counterexamples(
+                    view, joined_settings, subjects.counterexamples, observed.offending_facts,
+                ))
+            ):
+                raise DiscoveryDefect(f"{ref} disagrees with joined discovery support or verdict")
             if verdict == "pass":
                 if subjects.violations:
                     raise DiscoveryDefect(f"{ref} passes but discovery counted violations")
@@ -320,6 +355,8 @@ def discover(
         }
         type_proposals = types.propose(**type_arguments)
     fields_extra = {} if type_proposals is None else {"fact_type_proposals": type_proposals.report}
+    if joined_report is not None:
+        fields_extra["joined_rules"] = joined_report
     return {
         "model_bytes": model_bytes,
         "document": document,
@@ -337,7 +374,7 @@ def discover(
             "model": {"path": str(model_path), "sha256": hashlib.sha256(model_bytes).hexdigest()},
             "population": {"path": str(population_path), "sha256": digest},
             "bounds": {
-                "families": [f for f in (*FAMILIES, types.FAMILY) if f in families],
+                "families": [f for f in (*FAMILIES, types.FAMILY, joined.FAMILY) if f in families],
                 "max_values": max_values,
                 "max_pairs": max_pairs,
                 "max_key_arity": 4,
@@ -445,7 +482,13 @@ def _cmd_discover(
     type_evidence_in: str | None = None,
     duplicate_judgements: str | None = None,
     shape_judgements: str | None = None,
+    joined_settings: joined.Settings | None = None,
 ) -> int:
+    try:
+        joined.require_family(families, joined_settings)
+    except ValueError as error:
+        _stderr(str(error))
+        return EXIT_USAGE
     model_path, population_path = Path(model), Path(population)
     out_path, report_path = Path(out), Path(report)
     evidence_path = None if type_evidence is None else Path(type_evidence)
@@ -520,6 +563,7 @@ def _cmd_discover(
             model_path, population_path,
             families=families, max_values=max_values, max_pairs=max_pairs,
             min_support=min_support, show_values=show_values, show_digests=show_digests,
+            joined_settings=joined_settings,
         )
         loaded = result["view"].model
         if loaded.includes:

@@ -1,0 +1,188 @@
+{
+  "source_commit": "618141de9975c4ef30871a979532654267a15de6",
+  "wheel": "get_nick_done-0.3.0-py3-none-any.whl",
+  "wheel_sha256": "a04ca98ca3044ee4e870e435d0274c01637ee31c35cecdf7907d3ae434f9dab5",
+  "lock_sha256": "2e2614c5a639652005aa48677b12c2fa93af44f3b81c8c1ecbdc7e1b3b0bd517",
+  "python": "3.14.3",
+  "imported_from_installed_environment": true,
+  "inputs": {
+    "ga1/model.orm.yaml": "e83fcc2bc018bd09d73212f650720b30c750e2d5a405c76b7810bc64626db53b",
+    "ga1/isolated.json": "286b51710381af6cddec075e907437073a5ae05f07d8945d1eb3d48cc96ab872",
+    "ga2/model.orm.yaml": "646c93928aa096d38c7b2ed98bd199ef8b47b8679c25c1c406f213b1becfb516",
+    "ga2/population.json": "e48b3ddb585abb09738ea1cc426ca1229ae4e115845cda846a8566c5b13119ec",
+    "ga3/model.orm.yaml": "646c93928aa096d38c7b2ed98bd199ef8b47b8679c25c1c406f213b1becfb516",
+    "ga3/population.json": "e48b3ddb585abb09738ea1cc426ca1229ae4e115845cda846a8566c5b13119ec",
+    "ga3/rules.tsv": "312ba41f4c7dc5457bfb7dc682a28ad52dff29977cf708d0eadbbbefe1f8b58d"
+  },
+  "commands": [
+    {
+      "cwd": "ga1",
+      "args": [
+        "synth",
+        "model.orm.yaml",
+        "--guarded-cases",
+        "--out",
+        "corpus",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout_sha256": "097a7db28fd87bf3044392cd6bca9b3c1a699318f295c6856a7186d262ae7a6a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga1",
+      "args": [
+        "measure",
+        "corpus/ordinary/scoped.orm.yaml",
+        "--populations",
+        "corpus/ordinary/corpus",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout_sha256": "e4e13803f7a6ef3813e3c7d92d44eabbae07aab7acf43a199a67d40a8d21997f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga1",
+      "args": [
+        "measure",
+        "model.orm.yaml",
+        "--populations",
+        "corpus/ordinary/corpus"
+      ],
+      "exit": 3,
+      "stdout_sha256": "2d2bab15352121f3b6998fcbf5196c477323b2ea81e3de198d72e3d2a541c767",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga1",
+      "args": [
+        "synth",
+        "isolated.json",
+        "--guarded-cases",
+        "--out",
+        "isolated"
+      ],
+      "exit": 0,
+      "stdout_sha256": "7c87f1b9688e38039d6566083cb648dca6a8edda4f39e8f9a88bf1703d447286",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga2",
+      "args": [
+        "discover",
+        "model.orm.yaml",
+        "population.json",
+        "--families",
+        "guarded-join",
+        "--joined-relation",
+        "component_uses:source:target",
+        "--joined-classifier",
+        "component_in_area:component:area",
+        "--actor",
+        "smoke",
+        "--requested-at",
+        "2026-11-11T00:00:00Z",
+        "--out",
+        "proposal.json",
+        "--report",
+        "report.json",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout_sha256": "8ed40d0264e656e63e67d33879c8477452bc84d9d60cea1f84c9e90a60985e0b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga2",
+      "args": [
+        "evolve",
+        "preview",
+        "model.orm.yaml",
+        "proposal.json",
+        "--workspace",
+        ".",
+        "--records",
+        "records",
+        "--out",
+        "preview.json"
+      ],
+      "exit": 0,
+      "stdout_sha256": "230f0f4084a17ca6586cca8e663c21f769daeb42c963c474c4d63d072d1ff04f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga3",
+      "args": [
+        "export",
+        "ilp",
+        "model.orm.yaml",
+        "--population",
+        "population.json",
+        "--target",
+        "amie",
+        "--out",
+        "export"
+      ],
+      "exit": 0,
+      "stdout_sha256": "59cf86b0510c4a4b4a5be2cbda450ba2344898de9bb1980d3c56c6926261da4a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga3",
+      "args": [
+        "import",
+        "mined-rules",
+        "model.orm.yaml",
+        "rules.tsv",
+        "--population",
+        "population.json",
+        "--reported",
+        "reported.json",
+        "--target",
+        "amie",
+        "--out",
+        "proposal.json",
+        "--actor",
+        "smoke",
+        "--requested-at",
+        "2026-11-11T00:00:00Z",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout_sha256": "1fed72926f323ba1051c647a61d18937f4c121d247cc748ceffb20a91bf983bb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "cwd": "ga3",
+      "args": [
+        "evolve",
+        "preview",
+        "model.orm.yaml",
+        "proposal.json",
+        "--workspace",
+        ".",
+        "--records",
+        "records",
+        "--out",
+        "preview.json"
+      ],
+      "exit": 0,
+      "stdout_sha256": "32b81692fea7eec1657eb7641d132f68117e94bd5961c99a1538288f63e10f4c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "artifacts": {
+    "ga1/corpus/guarded-cases.json": "daf42271496bea96f2b70ff26d4ebfaa368867a685a3b1cc9c97a2743b943a8c",
+    "ga1/isolated/guarded-cases.json": "da9fbbca2a63b1db43974e635801b3f5f70d1b06b64db0c7b441425898095b20",
+    "ga2/report.json": "8ed40d0264e656e63e67d33879c8477452bc84d9d60cea1f84c9e90a60985e0b",
+    "ga2/proposal.json": "33da1c17e4a6c75b448c5dd6bff868bef702505595d3e0d65f3ab8761c0821db",
+    "ga3/proposal.json": "941268fd7909756af95c62ad614642f7518897aec3eee4286fe5cc8179df25ae",
+    "ga3/export/amie/facts.tsv": "1cd8222661cdee0de49ff0935d199496d9394af4d70979e2e01006fbbc12ad4e",
+    "ga3/reported.json": "6fc219ca1dd69275adf443018f11e925a36ecd01d6d899437f6d3f42a797b03f"
+  }
+}

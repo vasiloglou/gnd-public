@@ -82,3 +82,60 @@ be enough. BookRec and the expense tutorial start with such understandable
 fixtures. The command's live `gnd synth --help` and `gnd measure --help`, plus
 the [session grounding guide](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-dev-session/SKILL.md),
 define the current generation and evidence contract.
+
+## Generate examples for guarded rules
+
+```sh
+gnd synth model.orm.yaml --guarded-cases --out guarded-examples --seed 17
+```
+
+Use a fresh output directory and install the `synth` extra
+(`pip install "get-nick-done[synth]"`). The default seed for this mode is 0.
+For each supported rule, the command constructs an active failure and an active pass.
+An active case has at least one binding that satisfies the antecedent.
+The independent synthesis evaluator predicts the target verdict and counts
+the antecedent bindings. The checker must confirm both before publication.
+These cases illustrate the rule as written. Keep examples authored from the
+intended policy to detect mistakes in the rule itself.
+
+This mode covers asserted scalar facts with atom, absence, existential
+atom lists without `where`, and scalar comparison consequents. Fact
+consequents share an antecedent assignment across the two cases. Comparison
+cases can use different values for the same antecedent roles. Models may
+contain up to 128 constraints and 256 fact types. Each guard gets up to 128
+attempts and 100,000 construction and evaluation visits, with 1,000,000
+visits shared across the run. Before calling the checker, synthesis charges
+an upper bound on the guarded joins in each candidate.
+A pair that exceeds this bound is reported as `search-limit`.
+
+The output root contains `guarded-cases.json` (schema
+`gnd-guarded-cases/1`). It records the validated source model digest
+and seed, then one entry per guarded rule in declared order. Each entry
+contains the declared `rule_id`, positional `constraint_ref`, `cases` and
+`reason`. A case names the kind (`failing` or `passing`), population
+path relative to the output root, positive `binding_count`, target
+`verdict` and `other_findings` for other constraints with a non-pass
+verdict. A deontic failure has verdict `warning`.
+
+An unserved rule has an empty case array and one of these reasons.
+
+- `missing-id` indicates a rule without a declared ID. Its entry retains the positional reference.
+- `unsupported-shape` identifies a guard outside this mode's supported fragment.
+- `antecedent-unreachable` indicates a fixed antecedent literal outside a governing value domain.
+- `no-failing-case` or `no-passing-case` indicates a case ruled out by a governing literal domain or an antecedent that already supplies the consequent.
+- `search-limit` means the bounded search ended before producing a pair.
+
+The manifest's `ordinary` entry describes the ordinary `--class all` corpus,
+its scoped model, both model digests and a map from original to scoped
+constraint references. The entry lists omitted guarded references in
+`omitted_guarded_refs`. Run measure with the scoped model.
+
+```sh
+gnd measure guarded-examples/ordinary/scoped.orm.yaml \
+  --populations guarded-examples/ordinary/corpus
+```
+
+An unavailable ordinary corpus has an explicit reason in the manifest.
+A completed manifest can include unavailable rules and returns exit 0.
+Invalid models return 3, generator invariant failures return 5, and
+checker disagreements retain a `quarantine/` artifact at exit 6.

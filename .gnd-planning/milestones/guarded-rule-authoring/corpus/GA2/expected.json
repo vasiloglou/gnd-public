@@ -1,0 +1,12 @@
+{
+  "relation": "component_imports_component",
+  "classifier": "component_is_in_area",
+  "marker": "component_has_owner",
+  "unmarked": {
+    "forbidden_app_core": {"numerator": 1, "denominator": 1},
+    "forbidden_core_app": {"subjects": 21, "violations": 1, "counterexamples": ["ft0#20"]},
+    "same_class": {"subjects": 22, "violations": 1, "counterexamples": ["ft0#20"]}
+  },
+  "marked": {"same_class": {"numerator": 1, "denominator": 1}},
+  "directed_cap_1": {"compared": 1, "omitted": 3, "first_omitted_ordinal": 1}
+}

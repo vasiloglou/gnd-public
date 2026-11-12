@@ -280,7 +280,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/discover/support.py
 - uses: check.universe, model.document, model.population_loading, model.query_index, semantics.snapshot_adapter, semantics.snapshot_ir
-- used_by: discover.candidates, discover.fact_types, discover.service, discover.type_evidence, export.ilp_service
+- used_by: discover.candidates, discover.fact_types, discover.joined, discover.service, discover.type_evidence, export.ilp_service
 - tests: tests/test_discover.py, tests/test_discover_fact_type_family.py, tests/test_discover_type_evidence.py
 - notes: The same typed identity and view are reused by ILP import orchestration.
 
@@ -293,13 +293,25 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/discover/candidates.py
 - uses: check.universe, discover.population_view, model.query_index
-- used_by: discover.output, discover.service
+- used_by: discover.joined, discover.output, discover.service
 - tests: tests/test_discover.py
+
+
+### discover.joined
+- does: Mine bounded guarded rules over a binary relation and complete endpoint classifications.
+- verbs: guarded join, joined discovery, directed class pairs, target marker, relation support
+- in: Validated population view, explicit role coordinates and a directed pair cap.
+- out: Independently counted guarded candidates and joined-family work or refusal metadata.
+- status: canonical
+- modules: src/gnd/discover/joined.py
+- uses: check.population_structure, discover.candidates, discover.population_view, infra.input_policy, model.atom_bindings
+- used_by: discover.service
+- tests: tests/test_discover_guarded_join.py
 
 
 ### discover.output
 - does: Build induced constraint envelopes and replayable evolution proposals with deterministic reports [proposal, add_operations].
-- verbs: induced provenance, deontic proposal, add_operations, evolution proposal, candidate_document, candidate_text, canonical_bytes, YAML serialization, JSON report, render_text, evidence digest, proposal audit
+- verbs: induced provenance, deontic proposal, add_operations, evolution proposal, candidate_document, candidate_text, canonical_bytes, YAML serialization, JSON report, render_text, evidence digest, proposal audit, joined refusal text
 - in: Candidate constraints or ADD operations, source model bytes and audit metadata
 - out: EvolutionProposal, replayed model document, serialized bytes and report text
 - status: canonical
@@ -351,12 +363,12 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### discover.service
 - does: Check population-induced constraints and emit reviewed-evolution inputs, reports and optional type evidence [discover].
-- verbs: discover, _cmd_discover, induce constraints, checker admission, near misses, support counting, work budget, type evidence, judgement replay, proposal trimming, output collisions, reference populations, redacted discovery
+- verbs: discover, _cmd_discover, induce constraints, checker admission, near misses, support counting, work budget, type evidence, judgement replay, proposal trimming, output collisions, reference populations, redacted discovery, guarded support confirmation
 - in: Model/population paths, family limits, output paths and optional judgement inputs
 - out: Discovery report/build inputs or command outputs and exit code
 - status: canonical
 - modules: src/gnd/discover/__init__.py, src/gnd/discover/service.py
-- uses: checker.evaluate, discover.candidates, discover.fact_types, discover.output, discover.population_view, discover.type_evidence, discover.type_judgements, evolve.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_redaction, infra.version, model.loading, model.population_loading, model.query_index, model.reference_binding
+- uses: checker.evaluate, discover.candidates, discover.fact_types, discover.joined, discover.output, discover.population_view, discover.type_evidence, discover.type_judgements, evolve.service, infra.artifacts, infra.errors, infra.exit_codes, infra.input_policy, infra.report_redaction, infra.version, model.loading, model.population_loading, model.query_index, model.reference_binding
 - used_by: cli.discover_command
 - tests: tests/test_discover.py, tests/test_discover_fact_type_family.py, tests/test_discover_type_evidence.py, tests/test_discover_type_judgements.py
 - notes: Rooted composition supplies semantic checks while candidate/proposal output retains the captured authored includer. Include-free byte loading keeps its resolver variant. Discovery proposes additions; it does not publish changes to the source model.
@@ -550,7 +562,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### cli.discover_command
 - does: Validate discovery options and disclosure before dispatching constraint and fact type proposals [handle].
-- verbs: discover constraints, induce rules, fact type proposals, duplicate judgements, shape judgements, type evidence, minimum support, disclosure mode, request actor, request time, family selection, parse flags
+- verbs: discover constraints, induce rules, fact type proposals, duplicate judgements, shape judgements, type evidence, minimum support, disclosure mode, request actor, request time, family selection, parse flags, joined role selectors
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -716,8 +728,8 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### cli.synth_command
-- does: Register population synthesis classes, pools and seeds before dispatching generation [add_parsers; handle].
-- verbs: synth command, synthetic populations, conforming cases, violating cases, boundary cases, pool artifact, random seed, baseline seed, seed variants, register parser, dispatch handler
+- does: Register population synthesis classes, guarded case mode, pools and seeds before dispatching generation [add_parsers; handle].
+- verbs: synth command, synthetic populations, conforming cases, violating cases, boundary cases, guarded case corpus, pool artifact, random seed, baseline seed, seed variants, register parser, dispatch handler
 - in: argparse subparsers or a parsed command namespace
 - out: registered parsers or the selected command exit code
 - status: canonical
@@ -1527,15 +1539,15 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### export.mined_rules
-- does: Export typed AMIE triples, map mined Horn rules to guarded constraints and count distinct head-pair support [count].
-- verbs: AMIE triples, Horn rules, mined rules, typed relations, subtype families, reference primitives, parse_rules, map rule, head pairs, standard confidence, support count, provenance facts, canonical rule, own reference join, render_tables
+- does: Export typed AMIE triples, map mined Horn rules with typed literals to guarded constraints and count distinct head-pair support [count].
+- verbs: AMIE triples, Horn rules, mined rules, typed relations, subtype families, reference primitives, parse_rules, map rule, head pairs, standard confidence, support count, provenance facts, canonical rule, own reference join, render_tables, typed literal, aggregate recount
 - in: Model and covered population, AMIE printed rule lines or typed relation/pair tables.
 - out: amie/facts.tsv and relations.json bytes, parsed rules, guarded cores, support counts and satisfied fact ids.
 - status: canonical
 - modules: src/gnd/export/ilp_amie.py
-- uses: export.ilp_neutral, export.ilp_rewrite, infra.exit_codes, infra.report_redaction, model.query_index, model.scalar_terms
+- uses: check.population_structure, export.ilp_neutral, export.ilp_rewrite, infra.exit_codes, infra.report_redaction, model.query_index, model.scalar_terms
 - used_by: export.ilp_service, export.learner_registry
-- tests: tests/test_ilp_amie.py, tests/test_ih1_counting.py, tests/test_ih2_ownref.py
+- tests: tests/test_ilp_amie.py, tests/test_ih1_counting.py, tests/test_ih2_ownref.py, tests/test_ilp_amie_constants.py
 - notes: Only covered binary asserted fact types become mining relations; mapping refuses unsupported or incompatible joins before bounded counting. Counting returns evidence for rules whether or not they hold; admission belongs to export.ilp_service.
 
 
@@ -1932,7 +1944,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/address.py
 - uses: (none)
-- used_by: check.admission, check.applicability, check.baseline, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, … +4 more (graph.md)
+- used_by: check.admission, check.applicability, check.baseline, check.element_coverage, check.service, checker.evaluate, evolve.population_check, infra.report_payloads, measure.report, model.diff, model.query_index, semantics.extensions, … +5 more (graph.md)
 - tests: tests/test_address.py
 
 
@@ -1944,7 +1956,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/atoms.py
 - uses: (none)
-- used_by: check.baseline, check.universe, checker.evaluate, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter
+- used_by: check.baseline, check.universe, checker.evaluate, discover.joined, infra.report_redaction, model.operation_obligations, model.validation, model.verbalization, semantics.extensions, semantics.snapshot_adapter, synth.guarded
 - tests: tests/test_atom_bind.py
 
 
@@ -2169,7 +2181,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/input_policy.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +51 more (graph.md)
+- used_by: agent.declared_adapter, agent.solve, assurance.identity, check.element_coverage, check.evaluation_feedback, check.population_structure, checker.evaluate, cli.api, cli.checking_command, cli.exp_command, codegen.manifest, conformance.report, … +52 more (graph.md)
 - tests: tests/test_rf7_input_policy.py, tests/test_rf7_consumers.py, tests/test_rf7_review_regressions.py, tests/test_rf7_structure.py
 - notes: This is the shared syntax policy; infra.bounded_json adds proposal-oriented scalar and numeric ceilings with Decimal decoding.
 
@@ -2182,7 +2194,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/documents.py
 - uses: infra.errors
-- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +14 more (graph.md)
+- used_by: check.admission, check.incremental_reuse, check.population_structure, check.snapshot_decision, check.universe, checker.evaluate, discover.population_view, evolve.policy, evolve.population_check, evolve.service, evolve.shape_matches, extract.guidelines, … +15 more (graph.md)
 - tests: tests/test_rf3_core.py, tests/test_rf3_review_regressions.py, tests/test_v51_phase2_extraction_scope.py
 - notes: IncludedFile privately retains exact raw bytes for authenticated evolution snapshots, with a default preserving six-positional construction and unchanged public serialization. Defining home for types and the structured-rule predicate exposed historically through gnd.model; attribute freezing does not freeze nested collections.
 
@@ -2195,7 +2207,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/errors.py
 - uses: (none)
-- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +20 more (graph.md)
+- used_by: check.applicability, check.evaluation_feedback, check.population_structure, check.service, checker.evaluate, cli.export_command, discover.service, evolve.population_check, evolve.schema, evolve.service, export.applications, export.ilp_service, … +21 more (graph.md)
 - tests: tests/test_rf2_helpers.py, tests/test_rf3_core.py, tests/test_m3_population_schema.py, tests/test_incremental_state.py
 - notes: Defining home; historical gnd.model, gnd.population, gnd.checker and gnd.transition identities are retained through aliases and __module__ assignments.
 
@@ -2421,7 +2433,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +33 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +35 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2489,7 +2501,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/popvalidate.py
 - uses: check.universe, infra.errors, infra.input_policy, infra.verdict_prose, model.document, model.extraction_scope, model.query_index, model.scalar_terms
-- used_by: check.admission, codegen.emit, measure.coverage, model.population_loading, model.population_sentences, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, synth.pool, synth.prediction, … +2 more (graph.md)
+- used_by: check.admission, codegen.emit, discover.joined, export.mined_rules, measure.coverage, model.population_loading, model.population_sentences, semantics.transitions, synth.assemble, synth.boundary, synth.comparison, synth.constructive, … +4 more (graph.md)
 - tests: tests/test_popvalidate.py
 - in: Parsed population document and Model.
 - out: Ordered ValidationIssue list including warning severity.
@@ -2514,7 +2526,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/safefs.py, src/gnd/manifest_paths.py
 - uses: infra.artifacts, infra.errors
-- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +14 more (graph.md)
+- used_by: cli.checking_command, cli.export_command, codegen.emit, codegen.manifest, codegen.regenerate, codegen.service, evolve.command, evolve.service, exp.command, export.applications, export.ossie, export.verification, … +16 more (graph.md)
 - tests: tests/test_rf4_peripheral.py, tests/test_rf7_consumers.py
 - checked: partial
 - notes: safefs retains installer and artifact filesystem variants as distinct public seams; manifest_paths converts lexical path refusals into ValidationIssue values.
@@ -2886,7 +2898,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/values.py
 - uses: check.population_structure, infra.input_policy, model.scalar_terms
-- used_by: synth.prediction, synth.value_domain
+- used_by: synth.guarded, synth.prediction, synth.service, synth.value_domain
 - part_of: subsystem.synth
 - tests: tests/test_synth_values.py, tests/test_rf1_helper_pins.py, tests/test_rf7_consumers.py
 - notes: PRIMITIVES comes from the vendored meta-schema; unconstrained dates use fixed anchors for seed reproduction.
@@ -2900,7 +2912,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/synth/value_domain.py
 - uses: model.loading, model.query_index, synth.identity, synth.values
-- used_by: synth.assemble, synth.constructive, synth.pool, synth.prediction
+- used_by: synth.assemble, synth.constructive, synth.guarded, synth.pool, synth.prediction
 - tests: tests/test_synth_values.py, tests/test_poolfile.py, tests/test_synth_mutate.py, tests/test_rf6_index.py
 - notes: Multiple constraints are conjoined while ranges inside one constraint are alternatives; in_range retains its historical _in_range alias and metadata.
 
@@ -2932,14 +2944,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### synth.guarded
-- does: Independently join guarded atoms and test bounded existential witnesses, including narrow modular repair shapes [exists_witness].
-- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding
+- does: Construct and independently evaluate guarded-rule case pairs and bounded existential witnesses [build_pair, exists_witness].
+- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, active passing case
 - in: Guarded constraint, raw fact rows, optional covered fact types; model for private-source analysis.
 - out: Bindings, a modular repair plan or witness true/false/None; None represents unsupported or unavailable work.
 - status: canonical
-- modules: src/gnd/synth/guarded.py
-- uses: model.scalar_terms, synth.identity
-- used_by: synth.assemble, synth.constructive, synth.mutations, synth.prediction
+- modules: src/gnd/synth/guarded.py, src/gnd/synth/guarded_cases.py
+- uses: model.atom_bindings, model.document, model.query_index, model.scalar_terms, synth.identity, synth.value_domain, synth.values
+- used_by: synth.assemble, synth.constructive, synth.mutations, synth.prediction, synth.service
 - tests: tests/test_v62_phase6_synth_measure.py, tests/test_v62_phase6_evaluation.py
 - notes: Uses scalar identity and public exact-term comparison without calling the checker; the independent work ceiling is 100000 units.
 
@@ -3030,29 +3042,29 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### synth.corpus
 - does: Validate and resolve corpus manifests, merge index records and stage corpus publication [_SynthCorpusTransaction, _merge_index].
-- verbs: corpus manifest, index validation, closed schema, corpus path, resolve index, duplicate artifact, sidecar pairing, merge index, stable sorting, corpus transaction, staged directory, rollback, publish quarantine, atomic index, _SynthCorpusTransaction, _merge_index
+- verbs: corpus manifest, index validation, closed schema, corpus path, resolve index, duplicate artifact, sidecar pairing, merge index, stable sorting, corpus transaction, staged directory, fresh root, rollback, publish quarantine, atomic index, _SynthCorpusTransaction, _merge_index
 - in: Corpus root, untrusted index document and paths, generated artifact records and not-derivable records.
 - out: Validated records and resolved artifact pairs, staged/published corpus trees or a merged index.json; typed manifest and path errors.
 - status: canonical
 - modules: src/gnd/synth/corpus_service.py
-- uses: infra.input_policy, synth.paths
+- uses: infra.input_policy, infra.safe_filesystem, synth.paths
 - used_by: cli.dispatch, measure.service, synth.service
 - part_of: subsystem.synth
 - tests: tests/test_synth_conforming.py, tests/test_measure_offline.py
-- notes: Shared by synth and measure; historical names identify gnd.cli for compatibility. The directory publication transaction and the reader-facing manifest/path validation share one file.
+- notes: Shared by synth and measure; historical names identify gnd.cli for compatibility. The directory publication transaction supports both merging existing corpus trees and requiring a fresh output root.
 
 
 ### synth.service
 - does: Orchestrate synthetic corpus generation, provenance, quarantine retention and publication for gnd synth [_cmd_synth].
 - verbs: synth command, _cmd_synth, synthetic corpus, conforming corpus, violating corpus, boundary corpus, multiple seeds, baseline seed, random seed, deterministic reproduction, materialize pool, provenance sidecar, quarantine retention, discrepancy artifact, generator manifest, corpus publication
 - in: Model path, output root, requested class, optional pool and baseline seed, seed count and output format.
-- out: Corpus populations, pools, sidecars and index.json; JSON/text summary and exit code, or retained quarantine artifacts on mismatch.
+- out: Ordinary synth artifacts or a guarded case manifest, matched populations and scoped ordinary corpus. A checker disagreement retains quarantine evidence.
 - status: canonical
-- modules: src/gnd/synth/service.py
-- uses: checker.evaluate, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.version, model.loading, model.population_loading, model.scalar_terms, synth.assemble, synth.boundary, synth.corpus, synth.frontier, synth.mutations, synth.paths, synth.pool, synth.provenance
+- modules: src/gnd/synth/service.py, src/gnd/synth/guarded_service.py
+- uses: checker.evaluate, infra.errors, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.safe_filesystem, infra.version, model.address, model.loading, model.population_loading, model.query_index, model.scalar_terms, synth.assemble, synth.boundary, synth.corpus, synth.frontier, synth.guarded, synth.mutations, synth.paths, synth.pool, synth.provenance, synth.values
 - used_by: cli.dispatch, cli.synth_command
 - part_of: subsystem.synth
-- tests: tests/test_synth_conforming.py, tests/test_synth_mutate.py, tests/test_synth_boundary.py, tests/test_synth_false_pass_quarantine.py, tests/test_synth_derivation_refusal.py
+- tests: tests/test_synth_conforming.py, tests/test_synth_mutate.py, tests/test_synth_boundary.py, tests/test_synth_false_pass_quarantine.py, tests/test_synth_derivation_refusal.py, tests/test_synth_guarded_cases.py
 - notes: Coordinates the requested classes over cached baselines and a staged corpus transaction; command argument registration belongs to commands/synth.py outside this group. Refuses unsupported reference/temporal inputs and selected structured derivation forms before generation.
 
 

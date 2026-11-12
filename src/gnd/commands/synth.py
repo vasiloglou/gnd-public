@@ -71,6 +71,11 @@ def _register_synth(subparsers):
             "degenerate"
         ),
     )
+    synth_parser.add_argument(
+        "--guarded-cases",
+        action="store_true",
+        help="generate active failing and passing cases for guarded rules in a fresh corpus",
+    )
     _add_format_argument(synth_parser)
 
     return {'synth_parser': synth_parser}
@@ -88,6 +93,15 @@ def add_parsers(subparsers, *, command: str | None = None):
 
 
 def handle(args, parsers) -> int:
+    if args.command == "synth" and args.guarded_cases:
+        if (
+            args.synth_class != "conforming"
+            or args.pool
+            or args.seeds != 1
+            or args.baseline_seed is not None
+        ):
+            parsers["synth_parser"].error("--guarded-cases takes --out, --seed and --format")
+        return _handler_synth_service.run_guarded_cases(args.model, args.out, args.seed, args.format)
     if args.command == "synth":
         return _handler_synth_service._cmd_synth(
             args.model,
@@ -101,4 +115,3 @@ def handle(args, parsers) -> int:
         )
 
     raise ValueError(f"unsupported command: {args.command}")
-

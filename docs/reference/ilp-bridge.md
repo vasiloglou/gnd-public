@@ -544,13 +544,26 @@ in this order:
 |---|---|
 | a head relation outside the population's `covers` | refused `open-world-head`: a missing head fact is not evidence |
 | a relation the export does not write (unknown, or outside `covers`) | refused `unknown-predicate` |
-| a constant (AMIE prints one only with `-const`) | refused `constant-atom` |
+| a constant outside its role's canonical export spelling | refused `constant-atom` |
+| a decoded string beginning with `$` | refused `constant-spelling` |
 | an atom whose two ends are one variable | refused `reflexive-atom` |
-| the head relation also in the body | refused `recursion` |
+| an exact head atom in the body, or a variable-only head whose relation occurs in the body | refused `recursion` |
 | a head variable the body does not bind | refused `unbound-head` |
 | body atoms that fall into parts sharing no variable | refused `disconnected-body`: the checker evaluates a connected antecedent only |
 | a variable joining roles of incompatible object types | refused `type-confused-join`, by the fragment table's join check |
 | a variable whose types span two families (a subtype that does not inherit its supertype's reference starts one), or whose types' references, taken together, resolve to more than one kind of value: text, number (Integer and Number) or boolean. A type under two references, such as a subtype of both an own-reference subtype and its supertype, may hold `1` and `"1"` | refused `own-reference-join`: the count spells such values apart or alike where the checker does not, so it cannot count them as the checker does |
+
+A literal can occupy either role in a body or head atom. Use the role's
+export family followed by a colon and its canonical spelling, such as
+`area:cli`, `rank:7` or `flag:true`. Text uses the export escapes. The
+role's reference primitive determines the literal type. Variables alone
+connect body atoms. One fully ground body atom is allowed. A head with
+a literal can use a relation from the body when it specifies a different
+atom. For example:
+
+```text
+?a f_component_uses ?b ?b f_component_in_area area:cli => ?a f_component_in_area area:cli
+```
 
 **The counting.** GND counts every rule itself, over distinct head pairs:
 - **the denominator** is the number of distinct `(x, y)` that some binding of
@@ -559,8 +572,11 @@ in this order:
 - **the confidence** is numerator over denominator, reported with formula
   `std-confidence-head-pairs`.
 
-The body's join is bounded before it runs: if the product of its relations'
-sizes exceeds 1,000,000 rows the rule is refused `too-large`. Every rule is
+Body literals filter rows by their export tokens. Head literals fill their
+roles before pair deduplication. The body's join is bounded before it runs.
+A product over 1,000,000 rows or aggregate recount over 10,000,000 units is
+refused `too-large`. Aggregate work covers join prefixes, head projection,
+membership and provenance scans. Every rule is
 counted before any is checked, so any rule's `too-large` comes first. Then,
 rule by rule, in this order: a denominator of 0 is refused `covers-nothing`; a numerator that
 differs from the miner's Support is refused `support-mismatch`; and a rule

@@ -366,3 +366,41 @@ silently:
   multi-role subset, equality or exclusion.
 - **Support is a recorded claim** tied to the population's digest. Re-run
   discovery, or check the applied model, after the data changes.
+
+## Discover guarded joins
+
+Use the opt-in `guarded-join` family to suggest rules from a binary relation
+and a binary classifier. Give each fact type and its two role names in order.
+
+```sh
+gnd discover model.orm.yaml population.json \
+  --families guarded-join \
+  --joined-relation component_imports_component:importer:imported \
+  --joined-classifier component_is_in_area:component:area \
+  --actor reviewer --requested-at 2026-11-11T00:00:00Z \
+  --out proposal.json --report report.json
+```
+
+All selected fact types must be asserted and covered. The classifier must
+assign exactly one class to each endpoint. The relation roles and classifier
+entity role must use the same object type. Typed duplicate rows count once,
+using their first fact ID as evidence.
+
+- A forbidden pair means no relation row leaves the source class for the target
+  class. Its support is the count of distinct relation rows leaving the source
+  class. Ordered pairs are considered in typed identity order.
+- A same-class rule says the target's class also applies to the source. Its
+  support counts distinct eligible relation rows. To restrict it to marked
+  targets, supply a marker such as
+  `--joined-marker 'component_has_visibility:component:visibility="private"'`.
+- Both shapes can appear as near misses under the usual threshold. The
+  counterexamples are original relation-row IDs in population order.
+
+`--max-directed-pairs` caps ordered pairs (default 256). The ordinary
+`--max-pairs` option continues to bound the set families. The joined family
+charges at most 1,000,000 row and candidate visits. The `joined_rules` report
+entry records the work, how many pairs were compared and omitted, and a reason
+if the family refused. Coverage gaps, missing or ambiguous endpoint classes,
+redacted roles, unrepresentable literals and exhausted work can cause refusal.
+Other selected families can still propose rules. Emitted guarded rules use
+the existing induced, proposed, deontic evolve proposal.

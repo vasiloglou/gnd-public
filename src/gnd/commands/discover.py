@@ -7,8 +7,8 @@ import gnd.discover.service as _handler_discover_service
 from gnd.commands._arguments import _add_format_argument
 
 FAMILIES = _handler_discover_service.FAMILIES
-#: The opt-in eighth family (CT4); never part of the default.
-OPT_IN = ("fact-type",)
+#: Opt-in discovery families are excluded from the defaults.
+OPT_IN = ("fact-type", _handler_discover_service.joined.FAMILY)
 
 
 def _families(text: str) -> tuple[str, ...]:
@@ -82,7 +82,7 @@ def _register_discover(subparsers):
     )
     discover_parser.add_argument(
         "--families", type=_families, default=FAMILIES,
-        help="comma-separated subset of the seven families (default: all seven); add fact-type to opt in to fact-type proposals",
+        help="comma-separated subset of the seven default families; add fact-type or guarded-join to opt in",
     )
     discover_parser.add_argument(
         "--max-values", type=_at_least(1), default=20,
@@ -116,6 +116,14 @@ def _register_discover(subparsers):
         "--shape-judgements", default=None, metavar="PATH",
         help="fact-type family: read multi-valued shape verdicts (needs --type-evidence-in)",
     )
+    discover_parser.add_argument("--joined-relation", metavar="FACT:SOURCE:TARGET",
+                                 help="guarded-join family: binary relation and endpoint roles")
+    discover_parser.add_argument("--joined-classifier", metavar="FACT:ENTITY:CLASS",
+                                 help="guarded-join family: binary classifier and its roles")
+    discover_parser.add_argument("--joined-marker", metavar="FACT:ENTITY:VALUE=JSON",
+                                 help="guarded-join family: restrict same-class candidates by a target marker")
+    discover_parser.add_argument("--max-directed-pairs", type=_at_least(0), metavar="N",
+                                 help="guarded-join family: most ordered class pairs considered (default 256)")
     _add_format_argument(discover_parser)
     return {"discover_parser": discover_parser}
 
@@ -155,6 +163,21 @@ def handle(args, parsers) -> int:
             except DisclosureRefused as error:
                 print(f"gnd: error: {error}", file=sys.stderr)
                 return 3
+        joined = _handler_discover_service.joined
+        joined_settings = None
+        if joined.FAMILY in args.families:
+            if args.joined_relation is None or args.joined_classifier is None:
+                parsers["discover_parser"].error("guarded-join needs --joined-relation and --joined-classifier")
+            try:
+                joined_settings = joined.configure(
+                    args.joined_relation, args.joined_classifier, args.joined_marker, args.max_directed_pairs
+                )
+            except ValueError as error:
+                parsers["discover_parser"].error(str(error))
+        elif any(value is not None for value in (
+            args.joined_relation, args.joined_classifier, args.joined_marker, args.max_directed_pairs
+        )):
+            parsers["discover_parser"].error("joined options need --families guarded-join")
         return _handler_discover_service._cmd_discover(
             args.model,
             args.population,
@@ -166,6 +189,7 @@ def handle(args, parsers) -> int:
             max_values=args.max_values,
             max_pairs=args.max_pairs,
             output_format=args.format,
+            **({} if joined_settings is None else {"joined_settings": joined_settings}),
             **({} if "fact-type" not in args.families else {
                 "min_support": 20 if args.min_support is None else args.min_support,
                 "show_values": show_values,

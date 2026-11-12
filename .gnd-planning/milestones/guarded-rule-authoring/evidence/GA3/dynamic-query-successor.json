@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "reason": "GA3 decodes role-specific literal positions and verifies distinct head-pair recount bounds.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-authoring/evidence/GA2/dynamic-query-successor.json",
+  "predecessor_sha256": "37dd1840c219f5e065e08278dfb3102f503d54a2bf549ccbd8abb014cd9dbbaf",
+  "removed": [
+    [
+      "src/gnd/export/ilp_amie.py",
+      "atom",
+      "obj[1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "atom",
+      "subject[1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "count",
+      "b[head_object]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "count",
+      "b[head_subject]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "count",
+      "facts[relation]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "body[atom]",
+      2
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/export/ilp_amie.py",
+      "_constant",
+      "_PRIMITIVE_PREDICATES[primitive]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "_constant",
+      "_UNESCAPE[match[0]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "_constant",
+      "entry.families[position]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "_constant",
+      "entry.primitives[position]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "_constant",
+      "{'true': True, 'false': False}[payload]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "count",
+      "binding[head_object]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "count",
+      "binding[head_subject]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "body_variables[atom]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "decoded[-1]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "decoded[:-1]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "relations[relation]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "mapped",
+      "term[1:]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "recount_work",
+      "Mapping[str, list[tuple[str, str]]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "recount_work",
+      "facts[relation]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "recount_work",
+      "facts[rule.head[1]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "recount_work",
+      "list[tuple[str, str]]",
+      1
+    ],
+    [
+      "src/gnd/export/ilp_amie.py",
+      "recount_work",
+      "tuple[str, str]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7660,
+  "result_occurrences": 9523
+}

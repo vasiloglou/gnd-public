@@ -9,6 +9,12 @@ and the published versions from ``RELEASED`` in ``tests/test_release_version.py`
 While the declared version is not in ``RELEASED`` it reports nothing: that
 state belongs to the rules in ``tests/test_release_version.py``.
 
+A version in ``TAGGED`` (same file) is a GitHub tag only and never reaches the
+package index. While the declared version is tagged, ``check`` holds the pages
+to the latest published version, and also requires the tagged version's notes
+heading, its install-from-tag command and one sentence about it in the release
+notes opening and in the compatibility paragraph.
+
 ``publish`` makes the edits that are the same at every release: the install
 pins, the release link and wheel name, the tag sentence, the compatibility
 paragraph, the opening and the heading of the release notes, the support row
@@ -43,6 +49,8 @@ PIN_FILES = ("README.md", INSTALLATION, "docs/index.md", PLUGINS)
 
 VERSION = r"\d+\.\d+\.\d+"
 RELEASED_LINE = re.compile(r"^RELEASED = \{([^}\n]*)\}$", re.MULTILINE)
+TAGGED_LINE = re.compile(r"^TAGGED(?:: set\[str\])? = (?:\{([^}\n]*)\}|set\(\))$", re.MULTILINE)
+TAGGED_STATUS = re.compile(r"tagged (\d{4}-\d{2}-\d{2}), not published on PyPI")
 HEADING = re.compile(rf"^## ({VERSION})(?: \((.*)\))?\s*$")
 ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 PIN = re.compile(rf"(get-nick-done==){VERSION}")
@@ -71,6 +79,8 @@ STANDING = (
     ("docs/development/candidate.md", r"^The artifact is `get_nick_done-0\.1\.0-py3-none-any\.whl`\."),
     (PLUGINS, r"^not register the development checkout in the user's marketplace configuration\.$"),
     ("docs/releasing.md", r"^were validated\. Every release through 0\.3\.0 \(0\.1\.0, 0\.2\.0 and 0\.3\.0\) was$"),
+    # The tag-only procedure quotes the heading form a tag-only version carries.
+    ("docs/releasing.md", r"^   `## X\.Y\.Z \(tagged YYYY-MM-DD, not published on PyPI\)`, and give in it the$"),
     (SUPPORT, r"^\| [^|]+ \| Observed in Phase 3 acceptance of 0\.1\.0 \|$"),
     (SUPPORT, rf"^\| [^|]+ \| Observed in release acceptance of the {VERSION} candidate built from `[0-9a-f]{{8}}` \|$"),
     # A feature's first version stays true after later releases.
@@ -101,6 +111,27 @@ def released_versions(root: Path) -> list[str]:
     return sorted(set(versions), key=version_key)
 
 
+def tagged_versions(root: Path) -> list[str]:
+    """The tag-only versions, oldest first, from `TAGGED` beside `RELEASED`."""
+    match = TAGGED_LINE.search((root / RELEASED_HOME).read_text(encoding="utf-8"))
+    if not match:
+        raise ReleaseTextError(f"{RELEASED_HOME} has no `TAGGED = {{...}}` line")
+    versions = re.findall(rf'"({VERSION})"', match.group(1) or "")
+    return sorted(set(versions), key=version_key)
+
+
+def tag_sentence(version: str) -> str:
+    return f"Version {version} is a GitHub tag only and is not published on the package index."
+
+
+def _newer_tags(declared: str, tagged: list[str]) -> list[str]:
+    return [v for v in tagged if version_key(v) > version_key(declared)]
+
+
+def tag_install_command(version: str) -> str:
+    return f'uv tool install "git+https://github.com/vasiloglou/gnd-public@v{version}"'
+
+
 def _fill(text: str) -> str:
     return textwrap.fill(text, width=80, break_long_words=False, break_on_hyphens=False)
 
@@ -109,8 +140,10 @@ def _listed(versions: list[str]) -> str:
     return versions[0] if len(versions) == 1 else ", ".join(versions[:-1]) + " and " + versions[-1]
 
 
-def notes_opening(declared: str, date: str, released: list[str]) -> str:
-    """The first paragraph of the release notes once `declared` is published."""
+def notes_opening(declared: str, date: str, released: list[str], tagged: list[str] = ()) -> str:
+    """The first paragraph of the release notes once `declared` is published.
+
+    Each tag-only version newer than `declared` adds one sentence."""
     older = sorted((v for v in released if v != declared), key=version_key, reverse=True)
     if not older:
         standing = "is the first release."
@@ -119,17 +152,21 @@ def notes_opening(declared: str, date: str, released: list[str]) -> str:
     else:
         standing = f"is the latest release; {_listed(older)} came before it."
     return _fill(
-        f"Version {declared}, published on {date}, {standing} Releases follow the "
+        f"Version {declared}, published on {date}, {standing} "
+        + "".join(tag_sentence(v) + " " for v in _newer_tags(declared, tagged))
+        + "Releases follow the "
         "[release procedure](releasing.md). Changes on `main` after a release are listed "
         "in an `Unreleased:` section until the next one.")
 
 
-def compatibility_paragraph(declared: str, date: str, released: list[str]) -> str:
+def compatibility_paragraph(declared: str, date: str, released: list[str], tagged: list[str] = ()) -> str:
     """The first paragraph of the compatibility page once `declared` is published."""
     versions = sorted({*released, declared}, key=version_key)
     subject = f"Version {versions[0]} is" if len(versions) == 1 else f"Versions {_listed(versions)} are"
     return _fill(
-        f"{COMPATIBILITY_START} {subject} published ({declared} on {date}). For the next "
+        f"{COMPATIBILITY_START} {subject} published ({declared} on {date}). "
+        + "".join(tag_sentence(v) + " " for v in _newer_tags(declared, tagged))
+        + "For the next "
         "version, confirm service ownership and that the version is still free before "
         "candidate freeze and again before any upload. Milestone numbers are not package versions.")
 
@@ -191,7 +228,7 @@ def stale_lines(root: Path, declared: str, released: list[str]) -> list[str]:
     return problems
 
 
-def notes_problems(root: Path, declared: str, released: list[str]) -> list[str]:
+def notes_problems(root: Path, declared: str, released: list[str], tagged: list[str] = ()) -> list[str]:
     text = (root / NOTES).read_text(encoding="utf-8")
     lines = text.splitlines()
     headings = [(i, m) for i, line in enumerate(lines) if (m := HEADING.match(line)) and m.group(1) == declared]
@@ -203,14 +240,14 @@ def notes_problems(root: Path, declared: str, released: list[str]) -> list[str]:
         return [f"{NOTES}: the {declared} heading carries {date!r}, not a publication date"]
     problems = []
     paragraphs = _paragraphs(text)
-    opening = notes_opening(declared, date, released)
+    opening = notes_opening(declared, date, released, tagged)
     if len(paragraphs) < 2 or paragraphs[1] != opening:
         problems.append(f"{NOTES}: the opening paragraph is not the published form:\n{opening}")
     end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
     problems.extend(
         f"stale: {NOTES}: {line.strip()}" for line in lines[start:end] if STALE_IN_NOTES.search(line))
     compatibility = (root / COMPATIBILITY).read_text(encoding="utf-8")
-    expected = compatibility_paragraph(declared, date, released)
+    expected = compatibility_paragraph(declared, date, released, tagged)
     if expected not in _paragraphs(compatibility):
         problems.append(f"{COMPATIBILITY}: the version paragraph is not the published form:\n{expected}")
     return problems
@@ -244,16 +281,49 @@ def presence_problems(root: Path, declared: str) -> list[str]:
     return problems
 
 
+def tag_problems(root: Path, declared: str, released: list[str]) -> list[str]:
+    """A tag-only version: newer than every published one, with its own notes heading and install command."""
+    if declared in released:
+        return [f"{RELEASED_HOME}: {declared} is in both RELEASED and TAGGED"]
+    if released and version_key(declared) <= version_key(released[-1]):
+        return [f"{RELEASED_HOME}: tagged {declared} is not newer than published {released[-1]}"]
+    lines = (root / NOTES).read_text(encoding="utf-8").splitlines()
+    headings = [(i, m) for i, line in enumerate(lines) if (m := HEADING.match(line)) and m.group(1) == declared]
+    if len(headings) != 1:
+        return [f"{NOTES}: expected one `## {declared} (tagged DATE, not published on PyPI)` heading, found {len(headings)}"]
+    start, match = headings[0]
+    if not TAGGED_STATUS.fullmatch(match.group(2) or ""):
+        return [f"{NOTES}: the {declared} heading carries {match.group(2)!r}, not `tagged DATE, not published on PyPI`"]
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
+    if tag_install_command(declared) not in lines[start:end]:
+        return [f"{NOTES}: the {declared} section does not give `{tag_install_command(declared)}`"]
+    return []
+
+
+def subject_version(root: Path) -> str | None:
+    """The version the pages are held to: the declared one, or the latest published one while
+    the declared one is tag-only. None while the declared version is only prepared."""
+    declared = declared_version(root)
+    released = released_versions(root)
+    if declared in tagged_versions(root) and released:
+        return released[-1]
+    return declared if declared in released else None
+
+
 def problems(root: Path = ROOT) -> list[str]:
     """Everything that still describes the state before the declared version was published."""
     declared = declared_version(root)
     released = released_versions(root)
-    if declared not in released:
-        return []
+    tagged = tagged_versions(root)
+    found = tag_problems(root, declared, released) if declared in tagged else []
+    subject = subject_version(root)
+    if subject is None:
+        return found
     return [
-        *presence_problems(root, declared),
-        *notes_problems(root, declared, released),
-        *stale_lines(root, declared, released),
+        *found,
+        *presence_problems(root, subject),
+        *notes_problems(root, subject, released, tagged),
+        *stale_lines(root, subject, released),
     ]
 
 
@@ -266,6 +336,9 @@ def publish(root: Path, *, date: str, built: str, profile: str) -> list[str]:
     if not profile.strip() or "|" in profile or "\n" in profile:
         raise ReleaseTextError("--profile must be one line of text without `|`")
     declared = declared_version(root)
+    tagged = tagged_versions(root)
+    if declared in tagged:
+        raise ReleaseTextError(f"{declared} is in TAGGED: a tag-only version is not published to the package index")
     released = sorted({*released_versions(root), declared}, key=version_key)
 
     def notes(text):
@@ -277,7 +350,7 @@ def publish(root: Path, *, date: str, built: str, profile: str) -> list[str]:
         paragraphs = _paragraphs("\n".join(lines))
         if len(paragraphs) < 2 or not paragraphs[1].startswith("Version "):
             raise ReleaseTextError(f"{NOTES}: the paragraph after the title does not start with `Version `")
-        paragraphs[1] = notes_opening(declared, date, released)
+        paragraphs[1] = notes_opening(declared, date, released, tagged)
         return "\n\n".join(paragraphs)
 
     def compatibility(text):
@@ -285,7 +358,7 @@ def publish(root: Path, *, date: str, built: str, profile: str) -> list[str]:
         found = [i for i, p in enumerate(paragraphs) if p.startswith(COMPATIBILITY_START)]
         if len(found) != 1:
             raise ReleaseTextError(f"{COMPATIBILITY}: expected one paragraph starting {COMPATIBILITY_START!r}")
-        paragraphs[found[0]] = compatibility_paragraph(declared, date, released)
+        paragraphs[found[0]] = compatibility_paragraph(declared, date, released, tagged)
         return "\n\n".join(paragraphs)
 
     def support(text):
@@ -352,10 +425,12 @@ def main(argv: list[str] | None = None) -> int:
     for line in found:
         print(line)
     declared = declared_version(arguments.root)
-    if declared not in released_versions(arguments.root):
+    subject = subject_version(arguments.root)
+    if subject is None:
         print(f"{declared} is not in RELEASED: nothing to check before publication")
     elif not found:
-        print(f"no page describes the state before {declared} was published")
+        print(f"no page describes the state before {subject} was published"
+              + (f"; {declared} is tag-only" if subject != declared else ""))
     return 1 if found else 0
 
 

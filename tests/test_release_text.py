@@ -80,6 +80,83 @@ def test_the_tool_and_the_version_rules_read_the_same_homes():
     assert tool.PIN_FILES == version_rules.PIN_FILES
     assert tool.released_versions(ROOT) == sorted(version_rules.RELEASED, key=tool.version_key)
     assert tool.declared_version(ROOT) == version_rules.declared_version()
+    assert tool.tagged_versions(ROOT) == sorted(version_rules.TAGGED, key=tool.version_key)
+
+
+# -- tag-only versions: a GitHub tag that never reaches the package index --
+
+def tag_next(root: Path) -> Path:
+    """Put the copied pages in the state of a tag-only `NEXT`, as a tag-only release leaves them."""
+    declared = tool.declared_version(root)
+    subject = tool.released_versions(root)[-1]
+    edit(root, "pyproject.toml", f'version = "{declared}"', f'version = "{NEXT}"')
+    line = tool.TAGGED_LINE.search((root / tool.RELEASED_HOME).read_text(encoding="utf-8")).group(0)
+    edit(root, tool.RELEASED_HOME, line, f'TAGGED = {{"{NEXT}"}}')
+    first = next(m.group(0) for m in re.finditer(r"^## .*$", (root / tool.NOTES).read_text(encoding="utf-8"), re.MULTILINE))
+    edit(root, tool.NOTES, first, (
+        f"## {NEXT} (tagged 2027-01-02, not published on PyPI)\n\n{tool.tag_install_command(NEXT)}\n\n{first}"))
+    released = tool.released_versions(root)
+    for relative, start, build in (
+        (tool.NOTES, "Version ", tool.notes_opening),
+        (tool.COMPATIBILITY, tool.COMPATIBILITY_START, tool.compatibility_paragraph),
+    ):
+        paragraphs = (root / relative).read_text(encoding="utf-8").split("\n\n")
+        index = next(i for i, p in enumerate(paragraphs) if p.startswith(start))
+        paragraphs[index] = build(subject, "2026-11-11", released, [NEXT])
+        (root / relative).write_text("\n\n".join(paragraphs), encoding="utf-8")
+    return root
+
+
+def test_a_tag_only_version_is_checked_against_the_latest_published_pages(tmp_path):
+    root = tag_next(copy_tree(tmp_path))
+    assert tool.subject_version(root) == tool.released_versions(root)[-1]
+    assert tool.problems(root) == []   # the control
+
+
+@pytest.mark.parametrize("mutation, expected", [
+    ("heading-undated", "not `tagged DATE, not published on PyPI`"),
+    ("heading-missing", "expected one `## 9.9.9 (tagged DATE"),
+    ("no-install-command", "does not give `uv tool install"),
+    ("opening-silent", "the opening paragraph is not the published form"),
+    ("compatibility-silent", "the version paragraph is not the published form"),
+    ("also-released", "is in both RELEASED and TAGGED"),
+    ("not-newer", "is not newer than published"),
+])
+def test_a_tag_only_version_left_incomplete_is_reported(tmp_path, mutation, expected):
+    root = tag_next(copy_tree(tmp_path))
+    if mutation == "heading-undated":
+        edit(root, tool.NOTES, f"## {NEXT} (tagged 2027-01-02, not published on PyPI)", f"## {NEXT} (tagged)")
+    elif mutation == "heading-missing":
+        edit(root, tool.NOTES, f"## {NEXT} (tagged 2027-01-02, not published on PyPI)", "## Unreleased: something")
+    elif mutation == "no-install-command":
+        edit(root, tool.NOTES, tool.tag_install_command(NEXT), "Install from the tag.")
+    elif mutation == "opening-silent":
+        edit(root, tool.NOTES, tool.tag_sentence(NEXT).split(" is a ")[0], "A tag")
+    elif mutation == "compatibility-silent":
+        edit(root, tool.COMPATIBILITY, tool.tag_sentence(NEXT).split(" is a ")[0], "A tag")
+    elif mutation == "also-released":
+        line = tool.RELEASED_LINE.search((root / tool.RELEASED_HOME).read_text(encoding="utf-8")).group(0)
+        edit(root, tool.RELEASED_HOME, line, line[:-1] + f', "{NEXT}"}}')
+    else:
+        edit(root, "pyproject.toml", f'version = "{NEXT}"', 'version = "0.0.1"')
+        edit(root, tool.RELEASED_HOME, f'TAGGED = {{"{NEXT}"}}', 'TAGGED = {"0.0.1"}')
+    found = tool.problems(root)
+    assert any(expected in problem for problem in found), found
+
+
+def test_a_tag_only_version_cannot_be_published_to_the_index(tmp_path):
+    root = tag_next(copy_tree(tmp_path))
+    with pytest.raises(tool.ReleaseTextError, match="tag-only"):
+        tool.publish(root, **PUBLISH)
+
+
+def test_a_later_publication_drops_the_older_tag_sentence(tmp_path):
+    root = tag_next(copy_tree(tmp_path))
+    def opening(*arguments):
+        return " ".join(tool.notes_opening(*arguments).split())
+    assert tool.tag_sentence(NEXT) in opening("0.3.0", "2026-11-11", ["0.3.0"], [NEXT])
+    assert tool.tag_sentence(NEXT) not in opening("10.0.0", "2027-02-02", ["0.3.0", "10.0.0"], [NEXT])
+    assert tool.tagged_versions(root) == [NEXT]
 
 
 def test_publication_of_a_prepared_version(tmp_path):
@@ -116,7 +193,7 @@ def test_publication_of_a_prepared_version(tmp_path):
     # What is left is what a person wrote for this release, and only that.
     left = tool.problems(root)
     assert left == [
-        "stale: docs/release-notes.md: Everything in this section is on `main` after 0.3.0 and is not in any published",
+        f"stale: docs/release-notes.md: Everything in this section is on `main` after {tool.declared_version(ROOT)} and is not in any published",
         "stale: docs/marketplace-plugins.md: which is prepared and not published. Install the runtime from a checkout of the",
     ], left
     edit(root, "docs/release-notes.md", " and is not in any published\npackage.", ".")
@@ -169,7 +246,7 @@ MUTATIONS = {
 
 @pytest.mark.parametrize("name", sorted(MUTATIONS))
 def test_a_page_left_in_the_earlier_state_is_reported(tmp_path, name):
-    assert tool.declared_version(ROOT) == "0.3.0", "these mutations are written against the 0.3.0 pages"
+    assert tool.subject_version(ROOT) == "0.3.0", "these mutations are written against the 0.3.0 pages"
     root = copy_tree(tmp_path)
     assert tool.problems(root) == []   # the control: the copy is clean
     relative, start, new, expected = MUTATIONS[name]

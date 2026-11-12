@@ -23,6 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 # literal of its kind in the tests).
 RELEASED = {"0.1.0", "0.2.0", "0.3.0"}
 
+# Versions released as a GitHub tag only, never uploaded to the package index.
+# A tag-only version is newer than every published one and is never pinned; the
+# pages describe the latest published version (see tools/release_text.py).
+TAGGED = {"0.3.1"}
+
 MANIFESTS = (
     ".claude-plugin/plugin.json",
     ".codex-plugin/plugin.json",
@@ -272,9 +277,12 @@ def assert_notes_name_the_headline_change(notes: str, version: str) -> None:
     assert f"]({link})" in block, f"the {version} headline block does not link {link}"
 
 
-def assert_prepared_version_is_stated(declared: str, released: set[str], support: str, plugins: str) -> None:
-    """While `declared` is unpublished, the support and plugin pages must say so."""
-    if declared in released:
+def assert_prepared_version_is_stated(declared: str, released: set[str], support: str, plugins: str,
+                                      tagged: set[str] = frozenset()) -> None:
+    """While `declared` is prepared for the index, the support and plugin pages must say so.
+
+    A tag-only version is not prepared for the index, so nothing is required."""
+    if declared in released or declared in tagged:
         return
     version = re.escape(declared)
     assert re.search(rf"\b{version}\b[^|\n]*\|[^|\n]*[Nn]o profile is observed for {version}\b", support), (
@@ -314,7 +322,17 @@ def test_a_notes_section_without_its_headline_is_refused(mutation):
 
 def test_support_and_plugin_pages_state_the_prepared_version():
     assert_prepared_version_is_stated(
-        declared_version(), RELEASED, _page("docs/support.md"), _page("docs/marketplace-plugins.md"))
+        declared_version(), RELEASED, _page("docs/support.md"), _page("docs/marketplace-plugins.md"), TAGGED)
+
+
+def test_tagged_and_released_versions_are_disjoint():
+    assert not TAGGED & RELEASED, TAGGED & RELEASED
+
+
+def test_a_tag_only_version_needs_no_prepared_statement():
+    with pytest.raises(AssertionError):
+        assert_prepared_version_is_stated("9.9.9", {"0.1.0"}, "", "")
+    assert_prepared_version_is_stated("9.9.9", {"0.1.0"}, "", "", {"9.9.9"})
 
 
 @pytest.mark.parametrize("mutation", ["empty-support", "support-other-version", "support-observes-another", "plugins-silent", "plugins-no-route", "plugins-claim"])

@@ -1,6 +1,6 @@
 {
   "name": "gnd",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Build agentic data apps with ORM models, deterministic checks, and bounded development workflows. Requires the get-nick-done Python package.",
   "author": {
     "name": "Nikolaos Vasiloglou",

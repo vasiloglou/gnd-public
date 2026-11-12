@@ -1,14 +1,41 @@
 # Release notes and milestones
 
 Version 0.3.0, published on 2026-11-11, is the latest release; 0.2.0 and 0.1.0
-came before it. Releases follow the [release procedure](releasing.md). Changes
-on `main` after a release are listed in an `Unreleased:` section until the next
+came before it. Version 0.3.1 is a GitHub tag only and is not published on the
+package index. Releases follow the [release procedure](releasing.md). Changes on
+`main` after a release are listed in an `Unreleased:` section until the next
 one.
 
-## Unreleased: export note, import reference and package description
+## 0.3.1 (tagged 2026-11-11, not published on PyPI)
 
-These changes are on `main` after 0.3.0 and are not in any published package.
-Install from a checkout of the repository to use them.
+Version 0.3.1 is the GitHub tag `v0.3.1`. It is not on the package index;
+install it from the tag:
+
+```sh
+uv tool install "git+https://github.com/vasiloglou/gnd-public@v0.3.1"
+```
+
+Everything in this section is new since 0.3.0.
+
+### Guarded rules
+
+- **Antecedent diagnostics**: `gnd check --guarded-diagnostics` reports, per
+  guarded rule, how many bindings its antecedent has and the first atom that
+  matched nothing. See [rule-check reports](reference/rule-check-report.md).
+- **Comparing rule editions**: `gnd check HEAD POPULATION --baseline-model
+  BASE` compares offending findings by rule ID across two editions of a model.
+- **Guarded-case synthesis**: `gnd synth --guarded-cases` builds an active
+  failing and an active passing population for each supported guarded rule,
+  confirmed by the checker. See
+  [synthetic data](guides/synthetic-data.md#generate-examples-for-guarded-rules).
+- **Guarded-join discovery**: the opt-in `guarded-join` family of `gnd
+  discover` proposes forbidden-pair and same-class rules from a binary relation
+  and a classifier. See [discover](reference/discover.md#discover-guarded-joins).
+- **Typed AMIE constants**: the ILP bridge imports rules with literal
+  constants in body and head atoms, with bounded recount work. See the
+  [ILP bridge](reference/ilp-bridge.md).
+
+### Other changes
 
 - **Ossie export and `redact`** (issue 169): `gnd export ossie` prints a note
   with the number of fact types that declare `redact`. The exported files do

@@ -145,7 +145,7 @@ undecided. These fields leave verdicts and exit bands as reported by the
 same check without this option. Text output lists the same observations.
 
 For authoring-time findings on literal values, see the ORM
-[constraint reference](../../src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
+[constraint reference](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/constraint-reference.md).
 
 ## Comparing two rule editions
 

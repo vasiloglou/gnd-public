@@ -42,12 +42,13 @@ def query(run, tmp_path, fact, pair):
     target.write_bytes(canonical_json_bytes({"version": 1, "targets": [
         {"fact_type": fact, "tuple": [{"primitive": "String", "value": value} for value in pair]}]}))
     proof = tmp_path / "proof.json"
+    proof.unlink(missing_ok=True)
     done = gnd("witness", MODEL, run / "composed.population.json", "--targets", target, "--composition",
                run / "composition.json", "--raw", "--out", proof)
     return done, proof
 
 
-def test_named_development_paths(runs):
+def test_named_development_paths(runs, tmp_path):
     from gnd.examples.literature.lineage_run import score
 
     result = score(MODEL, runs["development"], EXAMPLE / "answers/answer-key.json")
@@ -55,6 +56,7 @@ def test_named_development_paths(runs):
     assert result["exit_code"] == 0
     statements = read(runs["development"] / "composed.population.json")["facts"]["assertion_statement"]
     assert any(r["predicate"] == "evaluated-as" and r["object"] == "Boltz-1 family" for r in statements)
+    assert query(runs["development"], tmp_path, "lineage_ancestor", ["PoseX", "Boltz-1 family"])[0].returncode == 2
 
 
 def test_only_eligible_relationships_supply_a_lineage_edge(runs, tmp_path):
@@ -119,6 +121,8 @@ def test_cycle_warning_and_reversed_relation(runs, tmp_path):
 
     a, b = "Clockwise", "Counterclockwise"
     ordinary = original["facts"]
+    original["population"]["covers"].extend(
+        ["lineage_step", "lineage_arc", "lineage_ancestor", "transfer_step", "transfer_ancestor"])
     for number, keep_cycle in enumerate((True, False)):
         width = 2 if keep_cycle else 1
         ordinary["assertion_statement"] = ordinary["assertion_statement"][:width]
@@ -140,3 +144,21 @@ def test_cycle_warning_and_reversed_relation(runs, tmp_path):
     result, report = check(original, "reversed")
     assert result.returncode == 1
     assert any(row["verdict"] == "fail" for row in report["derivations"])
+
+
+def test_invalid_annotation_and_changed_resolution_refuse(runs, tmp_path):
+    import shutil
+
+    from gnd.examples.literature.lineage_run import main
+
+    annotation = tmp_path / "bad.json"
+    annotation.write_bytes(b'{"sources":NaN}')
+    out = tmp_path / "refused"
+    assert main(["assemble", str(EXAMPLE), str(MODEL), str(annotation), str(out)]) == 3
+    assert not out.exists()
+
+    run = tmp_path / "stale"
+    shutil.copytree(runs["development"], run)
+    with (run / "sources/resolution.json").open("a") as stream:
+        stream.write(" ")
+    assert main(["score", str(MODEL), str(run), str(EXAMPLE / "answers/answer-key.json")]) == 3

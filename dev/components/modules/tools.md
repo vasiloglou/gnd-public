@@ -66,6 +66,19 @@ Build the LI1 literature regression corpus over src/gnd/examples/literature/.
 | `write_reference_run(root, corpus, corpus_raw) -> None` | function | 703 | (no docstring) |
 | `main(argv) -> None` | function | 711 | (no docstring) |
 
+## tools.build_literature_lineage_model — `tools/build_literature_lineage_model.py`
+Components: examples.literature_lineage
+Build the literature lineage rule model from its declared path policy.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `fact(name, reading, roles, clauses, **extra)` | function | 13 | (no docstring) |
+| `atom(name, **bind)` | function | 19 | (no docstring) |
+| `clause(body, **head)` | function | 23 | (no docstring) |
+| `closure(relation, direct)` | function | 27 | (no docstring) |
+| `model_from_policy(policy, base) -> dict` | function | 36 | Emit both path families from the same table and an admitted statement vocabulary. |
+| `main() -> None` | function | 80 | (no docstring) |
+
 ## tools.build_resolution_fixtures — `tools/build_resolution_fixtures.py`
 Components: unassigned
 Build the LI2 resolution fixtures under src/gnd/examples/literature/resolution/.

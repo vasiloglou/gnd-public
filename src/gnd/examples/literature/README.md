@@ -255,3 +255,33 @@ binds the exact input and output digests and lists per-statement decisions
 under `semantic-support` and `positive-own-findings`. A completed
 projection exits 0, including one with declined rows. Invalid,
 unavailable or stale inputs refuse at exit 3.
+
+## Context-qualified lineage
+
+The [lineage fixtures](lineage/README.md) use saved-opinion admission
+and compose its admitted rows with the original source evidence.
+The path-policy file names the relations that can supply lineage.
+A derived step also names its assertion's passage. A transfer step
+requires reviewed assumption and interface conditions in that
+assertion. Evaluation, comparison, inspiration and taxonomic
+membership remain available as statements.
+
+Run the public development score from the repository root with a
+fresh output directory.
+
+```sh
+example=src/gnd/examples/literature
+python -m gnd.examples.literature.lineage_run assemble "$example" \
+  "$example/lineage/model.orm.yaml" "$example/lineage/development-input.json" lineage-run
+python -m gnd.examples.literature.lineage_run score \
+  "$example/lineage/model.orm.yaml" lineage-run "$example/answers/answer-key.json"
+```
+
+The scorer checks the composition binding, then requests both the
+directed steps and the ancestry query for each path. It reports the
+supported and excluded counts separately. The original flat whale
+fixture is in the [resolution example](resolution/README.md).
+
+The committed rule model is generated from the path-policy table
+and the contextual assertion model by
+`python tools/build_literature_lineage_model.py`.

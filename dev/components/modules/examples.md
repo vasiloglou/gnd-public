@@ -224,6 +224,16 @@ Score the frozen synthetic diagnostic corpus using its predeclared sample.
 | `score(emissions, labels) -> dict` | function | 36 | Sample uniformly within each kind and report exact false-discovery counts. |
 | `main(argv) -> int` | function | 82 | (no docstring) |
 
+## gnd.examples.literature.lineage_run — `src/gnd/examples/literature/lineage_run.py`
+Components: examples.literature_lineage
+Assemble admitted contextual sources and score named lineage paths.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `assemble(example, model, annotations, out) -> None` | function | 179 | Build a no-replace run from accepted contextual statements and verified identities. |
+| `score(model, run, answer_key) -> dict` | function | 247 | Grade exact directed paths through the public witness route. |
+| `main(argv) -> int` | function | 279 | (no docstring) |
+
 ## gnd.examples.literature.name_diagnostics — `src/gnd/examples/literature/name_diagnostics.py`
 Components: examples.literature_name_diagnostics
 Generate reviewable name candidates from original literature occurrences.

@@ -1757,7 +1757,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model/__init__.py, src/gnd/model/_includes.py, src/gnd/model/_paths.py
 - uses: infra.artifacts, infra.errors, model.document, model.json_document, model.operation_obligations, model.population_loading, model.scalar_identity, model.validation
-- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +69 more (graph.md)
+- used_by: assurance.policy, check.admission, check.applicability, check.batch, check.element_coverage, check.incremental_reuse, check.service, checker.evaluate, cli.api, cli.checking_command, cli.dispatch, codegen.emit, … +70 more (graph.md)
 - part_of: subsystem.check, subsystem.codegen, subsystem.conformance, subsystem.evolve, subsystem.measure, subsystem.recovery, subsystem.synth
 - tests: tests/test_model_validation.py, tests/test_evolve_loading.py, tests/test_reference_population_corpus.py, tests/test_fu2_population_header.py
 - notes: Private evolution history and analysis reuse the canonical compose worker without constructing invalid Models. Captured proposal input checks authored-byte identity, and candidate loading preserves the include-free byte resolver. The initializer owns loading and binding; _includes owns one pinned-model resolver and shared admission guards, and _paths owns retained roots and confined paths. Public moved names remain explicit identity aliases. Reference binding validates declared hashes and ownership using retained directory descriptors; reference-free loading retains a historical symlink fallback.
@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +64 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +65 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, … +1 more (graph.md)
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2087,7 +2087,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/api.py
 - uses: assurance.evidence, assurance.policy, check.branches, check.calculation_scope, check.evaluation_feedback, check.incremental_reuse, check.service, checker.evaluate, export.service, extract.source_anchors, infra.artifacts, infra.disclosure, infra.exit_codes, infra.input_policy, infra.report_payloads, infra.report_redaction, model.anchors, model.composition, model.diff, model.loading, model.population_loading, model.population_sentences, model.query_index, model.reference_binding, model.scalar_identity, model.scalar_terms, model.verbalization, semantics.saved_judgments, semantics.transitions, witness.service
-- used_by: cli.checking_command, cli.dispatch, cli.judgments_command, examples.book_recommendations, examples.expense_application, examples.plan_apps
+- used_by: cli.checking_command, cli.dispatch, cli.judgments_command, examples.book_recommendations, examples.expense_application, examples.literature_lineage, examples.plan_apps
 - part_of: subsystem.check
 - tests: tests/test_v61_phase2_api.py, tests/test_tp3_check_receipts.py, tests/test_incremental_sessions.py, tests/test_composition.py
 - checked: partial
@@ -2129,7 +2129,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/composition.py
 - uses: infra.artifacts, model.anchors, model.composition_resolution, model.loading, model.population_loading, model.query_index
-- used_by: check.service, cli.api, witness.service
+- used_by: check.service, cli.api, examples.literature_lineage, witness.service
 - tests: tests/test_composition.py
 
 
@@ -2364,7 +2364,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/judgments.py
 - uses: check.admission, infra.artifacts, infra.bounded_json, infra.safe_filesystem, model.loading, model.population_loading, model.query_index
-- used_by: cli.api, exp.session_judgments
+- used_by: cli.api, examples.literature_lineage, exp.session_judgments
 - tests: tests/test_public_v71_full_judgments.py, tests/test_public_v71_judgment_successor_guards.py, tests/test_v72_phase4_json_input.py, tests/test_disclosure_mode.py
 - checked: partial
 - notes: Evaluates saved evidence without invoking a judge; emitted opinion policy results explicitly carry assurance none.
@@ -3264,7 +3264,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/assurance_report.py
 - uses: (none)
-- used_by: examples.literature_assertion_admission, examples.literature_name_diagnostics
+- used_by: examples.literature_assertion_admission, examples.literature_lineage, examples.literature_name_diagnostics
 - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
 - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
 
@@ -3289,8 +3289,20 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/assertion_admission.py
 - uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors
-- used_by: (none)
+- used_by: examples.literature_lineage
 - tests: tests/test_li4_assertions.py
+
+
+### examples.literature_lineage
+- does: Compose saved-opinion literature assertions and score ordered ancestry paths through GND witnesses.
+- verbs: literature lineage, conditional transfer, ordered path, source identity, witnessed assertion, context qualification
+- in: Approved path policy, contextual annotation documents, and a development or reserved answer key.
+- out: Composed run with revision-bound admission and resolution records, and a separated score.
+- status: canonical
+- modules: src/gnd/examples/literature/lineage_run.py, tools/build_literature_lineage_model.py
+- uses: cli.api, examples.literature_assertion_admission, examples.literature_assurance, infra.artifacts, model.anchors, model.composition, model.loading, semantics.saved_judgments
+- used_by: (none)
+- tests: tests/test_li5_lineage.py
 
 
 ### examples.expense_rules

@@ -804,9 +804,9 @@ gnd check MODEL POPULATION --guarded-diagnostics --format json
 
 ## Limits
 
-- **Diagnostics describe; they do not decide.** A rule with zero bindings over
-  populated tables stays `pass`. No option turns it into a failure or into
-  `vacuous`.
+- **Diagnostics preserve verdicts.** A positive join with no matches across
+  populated tables yields `pass`. A rule whose filters exclude every positive
+  binding yields `vacuous`.
 - **Plain snapshot checks only.** `--rule-ids`, `--guarded-diagnostics` and
   `--baseline-model` work on one population checked against a model without
   temporal terms, an active redaction policy or reference populations. Other

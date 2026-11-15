@@ -1,0 +1,39 @@
+{
+  "schema_version": "gnd-guarded-cases/1",
+  "model_digest": "sha256:d194ffb7b500214ba15049d8af31120c524d5d6b8fb9dc7025154df1a533cede",
+  "seed": 195,
+  "rules": [
+    {
+      "rule_id": "policy_limit_travel",
+      "constraint_ref": "constraints[0]",
+      "cases": [
+        {
+          "kind": "failing",
+          "population": "cases/0000.fail.json",
+          "verdict": "fail",
+          "binding_count": 1,
+          "other_findings": []
+        },
+        {
+          "kind": "passing",
+          "population": "cases/0000.pass.json",
+          "verdict": "pass",
+          "binding_count": 1,
+          "other_findings": []
+        }
+      ],
+      "reason": null
+    }
+  ],
+  "ordinary": {
+    "model": "ordinary/scoped.orm.yaml",
+    "source_model_digest": "sha256:d194ffb7b500214ba15049d8af31120c524d5d6b8fb9dc7025154df1a533cede",
+    "constraint_refs": {},
+    "model_digest": "sha256:547ff847315457e6e84d8be9ea8cb4c4218e218bb14788522885715f32aacc52",
+    "corpus": "ordinary/corpus",
+    "reason": null,
+    "omitted_guarded_refs": [
+      "constraints[0]"
+    ]
+  }
+}

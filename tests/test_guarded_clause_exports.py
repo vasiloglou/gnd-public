@@ -249,3 +249,25 @@ def test_membership_helper_refuses_a_raw_relation_name_collision(tmp_path):
     model.write_text(json.dumps(document))
     with pytest.raises(ExportInputError, match="^membership-helper-name-collision$"):
         render(model, "duckdb")
+
+
+@pytest.mark.parametrize("exporter", ["lean", "souffle"])
+def test_finite_exports_refuse_guarded_antecedent_filters_by_name(tmp_path, exporter):
+    from gnd.export.lean import render_lean
+    from gnd.export.souffle import render_souffle
+
+    model = _model(tmp_path, "filters").read_bytes()
+    facts = {
+        "expense_in_category": [{"expense": 1, "category": "travel"}],
+        "expense_has_amount": [{"expense": 1, "amount": 2500}],
+        "expense_has_status": [],
+    }
+    population = json.dumps({
+        "population": {"model": "model.orm.json", "source": "fixture", "covers": list(facts)},
+        "facts": facts,
+    }).encode()
+    if exporter == "lean":
+        result = render_lean(model, population, toolchain="leanprover/lean4:v4.34.0")
+    else:
+        result = render_souffle(model, population, model_format="json")
+    assert (result.exit_code, result.reason) == (2, "guarded-antecedent-filters-unsupported")

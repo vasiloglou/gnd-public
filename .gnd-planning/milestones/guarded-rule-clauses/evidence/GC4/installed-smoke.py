@@ -110,6 +110,10 @@ def main():
         checked[name] = {"exit": band, "verdicts": dict(zip(GUARDS, expected, strict=True))}
         if name == "all-violations":
             checked[name]["delivery_diagnostics"] = diagnostics["verdicts"][2]["guarded_alternatives"]
+        else:
+            shipped = diagnostics["verdicts"][1]["guarded_antecedent"]
+            assert shipped == {"binding_count": 0, "first_empty_atom_index": None}
+            checked[name]["shipped_antecedent"] = shipped
 
     run(["synth", model_arg, "--guarded-cases", "--seed", "195", "--out", "generated"], opts.scratch, 0)
     manifest = json.loads((opts.scratch / "generated/guarded-cases.json").read_text())

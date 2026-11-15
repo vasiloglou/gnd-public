@@ -278,3 +278,15 @@ and the [close audit](close-candidate.md).
   result when its exception applies.
 - **D6.** The owner-selected Standard instrument covers the plan and close.
   The separate Claude Code step covers each of the four phase diffs.
+
+### Synthesis reachability at close
+
+The original completion predicate above requires fail and pass cases for
+representative reachable forms, and singles out a GC1 finite-domain refusal.
+Ruling amendment, 2026-11-15, under the named `auto=true` milestone. For the
+exact #195 shipped self-denial, accept `no-passing-case` with zero cases in
+the installed manifest. Every active binding both establishes and forbids
+its raw-code fact. The exception excludes the binding and yields vacuity.
+The separate GC2 exception example supplies both active outcomes and
+satisfies N4. The [close disposition](close-disposition.md) records the
+replayed evidence, the profile matrix and the distinction in the exit bands.

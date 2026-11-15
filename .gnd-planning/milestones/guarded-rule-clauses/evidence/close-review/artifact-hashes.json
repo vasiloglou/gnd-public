@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "evidence": [
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/differential-replay.txt",
+      "sha256": "99547ccd533a42ccc050ba95b1f116b125c3765b90c5c9501f3129b5c700eaf7"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-boolean-no-failure/guarded-cases.json",
+      "sha256": "fa2fdffd4845a2fb71e2723b124549379584ed0fbba6c4124287f43a173f9b3b"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-boolean-no-failure/model.orm.json",
+      "sha256": "76761c3ae9126b19868765092e1899b2912ff89060828463ac1e0578b4332b52"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-boolean-no-pass/guarded-cases.json",
+      "sha256": "ea89bd3e7c7be6d05238e42c22fbafd8e2849b5c5bb3e41621dc6f9d5d190f4d"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-boolean-no-pass/model.orm.json",
+      "sha256": "6e2880f663ce7d8a4d78745a0d9984f66558a5ba7f1fe75093aed5bb84a7da9c"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-in/cases/0000.fail.json",
+      "sha256": "509e66d7abee1689de6c6a8f45679008ab185af32324fee6dfff5f99eaaa348c"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-in/cases/0000.pass.json",
+      "sha256": "049e49947b656ddf3c8854743d283af3dce6dbd70275313b1a7e6a04397033df"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-in/guarded-cases.json",
+      "sha256": "be626ddbd3c20f21e3aaabed935057f74f0a75b33997fb1f476ca71e388d7c77"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-in/model.orm.json",
+      "sha256": "3b6a6970b8d95348ec6608ab151c3b2de6d45a365de3810134d7b5942fdf0e73"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-not-in/cases/0000.fail.json",
+      "sha256": "049e49947b656ddf3c8854743d283af3dce6dbd70275313b1a7e6a04397033df"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-not-in/cases/0000.pass.json",
+      "sha256": "509e66d7abee1689de6c6a8f45679008ab185af32324fee6dfff5f99eaaa348c"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-not-in/guarded-cases.json",
+      "sha256": "13b139a67ed093db5d0974463ad0e446ae8e2f997a6ec1998f3507d7c31f5e6c"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC1-not-in/model.orm.json",
+      "sha256": "b835c552d6bda28da16d04b5219f85cdd1f0212dfbe86a6e3522fe7dbaf1de5a"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC2-exception/cases/0000.fail.json",
+      "sha256": "3af3ff88c8b898f69049d10cf6f055375857aff7fe4b50e00a2260417f63ed75"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC2-exception/cases/0000.pass.json",
+      "sha256": "f169d4db15b6f98bf3f776811a0ebb0b9dc5bf6a4e85b478685beb54d84c7627"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC2-exception/guarded-cases.json",
+      "sha256": "ea2f2c08f122f936333e0984ab4e7aa7e875633a8c9b86d75eccd2f37164e3aa"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC2-exception/model.orm.json",
+      "sha256": "b12346d40f4e86f9fe8b710080128666abae75ede934be47e0d36680c610134e"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC3-alternatives/cases/0000.fail.json",
+      "sha256": "f409bcf514c7e95aeaedd09d82f434732293bc1e4b21ad44ba15b6d0b302455d"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC3-alternatives/cases/0000.pass.json",
+      "sha256": "2b0399cfd30e9883a28d60f68e66ac3b8def857ce62103c7dcc2067ed0f6f979"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC3-alternatives/guarded-cases.json",
+      "sha256": "939c9c5ed158247c770493c050a194d19793af5c611e1e3082137b4f7650caa8"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/guarded-cases/GC3-alternatives/model.orm.json",
+      "sha256": "f780f0bada4b00546d6bb2ec4eaf8be09414de8fee204ff18c35eb155a148016"
+    },
+    {
+      "path": ".gnd-planning/milestones/guarded-rule-clauses/evidence/close-review/installed-smoke.json",
+      "sha256": "5b4a045e9a07e16563e6b47a4e681e5119719593d6720d0c0b845460bfd61ea3"
+    }
+  ]
+}

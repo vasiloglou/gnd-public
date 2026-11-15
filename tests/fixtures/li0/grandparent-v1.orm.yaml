@@ -1,0 +1,18 @@
+version: 1
+model_id: urn:gnd-fixture:li0-grandparent@1
+object_types:
+  - {id: person, name: Person, kind: value, primitive: String}
+fact_types:
+  - id: person_parent_of_person
+    reading: "{Person} is parent of {Person}"
+    roles: [{object_type: person, role_name: parent}, {object_type: person, role_name: child}]
+  - id: person_grandparent_of_person
+    reading: "{Person} is grandparent of {Person}"
+    roles: [{object_type: person, role_name: grandparent}, {object_type: person, role_name: grandchild}]
+    derivation: derived
+    derivation_rule:
+      body:
+        - {fact_type: person_parent_of_person, bind: {parent: "$a", child: "$b"}}
+        - {fact_type: person_parent_of_person, bind: {parent: "$b", child: "$c"}}
+      head: {grandparent: "$a", grandchild: "$c"}
+constraints: []

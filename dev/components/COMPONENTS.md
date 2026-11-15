@@ -3070,9 +3070,9 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### witness.schema
 - does: Validate bounded witness requests, certificates, typed targets and input identities before production or replay.
-- verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire
+- verbs: parse wire, read certificate, load targets, validate witness structure, certificate shape, typed scalar, input identity, reference digest, support closure, classify targets, wire limits, result envelope, reduce results, witness limits, population wire, model wire, version-1 model intake, model without model_id
 - in: JSON requests or certificates, model and population documents, reference bytes, fixed or lowered WitnessLimits.
-- out: Validated documents, loaded model/populations, identity bindings, fragment classifications, WitnessResult envelopes.
+- out: Validated documents, loaded model/populations, authored-shape model and population wire documents for re-entry into intake, identity bindings, fragment classifications, WitnessResult envelopes.
 - status: canonical
 - modules: src/gnd/witness/io.py, src/gnd/witness/types.py
 - uses: check.population_structure, infra.artifacts, infra.input_policy, model.loading, model.population_loading, model.reference_binding

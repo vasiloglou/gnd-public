@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "run_sha256": "052eae84a4fa12580b93bfc66ba76a8d3cc9dd400c343c6d15c4d0747b9f7f86",
+  "summary": "Three of six seats returned valid revise responses; Gemini and Kimi were malformed and GLM timed out, so the runtime quorum of three is met but the project's four-reviewer bar is not. Most concerns attack text added by the r2 repairs. The LI0 identity concern was reproduced: legacy model identity hashes Model.model_dump.",
+  "agreed_concerns": [
+    {
+      "group_id": "unresolved",
+      "severity": "high",
+      "title": "Decide how an unresolved pair of identical spellings composes",
+      "summary": "Coverage refuses an uncovered pair with exit 3, while unresolved mentions are promised to stay distinct and queryable.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li2-unresolved-vs-coverage-contradiction"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li2-unresolved-decision-refused-by-coverage-set"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "stages",
+      "severity": "high",
+      "title": "Declare per-stage gold units, floors and a failing fixture for every stage",
+      "summary": "Stage floors, scored units and denominators are undeclared; three stages have no failing fixture and identity-decisions has no input at LI1.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-stage-floors-undeclared"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "harness-cannot-see-identity-decisions"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li1-stage-metric-denominators"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-three-stages-have-no-failing-fixture"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-identity-decisions-stage-dormant-at-own-gate"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "lio",
+      "severity": "high",
+      "title": "Keep LI0 off the global serializer and pin identity digests",
+      "summary": "The Model hooks feed legacy-repr model identity; W3's golden set does not pin which bytes are digested.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li0-omission-hooks-move-model-identity"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li0-w3-golden-digest-input-unpinned"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "a5",
+      "severity": "medium",
+      "title": "Test receipt sensitivity on the admission record",
+      "summary": "A5 checks the admitted population's digest while the binding lives in the admission record, and receipts are not a named input.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "a5-tests-wrong-digest"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li4-receipt-population-digest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "a5-receipt-binding-not-an-input"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "n3",
+      "severity": "medium",
+      "title": "Name the N3 input population and per-kind floors",
+      "summary": "The small public corpus may not emit 100 candidates and a uniform draw can leave a kind at 0/0.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "n3-sample-unreachable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li3-n3-candidate-population-uncommitted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "n3-per-kind-denominator-has-no-floor"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "order",
+      "severity": "medium",
+      "title": "Make the LI2 refusal order implementable and asserted",
+      "summary": "Coverage is defined over the composed result so it cannot precede composition, and no fixture distinguishes the order.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li2-validation-order-unimplementable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li2-validation-order-never-asserted"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "heldout",
+      "severity": "medium",
+      "title": "Strengthen the held-out control",
+      "summary": "Committed labels are readable during LI5 and three chains cannot discriminate.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "heldout-readable-during-li5"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "c6-held-out-denominator-too-small-for-overfitting-control"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "record-fields-break-r5-baseline"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "li1-presupposes-li4-li5-model"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "l2-path-policy-denominator"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "refusal-keys-contain-values"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "n1-kind-precedence"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "li4-admission-report-verification"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "li2-decision-evidence-binding"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li3-n1-pairs-not-committed-by-c1"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li0-fixture-rule-excludes-li0-own-fixtures"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li4-gate-omits-d5-ruling"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "totality-rule-has-no-refusal-criterion-for-li3-li4"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li3-time-bound-test-missing-from-lane"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "exit-codes-unpinned-in-r3-l3-l5"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "part2-criterion4-method-vs-version-unowned"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "part10-deferral-outside-close-sweep"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "part1-criterion7-supported-routes-unowned"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "trace-criterion5-owner-is-not-a-criterion"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "unresolved",
+      "title": "Decide how an unresolved pair of identical spellings composes",
+      "action": "Pick one outcome for an unresolved identical-spelling pair, add it to the one-walk list if it separates, and add an R criterion with that fixture.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li2-unresolved-vs-coverage-contradiction"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li2-unresolved-decision-refused-by-coverage-set"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li2-unresolved-vs-coverage-contradiction",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li2-unresolved-decision-refused-by-coverage-set",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 1
+    },
+    {
+      "fix_id": "stages",
+      "title": "Declare per-stage gold units, floors and a failing fixture for every stage",
+      "action": "Give each stage its scored unit, gold labels, numeric floor and a failing mutation; mark stages dormant until their input phase and let LI2 extend the harness with resolution and composition records.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-stage-floors-undeclared"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "harness-cannot-see-identity-decisions"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li1-stage-metric-denominators"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-three-stages-have-no-failing-fixture"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-identity-decisions-stage-dormant-at-own-gate"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li1-stage-floors-undeclared",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "harness-cannot-see-identity-decisions",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li1-stage-metric-denominators",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-three-stages-have-no-failing-fixture",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-identity-decisions-stage-dormant-at-own-gate",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ],
+      "rank": 2
+    },
+    {
+      "fix_id": "lio",
+      "title": "Keep LI0 off the global serializer and pin identity digests",
+      "action": "Exclude the global hooks as LI0's home and add golden legacy and canonical identity digests, including models without model_id, to W3.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li0-omission-hooks-move-model-identity"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li0-w3-golden-digest-input-unpinned"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li0-omission-hooks-move-model-identity",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li0-w3-golden-digest-input-unpinned",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 3
+    },
+    {
+      "fix_id": "admission-verify",
+      "title": "Verify judgments before admission",
+      "action": "Have the admission step consume verified receipts and test a forged approval report.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li4-admission-report-verification"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li4-admission-report-verification",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ],
+      "rank": 4
+    },
+    {
+      "fix_id": "evidence-bind",
+      "title": "Bind decision evidence coordinates",
+      "action": "Refuse a decision whose coordinates do not name an anchored occurrence of its key.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li2-decision-evidence-binding"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li2-decision-evidence-binding",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex"
+      ],
+      "rank": 5
+    },
+    {
+      "fix_id": "a5",
+      "title": "Test receipt sensitivity on the admission record",
+      "action": "Name receipts as a bound input; assert that the admission record digest changes on any receipt edit and the population changes on a verdict-changing edit.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "a5-tests-wrong-digest"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li4-receipt-population-digest"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "a5-receipt-binding-not-an-input"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "a5-tests-wrong-digest",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li4-receipt-population-digest",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "a5-receipt-binding-not-an-input",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ],
+      "rank": 6
+    },
+    {
+      "fix_id": "n3",
+      "title": "Name the N3 input population and per-kind floors",
+      "action": "Name the measurement input, use stratified sampling with a per-kind minimum or a census, and report a kind below the minimum as unmeasured.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "n3-sample-unreachable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li3-n3-candidate-population-uncommitted"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "n3-per-kind-denominator-has-no-floor"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "n3-sample-unreachable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li3-n3-candidate-population-uncommitted",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "n3-per-kind-denominator-has-no-floor",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 7
+    },
+    {
+      "fix_id": "order",
+      "title": "Make the LI2 refusal order implementable and asserted",
+      "action": "Re-pin manifest, digest, parse, existing composition refusals, then coverage and different closure; add a doubly invalid fixture.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li2-validation-order-unimplementable"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li2-validation-order-never-asserted"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li2-validation-order-unimplementable",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li2-validation-order-never-asserted",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 8
+    },
+    {
+      "fix_id": "heldout",
+      "title": "Strengthen the held-out control",
+      "action": "Commit LI5 rule digests before scoring the held-out set and describe a three-chain held-out set as a smoke test.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "heldout-readable-during-li5"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "c6-held-out-denominator-too-small-for-overfitting-control"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "heldout-readable-during-li5",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "c6-held-out-denominator-too-small-for-overfitting-control",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "rank": 9
+    }
+  ]
+}

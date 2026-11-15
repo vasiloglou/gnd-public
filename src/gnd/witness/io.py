@@ -433,6 +433,29 @@ def support_closure(model, targets):
     return supported, closure
 
 
+def model_wire(model):
+    """The authored-shape document of a loaded model, for re-entry into intake.
+
+    Start from ``model.model_dump(mode="json", exclude={"warnings"})``, which
+    already applies the Model hooks (no empty ``reference_populations``,
+    ``includes`` or ``fact_type_constraints``). Then remove the two loader
+    defaults that intake would otherwise refuse: ``model_id`` when it is None
+    (the meta-schema types it as a string at every version) and ``operations``
+    when it is empty (a present ``operations`` requires version 2 to 5).
+
+    This is deliberately not a change to ``Model``'s own serializer: the
+    legacy model identity (``gnd.values._model_digest``) hashes that dump, so
+    omitting ``model_id`` there would move every pinned identity of a model
+    that declares none.
+    """
+    document = model.model_dump(mode="json", exclude={"warnings"})
+    if document.get("model_id") is None:
+        document.pop("model_id", None)
+    if not document.get("operations"):
+        document.pop("operations", None)
+    return document
+
+
 def population_wire(pop):
     metadata = {
         k: getattr(pop, k)

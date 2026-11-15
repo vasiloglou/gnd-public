@@ -205,9 +205,40 @@ def test_hostile_wire_document_refuses_at_3(hostile, monkeypatch):
             document["source"] = {"n": 10**200}
         return document
 
+    seen = []
+    real_intake = io.intake
+
+    def spy(model_document, *args, **kwargs):
+        try:
+            return real_intake(model_document, *args, **kwargs)
+        except Exception as error:
+            seen.append(type(error).__name__)
+            raise
+
     monkeypatch.setattr(producer, "model_wire", poisoned)
+    monkeypatch.setattr(io, "intake", spy)
     result = producer.produce_witness(model, candidate, targets)
     assert result.exit_code == 3
+    # The refusal must come from intake reading the hostile wire document,
+    # not from an earlier step that never reached it (review finding R3).
+    assert seen == ["WitnessInputError"], seen
+
+
+def test_unprojected_dump_is_still_refused_by_intake():
+    """Pin D1: Model's own dump keeps the loader defaults; only model_wire drops them.
+
+    If someone moves the omission into Model's serializer, this goes red, and
+    so does the identity golden (54 of 228 identities move, finding 2).
+    """
+    from gnd.model import ModelValidationError, load_model, load_model_bytes
+
+    model = load_model(LI0 / "grandparent-v1-no-id.orm.yaml")
+    dump = model.model_dump(mode="json", exclude={"warnings"})
+    assert dump["model_id"] is None and dump["operations"] == []
+    with pytest.raises(ModelValidationError) as caught:
+        load_model_bytes(json.dumps(dump).encode("utf-8"), source="model.orm.json")
+    messages = " ".join(issue.message for issue in caught.value.issues)
+    assert "model_id" in messages or "None is not of type" in messages
 
 
 # --- T9: no re-serialization of a model remains in the witness package ----------------

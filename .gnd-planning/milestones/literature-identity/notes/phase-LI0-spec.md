@@ -251,3 +251,53 @@ implementation file written.
 - **Reproduction.** The baseline exits are recorded in plan r3 §9. They are
   T1, T3 and T5 red at exit 3 and the version-2 controls at exit 0.
 - **Fixture counts.** 9 of the 224 fixtures have reference populations (T11).
+
+## Implementation findings, recorded as they were found (2026-11-15)
+
+1. **T7 narrowed.** `produce_witness` builds the certificate binding from the
+   original `model` object (`producer.py`, `witness_input_identity(model, …)`
+   right after `intake`). The intake reload only validates. So the wire
+   change cannot alter certificate bytes for an input that intake already
+   accepted.
+   - **Goldens:** the committed certificate golden covers the LI0 version-2
+     fixture.
+   - **Other certificates:** the composition and v7.1 corpus certificates are
+     covered by their own suites in the consumer lane (474 passed), not by
+     new golden files.
+   - This narrows §8 T7 as written.
+2. **D1 liveness experiment, run as recorded before it ran.** Reading (b) was
+   simulated in-process by patching `Model.model_dump` to drop null
+   `model_id` and empty `operations`. No source file was edited. T11's
+   comparison then reported **54 of 228** golden identities moved, so the
+   identity argument for D1 holds. The script was a scratch file and is not
+   committed.
+3. **T4 walks 228 models.** That is the 224 baseline fixtures plus the four
+   LI0 fixtures under `tests/fixtures/li0/`.
+4. **Exception narrowed.** The fixture walk caught every exception, and
+   `ruff` S112 flagged it. Every unloadable fixture raises
+   `gnd.model.ModelValidationError` (60 of 285 files), so the walk now catches
+   only that.
+5. **Stale component-index module.** `components_index.py changed --strict`
+   reported `dev/components/modules/tools.md` stale. That predates this phase:
+   `tools/release_text.py` changed in the 0.3.1 tag work and the module was
+   not regenerated. It was regenerated here with the witness module. The
+   `witness.schema` entry was edited. The `witness.service`,
+   `witness.produce` and `subsystem.witness` entries were re-read and remain
+   accurate.
+6. **Baseline consumer lane: 474 passed.** It started on the baseline source.
+   It ran for four minutes while the tests and fixtures were written, and
+   source edits began after it had started. So it is not a clean pre-change
+   measurement of `src/`. The red-first evidence for the changed behavior is
+   the committed red run: 12 failed and 4 passed at `176355e8`, with source
+   identical to `ecd12986`.
+7. **Diff review, Codex (one reviewer).** See the
+   [review note](phase-LI0-codex-review.md). It found no behavioral
+   counterexample. It raised four points about the test evidence:
+   - **R3 (blocking).** T8 could pass without reaching intake. T8 now
+     requires intake to raise `WitnessInputError`, and it was shown to fail
+     under the reviewer's early-refusal mutation.
+   - **R2.** A new pin shows that `Model`'s own dump is still refused by
+     intake. That is the semantic red-cause, and the pin also holds D1.
+   - **R1.** Not every test is red on the base source. No change: the
+     passing tests are controls by design.
+   - **R4.** T7 is narrower than written. That is finding 1.

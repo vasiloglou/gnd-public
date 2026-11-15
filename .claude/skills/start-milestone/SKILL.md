@@ -25,7 +25,8 @@ All planning output belongs under `.gnd-planning/milestones/<milestone>/`.
 Validate the resolved path stays inside the repository and is not a symlink to
 another location. Existing milestones keep their canonical plan path and phase
 IDs. A new plan normally lives at `notes/<milestone>-plan.md`, not a competing
-`PLAN.md` or a second planning directory.
+`PLAN.md` or a second planning directory. Here and in the other workflow skills,
+`notes/` is the milestone's own folder, `.gnd-planning/milestones/<milestone>/notes/`.
 
 Read before authoring:
 
@@ -141,7 +142,10 @@ Plan review and milestone close are held to the project's plan-review bar
 tool) and the bounded convergence rules from
 [process-phase review guidance](../process-phase/references/review-convergence.md).
 Select a review instrument explicitly; using this skill does not activate
-any review instrument or authorize reviewer subagents. Never claim a review
+any review instrument or authorize reviewer subagents. Where the project names
+none, the one to offer is process-phase's
+[review helper](../process-phase/references/review-tool.md), with
+`--subject plan`. Never claim a review
 opinion over amended bytes that were not reviewed.
 
 The plan review and the plan gate are recorded in the plan-gate record of the

@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "run_sha256": "d9e626d1967e07772f0cbf8103d4a9b044d814ea0af83743de45e727eea30023",
+  "summary": "Six reviewers returned schema-valid responses. Gemini approved without concerns. Five requested revisions. Three explicitly raised the unmet first independent L1 result as a concern. The corrected result supports the demonstrated public smoke exercise. The close record must keep independent acceptance open and bind the measured phase evidence. The panel is advisory.",
+  "agreed_concerns": [
+    {
+      "group_id": "independent-l1",
+      "severity": "high",
+      "title": "First reserved result misses L1",
+      "summary": "The first score missed its supported path. The corrected-input score used feedback and establishes a narrower smoke result. Record the unmet criterion explicitly.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li5-heldout-clause-undispositioned"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li5-heldout-exit"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-heldout-no-disposition"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "review-bar",
+      "severity": "high",
+      "title": "Close packet needs the observed reviewer count",
+      "summary": "Distinguish the three-seat runtime quorum from the required four-seat project bar. The packet did not yet have a reviewer count. This run returned six valid responses.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "close-quorum-bar-unmet"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li-close-quorum-fallback-undefined"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ]
+    },
+    {
+      "group_id": "li0-goldens",
+      "severity": "medium",
+      "title": "Scope the W3 exact-byte trace",
+      "summary": "The packet gives an incomplete account of the golden inventory. Distinguish the LI0 version-2 certificate and the pinned model identities from compatibility exercised by other tests.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li0-w3-certificate-trace"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "w3-golden-set-partial"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "direct-gate",
+      "severity": "medium",
+      "title": "Bind the consolidated gate",
+      "summary": "Attach the exact invocation, tested tree and result. Cite the separate structure and lint evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "consolidated-gate-unbound"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "consolidated-gate-unbound"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "lineage-controls",
+      "severity": "medium",
+      "title": "Trace LI5 refusal controls",
+      "summary": "Cite the transfer refusal exits and non-chaining cases explicitly. Separate the cycle warning from failure.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "transfer-cycle-outcomes-undistinguished"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-refusal-controls-absent"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ]
+    },
+    {
+      "group_id": "p3-carry",
+      "severity": "low",
+      "title": "State the pending P3 successor ruling",
+      "summary": "Bind the successor outlines and record P3 as a pending owner ruling at the literature-depth gate.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "p3-ruling-unowned"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li-close-p3-wording-vs-pending-ruling"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "corrected-input-not-precommitted"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "scorer-digest-unbound"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "fresh-reserve-residual-unowned"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "carried-questions-no-successor-row"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "li2-coverage-narrowing-undisclosed"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "related-issues-sweep-missing"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li4-a2-a3-untraced"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li1-stage-metrics-absent"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "plan-approved-digest-mismatch"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "li2-timing-amendment-citation"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "n3-labeller-and-budget-unbound"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "li3-close-kind-count"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "record-l1",
+      "title": "Rule the L1 evidence boundary",
+      "action": "Withhold milestone acceptance and keep the independent L1 result open. Preserve the exact initial and corrected counts and the correction chronology.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li5-heldout-clause-undispositioned"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li5-heldout-exit"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-heldout-no-disposition"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "corrected-input-not-precommitted"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "scorer-digest-unbound"
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "fresh-reserve-residual-unowned"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "li5-heldout-clause-undispositioned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li5-heldout-exit",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-heldout-no-disposition",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "corrected-input-not-precommitted",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "scorer-digest-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "claude",
+          "concern_id": "fresh-reserve-residual-unowned",
+          "evidence_index": 0
+        }
+      ],
+      "rank": 1
+    },
+    {
+      "fix_id": "trace-acceptance",
+      "title": "Bind the existing LI1 and LI4 proof",
+      "action": "Cite the exact active-stage reference fractions and report exit. Cite the A2 wrong-predicate rejection and the A3 polarity and attribution controls in phase evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-stage-metrics-absent"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li4-a2-a3-untraced"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li1-stage-metrics-absent",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li4-a2-a3-untraced",
+          "evidence_index": 0
+        }
+      ],
+      "rank": 2
+    },
+    {
+      "fix_id": "bind-tests",
+      "title": "Bind the consolidated focused gate",
+      "action": "Rerun the direct suite from the reviewed clean tree and record the command, tree and exit. Cite the structure and lint runs separately.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "consolidated-gate-unbound"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "consolidated-gate-unbound"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "consolidated-gate-unbound",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "consolidated-gate-unbound",
+          "evidence_index": 0
+        }
+      ],
+      "rank": 3
+    },
+    {
+      "fix_id": "scope-compatibility",
+      "title": "State the W3 byte golden coverage",
+      "action": "Record the one preexisting certificate golden and the 228 pinned model-identity cases, keeping other fixtures as behavior verification.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li0-w3-certificate-trace"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "w3-golden-set-partial"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "li0-w3-certificate-trace",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "w3-golden-set-partial",
+          "evidence_index": 0
+        }
+      ],
+      "rank": 4
+    },
+    {
+      "fix_id": "trace-negative-gates",
+      "title": "Trace lineage refusals and cycle behavior",
+      "action": "Record the missing transfer and edge exits, four non-chaining controls and accepted cycle-warning exit.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "transfer-cycle-outcomes-undistinguished"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-refusal-controls-absent"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "transfer-cycle-outcomes-undistinguished",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "li5-refusal-controls-absent",
+          "evidence_index": 0
+        }
+      ],
+      "rank": 5
+    },
+    {
+      "fix_id": "bind-partition",
+      "title": "Bind P3 and its successor gate",
+      "action": "Record the owner and gate for the pending P3 ruling and the exact successor-outline bytes used to check the partition.",
+      "concerns": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "p3-ruling-unowned"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li-close-p3-wording-vs-pending-ruling"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "p3-ruling-unowned",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "li-close-p3-wording-vs-pending-ruling",
+          "evidence_index": 0
+        }
+      ],
+      "rank": 6
+    }
+  ]
+}

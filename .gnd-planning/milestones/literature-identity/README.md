@@ -24,5 +24,6 @@ three seats failed. [LI0](003-phase-LI0.md) is implemented, reviewed by one revi
 recorded. The [LI1 spec](notes/phase-LI1-spec.md) r1 was approved on 2026-11-15
 ([gate](004-phase-LI1-spec-gate.md)), with D1–D10 ruled as proposed and a
 corpus-first instrument. The corpus, answer key, reference run, expected
-outcomes and red tests are committed, and await the corpus gate (with
-amendments A1–A5 in spec §13). No harness code exists yet.
+outcomes and red tests are committed, and the owner approved them at the
+[corpus gate](005-phase-LI1-corpus-gate.md), ruling A1–A5 as proposed. The
+harness waits for a separate go-ahead.

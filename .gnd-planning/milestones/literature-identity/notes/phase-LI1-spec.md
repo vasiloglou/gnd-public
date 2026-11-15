@@ -6,8 +6,9 @@
 `d6836087374ddb1c3b97532c372036160cb8ba4b98938b6b8a38d3c210e39adf`
 ([004](../004-phase-LI1-spec-gate.md)), ruled D1–D10 as proposed, and chose
 the corpus-first instrument. **Corpus authored and committed red (2026-11-15);
-awaiting the corpus gate** (§11 step 2), which also rules amendments A1–A5
-(§13). No harness code before that gate. `auto=false`.
+the owner approved the corpus on 2026-11-15** `(o)`
+([005](../005-phase-LI1-corpus-gate.md)) and ruled A1–A5 as proposed (§13).
+**Next: the harness**, on the owner's separate go-ahead. `auto=false`.
 
 ## 2. Provenance
 
@@ -720,12 +721,14 @@ every scored case, and ran R1–R4 on each.
 **Amendments for the corpus gate.**
 
 - **A1 · Validity becomes an agreement stage.**
+  - **Ruled as proposed `(o)` 2026-11-15**.
   - *Problem.* §6.5 defines run-positive as "R1 exit 0". Because R1 always
     exits 4, the reference run would have zero denominators and fail.
   - *Proposal.* A unit agrees when its R1 exit equals `expected_check_exit`.
     The stage reports `agreement` with a floor of 12/12. Precision and recall
     are not reported for it.
 - **A2 · Positives corrected for source binding, freshness and
+  - **Ruled as proposed `(o)` 2026-11-15**.
   derivation.**
   - *Problem.* §6.5's gold-positive column, read literally, is not a recall
     denominator. "The run's anchor span equals the gold span" would not
@@ -739,12 +742,14 @@ every scored case, and ran R1–R4 on each.
   - *Source-binding detail.* A source's binding is accepted when R2 does not
     refuse it (exit not 3). Exit 0 is not required.
 - **A3 · Any refused unit fails its stage.**
+  - **Ruled as proposed `(o)` 2026-11-15**.
   - *Problem.* §6.5 keeps refused units in the denominator but does not say
     that they fail. In M5 the refused posex case leaves R3's counts at 8/8,
     yet assertion a09 was never measured.
   - *Proposal.* A stage with any refused unit is `fail`, and the report
     names `refused_units`.
 - **A4 · A missing composition record counts against freshness.**
+  - **Ruled as proposed `(o)` 2026-11-15** (missing record counts as absent).
   - *Problem.* When `gnd compose` refuses (M5, M6), there is no composition
     record.
   - *Proposal.* Count it as an `absent` freshness unit, so freshness fails in
@@ -752,6 +757,7 @@ every scored case, and ran R1–R4 on each.
   - *Alternative.* Count the composition record only when it exists. Then
     freshness passes in M5 and M6.
 - **A5 · The approved outcomes are expectation files.**
+  - **Ruled as proposed `(o)` 2026-11-15**.
   - *Problem.* A golden report's bytes cannot be written before the harness
     exists without implementing it.
   - *Proposal.* The corpus gate approves `expected/<case>.expected.json`

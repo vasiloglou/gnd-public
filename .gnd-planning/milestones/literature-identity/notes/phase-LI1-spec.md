@@ -5,10 +5,9 @@
 **Owner-decided (2026-11-15) `(o)`.** The owner approved r1 at SHA-256
 `d6836087374ddb1c3b97532c372036160cb8ba4b98938b6b8a38d3c210e39adf`
 ([004](../004-phase-LI1-spec-gate.md)), ruled D1–D10 as proposed, and chose
-the corpus-first instrument. **Next: the corpus gate** (§11 step 2). The
-corpus, answer key, reference run and goldens are authored and committed red,
-then offered for the owner's reading. No harness code before that gate.
-`auto=false`.
+the corpus-first instrument. **Corpus authored and committed red (2026-11-15);
+awaiting the corpus gate** (§11 step 2), which also rules amendments A1–A5
+(§13). No harness code before that gate. `auto=false`.
 
 ## 2. Provenance
 
@@ -679,3 +678,120 @@ from JSON.
   cap+1 bytes from the opened file.
 
 No requirement was found that no implementation can meet.
+
+## 13. Implementation findings, corpus step (2026-11-15)
+
+Recorded as found, while authoring the corpus under the corpus-first
+instrument (D2). Nothing below changes an approved sentence above. Each
+amendment marked **A** needs the owner's ruling at the corpus gate before the
+harness is written.
+
+**Measured route behavior.** The scratch probes rebuilt the reference run and
+every scored case, and ran R1–R4 on each.
+- **R1 always exits 4.** Without the anchor sidecar, every anchored rule is
+  `unchecked` (`sidecar-absent`). Every source of this model therefore exits
+  4 under plain `gnd check`, and each `expected_check_exit` is 4.
+- **R2 on sources with no builds-on row.** The anchored rules over the empty
+  fact type are `vacuous`, and the derivation is `unchecked`, so R2 exits 4.
+  That happens on 5 of 12 sources (vampnets, posex, flows-review,
+  sbi-frontier, sensor-placement). It is not a binding refusal, and no
+  binding error is reported.
+- **The composed population.** R4 exits 0, and the derivation passes over 7
+  rows.
+- **Fidelity and doccheck.** With the harness's case assembly, `gnd
+  fidelity` runs 12 cases at exit 0, with builds-on `source_total` = `tp` =
+  8. `gnd doccheck` reports 0 violations on all 12 renderer manifests.
+- **Refusals reach other stages.**
+  - `gnd compose` refuses an invalid source population (M5) and a shifted
+    span (M6), so those runs have no `composed/` directory.
+  - One stale case makes `gnd fidelity` refuse the whole run with exit 3
+    (M3). An invalid population only fails its own case, and the command
+    still exits 0 (M5).
+- **Empty derivations.** When both the claimed and the recomputed extensions
+  are empty, `gnd check` reports the derivation as `pass`. It reports
+  `unchecked` when the composed `covers` is empty (M1). The zero-denominator
+  rule catches both.
+- **Composed rows.** The composition record binds the composed bytes, so a
+  cross-document derived row cannot be added after composing. The derived
+  fact type is therefore local: `work_builds_on_method`, from a work that
+  introduces a method and that method's builds-on facts. The builder checks
+  that every derived row comes from one document.
+
+**Amendments for the corpus gate.**
+
+- **A1 · Validity becomes an agreement stage.**
+  - *Problem.* §6.5 defines run-positive as "R1 exit 0". Because R1 always
+    exits 4, the reference run would have zero denominators and fail.
+  - *Proposal.* A unit agrees when its R1 exit equals `expected_check_exit`.
+    The stage reports `agreement` with a floor of 12/12. Precision and recall
+    are not reported for it.
+- **A2 · Positives corrected for source binding, freshness and
+  derivation.**
+  - *Problem.* §6.5's gold-positive column, read literally, is not a recall
+    denominator. "The run's anchor span equals the gold span" would not
+    shrink when an anchor is missing.
+  - *Proposal.* Units are the gold items together with the run's items.
+    Gold-positive means the item is in the answer key (or in R4's recomputed
+    extension), and "both" means run-positive and in agreement.
+  - *Derivation detail.* Abstention is counted per derived fact type: the
+    fact types whose R4 verdict is `unchecked` or `vacuous`. Here the
+    denominator is 1.
+  - *Source-binding detail.* A source's binding is accepted when R2 does not
+    refuse it (exit not 3). Exit 0 is not required.
+- **A3 · Any refused unit fails its stage.**
+  - *Problem.* §6.5 keeps refused units in the denominator but does not say
+    that they fail. In M5 the refused posex case leaves R3's counts at 8/8,
+    yet assertion a09 was never measured.
+  - *Proposal.* A stage with any refused unit is `fail`, and the report
+    names `refused_units`.
+- **A4 · A missing composition record counts against freshness.**
+  - *Problem.* When `gnd compose` refuses (M5, M6), there is no composition
+    record.
+  - *Proposal.* Count it as an `absent` freshness unit, so freshness fails in
+    M5 and M6 (recall 24/25). This follows §6.5 literally.
+  - *Alternative.* Count the composition record only when it exists. Then
+    freshness passes in M5 and M6.
+- **A5 · The approved outcomes are expectation files.**
+  - *Problem.* A golden report's bytes cannot be written before the harness
+    exists without implementing it.
+  - *Proposal.* The corpus gate approves `expected/<case>.expected.json`
+    (`literature-assurance-expectation/1`, format home: the example README).
+    Each holds the exit, the exact failing set, and every floored metric's
+    numerator and denominator. Full report goldens are generated once the
+    harness exists, and the tests require them to agree with these values.
+
+**Corpus facts that differ from the spec's estimates.**
+- **Documents.** There are 12 development documents (the spec estimated
+  about 14) and 4 held-out ones. Every development identifier was verified
+  through the arXiv API or Crossref.
+- **Paraphrase.** The longest run of words any passage shares with its
+  work's abstract is 6, against the limit of 12. Four passages paraphrase
+  body-level claims rather than the abstract: sbi-frontier.p2, roberta.p3,
+  roberta.p4 and segment-anything.p2.
+- **The `$PINN` spelling.** apinn writes the method as `$PINN`, reproducing
+  the host's LaTeX-residue spelling. Its identifier line says that the work
+  writes APINN.
+- **The chain schema adds two fields.** `merges` (identity pair ids) and
+  `path`. Chain c07 (Boltz-1 as ancestry) has one edge.
+- **Cross-domain chains.** Two of the three supported chains cross domains.
+  The floor is one.
+- **No method-versus-version pair.** The Boltz-1/Boltz-1x key pair was not
+  kept as an identity pair, because no gold fact carries Boltz-1x. The six
+  pairs are 3 `same` and 3 `different`, as planned.
+- **Extra distractors for doccheck.** Documents with no labelled unsupported
+  assertion carry one absent-fact distractor, because `gnd doccheck`
+  requires one of each kind.
+- **Builder output paths.** The builder runs `gnd extract` from the example
+  root, so the bundle index records `model.orm.yaml`. `gnd fidelity` checks
+  the model digest, not the path.
+- **The held-out key.** It is built outside the tree. Its SHA-256 is
+  `ef7b017a1591fa4008e08f4df170a5651229c9bba7547a2f567f9d5de75727b8`, and
+  it sits on the local branch `literature-heldout` (commit `2f3d441c`),
+  which is not pushed.
+- **The red tests fix four parts of the harness surface.**
+  - `stage_status(*, active, route_present, metrics, floors, refused=0)`;
+  - `ROUTES`, a dict from R1–R4 to argv;
+  - `passage_index` and `anchors_in_passages`, for the time bound;
+  - `score(example_root, answers, run)`.
+- **T18's case.** It is pinned on M1, whose derivation R4 reports as
+  `unchecked`.

@@ -1,0 +1,40 @@
+{
+  "facts": {
+    "method_builds_on_method": [
+      {
+        "base_method": "bidirectional transformer",
+        "method": "VampNet"
+      }
+    ],
+    "method_is_used_in_field": [
+      {
+        "field": "music generation",
+        "method": "VampNet"
+      }
+    ],
+    "work_builds_on_method": [
+      {
+        "method": "bidirectional transformer",
+        "work": "arXiv:2307.04686"
+      }
+    ],
+    "work_introduces_method": [
+      {
+        "method": "VampNet",
+        "work": "arXiv:2307.04686"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_builds_on_method",
+      "method_is_used_in_field",
+      "work_builds_on_method",
+      "work_introduces_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "synthetic"
+  }
+}

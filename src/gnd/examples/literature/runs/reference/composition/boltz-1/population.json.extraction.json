@@ -1,0 +1,13 @@
+{
+  "document": "document.txt",
+  "document_sha256": "1793ae0ee0e958e6dc4d63e05d40c2676d5f9d0f77bda4f35b249c31ce560282",
+  "executing_model": "claude-opus-5-5 (hand-authored fixture)",
+  "model": "model.orm.yaml",
+  "model_sha256": "196793889bf28bc2495c16cff4e82c225fd8cc45e12a00308de3238ed0989546",
+  "population": "population.json",
+  "population_sha256": "2bb9378f39b600f921255ace7162d61d8064040f4612591342eb6762472118b7",
+  "projection_sha256": "af16983bac1e96c4da58d67aa569ca7a1b9955dfec27ed236d6fdfd4989aa051",
+  "schema_version": 1,
+  "skill": "gnd-extract",
+  "skill_version": "0.1.0"
+}

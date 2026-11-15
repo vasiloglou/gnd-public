@@ -1,0 +1,1349 @@
+{
+  "anchored_facts": [
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "VAMPnet",
+          "work": "arXiv:1710.06012"
+        }
+      },
+      "id": "f01",
+      "passage": "vampnets.p1",
+      "role": "method",
+      "source": "vampnets",
+      "span": {
+        "end": 259,
+        "start": 165
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "molecular dynamics",
+          "method": "VAMPnet"
+        }
+      },
+      "id": "f02",
+      "passage": "vampnets.p3",
+      "role": "method",
+      "source": "vampnets",
+      "span": {
+        "end": 505,
+        "start": 401
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "VampNet",
+          "work": "arXiv:2307.04686"
+        }
+      },
+      "id": "f03",
+      "passage": "vampnet.p1",
+      "role": "method",
+      "source": "vampnet",
+      "span": {
+        "end": 291,
+        "start": 180
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "bidirectional transformer",
+          "method": "VampNet"
+        }
+      },
+      "id": "f04",
+      "passage": "vampnet.p2",
+      "role": "method",
+      "source": "vampnet",
+      "span": {
+        "end": 405,
+        "start": 292
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "bidirectional transformer",
+          "method": "VampNet"
+        }
+      },
+      "id": "f05",
+      "passage": "vampnet.p2",
+      "role": "base_method",
+      "source": "vampnet",
+      "span": {
+        "end": 405,
+        "start": 292
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "music generation",
+          "method": "VampNet"
+        }
+      },
+      "id": "f06",
+      "passage": "vampnet.p4",
+      "role": "method",
+      "source": "vampnet",
+      "span": {
+        "end": 587,
+        "start": 507
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "WhAM",
+          "work": "arXiv:2512.02206"
+        }
+      },
+      "id": "f07",
+      "passage": "wham-whale.p1",
+      "role": "method",
+      "source": "wham-whale",
+      "span": {
+        "end": 278,
+        "start": 181
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WhAM"
+        }
+      },
+      "id": "f08",
+      "passage": "wham-whale.p2",
+      "role": "method",
+      "source": "wham-whale",
+      "span": {
+        "end": 409,
+        "start": 279
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WhAM"
+        }
+      },
+      "id": "f09",
+      "passage": "wham-whale.p2",
+      "role": "base_method",
+      "source": "wham-whale",
+      "span": {
+        "end": 409,
+        "start": 279
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "bioacoustics",
+          "method": "WhAM"
+        }
+      },
+      "id": "f10",
+      "passage": "wham-whale.p4",
+      "role": "method",
+      "source": "wham-whale",
+      "span": {
+        "end": 608,
+        "start": 541
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "WHAM",
+          "work": "arXiv:2312.07531"
+        }
+      },
+      "id": "f11",
+      "passage": "wham-pose.p1",
+      "role": "method",
+      "source": "wham-pose",
+      "span": {
+        "end": 308,
+        "start": 186
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "SLAM",
+          "method": "WHAM"
+        }
+      },
+      "id": "f12",
+      "passage": "wham-pose.p2",
+      "role": "method",
+      "source": "wham-pose",
+      "span": {
+        "end": 444,
+        "start": 309
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "SLAM",
+          "method": "WHAM"
+        }
+      },
+      "id": "f13",
+      "passage": "wham-pose.p2",
+      "role": "base_method",
+      "source": "wham-pose",
+      "span": {
+        "end": 444,
+        "start": 309
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "computer vision",
+          "method": "WHAM"
+        }
+      },
+      "id": "f14",
+      "passage": "wham-pose.p4",
+      "role": "method",
+      "source": "wham-pose",
+      "span": {
+        "end": 611,
+        "start": 535
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "OpenCap Monocular",
+          "work": "arXiv:2603.24733"
+        }
+      },
+      "id": "f15",
+      "passage": "opencap-monocular.p1",
+      "role": "method",
+      "source": "opencap-monocular",
+      "span": {
+        "end": 334,
+        "start": 218
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "id": "f16",
+      "passage": "opencap-monocular.p2",
+      "role": "method",
+      "source": "opencap-monocular",
+      "span": {
+        "end": 448,
+        "start": 335
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "id": "f17",
+      "passage": "opencap-monocular.p2",
+      "role": "base_method",
+      "source": "opencap-monocular",
+      "span": {
+        "end": 448,
+        "start": 335
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "biomechanics",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "id": "f18",
+      "passage": "opencap-monocular.p5",
+      "role": "method",
+      "source": "opencap-monocular",
+      "span": {
+        "end": 762,
+        "start": 686
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "$PINN",
+          "work": "arXiv:2211.08939"
+        }
+      },
+      "id": "f19",
+      "passage": "apinn.p1",
+      "role": "method",
+      "source": "apinn",
+      "span": {
+        "end": 481,
+        "start": 368
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "XPINN",
+          "method": "$PINN"
+        }
+      },
+      "id": "f20",
+      "passage": "apinn.p2",
+      "role": "method",
+      "source": "apinn",
+      "span": {
+        "end": 593,
+        "start": 482
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "XPINN",
+          "method": "$PINN"
+        }
+      },
+      "id": "f21",
+      "passage": "apinn.p2",
+      "role": "base_method",
+      "source": "apinn",
+      "span": {
+        "end": 593,
+        "start": 482
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "XPINN"
+        }
+      },
+      "id": "f22",
+      "passage": "apinn.p3",
+      "role": "method",
+      "source": "apinn",
+      "span": {
+        "end": 701,
+        "start": 594
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "XPINN"
+        }
+      },
+      "id": "f23",
+      "passage": "apinn.p3",
+      "role": "base_method",
+      "source": "apinn",
+      "span": {
+        "end": 701,
+        "start": 594
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "scientific machine learning",
+          "method": "$PINN"
+        }
+      },
+      "id": "f24",
+      "passage": "apinn.p4",
+      "role": "method",
+      "source": "apinn",
+      "span": {
+        "end": 790,
+        "start": 702
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "curriculum regularization",
+          "work": "arXiv:2109.01050"
+        }
+      },
+      "id": "f25",
+      "passage": "pinn-failure-modes.p3",
+      "role": "method",
+      "source": "pinn-failure-modes",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "curriculum regularization"
+        }
+      },
+      "id": "f26",
+      "passage": "pinn-failure-modes.p3",
+      "role": "method",
+      "source": "pinn-failure-modes",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "curriculum regularization"
+        }
+      },
+      "id": "f27",
+      "passage": "pinn-failure-modes.p3",
+      "role": "base_method",
+      "source": "pinn-failure-modes",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "scientific machine learning",
+          "method": "curriculum regularization"
+        }
+      },
+      "id": "f28",
+      "passage": "pinn-failure-modes.p5",
+      "role": "method",
+      "source": "pinn-failure-modes",
+      "span": {
+        "end": 797,
+        "start": 695
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "Boltz-1",
+          "work": "doi:10.1101/2024.11.19.624167"
+        }
+      },
+      "id": "f29",
+      "passage": "boltz-1.p1",
+      "role": "method",
+      "source": "boltz-1",
+      "span": {
+        "end": 299,
+        "start": 189
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "Boltz-steering",
+          "work": "doi:10.1101/2024.11.19.624167"
+        }
+      },
+      "id": "f30",
+      "passage": "boltz-1.p3",
+      "role": "method",
+      "source": "boltz-1",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "id": "f31",
+      "passage": "boltz-1.p3",
+      "role": "method",
+      "source": "boltz-1",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "id": "f32",
+      "passage": "boltz-1.p3",
+      "role": "base_method",
+      "source": "boltz-1",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "structural biology",
+          "method": "Boltz-1"
+        }
+      },
+      "id": "f33",
+      "passage": "boltz-1.p4",
+      "role": "method",
+      "source": "boltz-1",
+      "span": {
+        "end": 642,
+        "start": 564
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "PoseX",
+          "work": "arXiv:2505.01700"
+        }
+      },
+      "id": "f34",
+      "passage": "posex.p1",
+      "role": "method",
+      "source": "posex",
+      "span": {
+        "end": 312,
+        "start": 188
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "drug discovery",
+          "method": "PoseX"
+        }
+      },
+      "id": "f35",
+      "passage": "posex.p4",
+      "role": "method",
+      "source": "posex",
+      "span": {
+        "end": 658,
+        "start": 596
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "probabilistic modeling",
+          "method": "normalizing flow"
+        }
+      },
+      "id": "f36",
+      "passage": "flows-review.p3",
+      "role": "method",
+      "source": "flows-review",
+      "span": {
+        "end": 531,
+        "start": 425
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "scientific simulation",
+          "method": "simulation-based inference"
+        }
+      },
+      "id": "f37",
+      "passage": "sbi-frontier.p3",
+      "role": "method",
+      "source": "sbi-frontier",
+      "span": {
+        "end": 555,
+        "start": 445
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "deep optimal sensor placement",
+          "work": "arXiv:2410.12036"
+        }
+      },
+      "id": "f38",
+      "passage": "sensor-placement.p1",
+      "role": "method",
+      "source": "sensor-placement",
+      "span": {
+        "end": 350,
+        "start": 186
+      }
+    },
+    {
+      "fact": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "experimental design",
+          "method": "deep optimal sensor placement"
+        }
+      },
+      "id": "f39",
+      "passage": "sensor-placement.p3",
+      "role": "method",
+      "source": "sensor-placement",
+      "span": {
+        "end": 650,
+        "start": 533
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "bidirectional transformer",
+          "method": "VampNet"
+        }
+      },
+      "id": "a01",
+      "label_disagreement": null,
+      "participants": [
+        "VampNet",
+        "bidirectional transformer"
+      ],
+      "passage": "vampnet.p2",
+      "predicate": "is built on",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WhAM"
+        }
+      },
+      "id": "a02",
+      "label_disagreement": null,
+      "participants": [
+        "WhAM",
+        "VampNet"
+      ],
+      "passage": "wham-whale.p2",
+      "predicate": "is made by fine-tuning",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "SLAM",
+          "method": "WHAM"
+        }
+      },
+      "id": "a03",
+      "label_disagreement": null,
+      "participants": [
+        "WHAM",
+        "SLAM"
+      ],
+      "passage": "wham-pose.p2",
+      "predicate": "uses the output of",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "id": "a04",
+      "label_disagreement": null,
+      "participants": [
+        "OpenCap Monocular",
+        "WHAM"
+      ],
+      "passage": "opencap-monocular.p2",
+      "predicate": "refines the estimates of",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "XPINN"
+        }
+      },
+      "id": "a05",
+      "label_disagreement": null,
+      "participants": [
+        "XPINN",
+        "PINNs"
+      ],
+      "passage": "apinn.p3",
+      "predicate": "extends",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "XPINN",
+          "method": "$PINN"
+        }
+      },
+      "id": "a06",
+      "label_disagreement": null,
+      "participants": [
+        "$PINN",
+        "XPINN"
+      ],
+      "passage": "apinn.p2",
+      "predicate": "improves on",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "curriculum regularization"
+        }
+      },
+      "id": "a07",
+      "label_disagreement": null,
+      "participants": [
+        "curriculum regularization",
+        "PINNs"
+      ],
+      "passage": "pinn-failure-modes.p3",
+      "predicate": "changes how it trains",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "id": "a08",
+      "label_disagreement": null,
+      "participants": [
+        "Boltz-steering",
+        "Boltz-1"
+      ],
+      "passage": "boltz-1.p3",
+      "predicate": "is applied at inference time to",
+      "support": "supported"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "PoseX"
+        }
+      },
+      "id": "a09",
+      "label_disagreement": null,
+      "participants": [
+        "PoseX",
+        "Boltz-1"
+      ],
+      "passage": "posex.p2",
+      "predicate": "evaluates",
+      "support": "stretched"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "normalizing flows",
+          "method": "simulation-based inference"
+        }
+      },
+      "id": "a10",
+      "label_disagreement": null,
+      "participants": [
+        "simulation-based inference",
+        "normalizing flows"
+      ],
+      "passage": "sbi-frontier.p2",
+      "predicate": "lists among its tools",
+      "support": "stretched"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "simulation-based inference",
+          "method": "deep optimal sensor placement"
+        }
+      },
+      "id": "a11",
+      "label_disagreement": null,
+      "participants": [
+        "deep optimal sensor placement",
+        "simulation-based inference"
+      ],
+      "passage": "sensor-placement.p2",
+      "predicate": "is contrasted with",
+      "support": "contradicted"
+    },
+    {
+      "fact": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "OpenCap",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "id": "a12",
+      "label_disagreement": null,
+      "participants": [
+        "OpenCap Monocular",
+        "OpenCap"
+      ],
+      "passage": "opencap-monocular.p3",
+      "predicate": "is compared in accuracy with",
+      "support": "insufficient-evidence"
+    }
+  ],
+  "chains": [
+    {
+      "domains": "cross",
+      "edges": [
+        "a01",
+        "a02"
+      ],
+      "id": "c01",
+      "label": "supported",
+      "merges": [],
+      "passages": [
+        "vampnet.p2",
+        "wham-whale.p2"
+      ],
+      "path": [
+        "bidirectional transformer",
+        "VampNet",
+        "WhAM"
+      ],
+      "reason": "Music model to whale bioacoustics: each link is stated in its own paper, and the names are the same method.",
+      "story": "transformer-to-whale"
+    },
+    {
+      "domains": "same",
+      "edges": [
+        "a05",
+        "a06"
+      ],
+      "id": "c02",
+      "label": "supported",
+      "merges": [],
+      "passages": [
+        "apinn.p2",
+        "apinn.p3"
+      ],
+      "path": [
+        "PINNs",
+        "XPINN",
+        "$PINN"
+      ],
+      "reason": "Each step is a stated extension within one method family.",
+      "story": "pinn-lineage"
+    },
+    {
+      "domains": "cross",
+      "edges": [
+        "a03",
+        "a04"
+      ],
+      "id": "c03",
+      "label": "supported",
+      "merges": [],
+      "passages": [
+        "opencap-monocular.p2",
+        "wham-pose.p2"
+      ],
+      "path": [
+        "SLAM",
+        "WHAM",
+        "OpenCap Monocular"
+      ],
+      "reason": "Computer vision to biomechanics: WHAM uses SLAM output, and OpenCap Monocular refines WHAM.",
+      "story": "slam-to-biomechanics"
+    },
+    {
+      "domains": "cross",
+      "edges": [
+        "a02",
+        "a04"
+      ],
+      "id": "c04",
+      "label": "false",
+      "merges": [
+        "i01",
+        "i02"
+      ],
+      "passages": [
+        "opencap-monocular.p2",
+        "wham-whale.p2"
+      ],
+      "path": [
+        "VAMPnet",
+        "WhAM",
+        "OpenCap Monocular"
+      ],
+      "reason": "True sentences joined by two false merges: VAMPnet (molecular kinetics) is not VampNet (music), and WhAM (whales) is not WHAM (human pose).",
+      "story": "whale"
+    },
+    {
+      "domains": "same",
+      "edges": [
+        "a06",
+        "a07"
+      ],
+      "id": "c05",
+      "label": "false",
+      "merges": [
+        "i03"
+      ],
+      "passages": [
+        "apinn.p2",
+        "pinn-failure-modes.p3"
+      ],
+      "path": [
+        "XPINN",
+        "PINNs",
+        "curriculum regularization"
+      ],
+      "reason": "Filing $PINN as PINNs makes curriculum regularization a descendant of XPINN; no passage says so.",
+      "story": "dollar-pinn-chain"
+    },
+    {
+      "domains": "same",
+      "edges": [
+        "a05",
+        "a06"
+      ],
+      "id": "c06",
+      "label": "false",
+      "merges": [
+        "i03"
+      ],
+      "passages": [
+        "apinn.p2",
+        "apinn.p3"
+      ],
+      "path": [
+        "PINNs",
+        "XPINN",
+        "PINNs"
+      ],
+      "reason": "Filing $PINN as PINNs closes a loop: PINNs would build on XPINN, which builds on PINNs.",
+      "story": "dollar-pinn-loop"
+    },
+    {
+      "domains": "same",
+      "edges": [
+        "a09"
+      ],
+      "id": "c07",
+      "label": "false",
+      "merges": [],
+      "passages": [
+        "posex.p2"
+      ],
+      "path": [
+        "Boltz-1",
+        "PoseX"
+      ],
+      "reason": "PoseX evaluates the Boltz-1 family; evaluation is not ancestry.",
+      "story": "boltz-1-as-ancestry"
+    },
+    {
+      "domains": "same",
+      "edges": [
+        "a10",
+        "a11"
+      ],
+      "id": "c08",
+      "label": "false",
+      "merges": [],
+      "passages": [
+        "sbi-frontier.p2",
+        "sensor-placement.p2"
+      ],
+      "path": [
+        "normalizing flows",
+        "simulation-based inference",
+        "deep optimal sensor placement"
+      ],
+      "reason": "The sensor-placement paper contrasts itself with simulation-based inference, and the review only lists flows among the field's tools.",
+      "story": "contrast-as-builds-on"
+    }
+  ],
+  "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
+  "heldout": {
+    "chains": {
+      "false": 2,
+      "supported": 1
+    },
+    "sha256": "ef7b017a1591fa4008e08f4df170a5651229c9bba7547a2f567f9d5de75727b8"
+  },
+  "identity_pairs": [
+    {
+      "id": "i01",
+      "label": "different",
+      "left": {
+        "object_type": "method",
+        "source": "vampnets",
+        "value": "VAMPnet"
+      },
+      "passages": [
+        "vampnets.p1",
+        "wham-whale.p2"
+      ],
+      "right": {
+        "object_type": "method",
+        "source": "wham-whale",
+        "value": "VampNet"
+      }
+    },
+    {
+      "id": "i02",
+      "label": "different",
+      "left": {
+        "object_type": "method",
+        "source": "wham-whale",
+        "value": "WhAM"
+      },
+      "passages": [
+        "wham-whale.p1",
+        "opencap-monocular.p2"
+      ],
+      "right": {
+        "object_type": "method",
+        "source": "opencap-monocular",
+        "value": "WHAM"
+      }
+    },
+    {
+      "id": "i03",
+      "label": "different",
+      "left": {
+        "object_type": "method",
+        "source": "apinn",
+        "value": "$PINN"
+      },
+      "passages": [
+        "apinn.p1",
+        "pinn-failure-modes.p1"
+      ],
+      "right": {
+        "object_type": "method",
+        "source": "pinn-failure-modes",
+        "value": "PINNs"
+      }
+    },
+    {
+      "id": "i04",
+      "label": "same",
+      "left": {
+        "object_type": "method",
+        "source": "vampnet",
+        "value": "VampNet"
+      },
+      "passages": [
+        "vampnet.p1",
+        "wham-whale.p2"
+      ],
+      "right": {
+        "object_type": "method",
+        "source": "wham-whale",
+        "value": "VampNet"
+      }
+    },
+    {
+      "id": "i05",
+      "label": "same",
+      "left": {
+        "object_type": "method",
+        "source": "wham-pose",
+        "value": "WHAM"
+      },
+      "passages": [
+        "wham-pose.p1",
+        "opencap-monocular.p2"
+      ],
+      "right": {
+        "object_type": "method",
+        "source": "opencap-monocular",
+        "value": "WHAM"
+      }
+    },
+    {
+      "id": "i06",
+      "label": "same",
+      "left": {
+        "object_type": "method",
+        "source": "apinn",
+        "value": "PINNs"
+      },
+      "passages": [
+        "apinn.p3",
+        "pinn-failure-modes.p1"
+      ],
+      "right": {
+        "object_type": "method",
+        "source": "pinn-failure-modes",
+        "value": "PINNs"
+      }
+    }
+  ],
+  "labeller": {
+    "independent": false,
+    "kind": "single-author",
+    "note": "Labels were written by the corpus author from the public works; they are not independent expert ground truth."
+  },
+  "name_pairs": [
+    {
+      "id": "n01",
+      "kind": "homonym",
+      "left": "VAMPnet",
+      "passages": [
+        "vampnets.p1",
+        "vampnet.p1"
+      ],
+      "right": "VampNet"
+    },
+    {
+      "id": "n02",
+      "kind": "homonym",
+      "left": "WhAM",
+      "passages": [
+        "wham-whale.p1",
+        "wham-pose.p1"
+      ],
+      "right": "WHAM"
+    },
+    {
+      "id": "n03",
+      "kind": "synonym",
+      "left": "normalizing flow",
+      "passages": [
+        "flows-review.p1",
+        "sbi-frontier.p2"
+      ],
+      "right": "normalizing flows"
+    },
+    {
+      "id": "n04",
+      "kind": "family",
+      "left": "$PINN",
+      "passages": [
+        "apinn.p1",
+        "pinn-failure-modes.p1"
+      ],
+      "right": "PINNs"
+    }
+  ],
+  "populations": [
+    {
+      "expected_check_exit": 4,
+      "source": "vampnets"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "vampnet"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "wham-whale"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "wham-pose"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "opencap-monocular"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "apinn"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "pinn-failure-modes"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "boltz-1"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "posex"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "flows-review"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "sbi-frontier"
+    },
+    {
+      "expected_check_exit": 4,
+      "source": "sensor-placement"
+    }
+  ],
+  "reuse_cases": [
+    {
+      "id": "u01",
+      "kind": "real",
+      "name": "VampNet",
+      "passages": [
+        "vampnet.p1",
+        "wham-whale.p2"
+      ]
+    },
+    {
+      "id": "u02",
+      "kind": "real",
+      "name": "WHAM",
+      "passages": [
+        "wham-pose.p1",
+        "opencap-monocular.p2"
+      ]
+    },
+    {
+      "id": "u03",
+      "kind": "real",
+      "name": "PINNs",
+      "passages": [
+        "apinn.p3",
+        "pinn-failure-modes.p1"
+      ]
+    },
+    {
+      "id": "u04",
+      "kind": "real",
+      "name": "simulation-based inference",
+      "passages": [
+        "sbi-frontier.p1",
+        "sensor-placement.p2"
+      ]
+    },
+    {
+      "id": "u05",
+      "kind": "generic-word",
+      "name": "benchmark",
+      "passages": [
+        "boltz-1.p2",
+        "posex.p1"
+      ]
+    },
+    {
+      "id": "u06",
+      "kind": "generic-word",
+      "name": "baseline",
+      "passages": [
+        "opencap-monocular.p4",
+        "pinn-failure-modes.p4"
+      ]
+    },
+    {
+      "id": "u07",
+      "kind": "homonym",
+      "name": "vampnet",
+      "passages": [
+        "vampnets.p1",
+        "vampnet.p1"
+      ]
+    },
+    {
+      "id": "u08",
+      "kind": "homonym",
+      "name": "wham",
+      "passages": [
+        "wham-whale.p1",
+        "wham-pose.p1"
+      ]
+    }
+  ],
+  "schema": "literature-answer-key/1"
+}

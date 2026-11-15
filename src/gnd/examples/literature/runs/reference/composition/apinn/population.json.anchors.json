@@ -1,0 +1,104 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "b496795e877d97144e323985fb4ea827a78ecf654942fd3f6089466b3ecc4ef0",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "$PINN",
+          "work": "arXiv:2211.08939"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 481,
+        "start": 368
+      }
+    },
+    {
+      "excerpt_sha256": "a40f52de92433183892a35461c869956718d6bce2ec3eb15a383bb7c078090c1",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "XPINN",
+          "method": "$PINN"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 593,
+        "start": 482
+      }
+    },
+    {
+      "excerpt_sha256": "a40f52de92433183892a35461c869956718d6bce2ec3eb15a383bb7c078090c1",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "XPINN",
+          "method": "$PINN"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 593,
+        "start": 482
+      }
+    },
+    {
+      "excerpt_sha256": "7c08aefc11c0a649e3c768031a9739f06d9686739e44b632c191f231ec5ab266",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "XPINN"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 701,
+        "start": 594
+      }
+    },
+    {
+      "excerpt_sha256": "7c08aefc11c0a649e3c768031a9739f06d9686739e44b632c191f231ec5ab266",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "XPINN"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 701,
+        "start": 594
+      }
+    },
+    {
+      "excerpt_sha256": "bbf1f5caca60a4bdb402a282bbcc89902bebcf118b845f28b0281c1251151616",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "scientific machine learning",
+          "method": "$PINN"
+        }
+      },
+      "occurrence": 3,
+      "role": "method",
+      "span": {
+        "end": 790,
+        "start": 702
+      }
+    }
+  ],
+  "document_sha256": "c7874f2817d05f8d8f7088e1dda4c60edbb974fddcb570d96df9951c5d8f15b3",
+  "population_sha256": "b875e939e83b522e6939a95fd669e33c1ca179836701907497362ab7b107bbf7",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

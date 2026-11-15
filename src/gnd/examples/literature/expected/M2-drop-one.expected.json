@@ -1,0 +1,80 @@
+{
+  "case": "M2-drop-one",
+  "exit_code": 1,
+  "failed_stages": [
+    "source-binding",
+    "semantic-support"
+  ],
+  "measured_routes": "R3 tp 7 of 8, missed 1; R4 exit 0",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "abstention": [
+        0,
+        1
+      ],
+      "precision": [
+        7,
+        7
+      ],
+      "recall": [
+        7,
+        7
+      ],
+      "status": "pass"
+    },
+    "freshness": {
+      "precision": [
+        25,
+        25
+      ],
+      "recall": [
+        25,
+        25
+      ],
+      "status": "pass"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        12,
+        12
+      ],
+      "status": "pass"
+    },
+    "semantic-support": {
+      "abstention": [
+        0,
+        12
+      ],
+      "precision": [
+        7,
+        7
+      ],
+      "recall": [
+        7,
+        8
+      ],
+      "status": "fail"
+    },
+    "source-binding": {
+      "precision": [
+        37,
+        37
+      ],
+      "recall": [
+        37,
+        39
+      ],
+      "status": "fail"
+    }
+  },
+  "transform": "Remove XPINN builds on PINNs (a05) and its two anchors from apinn; no claimed derived row depends on it."
+}

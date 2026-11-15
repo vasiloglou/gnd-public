@@ -1,0 +1,32 @@
+{
+  "applicable_sha256": "cfd80d14000c6cd4b958da9aa6154e7beff8e0bf2b7641135660f695fcef1277",
+  "distractors": [
+    {
+      "kind": "out-of-model",
+      "text": "regression testing"
+    },
+    {
+      "kind": "near-miss-entity",
+      "text": "Markov states"
+    },
+    {
+      "fact_type": "method_is_used_in_field",
+      "kind": "absent-fact",
+      "roles": {
+        "field": "music generation",
+        "method": "VAMPnet"
+      },
+      "text": "molecular dynamics"
+    }
+  ],
+  "document": "document.md",
+  "document_sha256": "eb1bd85d000c88ad8852ec49d0f7965d663b57824ee4df29dd0570d318b3c34a",
+  "executing_model": "claude-opus-5-5 (hand-authored fixture)",
+  "model": "model.orm.yaml",
+  "model_sha256": "196793889bf28bc2495c16cff4e82c225fd8cc45e12a00308de3238ed0989546",
+  "renderer_skill": "gnd-render-doc",
+  "renderer_skill_version": "0.1.0",
+  "schema_version": 1,
+  "source_population": "source.population.json",
+  "source_population_sha256": "040499462282e98a4743d1f4b96fb93b5556f784d0f07508793700bf956fb410"
+}

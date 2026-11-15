@@ -1,0 +1,718 @@
+{
+  "artifacts": {
+    "applicable_sha256": "cfd80d14000c6cd4b958da9aa6154e7beff8e0bf2b7641135660f695fcef1277",
+    "path": "corpus/artifacts",
+    "projection_sha256": "af16983bac1e96c4da58d67aa569ca7a1b9955dfec27ed236d6fdfd4989aa051"
+  },
+  "documents": [
+    {
+      "domain": "molecular-dynamics",
+      "id": "vampnets",
+      "paraphrase": true,
+      "path": "corpus/documents/vampnets.md",
+      "sha256": "eb1bd85d000c88ad8852ec49d0f7965d663b57824ee4df29dd0570d318b3c34a",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:1710.06012",
+        "title": "VAMPnets: Deep learning of molecular kinetics",
+        "year": 2017
+      }
+    },
+    {
+      "domain": "music",
+      "id": "vampnet",
+      "paraphrase": true,
+      "path": "corpus/documents/vampnet.md",
+      "sha256": "6445f1d2f55e346d9ceb740a0bceca27ee48ecb14b3fb44ffbafad171b0e7e7f",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2307.04686",
+        "title": "VampNet: Music Generation via Masked Acoustic Token Modeling",
+        "year": 2023
+      }
+    },
+    {
+      "domain": "bioacoustics",
+      "id": "wham-whale",
+      "paraphrase": true,
+      "path": "corpus/documents/wham-whale.md",
+      "sha256": "2808abd557e822b7350717a7b4ad268cc290f50007b26d5ec421b8d95922a021",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2512.02206",
+        "title": "WhAM: Towards A Translative Model of Sperm Whale Vocalization",
+        "year": 2025
+      }
+    },
+    {
+      "domain": "computer-vision",
+      "id": "wham-pose",
+      "paraphrase": true,
+      "path": "corpus/documents/wham-pose.md",
+      "sha256": "cb7fc5f6872e104ef56dfddff2759f47e622bb1ecb12c3062be23a6554a0c642",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2312.07531",
+        "title": "WHAM: Reconstructing World-grounded Humans with Accurate 3D Motion",
+        "year": 2023
+      }
+    },
+    {
+      "domain": "biomechanics",
+      "id": "opencap-monocular",
+      "paraphrase": true,
+      "path": "corpus/documents/opencap-monocular.md",
+      "sha256": "cdbd542ab0c3ff71466bdfce8db8c1985fa86cf3ffc0a77a0decceb113a89d7f",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2603.24733",
+        "title": "OpenCap Monocular: 3D Human Kinematics and Musculoskeletal Dynamics from a Single Smartphone Video",
+        "year": 2026
+      }
+    },
+    {
+      "domain": "scientific-ml",
+      "id": "apinn",
+      "paraphrase": true,
+      "path": "corpus/documents/apinn.md",
+      "sha256": "c7874f2817d05f8d8f7088e1dda4c60edbb974fddcb570d96df9951c5d8f15b3",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2211.08939",
+        "title": "Augmented Physics-Informed Neural Networks (APINNs): A gating network-based soft domain decomposition methodology",
+        "year": 2022
+      }
+    },
+    {
+      "domain": "scientific-ml",
+      "id": "pinn-failure-modes",
+      "paraphrase": true,
+      "path": "corpus/documents/pinn-failure-modes.md",
+      "sha256": "c9fdf5bcd4e55636ebde6eafa76513b4b1db0906184d9ef19e877b7ecb5194cb",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2109.01050",
+        "title": "Characterizing possible failure modes in physics-informed neural networks",
+        "year": 2021
+      }
+    },
+    {
+      "domain": "structural-biology",
+      "id": "boltz-1",
+      "paraphrase": true,
+      "path": "corpus/documents/boltz-1.md",
+      "sha256": "1793ae0ee0e958e6dc4d63e05d40c2676d5f9d0f77bda4f35b249c31ce560282",
+      "split": "dev",
+      "work": {
+        "identifier": "doi:10.1101/2024.11.19.624167",
+        "title": "Boltz-1: Democratizing Biomolecular Interaction Modeling",
+        "year": 2024
+      }
+    },
+    {
+      "domain": "structural-biology",
+      "id": "posex",
+      "paraphrase": true,
+      "path": "corpus/documents/posex.md",
+      "sha256": "f8842936ae0dc354c0cb164513146383fda8d019d108b4a1210d8b2bd59de56d",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2505.01700",
+        "title": "PoseX: AI Defeats Physics Approaches on Protein-Ligand Cross Docking",
+        "year": 2025
+      }
+    },
+    {
+      "domain": "probabilistic-ml",
+      "id": "flows-review",
+      "paraphrase": true,
+      "path": "corpus/documents/flows-review.md",
+      "sha256": "63117900d4dab49ea0e66600ab46076050d707f6638b47d0b85542ab26d9c27c",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:1912.02762",
+        "title": "Normalizing Flows for Probabilistic Modeling and Inference",
+        "year": 2019
+      }
+    },
+    {
+      "domain": "statistics",
+      "id": "sbi-frontier",
+      "paraphrase": true,
+      "path": "corpus/documents/sbi-frontier.md",
+      "sha256": "36d3292bdfd72d369d772cff6c480d6eab4b15b61346aadbccd1a7cb9b20ac93",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:1911.01429",
+        "title": "The frontier of simulation-based inference",
+        "year": 2019
+      }
+    },
+    {
+      "domain": "statistics",
+      "id": "sensor-placement",
+      "paraphrase": true,
+      "path": "corpus/documents/sensor-placement.md",
+      "sha256": "cd40b61f0e07fb4417602b2be134222ff20fe435f19317742e60742d2f27d4bc",
+      "split": "dev",
+      "work": {
+        "identifier": "arXiv:2410.12036",
+        "title": "Deep Optimal Sensor Placement for Black Box Stochastic Simulations",
+        "year": 2024
+      }
+    },
+    {
+      "domain": "nlp",
+      "id": "roberta",
+      "paraphrase": true,
+      "path": "corpus/documents/roberta.md",
+      "sha256": "9e470bf97946160d480ff1648203244af3a8eabef26b3c74ee8147fa29b03051",
+      "split": "heldout",
+      "work": {
+        "identifier": "arXiv:1907.11692",
+        "title": "RoBERTa: A Robustly Optimized BERT Pretraining Approach",
+        "year": 2019
+      }
+    },
+    {
+      "domain": "nlp",
+      "id": "xlnet",
+      "paraphrase": true,
+      "path": "corpus/documents/xlnet.md",
+      "sha256": "2c7bc84c6eedff788c5ed63f79d96bfdb6156b7f3ef04c7385e6f8fb4224c1f4",
+      "split": "heldout",
+      "work": {
+        "identifier": "arXiv:1906.08237",
+        "title": "XLNet: Generalized Autoregressive Pretraining for Language Understanding",
+        "year": 2019
+      }
+    },
+    {
+      "domain": "computer-vision",
+      "id": "segment-anything",
+      "paraphrase": true,
+      "path": "corpus/documents/segment-anything.md",
+      "sha256": "5c0a132d472d933f954390007490f6962d1dc24d55b36c6d72cc5311415c7253",
+      "split": "heldout",
+      "work": {
+        "identifier": "arXiv:2304.02643",
+        "title": "Segment Anything",
+        "year": 2023
+      }
+    },
+    {
+      "domain": "optimization",
+      "id": "asam",
+      "paraphrase": true,
+      "path": "corpus/documents/asam.md",
+      "sha256": "6386a8da8a5e7569b8e2232a10ed0f0dc92efb04845885e20a5647c535776423",
+      "split": "heldout",
+      "work": {
+        "identifier": "arXiv:2102.11600",
+        "title": "ASAM: Adaptive Sharpness-Aware Minimization for Scale-Invariant Learning of Deep Neural Networks",
+        "year": 2021
+      }
+    }
+  ],
+  "model": "model.orm.yaml",
+  "model_sha256": "196793889bf28bc2495c16cff4e82c225fd8cc45e12a00308de3238ed0989546",
+  "passages": [
+    {
+      "document": "vampnets",
+      "id": "vampnets.p1",
+      "span": {
+        "end": 259,
+        "start": 165
+      }
+    },
+    {
+      "document": "vampnets",
+      "id": "vampnets.p2",
+      "span": {
+        "end": 400,
+        "start": 260
+      }
+    },
+    {
+      "document": "vampnets",
+      "id": "vampnets.p3",
+      "span": {
+        "end": 505,
+        "start": 401
+      }
+    },
+    {
+      "document": "vampnet",
+      "id": "vampnet.p1",
+      "span": {
+        "end": 291,
+        "start": 180
+      }
+    },
+    {
+      "document": "vampnet",
+      "id": "vampnet.p2",
+      "span": {
+        "end": 405,
+        "start": 292
+      }
+    },
+    {
+      "document": "vampnet",
+      "id": "vampnet.p3",
+      "span": {
+        "end": 506,
+        "start": 406
+      }
+    },
+    {
+      "document": "vampnet",
+      "id": "vampnet.p4",
+      "span": {
+        "end": 587,
+        "start": 507
+      }
+    },
+    {
+      "document": "wham-whale",
+      "id": "wham-whale.p1",
+      "span": {
+        "end": 278,
+        "start": 181
+      }
+    },
+    {
+      "document": "wham-whale",
+      "id": "wham-whale.p2",
+      "span": {
+        "end": 409,
+        "start": 279
+      }
+    },
+    {
+      "document": "wham-whale",
+      "id": "wham-whale.p3",
+      "span": {
+        "end": 540,
+        "start": 410
+      }
+    },
+    {
+      "document": "wham-whale",
+      "id": "wham-whale.p4",
+      "span": {
+        "end": 608,
+        "start": 541
+      }
+    },
+    {
+      "document": "wham-pose",
+      "id": "wham-pose.p1",
+      "span": {
+        "end": 308,
+        "start": 186
+      }
+    },
+    {
+      "document": "wham-pose",
+      "id": "wham-pose.p2",
+      "span": {
+        "end": 444,
+        "start": 309
+      }
+    },
+    {
+      "document": "wham-pose",
+      "id": "wham-pose.p3",
+      "span": {
+        "end": 534,
+        "start": 445
+      }
+    },
+    {
+      "document": "wham-pose",
+      "id": "wham-pose.p4",
+      "span": {
+        "end": 611,
+        "start": 535
+      }
+    },
+    {
+      "document": "opencap-monocular",
+      "id": "opencap-monocular.p1",
+      "span": {
+        "end": 334,
+        "start": 218
+      }
+    },
+    {
+      "document": "opencap-monocular",
+      "id": "opencap-monocular.p2",
+      "span": {
+        "end": 448,
+        "start": 335
+      }
+    },
+    {
+      "document": "opencap-monocular",
+      "id": "opencap-monocular.p3",
+      "span": {
+        "end": 564,
+        "start": 449
+      }
+    },
+    {
+      "document": "opencap-monocular",
+      "id": "opencap-monocular.p4",
+      "span": {
+        "end": 685,
+        "start": 565
+      }
+    },
+    {
+      "document": "opencap-monocular",
+      "id": "opencap-monocular.p5",
+      "span": {
+        "end": 762,
+        "start": 686
+      }
+    },
+    {
+      "document": "apinn",
+      "id": "apinn.p1",
+      "span": {
+        "end": 481,
+        "start": 368
+      }
+    },
+    {
+      "document": "apinn",
+      "id": "apinn.p2",
+      "span": {
+        "end": 593,
+        "start": 482
+      }
+    },
+    {
+      "document": "apinn",
+      "id": "apinn.p3",
+      "span": {
+        "end": 701,
+        "start": 594
+      }
+    },
+    {
+      "document": "apinn",
+      "id": "apinn.p4",
+      "span": {
+        "end": 790,
+        "start": 702
+      }
+    },
+    {
+      "document": "pinn-failure-modes",
+      "id": "pinn-failure-modes.p1",
+      "span": {
+        "end": 319,
+        "start": 193
+      }
+    },
+    {
+      "document": "pinn-failure-modes",
+      "id": "pinn-failure-modes.p2",
+      "span": {
+        "end": 454,
+        "start": 320
+      }
+    },
+    {
+      "document": "pinn-failure-modes",
+      "id": "pinn-failure-modes.p3",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "document": "pinn-failure-modes",
+      "id": "pinn-failure-modes.p4",
+      "span": {
+        "end": 694,
+        "start": 591
+      }
+    },
+    {
+      "document": "pinn-failure-modes",
+      "id": "pinn-failure-modes.p5",
+      "span": {
+        "end": 797,
+        "start": 695
+      }
+    },
+    {
+      "document": "boltz-1",
+      "id": "boltz-1.p1",
+      "span": {
+        "end": 299,
+        "start": 189
+      }
+    },
+    {
+      "document": "boltz-1",
+      "id": "boltz-1.p2",
+      "span": {
+        "end": 411,
+        "start": 300
+      }
+    },
+    {
+      "document": "boltz-1",
+      "id": "boltz-1.p3",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "document": "boltz-1",
+      "id": "boltz-1.p4",
+      "span": {
+        "end": 642,
+        "start": 564
+      }
+    },
+    {
+      "document": "posex",
+      "id": "posex.p1",
+      "span": {
+        "end": 312,
+        "start": 188
+      }
+    },
+    {
+      "document": "posex",
+      "id": "posex.p2",
+      "span": {
+        "end": 459,
+        "start": 313
+      }
+    },
+    {
+      "document": "posex",
+      "id": "posex.p3",
+      "span": {
+        "end": 595,
+        "start": 460
+      }
+    },
+    {
+      "document": "posex",
+      "id": "posex.p4",
+      "span": {
+        "end": 658,
+        "start": 596
+      }
+    },
+    {
+      "document": "flows-review",
+      "id": "flows-review.p1",
+      "span": {
+        "end": 313,
+        "start": 178
+      }
+    },
+    {
+      "document": "flows-review",
+      "id": "flows-review.p2",
+      "span": {
+        "end": 424,
+        "start": 314
+      }
+    },
+    {
+      "document": "flows-review",
+      "id": "flows-review.p3",
+      "span": {
+        "end": 531,
+        "start": 425
+      }
+    },
+    {
+      "document": "sbi-frontier",
+      "id": "sbi-frontier.p1",
+      "span": {
+        "end": 296,
+        "start": 162
+      }
+    },
+    {
+      "document": "sbi-frontier",
+      "id": "sbi-frontier.p2",
+      "span": {
+        "end": 444,
+        "start": 297
+      }
+    },
+    {
+      "document": "sbi-frontier",
+      "id": "sbi-frontier.p3",
+      "span": {
+        "end": 555,
+        "start": 445
+      }
+    },
+    {
+      "document": "sensor-placement",
+      "id": "sensor-placement.p1",
+      "span": {
+        "end": 350,
+        "start": 186
+      }
+    },
+    {
+      "document": "sensor-placement",
+      "id": "sensor-placement.p2",
+      "span": {
+        "end": 532,
+        "start": 351
+      }
+    },
+    {
+      "document": "sensor-placement",
+      "id": "sensor-placement.p3",
+      "span": {
+        "end": 650,
+        "start": 533
+      }
+    },
+    {
+      "document": "roberta",
+      "id": "roberta.p1",
+      "span": {
+        "end": 303,
+        "start": 175
+      }
+    },
+    {
+      "document": "roberta",
+      "id": "roberta.p2",
+      "span": {
+        "end": 408,
+        "start": 304
+      }
+    },
+    {
+      "document": "roberta",
+      "id": "roberta.p3",
+      "span": {
+        "end": 457,
+        "start": 409
+      }
+    },
+    {
+      "document": "roberta",
+      "id": "roberta.p4",
+      "span": {
+        "end": 588,
+        "start": 458
+      }
+    },
+    {
+      "document": "roberta",
+      "id": "roberta.p5",
+      "span": {
+        "end": 660,
+        "start": 589
+      }
+    },
+    {
+      "document": "xlnet",
+      "id": "xlnet.p1",
+      "span": {
+        "end": 318,
+        "start": 192
+      }
+    },
+    {
+      "document": "xlnet",
+      "id": "xlnet.p2",
+      "span": {
+        "end": 402,
+        "start": 319
+      }
+    },
+    {
+      "document": "xlnet",
+      "id": "xlnet.p3",
+      "span": {
+        "end": 485,
+        "start": 403
+      }
+    },
+    {
+      "document": "xlnet",
+      "id": "xlnet.p4",
+      "span": {
+        "end": 568,
+        "start": 486
+      }
+    },
+    {
+      "document": "segment-anything",
+      "id": "segment-anything.p1",
+      "span": {
+        "end": 237,
+        "start": 136
+      }
+    },
+    {
+      "document": "segment-anything",
+      "id": "segment-anything.p2",
+      "span": {
+        "end": 322,
+        "start": 238
+      }
+    },
+    {
+      "document": "segment-anything",
+      "id": "segment-anything.p3",
+      "span": {
+        "end": 412,
+        "start": 323
+      }
+    },
+    {
+      "document": "segment-anything",
+      "id": "segment-anything.p4",
+      "span": {
+        "end": 471,
+        "start": 413
+      }
+    },
+    {
+      "document": "asam",
+      "id": "asam.p1",
+      "span": {
+        "end": 335,
+        "start": 216
+      }
+    },
+    {
+      "document": "asam",
+      "id": "asam.p2",
+      "span": {
+        "end": 429,
+        "start": 336
+      }
+    },
+    {
+      "document": "asam",
+      "id": "asam.p3",
+      "span": {
+        "end": 499,
+        "start": 430
+      }
+    }
+  ],
+  "schema": "literature-corpus/1"
+}

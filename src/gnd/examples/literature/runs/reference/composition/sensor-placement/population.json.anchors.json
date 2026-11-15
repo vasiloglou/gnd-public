@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "cfee54542315dc722f965cf3f0c6ea889f4e0f567e4f61e9a15b0b65642674d0",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "deep optimal sensor placement",
+          "work": "arXiv:2410.12036"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 350,
+        "start": 186
+      }
+    },
+    {
+      "excerpt_sha256": "0973536872e8faa3bc491ae645ebacd802dc30cf44759b93201742b450f1e306",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "experimental design",
+          "method": "deep optimal sensor placement"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 650,
+        "start": 533
+      }
+    }
+  ],
+  "document_sha256": "cd40b61f0e07fb4417602b2be134222ff20fe435f19317742e60742d2f27d4bc",
+  "population_sha256": "6e257f6e90d9a781ce4a97996940dba7e317b3fb0ba7683671a9bfcbe5ae1cf2",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

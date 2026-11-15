@@ -1,0 +1,69 @@
+{
+  "deduplications": "identical-rows",
+  "renamings": [],
+  "schema": "gnd-composition-manifest/1",
+  "scope_tags": [
+    {
+      "source": "vampnets",
+      "tag": "molecular-dynamics"
+    },
+    {
+      "source": "vampnet",
+      "tag": "music"
+    },
+    {
+      "source": "wham-whale",
+      "tag": "bioacoustics"
+    },
+    {
+      "source": "wham-pose",
+      "tag": "computer-vision"
+    },
+    {
+      "source": "opencap-monocular",
+      "tag": "biomechanics"
+    },
+    {
+      "source": "apinn",
+      "tag": "scientific-ml"
+    },
+    {
+      "source": "pinn-failure-modes",
+      "tag": "scientific-ml"
+    },
+    {
+      "source": "boltz-1",
+      "tag": "structural-biology"
+    },
+    {
+      "source": "posex",
+      "tag": "structural-biology"
+    },
+    {
+      "source": "flows-review",
+      "tag": "probabilistic-ml"
+    },
+    {
+      "source": "sbi-frontier",
+      "tag": "statistics"
+    },
+    {
+      "source": "sensor-placement",
+      "tag": "statistics"
+    }
+  ],
+  "sources": [
+    "vampnets",
+    "vampnet",
+    "wham-whale",
+    "wham-pose",
+    "opencap-monocular",
+    "apinn",
+    "pinn-failure-modes",
+    "boltz-1",
+    "posex",
+    "flows-review",
+    "sbi-frontier",
+    "sensor-placement"
+  ]
+}

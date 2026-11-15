@@ -1,0 +1,28 @@
+{
+  "artifacts": {
+    "model.applicable.json": {
+      "sha256": "cfd80d14000c6cd4b958da9aa6154e7beff8e0bf2b7641135660f695fcef1277"
+    },
+    "model.projection.schema.json": {
+      "sha256": "af16983bac1e96c4da58d67aa569ca7a1b9955dfec27ed236d6fdfd4989aa051"
+    },
+    "model.verbalization.txt": {
+      "sha256": "4ca308ce7065349bbd1d4d399a88bef2d89ac34177ab78c4705372e9555dde0f"
+    }
+  },
+  "gnd_version": "0.3.1",
+  "header_template": {
+    "covers": [
+      "method_builds_on_method",
+      "method_is_used_in_field",
+      "work_introduces_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "agent-output"
+  },
+  "model": {
+    "path": "model.orm.yaml",
+    "sha256": "196793889bf28bc2495c16cff4e82c225fd8cc45e12a00308de3238ed0989546"
+  }
+}

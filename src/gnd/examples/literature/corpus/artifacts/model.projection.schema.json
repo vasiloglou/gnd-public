@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "scalar": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "facts": {
+      "additionalProperties": false,
+      "properties": {
+        "method_builds_on_method": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "base_method": {
+                "$ref": "#/$defs/scalar"
+              },
+              "method": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "method",
+              "base_method"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "method_is_used_in_field": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/scalar"
+              },
+              "method": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "method",
+              "field"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "work_builds_on_method": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "method": {
+                "$ref": "#/$defs/scalar"
+              },
+              "work": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "work",
+              "method"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "work_introduces_method": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "method": {
+                "$ref": "#/$defs/scalar"
+              },
+              "work": {
+                "$ref": "#/$defs/scalar"
+              }
+            },
+            "required": [
+              "work",
+              "method"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "instances": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "method": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        },
+        "work": {
+          "items": {
+            "$ref": "#/$defs/scalar"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "population": {
+      "additionalProperties": false,
+      "properties": {
+        "covers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "label": {
+          "enum": [
+            "conforming",
+            "boundary",
+            "violating"
+          ]
+        },
+        "model": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "agent-output",
+            "synthetic",
+            "fixture"
+          ]
+        }
+      },
+      "required": [
+        "model",
+        "source"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "population",
+    "facts"
+  ],
+  "type": "object"
+}

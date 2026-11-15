@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "113174058e994ea3179709ef8e37b616a2eb5f61d049c6db97a665d9bf5e7a3b",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "curriculum regularization",
+          "work": "arXiv:2109.01050"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "excerpt_sha256": "113174058e994ea3179709ef8e37b616a2eb5f61d049c6db97a665d9bf5e7a3b",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "curriculum regularization"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "excerpt_sha256": "113174058e994ea3179709ef8e37b616a2eb5f61d049c6db97a665d9bf5e7a3b",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "PINNs",
+          "method": "curriculum regularization"
+        }
+      },
+      "occurrence": 1,
+      "role": "base_method",
+      "span": {
+        "end": 590,
+        "start": 455
+      }
+    },
+    {
+      "excerpt_sha256": "f8800d6d156ab75ca87b6138490e714495ff14671e27d7307af537c7cc073184",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "scientific machine learning",
+          "method": "curriculum regularization"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 797,
+        "start": 695
+      }
+    }
+  ],
+  "document_sha256": "c9fdf5bcd4e55636ebde6eafa76513b4b1db0906184d9ef19e877b7ecb5194cb",
+  "population_sha256": "19ec8aa25cd3f4203ca3fa8fdb5c027d00adb48e800775f2cac5e95ec3330405",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "b38cfa54845aff7f1f79593a4fc64d4053b74ac5f805282fec7d83d7541db5bd",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "VampNet",
+          "work": "arXiv:2307.04686"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 291,
+        "start": 180
+      }
+    },
+    {
+      "excerpt_sha256": "f6ab489af5ad006375bd4171cd676746c44cbd60e9273cc364520fc0de93b930",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "bidirectional transformer",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 405,
+        "start": 292
+      }
+    },
+    {
+      "excerpt_sha256": "f6ab489af5ad006375bd4171cd676746c44cbd60e9273cc364520fc0de93b930",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "bidirectional transformer",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 405,
+        "start": 292
+      }
+    },
+    {
+      "excerpt_sha256": "ca0b74b5ad2ce38e0fc1687e4fc1c6278f753dfb7aa8086bbf017416523957ac",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "music generation",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 4,
+      "role": "method",
+      "span": {
+        "end": 587,
+        "start": 507
+      }
+    }
+  ],
+  "document_sha256": "6445f1d2f55e346d9ceb740a0bceca27ee48ecb14b3fb44ffbafad171b0e7e7f",
+  "population_sha256": "09d85ddebe93218d6bcfec03ddc275f7bb219d8ed9011423327669a42346a547",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

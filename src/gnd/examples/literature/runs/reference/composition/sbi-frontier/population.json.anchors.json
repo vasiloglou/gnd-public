@@ -1,0 +1,24 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "c23e3efccb6ae9c23fc010ebd75a517fba51e70cf593ee45dfffccfaaee54c9d",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "scientific simulation",
+          "method": "simulation-based inference"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 555,
+        "start": 445
+      }
+    }
+  ],
+  "document_sha256": "36d3292bdfd72d369d772cff6c480d6eab4b15b61346aadbccd1a7cb9b20ac93",
+  "population_sha256": "62b284e7a0e3bb52ce83f11a755da1dda016f99bfcd60a6e96681ef5db3f7ed5",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

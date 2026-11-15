@@ -1,0 +1,80 @@
+{
+  "case": "M4-false-derived",
+  "exit_code": 1,
+  "failed_stages": [
+    "model-population-validity",
+    "derivation"
+  ],
+  "measured_routes": "R1 vampnet 1; R2 vampnet 1, no binding error; R4 exit 1, derived-extension-unsound with 1 finding",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "abstention": [
+        0,
+        1
+      ],
+      "precision": [
+        7,
+        8
+      ],
+      "recall": [
+        7,
+        7
+      ],
+      "status": "fail"
+    },
+    "freshness": {
+      "precision": [
+        25,
+        25
+      ],
+      "recall": [
+        25,
+        25
+      ],
+      "status": "pass"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        11,
+        12
+      ],
+      "status": "fail"
+    },
+    "semantic-support": {
+      "abstention": [
+        0,
+        12
+      ],
+      "precision": [
+        8,
+        8
+      ],
+      "recall": [
+        8,
+        8
+      ],
+      "status": "pass"
+    },
+    "source-binding": {
+      "precision": [
+        39,
+        39
+      ],
+      "recall": [
+        39,
+        39
+      ],
+      "status": "pass"
+    }
+  },
+  "transform": "Add the unsound claimed row 'arXiv:2307.04686 builds on WhAM' to vampnet; bindings regenerated and recomposed."
+}

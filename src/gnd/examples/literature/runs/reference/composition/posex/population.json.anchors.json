@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "0f6f9046e33b0222b40967594cfe9b99e309622485fc67805ca8678e1757cb62",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "PoseX",
+          "work": "arXiv:2505.01700"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 312,
+        "start": 188
+      }
+    },
+    {
+      "excerpt_sha256": "b87238614503206fa510c6ab060858c28414593a7779a7b6ab49a49abcee2c4d",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "drug discovery",
+          "method": "PoseX"
+        }
+      },
+      "occurrence": 3,
+      "role": "method",
+      "span": {
+        "end": 658,
+        "start": 596
+      }
+    }
+  ],
+  "document_sha256": "f8842936ae0dc354c0cb164513146383fda8d019d108b4a1210d8b2bd59de56d",
+  "population_sha256": "86321bdd8c7f8a79c3b00a3238cbb21b1f8f01d98addbacdefa2135640e1b075",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

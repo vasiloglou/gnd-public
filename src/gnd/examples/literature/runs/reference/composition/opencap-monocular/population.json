@@ -1,0 +1,40 @@
+{
+  "facts": {
+    "method_builds_on_method": [
+      {
+        "base_method": "WHAM",
+        "method": "OpenCap Monocular"
+      }
+    ],
+    "method_is_used_in_field": [
+      {
+        "field": "biomechanics",
+        "method": "OpenCap Monocular"
+      }
+    ],
+    "work_builds_on_method": [
+      {
+        "method": "WHAM",
+        "work": "arXiv:2603.24733"
+      }
+    ],
+    "work_introduces_method": [
+      {
+        "method": "OpenCap Monocular",
+        "work": "arXiv:2603.24733"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_builds_on_method",
+      "method_is_used_in_field",
+      "work_builds_on_method",
+      "work_introduces_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "agent-output"
+  }
+}

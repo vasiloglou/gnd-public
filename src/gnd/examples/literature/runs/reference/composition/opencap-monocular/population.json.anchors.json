@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "281a34af81b6770cf9472c582c83aa9b39d011073d37013da1aca8a4da0a3ce9",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "OpenCap Monocular",
+          "work": "arXiv:2603.24733"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 334,
+        "start": 218
+      }
+    },
+    {
+      "excerpt_sha256": "6b33f016d31491e4d9e64ca87bf079fab8d0ec934e1bd6dd710264b55a8ce0b7",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 448,
+        "start": 335
+      }
+    },
+    {
+      "excerpt_sha256": "6b33f016d31491e4d9e64ca87bf079fab8d0ec934e1bd6dd710264b55a8ce0b7",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 448,
+        "start": 335
+      }
+    },
+    {
+      "excerpt_sha256": "e8466dfb56dce3c3e3126e4e450907171d91e9035a225274f389c6098fe97248",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "biomechanics",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "occurrence": 3,
+      "role": "method",
+      "span": {
+        "end": 762,
+        "start": 686
+      }
+    }
+  ],
+  "document_sha256": "cdbd542ab0c3ff71466bdfce8db8c1985fa86cf3ffc0a77a0decceb113a89d7f",
+  "population_sha256": "48a18a73b4174f829b71b16f1c59fb9587775b5af57f2e99926944ecc02b5ed9",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

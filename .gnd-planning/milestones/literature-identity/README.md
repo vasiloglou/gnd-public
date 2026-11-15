@@ -30,5 +30,6 @@ implemented, reviewed by one reviewer, and recorded. The
 [LI2 spec](notes/phase-LI2-spec.md) r1 was approved on 2026-11-15
 ([gate](007-phase-LI2-spec-gate.md)), with D1–D11 ruled as proposed and a
 corpus-first instrument. The LI2 fixtures, the baseline, the LI1 reference
-decisions and the amended LI1 expectations are committed red and await the
-corpus gate (with B1–B4 in spec §13). No composition code exists yet.
+decisions and the amended LI1 expectations are committed red, and the owner
+approved them at the [LI2 corpus gate](008-phase-LI2-corpus-gate.md), ruling
+B1–B4 as proposed. The implementation waits for a separate go-ahead.

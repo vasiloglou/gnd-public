@@ -5,8 +5,9 @@
 **Owner-decided (2026-11-15) `(o)`.** The owner approved r1
 ([007](../007-phase-LI2-spec-gate.md)), ruled D1–D11 as proposed, and chose
 the corpus-first instrument. **Corpus authored and committed red
-(2026-11-15); awaiting the corpus gate** (§11 step 2), which also rules
-B1–B4 (§13). No composition code before that gate. `auto=false`.
+(2026-11-15); the owner approved it on 2026-11-15** `(o)`
+([008](../008-phase-LI2-corpus-gate.md)) and ruled B1–B4 as proposed (§13).
+**Next: the implementation**, on the owner's separate go-ahead. `auto=false`.
 
 ## 2. Provenance
 
@@ -586,6 +587,7 @@ changes an approved sentence needs the owner's ruling at the corpus gate.
 **Amendments for the corpus gate.**
 
 - **B1 · Keys come only from asserted fact types.**
+  - **Ruled as proposed `(o)` 2026-11-15.**
   - *What §6.3 says.* Keys are "every value of a role whose object type is
     in `object_types`".
   - *What that does to M4.* Read literally, it includes derived fact types.
@@ -597,6 +599,7 @@ changes an approved sentence needs the owner's ruling at the corpus gate.
     `derived` or `semiderived`). The amended LI1 expectations assume it: M4
     passes `identity-decisions`.
 - **B2 · The interface the red tests fix.**
+  - **Ruled as proposed `(o)` 2026-11-15.**
   - `check_coverage(keys, decisions)` raises `CompositionError`. A key is
     `{source, object_type, value, outcome, coordinate}`, where `coordinate`
     is the key's first asserted occurrence, written
@@ -604,6 +607,7 @@ changes an approved sentence needs the owner's ruling at the corpus gate.
   - The record's `facts[].decisions` and `resolution_sha256` are as §6.4
     describes.
 - **B3 · Refusal messages and their order.**
+  - **Ruled as proposed `(o)` 2026-11-15.**
   - *The messages.* `cases.json` fixes every message exactly.
   - *The order.* When several rules fail, the first is reported in this
     order:
@@ -616,6 +620,7 @@ changes an approved sentence needs the owner's ruling at the corpus gate.
   - *Where a key's first coordinate comes from.* Manifest source order,
     then fact-type id, then row, then the model's role order.
 - **B4 · A renaming without a decision is refused at step 1.** With a
+  - **Ruled as proposed `(o)` 2026-11-15.**
   resolution present, a renaming that cites no decision is refused there,
   with `renaming <i> cites no decision`. §6.2 said every renaming must
   cite one, and did not say at which step.

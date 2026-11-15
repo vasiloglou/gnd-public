@@ -21,5 +21,6 @@ and [literature-depth](../literature-depth/README.md). The partition table is
 in the plan's §1.1. The [review disposition](notes/plan-review-disposition.md)
 records both rounds. Round 2 did not meet the four-reviewer bar, because
 three seats failed. [LI0](003-phase-LI0.md) is implemented, reviewed by one reviewer, and
-recorded. The [LI1 spec](notes/phase-LI1-spec.md) r1 is drafted and awaits its
-owner gate (D1–D10, approval instrument). Nothing of LI1 is implemented.
+recorded. The [LI1 spec](notes/phase-LI1-spec.md) r1 was approved on 2026-11-15
+([gate](004-phase-LI1-spec-gate.md)), with D1–D10 ruled as proposed and a
+corpus-first instrument. Next is the corpus gate. Nothing of LI1 is implemented.

@@ -2,10 +2,13 @@
 
 ## 1. Status
 
-**Awaiting owner review (2026-11-15).** Nothing is implemented. No corpus
-byte, harness file or test exists. The owner gate must rule D1–D10 (§7) and
-choose the approval instrument (§11) before any file outside
-`.gnd-planning/` is created. `auto=false`.
+**Owner-decided (2026-11-15) `(o)`.** The owner approved r1 at SHA-256
+`d6836087374ddb1c3b97532c372036160cb8ba4b98938b6b8a38d3c210e39adf`
+([004](../004-phase-LI1-spec-gate.md)), ruled D1–D10 as proposed, and chose
+the corpus-first instrument. **Next: the corpus gate** (§11 step 2). The
+corpus, answer key, reference run and goldens are authored and committed red,
+then offered for the owner's reading. No harness code before that gate.
+`auto=false`.
 
 ## 2. Provenance
 
@@ -516,20 +519,21 @@ required stage.
 
 ## 7. Decisions
 
-All rows are **proposed**. None is ruled.
+All rows were proposed in r1. The owner ruled every row as proposed on
+2026-11-15 `(o)`; each row's ruling is marked in its proposal cell.
 
 | ID | Question | Proposal | The other reading and its cost |
 |---|---|---|---|
-| D1 | Route for `semantic-support` | **`gnd fidelity` (R3)**, with case directories assembled by the harness. Each corpus document gets a renderer manifest, because the manifest type requires `renderer_skill: "gnd-render-doc"` (`src/gnd/extract/manifest.py:145`). Documents are authored under the gnd-render-doc contract from their gold population, with `executing_model` naming the author, the same precedent as `tests/fixtures/roundtrip/`. This reuses `fidelity.match` as the one home of extractor matching, and follows plan §3 | The harness matches facts itself by exact canonical equality, with no renderer manifests or extract artifacts. That is simpler (≈ 120 fewer lines and no manifests), but it is a second matching home beside `fidelity.match` and drops plan §3's fidelity route. Both readings give the same exits on every C2/C5 case, because the fixtures use exact spellings |
-| D2 | Approval instrument | **Corpus-first** (§11). The phase ships a serialized format and an exit-code contract, where the default is corpus-first. The owner gates once on this spec's design and once on the authored corpus and goldens, before harness code | Prose only: one gate, but the expected failing set of each mutation and every route payload's shape are unseen until implementation |
-| D3 | Stage floors (the plan-gate open question) | As in §6.5: validity, source binding, derivation and freshness need P = R = 1.0; semantic-support needs P ≥ 0.9, R ≥ 0.9, abstention ≤ 0.2; derivation abstention = 0. Comparisons are inclusive, over exact rationals | Lower floors (say R ≥ 0.85) would let M2 pass with S = 8 (7/8 = 0.875), which breaks C2. Higher semantic floors (1.0) make every single stretched extraction fatal, so precision can no longer be reported as graded |
-| D4 | Where the held-out answer key lives | **A local branch `literature-heldout`** holding only the held-out answer key, with its digest committed on the LI1 branch. It is pushed only with a later explicit authorization | (a) An owner-held file outside the repository: blinder, but the owner has to keep it. (b) Committed on the LI1 branch: auditable, but plan C6's "off the LI5 development branch" fails |
-| D5 | Held-out set composition | **3 additional documents and chains** beyond the C1 floors, so the five named false chains all stay in dev (L2 and L6 need Boltz-1 and the contrast case in dev) | Hold out 2 of the named five: then L2/L6 lose development fixtures |
-| D6 | Reading of C3's route list | **Routes are read where a stage consumes them.** LI1 reads `gnd check` (R1, R2, R4) and `gnd fidelity` (R3). `gnd judgments` is first consumed when LI4 feeds review verdicts into `semantic-support`. LI1 records it as unread and has no stub for it | Wire `gnd judgments` now, with an LI1 review fixture: that needs the LI4 rubric (plan D7) before LI4's spec exists |
-| D7 | Business-facing docs page | **Deferred to LI5**, where the literature story is complete. LI1 ships the example README (developer-facing formats) only | A `docs/` page now would show a report with two dormant stages and no lineage result, and it would be rewritten in LI2, LI4 and LI5 |
-| D8 | Report and corpus schema ids | `literature-corpus/1`, `literature-answer-key/1`, `literature-run/1`, `literature-assurance-report/1`. They are example-level, not `gnd-…` ids, because plan D5 keeps this off the `gnd` contract | `gnd-…` ids would read as public CLI contracts |
-| D9 | A route refusal versus a harness refusal | A route's refusal is a measured outcome (scored, exit 1). Only the harness's own inputs exit 3 (§6.3) | Treating route refusals as exit 3 would make M3/M5/M6 report "invalid input" instead of failing their stages, which breaks C2 |
-| D10 | Spec review | **None.** The corpus gate (D2) is the second look | A panel round over these bytes |
+| D1 | Route for `semantic-support` | **Ruled as proposed `(o)` 2026-11-15.** **`gnd fidelity` (R3)**, with case directories assembled by the harness. Each corpus document gets a renderer manifest, because the manifest type requires `renderer_skill: "gnd-render-doc"` (`src/gnd/extract/manifest.py:145`). Documents are authored under the gnd-render-doc contract from their gold population, with `executing_model` naming the author, the same precedent as `tests/fixtures/roundtrip/`. This reuses `fidelity.match` as the one home of extractor matching, and follows plan §3 | The harness matches facts itself by exact canonical equality, with no renderer manifests or extract artifacts. That is simpler (≈ 120 fewer lines and no manifests), but it is a second matching home beside `fidelity.match` and drops plan §3's fidelity route. Both readings give the same exits on every C2/C5 case, because the fixtures use exact spellings |
+| D2 | Approval instrument | **Ruled as proposed `(o)` 2026-11-15.** **Corpus-first** (§11). The phase ships a serialized format and an exit-code contract, where the default is corpus-first. The owner gates once on this spec's design and once on the authored corpus and goldens, before harness code | Prose only: one gate, but the expected failing set of each mutation and every route payload's shape are unseen until implementation |
+| D3 | Stage floors (the plan-gate open question) | **Ruled as proposed `(o)` 2026-11-15.** As in §6.5: validity, source binding, derivation and freshness need P = R = 1.0; semantic-support needs P ≥ 0.9, R ≥ 0.9, abstention ≤ 0.2; derivation abstention = 0. Comparisons are inclusive, over exact rationals | Lower floors (say R ≥ 0.85) would let M2 pass with S = 8 (7/8 = 0.875), which breaks C2. Higher semantic floors (1.0) make every single stretched extraction fatal, so precision can no longer be reported as graded |
+| D4 | Where the held-out answer key lives | **Ruled as proposed `(o)` 2026-11-15.** **A local branch `literature-heldout`** holding only the held-out answer key, with its digest committed on the LI1 branch. It is pushed only with a later explicit authorization | (a) An owner-held file outside the repository: blinder, but the owner has to keep it. (b) Committed on the LI1 branch: auditable, but plan C6's "off the LI5 development branch" fails |
+| D5 | Held-out set composition | **Ruled as proposed `(o)` 2026-11-15.** **3 additional documents and chains** beyond the C1 floors, so the five named false chains all stay in dev (L2 and L6 need Boltz-1 and the contrast case in dev) | Hold out 2 of the named five: then L2/L6 lose development fixtures |
+| D6 | Reading of C3's route list | **Ruled as proposed `(o)` 2026-11-15.** **Routes are read where a stage consumes them.** LI1 reads `gnd check` (R1, R2, R4) and `gnd fidelity` (R3). `gnd judgments` is first consumed when LI4 feeds review verdicts into `semantic-support`. LI1 records it as unread and has no stub for it | Wire `gnd judgments` now, with an LI1 review fixture: that needs the LI4 rubric (plan D7) before LI4's spec exists |
+| D7 | Business-facing docs page | **Ruled as proposed `(o)` 2026-11-15.** **Deferred to LI5**, where the literature story is complete. LI1 ships the example README (developer-facing formats) only | A `docs/` page now would show a report with two dormant stages and no lineage result, and it would be rewritten in LI2, LI4 and LI5 |
+| D8 | Report and corpus schema ids | **Ruled as proposed `(o)` 2026-11-15.** `literature-corpus/1`, `literature-answer-key/1`, `literature-run/1`, `literature-assurance-report/1`. They are example-level, not `gnd-…` ids, because plan D5 keeps this off the `gnd` contract | `gnd-…` ids would read as public CLI contracts |
+| D9 | A route refusal versus a harness refusal | **Ruled as proposed `(o)` 2026-11-15.** A route's refusal is a measured outcome (scored, exit 1). Only the harness's own inputs exit 3 (§6.3) | Treating route refusals as exit 3 would make M3/M5/M6 report "invalid input" instead of failing their stages, which breaks C2 |
+| D10 | Spec review | **Ruled as proposed `(o)` 2026-11-15.** **None.** The corpus gate (D2) is the second look | A panel round over these bytes |
 
 ## 8. Tests and verification
 

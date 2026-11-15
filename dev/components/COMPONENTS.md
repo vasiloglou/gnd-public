@@ -1932,7 +1932,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/__init__.py
 - uses: (none)
-- used_by: cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, conformance.service, discover.service, extract.service, fidelity.service, install.skill_lifecycle, measure.service, review.command, synth.service
+- used_by: cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, conformance.service, discover.service, examples.literature_assurance, extract.service, fidelity.service, install.skill_lifecycle, measure.service, review.command, … +1 more (graph.md)
 - tests: tests/test_packaged_skills.py
 
 
@@ -3244,6 +3244,19 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - notes: These scripts prepare proposals only; preview and apply are separate evolution calls. The focused test listed here covers the meal-cap script, not prepare_currency.py.
 
 
+### examples.literature_assurance
+- does: Example: score a literature pipeline run against an answer key in seven separate stages, with exact-fraction floors and value-free refusals [score, stage_status].
+- verbs: assurance report, staged report, literature corpus, answer key, regression corpus, precision recall abstention, honest denominators, not measured, route refusal, source binding, semantic support, derivation agreement, evidence freshness, dormant stage, exact floors, score, stage_status, passage_index, anchors_in_passages
+- in: The literature example root (corpus/corpus.json, model, documents, extract artifacts), a literature-answer-key/1 file with gold/ and render/ beside it, and a literature-run/1 directory.
+- out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
+- status: canonical
+- modules: src/gnd/examples/literature/assurance_report.py
+- uses: infra.version
+- used_by: (none)
+- tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
+- notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
+
+
 ### examples.expense_rules
 - does: Example: check expense caps, approval relationships, allowed values and currency obligations with hand-written PyRel.
 - verbs: expense rules, hand written PyRel, category cap, approval limit, positive amount, approval submission, approval chain, subset rules, known categories, known chains, required currency, supported currency, vacuous rule, local DuckDB, rule witness
@@ -3422,6 +3435,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - environment allowlist: exp.adapter_policy, exp.verifier_environment, review.adapters
 - evaluate constraints: checker.evaluate, subsystem.check
 - event budget: exp.frontmatter, infra.input_policy
+- evidence freshness: examples.literature_assurance, semantics.proof_currency
 - evolution proposal: discover.output, export.ilp_service, subsystem.evolve
 - exact arithmetic: model.scalar_terms, semantics.extensions
 - exact bytes: exp.schema, export.applications
@@ -3540,6 +3554,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - reference value type: check.universe, extract.reference_schemes
 - regenerate project: codegen.regenerate, subsystem.codegen
 - register parser: cli.codegen_command, cli.conformance_command, cli.doccheck_command, cli.exp_command, cli.extract_command, cli.fidelity_command, cli.lifecycle_command, cli.measure_command, cli.recovery_command, cli.review_command, cli.synth_command, cli.verify_command, cli.witness_command
+- regression corpus: examples.literature_assurance, measure.promote
 - regular file: infra.safe_filesystem, model.population_loading
 - reject aliases: exp.frontmatter, model.architecture, skills.model_structure
 - relative path: exp.evidence_paths, model.labels
@@ -3579,7 +3594,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - skip station: agent.solve, cli.solve_command
 - souffle export: cli.export_command, export.souffle_lowering
 - source anchors: checker.evaluate, extract.source_anchors
-- source binding: model.composition, semantics.saved_judgments
+- source binding: examples.literature_assurance, model.composition, semantics.saved_judgments
 - source digest: conformance.currency, fidelity.doccheck, model.rai_import
 - source lineage: model.composition, witness.presentation
 - source spans: extract.source_anchors, model.anchors

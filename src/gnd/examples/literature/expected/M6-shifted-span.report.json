@@ -1,0 +1,935 @@
+{
+  "exit_code": 1,
+  "failed_stages": [
+    "source-binding",
+    "derivation",
+    "freshness"
+  ],
+  "inputs": {
+    "answers_sha256": "e183f2cf840b176925da2bbcf4d3cd207fb116933ebbd732301f96a385058944",
+    "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
+    "gnd_version": "0.3.1",
+    "harness_sha256": "cf6dc12b434411aee3b28dd5016c5ebe549ac513f0d431ce4b59c17ecb8d097a",
+    "run_sha256": "0b806030fd2601713cd275c62d7734a853d4b0935f7e719fa188de3678480396"
+  },
+  "labels": {
+    "independent": false,
+    "kind": "single-author",
+    "note": "Labels were written by the corpus author from the public works; they are not independent expert ground truth."
+  },
+  "not_measured": [
+    {
+      "owner": "LI2",
+      "stage": "identity-decisions"
+    },
+    {
+      "owner": "run",
+      "stage": "derivation"
+    },
+    {
+      "owner": "literature-depth LD3",
+      "stage": "coverage"
+    }
+  ],
+  "reason": null,
+  "schema": "literature-assurance-report/1",
+  "stages": [
+    {
+      "active": true,
+      "agreement": {
+        "denominator": 12,
+        "numerator": 12,
+        "rate": 1.0
+      },
+      "disagreements": {
+        "count": 0,
+        "units": []
+      },
+      "exclusions": [],
+      "failed_floors": [],
+      "floor": {
+        "agreement": [
+          1,
+          1
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": null,
+      "refused_units": 0,
+      "routes": [
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/vampnets/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/vampnet/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/wham-whale/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/wham-pose/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/opencap-monocular/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/apinn/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/pinn-failure-modes/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/boltz-1/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/posex/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/flows-review/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/sbi-frontier/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/sensor-placement/population.json",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        }
+      ],
+      "sample_size": 12,
+      "stage": "model-population-validity",
+      "status": "pass",
+      "unit": "run source population",
+      "unresolved": 0
+    },
+    {
+      "active": true,
+      "disagreements": {
+        "count": 4,
+        "units": [
+          "f15",
+          "f16",
+          "f17",
+          "f18"
+        ]
+      },
+      "exclusions": [],
+      "failed_floors": [
+        "recall",
+        "refused"
+      ],
+      "floor": {
+        "precision": [
+          1,
+          1
+        ],
+        "recall": [
+          1,
+          1
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": null,
+      "precision": {
+        "denominator": 35,
+        "numerator": 35,
+        "rate": 1.0
+      },
+      "recall": {
+        "denominator": 39,
+        "numerator": 35,
+        "rate": 0.8974358974358975
+      },
+      "refused_units": 4,
+      "routes": [
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/vampnets/population.json",
+            "--anchors",
+            "run/composition/vampnets/population.json.anchors.json",
+            "--document",
+            "run/composition/vampnets/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/vampnet/population.json",
+            "--anchors",
+            "run/composition/vampnet/population.json.anchors.json",
+            "--document",
+            "run/composition/vampnet/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/wham-whale/population.json",
+            "--anchors",
+            "run/composition/wham-whale/population.json.anchors.json",
+            "--document",
+            "run/composition/wham-whale/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/wham-pose/population.json",
+            "--anchors",
+            "run/composition/wham-pose/population.json.anchors.json",
+            "--document",
+            "run/composition/wham-pose/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/opencap-monocular/population.json",
+            "--anchors",
+            "run/composition/opencap-monocular/population.json.anchors.json",
+            "--document",
+            "run/composition/opencap-monocular/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 3
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/apinn/population.json",
+            "--anchors",
+            "run/composition/apinn/population.json.anchors.json",
+            "--document",
+            "run/composition/apinn/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/pinn-failure-modes/population.json",
+            "--anchors",
+            "run/composition/pinn-failure-modes/population.json.anchors.json",
+            "--document",
+            "run/composition/pinn-failure-modes/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/boltz-1/population.json",
+            "--anchors",
+            "run/composition/boltz-1/population.json.anchors.json",
+            "--document",
+            "run/composition/boltz-1/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/posex/population.json",
+            "--anchors",
+            "run/composition/posex/population.json.anchors.json",
+            "--document",
+            "run/composition/posex/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/flows-review/population.json",
+            "--anchors",
+            "run/composition/flows-review/population.json.anchors.json",
+            "--document",
+            "run/composition/flows-review/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/sbi-frontier/population.json",
+            "--anchors",
+            "run/composition/sbi-frontier/population.json.anchors.json",
+            "--document",
+            "run/composition/sbi-frontier/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/sensor-placement/population.json",
+            "--anchors",
+            "run/composition/sensor-placement/population.json.anchors.json",
+            "--document",
+            "run/composition/sensor-placement/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        }
+      ],
+      "sample_size": 39,
+      "stage": "source-binding",
+      "status": "fail",
+      "unit": "anchored fact role",
+      "unresolved": 0
+    },
+    {
+      "abstention": {
+        "denominator": 12,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "active": true,
+      "aggregate": "harness micro-total over the assertion fact types",
+      "disagreements": {
+        "count": 0,
+        "note": "gnd fidelity reports counts, not which fact matched; units lists abstained passages only",
+        "units": []
+      },
+      "exclusions": [],
+      "failed_floors": [],
+      "floor": {
+        "abstention_max": [
+          1,
+          5
+        ],
+        "precision": [
+          9,
+          10
+        ],
+        "recall": [
+          9,
+          10
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": null,
+      "per_domain": [
+        {
+          "abstention": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "bioacoustics",
+          "precision": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "recall": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "sample_size": 1
+        },
+        {
+          "abstention": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "biomechanics",
+          "precision": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "recall": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "sample_size": 2
+        },
+        {
+          "abstention": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "computer-vision",
+          "precision": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "recall": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "sample_size": 1
+        },
+        {
+          "abstention": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "domain": "molecular-dynamics",
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "recall": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "sample_size": 0
+        },
+        {
+          "abstention": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "music",
+          "precision": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "recall": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "sample_size": 1
+        },
+        {
+          "abstention": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "domain": "probabilistic-ml",
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "recall": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "sample_size": 0
+        },
+        {
+          "abstention": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "scientific-ml",
+          "precision": {
+            "denominator": 3,
+            "numerator": 3,
+            "rate": 1.0
+          },
+          "recall": {
+            "denominator": 3,
+            "numerator": 3,
+            "rate": 1.0
+          },
+          "sample_size": 3
+        },
+        {
+          "abstention": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "statistics",
+          "precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "recall": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "sample_size": 2
+        },
+        {
+          "abstention": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "domain": "structural-biology",
+          "precision": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "recall": {
+            "denominator": 1,
+            "numerator": 1,
+            "rate": 1.0
+          },
+          "sample_size": 2
+        }
+      ],
+      "precision": {
+        "denominator": 8,
+        "numerator": 8,
+        "rate": 1.0
+      },
+      "recall": {
+        "denominator": 8,
+        "numerator": 8,
+        "rate": 1.0
+      },
+      "refused_units": 0,
+      "routes": [
+        {
+          "argv": [
+            "fidelity",
+            "model.orm.yaml",
+            "--cases",
+            "fidelity-cases",
+            "--artifacts",
+            "corpus/artifacts",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        }
+      ],
+      "sample_size": 12,
+      "stage": "semantic-support",
+      "status": "pass",
+      "unit": "assertion with a support label",
+      "unresolved": 0
+    },
+    {
+      "active": false,
+      "failed_floors": [],
+      "owner": "LI2",
+      "sample_size": 0,
+      "stage": "identity-decisions",
+      "status": "not-measured",
+      "unit": "cross-source key pair with an identity label"
+    },
+    {
+      "active": true,
+      "disagreements": {
+        "count": 0,
+        "units": []
+      },
+      "exclusions": [],
+      "failed_floors": [],
+      "floor": {
+        "abstention_max": [
+          0,
+          1
+        ],
+        "precision": [
+          1,
+          1
+        ],
+        "recall": [
+          1,
+          1
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": "run",
+      "refused_units": 0,
+      "routes": [],
+      "sample_size": 0,
+      "stage": "derivation",
+      "status": "not-measured",
+      "unit": "derived row, claimed or recomputed",
+      "unresolved": 0
+    },
+    {
+      "active": false,
+      "failed_floors": [],
+      "owner": "literature-depth LD3",
+      "sample_size": 0,
+      "stage": "coverage",
+      "status": "not-measured",
+      "unit": "inspected document section"
+    },
+    {
+      "active": true,
+      "disagreements": {
+        "count": 1,
+        "units": [
+          "composition:absent"
+        ]
+      },
+      "exclusions": [],
+      "failed_floors": [
+        "recall"
+      ],
+      "floor": {
+        "precision": [
+          1,
+          1
+        ],
+        "recall": [
+          1,
+          1
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": null,
+      "precision": {
+        "denominator": 24,
+        "numerator": 24,
+        "rate": 1.0
+      },
+      "recall": {
+        "denominator": 25,
+        "numerator": 24,
+        "rate": 0.96
+      },
+      "refused_units": 0,
+      "routes": [
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/vampnets/population.json",
+            "--anchors",
+            "run/composition/vampnets/population.json.anchors.json",
+            "--document",
+            "run/composition/vampnets/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/vampnet/population.json",
+            "--anchors",
+            "run/composition/vampnet/population.json.anchors.json",
+            "--document",
+            "run/composition/vampnet/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/wham-whale/population.json",
+            "--anchors",
+            "run/composition/wham-whale/population.json.anchors.json",
+            "--document",
+            "run/composition/wham-whale/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/wham-pose/population.json",
+            "--anchors",
+            "run/composition/wham-pose/population.json.anchors.json",
+            "--document",
+            "run/composition/wham-pose/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/opencap-monocular/population.json",
+            "--anchors",
+            "run/composition/opencap-monocular/population.json.anchors.json",
+            "--document",
+            "run/composition/opencap-monocular/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 3
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/apinn/population.json",
+            "--anchors",
+            "run/composition/apinn/population.json.anchors.json",
+            "--document",
+            "run/composition/apinn/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/pinn-failure-modes/population.json",
+            "--anchors",
+            "run/composition/pinn-failure-modes/population.json.anchors.json",
+            "--document",
+            "run/composition/pinn-failure-modes/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/boltz-1/population.json",
+            "--anchors",
+            "run/composition/boltz-1/population.json.anchors.json",
+            "--document",
+            "run/composition/boltz-1/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/posex/population.json",
+            "--anchors",
+            "run/composition/posex/population.json.anchors.json",
+            "--document",
+            "run/composition/posex/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/flows-review/population.json",
+            "--anchors",
+            "run/composition/flows-review/population.json.anchors.json",
+            "--document",
+            "run/composition/flows-review/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/sbi-frontier/population.json",
+            "--anchors",
+            "run/composition/sbi-frontier/population.json.anchors.json",
+            "--document",
+            "run/composition/sbi-frontier/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composition/sensor-placement/population.json",
+            "--anchors",
+            "run/composition/sensor-placement/population.json.anchors.json",
+            "--document",
+            "run/composition/sensor-placement/document.txt",
+            "--format",
+            "json"
+          ],
+          "exit": 4
+        },
+        {
+          "argv": [
+            "fidelity",
+            "model.orm.yaml",
+            "--cases",
+            "fidelity-cases",
+            "--artifacts",
+            "corpus/artifacts",
+            "--format",
+            "json"
+          ],
+          "exit": 0
+        }
+      ],
+      "sample_size": 25,
+      "stage": "freshness",
+      "status": "fail",
+      "unit": "evidence binding",
+      "unresolved": 0
+    }
+  ],
+  "unscored_labels": [
+    {
+      "count": 8,
+      "kind": "chains",
+      "owner": "LI5"
+    },
+    {
+      "count": 8,
+      "kind": "reuse_cases",
+      "owner": "LI2, LI3"
+    },
+    {
+      "count": 6,
+      "kind": "identity_pairs",
+      "owner": "LI2"
+    },
+    {
+      "count": 4,
+      "kind": "name_pairs",
+      "owner": "LI3"
+    }
+  ]
+}

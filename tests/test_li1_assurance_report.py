@@ -329,6 +329,16 @@ def test_harness_refusals(reason, edit, tmp_path):
     assert (report["exit_code"], report["reason"]) == (3, reason)
 
 
+def test_symlinked_run_path_is_resolved(tmp_path):
+    # Implementation finding: gnd refuses paths through a symlink, so an unresolved
+    # symlinked run directory would score every route as refused.
+    real = tmp_path / "real"
+    shutil.copytree(EXAMPLE / "runs/reference", real)
+    link = tmp_path / "link"
+    link.symlink_to(real, target_is_directory=True)
+    assert _score(link)["exit_code"] == 0
+
+
 def test_time_bound():
     harness = _harness()
     passages = [{"id": f"d.p{i}", "document": "d", "span": {"start": i * 10, "end": i * 10 + 9}} for i in range(5000)]
@@ -337,3 +347,30 @@ def test_time_bound():
     index = harness.passage_index(passages)
     assert len(harness.anchors_in_passages(index, anchors)) == 5000
     assert time.monotonic() - started < 10
+
+
+# --- T24 (implementation successor, amendment A5): full report goldens -----------------
+
+GOLDEN_CASES = ("reference", *sorted(MUTATIONS))
+
+
+def _report_for(name: str, tmp: Path) -> dict:
+    return _score(EXAMPLE / "runs/reference" if name == "reference" else build_case(name, tmp))
+
+
+@pytest.mark.parametrize("name", GOLDEN_CASES)
+def test_report_golden(name, tmp_path):
+    golden = json.loads((EXPECTED / f"{name}.report.json").read_text(encoding="utf-8"))
+    assert _report_for(name, tmp_path) == golden
+    assert_matches_expectation(golden, name)
+
+
+if __name__ == "__main__" and sys.argv[1:] == ["--write-goldens"]:
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as scratch:
+        for case in GOLDEN_CASES:
+            report = _report_for(case, Path(scratch).resolve())
+            (EXPECTED / f"{case}.report.json").write_text(
+                json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+            print(f"wrote expected/{case}.report.json exit {report['exit_code']}")

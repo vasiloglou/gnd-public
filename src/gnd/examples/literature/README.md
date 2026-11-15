@@ -93,8 +93,61 @@ inside a passage it abstains on.
 
 ### `literature-assurance-report/1`
 
-The report written by the harness. Its fields are specified in the phase
-spec, §6.3, until the harness lands. This section will then hold them.
+The report written by `python -m gnd.examples.literature.assurance_report
+CORPUS ANSWERS RUN [--out PATH]`, where CORPUS is this directory.
+
+**Exit codes.** The process exits with the report's `exit_code`:
+- 0 when every active stage is `pass`;
+- 1 when any active stage is `fail`, or `not-measured` because the run left
+  out a route's input;
+- 3 when the harness refuses an input.
+
+**A refused input** gets `stages: []` and a `reason`. The reasons, in
+validation order:
+1. `input:unreadable`, `input:too-large` (every document is capped at 4 MiB
+   on read), `input:not-json` (no NaN, depth at most 64, integers at most 128
+   digits);
+2. `input:schema`;
+3. `corpus:digest-mismatch`, `run:corpus-mismatch`;
+4. `run:unknown-source`, `run:document-mismatch`, `run:unknown-passage`,
+   `run:abstained-passage-asserted`;
+5. `internal`, for anything unforeseen.
+
+**Top-level fields:**
+- `schema`, `exit_code` and `reason` (`null` when scored);
+- `inputs`: `corpus_sha256`, `answers_sha256`, `run_sha256` (a digest over
+  every file of the run), `gnd_version` and `harness_sha256`;
+- `labels`: the answer key's labeller `kind`, `independent` and `note`;
+- `stages`: the seven stages, in order;
+- `failed_stages`, in stage order;
+- `not_measured`: each stage not measured, with its owner;
+- `unscored_labels`: the label groups this report does not score, with their
+  counts and owners.
+
+**Fields of each active stage:**
+- `status`: `pass`, `fail` or `not-measured`;
+- `owner`: `null`, or `run` when the run left out the stage's route input;
+- `failed_floors`: names from `agreement`, `precision`, `recall`,
+  `abstention`, `refused` and `route-refused`;
+- `unit`, `sample_size`, `exclusions` and `unresolved`;
+- `disagreements`: `count` and `units`;
+- `label_disagreements` and `refused_units`;
+- `floor`: each floor as an exact fraction, where a `_max` key is an upper
+  bound;
+- `routes`: each route's `argv`, shown relative to the inputs, and its
+  `exit`;
+- `route_refused`, set when the stage's whole route refused;
+- the metrics `agreement`, `precision`, `recall` and `abstention`, each with
+  its `numerator`, `denominator` and `rate` (`null` when the denominator is
+  0).
+
+`semantic-support` adds `per_domain` and an `aggregate` note.
+
+**Status rules.** One function, `stage_status`, applies them to every stage:
+- A floor with a zero denominator fails.
+- Floors compare exact fractions, inclusively.
+- A stage with any refused unit fails.
+- A route refusal never shrinks a denominator.
 
 ### `literature-assurance-expectation/1`
 

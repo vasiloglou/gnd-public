@@ -13,6 +13,12 @@ No implementation has started. `auto=false`.
   2026-11-14 reviews the plan only. A plan-review opinion is not an opinion
   over these bytes.
 - **Baseline.** `ecd12986`.
+- **Repairs, 2026-11-15.** This spec follows plan r2 (`(p2)` tags). Round 1
+  of the plan panel found that `gnd.documents.Model` already omits some empty
+  defaults. A new projection beside them would be a third home for that rule.
+  D1 below is re-argued on that basis. W3's "unchanged" now means equal to
+  golden digests committed from the baseline. These repaired bytes carry no
+  review opinion.
 
 ## 3. Obligations
 
@@ -58,6 +64,10 @@ inputs. Witness bytes for every input that was already accepted are unchanged.
 
 ## 6. Design
 
+The design below is reading (a) of D1. Under reading (b), the same two
+omissions move into `gnd.documents.Model`'s existing hooks, and the two dump
+sites stay unchanged. `(p2)`
+
 **`src/gnd/witness/io.py`**, about 20 added lines, adds:
 
 ```python
@@ -99,7 +109,7 @@ model to show that reason ordering is unchanged.
 
 | ID | Question | Readings | Cost |
 |---|---|---|---|
-| D1 | Local projection or global serializer change | (a) `model_wire` in `witness/io.py`. (b) Make `Model.model_dump` omit null `model_id` and empty `operations` everywhere | (b) can move digests over dumps elsewhere, and the `operations` comment in `documents.py` promises byte identity for version-1 documents. Recommend (a), unless the measurement below shows (b) moves nothing |
+| D1 | Where the default-omission rule lives | (a) `model_wire` in `witness/io.py`. (b) Extend the existing omission hooks in `gnd.documents.Model` (`model_dump`, which drops `reference_populations`, and `_omit_empty_include_fields`) to omit null `model_id` and empty `operations` everywhere | (b) keeps one home but can move digests over dumps elsewhere. The `operations` comment in `documents.py` promises byte identity for version-1 documents. Under (a), `model_wire` must call the existing hooks and add only the two witness-specific omissions, with a test that lists every omission. Recommend (b) if the measurement below moves nothing, otherwise (a) `(p2)` |
 | D2 | Should `model_wire` also omit an empty `source: {}`? | Keep it, since the schema accepts it today, or omit it as an unauthored default | No difference in exit code. Keeping it is the smaller change |
 
 ### Experiment recorded before it runs
@@ -125,7 +135,8 @@ The file is `tests/test_li0_witness_wire.py`, with its fixtures under
 | T4 | Round trip: every loadable `tests/fixtures/**/*.orm.yaml` without includes, with `load` then `model_wire` then `load_model_bytes`, gives an equal `model_dump` | all equal. The test reports how many fixtures it walked, with a floor of 200. The baseline count on 2026-11-14 is 224 loadable models without includes, out of 285 files |
 | T5 | `gnd why-not --fact-type` on T1 and T3 | exit 0, `mode` is `rule` |
 | T6 | An include-bearing model through witness | the existing `include:` reason, exit 3, unchanged |
-| T7 | Witness certificates for the version-2 inputs in `test_witness_composition.py` and the v7.1 witness corpus | byte-identical to `main` |
+| T7 | Witness certificates for the version-2 inputs in `test_witness_composition.py` and the v7.1 witness corpus | equal to golden SHA-256 digests in `tests/fixtures/li0/golden.json`, generated at `ecd12986` and committed before the change `(p2)` |
+| T10 | Every version-gated default in the `allOf` of `orm-meta.schema.json` is omitted when empty | passes `(p2)` |
 | T8 | `intake` with hostile JSON (NaN, deep nesting, a long integer) | exit 3, no traceback |
 | T9 | Source scan: no `model.model_dump(` left under `src/gnd/witness/` | passes |
 

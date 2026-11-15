@@ -1,7 +1,7 @@
 # Literature identity and assertions
 
-Draft r1, 2026-11-14, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193).
-Not reviewed and not approved.
+Draft r2, 2026-11-15, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193).
+Not approved. Panel round 1 reviewed r1. The repairs in r2 are unreviewed.
 
 | Order | Phase | #193 part | Deliverable |
 |---|---|---|---|
@@ -17,5 +17,6 @@ Not reviewed and not approved.
 
 Parts 5–8 and 10 go to [literature-interop](../literature-interop/README.md)
 and [literature-depth](../literature-depth/README.md). The partition table is
-in the plan's §1.1. The next action is the plan review, then the owner's
-rulings on D1–D9 and the plan gate.
+in the plan's §1.1. The [review disposition](notes/plan-review-disposition.md)
+records round 1. Next, the owner chooses between panel round 2 (the last in
+the budget) and going straight to the plan gate, and rules on D1–D9.

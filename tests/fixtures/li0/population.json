@@ -1,0 +1,1 @@
+{"population":{"model":"grandparent.orm.yaml","source":"agent-output"},"instances":{},"facts":{"person_parent_of_person":[{"parent":"A","child":"B"},{"parent":"B","child":"C"}]}}

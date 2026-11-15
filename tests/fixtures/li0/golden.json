@@ -1,0 +1,920 @@
+{
+ "baseline": "ecd12986",
+ "certificates": {
+  "grandparent-v2.orm.yaml": "9c7504cd2463246e247e10ec8489c96a82d0dca1e09ee03f8538b1f880817975"
+ },
+ "identities": {
+  "tests/fixtures/adversarial/models/f05_frequency_external.orm.yaml": {
+   "canonical": "sha256:14d5dc7bf2a83a0ea3792d753e470322df49ae072db4fb0a8c26efd9ecaeb8e6",
+   "legacy": "4fb2c3bd0ae5092d6af8ebbca879eedb9a0bdbea3fdfe8b5a91566a549278104"
+  },
+  "tests/fixtures/adversarial/models/f05_setfam_join.orm.yaml": {
+   "canonical": "sha256:fb3c53f42fab452506de1064f7776cafedbc755f953650ea7137c302dd8ec553",
+   "legacy": "33197e246e6bc4278caca8ba64925c020d588727fa4fa1135c23ace20e33ff9c"
+  },
+  "tests/fixtures/adversarial/models/f05_uniqueness_external.orm.yaml": {
+   "canonical": "sha256:894650f88c63a8ee09f8007b8a089cdaaafc466f300f6e17f50c19498ea69e57",
+   "legacy": "ac6461e336894b9d1e535faa50c0787b5d38cd3ab376e51a09ef6ba7d0c75b2a"
+  },
+  "tests/fixtures/adversarial/models/float_range.orm.yaml": {
+   "canonical": "sha256:d102547119f4bec414df900f84febf82503668645643fcdaa2be29f32577ced9",
+   "legacy": "311b46cc61cb54e4a85661e682f2226646648c3e63aa13e0bd3594c35117d8d3"
+  },
+  "tests/fixtures/adversarial/models/hostile_values.orm.yaml": {
+   "canonical": "sha256:0f38d88b592c3eb3281538bf8e2e4c61a36314a7d16d650d4d791530f9e36246",
+   "legacy": "f5f60591014f86ad05e6d23a5f8f89c488ca13932f9963dd2b0f69655d867e66"
+  },
+  "tests/fixtures/adversarial/models/model_id_a.orm.yaml": {
+   "canonical": "sha256:bb2b36f512e00c7cb195966f977bff854464818639c64595569a33dd755c08a2",
+   "legacy": "1fe2958b352ec0acd84bfb1f4d53b96d09fd33e784529e708b3fc37ac32c91e3"
+  },
+  "tests/fixtures/adversarial/models/no_observable_subjects.orm.yaml": {
+   "canonical": "sha256:a8297ec52850d202133dee7a314ba6ba6a21380b5f8146c107351118f91ddccd",
+   "legacy": "bfc1d2722fb9b061b84af6061efa3050c22e4c36486cd02df831c2438119cf26"
+  },
+  "tests/fixtures/adversarial/models/no_subjects_cardinality_min.orm.yaml": {
+   "canonical": "sha256:9b8eaf9502bd8926b0277bc4ad87b88820867263c8eadc6b66c82796d4c22a22",
+   "legacy": "d7fe012647987f428cebcbac5c19c187fd6a0006eb58e41a0bc4ec510058f0fa"
+  },
+  "tests/fixtures/adversarial/models/omission.orm.yaml": {
+   "canonical": "sha256:fb530f58037b58be0d5034c6c18c38931df91ae0250c1f376b96adf63b0e1ba4",
+   "legacy": "dc8f8b53dd97b30bac157d49cf0715541b041a5ffdb7c64a760826df227aa1c6"
+  },
+  "tests/fixtures/adversarial/models/partition_exclusive.orm.yaml": {
+   "canonical": "sha256:64fd40076414aedddd11d6e43c4f08294ff894c325b849d83f585a0317b958e4",
+   "legacy": "fc267a34a3e79a89cf4ef144cf2e17afb10aa83b3599bde4840988e2d6be099d"
+  },
+  "tests/fixtures/adversarial/models/reference_cardinality.orm.yaml": {
+   "canonical": "sha256:4fe58781972b185e99bc2057d2006104a2071f4dcdaa7ffb80cf3accd8848323",
+   "legacy": "3d415c60045dc640afde846553bd2bf5fd45ebc748064660c2e3e86e0992e56a"
+  },
+  "tests/fixtures/adversarial/models/reference_value_type.orm.yaml": {
+   "canonical": "sha256:34172a19a04a353a8f5a5b1c6cbbf19f4c322861813042ee99767cc5353a4fe4",
+   "legacy": "1646b6afbd273d735902c9ad3c381cd9c150e190c7c711aaf32450179b601a1c"
+  },
+  "tests/fixtures/adversarial/models/subtype_mandatory.orm.yaml": {
+   "canonical": "sha256:c6777ac9e01dc6a69a46098f2eab04e0f587c529536a123334982474a4aee309",
+   "legacy": "6f591253b798785ff686a8e7b5de921c5b59526a3a8687133da5cd65583447a5"
+  },
+  "tests/fixtures/adversarial/models/textual_alethic.orm.yaml": {
+   "canonical": "sha256:d009595aafcc98ca416078560a97a0187b13f2f0cbc22a67e76bf421ea5d6b86",
+   "legacy": "9d4233ba6499828036feb926b154135658a12f34fd4c07a66af81071965e6a1f"
+  },
+  "tests/fixtures/adversarial/models/typed_range.orm.yaml": {
+   "canonical": "sha256:64b10ad17c5a0a6395fc1458fa3116fd5726bef51c3d20cf48ccd52a262b747e",
+   "legacy": "de3d76d15832ef58d656efeb1fd245dc6021769772558fcfe0c8abda1c35d296"
+  },
+  "tests/fixtures/adversarial/models/uncomparable_literal.orm.yaml": {
+   "canonical": "sha256:3e761f7cca68b6c1c92e898b484dd9ad5880456273190fac254e4d0ec67622f7",
+   "legacy": "9c56c1414c269c6d198211c435898b9f6d1ee4681ed4e2c53d0d69489d04ac12"
+  },
+  "tests/fixtures/adversarial/models/unresolvable_bound.orm.yaml": {
+   "canonical": "sha256:8d0bc9d088cd624037203a4425088cc66ba32d04ea5cc1eff3507577764d67fc",
+   "legacy": "4f086da82c938065668b2976c4de2cf30b6370b77d85eda76bb2b2b0bd8e9618"
+  },
+  "tests/fixtures/adversarial/models/xor_multirole.orm.yaml": {
+   "canonical": "sha256:438b0d1223f894086fd5b8a66f0889f6ea927934bc68f6f47e3e4c5e4bbdc20f",
+   "legacy": "4c4bc53e22538b3d0082c4df6b19727fc985dfde6b24c7f5fdd1e209b136e3d8"
+  },
+  "tests/fixtures/architecture/static/model.orm.yaml": {
+   "canonical": "sha256:1deba9cfe03c46bc2c2c447e0237be89eb90d60cd2ccb711e79d0004bd156c70",
+   "legacy": "da0c80678c6d7dc4d4ccd1cfe7f935987f99d9df06d910a9e11a3d0ce3f30e9b"
+  },
+  "tests/fixtures/checker/misc.orm.yaml": {
+   "canonical": "sha256:1e5c71c0fa0ff9aea80420ba55dccd9f9395b35fb549f3d45b5d70ac1beba172",
+   "legacy": "9545284078b7042c21c6962a68188dab8192beb1fc74ee049ca00cee2ac85209"
+  },
+  "tests/fixtures/checker/ring.orm.yaml": {
+   "canonical": "sha256:2c6167790c012658b87619d5c95966332a891b6d30ba6f08349408a0c19ded41",
+   "legacy": "bd3e6e3a0ef16ad1f94250074c411a0da6f6ab39f58d460b5fb209f178caf737"
+  },
+  "tests/fixtures/checker/setfam.orm.yaml": {
+   "canonical": "sha256:b1b9ed41859e6b4a876c2198161d4fe2b9d273959b55e31856a4be2071219a70",
+   "legacy": "221b91c83ad59f6f1f387020fb4b97e038793179b84bac8a3e8ff2cb7248f7fd"
+  },
+  "tests/fixtures/coverage/mixed/v2_operations.orm.yaml": {
+   "canonical": "sha256:65a69f322426fe7e2f42b0e74b377009f5949837bc481ad69428dad860d113a8",
+   "legacy": "819491f97e3a5882217d852b7c21b70487ca082bf9f88ffbded5e6cdb5e3ccc5"
+  },
+  "tests/fixtures/coverage/positional/library.orm.yaml": {
+   "canonical": "sha256:f52589b794f74d0a3bf056c84cdb11cabd3bdd6498ba6817a4678f21c08af6c3",
+   "legacy": "8c598378a7509c43a7907faf29410c6b25bb7bf4d838920143ee39ef109920d3"
+  },
+  "tests/fixtures/coverage/refused/v2_worked_example.orm.yaml": {
+   "canonical": "sha256:1442a85a19ecdf8dd242780903d3ba2ef01afbbf9b85f340f74c0d3ac44311df",
+   "legacy": "fbcfde082dbcbb76ddb12be314ab5ae622b8dad4c023a7447ed3d95180d32e41"
+  },
+  "tests/fixtures/derivation-evaluation/cases/constraint-semiderived-computed-view/model.orm.yaml": {
+   "canonical": "sha256:1c81ab9c2a3c278fa9ecd428fa089dfcc9bea6235f68441c08a89ba71f759e4f",
+   "legacy": "efc27973339b2d3a585eb2134a4c89dd9aacaefab27702f1fac3c181d6263020"
+  },
+  "tests/fixtures/derivation-evaluation/cases/cost-chain-counted/model.orm.yaml": {
+   "canonical": "sha256:5dd68d6f19c8c1607b39a71fe506be2952b2d9e60d8a5c8ba28e897615ce4844",
+   "legacy": "d00bba4dd5414e99419330997ce8eb45fb16972e5cae0fc460d675ffb7b1424f"
+  },
+  "tests/fixtures/derivation-evaluation/cases/cost-quadratic-mutation-red/model.orm.yaml": {
+   "canonical": "sha256:92936206172c9848d2821caf1786627acfdc8b2508fa137be958f73aad824f3c",
+   "legacy": "215aad25a2899568d4872d679cc2513958417657f0348b0a09872b84c679d3b8"
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-bare-dollar-literal/model.orm.yaml": {
+   "canonical": "sha256:fcdd453de95b9700ea73a3840c90a7ff4ef75c6f0c15a5663413b611b1ab03ce",
+   "legacy": "5771be5e0bc4a45ce5a1c003dad5191b536e63c41a531f2404624999f328ffd5"
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-depth3-dependency-order/model.orm.yaml": {
+   "canonical": "sha256:9b4d72231f454b57a853a11b6c302a8234edfde19daa7801312d00dbd56346cc",
+   "legacy": "327726f74b6a04121203a1eb71b85c42e8f44519fdf4c19d5612e959d56841c9"
+  },
+  "tests/fixtures/derivation-evaluation/cases/eval-negated-present/model.orm.yaml": {
+   "canonical": "sha256:dd451f90340653ec4502d7d8d0d9bbcaa2cb5019bebcd5be9a52e3acec43d51c",
+   "legacy": "d5db20ab26dd588ac4783264b011828f99ac38eee5d2cc9d046268af18bbd1ee"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-derived-both-differences/model.orm.yaml": {
+   "canonical": "sha256:829c551b49906b6137a83fb4439a97001064bec1b8a7c0b1f1f99f85a274e8aa",
+   "legacy": "b0260468cf5302afd3b5e12e6a3cc4649ade6f5ecf4dd26e8c7953fe06e640bc"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-opaque-mixed-listed/model.orm.yaml": {
+   "canonical": "sha256:e41e65f15670144bb55391ef65456f5f35de6896a081a5a38cc926c0d19cb76a",
+   "legacy": "fe7fa0bcc501a3d117df52420405aba81e631bfc2db00fa28893892484214c45"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-semiderived-surplus/model.orm.yaml": {
+   "canonical": "sha256:7d2e2c6697f7ee661ee378a4fabbcfb5528530242550905546e17f274ff3bb74",
+   "legacy": "d9fcb6448c6a4664695c525b6a8909e34f9f7211336391df9f1233ea537aec54"
+  },
+  "tests/fixtures/derivation-evaluation/cases/obligation-unlisted-derived-empty-computed/model.orm.yaml": {
+   "canonical": "sha256:760429774787162d5f513f76c60e32134a06a6e235ea895852ac0562b54081c2",
+   "legacy": "08c1f2264158bffb22fd83ed69d94372a7efa8062a005e5a5f3fcc52d38e3f74"
+  },
+  "tests/fixtures/derivation-evaluation/cases/wire-text-json-parity/model.orm.yaml": {
+   "canonical": "sha256:149a015fc2c8e9e7bf36661efee4b96492e4a9c97ffd64d899c36b2fab9561db",
+   "legacy": "03298057ffe6ac64a8fcb634e1d76c228f87caad7bc609ce81cd80213ca65431"
+  },
+  "tests/fixtures/derivation-evaluation/cases/wire-v4-structured-check/model.orm.yaml": {
+   "canonical": "sha256:309fdaf5bfbdec7cb2880e1830bc5354bbb0637c88c187cb180306e1ba4056e3",
+   "legacy": "638ee023b102c8c9b98d3980b743bc71b73cfcee6fd1cad44ae625d90b5b489b"
+  },
+  "tests/fixtures/derivation/cases/a01-string-arm.orm.yaml": {
+   "canonical": "sha256:d3e0fc70135b5244c4e564e91268617883d4bb26dcaf40073321ca3d4e7c27ed",
+   "legacy": "14b183343a6e0f4a42dbb852b654690ed7d9c0672b07ddbb0c5500e6922e7045"
+  },
+  "tests/fixtures/derivation/cases/a02-object-arm.orm.yaml": {
+   "canonical": "sha256:3f6b473938f7f1f79e31647d803614cf98c07a72b6e3948e11d4e28d0f228587",
+   "legacy": "7091de3d5f9958d313422d39cd390d434ac922c3ffd981a624b09d6c303b2abb"
+  },
+  "tests/fixtures/derivation/cases/a03-absent.orm.yaml": {
+   "canonical": "sha256:d9f819ec715333e6249f1837411b3b72543d87b71c372b2f449b9a209c649bfc",
+   "legacy": "5523614c8943180c2d077b65d808074e6f7cee47b5d2d344b994170a2042e887"
+  },
+  "tests/fixtures/derivation/cases/a04-compatible-subtype.orm.yaml": {
+   "canonical": "sha256:e33f78c245d4145531b0f3bba76c3a2fa3821639373c1329cc2bd5539df28bbe",
+   "legacy": "64ca3580d10ba08288a068bb4afd9c9257050efabc8b70ec24348bc78dff05b9"
+  },
+  "tests/fixtures/derivation/cases/a05-compatible-numeric.orm.yaml": {
+   "canonical": "sha256:5f0f060c2c1feee82f58a1f6b30e2e821ee4ef39c6bdfab7e073ec97a83105d4",
+   "legacy": "8ecad31bb5d5dd24cde4b9b65c10e7a0028f5d22b05936da01cf2106f2eececb"
+  },
+  "tests/fixtures/derivation/cases/a06-dag-depth-3.orm.yaml": {
+   "canonical": "sha256:3348f4f7f8339038842f357ec909aef6bc62b600242cc2d10ce6920b6f65b542",
+   "legacy": "e3e3bc3ff2cb07c0027455b51e2e62207d68f36321a54ad11fc37869bf363dd1"
+  },
+  "tests/fixtures/derivation/cases/a07-component-product.orm.yaml": {
+   "canonical": "sha256:ace02f5f490c3d37d76d3ccc23fd031bc5659e73037c502c7db1ca244060c859",
+   "legacy": "399a252b09306987cd9313366f2a45548674a0ca3caf7ad0db1978b1ccad18b8"
+  },
+  "tests/fixtures/derivation/cases/a08-semiderived.orm.yaml": {
+   "canonical": "sha256:69a5ad156fd97c53f9fc00bbedd0509e5740d82fcaa7f433684032fda5db9a23",
+   "legacy": "caa86126f0038887fb12b508f5cea4b05cb2a8928f2ce9a1f613d34a57a79550"
+  },
+  "tests/fixtures/derivation/cases/m07-token-dag-to-cycle.orm.yaml": {
+   "canonical": "sha256:c87a56b90085c068afcec4fadcda9160dfb01bf5982c66c9500e3e8d879205fb",
+   "legacy": "510a1a1e8c8d782a97cf6d9afcb7d384dee6e4dac60f6bb96b28cf1bd2de3030"
+  },
+  "tests/fixtures/derivation/cases/r22-head-literal-number.orm.yaml": {
+   "canonical": "sha256:32273c993f869f0c42a17f318260b1c9b5fd371ccad05402bb55452ecd7e06de",
+   "legacy": "76051f6df3b263474c63f2ff0d3ac5a25f240c0a476b9570e1d0b8dc48b87475"
+  },
+  "tests/fixtures/derivation/cases/r29-self-loop.orm.yaml": {
+   "canonical": "sha256:107de2c7787f8f373f36c813cca66d5d6be18d9dfc0c5d27269bf9993c2f2807",
+   "legacy": "9e9533b610268e7e7d93e626837f749b8ea6aa96887709dc5264b61d7a8d5862"
+  },
+  "tests/fixtures/derivation/cases/r30-cycle-2.orm.yaml": {
+   "canonical": "sha256:9a847635c5795d6b68009da615d20eb3b3d2d000e20edf823b103729e0e54429",
+   "legacy": "c39143a5f46319f3c095d813a424a593570acd472bd9cdf2eac86820ed839aa0"
+  },
+  "tests/fixtures/derivation/cases/r31-cycle-3.orm.yaml": {
+   "canonical": "sha256:388e6dbf63d5d1e00d2d9b4c98417d9e0e2d68fd41475a933d8af48f6030aa2d",
+   "legacy": "257278f19f273cd61596776fd9ced428770f3cde9d52adb3a82e10ba7d6aa299"
+  },
+  "tests/fixtures/derivation/cases/r37-operations-plus-derivation.orm.yaml": {
+   "canonical": "sha256:02ad6de8b761a198df45f43a6fd0ca777d5c9e3718f0e900cdd07c61ceadfa4a",
+   "legacy": "348661af134824f92e89b3d9887de814ee6d9844b6548829087cfe904ce8e0d3"
+  },
+  "tests/fixtures/evolve-policy/base.orm.yaml": {
+   "canonical": "sha256:fcca48b25b469f58220d793414c85a0ed4ae24c08847f22dc64ee211dc2ad87b",
+   "legacy": "068d2e36fc7060c7e878761b1ba598452708afc93cda4e91bfac7e8573be2c61"
+  },
+  "tests/fixtures/fu1-term-reasons/models/terms.orm.yaml": {
+   "canonical": "sha256:0e5800575eac88eb99cc1636ae0568cfe8f3dd0db0ed4c9276763b7c1cb6d142",
+   "legacy": "bbeda1fc82101a1d1186430f265f934124ef3a3dcd960507a4bb9861ea324022"
+  },
+  "tests/fixtures/fu3-derived-ring/models/ring.orm.yaml": {
+   "canonical": "sha256:65c7bf917f0d3ca3104f1fac5d0214a25cfb8782efd237a64314269fb9bc6316",
+   "legacy": "aaa2d3560fe9fd1c21365219dae24f87b31e333f84dfd76e733f41e979914a9c"
+  },
+  "tests/fixtures/guarded/models/alethic.orm.yaml": {
+   "canonical": "sha256:f9f35c3d5de1818c51cb0698445d6b8d5e60b3357e7bb487bc185f5501253c0d",
+   "legacy": "c2e18fd4390f9a0b550660d8b4d088790e677b8c0073ea343199b06f96be2e69"
+  },
+  "tests/fixtures/guarded/models/deontic.orm.yaml": {
+   "canonical": "sha256:7a2d2d15acf5bb3a62cc662759670857bf35ba5ab0f80f05374179d58ab1db9f",
+   "legacy": "afb9843fcfbd2f32d88c4be5c49409e058479127ba292d0db83e5d29fd07d832"
+  },
+  "tests/fixtures/guarded/models/disconnected.orm.yaml": {
+   "canonical": "sha256:ddc684e3ce3b359911412200d48a15a3534a7e19e5cf901373b0de16d9fcbcda",
+   "legacy": "348838d2be3cf3981170f6627474d1dac6273dac5e8ba2bc36b3493dd33d9634"
+  },
+  "tests/fixtures/guarded/models/join.orm.yaml": {
+   "canonical": "sha256:b977518b1d0764894e7fe16814a4d84fd2f8cad95b8c711f54757b173fef5db1",
+   "legacy": "e9d98e1f39d232349294f65991a35fa9ca697c006ab2f424f5590a7284a1b152"
+  },
+  "tests/fixtures/guarded/models/submission.orm.yaml": {
+   "canonical": "sha256:89f46898241e7229b97e640b5d9f5bf94fead4647d7476f38b35584d92b3be5d",
+   "legacy": "d6bbd4ed572848794294d731b67c0fdd6f4b6a1d698e8f8c4b48ecde37c1a12a"
+  },
+  "tests/fixtures/guarded/models/undecidable.orm.yaml": {
+   "canonical": "sha256:c41a7f1ba9161d9b79c2fcc062a7cb24e2b925a59d2df5c54d66efe47ad50a88",
+   "legacy": "e272a96688d821f549c1b05eda189e1165d26c1d54dcf61b26f8d8458fc99450"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-director.orm.yaml": {
+   "canonical": "sha256:325cc2ba1363597cde9d35429b98522462dc815a271fc43f348d5455f8e5ff26",
+   "legacy": "59fb65458942ca858e57a8e795e1e7774628bf3e1c24956c25e12b1f24a04d59"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-number.orm.yaml": {
+   "canonical": "sha256:36ae9979d292a4f0cf2774a21b09bc12028767fec6a7717cc7cf696daf64ffc2",
+   "legacy": "dbd303a274638c166f65c62b47feb3391232d6e72b7576f563320fc32655e0b5"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond-string.orm.yaml": {
+   "canonical": "sha256:c0e8f04c9585d3eb2e0d62285f2e9d3cf9fc1c3434eb835552cc0aca6e41721b",
+   "legacy": "654807900fa5a410dd2c20c91984a7fa68a5ad92a816000a32be88c538bad6dc"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/diamond.orm.yaml": {
+   "canonical": "sha256:63a12cfb7d37573c083f253de31e9d8d3ea6fb76b1af6671af4d785295e8e2fb",
+   "legacy": "2272b1ec4589278b5c622ec806716e6d48620d8b0566e25b781718aac2d678a1"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/ownref-object.orm.yaml": {
+   "canonical": "sha256:301ae42124a5463a9752af60f549a0725eab6e75d4ee8c98cbcfe911465bb7ef",
+   "legacy": "fb698e4db3049a0a5f3a37dbd106248b6cbec343f4fdb0833fcb0c79d485e7fa"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/ownref-string.orm.yaml": {
+   "canonical": "sha256:a8bc67a2bf190511506390c9a8ab559de502a28b753d3431604c73eb395e6532",
+   "legacy": "a0dd67ec368c229e993d8b5846a2cfcb1e60f0d47fa126bcb65003074eabbaf4"
+  },
+  "tests/fixtures/ilp_import_hardening/ih2/tops.orm.yaml": {
+   "canonical": "sha256:4e9112c9659b5e8d819dcdc71ded868cd22e4c9231d4f857d7a0bbc8b9d3fb94",
+   "legacy": "24ced590d7be4d63a2e72f08bc73a6e4f5fbb1969c2f6a05dc052f52ae47ea87"
+  },
+  "tests/fixtures/ilp_learners/close/cyclic.orm.yaml": {
+   "canonical": "sha256:fcc974476145bbbdbf5969ffddbc3ef76916779c0526aaa8b9fa63f47f95e9d4",
+   "legacy": "87ee62d5085889fab799c13e3ab55bd058817ada2a209b1abe0be0c3c29a2960"
+  },
+  "tests/fixtures/ilp_learners/close/family.orm.yaml": {
+   "canonical": "sha256:725974491e7abaa908d9874a59b67920cd482b9123faa810023ef77e02b9dd3e",
+   "legacy": "267b5c8e382789c54007fa4e7a13027a8f33c8f7e9ed6afc9c8ef9f040c65794"
+  },
+  "tests/fixtures/ilp_learners/close/multi.orm.yaml": {
+   "canonical": "sha256:4f38278bc7d854ab16aa14e60acbbb66ddf0924caf8ca75f52acf7ced6a77b3a",
+   "legacy": "6fbbd11eba64a437376cb13ac8079962af77ed6fdfdd6b2ca776ee2c018afcb9"
+  },
+  "tests/fixtures/ilp_learners/close/orders.orm.yaml": {
+   "canonical": "sha256:d3e6f1666f9b50c4b3f4dad61b55789c2806e2af4479c780ea19fa27996aa78a",
+   "legacy": "6dc88021681420485117eed8d9341efb701652ae0cec37f0a4f84c72aacf9708"
+  },
+  "tests/fixtures/ilp_learners/close/ownref.orm.yaml": {
+   "canonical": "sha256:1416c68c693e136f7a7b7a43499a3a2ca1cdf3d48de4fd3d195842d6adbe71d0",
+   "legacy": "a368a29e922e8d2fac19cf737557fedb1931465ef0e09c4e5eb260088910e789"
+  },
+  "tests/fixtures/ilp_learners/close/staffing-swapped.orm.yaml": {
+   "canonical": "sha256:89919cada9d27974e7c1a8cb63dba17d41c6645827d40592c3ff70ae7db46beb",
+   "legacy": "a7f33b68fc8e8328425af35131705bcd3f73f27a1e0b2f83be9e06dd4a80052f"
+  },
+  "tests/fixtures/ilp_learners/close/subtype.orm.yaml": {
+   "canonical": "sha256:3802bb5bdc85de45e8205757328fb13dc6678d44d51a4c3491ae4fa04fa5219a",
+   "legacy": "d571fcb687f9ddedf4e30b766bed4f3d36f849aa30248586f181ca57e1f6dbe7"
+  },
+  "tests/fixtures/ilp_learners/il4/model.orm.yaml": {
+   "canonical": "sha256:9563c1242fc6660e6a852f266df6179051375cbbb9c2d611eb7824a0ad722074",
+   "legacy": "9d8a1cbd5bfc0ab86a6bd87d708ded75e6d1ac89d61c410eec5a0c675183973d"
+  },
+  "tests/fixtures/induced_knowledge/ik3-corpus/labels.orm.yaml": {
+   "canonical": "sha256:498dee62b0d280c066ea7bcdf3eff6d5bb067a5fd370da47ba0a723f605ac5df",
+   "legacy": "cf155d887e53c8932251638514d5264c52a9218d09cc100790545f20874f99b3"
+  },
+  "tests/fixtures/induced_knowledge/ik4-corpus/staff-declared.orm.yaml": {
+   "canonical": "sha256:07a547f508fa76b3e4e7d9c84601614845aabcc0f91da7e076eeb88ec832fd6e",
+   "legacy": "6476a5cbde232d56c849fcc63392567a667f0d8a0d737857e572e8368a6b4b2b"
+  },
+  "tests/fixtures/induced_knowledge/ik4-corpus/staff.orm.yaml": {
+   "canonical": "sha256:9eb9cf218d5c1eff508fa74a7d9b9f3f592a98ddc75ad4a4b259ff99f1c6934d",
+   "legacy": "9420e22c69e557f87239b163095d98f54ccb6f2ddb81d0568ab6d8b56718bac6"
+  },
+  "tests/fixtures/induced_knowledge/ik5-corpus/orders.orm.yaml": {
+   "canonical": "sha256:41e2cac3f0808fff18d3daaefa44bbb170d9a877a5c874ea0ffb35170c390646",
+   "legacy": "eeb87a5ad7668128dffc010a6c45b5b511729e22b24c45ab1731af33f44761df"
+  },
+  "tests/fixtures/li0/grandparent-v1-no-id.orm.yaml": {
+   "canonical": "sha256:d6d250940c80da7ae56f5a4f40c7049ab4c7d2755f58378e0edae697d5593fe4",
+   "legacy": "f185f990c5acd200c434656eacf09acd33a54c0ef6500a3902ec4653e17e6a4d"
+  },
+  "tests/fixtures/li0/grandparent-v1.orm.yaml": {
+   "canonical": "sha256:a826630b81f9c8a4b5933a4ff01dfe4c15e024dafb22888e25e6f213f01862c1",
+   "legacy": "6793b7b7fe11d14daf7d89a4ba91cd290ab7e64fc0f73e09936560ac2d4a7f12"
+  },
+  "tests/fixtures/li0/grandparent-v2-no-id.orm.yaml": {
+   "canonical": "sha256:9b7597040c561220f5a1ed99c1d1ced7cc8c3e8ffd2e45ab5582756d55fdd92c",
+   "legacy": "13c02082f42ad72606320561469ebfc4d5074b8f0da0d0767512555e1b603f97"
+  },
+  "tests/fixtures/li0/grandparent-v2.orm.yaml": {
+   "canonical": "sha256:0efc56ac130faec1a8aa006c130e72fcb694269da31ac560e47aa663572dae63",
+   "legacy": "47578924713cef1a8622cdddf5797ee81cfff163425a52315920ccd64157f4ba"
+  },
+  "tests/fixtures/mc1-includes/flattened.orm.yaml": {
+   "canonical": "sha256:4d7d47a88a61606c8cf7baa0f305325b1c1984a09fa43024c5b194c1ae2c533c",
+   "legacy": "c562b383c60c1aff95cb8199487ee93f485d27600c7c609cdc12ee8992cfdaa1"
+  },
+  "tests/fixtures/mc1-includes/vocabulary.orm.yaml": {
+   "canonical": "sha256:3995482e283823f3dae39933ac879d6b1abe32caf96fbdc29e9a0a0d819c6f14",
+   "legacy": "0375db529c5880f6be08e236ecda03c134f517dbee17633b236a96e19ccd9314"
+  },
+  "tests/fixtures/migration/base/v2_migration_corpus.orm.yaml": {
+   "canonical": "sha256:c532ea5eb022a9f50a13f0a2281d82460a48e50d9ef1ab019cecd000aabe1153",
+   "legacy": "dfeaff49b4ff5b6f8118a43c98af96c8a7492da8e726948f782a19c5bc5a5741"
+  },
+  "tests/fixtures/models/dispatch.orm.yaml": {
+   "canonical": "sha256:d2c025209cbddae8e601baec93259a15fbb034cc2bf487c45e2a9f37eeab8b01",
+   "legacy": "58b5f31023ee985a0bc73d4cb73c180b8ae776f51dac84d25a2f10f136c9ba6e"
+  },
+  "tests/fixtures/models/full_vocabulary.orm.yaml": {
+   "canonical": "sha256:d469325b3db92ef77e8fd683fd1992271a0bc1427d60a70d9b1962b71a7212e1",
+   "legacy": "9ffeeada5d9eb97163eabd45bcead12bc2fbce5a3aaeca415e286e38e441bfa9"
+  },
+  "tests/fixtures/models/guarded_minimal.orm.yaml": {
+   "canonical": "sha256:fa802a12d4053ae5a57cf39532d9589b9b627a905f74dc2572553f1eb63f213f",
+   "legacy": "971cee95db13819e60e24daded6b204d91ead9c7168f55b9fd12f4e754762f60"
+  },
+  "tests/fixtures/models/keywords.orm.yaml": {
+   "canonical": "sha256:2f8256418dd7ed7c4cf8bf5bf57aad50fe35c08bb6f3e2d9ea921d225b9db3f4",
+   "legacy": "cb6f47c8e4f7c9d9f081f7628e005475aca9abf05263bca0e9a22396633b1fcb"
+  },
+  "tests/fixtures/models/library.orm.yaml": {
+   "canonical": "sha256:f52589b794f74d0a3bf056c84cdb11cabd3bdd6498ba6817a4678f21c08af6c3",
+   "legacy": "8c598378a7509c43a7907faf29410c6b25bb7bf4d838920143ee39ef109920d3"
+  },
+  "tests/fixtures/models/v2_operations.orm.yaml": {
+   "canonical": "sha256:54b4a92939f2db23bb79a86514869aa440897dbe98669e33260c1951cfed200b",
+   "legacy": "c073b49c74f969eea396becb2eea7ff31774b64bba391bd699ced8c8c7359a76"
+  },
+  "tests/fixtures/models/v2_worked_example.orm.yaml": {
+   "canonical": "sha256:1442a85a19ecdf8dd242780903d3ba2ef01afbbf9b85f340f74c0d3ac44311df",
+   "legacy": "fbcfde082dbcbb76ddb12be314ab5ae622b8dad4c023a7447ed3d95180d32e41"
+  },
+  "tests/fixtures/phase3-consumers/eligibility.orm.yaml": {
+   "canonical": "sha256:508e32490f492e55af3a88d0ad7a12d48d7b5888ce9315d1479a5e2fb54b6823",
+   "legacy": "b698dab1aaf15d14e520189aee160eb447aaa90f3e29b3f0200302fc3ad21133"
+  },
+  "tests/fixtures/phase3-consumers/legacy-derived.orm.yaml": {
+   "canonical": "sha256:1a327dffb75af76b940966f662d51f312e9632eb809e3b7c5c968e86b7890a56",
+   "legacy": "503c2b3453bf5ff31d6e62b45ad9c1d2fdf3dd8eacb71e6c18d100fb2c8694e2"
+  },
+  "tests/fixtures/public-adapter-cases/shapes/model.orm.yaml": {
+   "canonical": "sha256:a4253b6bc4d7f4d918d52d648176bd31274bf0155ae0d3f06b1cf6c81af9aa5d",
+   "legacy": "f92af11654f81b7e2d5e2dc23bdef0092e6c55e5e957539be68863837fe110b0"
+  },
+  "tests/fixtures/public-adapter-cases/untyped/model.orm.yaml": {
+   "canonical": "sha256:c41a7f1ba9161d9b79c2fcc062a7cb24e2b925a59d2df5c54d66efe47ad50a88",
+   "legacy": "e272a96688d821f549c1b05eda189e1165d26c1d54dcf61b26f8d8458fc99450"
+  },
+  "tests/fixtures/public-applicability/c01/model.orm.yaml": {
+   "canonical": "sha256:13fadff4ee5992769db2b7e28c0be8cfcc6d9957af3234fed205eaee145bfc02",
+   "legacy": "b3650455b397a59ea8743e095008dccdc1b6979e964583146fc160126e4d0ec2"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/different-version.orm.yaml": {
+   "canonical": "sha256:6ad751b267494bb19b59c9ec78c34708e9f07ce01915c4a99d1c80766586ce54",
+   "legacy": "98ce184f74ea9ce2b751f59011f855754c00b53c54e01c570b9624742a562ca2"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/nonstructured.orm.yaml": {
+   "canonical": "sha256:68cf04d3d5953b23908eba293ed67406d3e7902bd1f4e1e01ba087427e073c96",
+   "legacy": "e4a5c453f40d3181146cfd1195beca4ec23b211c96287442b9646a6276bf6633"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/same-version-different-model.orm.yaml": {
+   "canonical": "sha256:29baa83b8ea6ec0c338f39a6812403302284fb06a29cf12393f7023c1eb24046",
+   "legacy": "fa7ab9c68f3b22f1966ad6acc7514b6a0db386a6864dcff4a6a537d4303f41cb"
+  },
+  "tests/fixtures/public-binding-reports/reports/models/structured.orm.yaml": {
+   "canonical": "sha256:45e59f9ba6f418fab9c4a2a3b4bfa166ff9250f26cd85a23745462f7e9cab0c3",
+   "legacy": "62dea881186772028e7144eea1fc8a0c0c6c4bbe0b4640eedb45d4416cb31677"
+  },
+  "tests/fixtures/public-bridge/fixtures/c01/model.orm.yaml": {
+   "canonical": "sha256:13fadff4ee5992769db2b7e28c0be8cfcc6d9957af3234fed205eaee145bfc02",
+   "legacy": "b3650455b397a59ea8743e095008dccdc1b6979e964583146fc160126e4d0ec2"
+  },
+  "tests/fixtures/public-bridge/fixtures/c02/model.orm.yaml": {
+   "canonical": "sha256:13fadff4ee5992769db2b7e28c0be8cfcc6d9957af3234fed205eaee145bfc02",
+   "legacy": "b3650455b397a59ea8743e095008dccdc1b6979e964583146fc160126e4d0ec2"
+  },
+  "tests/fixtures/public-bridge/fixtures/c04/model.orm.yaml": {
+   "canonical": "sha256:13fadff4ee5992769db2b7e28c0be8cfcc6d9957af3234fed205eaee145bfc02",
+   "legacy": "b3650455b397a59ea8743e095008dccdc1b6979e964583146fc160126e4d0ec2"
+  },
+  "tests/fixtures/public-bridge/fixtures/c06/model.orm.yaml": {
+   "canonical": "sha256:dda06c4684fef120f6cab86a52409871781857452285d0750a952fe33a516fef",
+   "legacy": "a49f05cd6c61572d41f57e7e60248b9d5e23fa2f5ea870e90adfe9744f0664d8"
+  },
+  "tests/fixtures/public-bridge/fixtures/c07/model.orm.yaml": {
+   "canonical": "sha256:dda06c4684fef120f6cab86a52409871781857452285d0750a952fe33a516fef",
+   "legacy": "a49f05cd6c61572d41f57e7e60248b9d5e23fa2f5ea870e90adfe9744f0664d8"
+  },
+  "tests/fixtures/public-composition-digests/v62-phase1/models/static.orm.yaml": {
+   "canonical": "sha256:0620630a2b27c027f15ffb50d007a3a523b072421b9dc9c933d55bd536a4eba5",
+   "legacy": "fcd4f5bf776054268ad04dc3403725ba36e3d04fefa8386b60f344b806b5eac5"
+  },
+  "tests/fixtures/public-composition-digests/v62-phase3/models/exact-terms.orm.yaml": {
+   "canonical": "sha256:1a37fed7816c3113642a4b8ccc6d76f06ac7c7a8f899c3d48bd8e08345ea56f3",
+   "legacy": "71765bf3d470706584cdfc9b827930ba58d6790f48071c2ff3d4761aadcd12df"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/constraint-one-final-walk/model.orm.yaml": {
+   "canonical": "sha256:fbedf6c222409aa9cd49c7e779705b68f887f8c3dd4ac5bcdc7a0a775c78885b",
+   "legacy": "1a5b8077ef3131a2a03a7020b63378bb141b930cb49efe8bcaa085fd8c3a0730"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/cost-chain-counted/model.orm.yaml": {
+   "canonical": "sha256:5dd68d6f19c8c1607b39a71fe506be2952b2d9e60d8a5c8ba28e897615ce4844",
+   "legacy": "d00bba4dd5414e99419330997ce8eb45fb16972e5cae0fc460d675ffb7b1424f"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/cost-disconnected-counted/model.orm.yaml": {
+   "canonical": "sha256:bf8afc5ddbcf0445b3712c52d9b0375848f895eddb72d63398acffe9db714dcd",
+   "legacy": "79c6443273958c36d0217e6ebe352f77d8832f79c704b49fb6bff1a94a01ad5f"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/eval-disconnected-product/model.orm.yaml": {
+   "canonical": "sha256:a0cba06e69a56f9c2d10c25f260fec6456e41e9dc7debc632fc310689b240751",
+   "legacy": "fbc04f9bec61854365c794797a3a525c531ba932601e9c783cf12ad002546c6d"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-exact/model.orm.yaml": {
+   "canonical": "sha256:50cca40978c83ec985aac027ebbe1da3984f1f2852d40a28b70eff625d3f8556",
+   "legacy": "07397a865cb541e832aa6915d0248b54e0fed1de652ebb572c9f1d2b28a57869"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-missing/model.orm.yaml": {
+   "canonical": "sha256:7c619fd6f32081e8d6de817e93ec5c0ae086337d9138a11bdf03e4566b073fa7",
+   "legacy": "e54ca340e06457523cac59880c7af36eead31e18d56a5fe0955a9754c58bf3e8"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/obligation-derived-surplus/model.orm.yaml": {
+   "canonical": "sha256:6a44f57a739593c238dfbea9f4c27873f827010262d6bb60920cc102d1951bb4",
+   "legacy": "4ed08f2760280f9a5ef596c334bc467ed6ddd616858492183bba57d425979cd9"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/wire-v4-check-internal/model.orm.yaml": {
+   "canonical": "sha256:372c5b5f4b461eb12af8e2e5f9dee2ddbd09e0937cbb02dee8440307fcf9270e",
+   "legacy": "132788abf637eb6f6d11c5bd39ee65e6b712d059494cbf0a4c57ee374997311d"
+  },
+  "tests/fixtures/public-derivation-evaluator-controls/cases/witness-missing-canonical/model.orm.yaml": {
+   "canonical": "sha256:7879a507b6ab0bffe62a5fec8366b611bfd78414419bbc050e29dbc4c6c2df55",
+   "legacy": "2df0c2300efdadb1e5246c83897a88d2ee17526218a665b98cc33874ba98cefa"
+  },
+  "tests/fixtures/public-emitter-trust-controls/models/role-declaration.orm.yaml": {
+   "canonical": "sha256:ff6bd1f1e30f3a25227d361ce3482b894c3f2c532975880ba0b76d66afb8d7c1",
+   "legacy": "879da100361203e11517bf34cc626d7a90f579ea4e3a73f365bbb0156ba85d79"
+  },
+  "tests/fixtures/public-emitter21/models/role-declaration.orm.yaml": {
+   "canonical": "sha256:ff6bd1f1e30f3a25227d361ce3482b894c3f2c532975880ba0b76d66afb8d7c1",
+   "legacy": "879da100361203e11517bf34cc626d7a90f579ea4e3a73f365bbb0156ba85d79"
+  },
+  "tests/fixtures/public-generated-examples/bookrec/model.orm.yaml": {
+   "canonical": "sha256:33dd773fd336346ad95eb3eb8114a75158db88abf7e050249dd41372fb826be7",
+   "legacy": "6eda4132891deb4aac3bcf28ae7a4d17afffb4822239f5b4e632f73a5f113948"
+  },
+  "tests/fixtures/public-generated-examples/expense/model.orm.yaml": {
+   "canonical": "sha256:03a1a0bfa95a5f08c567c782ee5c901e3010c39591541bdac67358f3abd5bebf",
+   "legacy": "8987aabca7b782313294ea18e8d9ed16ab00f21cb50aa2a5d61e2564d9c44a47"
+  },
+  "tests/fixtures/public-launch-phase-2/model.orm.yaml": {
+   "canonical": "sha256:4c7f12880b2f806e7a87fb5925465152af19e26bdea61fbcfa49e1ab4a47a0ae",
+   "legacy": "5ef3d6b128d00b8d346fad3b606b56f7fdbaf6f2cb18f19375026bcff830cc48"
+  },
+  "tests/fixtures/public-launch-phase-2/textual.orm.yaml": {
+   "canonical": "sha256:0b6251510a660de694eeb7a9fe86adb0596500b7b83b305e2ee923eff16852dc",
+   "legacy": "b2466d210308efe9f764f1d88225b224855995070cd8bbd0f7e3c882766c56d1"
+  },
+  "tests/fixtures/public-phase1-trace/fixtures/c01/model.orm.yaml": {
+   "canonical": "sha256:13fadff4ee5992769db2b7e28c0be8cfcc6d9957af3234fed205eaee145bfc02",
+   "legacy": "b3650455b397a59ea8743e095008dccdc1b6979e964583146fc160126e4d0ec2"
+  },
+  "tests/fixtures/public-semantic-partition/model.orm.yaml": {
+   "canonical": "sha256:f4851cd815f41fb7f0e54ec08fb97495c9a3fd5e0f2bc968aaf694f38252c880",
+   "legacy": "0b163fbedc83e21a6a3999aaf5897209a8bb5f0a585d780a0121f1a8c0da7448"
+  },
+  "tests/fixtures/public-semantic-shapes/model.orm.yaml": {
+   "canonical": "sha256:a4253b6bc4d7f4d918d52d648176bd31274bf0155ae0d3f06b1cf6c81af9aa5d",
+   "legacy": "f92af11654f81b7e2d5e2dc23bdef0092e6c55e5e957539be68863837fe110b0"
+  },
+  "tests/fixtures/public-snapshot-counterexamples/joins-model.orm.yaml": {
+   "canonical": "sha256:702ade971809d6270ba78e6fe78912743f51b484d5e1c970d9e04ff874c78de0",
+   "legacy": "da8ba62f6ebccf6e0dda92bfcde8f6cfe6a0a9e67fe9f0840e2efc056a40bac3"
+  },
+  "tests/fixtures/public-transition-contract/v2_expense.orm.yaml": {
+   "canonical": "sha256:e1d36af5328d0765132ea7bd224f57392b56f819bbd8d9942f3c651e66c5eeb9",
+   "legacy": "61ac8808e4afea0a96dc03cef674722f0dc1d5f87d3c8db074f7566f2dce9bee"
+  },
+  "tests/fixtures/public-transition-trace/expense/v2_expense.orm.yaml": {
+   "canonical": "sha256:2c7c19fa446c399b256b540da9df7a2fb4a19024e62d07fc5a68168247b95dc8",
+   "legacy": "7ba327a9d4413ccdbe1cd94d5b7845814f470d8df1122cb1af17445283418f42"
+  },
+  "tests/fixtures/public-walk-floor/session/model.orm.yaml": {
+   "canonical": "sha256:75564b1fdfa61729c88877cbe1f6d4feb814490f56d023c146dcd329dfd8cca7",
+   "legacy": "d4f31d0a684ae9171a24504e10109a4fac28c536d4f5ee17c0d8b1cb678ba57c"
+  },
+  "tests/fixtures/pyrel-oracle/basics.orm.yaml": {
+   "canonical": "sha256:b330c35468892372073c951756e599d7a450cfddac1bab848316b7a60f2ddd9c",
+   "legacy": "0ff65189614b02b72f6b0f95b199fbeb7d816cea6dce1de60f29bc379c2d9d0f"
+  },
+  "tests/fixtures/rc1-rule-ids/models/components-positional.orm.yaml": {
+   "canonical": "sha256:e9f03bf9d113da9a855aefa8bb6629ce97261adabf261c83afaab1ae2cb8a327",
+   "legacy": "82792ffa232c735d65042095e0cd3ab4107010596f798dba34ab068c0db413b8"
+  },
+  "tests/fixtures/rc1-rule-ids/models/components.orm.yaml": {
+   "canonical": "sha256:993214dbabd719d028f0133a845c9e4702bb73c93d8b37b499c17d71a537bf93",
+   "legacy": "b727e0291270fd2392bae61082172dd6fc0384ed6d178dc4916dc8d104c0956c"
+  },
+  "tests/fixtures/rc1-rule-ids/models/exact-terms-redacted.orm.yaml": {
+   "canonical": "sha256:c497fff13bc919f0f96689ac4144cfd25a3a49294683f89ad764c99ebbd0a5a7",
+   "legacy": "a4c27ecd235517676c7287c77b6f345fe6be4970d1321d2cdc8050280af16ca4"
+  },
+  "tests/fixtures/rc1-rule-ids/models/exact-terms.orm.yaml": {
+   "canonical": "sha256:acba947096f8104ec374e0c4bf03480990fcf24061b36133d00f51f11ff00bbc",
+   "legacy": "0ba28c983e284766a3c50208b2ba20db613db46661f62c12bc798c71208d81f3"
+  },
+  "tests/fixtures/rc1-rule-ids/models/reference/model.orm.yaml": {
+   "canonical": "sha256:fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b",
+   "legacy": "fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b"
+  },
+  "tests/fixtures/rc1-rule-ids/models/temporal.orm.yaml": {
+   "canonical": "sha256:3b89947c12a9a2abcecaada0a19af6ef08b506588d747ff3846dabce3165c1c2",
+   "legacy": "cb543e4953f625407d20fe656bfd3ffabb1eb36262811ab530d1370150163397"
+  },
+  "tests/fixtures/rc2-acyclic/models/graph-composite.orm.yaml": {
+   "canonical": "sha256:c41e73b5cb78938f943424ddad2baf52a4f26219873984738c6027e2b1315108",
+   "legacy": "bd0d2737ba0628bbd5e1df19308045e4249b1bb9820db461d3f4e12179e39d3e"
+  },
+  "tests/fixtures/rc2-acyclic/models/graph.orm.yaml": {
+   "canonical": "sha256:985dea04e24ca39b5ce32ad3eada09534d3f74ae406c2decdfba92c6926c5cf3",
+   "legacy": "e03c76b8448f16120fb61909e7377bff800ee5c921cfd5d2a794f6fde4bf0f97"
+  },
+  "tests/fixtures/rc3-baseline/models/derivations.orm.yaml": {
+   "canonical": "sha256:acba947096f8104ec374e0c4bf03480990fcf24061b36133d00f51f11ff00bbc",
+   "legacy": "0ba28c983e284766a3c50208b2ba20db613db46661f62c12bc798c71208d81f3"
+  },
+  "tests/fixtures/rc3-baseline/models/graph.orm.yaml": {
+   "canonical": "sha256:3ee6173361726700bf0ffca904fd150f0e66022bf2312a2a5f69a61fdd4f36f0",
+   "legacy": "77ec5a8bdfcfcc3fb493045ae9ce17581352d9747d8663bd951fa07e1d28f7a5"
+  },
+  "tests/fixtures/rc3-baseline/models/temporal.orm.yaml": {
+   "canonical": "sha256:3b89947c12a9a2abcecaada0a19af6ef08b506588d747ff3846dabce3165c1c2",
+   "legacy": "cb543e4953f625407d20fe656bfd3ffabb1eb36262811ab530d1370150163397"
+  },
+  "tests/fixtures/rc4-allow-vacuous/models/graph.orm.yaml": {
+   "canonical": "sha256:9857f42a00f9b5955fd8b322c5f0d3345fe6dba4b56d16e613efc8ea8a2ace92",
+   "legacy": "a976f6f13566bc5a8c90cde5f3111094f5bbac555b6ce4a3556f1724f7ff45b7"
+  },
+  "tests/fixtures/rc5-tool-output/models/catalog.orm.yaml": {
+   "canonical": "sha256:02d552fdf515907caf6df68be6f1aa00d7806b65d94c612b92ea406b1c4b56e8",
+   "legacy": "8be94fc081ec7d070d987a7f05c0d1083a6ad9fda2213f1d5015cd0bf0b50857"
+  },
+  "tests/fixtures/reference-corpus/dispatch/model.orm.yaml": {
+   "canonical": "sha256:fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b",
+   "legacy": "fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b"
+  },
+  "tests/fixtures/reference-corpus/release/model.orm.yaml": {
+   "canonical": "sha256:4fd241e000104e1209028e3a98cdb3f9bd2fadd387d2c6da38b943854d0bf8cb",
+   "legacy": "4fd241e000104e1209028e3a98cdb3f9bd2fadd387d2c6da38b943854d0bf8cb"
+  },
+  "tests/fixtures/reference-legacy/dispatch/model.orm.yaml": {
+   "canonical": "sha256:8360d5e7057af7915ba9731a59a2ab048e7bcf83c71a13712b4ef7d58317db27",
+   "legacy": "4b8fd3b2a72d10562dea7c5c0c97f8de6c6b98e2e20b7ec430f8611a65935f6a"
+  },
+  "tests/fixtures/reference-legacy/release/model.orm.yaml": {
+   "canonical": "sha256:ad230a047344be4558f6261afae15b3fca3098409bd8c19474e2f46bb74cfe9d",
+   "legacy": "a4864892e8e631665b959208975d867beea0b5eb04bae692aeb8150e8c302835"
+  },
+  "tests/fixtures/release-acceptance/0.3.0/q4/model.orm.yaml": {
+   "canonical": "sha256:936b97752d4fa1b0574460c6362d3ebc594f705e2d21eb4eeb0a6f149b874035",
+   "legacy": "201ec7e1090e3d1eed52625d6c41e4146ef02af0ae0f7407e7451786f3533cd1"
+  },
+  "tests/fixtures/release-acceptance/0.3.0/q5/model.orm.yaml": {
+   "canonical": "sha256:10374e2d10997848ae22342c8aadfbd0e99ecd965f9b17ed0cc6b85bc2f6e915",
+   "legacy": "a276f8ad5651260304149f282012f897c5baef4f45b97148794f089147832059"
+  },
+  "tests/fixtures/rof1-projected-text/models/contacts-redacted.orm.yaml": {
+   "canonical": "sha256:e4c1249e78ed5bf7ea57517fb93dd19adde1281de10207d7d4cabd70e7707a90",
+   "legacy": "04aa049bd4d84b7b2959dccf65aae24d3c25b6d9d552aa4021ad14f9d860def1"
+  },
+  "tests/fixtures/rof1-projected-text/models/directory-redacted.orm.yaml": {
+   "canonical": "sha256:05841362b4f492b2a5184f74cb2cde95883a7c41e2e6810927f4d7b7a00cca1a",
+   "legacy": "5fc862374a64836ad619a608b613ca642f9d2153b36b83a8474dadce774a884d"
+  },
+  "tests/fixtures/rof1-projected-text/models/service-temporal.orm.yaml": {
+   "canonical": "sha256:1811ff40c5b3a9af6fa26c78f72f35f94457c31aa026ddf9863403ad7d3ddd51",
+   "legacy": "97e707a89ac31c7f52c582342fdf8b8cf9cd49beb4f5a02b0c100622261911a4"
+  },
+  "tests/fixtures/rof1-projected-text/models/terms-temporal.orm.yaml": {
+   "canonical": "sha256:877f2f395ab867017c50a693a59dd1286c29c0175a09548b15951d235cdc004f",
+   "legacy": "e7906ff51282fe0bb574f9acafe7b6d38f6cc0f79e08f0191b2873f2830f9013"
+  },
+  "tests/fixtures/rof2-projected-text/models/accounts-redacted.orm.yaml": {
+   "canonical": "sha256:72bd4f2f3d9b3e8ed659babee2c9e45634b3e2e4fee88d705496d71d4aacee44",
+   "legacy": "7d1a6c00e72c8d2aa666412aaad62b51d29aa49de932665a516a7c4d1c0699bd"
+  },
+  "tests/fixtures/rof2-projected-text/models/dynamic.orm.yaml": {
+   "canonical": "sha256:06de45eae3a55201dc9aa4b2faa1441f6d3f2f12ca4e77785869cbf012023e80",
+   "legacy": "d837cd1601b5c8d59ce7d023739563e14e5d22f2f5f7c913a39c93604b95367b"
+  },
+  "tests/fixtures/rof2-projected-text/models/service-temporal.orm.yaml": {
+   "canonical": "sha256:f290d8b30342ddca8b6d7053abd77d7581ce2ee539a7c5f8b9a4cd81dc74a33a",
+   "legacy": "6db189f3f5e426bdb76efc6f44a8b98c6f8a45ea7916370912b8db9aa8e77515"
+  },
+  "tests/fixtures/rof3-model-identity/models/dates-and-text.orm.yaml": {
+   "canonical": "sha256:f83c63620321c8bd516dba34279191673857421af698be4bff450884b850a0e3",
+   "legacy": "2424b81a5df52a374a025f8f0cd05276b06ee0fc468daed4640b144f132ab374"
+  },
+  "tests/fixtures/rof3-model-identity/models/floats.orm.yaml": {
+   "canonical": "sha256:66b5ae67550f2df0664b6afb1d31265c675bc86d16ebff041823873eeedf1e59",
+   "legacy": "8f90d387e7499aa33d463ba753fcdc26e087de0818dee57fde7c0438b0065b01"
+  },
+  "tests/fixtures/rof3-model-identity/models/operations-a.orm.yaml": {
+   "canonical": "sha256:72bd4f2f3d9b3e8ed659babee2c9e45634b3e2e4fee88d705496d71d4aacee44",
+   "legacy": "7d1a6c00e72c8d2aa666412aaad62b51d29aa49de932665a516a7c4d1c0699bd"
+  },
+  "tests/fixtures/rof3-model-identity/models/operations-b.orm.yaml": {
+   "canonical": "sha256:72bd4f2f3d9b3e8ed659babee2c9e45634b3e2e4fee88d705496d71d4aacee44",
+   "legacy": "7d1a6c00e72c8d2aa666412aaad62b51d29aa49de932665a516a7c4d1c0699bd"
+  },
+  "tests/fixtures/rof3-model-identity/models/plain-small.orm.yaml": {
+   "canonical": "sha256:e4c1249e78ed5bf7ea57517fb93dd19adde1281de10207d7d4cabd70e7707a90",
+   "legacy": "04aa049bd4d84b7b2959dccf65aae24d3c25b6d9d552aa4021ad14f9d860def1"
+  },
+  "tests/fixtures/rof3-model-identity/models/reference-operations/model.orm.yaml": {
+   "canonical": "sha256:cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85",
+   "legacy": "cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85"
+  },
+  "tests/fixtures/rof3-model-identity/models/reference/model.orm.yaml": {
+   "canonical": "sha256:fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b",
+   "legacy": "fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b"
+  },
+  "tests/fixtures/rof4-accept-identities/models/approvals/model.orm.yaml": {
+   "canonical": "sha256:1ef9d764a69241c0eda2015c8065517660e84706ae10615cbdbfa87584d52935",
+   "legacy": "278b20b244428f78a095c7824b12b6ae9c120ce70a16a485f612f878a077588f"
+  },
+  "tests/fixtures/rof4-accept-identities/models/nonstructured/model.orm.yaml": {
+   "canonical": "sha256:68cf04d3d5953b23908eba293ed67406d3e7902bd1f4e1e01ba087427e073c96",
+   "legacy": "e4a5c453f40d3181146cfd1195beca4ec23b211c96287442b9646a6276bf6633"
+  },
+  "tests/fixtures/rof4-accept-identities/models/reference/model.orm.yaml": {
+   "canonical": "sha256:cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85",
+   "legacy": "cc98b9acc5e175d468b3605493ce80780c296c2bdfbf1e7d3c71d6013ed9fd85"
+  },
+  "tests/fixtures/skeleton/model.orm.yaml": {
+   "canonical": "sha256:28295f7d2974caeedc18e762154ec3294a8b5ae66560e02ff24d04569a5460e9",
+   "legacy": "aa36043d06d945624291ca69cec5e97ef1cc3e9e1029fa1bb6950ed3673b27f1"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-exhausted.orm.yaml": {
+   "canonical": "sha256:c570ad54406284f5bee62ddf2406f79d65b221812fdc6d0346193a7e894f6708",
+   "legacy": "969251b3d9563f4a364773f3cb16f0acbf10501668c16560e97b2cb86e5064c1"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-pair.orm.yaml": {
+   "canonical": "sha256:3dad79784d41fa0994d5d30a28ffd49d410ba8d939ace21cc33d9bd81cc3353a",
+   "legacy": "73ac51c2181e3be74b2e99b79b8f21202f0ac68a0ebfdea6d6689a91d5d38557"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-second.orm.yaml": {
+   "canonical": "sha256:be21e183b565d878478cd54b508995d04f8af966fbe3d769fb450b989bb76e8d",
+   "legacy": "ba49b41bf0944ede7e1796344686fafa8f0c5982b2b9e273080e7e6d7a5f4d66"
+  },
+  "tests/fixtures/synth-external-uniqueness/external-single.orm.yaml": {
+   "canonical": "sha256:21343e14d08865fc7d053c8f5b8eb3e6b47341a1ddc0479678c9f7125e0ec195",
+   "legacy": "e37a1b9e0a59b4d1473e446be461a56014e1fdd970d61a18b9da58295ae25f09"
+  },
+  "tests/fixtures/synth-external-uniqueness/mandatory-exhausted.orm.yaml": {
+   "canonical": "sha256:93ccb5481a54429c3d472fe8aec078da4c8115a6955aa45511f67a32903198b6",
+   "legacy": "24bf22a6d4a7368b27a8c6026eccf656d086b2bae3fa3ecd067038d2241b97e2"
+  },
+  "tests/fixtures/synth-external-uniqueness/mandatory-one-to-one.orm.yaml": {
+   "canonical": "sha256:c8baf3f06996706280d7aef0929deacee049e011df3e651a1d94a1af73a2f7b1",
+   "legacy": "0fa8750ac36eb7c6940a98b51a992050740b5fa7ce55028cf7537af45a617362"
+  },
+  "tests/fixtures/type-judgements/multi-valued/model.orm.yaml": {
+   "canonical": "sha256:76cab4abd0a5a86901b25314f6fd77dc5ae980c4729d0950a4b63e1381881534",
+   "legacy": "b1b8aed2e1d06b971cc5a441dd872ef16c35fbf09895cb9a6eabac1ec26e8274"
+  },
+  "tests/fixtures/type-judgements/round-two/model.orm.yaml": {
+   "canonical": "sha256:fc1af58ab661dd578cab2ad99ef008c1650a920ba3e32d644fc7293c22a4c79a",
+   "legacy": "a6fe26284452bd57ac4cf635c39c414908351dfbdc65eb16a901ee41e7df4eae"
+  },
+  "tests/fixtures/unattended-model-growth/ug2/base.orm.yaml": {
+   "canonical": "sha256:936b97752d4fa1b0574460c6362d3ebc594f705e2d21eb4eeb0a6f149b874035",
+   "legacy": "201ec7e1090e3d1eed52625d6c41e4146ef02af0ae0f7407e7451786f3533cd1"
+  },
+  "tests/fixtures/unattended-model-growth/ug3/models/plain.orm.yaml": {
+   "canonical": "sha256:f8fceb87af1220d46b248e64c057605b8851ebdb8f336068b139bbe689d98db1",
+   "legacy": "a80c1dced0a6a8e949b315c1bdcb35c95be9eba19fa27a72ff3a242e6d3fafc4"
+  },
+  "tests/fixtures/unattended-model-growth/ug3/models/rounds.orm.yaml": {
+   "canonical": "sha256:d9cd17b3365f77046772e2a73c2790891b64351e2228fd9021c37c99d70372c3",
+   "legacy": "5a6e865c97e30c9ed3597b00b9b1473b00a1279393c3deb620338e449f42ae3f"
+  },
+  "tests/fixtures/unattended-model-growth/ug3/models/span-constraint.orm.yaml": {
+   "canonical": "sha256:6d4c05fc609e53770edf39a1f55dad28a6887867ec93aa63f3d9bf582399fde6",
+   "legacy": "c5fc4a90e5b0e93a85db28ac02504ce49cbcc4462887e1a9c06c1f7734d9a92f"
+  },
+  "tests/fixtures/unattended-model-growth/ug3/models/span-element.orm.yaml": {
+   "canonical": "sha256:10374e2d10997848ae22342c8aadfbd0e99ecd965f9b17ed0cc6b85bc2f6e915",
+   "legacy": "a276f8ad5651260304149f282012f897c5baef4f45b97148794f089147832059"
+  },
+  "tests/fixtures/unattended-model-growth/ug3/models/span-sample.orm.yaml": {
+   "canonical": "sha256:67a56d72eb46c68ba3c9439e11d451f1a5e97a47e1ad0f660909979fdd9a5232",
+   "legacy": "8374f9703f5605434d249842c031a86ae35e0807f47fb0006c38ca37ad794d26"
+  },
+  "tests/fixtures/unattended/conforming.orm.yaml": {
+   "canonical": "sha256:093a4e79ba08f0e497bed8da2be52cf338cced8c8156435fba99eb6b79fe8720",
+   "legacy": "b9b560efc2b5c5e72f871d2a3fc38f68d37d0fd8db7e6e3300671ab2eeece70e"
+  },
+  "tests/fixtures/v51-extraction-boundary/models/mixed.orm.yaml": {
+   "canonical": "sha256:8cebd05b9f34166a0bae2e425d488ab95ddb0656ce9a0d161670c9f694e2aa73",
+   "legacy": "34616751d72246c16ba4e1ea114721bb60b267604ff834a544efa005f4dff264"
+  },
+  "tests/fixtures/v51-generated-project/alpha/model.orm.yaml": {
+   "canonical": "sha256:b9a655ab876c46b1d9ddb653e5b0adc068fc97f2eff813e0f273cb2b722cc636",
+   "legacy": "172ac7dbd28768b08a79f15013cb932813bff147535e6ed76da35759a9285acf"
+  },
+  "tests/fixtures/v51-generated-project/beta/model.orm.yaml": {
+   "canonical": "sha256:15afc46bb5fb9e4f0ada32b3eee74f375796c16a59a7b9781ca533778202ba19",
+   "legacy": "4b44705cc2e243d68c234fb4f39681521250be0b20587696409337e4045e5ed3"
+  },
+  "tests/fixtures/v6-assurance/cases/expense-approval/conforming/model.orm.yaml": {
+   "canonical": "sha256:8839fe3219d8fdb414c2edaec316d13293c314e2e05c44c9c697d48a411b81a0",
+   "legacy": "c8bc8e5ae8acd5a9ed07e5168afd92d91da41b80a97188df3bd66764385286eb"
+  },
+  "tests/fixtures/v6-assurance/cases/recommendation-completeness/conforming/model.orm.yaml": {
+   "canonical": "sha256:4895e4c2eea646c494960b49c8fc51a63f3dfbfc385b313183fd4ff7c00f5a4b",
+   "legacy": "67505721dab620154efbd79b59c1591772ec95c2ddca3c5c244e77eec55fc589"
+  },
+  "tests/fixtures/v6-assurance/cases/separation-of-duties/conforming/model.orm.yaml": {
+   "canonical": "sha256:b3e176a14e13ebe8b98e24e08064037926a2316b9449c9d935288e7563c1b324",
+   "legacy": "4377fe1919af0817401465b5a39667ceeee91b325313ee3be9b906ab8f25f46e"
+  },
+  "tests/fixtures/v61-phase1/batch/model.orm.yaml": {
+   "canonical": "sha256:351cf2eb74d59e023bca7ed27eb554a0f767a8cbf6c3a49050777e612cf9fcf1",
+   "legacy": "f416680d48ac79b5c7fcb1df710851e2e9f805fb72e16a1485de3299fa51cf12"
+  },
+  "tests/fixtures/v61-phase1/import/identity.expected.model.orm.yaml": {
+   "canonical": "sha256:2ce797839e7463432e8c71fd895ffc3b2c6ade1297e67010a4675466ac8b336f",
+   "legacy": "df901fe6e1019554e685918edf8032f72bfa53d8fb2fb9db2c7f4ee931d37879"
+  },
+  "tests/fixtures/v61-phase1/import/identity.source.orm.yaml": {
+   "canonical": "sha256:2ce797839e7463432e8c71fd895ffc3b2c6ade1297e67010a4675466ac8b336f",
+   "legacy": "df901fe6e1019554e685918edf8032f72bfa53d8fb2fb9db2c7f4ee931d37879"
+  },
+  "tests/fixtures/v61-phase4/models/fact-type-declaration.orm.yaml": {
+   "canonical": "sha256:9be360040f5335605d9a96318c511d548f4f5457cc54bd45e579fa1f18122884",
+   "legacy": "399c24b0fbd4c0673d79ea1d5204ae7092c43cc5fe54785d1903ad81ead1bcc2"
+  },
+  "tests/fixtures/v61-phase4/models/no-declaration.orm.yaml": {
+   "canonical": "sha256:802007ba67ac5af02f421840cb4b02a93a19e02eef6dc182b61812b73c526445",
+   "legacy": "4502413c5b5653a9c8ba0ec8534a96166bbfa5fcf23fbd40b3573bf267e6e92c"
+  },
+  "tests/fixtures/v61-phase4/models/operation-flow-declarations.orm.yaml": {
+   "canonical": "sha256:3e54c35cc66ceae98b3a93d0a4447583399ef182024f64eac9b23ef73f78ca0d",
+   "legacy": "91217c890a50c509a34562306491b967d3e02cd1ee9c7cf38b52661447f038fb"
+  },
+  "tests/fixtures/v61-phase4/models/redundant-declarations.orm.yaml": {
+   "canonical": "sha256:cc907c6379f92ef7162ec3b81dccfec00d82547db1d015c531c16743e93e40f4",
+   "legacy": "bedd7aaadc80c0f066008b105d9672a61b0aad223086fa501c1cdc3ca9b1bd1a"
+  },
+  "tests/fixtures/v61-phase4/models/role-declaration-unchecked.orm.yaml": {
+   "canonical": "sha256:18290e290ad69c0e7e1820ac5088f03449983d52d956bda397cdadc98b855956",
+   "legacy": "d3a3495a5eba15e0cdbe3936797f2c1406ae001399eaa9d7713b77869dac2b95"
+  },
+  "tests/fixtures/v61-phase4/models/role-declaration.orm.yaml": {
+   "canonical": "sha256:ff6bd1f1e30f3a25227d361ce3482b894c3f2c532975880ba0b76d66afb8d7c1",
+   "legacy": "879da100361203e11517bf34cc626d7a90f579ea4e3a73f365bbb0156ba85d79"
+  },
+  "tests/fixtures/v61-phase4/models/witness-declarations.orm.yaml": {
+   "canonical": "sha256:58594fafa5a2a6f6caef424cf6eadc4879a3a5c91aac70d609ce554a3339d4f3",
+   "legacy": "46cf8eaeabc2195830e5328b510dbc49b0d488b744f731edd8f518bf5075b49b"
+  },
+  "tests/fixtures/v62-phase1/models/static.orm.yaml": {
+   "canonical": "sha256:0620630a2b27c027f15ffb50d007a3a523b072421b9dc9c933d55bd536a4eba5",
+   "legacy": "fcd4f5bf776054268ad04dc3403725ba36e3d04fefa8386b60f344b806b5eac5"
+  },
+  "tests/fixtures/v62-phase2/models/dynamic.orm.yaml": {
+   "canonical": "sha256:06de45eae3a55201dc9aa4b2faa1441f6d3f2f12ca4e77785869cbf012023e80",
+   "legacy": "d837cd1601b5c8d59ce7d023739563e14e5d22f2f5f7c913a39c93604b95367b"
+  },
+  "tests/fixtures/v62-phase3/models/exact-terms.orm.yaml": {
+   "canonical": "sha256:1a37fed7816c3113642a4b8ccc6d76f06ac7c7a8f899c3d48bd8e08345ea56f3",
+   "legacy": "71765bf3d470706584cdfc9b827930ba58d6790f48071c2ff3d4761aadcd12df"
+  },
+  "tests/fixtures/v62-phase4/models/aggregates.orm.yaml": {
+   "canonical": "sha256:40c80219b8b9d8dcd79de6b5d57921ccea525973de6a51a0faaac9efa109edc1",
+   "legacy": "897ecb1a52876a2de7112cb86cf436e8bc35fcd1bb0ed3cd288d7d07e271b2cf"
+  },
+  "tests/fixtures/v62-phase5/models/floats.orm.yaml": {
+   "canonical": "sha256:66b5ae67550f2df0664b6afb1d31265c675bc86d16ebff041823873eeedf1e59",
+   "legacy": "8f90d387e7499aa33d463ba753fcdc26e087de0818dee57fde7c0438b0065b01"
+  },
+  "tests/fixtures/v62-phase6/models/existential-guard.orm.yaml": {
+   "canonical": "sha256:a6ce96b4b8d809c1d0c5ca49ee7074b4f17df1b5439bf2b9443fc13be3de54ce",
+   "legacy": "2b1c02d749556109432146bdc07426f24d8b0c0a7a70e2cd2a10b1fd2ab0a6bc"
+  },
+  "tests/fixtures/v70-phase1/model.orm.yaml": {
+   "canonical": "sha256:74e8e50d6021abf380f35a433ec04c760997018ac6b857d2f96f97bd23755dc4",
+   "legacy": "f2b024e973d485ce54f64c0e25715717cd6afe60da5a71300ff0a27377f77eac"
+  },
+  "tests/fixtures/v70-phase2/model.orm.yaml": {
+   "canonical": "sha256:2a846194faa3035ed76f0ccf93c8f333cb92832971b9248d031bda1dcde874a9",
+   "legacy": "03b0324ebe123991ee39d928faaaf3f5357943a6924c880a3ebd0b9cf6681a33"
+  },
+  "tests/fixtures/v70-phase3/join-model.orm.yaml": {
+   "canonical": "sha256:a9c48192614286f0e2d720e3166a37a6ca5d1bb30d5b6765bb2bb72ee238977b",
+   "legacy": "bae6fa5f1d60a11285ef08cedeb99ea5250d816fc29f166698fada5cd03d6ce5"
+  },
+  "tests/fixtures/v70-phase3/model.orm.yaml": {
+   "canonical": "sha256:11a5582c36a1a2c65c806540ac635072de6aab5907019d33ae34e659271b69c4",
+   "legacy": "0651acfa76b8a0dee829c0a97c0a8582be30c356d55084b42d864c273d096f42"
+  },
+  "tests/fixtures/v70-phase4/negation.orm.yaml": {
+   "canonical": "sha256:660260d06bd506d4da6a144f32855b3fc300d6ebdb7fb22a355f0b2ca9cdaf89",
+   "legacy": "6a04bad55c722ccaffdd51e1fde0262d49491ee443e31d34b0d8a9a3de844a06"
+  },
+  "tests/fixtures/v70-phase4/positive.orm.yaml": {
+   "canonical": "sha256:4595ed600ff6365615b5f038bea11ec1c3eaaae42dacbc98098fc81d1c00c7f5",
+   "legacy": "0a494538e023ef407c1a352a3936eb6bb2fc393c1549494378b9082595df6e6a"
+  },
+  "tests/fixtures/v70-phase4/recursive.orm.yaml": {
+   "canonical": "sha256:25421b98eb70b24432ca44298490ed6878d7f01bcf411f91eeda53099929e5cb",
+   "legacy": "5144336d04860fa1eafe3df79681942a157790a14812560b1784e38f04d36589"
+  },
+  "tests/fixtures/v70-phase5/bad-inverse.orm.yaml": {
+   "canonical": "sha256:2932218d347f7a10369b4308ceb7a8549b9841b2d2efb3a2d472ed5d95a82107",
+   "legacy": "9b219f630a7da71e751ff889c91f59b09f4e062d35081839fd20364b4eb2d3e7"
+  },
+  "tests/fixtures/v70-phase5/private.orm.yaml": {
+   "canonical": "sha256:7cbb8857f4fa2aaca2cfdbbb7d6424fc561ff2edcaabd2733e0c6ba71e6aceae",
+   "legacy": "b4e3062c59f471410548ddb093d2cfd10e1b10219acca8779ed0a70ce26c1bc4"
+  },
+  "tests/fixtures/v70-phase5/public.orm.yaml": {
+   "canonical": "sha256:1db8e5194b96f5fb8d95a3b1be6718acfb889e54fb4e5302962a6f774f1ff023",
+   "legacy": "72d0f51f3c1482cd7486743b7769a5e565e04977a659f9e142da88df8a1cc312"
+  },
+  "tests/fixtures/v70-phase6/negation-a.orm.yaml": {
+   "canonical": "sha256:cee67cd75734bfad81012843a28d9f4f20ff2e915a9258b28fce848c63150c00",
+   "legacy": "9eab7c7cae43e593c3af8f8bb20e4707e03f5eb41a1d81e7ef4d6bb9dbddc67e"
+  },
+  "tests/fixtures/v70-phase6/negation-b.orm.yaml": {
+   "canonical": "sha256:6a8847949fa748902cb60b20a2f94df282804a254698ea0e7e1357fd59114909",
+   "legacy": "2e85b76993c5133b0d1077cdd3110f095c16f6f0fcbceb980884266d387d8b14"
+  },
+  "tests/fixtures/v70-phase6/range-a.orm.yaml": {
+   "canonical": "sha256:d741282829843a1a95153d2dc1eba327edd239d68d5aefef4de5cb250b7d9fea",
+   "legacy": "df61c5a163015ac3a7e1e766065a1305abecb682c6d16139c18adbc6fee13cb6"
+  },
+  "tests/fixtures/v70-phase6/range-b.orm.yaml": {
+   "canonical": "sha256:a29b533843c5f41e2c7a0a561e08eb0e4633969848d996666cd22d3e7c09d971",
+   "legacy": "80dee408d72d334350b15474dbf877c30b7bd5760e6b5cf3b238a69f86edc4e0"
+  },
+  "tests/fixtures/v71/dispatch/model.orm.yaml": {
+   "canonical": "sha256:8360d5e7057af7915ba9731a59a2ab048e7bcf83c71a13712b4ef7d58317db27",
+   "legacy": "4b8fd3b2a72d10562dea7c5c0c97f8de6c6b98e2e20b7ec430f8611a65935f6a"
+  },
+  "tests/fixtures/v71/phase1/dispatch/model.orm.yaml": {
+   "canonical": "sha256:16fa98edee9fcba7ed76997bae2f7a605ec37572c871f985d193cb91eee1951c",
+   "legacy": "3831f20fbf34b9b430af000a8531dd7803bd3f4045d8b3e483918597269b8186"
+  },
+  "tests/fixtures/v71/phase1/release/model.orm.yaml": {
+   "canonical": "sha256:97761e2917199899370ad41eed356f52c8e6c2c6673dd4b8290df830e25b2730",
+   "legacy": "cec2c81f54a7559fe0dc517de7b5f46674b1229b27e5ac7c4645f9789dbdede9"
+  },
+  "tests/fixtures/v71/phase2/dispatch/model.orm.yaml": {
+   "canonical": "sha256:fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b",
+   "legacy": "fab46dd5bddbf385c6984f5c445240b9308de53d3749fb54fe9e8a356961cc3b"
+  },
+  "tests/fixtures/v71/phase3/dispatch/model.orm.yaml": {
+   "canonical": "sha256:1f55a47443d4a18137234913fd24dd676b7b59996dad626875540f88d1b9c299",
+   "legacy": "1f55a47443d4a18137234913fd24dd676b7b59996dad626875540f88d1b9c299"
+  },
+  "tests/fixtures/v71/phase4/dispatch/model.orm.yaml": {
+   "canonical": "sha256:1e992ddd08f4e7c6a838b4be42dfa17d1d65695094ebe4aee3b0b6e2b92d5116",
+   "legacy": "b56f140a4c85dbefef257200969e15ff5fbebcedeefbdae1364309765bf5b573"
+  },
+  "tests/fixtures/v71/phase4/dispatch/owned-model.orm.yaml": {
+   "canonical": "sha256:1b45a719104b9ce8835c8f02692e11a8f9c282f722a54dedacdced316073c734",
+   "legacy": "d711a9f80b0f366363718f295da515ad0b7e3949d73e047bd3350603f651265d"
+  },
+  "tests/fixtures/v71/phase4/dispatch/reference-model.orm.yaml": {
+   "canonical": "sha256:acb5af2f02cdbcc3cc1c075c639c7ee07f3ac9bff4d6bc14495c2c5fbd03cc41",
+   "legacy": "acb5af2f02cdbcc3cc1c075c639c7ee07f3ac9bff4d6bc14495c2c5fbd03cc41"
+  }
+ }
+}

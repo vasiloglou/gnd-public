@@ -204,6 +204,14 @@ def test_mixed_disjunction_synthesizes_and_verbalizes(tmp_path):
     assert rule["reason"] is None
     assert {case["verdict"] for case in rule["cases"]} == {"fail", "pass"}
     assert all(case["binding_count"] > 0 for case in rule["cases"])
+    for case in rule["cases"]:
+        actual = run_main([
+            "check", paths[0], str(generated / case["population"]), "--guarded-diagnostics", "--format", "json",
+        ])
+        verdict = json.loads(actual.stdout)["verdicts"][0]
+        assert verdict["verdict"] == case["verdict"]
+        assert verdict["guarded_antecedent"]["binding_count"] == case["binding_count"]
+
 
 
 def test_covered_disjunction_and_semiderived_union_agree_on_seeded_populations(tmp_path):
@@ -304,6 +312,8 @@ def test_indexed_disjunction_handles_wide_consequent_with_shared_budget(tmp_path
     from gnd.checker import check
     from gnd.model import load_model
     from gnd.population import load_population
+    from gnd.semantic_adapter import adapt_snapshot
+    from gnd.semantic_spec import verdict_of
 
     paths = _case(tmp_path, [LOW, {"atom": _status("review")}], 1500)
     population = _read(paths[1])
@@ -325,6 +335,8 @@ def test_indexed_disjunction_handles_wide_consequent_with_shared_budget(tmp_path
     verdict, = check(model, admitted).verdicts
     assert verdict.binding_count == count and verdict.verdict == "pass"
     assert perf_counter() - start < 5
+    snapshot = adapt_snapshot(model, admitted)
+    assert verdict_of(snapshot.constraints[0], snapshot) == ("pass", None, ())
 
 
 def test_temporal_comparison_alternative_uses_calendar_arithmetic(tmp_path):
@@ -341,3 +353,50 @@ def test_temporal_comparison_alternative_uses_calendar_arithmetic(tmp_path):
     result = run_main(["check", *paths, "--format", "json"])
     assert result.returncode == 0, result.stdout
     assert json.loads(result.stdout)["verdicts"][0]["verdict"] == "pass"
+
+
+@pytest.mark.parametrize(("limit", "verdict"), [(7, "unchecked"), (8, "pass")])
+def test_reference_and_public_comparison_have_same_precise_ceiling(tmp_path, monkeypatch, limit, verdict):
+    from gnd import semantic_spec
+
+    monkeypatch.setattr(semantic_spec, "_GUARDED_DISJUNCTION_WORK_LIMIT", limit)
+    paths = _case(tmp_path, [LOW, HIGH], 500)
+    _, checked = _check_and_reference(paths)
+    assert checked["verdict"] == verdict
+
+
+def test_malformed_alternative_atom_returns_an_admission_issue(tmp_path):
+    alt = {"atom": {"fact_type": "expense_has_status", "bind": ["$e"]}}
+    paths = _case(tmp_path, [alt, LOW], 1500)
+    result = run_main(["validate", paths[0], "--format", "json"])
+    assert result.returncode == 3
+    assert json.loads(result.stdout)["issues"]
+
+
+def test_duration_conflict_in_positive_bindings_is_reported_once(tmp_path):
+    paths = _case(tmp_path, [LOW, HIGH], 1500)
+    document = _read(paths[0])
+    document["version"] = 3
+    next(item for item in document["object_types"] if item["id"] == "amount")["primitive"] = "Duration"
+    document["constraints"][0]["antecedent"][0]["bind"]["category"] = "$a"
+    _write(paths[0], document)
+    result = run_main(["validate", paths[0], "--format", "json"])
+    assert result.returncode == 3
+    assert [
+        row["path"] for row in json.loads(result.stdout)["issues"]
+        if row["rule_id"] == "semantic:guarded-binding-type"
+    ] == ["$.constraints[0]"]
+
+
+@pytest.mark.parametrize(("limit", "verdict"), [(11, "unchecked"), (12, "pass")])
+def test_reference_and_public_exists_have_same_precise_ceiling(tmp_path, monkeypatch, limit, verdict):
+    from gnd import semantic_spec
+
+    monkeypatch.setattr(semantic_spec, "_GUARDED_DISJUNCTION_WORK_LIMIT", limit)
+    paths = _case(tmp_path, [LOW, {"exists": {"atoms": [_status("review")]}}], 1500)
+    population = _read(paths[1])
+    population["population"]["covers"].append("expense_has_status")
+    population["facts"]["expense_has_status"] = [{"expense": 1, "status": "review"}]
+    _write(paths[1], population)
+    _, checked = _check_and_reference(paths)
+    assert checked["verdict"] == verdict

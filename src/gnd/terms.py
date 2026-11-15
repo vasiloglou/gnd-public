@@ -43,6 +43,7 @@ EARTH_RADIUS_KM = 6371.0088
 MEMBERSHIP_OPERATORS = ("in", "not in")
 MAX_MEMBERSHIP_ITEMS = 1024
 NUMERIC_PRIMITIVES = frozenset({"Integer", "Float", "Number"})
+TEMPORAL_APPLICATION_LIMIT = 10_000
 TEMPORAL_FUNCTIONS = frozenset({"date_add", "date_sub"})
 MAX_DURATION_DAYS = 1_000_000
 TEMPORAL_REASONS = (
@@ -643,7 +644,9 @@ def evaluate_term(
             if not isinstance(arguments, list) or len(arguments) != 2:
                 return unavailable("term:function-arity")
             if temporal_work is not None:
-                if temporal_work[0] >= 10_000:
+                if temporal_work[0] >= TEMPORAL_APPLICATION_LIMIT:
+                    if len(temporal_work) > 1:
+                        temporal_work[1] = 1
                     return unavailable("term:temporal-work-limit")
                 temporal_work[0] += 1
             results = [walk(argument, depth + 1) for argument in arguments]

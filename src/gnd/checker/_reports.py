@@ -36,9 +36,7 @@ class ConstraintVerdict(BaseModel):
     fact_refs: list[dict[str, Any]] = Field(default_factory=list, exclude=True)
     binding_count: int | None = Field(default=None, exclude=True)
     first_empty_atom_index: int | None = Field(default=None, exclude=True)
-    guarded_alternatives: tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...] = Field(
-        default=(), exclude=True
-    )
+    guarded_alternatives: tuple[dict[str, Any], ...] = Field(default=(), exclude=True)
     #: Machine-readable reason a constraint could not be evaluated (D-12).
     #: Non-null if and only if ``verdict == "unchecked"`` — a machine-readable
     #: sibling of ``message``, never a replacement for it. "Unimplemented

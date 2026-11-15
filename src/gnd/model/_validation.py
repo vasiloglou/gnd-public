@@ -2373,13 +2373,10 @@ def _iter_guarded_scopes(doc):
 def _iter_guarded_consequent_terms(constraint: Any):
     """Yield path and term for each single consequent's grounding check."""
     consequent = constraint.get("consequent")
-    if not isinstance(consequent, dict):
-        return
-    for kind in ("atom", "absence"):
-        atom = consequent.get(kind)
-        if isinstance(atom, dict):
-            for role_name, term in atom_bind(atom).items():
-                yield f".consequent.{kind}.bind[{role_name}]", term
+    for prefix, alternative in _guarded_alternatives(consequent):
+        for kind in ("atom", "absence"):
+            for role_name, term in atom_bind(alternative.get(kind)).items():
+                yield f"{prefix}.{kind}.bind[{role_name}]", term
     for path, comparison in _iter_guarded_comparisons(consequent):
         if path.endswith(".comparison") or comparison.get("operator") in MEMBERSHIP_OPERATORS:
             yield from _iter_guarded_comparison_terms(path, comparison)
@@ -4929,29 +4926,48 @@ def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
                     rule_id="semantic:temporal-comparison-type",
                 )
             )
-    for path, prefix, constraint in _iter_guarded_scopes(doc):
-        observed: dict[str, set[str]] = {}
-        for _, atom in _iter_guarded_atoms(constraint):
+    def duration_conflicts(atoms, observed):
+        for atom in atoms:
             if not isinstance(atom, dict):
                 continue
-            bindings = atom_bind(atom)
-            if not isinstance(bindings, dict):
-                continue
-            for role, term in bindings.items():
+            for role, term in atom_bind(atom).items():
                 variable = _variable_name(term)
                 object_type = role_types.get(str(atom.get("fact_type")), {}).get(str(role))
                 primitive = primitives.get(object_type or "")
                 if variable is not None and primitive is not None:
                     observed.setdefault(variable, set()).add(primitive)
-        for variable, choices in observed.items():
-            if "Duration" in choices and len(choices) > 1:
-                issues.append(
-                    ValidationIssue(
-                        path=path if prefix == ".consequent" else path + prefix,
-                        message=f"Variable ${variable} mixes Duration and another primitive.",
-                        rule_id="semantic:guarded-binding-type",
-                    )
-                )
+        return [variable for variable, choices in observed.items() if "Duration" in choices and len(choices) > 1]
+
+    def record_conflicts(path, conflicts):
+        for variable in conflicts:
+            issues.append(ValidationIssue(
+                path=path,
+                message=f"Variable ${variable} mixes Duration and another primitive.",
+                rule_id="semantic:guarded-binding-type",
+            ))
+
+    for path, constraint in _iter_guarded_constraints(doc):
+        if not isinstance(constraint.get("consequent"), dict) or "any_of" not in constraint["consequent"]:
+            record_conflicts(path, duration_conflicts(
+                (atom for _, atom in _iter_guarded_atoms(constraint)), {},
+            ))
+            continue
+        observed = {}
+        local_atoms = {}
+        common_atoms = []
+        for suffix, atom in _iter_guarded_atoms(constraint):
+            if suffix.startswith(".consequent."):
+                prefix = suffix.split("]", 1)[0] + "]"
+                local_atoms.setdefault(prefix, []).append(atom)
+            else:
+                common_atoms.append(atom)
+        base = duration_conflicts(common_atoms, observed)
+        record_conflicts(path, base)
+        for prefix, atoms in local_atoms.items():
+            local = duration_conflicts(
+                atoms, {variable: domains.copy() for variable, domains in observed.items()},
+            )
+            record_conflicts(path + prefix, (variable for variable in local if variable not in base))
     for path, node in temporal_nodes(doc):
         if node.get("primitive") == "Duration" or is_temporal_node(node):
             reason = None

@@ -87,7 +87,7 @@ class ProjectedFinding:
     fact_refs: tuple[tuple[str, int], ...] = ()
     binding_count: int | None = None
     first_empty_atom_index: int | None = None
-    guarded_alternatives: tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...] = ()
+    guarded_alternatives: tuple[dict[str, Any], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -690,13 +690,13 @@ def _indexed_guarded_exists_verdict(
         nonlocal work
         if reference_work is not None and category == "merged_bindings":
             reference_work.charge()
-        if budget is not None:
+        if budget is not None and category is not None:
             budget.charge(amount)
         work += amount
         if category is not None:
             counts[category] = counts.get(category, 0) + amount
         counts["total_work"] = work
-        return work <= GUARDED_EXISTS_WORK_LIMIT
+        return budget is not None or work <= GUARDED_EXISTS_WORK_LIMIT
 
     candidates_by_atom: list[list[dict[str, Scalar]]] = []
     variable_order: list[str] = list(names)
@@ -774,8 +774,6 @@ def _indexed_guarded_exists_verdict(
         if missing_atoms is not None:
             antecedent_shared = tuple(name for name in shared if name in antecedent_names)
             positions = tuple(shared.index(name) for name in antecedent_shared)
-            if budget is not None:
-                budget.charge(len(index))
             standalone_indices.append((
                 antecedent_shared, {tuple(key[pos] for pos in positions) for key in index},
             ))
@@ -839,8 +837,6 @@ def _indexed_guarded_exists_verdict(
         if states is not None:
             states.append(-1 if antecedent_undefined else int(witnessed))
         if missing_atoms is not None:
-            if budget is not None and not witnessed and not antecedent_undefined:
-                budget.charge(len(standalone_indices))
             missing_atoms.append(tuple(
                 position for position, (shared, keys) in enumerate(standalone_indices)
                 if not witnessed and not antecedent_undefined
@@ -872,7 +868,7 @@ def _indexed_guarded_disjunction(constraint, snapshot, names, bindings, referenc
     covers, unavailable = semantic_spec.guarded_relation_availability(snapshot)
     try:
         for alternate in constraint.alternatives:
-            budget.charge(1 + len(bindings))
+            budget.start_alternative(alternate, bindings)
             states: list[int] = []
             missing: list[tuple[int, ...]] = []
             available = semantic_spec.guarded_alternative_available(alternate, relations, covers, unavailable)
@@ -1266,6 +1262,30 @@ def project_finding(
         coordinates.update(_subject_occurrences(finding.constraint_id, observation))
     elif finding.verdict in {"fail", "warning"}:
         coordinates.update(index.coordinates(finding.witness))
+    witness = project_witness(
+        observation,
+        index,
+        scope_id=finding.scope_id,
+        constraint_id=finding.constraint_id,
+        family=finding.family,
+        witness=finding.witness,
+        witness_keys=finding.witness_keys,
+    )
+    diagnostics = ()
+    if finding.guarded_alternatives:
+        diagnostics = tuple(
+            {
+                "binding": binding,
+                "alternatives": [
+                    {
+                        "index": index, "reason": reason, "fact_types": list(facts),
+                        "atom_indexes": list(atom_indexes),
+                    }
+                    for index, (reason, facts, atom_indexes) in enumerate(alternatives)
+                ],
+            }
+            for binding, alternatives in zip(witness, finding.guarded_alternatives, strict=True)
+        )
     return ProjectedFinding(
         finding.scope_id,
         finding.constraint_id,
@@ -1273,20 +1293,12 @@ def project_finding(
         finding.modality,
         finding.verdict,
         finding.reason_code,
-        project_witness(
-            observation,
-            index,
-            scope_id=finding.scope_id,
-            constraint_id=finding.constraint_id,
-            family=finding.family,
-            witness=finding.witness,
-            witness_keys=finding.witness_keys,
-        ),
+        witness,
         finding.applicable_scope_ids,
         tuple(sorted(coordinates)),
         finding.binding_count,
         finding.first_empty_atom_index,
-        finding.guarded_alternatives,
+        diagnostics,
     )
 
 

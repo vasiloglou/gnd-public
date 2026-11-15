@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "reason": "GC3 renders disjunction diagnostics only when the caller enables guarded diagnostics.",
+  "predecessor": ".gnd-planning/milestones/compiled-snapshot-obligations/evidence/CI/source-successors.json",
+  "predecessor_sha256": "bc74b5b0b46fcef779c3d7e8b6247013801174f0478db4667f1a8b549411a7fa",
+  "successors": [
+    {
+      "kind": "RF5",
+      "old": "gnd.cli",
+      "name": "_cmd_check",
+      "home": "gnd.commands.checking",
+      "before": {
+        "raw_sha256": "36636b18aacfc339526e9c0f835160814cc6a739ec2f52e5c5971fff78ac314e",
+        "algorithm_sha256": "0205e56be5f917c74e4d5ece361899511c52360b07a4360b1817e5d6c779b6f0"
+      },
+      "after": {
+        "raw_sha256": "24242df1c4d8093157da3a25405994972307bdd3dd2bda0df648e0ab4ba22362",
+        "algorithm_sha256": "f9d2d457817dd20b08f34b8b3555d0e0c65ed531b9487e765c87a3a70f5881da"
+      },
+      "reason": "Render v17 alternative failures below the existing text binding observation."
+    }
+  ]
+}

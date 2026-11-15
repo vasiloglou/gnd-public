@@ -297,21 +297,7 @@ def _run_check_raw(
                             "first_empty_atom_index": verdict.first_empty_atom_index,
                         }
                         if verdict.guarded_alternatives:
-                            row["guarded_alternatives"] = [
-                                {
-                                    "binding": binding,
-                                    "alternatives": [
-                                        {
-                                            "index": index, "reason": reason,
-                                            "fact_types": list(facts), "atom_indexes": list(atom_indexes),
-                                        }
-                                        for index, (reason, facts, atom_indexes) in enumerate(alternatives)
-                                    ],
-                                }
-                                for binding, alternatives in zip(
-                                    verdict.offending_facts, verdict.guarded_alternatives, strict=True
-                                )
-                            ]
+                            row["guarded_alternatives"] = list(verdict.guarded_alternatives)
         return payload
 
 

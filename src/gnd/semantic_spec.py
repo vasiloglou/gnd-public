@@ -1823,20 +1823,35 @@ class GuardedDisjunctionLimit(Exception):
 class GuardedDisjunctionBudget:
     def __init__(self) -> None:
         self.work = 0
-        self.temporal_work = [0]
+        self.temporal_work = [0, 0]
 
     def charge(self, amount: int = 1) -> None:
         self.work += amount
         if self.work > _GUARDED_DISJUNCTION_WORK_LIMIT:
             raise GuardedDisjunctionLimit
 
+    def start_alternative(self, alternate, bindings):
+        # One entry per binding and one potential diagnostic probe per exists atom.
+        self.charge(1 + len(bindings) * (1 + len(alternate.exists_atoms)))
+
     def comparison_state(self, operator, left, right, names, binding):
+        nodes = [left, right]
+        while nodes:
+            self.charge()
+            nodes.extend(nodes.pop().arguments)
+        before = self.temporal_work[0]
         state = guarded_pair_state(
             operator, left, right, names, binding, temporal_work=self.temporal_work,
         )
-        if state < 0 and self.temporal_work[0] >= 10_000:
+        self.charge(self.temporal_work[0] - before)
+        if self.temporal_work[1]:
             raise GuardedDisjunctionLimit
         return state
+
+    def charge_exists_comparison(self, result):
+        self.charge(max(1, result.nodes + result.operations))
+        if self.temporal_work[1]:
+            raise GuardedDisjunctionLimit
 
 
 def guarded_term_binding(binding):
@@ -1876,8 +1891,8 @@ def guarded_exists_comparison(operator, left, right, binding, *, budget=None):
         left_primitive=left.primitive,
         temporal_work=None if budget is None else budget.temporal_work,
     )
-    if budget is not None and result.reason == "term:temporal-work-limit":
-        raise GuardedDisjunctionLimit
+    if budget is not None:
+        budget.charge_exists_comparison(result)
     return result
 
 
@@ -1900,36 +1915,62 @@ def guarded_alternative_available(alternate, relations, covers, unavailable):
     return True
 
 
-def _reference_exists_state(alternate, names, binding, facts, relations, budget):
-    """Scan the covered relations for joint witnesses of one antecedent binding."""
-    assignments = [dict(zip(names, binding, strict=True))]
+def _disjunction_scalar_key(value):
+    return value.identity_kind, value.token
+
+
+def _reference_exists_index(alternate, names, facts, relations, budget):
+    indexes = []
+    prior = set(names)
     for atom in alternate.exists_atoms:
         fact = facts.get(atom.fact_type)
         if fact is None or len(atom.bindings) != len(fact.roles):
-            return -1
+            return None
         columns = [(fact_role_index(fact, role), term) for role, term in atom.bindings]
         if any(column < 0 or not term.valid for column, term in columns):
-            return -1
+            return None
+        names_here = {term.variable for _, term in columns if term.kind == "variable"}
+        join_keys = tuple(sorted(prior & names_here))
+        index = {}
+        observed = set()
+        for row in relations[atom.fact_type].rows:
+            budget.charge(1 + len(row))
+            if len(row) != len(columns) or any(cell is None for cell in row):
+                return None
+            values = {}
+            for column, term in columns:
+                value = row[column]
+                if term.kind == "literal":
+                    if term.literal is None or not scalar_identical(value, term.literal):
+                        break
+                elif term.kind == "variable":
+                    if not scalar_identical(value, values.setdefault(term.variable, value)):
+                        break
+                else:
+                    return None
+            else:
+                token = tuple(sorted((name, _disjunction_scalar_key(value)) for name, value in values.items()))
+                if token in observed:
+                    continue
+                observed.add(token)
+                key = tuple(_disjunction_scalar_key(values[name]) for name in join_keys)
+                index.setdefault(key, []).append(values)
+        indexes.append((join_keys, index))
+        if observed:
+            prior |= names_here
+    return indexes
+
+
+def _reference_exists_state(alternate, names, binding, indexes, budget):
+    assignments = [dict(zip(names, binding, strict=True))]
+    for keys, index in indexes:
         joined = []
         for assignment in assignments:
-            for row in relations[atom.fact_type].rows:
-                budget.charge(1 + len(row))
-                if len(row) != len(columns) or any(cell is None for cell in row):
-                    return -1
-                candidate = dict(assignment)
-                for column, term in columns:
-                    value = row[column]
-                    if term.kind == "literal":
-                        if term.literal is None or not scalar_identical(value, term.literal):
-                            break
-                    elif term.kind == "variable":
-                        earlier = candidate.setdefault(term.variable, value)
-                        if not scalar_identical(value, earlier):
-                            break
-                    else:
-                        return -1
-                else:
-                    joined.append(candidate)
+            budget.charge()
+            key = tuple(_disjunction_scalar_key(assignment[name]) for name in keys)
+            for values in index.get(key, ()):
+                budget.charge()
+                joined.append(assignment | values)
         assignments = joined
         if not assignments:
             return 0
@@ -1937,14 +1978,54 @@ def _reference_exists_state(alternate, names, binding, facts, relations, budget)
     unknown = False
     for assignment in assignments:
         binding = guarded_term_binding(assignment)
-        states = []
-        for operator, left, right in alternate.exists_where:
-            result = guarded_exists_comparison(operator, left, right, binding, budget=budget)
-            budget.charge(max(1, result.nodes + result.operations))
-            states.append(int(result.value) if result.available else -1)
-        unknown |= -1 in states
-        witnessed |= all(state == 1 for state in states)
+        states = [
+            guarded_exists_comparison(operator, left, right, binding, budget=budget)
+            for operator, left, right in alternate.exists_where
+        ]
+        unknown |= any(not result.available for result in states)
+        witnessed |= all(result.available and result.value is True for result in states)
     return -1 if unknown else int(witnessed)
+
+
+def _reference_atom_index(atom, fact, relation, budget):
+    roles = dict(atom.bindings)
+    if len(atom.bindings) != len(fact.roles) or not all(role.name in roles for role in fact.roles):
+        return None
+    terms = tuple(roles[role.name] for role in fact.roles)
+    keys = set()
+    for row in relation.rows:
+        budget.charge(1 + len(row))
+        if len(row) != len(terms) or any(cell is None for cell in row):
+            return None
+        keys.add(tuple(_disjunction_scalar_key(cell) for cell in row))
+    return terms, keys
+
+
+def _reference_alternative_states(alternate, names, bindings, facts, relations, budget):
+    if alternate.variant == "comparison":
+        return [
+            budget.comparison_state(alternate.operator, *alternate.operands, names, binding)
+            for binding in bindings
+        ]
+    if alternate.variant == "exists":
+        indexes = _reference_exists_index(alternate, names, facts, relations, budget)
+        if indexes is None:
+            return [-1] * len(bindings)
+        return [_reference_exists_state(alternate, names, binding, indexes, budget) for binding in bindings]
+    atom = alternate.consequent[0]
+    prepared = _reference_atom_index(atom, facts[atom.fact_type], relations[atom.fact_type], budget)
+    if prepared is None:
+        return [-1] * len(bindings)
+    terms, keys = prepared
+    states = []
+    for binding in bindings:
+        row = [guarded_operand_value(term, names, binding) for term in terms]
+        if any(cell is None for cell in row):
+            states.append(-1)
+        else:
+            present = tuple(_disjunction_scalar_key(cell) for cell in row) in keys
+            states.append(int(present == (alternate.variant == "atom")))
+    return states
 
 
 def guarded_disjunction_state(states):
@@ -1962,30 +2043,22 @@ def _reference_guarded_disjunction(constraint, snapshot, names, bindings):
     relations = {relation.fact_type: relation for relation in snapshot.relations}
     covers, unavailable = guarded_relation_availability(snapshot)
     budget = GuardedDisjunctionBudget()
+    if not bindings:
+        return 1, [], None
     failures = []
     unknown = False
     try:
-        available = tuple(
-            guarded_alternative_available(alternate, relations, covers, unavailable)
-            for alternate in constraint.alternatives
-        )
-        for binding in bindings:
-            states = []
-            for alternate, usable in zip(constraint.alternatives, available, strict=True):
-                budget.charge()
-                state = -1
-                if usable and alternate.variant == "exists":
-                    state = _reference_exists_state(alternate, names, binding, facts, relations, budget)
-                elif usable and alternate.variant == "comparison":
-                    state = budget.comparison_state(alternate.operator, *alternate.operands, names, binding)
-                elif usable:
-                    atom = alternate.consequent[0]
-                    budget.charge(len(relations[atom.fact_type].rows))
-                    state = guarded_atom_state(atom, names, binding, snapshot)
-                    if alternate.variant == "absence" and state >= 0:
-                        state = 1 - state
-                states.append(state)
-            combined = guarded_disjunction_state(states)
+        states = []
+        for alternate in constraint.alternatives:
+            budget.start_alternative(alternate, bindings)
+            if guarded_alternative_available(alternate, relations, covers, unavailable):
+                states.append(_reference_alternative_states(
+                    alternate, names, bindings, facts, relations, budget,
+                ))
+            else:
+                states.append([-1] * len(bindings))
+        for binding, results in zip(bindings, zip(*states, strict=True), strict=True):
+            combined = guarded_disjunction_state(results)
             unknown |= combined < 0
             if combined == 0:
                 failures.append(list(binding))

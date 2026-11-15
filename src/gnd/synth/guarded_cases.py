@@ -251,6 +251,8 @@ def _disjunction_pair(model, index, rule, rng, budget):
         charge(budget)
         kind, payload = next(iter(alternative.items()))
         atoms, comparisons = _alternative_parts(kind, payload)
+        if kind == "comparison" and any(isinstance(payload[side], dict) for side in ("left", "right")):
+            raise UnsupportedShape
         extension, possible = _domains(model, index, atoms, roles, asserted, budget)
         alternatives.append((kind, _prepared_guard_filters(comparisons, budget), atoms))
         shapes.append((kind, comparisons[0] if comparisons else {}, atoms, extension, possible))

@@ -38,11 +38,11 @@ Existing checker reports section; historical facade retained.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `ConstraintVerdict` | class(BaseModel) | 15 | One verdict for one constraint. |
-| `CoverageEntry` | class(BaseModel) | 68 | Declared-coverage status and fact count for one fact type. |
-| `Phase1Trace` | class | 76 | The v6.0 Phase 1 evidence lane for one complete in-scope result. |
-| `CheckReport` | class(BaseModel) | 92 | The full set of per-constraint verdicts for one (model, population) pair. |
-| `CheckReport.has_alethic_fail(self) -> bool` | method | 115 | (no docstring) |
-| `CheckReport.has_vacuous(self) -> bool` | method | 121 | (no docstring) |
-| `CheckReport.has_unevaluated_alethic(self) -> bool` | method | 125 | (no docstring) |
-| `CheckReport.counts(self) -> dict[str, int]` | method | 137 | (no docstring) |
-| `band(report, baseline, allow_vacuous) -> int` | function | 146 | Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08). |
+| `CoverageEntry` | class(BaseModel) | 66 | Declared-coverage status and fact count for one fact type. |
+| `Phase1Trace` | class | 74 | The v6.0 Phase 1 evidence lane for one complete in-scope result. |
+| `CheckReport` | class(BaseModel) | 90 | The full set of per-constraint verdicts for one (model, population) pair. |
+| `CheckReport.has_alethic_fail(self) -> bool` | method | 113 | (no docstring) |
+| `CheckReport.has_vacuous(self) -> bool` | method | 119 | (no docstring) |
+| `CheckReport.has_unevaluated_alethic(self) -> bool` | method | 123 | (no docstring) |
+| `CheckReport.counts(self) -> dict[str, int]` | method | 135 | (no docstring) |
+| `band(report, baseline, allow_vacuous) -> int` | function | 144 | Verdicts -> exit band, precedence 3 > 1 > 4 > 2 > 0 (D-08). |

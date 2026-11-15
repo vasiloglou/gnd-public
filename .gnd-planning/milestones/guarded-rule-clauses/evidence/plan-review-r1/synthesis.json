@@ -1,0 +1,463 @@
+{
+  "schema_version": 1,
+  "run_sha256": "2c85153f902609f1e619d63ac66888e2d8234ab98713a65a854d93075116313b",
+  "summary": "Five reviewers returned schema-valid responses on plan r1. The common issues concern oracle scope, membership identity, unavailable where terms, reachable synthesis cases, export protection, and a reproducible installed smoke. Gemini returned no JSON object; Kimi retained all three declared concerns with one preamble line.",
+  "agreed_concerns": [
+    {
+      "group_id": "unknown-oracle",
+      "severity": "high",
+      "title": "Differential tests need a decidable domain",
+      "summary": "Helper derivations cannot observe every guarded unknown or coverage outcome.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc3-any-of-unknown-vs-union-helper"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rule6-differential-cannot-decide-unknowns"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "grc-differential-unknown"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-differential-cannot-adjudicate-unknown"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "unknown-where",
+      "severity": "high",
+      "title": "Specify undecidable antecedent comparisons",
+      "summary": "A populated positive antecedent followed by an undefined where term needs a defined result.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc2-unknown-where"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc2-undecidable-where-unspecified"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "membership-identity",
+      "severity": "high",
+      "title": "Define membership identity independently of legacy equality",
+      "summary": "Existing term equality and guarded scalar equality take different paths. Specify typed canonical keys and test compilation and lookup as well as each public comparison site.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc1-membership-identity-home"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-comparison-identity"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc1-typed-identity-anchor-wrong"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-set-index-vs-typed-identity"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "finite-synth",
+      "severity": "medium",
+      "title": "Handle exhaustive domains in guarded synthesis",
+      "summary": "A valid rule whose domain forces its membership outcome cannot produce both witness verdicts.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-exhaustive-list-synth"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "synth-witness-unattainable-not-in"
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "export-containment",
+      "severity": "medium",
+      "title": "Protect exporters in the phase that adds membership",
+      "summary": "The GC1 gate must cover exporter behavior for the new syntax, including derivation where.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "d1-derivation-where-exporter-crash"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc1-exporter-refusals-gate-mismatch"
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "group_id": "installed-smoke",
+      "severity": "low",
+      "title": "Make the issue examples reproducible in the installed smoke",
+      "summary": "Pin the evaluated cases and their expected verdict and verbalization before claiming GC4 evidence.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "grc-retail-examples-not-recorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-smoke-e3-no-expected-outcomes"
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ]
+    }
+  ],
+  "divergent_concerns": [
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-ground-negated-disconnection"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-uncovered-negation-oracle-contradiction"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc2-vacuous-vs-pass-differential"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "gc3-exists-alternative-tristate"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "synth-witness-unsupported-shapes"
+    },
+    {
+      "reviewer_id": "claude",
+      "concern_id": "walk-membership-list-members"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "gc1-numeric-kind-gate"
+    },
+    {
+      "reviewer_id": "codex",
+      "concern_id": "gc3-unmet-exists-atoms"
+    },
+    {
+      "reviewer_id": "glm",
+      "concern_id": "d3-redefines-v16-binding-count-in-place"
+    },
+    {
+      "reviewer_id": "kimi",
+      "concern_id": "grc-anyof-goal-drift"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-any-of-alternative-shapes-unenumerated"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-first-empty-index-no-witness"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-guarded-negate-stratification-parity"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-identical-offending-bindings-across-encodings"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-membership-kind-mismatch-unspecified"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-per-alternative-grounding-scope"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-report-v17-vs-byte-stability"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-rule-check-report-doc-conditional"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-synth-manifest-version-with-new-reasons"
+    },
+    {
+      "reviewer_id": "qwen",
+      "concern_id": "gnd-gc-plan-r1-term-comparison-consumers-unenumerated"
+    }
+  ],
+  "prioritized_fixes": [
+    {
+      "fix_id": "unknown-oracle",
+      "rank": 1,
+      "title": "Differential tests need a decidable domain",
+      "action": "Compare decidable covered cases with the helper encoding and assert that boundary. Test unknown, rule coverage, and work exhaustion with explicit public outcomes.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc3-any-of-unknown-vs-union-helper"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rule6-differential-cannot-decide-unknowns"
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "grc-differential-unknown"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-differential-cannot-adjudicate-unknown"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc3-any-of-unknown-vs-union-helper",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "rule6-differential-cannot-decide-unknowns",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "grc-differential-unknown",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-differential-cannot-adjudicate-unknown",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "qwen",
+        "kimi",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "unknown-where",
+      "rank": 2,
+      "title": "Specify undecidable antecedent comparisons",
+      "action": "Specify unchecked for unresolved pertinent filters and test active antecedents in both paths.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc2-unknown-where"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc2-undecidable-where-unspecified"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc2-unknown-where",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc2-undecidable-where-unspecified",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "membership-identity",
+      "rank": 3,
+      "title": "Define membership identity independently of legacy equality",
+      "action": "Use tagged canonical membership keys and preserve legacy equality. Pin numeric, Boolean, and temporal cases per site.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc1-membership-identity-home"
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-comparison-identity"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc1-typed-identity-anchor-wrong"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-set-index-vs-typed-identity"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "gc1-membership-identity-home",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-comparison-identity",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc1-typed-identity-anchor-wrong",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-set-index-vs-typed-identity",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "codex",
+        "qwen",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "finite-synth",
+      "rank": 4,
+      "title": "Handle exhaustive domains in guarded synthesis",
+      "action": "Require both verdicts on designated reachable shapes and assert a manifest reason on a provably exhausted finite domain.",
+      "concerns": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-exhaustive-list-synth"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "synth-witness-unattainable-not-in"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "codex",
+          "concern_id": "gc1-exhaustive-list-synth",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "synth-witness-unattainable-not-in",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "codex",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "export-containment",
+      "rank": 5,
+      "title": "Protect exporters in the phase that adds membership",
+      "action": "Inventory public exporters and pin membership refusal or verified translation for every affected site from GC1 onward.",
+      "concerns": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "d1-derivation-where-exporter-crash"
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc1-exporter-refusals-gate-mismatch"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "claude",
+          "concern_id": "d1-derivation-where-exporter-crash",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "glm",
+          "concern_id": "gc1-exporter-refusals-gate-mismatch",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "claude",
+        "glm"
+      ]
+    },
+    {
+      "fix_id": "installed-smoke",
+      "rank": 6,
+      "title": "Make the issue examples reproducible in the installed smoke",
+      "action": "Pin fixture source, passing and failing expectations, and verbalization assertions in the GC4 spec.",
+      "concerns": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "grc-retail-examples-not-recorded"
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-smoke-e3-no-expected-outcomes"
+        }
+      ],
+      "evidence": [
+        {
+          "reviewer_id": "kimi",
+          "concern_id": "grc-retail-examples-not-recorded",
+          "evidence_index": 0
+        },
+        {
+          "reviewer_id": "qwen",
+          "concern_id": "gnd-gc-plan-r1-smoke-e3-no-expected-outcomes",
+          "evidence_index": 0
+        }
+      ],
+      "supporting_reviewers": [
+        "qwen",
+        "kimi"
+      ]
+    }
+  ]
+}

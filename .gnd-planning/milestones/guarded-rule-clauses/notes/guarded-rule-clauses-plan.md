@@ -1,9 +1,10 @@
-# Guarded rule clauses · plan r1
+# Guarded rule clauses · plan r2
 
-**Status — draft r1, 2026-11-15. Not reviewed, not approved.** No plan review
-has run over these bytes: the owner has not selected a review instrument for
-this milestone. The project bar for plan review is the maintained GND review
-panel. Default `auto=false`; every phase and spec waits for its owner gate.
+**Status — r2 review candidate, 2026-11-15.** The owner selected the Standard
+GND review panel for plan and close and delegated approval rulings with
+`auto=true`. The review of r1 and its dispositions are recorded in
+[the review disposition](plan-review-disposition.md). The plan gate follows
+confirmation of r2.
 
 ## Goal and completion predicates
 
@@ -19,11 +20,13 @@ acceptable" is one rule, not a helper fact type plus a rule
   `where` (term comparisons) beside `antecedent`, with derivation-clause
   semantics, safety and the stratification argument recorded.
 - **GC3.** A consequent `any_of: [<consequent>, ...]` over today's four forms
-  holds when at least one alternative holds, and a violation lists each
-  alternative's unmet atoms.
-- **Every form** passes a differential test against its equivalent
-  derivation-helper encoding over generated populations, and
-  `gnd synth --guarded-cases` produces a failing and a passing case for it.
+  holds when at least one alternative holds, and the opt-in diagnostics report
+  gives a failure reason for each alternative of a violated rule.
+- **Every form** passes a differential test over covered, decidable generated
+  populations and explicit fixtures for applicable unknown outcomes. Guarded
+  synthesis produces a failing and a passing case for representative reachable
+  shapes, including the issue examples. An exhaustive finite domain with only
+  one reachable verdict yields a named refusal.
 - **GC4.** Exporters translate or refuse each new form with a named reason,
   normative docs and the bookrec guarded-rules chapter teach the three forms,
   and an installed-candidate smoke runs the issue's three retail examples.
@@ -47,16 +50,20 @@ by name in each spec. In particular:
    guarded block (`model/_validation.py` registration order) at a stated
    position, pinned by source-order assertion.
 4. **One walk.** `_iter_guarded_atoms` and `_iter_guarded_consequent_terms`
-   learn the new sites (negated atoms, `where` terms, `any_of` alternatives)
+   learn the new sites (negated atoms, `where` terms, membership list members, `any_of` alternatives)
    once, so every existing guarded check (term refs, role claims, literal
    domains, binding types, grounding) covers them without per-site copies.
 5. **One home.** `representation-format.md` "Guarded constraints" owns the
    syntax and semantics; constraint-reference, verbalization-patterns, CLI and
    docs pages cite it. The stale guarded row in constraint-reference (no
    `exists`) is corrected in GC1.
-6. **Measure.** The differential test against helper encodings decides any
-   disputed semantics (unknown propagation, duplicate witnesses, negation over
-   an uncovered relation).
+6. **Measure.** On covered, decidable populations, compare verdicts and the
+   set of offending bindings projected onto the shared business variables
+   using canonical ORM identity. Assert coverage and defined terms in the
+   differential harness. For GC2, compare an emptied native guard with a
+   vacuous helper as zero active bindings and assert each public verdict
+   separately. For undefined terms, missing coverage, and exhausted work,
+   assert expected outcomes directly on both evaluator paths.
 
 Use ModelIndex and `constraint_families.FAMILIES` dispatch, keep branch
 evidence identities, register new refusal and unchecked scopes in
@@ -70,7 +77,7 @@ experiment-claim census cannot measure runtime coverage of rule syntax.
 
 | Source and location | Obligation or constraint | Phase and gate |
 |---|---|---|
-| #195 Summary item 3 | `in` / `not in` with a list-of-literals right side in `term_comparison` and `guarded_comparison` | GC1 I1–I4 |
+| #195 Summary item 3 | `in` / `not in` with a list-of-literals right side in `term_comparison` and `guarded_comparison` | GC1 I1–I5 |
 | #195 Summary item 1 | `negate` and `where` beside `antecedent` with derivation-clause semantics | GC2 N1–N4 |
 | #195 Summary item 2 | `any_of` consequent over the four existing forms | GC3 A1–A4 |
 | #195 Acceptance bullet 1 | Schema validation, differential test against the helper encoding over generated populations, one-sentence verbalization | GC1–GC3, each criterion 1–3 |
@@ -87,36 +94,52 @@ experiment-claim census cannot measure runtime coverage of rule syntax.
 **GC1 · membership.** New schema def `membership_comparison`
 `{operator: "in" | "not in", left: term, right: literal_list}`; `literal_list`
 is a non-empty array (proposed cap 1,024) of scalar, date or duration literals
-of one primitive kind. `guarded_comparison` and `term_comparison` become
+from one membership domain. `guarded_comparison` and `term_comparison` become
 `oneOf` the current shape and this one. The shared `comparison_operator` enum
 is **not** extended, so value-comparison and dynamic rules are unchanged.
-Semantics: `in` holds when the left value is typed-identical to some list
-member; `not in` when it is identical to none; an unknown or non-comparable
-left value gives the same unknown/`term:values-not-comparable` outcome as `=`.
-Because `term_comparison` is shared, derivation `where` gains membership too
-(decision D1).
+Semantics use a canonical, kind-tagged membership key compiled once per list.
+Boolean and numeric identities are distinct. Integer, Float and Number share
+an exact numeric domain. Date literals normalize to calendar dates and
+duration literals to day counts, with tags distinct from raw strings and
+numbers. Validation refuses a statically incompatible kind. An unavailable
+left term or a runtime kind mismatch yields unchecked rather than a true
+`not in` result. Preserve existing equality paths. Establish singleton parity
+only for comparable inputs on which the existing equality uses the same
+identity contract. D1 covers all existing sites below.
 
-**GC2 · antecedent `negate` and `where`.** A guarded rule may add
-`negate: [atom, ...]` and `where: [term_comparison, ...]`. A binding of the
-positive antecedent survives when every `where` holds and no negated atom
-matches. Safety: every variable in a negated atom or `where` term is bound by a
-positive antecedent atom (reuse the `derivation-negate-unbound` rule).
-Stratification: a guarded rule produces no facts, so negating any fact type,
-derived or asserted, reads a completed extension; the issue's condition holds
-by construction and the spec records that argument plus a test that negates a
-derived fact type. A negated atom over an uncovered or unavailable relation
-makes the binding unknown, never a silent survivor. Disconnected negated atoms
-are refused as positive ones are. `--guarded-diagnostics` counts bindings after
-`negate`/`where`; the first-empty index still refers to positive atoms
-(decision D3).
+| Comparison site | GC1 contract |
+|---|---|
+| Guarded top-level consequent | Membership enabled through indexed and reference evaluation |
+| Guarded `exists.where` | Membership enabled through its term filter and guarded synthesis |
+| Ordinary, aggregate-bearing and headless `derivation_rule.where` | Membership enabled through derivation extension filters |
+| `derivation_clause.where`, `derivation_headed_clause.where` | Membership enabled through derivation extension filters |
+| Value comparison and dynamic rule | Existing operator restrictions remain |
+| Exporter profiles receiving any of these forms | Explicit refusal from GC1 wherever translation is unavailable, including PyRel rules/runtime, Lean, Ossie and Soufflé paths that consume the form |
 
-**GC3 · `any_of`.** `consequent: {any_of: [c1, c2, ...]}`, two or more
-alternatives, each one of the four existing forms (no nesting). Per binding:
-holds if any alternative holds; otherwise unknown if any is unknown; otherwise
-violated. Each alternative is grounded independently against the antecedent
-plus its own `exists` atoms. Violations carry, per alternative, its index and
-its unmet atoms or failing comparison, on an opt-in report surface (decision
-D4). Messages and verbalization read "at least one of: …".
+**GC2 · antecedent `negate` and `where`.** Positive atoms bind variables. A
+filter can prove exclusion by a definite false `where` or a matching negated
+atom. Otherwise an undefined comparison or negated relation with unavailable
+or uncovered rows makes the binding unknown. A ground negated atom is a
+global existence probe, including the shipped-order example. Every variable
+of a negated atom or comparison must occur in a positive atom. A guarded rule
+produces no facts and reads completed extensions, so it adds no dependency
+edges to derivation stratification. Pin a negated derived relation and preserve
+validation refusal for an independently unstratifiable derivation. A
+determinate filter-empty guard has zero active bindings and a vacuous verdict.
+A first-empty index continues to describe only a positive join prefix. In
+particular the index is absent when filters alone eliminate the bindings.
+
+**GC3 · `any_of`.** Each alternative is an `atom`, `comparison`, `absence`
+or `exists` consequent and may use the comparison forms shipped in GC1.
+There are at least two alternatives and nesting is refused. Each alternative
+can read the antecedent bindings and its own local `exists` bindings. Per
+binding, a true alternative wins over a data-unknown alternative. When no
+alternative holds, an unknown alternative makes the result unchecked.
+A concrete satisfying existential witness wins over an undefined candidate.
+Exhausting the shared work budget records unchecked through the existing
+limit path. A definite violation provides the alternative's index and a reason
+on opt-in diagnostics, including an unmet atom, a false comparison, or a
+failed joint witness when all atoms match individually.
 
 ## 3. Dependencies and artifact homes
 
@@ -132,11 +155,11 @@ GC3. GC4 depends on all three.
 | Validation | Adapt the guarded block in `src/gnd/model/_validation.py`; reuse `_rule_derivation_negate_unbound` logic and the guarded atom/term walks |
 | Structural shape and scope | Adapt `universe._family_implemented_guarded` and `_family_scope_guarded`; register scopes in `branches.py` |
 | Adapter and IR | Adapt `semantic_adapter._family_adapt_guarded` and `IRConstraint` with `negate`, `where`, `alternatives` fields |
-| Term comparison | Adapt `terms.compare_terms` (one home for membership), reused by `checker._compare`, `synth/guarded._where_holds` and `extensions` where filters |
+| Term comparison | Share membership key semantics across guarded scalar evaluation, term filters and the independent synthesis oracle. Retain existing equality paths. |
 | Evaluation | Adapt `semantic_spec.guarded_result` (reference) and `correspondence._indexed_guarded_*` (production); reuse `extensions._apply_negation` identity anti-join |
 | Messages and verbalization | Adapt `verbalize.guarded_message`, `model_verbalization._guarded_cnl`; reuse `_derivation_cnl` negate/where wording |
 | Synth | Adapt `synth/guarded_cases.build_pair` and `COMPARISON_PAIRS` |
-| Exports | GC4: `export/pyrel_rules.py`, `pyrel_runtime.py`, `lean.py`, `ossie_formulas.py` |
+| Exports | GC1 pins named refusals across membership consumers. GC2 and GC3 protect their new shapes when admitted. GC4 exercises the final translate-or-refuse matrix. |
 
 Component consult (`dev/components/`, `scripts/components_index.py search
 guarded comparison` and `search term comparison membership`) found
@@ -150,19 +173,19 @@ review was not run for this plan; each phase spec repeats the consult and runs
 
 | Order | Phase | Acceptance criteria |
 |---|---|---|
-| 1 | **GC1 · membership** | I1 schema and validation accept `in`/`not in` in guarded and term comparisons and refuse empty, oversize, mixed-kind and non-literal lists; value-comparison and dynamic rules still refuse them. I2 reference and production evaluators agree; typed identity (bool vs number, date vs string) and unknown left values tested. I3 differential test: each `in` rule against its helper encoding (a value fact type plus a derivation union) over generated populations yields identical verdicts and offending bindings. I4 one-sentence verbalization and `--guarded-cases` failing/passing pair for `in` and `not in`. |
-| 2 | **GC2 · antecedent negate/where** | N1 schema, safety and disconnection refusals; the walks cover negated atoms and `where` terms. N2 stratification argument recorded and tested with a negated derived fact type; uncovered negated relation yields unchecked, not pass. N3 production and reference evaluators agree, `--guarded-diagnostics` counts post-filter bindings, and the differential test against the `negate`/`where` helper encoding matches. N4 verbalization reads as one sentence ("…, unless …") and synth produces a failing and a passing case, including one that passes only because the negated atom is present. |
-| 3 | **GC3 · any_of** | A1 schema and validation (≥2 alternatives, no nesting, per-alternative grounding). A2 three-valued evaluation agrees across evaluators; differential test against the union-helper encoding. A3 violation report lists each alternative's index and unmet atoms or failing comparison on the selected surface. A4 verbalization and a synth pair per alternative shape. |
-| 4 | **GC4 · exports, docs, smoke** | E1 PyRel rules and runtime translate or refuse each form with a named `ProfileRefusal`; Lean and Ossie refuse with named reasons; existing exports byte-stable. E2 normative docs, bookrec chapter 8 and CLI reference updated, with the "Why not a derived fact type" helper patterns shown as the before. E3 installed-candidate smoke of the issue's three retail rules plus the `exists` control. |
+| 1 | **GC1 · membership** | I1 schema and validation accept `in`/`not in` in guarded and term comparisons and refuse empty, oversize, mixed nonnumeric kinds and non-literal lists; value-comparison and dynamic rules still refuse them. I2 reference and production evaluators agree; typed identity (bool vs number, date vs string) and unknown left values tested. I3 differential test: each `in` rule against its helper encoding (a value fact type plus a derivation union) over generated populations yields identical verdicts and offending bindings. I4 one-sentence verbalization, v1 synth pairs for reachable cases, and a named refusal when a proven finite domain forces one verdict. I5 exporter containment for guarded, existential and derivation membership. |
+| 2 | **GC2 · antecedent negate/where** | N1 schema, safety and disconnection refusals; the walks cover negated atoms and `where` terms. N2 stratification argument recorded and tested with a negated derived fact type; uncovered negated relation yields unchecked, not pass. N3 production and reference evaluators agree, `--guarded-diagnostics` counts post-filter bindings, filter-only emptiness is vacuous with no first-empty positive prefix, and the covered/decidable helper differential matches after binding projection. Test active unknown filters separately. N4 verbalization reads as one sentence ("…, unless …") and synth produces a failing and a passing case, including one that passes only because the negated atom is present. |
+| 3 | **GC3 · any_of** | A1 schema and validation (≥2 alternatives, no nesting, per-alternative grounding). A2 three-valued evaluation agrees across evaluators, including joint existential witnesses, undefined candidates, and work exhaustion. Compare covered, decidable cases against the union helper. A3 violation report lists each alternative's index and failure reason on the selected surface and pins bytes and report version for models without the new forms. A4 verbalization and a synth pair per alternative shape. |
+| 4 | **GC4 · exports, docs, smoke** | E1 PyRel rules and runtime translate or refuse each form with a named `ProfileRefusal`; Lean, Ossie and affected Soufflé paths explicitly refuse unsupported forms; existing exports remain byte-stable. E2 normative docs, bookrec chapter 8, report reference and CLI reference updated, with the "Why not a derived fact type" helper patterns shown as the before. E3 installed-candidate smoke of active customer membership, the shipped-code exception, and delivered alternatives plus the existing test-account `exists` control. The GC4 spec pins the issue #195 fixtures, expected pass/fail verdicts, and one-sentence verbalization checks. |
 
 ## 5. Documentation, skill and compatibility surfaces
 
 `representation-format.md` owns syntax and semantics; `constraint-reference.md`
 (guarded row, operators), `verbalization-patterns.md`, `docs/reference/cli.md`,
-`docs/bookrec/08-guarded-rules.md`, `docs/reference/rule-check-report.md` (if
-GC3 changes the wire) and the packaged model-authoring skills cite it. Existing
-models and reports keep their bytes: every change is additive, and a model not
-using the new forms validates, checks and exports identically.
+`docs/bookrec/08-guarded-rules.md` and the packaged model-authoring skills cite it.
+The public report reference owns diagnostics fields and conditional report
+versions. A model using none of the new forms validates, checks and exports
+identically, including its existing default and diagnostics report bytes.
 
 ## 6. Risks and required controls
 
@@ -185,13 +208,13 @@ using the new forms validates, checks and exports identically.
 
 Nested `any_of`, `any_of` in the antecedent, aggregates in guarded rules,
 membership against a fact type (only literal lists), extending `in` to value
-comparisons or dynamic rules, Souffle export of guarded rules, why-not for
+comparisons or dynamic rules, Soufflé translation of guarded rules, why-not for
 guarded rules, publication, certification and dev-tools changes.
 
 ## 8. Execution, approval and review protocol
 
 `process-phase` per phase: spec and owner gate, implementation, focused
-verification with the guard list and Ruff, independent diff and refactoring
+verification with the [issue #171 guard list](https://github.com/vasiloglou/gnd-public/issues/171) and Ruff, independent diff and refactoring
 review (one reviewer in a different tool), phase record, topic PR, separate
 owner merge authorization. Plan review and milestone close use the maintained
 GND review panel when the owner selects it. Close needs four phase records,
@@ -202,7 +225,7 @@ issue-to-criterion sweep.
 
 | Phase | Focused lane and affected consumers |
 |---|---|
-| GC1 | New `tests/test_guarded_membership.py` plus `test_model_guarded.py`, `test_public_guarded_consequent_matrix.py`, `test_derivation_rule.py`, `test_synth_guarded_cases.py`, `test_rule_verbalization.py`, `test_schema_sync.py`, guard list |
+| GC1 | New `tests/test_guarded_membership.py` plus `test_model_guarded.py`, `test_public_guarded_consequent_matrix.py`, `test_derivation_rule.py`, `test_synth_guarded_cases.py`, `test_rule_verbalization.py`, `test_schema_sync.py`, affected PyRel, Lean, Ossie and Soufflé exporter tests, guard list |
 | GC2 | New `tests/test_guarded_antecedent_negate.py` plus guarded corpus, semantic join, diagnostics, baseline, derivation stratification consumers, guard list |
 | GC3 | New `tests/test_guarded_any_of.py` plus consequent matrix, rule IDs, diagnostics, report schema, guard list |
 | GC4 | `tests/test_pyrel_rules*.py`, Lean/Ossie export tests, docs link checks, installed-candidate smoke, guard list |
@@ -216,7 +239,7 @@ and certification are not selected.
 |---|---|---|---|
 | D1 | Should derivation `where` also gain `in`/`not in`, since `term_comparison` is shared? | Yes: one definition, one evaluator, and the helper-encoding test benefits | Proposed |
 | D2 | Spelling of the negative operator | `"not in"` as the issue writes it (with a space); no `nin` alias | Proposed |
-| D3 | Diagnostics when `negate`/`where` empty the bindings | Count after filters; first-empty index stays positive-atom only; add no new field in GC2 | Proposed |
-| D4 | Where `any_of` per-alternative violation detail lives | Additive object on guarded verdicts under `--guarded-diagnostics` (new report version 17), default report unchanged | Proposed |
+| D3 | Diagnostics when `negate`/`where` empty the bindings | Count after filters; document v16 for this new case and omit first-empty index when the positive join was populated | Proposed |
+| D4 | Where `any_of` per-alternative violation detail lives | Guarded diagnostics use v17 when the checked model contains `any_of`; default report shape and v16 diagnostics for existing models keep their current version | Proposed |
 | D5 | Exporter policy for new forms | PyRel translates `in`, `negate`, `where`; refuses `any_of` until a PyRel disjunction pattern is measured; Lean and Ossie refuse | Proposed, GC4 spec |
-| D6 | Plan review instrument and `auto` delegation | Owner to select; project bar is the maintained panel | Open |
+| D6 | Plan review instrument and `auto` delegation | Owner selected the Standard GND review panel for plan and close and delegated this milestone's approval rulings | Selected |

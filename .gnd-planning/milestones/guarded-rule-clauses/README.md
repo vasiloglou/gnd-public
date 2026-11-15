@@ -1,6 +1,6 @@
 # Guarded rule clauses
 
-Draft r1, 2026-11-15. Fixes [#195](https://github.com/vasiloglou/gnd-public/issues/195):
+Plan r2 review candidate, 2026-11-15. Fixes [#195](https://github.com/vasiloglou/gnd-public/issues/195):
 guarded rules gain the clause language derivations already have.
 
 | Order | Phase | Deliverable |
@@ -13,7 +13,7 @@ guarded rules gain the clause language derivations already have.
 [Milestone plan](notes/guarded-rule-clauses-plan.md) ·
 [GC1 draft spec](notes/phase-GC1-spec.md)
 
-**Readiness.** Not reviewed, not approved. Next: the owner selects a plan
-review instrument (project bar: the maintained GND review panel), rules on
-plan decisions D1–D6, then the plan gate; GC1 follows with `process-phase GC1
-guarded-rule-clauses`.
+**Readiness.** The owner selected the Standard panel for plan and close and
+delegated milestone approval rulings. See the
+[round 1 disposition](notes/plan-review-disposition.md). The plan gate follows
+confirmation of r2, then GC1's corpus and spec gate.

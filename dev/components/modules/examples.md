@@ -232,7 +232,7 @@ Assemble admitted contextual sources and score named lineage paths.
 | --- | --- | --- | --- |
 | `assemble(example, model, annotations, out) -> None` | function | 179 | Build a no-replace run from accepted contextual statements and verified identities. |
 | `score(model, run, answer_key) -> dict` | function | 247 | Grade exact directed paths through the public witness route. |
-| `main(argv) -> int` | function | 279 | (no docstring) |
+| `main(argv) -> int` | function | 285 | (no docstring) |
 
 ## gnd.examples.literature.name_diagnostics — `src/gnd/examples/literature/name_diagnostics.py`
 Components: examples.literature_name_diagnostics

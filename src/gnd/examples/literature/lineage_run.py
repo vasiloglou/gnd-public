@@ -257,13 +257,19 @@ def score(model: Path, run: Path, answer_key: Path) -> dict:
     counts = {"supported": [0, 0], "excluded": [0, 0]}
     results = []
     with tempfile.TemporaryDirectory(prefix="gnd-lineage-score-") as scratch:
-        target = Path(scratch).resolve()/"targets.json"
+        snapshot = Path(scratch).resolve()
+        frozen_model, frozen_population, frozen_record = (
+            snapshot/"model.orm.yaml", snapshot/"composed.population.json", snapshot/"composition.json"
+        )
+        for path, raw in ((frozen_model, model_raw), (frozen_population, pop_raw), (frozen_record, record_raw)):
+            path.write_bytes(raw)
+        target = snapshot/"targets.json"
         for row in chains:
             path = row["path"]
             claims = [_claim("lineage_arc", child, parent) for parent, child in dict.fromkeys(pairwise(path))]
             claims.append(_claim("lineage_ancestor", path[-1], path[0]))
             target.write_bytes(canonical_json_bytes({"version": 1, "targets": claims}))
-            witness = api.witness(model, population, target, composition=record)
+            witness = api.witness(frozen_model, frozen_population, target, composition=frozen_record)
             exit_code = witness["exit_code"]
             _require(exit_code in (0, 2), "witness:refused")
             kind = "supported" if row["label"] == "supported" else "excluded"

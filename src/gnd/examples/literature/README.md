@@ -218,3 +218,40 @@ python -m gnd.examples.literature.diagnostic_measurement \
   src/gnd/examples/literature/diagnostics/measurement.json \
   src/gnd/examples/literature/diagnostics/labels.json
 ```
+
+## Contextual assertions and saved reviews
+
+The [contextual assertions corpus](assertions/README.md) represents each
+statement with a work version, predicate, participants, source passage
+and experiment. Conditions and regimes qualify individual statements.
+Opposing results under different experiments remain separate. A mention
+can identify a document occurrence while its participant sense remains
+unresolved.
+
+The example preserves an assertion's polarity and attribution. Reviewers
+can approve an accurate extraction of a negation, comparison, speculation
+or citation. The positive projection selects statements that pass the
+saved-judgment and condition checks and assert an own finding. The
+[saved judgment contract](../../skills/gnd-dev-session/references/judgment-contract.md)
+defines the underlying receipt and policy shapes. The corpus rubric records
+`stretched` as rejection and `insufficient-evidence` as abstention.
+
+```sh
+cd src/gnd/examples/literature/assertions
+python -m gnd.examples.literature.assertion_admission \
+  model.orm.yaml raw.population.json policy.json receipts.json evidence \
+  --out trial-admission
+```
+
+The producer runs `gnd judgments check` over captured consumer-pinned inputs
+and retains its ordinary JSON report. A conditional statement needs a
+concrete condition. The words unspecified, none and n/a denote absence
+for that check, regardless of case or surrounding space. Each statement
+has its own work and passage identity. Separate excerpts can represent
+several statements reported in the same passage. The producer writes
+`raw.population.json`, `judgment-report.json`, `admitted.population.json`
+and `admission.json` in the new output directory. The admission marker
+binds the exact input and output digests and lists per-statement decisions
+under `semantic-support` and `positive-own-findings`. A completed
+projection exits 0, including one with declined rows. Invalid,
+unavailable or stale inputs refuse at exit 3.

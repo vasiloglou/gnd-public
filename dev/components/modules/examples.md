@@ -181,6 +181,16 @@ A scripted stand-in for a coding assistant, for the offline expense session.
 | `named_expenses(feedback) -> set[int]` | function | 26 | Every expense id the checker reported inside an offending fact. |
 | `main() -> int` | function | 37 | (no docstring) |
 
+## gnd.examples.literature.assertion_admission — `src/gnd/examples/literature/assertion_admission.py`
+Components: examples.literature_assertion_admission
+Publish the positive contextual assertions selected by saved judgments.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `project(subject, targets) -> tuple[dict, dict]` | function | 100 | Project accepted positive occurrences and their original identity links. |
+| `admit(model, raw, policy, receipts, trusted_root, out) -> dict` | function | 183 | Check saved opinion bytes, project supported rows and publish one bound result. |
+| `main(argv) -> int` | function | 209 | (no docstring) |
+
 ## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
 Components: examples.literature_assurance
 The staged assurance report over the literature corpus (phase LI1).

@@ -58,39 +58,39 @@
   "trusted_receipts": [
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "1f08784d4ebefff5240aeeb9006a60e96cdd494a9c0578bbdfdf493fa91ce56d"
+      "receipt_sha256": "29dde8e66768184112956600ad0d70e3232af69b8ce040e2d441238a39b5fc67"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "e75070a999a140da04307016cf2c648771673f30b909e5a111b251ac73f87336"
+      "receipt_sha256": "852ce2b26350f717ec33355099c04bbb6c6c2addba0282e06ca20fa1615ad10d"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "c95e71b59a339d3dbfbd980c1fd0426b0dcfeb286455a4a751a41f075842bea4"
+      "receipt_sha256": "544ce3e6faf4a24cc99790f5a481bbec5852b07b338c1cd78684aed600087785"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "fe443d4fa7b088be9da511c96ebf6e49c6ca15e11b14aceb9575daf14f39602c"
+      "receipt_sha256": "5cec962c2dc0f018a8853486755ee45083159a0f2fd35869af3f5a7d30e81821"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "b2afdfe048dbc6130750658f31a58b0397cb58bbee50b04ae457b1eb32fcf3d9"
+      "receipt_sha256": "836936f87f2a80f53a5105774998a3a68d51cc24fe43896bddf6409da12a6224"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "44222d2c87f67fe787bf2c3e3ca24b5b1dc9bb49e12df760a60493ef72206f5a"
+      "receipt_sha256": "3b0410de87fde0a622c42b5e4b1852444ef1119c03d010d6a910a934301a19ae"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "f546004cbce53f5824c7e725501ed5eefc8e2be012f4d64d6db346f3af35a511"
+      "receipt_sha256": "34d7f1eae5454054659ea10921c7717b782a3a1ace7d3248dbdc8e79ac07bfa3"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "a8c5375d7ffa7f72f51949874cb7a987efef2ca66d43fcb902b2c535b7d3bfb1"
+      "receipt_sha256": "f3d3a48dac471ab02e61067a933b500f383b7111091b3aa2b43ef78647881233"
     },
     {
       "judge_id": "corpus-author",
-      "receipt_sha256": "559e7bb0a0135ec0faa5e7011dd1811bd757c8edcbf3069ff34059800e7417b0"
+      "receipt_sha256": "efed1a88f2500696bed1c42ad4b1bc48804177fbbf8d31eefc124ad767b8ec00"
     }
   ]
 }

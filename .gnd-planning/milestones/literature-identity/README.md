@@ -37,5 +37,8 @@ B1–B4 as proposed. The current milestone delegation supplied the go-ahead. [LI
 [LI3](014-phase-LI3.md) is implemented and recorded. The diagnostic measurement
 met the predeclared ceiling in all measured strata.
 
+[LI4](018-phase-LI4.md) is implemented and recorded. The example projects
+positive contextual assertions through a digest-bound saved-opinion route.
+
 To run the rest of the milestone from Codex, start at the
 [Codex handoff](notes/codex-handoff.md).

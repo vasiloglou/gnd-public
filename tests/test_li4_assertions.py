@@ -66,6 +66,12 @@ def test_contextual_assertions_and_reviewed_projection(tmp_path):
     assert judgment["outcome"] == expected["judgment_exit"]
     raw = read(out / "raw.population.json")
     selected = read(out / "admitted.population.json")
+    assert selected["population"]["source"] == "tool-output"
+    assert selected["population"]["producer"] == record["schema"]
+    checked = subprocess.run([sys.executable, "-m", "gnd", "check", str(EXAMPLE / "model.orm.yaml"),
+                              str(out / "admitted.population.json"), "--format", "json"],
+                             check=False, capture_output=True, text=True)
+    assert checked.returncode == 0, checked.stdout + checked.stderr
     assert (out / "raw.population.json").read_bytes() == (EXAMPLE / "raw.population.json").read_bytes()
     assert selected["facts"][FACT] == [raw["facts"][FACT][i] for i in expected["positive"]]
     assert len(selected["facts"]["assertion_names_passage"]) == len(expected["positive"])
@@ -73,6 +79,9 @@ def test_contextual_assertions_and_reviewed_projection(tmp_path):
     positive = _rows(record, "positive-own-findings")
     assert [i for i, row in semantic.items() if row["status"] == "pass"] == expected["supported"]
     assert [i for i, row in positive.items() if row["status"] == "pass"] == expected["positive"]
+    assert [positive[i]["reason"] for i in (3, 4, 5, 6)] == [
+        "negated", "baseline-comparison", "speculation", "cites-other-work",
+    ]
     assert semantic[expected["incorrect_predicate"]["index"]]["reason"] == expected["incorrect_predicate"]["semantic_reason"]
     assert {k: semantic[int(k)]["reason"] for k in expected["review_arms"]} == expected["review_arms"]
     assert [[raw["facts"][FACT][i]["polarity"], raw["facts"][FACT][i]["attribution"]]
@@ -85,11 +94,12 @@ def test_contextual_assertions_and_reviewed_projection(tmp_path):
         assert record[field + "_sha256"] == sha(path)
 
 
-def test_conditional_marker_survives_condition_loss_as_a_failure(tmp_path):
+@pytest.mark.parametrize("absent", ["unspecified", " Unspecified ", "n/a", "none"])
+def test_conditional_marker_survives_condition_loss_as_a_failure(tmp_path, absent):
     root = copied(tmp_path)
     population = root / "raw.population.json"
     doc = read(population)
-    doc["facts"][FACT][0]["condition"] = "unspecified"
+    doc["facts"][FACT][0]["condition"] = absent
     dump(population, doc)
     receipts = read(root / "receipts.json")
     for receipt in receipts["receipts"]:
@@ -106,7 +116,7 @@ def test_conditional_marker_survives_condition_loss_as_a_failure(tmp_path):
 
 
 @pytest.mark.parametrize("fault", ["raw-missing", "policy-missing", "stale-subject", "stale-source",
-                                   "report-instead-of-receipts", "malformed", "over-limit"])
+                                   "report-instead-of-receipts", "unpinned-verdict", "malformed", "over-limit"])
 def test_inputs_refuse_without_a_complete_publication(tmp_path, fault):
     root = copied(tmp_path)
     if fault == "raw-missing":
@@ -121,11 +131,15 @@ def test_inputs_refuse_without_a_complete_publication(tmp_path, fault):
             f.write(" ")
     elif fault == "report-instead-of-receipts":
         dump(root / "receipts.json", {"outcome": 0, "judgment_policy": {"admission": True}})
+    elif fault == "unpinned-verdict":
+        receipts = read(root / "receipts.json")
+        receipts["receipts"][-1]["verdict"] = "approve"
+        dump(root / "receipts.json", receipts)
     elif fault == "malformed":
         (root / "policy.json").write_text("[")
     else:
         policy = read(root / "policy.json")
-        policy["targets"] *= 103
+        policy["targets"] = [{"fact_type": FACT, "index": i} for i in range(1025)]
         dump(root / "policy.json", policy)
     out = tmp_path / "admitted"
     done = run(root, out)
@@ -166,3 +180,59 @@ def test_maximum_contextual_projection_is_bounded():
     population, _ = project(subject, targets)
     assert len(population["facts"][FACT]) == 1024
     assert time.monotonic() - started < 10
+
+
+def test_self_asserted_opinions_cannot_publish_a_reviewed_projection(tmp_path):
+    root = copied(tmp_path)
+    policy = read(root / "policy.json")
+    receipts = read(root / "receipts.json")
+    policy.update(trust_mode="self-asserted", trusted_receipts=[])
+    for receipt in receipts["receipts"]:
+        receipt["trust"] = "self-asserted"
+    receipts["receipts"][2]["verdict"] = "approve"
+    dump(root / "policy.json", policy)
+    dump(root / "receipts.json", receipts)
+    out = tmp_path / "admitted"
+    assert run(root, out).returncode == 3 and not out.exists()
+
+
+def test_mention_identifier_points_at_its_surface():
+    row = read(EXAMPLE / "raw.population.json")["facts"][FACT][7]
+    doc, span = row["actor"].rsplit("@", 1)
+    start, end = map(int, span.split("-"))
+    assert doc == row["work"]
+    assert (EXAMPLE / "evidence/passages.txt").read_bytes()[start:end] == b"Quartz"
+
+
+def test_projection_works_with_customer_disclosure(tmp_path, monkeypatch):
+    monkeypatch.setenv("GND_DISCLOSURE", "customer")
+    out = tmp_path / "admitted"
+    got = run(EXAMPLE, out)
+    assert got.returncode == 0, got.stdout + got.stderr
+    judgment = read(out / "judgment-report.json")["judgment_policy"]
+    assert judgment["targets"][0]["judgments"][0]["receipt_id"] is None
+    assert read(out / "admitted.population.json")["facts"][FACT][0]["condition"] == "low noise"
+
+
+def test_corpus_rubric_matches_the_pinned_receipts():
+    rubric = read(EXAMPLE / "rubric.json")
+    receipts = {row["receipt_id"]: row for row in read(EXAMPLE / "receipts.json")["receipts"]}
+    assert {row["receipt_id"] for row in rubric["dispositions"]} == receipts.keys()
+    for row in rubric["dispositions"]:
+        assert receipts[row["receipt_id"]]["verdict"] == rubric["mapping"][row["disposition"]]
+
+
+def test_admission_is_deterministic_and_checks_report_bindings(tmp_path):
+    from gnd.examples.literature.assertion_admission import POLICY, RECEIPTS, _verify_report_inputs
+    from gnd.examples.literature.assurance_report import Refusal
+
+    left, right = tmp_path / "first", tmp_path / "second"
+    assert run(EXAMPLE, left).returncode == run(EXAMPLE, right).returncode == 0
+    assert {p.name: p.read_bytes() for p in left.iterdir()} == {p.name: p.read_bytes() for p in right.iterdir()}
+    report = read(left / "judgment-report.json")["judgment_policy"]
+    snapshots = {name: (EXAMPLE / name).read_bytes() for name in (POLICY, RECEIPTS)}
+    _verify_report_inputs(report, snapshots)
+    for field in ("policy_sha256", "receipts_sha256", "targets"):
+        with pytest.raises(Refusal) as error:
+            _verify_report_inputs(report | {field: None}, snapshots)
+        assert error.value.reason == "judgments:binding-mismatch"

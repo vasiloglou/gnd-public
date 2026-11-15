@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +63 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +64 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_assertion_admission, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -2312,7 +2312,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/disclosure.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, exp.service, export.service, review.adapters, witness.service
+- used_by: agent.declared_adapter, agent.solve, cli.api, cli.discover_command, cli.dispatch, examples.literature_assertion_admission, exp.service, export.service, review.adapters, witness.service
 - tests: tests/test_disclosure_mode.py, tests/test_disclosure_docs.py, tests/test_why_not_near_misses_public.py
 - notes: Customer mode wins over internal mode from either source; forward propagates only the restrictive customer setting.
 
@@ -2550,7 +2550,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/process.py
 - uses: (none)
-- used_by: agent.declared_adapter, agent.invocation, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
+- used_by: agent.declared_adapter, agent.invocation, examples.literature_assertion_admission, exp.declared_invocation, exp.service, exp.tests_runner, export.applications, review.adapters, review.service
 - tests: tests/test_agent_cli.py, tests/test_rf4_peripheral.py
 - in: Trusted argv, real cwd, explicit environment, ProcessLimits and optional stdin bytes.
 - out: BoundedProcessResult with closed metadata and out-of-band byte streams.
@@ -3264,7 +3264,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/assurance_report.py
 - uses: (none)
-- used_by: examples.literature_name_diagnostics
+- used_by: examples.literature_assertion_admission, examples.literature_name_diagnostics
 - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
 - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
 
@@ -3279,6 +3279,18 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - uses: examples.literature_assurance, infra.artifacts, model.anchors
 - used_by: (none)
 - tests: tests/test_li3_diagnostics.py
+
+
+### examples.literature_assertion_admission
+- does: Run saved judgments over a frozen contextual assertion snapshot and publish the admitted positive statements.
+- verbs: assertion review, contextual assertion, saved opinion admission, positive finding, conditioned support, evidence digest
+- in: Contextual example model, raw extraction, judgment policy, saved receipts and trusted evidence root.
+- out: Original raw extraction, actual judgment report, admitted population and digest-bound admission marker.
+- status: canonical
+- modules: src/gnd/examples/literature/assertion_admission.py
+- uses: examples.literature_assurance, infra.artifacts, infra.bounded_process, infra.disclosure, model.anchors
+- used_by: (none)
+- tests: tests/test_li4_assertions.py
 
 
 ### examples.expense_rules
@@ -3459,6 +3471,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - environment allowlist: exp.adapter_policy, exp.verifier_environment, review.adapters
 - evaluate constraints: checker.evaluate, subsystem.check
 - event budget: exp.frontmatter, infra.input_policy
+- evidence digest: discover.output, examples.literature_assertion_admission
 - evidence freshness: examples.literature_assurance, semantics.proof_currency
 - evolution proposal: discover.output, export.ilp_service, subsystem.evolve
 - exact arithmetic: model.scalar_terms, semantics.extensions

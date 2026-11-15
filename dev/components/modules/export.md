@@ -27,7 +27,7 @@ Offline publication of a self-contained optional PyRel program.
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
 | `render_pyrel(model_path, *, duckdb_path, connection) -> str` | function | 18 | Render from one bounded input read; no checker or foreign-runtime import. |
-| `render_pyrel_rules(model_path, target)` | function | 55 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
+| `render_pyrel_rules(model_path, target)` | function | 60 | The model's rules as a readable PyRel program of requirements (see ``pyrel_rules``). |
 
 ## gnd.export.ilp — `src/gnd/export/ilp.py`
 Components: export.ilp_neutral
@@ -232,9 +232,9 @@ Render a GND model as a pinned Ossie ontology and bound interchange metadata.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `OssieInputError` | class(ValueError) | 40 | The source cannot be exported with the selected policy. |
-| `OssieArtifacts` | class | 45 | (no docstring) |
-| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 417 | Render three deterministic artifacts from one bounded, admitted model read. |
+| `OssieInputError` | class(ValueError) | 46 | The source cannot be exported with the selected policy. |
+| `OssieArtifacts` | class | 51 | (no docstring) |
+| `render_ossie(model_path, *, output_format, strict) -> OssieArtifacts` | function | 423 | Render three deterministic artifacts from one bounded, admitted model read. |
 
 ## gnd.export.ossie_formulas — `src/gnd/export/ossie_formulas.py`
 Components: export.ossie
@@ -265,7 +265,7 @@ Render a model's rules as a readable PyRel program, as requirements.
 | `requirements(doc, model) -> list[Requirement]` | function | 889 | Lower every supported constraint to requirements, in model order. One walk for all families. |
 | `require_text(req, names, model) -> str` | function | 1085 | (no docstring) |
 | `denial_text(req, names, model) -> str` | function | 1097 | (no docstring) |
-| `render(model_path, target) -> str` | function | 2399 | (no docstring) |
+| `render(model_path, target) -> str` | function | 2408 | (no docstring) |
 
 ## gnd.export.pyrel_runtime — `src/gnd/export/pyrel_runtime.py`
 Components: export.pyrel_runtime

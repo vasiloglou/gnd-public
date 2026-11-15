@@ -113,8 +113,9 @@ prerequisites and credentials are separate from deterministic tutorial runs.
 
 The readable PyRel rules profiles (`gnd export pyrel --rules duckdb` and
 `--rules lqp`) lower simple guarded antecedent filters and finite membership
-on bound Integer, String or Boolean variables. A negative filter over a
-claimed relation requires declared coverage. Unsupported terms, existential
+on bound Integer, String or Boolean variables. DuckDB reports unresolved
+negative filters by rule when claimed relations lack coverage. The LQP
+execution profile requires coverage before it evaluates those filters. Unsupported terms, existential
 membership, disjunctions and plans with the new clauses receive named
 refusals. The embedded PyRel checker profile also refuses the new clauses.
 Lean and Soufflé refuse unsupported guarded forms. Ossie's loss report

@@ -1209,11 +1209,10 @@ Closed exact scalar-term language shared by derivations and guarded rules.
 | `where_uses_membership(where) -> bool` | function | 458 | (no docstring) |
 | `guard_uses_membership(consequent) -> bool` | function | 465 | (no docstring) |
 | `guarded_clause_refusal(constraint) -> str \| None` | function | 475 | Name the new clause shapes for profiles that cannot represent them. |
-| `derivation_uses_membership(rule) -> bool` | function | 489 | Detect root and single-level clause where operators in a raw rule. |
-| `prepare_comparisons(comparisons)` | function | 502 | Keep the existing filter rows while compiling any membership lists. |
-| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 515 | Evaluate exactly, returning a named unavailable result instead of raising. |
-| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 761 | (no docstring) |
-| `materialize_scalar(value) -> Any` | function | 868 | Return the existing wire scalar for a head value; fractions never escape. |
+| `prepare_comparisons(comparisons)` | function | 489 | Keep the existing filter rows while compiling any membership lists. |
+| `evaluate_term(term, binding, *, limits, temporal_work) -> ExactTermResult` | function | 502 | Evaluate exactly, returning a named unavailable result instead of raising. |
+| `compare_terms(operator, left, right, binding, *, limits, bound_cross_product, left_primitive, tempo…` | function | 748 | (no docstring) |
+| `materialize_scalar(value) -> Any` | function | 855 | Return the existing wire scalar for a head value; fractions never escape. |
 
 ## gnd.transition — `src/gnd/transition.py`
 Components: semantics.transitions

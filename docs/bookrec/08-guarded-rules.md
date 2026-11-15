@@ -799,7 +799,7 @@ feedback and see each failed alternative in version 17 diagnostics.
 gnd check MODEL POPULATION --guarded-diagnostics --format json
 ```
 
-[Guarded constraint format](../../src/gnd/skills/gnd-orm-core/references/representation-format.md#guarded-constraints)
+[Guarded constraint format](https://github.com/vasiloglou/gnd-public/blob/main/src/gnd/skills/gnd-orm-core/references/representation-format.md#guarded-constraints)
 
 
 ## Limits

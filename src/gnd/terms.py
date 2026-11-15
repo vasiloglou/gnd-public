@@ -486,19 +486,6 @@ def guarded_clause_refusal(constraint: Mapping) -> str | None:
     return None
 
 
-def derivation_uses_membership(rule: object) -> bool:
-    """Detect root and single-level clause where operators in a raw rule."""
-    if not isinstance(rule, Mapping):
-        return False
-    if where_uses_membership(rule.get("where")):
-        return True
-    clauses = rule.get("clauses")
-    return isinstance(clauses, list) and any(
-        isinstance(clause, Mapping) and where_uses_membership(clause.get("where"))
-        for clause in clauses
-    )
-
-
 def prepare_comparisons(comparisons):
     """Keep the existing filter rows while compiling any membership lists."""
     return tuple(

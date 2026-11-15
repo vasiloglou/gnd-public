@@ -29,20 +29,25 @@ def render_pyrel(
         guard_document(document, "export.pyrel")
     except ModelValidationError as error:
         raise ExportInputError(str(error)) from error
-    from gnd.terms import derivation_uses_membership, guarded_clause_refusal, uses_temporal
+    from gnd.model import iter_derivation_clauses
+    from gnd.terms import guarded_clause_refusal, uses_temporal, where_uses_membership
 
+    if uses_temporal(document):
+        raise ExportInputError("PyRel export does not support temporal models in Phase 1")
     admitted = admit_model(document)
     try:
         for _, constraint, _ in _constraint_entries(admitted):
             reason = guarded_clause_refusal(constraint)
             if reason is not None:
                 raise ProfileRefusal(reason)
-        if any(derivation_uses_membership(fact.get("derivation_rule")) for fact in admitted.fact_types.values()):
+        if any(
+            where_uses_membership(clause.get("where"))
+            for fact in admitted.fact_types.values()
+            for clause in iter_derivation_clauses(fact.get("derivation_rule"))
+        ):
             raise ProfileRefusal("membership-unsupported")
     except ProfileRefusal as error:
         raise ExportInputError(str(error)) from error
-    if uses_temporal(document):
-        raise ExportInputError("PyRel export does not support temporal models in Phase 1")
     runtime = files("gnd.export").joinpath("pyrel_runtime.py").read_text(encoding="utf-8")
     config = {"duckdb_path": duckdb_path, "connection": connection}
     source = (SCRIPT_HEADER + runtime + f"\nMODEL_TEXT = {text!r}\n"

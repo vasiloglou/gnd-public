@@ -19,12 +19,18 @@ from ruamel.yaml.error import YAMLError
 from gnd.artifacts import canonical_json_bytes
 from gnd.export.ossie_formulas import ProjectedRelation, place_formulas
 from gnd.input_policy import MAX_BYTES, guard_yaml, loads
-from gnd.model import MAX_MODEL_BYTES, json_document, load_model_bytes, parse_model_document
+from gnd.model import (
+    MAX_MODEL_BYTES,
+    iter_derivation_clauses,
+    json_document,
+    load_model_bytes,
+    parse_model_document,
+)
 from gnd.model._documents import ModelValueError
 from gnd.model._includes import guard_document
 from gnd.model_index import ModelIndex
 from gnd.safefs import NotRegularFileError, open_regular
-from gnd.terms import derivation_uses_membership, guarded_clause_refusal
+from gnd.terms import guarded_clause_refusal, where_uses_membership
 from gnd.values import ModelIdentityError, model_identity
 
 _VERSION = "0.3.0.dev0"
@@ -424,15 +430,18 @@ def render_ossie(model_path: Path, *, output_format: str, strict: bool = False) 
         reason = guarded_clause_refusal(constraint)
         if reason is not None:
             incompatible[("constraints", index)] = reason
-    for index, fact in enumerate(ModelIndex.for_model(model).iter_fact_types_shared()):
-        if derivation_uses_membership(fact.get("derivation_rule")):
+    for index, fact in enumerate(ModelIndex(None, document).iter_fact_types_shared()):
+        if any(
+            where_uses_membership(clause.get("where"))
+            for clause in iter_derivation_clauses(fact.get("derivation_rule"))
+        ):
             incompatible[("fact_types", index, "derivation_rule")] = "membership-unsupported"
-    if strict and incompatible:
-        raise OssieInputError(next(iter(incompatible.values())))
     mapped.update((path, ("extension", reason, None)) for path, reason in incompatible.items())
     rows, elements, refused = _metadata(document, mapped)
     if strict and refused:
         raise OssieInputError(_POPULATION_REFUSAL)
+    if strict and incompatible:
+        raise OssieInputError(next(iter(incompatible.values())))
     if output_format == "json":
         data = canonical_json_bytes(ontology)
     elif output_format == "yaml":

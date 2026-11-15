@@ -1,11 +1,26 @@
 """Profile boundaries for the guarded clause syntax."""
 import json
+import os
+import subprocess
 from pathlib import Path
 
 import pytest
 from ruamel.yaml import YAML
 
 BASE = Path(__file__).resolve().parent / "fixtures/models/guarded_minimal.orm.yaml"
+
+
+@pytest.fixture(scope="module")
+def native_python():
+    native = os.environ.get("GND_PYREL_PYTHON")
+    if not native:
+        pytest.skip("set GND_PYREL_PYTHON to the pinned local runtime")
+    versions = subprocess.check_output(
+        [native, "-I", "-c", "from importlib.metadata import version; print(version('relationalai'), version('duckdb'))"],
+        text=True, timeout=10,
+    )
+    assert versions.strip() == "1.30.1 1.5.5"
+    return native
 
 
 def _model(tmp_path, shape):
@@ -104,17 +119,11 @@ def test_readable_rules_refuse_function_shaped_antecedent_filters(tmp_path):
     ("filters", None, 500, None, "vacuous"),
     ("filters", None, 1500, None, "OK"),
 ])
-def test_readable_rule_duckdb_matches_public_checker(tmp_path, shape, operator, amount, status, expected):
-    import os
-    import subprocess
-
+def test_readable_rule_duckdb_matches_public_checker(tmp_path, native_python, shape, operator, amount, status, expected):
     from support.cli_runner import run_main
 
     from gnd.export.pyrel_rules import render
 
-    native = os.environ.get("GND_PYREL_PYTHON")
-    if not native:
-        pytest.skip("set GND_PYREL_PYTHON to the pinned local runtime")
     model_path = _model(tmp_path, shape)
     if operator is not None:
         document = json.loads(model_path.read_bytes())
@@ -138,7 +147,7 @@ def test_readable_rule_duckdb_matches_public_checker(tmp_path, shape, operator, 
     row, = json.loads(core.stdout)["verdicts"]
     assert row["verdict"] == expected_verdict
     translated = subprocess.run(
-        [native, "-I", str(source), str(data)], cwd=tmp_path, capture_output=True, text=True, timeout=35,
+        [native_python, "-I", str(source), str(data)], cwd=tmp_path, capture_output=True, text=True, timeout=35,
         check=False,
     )
     assert translated.returncode == core.returncode, (translated.stdout, translated.stderr)
@@ -146,34 +155,36 @@ def test_readable_rule_duckdb_matches_public_checker(tmp_path, shape, operator, 
     if expected == "violated":
         witness = json.loads(translated.stdout.split("violated  ", 1)[1])
         assert row["offending_facts"] == [witness]
-    if shape == "filters" and expected == "vacuous" and status == "exempt":
+    if shape == "filters":
         population["population"]["covers"].remove("expense_has_status")
         data.write_text(json.dumps(population))
-        refused = subprocess.run(
-            [native, "-I", str(source), str(data)], cwd=tmp_path, capture_output=True, text=True,
+        core = run_main(["check", str(model_path), str(data), "--rule-ids", "--format", "json"])
+        native_check = subprocess.run(
+            [native_python, "-I", str(source), str(data)], cwd=tmp_path, capture_output=True, text=True,
             timeout=35, check=False,
         )
-        assert refused.returncode == 3
-        assert "guarded-filter-coverage-missing" in refused.stderr
+        assert native_check.returncode == core.returncode
+        row, = json.loads(core.stdout)["verdicts"]
+        if expected == "vacuous":
+            assert row["verdict"] == "vacuous"
+            assert "vacuous" in native_check.stdout
+        else:
+            assert row["verdict"] == "unchecked"
+            assert "guarded-filter-coverage-missing" in native_check.stdout
+
 
 
 @pytest.mark.parametrize("shape", ["membership", "filters", "derived-membership"])
-def test_readable_clauses_compile_to_lqp_requirements_locally(tmp_path, shape):
-    import os
-    import subprocess
-
+def test_readable_clauses_compile_to_lqp_requirements_locally(tmp_path, native_python, shape):
     from gnd.export.pyrel_rules import render
 
-    native = os.environ.get("GND_PYREL_PYTHON")
-    if not native:
-        pytest.skip("set GND_PYREL_PYTHON to the pinned local runtime")
     path = _model(tmp_path, "membership" if shape == "derived-membership" else shape)
     if shape == "derived-membership":
         _derive_membership(path)
     source = tmp_path / "rules.py"
     source.write_text(render(path, "lqp"))
     compiled = subprocess.run(
-        [native, "-I", str(source), "--compile"], cwd=tmp_path, capture_output=True,
+        [native_python, "-I", str(source), "--compile"], cwd=tmp_path, capture_output=True,
         text=True, timeout=35, check=False,
     )
     assert compiled.returncode == 0, (compiled.stdout, compiled.stderr)
@@ -198,17 +209,11 @@ def _derive_membership(path):
 
 
 @pytest.mark.parametrize("amount", [1500, 2100])
-def test_readable_derivation_membership_agrees_with_deterministic_claim_check(tmp_path, amount):
-    import os
-    import subprocess
-
+def test_readable_derivation_membership_agrees_with_deterministic_claim_check(tmp_path, native_python, amount):
     from support.cli_runner import run_main
 
     from gnd.export.pyrel_rules import render
 
-    native = os.environ.get("GND_PYREL_PYTHON")
-    if not native:
-        pytest.skip("set GND_PYREL_PYTHON to the pinned local runtime")
     path = _model(tmp_path, "membership")
     _derive_membership(path)
     facts = {
@@ -226,9 +231,21 @@ def test_readable_derivation_membership_agrees_with_deterministic_claim_check(tm
     source = tmp_path / "program.py"
     source.write_text(render(path, "duckdb"))
     native_run = subprocess.run(
-        [native, "-I", str(source), str(data)], cwd=tmp_path, capture_output=True,
+        [native_python, "-I", str(source), str(data)], cwd=tmp_path, capture_output=True,
         text=True, timeout=35, check=False,
     )
     core = run_main(["check", str(path), str(data)])
     assert native_run.returncode == core.returncode == (0 if amount == 1500 else 1), native_run.stderr
     assert ("violated" in native_run.stdout) == (amount == 2100)
+
+
+def test_membership_helper_refuses_a_raw_relation_name_collision(tmp_path):
+    from gnd.export.pyrel_rules import ExportInputError, render
+
+    model = _model(tmp_path, "membership")
+    document = json.loads(model.read_bytes())
+    relation = next(fact for fact in document["fact_types"] if fact["id"] == "expense_has_status")
+    relation["id"] = "policy_limit_travel_membership"
+    model.write_text(json.dumps(document))
+    with pytest.raises(ExportInputError, match="^membership-helper-name-collision$"):
+        render(model, "duckdb")

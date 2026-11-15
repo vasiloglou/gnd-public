@@ -9,7 +9,7 @@
     "answers_sha256": "e183f2cf840b176925da2bbcf4d3cd207fb116933ebbd732301f96a385058944",
     "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
     "gnd_version": "0.3.1",
-    "harness_sha256": "cf6dc12b434411aee3b28dd5016c5ebe549ac513f0d431ce4b59c17ecb8d097a",
+    "harness_sha256": "ce46bbb837443a52ca55d89315766e0d1943dc8ca8c3382526a947a498dd6149",
     "run_sha256": "0cd2a2581c158952437489badaa027621ef27f6af655ffa11c29d9cd48eec0ea"
   },
   "labels": {

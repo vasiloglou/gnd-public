@@ -415,10 +415,13 @@ def _occurrence(text: str, value: str, span: tuple[int, int]) -> int:
     raise ValueError(f"{value!r} does not occur in span {span}")
 
 
-def source_facts(doc: dict) -> dict:
-    facts: dict[str, list] = {}
-    for fact_type, roles, _ in doc["facts"]:
-        facts.setdefault(fact_type, []).append(dict(roles))
+def with_derived(facts: dict) -> dict:
+    """The asserted facts plus the derived rows they imply, in canonical key order.
+
+    The one home of the local derivation rule: a work builds on every base method
+    of a method it introduces. Any claimed derived rows passed in are replaced.
+    """
+    facts = {fact_type: rows for fact_type, rows in facts.items() if fact_type != DERIVED}
     derived = sorted(
         ({"work": i["work"], "method": b["base_method"]}
          for i in facts.get("work_introduces_method", [])
@@ -427,6 +430,13 @@ def source_facts(doc: dict) -> dict:
     if derived:
         facts[DERIVED] = derived
     return {fact_type: facts[fact_type] for fact_type in sorted(facts)}
+
+
+def source_facts(doc: dict) -> dict:
+    facts: dict[str, list] = {}
+    for fact_type, roles, _ in doc["facts"]:
+        facts.setdefault(fact_type, []).append(dict(roles))
+    return with_derived(facts)
 
 
 def population_bytes(facts: dict, *, source: str = "agent-output") -> bytes:

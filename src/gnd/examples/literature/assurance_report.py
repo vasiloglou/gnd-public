@@ -254,11 +254,9 @@ def failed_floors(metrics: dict, floors: dict) -> list[str]:
     for name, (num, den) in floors.items():
         metric = name.removesuffix("_max")
         have, total = metrics.get(metric, (0, 0))
-        if total == 0:
-            failed.append(metric)
-        elif name.endswith("_max") and have * den > num * total:
-            failed.append(metric)
-        elif not name.endswith("_max") and have * den < num * total:
+        too_high = name.endswith("_max") and have * den > num * total
+        too_low = not name.endswith("_max") and have * den < num * total
+        if total == 0 or too_high or too_low:
             failed.append(metric)
     return failed
 
@@ -304,6 +302,11 @@ def _public(result: dict) -> dict:
     return {"argv": result["argv"], "exit": result["exit"]}
 
 
+def _unreported(result: dict | None) -> bool:
+    """The route ran but produced no report this harness can read (review finding R2)."""
+    return result is not None and (result["exit"] is None or result["payload"] is None)
+
+
 def _refused(result: dict | None) -> bool:
     return result is None or result["exit"] not in (0, 1, 2, 4) or result["payload"] is None
 
@@ -331,10 +334,14 @@ class Inputs:
         self.corpus, self.corpus_raw = read_json(corpus_path)
         self.key, self.key_raw = read_json(answers)
         self.run, self.run_raw = read_json(run_dir / "run.json")
-        # Step 2: shapes.
-        check_corpus_shape(self.corpus)
-        check_key_shape(self.key)
-        check_run_shape(self.run)
+        # Step 2: shapes. A field of the wrong type (an unhashable split, say) is
+        # a schema refusal too, never an internal one (review finding R3).
+        try:
+            check_corpus_shape(self.corpus)
+            check_key_shape(self.key)
+            check_run_shape(self.run)
+        except (TypeError, KeyError, AttributeError) as error:
+            raise Refusal("input:schema") from error
         # Step 3: digests.
         corpus_sha = _sha(self.corpus_raw)
         if self.key["corpus_sha256"] != corpus_sha:
@@ -448,15 +455,18 @@ def _stage(name: str, *, metrics: dict, floors: dict, route_present: bool, refus
 
 
 def _validity(inputs: Inputs, r1: dict) -> dict:
-    agree, units = 0, []
+    agree, units, refused = 0, [], 0
     for item in inputs.key["populations"]:
         result = r1.get(item["source"])
-        if result is not None and result["exit"] == item["expected_check_exit"]:
+        if _unreported(result):
+            refused += 1
+            units.append(item["source"])
+        elif result is not None and result["exit"] == item["expected_check_exit"]:
             agree += 1
         else:
             units.append(item["source"])
     return _stage("model-population-validity", metrics={"agreement": (agree, len(inputs.key["populations"]))},
-                  floors=FLOORS["model-population-validity"], route_present=bool(r1),
+                  floors=FLOORS["model-population-validity"], route_present=bool(r1), refused=refused,
                   sample_size=len(inputs.key["populations"]),
                   disagreements={"count": len(units), "units": units},
                   routes=[_public(r) for r in r1.values()])
@@ -544,7 +554,7 @@ def _freshness(inputs: Inputs, r2: dict, r3: dict | None, r4: dict | None) -> di
     projection = inputs.corpus["artifacts"]["projection_sha256"]
     expected = [item["source"] for item in inputs.key["populations"]]
     units = [(s, kind) for s in expected for kind in ("anchors", "extraction")] + [("run", "composition")]
-    present, fresh, stale = 0, 0, []
+    present, fresh, stale, refused = 0, 0, [], 0
     for source, kind in units:
         if kind == "composition":
             record = _try_json(inputs.run_dir / "composed" / "record.json")
@@ -552,6 +562,13 @@ def _freshness(inputs: Inputs, r2: dict, r3: dict | None, r4: dict | None) -> di
                 stale.append("composition:absent")
                 continue
             present += 1
+            if _unreported(r4):
+                refused += 1
+                stale.append("composition:refused")
+                continue
+            if not _record_covers_run(inputs, record):
+                stale.append("composition:sources-differ")
+                continue
             ok = isinstance(record, dict) and _record_fresh(inputs, record) and not (
                 r4 is not None and _refused(r4) and "digest" in _error_message(r4))
         else:
@@ -561,6 +578,13 @@ def _freshness(inputs: Inputs, r2: dict, r3: dict | None, r4: dict | None) -> di
                 stale.append(f"{source}:{kind}:absent")
                 continue
             present += 1
+            # The anchor sidecar binds a vocabulary digest only R2 can check, so an
+            # unreported R2 refuses it. The extraction sidecar's digests are all raw
+            # bytes this harness checks itself.
+            if kind == "anchors" and _unreported(r2.get(source)):
+                refused += 1
+                stale.append(f"{source}:{kind}:refused")
+                continue
             population = _file_sha(folder / "population.json")
             document = _file_sha(folder / "document.txt")
             ok = isinstance(sidecar, dict) and sidecar.get("population_sha256") == population \
@@ -575,7 +599,7 @@ def _freshness(inputs: Inputs, r2: dict, r3: dict | None, r4: dict | None) -> di
             stale.append(f"{source}:{kind}")
     routes = [_public(r) for r in r2.values()] + ([_public(r3)] if r3 else []) + ([_public(r4)] if r4 else [])
     return _stage("freshness", metrics={"precision": (fresh, present), "recall": (fresh, len(units))},
-                  floors=FLOORS["freshness"], route_present=present > 0, sample_size=len(units),
+                  floors=FLOORS["freshness"], route_present=present > 0, refused=refused, sample_size=len(units),
                   disagreements={"count": len(stale), "units": stale}, routes=routes)
 
 
@@ -584,6 +608,15 @@ def _file_sha(path: Path) -> str | None:
         return _sha(read_capped(path, ROUTE_CAP))
     except Refusal:
         return None
+
+
+def _record_covers_run(inputs: Inputs, record: Any) -> bool:
+    """The composition record names exactly the run's sources (review finding R1)."""
+    entries = record.get("sources") if isinstance(record, dict) else None
+    if not isinstance(entries, list):
+        return False
+    ids = [e.get("id") for e in entries if isinstance(e, dict)]
+    return len(ids) == len(entries) and sorted(map(str, ids)) == sorted(inputs.sources)
 
 
 def _record_fresh(inputs: Inputs, record: dict) -> bool:
@@ -612,13 +645,13 @@ def _run_sha(run_dir: Path) -> str:
     return _sha(json.dumps(listing, separators=(",", ":")).encode("utf-8"))
 
 
-def _gnd_version() -> str:
-    try:
-        from gnd import resolve_version
-
-        return resolve_version()
-    except Exception:  # noqa: BLE001 -- the version is reported, never required
-        return "unknown"
+def _gnd_version(results: dict) -> str:
+    """The gnd version as the fidelity route reports it (review finding R5: CLI only)."""
+    for result in results.values():
+        payload = result.get("payload")
+        if isinstance(payload, dict) and isinstance(payload.get("gnd_version"), str):
+            return payload["gnd_version"]
+    return "unknown"
 
 
 def refused_report(reason: str) -> dict:
@@ -726,7 +759,7 @@ def score(corpus_root: Path, answers: Path, run_dir: Path, *,
         "exit_code": 1 if failed else 0,
         "reason": None,
         "inputs": {"corpus_sha256": _sha(inputs.corpus_raw), "answers_sha256": _sha(inputs.key_raw),
-                   "run_sha256": _run_sha(run_dir), "gnd_version": _gnd_version(),
+                   "run_sha256": _run_sha(run_dir), "gnd_version": _gnd_version(results),
                    "harness_sha256": _sha(Path(__file__).read_bytes())},
         "labels": {"kind": labeller.get("kind"), "independent": labeller.get("independent") is True,
                    "note": labeller.get("note") or LABELS_NOTE},
@@ -741,6 +774,7 @@ def score(corpus_root: Path, answers: Path, run_dir: Path, *,
 
 
 def main(argv: list[str] | None = None) -> int:
+    args = None
     try:
         parser = argparse.ArgumentParser(description="Score a literature run against an answer key.")
         parser.add_argument("corpus")
@@ -753,11 +787,13 @@ def main(argv: list[str] | None = None) -> int:
         raise
     except Exception:  # noqa: BLE001 -- totality at the process boundary
         report = refused_report("internal")
-    text = json.dumps(report, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
-    if args.out:
-        Path(args.out).write_text(json.dumps(report, sort_keys=True, ensure_ascii=False, indent=2) + "\n",
-                                  encoding="utf-8")
-    print(text)
+    if args is not None and args.out:
+        try:
+            Path(args.out).write_text(json.dumps(report, sort_keys=True, ensure_ascii=False, indent=2) + "\n",
+                                      encoding="utf-8")
+        except OSError:
+            report = refused_report("output:unwritable")  # review finding R4
+    print(json.dumps(report, sort_keys=True, ensure_ascii=False, separators=(",", ":")))
     return report["exit_code"]
 
 

@@ -197,13 +197,13 @@ The staged assurance report over the literature corpus (phase LI1).
 | `passage_index(passages) -> dict[str, tuple[list[int], list[dict]]]` | function | 222 | Per document, the passages sorted by start, for containment lookups. |
 | `anchors_in_passages(index, anchors) -> list[str \| None]` | function | 231 | For each anchor ({document, span}), the id of the passage that contains it, or None. |
 | `failed_floors(metrics, floors) -> list[str]` | function | 252 | (no docstring) |
-| `stage_status(*, active, route_present, metrics, floors, refused) -> str` | function | 266 | Spec §6.5 status rules, in order: dormant, route missing, floors and refusals, pass. |
-| `run_route(gnd, route, paths, shown) -> dict` | function | 287 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
-| `Inputs` | class | 324 | Everything validated in steps 1-4, with the run's files located. |
-| `Inputs.source_dir(self, source) -> Path` | method | 378 | (no docstring) |
-| `refused_report(reason) -> dict` | function | 624 | (no docstring) |
-| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 691 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
-| `main(argv) -> int` | function | 743 | (no docstring) |
+| `stage_status(*, active, route_present, metrics, floors, refused) -> str` | function | 264 | Spec §6.5 status rules, in order: dormant, route missing, floors and refusals, pass. |
+| `run_route(gnd, route, paths, shown) -> dict` | function | 285 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
+| `Inputs` | class | 327 | Everything validated in steps 1-4, with the run's files located. |
+| `Inputs.source_dir(self, source) -> Path` | method | 385 | (no docstring) |
+| `refused_report(reason) -> dict` | function | 657 | (no docstring) |
+| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 724 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+| `main(argv) -> int` | function | 776 | (no docstring) |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

@@ -1932,7 +1932,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/__init__.py
 - uses: (none)
-- used_by: cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, conformance.service, discover.service, examples.literature_assurance, extract.service, fidelity.service, install.skill_lifecycle, measure.service, review.command, … +1 more (graph.md)
+- used_by: cli.checking_command, cli.dispatch, codegen.emit, codegen.manifest, conformance.service, discover.service, extract.service, fidelity.service, install.skill_lifecycle, measure.service, review.command, synth.service
 - tests: tests/test_packaged_skills.py
 
 
@@ -3251,7 +3251,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: A literature-assurance-report/1 payload and exit 0, 1 or 3. The routes are gnd check (plain, --anchors, --composition) and gnd fidelity, run as subprocesses.
 - status: canonical
 - modules: src/gnd/examples/literature/assurance_report.py
-- uses: infra.version
+- uses: (none)
 - used_by: (none)
 - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
 - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.

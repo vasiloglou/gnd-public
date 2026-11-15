@@ -61,14 +61,7 @@ def _drop_fact(source: dict, fact_type: str, roles: dict) -> None:
         del source["facts"][fact_type]
     source["anchors"] = [a for a in source["anchors"]
                          if not (a["fact_key"]["fact_type"] == fact_type and a["fact_key"]["roles"] == roles)]
-    facts = {k: v for k, v in source["facts"].items() if k != builder.DERIVED}
-    derived = sorted(({"work": i["work"], "method": b["base_method"]}
-                      for i in facts.get("work_introduces_method", [])
-                      for b in facts.get("method_builds_on_method", []) if b["method"] == i["method"]),
-                     key=lambda row: (row["work"], row["method"]))
-    if derived:
-        facts[builder.DERIVED] = derived
-    source["facts"] = {k: facts[k] for k in sorted(facts)}
+    source["facts"] = builder.with_derived(source["facts"])
 
 
 def _shift(sources: dict, *, recompute: bool) -> None:
@@ -337,6 +330,88 @@ def test_symlinked_run_path_is_resolved(tmp_path):
     link = tmp_path / "link"
     link.symlink_to(real, target_is_directory=True)
     assert _score(link)["exit_code"] == 0
+
+
+# --- Review regressions (one per reproduced finding, notes/phase-LI1-codex-review.md) ---
+
+
+def test_composition_missing_a_source_fails(tmp_path):
+    # R1: a composition that leaves out one of the run's sources must not pass.
+    run = tmp_path / "run"
+    shutil.copytree(EXAMPLE / "runs/reference", run)
+    manifest_path = run / "composition/manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["sources"].remove("posex")
+    manifest["scope_tags"] = [t for t in manifest["scope_tags"] if t["source"] != "posex"]
+    manifest_path.write_text(json.dumps(manifest, indent=2))
+    subprocess.run([sys.executable, "-m", "gnd", "compose", str(EXAMPLE / "model.orm.yaml"), str(run / "composition"),
+                    "--out", str(run / "composed/population.json"), "--record", str(run / "composed/record.json")],
+                   check=True, capture_output=True)
+    report = _score(run)
+    assert report["exit_code"] == 1
+    freshness = next(s for s in report["stages"] if s["stage"] == "freshness")
+    assert "composition:sources-differ" in freshness["disagreements"]["units"]
+
+
+FAKE_GND = '''
+import os, runpy, sys
+args = sys.argv[1:]
+route = "R4" if "--composition" in args else "R2" if "--anchors" in args else "R3" if args[:1] == ["fidelity"] else "R1"
+if route == os.environ["FAKE_GND_BREAK"]:
+    print("not a report")
+    sys.exit(4 if route == "R1" else 3)
+sys.argv = ["gnd", *args]
+runpy.run_module("gnd", run_name="__main__")
+'''
+
+
+@pytest.mark.parametrize(("route", "stage"), [("R1", "model-population-validity"), ("R2", "freshness")])
+def test_unreported_route_is_refused(route, stage, tmp_path, monkeypatch):
+    # R2: a route that prints no report is a refused unit, never an agreement.
+    fake = tmp_path / "fake_gnd.py"
+    fake.write_text(FAKE_GND)
+    monkeypatch.setenv("FAKE_GND_BREAK", route)
+    report = _harness().score(EXAMPLE, KEY, EXAMPLE / "runs/reference", gnd=(sys.executable, str(fake)))
+    got = next(s for s in report["stages"] if s["stage"] == stage)
+    assert got["status"] == "fail" and got["refused_units"] == 12
+    assert report["exit_code"] == 1
+
+
+@pytest.mark.parametrize(("target", "edit"), [
+    ("corpus/corpus.json", lambda doc: doc["documents"][0].__setitem__("split", [])),
+    ("answers/answer-key.json", lambda doc: doc["assertions"][0].__setitem__("support", [])),
+    ("answers/answer-key.json", lambda doc: doc["populations"][0].__setitem__("source", {"a": 1})),
+])
+def test_shape_type_errors_refuse_as_schema(target, edit, tmp_path):
+    # R3: a field of the wrong type is a schema refusal, not an internal one.
+    corpus, answers, run = _copy_inputs(tmp_path)
+    path = corpus / target
+    doc = json.loads(path.read_text())
+    edit(doc)
+    path.write_text(json.dumps(doc))
+    assert _score(run, answers, corpus)["reason"] == "input:schema"
+
+
+def test_cli_unwritable_out_has_no_traceback(tmp_path):
+    # R4: an output path that cannot be written ends in a report, not a traceback.
+    completed = subprocess.run(
+        [sys.executable, "-m", "gnd.examples.literature.assurance_report", str(EXAMPLE), str(KEY),
+         str(EXAMPLE / "runs/reference"), "--out", str(tmp_path)],
+        capture_output=True, text=True, check=False)
+    assert "Traceback" not in completed.stderr
+    assert completed.returncode == 3
+    assert json.loads(completed.stdout)["reason"] == "output:unwritable"
+
+
+def test_harness_reads_gnd_only_through_the_cli():
+    # R5: no gnd module is imported; the version comes from a route's own payload.
+    import ast
+
+    tree = ast.parse((EXAMPLE / "assurance_report.py").read_text(encoding="utf-8"))
+    imported = {alias.name for node in ast.walk(tree) if isinstance(node, ast.Import) for alias in node.names}
+    imported |= {node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom) and node.module}
+    assert not {name for name in imported if name == "gnd" or name.startswith("gnd.")}
+    assert _score(EXAMPLE / "runs/reference")["inputs"]["gnd_version"] != "unknown"
 
 
 def test_time_bound():

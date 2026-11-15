@@ -1571,7 +1571,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: ontology, sidecar and loss report bytes
 - status: canonical
 - modules: src/gnd/export/ossie.py, src/gnd/export/ossie_formulas.py
-- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity
+- uses: export.pyrel_rules, infra.artifacts, infra.input_policy, infra.report_redaction, infra.safe_filesystem, model.json_document, model.loading, model.query_index, model.scalar_identity, model.scalar_terms
 - used_by: cli.export_command
 - tests: tests/test_ossie_export.py, tests/test_ossie_external_oracle.py, tests/test_ossie_formulas.py
 - notes: The three output artifacts use the importer's input size cap.
@@ -1611,7 +1611,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: Standalone Python program assembled from shared Requirement records and target-specific execution code.
 - status: canonical
 - modules: src/gnd/export/pyrel_rules.py
-- uses: export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, semantics.transitions
+- uses: export.pyrel_runtime, infra.artifacts, infra.errors, infra.graphs, model.loading, model.query_index, model.scalar_terms, semantics.transitions
 - used_by: examples.plan_apps, export.ossie, export.pyrel_emit
 - tests: tests/test_pyrel_rules.py, tests/test_pyrel_rules_calendar.py, tests/test_pyrel_rules_derivations.py, tests/test_pyrel_rules_families.py, tests/test_pyrel_rules_plans.py, tests/test_plan_apps.py
 - checked: partial
@@ -1638,7 +1638,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: ExportResult containing program.dl, fact inputs, symbol/origin maps, retained inputs and manifest, or refusal.
 - status: canonical
 - modules: src/gnd/export/souffle.py, src/gnd/export/souffle_types.py
-- uses: infra.input_policy, model.loading, model.population_loading, witness.schema
+- uses: infra.input_policy, model.loading, model.population_loading, model.query_index, model.scalar_terms, witness.schema
 - used_by: export.lean_compile, export.lean_lowering, export.service, export.souffle_bundle, export.souffle_runtime
 - tests: tests/test_public_souffle_input_contract.py, tests/test_public_souffle_successors.py, tests/test_public_derivation_parity_tools.py
 - notes: Export records every constraint as excluded and claims no constraint verdict or assurance. Result types and limit ceilings belong here with the lowering they constrain.
@@ -1677,7 +1677,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: LeanResult with Definitions.lean, ProofObligations.lean, maps, obligations, toolchain, retained inputs and manifest.
 - status: canonical
 - modules: src/gnd/export/lean.py, src/gnd/export/lean_types.py
-- uses: export.souffle_lowering, infra.artifacts, infra.errors, model.loading, witness.schema
+- uses: export.souffle_lowering, infra.artifacts, infra.errors, model.loading, model.query_index, model.scalar_terms, witness.schema
 - used_by: export.lean_bundle, export.lean_compile
 - tests: tests/test_public_lean_export_successors.py, tests/test_public_lean_native_successors.py
 - checked: partial
@@ -1765,7 +1765,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### model.validation
 - does: Parse bounded model bytes, validate schema and semantic rules; analyze aggregate scope and derivation dependencies [semantic_validate].
-- verbs: validate model, structural validation, semantic validation, guarded literal domain, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
+- verbs: validate model, structural validation, semantic validation, guarded literal domain, guarded antecedent filter validation, validate membership lists, declared value domains, JSON schema, cross references, role references, provenance, induced knowledge, support counts, confirmation review, modality policy, analyze_aggregate, aggregate scope, derivation dependencies, derivation classification, dependency closure, derivation strata, body components, YAML guard, unattended spans, span coverage, unchecked spans, SpanCoverage, unattended_span_coverage
 - in: Parsed model document; aggregate rules and variable primitives for analysis helpers.
 - out: Ordered ValidationIssue errors or warnings; aggregate analyses, labelled dependency edges, classifications and strata.
 - status: canonical
@@ -2433,7 +2433,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +35 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +37 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.
@@ -2653,7 +2653,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/semantic_ir.py
 - uses: (none)
-- used_by: check.admission, check.branches, check.snapshot_decision, discover.population_view, model.scalar_identity, model.validation, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
+- used_by: check.admission, check.branches, check.snapshot_decision, discover.population_view, model.scalar_identity, model.scalar_terms, model.validation, semantics.indexed_rows, semantics.snapshot_adapter, semantics.snapshot_spec, semantics.temporal_guards, semantics.witness_origins
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py
 - notes: Constructing these values establishes no proof or verdict; relation-source and refusal fields retain input meaning.
 
@@ -2663,7 +2663,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - verbs: adapt snapshot, canonical_scalar, typed scalar, rational identity, datetime coordinate, opaque refusal, adapt_constraint, adapt_snapshot, adapt_snapshot_observed, derived lineage, value origins, validation marker, input refusal, canonical scalar compatibility alias
 - status: canonical
 - modules: src/gnd/semantic_adapter.py
-- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, semantics.snapshot_ir, semantics.snapshot_spec
+- uses: check.applicability, check.branches, check.constraint_families, check.universe, infra.errors, model.address, model.atom_bindings, model.document, model.loading, model.population_loading, model.scalar_identity, model.scalar_terms, semantics.snapshot_ir, semantics.snapshot_spec
 - used_by: check.admission, check.snapshot_decision, discover.population_view, semantics.temporal_guards, semantics.witness_origins
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_m3_origin_index.py, tests/test_public_adapter_derivation.py
 - checked: partial
@@ -2694,10 +2694,10 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### semantics.snapshot_spec
 - does: Evaluate snapshot constraint specifications with explicit applicability, witnesses, modality and exit-band rules.
-- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, value comparison, cardinality, subtype partition, assurance_of, band_of
+- verbs: snapshot specification, reference evaluator, verdict_of, applicability_of, snapshot_family_result, mandatory predicate, set constraints, frequency result, ring witness, ring_pairs, acyclic_extent, strongly connected groups, guarded rule, bounded negative relation index, guarded term filters, value comparison, cardinality, subtype partition, assurance_of, band_of
 - status: canonical
 - modules: src/gnd/semantic_spec.py
-- uses: check.constraint_families, infra.graphs, semantics.snapshot_ir
+- uses: check.constraint_families, infra.graphs, model.scalar_terms, semantics.snapshot_ir
 - used_by: assurance.policy, check.snapshot_decision, model.validation, semantics.indexed_rows, semantics.snapshot_adapter, semantics.temporal_guards
 - tests: tests/test_v6_phase2_semantic_spec.py, tests/test_ik4_indexed_set_families.py
 - checked: partial
@@ -2705,14 +2705,14 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 
 ### model.scalar_terms
-- does: Analyze and evaluate bounded numeric and Gregorian date expressions [analyze_term, evaluate_term, compare_terms].
-- verbs: scalar terms, exact arithmetic, rational numbers, float functions, numeric expressions, date arithmetic, calendar days, duration days, term analysis, infer primitive, compare terms, variable binding, floor modulo, haversine distance, materialize scalar, term budgets, unavailable reasons, reject temporal consumers
+- does: Analyze bounded scalar expressions and compile typed set membership [analyze_term, evaluate_term, compare_terms].
+- verbs: scalar terms, membership comparisons, compile membership, typed literal set, exact arithmetic, rational numbers, float functions, numeric expressions, date arithmetic, calendar days, duration days, term analysis, infer primitive, compare terms, variable binding, floor modulo, haversine distance, materialize scalar, term budgets, unavailable reasons, reject temporal consumers
 - in: Term syntax, variable primitive declarations or bindings, structural and value limits, optional shared temporal work counter.
 - out: TermAnalysis or ExactTermResult with values, primitives, variables, counters and named failures; wire scalars from materialize_scalar.
 - status: canonical
 - modules: src/gnd/terms.py
-- uses: infra.errors
-- used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +17 more (graph.md)
+- uses: infra.errors, semantics.snapshot_ir
+- used_by: check.applicability, check.baseline, check.population_structure, check.service, check.snapshot_decision, checker.evaluate, cli.api, codegen.emit, codegen.service, conformance.service, exp.service, exp.session_replay, … +23 more (graph.md)
 - tests: tests/test_v62_phase3_terms.py, tests/test_v62_phase5_terms.py, tests/test_v71_phase1_dates.py, tests/test_v71_phase1_successors.py
 - notes: Includes the guarded operand evaluator adapter and temporal syntax detection used to refuse unsupported consumers.
 
@@ -2945,7 +2945,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 
 ### synth.guarded
 - does: Construct and independently evaluate guarded-rule case pairs and bounded existential witnesses [build_pair, exists_witness].
-- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, active passing case
+- verbs: guarded exists, existential witness, exists_witness, join_atoms, antecedent bindings, modular repair, modular_repair_plan, private source, shared relation, connected atoms, exact terms, work budget, oracle abstention, variable binding, guarded cases, antecedent filters, negative exceptions, membership witnesses, active passing case
 - in: Guarded constraint, raw fact rows, optional covered fact types; model for private-source analysis.
 - out: Bindings, a modular repair plan or witness true/false/None; None represents unsupported or unavailable work.
 - status: canonical

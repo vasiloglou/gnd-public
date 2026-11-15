@@ -10,6 +10,8 @@ from datetime import date
 from fractions import Fraction
 from typing import Any
 
+from gnd.semantic_ir import MembershipSet
+
 EXACT_FUNCTION_ARITY = {
     "add": 2,
     "sub": 2,
@@ -38,7 +40,10 @@ FLOAT_FUNCTION_RESULT_PRIMITIVE = {
     "haversine": "Float",
 }
 EARTH_RADIUS_KM = 6371.0088
+MEMBERSHIP_OPERATORS = ("in", "not in")
+MAX_MEMBERSHIP_ITEMS = 1024
 NUMERIC_PRIMITIVES = frozenset({"Integer", "Float", "Number"})
+TEMPORAL_APPLICATION_LIMIT = 10_000
 TEMPORAL_FUNCTIONS = frozenset({"date_add", "date_sub"})
 MAX_DURATION_DAYS = 1_000_000
 TEMPORAL_REASONS = (
@@ -167,10 +172,10 @@ def guarded_operand_evaluator(legacy, scalar_factory):
     numerator/denominator pair regardless of source tier.
     """
 
-    def evaluate(operand, names, binding):
+    def evaluate(operand, names, binding, *, temporal_work=None):
         if operand.kind != "function":
             return legacy(operand, names, binding)
-        values = [evaluate(item, names, binding) for item in operand.arguments]
+        values = [evaluate(item, names, binding, temporal_work=temporal_work) for item in operand.arguments]
         if operand.function in TEMPORAL_FUNCTIONS:
             if (
                 not operand.valid
@@ -199,6 +204,7 @@ def guarded_operand_evaluator(legacy, scalar_factory):
                     ],
                 },
                 {},
+                temporal_work=temporal_work,
             )
             if not result.available:
                 return None
@@ -386,6 +392,109 @@ def _exact_number(value: object) -> Fraction | None:
     return None
 
 
+def membership_domain(primitive: str | None) -> str | None:
+    if primitive in NUMERIC_PRIMITIVES:
+        return "Number"
+    if primitive in ("Boolean", "Date", "Duration"):
+        return primitive
+    if primitive in ("String", "Binary", "DateTime"):
+        return "String"
+    return None
+
+
+def _membership_key(value: object, primitive: str | None = None) -> tuple[str, object] | None:
+    if isinstance(value, dict):
+        if set(value) == {"date"} and valid_date(value["date"]):
+            return "Date", value["date"]
+        if set(value) == {"duration_days"} and valid_duration(value["duration_days"]):
+            return "Duration", value["duration_days"]
+        return None
+    if primitive == "Date":
+        return ("Date", value) if valid_date(value) else None
+    if primitive == "Duration":
+        return ("Duration", value) if valid_duration(value) else None
+    if isinstance(value, bool):
+        return "Boolean", value
+    if isinstance(value, str):
+        return "String", value
+    numeric = _exact_number(value)
+    if numeric is not None and not _too_wide(numeric, DEFAULT_LIMITS):
+        return "Number", numeric
+    return None
+
+
+def compile_membership(terms: object) -> MembershipSet | None:
+    """Compile an authored literal list once for a guarded or derivation filter."""
+    if not isinstance(terms, list) or not 1 <= len(terms) <= MAX_MEMBERSHIP_ITEMS:
+        return None
+    keys: set[object] = set()
+    domain = None
+    for value in terms:
+        if variable_name(value) is not None:
+            return None
+        key = _membership_key(value)
+        if key is None or domain not in (None, key[0]):
+            return None
+        domain, member = key
+        keys.add(member)
+    assert domain is not None
+    return MembershipSet(domain, frozenset(keys))
+
+
+def membership_verdict(
+    operator: str, value: object, members: MembershipSet, primitive: str | None = None
+) -> bool | None:
+    """Return the membership verdict or unavailable for an incompatible value."""
+    expected = membership_domain(primitive)
+    if expected is not None and expected != members.domain:
+        return None
+    key = _membership_key(value, primitive)
+    if key is None or key[0] != members.domain:
+        return None
+    contains = key[1] in members.keys
+    return contains if operator == "in" else not contains
+
+
+def where_uses_membership(where: object) -> bool:
+    return isinstance(where, (tuple, list)) and any(
+        isinstance(item, Mapping) and item.get("operator") in MEMBERSHIP_OPERATORS
+        for item in where
+    )
+
+
+def guard_uses_membership(consequent: object) -> bool:
+    if not isinstance(consequent, Mapping):
+        return False
+    direct = consequent.get("comparison")
+    if isinstance(direct, Mapping) and direct.get("operator") in MEMBERSHIP_OPERATORS:
+        return True
+    exists = consequent.get("exists")
+    return isinstance(exists, Mapping) and where_uses_membership(exists.get("where"))
+
+
+def guarded_clause_refusal(constraint: Mapping) -> str | None:
+    """Name the new clause shapes for profiles that cannot represent them."""
+    if constraint.get("type") != "guarded":
+        return None
+    consequent = constraint.get("consequent")
+    if isinstance(consequent, Mapping) and "any_of" in consequent:
+        return "guarded-disjunction-unsupported"
+    if constraint.get("negate") or constraint.get("where"):
+        return "guarded-antecedent-filters-unsupported"
+    if guard_uses_membership(consequent):
+        return "membership-unsupported"
+    return None
+
+
+def prepare_comparisons(comparisons):
+    """Keep the existing filter rows while compiling any membership lists."""
+    return tuple(
+        {**comparison, "right": compile_membership(comparison.get("right"))}
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS else comparison
+        for comparison in comparisons
+    )
+
+
 def _too_wide(value: Fraction, limits: ExactTermLimits) -> bool:
     return max(value.numerator.bit_length(), value.denominator.bit_length()) > limits.max_value_bits
 
@@ -549,7 +658,9 @@ def evaluate_term(
             if not isinstance(arguments, list) or len(arguments) != 2:
                 return unavailable("term:function-arity")
             if temporal_work is not None:
-                if temporal_work[0] >= 10_000:
+                if temporal_work[0] >= TEMPORAL_APPLICATION_LIMIT:
+                    if len(temporal_work) > 1:
+                        temporal_work[1] = 1
                     return unavailable("term:temporal-work-limit")
                 temporal_work[0] += 1
             results = [walk(argument, depth + 1) for argument in arguments]
@@ -642,11 +753,32 @@ def compare_terms(
     *,
     limits: ExactTermLimits = DEFAULT_LIMITS,
     bound_cross_product: bool = False,
+    left_primitive: str | None = None,
+    temporal_work: list[int] | None = None,
 ) -> ExactTermResult:
-    left_result = evaluate_term(left, binding, limits=limits)
+    left_result = evaluate_term(left, binding, limits=limits, temporal_work=temporal_work)
     if not left_result.available:
         return left_result
-    right_result = evaluate_term(right, binding, limits=limits)
+    if operator in MEMBERSHIP_OPERATORS:
+        compiled = isinstance(right, MembershipSet)
+        members = right if compiled else compile_membership(right)
+        if members is None:
+            return ExactTermResult(None, "term:values-not-comparable", dict(binding))
+        primitive = left_primitive
+        if not primitive and isinstance(left, dict):
+            if "date" in left or left.get("fn") in TEMPORAL_FUNCTIONS:
+                primitive = "Date"
+            elif "duration_days" in left:
+                primitive = "Duration"
+        result = membership_verdict(operator, left_result.value, members, primitive)
+        return ExactTermResult(
+            result, None if result is not None else "term:values-not-comparable",
+            dict(binding),
+            left_result.operations + 1 + (0 if compiled else len(right)),
+            left_result.nodes,
+            left_result.max_value_bits,
+        )
+    right_result = evaluate_term(right, binding, limits=limits, temporal_work=temporal_work)
     if not right_result.available:
         return ExactTermResult(
             None,

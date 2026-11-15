@@ -302,7 +302,7 @@ def _include_preview_successor():
 
 
 def _guarded_workflows_check_successor():
-    """Restore RC4's frozen check parser, then add the two reviewed flags."""
+    """Restore RC4, add the guarded workflow flags and GC3 diagnostics help."""
     base = json.loads(golden_path("cli", "tree").read_text())["subcommands"]["check"]
     for action in base["actions"]:
         if action["help"] == argparse.SUPPRESS:
@@ -323,6 +323,7 @@ def _guarded_workflows_check_successor():
         option_strings=["--guarded-diagnostics"],
         help="report version 16: include antecedent binding diagnostics; implies --rule-ids",
     )
+    diagnostics["help"] = "include guarded binding and disjunction diagnostics; implies --rule-ids"
     base["actions"].insert(ALLOW_VACUOUS_SUCCESSOR["action_index"], edition)
     base["actions"].insert(ALLOW_VACUOUS_SUCCESSOR["action_index"] + 2, diagnostics)
     parser = cli._BandSafeParser(prog=base["prog"], description=base["description"])

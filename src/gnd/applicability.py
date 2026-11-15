@@ -352,6 +352,8 @@ def applicable_scope_ids(model: Model, population: Population) -> tuple[str, ...
                 family == "guarded" and constraint_variant(constraint) == "exists"
             ):
                 variants.add("n-a")
+            if family == "guarded" and (constraint.get("negate") or constraint.get("where")):
+                variants.add("filtered")
             if family == "guarded" and any(
                 isinstance(atom, dict) and str(atom.get("fact_type")) in aggregate_heads
                 for atom in constraint.get("antecedent") or []

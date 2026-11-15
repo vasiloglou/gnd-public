@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "reason": "GC4 records the readable and embedded PyRel profile boundaries and Ossie loss reporting.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/dynamic-query-successor.json",
+  "predecessor_sha256": "23349bc5a2030a1d42085b7fe9f975c7da889af7aa41010d633b85216d9f329c",
+  "removed": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_unswapped",
+      "atoms[-1]",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "Requirement",
+      "tuple[Check, ...]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_domain_text",
+      "list[str]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_guarded",
+      "model.facts[atom.relation]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_guarded",
+      "types.get(name)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_guarded_filter",
+      "comparison[key]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_membership_check",
+      "types.get(member)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_membership_check",
+      "{'Integer': 'Number', 'String': 'String', 'Boolean': 'Boolean'}.get(primitive)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "_unswapped",
+      "atoms[len(req.domain):]",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "primitive",
+      "types.get(term)",
+      1
+    ],
+    [
+      "src/gnd/export/pyrel_rules.py",
+      "primitive",
+      "{int: 'Integer', str: 'String', bool: 'Boolean'}.get(type(term))",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7720,
+  "result_occurrences": 9591
+}

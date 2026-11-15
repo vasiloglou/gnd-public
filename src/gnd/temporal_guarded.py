@@ -6,12 +6,13 @@ from fractions import Fraction
 from typing import Any
 
 from gnd.semantic_ir import IRConstraint, IROperand, Scalar, SnapshotIR
-from gnd.terms import TEMPORAL_FUNCTIONS, evaluate_term
+from gnd.terms import MEMBERSHIP_OPERATORS, TEMPORAL_FUNCTIONS, evaluate_term, membership_verdict
 
 
 def temporal_operand(operand: IROperand) -> bool:
     return (
         operand.primitive == "Duration"
+        or (operand.membership is not None and operand.primitive == "Date")
         or operand.function in TEMPORAL_FUNCTIONS
         or operand.tagged
         or any(temporal_operand(child) for child in operand.arguments)
@@ -29,11 +30,11 @@ def _value(scalar: Scalar | None) -> Any:
     return scalar.token
 
 
-def _syntax(operand: IROperand) -> Any:
+def term_syntax(operand: IROperand) -> Any:
     if operand.kind == "variable":
         return operand.variable
     if operand.kind == "function":
-        return {"fn": operand.function, "args": [_syntax(child) for child in operand.arguments]}
+        return {"fn": operand.function, "args": [term_syntax(child) for child in operand.arguments]}
     value = _value(operand.literal)
     if operand.tagged:
         return {"date" if operand.primitive == "Date" else "duration_days": value}
@@ -54,7 +55,6 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
     ):
         return None
     from gnd import semantic_spec
-    from gnd.semantic_adapter import canonical_scalar
 
     facts = {fact.id: fact for fact in snapshot.fact_types}
     relations = {relation.fact_type: relation for relation in snapshot.relations}
@@ -164,12 +164,30 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
             yield from walk(position + 1, merged, uncertain or uncertainties[id(candidate)])
 
     names = semantic_spec.guarded_variable_names(constraint)
-    syntax = [_syntax(operand) for operand in constraint.operands]
+    return _evaluate_temporal_bindings(constraint, names, walk(0, {}))
+
+
+def evaluate_filtered_temporal_guard(constraint, names, bindings):
+    if constraint.variant != "comparison" or not any(
+        temporal_operand(operand) for operand in constraint.operands
+    ):
+        return None
+    source = ((dict(zip(names, row, strict=True)), None) for row in bindings)
+    return _evaluate_temporal_bindings(constraint, names, source)
+
+
+def _evaluate_temporal_bindings(constraint, names, source):
+    from gnd import semantic_spec
+    from gnd.semantic_adapter import canonical_scalar
+
+    membership = constraint.operator in MEMBERSHIP_OPERATORS
+    operands = constraint.operands[:1] if membership else constraint.operands
+    syntax = [term_syntax(operand) for operand in operands]
     work = [0]
     seen = set()
     violations = []
     unknown = None
-    for binding, uncertain in walk(0, {}):
+    for binding, uncertain in source:
         row = tuple(binding[name] for name in names)
         seen_key = (row, uncertain)
         if seen_key in seen:
@@ -183,15 +201,22 @@ def evaluate_temporal_guard(constraint: IRConstraint, snapshot: SnapshotIR):
         if reason or uncertain:
             unknown = unknown or reason or uncertain
             continue
-        values = [
-            canonical_scalar(result.value, operand.primitive)
-            for result, operand in zip(results, constraint.operands, strict=True)
-        ]
-        state = (
-            -1
-            if any(value is None for value in values)
-            else semantic_spec.comparison_pair_state(values[0], values[1], constraint.operator)
-        )
+        if membership:
+            members = constraint.operands[1].membership
+            verdict = None if members is None else membership_verdict(
+                constraint.operator, results[0].value, members, operands[0].primitive
+            )
+            state = -1 if verdict is None else int(verdict)
+        else:
+            values = [
+                canonical_scalar(result.value, operand.primitive)
+                for result, operand in zip(results, operands, strict=True)
+            ]
+            state = (
+                -1
+                if any(value is None for value in values)
+                else semantic_spec.comparison_pair_state(values[0], values[1], constraint.operator)
+            )
         if state < 0:
             unknown = unknown or "term:opaque-date-operand"
         elif state == 0:

@@ -226,7 +226,7 @@ _SNAPSHOT = (
     ),
     (
         "guarded",
-        ("comparison", "atom", "absence", "exists"),
+        ("comparison", "atom", "absence", "exists", "any_of"),
         "joined",
         "bindings",
         "_check_guarded",
@@ -392,6 +392,26 @@ def _snapshot_rows() -> Iterator[Branch]:
         owner="gnd.correspondence.evaluate_snapshot",
         inputs=("identity", "role-order"),
     )
+    yield _row(
+        "snapshot", "guarded", "filtered", "vacuous-filter-empty", "vacuous",
+        owner="gnd.semantic_spec.guarded_filtered_bindings",
+        inputs=("antecedent-atoms", "negative-relations", "term-comparisons"),
+    )
+    for reason in ("guarded-disjunction-undecidable", "guarded-disjunction-work-limit"):
+        yield _row(
+            "snapshot", "guarded", "any_of", "unchecked-" + reason, "unchecked",
+            reason=reason, owner="gnd.correspondence._indexed_guarded_disjunction",
+        )
+    for reason in (
+        "guarded-filter-coverage-missing",
+        "guarded-filter-term-unavailable",
+        "guarded-filter-work-limit",
+    ):
+        yield _row(
+            "snapshot", "guarded", "filtered", "unchecked-" + reason, "unchecked",
+            owner="gnd.semantic_spec.guarded_filtered_bindings",
+            reason=reason, witness="none", inputs=("covers", "term-comparisons", "work-budget"),
+        )
     for event, reason in (
         ("unchecked-guarded-exists-coverage-missing", "guarded-exists-coverage-missing"),
         ("unchecked-guarded-exists-work-limit", "guarded-exists-work-limit"),
@@ -1451,7 +1471,7 @@ def constraint_variant(constraint: dict, fact_type: dict | None = None) -> str:
         consequent = constraint.get("consequent")
         kinds = [
             kind
-            for kind in ("comparison", "atom", "absence", "exists")
+            for kind in ("comparison", "atom", "absence", "exists", "any_of")
             if isinstance(consequent, dict) and kind in consequent
         ]
         return kinds[0] if len(kinds) == 1 else "n-a"

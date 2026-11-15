@@ -40,7 +40,7 @@ def _prepared(tmp_path: Path, *, rows: int, disconnected: bool=False, include_wh
     population = load_population(population_path, model=model)
     adapted = adapt_snapshot_observed(model, population)
     constraint = adapted.snapshot.constraints[0]
-    valid, names, bindings = _indexed_guarded_bindings(constraint, adapted.snapshot)
+    valid, names, bindings, _observation = _indexed_guarded_bindings(constraint, adapted.snapshot)
     assert valid
     return (adapted, constraint, names, bindings)
 

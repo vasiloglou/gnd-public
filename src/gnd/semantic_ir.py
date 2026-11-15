@@ -26,7 +26,7 @@ ADAPTER_REFUSALS = (
     "malformed-constraint",
 )
 OPERAND_KINDS = ("role", "variable", "literal", "clock")
-CONSEQUENT_KINDS = ("comparison", "atom", "absence", "exists", "")
+CONSEQUENT_KINDS = ("comparison", "atom", "absence", "exists", "any_of", "")
 FLAG_NAMES = ("exclusive", "exhaustive", "min-inclusive", "max-inclusive")
 RELATION_SOURCES = ("claimed", "computed-extension", "empty")
 
@@ -98,6 +98,12 @@ class IRObjectType:
 
 
 @dataclass(frozen=True)
+class MembershipSet:
+    domain: str
+    keys: frozenset[object]
+
+
+@dataclass(frozen=True)
 class IROperand:
     kind: str
     fact_type: str = ""
@@ -111,6 +117,7 @@ class IROperand:
     refused: str = ""
     function: str = ""
     arguments: tuple["IROperand", ...] = field(default_factory=tuple)
+    membership: MembershipSet | None = None
 
 
 @dataclass(frozen=True)
@@ -158,6 +165,9 @@ class IRConstraint:
     refused: str
     exists_atoms: tuple[IRAtom, ...] = field(default_factory=tuple)
     exists_where: tuple[tuple[str, IROperand, IROperand], ...] = field(default_factory=tuple)
+    negate: tuple[IRAtom, ...] = field(default_factory=tuple)
+    where: tuple[tuple[str, IROperand, IROperand], ...] = field(default_factory=tuple)
+    alternatives: tuple["IRConstraint", ...] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)
@@ -173,3 +183,4 @@ class SnapshotIR:
     derivations: tuple[IRDerivation, ...]
     derivation_order: tuple[str, ...]
     refusals: tuple[IRRefusal, ...]
+    computed_available: frozenset[str] = field(default_factory=frozenset)

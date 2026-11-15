@@ -229,8 +229,7 @@ def _derivation_cnl(
         f"no {_guarded_atom(atom, fallbacks)} fact holds" for atom in rule.get("negate") or []
     )
     comparisons = " and ".join(
-        f"{_guarded_term(item.get('left'), fallbacks)} {item.get('operator')} "
-        f"{_guarded_term(item.get('right'), fallbacks)}"
+        _comparison_cnl(item, symbolic=True, fallbacks=fallbacks)
         for item in rule.get("where") or []
     )
     conditions = " and ".join(item for item in (body, negated, comparisons) if item)
@@ -275,24 +274,33 @@ def _derivation_cnl(
     return f"when {conditions}, derive ({head})"
 
 
-def _guarded_cnl(item: dict[str, Any]) -> str:
-    antecedent = " and ".join(_guarded_atom(atom) for atom in item.get("antecedent") or [])
-    consequent = item.get("consequent") or {}
+def _comparison_cnl(comparison: dict[str, Any], *, symbolic=False, fallbacks=None) -> str:
+    operator = str(comparison.get("operator"))
+    right = comparison.get("right")
+    words = {
+        "<": "is less than",
+        "<=": "is at most",
+        "=": "equals",
+        ">=": "is at least",
+        ">": "is greater than",
+        "!=": "is not equal to",
+    }
+    if operator in ("in", "not in") and isinstance(right, list):
+        phrase = "is one of" if operator == "in" else "is none of"
+        rendered = ", ".join(_guarded_term(member, fallbacks) for member in right)
+    else:
+        phrase = operator if symbolic else words.get(operator, operator)
+        rendered = _guarded_term(right, fallbacks)
+    return f"{_guarded_term(comparison.get('left'), fallbacks)} {phrase} {rendered}"
+
+
+def _guarded_consequent_cnl(consequent: dict[str, Any]) -> str:
+    if "any_of" in consequent:
+        choices = (_guarded_consequent_cnl(alternative) for alternative in consequent["any_of"])
+        return "at least one of these alternatives must hold (" + ") or (".join(choices) + ")"
     if "comparison" in consequent:
         comparison = consequent.get("comparison") or {}
-        operators = {
-            "<": "is less than",
-            "<=": "is at most",
-            "=": "equals",
-            ">=": "is at least",
-            ">": "is greater than",
-            "!=": "is not equal to",
-        }
-        operator = operators.get(str(comparison.get("operator")), str(comparison.get("operator")))
-        conclusion = (
-            f"{_guarded_term(comparison.get('left'))} {operator} "
-            f"{_guarded_term(comparison.get('right'))}"
-        )
+        conclusion = _comparison_cnl(comparison)
     elif "atom" in consequent:
         conclusion = f"{_guarded_atom(consequent.get('atom'))} holds"
     elif "exists" in consequent:
@@ -300,29 +308,25 @@ def _guarded_cnl(item: dict[str, Any]) -> str:
         atoms = " and ".join(
             f"{_guarded_atom(atom)} holds" for atom in exists.get("atoms") or []
         )
-        comparisons = []
-        for comparison in exists.get("where") or []:
-            operators = {
-                "<": "is less than",
-                "<=": "is at most",
-                "=": "equals",
-                ">=": "is at least",
-                ">": "is greater than",
-                "!=": "is not equal to",
-            }
-            operator = operators.get(
-                str(comparison.get("operator")), str(comparison.get("operator"))
-            )
-            comparisons.append(
-                f"{_guarded_term(comparison.get('left'))} {operator} "
-                f"{_guarded_term(comparison.get('right'))}"
-            )
+        comparisons = [_comparison_cnl(comparison) for comparison in exists.get("where") or []]
         conditions = [atoms, *comparisons]
         conclusion = "there exists a joint assignment such that " + " and ".join(
             value for value in conditions if value
         )
     else:
         conclusion = f"no {_guarded_atom(consequent.get('absence'))} fact holds"
+    return conclusion
+
+
+def _guarded_cnl(item: dict[str, Any]) -> str:
+    antecedent = " and ".join(_guarded_atom(atom) for atom in item.get("antecedent") or [])
+    conclusion = _guarded_consequent_cnl(item.get("consequent") or {})
+    comparisons = [_comparison_cnl(row) for row in item.get("where") or []]
+    if comparisons:
+        antecedent += " and " + " and ".join(comparisons)
+    exceptions = [_guarded_atom(atom) for atom in item.get("negate") or []]
+    if exceptions:
+        antecedent += ", unless " + " or ".join(exceptions)
     return f"If {antecedent}, then {conclusion}."
 
 

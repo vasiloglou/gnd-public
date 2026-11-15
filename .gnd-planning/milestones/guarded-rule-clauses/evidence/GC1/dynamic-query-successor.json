@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "reason": "GC1 introduces term and membership indexing. The recorded selectors address terms, fixed syntax and scalar sets.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-authoring/evidence/GA3/dynamic-query-successor.json",
+  "predecessor_sha256": "744b0cb3a2112dff6fc808f77e3c7dffb29d6826237b58864bd29d1a7cf0f9fa",
+  "removed": [
+    [
+      "src/gnd/model_verbalization.py",
+      "_guarded_cnl",
+      "operators.get(str(comparison.get('operator')), str(comparison.get('operator')))",
+      2
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/extensions.py",
+      "_partial_clause_rows",
+      "Mapping[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "_partial_clause_rows",
+      "Sequence[Mapping[str, Any]]",
+      1
+    ],
+    [
+      "src/gnd/extensions.py",
+      "prepare",
+      "compiled_where[key]",
+      2
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_comparison_cnl",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_comparison_cnl",
+      "words.get(operator, operator)",
+      1
+    ],
+    [
+      "src/gnd/semantic_ir.py",
+      "MembershipSet",
+      "frozenset[object]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "(other or [])[:ATTEMPTS]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "_assignment",
+      "members[1:]",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "build_pair",
+      "domains.get(left, ())",
+      1
+    ],
+    [
+      "src/gnd/temporal_guarded.py",
+      "evaluate_temporal_guard",
+      "constraint.operands[:1]",
+      1
+    ],
+    [
+      "src/gnd/terms.py",
+      "_membership_key",
+      "tuple[str, object]",
+      1
+    ],
+    [
+      "src/gnd/terms.py",
+      "compile_membership",
+      "set[object]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7671,
+  "result_occurrences": 9534
+}

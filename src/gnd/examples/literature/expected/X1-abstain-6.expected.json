@@ -1,0 +1,80 @@
+{
+  "case": "X1-abstain-6",
+  "exit_code": 1,
+  "failed_stages": [
+    "source-binding",
+    "semantic-support"
+  ],
+  "measured_routes": "R3 tp 4 of 8, missed 4, extracted 4; R4 exit 0",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "abstention": [
+        0,
+        1
+      ],
+      "precision": [
+        4,
+        4
+      ],
+      "recall": [
+        4,
+        4
+      ],
+      "status": "pass"
+    },
+    "freshness": {
+      "precision": [
+        25,
+        25
+      ],
+      "recall": [
+        25,
+        25
+      ],
+      "status": "pass"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        12,
+        12
+      ],
+      "status": "pass"
+    },
+    "semantic-support": {
+      "abstention": [
+        6,
+        12
+      ],
+      "precision": [
+        4,
+        4
+      ],
+      "recall": [
+        4,
+        8
+      ],
+      "status": "fail"
+    },
+    "source-binding": {
+      "precision": [
+        31,
+        31
+      ],
+      "recall": [
+        31,
+        39
+      ],
+      "status": "fail"
+    }
+  },
+  "transform": "Abstain on vampnet.p2, wham-whale.p2, wham-pose.p2, apinn.p3 (supported) and posex.p2, sbi-frontier.p2 (not supported), and drop the facts of the four supported passages."
+}

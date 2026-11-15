@@ -1,0 +1,44 @@
+{
+  "facts": {
+    "method_builds_on_method": [
+      {
+        "base_method": "XPINN",
+        "method": "$PINN"
+      },
+      {
+        "base_method": "PINNs",
+        "method": "XPINN"
+      }
+    ],
+    "method_is_used_in_field": [
+      {
+        "field": "scientific machine learning",
+        "method": "$PINN"
+      }
+    ],
+    "work_builds_on_method": [
+      {
+        "method": "XPINN",
+        "work": "arXiv:2211.08939"
+      }
+    ],
+    "work_introduces_method": [
+      {
+        "method": "$PINN",
+        "work": "arXiv:2211.08939"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_builds_on_method",
+      "method_is_used_in_field",
+      "work_builds_on_method",
+      "work_introduces_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "synthetic"
+  }
+}

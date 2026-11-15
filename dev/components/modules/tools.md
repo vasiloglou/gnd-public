@@ -44,6 +44,27 @@ Build the growth how-to's two evolve proposals over src/gnd/examples/growth/mode
 | `proposal(text, proposal_id, operation) -> EvolutionProposal` | function | 42 | (no docstring) |
 | `main(directory) -> None` | function | 53 | (no docstring) |
 
+## tools.build_literature_example — `tools/build_literature_example.py`
+Components: unassigned
+Build the LI1 literature regression corpus over src/gnd/examples/literature/.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `document_text(doc_id, doc) -> str` | function | 387 | (no docstring) |
+| `passage_spans(text) -> list[tuple[int, int]]` | function | 395 | Spans of every line after the two header lines, in order. |
+| `passage_id(doc_id, number) -> str` | function | 405 | (no docstring) |
+| `with_derived(facts) -> dict` | function | 418 | The asserted facts plus the derived rows they imply, in canonical key order. |
+| `source_facts(doc) -> dict` | function | 435 | (no docstring) |
+| `population_bytes(facts, *, source) -> bytes` | function | 442 | (no docstring) |
+| `anchors_for(text, doc) -> list[dict]` | function | 448 | (no docstring) |
+| `write_corpus(root) -> dict` | function | 468 | (no docstring) |
+| `write_gold(root, corpus, split, out) -> dict` | function | 503 | Gold source populations and renderer manifests for one split. |
+| `answer_key(corpus_raw, heldout_sha256, root) -> dict` | function | 544 | (no docstring) |
+| `reference_sources(root, corpus) -> dict` | function | 591 | Per-source facts and anchors of the faithful run: exactly the gold facts, at the gold spans. |
+| `write_run(root, corpus, corpus_raw, run, sources, *, abstentions) -> subprocess.CompletedProcess` | function | 603 | Write a literature-run/1 directory, bind every sidecar to the bytes written, and compose. |
+| `write_reference_run(root, corpus, corpus_raw) -> None` | function | 646 | (no docstring) |
+| `main(argv) -> None` | function | 652 | (no docstring) |
+
 ## tools.check_docs — `tools/check_docs.py`
 Components: unassigned
 Check generated site's local links, assets and anchors (no external requests).

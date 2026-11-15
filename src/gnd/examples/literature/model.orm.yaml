@@ -1,0 +1,68 @@
+# The flat literature model of the LI1 regression corpus
+# (.gnd-planning/milestones/literature-identity/notes/phase-LI1-spec.md §6.1).
+# It is deliberately flat: a method is identified by the name a document uses,
+# as in the host graph that issue 193 reports. Later phases add senses,
+# contextual assertions and lineage; this model stays so the corpus can
+# measure what they change.
+version: 2
+model_id: urn:gnd-example:literature-flat@1
+source: { kind: text-conversation, confidence: standard, mode: one-shot }
+object_types:
+  - { id: work, name: Work, kind: value, primitive: String }
+  - { id: method, name: Method, kind: value, primitive: String }
+  - { id: field, name: Field, kind: value, primitive: String }
+fact_types:
+  - id: work_introduces_method
+    reading: "{Work} introduces {Method}"
+    roles:
+      - { object_type: work, role_name: work }
+      - { object_type: method, role_name: method }
+    constraints:
+      - type: anchored
+        role: method
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A method name is only as good as the passage that uses it." }
+  - id: method_builds_on_method
+    reading: "{Method} builds on {Method}"
+    roles:
+      - { object_type: method, role_name: method }
+      - { object_type: method, role_name: base_method }
+    constraints:
+      - type: anchored
+        role: method
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Both ends of a builds-on statement are named in its passage." }
+      - type: anchored
+        role: base_method
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "Both ends of a builds-on statement are named in its passage." }
+  - id: method_is_used_in_field
+    reading: "{Method} is used in {Field}"
+    roles:
+      - { object_type: method, role_name: method }
+      - { object_type: field, role_name: field }
+    constraints:
+      - type: anchored
+        role: method
+        source: explicit
+        status: confirmed
+        modality: alethic
+        provenance: { user_quote: "A method name is only as good as the passage that uses it." }
+  - id: work_builds_on_method
+    reading: "{Work} builds on {Method}"
+    roles:
+      - { object_type: work, role_name: work }
+      - { object_type: method, role_name: method }
+    derivation: derived
+    derivation_rule:
+      body:
+        - { fact_type: work_introduces_method, bind: { work: "$w", method: "$m" } }
+        - { fact_type: method_builds_on_method, bind: { method: "$m", base_method: "$b" } }
+      head: { work: "$w", method: "$b" }
+constraints: []

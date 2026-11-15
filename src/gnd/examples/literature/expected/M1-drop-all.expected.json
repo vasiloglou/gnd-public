@@ -1,0 +1,81 @@
+{
+  "case": "M1-drop-all",
+  "exit_code": 1,
+  "failed_stages": [
+    "source-binding",
+    "semantic-support",
+    "derivation"
+  ],
+  "measured_routes": "R1 4; R2 4, no binding error; R3 exit 0, tp 0 of 8; R4 exit 4, derivation unchecked",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "abstention": [
+        1,
+        1
+      ],
+      "precision": [
+        0,
+        0
+      ],
+      "recall": [
+        0,
+        0
+      ],
+      "status": "fail"
+    },
+    "freshness": {
+      "precision": [
+        25,
+        25
+      ],
+      "recall": [
+        25,
+        25
+      ],
+      "status": "pass"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        12,
+        12
+      ],
+      "status": "pass"
+    },
+    "semantic-support": {
+      "abstention": [
+        0,
+        12
+      ],
+      "precision": [
+        0,
+        0
+      ],
+      "recall": [
+        0,
+        8
+      ],
+      "status": "fail"
+    },
+    "source-binding": {
+      "precision": [
+        0,
+        0
+      ],
+      "recall": [
+        0,
+        39
+      ],
+      "status": "fail"
+    }
+  },
+  "transform": "Every source population's facts become empty and its anchors empty; bindings regenerated."
+}

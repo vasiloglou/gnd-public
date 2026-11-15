@@ -181,6 +181,30 @@ A scripted stand-in for a coding assistant, for the offline expense session.
 | `named_expenses(feedback) -> set[int]` | function | 26 | Every expense id the checker reported inside an offending fact. |
 | `main() -> int` | function | 37 | (no docstring) |
 
+## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
+Components: examples.literature_assurance
+The staged assurance report over the literature corpus (phase LI1).
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `Refusal` | class(Exception) | 77 | A harness refusal: exit 3 with a value-free reason code. |
+| `read_capped(path, cap) -> bytes` | function | 92 | Read at most cap+1 bytes. The cap is applied to the read, not after it. |
+| `parse_json(raw) -> Any` | function | 127 | Strict JSON: UTF-8, no NaN or infinities, bounded integer digits, depth at most 64. |
+| `read_json(path, cap) -> tuple[Any, bytes]` | function | 138 | (no docstring) |
+| `check_corpus_shape(corpus) -> None` | function | 172 | (no docstring) |
+| `check_key_shape(key) -> None` | function | 195 | (no docstring) |
+| `check_run_shape(run) -> None` | function | 211 | (no docstring) |
+| `passage_index(passages) -> dict[str, tuple[list[int], list[dict]]]` | function | 222 | Per document, the passages sorted by start, for containment lookups. |
+| `anchors_in_passages(index, anchors) -> list[str \| None]` | function | 231 | For each anchor ({document, span}), the id of the passage that contains it, or None. |
+| `failed_floors(metrics, floors) -> list[str]` | function | 252 | (no docstring) |
+| `stage_status(*, active, route_present, metrics, floors, refused) -> str` | function | 264 | Spec §6.5 status rules, in order: dormant, route missing, floors and refusals, pass. |
+| `run_route(gnd, route, paths, shown) -> dict` | function | 285 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
+| `Inputs` | class | 327 | Everything validated in steps 1-4, with the run's files located. |
+| `Inputs.source_dir(self, source) -> Path` | method | 385 | (no docstring) |
+| `refused_report(reason) -> dict` | function | 657 | (no docstring) |
+| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 724 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+| `main(argv) -> int` | function | 776 | (no docstring) |
+
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps
 The access desk: ask the bot for an access plan, check it with GND or PyRel, execute it.

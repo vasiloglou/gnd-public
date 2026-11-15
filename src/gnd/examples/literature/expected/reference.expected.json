@@ -1,0 +1,77 @@
+{
+  "case": "reference",
+  "exit_code": 0,
+  "failed_stages": [],
+  "measured_routes": "R1 4 on every source; R2 0 or 4 with no binding error; R3 exit 0, builds-on tp 8 of 8; R4 exit 0, derivation pass",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "abstention": [
+        0,
+        1
+      ],
+      "precision": [
+        7,
+        7
+      ],
+      "recall": [
+        7,
+        7
+      ],
+      "status": "pass"
+    },
+    "freshness": {
+      "precision": [
+        25,
+        25
+      ],
+      "recall": [
+        25,
+        25
+      ],
+      "status": "pass"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        12,
+        12
+      ],
+      "status": "pass"
+    },
+    "semantic-support": {
+      "abstention": [
+        0,
+        12
+      ],
+      "precision": [
+        8,
+        8
+      ],
+      "recall": [
+        8,
+        8
+      ],
+      "status": "pass"
+    },
+    "source-binding": {
+      "precision": [
+        39,
+        39
+      ],
+      "recall": [
+        39,
+        39
+      ],
+      "status": "pass"
+    }
+  },
+  "transform": "The faithful run: the gold facts at the gold spans, no abstentions."
+}

@@ -1,0 +1,40 @@
+{
+  "facts": {
+    "method_builds_on_method": [
+      {
+        "base_method": "VampNet",
+        "method": "WhAM"
+      }
+    ],
+    "method_is_used_in_field": [
+      {
+        "field": "bioacoustics",
+        "method": "WhAM"
+      }
+    ],
+    "work_builds_on_method": [
+      {
+        "method": "VampNet",
+        "work": "arXiv:2512.02206"
+      }
+    ],
+    "work_introduces_method": [
+      {
+        "method": "WhAM",
+        "work": "arXiv:2512.02206"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_builds_on_method",
+      "method_is_used_in_field",
+      "work_builds_on_method",
+      "work_introduces_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "agent-output"
+  }
+}

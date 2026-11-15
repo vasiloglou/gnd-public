@@ -1,0 +1,19 @@
+{
+  "facts": {
+    "method_is_used_in_field": [
+      {
+        "field": "probabilistic modeling",
+        "method": "normalizing flow"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_is_used_in_field"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "synthetic"
+  }
+}

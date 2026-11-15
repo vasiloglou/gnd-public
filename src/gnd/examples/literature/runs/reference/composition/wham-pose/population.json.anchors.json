@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "cf33a9ee28213301575933d0d02126fec7a4bbbfbf2da259fc5d1c62dc6d93ad",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "WHAM",
+          "work": "arXiv:2312.07531"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 308,
+        "start": 186
+      }
+    },
+    {
+      "excerpt_sha256": "8910e347aefa37e85c9e14a1aca00c810900d6bb9f9f1245f62a2fef88ef9d47",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "SLAM",
+          "method": "WHAM"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 444,
+        "start": 309
+      }
+    },
+    {
+      "excerpt_sha256": "8910e347aefa37e85c9e14a1aca00c810900d6bb9f9f1245f62a2fef88ef9d47",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "SLAM",
+          "method": "WHAM"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 444,
+        "start": 309
+      }
+    },
+    {
+      "excerpt_sha256": "3735793f055b9ece2a834b8b57aee61e47db83738a65ee5c89abe05618aa6343",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "computer vision",
+          "method": "WHAM"
+        }
+      },
+      "occurrence": 4,
+      "role": "method",
+      "span": {
+        "end": 611,
+        "start": 535
+      }
+    }
+  ],
+  "document_sha256": "cb7fc5f6872e104ef56dfddff2759f47e622bb1ecb12c3062be23a6554a0c642",
+  "population_sha256": "9fb6fdf26606f0af2a78e399dea6363ae8d9f742a6afd191ae4992e4719ca490",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "3fc7758f0eddedd66947c991edc91b9551a996376d9e61560e58aa1f5859d2de",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "WhAM",
+          "work": "arXiv:2512.02206"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 278,
+        "start": 181
+      }
+    },
+    {
+      "excerpt_sha256": "a1093b9932273e9909c80569a53231da7c4a600bbf62c8491171d5810c29a080",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WhAM"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 409,
+        "start": 279
+      }
+    },
+    {
+      "excerpt_sha256": "a1093b9932273e9909c80569a53231da7c4a600bbf62c8491171d5810c29a080",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WhAM"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 409,
+        "start": 279
+      }
+    },
+    {
+      "excerpt_sha256": "f3ee86fa2ec45f836a692690e71bd9eacdc6aa0476711233e7d340c69711e325",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "bioacoustics",
+          "method": "WhAM"
+        }
+      },
+      "occurrence": 4,
+      "role": "method",
+      "span": {
+        "end": 608,
+        "start": 541
+      }
+    }
+  ],
+  "document_sha256": "2808abd557e822b7350717a7b4ad268cc290f50007b26d5ec421b8d95922a021",
+  "population_sha256": "34f4912b5224a61fd1f20156212c9ccf51db76d8afd83d45176832b37b639594",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

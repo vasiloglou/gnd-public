@@ -1,0 +1,75 @@
+{
+  "case": "M5-invalid-population",
+  "exit_code": 1,
+  "failed_stages": [
+    "model-population-validity",
+    "source-binding",
+    "semantic-support",
+    "derivation",
+    "freshness"
+  ],
+  "measured_routes": "R1 posex 3; R2 posex 3; R3 exit 0 with the posex case failed; gnd compose refuses, so no composed/",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "counts_as_failure": true,
+      "owner": "run",
+      "status": "not-measured"
+    },
+    "freshness": {
+      "precision": [
+        24,
+        24
+      ],
+      "recall": [
+        24,
+        25
+      ],
+      "status": "fail"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        11,
+        12
+      ],
+      "status": "fail"
+    },
+    "semantic-support": {
+      "abstention": [
+        0,
+        12
+      ],
+      "precision": [
+        8,
+        8
+      ],
+      "recall": [
+        8,
+        8
+      ],
+      "refused_units": 1,
+      "status": "fail"
+    },
+    "source-binding": {
+      "precision": [
+        37,
+        37
+      ],
+      "recall": [
+        37,
+        39
+      ],
+      "refused_units": 2,
+      "status": "fail"
+    }
+  },
+  "transform": "Add an unknown top-level key to posex's population; bindings regenerated."
+}

@@ -1,0 +1,40 @@
+{
+  "facts": {
+    "method_builds_on_method": [
+      {
+        "base_method": "PINNs",
+        "method": "curriculum regularization"
+      }
+    ],
+    "method_is_used_in_field": [
+      {
+        "field": "scientific machine learning",
+        "method": "curriculum regularization"
+      }
+    ],
+    "work_builds_on_method": [
+      {
+        "method": "PINNs",
+        "work": "arXiv:2109.01050"
+      }
+    ],
+    "work_introduces_method": [
+      {
+        "method": "curriculum regularization",
+        "work": "arXiv:2109.01050"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "method_builds_on_method",
+      "method_is_used_in_field",
+      "work_builds_on_method",
+      "work_introduces_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-flat@1",
+    "source": "synthetic"
+  }
+}

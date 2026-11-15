@@ -1,0 +1,19 @@
+{
+  "abstentions": [],
+  "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
+  "schema": "literature-run/1",
+  "sources": [
+    "vampnets",
+    "vampnet",
+    "wham-whale",
+    "wham-pose",
+    "opencap-monocular",
+    "apinn",
+    "pinn-failure-modes",
+    "boltz-1",
+    "posex",
+    "flows-review",
+    "sbi-frontier",
+    "sensor-placement"
+  ]
+}

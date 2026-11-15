@@ -1,0 +1,24 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "50b379790bcac06dd345cf3e9844ec9a1f9b6d7ade4430de2e38f3770fa48280",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "probabilistic modeling",
+          "method": "normalizing flow"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 531,
+        "start": 425
+      }
+    }
+  ],
+  "document_sha256": "63117900d4dab49ea0e66600ab46076050d707f6638b47d0b85542ab26d9c27c",
+  "population_sha256": "f5b8d587c728c8870d89059fe9681e798f0c6f87ffc8c3fb5445b3ef71b7eada",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

@@ -1,0 +1,28 @@
+=== Header ===
+Derived mechanically from the ORM model by `gnd extract` (R-08").
+Constraint-blind by specification: object types, reference schemes,
+fact-type readings and primitive shapes only — no constraint
+sentences, no modality, no provenance. Hand-authoring this file is
+banned; regenerate it with `gnd extract MODEL --out DIR`.
+
+=== Object Types ===
+Work is a value of type String.
+Method is a value of type String.
+Field is a value of type String.
+
+=== Fact Types ===
+Work introduces Method
+  - work: Work (String)
+  - method: Method (String)
+
+Method builds on Method
+  - method: Method (String)
+  - base_method: Method (String)
+
+Method is used in Field
+  - method: Method (String)
+  - field: Field (String)
+
+Work builds on Method
+  - work: Work (String)
+  - method: Method (String)

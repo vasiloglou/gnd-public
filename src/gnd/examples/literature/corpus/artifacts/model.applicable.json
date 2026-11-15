@@ -1,0 +1,41 @@
+{
+  "fact_types": [
+    {
+      "applicable": true,
+      "id": "method_builds_on_method",
+      "reason": null
+    },
+    {
+      "applicable": true,
+      "id": "method_is_used_in_field",
+      "reason": null
+    },
+    {
+      "applicable": false,
+      "id": "work_builds_on_method",
+      "reason": "structured-derived fact types are computed from asserted facts and are outside document extraction scope"
+    },
+    {
+      "applicable": true,
+      "id": "work_introduces_method",
+      "reason": null
+    }
+  ],
+  "object_types": [
+    {
+      "id": "field",
+      "path": "direct",
+      "value_type": "field"
+    },
+    {
+      "id": "method",
+      "path": "direct",
+      "value_type": "method"
+    },
+    {
+      "id": "work",
+      "path": "direct",
+      "value_type": "work"
+    }
+  ]
+}

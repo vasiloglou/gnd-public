@@ -1,0 +1,88 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "b11bf7647747cb2981a110eaaa2041965f33b85425114140599159110164c524",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "Boltz-1",
+          "work": "doi:10.1101/2024.11.19.624167"
+        }
+      },
+      "occurrence": 1,
+      "role": "method",
+      "span": {
+        "end": 299,
+        "start": 189
+      }
+    },
+    {
+      "excerpt_sha256": "4b77ab7eb4051a2fbef34778498b22a4fe537a57028b47ff1f2a5ebf07c15d01",
+      "fact_key": {
+        "fact_type": "work_introduces_method",
+        "roles": {
+          "method": "Boltz-steering",
+          "work": "doi:10.1101/2024.11.19.624167"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "excerpt_sha256": "4b77ab7eb4051a2fbef34778498b22a4fe537a57028b47ff1f2a5ebf07c15d01",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "excerpt_sha256": "4b77ab7eb4051a2fbef34778498b22a4fe537a57028b47ff1f2a5ebf07c15d01",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "occurrence": 3,
+      "role": "base_method",
+      "span": {
+        "end": 563,
+        "start": 412
+      }
+    },
+    {
+      "excerpt_sha256": "c53f7041bf613022fc40541af977df9364659a71f511fd0178f0c7567b2d731e",
+      "fact_key": {
+        "fact_type": "method_is_used_in_field",
+        "roles": {
+          "field": "structural biology",
+          "method": "Boltz-1"
+        }
+      },
+      "occurrence": 4,
+      "role": "method",
+      "span": {
+        "end": 642,
+        "start": 564
+      }
+    }
+  ],
+  "document_sha256": "1793ae0ee0e958e6dc4d63e05d40c2676d5f9d0f77bda4f35b249c31ce560282",
+  "population_sha256": "2bb9378f39b600f921255ace7162d61d8064040f4612591342eb6762472118b7",
+  "schema_version": 2,
+  "vocabulary_digest": "22ca33f3d02f16b50a417de05ff23690b68e50d3e895a2e6f73c0caf1699adaa"
+}

@@ -1,0 +1,62 @@
+{
+  "case": "M3-stale",
+  "exit_code": 1,
+  "failed_stages": [
+    "source-binding",
+    "semantic-support",
+    "derivation",
+    "freshness"
+  ],
+  "measured_routes": "R2 vampnet 3 'anchor:binding-mismatch: digest differs'; R3 exit 3 (digest mismatch, whole run); R4 exit 3 composition:invalid",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "route_refused": true,
+      "status": "fail"
+    },
+    "freshness": {
+      "precision": [
+        22,
+        25
+      ],
+      "recall": [
+        22,
+        25
+      ],
+      "status": "fail"
+    },
+    "identity-decisions": {
+      "owner": "LI2",
+      "status": "not-measured"
+    },
+    "model-population-validity": {
+      "agreement": [
+        12,
+        12
+      ],
+      "status": "pass"
+    },
+    "semantic-support": {
+      "refused_units": 12,
+      "route_refused": true,
+      "status": "fail"
+    },
+    "source-binding": {
+      "precision": [
+        35,
+        35
+      ],
+      "recall": [
+        35,
+        39
+      ],
+      "refused_units": 4,
+      "status": "fail"
+    }
+  },
+  "transform": "Rewrite vampnet's population with different whitespace and keep its sidecars."
+}

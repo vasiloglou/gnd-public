@@ -1,0 +1,144 @@
+{
+  "cases": [
+    {
+      "directory": "cases/W-flat",
+      "exit": 0,
+      "id": "W-flat",
+      "story": "The whale, composed flat: identical spellings join, so the false chain OpenCap Monocular ... DMD is derivable."
+    },
+    {
+      "directory": "cases/W-resolved",
+      "exit": 0,
+      "id": "W-resolved",
+      "story": "The whale with two different decisions and two separating renamings: four senses stay distinct, the three edges survive, and the false chain is gone."
+    },
+    {
+      "directory": "cases/R-uncovered",
+      "exit": 3,
+      "id": "R-uncovered",
+      "message": "composition:invalid: keys at whale-a method_builds_on_method#0.method and whale-b method_builds_on_method#0.base_method (object type method) are joined without a same decision",
+      "story": "A resolution with no decisions: VampNet is joined across the two notes with no same decision (rule 1)."
+    },
+    {
+      "directory": "cases/R-wrong-decision",
+      "exit": 3,
+      "id": "R-wrong-decision",
+      "message": "composition:invalid: renaming 0 cites decision 1, which does not name its key",
+      "story": "A renaming cites a decision about another key (rule 6)."
+    },
+    {
+      "directory": "cases/R-no-decision-field",
+      "exit": 3,
+      "id": "R-no-decision-field",
+      "message": "composition:invalid: renaming 0 cites no decision",
+      "story": "With a resolution present, a renaming that cites no decision is refused."
+    },
+    {
+      "directory": "cases/R-transitive",
+      "exit": 3,
+      "id": "R-transitive",
+      "message": "composition:invalid: decision 2 (different) keys are connected through same decisions",
+      "story": "VampNet is same across a-b and b-c, but a and c are recorded different: a transitive merge across different (rule 3)."
+    },
+    {
+      "directory": "cases/R-evidence-fact",
+      "exit": 3,
+      "id": "R-evidence-fact",
+      "message": "composition:invalid: decision 0 evidence 0 (source whale-a, method_builds_on_method#1.method) does not hold key 0",
+      "story": "Decision 0's first coordinate points at a fact whose role holds another value."
+    },
+    {
+      "directory": "cases/R-evidence-span",
+      "exit": 3,
+      "id": "R-evidence-span",
+      "message": "composition:invalid: decision 0 evidence 0 (source whale-a, method_builds_on_method#0.method) has no anchor at its span",
+      "story": "Decision 0's first coordinate cites a span no anchor has."
+    },
+    {
+      "directory": "cases/R-stale-input",
+      "exit": 3,
+      "id": "R-stale-input",
+      "message": "composition:invalid: decision 0 input digest for source whale-b differs from its population",
+      "story": "Decision 0 was made over another version of whale-b's population."
+    },
+    {
+      "directory": "cases/R-digest-and-uncovered",
+      "exit": 3,
+      "id": "R-digest-and-uncovered",
+      "message": "composition:invalid: resolution digest differs from the manifest",
+      "story": "A wrong resolution digest and an uncovered pair: the digest (step 2) is reported, not the pair (step 5)."
+    },
+    {
+      "directory": "cases/R-evidence-and-uncovered",
+      "exit": 3,
+      "id": "R-evidence-and-uncovered",
+      "message": "composition:invalid: decision 0 evidence 0 (source whale-a, method_builds_on_method#1.method) does not hold key 0",
+      "story": "A bad coordinate on decision 0 and an uncovered WHAM pair: the evidence (step 3) is reported, not the pair (step 5)."
+    },
+    {
+      "directory": "cases/MV-joined-no-same",
+      "exit": 3,
+      "id": "MV-joined-no-same",
+      "message": "composition:invalid: keys at mv-a method_builds_on_method#0.base_method and mv-b method_builds_on_method#0.base_method (object type method) are joined without a same decision",
+      "story": "A method key and a version key spelled alike are joined with no same decision (R2, rule 1)."
+    },
+    {
+      "directory": "cases/MV-distinct",
+      "exit": 0,
+      "id": "MV-distinct",
+      "story": "The same pair recorded different, with mv-b's value renamed to its version: two values."
+    },
+    {
+      "directory": "cases/A-alias",
+      "exit": 0,
+      "id": "A-alias",
+      "story": "An evidenced alias: AF3 is AlphaFold3, renamed in both roles where alias-b uses it (R3)."
+    },
+    {
+      "directory": "cases/A-same-not-applied",
+      "exit": 3,
+      "id": "A-same-not-applied",
+      "message": "composition:invalid: decision 0 (same) keys are not joined",
+      "story": "A same decision the manifest never applies (rule 5)."
+    },
+    {
+      "directory": "cases/A-split",
+      "exit": 3,
+      "id": "A-split",
+      "message": "composition:invalid: renaming 0 splits a value of source alias-b: method_builds_on_method.base_method still uses the old value; rename it there too",
+      "story": "The existing one-value-one-entity refusal still fires with a resolution present: AF3 renamed in one role only."
+    },
+    {
+      "directory": "cases/H-no-decision",
+      "exit": 3,
+      "id": "H-no-decision",
+      "message": "composition:invalid: keys at hom-a method_builds_on_method#0.method and hom-b method_builds_on_method#0.method (object type method) are joined without a same decision",
+      "story": "A same-domain homonym with no decision: TRACE is joined, and refused (R3)."
+    },
+    {
+      "directory": "cases/H-different",
+      "exit": 0,
+      "id": "H-different",
+      "story": "The homonym recorded different, with hom-b renamed to a sense id: two values (R3)."
+    },
+    {
+      "directory": "cases/H-unresolved",
+      "exit": 0,
+      "id": "H-unresolved",
+      "story": "The homonym left unresolved: both keys take their placeholders and stay apart (R7)."
+    },
+    {
+      "directory": "cases/H-unresolved-wrong",
+      "exit": 3,
+      "id": "H-unresolved-wrong",
+      "message": "composition:invalid: decision 0 (unresolved) key 1 does not take its placeholder",
+      "story": "An unresolved key renamed to something other than its placeholder (rule 4)."
+    }
+  ],
+  "mentions": {
+    "check_exit": 0,
+    "directory": "mentions"
+  },
+  "model": "model.orm.yaml",
+  "schema": "li2-resolution-cases/1"
+}

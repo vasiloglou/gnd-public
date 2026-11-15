@@ -1,0 +1,2 @@
+# Notes on a benchmark (synthetic fixture)
+PoseX builds on AlphaFold3.

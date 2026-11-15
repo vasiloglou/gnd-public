@@ -1,0 +1,2 @@
+# Notes on a tracker (synthetic fixture)
+TRACE builds on Kalman filtering.

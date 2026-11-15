@@ -1,0 +1,2 @@
+# Notes B: a music model and a whale model (synthetic fixture)
+WHAM builds on VampNet.

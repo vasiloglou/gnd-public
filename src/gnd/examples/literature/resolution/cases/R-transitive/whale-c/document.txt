@@ -1,0 +1,2 @@
+# Notes C: the music model again (synthetic fixture)
+VampNet builds on masked token modelling.

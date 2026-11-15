@@ -1,0 +1,3 @@
+# Notes A: a Koopman method and a pose model (synthetic fixture)
+VampNet builds on DMD.
+OpenCap Monocular builds on WHAM.

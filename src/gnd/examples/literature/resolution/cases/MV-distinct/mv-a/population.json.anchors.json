@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "5f1f61110ea078bfe82a73ba050ea0270b5aa46ba6ff16dfec6498a48b2edd1e",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 73,
+        "start": 40
+      }
+    },
+    {
+      "excerpt_sha256": "5f1f61110ea078bfe82a73ba050ea0270b5aa46ba6ff16dfec6498a48b2edd1e",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "Boltz-steering"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 73,
+        "start": 40
+      }
+    }
+  ],
+  "document_sha256": "2eba54090258e614addfce802dcc0b2535e125f85989cf02e6350ac87b3eeaea",
+  "population_sha256": "d091f39c3826ab68d71c08ca273532b6aad620d774f3ab5aff7e7b1ce9d83492",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

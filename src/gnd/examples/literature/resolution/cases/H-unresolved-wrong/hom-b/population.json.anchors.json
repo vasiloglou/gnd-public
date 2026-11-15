@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "754f41c35389ebcce1efa4dd11e74e6401ea0f744fb7dc941baf4c9384db8839",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "attention",
+          "method": "TRACE"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 101,
+        "start": 75
+      }
+    },
+    {
+      "excerpt_sha256": "754f41c35389ebcce1efa4dd11e74e6401ea0f744fb7dc941baf4c9384db8839",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "attention",
+          "method": "TRACE"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 101,
+        "start": 75
+      }
+    }
+  ],
+  "document_sha256": "48a3427790c110b82535a9e768fbaa8c573ce3a9aa4f1a9e53ee8878286cfe9f",
+  "population_sha256": "e7e9d5fb28cad5e345b585f0c0233f3c2ac23f04a8af5dadf473565cd1b121b1",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

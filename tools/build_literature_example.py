@@ -601,7 +601,8 @@ def reference_sources(root: Path, corpus: dict) -> dict:
 
 
 def write_run(root: Path, corpus: dict, corpus_raw: bytes, run: Path, sources: dict, *,
-              abstentions: tuple = ()) -> subprocess.CompletedProcess:
+              abstentions: tuple = (), resolution: dict | None = None,
+              renamings: list | None = None) -> subprocess.CompletedProcess:
     """Write a literature-run/1 directory, bind every sidecar to the bytes written, and compose.
 
     Returns the compose result. When compose refuses, the run has no composed/ directory.
@@ -628,10 +629,15 @@ def write_run(root: Path, corpus: dict, corpus_raw: bytes, run: Path, sources: d
             "document": "document.txt", "document_sha256": _sha(document),
             "skill": "gnd-extract", "skill_version": "0.1.0", "executing_model": EXECUTING_MODEL}))
     ids = list(sources)
-    (composition / "manifest.json").write_bytes(_dump({
-        "schema": "gnd-composition-manifest/1", "sources": ids, "renamings": [],
-        "deduplications": "identical-rows",
-        "scope_tags": [{"source": s, "tag": DOCUMENTS[s]["domain"]} for s in ids]}))
+    manifest = {"schema": "gnd-composition-manifest/1", "sources": ids, "renamings": list(renamings or []),
+                "deduplications": "identical-rows",
+                "scope_tags": [{"source": s, "tag": DOCUMENTS[s]["domain"]} for s in ids]}
+    if resolution is not None:
+        # LI2 (spec D8): the run's sense-resolution decisions, bound by digest.
+        raw = _dump(resolution)
+        (composition / "resolution.json").write_bytes(raw)
+        manifest["resolution"] = {"path": "resolution.json", "sha256": _sha(raw)}
+    (composition / "manifest.json").write_bytes(_dump(manifest))
     (run / "run.json").write_bytes(_dump({"schema": "literature-run/1", "corpus_sha256": _sha(corpus_raw),
                                           "sources": ids, "abstentions": list(abstentions)}))
     composed = run / "composed"
@@ -641,6 +647,57 @@ def write_run(root: Path, corpus: dict, corpus_raw: bytes, run: Path, sources: d
     if made.returncode != 0:
         shutil.rmtree(composed)
     return made
+
+
+# --- LI2: the run's resolution decisions (spec phase-LI2 §6.7, D8) ----------------------
+
+METHOD_ROLES = {"work_introduces_method": ("method",), "method_builds_on_method": ("method", "base_method"),
+                "method_is_used_in_field": ("method",)}
+
+
+def _evidence(source_id: str, source: dict, key: int, value: str) -> dict | None:
+    """The first asserted coordinate whose method role holds value, with its anchor span.
+
+    Derived fact types are claims, not mentions, so they never supply keys or evidence
+    (LI2 corpus-step amendment B1).
+    """
+    for fact_type in sorted(source["facts"]):
+        for fact_index, row in enumerate(source["facts"][fact_type]):
+            for role in METHOD_ROLES.get(fact_type, ()):
+                if row.get(role) != value:
+                    continue
+                spans = [a["span"] for a in source["anchors"]
+                         if a["fact_key"]["fact_type"] == fact_type and a["fact_key"]["roles"] == row and a["role"] == role]
+                if not spans:
+                    return None
+                return {"key": key, "source": source_id, "fact_type": fact_type, "fact_index": fact_index,
+                        "role": role, "span": dict(spans[0])}
+    return None
+
+
+def resolution_for(sources: dict, pairs: list | None = None) -> dict:
+    """Decisions for the identity pairs whose two keys still exist in the run's sources.
+
+    pairs defaults to the answer key's labelled pairs, each decided as labelled. A pair
+    whose key or evidence is gone (because a mutation removed its fact) is dropped.
+    """
+    decisions = []
+    for _, left, right, label, _ in (pairs if pairs is not None else IDENTITY_PAIRS):
+        if left[0] not in sources or right[0] not in sources:
+            continue
+        found = [_evidence(left[0], sources[left[0]], 0, left[1]), _evidence(right[0], sources[right[0]], 1, right[1])]
+        if None in found:
+            continue
+        digests = {}
+        for source_id in sorted({left[0], right[0]}):
+            source = sources[source_id]
+            digests[source_id] = _sha(source.get("population_bytes") or population_bytes(source["facts"]))
+        decisions.append({"decision": label,
+                          "keys": [{"source": left[0], "object_type": "method", "value": left[1]},
+                                   {"source": right[0], "object_type": "method", "value": right[1]}],
+                          "evidence": found, "producer": {"kind": "reviewer", "id": "corpus-author"},
+                          "input_sha256": digests, "placeholders": None})
+    return {"schema": "gnd-resolution/1", "object_types": ["method"], "decisions": decisions}
 
 
 def write_reference_run(root: Path, corpus: dict, corpus_raw: bytes) -> None:
@@ -675,6 +732,11 @@ def main(argv: list[str] | None = None) -> None:
     heldout_sha256 = digest_file.read_text(encoding="ascii").strip()
     (answers / "answer-key.json").write_bytes(_dump(answer_key(corpus_raw, heldout_sha256, root)))
     write_reference_run(root, corpus, corpus_raw)
+    # LI2 corpus gate: the decisions the reference run will carry once composition
+    # understands a resolution (spec phase-LI2 D8). Data only until then.
+    (root / "resolution").mkdir(exist_ok=True)
+    (root / "resolution" / "li1-reference.resolution.json").write_bytes(
+        _dump(resolution_for(reference_sources(root, corpus))))
 
 
 if __name__ == "__main__":

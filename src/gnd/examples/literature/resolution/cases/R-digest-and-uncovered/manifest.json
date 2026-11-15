@@ -1,0 +1,14 @@
+{
+  "deduplications": "identical-rows",
+  "renamings": [],
+  "resolution": {
+    "path": "resolution.json",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "schema": "gnd-composition-manifest/1",
+  "scope_tags": [],
+  "sources": [
+    "whale-a",
+    "whale-b"
+  ]
+}

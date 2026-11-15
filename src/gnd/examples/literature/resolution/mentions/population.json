@@ -1,0 +1,48 @@
+{
+  "facts": {
+    "mention_denotes_sense": [
+      {
+        "mention": "mentions@47-54",
+        "sense": "Koopman operator method"
+      },
+      {
+        "mention": "mentions@83-90",
+        "sense": "music generation model"
+      }
+    ],
+    "mention_has_surface_text": [
+      {
+        "mention": "mentions@47-54",
+        "surface": "VampNet"
+      },
+      {
+        "mention": "mentions@83-90",
+        "surface": "VampNet"
+      }
+    ],
+    "method_builds_on_method": [
+      {
+        "base_method": "DMD",
+        "method": "VampNet"
+      }
+    ],
+    "method_has_ancestor_method": [
+      {
+        "ancestor": "DMD",
+        "method": "VampNet"
+      }
+    ]
+  },
+  "instances": {},
+  "population": {
+    "covers": [
+      "mention_denotes_sense",
+      "mention_has_surface_text",
+      "method_builds_on_method",
+      "method_has_ancestor_method"
+    ],
+    "model": "model.orm.yaml",
+    "model_id": "urn:gnd-example:literature-resolution@1",
+    "source": "agent-output"
+  }
+}

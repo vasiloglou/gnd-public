@@ -1,0 +1,296 @@
+{
+  "decisions": [
+    {
+      "decision": "different",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_is_used_in_field",
+          "key": 0,
+          "role": "method",
+          "source": "vampnets",
+          "span": {
+            "end": 505,
+            "start": 401
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "wham-whale",
+          "span": {
+            "end": 409,
+            "start": 279
+          }
+        }
+      ],
+      "input_sha256": {
+        "vampnets": "37f7788824920c045baaf8cd34930dcf58efca73ae372a165feb76752dcb83d8",
+        "wham-whale": "34f4912b5224a61fd1f20156212c9ccf51db76d8afd83d45176832b37b639594"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "vampnets",
+          "value": "VAMPnet"
+        },
+        {
+          "object_type": "method",
+          "source": "wham-whale",
+          "value": "VampNet"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    },
+    {
+      "decision": "different",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "method",
+          "source": "wham-whale",
+          "span": {
+            "end": 409,
+            "start": 279
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "opencap-monocular",
+          "span": {
+            "end": 448,
+            "start": 335
+          }
+        }
+      ],
+      "input_sha256": {
+        "opencap-monocular": "48a18a73b4174f829b71b16f1c59fb9587775b5af57f2e99926944ecc02b5ed9",
+        "wham-whale": "34f4912b5224a61fd1f20156212c9ccf51db76d8afd83d45176832b37b639594"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "wham-whale",
+          "value": "WhAM"
+        },
+        {
+          "object_type": "method",
+          "source": "opencap-monocular",
+          "value": "WHAM"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    },
+    {
+      "decision": "different",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "method",
+          "source": "apinn",
+          "span": {
+            "end": 593,
+            "start": 482
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "pinn-failure-modes",
+          "span": {
+            "end": 590,
+            "start": 455
+          }
+        }
+      ],
+      "input_sha256": {
+        "apinn": "b875e939e83b522e6939a95fd669e33c1ca179836701907497362ab7b107bbf7",
+        "pinn-failure-modes": "19ec8aa25cd3f4203ca3fa8fdb5c027d00adb48e800775f2cac5e95ec3330405"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "apinn",
+          "value": "$PINN"
+        },
+        {
+          "object_type": "method",
+          "source": "pinn-failure-modes",
+          "value": "PINNs"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    },
+    {
+      "decision": "same",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "method",
+          "source": "vampnet",
+          "span": {
+            "end": 405,
+            "start": 292
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "wham-whale",
+          "span": {
+            "end": 409,
+            "start": 279
+          }
+        }
+      ],
+      "input_sha256": {
+        "vampnet": "09d85ddebe93218d6bcfec03ddc275f7bb219d8ed9011423327669a42346a547",
+        "wham-whale": "34f4912b5224a61fd1f20156212c9ccf51db76d8afd83d45176832b37b639594"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "vampnet",
+          "value": "VampNet"
+        },
+        {
+          "object_type": "method",
+          "source": "wham-whale",
+          "value": "VampNet"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    },
+    {
+      "decision": "same",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "method",
+          "source": "wham-pose",
+          "span": {
+            "end": 444,
+            "start": 309
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "opencap-monocular",
+          "span": {
+            "end": 448,
+            "start": 335
+          }
+        }
+      ],
+      "input_sha256": {
+        "opencap-monocular": "48a18a73b4174f829b71b16f1c59fb9587775b5af57f2e99926944ecc02b5ed9",
+        "wham-pose": "9fb6fdf26606f0af2a78e399dea6363ae8d9f742a6afd191ae4992e4719ca490"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "wham-pose",
+          "value": "WHAM"
+        },
+        {
+          "object_type": "method",
+          "source": "opencap-monocular",
+          "value": "WHAM"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    },
+    {
+      "decision": "same",
+      "evidence": [
+        {
+          "fact_index": 1,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "base_method",
+          "source": "apinn",
+          "span": {
+            "end": 701,
+            "start": 594
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "pinn-failure-modes",
+          "span": {
+            "end": 590,
+            "start": 455
+          }
+        }
+      ],
+      "input_sha256": {
+        "apinn": "b875e939e83b522e6939a95fd669e33c1ca179836701907497362ab7b107bbf7",
+        "pinn-failure-modes": "19ec8aa25cd3f4203ca3fa8fdb5c027d00adb48e800775f2cac5e95ec3330405"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "apinn",
+          "value": "PINNs"
+        },
+        {
+          "object_type": "method",
+          "source": "pinn-failure-modes",
+          "value": "PINNs"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    }
+  ],
+  "object_types": [
+    "method"
+  ],
+  "schema": "gnd-resolution/1"
+}

@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "bf56ac2d8617112969e12f2e33a778c7b2b211ada0349fa53dbca98338a64d5d",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WHAM"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 86,
+        "start": 63
+      }
+    },
+    {
+      "excerpt_sha256": "bf56ac2d8617112969e12f2e33a778c7b2b211ada0349fa53dbca98338a64d5d",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "VampNet",
+          "method": "WHAM"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 86,
+        "start": 63
+      }
+    }
+  ],
+  "document_sha256": "409f9247d6bbbddf70fca52353d9fc518bd13c888b728edf008566cf3c1cf2a9",
+  "population_sha256": "ad16b2f98672fd9b47e20afad07cdbf3085fc2df86a63384cece3c67db4708d8",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

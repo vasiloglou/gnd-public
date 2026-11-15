@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "2c9f7bba18c06e1649b11679b7eb8df31dd005b9f9cd1ea1cf59631538b9818d",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Kalman filtering",
+          "method": "TRACE"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 74,
+        "start": 41
+      }
+    },
+    {
+      "excerpt_sha256": "2c9f7bba18c06e1649b11679b7eb8df31dd005b9f9cd1ea1cf59631538b9818d",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Kalman filtering",
+          "method": "TRACE"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 74,
+        "start": 41
+      }
+    }
+  ],
+  "document_sha256": "d03c1785073fb0ba48ff9ec550457e78d402490ad5cba00171b529fe17bd28ad",
+  "population_sha256": "9a9fa1c196938568d713f10fd073ecb74eca0f6131b942b538a9c419239e7d62",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

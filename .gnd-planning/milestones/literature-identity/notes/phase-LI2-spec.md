@@ -4,8 +4,9 @@
 
 **Owner-decided (2026-11-15) `(o)`.** The owner approved r1
 ([007](../007-phase-LI2-spec-gate.md)), ruled D1–D11 as proposed, and chose
-the corpus-first instrument. **Next: the corpus gate** (§11 step 2). No
-composition code before that gate. `auto=false`.
+the corpus-first instrument. **Corpus authored and committed red
+(2026-11-15); awaiting the corpus gate** (§11 step 2), which also rules
+B1–B4 (§13). No composition code before that gate. `auto=false`.
 
 ## 2. Provenance
 
@@ -558,3 +559,107 @@ Proposed: **corpus-first** (D5), as in LI1.
   Each amended failing set is measured and shown at the corpus gate (D8).
 - **T16 goldens.** They are measured before any edit. No requirement was
   found that no implementation can meet.
+
+## 13. Implementation findings, corpus step (2026-11-15)
+
+Recorded as found, while authoring the corpus under the corpus-first
+instrument (D5). Nothing above is rewritten. Each item marked **B** that
+changes an approved sentence needs the owner's ruling at the corpus gate.
+
+**Measured before any code change.**
+- **T16 baseline.** `resolution/baseline.json` records what `gnd compose`
+  writes today for the composition example (both directories) and for the
+  LI1 reference run. The source was identical to `d09189ca`, and the LI1
+  record digest equals the committed one.
+- **R1, flat.** `W-flat` composes, and `gnd witness` proves
+  `OpenCap Monocular has ancestor DMD` at exit 0, so the false chain is
+  real before LI2.
+- **R2, mentions.** The pattern already works in 0.3.1. `gnd check --anchors
+  --document` on `mentions/` exits 0, with 6 rules passing. T2 is a
+  control, not a red case. The fixture carries one builds-on row and
+  claims its ancestor row, because an empty builds-on type would make its
+  anchored rules vacuous (the LI1 finding).
+- **The red is the intended one.** Every case with a resolution is refused
+  today with `composition:invalid: manifest has missing or unexpected
+  fields`.
+
+**Amendments for the corpus gate.**
+
+- **B1 · Keys come only from asserted fact types.**
+  - *What §6.3 says.* Keys are "every value of a role whose object type is
+    in `object_types`".
+  - *What that does to M4.* Read literally, it includes derived fact types.
+    M4's unsound claimed row, `vampnet builds on WhAM`, would then make a
+    key `(vampnet, WhAM)`, joined with wham-whale's WhAM, and composition
+    would refuse M4 for a missing `same` decision. That is a claim, not a
+    mention.
+  - *Proposal.* Keys and evidence come only from asserted fact types (not
+    `derived` or `semiderived`). The amended LI1 expectations assume it: M4
+    passes `identity-decisions`.
+- **B2 · The interface the red tests fix.**
+  - `check_coverage(keys, decisions)` raises `CompositionError`. A key is
+    `{source, object_type, value, outcome, coordinate}`, where `coordinate`
+    is the key's first asserted occurrence, written
+    `<source> <fact_type>#<index>.<role>`.
+  - The record's `facts[].decisions` and `resolution_sha256` are as §6.4
+    describes.
+- **B3 · Refusal messages and their order.**
+  - *The messages.* `cases.json` fixes every message exactly.
+  - *The order.* When several rules fail, the first is reported in this
+    order:
+    1. step 3: renaming citations (rule 6), then evidence, by decision index
+       and then evidence index;
+    2. step 5, decisions in index order: rule 5, then rule 3, then rule 4;
+    3. joined groups (rule 1), ordered by object type and then by their
+       first coordinate;
+    4. spelling groups (rule 2), in the same order.
+  - *Where a key's first coordinate comes from.* Manifest source order,
+    then fact-type id, then row, then the model's role order.
+- **B4 · A renaming without a decision is refused at step 1.** With a
+  resolution present, a renaming that cites no decision is refused there,
+  with `renaming <i> cites no decision`. §6.2 said every renaming must
+  cite one, and did not say at which step.
+
+**Corpus facts.**
+- **Fixtures.** They sit under `src/gnd/examples/literature/resolution/`:
+  20 composition cases, the mention fixture, the baseline, and the LI1
+  reference decisions. Their texts are synthetic fixtures, not paraphrases
+  of works, so LI1's paraphrase rule does not apply.
+- **Builders.** A separate `tools/build_resolution_fixtures.py` builds
+  them, where §6.1 planned to extend the literature builder. The literature
+  builder gains `resolution_for`, which keeps a decision only while both
+  keys and their evidence exist, and `resolution` and `renamings` options
+  on `write_run`. Both builders rebuild byte-identically.
+- **R2's method/version clause.** It is realized as a version that the
+  extractor spelled like its method, `Boltz-1`, joined with no decision
+  (rule 1). A renaming would have reported rule 6 or rule 3 instead.
+- **The LI1 reference run stays unresolved for now.** 0.3.1 compose refuses
+  the `resolution` key, so the run is rebuilt with
+  `li1-reference.resolution.json` only after the implementation. Its six
+  decisions, `different` for i01–i03 and `same` for i04–i06, all have
+  evidence on asserted facts.
+- **M7 also fails `derivation`.** The false merge makes a derived row that
+  no source claims, `arXiv:1710.06012 builds on bidirectional transformer`,
+  so recall is 7/8. That is designed, not yet measured.
+- **The amended LI1 failing sets** (D8, with B1):
+
+  | Case | Failing stages |
+  |---|---|
+  | reference | none |
+  | M1 | source-binding, semantic-support, identity-decisions, derivation |
+  | M2 | source-binding, semantic-support, identity-decisions |
+  | M3 | source-binding, semantic-support, identity-decisions, derivation, freshness |
+  | M4 | validity, derivation |
+  | M5 | validity, source-binding, semantic-support, identity-decisions, derivation, freshness |
+  | M6 | source-binding, identity-decisions, derivation, freshness |
+  | X1 | source-binding, semantic-support, identity-decisions |
+  | X2 | source-binding |
+  | M7 | identity-decisions, derivation |
+
+- **The red split.**
+  - *LI2.* `tests/test_li2_resolution.py` gives 42 failed and 17 passed.
+    The passing ones are the controls: W-flat, mentions, T16, and the check
+    that each approved message names no value.
+  - *LI1.* `tests/test_li1_*` give 22 failed and 51 passed. Every failure
+    is a case whose run now carries a resolution, or an amended expectation.
+    The 6 corpus tests pass.

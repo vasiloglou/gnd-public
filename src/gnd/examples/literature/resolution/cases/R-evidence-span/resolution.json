@@ -1,0 +1,104 @@
+{
+  "decisions": [
+    {
+      "decision": "different",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "method",
+          "source": "whale-a",
+          "span": {
+            "end": 87,
+            "start": 1
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "base_method",
+          "source": "whale-b",
+          "span": {
+            "end": 86,
+            "start": 63
+          }
+        }
+      ],
+      "input_sha256": {
+        "whale-a": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+        "whale-b": "ad16b2f98672fd9b47e20afad07cdbf3085fc2df86a63384cece3c67db4708d8"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "whale-a",
+          "value": "VampNet"
+        },
+        {
+          "object_type": "method",
+          "source": "whale-b",
+          "value": "VampNet"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    },
+    {
+      "decision": "different",
+      "evidence": [
+        {
+          "fact_index": 1,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "base_method",
+          "source": "whale-a",
+          "span": {
+            "end": 121,
+            "start": 88
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "method",
+          "source": "whale-b",
+          "span": {
+            "end": 86,
+            "start": 63
+          }
+        }
+      ],
+      "input_sha256": {
+        "whale-a": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+        "whale-b": "ad16b2f98672fd9b47e20afad07cdbf3085fc2df86a63384cece3c67db4708d8"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "whale-a",
+          "value": "WHAM"
+        },
+        {
+          "object_type": "method",
+          "source": "whale-b",
+          "value": "WHAM"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    }
+  ],
+  "object_types": [
+    "method"
+  ],
+  "schema": "gnd-resolution/1"
+}

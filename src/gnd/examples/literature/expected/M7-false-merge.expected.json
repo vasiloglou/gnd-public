@@ -1,0 +1,92 @@
+{
+  "amended": "LI2 corpus gate (spec phase-LI2 D8): identity-decisions is active.",
+  "case": "M7-false-merge",
+  "exit_code": 1,
+  "failed_stages": [
+    "identity-decisions",
+    "derivation"
+  ],
+  "measured_routes": "Designed, not yet measured: the composition must accept the merge because the decision exists; the merge also makes a new derived row (arXiv:1710.06012 builds on bidirectional transformer) that no source claims.",
+  "schema": "literature-assurance-expectation/1",
+  "stages": {
+    "coverage": {
+      "owner": "literature-depth LD3",
+      "status": "not-measured"
+    },
+    "derivation": {
+      "abstention": [
+        0,
+        1
+      ],
+      "precision": [
+        7,
+        7
+      ],
+      "recall": [
+        7,
+        8
+      ],
+      "status": "fail"
+    },
+    "freshness": {
+      "precision": [
+        25,
+        25
+      ],
+      "recall": [
+        25,
+        25
+      ],
+      "status": "pass"
+    },
+    "identity-decisions": {
+      "abstention": [
+        0,
+        6
+      ],
+      "precision": [
+        3,
+        4
+      ],
+      "recall": [
+        3,
+        3
+      ],
+      "status": "fail"
+    },
+    "model-population-validity": {
+      "agreement": [
+        12,
+        12
+      ],
+      "status": "pass"
+    },
+    "semantic-support": {
+      "abstention": [
+        0,
+        12
+      ],
+      "precision": [
+        8,
+        8
+      ],
+      "recall": [
+        8,
+        8
+      ],
+      "status": "pass"
+    },
+    "source-binding": {
+      "precision": [
+        39,
+        39
+      ],
+      "recall": [
+        39,
+        39
+      ],
+      "status": "pass"
+    }
+  },
+  "transform": "Rename vampnets' VAMPnet to VampNet in both of its roles, citing a new same decision between (vampnets, VAMPnet) and (wham-whale, VampNet) that replaces the different decision i01."
+}

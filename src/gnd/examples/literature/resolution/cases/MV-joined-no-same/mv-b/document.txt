@@ -1,0 +1,2 @@
+# Notes on a version, which the extractor spelled as its method (synthetic fixture)
+PoseX builds on Boltz-1, in its Boltz-1x version.

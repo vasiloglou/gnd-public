@@ -1,0 +1,3 @@
+# Notes that abbreviate the same model (synthetic fixture)
+AF3 builds on Evoformer.
+Boltz-1 builds on AF3.

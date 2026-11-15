@@ -1,0 +1,3 @@
+# Two senses, one spelling (synthetic fixture)
+VampNet, the Koopman method, is not VampNet, the music model.
+VampNet builds on DMD.

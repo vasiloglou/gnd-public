@@ -1,0 +1,2 @@
+# Notes on an interpretability method of the same name (synthetic fixture)
+TRACE builds on attention.

@@ -1,0 +1,23 @@
+{
+  "deduplications": "identical-rows",
+  "renamings": [
+    {
+      "decision": 0,
+      "fact_type": "method_builds_on_method",
+      "from": "Boltz-1",
+      "role": "base_method",
+      "source": "mv-b",
+      "to": "Boltz-1x"
+    }
+  ],
+  "resolution": {
+    "path": "resolution.json",
+    "sha256": "7485355364107c6b4397aa74c12bdd3b2e809f1575e7b0b100415aa14eb7bf86"
+  },
+  "schema": "gnd-composition-manifest/1",
+  "scope_tags": [],
+  "sources": [
+    "mv-a",
+    "mv-b"
+  ]
+}

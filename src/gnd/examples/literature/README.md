@@ -178,3 +178,43 @@ counts toward abstention. The precision floor is 1, the recall floor is
 and resolution cannot pass this stage.
 
 `coverage` remains dormant, owned by the reading-coverage milestone.
+
+## Name diagnostics
+
+The [name diagnostics example](diagnostics/README.md) scores candidate
+spelling relationships for review and supplies unresolved proposals
+with source evidence. Its synthetic measurement reports an observed
+false-discovery fraction for each sampled kind.
+
+
+```sh
+python -m gnd.examples.literature.name_diagnostics src/gnd/examples/literature/diagnostics/cases.json
+```
+
+The input schema is `literature-name-occurrences/1`. Each row has an ID,
+work ID, contexts, introducing works, original source key, one evidence
+coordinate and the raw population SHA-256. The example accepts up to
+500 occurrences and 8,000 candidates. Candidate generation uses the
+original spellings. Folded equality in disjoint contexts provides the
+homonym signal. In overlapping contexts, a casing variant needs a compact
+spelling with at least two adjacent capitals. A shared introducing work
+suppresses that signal. A family signal needs a shared name token in at
+least four distinct works and no introducing work. The generic tokens
+`family`, `method` and `variant` supply no family signal. Synonyms have
+one edit between folded names and share a context. The ordered kinds
+are homonym, family and synonym, with scores 1.0, 0.9 and 0.85. The
+threshold is 0.8.
+
+The output schema is `literature-name-diagnostics/1`. Each candidate
+includes the occurrences, kind, score and an unresolved decision
+proposal with distinct placeholders and evidence coordinates. The example
+writes only to stdout. The composition reference governs use of
+resolution records. Malformed or over-limit input exits 3.
+
+Run the frozen synthetic measurement with the separate ledger.
+
+```sh
+python -m gnd.examples.literature.diagnostic_measurement \
+  src/gnd/examples/literature/diagnostics/measurement.json \
+  src/gnd/examples/literature/diagnostics/labels.json
+```

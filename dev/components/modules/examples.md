@@ -205,6 +205,28 @@ The staged assurance report over the literature corpus (phase LI1).
 | `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 810 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
 | `main(argv) -> int` | function | 863 | (no docstring) |
 
+## gnd.examples.literature.diagnostic_measurement — `src/gnd/examples/literature/diagnostic_measurement.py`
+Components: examples.literature_name_diagnostics
+Score the frozen synthetic diagnostic corpus using its predeclared sample.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `score(emissions, labels) -> dict` | function | 36 | Sample uniformly within each kind and report exact false-discovery counts. |
+| `main(argv) -> int` | function | 82 | (no docstring) |
+
+## gnd.examples.literature.name_diagnostics — `src/gnd/examples/literature/name_diagnostics.py`
+Components: examples.literature_name_diagnostics
+Generate reviewable name candidates from original literature occurrences.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `Occurrence` | class | 56 | (no docstring) |
+| `Occurrence.key(self) -> tuple[str, str, str]` | method | 71 | (no docstring) |
+| `Occurrence.resolution_key(self) -> dict` | method | 74 | (no docstring) |
+| `diagnose(data) -> list[dict]` | function | 186 | Return candidate kinds and unresolved proposals in occurrence order. |
+| `read_diagnostic_input(path) -> tuple[object, str]` | function | 222 | Read one regular local input and bind its exact bytes. |
+| `main(argv) -> int` | function | 232 | Read a capped input and print one diagnostic report. |
+
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps
 The access desk: ask the bot for an access plan, check it with GND or PyRel, execute it.

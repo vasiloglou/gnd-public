@@ -1918,7 +1918,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/artifacts.py
 - uses: (none)
-- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +62 more (graph.md)
+- used_by: agent.declared_adapter, assurance.evidence, assurance.identity, assurance.policy, check.admission, check.baseline, check.batch, check.element_coverage, check.evaluation_feedback, check.service, cli.api, cli.checking_command, … +63 more (graph.md)
 - tests: tests/test_artifacts.py
 - checked: partial
 - notes: Canonical serialization and filesystem publication share this module; tree hashing and tracked roster snapshots are also exposed.
@@ -1981,7 +1981,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/anchors.py
 - uses: infra.artifacts, infra.input_policy, model.anchor_identity
-- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
+- used_by: check.service, checker.evaluate, cli.api, cli.checking_command, examples.literature_name_diagnostics, extract.source_anchors, model.composition, model.composition_resolution, model.population_sentences, model.validation, witness.service
 - tests: tests/test_anchor_sidecar_v2.py, tests/test_composition.py
 - notes: This root module owns the anchor implementation; extraction compatibility spellings should join this entry if their reader confirms pure re-exports.
 
@@ -3264,9 +3264,21 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/examples/literature/assurance_report.py
 - uses: (none)
-- used_by: (none)
+- used_by: examples.literature_name_diagnostics
 - tests: tests/test_li1_assurance_report.py, tests/test_li1_literature_corpus.py
 - notes: The formats' one home is src/gnd/examples/literature/README.md. The harness calls gnd only through the CLI. It resolves its input paths, because gnd's safe readers refuse a path through a symlink. tools/build_literature_example.py builds the corpus, the reference run and the scored mutations' runs.
+
+
+### examples.literature_name_diagnostics
+- does: Propose unresolved literature name candidates with source coordinates and score the frozen synthetic candidate sample.
+- verbs: name diagnostics, homonym candidate, name synonym, method family, unresolved proposal, stratified sampling, false discovery
+- in: Bounded occurrence document and optional separate synthetic label ledger.
+- out: Candidate report with unresolved decisions or an exact-count sample report.
+- status: canonical
+- modules: src/gnd/examples/literature/name_diagnostics.py, src/gnd/examples/literature/diagnostic_measurement.py
+- uses: examples.literature_assurance, infra.artifacts, model.anchors
+- used_by: (none)
+- tests: tests/test_li3_diagnostics.py
 
 
 ### examples.expense_rules

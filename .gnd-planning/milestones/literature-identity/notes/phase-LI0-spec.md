@@ -2,9 +2,10 @@
 
 ## 1. Status
 
-**Draft r2, awaiting this spec's owner gate (2026-11-15).** The plan gate was
-recorded on 2026-11-15 ([001](../001-plan-gate.md)), and D8 ruled LI0 a phase.
-No implementation has started. `auto=false`.
+**Owner-decided (2026-11-15).** The owner approved r2 at SHA-256 `a8015970…106f9`
+([002](../002-phase-LI0-spec-gate.md)), ruled D1–D4 as proposed, chose no
+spec review, and gave the go-ahead. Implementation is in progress.
+`auto=false`.
 
 ## 2. Provenance
 
@@ -133,10 +134,10 @@ covering `src/gnd/witness/io.py` is re-read and updated in the same commit.
 
 | ID | Question | Readings | Cost | Ruling |
 |---|---|---|---|---|
-| D1 | Where the two extra omissions live | (a) `model_wire` in `witness/io.py`. (b) Extend the `gnd.documents.Model` hooks everywhere | Under (b), `values._model_digest` (`values.py:193`) hashes `Model.model_dump`, and `model_identity_matches` (`values.py:328`) compares it with pinned identities. So (b) would move every legacy identity of a model without `model_id` | **Proposed: (a).** Open |
-| D2 | Omit an empty `source: {}` as well? | Keep it, or omit it as an unauthored default | No exit difference. The schema accepts it today, and T4 shows all 224 fixtures round-trip with it kept | **Proposed: keep.** Open |
-| D3 | Approval instrument | Prose plus golden digests committed red-first, or a separate narrated corpus | See §11 | **Proposed: prose plus goldens.** Open |
-| D4 | Diff review instrument | One reviewer in a different tool (shared default), or the panel | The plan sets no per-phase panel. A panel costs a six-seat run | **Proposed: one reviewer (Codex).** Open |
+| D1 | Where the two extra omissions live | (a) `model_wire` in `witness/io.py`. (b) Extend the `gnd.documents.Model` hooks everywhere | Under (b), `values._model_digest` (`values.py:193`) hashes `Model.model_dump`, and `model_identity_matches` (`values.py:328`) compares it with pinned identities. So (b) would move every legacy identity of a model without `model_id` | **Proposed: (a).** Ruled (a) `(o)` 2026-11-15 |
+| D2 | Omit an empty `source: {}` as well? | Keep it, or omit it as an unauthored default | No exit difference. The schema accepts it today, and T4 shows all 224 fixtures round-trip with it kept | **Proposed: keep.** Ruled keep `(o)` 2026-11-15 |
+| D3 | Approval instrument | Prose plus golden digests committed red-first, or a separate narrated corpus | See §11 | **Proposed: prose plus goldens.** Ruled prose plus goldens `(o)` 2026-11-15 |
+| D4 | Diff review instrument | One reviewer in a different tool (shared default), or the panel | The plan sets no per-phase panel. A panel costs a six-seat run | **Proposed: one reviewer (Codex).** Ruled one reviewer (Codex) `(o)` 2026-11-15 |
 
 ### Experiment recorded before it runs
 

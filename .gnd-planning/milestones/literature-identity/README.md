@@ -1,7 +1,7 @@
 # Literature identity and assertions
 
 Draft r3, 2026-11-15, from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193).
-Not approved. Panel rounds 1 and 2 reviewed r1 and r2, and review stopped under the declared rule. The repairs in r3 are unreviewed.
+**Plan r3 approved by the owner on 2026-11-15** ([plan gate](001-plan-gate.md)), with D1–D9 ruled as proposed. Panel rounds 1 and 2 reviewed r1 and r2, and review stopped under the declared rule. The r3 repairs are unreviewed.
 
 | Order | Phase | #193 part | Deliverable |
 |---|---|---|---|
@@ -19,5 +19,5 @@ Parts 5–8 and 10 go to [literature-interop](../literature-interop/README.md)
 and [literature-depth](../literature-depth/README.md). The partition table is
 in the plan's §1.1. The [review disposition](notes/plan-review-disposition.md)
 records both rounds. Round 2 did not meet the four-reviewer bar, because
-three seats failed. Next comes the owner's plan gate over r3, with rulings
-on D1–D9.
+three seats failed. Next is the owner gate on the [LI0 draft spec](notes/phase-LI0-spec.md),
+then LI0 under `process-phase`.

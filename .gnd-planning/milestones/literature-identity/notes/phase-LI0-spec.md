@@ -2,8 +2,9 @@
 
 ## 1. Status
 
-**Draft, awaiting the plan gate and then this spec's owner gate (2026-11-14).**
-No implementation has started. `auto=false`.
+**Draft, awaiting this spec's owner gate.** The plan gate was recorded on
+2026-11-15 ([001](../001-plan-gate.md)), and D8 ruled LI0 a phase. No
+implementation has started. `auto=false`.
 
 ## 2. Provenance
 

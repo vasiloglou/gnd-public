@@ -46,7 +46,9 @@ first reserved miss alongside the corrected smoke result.
 The [close record](026-milestone-close.md) withholds milestone acceptance. The first
 reserved run retained 0/1 supported paths and excluded 2/2 false paths.
 The same reserve retained 1/1 supported and excluded 2/2 after an input
-correction informed by the first result. L1's independent reserved
-acceptance condition remains open.
+correction informed by the first result. The
+[fresh independent reserve](031-phase-LI5-independent-reserve.md)
+subsequently retained 1/1 supported and excluded 2/2 false paths in
+its first score. A new milestone ruling remains pending.
 
 The [Codex handoff](notes/codex-handoff.md) records the starting point.

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "kind": "spec-results-delta",
+  "spec": {
+    "path": ".gnd-planning/milestones/guarded-rule-clauses/notes/guarded-rule-clauses-plan.md",
+    "sha256": "262a06d6627a7ce0cab77e2cccaf63aaa4bcaedf7055548c2a56c7f54cd235bc",
+    "media_type": "text/markdown"
+  },
+  "results": {
+    "path": ".gnd-planning/milestones/guarded-rule-clauses/009-phase-GC4.md",
+    "sha256": "8538b1282350ece03db2bc1d8a2185b89754ecfb202fc57ccb47f4d1ef067bab",
+    "media_type": "text/markdown"
+  },
+  "delta": {
+    "path": ".gnd-planning/milestones/guarded-rule-clauses/notes/close-candidate.md",
+    "sha256": "09668ff94f5d174577e006047639b31168cf95e9f478cac30ed557e13d6141c7",
+    "media_type": "text/markdown"
+  },
+  "rubric": {
+    "name": "Guarded rule clauses milestone close",
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Verify the close audit against the actual issue requirements summarized in the bound plan and corresponding phase records.",
+      "Identify a concrete unsupported claim, missed requirement, reproducible correctness issue, or missing closure artifact with a precise citation.",
+      "Check the shipped exception's vacuity and active-synthesis boundary, scoped exporter behavior, existing report compatibility and native smoke evidence.",
+      "Read linked phase evidence only where required to verify a concern. Distinguish optional hardening, previously documented profile limits, and a real unmet completion condition."
+    ]
+  }
+}

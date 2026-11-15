@@ -1,4 +1,4 @@
-# Guarded rule clauses · plan r3
+# Guarded rule clauses · plan r3 with close audit amendment
 
 **Status — r3, 2026-11-15.** The owner selected the Standard
 GND review panel for plan and close and delegated approval rulings with
@@ -255,3 +255,26 @@ and certification are not selected.
 | D4 | Where `any_of` per-alternative violation detail lives | Guarded diagnostics use v17 when the checked model contains `any_of`; default report shape and v16 diagnostics for existing models keep their current version | Proposed |
 | D5 | Exporter policy for new forms | PyRel translates `in`, `negate`, `where`; refuses `any_of` until a PyRel disjunction pattern is measured; Lean and Ossie refuse | Proposed, GC4 spec |
 | D6 | Plan review instrument and `auto` delegation | Owner selected the Standard GND review panel for plan and close and delegated this milestone's approval rulings | Selected |
+
+
+## 11. Close audit amendment, 2026-11-15
+
+This section supersedes the D1–D5 proposals in §10 for the close audit.
+The r3 wording and the original gate are retained above and in commit
+`e13e6926` respectively. The implementation evidence is the phase records
+and the [close audit](close-candidate.md).
+
+- **D1 and D2.** GC1 delivered shared guarded and derivation membership
+  using the spelling `not in` for the negative operator.
+- **D3 and D4.** GC2 counts definite survivors and reserves the
+  first-empty index for the positive antecedent. GC3 adds version 17
+  per-alternative failure details on the plain opt-in diagnostics route.
+- **D5.** The prior proposal says “PyRel translates `in`, `negate`,
+  `where`; refuses `any_of` until a PyRel disjunction pattern is measured;
+  Lean and Ossie refuse.” The GC4 record specifies the measured readable
+  PyRel scalar fragment, the embedded checker's named refusals, and the
+  finite and Ossie profile dispositions. The installed issue smoke uses
+  GND's native checker. The shipped-code policy has a compliant vacuous
+  result when its exception applies.
+- **D6.** The owner-selected Standard instrument covers the plan and close.
+  The separate Claude Code step covers each of the four phase diffs.

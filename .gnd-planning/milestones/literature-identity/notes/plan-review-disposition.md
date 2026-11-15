@@ -80,21 +80,108 @@ synthesis has 9 agreed groups, 18 divergent views and 13 prioritized fixes.
 | Qwen · part 10 has no owner | **Accepted.** §1.1 names literature-depth as owner of the deferred row, pending its P3 ruling |
 | GLM · A3 not falsifiable | **Accepted.** `polarity` and `attribution` fields. A3 requires four distinct pairs and no `own-finding` admission |
 
+## Round 2
+
+The owner asked for round 2 on 2026-11-15. It reviewed plan r2 at commit
+`552117d3`, SHA-256
+`5badf3efe4e00fc6f853969f6937076808bff7e1ca7cfcd3e2a9466149f95143`.
+
+**The run.**
+
+- **Command:** `uv run python tools/run_gnd_review_panel.py
+  li-plan-review-request-r2.json --out li-plan-panel-r2 --reviewer-timeout
+  600 --overall-timeout 900`, which exited 0.
+- **Run:** the run digest is
+  `052eae84a4fa12580b93bfc66ba76a8d3cc9dd400c343c6d15c4d0747b9f7f86`, and the
+  reviewed artifact was unchanged during the run.
+
+**The seats.** Six seats were attempted and three responses validated:
+
+| Seat | Result |
+|---|---|
+| Claude, Codex, Qwen | Each returned `revise`, and each response was complete |
+| Codex | One concern is unanchored |
+| Gemini, Kimi | Malformed output |
+| GLM | Timed out |
+
+The runtime quorum of three was met. **The project's four-reviewer bar was
+not met.**
+
+**Finalization.** `gnd review finalize` exited 0 with synthesis SHA-256
+`cfbe8e0e570587e4b810bbadb8be1d68b04310f78f19fabd448b42d38c1d78d7`. The
+synthesis has 7 agreed groups, 17 divergent views and 9 prioritized fixes.
+
+**Evidence.** The [report](../evidence/plan-review/r2.md), its
+[synthesis](../evidence/plan-review/r2-synthesis.json) and the
+[request](../evidence/plan-review/r2-request.json).
+
+**Reproduction.** The high-severity LI0 identity concern was reproduced in
+the source. `values._model_digest` hashes `Model.model_dump`, so the
+global-hook home would move legacy-repr identities. It is excluded in r3.
+
+### Agreed groups (repaired in r3, `(p3)`)
+
+| Group (supporters) | Disposition in r3 |
+|---|---|
+| `unresolved`: an unresolved identical-spelling pair both refuses and stays queryable (Claude, Qwen) | **Accepted.** `unresolved` counts as coverage and separates the keys into distinct placeholder values. It joins the one-walk list. R7 tests it |
+| `stages`: stage units, floors and denominators undeclared. Three stages have no failing fixture. `identity-decisions` has no input (Claude, Codex, Qwen) | **Accepted.** A per-stage table gives unit, gold, floor and active phase. C2 adds the validity and binding mutations. C7 adds dormant stages. LI2 extends the harness |
+| `lio`: LI0 must stay off the global serializer, and identities must be pinned (Claude, Qwen) | **Accepted.** The home is the witness wire projection. W3 and spec T11 pin the legacy-repr and canonical identities |
+| `a5`: A5 tests the wrong digest (Claude, Codex, Qwen) | **Accepted.** Receipts are a bound input. A5 asserts the admission-record digest, a verdict-changing edit, and refusal of a forged report |
+| `n3`: N3 input and per-kind floors (Claude, Qwen) | **Accepted.** A 300-occurrence diagnostics corpus, a stratified sample with a 20-per-kind minimum or a census, and unmeasured kinds reported |
+| `order`: LI2 refusal order cannot be implemented and is never asserted (Claude, Qwen) | **Accepted.** The order is re-pinned in §0, and R4 has a doubly invalid fixture |
+| `heldout`: held-out control is weak (Claude, Qwen) | **Accepted.** The key stays off the development branch, rule digests are committed before scoring, and the set is labelled a smoke test |
+
+### Divergent views
+
+| Concern | Disposition |
+|---|---|
+| Codex · admission trusts an unverified report | **Accepted.** The step runs `gnd judgments` itself. A forged report refuses |
+| Codex · decision evidence not bound | **Accepted.** Coordinates must name an anchored occurrence of the key. A mutation refuses (R4) |
+| Claude · record fields change baseline bytes | **Accepted.** The fields are optional and absent without `resolution`. Keeping the schema ids is proposed for the LI2 gate |
+| Claude · LI1 presupposes LI4/LI5 models | **Accepted.** LI1 gold labels are passage-level |
+| Claude · path-policy table missing | **Accepted.** A proposed 9×2 table. L6 has four exclusion fixtures |
+| Claude · refusal keys contain values | **Accepted.** Refusals use value-free coordinates, and R4 asserts it |
+| Claude · N1 kind precedence | **Accepted.** One kind per candidate, with precedence homonym, then family, then synonym |
+| Qwen · N1 pairs not committed | **Accepted.** C1 adds a name-pair floor |
+| Qwen · fixture rule excludes LI0's own fixtures | **Accepted.** "phase is LI0 or depends on LI0" |
+| Qwen · LI4 gate omits D5 | **Accepted** |
+| Qwen · totality has no refusal criterion for LI3/LI4 | **Accepted.** N4 and A5 add malformed-input refusals |
+| Qwen · LI3 time-bound test missing | **Accepted.** N4 and §9 |
+| Qwen · exit codes unpinned in R3/L3/L5 | **Accepted.** R3 and L5 pin exits. L3's witness code is a runtime fact, pinned by test in the LI5 spec |
+| Qwen · method versus version unowned | **Accepted.** R2 clause |
+| Qwen · part 10 outside the close sweep | **Accepted.** The close sweep covers §1.1 successor rows, and the trace carries parts 5–8 and 10 |
+| Qwen · part 1 criterion 7 unowned | **Accepted.** C3 route clause |
+| Qwen · trace row for criterion 5 cites a section | **Accepted.** It now cites C4, C5 and C7 |
+
 ## Round budget and stop rule
 
-The budget is two plan rounds for this revision sequence (D9). It was
+The budget was two plan rounds for this revision sequence (D9). It was
 declared in r1's own bytes (§8) before round 1.
+
+**How "self-inflicted" is counted.** A finding is self-inflicted when it
+attacks text added or changed by the previous repair round. In round 2 that
+is text marked `(p2)` or rewritten in r2. Four findings attack r1 text:
+
+- Claude · validation order;
+- Qwen · validation order never asserted;
+- Qwen · LI3 time-bound test;
+- Qwen · R3/L3/L5 exit codes.
 
 | Round | Seats | Per-seat counts | Self-inflicted / total | Blocking / total | Severity ceiling | Verdicts |
 |---|---|---|---|---|---|---|
 | 1 | 6 attempted, 5 valid | Claude 17, Codex 3, Qwen 17, Kimi 3, GLM 4 | 0 / 44 | 22 / 44 | high | 5 revise |
+| 2 | 6 attempted, 3 valid | Claude 13, Codex 4, Qwen 19 | 32 / 36 | 15 / 36 | high | 3 revise |
 
-**Round 2** would review r2. Its stop test:
+**Ruling of the declared rule:** stop.
 
-- stop if more than half of its findings attack text marked `(p2)`;
-- or if the counts per seat are flat or rising while the severity ceiling
-  falls;
-- in any case, stop after round 2 and record whether the bar was met.
+- **Self-inflicted ratio.** 32/36 is above one half.
+- **Budget.** The two-round budget is exhausted.
+- **Bar.** The four-reviewer bar was not met in round 2, because three seats
+  failed for reasons unrelated to the plan.
+- **Same-seat trend.** Codex and Qwen rose while Claude fell. One rising
+  round does not complete the two-round trend test.
 
-r2 carries no review opinion. Round 2 runs only on the owner's request,
-because it is a second paid six-seat run.
+Per the convergence guidance, the next instrument is code: the phase specs and
+their tests. Another plan round is not the next step. **Plan r3 carries no
+review opinion.** Approving it is the owner's plan gate, ruled over r3's exact
+bytes with the bar recorded as unmet.

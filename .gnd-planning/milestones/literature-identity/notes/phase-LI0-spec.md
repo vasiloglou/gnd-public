@@ -109,7 +109,7 @@ model to show that reason ordering is unchanged.
 
 | ID | Question | Readings | Cost |
 |---|---|---|---|
-| D1 | Where the default-omission rule lives | (a) `model_wire` in `witness/io.py`. (b) Extend the existing omission hooks in `gnd.documents.Model` (`model_dump`, which drops `reference_populations`, and `_omit_empty_include_fields`) to omit null `model_id` and empty `operations` everywhere | (b) keeps one home but can move digests over dumps elsewhere. The `operations` comment in `documents.py` promises byte identity for version-1 documents. Under (a), `model_wire` must call the existing hooks and add only the two witness-specific omissions, with a test that lists every omission. Recommend (b) if the measurement below moves nothing, otherwise (a) `(p2)` |
+| D1 | Where the default-omission rule lives | (a) `model_wire` in `witness/io.py`. (b) Extend the existing omission hooks in `gnd.documents.Model` (`model_dump`, which drops `reference_populations`, and `_omit_empty_include_fields`) to omit null `model_id` and empty `operations` everywhere | (b) keeps one home but can move digests over dumps elsewhere. The `operations` comment in `documents.py` promises byte identity for version-1 documents. Under (a), `model_wire` must call the existing hooks and add only the two witness-specific omissions, with a test that lists every omission. Recommend (b) if the measurement below moves nothing, otherwise (a) `(p2)`. **Re-argued `(p3)`:** reading (b) is excluded. The legacy-repr model identity (`values.py:193`, `_model_digest`) hashes `Model.model_dump`, so (b) would move every pinned legacy identity of a model without `model_id`. Recommend (a). The measurement below stays, as a liveness check: under (b) at least one identity pin must go red |
 | D2 | Should `model_wire` also omit an empty `source: {}`? | Keep it, since the schema accepts it today, or omit it as an unauthored default | No difference in exit code. Keeping it is the smaller change |
 
 ### Experiment recorded before it runs
@@ -137,6 +137,7 @@ The file is `tests/test_li0_witness_wire.py`, with its fixtures under
 | T6 | An include-bearing model through witness | the existing `include:` reason, exit 3, unchanged |
 | T7 | Witness certificates for the version-2 inputs in `test_witness_composition.py` and the v7.1 witness corpus | equal to golden SHA-256 digests in `tests/fixtures/li0/golden.json`, generated at `ecd12986` and committed before the change `(p2)` |
 | T10 | Every version-gated default in the `allOf` of `orm-meta.schema.json` is omitted when empty | passes `(p2)` |
+| T11 | Legacy-repr and canonical identities of every T4 fixture model, plus models without `model_id` and models with reference populations and no operations | equal to the golden digests in `tests/fixtures/li0/golden.json`, generated at `ecd12986` `(p3)` |
 | T8 | `intake` with hostile JSON (NaN, deep nesting, a long integer) | exit 3, no traceback |
 | T9 | Source scan: no `model.model_dump(` left under `src/gnd/witness/` | passes |
 

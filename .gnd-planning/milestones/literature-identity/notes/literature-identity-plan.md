@@ -1,12 +1,17 @@
-# Literature identity and assertions · plan r2
+# Literature identity and assertions · plan r3
 
-**Status: draft r2, 2026-11-15. Not approved.**
+**Status: draft r3, 2026-11-15. Not approved. Review stopped.**
 
-- **Review.** Round 1 of the maintained panel reviewed r1 (SHA-256
-  `f27c10dc…53bfe3`, commit `b75c910e`). The [review disposition](plan-review-disposition.md)
-  records it.
-- **Repairs.** The r2 changes are marked `(p2)`. They carry no review opinion.
-  Round 2, the last in the declared budget, has not run.
+- **Round 1** of the maintained panel reviewed r1 (SHA-256 `f27c10dc…53bfe3`,
+  commit `b75c910e`).
+- **Round 2** reviewed r2 (SHA-256 `5badf3ef…f95143`, commit `552117d3`).
+  Only three seats returned valid responses, so the project's four-reviewer
+  bar was not met.
+- **Stop.** The declared stop rule fired: 32 of the 36 round-2 findings
+  attack text added in r2. Round 2 was also the last round in the budget.
+- **Repairs.** The r2 changes are marked `(p2)` and the r3 changes `(p3)`.
+  The r3 bytes carry no review opinion. The
+  [review disposition](plan-review-disposition.md) records both rounds.
 - **Gates.** No owner gate is recorded, and no phase may start implementation
   before its spec gate. `auto=false`.
 
@@ -44,7 +49,9 @@ The milestone is complete when all of these hold:
   and on the held-out set. Each accepted path's witness names the assertions
   and resolution decisions it rests on. `(p2)`
 - The milestone close sweeps every row of the [criterion trace](#41-criterion-trace-from-193-p2)
-  to a phase result, a carried row, or a recorded owner ruling.
+  to a phase result, a carried row, or a recorded owner ruling. It also
+  confirms that every successor row of the §1.1 partition is carried in the
+  successor plans, including part 10 and its ruling P3. `(p3)`
 
 ## 0. Binding design rules
 
@@ -59,12 +66,20 @@ by name.
 - **Input-bounded work.** Bound work proportional to the input with a
   time-bound test. In LI2 the input is values × sources × decisions, and in
   LI3 it is occurrences × candidates.
-- **Validation order.** Pin the refusal order at each boundary. In LI2 that is
-  the manifest, then the resolution record digest, then the decision coverage
-  set, then composition.
+- **Validation order.** Pin the refusal order at each boundary. In LI2 that
+  order is: `(p3)`
+  1. the manifest;
+  2. the resolution record digest;
+  3. the resolution record parse and evidence binding;
+  4. the existing composition refusals;
+  5. coverage and `different` closure over the renamed key graph.
+
+  Coverage is defined over the composed result, so it cannot come earlier.
+  R4 asserts the order with an input that fails two steps.
 - **One walk per policy.** One walk enforces the LI2 decision policy over every
   identity-changing outcome: a renaming that merges, a renaming that
-  separates, and an equal value joined unchanged. `(p2)`
+  separates, an equal value joined unchanged `(p2)`, and an `unresolved`
+  separation `(p3)`.
 - **One home per contract.** The composition reference stays the home of the
   composition contract, and LI2 extends it there. The judgment contract stays
   the home of saved opinions. LI4 cites it and does not restate it. LI0's
@@ -139,9 +154,15 @@ the string type at any version.
 - `model_dump` drops `reference_populations`;
 - `_omit_empty_include_fields` drops `includes` and `fact_type_constraints`.
 
-The omission of the two further defaults has one home. The spec chooses it by
-measurement, either those existing hooks or a single wire projection that
-reuses them, and does not create a third. `(p2)` (#193 calls the class
+The omission of the two further defaults has one home. `(p2)` That home is a
+single witness wire projection. It calls the existing hooks and adds only the
+two witness-intake omissions. `(p3)`
+
+The global hooks are excluded, because the legacy-repr model identity
+(`values.py:193`, `_model_digest`) hashes `Model.model_dump`, and
+`model_identity_matches` (`values.py:328`) compares it with pinned
+identities. Dropping a null `model_id` there would move every legacy identity
+of a model that has no `model_id`. `(p3)` (#193 calls the class
 `ModelDocument`. In the source it is `gnd.documents.Model`.)
 
 **LI1.** The fixture corpus has small paraphrased source documents with
@@ -161,7 +182,28 @@ exclusions, unresolved count and disagreements: `(p2)`
 7. `freshness`
 
 It also reports precision, recall and abstention per stage, computed against
-the answer key. It does not take them from `gnd measure --labels`. Exit codes:
+the answer key. It does not take them from `gnd measure --labels`.
+
+Each stage has a scored unit, a gold source, a floor and a failing mutation,
+and some stages are dormant until a later phase supplies their input. A
+dormant stage is reported as `not-measured` with its owner, and it never
+counts toward exit 0. A denominator of zero is never reported as a pass.
+`(p3)`
+
+| Stage | Unit | Gold | Floor | Active from |
+|---|---|---|---|---|
+| `model-population-validity` | source population | expected `gnd check` exit | 100% agree | LI1 |
+| `source-binding` | anchored fact | cited passage span | 100% agree | LI1 |
+| `semantic-support` | assertion with a support label (12) | support label | precision ≥ 0.9, recall ≥ 0.9, abstention ≤ 0.2 | LI1 |
+| `identity-decisions` | cross-source key pair with a gold identity label | `same`/`different` label | precision 1.0, recall ≥ 0.9 | LI2, which extends the harness to read the resolution and composition records |
+| `derivation` | claimed derived row in LI1. Labelled chain from LI5 | recomputed row, or chain label | 100% agree | LI1 |
+| `coverage` | inspected document section | coverage record | none yet | literature-depth LD3 (dormant here) |
+| `freshness` | evidence binding (sidecar or receipt digest) | current digest | 100% agree | LI1 |
+
+The floors are proposals, fixed at the LI1 spec gate before any measurement.
+`(p3)`
+
+Exit codes:
 
 | Exit | Meaning |
 |---|---|
@@ -180,6 +222,11 @@ one-value-one-entity rule unchanged. Each decision cites evidence
 coordinates, meaning mentions: source, fact type, fact index, role and anchor
 span. It also names its producer or reviewer and its input digests. `(p2)`
 
+Each cited coordinate must name a fact of that source whose role holds the
+key's value. Where the role is anchored, the anchor must resolve to the cited
+span. A decision whose coordinates fail this check refuses with exit 3.
+`(p3)`
+
 **Coverage set.** With `resolution` present, consider each composed value of
 an entity-typed object type that draws on two or more source keys. This
 covers equal spellings that are never renamed. Every pair of those source
@@ -195,13 +242,27 @@ keys must be connected by `same` decisions.
   through a chain of `same` decisions.
 - An uncovered pair refuses with exit 3. The refusal names keys and mentions,
   never values.
+- **Value-free refusals.** A refusal identifies a key by source, object type
+  and decision index, plus mention coordinates. It never prints the source
+  value. `(p3)`
 
 **Unresolved mentions.** An `unresolved` decision never joins two keys. Its
 mentions stay distinct and carry no sense. LI4 and LI5 can therefore still
 represent and query them. `(p2)`
 
+An `unresolved` decision counts as coverage for its pair. It names a distinct
+placeholder identifier for each key, and composition applies those as
+separating renamings. So two identically spelled keys under `unresolved`
+compose (exit 0) into two distinct values. Only a pair with no decision at
+all refuses. `(p3)`
+
 **Record fields.** The composition record gains `resolution_sha256`, and a
 per-fact list of the decision indexes applied, which mirrors `renamings`.
+
+Both fields are optional and absent when the manifest has no `resolution`.
+The schema ids `gnd-composition/1` and `gnd-composition-manifest/1` are kept,
+with the new properties added as optional. This is proposed, and the LI2 spec
+gate rules on it. `(p3)`
 
 **Senses inside one document.** When one document uses one spelling for two
 senses, the source is not rewritten. The reviewed replacement population
@@ -226,6 +287,14 @@ kind (`homonym`, `synonym`, `family`) and a `score` in [0, 1]. The threshold
 
 The report writes `unresolved` entries in the LI2 format and never applies
 them. The surface is D4.
+
+A candidate carries exactly one kind. Where several definitions match, the
+precedence is `homonym`, then `family`, then `synonym`. `(p3)`
+
+**Diagnostics corpus.** LI3 commits a diagnostics corpus of at least 300
+synthetic name occurrences, built from public method names across fields,
+with its SHA-256 pinned before the N3 measurement. The C1 corpus alone is too
+small. `(p3)`
 
 **LI4.** A worked example model:
 
@@ -258,6 +327,17 @@ It writes the admitted population and an admission record binding the
 SHA-256 of each of those three inputs. It refuses (exit 3) when any input is
 missing. The step lives in the example, per D5, and is not a `gnd` command.
 
+**Revised inputs.** `(p3)` The step does not trust a supplied report. It
+runs `gnd judgments` itself over:
+
+- the policy;
+- the receipts;
+- the trusted root.
+
+The receipts are a fourth bound input. The admission record binds the raw
+population, the policy, the receipts and the resulting report. A malformed
+input of any kind refuses with exit 3.
+
 **LI5.** The relations are fine-tuning, implementation, extension, component
 use, training on another method's outputs, evaluated-as, compared-against,
 inspired-by and taxonomic membership. Each has an explicit **path policy**, a
@@ -267,6 +347,13 @@ relation-by-query-family table that says whether the relation may chain in:
 - **Documented methodological lineage.**
 - **Justified transfer of a result.** It needs assumption and interface
   evidence.
+
+Proposed path policy, which the LI5 spec gate fixes: `(p3)`
+
+| Relations | Lineage | Transfer |
+|---|---|---|
+| Fine-tuning, implementation, extension, component use, training on outputs | May chain | Only with assumption and interface evidence |
+| Evaluated-as, compared-against, inspired-by, taxonomic membership | Never chain | Never |
 
 The derived lineage fact types carry assertion identities as roles. Witness
 version 2 therefore names every assertion fact on a path. The composition
@@ -283,21 +370,21 @@ Phase dependencies (all acyclic, LI0 → LI5): `(p2)`
 | Phase | Needs |
 |---|---|
 | LI0 | Nothing |
-| LI1 | Nothing. It runs first among the semantic phases because it supplies their fixtures. Its mutations are only the ones that 0.3.1 commands can detect (C2) |
-| LI2 | LI1 |
+| LI1 | Nothing. It runs first among the semantic phases because it supplies their fixtures. Its mutations are only the ones that 0.3.1 commands can detect (C2). Its gold labels are passage-level: participants, the predicate in plain words, and a support label. They depend on no LI4 or LI5 model, which express them later `(p3)` |
+| LI2 | LI1. It extends the LI1 harness's `identity-decisions` stage `(p3)` |
 | LI3 | LI2 |
 | LI4 | LI2 |
 | LI5 | LI1, LI2 and LI4 |
 
 Every fixture model declares `model_id` and version 2 or later, unless its
-phase depends on LI0. Nothing in this milestone needs literature-interop. The
+phase is LI0 or depends on LI0 `(p3)`. Nothing in this milestone needs literature-interop. The
 L2 cross-domain chain composes ordinary public fixture sources with the
 current composition. It uses no includes and no reference populations.
 `(p2)`
 
 | Capability | Observed component and decision |
 |---|---|
-| Default omission | Adapt `gnd.documents.Model` (`model_dump`, `_omit_empty_include_fields`), or a single projection reusing them. The dump sites are `witness/producer.py:197` and `witness/service.py:252` (why-not). Replay through `service.replay_result` passes the raw parsed document `md` to the kernel, and the Soufflé/Lean exports parse raw bytes in their `admit` paths. None of these re-serializes `(p2)` |
+| Default omission | A single witness wire projection reusing the `gnd.documents.Model` hooks (`model_dump`, `_omit_empty_include_fields`). It does not edit them, because they feed `values._model_digest` `(p3)`. The dump sites are `witness/producer.py:197` and `witness/service.py:252` (why-not). Replay through `service.replay_result` passes the raw parsed document `md` to the kernel, and the Soufflé/Lean exports parse raw bytes in their `admit` paths. None of these re-serializes `(p2)` |
 | Resolution binding | Adapt `model.composition` (`src/gnd/composition.py`), its manifest schema `composition-manifest.schema.json` and record schema `composition.schema.json`. Adapt `checker._composed` for re-verification and witness version 2 for the record digest |
 | Mention spans | Reuse the anchor sidecars bound per source by composition |
 | Name diagnostics | A new module whose home is set by D4. Its normalization is its own (`gnd.witness.why_not` near-miss keys do not fit). Coordinate with #181 if the home is `gnd discover` `(p2)` |
@@ -321,6 +408,14 @@ inspected source. A Review pass over the index can be selected separately.
 - **W3.** A regression test pins the round trip over the committed fixture
   models. Witness certificates for already-supported inputs match golden
   digests committed from the baseline `ecd12986` before the change. `(p2)`
+  The golden set covers four things: `(p3)`
+  - the certificate file bytes;
+  - each fixture model's legacy-repr and canonical identities;
+  - those identities for models without `model_id`;
+  - those identities for models with reference populations and no
+    operations.
+
+  Every one is unchanged after LI0.
 
 ### LI1 · C1–C6 · part 1
 
@@ -333,6 +428,8 @@ inspected source. A Review pass over the index can be selected separately.
   | False chains | 5: the whale, a `$PINN` chain, the `$PINN` loop, Boltz-1 as ancestry, contrast as "builds on" |
   | Reuse cases | 8: 4 real, 2 generic words, 2 homonyms |
   | Assertions with support labels | 12 |
+  | Cross-source key pairs with identity labels | 6: 3 `same`, 3 `different` `(p3)` |
+  | Name pairs for N1 | 4: 2 homonym, 1 synonym, 1 family `(p3)` |
 
   An answer key below any floor fails C1.
 - **C2.** These mutations, which 0.3.1 commands can detect, each fail their
@@ -344,19 +441,33 @@ inspected source. A Review pass over the index can be selected separately.
   | Dropping one supported fact | `semantic-support` |
   | Stale evidence | `freshness` |
   | A falsified derived row | `derivation` |
+  | An invalid source population `(p3)` | `model-population-validity` |
+  | A shifted anchor span `(p3)` | `source-binding` |
 
   The later phases own the other mutations: false merge (R6), missing
   condition (A1) and reversed relation (L5).
 - **C3.** An empty rule premise never counts as a successful test, and
-  mutually exclusive flags are never combined.
+  mutually exclusive flags are never combined. The harness reads `gnd check`,
+  `gnd check --composition`, `gnd fidelity` and `gnd judgments` over their
+  own routes. A fixture that withholds one route's output makes its stage
+  `not-measured`, never a pass. `(p3)`
 - **C4.** The report states sample sizes, exclusions and disagreements, and
   that its labels are not independent expert ground truth.
 - **C5.** Precision, recall and abstention are reported per stage. A fixture
   run that abstains heavily reaches high precision and must still report low
-  recall. `(p2)`
+  recall. `(p2)` The case: a run that abstains on 6 of the 12 assertions and
+  answers the rest correctly reports precision 1.0, recall 0.5 and
+  abstention 0.5. It exits 1 on `semantic-support`. `(p3)`
 - **C6.** A held-out subset is committed with its digest before LI5 starts:
   1 supported chain and 2 false chains not used in LI5 development. The whale
-  is scored in the development set. `(p2)`
+  is scored in the development set. `(p2)` `(p3)`:
+  - The held-out answer key stays off the LI5 development branch.
+  - The LI5 rule and path-policy digests are committed before the held-out
+    set is scored, and the score binds them.
+  - Three chains make a smoke test, not a measure of generalization.
+- **C7.** A dormant stage reports `not-measured` with its owner, and is
+  excluded from exit 0. At LI1's gate `identity-decisions` and `coverage` are
+  dormant. `(p3)`
 
 ### LI2 · R1–R6 · part 2
 
@@ -366,12 +477,22 @@ inspected source. A Review pass over the index can be selected separately.
   `(p2)`
 - **R2.** Two senses with one spelling in one document are both
   representable through `Mention` entities, without rewriting the text. An
-  `anchored` constraint still passes. `(p2)`
+  `anchored` constraint still passes. `(p2)` A method key and a version key
+  of the same method stay distinct. Merging them without `same` refuses with
+  exit 3. `(p3)`
 - **R3.** An evidenced alias joins across documents. A same-domain homonym
-  with no supporting decision does not.
+  with no supporting decision does not: with `resolution` present and no
+  decision, it refuses with exit 3. Under `different` or `unresolved` it
+  composes (exit 0) into two values. `(p3)`
 - **R4.** Each of these refuses with exit 3 and names keys and mentions, not
   values: an uncovered pair, a partially covered renaming, and a transitive
-  merge across a `different` decision. `(p2)`
+  merge across a `different` decision. `(p2)` `(p3)`:
+  - The source value never appears in the refusal.
+  - A decision with a mutated evidence coordinate refuses with exit 3.
+  - An input with both a bad resolution digest and an uncovered pair reports
+    the digest refusal first.
+- **R7.** Two identically spelled keys under `unresolved` compose (exit 0)
+  into two distinct placeholder values. `(p3)`
 - **R5.** A changed decision makes `check --composition` and replay stale
   (exit 3, reason asserted). The prior snapshot replays to its original
   result. A manifest without `resolution` matches golden outputs committed
@@ -395,7 +516,13 @@ inspected source. A Review pass over the index can be selected separately.
 - **N3.** These are declared before the measurement: a sample of at least 100
   emitted candidates drawn uniformly, its labeller, per-kind denominators, and
   the budget. The false-positive rate per kind is within the budget. Nothing
-  is ever applied. `(p2)`
+  is ever applied. `(p2)` `(p3)`:
+  - The input is the LI3 diagnostics corpus.
+  - The sample is stratified, with at least 20 candidates per kind. When
+    fewer than 100 are emitted, every candidate is labelled.
+  - A kind below 20 is reported as unmeasured, with no budget claim.
+- **N4.** A malformed diagnostics input refuses with exit 3 and no
+  traceback. A time-bound test covers occurrences × candidates. `(p3)`
 
 ### LI4 · A1–A5 · part 3
 
@@ -411,7 +538,12 @@ inspected source. A Review pass over the index can be selected separately.
   judgment-contract limits.
 - **A5.** Changing one receipt changes the admitted population's digest. A
   missing raw extraction or policy refuses (exit 3), and the raw extraction
-  is retained beside the admitted population. `(p2)`
+  is retained beside the admitted population. `(p2)` Correction `(p3)`:
+  - Any receipt edit changes the admission record's digest.
+  - A receipt edit that changes a verdict also changes the admitted
+    population.
+  - A forged approval report not produced from the receipts refuses with
+    exit 3, as does any malformed input.
 
 ### LI5 · L1–L5 · part 4
 
@@ -422,14 +554,21 @@ inspected source. A Review pass over the index can be selected separately.
   is kept, and an invalid same-domain chain is rejected. `(p2)`
 - **L3.** A path with an unreviewed edge, or with an edge whose participant
   is an unresolved mention, is not accepted. A transfer missing its required
-  conditions fails.
+  conditions fails. Neither appears in the derived lineage extension, and
+  `gnd witness` on it does not exit 0. The LI5 spec pins the exact code by
+  test. `(p3)`
 - **L4.** Cyclic and acyclic fixtures exist, and a warning is not read as a
   failure. The original flat-model whale witness is a separate,
   documentation-only fixture outside the scored corpus. It is a
   demonstration of the old model's weakness, not a checker defect. `(p2)`
 - **L5.** An accepted path's witness names its assertion facts, and its
   composition record names the decisions behind them. Removing either fails
-  replay. A reversed-relation mutation fails `derivation`. `(p2)`
+  replay. A reversed-relation mutation fails `derivation`. `(p2)` The
+  replay outcomes: a changed base node gives `proof-invalid` (exit 1), and a
+  different record gives `binding-stale` (exit 3). Both follow the existing
+  composition reference. `(p3)`
+- **L6.** One fixture for each of the four never-chaining relations is
+  excluded from lineage. `(p3)`
 
 ### 4.1 Criterion trace from #193 `(p2)`
 
@@ -440,16 +579,16 @@ inspected source. A Review pass over the index can be selected separately.
 | Part 1, criterion 2 (removing outputs cannot pass) | C2, C5 |
 | Part 1, criterion 3 (omitted fact reduces recall) | C2, C5 |
 | Part 1, criterion 4 (each mutation fails its gate) | C2, R6, A1, L5 |
-| Part 1, criterion 5 (stages separate) | The LI1 stage list (§2) |
+| Part 1, criterion 5 (stages separate) | C4, C5, C7 `(p3)` |
 | Part 1, criterion 6 (empty premises) | C3 |
-| Part 1, criterion 7 (supported routes) | C3 |
+| Part 1, criterion 7 (supported routes) | C3, including its route clause `(p3)` |
 | Part 1, criterion 8 (sample sizes and disagreements) | C4 |
 | Part 1, the three evaluation sets | Public analogues in C1 and C6. The host-scale sets go to D1 |
 | Part 2, criterion 1 | R1 |
 | Part 2, criterion 2 | R2 |
 | Part 2, criterion 3 | R3 |
-| Part 2, criterion 4 (family, method and version distinct) | R2, N1 (`family`) |
-| Part 2, criterion 5 | R4 |
+| Part 2, criterion 4 (family, method and version distinct) | R2, including its method/version clause `(p3)`, and N1 (`family`) |
+| Part 2, criterion 5 | R4, R7 `(p3)` |
 | Part 2, criterion 6 | R5 |
 | Part 2, diagnostics | N1–N3 |
 | Part 3, criterion 1 | A1 |
@@ -464,6 +603,7 @@ inspected source. A Review pass over the index can be selected separately.
 | Part 4, criterion 6 | L4 |
 | Part 4, criterion 7 | L4 |
 | Part 4, dates | Carried to literature-interop LX4 |
+| Parts 5–8 and 10 `(p3)` | Carried to the successor plans named in §1.1. Part 10 needs ruling P3 there |
 
 The #193 numbers (16 chains, 50 reuse cases, 7 supported and 8 false chains,
 a 24-paper pilot, a 180-assertion audit) are host-scale and host-owned under
@@ -524,7 +664,7 @@ Default `auto=false`. Each phase needs, in order: `(p2)`
    | LI1 | D1, D2, D5 |
    | LI2 | D3 |
    | LI3 | D4 |
-   | LI4 | D7 |
+   | LI4 | D5, D7 `(p3)` |
    | Partition | D6 |
 
 2. its spec gate;
@@ -559,7 +699,7 @@ version-1 models load back to an equal `Model` `(p2)`.
 | LI0 | New regression tests, plus `test_witness_composition.py`, `test_public_why_not.py`, `test_public_replay_admission.py`, `test_public_optional_value_witness.py` and `test_public_v71_witness_corpus.py` |
 | LI1 | Corpus and harness tests, plus `test_composition_example.py` and the fidelity/judgments consumers the harness reads |
 | LI2 | New resolution tests, plus `test_composition.py`, `test_composition_example.py` and `test_witness_composition.py`. Time-bound test over values × sources × decisions |
-| LI3 | Diagnostics tests and the N3 measurement, recorded before it runs |
+| LI3 | Diagnostics tests, the N4 refusal and time-bound tests `(p3)`, and the N3 measurement, recorded before it runs |
 | LI4 | Example-model, admission-step and judgment tests |
 | LI5 | Lineage fixture tests, plus ring/acyclic, witness and why-not consumers |
 

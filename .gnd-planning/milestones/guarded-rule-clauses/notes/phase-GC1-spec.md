@@ -1,7 +1,6 @@
-# GC1 · Set membership in comparisons · draft r3
+# GC1 · Set membership in comparisons · r4
 
-**Status — awaiting owner review, 2026-11-15.** Implementable once the plan
-gate and this spec's owner gate are recorded. No code is written before then.
+**Status — r4, 2026-11-15.** See the [delegated spec gate](../002-phase-GC1-spec-gate.md).
 
 ## 2. Provenance
 
@@ -193,3 +192,22 @@ Use a corpus-first gate for public validation and findings. Before runtime
 implementation, record the delegated ruling over this spec and the initial red
 fixture expectations, including each comparison site, unsupported export and
 the finite-domain synthesis outcome.
+
+
+## 12. Verification selection
+
+| Obligation | Disposition | Command and expected exit | Input boundary and invalidation |
+|---|---|---|---|
+| Corpus distinguishing validation, check, and synth | Run red then green | `uv run pytest -q tests/test_guarded_membership.py --tb=short`, red exits 1 and green exits 0 | The initial answer key and test harness, then schema, runtime and CLI. The baseline remains bound to this exact corpus. |
+| I1–I4 and old comparisons | Run | `uv run pytest -q tests/test_guarded_membership.py tests/test_model_guarded.py tests/test_public_guarded_consequent_matrix.py tests/test_public_semantic_guarded.py tests/test_derivation_rule.py tests/test_synth_guarded_cases.py tests/test_rule_verbalization.py tests/test_schema_sync.py --tb=short`, exit 0 | Schema arms, validator, report, term and guard dispatch, synth and verbalization. Old comparison schema controls inspect the legacy oneOf arm. |
+| I5 exporter boundary | Run | `uv run pytest -q tests/test_pyrel_rules.py tests/test_pyrel_rules_derivations.py tests/test_public_pyrel_export_runtime_support.py tests/test_public_lean_export_successors.py tests/test_ossie_export.py tests/test_public_souffle_successors.py --tb=short`, exit 0 | Affected export paths refuse new unsupported shapes explicitly. Profiles that already refuse the enclosing construct retain that reason. |
+| Repository and layer guards | Run | `uv run pytest -q tests/test_rf5_commands.py tests/test_rf5_review_regressions.py tests/test_rf6_query_policy.py tests/test_rf7_structure.py tests/test_rf8_structure.py tests/test_rf9_repairs.py tests/test_rof4_accept_identities.py tests/test_disclosure_mode.py tests/test_disclosure_docs.py tests/test_packaged_skills.py tests/test_conformance_payload.py tests/test_development_scaffold.py --tb=short`, exit 0 | Source layout, default test configuration and installed package metadata. |
+| Lint and index | Run | `uv run ruff check` and `python3 scripts/components_index.py changed --base main --strict`, both exit 0 | Source and index content, including logical ownership of modified modules. |
+| Historical replay | Cadence | Separately selected evidence and census lane under the repository's milestone protocol | Prior claims stay with their source bytes. Focused current tests cover the affected behavior. |
+
+Component consult checked the repository index for “term comparison,” “guarded
+cases,” and “membership” and found no indexed external dependency. Adapt
+`synth.guarded`, `synth.value_domain`, and `semantics.indexed_rows` in their
+existing homes. Reuse the operator, parser, and primitive plumbing in the
+existing term and semantic components. Leave the synthesis oracle independent
+of the production checker.

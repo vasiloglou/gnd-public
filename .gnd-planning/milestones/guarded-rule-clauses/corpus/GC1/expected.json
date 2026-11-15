@@ -1,0 +1,27 @@
+{
+  "validation": {
+    "guarded_numeric_membership": 0,
+    "guarded_exists_membership": 0,
+    "derivation_where_membership": 0,
+    "guarded_empty_list": 3,
+    "guarded_oversized_list": 3,
+    "guarded_variable_member": 3,
+    "guarded_nested_member": 3,
+    "guarded_mixed_nonnumeric_members": 3,
+    "guarded_incompatible_left": 3,
+    "value_comparison_membership": 3,
+    "dynamic_rule_membership": 3
+  },
+  "check": {
+    "in_contains": {"exit": 0, "guarded": "pass"},
+    "in_excludes": {"exit": 1, "guarded": "fail"},
+    "not_in_contains": {"exit": 1, "guarded": "fail"},
+    "not_in_excludes": {"exit": 0, "guarded": "pass"}
+  },
+  "synth": {
+    "manifest": "gnd-guarded-cases/1",
+    "reachable": ["failing", "passing"],
+    "in_covers_boolean_domain": "no-failing-case",
+    "not_in_covers_boolean_domain": "no-passing-case"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "admission": {
+    "evidence_floor": null,
+    "minimum_approvals": 1
+  },
+  "judges": [
+    "corpus-author"
+  ],
+  "policy_id": "contextual-assertion-example",
+  "repair": {
+    "evidence_floor": null,
+    "minimum_rejections": 1
+  },
+  "schema_version": 1,
+  "targets": [
+    {
+      "fact_type": "assertion_statement",
+      "index": 0
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 1
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 2
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 3
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 4
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 5
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 6
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 7
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 8
+    },
+    {
+      "fact_type": "assertion_statement",
+      "index": 9
+    }
+  ],
+  "trust_mode": "consumer-pinned",
+  "trusted_receipts": [
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "1f08784d4ebefff5240aeeb9006a60e96cdd494a9c0578bbdfdf493fa91ce56d"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "e75070a999a140da04307016cf2c648771673f30b909e5a111b251ac73f87336"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "c95e71b59a339d3dbfbd980c1fd0426b0dcfeb286455a4a751a41f075842bea4"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "fe443d4fa7b088be9da511c96ebf6e49c6ca15e11b14aceb9575daf14f39602c"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "b2afdfe048dbc6130750658f31a58b0397cb58bbee50b04ae457b1eb32fcf3d9"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "44222d2c87f67fe787bf2c3e3ca24b5b1dc9bb49e12df760a60493ef72206f5a"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "f546004cbce53f5824c7e725501ed5eefc8e2be012f4d64d6db346f3af35a511"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "a8c5375d7ffa7f72f51949874cb7a987efef2ca66d43fcb902b2c535b7d3bfb1"
+    },
+    {
+      "judge_id": "corpus-author",
+      "receipt_sha256": "559e7bb0a0135ec0faa5e7011dd1811bd757c8edcbf3069ff34059800e7417b0"
+    }
+  ]
+}

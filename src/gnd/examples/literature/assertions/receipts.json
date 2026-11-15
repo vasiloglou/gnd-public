@@ -1,0 +1,239 @@
+{
+  "receipts": [
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-00",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 62,
+            "sha256": "e953121ceb840d7afa0c8a08596a20606e7f7ac18380cec06cc14d1e4f35e01c",
+            "start": 0
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "99a833f78a2c07c1731cc00c2737396c9e2680cc64187dd2e451d5a101368a3b",
+        "fact_type": "assertion_statement",
+        "index": 0,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-01",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 128,
+            "sha256": "b884b23e02c3ea981962673e9033e4263e7d99d595ca7652bba6c4417543ba3f",
+            "start": 63
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "b47d21a67d3c2e6525014772c581d40cb2d4500f83384f15eca29947385678ef",
+        "fact_type": "assertion_statement",
+        "index": 1,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-02",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 188,
+            "sha256": "e9db539bc2957da6cfde220c03877b616aea288751d1828f76001c2d33ac9484",
+            "start": 129
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "3ca1758d56e2bf1a55074583cbe24204d8a4251b8ff0911b64e4006eabcc129c",
+        "fact_type": "assertion_statement",
+        "index": 2,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "reject"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-03",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 240,
+            "sha256": "909124c4e103f5e6fe195be71ed6b3837d15cfe1ad395e4c83fcf8aa52afc340",
+            "start": 189
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "0928b62fdd87997182e643b5cb5ba91c0a08daf211d670dcc65295c85b8de0ac",
+        "fact_type": "assertion_statement",
+        "index": 3,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-04",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 291,
+            "sha256": "f7ba2e7beda1abf9fff40ec6b3a760ac12604def47bf834fdbd259334ab6538f",
+            "start": 241
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "7beff1d653de5ab0c762d2c0f3ab7e05df6b75ab961fefa395795e33a9a22c4e",
+        "fact_type": "assertion_statement",
+        "index": 4,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-05",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 344,
+            "sha256": "104dc34134ef2d42efd27c869d844192dd35b298eee3ebceb30939aade1d4b70",
+            "start": 292
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "879f31971eeaf8b212ae88b266e4f8137d8038bbdfe9bb64438359f53a117c7c",
+        "fact_type": "assertion_statement",
+        "index": 5,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-06",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 389,
+            "sha256": "69e0afe7823020a2e55f308adea6ec463e68c1f786d831237137d8f0ef0c85f6",
+            "start": 345
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "b9d75903adfcbfebd9e8c83a34c5c49a1056bf210f8b9c00464cd3d1230f1b2b",
+        "fact_type": "assertion_statement",
+        "index": 6,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-07",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 450,
+            "sha256": "9c0354934ae02e32183d9dda7af4e4578361890d625d072dd8b41263fbf23643",
+            "start": 390
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "d09324191eea7cb956e415a264869ab4d27d3ca2e2ce831cad94214211890b9a",
+        "fact_type": "assertion_statement",
+        "index": 7,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "approve"
+    },
+    {
+      "external_evidence": null,
+      "judge_id": "corpus-author",
+      "receipt_id": "opinion-08",
+      "sources": [
+        {
+          "path": "passages.txt",
+          "quote": {
+            "end": 516,
+            "sha256": "c8cbecee011fe063a3fc117585ec17f3042bdd2c030ec179f753d27f3491178d",
+            "start": 451
+          },
+          "sha256": "9b0415e9d4eb6cb8bb3f7111e312f0d28e8db78656008c70e76d85c2e909e0f0"
+        }
+      ],
+      "subject": {
+        "fact_sha256": "7d232642e89b30118a28e8c25ac2f10239db8f8f18e15654a7cf01f51c109046",
+        "fact_type": "assertion_statement",
+        "index": 8,
+        "model_sha256": "3212647b84df439e3304d598275864b0b47cc0ef22fc530c6293b27c7e440f5b",
+        "population_sha256": "888cc1662abcb7810ea923acd60ff9bb44efce34218d40ba6ecbb28250e435a0",
+        "reference_identity": null
+      },
+      "trust": "consumer-pinned",
+      "verdict": "abstain"
+    }
+  ],
+  "schema_version": 1
+}

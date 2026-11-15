@@ -1,0 +1,207 @@
+{
+  "constraints": [
+    {
+      "modality": "alethic",
+      "preferred": true,
+      "provenance": {
+        "user_quote": "A worked example assertion is identified by work and passage."
+      },
+      "role_refs": [
+        {
+          "fact_type": "assertion_names_passage",
+          "role": "passage"
+        },
+        {
+          "fact_type": "assertion_names_work",
+          "role": "work"
+        }
+      ],
+      "scope": "external",
+      "source": "explicit",
+      "status": "confirmed",
+      "type": "uniqueness"
+    }
+  ],
+  "fact_types": [
+    {
+      "id": "assertion_statement",
+      "objectified_as": "assertion",
+      "reading": "{PassageId} in {WorkId} version {VersionId} records predicate {PredicateId} with {ParticipantName:actor} of kind {ParticipantKind:actor_kind} and {ParticipantName:object} of kind {ParticipantKind:object_kind} at qualification {QualificationKind}, condition {ConditionText}, regime {RegimeId} and experiment {ExperimentId}, with {PolarityKind} and {AttributionKind}",
+      "roles": [
+        {
+          "object_type": "passage_id",
+          "role_name": "passage"
+        },
+        {
+          "object_type": "work_id",
+          "role_name": "work"
+        },
+        {
+          "object_type": "version_id",
+          "role_name": "version"
+        },
+        {
+          "object_type": "predicate_id",
+          "role_name": "predicate"
+        },
+        {
+          "object_type": "participant_name",
+          "role_name": "actor"
+        },
+        {
+          "object_type": "participant_kind",
+          "role_name": "actor_kind"
+        },
+        {
+          "object_type": "participant_name",
+          "role_name": "object"
+        },
+        {
+          "object_type": "participant_kind",
+          "role_name": "object_kind"
+        },
+        {
+          "object_type": "qualification_kind",
+          "role_name": "qualification"
+        },
+        {
+          "object_type": "condition_text",
+          "role_name": "condition"
+        },
+        {
+          "object_type": "regime_id",
+          "role_name": "regime"
+        },
+        {
+          "object_type": "experiment_id",
+          "role_name": "experiment"
+        },
+        {
+          "object_type": "polarity_kind",
+          "role_name": "polarity"
+        },
+        {
+          "object_type": "attribution_kind",
+          "role_name": "attribution"
+        }
+      ]
+    },
+    {
+      "id": "assertion_names_passage",
+      "reading": "{Assertion} occurs at {PassageId}",
+      "roles": [
+        {
+          "object_type": "assertion",
+          "role_name": "assertion"
+        },
+        {
+          "object_type": "passage_id",
+          "role_name": "passage"
+        }
+      ]
+    },
+    {
+      "id": "assertion_names_work",
+      "reading": "{Assertion} is from {WorkId}",
+      "roles": [
+        {
+          "object_type": "assertion",
+          "role_name": "assertion"
+        },
+        {
+          "object_type": "work_id",
+          "role_name": "work"
+        }
+      ]
+    }
+  ],
+  "model_id": "urn:gnd-example:literature-contextual-assertions@1",
+  "object_types": [
+    {
+      "id": "passage_id",
+      "kind": "value",
+      "name": "PassageId",
+      "primitive": "String"
+    },
+    {
+      "id": "work_id",
+      "kind": "value",
+      "name": "WorkId",
+      "primitive": "String"
+    },
+    {
+      "id": "version_id",
+      "kind": "value",
+      "name": "VersionId",
+      "primitive": "String"
+    },
+    {
+      "id": "predicate_id",
+      "kind": "value",
+      "name": "PredicateId",
+      "primitive": "String"
+    },
+    {
+      "id": "participant_name",
+      "kind": "value",
+      "name": "ParticipantName",
+      "primitive": "String"
+    },
+    {
+      "id": "participant_kind",
+      "kind": "value",
+      "name": "ParticipantKind",
+      "primitive": "String"
+    },
+    {
+      "id": "qualification_kind",
+      "kind": "value",
+      "name": "QualificationKind",
+      "primitive": "String"
+    },
+    {
+      "id": "condition_text",
+      "kind": "value",
+      "name": "ConditionText",
+      "primitive": "String"
+    },
+    {
+      "id": "regime_id",
+      "kind": "value",
+      "name": "RegimeId",
+      "primitive": "String"
+    },
+    {
+      "id": "experiment_id",
+      "kind": "value",
+      "name": "ExperimentId",
+      "primitive": "String"
+    },
+    {
+      "id": "polarity_kind",
+      "kind": "value",
+      "name": "PolarityKind",
+      "primitive": "String"
+    },
+    {
+      "id": "attribution_kind",
+      "kind": "value",
+      "name": "AttributionKind",
+      "primitive": "String"
+    },
+    {
+      "id": "assertion",
+      "kind": "entity",
+      "name": "Assertion",
+      "reference": {
+        "mode": "external"
+      }
+    }
+  ],
+  "source": {
+    "confidence": "standard",
+    "kind": "text-conversation",
+    "mode": "one-shot"
+  },
+  "version": 2
+}

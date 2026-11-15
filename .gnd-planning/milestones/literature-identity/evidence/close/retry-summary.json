@@ -1,0 +1,209 @@
+{
+  "reviewed_commit": "ff7ce094a28af50ad4e8f4cb5ebcd1db6683fa9a",
+  "run_sha256": "ebf6bfd8eb5c3c9b69ec182b1a7b19199d959d78b5d9e0a96d502c294fb613bf",
+  "request_sha256": "947cc5bddb4da7d997ede896dc73b4892338ec6401dc29ade4b604b9b0688a69",
+  "reviewed_artifacts_before_sha256": "194e987ce3289afceab55614462c8a79d7a3b9b8c7ebf9dda88af7c3db8d9973",
+  "reviewed_artifacts_after_sha256": "194e987ce3289afceab55614462c8a79d7a3b9b8c7ebf9dda88af7c3db8d9973",
+  "effort": "xhigh",
+  "runtime_required_seats": 3,
+  "project_required_seats": 4,
+  "seats": [
+    {
+      "reviewer_id": "claude",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "5aa7751fa7fc64f0e92ab8caff01d6bcac7f5790ac9e353b1aeb5e5d93960fa5",
+      "streams_sha256": {
+        "capability.stdout": "5ca3a9dac2026e56c221fdd34380c7d7d45ebbb51c1d01b7c17c75cb076a0be8",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "eb0d2da845e4a1be6376a56715fe76f8cf4df3dfb73e8a5fcc104de61cdd5fff",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "revise",
+      "response_sha256": "2e0405a4ecd6334d44eca08ae85e6159ad2fc720885adf21f859239ee95e6588",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 5,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 5,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 5,
+        "total_concerns": 5,
+        "unanchored_concern_ids": []
+      },
+      "relevance_counts": {
+        "hardening": 4,
+        "completeness": 1
+      }
+    },
+    {
+      "reviewer_id": "codex",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "c9457a000345df309fae6ee5f3ac982025953c9bcf4bf765acff00d5b926e587",
+      "streams_sha256": {
+        "capability.stdout": "df0d864ca2076f7654288c6a1e3394e3eaa2ea8f15021df2524efdd90c70986c",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "f0626ad49e5f6cc2eae53a5cb448c748ce8016a46dcf07543d56f8cc32994c70",
+        "stderr": "f79a112a828d66c56cd9bcc1f0e1ea10972b23a6d4ec80d4c896ee141e35dc65"
+      },
+      "disposition": "approve",
+      "response_sha256": "1bbba2b6711e9c072469405545521a2f23ba5a3b168c69f0139957a563e9fea6",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 0,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 0,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 0,
+        "unanchored_concern_ids": []
+      },
+      "relevance_counts": {}
+    },
+    {
+      "reviewer_id": "qwen",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "e93cc945c318ceada75c5ac866ac7af5b4dcf979a747c95b04376ee70b0bdaa7",
+      "streams_sha256": {
+        "capability.stdout": "a8b68ecacf715b6c89ced11b02c8f25c46d35117f2eee5782882f2232a2d4c66",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "6836566d6cd84e37b5793f010334447d464172893897ef0b44a69ba8fb3df694",
+        "stderr": "7f47e77adae01cdd6d9190bb3a010651b48c47bea02e862f28e3d21f16ac70ab"
+      },
+      "disposition": "revise",
+      "response_sha256": "092895d8cf24dfe679ac64e79bd13351687b0edf9c0395f785e5b110903ed0ba",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 6,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 6,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 6,
+        "total_concerns": 6,
+        "unanchored_concern_ids": []
+      },
+      "relevance_counts": {
+        "blocking": 1,
+        "hardening": 3,
+        "completeness": 2
+      }
+    },
+    {
+      "reviewer_id": "gemini",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "fa1b89cd2812d4e100ddcda01d723e1c31bc344b2d6a3c561c8565fbd49082d3",
+      "streams_sha256": {
+        "capability.stdout": "b5c6e1af180f48adb3700982e7b06e905f29d2965f047eaeebd0b5c4f676b632",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "5fb89ad527250d44493ec98e604acdd1606ebbfca8a6ce2b0d809135c8c7d266",
+        "stderr": "b57cebcb570e49004344455caeba4a6bc1b028464558a9de3525623a70b550c3"
+      },
+      "disposition": "block",
+      "response_sha256": "2bdd7c0547c51398491d0810f06134358d227daf865466fe5fa90d0556dd25a1",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 0,
+        "total_concerns": 2,
+        "unanchored_concern_ids": [
+          "repair-affects-l1-closure",
+          "stale-plan-close-amendment"
+        ]
+      },
+      "relevance_counts": {
+        "blocking": 1,
+        "completeness": 1
+      }
+    },
+    {
+      "reviewer_id": "kimi",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "3810fbbfe5b12008b876db10a4c3619dbf18cea1122c10955541c21605967318",
+      "streams_sha256": {
+        "capability.stdout": "38366cf8f3a746da0527b722bb8f017d5cdcecd16e6885148a05b19794ef0ca0",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "ae6f0068d7df12909b446f24460bc1d34706ac3d1673c4aae249ce9bc4a8a135",
+        "stderr": "acc17c60cb4941d4cab09daaebf831442e7615d6972078816c06988476980471"
+      },
+      "disposition": "revise",
+      "response_sha256": "0ad80671abbbc6d62f9eafed15a19422b0537a98e1ffec317c55e721aaaa4478",
+      "salvage": {
+        "complete": false,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 1,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 2,
+        "total_concerns": 2,
+        "unanchored_concern_ids": []
+      },
+      "relevance_counts": {
+        "hardening": 2
+      }
+    },
+    {
+      "reviewer_id": "glm",
+      "status": "success",
+      "issue_codes": [],
+      "envelope_sha256": "6a3e38597df6702f0df6a279af916c90ef476908edadb055330b077b09f470cd",
+      "streams_sha256": {
+        "capability.stdout": "5ca3a9dac2026e56c221fdd34380c7d7d45ebbb51c1d01b7c17c75cb076a0be8",
+        "capability.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "32db5ed50c3ceda0c1fc3234f3271f08fe1ba0a0fa6e98ae8876dbf94618303a",
+        "stderr": "84a7a92addfe6124967bec188da43c69300fa0c093fdc46484e5700bb5091db1"
+      },
+      "disposition": "revise",
+      "response_sha256": "88c06e4ef4d8b21039e56f8fd2a58447fdf07d14053f3ea61eed3480e16a8178",
+      "salvage": {
+        "complete": true,
+        "declared_concern_count": 2,
+        "dropped": [],
+        "dropped_overflow": 0,
+        "preamble_lines": 0,
+        "retained_concern_count": 2,
+        "trailing_lines": 0,
+        "transport": "jsonl"
+      },
+      "resolution": {
+        "anchored_concerns": 2,
+        "total_concerns": 2,
+        "unanchored_concern_ids": []
+      },
+      "relevance_counts": {
+        "completeness": 2
+      }
+    }
+  ]
+}

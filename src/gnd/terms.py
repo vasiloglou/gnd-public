@@ -737,8 +737,9 @@ def compare_terms(
     limits: ExactTermLimits = DEFAULT_LIMITS,
     bound_cross_product: bool = False,
     left_primitive: str | None = None,
+    temporal_work: list[int] | None = None,
 ) -> ExactTermResult:
-    left_result = evaluate_term(left, binding, limits=limits)
+    left_result = evaluate_term(left, binding, limits=limits, temporal_work=temporal_work)
     if not left_result.available:
         return left_result
     if operator in MEMBERSHIP_OPERATORS:
@@ -760,7 +761,7 @@ def compare_terms(
             left_result.nodes,
             left_result.max_value_bits,
         )
-    right_result = evaluate_term(right, binding, limits=limits)
+    right_result = evaluate_term(right, binding, limits=limits, temporal_work=temporal_work)
     if not right_result.available:
         return ExactTermResult(
             None,

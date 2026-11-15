@@ -16,6 +16,7 @@ from gnd.model import (
     iter_derivation_clauses,
 )
 from gnd.model._includes import guard_bytes, include_reason
+from gnd.model_index import ModelIndex
 from gnd.population import PopulationLoadError
 from gnd.terms import guard_uses_membership, where_uses_membership
 from gnd.witness import io as witness_io
@@ -102,6 +103,11 @@ def admit(model_bytes, candidate_bytes, model_format, candidate_format, referenc
         numeric_digits=limits.numeric_digits,
     )
     model, candidate, refs = witness_io.intake(md, pd, reference_inputs, limits=wl)
+    if any(
+        constraint.get("type") == "guarded" and "any_of" in (constraint.get("consequent") or {})
+        for _, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+    ):
+        raise Unsupported("guarded-disjunction-unsupported")
     if any(
         constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
         for constraint in model.constraints
@@ -409,7 +415,7 @@ def render_souffle(
         )
     except Unsupported as error:
         reason = str(error)
-        if reason not in {"membership-unsupported", "guarded-antecedent-filters-unsupported"}:
+        if reason not in {"membership-unsupported", "guarded-antecedent-filters-unsupported", "guarded-disjunction-unsupported"}:
             reason = "fragment-unsupported"
         return refused(2, reason)
     except ModelValidationError as error:

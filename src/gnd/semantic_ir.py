@@ -26,7 +26,7 @@ ADAPTER_REFUSALS = (
     "malformed-constraint",
 )
 OPERAND_KINDS = ("role", "variable", "literal", "clock")
-CONSEQUENT_KINDS = ("comparison", "atom", "absence", "exists", "")
+CONSEQUENT_KINDS = ("comparison", "atom", "absence", "exists", "any_of", "")
 FLAG_NAMES = ("exclusive", "exhaustive", "min-inclusive", "max-inclusive")
 RELATION_SOURCES = ("claimed", "computed-extension", "empty")
 
@@ -167,6 +167,7 @@ class IRConstraint:
     exists_where: tuple[tuple[str, IROperand, IROperand], ...] = field(default_factory=tuple)
     negate: tuple[IRAtom, ...] = field(default_factory=tuple)
     where: tuple[tuple[str, IROperand, IROperand], ...] = field(default_factory=tuple)
+    alternatives: tuple["IRConstraint", ...] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)

@@ -2340,36 +2340,48 @@ def _iter_guarded_atoms(constraint: Any):
     if isinstance(negate, list):
         for index, atom in enumerate(negate):
             yield f".negate[{index}]", atom
-    consequent = constraint.get("consequent")
+    for prefix, consequent in _guarded_alternatives(constraint.get("consequent")):
+        for kind in ("atom", "absence"):
+            if kind in consequent:
+                yield f"{prefix}.{kind}", consequent[kind]
+        exists = consequent.get("exists")
+        if isinstance(exists, dict) and isinstance(exists.get("atoms"), list):
+            for index, atom in enumerate(exists["atoms"]):
+                yield f"{prefix}.exists.atoms[{index}]", atom
+
+
+def _guarded_alternatives(consequent):
+    """Yield each single consequent and its document path suffix."""
     if not isinstance(consequent, dict):
         return
-    for kind in ("atom", "absence"):
-        if kind in consequent:
-            yield f".consequent.{kind}", consequent.get(kind)
-    exists = consequent.get("exists")
-    if isinstance(exists, dict) and isinstance(exists.get("atoms"), list):
-        for index, atom in enumerate(exists["atoms"]):
-            yield f".consequent.exists.atoms[{index}]", atom
+    alternatives = consequent.get("any_of")
+    if isinstance(alternatives, list):
+        for index, alternative in enumerate(alternatives):
+            if isinstance(alternative, dict):
+                yield f".consequent.any_of[{index}]", alternative
+    else:
+        yield ".consequent", consequent
+
+
+def _iter_guarded_scopes(doc):
+    """Use the shared antecedent with one consequent's local variable scope."""
+    for path, constraint in _iter_guarded_constraints(doc):
+        for prefix, consequent in _guarded_alternatives(constraint.get("consequent")):
+            yield path, prefix, {**constraint, "consequent": consequent}
 
 
 def _iter_guarded_consequent_terms(constraint: Any):
-    """Yield ``(suffix, term)`` for every term used by a guarded consequent."""
-    if not isinstance(constraint, dict):
-        return
+    """Yield path and term for each single consequent's grounding check."""
     consequent = constraint.get("consequent")
     if not isinstance(consequent, dict):
         return
     for kind in ("atom", "absence"):
         atom = consequent.get(kind)
-        if not isinstance(atom, dict):
-            continue
-        bind = atom_bind(atom)
-        if not isinstance(bind, dict):
-            continue
-        for role_name, term in bind.items():
-            yield f".consequent.{kind}.bind[{role_name}]", term
-    for path, comparison in _iter_guarded_comparisons(consequent, constraint.get("where")):
-        if path.startswith(".where[") or path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+        if isinstance(atom, dict):
+            for role_name, term in atom_bind(atom).items():
+                yield f".consequent.{kind}.bind[{role_name}]", term
+    for path, comparison in _iter_guarded_comparisons(consequent):
+        if path.endswith(".comparison") or comparison.get("operator") in MEMBERSHIP_OPERATORS:
             yield from _iter_guarded_comparison_terms(path, comparison)
 
 
@@ -2378,16 +2390,15 @@ def _iter_guarded_comparisons(consequent, where=None):
         for index, comparison in enumerate(where):
             if isinstance(comparison, dict):
                 yield f".where[{index}]", comparison
-    if not isinstance(consequent, dict):
-        return
-    direct = consequent.get("comparison")
-    if isinstance(direct, dict):
-        yield ".consequent.comparison", direct
-    exists = consequent.get("exists")
-    if isinstance(exists, dict) and isinstance(exists.get("where"), list):
-        for index, comparison in enumerate(exists["where"]):
-            if isinstance(comparison, dict):
-                yield f".consequent.exists.where[{index}]", comparison
+    for prefix, alternative in _guarded_alternatives(consequent):
+        direct = alternative.get("comparison")
+        if isinstance(direct, dict):
+            yield f"{prefix}.comparison", direct
+        exists = alternative.get("exists")
+        if isinstance(exists, dict) and isinstance(exists.get("where"), list):
+            for index, comparison in enumerate(exists["where"]):
+                if isinstance(comparison, dict):
+                    yield f"{prefix}.exists.where[{index}]", comparison
 
 
 def _iter_guarded_memberships(guard):
@@ -2581,11 +2592,13 @@ def _rule_guarded_literal_domain(doc: dict[str, Any]) -> list[ValidationIssue]:
                 variable = _variable_name(value)
                 if variable is None:
                     yield f"{suffix}.bind[{role}]", fact, role, value
-                elif suffix.startswith((".antecedent[", ".consequent.exists.atoms[")):
-                    sites.setdefault(variable, set()).add((fact, role))
+                elif suffix.startswith(".antecedent[") or ".exists.atoms[" in suffix:
+                    scope = "" if suffix.startswith(".antecedent[") else suffix.split(".exists.", 1)[0]
+                    sites.setdefault((scope, variable), set()).add((fact, role))
         for left, right, prefix in _iter_guarded_memberships(guard):
             variable = _variable_name(left)
-            roles_for_left = sorted(sites.get(variable, ()))
+            scope = prefix.split(".exists.", 1)[0] if ".exists." in prefix else ""
+            roles_for_left = sorted(sites.get(("", variable), set()) | sites.get((scope, variable), set()))
             for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
                 if isinstance(member, dict) and set(member) in ({"date"}, {"duration_days"}):
                     member = next(iter(member.values()))
@@ -2638,7 +2651,7 @@ class _GuardedLiteralDomainLimit(Exception):
 def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every guarded consequent variable is bound by its antecedent or exists atom."""
     issues: list[ValidationIssue] = []
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         bound: set[str] = set()
         antecedent = constraint.get("antecedent")
         if isinstance(antecedent, list):
@@ -2670,13 +2683,11 @@ def _rule_guarded_consequent_ground(doc: dict[str, Any]) -> list[ValidationIssue
             else "are not introduced by an antecedent bind"
         )
         for suffix, term in _iter_guarded_consequent_terms(constraint):
-            if suffix.startswith(".where["):
-                continue
             unbound = set(term_variables(term)) - allowed
             if unbound:
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}{suffix}",
+                        path=path + prefix + suffix.removeprefix(".consequent"),
                         message=(
                             f"consequent variables {sorted('$' + item for item in unbound)} "
                             f"{grounding_message}"
@@ -2735,8 +2746,8 @@ def _rule_guarded_filters(doc: dict[str, Any]) -> list[ValidationIssue]:
                         path=f"{path}{location}", message="Negative binding has an incompatible primitive.",
                         rule_id="semantic:guarded-binding-type",
                     ))
-        terms.extend((suffix, term) for suffix, term in _iter_guarded_consequent_terms(guard)
-                     if suffix.startswith(".where["))
+        for suffix, comparison in _iter_guarded_comparisons(None, guard.get("where")):
+            terms.extend(_iter_guarded_comparison_terms(suffix, comparison))
         for suffix, term in terms:
             unbound = set(term_variables(term)) - scopes.keys()
             if unbound:
@@ -2786,7 +2797,7 @@ def _guarded_nested_function_variables(term: Any) -> set[str]:
 def _rule_guarded_exists_range(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Exact-function variables must be positively range-restricted."""
     issues: list[ValidationIssue] = []
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         exists = consequent.get("exists") if isinstance(consequent, dict) else None
         if not isinstance(exists, dict):
@@ -2811,7 +2822,7 @@ def _rule_guarded_exists_range(doc: dict[str, Any]) -> list[ValidationIssue]:
         if unsafe:
             issues.append(
                 ValidationIssue(
-                    path=f"{path}.consequent.exists",
+                    path=f"{path}{prefix}.exists",
                     message=(
                         "exact where-term variables must occur in an antecedent or positive "
                         f"exists atom: {sorted('$' + item for item in unsafe)}"
@@ -2825,7 +2836,7 @@ def _rule_guarded_exists_range(doc: dict[str, Any]) -> list[ValidationIssue]:
 def _rule_guarded_exists_where_bound(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every exists.where variable is antecedent-bound or positively exists-bound."""
     issues: list[ValidationIssue] = []
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         exists = consequent.get("exists") if isinstance(consequent, dict) else None
         if not isinstance(exists, dict):
@@ -2849,7 +2860,7 @@ def _rule_guarded_exists_where_bound(doc: dict[str, Any]) -> list[ValidationIssu
             if unbound:
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.exists.where[{index}]",
+                        path=f"{path}{prefix}.exists.where[{index}]",
                         message=(
                             "where variables must be introduced by an antecedent or positive "
                             f"exists atom: {sorted('$' + item for item in unbound)}"
@@ -2942,7 +2953,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
             primitive_cache[object_type_id] = resolve_primitive(object_type_id, primitive_model)
         return primitive_cache[object_type_id]
 
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         comparison = consequent.get("comparison") if isinstance(consequent, dict) else None
         if not isinstance(comparison, dict) or not {"left", "right"} <= comparison.keys():
@@ -2981,7 +2992,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
         }
         if comparison.get("operator") in MEMBERSHIP_OPERATORS:
             issues.extend(_membership_comparison_issues(
-                f"{path}.consequent.comparison", comparison, collapsed_primitives
+                f"{path}{prefix}.comparison", comparison, collapsed_primitives
             ))
             continue
         if isinstance(left, dict) or isinstance(right, dict):
@@ -2991,7 +3002,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
                 if analysis.issue is not None:
                     issues.append(
                         ValidationIssue(
-                            path=f"{path}.consequent.comparison.{side}",
+                            path=f"{path}{prefix}.comparison.{side}",
                             message=f"guarded term is invalid: {analysis.issue}",
                             rule_id=analysis.issue,
                         )
@@ -3007,7 +3018,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
             ):
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.comparison",
+                        path=f"{path}{prefix}.comparison",
                         message=(
                             "guarded comparison operands have incompatible resolved "
                             f"types: {left_analysis.primitive!r} and "
@@ -3062,7 +3073,7 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
         if compatible is False:
             issues.append(
                 ValidationIssue(
-                    path=f"{path}.consequent.comparison",
+                    path=f"{path}{prefix}.comparison",
                     message=(
                         "guarded comparison operands have incompatible resolved "
                         f"types: {left!r} and {right!r}"
@@ -3092,7 +3103,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
             primitive_cache[object_type_id] = resolve_primitive(object_type_id, primitive_model)
         return primitive_cache[object_type_id]
 
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         exists = consequent.get("exists") if isinstance(consequent, dict) else None
         if not isinstance(exists, dict):
@@ -3128,7 +3139,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
                 continue
             if comparison.get("operator") in MEMBERSHIP_OPERATORS:
                 issues.extend(_membership_comparison_issues(
-                    f"{path}.consequent.exists.where[{index}]", comparison, collapsed
+                    f"{path}{prefix}.exists.where[{index}]", comparison, collapsed
                 ))
                 continue
             left, right = comparison.get("left"), comparison.get("right")
@@ -3140,7 +3151,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
                 if analysis.issue is not None:
                     issues.append(
                         ValidationIssue(
-                            path=f"{path}.consequent.exists.where[{index}].{side}",
+                            path=f"{path}{prefix}.exists.where[{index}].{side}",
                             message=f"guarded exists term is invalid: {analysis.issue}",
                             rule_id=analysis.issue,
                         )
@@ -3155,7 +3166,7 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
             ):
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.exists.where[{index}]",
+                        path=f"{path}{prefix}.exists.where[{index}]",
                         message=(
                             "guarded exists comparison operands have incompatible resolved "
                             f"types: {left_primitive!r} and {right_primitive!r}"
@@ -4559,7 +4570,7 @@ def _rule_term_argument_type(doc: dict[str, Any]) -> list[ValidationIssue]:
 
 def _rule_term_non_finite_number(doc: dict[str, Any]) -> list[ValidationIssue]:
     issues = _filter_derivation_term_issues(doc, rule_id="semantic:term-non-finite-number")
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         consequent = constraint.get("consequent")
         comparison = consequent.get("comparison") if isinstance(consequent, dict) else None
         if not isinstance(comparison, dict):
@@ -4569,7 +4580,7 @@ def _rule_term_non_finite_number(doc: dict[str, Any]) -> list[ValidationIssue]:
             if isinstance(operand, float) and not math.isfinite(operand):
                 issues.append(
                     ValidationIssue(
-                        path=f"{path}.consequent.comparison.{side}",
+                        path=f"{path}{prefix}.comparison.{side}",
                         message="guarded term is invalid: semantic:term-non-finite-number",
                         rule_id="semantic:term-non-finite-number",
                     )
@@ -4877,7 +4888,7 @@ def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
     for _, constraint in _iter_guarded_constraints(doc):
         consequent = constraint.get("consequent")
         for path, comparison in _iter_guarded_comparisons(consequent, constraint.get("where")):
-            if path.startswith(".where[") or path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+            if path.startswith(".where[") or path.endswith(".comparison") or comparison.get("operator") in MEMBERSHIP_OPERATORS:
                 for side in ("left", "right"):
                     allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
     for _, _, clause in _iter_structured_fact_derivations(doc):
@@ -4918,7 +4929,7 @@ def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
                     rule_id="semantic:temporal-comparison-type",
                 )
             )
-    for path, constraint in _iter_guarded_constraints(doc):
+    for path, prefix, constraint in _iter_guarded_scopes(doc):
         observed: dict[str, set[str]] = {}
         for _, atom in _iter_guarded_atoms(constraint):
             if not isinstance(atom, dict):
@@ -4936,7 +4947,7 @@ def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
             if "Duration" in choices and len(choices) > 1:
                 issues.append(
                     ValidationIssue(
-                        path=path,
+                        path=path if prefix == ".consequent" else path + prefix,
                         message=f"Variable ${variable} mixes Duration and another primitive.",
                         rule_id="semantic:guarded-binding-type",
                     )

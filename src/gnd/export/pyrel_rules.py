@@ -2299,6 +2299,11 @@ def render(model_path: Path, target: str) -> str:
     model = _Model(doc)
     reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything
     if any(
+        constraint.get("type") == "guarded" and "any_of" in (constraint.get("consequent") or {})
+        for _, constraint, _ in ModelIndex.for_model(loaded).iter_constraints_shared()
+    ):
+        raise ExportInputError("guarded-disjunction-unsupported")
+    if any(
         constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
         for constraint in loaded.constraints
     ):

@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "reason": "GC3 registers bounded disjunction evaluation, projection, synthesis and unchanged legacy guarded join semantics.",
+  "predecessor": ".gnd-planning/milestones/guarded-rule-clauses/evidence/GC2/dynamic-query-successor.json",
+  "predecessor_sha256": "432e4850a5e55b8b12c77a243f7dc0d42fde4fea0c7ae31fc98b7a126877e964",
+  "removed": [
+    [
+      "src/gnd/semantic_adapter.py",
+      "_family_adapt_guarded",
+      "comparison[key]",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_family_adapt_guarded",
+      "consequent[kind]",
+      3
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_family_adapt_guarded",
+      "primitives.get(other, '')",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_family_adapt_guarded",
+      "primitives.get(term, '')",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_family_adapt_guarded",
+      "terms[1 - index]",
+      1
+    ],
+    [
+      "src/gnd/universe.py",
+      "_family_implemented_guarded",
+      "consequent.get(key)",
+      1
+    ]
+  ],
+  "added": [
+    [
+      "src/gnd/checker/_reports.py",
+      "ConstraintVerdict",
+      "tuple[int, ...]",
+      1
+    ],
+    [
+      "src/gnd/checker/_reports.py",
+      "ConstraintVerdict",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/checker/_reports.py",
+      "ConstraintVerdict",
+      "tuple[str, tuple[str, ...], tuple[int, ...]]",
+      1
+    ],
+    [
+      "src/gnd/checker/_reports.py",
+      "ConstraintVerdict",
+      "tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...]",
+      1
+    ],
+    [
+      "src/gnd/checker/_reports.py",
+      "ConstraintVerdict",
+      "tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "CorrespondedFinding",
+      "tuple[int, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "CorrespondedFinding",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "CorrespondedFinding",
+      "tuple[str, tuple[str, ...], tuple[int, ...]]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "CorrespondedFinding",
+      "tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "CorrespondedFinding",
+      "tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "ProjectedFinding",
+      "tuple[int, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "ProjectedFinding",
+      "tuple[str, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "ProjectedFinding",
+      "tuple[str, tuple[str, ...], tuple[int, ...]]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "ProjectedFinding",
+      "tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "ProjectedFinding",
+      "tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_guarded_alternative_failure",
+      "alternate.exists_atoms[i]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_disjunction",
+      "details_by_binding[tuple(map(_scalar_identity, row))]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_disjunction",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_disjunction",
+      "list[tuple[int, ...]]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_disjunction",
+      "missing[position]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_disjunction",
+      "states[position]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_disjunction",
+      "tuple[int, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_exists_verdict",
+      "initial[name]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_exists_verdict",
+      "key[pos]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_exists_verdict",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_exists_verdict",
+      "list[tuple[int, ...]]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_exists_verdict",
+      "tuple[int, ...]",
+      1
+    ],
+    [
+      "src/gnd/correspondence.py",
+      "_indexed_guarded_verdict",
+      "list[int]",
+      1
+    ],
+    [
+      "src/gnd/model_verbalization.py",
+      "_guarded_consequent_cnl",
+      "dict[str, Any]",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_adapt_guarded_alternative",
+      "comparison[key]",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_adapt_guarded_alternative",
+      "consequent[kind]",
+      3
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_adapt_guarded_alternative",
+      "primitives.get(other, '')",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_adapt_guarded_alternative",
+      "primitives.get(term, '')",
+      1
+    ],
+    [
+      "src/gnd/semantic_adapter.py",
+      "_adapt_guarded_alternative",
+      "terms[1 - index]",
+      1
+    ],
+    [
+      "src/gnd/semantic_ir.py",
+      "IRConstraint",
+      "tuple['IRConstraint', ...]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "_reference_exists_state",
+      "facts.get(atom.fact_type)",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "_reference_exists_state",
+      "relations[atom.fact_type]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "_reference_exists_state",
+      "row[column]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "_reference_guarded_disjunction",
+      "relations[atom.fact_type]",
+      1
+    ],
+    [
+      "src/gnd/semantic_spec.py",
+      "guarded_alternative_available",
+      "relations.get(atom.fact_type)",
+      1
+    ],
+    [
+      "src/gnd/synth/guarded_cases.py",
+      "confirmation_work",
+      "case.facts.get(atom['fact_type'], ())",
+      1
+    ],
+    [
+      "src/gnd/terms.py",
+      "compare_terms",
+      "list[int]",
+      1
+    ]
+  ],
+  "result_distinct_rows": 7711,
+  "result_occurrences": 9582
+}

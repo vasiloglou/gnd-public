@@ -1638,7 +1638,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - out: ExportResult containing program.dl, fact inputs, symbol/origin maps, retained inputs and manifest, or refusal.
 - status: canonical
 - modules: src/gnd/export/souffle.py, src/gnd/export/souffle_types.py
-- uses: infra.input_policy, model.loading, model.population_loading, model.scalar_terms, witness.schema
+- uses: infra.input_policy, model.loading, model.population_loading, model.query_index, model.scalar_terms, witness.schema
 - used_by: export.lean_compile, export.lean_lowering, export.service, export.souffle_bundle, export.souffle_runtime
 - tests: tests/test_public_souffle_input_contract.py, tests/test_public_souffle_successors.py, tests/test_public_derivation_parity_tools.py
 - notes: Export records every constraint as excluded and claims no constraint verdict or assurance. Result types and limit ceilings belong here with the lowering they constrain.
@@ -2433,7 +2433,7 @@ Each entry is written by hand (`does`, `verbs`, `status`, `modules`, `tests`). T
 - status: canonical
 - modules: src/gnd/model_index.py
 - uses: infra.artifacts, model.address, model.document, model.reference_resolution
-- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +36 more (graph.md)
+- used_by: check.batch, check.compiled_obligations, check.element_coverage, check.evaluation_feedback, check.incremental_reuse, check.population_structure, check.service, check.snapshot_decision, check.universe, checker.evaluate, cli.api, codegen.emit, … +37 more (graph.md)
 - tests: tests/test_rf6_index.py, tests/test_tp1_index_scope.py
 - in: Loaded Model and query identifiers.
 - out: Detached lookup results and scoped ModelIndex snapshots.

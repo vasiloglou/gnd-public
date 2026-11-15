@@ -333,13 +333,13 @@ Deterministic offline lowering to Souffle's bounded relational fragment.
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Unsupported` | class(ValueError) | 40 | Valid input outside the selected fragment. |
-| `wire(document)` | function | 44 | (no docstring) |
-| `digest(data)` | function | 48 | (no docstring) |
-| `parse(raw, fmt, limits)` | function | 52 | (no docstring) |
-| `token(value, primitive)` | function | 72 | (no docstring) |
-| `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 90 | (no docstring) |
-| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 219 | (no docstring) |
+| `Unsupported` | class(ValueError) | 41 | Valid input outside the selected fragment. |
+| `wire(document)` | function | 45 | (no docstring) |
+| `digest(data)` | function | 49 | (no docstring) |
+| `parse(raw, fmt, limits)` | function | 53 | (no docstring) |
+| `token(value, primitive)` | function | 73 | (no docstring) |
+| `admit(model_bytes, candidate_bytes, model_format, candidate_format, reference_inputs, limits)` | function | 91 | (no docstring) |
+| `render_souffle(model_bytes, candidate_bytes, *, model_format, candidate_format, reference_inputs, l…` | function | 225 | (no docstring) |
 
 ## gnd.export.souffle_cli — `src/gnd/export/souffle_cli.py`
 Components: export.command

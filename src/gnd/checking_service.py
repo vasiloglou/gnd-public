@@ -284,7 +284,11 @@ def _run_check_raw(
             allow_vacuous=allow_vacuous and wire_version == 15,
         )
         if guarded_diagnostics and wire_version == 15:
-            payload["schema_version"] = 16
+            disjunctive = model is not None and any(
+                constraint.get("type") == "guarded" and "any_of" in (constraint.get("consequent") or {})
+                for _, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+            )
+            payload["schema_version"] = 17 if disjunctive else 16
             if report is not None:
                 for row, verdict in zip(payload["verdicts"], report.verdicts, strict=True):
                     if verdict.constraint_type == "guarded":
@@ -292,6 +296,22 @@ def _run_check_raw(
                             "binding_count": verdict.binding_count,
                             "first_empty_atom_index": verdict.first_empty_atom_index,
                         }
+                        if verdict.guarded_alternatives:
+                            row["guarded_alternatives"] = [
+                                {
+                                    "binding": binding,
+                                    "alternatives": [
+                                        {
+                                            "index": index, "reason": reason,
+                                            "fact_types": list(facts), "atom_indexes": list(atom_indexes),
+                                        }
+                                        for index, (reason, facts, atom_indexes) in enumerate(alternatives)
+                                    ],
+                                }
+                                for binding, alternatives in zip(
+                                    verdict.offending_facts, verdict.guarded_alternatives, strict=True
+                                )
+                            ]
         return payload
 
 

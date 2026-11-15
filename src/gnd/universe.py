@@ -1,7 +1,6 @@
 """RF3 shared dependency home; algorithms retain predecessor semantics."""
 from __future__ import annotations
 
-from collections.abc import Mapping
 from contextvars import ContextVar
 from typing import Any, Literal  # noqa: F401 -- compatibility export
 
@@ -486,29 +485,27 @@ def _family_implemented_value_comparison(constraint, fact_type):
 
 def _family_implemented_guarded(constraint, fact_type):
     antecedent = constraint.get("antecedent")
+    if not isinstance(antecedent, list) or not antecedent or not all(map(atom_has_bind, antecedent)):
+        return False
     consequent = constraint.get("consequent")
-    exists = consequent.get("exists") if isinstance(consequent, Mapping) else None
-    exists_atoms = exists.get("atoms") if isinstance(exists, Mapping) else None
-    return (
-        isinstance(antecedent, list)
-        and bool(antecedent)
-        and all(atom_has_bind(atom) for atom in antecedent)
-        and isinstance(consequent, dict)
-        and sum(key in consequent for key in ("comparison", "atom", "absence", "exists")) == 1
-        and all(
-            isinstance(consequent.get(key), dict)
-            for key in ("comparison", "atom", "absence", "exists")
-            if key in consequent
+    if isinstance(consequent, dict) and set(consequent) == {"any_of"}:
+        alternatives = consequent["any_of"]
+        return isinstance(alternatives, list) and len(alternatives) >= 2 and all(
+            _implemented_guarded_alternative(item) for item in alternatives
         )
-        and (
-            "exists" not in consequent
-            or (
-                isinstance(exists_atoms, list)
-                and bool(exists_atoms)
-                and all(atom_has_bind(atom) for atom in exists_atoms)
-            )
-        )
-    )
+    return _implemented_guarded_alternative(consequent)
+
+
+def _implemented_guarded_alternative(consequent):
+    if not isinstance(consequent, dict) or len(consequent) != 1:
+        return False
+    kind, value = next(iter(consequent.items()))
+    if kind not in ("comparison", "atom", "absence", "exists") or not isinstance(value, dict):
+        return False
+    if kind != "exists":
+        return True
+    atoms = value.get("atoms")
+    return isinstance(atoms, list) and bool(atoms) and all(map(atom_has_bind, atoms))
 
 
 def _family_implemented_subtype_partition(constraint, fact_type):

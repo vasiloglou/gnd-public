@@ -294,9 +294,10 @@ def _comparison_cnl(comparison: dict[str, Any], *, symbolic=False, fallbacks=Non
     return f"{_guarded_term(comparison.get('left'), fallbacks)} {phrase} {rendered}"
 
 
-def _guarded_cnl(item: dict[str, Any]) -> str:
-    antecedent = " and ".join(_guarded_atom(atom) for atom in item.get("antecedent") or [])
-    consequent = item.get("consequent") or {}
+def _guarded_consequent_cnl(consequent: dict[str, Any]) -> str:
+    if "any_of" in consequent:
+        choices = (_guarded_consequent_cnl(alternative) for alternative in consequent["any_of"])
+        return "at least one of these alternatives must hold (" + ") or (".join(choices) + ")"
     if "comparison" in consequent:
         comparison = consequent.get("comparison") or {}
         conclusion = _comparison_cnl(comparison)
@@ -314,6 +315,12 @@ def _guarded_cnl(item: dict[str, Any]) -> str:
         )
     else:
         conclusion = f"no {_guarded_atom(consequent.get('absence'))} fact holds"
+    return conclusion
+
+
+def _guarded_cnl(item: dict[str, Any]) -> str:
+    antecedent = " and ".join(_guarded_atom(atom) for atom in item.get("antecedent") or [])
+    conclusion = _guarded_consequent_cnl(item.get("consequent") or {})
     comparisons = [_comparison_cnl(row) for row in item.get("where") or []]
     if comparisons:
         antecedent += " and " + " and ".join(comparisons)

@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping, Sequence
 from contextvars import ContextVar
 from dataclasses import dataclass, fields, replace
-from fractions import Fraction
 from functools import cmp_to_key
 from types import FunctionType
 from typing import Any, Literal, get_origin
@@ -39,7 +38,7 @@ from gnd.semantic_rows import (
 from gnd.semantic_rows import (
     scalar_identity as _scalar_identity,
 )
-from gnd.terms import MEMBERSHIP_OPERATORS, compare_terms
+from gnd.terms import MEMBERSHIP_OPERATORS
 
 _SPEC_GUARDED_ATOM_STATE = semantic_spec.guarded_atom_state
 GUARDED_EXISTS_WORK_LIMIT = 200_000
@@ -64,6 +63,7 @@ class CorrespondedFinding:
     applicable_scope_ids: tuple[str, ...]
     binding_count: int | None = None
     first_empty_atom_index: int | None = None
+    guarded_alternatives: tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -87,6 +87,7 @@ class ProjectedFinding:
     fact_refs: tuple[tuple[str, int], ...] = ()
     binding_count: int | None = None
     first_empty_atom_index: int | None = None
+    guarded_alternatives: tuple[tuple[tuple[str, tuple[str, ...], tuple[int, ...]], ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -530,6 +531,9 @@ def _indexed_guarded_verdict(
     snapshot: SnapshotIR,
     names: tuple[str, ...],
     bindings: tuple[tuple[Scalar, ...], ...],
+    *,
+    states: list[int] | None = None,
+    budget: semantic_spec.GuardedDisjunctionBudget | None = None,
 ) -> tuple[SnapshotVerdict, str | None, tuple[tuple[Scalar, ...], ...]]:
     """Evaluate a guarded join using representation-format.md scalar identity."""
     malformed = (
@@ -571,6 +575,8 @@ def _indexed_guarded_verdict(
         consequent_terms = tuple(prepared)
         consequent_index = set()
         for row in relation.rows:
+            if budget is not None:
+                budget.charge(1 + len(row))
             if len(row) != len(fact.roles) or any(value is None for value in row):
                 return "unchecked", semantic_spec.unchecked_reason_of(constraint, snapshot), ()
             consequent_index.add(
@@ -581,7 +587,10 @@ def _indexed_guarded_verdict(
     undecidable = False
     for binding in bindings:
         if constraint.variant == "comparison":
-            state = semantic_spec.guarded_comparison_state(constraint, names, binding)
+            if budget is None:
+                state = semantic_spec.guarded_comparison_state(constraint, names, binding)
+            else:
+                state = budget.comparison_state(constraint.operator, *constraint.operands, names, binding)
         else:
             if semantic_spec.guarded_atom_state is not _SPEC_GUARDED_ATOM_STATE:
                 state = semantic_spec.guarded_atom_state(
@@ -589,19 +598,22 @@ def _indexed_guarded_verdict(
                 )
             else:
                 ground: list[Scalar | None] = [None] * len(consequent_terms)
+                invalid_ground = False
                 for column, term in consequent_terms:
                     value = semantic_spec.guarded_operand_value(term, names, binding)
                     if value is None or ground[column] is not None:
-                        undecidable = True
+                        invalid_ground = True
                         break
                     ground[column] = value
-                if undecidable or any(value is None for value in ground):
+                if invalid_ground or any(value is None for value in ground):
                     state = -1
                 else:
                     key = tuple(_scalar_identity(value) for value in ground if value is not None)
                     state = int(key in consequent_index) if consequent_index is not None else -1
             if constraint.variant == "absence" and state >= 0:
                 state = 1 - state
+        if states is not None:
+            states.append(state)
         if state < 0:
             undecidable = True
         elif state == 0:
@@ -616,28 +628,6 @@ def _indexed_guarded_verdict(
     return verdict, None, witness
 
 
-def _ir_scalar_value(value: Scalar) -> Any:
-    if value.kind == "number":
-        rational = Fraction(value.num, value.den)
-        return rational.numerator if rational.denominator == 1 else rational
-    if value.kind == "boolean":
-        return value.token == "true"
-    return value.token
-
-
-def _ir_term_syntax(operand: Any) -> Any:
-    if operand.kind == "variable":
-        return operand.variable
-    if operand.kind == "literal":
-        return _ir_scalar_value(operand.literal) if operand.literal is not None else None
-    if operand.kind == "function":
-        return {
-            "fn": operand.function,
-            "args": [_ir_term_syntax(argument) for argument in operand.arguments],
-        }
-    return None
-
-
 def _indexed_guarded_exists_verdict(
     constraint: IRConstraint,
     snapshot: SnapshotIR,
@@ -647,6 +637,9 @@ def _indexed_guarded_exists_verdict(
     *,
     work_counts: dict[str, int] | None = None,
     reference_work: ReferenceJoinWork | None = None,
+    states: list[int] | None = None,
+    missing_atoms: list[tuple[int, ...]] | None = None,
+    budget: semantic_spec.GuardedDisjunctionBudget | None = None,
 ) -> tuple[SnapshotVerdict, str | None, tuple[tuple[Scalar, ...], ...]]:
     """Evaluate a bounded joint exists join over the original covered relations."""
     if (
@@ -697,6 +690,8 @@ def _indexed_guarded_exists_verdict(
         nonlocal work
         if reference_work is not None and category == "merged_bindings":
             reference_work.charge()
+        if budget is not None:
+            budget.charge(amount)
         work += amount
         if category is not None:
             counts[category] = counts.get(category, 0) + amount
@@ -722,6 +717,8 @@ def _indexed_guarded_exists_verdict(
         candidates: list[dict[str, Scalar]] = []
         seen_candidates: set[tuple[tuple[str, str], ...]] = set()
         for row in relation.rows:
+            if budget is not None:
+                budget.charge(len(row))
             if not consume(category="candidate_rows"):
                 return "unchecked", "guarded-exists-work-limit", ()
             if len(row) != len(fact.roles) or any(value is None for value in row):
@@ -759,7 +756,9 @@ def _indexed_guarded_exists_verdict(
             dict[tuple[tuple[str, str], ...], list[dict[str, Scalar]]],
         ]
     ] = []
+    standalone_indices = []
     bound_names = set(names)
+    antecedent_names = set(names)
     for candidates in candidates_by_atom:
         candidate_names = set(candidates[0]) if candidates else set()
         shared = tuple(
@@ -772,6 +771,14 @@ def _indexed_guarded_exists_verdict(
             key = tuple(_scalar_identity(candidate[name]) for name in shared)
             index.setdefault(key, []).append(candidate)
         index_specs.append((shared, index))
+        if missing_atoms is not None:
+            antecedent_shared = tuple(name for name in shared if name in antecedent_names)
+            positions = tuple(shared.index(name) for name in antecedent_shared)
+            if budget is not None:
+                budget.charge(len(index))
+            standalone_indices.append((
+                antecedent_shared, {tuple(key[pos] for pos in positions) for key in index},
+            ))
         bound_names.update(candidate_names)
 
     violations: list[tuple[Scalar, ...]] = []
@@ -797,23 +804,14 @@ def _indexed_guarded_exists_verdict(
             if not partials:
                 break
         witnessed = False
+        antecedent_undefined = False
         for assignment in partials:
-            python_binding = {
-                name.removeprefix("$"): _ir_scalar_value(value)
-                for name, value in assignment.items()
-            }
+            python_binding = semantic_spec.guarded_term_binding(assignment)
             satisfies = True
             assignment_undefined = False
             for operator, left, right in constraint.exists_where:
-                result = compare_terms(
-                    operator,
-                    (temporal_guarded.term_syntax(left) if operator in MEMBERSHIP_OPERATORS
-                     else _ir_term_syntax(left)),
-                    right.membership if operator in MEMBERSHIP_OPERATORS else _ir_term_syntax(right),
-                    python_binding,
-                    bound_cross_product=True,
-                    left_primitive=left.primitive,
-
+                result = semantic_spec.guarded_exists_comparison(
+                    operator, left, right, python_binding, budget=budget,
                 )
                 counts["term_nodes"] += result.nodes
                 counts["term_operations"] += result.operations
@@ -832,11 +830,22 @@ def _indexed_guarded_exists_verdict(
                 elif result.value is not True:
                     satisfies = False
             if assignment_undefined:
+                antecedent_undefined = True
                 undefined_bindings.append(
                     tuple(assignment[name] for name in variable_order if name in assignment)
                 )
             if satisfies:
                 witnessed = True
+        if states is not None:
+            states.append(-1 if antecedent_undefined else int(witnessed))
+        if missing_atoms is not None:
+            if budget is not None and not witnessed and not antecedent_undefined:
+                budget.charge(len(standalone_indices))
+            missing_atoms.append(tuple(
+                position for position, (shared, keys) in enumerate(standalone_indices)
+                if not witnessed and not antecedent_undefined
+                and tuple(_scalar_identity(initial[name]) for name in shared) not in keys
+            ))
         if not witnessed:
             violations.append(antecedent)
 
@@ -848,11 +857,75 @@ def _indexed_guarded_exists_verdict(
         )
     witness = _canonical_rows(violations)
     if not witness:
-        if constraint.exists_where:
+        if constraint.exists_where and states is None:
             record_branch("snapshot:guarded:exists:exact-success")
         return "pass", None, ()
     verdict: SnapshotVerdict = "warning" if constraint.modality == "deontic" else "fail"
     return verdict, None, witness
+
+
+def _indexed_guarded_disjunction(constraint, snapshot, names, bindings, reference_work):
+    """Evaluate each alternative over the same bindings and share the work ceiling."""
+    budget = semantic_spec.GuardedDisjunctionBudget()
+    alternatives = []
+    relations = {relation.fact_type: relation for relation in snapshot.relations}
+    covers, unavailable = semantic_spec.guarded_relation_availability(snapshot)
+    try:
+        for alternate in constraint.alternatives:
+            budget.charge(1 + len(bindings))
+            states: list[int] = []
+            missing: list[tuple[int, ...]] = []
+            available = semantic_spec.guarded_alternative_available(alternate, relations, covers, unavailable)
+            if available and alternate.variant == "exists":
+                _verdict, reason, _witness = _indexed_guarded_exists_verdict(
+                    alternate, snapshot, names, bindings,
+                    covers,
+                    reference_work=reference_work, states=states,
+                    missing_atoms=missing, budget=budget,
+                )
+                if reason == "guarded-exists-work-limit":
+                    raise semantic_spec.GuardedDisjunctionLimit
+            elif available:
+                _indexed_guarded_verdict(
+                    alternate, snapshot, names, bindings, states=states, budget=budget,
+                )
+            alternatives.append((alternate, states or [-1] * len(bindings), missing))
+    except (semantic_spec.GuardedDisjunctionLimit, ReferenceJoinLimit):
+        return ("unchecked", "guarded-disjunction-work-limit", ()), ()
+    failures = []
+    for position, binding in enumerate(bindings):
+        combined = semantic_spec.guarded_disjunction_state(
+            states[position] for _, states, _ in alternatives
+        )
+        if combined < 0:
+            return ("unchecked", "guarded-disjunction-undecidable", ()), ()
+        if combined == 0:
+            details = tuple(
+                _guarded_alternative_failure(alternate, missing[position] if missing else ())
+                for alternate, _, missing in alternatives
+            )
+            failures.append((binding, details))
+    if not failures:
+        return ("pass", None, ()), ()
+    witness = _canonical_rows(binding for binding, _ in failures)
+    details_by_binding = {
+        tuple(map(_scalar_identity, binding)): details for binding, details in failures
+    }
+    diagnostics = tuple(details_by_binding[tuple(map(_scalar_identity, row))] for row in witness)
+    verdict = "warning" if constraint.modality == "deontic" else "fail"
+    return (verdict, None, witness), diagnostics
+
+
+def _guarded_alternative_failure(alternate, missing):
+    if alternate.variant == "comparison":
+        return "false-comparison", (), ()
+    if alternate.variant == "atom":
+        return "missing-required-fact", (alternate.consequent[0].fact_type,), ()
+    if alternate.variant == "absence":
+        return "present-forbidden-fact", (alternate.consequent[0].fact_type,), ()
+    if missing:
+        return "missing-exists-atom", tuple(alternate.exists_atoms[i].fact_type for i in missing), missing
+    return "no-joint-witness", (), ()
 
 
 def evaluation_snapshot(snapshot: SnapshotIR, family: str) -> SnapshotIR:
@@ -893,6 +966,7 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
             binding_count, first_empty_atom_index = observation
         except ReferenceJoinLimit:
             work_exceeded = True
+    guarded_alternatives = ()
     filter_reason = None
     filter_empty = False
     if filtered_guard and guarded_valid and guarded_bindings and applicability == "evaluate":
@@ -928,7 +1002,11 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
                 and guarded_valid
                 and guarded_bindings is not None
             ):
-                if constraint.variant == "exists":
+                if constraint.variant == "any_of":
+                    indexed, guarded_alternatives = _indexed_guarded_disjunction(
+                        constraint, adapted.snapshot, guarded_names, guarded_bindings, reference_work,
+                    )
+                elif constraint.variant == "exists":
                     try:
                         indexed = _indexed_guarded_exists_verdict(
                             constraint,
@@ -1015,6 +1093,7 @@ def _evaluate_constraint(adapted, constraint, aliases, reference_work):
             applicable_scope_ids=(scope_id,),
             binding_count=binding_count,
             first_empty_atom_index=first_empty_atom_index if binding_count == 0 else None,
+            guarded_alternatives=guarded_alternatives,
         )
 
 
@@ -1168,6 +1247,7 @@ def project_reference_limit(
         fact_refs=_subject_occurrences(finding.constraint_id, observation),
         binding_count=None,
         first_empty_atom_index=None,
+        guarded_alternatives=(),
     )
 
 
@@ -1206,6 +1286,7 @@ def project_finding(
         tuple(sorted(coordinates)),
         finding.binding_count,
         finding.first_empty_atom_index,
+        finding.guarded_alternatives,
     )
 
 

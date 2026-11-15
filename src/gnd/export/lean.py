@@ -820,6 +820,11 @@ def render_lean(
         )
         model, candidate, refs = witness_io.intake(md, pd, reference_inputs, limits=wl)
         if any(
+            constraint.get("type") == "guarded" and "any_of" in (constraint.get("consequent") or {})
+            for _, constraint, _ in ModelIndex.for_model(model).iter_constraints_shared()
+        ):
+            return refused(2, "guarded-disjunction-unsupported")
+        if any(
             constraint.get("type") == "guarded" and (constraint.get("negate") or constraint.get("where"))
             for constraint in model.constraints
         ):

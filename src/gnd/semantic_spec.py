@@ -13,7 +13,7 @@ from fractions import Fraction
 from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.graphs import strongly_connected_components
 from gnd.semantic_ir import IRConstraint, IRFactType, Scalar, SnapshotIR
-from gnd.terms import MEMBERSHIP_OPERATORS, membership_verdict
+from gnd.terms import MEMBERSHIP_OPERATORS, compare_terms, membership_verdict
 
 
 def scalar_identical(left: Scalar, right: Scalar) -> bool:
@@ -1813,6 +1813,189 @@ def guarded_filtered_bindings(constraint, snapshot, names, bindings):
     return tuple(survivors), unknown_reason
 
 
+_GUARDED_DISJUNCTION_WORK_LIMIT = 200_000
+
+
+class GuardedDisjunctionLimit(Exception):
+    """A disjunction exceeded its shared evaluation budget."""
+
+
+class GuardedDisjunctionBudget:
+    def __init__(self) -> None:
+        self.work = 0
+        self.temporal_work = [0]
+
+    def charge(self, amount: int = 1) -> None:
+        self.work += amount
+        if self.work > _GUARDED_DISJUNCTION_WORK_LIMIT:
+            raise GuardedDisjunctionLimit
+
+    def comparison_state(self, operator, left, right, names, binding):
+        state = guarded_pair_state(
+            operator, left, right, names, binding, temporal_work=self.temporal_work,
+        )
+        if state < 0 and self.temporal_work[0] >= 10_000:
+            raise GuardedDisjunctionLimit
+        return state
+
+
+def guarded_term_binding(binding):
+    return {name.removeprefix("$"): _guarded_term_scalar(value) for name, value in binding.items()}
+
+
+def _guarded_term_scalar(value):
+    if value.kind == "number":
+        rational = Fraction(value.num, value.den)
+        return rational.numerator if rational.denominator == 1 else rational
+    if value.kind == "boolean":
+        return value.token == "true"
+    return value.token
+
+
+def _guarded_term_syntax(operand, *, keep_tags=False):
+    if operand.kind == "variable":
+        return operand.variable
+    if operand.kind == "function":
+        return {"fn": operand.function, "args": [
+            _guarded_term_syntax(argument, keep_tags=keep_tags) for argument in operand.arguments
+        ]}
+    value = _guarded_term_scalar(operand.literal) if operand.literal is not None else None
+    if keep_tags and operand.tagged:
+        return {"date" if operand.primitive == "Date" else "duration_days": value}
+    return value
+
+
+def guarded_exists_comparison(operator, left, right, binding, *, budget=None):
+    membership = operator in MEMBERSHIP_OPERATORS
+    result = compare_terms(
+        operator,
+        _guarded_term_syntax(left, keep_tags=membership),
+        right.membership if membership else _guarded_term_syntax(right),
+        binding,
+        bound_cross_product=True,
+        left_primitive=left.primitive,
+        temporal_work=None if budget is None else budget.temporal_work,
+    )
+    if budget is not None and result.reason == "term:temporal-work-limit":
+        raise GuardedDisjunctionLimit
+    return result
+
+
+def guarded_relation_availability(snapshot):
+    """Separate declared covers from computed relations whose evaluation is unavailable."""
+    unavailable = {
+        fact.id for fact in snapshot.fact_types
+        if fact.relation_source == "computed-extension" and fact.id not in snapshot.computed_available
+    }
+    return (set(snapshot.covers) | set(snapshot.computed_available)) - unavailable, unavailable
+
+
+def guarded_alternative_available(alternate, relations, covers, unavailable):
+    for atom in (*alternate.consequent, *alternate.exists_atoms):
+        relation = relations.get(atom.fact_type)
+        if atom.fact_type in unavailable or relation is None or relation.refusals:
+            return False
+        if alternate.variant == "exists" and atom.fact_type not in covers:
+            return False
+    return True
+
+
+def _reference_exists_state(alternate, names, binding, facts, relations, budget):
+    """Scan the covered relations for joint witnesses of one antecedent binding."""
+    assignments = [dict(zip(names, binding, strict=True))]
+    for atom in alternate.exists_atoms:
+        fact = facts.get(atom.fact_type)
+        if fact is None or len(atom.bindings) != len(fact.roles):
+            return -1
+        columns = [(fact_role_index(fact, role), term) for role, term in atom.bindings]
+        if any(column < 0 or not term.valid for column, term in columns):
+            return -1
+        joined = []
+        for assignment in assignments:
+            for row in relations[atom.fact_type].rows:
+                budget.charge(1 + len(row))
+                if len(row) != len(columns) or any(cell is None for cell in row):
+                    return -1
+                candidate = dict(assignment)
+                for column, term in columns:
+                    value = row[column]
+                    if term.kind == "literal":
+                        if term.literal is None or not scalar_identical(value, term.literal):
+                            break
+                    elif term.kind == "variable":
+                        earlier = candidate.setdefault(term.variable, value)
+                        if not scalar_identical(value, earlier):
+                            break
+                    else:
+                        return -1
+                else:
+                    joined.append(candidate)
+        assignments = joined
+        if not assignments:
+            return 0
+    witnessed = False
+    unknown = False
+    for assignment in assignments:
+        binding = guarded_term_binding(assignment)
+        states = []
+        for operator, left, right in alternate.exists_where:
+            result = guarded_exists_comparison(operator, left, right, binding, budget=budget)
+            budget.charge(max(1, result.nodes + result.operations))
+            states.append(int(result.value) if result.available else -1)
+        unknown |= -1 in states
+        witnessed |= all(state == 1 for state in states)
+    return -1 if unknown else int(witnessed)
+
+
+def guarded_disjunction_state(states):
+    """Compose true, unknown and false in descending precedence."""
+    unknown = False
+    for state in states:
+        if state == 1:
+            return 1
+        unknown |= state < 0
+    return -1 if unknown else 0
+
+
+def _reference_guarded_disjunction(constraint, snapshot, names, bindings):
+    facts = {fact.id: fact for fact in snapshot.fact_types}
+    relations = {relation.fact_type: relation for relation in snapshot.relations}
+    covers, unavailable = guarded_relation_availability(snapshot)
+    budget = GuardedDisjunctionBudget()
+    failures = []
+    unknown = False
+    try:
+        available = tuple(
+            guarded_alternative_available(alternate, relations, covers, unavailable)
+            for alternate in constraint.alternatives
+        )
+        for binding in bindings:
+            states = []
+            for alternate, usable in zip(constraint.alternatives, available, strict=True):
+                budget.charge()
+                state = -1
+                if usable and alternate.variant == "exists":
+                    state = _reference_exists_state(alternate, names, binding, facts, relations, budget)
+                elif usable and alternate.variant == "comparison":
+                    state = budget.comparison_state(alternate.operator, *alternate.operands, names, binding)
+                elif usable:
+                    atom = alternate.consequent[0]
+                    budget.charge(len(relations[atom.fact_type].rows))
+                    state = guarded_atom_state(atom, names, binding, snapshot)
+                    if alternate.variant == "absence" and state >= 0:
+                        state = 1 - state
+                states.append(state)
+            combined = guarded_disjunction_state(states)
+            unknown |= combined < 0
+            if combined == 0:
+                failures.append(list(binding))
+    except GuardedDisjunctionLimit:
+        return -1, [], "guarded-disjunction-work-limit"
+    if unknown:
+        return -1, [], "guarded-disjunction-undecidable"
+    return int(not failures), failures, None
+
+
 def guarded_result(
     constraint: IRConstraint, snapshot: SnapshotIR, *, prepared_bindings=None
 ) -> tuple[int, list[list[Scalar]]]:
@@ -1820,7 +2003,7 @@ def guarded_result(
     empty: list[list[Scalar]] = []
     if (
         constraint.family != "guarded"
-        or constraint.variant not in ("comparison", "atom", "absence")
+        or constraint.variant not in ("comparison", "atom", "absence", "any_of")
         or constraint.consequent_kind != constraint.variant
         or constraint.refused != ""
         or not constraint.antecedent
@@ -1833,6 +2016,9 @@ def guarded_result(
             or constraint.operator not in ("<", "<=", "=", ">=", ">", "!=", *MEMBERSHIP_OPERATORS)
         ):
             return -1, empty
+    elif constraint.variant == "any_of":
+        if len(constraint.alternatives) < 2:
+            return -1, empty
     elif len(constraint.consequent) != 1 or constraint.operands:
         return -1, empty
     if prepared_bindings is None:
@@ -1844,6 +2030,9 @@ def guarded_result(
             return -1, empty
     else:
         names, bindings = prepared_bindings
+    if constraint.variant == "any_of":
+        state, rows, _reason = _reference_guarded_disjunction(constraint, snapshot, names, bindings)
+        return state, rows
     violations: list[tuple[Scalar, ...]] = []
     undecidable = False
     binding_index = 0
@@ -2582,6 +2771,8 @@ def unchecked_reason_of(constraint: IRConstraint, snapshot: SnapshotIR) -> str:
     if constraint.family == "guarded":
         if any(operand.kind == "literal" and not operand.valid for operand in constraint.operands):
             return "literal-type-ambiguous"
+        if constraint.variant == "any_of":
+            return "guarded-disjunction-undecidable"
         if constraint.variant == "comparison":
             return "values-not-comparable"
     if constraint.family == "frequency" or constraint.family == "cardinality":
@@ -2696,7 +2887,7 @@ def verdict_of(
         return "vacuous", None, ()
     if applicability.startswith("unchecked-"):
         return "unchecked", applicability.removeprefix("unchecked-"), ()
-    if constraint.family == "guarded" and (constraint.negate or constraint.where):
+    if constraint.family == "guarded" and (constraint.negate or constraint.where or constraint.variant == "any_of"):
         valid, names, positive = guarded_bindings(constraint, snapshot)
         if not valid:
             return "unchecked", unchecked_reason_of(constraint, snapshot), ()
@@ -2705,7 +2896,12 @@ def verdict_of(
             return "unchecked", reason, ()
         if positive and not active:
             return "vacuous", None, ()
-        state, rows = guarded_result(constraint, snapshot, prepared_bindings=(names, active))
+        if constraint.variant == "any_of":
+            state, rows, reason = _reference_guarded_disjunction(constraint, snapshot, names, active)
+            if reason is not None:
+                return "unchecked", reason, ()
+        else:
+            state, rows = guarded_result(constraint, snapshot, prepared_bindings=(names, active))
     else:
         state, rows = snapshot_family_result(constraint, snapshot)
     if state < 0:

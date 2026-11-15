@@ -984,33 +984,49 @@ def _guarded_where(comparisons, primitives):
 def _family_adapt_guarded(base, source, model, fact_type):
     atoms = tuple(_atom(value, model) for value in _list(source.get("antecedent")))
     consequent = _mapping(source.get("consequent"))
-    kinds = tuple(
-        key for key in ("comparison", "atom", "absence", "exists") if key in consequent
-    )
-    if len(kinds) != 1 or not atoms:
-        raise _ShapeError("a guarded constraint needs one consequent")
-    kind = kinds[0]
-    base = replace(base, consequent_kind=kind, antecedent=atoms)
+    base = replace(base, antecedent=atoms)
     if "negate" in source or "where" in source:
-        primitives = {}
-        for atom in atoms:
-            for _, term in atom.bindings:
-                if term.kind == "variable":
-                    primitives.setdefault(term.variable, term.primitive)
+        primitives = _guarded_primitives(atoms)
         base = replace(
             base,
             negate=tuple(_atom(atom, model) for atom in _list(source.get("negate", []))),
             where=_guarded_where(source.get("where", []), primitives),
         )
+    if "any_of" in consequent:
+        alternatives = _list(consequent["any_of"])
+        if set(consequent) != {"any_of"} or len(alternatives) < 2:
+            raise _ShapeError("a disjunction needs at least two alternatives")
+        alternate_base = replace(base, negate=(), where=())
+        return replace(base, consequent_kind="any_of", alternatives=tuple(
+            _adapt_guarded_alternative(alternate_base, _mapping(item), model)
+            for item in alternatives
+        ))
+    return _adapt_guarded_alternative(base, consequent, model)
+
+
+def _guarded_primitives(atoms):
+    primitives = {}
+    for atom in atoms:
+        for _, term in atom.bindings:
+            if term.kind == "variable":
+                primitives.setdefault(term.variable, term.primitive)
+    return primitives
+
+
+def _adapt_guarded_alternative(base, consequent, model):
+    atoms = base.antecedent
+    kinds = tuple(key for key in ("comparison", "atom", "absence", "exists") if key in consequent)
+    if len(kinds) != 1 or not atoms:
+        raise _ShapeError("a guarded constraint needs one consequent")
+    kind = kinds[0]
+    if len(consequent) != 1:
+        raise _ShapeError("a guarded alternative needs exactly one shape")
+    base = replace(base, consequent_kind=kind, variant=kind)
     if kind not in {"comparison", "exists"}:
         base = replace(base, consequent=(_atom(consequent[kind], model),))
     elif kind == "comparison":
         comparison = _mapping(consequent[kind])
-        primitives = {}
-        for atom in atoms:
-            for _, term in atom.bindings:
-                if term.kind == "variable":
-                    primitives.setdefault(term.variable, term.primitive)
+        primitives = _guarded_primitives(atoms)
         operator = _text(comparison.get("operator"))
         if operator in MEMBERSHIP_OPERATORS:
             return replace(base, operator=operator, operands=(
@@ -1057,11 +1073,7 @@ def _family_adapt_guarded(base, source, model, fact_type):
     else:
         exists = _mapping(consequent[kind])
         exists_atoms = tuple(_atom(value, model) for value in _list(exists.get("atoms")))
-        primitives = {}
-        for atom in (*atoms, *exists_atoms):
-            for _, term in atom.bindings:
-                if term.kind == "variable":
-                    primitives.setdefault(term.variable, term.primitive)
+        primitives = _guarded_primitives((*atoms, *exists_atoms))
         where_rows = []
         where_value = exists.get("where")
         where_comparisons = [] if where_value is None else _list(where_value)

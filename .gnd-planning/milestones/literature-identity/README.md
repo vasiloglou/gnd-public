@@ -41,8 +41,12 @@ met the predeclared ceiling in all measured strata.
 positive contextual assertions through a digest-bound saved-opinion route.
 
 [LI5](024-phase-LI5.md) implements qualified lineage and records the
-first reserved miss alongside the corrected smoke result. The initial
-reserved acceptance condition is pending the close disposition.
+first reserved miss alongside the corrected smoke result.
 
-To run the rest of the milestone from Codex, start at the
-[Codex handoff](notes/codex-handoff.md).
+The [close record](026-milestone-close.md) withholds milestone acceptance. The first
+reserved run retained 0/1 supported paths and excluded 2/2 false paths.
+The same reserve retained 1/1 supported and excluded 2/2 after an input
+correction informed by the first result. L1's independent reserved
+acceptance condition remains open.
+
+The [Codex handoff](notes/codex-handoff.md) records the starting point.

@@ -1,0 +1,56 @@
+{
+  "blocked": [
+    [
+      "Alto",
+      "Beta"
+    ],
+    [
+      "Beta",
+      "Gamma"
+    ]
+  ],
+  "development": {
+    "excluded": [
+      5,
+      5
+    ],
+    "supported": [
+      3,
+      3
+    ]
+  },
+  "missing_exit": 2,
+  "non_chaining": [
+    [
+      "Evaluation A",
+      "Prototype"
+    ],
+    [
+      "Comparison A",
+      "Prototype"
+    ],
+    [
+      "Idea A",
+      "Prototype"
+    ],
+    [
+      "Member A",
+      "Prototype"
+    ]
+  ],
+  "replay_proof_exit": 1,
+  "replay_record_exit": 3,
+  "schema": "literature-lineage-cases/1",
+  "transfer_chain_missing": [
+    "Cumulus",
+    "Atlas"
+  ],
+  "transfer_kept": [
+    "Nimbus",
+    "Atlas"
+  ],
+  "transfer_missing": [
+    "Serein",
+    "Nimbus"
+  ]
+}

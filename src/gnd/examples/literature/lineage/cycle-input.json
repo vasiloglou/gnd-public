@@ -1,0 +1,50 @@
+{
+  "decisions": [],
+  "schema": "literature-lineage-input/1",
+  "sources": [
+    {
+      "document": "lineage/cycle-document.txt",
+      "id": "cycle",
+      "sha256": "39644edd5b8c279881087728884784aacb6fa2f57e896d514c3a44d6d15dc131",
+      "statements": [
+        {
+          "actor": "Clockwise",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 55,
+          "experiment": "unspecified",
+          "object": "Counterclockwise",
+          "object_kind": "sense",
+          "passage": "cycle.p1",
+          "polarity": "asserts",
+          "predicate": "component-use",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 0,
+          "version": "corpus-1"
+        },
+        {
+          "actor": "Counterclockwise",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 111,
+          "experiment": "unspecified",
+          "object": "Clockwise",
+          "object_kind": "sense",
+          "passage": "cycle.p2",
+          "polarity": "asserts",
+          "predicate": "component-use",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 56,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "synthetic-cycle"
+    }
+  ]
+}

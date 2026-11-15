@@ -1,0 +1,51 @@
+{
+  "conditional": {
+    "condition": "low noise",
+    "index": 0
+  },
+  "incorrect_predicate": {
+    "disposition": "stretched",
+    "index": 2,
+    "semantic_reason": "rejected"
+  },
+  "invalid_exit": 3,
+  "judgment_exit": 1,
+  "non_positive": [
+    [
+      "negates",
+      "own-finding"
+    ],
+    [
+      "asserts",
+      "baseline-comparison"
+    ],
+    [
+      "asserts",
+      "speculation"
+    ],
+    [
+      "asserts",
+      "cites-other-work"
+    ]
+  ],
+  "positive": [
+    0,
+    1,
+    7
+  ],
+  "producer_exit": 0,
+  "review_arms": {
+    "8": "abstained",
+    "9": "missing"
+  },
+  "schema": "literature-assertion-cases/1",
+  "supported": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+  ]
+}

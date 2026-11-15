@@ -33,6 +33,8 @@ CSDP is Halpin's canonical forward-design methodology. The user provides example
 6. Add value, set-comparison, ring, and subtyping constraints (typed library + LLM tier with opt-in spot-check)
 7. Add other constraints, assign modality per the D-03 policy, commit to YAML, and validate
 
+For literature with conditions, negations or attributed claims, see the worked contextual assertion model in the installed example `gnd/examples/literature/assertions/`. It links a work version, predicate, participants and experiment to a passage. Raw statements and saved reviews are separate inputs.
+
 ## Routing: this skill authors, it never re-authors
 
 CSDP here is for a model that does not exist yet, from natural language. Two neighbouring intents look like this one at the first prompt and are not, and the difference matters before you write a line of YAML — **a fresh CSDP pass over a domain that already has a model silently discards that model's provenance**, because every constraint it emits is newly sourced and every earlier `confirmed` status is gone.

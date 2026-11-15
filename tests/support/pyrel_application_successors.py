@@ -17,6 +17,7 @@ QUERY_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC2/query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/query-successor.json',
+    ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/query-successor.json',
 ]
 
 
@@ -140,6 +141,7 @@ DYNAMIC_SUCCESSORS = [
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC2/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC3/dynamic-query-successor.json',
     ROOT / '.gnd-planning/milestones/guarded-rule-clauses/evidence/GC4/dynamic-query-successor.json',
+    ROOT / '.gnd-planning/milestones/literature-identity/evidence/main-integration/dynamic-query-successor.json',
 ]
 
 

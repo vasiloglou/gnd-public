@@ -65,6 +65,10 @@
               "integer",
               "number"
             ]
+          },
+          "decision": {
+            "type": "integer",
+            "minimum": 0
           }
         }
       }
@@ -90,6 +94,53 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 128
+          }
+        }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}\\.json$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  },
+  "if": {
+    "required": [
+      "resolution"
+    ]
+  },
+  "then": {
+    "properties": {
+      "renamings": {
+        "items": {
+          "required": [
+            "decision"
+          ]
+        }
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "renamings": {
+        "items": {
+          "not": {
+            "required": [
+              "decision"
+            ]
           }
         }
       }

@@ -1,0 +1,25 @@
+{
+  "cases": {
+    "composition-example": {
+      "directory": "src/gnd/examples/composition/composition",
+      "model": "src/gnd/examples/composition/model.orm.yaml",
+      "population_sha256": "582c42b7ffdcb333c4383f0178e68e62abdc79c4449e631fd883a5baf3fe1393",
+      "record_sha256": "c40a81b27736b6a4bd2f5bd851052c52fa444601e14aa5d40f4934d21eb011e5"
+    },
+    "composition-example-conflict": {
+      "directory": "src/gnd/examples/composition/composition-conflict",
+      "model": "src/gnd/examples/composition/model.orm.yaml",
+      "population_sha256": "d40888620e8a42dbbe7c64d837a7f21bbd1b79863c3fa312fd90184a5fbd5265",
+      "record_sha256": "b21499386ce9afcd0010c1c1f4837e2d0b52dfee36b53a9f524ec9fddde7bee7"
+    },
+    "literature-reference-run": {
+      "directory": "src/gnd/examples/literature/runs/reference/composition",
+      "model": "src/gnd/examples/literature/model.orm.yaml",
+      "population_sha256": "7289313138ccb128753fb8a36048014022af1b1fe009612b1290beea0f6e717c",
+      "record_sha256": "3ca77d049098061eecafa1d5f5f102e7421aaae4578586204cf2ba7ab14d87ec"
+    }
+  },
+  "measured_at": "4561ac11 (source identical to d09189ca)",
+  "note": "Bytes gnd compose wrote before LI2 changed any code; T16 requires a manifest without resolution to keep them.",
+  "schema": "li2-baseline-composition/1"
+}

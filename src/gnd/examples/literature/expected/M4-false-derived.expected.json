@@ -1,4 +1,5 @@
 {
+  "amended": "LI2 corpus gate (spec phase-LI2 D8): identity-decisions is active.",
   "case": "M4-false-derived",
   "exit_code": 1,
   "failed_stages": [
@@ -39,8 +40,19 @@
       "status": "pass"
     },
     "identity-decisions": {
-      "owner": "LI2",
-      "status": "not-measured"
+      "abstention": [
+        0,
+        6
+      ],
+      "precision": [
+        3,
+        3
+      ],
+      "recall": [
+        3,
+        3
+      ],
+      "status": "pass"
     },
     "model-population-validity": {
       "agreement": [

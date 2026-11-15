@@ -1,0 +1,31 @@
+{
+  "deduplications": "identical-rows",
+  "renamings": [
+    {
+      "decision": 0,
+      "fact_type": "method_builds_on_method",
+      "from": "TRACE",
+      "role": "method",
+      "source": "hom-a",
+      "to": "TRACE#1"
+    },
+    {
+      "decision": 0,
+      "fact_type": "method_builds_on_method",
+      "from": "TRACE",
+      "role": "method",
+      "source": "hom-b",
+      "to": "TRACE#2"
+    }
+  ],
+  "resolution": {
+    "path": "resolution.json",
+    "sha256": "5f6deb242aba5a59eb38d633e56778e22334de1cbec474e5216e75d02fc838ed"
+  },
+  "schema": "gnd-composition-manifest/1",
+  "scope_tags": [],
+  "sources": [
+    "hom-a",
+    "hom-b"
+  ]
+}

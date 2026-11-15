@@ -1,0 +1,2 @@
+# Notes on a method (synthetic fixture)
+Boltz-steering builds on Boltz-1.

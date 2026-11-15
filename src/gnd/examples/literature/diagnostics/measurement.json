@@ -1,0 +1,6005 @@
+{
+  "occurrences": [
+    {
+      "contexts": [
+        "kinetic-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h00-0"
+      },
+      "id": "h00-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h00-0",
+        "value": "VAMPNETH00"
+      },
+      "population_sha256": "75bec219d42e560290200e4ce0ffd886d1871575670ff9fb797eaa316997e35c",
+      "work": "h00-0"
+    },
+    {
+      "contexts": [
+        "music-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h00-1"
+      },
+      "id": "h00-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h00-1",
+        "value": "vampneth00"
+      },
+      "population_sha256": "1efe350d7b262a12aa17c3c5ff8ef177701ba3698a31fbd1a59f9b9f3282643e",
+      "work": "h00-1"
+    },
+    {
+      "contexts": [
+        "kinetic-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h01-0"
+      },
+      "id": "h01-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h01-0",
+        "value": "WHAMH01"
+      },
+      "population_sha256": "42b9862bdc0b5cdb14418e6c0d1d57b774e43ca739e2ae9af7906788ec4f719f",
+      "work": "h01-0"
+    },
+    {
+      "contexts": [
+        "music-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h01-1"
+      },
+      "id": "h01-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h01-1",
+        "value": "whamh01"
+      },
+      "population_sha256": "39e50b4635aa4f8354caa3c22ab2893221beba482eb59c593824e1e6368ce43f",
+      "work": "h01-1"
+    },
+    {
+      "contexts": [
+        "kinetic-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h02-0"
+      },
+      "id": "h02-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h02-0",
+        "value": "TRACEH02"
+      },
+      "population_sha256": "a7dde12b9648547ce6c7adbebee5e68f215b0e519903fa5e52659b390524fd6c",
+      "work": "h02-0"
+    },
+    {
+      "contexts": [
+        "music-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h02-1"
+      },
+      "id": "h02-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h02-1",
+        "value": "traceh02"
+      },
+      "population_sha256": "557010b449c6d232314ff7590fbf8abc854d3944adb9bc0d6c5b289602284115",
+      "work": "h02-1"
+    },
+    {
+      "contexts": [
+        "kinetic-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h03-0"
+      },
+      "id": "h03-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h03-0",
+        "value": "BOLTZH03"
+      },
+      "population_sha256": "9ec3747ef80c93c7860c957183dcd145da7cb997f486f706cb250610751143cf",
+      "work": "h03-0"
+    },
+    {
+      "contexts": [
+        "music-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h03-1"
+      },
+      "id": "h03-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h03-1",
+        "value": "boltzh03"
+      },
+      "population_sha256": "0bb513bc4848a8f9cf231ef1f5d99305e4ccd762b8cdf846b0b56e319119d3d0",
+      "work": "h03-1"
+    },
+    {
+      "contexts": [
+        "kinetic-4"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h04-0"
+      },
+      "id": "h04-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h04-0",
+        "value": "OPENCAPH04"
+      },
+      "population_sha256": "04e6c2659cbae5b87c056f6c24027f8286aede2b83c074c63258c029b72a26ca",
+      "work": "h04-0"
+    },
+    {
+      "contexts": [
+        "music-4"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h04-1"
+      },
+      "id": "h04-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h04-1",
+        "value": "opencaph04"
+      },
+      "population_sha256": "0a8783f361af37a5e4c3f625521df448840aae66e513071beaf1b1e51280dee1",
+      "work": "h04-1"
+    },
+    {
+      "contexts": [
+        "kinetic-5"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h05-0"
+      },
+      "id": "h05-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h05-0",
+        "value": "ALPHAFOLDH05"
+      },
+      "population_sha256": "3d9e140b20131094c29dca38f2c759d096ef9a8f8b0b9be730cfc949c52f7b73",
+      "work": "h05-0"
+    },
+    {
+      "contexts": [
+        "music-5"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h05-1"
+      },
+      "id": "h05-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h05-1",
+        "value": "alphafoldh05"
+      },
+      "population_sha256": "ca13ddd6ff716fecddee0ecc0c5c06a34433b6392652e2825fcef755c3cd9581",
+      "work": "h05-1"
+    },
+    {
+      "contexts": [
+        "kinetic-6"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h06-0"
+      },
+      "id": "h06-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h06-0",
+        "value": "ROBERTAH06"
+      },
+      "population_sha256": "87d6c4c02cec9fe2cab8a7fd563ddecaf12a4734ba36c6e4243d7c29b75ee36c",
+      "work": "h06-0"
+    },
+    {
+      "contexts": [
+        "music-6"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h06-1"
+      },
+      "id": "h06-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h06-1",
+        "value": "robertah06"
+      },
+      "population_sha256": "7ec6a33cfcd99f46bf497b1fea7e8ebf2f1c08da872fa9232419c162bfbc2b8a",
+      "work": "h06-1"
+    },
+    {
+      "contexts": [
+        "kinetic-7"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h07-0"
+      },
+      "id": "h07-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h07-0",
+        "value": "PINNH07"
+      },
+      "population_sha256": "5187deeea305d52f23286c04f08817c078c7a8597daf0446171e2a6a3534d880",
+      "work": "h07-0"
+    },
+    {
+      "contexts": [
+        "music-7"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h07-1"
+      },
+      "id": "h07-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h07-1",
+        "value": "pinnh07"
+      },
+      "population_sha256": "d5f7b2039441403efd5db15c7155865900a1adb7aa03532293422c52aa601489",
+      "work": "h07-1"
+    },
+    {
+      "contexts": [
+        "kinetic-8"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h08-0"
+      },
+      "id": "h08-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h08-0",
+        "value": "NERFH08"
+      },
+      "population_sha256": "ae7a58f3e520fa5ab6919b1fa8b675269072585fb476ca74013972690faaf4c3",
+      "work": "h08-0"
+    },
+    {
+      "contexts": [
+        "music-8"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h08-1"
+      },
+      "id": "h08-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h08-1",
+        "value": "nerfh08"
+      },
+      "population_sha256": "bcea63caeb530156ba31a3e190728d41a8bf0386222c8888ea8f8c2796be20f9",
+      "work": "h08-1"
+    },
+    {
+      "contexts": [
+        "kinetic-9"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h09-0"
+      },
+      "id": "h09-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h09-0",
+        "value": "DEEPONETH09"
+      },
+      "population_sha256": "327b330dc92c61ecf7b286f2cd3a17e502a7ca1954b8a569656c5b4650c89932",
+      "work": "h09-0"
+    },
+    {
+      "contexts": [
+        "music-9"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h09-1"
+      },
+      "id": "h09-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h09-1",
+        "value": "deeponeth09"
+      },
+      "population_sha256": "f649521eeab3a0b6a44e5e1c591ae857273c9d6f0a53ddd60b3d70da8fd8deea",
+      "work": "h09-1"
+    },
+    {
+      "contexts": [
+        "kinetic-10"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h10-0"
+      },
+      "id": "h10-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h10-0",
+        "value": "DIFFDOCKH10"
+      },
+      "population_sha256": "5f71b45a2d4c51d63290b4ab5c7f27420b55e80204c8cc18b7402c9cbcc1b44c",
+      "work": "h10-0"
+    },
+    {
+      "contexts": [
+        "music-10"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h10-1"
+      },
+      "id": "h10-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h10-1",
+        "value": "diffdockh10"
+      },
+      "population_sha256": "0ff4869d6b6ad83275a28b687fafa1bff66257bd940b61c4d6205118ff6ea165",
+      "work": "h10-1"
+    },
+    {
+      "contexts": [
+        "kinetic-11"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h11-0"
+      },
+      "id": "h11-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h11-0",
+        "value": "BIOCLIPH11"
+      },
+      "population_sha256": "a143e05c979c7fbabbdea772c7dffd3c688ecb4c573b19b0549741ce8d445615",
+      "work": "h11-0"
+    },
+    {
+      "contexts": [
+        "music-11"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h11-1"
+      },
+      "id": "h11-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h11-1",
+        "value": "biocliph11"
+      },
+      "population_sha256": "01cb961cb38bda99ad0cbe958b7422dd4c03eeebe00e4aa8b757fc18f959d2f2",
+      "work": "h11-1"
+    },
+    {
+      "contexts": [
+        "kinetic-12"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h12-0"
+      },
+      "id": "h12-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h12-0",
+        "value": "VAMPNETH12"
+      },
+      "population_sha256": "a120216c674d912a5952528dcb361f7011d76f493ef58d23bfc9458f4dc743e9",
+      "work": "h12-0"
+    },
+    {
+      "contexts": [
+        "music-12"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h12-1"
+      },
+      "id": "h12-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h12-1",
+        "value": "vampneth12"
+      },
+      "population_sha256": "606bb12fe0cd0579773282e5a5768e0d004920b387d085a6ff028789b54306c6",
+      "work": "h12-1"
+    },
+    {
+      "contexts": [
+        "kinetic-13"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h13-0"
+      },
+      "id": "h13-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h13-0",
+        "value": "WHAMH13"
+      },
+      "population_sha256": "019e2ab5c3b3f8b976152247a9aef8308f5a85b7ad74bb69d45342eacfa60472",
+      "work": "h13-0"
+    },
+    {
+      "contexts": [
+        "music-13"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h13-1"
+      },
+      "id": "h13-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h13-1",
+        "value": "whamh13"
+      },
+      "population_sha256": "e5906ad0a4f3015f4270257f65a1c783967ed7be5b1132bcd83945c039fd0380",
+      "work": "h13-1"
+    },
+    {
+      "contexts": [
+        "kinetic-14"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h14-0"
+      },
+      "id": "h14-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h14-0",
+        "value": "TRACEH14"
+      },
+      "population_sha256": "dd7846caf43eae40c6e555f023a7b68653c325f44a30c4a345546b941a26a41b",
+      "work": "h14-0"
+    },
+    {
+      "contexts": [
+        "music-14"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h14-1"
+      },
+      "id": "h14-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h14-1",
+        "value": "traceh14"
+      },
+      "population_sha256": "70886000a4fa22cad77f213da1d32911e9dc84668edf9080ce7feeb0bd332bd3",
+      "work": "h14-1"
+    },
+    {
+      "contexts": [
+        "kinetic-15"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h15-0"
+      },
+      "id": "h15-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h15-0",
+        "value": "BOLTZH15"
+      },
+      "population_sha256": "d7a0b459c0d9ee220a8c72efc8341d1f7bd95a2c07f4358f49dafe1abdb002f4",
+      "work": "h15-0"
+    },
+    {
+      "contexts": [
+        "music-15"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h15-1"
+      },
+      "id": "h15-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h15-1",
+        "value": "boltzh15"
+      },
+      "population_sha256": "5f8638a1294d377c543b957cd425d6854549c2fb7fa3b4d284c667f6feb4ae8a",
+      "work": "h15-1"
+    },
+    {
+      "contexts": [
+        "kinetic-16"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h16-0"
+      },
+      "id": "h16-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h16-0",
+        "value": "OPENCAPH16"
+      },
+      "population_sha256": "e2a52ede692d17af6a179c56966aec8e1fd7e44586b0b4617a00eb93a3e137f9",
+      "work": "h16-0"
+    },
+    {
+      "contexts": [
+        "music-16"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h16-1"
+      },
+      "id": "h16-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h16-1",
+        "value": "opencaph16"
+      },
+      "population_sha256": "65d8a692abc3e86119aae1cafa5d08bdb11eaa02dc8112e51cabd1006dace8c7",
+      "work": "h16-1"
+    },
+    {
+      "contexts": [
+        "kinetic-17"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h17-0"
+      },
+      "id": "h17-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h17-0",
+        "value": "ALPHAFOLDH17"
+      },
+      "population_sha256": "caba735afd0b33e1534a37bbd3eb8baea3a78f38bb1f4e785ca3060db4a04d7a",
+      "work": "h17-0"
+    },
+    {
+      "contexts": [
+        "music-17"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h17-1"
+      },
+      "id": "h17-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h17-1",
+        "value": "alphafoldh17"
+      },
+      "population_sha256": "4c74748044fc98dd425d5f9f5f80ac565fe5cf3d1550dd2ff4ed3439fe675a86",
+      "work": "h17-1"
+    },
+    {
+      "contexts": [
+        "kinetic-18"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h18-0"
+      },
+      "id": "h18-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h18-0",
+        "value": "ROBERTAH18"
+      },
+      "population_sha256": "1300794300484a6b225c6a4be4f63ec1345cc1ab304abb7ed7bf238fc3d392cd",
+      "work": "h18-0"
+    },
+    {
+      "contexts": [
+        "music-18"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h18-1"
+      },
+      "id": "h18-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h18-1",
+        "value": "robertah18"
+      },
+      "population_sha256": "ae15691a2ed03996cfcdbc40dbf2df12b34853f285e169a93bb1456c93322c7e",
+      "work": "h18-1"
+    },
+    {
+      "contexts": [
+        "kinetic-19"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h19-0"
+      },
+      "id": "h19-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h19-0",
+        "value": "PINNH19"
+      },
+      "population_sha256": "c0713a1cd801396d261a245545a93807ecbe56b51716fe10fc35f20c0cf52a8b",
+      "work": "h19-0"
+    },
+    {
+      "contexts": [
+        "music-19"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h19-1"
+      },
+      "id": "h19-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h19-1",
+        "value": "pinnh19"
+      },
+      "population_sha256": "8dea19feae11ae07b05a4928ae505df88ced4e5cf877fd1eafbe683222eafc42",
+      "work": "h19-1"
+    },
+    {
+      "contexts": [
+        "kinetic-20"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h20-0"
+      },
+      "id": "h20-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h20-0",
+        "value": "NERFH20"
+      },
+      "population_sha256": "24b4af6507dc9dce21038767849e33e58992eb79ae386fdd3703e5b34f2add26",
+      "work": "h20-0"
+    },
+    {
+      "contexts": [
+        "music-20"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h20-1"
+      },
+      "id": "h20-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h20-1",
+        "value": "nerfh20"
+      },
+      "population_sha256": "549f3ec3ef6bf8282c7fa9cf822e2118b1870d71e1f574f5d9aa02d07834b5a6",
+      "work": "h20-1"
+    },
+    {
+      "contexts": [
+        "kinetic-21"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h21-0"
+      },
+      "id": "h21-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h21-0",
+        "value": "DEEPONETH21"
+      },
+      "population_sha256": "b4f0f093bac399ef6b57e6baabe002fe50ee5b6c3d0d6e626627964714194bbb",
+      "work": "h21-0"
+    },
+    {
+      "contexts": [
+        "music-21"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h21-1"
+      },
+      "id": "h21-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h21-1",
+        "value": "deeponeth21"
+      },
+      "population_sha256": "daf420786299993699799abd8bc7c25eb90bbb663b108616ffd5aafd85c51bba",
+      "work": "h21-1"
+    },
+    {
+      "contexts": [
+        "kinetic-22"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h22-0"
+      },
+      "id": "h22-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h22-0",
+        "value": "DIFFDOCKH22"
+      },
+      "population_sha256": "39abeb53ff33c975e6de9ed0d9e7d833b61c390347c2f466c89cae47e3f82633",
+      "work": "h22-0"
+    },
+    {
+      "contexts": [
+        "music-22"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h22-1"
+      },
+      "id": "h22-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h22-1",
+        "value": "diffdockh22"
+      },
+      "population_sha256": "997f1902638504492a1e6de4d6e2ff43e0d44bc339d9a68b3ff6a9832b7d9d8c",
+      "work": "h22-1"
+    },
+    {
+      "contexts": [
+        "kinetic-23"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h23-0"
+      },
+      "id": "h23-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h23-0",
+        "value": "BIOCLIPH23"
+      },
+      "population_sha256": "f2627548ae3c44bd9ca0b7bb871c7885b82ed20e056e52c8675554e14eac6973",
+      "work": "h23-0"
+    },
+    {
+      "contexts": [
+        "music-23"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h23-1"
+      },
+      "id": "h23-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h23-1",
+        "value": "biocliph23"
+      },
+      "population_sha256": "48b0d733af0ac5fb63a9e1856f76e9ca9ac982944722e67e42b3dd790cdd723b",
+      "work": "h23-1"
+    },
+    {
+      "contexts": [
+        "kinetic-24"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h24-0"
+      },
+      "id": "h24-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h24-0",
+        "value": "VAMPNETH24"
+      },
+      "population_sha256": "a557c797f9582e53a73a58fc4a58e1921c7fc03640588a7ea036ed9e187a525c",
+      "work": "h24-0"
+    },
+    {
+      "contexts": [
+        "music-24"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h24-1"
+      },
+      "id": "h24-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h24-1",
+        "value": "vampneth24"
+      },
+      "population_sha256": "8cc02841aa55e5d98f72b9d8d3dad0f3457bddf5ca01f4e27663f7d570218073",
+      "work": "h24-1"
+    },
+    {
+      "contexts": [
+        "kinetic-25"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h25-0"
+      },
+      "id": "h25-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h25-0",
+        "value": "WHAMH25"
+      },
+      "population_sha256": "1b6f21cba4ffa516d21dab257a78c7c6ebb06e5d681da4f12a0cd2954b50f9e9",
+      "work": "h25-0"
+    },
+    {
+      "contexts": [
+        "music-25"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h25-1"
+      },
+      "id": "h25-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h25-1",
+        "value": "whamh25"
+      },
+      "population_sha256": "12b0a140af6f4cc19ad51780d1ed7f5fa8f351d03f2e10a44ed4d3d6c80e2286",
+      "work": "h25-1"
+    },
+    {
+      "contexts": [
+        "kinetic-26"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h26-0"
+      },
+      "id": "h26-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h26-0",
+        "value": "TRACEH26"
+      },
+      "population_sha256": "96df9f1361d070d2d9d60063cde416bd39dcbd29f93b07312dc4a9b1732d385f",
+      "work": "h26-0"
+    },
+    {
+      "contexts": [
+        "music-26"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h26-1"
+      },
+      "id": "h26-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h26-1",
+        "value": "traceh26"
+      },
+      "population_sha256": "74f1a2a2844d51482975959a991d3bf04a338211bb9469807e7f5dec507d5ea0",
+      "work": "h26-1"
+    },
+    {
+      "contexts": [
+        "kinetic-27"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h27-0"
+      },
+      "id": "h27-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h27-0",
+        "value": "BOLTZH27"
+      },
+      "population_sha256": "64d7614fe16ce2ef75fcae42875a4be5f63eb466fbab702bc7b6a52d8e13e79e",
+      "work": "h27-0"
+    },
+    {
+      "contexts": [
+        "music-27"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h27-1"
+      },
+      "id": "h27-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h27-1",
+        "value": "boltzh27"
+      },
+      "population_sha256": "666d9460ec6265d49c3b1ca3896853fc636e6bdea0cf0d9ec00492cc8d3ad44f",
+      "work": "h27-1"
+    },
+    {
+      "contexts": [
+        "kinetic-28"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h28-0"
+      },
+      "id": "h28-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h28-0",
+        "value": "OPENCAPH28"
+      },
+      "population_sha256": "d33082ca00b01dbb3c120d46fc58e5bc0f1ce3d1b64674b1dc07d9e3e762c94e",
+      "work": "h28-0"
+    },
+    {
+      "contexts": [
+        "music-28"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h28-1"
+      },
+      "id": "h28-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h28-1",
+        "value": "opencaph28"
+      },
+      "population_sha256": "a551a1f9b9743ead5152ea7c5a0862c7e02f9d8063559b1b0385d9ccf1f25553",
+      "work": "h28-1"
+    },
+    {
+      "contexts": [
+        "kinetic-29"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h29-0"
+      },
+      "id": "h29-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h29-0",
+        "value": "ALPHAFOLDH29"
+      },
+      "population_sha256": "28651867388fa7f4654dae24e2b376ad66c671e3a78e9af9c6af5e2187655d1f",
+      "work": "h29-0"
+    },
+    {
+      "contexts": [
+        "music-29"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h29-1"
+      },
+      "id": "h29-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h29-1",
+        "value": "alphafoldh29"
+      },
+      "population_sha256": "b07937ac7e7ab8a7ba19972725f2d646dee3255d8a3d90b86e2ea26a08e474a0",
+      "work": "h29-1"
+    },
+    {
+      "contexts": [
+        "kinetic-30"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h30-0"
+      },
+      "id": "h30-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h30-0",
+        "value": "ROBERTAH30"
+      },
+      "population_sha256": "e62bf67cd844823d857adba36a03a4b00e2516870d92493ed26a17fac8f17181",
+      "work": "h30-0"
+    },
+    {
+      "contexts": [
+        "music-30"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h30-1"
+      },
+      "id": "h30-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h30-1",
+        "value": "robertah30"
+      },
+      "population_sha256": "df2883ed460b61eb15e97f9b279abe983017771dcd2d1c95294d1191fb92ecd6",
+      "work": "h30-1"
+    },
+    {
+      "contexts": [
+        "kinetic-31"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h31-0"
+      },
+      "id": "h31-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h31-0",
+        "value": "PINNH31"
+      },
+      "population_sha256": "00cf29999712a975c2878549b40a929f62cb10a05ee82a3991712985ba4bcd3b",
+      "work": "h31-0"
+    },
+    {
+      "contexts": [
+        "music-31"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h31-1"
+      },
+      "id": "h31-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h31-1",
+        "value": "pinnh31"
+      },
+      "population_sha256": "ac0d831f195d9d103c0da89acb2c5ad06d6cc926810e7902e8fe60c199d499ed",
+      "work": "h31-1"
+    },
+    {
+      "contexts": [
+        "kinetic-32"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h32-0"
+      },
+      "id": "h32-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h32-0",
+        "value": "NERFH32"
+      },
+      "population_sha256": "4e1cb49f423c6dce450644677b2c309cf87f57bf9769806dc5b02009cda7023e",
+      "work": "h32-0"
+    },
+    {
+      "contexts": [
+        "music-32"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h32-1"
+      },
+      "id": "h32-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h32-1",
+        "value": "nerfh32"
+      },
+      "population_sha256": "9a9f1fb2df6b2f254da6ce4cfcf57f18acf2880a267b7a4dd121e6a58d171ad3",
+      "work": "h32-1"
+    },
+    {
+      "contexts": [
+        "kinetic-33"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h33-0"
+      },
+      "id": "h33-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h33-0",
+        "value": "DEEPONETH33"
+      },
+      "population_sha256": "7ac8ebf728061d426dcfa7420465c186bc0e470e920e5633981b6e36038c7100",
+      "work": "h33-0"
+    },
+    {
+      "contexts": [
+        "music-33"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h33-1"
+      },
+      "id": "h33-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h33-1",
+        "value": "deeponeth33"
+      },
+      "population_sha256": "2c959c99ef10e34ec4feb12f6779b9433e3d600e554fd8b7240f325a3ae6f3ff",
+      "work": "h33-1"
+    },
+    {
+      "contexts": [
+        "kinetic-34"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h34-0"
+      },
+      "id": "h34-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h34-0",
+        "value": "DIFFDOCKH34"
+      },
+      "population_sha256": "ba7a34d42c9c9fb7fa0a098ae84431717813a0a20fb7de7dccba2513ada2b0a0",
+      "work": "h34-0"
+    },
+    {
+      "contexts": [
+        "music-34"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h34-1"
+      },
+      "id": "h34-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h34-1",
+        "value": "diffdockh34"
+      },
+      "population_sha256": "57fbc9f80bd9722655ac7f6ba36ac6089e2bfe51219f7038869322fc3c7677b9",
+      "work": "h34-1"
+    },
+    {
+      "contexts": [
+        "kinetic-35"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h35-0"
+      },
+      "id": "h35-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h35-0",
+        "value": "BIOCLIPH35"
+      },
+      "population_sha256": "453b6a42a6d1cf82d996cef353829d8ba9c2f04fe9b089c4dd9f46908fa0b881",
+      "work": "h35-0"
+    },
+    {
+      "contexts": [
+        "music-35"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "h35-1"
+      },
+      "id": "h35-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "h35-1",
+        "value": "biocliph35"
+      },
+      "population_sha256": "11b9ec9ea61fac31ca51a42c736bd6e770fb63821e6a54d332ad0872fbf29f41",
+      "work": "h35-1"
+    },
+    {
+      "contexts": [
+        "field-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s00-0"
+      },
+      "id": "s00-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s00-0",
+        "value": "VampNets00"
+      },
+      "population_sha256": "3950277b41eb41a3ff860d05025777be07a1cbc92e0fd0b8bfb1d296659eedc2",
+      "work": "s00-0"
+    },
+    {
+      "contexts": [
+        "field-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s00-1"
+      },
+      "id": "s00-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s00-1",
+        "value": "VampNets00s"
+      },
+      "population_sha256": "4ab8892efe12fc6970f18dcc101643e505b90b7e98c4529155b0b0252453af28",
+      "work": "s00-1"
+    },
+    {
+      "contexts": [
+        "field-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s01-0"
+      },
+      "id": "s01-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s01-0",
+        "value": "WHAMs01"
+      },
+      "population_sha256": "44941e1035a55e6e7b2de74869e3ea1434dd4b170d7481d29483191cceeb998b",
+      "work": "s01-0"
+    },
+    {
+      "contexts": [
+        "field-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s01-1"
+      },
+      "id": "s01-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s01-1",
+        "value": "WHAMs01s"
+      },
+      "population_sha256": "2342fba4b1dc48762de334f196d368c2a0f5874968a536a85bcf43674ea5d44e",
+      "work": "s01-1"
+    },
+    {
+      "contexts": [
+        "field-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s02-0"
+      },
+      "id": "s02-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s02-0",
+        "value": "TRACEs02"
+      },
+      "population_sha256": "5070bbdade63c5420ca4bd44da965f5ae46b78aa601277d17e6c7422e2c818a8",
+      "work": "s02-0"
+    },
+    {
+      "contexts": [
+        "field-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s02-1"
+      },
+      "id": "s02-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s02-1",
+        "value": "TRACEs02s"
+      },
+      "population_sha256": "544fe10932d2ac9c2da1380a7ade65b39284e845256c36ad4261f5a8011dee5f",
+      "work": "s02-1"
+    },
+    {
+      "contexts": [
+        "field-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s03-0"
+      },
+      "id": "s03-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s03-0",
+        "value": "Boltzs03"
+      },
+      "population_sha256": "ce41f4c5929640807d082eca0e25d39723515e1c71b7319f47e31cbaed7a350a",
+      "work": "s03-0"
+    },
+    {
+      "contexts": [
+        "field-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s03-1"
+      },
+      "id": "s03-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s03-1",
+        "value": "Boltzs03s"
+      },
+      "population_sha256": "c40bf440df1371bb46da1da83601a42faaed415435c530980b09b49a476e2991",
+      "work": "s03-1"
+    },
+    {
+      "contexts": [
+        "field-4"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s04-0"
+      },
+      "id": "s04-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s04-0",
+        "value": "OpenCaps04"
+      },
+      "population_sha256": "d740083c9ac7dbceead08bf4d5740b434a6636a862a79f0e049a52b113d12e9a",
+      "work": "s04-0"
+    },
+    {
+      "contexts": [
+        "field-4"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s04-1"
+      },
+      "id": "s04-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s04-1",
+        "value": "OpenCaps04s"
+      },
+      "population_sha256": "930770b6928c3ff2ab3c476f9d162241f0fdd4b944fb5f09f00cf312cc903782",
+      "work": "s04-1"
+    },
+    {
+      "contexts": [
+        "field-5"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s05-0"
+      },
+      "id": "s05-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s05-0",
+        "value": "AlphaFolds05"
+      },
+      "population_sha256": "2146ab3b455f65f06641fa24ee466b3d0a6611e96d61c830a54430a52bb38db8",
+      "work": "s05-0"
+    },
+    {
+      "contexts": [
+        "field-5"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s05-1"
+      },
+      "id": "s05-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s05-1",
+        "value": "AlphaFolds05s"
+      },
+      "population_sha256": "6f0c306220812045ef171de70565bec652383ff59d575f19317d58a3f705414d",
+      "work": "s05-1"
+    },
+    {
+      "contexts": [
+        "field-6"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s06-0"
+      },
+      "id": "s06-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s06-0",
+        "value": "RoBERTas06"
+      },
+      "population_sha256": "445861cf29eefe87c05cd1cc373e84e36e460afc31f92c10a8dab3a7f49e86df",
+      "work": "s06-0"
+    },
+    {
+      "contexts": [
+        "field-6"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s06-1"
+      },
+      "id": "s06-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s06-1",
+        "value": "RoBERTas06s"
+      },
+      "population_sha256": "a852d229483d96d01980b78ac774b9bfff6086822f55cf936acd75795e312d11",
+      "work": "s06-1"
+    },
+    {
+      "contexts": [
+        "field-7"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s07-0"
+      },
+      "id": "s07-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s07-0",
+        "value": "PINNs07"
+      },
+      "population_sha256": "7a8e42d9811d41cb373ca37e53a30e1848469f72d44747e8ea9774c5f976fb43",
+      "work": "s07-0"
+    },
+    {
+      "contexts": [
+        "field-7"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s07-1"
+      },
+      "id": "s07-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s07-1",
+        "value": "PINNs07s"
+      },
+      "population_sha256": "7726f5fad05a5b673fc9d035db4ac3ef4ae8ef59de88e9bf39ba565960c5dd21",
+      "work": "s07-1"
+    },
+    {
+      "contexts": [
+        "field-8"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s08-0"
+      },
+      "id": "s08-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s08-0",
+        "value": "NeRFs08"
+      },
+      "population_sha256": "c8e4c2802aab1fb0505457add13eefa0597f91eb676691588e81db2a0495702d",
+      "work": "s08-0"
+    },
+    {
+      "contexts": [
+        "field-8"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s08-1"
+      },
+      "id": "s08-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s08-1",
+        "value": "NeRFs08s"
+      },
+      "population_sha256": "dfd2992f28e304f66fa742209f59e75498183f02f5b23b8cb8e84d5170d11691",
+      "work": "s08-1"
+    },
+    {
+      "contexts": [
+        "field-9"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s09-0"
+      },
+      "id": "s09-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s09-0",
+        "value": "DeepONets09"
+      },
+      "population_sha256": "d9337ac25fc2ef96a15b3ac9c718587115dc647f0a12c5318b9db812e788dbf4",
+      "work": "s09-0"
+    },
+    {
+      "contexts": [
+        "field-9"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s09-1"
+      },
+      "id": "s09-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s09-1",
+        "value": "DeepONets09s"
+      },
+      "population_sha256": "19c3368fec5b2b915545f32fcf567ef64f40ee9caaabc5fe245c24f4d0bd426b",
+      "work": "s09-1"
+    },
+    {
+      "contexts": [
+        "field-10"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s10-0"
+      },
+      "id": "s10-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s10-0",
+        "value": "DiffDocks10"
+      },
+      "population_sha256": "4221c0f84bb20e47fab925fa6ef8c5d372b35bf8fd59c4773a86e0919be44598",
+      "work": "s10-0"
+    },
+    {
+      "contexts": [
+        "field-10"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s10-1"
+      },
+      "id": "s10-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s10-1",
+        "value": "DiffDocks10s"
+      },
+      "population_sha256": "a67b17baab66c5066e6ed2ac534941595cb4354c1ad7c0b2ede9423148b2ec7f",
+      "work": "s10-1"
+    },
+    {
+      "contexts": [
+        "field-11"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s11-0"
+      },
+      "id": "s11-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s11-0",
+        "value": "BioCLIPs11"
+      },
+      "population_sha256": "400ad39e4441f62dc19e0b5f22df4d99d6b9677e63db8d30b616b3d0e56de9c2",
+      "work": "s11-0"
+    },
+    {
+      "contexts": [
+        "field-11"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s11-1"
+      },
+      "id": "s11-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s11-1",
+        "value": "BioCLIPs11s"
+      },
+      "population_sha256": "c732eb9840c437969fba1ad5a68303365e65687341297c1309eb1aba723bd77a",
+      "work": "s11-1"
+    },
+    {
+      "contexts": [
+        "field-12"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s12-0"
+      },
+      "id": "s12-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s12-0",
+        "value": "VampNets12"
+      },
+      "population_sha256": "77209dc93b534c95b29355fb6d724733a39f7e681653e216e14a6120a5b4538b",
+      "work": "s12-0"
+    },
+    {
+      "contexts": [
+        "field-12"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s12-1"
+      },
+      "id": "s12-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s12-1",
+        "value": "VampNets12s"
+      },
+      "population_sha256": "623b3cf05b88df0543ed64f1f803c563c5ba40312ce23170279208f893c85925",
+      "work": "s12-1"
+    },
+    {
+      "contexts": [
+        "field-13"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s13-0"
+      },
+      "id": "s13-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s13-0",
+        "value": "WHAMs13"
+      },
+      "population_sha256": "d2a1de63ebf0fa976f919697397901c434f3452439f1bf50bf8a42cb40ae04b7",
+      "work": "s13-0"
+    },
+    {
+      "contexts": [
+        "field-13"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s13-1"
+      },
+      "id": "s13-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s13-1",
+        "value": "WHAMs13s"
+      },
+      "population_sha256": "a826440fc162f9a2a51fca0c6e9c559ccbd2a866d30ca797e149ea1690004a41",
+      "work": "s13-1"
+    },
+    {
+      "contexts": [
+        "field-14"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s14-0"
+      },
+      "id": "s14-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s14-0",
+        "value": "TRACEs14"
+      },
+      "population_sha256": "c6924ba2197adc721817743f1eb6c49147396f1fa2a7e990e13be96974ae86c9",
+      "work": "s14-0"
+    },
+    {
+      "contexts": [
+        "field-14"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s14-1"
+      },
+      "id": "s14-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s14-1",
+        "value": "TRACEs14s"
+      },
+      "population_sha256": "d72e05e2da1aa4e6a00649bc8f1e8e6fe5fba304899743ddd8d222f5c93b7a8e",
+      "work": "s14-1"
+    },
+    {
+      "contexts": [
+        "field-15"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s15-0"
+      },
+      "id": "s15-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s15-0",
+        "value": "Boltzs15"
+      },
+      "population_sha256": "d65a97b8b4a022340a16335e76dfe1932553ae29a30c0050535d685414ea728d",
+      "work": "s15-0"
+    },
+    {
+      "contexts": [
+        "field-15"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s15-1"
+      },
+      "id": "s15-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s15-1",
+        "value": "Boltzs15s"
+      },
+      "population_sha256": "3fa3dca15f33b1e595b916dc66eeee418231024df56dee989b50006a8227f575",
+      "work": "s15-1"
+    },
+    {
+      "contexts": [
+        "field-16"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s16-0"
+      },
+      "id": "s16-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s16-0",
+        "value": "OpenCaps16"
+      },
+      "population_sha256": "3e5cfdcf1bf6ed5fe717398d1b90b4ada5cc8dc99f5cf45ef9a1f9cca4368de1",
+      "work": "s16-0"
+    },
+    {
+      "contexts": [
+        "field-16"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s16-1"
+      },
+      "id": "s16-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s16-1",
+        "value": "OpenCaps16s"
+      },
+      "population_sha256": "89907a424074d691498cf7566b6398e73af470154d819e1dd057c294af60b2b3",
+      "work": "s16-1"
+    },
+    {
+      "contexts": [
+        "field-17"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s17-0"
+      },
+      "id": "s17-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s17-0",
+        "value": "AlphaFolds17"
+      },
+      "population_sha256": "fc19eab2a6056651d5d48401abcfed9c1dfb8467ac597bb3390b69fed989c3cc",
+      "work": "s17-0"
+    },
+    {
+      "contexts": [
+        "field-17"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s17-1"
+      },
+      "id": "s17-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s17-1",
+        "value": "AlphaFolds17s"
+      },
+      "population_sha256": "4efd907ed73c78845a245d9608643388c368d1fdb423cbd1b28941162fa61f10",
+      "work": "s17-1"
+    },
+    {
+      "contexts": [
+        "field-18"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s18-0"
+      },
+      "id": "s18-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s18-0",
+        "value": "RoBERTas18"
+      },
+      "population_sha256": "309aeb369858641667ae2bdc37f1f1c56885cc0e1d86e9f6b0621c5301df1410",
+      "work": "s18-0"
+    },
+    {
+      "contexts": [
+        "field-18"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s18-1"
+      },
+      "id": "s18-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s18-1",
+        "value": "RoBERTas18s"
+      },
+      "population_sha256": "78abc2a6e6d948a8615ae32a9a89fccbff17998d359052687c204385e88a5e60",
+      "work": "s18-1"
+    },
+    {
+      "contexts": [
+        "field-19"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s19-0"
+      },
+      "id": "s19-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s19-0",
+        "value": "PINNs19"
+      },
+      "population_sha256": "43255a7d142067245b373939a131e74f9059633a22671c9447e913073361c982",
+      "work": "s19-0"
+    },
+    {
+      "contexts": [
+        "field-19"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s19-1"
+      },
+      "id": "s19-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s19-1",
+        "value": "PINNs19s"
+      },
+      "population_sha256": "ac9451f38f0d5648f3b2fa07766c3a1375f3edde40c97d34cacb8905bbc32393",
+      "work": "s19-1"
+    },
+    {
+      "contexts": [
+        "field-20"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s20-0"
+      },
+      "id": "s20-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s20-0",
+        "value": "NeRFs20"
+      },
+      "population_sha256": "819ae6545a847c3154115dbef6f7b13a9091b4f6158bc428e23210ebef6b752f",
+      "work": "s20-0"
+    },
+    {
+      "contexts": [
+        "field-20"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s20-1"
+      },
+      "id": "s20-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s20-1",
+        "value": "NeRFs20s"
+      },
+      "population_sha256": "c9df9f675eb4ef1ce750163735cf4bfcf5a305328d5e57ded8f0716b77ab703b",
+      "work": "s20-1"
+    },
+    {
+      "contexts": [
+        "field-21"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s21-0"
+      },
+      "id": "s21-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s21-0",
+        "value": "DeepONets21"
+      },
+      "population_sha256": "2a6ffa03a96a333f227a6a2e1c2406bf2ff8d720bf3284d8937c3ddcae11d3a4",
+      "work": "s21-0"
+    },
+    {
+      "contexts": [
+        "field-21"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s21-1"
+      },
+      "id": "s21-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s21-1",
+        "value": "DeepONets21s"
+      },
+      "population_sha256": "cd5f6fdbcb60640fb7642d4fb2b31fec3c68b994f671e67f4c42bb5f8a6504f3",
+      "work": "s21-1"
+    },
+    {
+      "contexts": [
+        "field-22"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s22-0"
+      },
+      "id": "s22-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s22-0",
+        "value": "DiffDocks22"
+      },
+      "population_sha256": "12b972d05e62247ece097cdb1afe6eb2229ccbd6db4b24f4753a029bf5c1c906",
+      "work": "s22-0"
+    },
+    {
+      "contexts": [
+        "field-22"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s22-1"
+      },
+      "id": "s22-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s22-1",
+        "value": "DiffDocks22s"
+      },
+      "population_sha256": "35b93efe8f112dd24fa88744780281ad0306ce98fa6e9495651460a784e695a8",
+      "work": "s22-1"
+    },
+    {
+      "contexts": [
+        "field-23"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s23-0"
+      },
+      "id": "s23-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s23-0",
+        "value": "BioCLIPs23"
+      },
+      "population_sha256": "9fa5703d93f0935b792dae57364957caa335bcdd9038d678726fc1dd31444727",
+      "work": "s23-0"
+    },
+    {
+      "contexts": [
+        "field-23"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s23-1"
+      },
+      "id": "s23-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s23-1",
+        "value": "BioCLIPs23s"
+      },
+      "population_sha256": "8b795ab0c8f45bb6dfc292ed6efb06dfc155ea796d315bc6e5a3214007aa8eeb",
+      "work": "s23-1"
+    },
+    {
+      "contexts": [
+        "field-24"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s24-0"
+      },
+      "id": "s24-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s24-0",
+        "value": "VampNets24"
+      },
+      "population_sha256": "c63faa5c150ea570751f2b9fdb3b3d2202fef68ff4eb235dbb75997663559b5e",
+      "work": "s24-0"
+    },
+    {
+      "contexts": [
+        "field-24"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s24-1"
+      },
+      "id": "s24-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s24-1",
+        "value": "VampNets24s"
+      },
+      "population_sha256": "886fe4cb93e1b6e87d1482aec6f432503a340cc7bcd4be80d70de3845e643107",
+      "work": "s24-1"
+    },
+    {
+      "contexts": [
+        "field-25"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s25-0"
+      },
+      "id": "s25-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s25-0",
+        "value": "WHAMs25"
+      },
+      "population_sha256": "1dbfd8010760878b5c21d527eb2d82a16c8f4f4ded6c28ddf9d54059cfa2e38f",
+      "work": "s25-0"
+    },
+    {
+      "contexts": [
+        "field-25"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s25-1"
+      },
+      "id": "s25-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s25-1",
+        "value": "WHAMs25s"
+      },
+      "population_sha256": "b9f689cca3b2c09fd9eb014d4aecd84bc2f7f4e3f9a5f25367f9c70570daad01",
+      "work": "s25-1"
+    },
+    {
+      "contexts": [
+        "field-26"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s26-0"
+      },
+      "id": "s26-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s26-0",
+        "value": "TRACEs26"
+      },
+      "population_sha256": "5519d162f64d9205085a150e2020af5a7f4b51496c0155d8432c3f374f6ff81b",
+      "work": "s26-0"
+    },
+    {
+      "contexts": [
+        "field-26"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s26-1"
+      },
+      "id": "s26-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s26-1",
+        "value": "TRACEs26s"
+      },
+      "population_sha256": "a86622b0b16c968c6f4906fba5629569e6c1babdb9550dc0d7260b1cfcff9d36",
+      "work": "s26-1"
+    },
+    {
+      "contexts": [
+        "field-27"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s27-0"
+      },
+      "id": "s27-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s27-0",
+        "value": "Boltzs27"
+      },
+      "population_sha256": "68d583ae9b3f1b5f454b23a94dd935b3d302c122ad24be64f0ffb09f6465c86f",
+      "work": "s27-0"
+    },
+    {
+      "contexts": [
+        "field-27"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s27-1"
+      },
+      "id": "s27-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s27-1",
+        "value": "Boltzs27s"
+      },
+      "population_sha256": "ff7703aac0707d2cf73370b732dfed686cad551bf49a82f71a398f1c01fd5779",
+      "work": "s27-1"
+    },
+    {
+      "contexts": [
+        "field-28"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s28-0"
+      },
+      "id": "s28-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s28-0",
+        "value": "OpenCaps28"
+      },
+      "population_sha256": "959709cb0a07754d011fa962be95ad955f0849823a88271b748bbb2b928d0156",
+      "work": "s28-0"
+    },
+    {
+      "contexts": [
+        "field-28"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s28-1"
+      },
+      "id": "s28-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s28-1",
+        "value": "OpenCaps28s"
+      },
+      "population_sha256": "6e7487e8165f901a40839b08cb58042bcdd3cea09178e24be7070c903b7a21cf",
+      "work": "s28-1"
+    },
+    {
+      "contexts": [
+        "field-29"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s29-0"
+      },
+      "id": "s29-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s29-0",
+        "value": "AlphaFolds29"
+      },
+      "population_sha256": "1f45f43d9b9129835785667a7205f8cdc242ad7874c8adf438bc1540293d6192",
+      "work": "s29-0"
+    },
+    {
+      "contexts": [
+        "field-29"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s29-1"
+      },
+      "id": "s29-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s29-1",
+        "value": "AlphaFolds29s"
+      },
+      "population_sha256": "1f98c1d880cb71fd456cd5630e935805ae0f3eb53d0728df2cd92722f319d31c",
+      "work": "s29-1"
+    },
+    {
+      "contexts": [
+        "field-30"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s30-0"
+      },
+      "id": "s30-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s30-0",
+        "value": "RoBERTas30"
+      },
+      "population_sha256": "ba1ead766e2bb6cf6c5e0ff3f8d4d8bc0c26d7d96d306b366fa84303034db493",
+      "work": "s30-0"
+    },
+    {
+      "contexts": [
+        "field-30"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s30-1"
+      },
+      "id": "s30-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s30-1",
+        "value": "RoBERTas30s"
+      },
+      "population_sha256": "dcfc26c6cdd046830159f4b6b15d47ad40ae13d8dd0d963741402f5f95ae4173",
+      "work": "s30-1"
+    },
+    {
+      "contexts": [
+        "field-31"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s31-0"
+      },
+      "id": "s31-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s31-0",
+        "value": "PINNs31"
+      },
+      "population_sha256": "e26633caa77fadac0956ee7ada35c073a4cb1a9c22c1062d3225821ffe1df744",
+      "work": "s31-0"
+    },
+    {
+      "contexts": [
+        "field-31"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s31-1"
+      },
+      "id": "s31-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s31-1",
+        "value": "PINNs31s"
+      },
+      "population_sha256": "7ec04a9e27b3a8b3fc00228a642123a03535f2d3380c34484f3524965ba1a942",
+      "work": "s31-1"
+    },
+    {
+      "contexts": [
+        "field-32"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s32-0"
+      },
+      "id": "s32-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s32-0",
+        "value": "NeRFs32"
+      },
+      "population_sha256": "abc2854aac711e05276fec86a7048ee923fb55f4cf9c779fafba3968b1ddf9e6",
+      "work": "s32-0"
+    },
+    {
+      "contexts": [
+        "field-32"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s32-1"
+      },
+      "id": "s32-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s32-1",
+        "value": "NeRFs32s"
+      },
+      "population_sha256": "b6741f990ee95dca64ed79e3615e8a2d6988b7fa6b328e66ae65e52c9c3e00db",
+      "work": "s32-1"
+    },
+    {
+      "contexts": [
+        "field-33"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s33-0"
+      },
+      "id": "s33-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s33-0",
+        "value": "DeepONets33"
+      },
+      "population_sha256": "4a5f43c21eea13ccb95db53d4601c90002dfb237ba70f435d3ea5229c09ef8bd",
+      "work": "s33-0"
+    },
+    {
+      "contexts": [
+        "field-33"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s33-1"
+      },
+      "id": "s33-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s33-1",
+        "value": "DeepONets33s"
+      },
+      "population_sha256": "2dc534ca2e97b0720e063cdc216112013e37da69637e52e1c6f8a521bebcf5eb",
+      "work": "s33-1"
+    },
+    {
+      "contexts": [
+        "field-34"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s34-0"
+      },
+      "id": "s34-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s34-0",
+        "value": "DiffDocks34"
+      },
+      "population_sha256": "18e172006aaf354cb169901cc0136b41163e4bafa1404d471667568a47ed9aa1",
+      "work": "s34-0"
+    },
+    {
+      "contexts": [
+        "field-34"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s34-1"
+      },
+      "id": "s34-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s34-1",
+        "value": "DiffDocks34s"
+      },
+      "population_sha256": "9ca2a9af59dd39643e7c60565ae7797c251f10f514488d2d8fc4e9a4855d4711",
+      "work": "s34-1"
+    },
+    {
+      "contexts": [
+        "field-35"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s35-0"
+      },
+      "id": "s35-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s35-0",
+        "value": "BioCLIPs35"
+      },
+      "population_sha256": "48cc57374f7657c6eae0fd6cfa6924bc0c9a01e50e5dd810d6b77bb496af40fa",
+      "work": "s35-0"
+    },
+    {
+      "contexts": [
+        "field-35"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "s35-1"
+      },
+      "id": "s35-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "s35-1",
+        "value": "BioCLIPs35s"
+      },
+      "population_sha256": "f64b23e4d4c21f3eef7665a6c86e085bc267cdfac23184e0f9f6da84a2cb6949",
+      "work": "s35-1"
+    },
+    {
+      "contexts": [
+        "family-0-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f00-0"
+      },
+      "id": "f00-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f00-0",
+        "value": "$VampNetf00"
+      },
+      "population_sha256": "d1695425a85bbae7cabc85ab91af3a5326026d08627adafd32ba399366f2be0e",
+      "work": "f00-0"
+    },
+    {
+      "contexts": [
+        "family-0-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f00-1"
+      },
+      "id": "f00-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f00-1",
+        "value": "VampNetf00s"
+      },
+      "population_sha256": "1224e5e6bf529cea892223bdcb4267e4ae94908274ccd1ae7312688f7b235ce1",
+      "work": "f00-1"
+    },
+    {
+      "contexts": [
+        "family-0-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f00-2"
+      },
+      "id": "f00-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f00-2",
+        "value": "VampNetf00-family"
+      },
+      "population_sha256": "78d0e1f35c8ceb14439eed0e617caaa8748e08f3f116b21743a3373ae4a0608b",
+      "work": "f00-2"
+    },
+    {
+      "contexts": [
+        "family-0-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f00-3"
+      },
+      "id": "f00-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f00-3",
+        "value": "VampNetf00-variants"
+      },
+      "population_sha256": "b3408eeff45a1c84c4f94cc92635d0da357f1f3300c7976f467b3a2e56a6ae96",
+      "work": "f00-3"
+    },
+    {
+      "contexts": [
+        "family-1-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f01-0"
+      },
+      "id": "f01-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f01-0",
+        "value": "$WHAMf01"
+      },
+      "population_sha256": "f661683795c0f583fdba2ef580189ca897717c329852bb44018e8569b536513d",
+      "work": "f01-0"
+    },
+    {
+      "contexts": [
+        "family-1-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f01-1"
+      },
+      "id": "f01-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f01-1",
+        "value": "WHAMf01s"
+      },
+      "population_sha256": "97884630fdec08e729fe824e440c0b66ce06c1f142ae94b73cce4eb81b1064fa",
+      "work": "f01-1"
+    },
+    {
+      "contexts": [
+        "family-1-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f01-2"
+      },
+      "id": "f01-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f01-2",
+        "value": "WHAMf01-family"
+      },
+      "population_sha256": "92e1b1b5b607c8c5290e302e0b9fd4cd537d04cc0cf44d5e98ae0d06af501eec",
+      "work": "f01-2"
+    },
+    {
+      "contexts": [
+        "family-1-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f01-3"
+      },
+      "id": "f01-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f01-3",
+        "value": "WHAMf01-variants"
+      },
+      "population_sha256": "d661fb7ce2b07a7442d33c8375c9bf078ee7fd5f318dd27e0d234e70a1f25671",
+      "work": "f01-3"
+    },
+    {
+      "contexts": [
+        "family-2-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f02-0"
+      },
+      "id": "f02-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f02-0",
+        "value": "$TRACEf02"
+      },
+      "population_sha256": "eb3a193555b45bcd83aca917feecc385f99ecc2617a48c32cb7dfc101f254c01",
+      "work": "f02-0"
+    },
+    {
+      "contexts": [
+        "family-2-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f02-1"
+      },
+      "id": "f02-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f02-1",
+        "value": "TRACEf02s"
+      },
+      "population_sha256": "51ab006def12a7587a37a7150ec1876586f9ec0fb280cb6d5a75031486350561",
+      "work": "f02-1"
+    },
+    {
+      "contexts": [
+        "family-2-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f02-2"
+      },
+      "id": "f02-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f02-2",
+        "value": "TRACEf02-family"
+      },
+      "population_sha256": "155f0bf2ac71a1108961bafa64e49bccf2a1b071ed075db5e0cda8458b348b91",
+      "work": "f02-2"
+    },
+    {
+      "contexts": [
+        "family-2-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f02-3"
+      },
+      "id": "f02-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f02-3",
+        "value": "TRACEf02-variants"
+      },
+      "population_sha256": "6411e667704ac8ec71108544ccc2c8229518f89d973065aa07bb4c1e91079517",
+      "work": "f02-3"
+    },
+    {
+      "contexts": [
+        "family-3-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f03-0"
+      },
+      "id": "f03-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f03-0",
+        "value": "$Boltzf03"
+      },
+      "population_sha256": "adc3790422472732c2b1da7eae851cf66858ea3c56659eb5d8f6681d8e139e33",
+      "work": "f03-0"
+    },
+    {
+      "contexts": [
+        "family-3-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f03-1"
+      },
+      "id": "f03-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f03-1",
+        "value": "Boltzf03s"
+      },
+      "population_sha256": "cd03880b72fc0ee50817d6145b07b6cb64399f9972da7b010c76e8926360fad5",
+      "work": "f03-1"
+    },
+    {
+      "contexts": [
+        "family-3-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f03-2"
+      },
+      "id": "f03-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f03-2",
+        "value": "Boltzf03-family"
+      },
+      "population_sha256": "21fe78809bdaf5a12e33700c03b0eafeb035e6bd3eb726d38820d877c81e6dec",
+      "work": "f03-2"
+    },
+    {
+      "contexts": [
+        "family-3-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f03-3"
+      },
+      "id": "f03-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f03-3",
+        "value": "Boltzf03-variants"
+      },
+      "population_sha256": "69c160963dc4595a9595d15b73c4179d5cd3e303e3b41af01c1091f251b5b0e8",
+      "work": "f03-3"
+    },
+    {
+      "contexts": [
+        "family-4-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f04-0"
+      },
+      "id": "f04-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f04-0",
+        "value": "$OpenCapf04"
+      },
+      "population_sha256": "d2a30d703f570390e520f339c5e90339e7a6ed0c187533e7451190a8a6b80c09",
+      "work": "f04-0"
+    },
+    {
+      "contexts": [
+        "family-4-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f04-1"
+      },
+      "id": "f04-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f04-1",
+        "value": "OpenCapf04s"
+      },
+      "population_sha256": "5505d09ca0f84173fb9ecac8eb0718a28ad582060b4c69a77a23eade798df8cb",
+      "work": "f04-1"
+    },
+    {
+      "contexts": [
+        "family-4-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f04-2"
+      },
+      "id": "f04-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f04-2",
+        "value": "OpenCapf04-family"
+      },
+      "population_sha256": "f1a1f9a7d2aeb9df8da0fb8affdb585f1ac689a6aef1a39ca2b8084f61c05370",
+      "work": "f04-2"
+    },
+    {
+      "contexts": [
+        "family-4-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f04-3"
+      },
+      "id": "f04-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f04-3",
+        "value": "OpenCapf04-variants"
+      },
+      "population_sha256": "3a669a7d91dff5f67939f291645cab315b12ac332df182c17252c00f3a141c9f",
+      "work": "f04-3"
+    },
+    {
+      "contexts": [
+        "family-5-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f05-0"
+      },
+      "id": "f05-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f05-0",
+        "value": "$AlphaFoldf05"
+      },
+      "population_sha256": "7a915411eb1cd85dbdabfd3c24afcaa3aa313a25a0c1a4cb25b70a8aa49caaf6",
+      "work": "f05-0"
+    },
+    {
+      "contexts": [
+        "family-5-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f05-1"
+      },
+      "id": "f05-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f05-1",
+        "value": "AlphaFoldf05s"
+      },
+      "population_sha256": "a17e51b9f36957717edcaa0b2d0a654ecba876eab7c04bdfe494cd4dd2715047",
+      "work": "f05-1"
+    },
+    {
+      "contexts": [
+        "family-5-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f05-2"
+      },
+      "id": "f05-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f05-2",
+        "value": "AlphaFoldf05-family"
+      },
+      "population_sha256": "f36e6cd210b1a12822b431da05b93f374dbc2230c3da4d720f68b5f4b3ffcf7b",
+      "work": "f05-2"
+    },
+    {
+      "contexts": [
+        "family-5-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f05-3"
+      },
+      "id": "f05-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f05-3",
+        "value": "AlphaFoldf05-variants"
+      },
+      "population_sha256": "fe69a25b0b9508dcbaaa011ed77863afbc4a09bd1e8854d83d28b5c00dfedd58",
+      "work": "f05-3"
+    },
+    {
+      "contexts": [
+        "family-6-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f06-0"
+      },
+      "id": "f06-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f06-0",
+        "value": "$RoBERTaf06"
+      },
+      "population_sha256": "9222ee4a287801cd8679f49566fbf27f553e67093cde5cbebe9d00e8f1ea9b2b",
+      "work": "f06-0"
+    },
+    {
+      "contexts": [
+        "family-6-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f06-1"
+      },
+      "id": "f06-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f06-1",
+        "value": "RoBERTaf06s"
+      },
+      "population_sha256": "d8826703afef76d1931c90b4f9410a867db51d3ad64bc0660e1188f57bc16ae2",
+      "work": "f06-1"
+    },
+    {
+      "contexts": [
+        "family-6-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f06-2"
+      },
+      "id": "f06-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f06-2",
+        "value": "RoBERTaf06-family"
+      },
+      "population_sha256": "2e948e46b27841a27f743b93442567dd581ddcf0ab1b09f89e9f1ab36df64576",
+      "work": "f06-2"
+    },
+    {
+      "contexts": [
+        "family-6-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f06-3"
+      },
+      "id": "f06-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f06-3",
+        "value": "RoBERTaf06-variants"
+      },
+      "population_sha256": "4f1d2fb299644ac04e562e487f1f2135a1e02c5eea0222d253c24ec513bf2dda",
+      "work": "f06-3"
+    },
+    {
+      "contexts": [
+        "family-7-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f07-0"
+      },
+      "id": "f07-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f07-0",
+        "value": "$PINNf07"
+      },
+      "population_sha256": "a646216b3c4dd0339a690738ccb817ae0cb758bb424dcbd4ae82d16d53f4281b",
+      "work": "f07-0"
+    },
+    {
+      "contexts": [
+        "family-7-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f07-1"
+      },
+      "id": "f07-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f07-1",
+        "value": "PINNf07s"
+      },
+      "population_sha256": "b15f2384f7258ec2c85085b21ec632f9ac6abe7e62d328fe0ddc7f92acaa1c7b",
+      "work": "f07-1"
+    },
+    {
+      "contexts": [
+        "family-7-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f07-2"
+      },
+      "id": "f07-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f07-2",
+        "value": "PINNf07-family"
+      },
+      "population_sha256": "532bebf353674232c1f0a534613eb26285640dbd0d68c1b87bf43dccb0b69609",
+      "work": "f07-2"
+    },
+    {
+      "contexts": [
+        "family-7-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f07-3"
+      },
+      "id": "f07-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f07-3",
+        "value": "PINNf07-variants"
+      },
+      "population_sha256": "5e71e3b774a7d0c9c0d69a4a76ccab100c4fc215e0fa5364f42c8be8a8d3d364",
+      "work": "f07-3"
+    },
+    {
+      "contexts": [
+        "family-8-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f08-0"
+      },
+      "id": "f08-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f08-0",
+        "value": "$NeRFf08"
+      },
+      "population_sha256": "47b5b0108a57184ee8516833c4ded402759077b0b450b2af2e2fa66ae19d4e03",
+      "work": "f08-0"
+    },
+    {
+      "contexts": [
+        "family-8-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f08-1"
+      },
+      "id": "f08-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f08-1",
+        "value": "NeRFf08s"
+      },
+      "population_sha256": "516152e02f2ea13ffc6dfb75e75b8fd9b35d452ef74cae3529482ba8bf4ac4bf",
+      "work": "f08-1"
+    },
+    {
+      "contexts": [
+        "family-8-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f08-2"
+      },
+      "id": "f08-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f08-2",
+        "value": "NeRFf08-family"
+      },
+      "population_sha256": "1a89e05cd7dd80626d477aba098c81fd520c7c7938e26586f12fa5256364fd37",
+      "work": "f08-2"
+    },
+    {
+      "contexts": [
+        "family-8-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f08-3"
+      },
+      "id": "f08-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f08-3",
+        "value": "NeRFf08-variants"
+      },
+      "population_sha256": "0ded78a96a18d6bd909feb404914a0ebcfd1d2a10b3573f955b92f0243711a4c",
+      "work": "f08-3"
+    },
+    {
+      "contexts": [
+        "family-9-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f09-0"
+      },
+      "id": "f09-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f09-0",
+        "value": "$DeepONetf09"
+      },
+      "population_sha256": "9f905acc38f769cbb6a8f2a8cb8ca95d9f40c861616eb3c2a8f3dc363d393fc0",
+      "work": "f09-0"
+    },
+    {
+      "contexts": [
+        "family-9-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f09-1"
+      },
+      "id": "f09-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f09-1",
+        "value": "DeepONetf09s"
+      },
+      "population_sha256": "1c4603d8959c6113ee90e1615b517d17ba642506d368ab500728f8f79a7e6f9a",
+      "work": "f09-1"
+    },
+    {
+      "contexts": [
+        "family-9-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f09-2"
+      },
+      "id": "f09-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f09-2",
+        "value": "DeepONetf09-family"
+      },
+      "population_sha256": "6281b3e53bec3d3ec2fd63bdd0036b31009cbace6da5761e2197069f92338d6e",
+      "work": "f09-2"
+    },
+    {
+      "contexts": [
+        "family-9-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f09-3"
+      },
+      "id": "f09-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f09-3",
+        "value": "DeepONetf09-variants"
+      },
+      "population_sha256": "3f30134ed5f0e3d00456541e9574cd25c54045013ed2245c62161699483a9d85",
+      "work": "f09-3"
+    },
+    {
+      "contexts": [
+        "family-10-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f10-0"
+      },
+      "id": "f10-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f10-0",
+        "value": "$DiffDockf10"
+      },
+      "population_sha256": "2b496814bdd9a17ee6b79013bb7ce8345fac36e61d2d6050888731a954252189",
+      "work": "f10-0"
+    },
+    {
+      "contexts": [
+        "family-10-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f10-1"
+      },
+      "id": "f10-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f10-1",
+        "value": "DiffDockf10s"
+      },
+      "population_sha256": "ab5e855dd0e3f9540c32afd5cdd62664072ac4207e29f40496bbcd8a3df2f633",
+      "work": "f10-1"
+    },
+    {
+      "contexts": [
+        "family-10-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f10-2"
+      },
+      "id": "f10-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f10-2",
+        "value": "DiffDockf10-family"
+      },
+      "population_sha256": "86807c05d49f8344953dcc30d19537b6915993dd2504acd85c18f765b656cd20",
+      "work": "f10-2"
+    },
+    {
+      "contexts": [
+        "family-10-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f10-3"
+      },
+      "id": "f10-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f10-3",
+        "value": "DiffDockf10-variants"
+      },
+      "population_sha256": "014ace425ca3befd5be5636ff6fac69274f5fe73466f167fab95518dd03d93e2",
+      "work": "f10-3"
+    },
+    {
+      "contexts": [
+        "family-11-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f11-0"
+      },
+      "id": "f11-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f11-0",
+        "value": "$BioCLIPf11"
+      },
+      "population_sha256": "0249c57d05fb15ddb8c69256961ff440f6d8bfe3b3ece6d42f7feb7ee31203c8",
+      "work": "f11-0"
+    },
+    {
+      "contexts": [
+        "family-11-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f11-1"
+      },
+      "id": "f11-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f11-1",
+        "value": "BioCLIPf11s"
+      },
+      "population_sha256": "9d6899ec5dfd5984aa31aa58b9bfec91f81306fbf6b4358049f8ee817fe05dc4",
+      "work": "f11-1"
+    },
+    {
+      "contexts": [
+        "family-11-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f11-2"
+      },
+      "id": "f11-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f11-2",
+        "value": "BioCLIPf11-family"
+      },
+      "population_sha256": "e4d227f3178c341f8581dfba72398ab7c5c1651783cbf5fde1a688dd7112b27f",
+      "work": "f11-2"
+    },
+    {
+      "contexts": [
+        "family-11-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f11-3"
+      },
+      "id": "f11-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f11-3",
+        "value": "BioCLIPf11-variants"
+      },
+      "population_sha256": "146ff8c454818b5bde65ada89b42f0f52dfde4f237c3559213c59c95ce49f8b5",
+      "work": "f11-3"
+    },
+    {
+      "contexts": [
+        "family-12-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f12-0"
+      },
+      "id": "f12-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f12-0",
+        "value": "$VampNetf12"
+      },
+      "population_sha256": "615425827c4d1b25a4a2afd751257408261d888d01fd0fecf12be2d25f325448",
+      "work": "f12-0"
+    },
+    {
+      "contexts": [
+        "family-12-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f12-1"
+      },
+      "id": "f12-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f12-1",
+        "value": "VampNetf12s"
+      },
+      "population_sha256": "50783b99f8a547a6f2448445225dcb1707cc6b44608ab9aba4a028bba528ff72",
+      "work": "f12-1"
+    },
+    {
+      "contexts": [
+        "family-12-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f12-2"
+      },
+      "id": "f12-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f12-2",
+        "value": "VampNetf12-family"
+      },
+      "population_sha256": "170c96e68bc19d5b30e93d2f9a23e6a9c8e705ae0275f71b8fe9a00b65f977f0",
+      "work": "f12-2"
+    },
+    {
+      "contexts": [
+        "family-12-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f12-3"
+      },
+      "id": "f12-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f12-3",
+        "value": "VampNetf12-variants"
+      },
+      "population_sha256": "cafd44cc1381fa4627613209ff510eab870d8a920c838f6fe0949deb3e250935",
+      "work": "f12-3"
+    },
+    {
+      "contexts": [
+        "family-13-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f13-0"
+      },
+      "id": "f13-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f13-0",
+        "value": "$WHAMf13"
+      },
+      "population_sha256": "5ee5ea5878767cb0caee3527e6bc3fa7247e29bae047a0a52ef628e544027168",
+      "work": "f13-0"
+    },
+    {
+      "contexts": [
+        "family-13-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f13-1"
+      },
+      "id": "f13-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f13-1",
+        "value": "WHAMf13s"
+      },
+      "population_sha256": "5c9a8c40389887eb5ab645ab7213ee56b57e43619b252b55fe9e519c58a5abd2",
+      "work": "f13-1"
+    },
+    {
+      "contexts": [
+        "family-13-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f13-2"
+      },
+      "id": "f13-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f13-2",
+        "value": "WHAMf13-family"
+      },
+      "population_sha256": "69eb7ea7f249dcda4f5a7c70200b2c7013f4aa926f8dfafee9ce5f3c51bf5fdf",
+      "work": "f13-2"
+    },
+    {
+      "contexts": [
+        "family-13-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f13-3"
+      },
+      "id": "f13-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f13-3",
+        "value": "WHAMf13-variants"
+      },
+      "population_sha256": "9b3cdd8d8710ea3b1e492b5622ef6df6e9c48e559a9b6d96cec4e346c04eec81",
+      "work": "f13-3"
+    },
+    {
+      "contexts": [
+        "family-14-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f14-0"
+      },
+      "id": "f14-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f14-0",
+        "value": "$TRACEf14"
+      },
+      "population_sha256": "d46c474714509e42af6ba688e58675b318a2544d7a27cfba951b9c6e699373a0",
+      "work": "f14-0"
+    },
+    {
+      "contexts": [
+        "family-14-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f14-1"
+      },
+      "id": "f14-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f14-1",
+        "value": "TRACEf14s"
+      },
+      "population_sha256": "87707e2d836a4e04087eba644c55535b9dd0ed869ec0aeafcabb792d147eb7bb",
+      "work": "f14-1"
+    },
+    {
+      "contexts": [
+        "family-14-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f14-2"
+      },
+      "id": "f14-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f14-2",
+        "value": "TRACEf14-family"
+      },
+      "population_sha256": "3c9012283f3d90f0a29639ed853067946dad68568fd95b4934e8d066f315ad44",
+      "work": "f14-2"
+    },
+    {
+      "contexts": [
+        "family-14-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f14-3"
+      },
+      "id": "f14-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f14-3",
+        "value": "TRACEf14-variants"
+      },
+      "population_sha256": "2b8a1ac35f504d6e5f86933afee983a552ce91429d0f3ca1004f6ecf0f8da826",
+      "work": "f14-3"
+    },
+    {
+      "contexts": [
+        "family-15-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f15-0"
+      },
+      "id": "f15-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f15-0",
+        "value": "$Boltzf15"
+      },
+      "population_sha256": "68de9702df8d520f379ea33dfe55101e20e298e4ca659500b7a24c45e9e29511",
+      "work": "f15-0"
+    },
+    {
+      "contexts": [
+        "family-15-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f15-1"
+      },
+      "id": "f15-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f15-1",
+        "value": "Boltzf15s"
+      },
+      "population_sha256": "5d926628e64ce82192f09833e3aa913e63052190ff209c512ee5677d16edd13e",
+      "work": "f15-1"
+    },
+    {
+      "contexts": [
+        "family-15-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f15-2"
+      },
+      "id": "f15-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f15-2",
+        "value": "Boltzf15-family"
+      },
+      "population_sha256": "93ecb5f893321b56426e2ba78e2247edab483705e0dd9ea90083f4a324dd323c",
+      "work": "f15-2"
+    },
+    {
+      "contexts": [
+        "family-15-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f15-3"
+      },
+      "id": "f15-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f15-3",
+        "value": "Boltzf15-variants"
+      },
+      "population_sha256": "ce3d20db53de6b80a4ee6b0522cfe1395add53332a49de0c405a86564ee8fadc",
+      "work": "f15-3"
+    },
+    {
+      "contexts": [
+        "family-16-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f16-0"
+      },
+      "id": "f16-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f16-0",
+        "value": "$OpenCapf16"
+      },
+      "population_sha256": "c94e674d2fffcc929b948bd0f2db76921d215c674b220e93b59d5bc382365d9b",
+      "work": "f16-0"
+    },
+    {
+      "contexts": [
+        "family-16-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f16-1"
+      },
+      "id": "f16-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f16-1",
+        "value": "OpenCapf16s"
+      },
+      "population_sha256": "8626ff6ff9310ed1901b197e16746257e00c6981d6eb712ae3589a9fd598abd0",
+      "work": "f16-1"
+    },
+    {
+      "contexts": [
+        "family-16-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f16-2"
+      },
+      "id": "f16-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f16-2",
+        "value": "OpenCapf16-family"
+      },
+      "population_sha256": "7d3b4e7da03a4da3f489e72e876a54bb4034cf011b186cb3edf7c4e00da58825",
+      "work": "f16-2"
+    },
+    {
+      "contexts": [
+        "family-16-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f16-3"
+      },
+      "id": "f16-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f16-3",
+        "value": "OpenCapf16-variants"
+      },
+      "population_sha256": "622811dec772677988c64b261cf896b6d674dba4e75ccc693d1b898c4c8f2e06",
+      "work": "f16-3"
+    },
+    {
+      "contexts": [
+        "family-17-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f17-0"
+      },
+      "id": "f17-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f17-0",
+        "value": "$AlphaFoldf17"
+      },
+      "population_sha256": "c90fbad21a6e3fb2ebc3c22e6fdbce81bbc7c8f11585a8a84e736d86a6e4a270",
+      "work": "f17-0"
+    },
+    {
+      "contexts": [
+        "family-17-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f17-1"
+      },
+      "id": "f17-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f17-1",
+        "value": "AlphaFoldf17s"
+      },
+      "population_sha256": "4638ac15a6192adec4a1d7aa435ce5c6cb25b000bd7f1720cb8b22d565043030",
+      "work": "f17-1"
+    },
+    {
+      "contexts": [
+        "family-17-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f17-2"
+      },
+      "id": "f17-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f17-2",
+        "value": "AlphaFoldf17-family"
+      },
+      "population_sha256": "f7060aa253138adc0e8b99abed4d8e760a73c13fb93a731f7ded689f7f099f48",
+      "work": "f17-2"
+    },
+    {
+      "contexts": [
+        "family-17-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f17-3"
+      },
+      "id": "f17-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f17-3",
+        "value": "AlphaFoldf17-variants"
+      },
+      "population_sha256": "5f07bc7b3ac73b18dcb9e66dfc087c1075d4370c0652300c232c810aa94dcd55",
+      "work": "f17-3"
+    },
+    {
+      "contexts": [
+        "family-18-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f18-0"
+      },
+      "id": "f18-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f18-0",
+        "value": "$RoBERTaf18"
+      },
+      "population_sha256": "d0209577f1e7838b87b07a9adabce1356a0686d14e7ea152124563c260847d9f",
+      "work": "f18-0"
+    },
+    {
+      "contexts": [
+        "family-18-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f18-1"
+      },
+      "id": "f18-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f18-1",
+        "value": "RoBERTaf18s"
+      },
+      "population_sha256": "caeb850594929580b8939c2b8b4bdcb19fe911556779134a8bb20678b0570295",
+      "work": "f18-1"
+    },
+    {
+      "contexts": [
+        "family-18-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f18-2"
+      },
+      "id": "f18-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f18-2",
+        "value": "RoBERTaf18-family"
+      },
+      "population_sha256": "8a73833ffab04ff9950d5841531fa401da1756aaf005401eb832541189c58674",
+      "work": "f18-2"
+    },
+    {
+      "contexts": [
+        "family-18-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f18-3"
+      },
+      "id": "f18-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f18-3",
+        "value": "RoBERTaf18-variants"
+      },
+      "population_sha256": "61cc2675faaf770678a06f8b972bcd4b39d2889934b32b8176718af13f407fbf",
+      "work": "f18-3"
+    },
+    {
+      "contexts": [
+        "family-19-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f19-0"
+      },
+      "id": "f19-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f19-0",
+        "value": "$PINNf19"
+      },
+      "population_sha256": "ceafde72a3a882fd0b7176f8dcbf31efdd0e37960b318ab239c52600c25fe2eb",
+      "work": "f19-0"
+    },
+    {
+      "contexts": [
+        "family-19-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f19-1"
+      },
+      "id": "f19-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f19-1",
+        "value": "PINNf19s"
+      },
+      "population_sha256": "003b896415d5c8eec9f7a6c6c4239577deeb2703d495a765bb37005037fcb920",
+      "work": "f19-1"
+    },
+    {
+      "contexts": [
+        "family-19-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f19-2"
+      },
+      "id": "f19-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f19-2",
+        "value": "PINNf19-family"
+      },
+      "population_sha256": "5fcf8d25ade983a2c0034ec19b236a062ca27433c42246c67942f7b1dfff1218",
+      "work": "f19-2"
+    },
+    {
+      "contexts": [
+        "family-19-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f19-3"
+      },
+      "id": "f19-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f19-3",
+        "value": "PINNf19-variants"
+      },
+      "population_sha256": "accc16d31ecc83fe0739b64b7cb409a727fb35c5b825001811ace952f49f1d07",
+      "work": "f19-3"
+    },
+    {
+      "contexts": [
+        "family-20-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f20-0"
+      },
+      "id": "f20-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f20-0",
+        "value": "$NeRFf20"
+      },
+      "population_sha256": "ed734226d835795c073b733a0dd0864ed37d63434da2882e02fdaf286d52fd4c",
+      "work": "f20-0"
+    },
+    {
+      "contexts": [
+        "family-20-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f20-1"
+      },
+      "id": "f20-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f20-1",
+        "value": "NeRFf20s"
+      },
+      "population_sha256": "3b90a5bb20a208550f10e54163b80757c215d1858b2e454f0fcedc07599a5997",
+      "work": "f20-1"
+    },
+    {
+      "contexts": [
+        "family-20-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f20-2"
+      },
+      "id": "f20-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f20-2",
+        "value": "NeRFf20-family"
+      },
+      "population_sha256": "805c448533eca35223c54539c0d329f6e7a2a4a05ee02bb630548d3c92cd9d6b",
+      "work": "f20-2"
+    },
+    {
+      "contexts": [
+        "family-20-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f20-3"
+      },
+      "id": "f20-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f20-3",
+        "value": "NeRFf20-variants"
+      },
+      "population_sha256": "b2d77b1b25cde8e2f852d14e3b695b10660c3034e4c398ab6e79611006112889",
+      "work": "f20-3"
+    },
+    {
+      "contexts": [
+        "family-21-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f21-0"
+      },
+      "id": "f21-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f21-0",
+        "value": "$DeepONetf21"
+      },
+      "population_sha256": "494d1d0113bb1db7614e79e161cd485914f594d1566da2601bb7b3d267f60d7d",
+      "work": "f21-0"
+    },
+    {
+      "contexts": [
+        "family-21-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f21-1"
+      },
+      "id": "f21-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f21-1",
+        "value": "DeepONetf21s"
+      },
+      "population_sha256": "077a014973a40e3c97fa15b2e0f039a2322ecdfc0ca46b197805099d9874df44",
+      "work": "f21-1"
+    },
+    {
+      "contexts": [
+        "family-21-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f21-2"
+      },
+      "id": "f21-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f21-2",
+        "value": "DeepONetf21-family"
+      },
+      "population_sha256": "37bfd7ec5239fd7a092b179898c04acb381104734e5c13f5c443dce4bd80c9e6",
+      "work": "f21-2"
+    },
+    {
+      "contexts": [
+        "family-21-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f21-3"
+      },
+      "id": "f21-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f21-3",
+        "value": "DeepONetf21-variants"
+      },
+      "population_sha256": "0dc8dce67b311446b3a9411ef68eb7262b5542dce0ae37cd96766d0a47e99aa9",
+      "work": "f21-3"
+    },
+    {
+      "contexts": [
+        "family-22-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f22-0"
+      },
+      "id": "f22-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f22-0",
+        "value": "$DiffDockf22"
+      },
+      "population_sha256": "a377889e5b24f538008bf882b410567bbbf65636cb8528602e248a64230c2c92",
+      "work": "f22-0"
+    },
+    {
+      "contexts": [
+        "family-22-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f22-1"
+      },
+      "id": "f22-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f22-1",
+        "value": "DiffDockf22s"
+      },
+      "population_sha256": "bb19e8a3e02534109ba11a62130cd6f703654b174e063bfa8583294f9646deae",
+      "work": "f22-1"
+    },
+    {
+      "contexts": [
+        "family-22-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f22-2"
+      },
+      "id": "f22-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f22-2",
+        "value": "DiffDockf22-family"
+      },
+      "population_sha256": "f71c040a28025a0718428f8c110ddd7be5db9058754ef60b2d3ac0b19ac13dba",
+      "work": "f22-2"
+    },
+    {
+      "contexts": [
+        "family-22-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f22-3"
+      },
+      "id": "f22-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f22-3",
+        "value": "DiffDockf22-variants"
+      },
+      "population_sha256": "caeb81bf1adcb5baa1d495b70429c37248c7d5f09fbc7c3425ef09d04b2e3b90",
+      "work": "f22-3"
+    },
+    {
+      "contexts": [
+        "family-23-0"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f23-0"
+      },
+      "id": "f23-0",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f23-0",
+        "value": "$BioCLIPf23"
+      },
+      "population_sha256": "da3596a101250f7a7a3a82c99886e1a101fd3dd65104964b83818eb5fadab4c8",
+      "work": "f23-0"
+    },
+    {
+      "contexts": [
+        "family-23-1"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f23-1"
+      },
+      "id": "f23-1",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f23-1",
+        "value": "BioCLIPf23s"
+      },
+      "population_sha256": "418bfa95b5baec735e36b363f2836a3bd54a4097777f276187ec418906f94ddb",
+      "work": "f23-1"
+    },
+    {
+      "contexts": [
+        "family-23-2"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f23-2"
+      },
+      "id": "f23-2",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f23-2",
+        "value": "BioCLIPf23-family"
+      },
+      "population_sha256": "d3e9356be9662baadecca1c80f1cd8b3403c2fb231a00f9314775fc3ee99b55a",
+      "work": "f23-2"
+    },
+    {
+      "contexts": [
+        "family-23-3"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "f23-3"
+      },
+      "id": "f23-3",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "f23-3",
+        "value": "BioCLIPf23-variants"
+      },
+      "population_sha256": "a3d22f7670e413a1227e8c2e7cff383158073ae0592ccad0dcaa79a032d2841d",
+      "work": "f23-3"
+    },
+    {
+      "contexts": [
+        "isolated-00"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-00"
+      },
+      "id": "isolated-00",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-00",
+        "value": "VampNetisolated00"
+      },
+      "population_sha256": "0d3de27cd280090892caaf2aaf8c8d0426ac2b6513c8bb5a7c1e4b0234a1a271",
+      "work": "isolated-00"
+    },
+    {
+      "contexts": [
+        "isolated-01"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-01"
+      },
+      "id": "isolated-01",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-01",
+        "value": "WHAMisolated01"
+      },
+      "population_sha256": "4ccecfbf15970fb2dfc15e5afe895a21e76f3a4cf08ea0b7cefd1eeca338beaa",
+      "work": "isolated-01"
+    },
+    {
+      "contexts": [
+        "isolated-02"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-02"
+      },
+      "id": "isolated-02",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-02",
+        "value": "TRACEisolated02"
+      },
+      "population_sha256": "9afb2ae54dfc868de52a60bad3102122beed28fcd97b793d4cb8fdb0bdba5aa5",
+      "work": "isolated-02"
+    },
+    {
+      "contexts": [
+        "isolated-03"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-03"
+      },
+      "id": "isolated-03",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-03",
+        "value": "Boltzisolated03"
+      },
+      "population_sha256": "3b5f872b2918c001ab345a77f003f586c3c85c36b3edf90c967898dd22babf0a",
+      "work": "isolated-03"
+    },
+    {
+      "contexts": [
+        "isolated-04"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-04"
+      },
+      "id": "isolated-04",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-04",
+        "value": "OpenCapisolated04"
+      },
+      "population_sha256": "aca16ffdb302eb5e39c71ff309f8af9206894bf6e5a7e6146f5591f4e49aebbe",
+      "work": "isolated-04"
+    },
+    {
+      "contexts": [
+        "isolated-05"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-05"
+      },
+      "id": "isolated-05",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-05",
+        "value": "AlphaFoldisolated05"
+      },
+      "population_sha256": "cfa5a6747a3003fc030f6edf76fc1643d58abc7113349234e1bf70d74d6d6b18",
+      "work": "isolated-05"
+    },
+    {
+      "contexts": [
+        "isolated-06"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-06"
+      },
+      "id": "isolated-06",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-06",
+        "value": "RoBERTaisolated06"
+      },
+      "population_sha256": "5110682396ab03511c843f73a8733769de20c07aa97543175c3707d75ae837e2",
+      "work": "isolated-06"
+    },
+    {
+      "contexts": [
+        "isolated-07"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-07"
+      },
+      "id": "isolated-07",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-07",
+        "value": "PINNisolated07"
+      },
+      "population_sha256": "9534513e62101f3ac2757e9584d01134b8666b733edfcda35d9b1eb0a6a59cec",
+      "work": "isolated-07"
+    },
+    {
+      "contexts": [
+        "isolated-08"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-08"
+      },
+      "id": "isolated-08",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-08",
+        "value": "NeRFisolated08"
+      },
+      "population_sha256": "0f5773d9007eb70f725e8e0cc84c63e18fda250859f891bccf517cc186413ad5",
+      "work": "isolated-08"
+    },
+    {
+      "contexts": [
+        "isolated-09"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-09"
+      },
+      "id": "isolated-09",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-09",
+        "value": "DeepONetisolated09"
+      },
+      "population_sha256": "70a1d3afbac593f7e2c20a85f2eafdae152a239e56bd79bba38515e66b69a681",
+      "work": "isolated-09"
+    },
+    {
+      "contexts": [
+        "isolated-10"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-10"
+      },
+      "id": "isolated-10",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-10",
+        "value": "DiffDockisolated10"
+      },
+      "population_sha256": "9d12f5530b5aaf75c90b8cd808928eb7ee7c9ef26dfa1b24857a32f966a5d4b5",
+      "work": "isolated-10"
+    },
+    {
+      "contexts": [
+        "isolated-11"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-11"
+      },
+      "id": "isolated-11",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-11",
+        "value": "BioCLIPisolated11"
+      },
+      "population_sha256": "f1bc41d077c8ca1ff2ce49927dc6c626e95a0d2524adb568a5cbee6f855a213b",
+      "work": "isolated-11"
+    },
+    {
+      "contexts": [
+        "isolated-12"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-12"
+      },
+      "id": "isolated-12",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-12",
+        "value": "VampNetisolated12"
+      },
+      "population_sha256": "deddc6f3cd388335acc07a006efe32f59b60665561ff8f5875982a8116d446eb",
+      "work": "isolated-12"
+    },
+    {
+      "contexts": [
+        "isolated-13"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-13"
+      },
+      "id": "isolated-13",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-13",
+        "value": "WHAMisolated13"
+      },
+      "population_sha256": "0f2a4c8cd78ef5b97eb6cefe4268192fdcd9822fb9bb163f34123915b6e39a8d",
+      "work": "isolated-13"
+    },
+    {
+      "contexts": [
+        "isolated-14"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-14"
+      },
+      "id": "isolated-14",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-14",
+        "value": "TRACEisolated14"
+      },
+      "population_sha256": "ba74eda8c8e5b8985207db64e184e3418d892d6453d34875b8f23d9f2e5856e5",
+      "work": "isolated-14"
+    },
+    {
+      "contexts": [
+        "isolated-15"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-15"
+      },
+      "id": "isolated-15",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-15",
+        "value": "Boltzisolated15"
+      },
+      "population_sha256": "ed34024eeb2636e572472a3788001c5609d68c4baccff25e1ca0bed932b603f0",
+      "work": "isolated-15"
+    },
+    {
+      "contexts": [
+        "isolated-16"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-16"
+      },
+      "id": "isolated-16",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-16",
+        "value": "OpenCapisolated16"
+      },
+      "population_sha256": "cefa946d3ce74785f5c1fac6cbaf6094727e8087af4bcf98c1f9b9e55f264871",
+      "work": "isolated-16"
+    },
+    {
+      "contexts": [
+        "isolated-17"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-17"
+      },
+      "id": "isolated-17",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-17",
+        "value": "AlphaFoldisolated17"
+      },
+      "population_sha256": "451ff8f03e05d74e8eee3df270a52572e0b098da134b2a1bbaa78284ff2a4417",
+      "work": "isolated-17"
+    },
+    {
+      "contexts": [
+        "isolated-18"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-18"
+      },
+      "id": "isolated-18",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-18",
+        "value": "RoBERTaisolated18"
+      },
+      "population_sha256": "c5db715172e1402fa44f1c80cca0ffc60d3c2952fefd6fc736855aeae037c92c",
+      "work": "isolated-18"
+    },
+    {
+      "contexts": [
+        "isolated-19"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-19"
+      },
+      "id": "isolated-19",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-19",
+        "value": "PINNisolated19"
+      },
+      "population_sha256": "c779ffd3bd99926ef6c57e3b3967ce7601830a360b99cf7c4fcc9f3206e11f2e",
+      "work": "isolated-19"
+    },
+    {
+      "contexts": [
+        "isolated-20"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-20"
+      },
+      "id": "isolated-20",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-20",
+        "value": "NeRFisolated20"
+      },
+      "population_sha256": "9053b3022c7be42921c3ff69d45773f02ffb08ca8bbbc3be2517d9da600d02c9",
+      "work": "isolated-20"
+    },
+    {
+      "contexts": [
+        "isolated-21"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-21"
+      },
+      "id": "isolated-21",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-21",
+        "value": "DeepONetisolated21"
+      },
+      "population_sha256": "933a8a69e55fb9ee05343ce51e776784951ab5ff29d7acde642967b0bf2ec8b3",
+      "work": "isolated-21"
+    },
+    {
+      "contexts": [
+        "isolated-22"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-22"
+      },
+      "id": "isolated-22",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-22",
+        "value": "DiffDockisolated22"
+      },
+      "population_sha256": "05429131ee4408ed2ddc208e4677be8096ed9c5b4bdca51bcbf19be0546afa40",
+      "work": "isolated-22"
+    },
+    {
+      "contexts": [
+        "isolated-23"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-23"
+      },
+      "id": "isolated-23",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-23",
+        "value": "BioCLIPisolated23"
+      },
+      "population_sha256": "a9e2ef70663a1509047a874d88bd27d054cab2f76cf0565a8de7d719b58b369d",
+      "work": "isolated-23"
+    },
+    {
+      "contexts": [
+        "isolated-24"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-24"
+      },
+      "id": "isolated-24",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-24",
+        "value": "VampNetisolated24"
+      },
+      "population_sha256": "036567902b15a9cb67770646af704bdf88a14a0f60eae9fb64fd3865f5e7a405",
+      "work": "isolated-24"
+    },
+    {
+      "contexts": [
+        "isolated-25"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-25"
+      },
+      "id": "isolated-25",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-25",
+        "value": "WHAMisolated25"
+      },
+      "population_sha256": "fc08120b79317b94f87ea3f6375993ed95d1840f215da6a839438147fccc81db",
+      "work": "isolated-25"
+    },
+    {
+      "contexts": [
+        "isolated-26"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-26"
+      },
+      "id": "isolated-26",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-26",
+        "value": "TRACEisolated26"
+      },
+      "population_sha256": "eaca1e96c43f2e367391ca0c7ea90f24b3eff94a0ab7f53a50fbf55aab7c9548",
+      "work": "isolated-26"
+    },
+    {
+      "contexts": [
+        "isolated-27"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-27"
+      },
+      "id": "isolated-27",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-27",
+        "value": "Boltzisolated27"
+      },
+      "population_sha256": "836cb7cc1f4b908d23f2bb3eb53ac2e9c78be4cf09ffe46c5eef7ec2568b953f",
+      "work": "isolated-27"
+    },
+    {
+      "contexts": [
+        "isolated-28"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-28"
+      },
+      "id": "isolated-28",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-28",
+        "value": "OpenCapisolated28"
+      },
+      "population_sha256": "3620b749c3be4576a91366cade176eaaac2119ff219bd5239dbc792eee3f618e",
+      "work": "isolated-28"
+    },
+    {
+      "contexts": [
+        "isolated-29"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-29"
+      },
+      "id": "isolated-29",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-29",
+        "value": "AlphaFoldisolated29"
+      },
+      "population_sha256": "cd752b57b3a9ffe54b50a50688c2bdaede8770b482c3c0ac6b6af875f382248d",
+      "work": "isolated-29"
+    },
+    {
+      "contexts": [
+        "isolated-30"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-30"
+      },
+      "id": "isolated-30",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-30",
+        "value": "RoBERTaisolated30"
+      },
+      "population_sha256": "b6146f7a26e4512cb5626d2d0b93c9309732ead84742e478a3df33a313e60dea",
+      "work": "isolated-30"
+    },
+    {
+      "contexts": [
+        "isolated-31"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-31"
+      },
+      "id": "isolated-31",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-31",
+        "value": "PINNisolated31"
+      },
+      "population_sha256": "a1e2682c8ac67a138ab350762c421b2d276e9960f0edacde1f6c33f3839b9016",
+      "work": "isolated-31"
+    },
+    {
+      "contexts": [
+        "isolated-32"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-32"
+      },
+      "id": "isolated-32",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-32",
+        "value": "NeRFisolated32"
+      },
+      "population_sha256": "58766424e36e14b20fe9e2e2a86b93c0275939c85780e4f06939cbb6d4805413",
+      "work": "isolated-32"
+    },
+    {
+      "contexts": [
+        "isolated-33"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-33"
+      },
+      "id": "isolated-33",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-33",
+        "value": "DeepONetisolated33"
+      },
+      "population_sha256": "2fd3f34ca6c78807fc655aaa0149cc84b127355fca914efead5194a70a041296",
+      "work": "isolated-33"
+    },
+    {
+      "contexts": [
+        "isolated-34"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-34"
+      },
+      "id": "isolated-34",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-34",
+        "value": "DiffDockisolated34"
+      },
+      "population_sha256": "950980f3888d930a2ca3927bc01c64ec7f71ef93521c63b53ab8956b8578896c",
+      "work": "isolated-34"
+    },
+    {
+      "contexts": [
+        "isolated-35"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-35"
+      },
+      "id": "isolated-35",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-35",
+        "value": "BioCLIPisolated35"
+      },
+      "population_sha256": "93cff16da3992555794f25f75bff97362079bd185af357e45dfbd5bd33788a89",
+      "work": "isolated-35"
+    },
+    {
+      "contexts": [
+        "isolated-36"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-36"
+      },
+      "id": "isolated-36",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-36",
+        "value": "VampNetisolated36"
+      },
+      "population_sha256": "5cc46916a6e4c61a594e43cdf8e39e9d5d96ae647fecb570d0d9c781f604cfec",
+      "work": "isolated-36"
+    },
+    {
+      "contexts": [
+        "isolated-37"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-37"
+      },
+      "id": "isolated-37",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-37",
+        "value": "WHAMisolated37"
+      },
+      "population_sha256": "70a9790e610300c76b137dc31853c20ee021cc2f0cd9db83a95f25d1eda6eee7",
+      "work": "isolated-37"
+    },
+    {
+      "contexts": [
+        "isolated-38"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-38"
+      },
+      "id": "isolated-38",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-38",
+        "value": "TRACEisolated38"
+      },
+      "population_sha256": "94305b5f601a7851c9104987e35ba4a781b49fe4088fc5a2147ddf482ff00cb1",
+      "work": "isolated-38"
+    },
+    {
+      "contexts": [
+        "isolated-39"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-39"
+      },
+      "id": "isolated-39",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-39",
+        "value": "Boltzisolated39"
+      },
+      "population_sha256": "9db56e23503aef31dac849df9366db96144c4ef60114a54037a9f7d738b0f9de",
+      "work": "isolated-39"
+    },
+    {
+      "contexts": [
+        "isolated-40"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-40"
+      },
+      "id": "isolated-40",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-40",
+        "value": "OpenCapisolated40"
+      },
+      "population_sha256": "12d94b88db3e4b93cecefd3fed781fd1e6648754b113248297e3f87c70d9d6e3",
+      "work": "isolated-40"
+    },
+    {
+      "contexts": [
+        "isolated-41"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-41"
+      },
+      "id": "isolated-41",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-41",
+        "value": "AlphaFoldisolated41"
+      },
+      "population_sha256": "1337b464b2e3c9119a2262fb0fc031b4bd0495e350721e935140f8179e7a6303",
+      "work": "isolated-41"
+    },
+    {
+      "contexts": [
+        "isolated-42"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-42"
+      },
+      "id": "isolated-42",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-42",
+        "value": "RoBERTaisolated42"
+      },
+      "population_sha256": "abefa6a8092a532f253d51f78404334ba8b2e6b50a10ddbd21bbc3ca6ad6bdc1",
+      "work": "isolated-42"
+    },
+    {
+      "contexts": [
+        "isolated-43"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-43"
+      },
+      "id": "isolated-43",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-43",
+        "value": "PINNisolated43"
+      },
+      "population_sha256": "fc4c2a95c422e89ba7a62c493b97eef779d41588f899927de20b9547756331e5",
+      "work": "isolated-43"
+    },
+    {
+      "contexts": [
+        "isolated-44"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-44"
+      },
+      "id": "isolated-44",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-44",
+        "value": "NeRFisolated44"
+      },
+      "population_sha256": "e25104989f6d45ad5b8428dffba64d796c9f78c8c4d6f1dcde7f8538ddc9feb3",
+      "work": "isolated-44"
+    },
+    {
+      "contexts": [
+        "isolated-45"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-45"
+      },
+      "id": "isolated-45",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-45",
+        "value": "DeepONetisolated45"
+      },
+      "population_sha256": "83969a56b0064a4f0d954c0e2f1f8b99c02d38dc5eb93bbea0dd97699e5e6d9e",
+      "work": "isolated-45"
+    },
+    {
+      "contexts": [
+        "isolated-46"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-46"
+      },
+      "id": "isolated-46",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-46",
+        "value": "DiffDockisolated46"
+      },
+      "population_sha256": "f6f903aa394d2ebb11c219d5de759bf08555c670fe28747657a55d75dd3cf48a",
+      "work": "isolated-46"
+    },
+    {
+      "contexts": [
+        "isolated-47"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-47"
+      },
+      "id": "isolated-47",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-47",
+        "value": "BioCLIPisolated47"
+      },
+      "population_sha256": "fed349c2786d65a5ef5333e3aab58831427931b6f6e011589e5ebb90a6ac0507",
+      "work": "isolated-47"
+    },
+    {
+      "contexts": [
+        "isolated-48"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-48"
+      },
+      "id": "isolated-48",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-48",
+        "value": "VampNetisolated48"
+      },
+      "population_sha256": "5951df6c683c92454e3c3a912c4de74a3eb045086f911f13445fc20dbbc04149",
+      "work": "isolated-48"
+    },
+    {
+      "contexts": [
+        "isolated-49"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-49"
+      },
+      "id": "isolated-49",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-49",
+        "value": "WHAMisolated49"
+      },
+      "population_sha256": "5710d95b193553cd9d63a923967da727b8de8edff661e252044cb18a94265b46",
+      "work": "isolated-49"
+    },
+    {
+      "contexts": [
+        "isolated-50"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-50"
+      },
+      "id": "isolated-50",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-50",
+        "value": "TRACEisolated50"
+      },
+      "population_sha256": "6c61c3755e04c20a04ceac4504bb8126acd881ef3b84d98b47b7d1f9ee745294",
+      "work": "isolated-50"
+    },
+    {
+      "contexts": [
+        "isolated-51"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-51"
+      },
+      "id": "isolated-51",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-51",
+        "value": "Boltzisolated51"
+      },
+      "population_sha256": "b18d663afe722954f02643b20af8c946e2a0e658c89f02eae2ad90dd1f1372f6",
+      "work": "isolated-51"
+    },
+    {
+      "contexts": [
+        "isolated-52"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-52"
+      },
+      "id": "isolated-52",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-52",
+        "value": "OpenCapisolated52"
+      },
+      "population_sha256": "257ff66b0f9ac577accc1e7df765b6384afd8beb56c77a1182c340ce47fe6fde",
+      "work": "isolated-52"
+    },
+    {
+      "contexts": [
+        "isolated-53"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-53"
+      },
+      "id": "isolated-53",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-53",
+        "value": "AlphaFoldisolated53"
+      },
+      "population_sha256": "cf56960983895e96b9f6cf94aa7ca2b89d07e1bad950a77150bcec8fd8fb17aa",
+      "work": "isolated-53"
+    },
+    {
+      "contexts": [
+        "isolated-54"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-54"
+      },
+      "id": "isolated-54",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-54",
+        "value": "RoBERTaisolated54"
+      },
+      "population_sha256": "d5dc142baaae6aff043f46337a13c28a5829fdab77f9e6f31ec156051ee10a5d",
+      "work": "isolated-54"
+    },
+    {
+      "contexts": [
+        "isolated-55"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-55"
+      },
+      "id": "isolated-55",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-55",
+        "value": "PINNisolated55"
+      },
+      "population_sha256": "e01117eaa6916b4c3921ab37c3f3e06b90e75811d78faee514e57b05b76cc35c",
+      "work": "isolated-55"
+    },
+    {
+      "contexts": [
+        "isolated-56"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-56"
+      },
+      "id": "isolated-56",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-56",
+        "value": "NeRFisolated56"
+      },
+      "population_sha256": "ef86d599fb02d85cb6fff59ba4e11b7e1473090cd28eb82b5b4a65a6c48ba4ee",
+      "work": "isolated-56"
+    },
+    {
+      "contexts": [
+        "isolated-57"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-57"
+      },
+      "id": "isolated-57",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-57",
+        "value": "DeepONetisolated57"
+      },
+      "population_sha256": "1300b27a8fd62a99ecc5e3479b10ae9af2ce094f5267dd747702c58927014cc6",
+      "work": "isolated-57"
+    },
+    {
+      "contexts": [
+        "isolated-58"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-58"
+      },
+      "id": "isolated-58",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-58",
+        "value": "DiffDockisolated58"
+      },
+      "population_sha256": "78db2c1693f929b2279746868e06ec652263159689ab38e0d09648c6431f3fe5",
+      "work": "isolated-58"
+    },
+    {
+      "contexts": [
+        "isolated-59"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "isolated-59"
+      },
+      "id": "isolated-59",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "isolated-59",
+        "value": "BioCLIPisolated59"
+      },
+      "population_sha256": "7635ea7376781e58ed1b88228c3ae679fe0ee2bd581da0ed8f4a1f7c522d6ff7",
+      "work": "isolated-59"
+    }
+  ],
+  "schema": "literature-name-occurrences/1"
+}

@@ -1,0 +1,31 @@
+{
+  "deduplications": "identical-rows",
+  "renamings": [
+    {
+      "decision": 0,
+      "fact_type": "method_builds_on_method",
+      "from": "VampNet",
+      "role": "base_method",
+      "source": "whale-b",
+      "to": "VampNet [music]"
+    },
+    {
+      "decision": 1,
+      "fact_type": "method_builds_on_method",
+      "from": "WHAM",
+      "role": "method",
+      "source": "whale-b",
+      "to": "WhAM [whale]"
+    }
+  ],
+  "resolution": {
+    "path": "resolution.json",
+    "sha256": "35508ee7c8a07b64b9ebb3daebe529798148c3b914fdc048ba940ca1681ce29d"
+  },
+  "schema": "gnd-composition-manifest/1",
+  "scope_tags": [],
+  "sources": [
+    "whale-a",
+    "whale-b"
+  ]
+}

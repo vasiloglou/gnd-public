@@ -1,0 +1,69 @@
+Technical failure from Claude Code. Output sanitized for host paths.
+
+I'll check three unseen dependencies the review hinges on (`read_capped`, `Refusal`, `strict_json`), using read-only searches.
+
+
+<invoke name="Grep">
+<parameter name="pattern">def read_capped|class Refusal|^DOCUMENT_CAP|REASONS|def __init__</parameter>
+<parameter name="path">src/gnd/examples/literature/assurance_report.py</parameter>
+<parameter name="output_mode">content</parameter>
+<parameter name="-n">true</parameter>
+<parameter name="-A">14</parameter>
+</invoke>
+<invoke name="Grep">
+<parameter name="pattern">def strict_json</parameter>
+<parameter name="path">src/gnd</parameter>
+<parameter name="output_mode">content</parameter>
+<parameter name="-n">true</parameter>
+<parameter name="-A">40</parameter>
+</invoke>
+
+<invoke name="Grep">
+<parameter name="pattern">"id":</parameter>
+<parameter name="path">src/gnd/examples/literature/diagnostics/cases.json</parameter>
+<parameter name="output_mode">count</parameter>
+</invoke>
+
+<invoke name="Grep">
+<parameter name="pattern">"kind":</parameter>
+<parameter name="path">src/gnd/examples/literature/diagnostics/labels.json</parameter>
+<parameter name="output_mode">count</parameter>
+</invoke>
+
+
+
+
+
+
+<invoke name="Read">
+<parameter name="file_path"><repo>/src/gnd/examples/literature/assurance_report.py</parameter>
+<parameter name="limit">120</parameter>
+</invoke>
+
+
+
+
+
+<invoke name="Grep">
+<parameter name="pattern">"kind": "(homonym|family|synonym)"</parameter>
+<parameter name="path">src/gnd/examples/literature/diagnostics/labels.json</parameter>
+<parameter name="output_mode">count</parameter>
+</invoke>
+
+
+<invoke name="Grep">
+<parameter name="pattern">^def |^class |^[A-Z_]+ =</parameter>
+<parameter name="path">src/gnd/anchors.py</parameter>
+<parameter name="output_mode">content</parameter>
+<parameter name="-n">true</parameter>
+</invoke>
+
+
+
+
+
+<invoke name="Grep">
+<parameter name="pattern">"id": "</parameter>
+<parameter name="path">src/gnd/examples/literature/diagnostics/cases.json</parameter>
+<parameter name="output_mode">count</parameter>
+</invoke>

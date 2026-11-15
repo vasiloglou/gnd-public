@@ -143,6 +143,47 @@
               "type": "integer",
               "minimum": 0
             }
+          },
+          "decisions": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "resolution_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "if": {
+    "required": [
+      "resolution_sha256"
+    ]
+  },
+  "then": {
+    "properties": {
+      "facts": {
+        "items": {
+          "required": [
+            "decisions"
+          ]
+        }
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "facts": {
+        "items": {
+          "not": {
+            "required": [
+              "decisions"
+            ]
           }
         }
       }

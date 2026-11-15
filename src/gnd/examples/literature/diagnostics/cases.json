@@ -1,0 +1,249 @@
+{
+  "occurrences": [
+    {
+      "contexts": [
+        "kinetics"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "vampnets"
+      },
+      "id": "vampnets",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "vampnets",
+        "value": "VAMPnet"
+      },
+      "population_sha256": "bd1247ad75e9a18db5bead30a39f0a70b99a7eb990d2fe63d5132a0aaf6fc786",
+      "work": "vampnets"
+    },
+    {
+      "contexts": [
+        "music"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "vampnet"
+      },
+      "id": "vampnet",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "vampnet",
+        "value": "VampNet"
+      },
+      "population_sha256": "326e02711d9f58003b11badd48f147d1b00aed68da6b2ceb4775660e072d80d5",
+      "work": "vampnet"
+    },
+    {
+      "contexts": [
+        "bioacoustics"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "wham-whale"
+      },
+      "id": "wham-whale",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "wham-whale",
+        "value": "WhAM"
+      },
+      "population_sha256": "bd08926731f5e88a9b26a9a4080fe8dbc0aa572af4327a8a2e2cd93473456cff",
+      "work": "wham-whale"
+    },
+    {
+      "contexts": [
+        "pose"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "wham-pose"
+      },
+      "id": "wham-pose",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "wham-pose",
+        "value": "WHAM"
+      },
+      "population_sha256": "972c033b21184cd4e13cf8a1a7e3c7283a47121529eda7586d842fba98ebb269",
+      "work": "wham-pose"
+    },
+    {
+      "contexts": [
+        "inference"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "flows-review"
+      },
+      "id": "flows-review",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "flows-review",
+        "value": "normalizing flow"
+      },
+      "population_sha256": "6e68288e11ec598a3b6922a50d1cdf5df3c76286f8acb8b0a10351b0b3d50564",
+      "work": "flows-review"
+    },
+    {
+      "contexts": [
+        "inference"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "sbi-frontier"
+      },
+      "id": "sbi-frontier",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "sbi-frontier",
+        "value": "normalizing flows"
+      },
+      "population_sha256": "99e831e0d897d4bfc623cac9a29fe10b31bb10ebdc672e2ff183f74e10f7f9ab",
+      "work": "sbi-frontier"
+    },
+    {
+      "contexts": [
+        "scope-conditions"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "apinn"
+      },
+      "id": "apinn",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "apinn",
+        "value": "$PINN"
+      },
+      "population_sha256": "bccc8c59d74e4a5f04612b53bc18e12b027600295cee7376514b6f13047e39f4",
+      "work": "apinn"
+    },
+    {
+      "contexts": [
+        "robustness"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "pinn-failure-modes"
+      },
+      "id": "pinn-failure-modes",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "pinn-failure-modes",
+        "value": "PINNs"
+      },
+      "population_sha256": "e21018b9cfa7ca5bedd590cc299244d8e1fc4e72a5bc8123d3b2cb366407330e",
+      "work": "pinn-failure-modes"
+    },
+    {
+      "contexts": [
+        "transfer"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "pinn-transfer"
+      },
+      "id": "pinn-transfer",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "pinn-transfer",
+        "value": "PINN family"
+      },
+      "population_sha256": "193f55b9306376092dbec0bd39fe96043134e88830839e36ec9051a310d5e9a8",
+      "work": "pinn-transfer"
+    },
+    {
+      "contexts": [
+        "survey"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "pinn-workshop"
+      },
+      "id": "pinn-workshop",
+      "introducing_works": [],
+      "key": {
+        "object_type": "method",
+        "source": "pinn-workshop",
+        "value": "PINN methods"
+      },
+      "population_sha256": "135e47caf13f817982ac193f5a5efe1e15b75cedbfc3afde3594851f0ce14bc1",
+      "work": "pinn-workshop"
+    },
+    {
+      "contexts": [
+        "density"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "flow-density"
+      },
+      "id": "flow-density",
+      "introducing_works": [
+        "flow-origin"
+      ],
+      "key": {
+        "object_type": "method",
+        "source": "flow-density",
+        "value": "Flow Matching"
+      },
+      "population_sha256": "9604fac0a967d287517b09bd219a457f68bf5c3c42441f6c4345676df93c67cd",
+      "work": "flow-density"
+    },
+    {
+      "contexts": [
+        "motion"
+      ],
+      "evidence": {
+        "fact_index": 0,
+        "fact_type": "method_mentioned",
+        "role": "method",
+        "source": "flow-motion"
+      },
+      "id": "flow-motion",
+      "introducing_works": [
+        "flow-origin"
+      ],
+      "key": {
+        "object_type": "method",
+        "source": "flow-motion",
+        "value": "flow matching"
+      },
+      "population_sha256": "1209b6397982ee99b12f6e279e72fdb91d93deabc43135052cc49a9440dd34a5",
+      "work": "flow-motion"
+    }
+  ],
+  "schema": "literature-name-occurrences/1"
+}

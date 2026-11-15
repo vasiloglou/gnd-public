@@ -26,5 +26,29 @@ recorded. The [LI1 spec](notes/phase-LI1-spec.md) r1 was approved on 2026-11-15
 corpus-first instrument. The corpus, answer key, reference run, expected
 outcomes and red tests are committed, and the owner approved them at the
 [corpus gate](005-phase-LI1-corpus-gate.md), ruling A1–A5 as proposed. [LI1](006-phase-LI1.md) is
-implemented, reviewed by one reviewer, and recorded. Next is LI2, which starts
-with its spec under `process-phase`.
+implemented, reviewed by one reviewer, and recorded. The
+[LI2 spec](notes/phase-LI2-spec.md) r1 was approved on 2026-11-15
+([gate](007-phase-LI2-spec-gate.md)), with D1–D11 ruled as proposed and a
+corpus-first instrument. The LI2 fixtures, the baseline, the LI1 reference
+decisions and the amended LI1 expectations are committed red, and the owner
+approved them at the [LI2 corpus gate](008-phase-LI2-corpus-gate.md), ruling
+B1–B4 as proposed. The current milestone delegation supplied the go-ahead. [LI2](010-phase-LI2.md) is implemented, independently reviewed and recorded.
+
+[LI3](014-phase-LI3.md) is implemented and recorded. The diagnostic measurement
+met the predeclared ceiling in all measured strata.
+
+[LI4](018-phase-LI4.md) is implemented and recorded. The example projects
+positive contextual assertions through a digest-bound saved-opinion route.
+
+[LI5](024-phase-LI5.md) implements qualified lineage and records the
+first reserved miss alongside the corrected smoke result.
+
+The [close record](026-milestone-close.md) withholds milestone acceptance. The first
+reserved run retained 0/1 supported paths and excluded 2/2 false paths.
+The same reserve retained 1/1 supported and excluded 2/2 after an input
+correction informed by the first result. The
+[fresh independent reserve](031-phase-LI5-independent-reserve.md)
+subsequently retained 1/1 supported and excluded 2/2 false paths in
+its first score. A new milestone ruling remains pending.
+
+The [Codex handoff](notes/codex-handoff.md) records the starting point.

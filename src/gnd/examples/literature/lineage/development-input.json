@@ -1,0 +1,407 @@
+{
+  "decisions": [
+    {
+      "decision": "different",
+      "keys": [
+        {
+          "source": "vampnets",
+          "value": "VAMPnet"
+        },
+        {
+          "source": "wham-whale",
+          "value": "VampNet"
+        }
+      ]
+    },
+    {
+      "decision": "different",
+      "keys": [
+        {
+          "source": "wham-whale",
+          "value": "WhAM"
+        },
+        {
+          "source": "opencap-monocular",
+          "value": "WHAM"
+        }
+      ]
+    },
+    {
+      "decision": "different",
+      "keys": [
+        {
+          "source": "apinn",
+          "value": "$PINN"
+        },
+        {
+          "source": "pinn-failure-modes",
+          "value": "PINNs"
+        }
+      ]
+    },
+    {
+      "decision": "same",
+      "keys": [
+        {
+          "source": "vampnet",
+          "value": "VampNet"
+        },
+        {
+          "source": "wham-whale",
+          "value": "VampNet"
+        }
+      ]
+    },
+    {
+      "decision": "same",
+      "keys": [
+        {
+          "source": "wham-pose",
+          "value": "WHAM"
+        },
+        {
+          "source": "opencap-monocular",
+          "value": "WHAM"
+        }
+      ]
+    },
+    {
+      "decision": "same",
+      "keys": [
+        {
+          "source": "apinn",
+          "value": "PINNs"
+        },
+        {
+          "source": "pinn-failure-modes",
+          "value": "PINNs"
+        }
+      ]
+    }
+  ],
+  "schema": "literature-lineage-input/1",
+  "sources": [
+    {
+      "document": "corpus/documents/vampnet.md",
+      "id": "vampnet",
+      "sha256": "6445f1d2f55e346d9ceb740a0bceca27ee48ecb14b3fb44ffbafad171b0e7e7f",
+      "statements": [
+        {
+          "actor": "VampNet",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 405,
+          "experiment": "unspecified",
+          "object": "bidirectional transformer",
+          "object_kind": "sense",
+          "passage": "vampnet.p2",
+          "polarity": "asserts",
+          "predicate": "implements",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 292,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2307.04686"
+    },
+    {
+      "document": "corpus/documents/wham-whale.md",
+      "id": "wham-whale",
+      "sha256": "2808abd557e822b7350717a7b4ad268cc290f50007b26d5ec421b8d95922a021",
+      "statements": [
+        {
+          "actor": "WhAM",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 409,
+          "experiment": "unspecified",
+          "object": "VampNet",
+          "object_kind": "sense",
+          "passage": "wham-whale.p2",
+          "polarity": "asserts",
+          "predicate": "fine-tunes",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 279,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2512.02206"
+    },
+    {
+      "document": "corpus/documents/wham-pose.md",
+      "id": "wham-pose",
+      "sha256": "cb7fc5f6872e104ef56dfddff2759f47e622bb1ecb12c3062be23a6554a0c642",
+      "statements": [
+        {
+          "actor": "WHAM",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 444,
+          "experiment": "unspecified",
+          "object": "SLAM",
+          "object_kind": "sense",
+          "passage": "wham-pose.p2",
+          "polarity": "asserts",
+          "predicate": "component-use",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 309,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2312.07531"
+    },
+    {
+      "document": "corpus/documents/opencap-monocular.md",
+      "id": "opencap-monocular",
+      "sha256": "cdbd542ab0c3ff71466bdfce8db8c1985fa86cf3ffc0a77a0decceb113a89d7f",
+      "statements": [
+        {
+          "actor": "OpenCap Monocular",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 448,
+          "experiment": "unspecified",
+          "object": "WHAM",
+          "object_kind": "sense",
+          "passage": "opencap-monocular.p2",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 335,
+          "version": "corpus-1"
+        },
+        {
+          "actor": "OpenCap Monocular",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "insufficient-evidence",
+          "end": 564,
+          "experiment": "unspecified",
+          "object": "OpenCap",
+          "object_kind": "sense",
+          "passage": "opencap-monocular.p3",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 449,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2603.24733"
+    },
+    {
+      "document": "corpus/documents/apinn.md",
+      "id": "apinn",
+      "sha256": "c7874f2817d05f8d8f7088e1dda4c60edbb974fddcb570d96df9951c5d8f15b3",
+      "statements": [
+        {
+          "actor": "XPINN",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 701,
+          "experiment": "unspecified",
+          "object": "PINNs",
+          "object_kind": "sense",
+          "passage": "apinn.p3",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 594,
+          "version": "corpus-1"
+        },
+        {
+          "actor": "$PINN",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 593,
+          "experiment": "unspecified",
+          "object": "XPINN",
+          "object_kind": "sense",
+          "passage": "apinn.p2",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 482,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2211.08939"
+    },
+    {
+      "document": "corpus/documents/pinn-failure-modes.md",
+      "id": "pinn-failure-modes",
+      "sha256": "c9fdf5bcd4e55636ebde6eafa76513b4b1db0906184d9ef19e877b7ecb5194cb",
+      "statements": [
+        {
+          "actor": "curriculum regularization",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 590,
+          "experiment": "unspecified",
+          "object": "PINNs",
+          "object_kind": "sense",
+          "passage": "pinn-failure-modes.p3",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 455,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2109.01050"
+    },
+    {
+      "document": "corpus/documents/boltz-1.md",
+      "id": "boltz-1",
+      "sha256": "1793ae0ee0e958e6dc4d63e05d40c2676d5f9d0f77bda4f35b249c31ce560282",
+      "statements": [
+        {
+          "actor": "Boltz-steering",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 563,
+          "experiment": "unspecified",
+          "object": "Boltz-1",
+          "object_kind": "sense",
+          "passage": "boltz-1.p3",
+          "polarity": "asserts",
+          "predicate": "implements",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 412,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "doi:10.1101/2024.11.19.624167"
+    },
+    {
+      "document": "corpus/documents/posex.md",
+      "id": "posex",
+      "sha256": "f8842936ae0dc354c0cb164513146383fda8d019d108b4a1210d8b2bd59de56d",
+      "statements": [
+        {
+          "actor": "PoseX",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 459,
+          "experiment": "unspecified",
+          "object": "Boltz-1 family",
+          "object_kind": "sense",
+          "passage": "posex.p2",
+          "polarity": "asserts",
+          "predicate": "evaluated-as",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 313,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2505.01700"
+    },
+    {
+      "document": "corpus/documents/sbi-frontier.md",
+      "id": "sbi-frontier",
+      "sha256": "36d3292bdfd72d369d772cff6c480d6eab4b15b61346aadbccd1a7cb9b20ac93",
+      "statements": [
+        {
+          "actor": "simulation-based inference",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "stretched",
+          "end": 444,
+          "experiment": "unspecified",
+          "object": "normalizing flows",
+          "object_kind": "sense",
+          "passage": "sbi-frontier.p2",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 297,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:1911.01429"
+    },
+    {
+      "document": "corpus/documents/sensor-placement.md",
+      "id": "sensor-placement",
+      "sha256": "cd40b61f0e07fb4417602b2be134222ff20fe435f19317742e60742d2f27d4bc",
+      "statements": [
+        {
+          "actor": "deep optimal sensor placement",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "contradicted",
+          "end": 532,
+          "experiment": "unspecified",
+          "object": "simulation-based inference",
+          "object_kind": "sense",
+          "passage": "sensor-placement.p2",
+          "polarity": "asserts",
+          "predicate": "extends",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 351,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:2410.12036"
+    },
+    {
+      "document": "corpus/documents/vampnets.md",
+      "id": "vampnets",
+      "sha256": "eb1bd85d000c88ad8852ec49d0f7965d663b57824ee4df29dd0570d318b3c34a",
+      "statements": [
+        {
+          "actor": "VAMPnet",
+          "actor_kind": "sense",
+          "attribution": "own-finding",
+          "condition": "unspecified",
+          "disposition": "supported",
+          "end": 259,
+          "experiment": "unspecified",
+          "object": "neural network",
+          "object_kind": "sense",
+          "passage": "vampnets.p1",
+          "polarity": "asserts",
+          "predicate": "taxonomic-membership",
+          "qualification": "unqualified",
+          "regime": "unspecified",
+          "start": 165,
+          "version": "corpus-1"
+        }
+      ],
+      "work": "arXiv:1710.06012"
+    }
+  ]
+}

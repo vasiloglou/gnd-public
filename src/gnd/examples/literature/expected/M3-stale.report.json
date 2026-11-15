@@ -3,6 +3,7 @@
   "failed_stages": [
     "source-binding",
     "semantic-support",
+    "identity-decisions",
     "derivation",
     "freshness"
   ],
@@ -10,8 +11,8 @@
     "answers_sha256": "e183f2cf840b176925da2bbcf4d3cd207fb116933ebbd732301f96a385058944",
     "corpus_sha256": "9b572f981660f273a6db95ec248f106db0e618fecea7de8dda934c329fdcd5f1",
     "gnd_version": "0.3.1",
-    "harness_sha256": "ce46bbb837443a52ca55d89315766e0d1943dc8ca8c3382526a947a498dd6149",
-    "run_sha256": "52b89a9e50987ca68f274244c96a2f661ab97e3419e483180c5a0eaaef5cfc22"
+    "harness_sha256": "b3dc219528f3d2131357ce6a4cd5fb55a25dad37a5fbd5b4d1ea43663ac481e4",
+    "run_sha256": "f3a77f3b72fa704f9af98ffb3db0c7dcff4e10d71f7b9b7536b2cd4bc25536c0"
   },
   "labels": {
     "independent": false,
@@ -19,10 +20,6 @@
     "note": "Labels were written by the corpus author from the public works; they are not independent expert ground truth."
   },
   "not_measured": [
-    {
-      "owner": "LI2",
-      "stage": "identity-decisions"
-    },
     {
       "owner": "literature-depth LD3",
       "stage": "coverage"
@@ -446,13 +443,54 @@
       "unresolved": 0
     },
     {
-      "active": false,
-      "failed_floors": [],
-      "owner": "LI2",
-      "sample_size": 0,
+      "active": true,
+      "disagreements": {
+        "count": 0,
+        "units": []
+      },
+      "exclusions": [],
+      "failed_floors": [
+        "route-refused"
+      ],
+      "floor": {
+        "abstention_max": [
+          1,
+          5
+        ],
+        "precision": [
+          1,
+          1
+        ],
+        "recall": [
+          9,
+          10
+        ]
+      },
+      "label_disagreements": 0,
+      "owner": null,
+      "refused_units": 0,
+      "route_refused": true,
+      "routes": [
+        {
+          "argv": [
+            "check",
+            "model.orm.yaml",
+            "run/composed/population.json",
+            "--composition",
+            "run/composed/record.json",
+            "--sources",
+            "run/composition",
+            "--format",
+            "json"
+          ],
+          "exit": 3
+        }
+      ],
+      "sample_size": 6,
       "stage": "identity-decisions",
-      "status": "not-measured",
-      "unit": "cross-source key pair with an identity label"
+      "status": "fail",
+      "unit": "cross-source key pair with an identity label",
+      "unresolved": 0
     },
     {
       "active": true,
@@ -767,14 +805,14 @@
       "owner": "LI2, LI3"
     },
     {
-      "count": 6,
-      "kind": "identity_pairs",
-      "owner": "LI2"
-    },
-    {
       "count": 4,
       "kind": "name_pairs",
       "owner": "LI3"
+    },
+    {
+      "count": 6,
+      "kind": "identity_pairs",
+      "owner": "run"
     }
   ]
 }

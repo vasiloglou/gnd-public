@@ -1,0 +1,47 @@
+{
+  "dispositions": [
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-00"
+    },
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-01"
+    },
+    {
+      "disposition": "stretched",
+      "receipt_id": "opinion-02"
+    },
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-03"
+    },
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-04"
+    },
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-05"
+    },
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-06"
+    },
+    {
+      "disposition": "supported",
+      "receipt_id": "opinion-07"
+    },
+    {
+      "disposition": "insufficient-evidence",
+      "receipt_id": "opinion-08"
+    }
+  ],
+  "mapping": {
+    "contradicted": "reject",
+    "insufficient-evidence": "abstain",
+    "stretched": "reject",
+    "supported": "approve"
+  },
+  "schema": "literature-assertion-rubric/1"
+}

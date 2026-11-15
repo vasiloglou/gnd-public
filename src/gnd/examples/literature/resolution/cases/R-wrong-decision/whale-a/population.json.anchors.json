@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "DMD",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 87,
+        "start": 65
+      }
+    },
+    {
+      "excerpt_sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "DMD",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 87,
+        "start": 65
+      }
+    },
+    {
+      "excerpt_sha256": "07d3e2272b95300b2d79cf1ded46cee9de2ae916f703ec785a5abbbcb2df57a2",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 121,
+        "start": 88
+      }
+    },
+    {
+      "excerpt_sha256": "07d3e2272b95300b2d79cf1ded46cee9de2ae916f703ec785a5abbbcb2df57a2",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "WHAM",
+          "method": "OpenCap Monocular"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 121,
+        "start": 88
+      }
+    }
+  ],
+  "document_sha256": "f2162704059f422d4220fb135876a8adf54ccf892fded35d12564ea7896475f6",
+  "population_sha256": "df09c4d3fb08f7ccd0441823facfd972e83c86e6468e2ae0942cfef0853f1e05",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

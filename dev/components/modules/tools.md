@@ -61,9 +61,44 @@ Build the LI1 literature regression corpus over src/gnd/examples/literature/.
 | `write_gold(root, corpus, split, out) -> dict` | function | 503 | Gold source populations and renderer manifests for one split. |
 | `answer_key(corpus_raw, heldout_sha256, root) -> dict` | function | 544 | (no docstring) |
 | `reference_sources(root, corpus) -> dict` | function | 591 | Per-source facts and anchors of the faithful run: exactly the gold facts, at the gold spans. |
-| `write_run(root, corpus, corpus_raw, run, sources, *, abstentions) -> subprocess.CompletedProcess` | function | 603 | Write a literature-run/1 directory, bind every sidecar to the bytes written, and compose. |
-| `write_reference_run(root, corpus, corpus_raw) -> None` | function | 646 | (no docstring) |
-| `main(argv) -> None` | function | 652 | (no docstring) |
+| `write_run(root, corpus, corpus_raw, run, sources, *, abstentions, resolution, renamings) -> subproc…` | function | 603 | Write a literature-run/1 directory, bind every sidecar to the bytes written, and compose. |
+| `resolution_for(sources, pairs) -> dict` | function | 678 | Decisions for the identity pairs whose two keys still exist in the run's sources. |
+| `write_reference_run(root, corpus, corpus_raw) -> None` | function | 703 | (no docstring) |
+| `main(argv) -> None` | function | 711 | (no docstring) |
+
+## tools.build_literature_lineage_model — `tools/build_literature_lineage_model.py`
+Components: examples.literature_lineage
+Build the literature lineage rule model from its declared path policy.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `fact(name, reading, roles, clauses, **extra)` | function | 13 | (no docstring) |
+| `atom(name, **bind)` | function | 19 | (no docstring) |
+| `clause(body, **head)` | function | 23 | (no docstring) |
+| `closure(relation, direct)` | function | 27 | (no docstring) |
+| `model_from_policy(policy, base) -> dict` | function | 36 | Emit both path families from the same table and an admitted statement vocabulary. |
+| `main() -> None` | function | 80 | (no docstring) |
+
+## tools.build_resolution_fixtures — `tools/build_resolution_fixtures.py`
+Components: unassigned
+Build the LI2 resolution fixtures under src/gnd/examples/literature/resolution/.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `text_of(source) -> str` | function | 102 | (no docstring) |
+| `line_spans(text) -> list[tuple[int, int]]` | function | 106 | (no docstring) |
+| `occurrence(text, value, span) -> int` | function | 115 | (no docstring) |
+| `facts_of(source) -> dict` | function | 123 | (no docstring) |
+| `population_bytes(facts) -> bytes` | function | 130 | (no docstring) |
+| `anchors_of(source, text) -> list[dict]` | function | 135 | (no docstring) |
+| `evidence(source_id, key, value, *, skip) -> dict` | function | 148 | The first asserted coordinate in a source whose method role holds value (after skip hits). |
+| `decision(kind, left, right, placeholders) -> dict` | function | 168 | (no docstring) |
+| `renaming(source, role, old, new, cites, fact_type) -> dict` | function | 177 | (no docstring) |
+| `resolution(decisions) -> dict` | function | 184 | (no docstring) |
+| `write_source(folder, source_id, vocabulary) -> None` | function | 297 | (no docstring) |
+| `write_case(root, case_id, case, vocabulary) -> dict` | function | 310 | (no docstring) |
+| `write_mentions(root, vocabulary) -> None` | function | 336 | Fixture M: one document, two VampNet mentions with two senses (spec §6.5). |
+| `main(directory) -> None` | function | 372 | (no docstring) |
 
 ## tools.check_docs — `tools/check_docs.py`
 Components: unassigned

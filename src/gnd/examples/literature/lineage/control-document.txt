@@ -1,0 +1,12 @@
+Nimbus refines Atlas under the stated noise bound over the shared calibration interface.
+Serein uses Nimbus as a component under the noise bound. The interface match is unspecified.
+Cumulus refines Serein under the noise bound over the shared calibration interface.
+The draft says Alto trains on Beta outputs. No reviewer evaluated that statement.
+The note says Beta builds on the name called Gamma, whose intended sense is unresolved.
+Evaluation A reports how Prototype performs as an evaluated baseline.
+Comparison A compares Prototype and its other baselines.
+Idea A cites Prototype as inspiration.
+Member A is classified as a Prototype family member.
+Adaptor A trains on outputs from System P.
+Tuned A fine-tunes System P.
+Port A implements System P.

@@ -1,0 +1,2 @@
+Clockwise incorporates Counterclockwise as a component.
+Counterclockwise incorporates Clockwise as a component.

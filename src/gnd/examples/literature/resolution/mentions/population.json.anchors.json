@@ -1,0 +1,72 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "f5952eb304d9d02ed0678883bdab020f869e92fa7783d689d73b00cd0e94666e",
+      "fact_key": {
+        "fact_type": "mention_has_surface_text",
+        "roles": {
+          "mention": "mentions@47-54",
+          "surface": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "surface",
+      "span": {
+        "end": 54,
+        "start": 47
+      }
+    },
+    {
+      "excerpt_sha256": "f5952eb304d9d02ed0678883bdab020f869e92fa7783d689d73b00cd0e94666e",
+      "fact_key": {
+        "fact_type": "mention_has_surface_text",
+        "roles": {
+          "mention": "mentions@83-90",
+          "surface": "VampNet"
+        }
+      },
+      "occurrence": 1,
+      "role": "surface",
+      "span": {
+        "end": 90,
+        "start": 83
+      }
+    },
+    {
+      "excerpt_sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "DMD",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 2,
+      "role": "method",
+      "span": {
+        "end": 131,
+        "start": 109
+      }
+    },
+    {
+      "excerpt_sha256": "d14328560cb1cac7f093111e44feec1f78e2bd8b923e233348efa3cdd98c7e5a",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "DMD",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 131,
+        "start": 109
+      }
+    }
+  ],
+  "document_sha256": "c2c25451ae4b83ad8ed149583ca09ff073cbda7ce5b44c8bee69c61c0887d0a3",
+  "population_sha256": "3932df417ce535a1f818bd0edd913ac3fe211aaa24b79915f6d401f71951dddf",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

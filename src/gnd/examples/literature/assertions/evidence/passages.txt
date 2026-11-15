@@ -1,0 +1,10 @@
+Quartz reduced error compared with Slate on low-noise Trial A.
+Quartz increased error compared with Slate on high-noise Trial B.
+Quartz and Slate were listed together in the methods table.
+Quartz did not use Slate as a component in Trial C.
+The baseline comparison includes Quartz and Slate.
+Quartz might be inspired by Slate in the next trial.
+An earlier report says Quartz extends Slate.
+The note uses a mention called Quartz when discussing Slate.
+The plot labels alone do not settle whether Quartz extends Slate.
+A supplementary row lists Quartz and Slate without a review.

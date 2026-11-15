@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "da6a75abe0fdb67dc08a410da09f083df1edd775c22f9d7b7bdfcbd8c537326c",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "PoseX"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 133,
+        "start": 84
+      }
+    },
+    {
+      "excerpt_sha256": "da6a75abe0fdb67dc08a410da09f083df1edd775c22f9d7b7bdfcbd8c537326c",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "Boltz-1",
+          "method": "PoseX"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 133,
+        "start": 84
+      }
+    }
+  ],
+  "document_sha256": "62c847bd55c5c2f3c043d3abc0f933398e141e408c4a1a543a3380f7a4b3f4fd",
+  "population_sha256": "bcacbd4ab7eb0b4f38a3862a6c44537c2ef2e1043923b29604ca7d6e417e8c34",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

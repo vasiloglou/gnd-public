@@ -1,0 +1,7 @@
+{
+  "schema": "literature-lineage-policy/1",
+  "chainable": ["fine-tunes", "implements", "extends", "component-use", "training-on-outputs"],
+  "non_chaining": ["evaluated-as", "compared-against", "inspired-by", "taxonomic-membership"],
+  "transfer": {"qualification": "conditional", "assumption_role": "condition", "interface_role": "regime"},
+  "absence_words": ["unspecified", "none", "n/a"]
+}

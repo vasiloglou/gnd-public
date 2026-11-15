@@ -1,0 +1,56 @@
+{
+  "decisions": [
+    {
+      "decision": "different",
+      "evidence": [
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 0,
+          "role": "method",
+          "source": "hom-a",
+          "span": {
+            "end": 74,
+            "start": 41
+          }
+        },
+        {
+          "fact_index": 0,
+          "fact_type": "method_builds_on_method",
+          "key": 1,
+          "role": "method",
+          "source": "hom-b",
+          "span": {
+            "end": 101,
+            "start": 75
+          }
+        }
+      ],
+      "input_sha256": {
+        "hom-a": "9a9fa1c196938568d713f10fd073ecb74eca0f6131b942b538a9c419239e7d62",
+        "hom-b": "e7e9d5fb28cad5e345b585f0c0233f3c2ac23f04a8af5dadf473565cd1b121b1"
+      },
+      "keys": [
+        {
+          "object_type": "method",
+          "source": "hom-a",
+          "value": "TRACE"
+        },
+        {
+          "object_type": "method",
+          "source": "hom-b",
+          "value": "TRACE"
+        }
+      ],
+      "placeholders": null,
+      "producer": {
+        "id": "corpus-author",
+        "kind": "reviewer"
+      }
+    }
+  ],
+  "object_types": [
+    "method"
+  ],
+  "schema": "gnd-resolution/1"
+}

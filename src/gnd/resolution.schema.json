@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gnd.dev/schemas/resolution.schema.json",
+  "title": "GND composition resolution",
+  "description": "Describes the resolution referenced by a composition manifest. See the composition reference for evidence, identity, and verification rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "object_types",
+    "decisions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "gnd-resolution/1"
+    },
+    "object_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "decision",
+          "keys",
+          "evidence",
+          "producer",
+          "input_sha256",
+          "placeholders"
+        ],
+        "properties": {
+          "decision": {
+            "enum": [
+              "same",
+              "different",
+              "unresolved"
+            ]
+          },
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source",
+                "object_type",
+                "value"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                },
+                "object_type": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "boolean",
+                    "integer",
+                    "number"
+                  ]
+                }
+              }
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "source",
+                "fact_type",
+                "fact_index",
+                "role"
+              ],
+              "properties": {
+                "key": {
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+                },
+                "fact_type": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "fact_index": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "role": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "span": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "start",
+                    "end"
+                  ],
+                  "properties": {
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            },
+            "minItems": 2
+          },
+          "producer": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "id"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "reviewer",
+                  "tool"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "input_sha256": {
+            "type": "object",
+            "minProperties": 2,
+            "maxProperties": 2,
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "placeholders": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": [
+                    "string",
+                    "boolean",
+                    "integer",
+                    "number"
+                  ]
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "uniqueItems": true
+              }
+            ]
+          }
+        },
+        "if": {
+          "properties": {
+            "decision": {
+              "const": "unresolved"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "placeholders": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "boolean",
+                  "integer",
+                  "number"
+                ]
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "uniqueItems": true
+            }
+          }
+        },
+        "else": {
+          "properties": {
+            "placeholders": {
+              "type": "null"
+            }
+          }
+        }
+      }
+    }
+  }
+}

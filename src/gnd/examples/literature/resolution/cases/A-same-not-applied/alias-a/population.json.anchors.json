@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "fb2337d48af8251fd1a13ac809d006b006ed9482742ac504a90d7a4d824089db",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "AlphaFold3",
+          "method": "PoseX"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 70,
+        "start": 43
+      }
+    },
+    {
+      "excerpt_sha256": "fb2337d48af8251fd1a13ac809d006b006ed9482742ac504a90d7a4d824089db",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "AlphaFold3",
+          "method": "PoseX"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 70,
+        "start": 43
+      }
+    }
+  ],
+  "document_sha256": "37b5064e64b0e379a9d9cfe7f68b645504540e74026dc120a9f0bee3d28f1529",
+  "population_sha256": "c72a30a4f9dfc620ef75b4eb12db46e7d9953c43fee2474cbbb780f3b3d75cf8",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

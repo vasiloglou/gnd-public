@@ -1,0 +1,23 @@
+{
+  "deduplications": "identical-rows",
+  "renamings": [
+    {
+      "decision": 0,
+      "fact_type": "method_builds_on_method",
+      "from": "TRACE",
+      "role": "method",
+      "source": "hom-b",
+      "to": "TRACE [attention]"
+    }
+  ],
+  "resolution": {
+    "path": "resolution.json",
+    "sha256": "33ba78b02eee9c1b9f59965e31b12066fab9c95d2285989031a8ad7168bddd37"
+  },
+  "schema": "gnd-composition-manifest/1",
+  "scope_tags": [],
+  "sources": [
+    "hom-a",
+    "hom-b"
+  ]
+}

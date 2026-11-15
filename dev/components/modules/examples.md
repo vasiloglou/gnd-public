@@ -181,29 +181,71 @@ A scripted stand-in for a coding assistant, for the offline expense session.
 | `named_expenses(feedback) -> set[int]` | function | 26 | Every expense id the checker reported inside an offending fact. |
 | `main() -> int` | function | 37 | (no docstring) |
 
+## gnd.examples.literature.assertion_admission — `src/gnd/examples/literature/assertion_admission.py`
+Components: examples.literature_assertion_admission
+Publish the positive contextual assertions selected by saved judgments.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `project(subject, targets) -> tuple[dict, dict]` | function | 100 | Project accepted positive occurrences and their original identity links. |
+| `admit(model, raw, policy, receipts, trusted_root, out) -> dict` | function | 183 | Check saved opinion bytes, project supported rows and publish one bound result. |
+| `main(argv) -> int` | function | 209 | (no docstring) |
+
 ## gnd.examples.literature.assurance_report — `src/gnd/examples/literature/assurance_report.py`
 Components: examples.literature_assurance
 The staged assurance report over the literature corpus (phase LI1).
 
 | Symbol | Kind | Line | Summary |
 | --- | --- | --- | --- |
-| `Refusal` | class(Exception) | 77 | A harness refusal: exit 3 with a value-free reason code. |
-| `read_capped(path, cap) -> bytes` | function | 92 | Read at most cap+1 bytes. The cap is applied to the read, not after it. |
-| `parse_json(raw) -> Any` | function | 127 | Strict JSON: UTF-8, no NaN or infinities, bounded integer digits, depth at most 64. |
-| `read_json(path, cap) -> tuple[Any, bytes]` | function | 138 | (no docstring) |
-| `check_corpus_shape(corpus) -> None` | function | 172 | (no docstring) |
-| `check_key_shape(key) -> None` | function | 195 | (no docstring) |
-| `check_run_shape(run) -> None` | function | 211 | (no docstring) |
-| `passage_index(passages) -> dict[str, tuple[list[int], list[dict]]]` | function | 222 | Per document, the passages sorted by start, for containment lookups. |
-| `anchors_in_passages(index, anchors) -> list[str \| None]` | function | 231 | For each anchor ({document, span}), the id of the passage that contains it, or None. |
-| `failed_floors(metrics, floors) -> list[str]` | function | 252 | (no docstring) |
-| `stage_status(*, active, route_present, metrics, floors, refused) -> str` | function | 264 | Spec §6.5 status rules, in order: dormant, route missing, floors and refusals, pass. |
-| `run_route(gnd, route, paths, shown) -> dict` | function | 285 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
-| `Inputs` | class | 327 | Everything validated in steps 1-4, with the run's files located. |
-| `Inputs.source_dir(self, source) -> Path` | method | 385 | (no docstring) |
-| `refused_report(reason) -> dict` | function | 657 | (no docstring) |
-| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 724 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
-| `main(argv) -> int` | function | 776 | (no docstring) |
+| `Refusal` | class(Exception) | 80 | A harness refusal: exit 3 with a value-free reason code. |
+| `read_capped(path, cap) -> bytes` | function | 95 | Read at most cap+1 bytes. The cap is applied to the read, not after it. |
+| `parse_json(raw) -> Any` | function | 130 | Strict JSON: UTF-8, no NaN or infinities, bounded integer digits, depth at most 64. |
+| `read_json(path, cap) -> tuple[Any, bytes]` | function | 141 | (no docstring) |
+| `check_corpus_shape(corpus) -> None` | function | 175 | (no docstring) |
+| `check_key_shape(key) -> None` | function | 206 | (no docstring) |
+| `check_run_shape(run) -> None` | function | 226 | (no docstring) |
+| `passage_index(passages) -> dict[str, tuple[list[int], list[dict]]]` | function | 237 | Per document, the passages sorted by start, for containment lookups. |
+| `anchors_in_passages(index, anchors) -> list[str \| None]` | function | 246 | For each anchor ({document, span}), the id of the passage that contains it, or None. |
+| `failed_floors(metrics, floors) -> list[str]` | function | 267 | (no docstring) |
+| `stage_status(*, active, route_present, metrics, floors, refused) -> str` | function | 279 | Spec §6.5 status rules, in order: dormant, route missing, floors and refusals, pass. |
+| `run_route(gnd, route, paths, shown) -> dict` | function | 300 | Run one route. Returns its exit, its parsed payload (or None) and argv for display. |
+| `Inputs` | class | 342 | Everything validated in steps 1-4, with the run's files located. |
+| `Inputs.source_dir(self, source) -> Path` | method | 400 | (no docstring) |
+| `refused_report(reason) -> dict` | function | 743 | (no docstring) |
+| `score(corpus_root, answers, run_dir, *, gnd) -> dict` | function | 810 | Score RUN against ANSWERS over the corpus at CORPUS_ROOT. Never raises for its inputs. |
+| `main(argv) -> int` | function | 863 | (no docstring) |
+
+## gnd.examples.literature.diagnostic_measurement — `src/gnd/examples/literature/diagnostic_measurement.py`
+Components: examples.literature_name_diagnostics
+Score the frozen synthetic diagnostic corpus using its predeclared sample.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `score(emissions, labels) -> dict` | function | 36 | Sample uniformly within each kind and report exact false-discovery counts. |
+| `main(argv) -> int` | function | 82 | (no docstring) |
+
+## gnd.examples.literature.lineage_run — `src/gnd/examples/literature/lineage_run.py`
+Components: examples.literature_lineage
+Assemble admitted contextual sources and score named lineage paths.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `assemble(example, model, annotations, out) -> None` | function | 180 | Build a no-replace run from accepted contextual statements and verified identities. |
+| `score(model, run, answer_key) -> dict` | function | 270 | Grade exact directed paths through the public witness route. |
+| `main(argv) -> int` | function | 310 | (no docstring) |
+
+## gnd.examples.literature.name_diagnostics — `src/gnd/examples/literature/name_diagnostics.py`
+Components: examples.literature_name_diagnostics
+Generate reviewable name candidates from original literature occurrences.
+
+| Symbol | Kind | Line | Summary |
+| --- | --- | --- | --- |
+| `Occurrence` | class | 56 | (no docstring) |
+| `Occurrence.key(self) -> tuple[str, str, str]` | method | 71 | (no docstring) |
+| `Occurrence.resolution_key(self) -> dict` | method | 74 | (no docstring) |
+| `diagnose(data) -> list[dict]` | function | 186 | Return candidate kinds and unresolved proposals in occurrence order. |
+| `read_diagnostic_input(path) -> tuple[object, str]` | function | 222 | Read one regular local input and bind its exact bytes. |
+| `main(argv) -> int` | function | 232 | Read a capped input and print one diagnostic report. |
 
 ## gnd.examples.plan_apps.access.app — `src/gnd/examples/plan_apps/access/app.py`
 Components: examples.plan_apps

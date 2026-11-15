@@ -1,0 +1,20 @@
+{
+  "annotations_sha256": "387be570b869d0dcbe8d4e0ae57a818c1369f3076a5639a9e5da6517e23abb76",
+  "answers_sha256": "ef7b017a1591fa4008e08f4df170a5651229c9bba7547a2f567f9d5de75727b8",
+  "composition_sha256": "f0a61844b6f7230d9c07a827a66bb2d733ad48cb8a3cf294e3b848cfce91339c",
+  "counts": {
+    "excluded": [
+      2,
+      2
+    ],
+    "supported": [
+      1,
+      1
+    ]
+  },
+  "exit_code": 0,
+  "model_sha256": "a63b64293edbed71c74d1ded8423c133c328aa4ea02f550bad4fb03c91591279",
+  "path_policy_sha256": "cc27412b17b7cc1ca4f6d5da940b74b80528e45d2aa9d5a78dbee4986274c0b7",
+  "phase": "corrected-input-after-first-score",
+  "schema": "literature-lineage-score/1"
+}

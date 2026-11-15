@@ -270,6 +270,9 @@
     "gnd.composition": {
       "layer": "model"
     },
+    "gnd.composition_resolution": {
+      "layer": "model"
+    },
     "gnd.conformance": {
       "lane": "conformance",
       "layer": "lanes"

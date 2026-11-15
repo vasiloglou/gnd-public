@@ -1,0 +1,40 @@
+{
+  "anchors": [
+    {
+      "excerpt_sha256": "6fa04addf4381d04cb90f61be3c5b9afed05797c25d5d0ae6f0c5973ac18c8fb",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "masked token modelling",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "method",
+      "span": {
+        "end": 94,
+        "start": 53
+      }
+    },
+    {
+      "excerpt_sha256": "6fa04addf4381d04cb90f61be3c5b9afed05797c25d5d0ae6f0c5973ac18c8fb",
+      "fact_key": {
+        "fact_type": "method_builds_on_method",
+        "roles": {
+          "base_method": "masked token modelling",
+          "method": "VampNet"
+        }
+      },
+      "occurrence": 0,
+      "role": "base_method",
+      "span": {
+        "end": 94,
+        "start": 53
+      }
+    }
+  ],
+  "document_sha256": "42256571744c528facda12ecaf39aba7559356e8aad23ac290914ba65e22da9f",
+  "population_sha256": "e20f42cf6edd34d6a15c9984da324f8f036d8b944b28f40d2a09c09963381207",
+  "schema_version": 2,
+  "vocabulary_digest": "1f5b0c79a9e07667894d81b2995391d987ec379de72344a626907131d1fff198"
+}

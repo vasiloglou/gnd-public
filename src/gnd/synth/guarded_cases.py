@@ -16,7 +16,7 @@ from gnd.synth.guarded import _where_holds, _WorkBudget, guarded_atoms_connected
 from gnd.synth.identity import scalar_identity
 from gnd.synth.value_domain import constraint_accepts, governing_value_constraints
 from gnd.synth.values import make_value, predicate_for
-from gnd.terms import variable_name
+from gnd.terms import MEMBERSHIP_OPERATORS, prepare_comparisons, variable_name
 
 GUARD_WORK = 100_000
 RUN_WORK = 1_000_000
@@ -137,6 +137,10 @@ def _assignment(domains, comparison, attempt, rng, budget, *, initial=None):
             preferred = []
             if side and other_name is not None:
                 preferred = [pair[int(side == "right")] for pair in COMPARISON_PAIRS]
+            elif side == "left" and comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                members = other or []
+                if members:
+                    preferred = [*_preferred(members[0]), *members[1:ATTEMPTS]]
             elif side and other is not None:
                 preferred = _preferred(other)
             if attempt < len(preferred):
@@ -176,7 +180,7 @@ def _join(facts, atoms, budget, binding=None):
     return rows
 
 
-def _outcome(facts, antecedent, kind, payload, witnesses, budget):
+def _outcome(facts, antecedent, kind, where, witnesses, budget):
     bindings = _join(facts, antecedent, budget)
     if not bindings:
         return None
@@ -189,15 +193,20 @@ def _outcome(facts, antecedent, kind, payload, witnesses, budget):
     for binding in distinct.values():
         charge(budget)
         if kind == "comparison":
-            holds = _where_holds([payload], binding, budget=budget)
-            if budget.exhausted:
-                raise SearchLimit
-            if holds is None:
-                return None
+            holds = _where_holds(where, binding, budget=budget)
         else:
-            holds = bool(_join(facts, witnesses, budget, binding))
+            joined = _join(facts, witnesses, budget, binding)
+            if kind == "exists" and where:
+                outcomes = [_where_holds(where, row, budget=budget) for row in joined]
+                holds = None if None in outcomes else any(outcomes)
+            else:
+                holds = bool(joined)
             if kind == "absence":
                 holds = not holds
+        if budget.exhausted:
+            raise SearchLimit
+        if holds is None:
+            return None
         satisfied = satisfied and holds
     return satisfied, Candidate(facts, len(distinct))
 
@@ -225,7 +234,10 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
     witnesses = []
     if kind in {"atom", "absence"}:
         witnesses = [payload]
-    elif kind == "exists" and not payload.get("where"):
+    elif kind == "exists" and (
+        not payload.get("where")
+        or any(comparison.get("operator") in MEMBERSHIP_OPERATORS for comparison in payload["where"])
+    ):
         witnesses = payload["atoms"]
     elif kind != "comparison":
         return None, "unsupported-shape"
@@ -249,17 +261,41 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
         extension, possible = _domains(model, index, witnesses, roles, asserted, budget)
         if not possible:
             return None, "no-failing-case" if kind == "absence" else "no-passing-case"
-        if witnesses and all(atom in antecedent for atom in witnesses):
+        raw_where = []
+        if kind == "comparison":
+            raw_where = [payload]
+        elif kind == "exists":
+            raw_where = payload.get("where") or []
+        where = list(prepare_comparisons(raw_where))
+        for comparison in raw_where:
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                charge(budget, len(comparison["right"]))
+        if witnesses and not raw_where and all(atom in antecedent for atom in witnesses):
             return None, "no-passing-case" if kind == "absence" else "no-failing-case"
 
-        comparison = payload if kind == "comparison" else {}
+        comparison = raw_where[0] if raw_where else {}
+        left = variable_name(comparison.get("left"))
+        if kind == "comparison" and comparison.get("operator") in MEMBERSHIP_OPERATORS:
+            domains_for_left = domains.get(left, ())
+            if domains_for_left and all(domain.primitive == "Boolean" for domain in domains_for_left):
+                outcomes = {
+                    _where_holds(where, {left: value}, budget=budget)
+                    for value in (False, True)
+                    if all(domain.accepts(value, budget) for domain in domains_for_left)
+                }
+                if budget.exhausted:
+                    raise SearchLimit
+                if outcomes == {True}:
+                    return None, "no-failing-case"
+                if outcomes == {False}:
+                    return None, "no-passing-case"
         seen = {}
         for attempt in range(ATTEMPTS):
             assignment = _assignment(domains, comparison, attempt, rng, budget)
             if assignment is None:
                 continue
             base = _facts(antecedent, assignment, budget)
-            first = _outcome(base, antecedent, kind, payload, witnesses, budget)
+            first = _outcome(base, antecedent, kind, where, witnesses, budget)
             if first is None:
                 continue
             truth, case = first
@@ -269,13 +305,13 @@ def build_pair(model: Model, index: ModelIndex, rule: dict, rng: Random, budget:
                 # A single antecedent assignment supplies both cases. Check both
                 # resulting extensions because witness rows may add new subjects.
                 seen = {truth: case}
-                expanded = _assignment(extension, {}, attempt, rng, budget, initial=assignment)
+                expanded = _assignment(extension, comparison, attempt, rng, budget, initial=assignment)
                 if expanded is not None:
                     second = _outcome(
                         _facts([*antecedent, *witnesses], expanded, budget),
                         antecedent,
                         kind,
-                        payload,
+                        where,
                         witnesses,
                         budget,
                     )

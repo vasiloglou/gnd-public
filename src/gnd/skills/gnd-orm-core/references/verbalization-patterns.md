@@ -592,6 +592,13 @@ Both tests should pass on every full-model verbalization. If they don't, fix the
 *Adapted from the rai-agent-skills ORM skills (branch an-orm-skill).*
 
 
+### Membership comparisons
+
+Render `in` as “is one of” and `not in` as “is none of”. List literals use
+their declared order. The
+[membership comparison contract](representation-format.md#membership-comparisons)
+owns the syntax and semantics.
+
 ### Temporal guarded comparisons (v7.1)
 
 Use “calendar days after” for `date_add` and “calendar days before” for

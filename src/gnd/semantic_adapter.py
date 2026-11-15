@@ -50,6 +50,7 @@ from gnd.semantic_ir import (
     Scalar,
     SnapshotIR,
 )
+from gnd.terms import MEMBERSHIP_OPERATORS, compile_membership
 from gnd.universe import resolve_primitive
 
 canonical_scalar = scalar_values.canonical_scalar
@@ -955,6 +956,13 @@ def _family_adapt_value_comparison(base, source, model, fact_type):
     return base
 
 
+def _membership_operand(right):
+    members = compile_membership(right)
+    if members is None:
+        raise _ShapeError("invalid membership list")
+    return IROperand("membership", primitive=members.domain, membership=members)
+
+
 def _family_adapt_guarded(base, source, model, fact_type):
     atoms = tuple(_atom(value, model) for value in _list(source.get("antecedent")))
     consequent = _mapping(source.get("consequent"))
@@ -974,6 +982,12 @@ def _family_adapt_guarded(base, source, model, fact_type):
             for _, term in atom.bindings:
                 if term.kind == "variable":
                     primitives.setdefault(term.variable, term.primitive)
+        operator = _text(comparison.get("operator"))
+        if operator in MEMBERSHIP_OPERATORS:
+            return replace(base, operator=operator, operands=(
+                _guarded_term(comparison["left"], primitives),
+                _membership_operand(comparison["right"]),
+            ))
         terms = tuple(comparison[key] for key in ("left", "right"))
         operands = []
         for index, term in enumerate(terms):
@@ -1025,10 +1039,14 @@ def _family_adapt_guarded(base, source, model, fact_type):
         for comparison_value in where_comparisons:
             comparison = _mapping(comparison_value)
             operator = _text(comparison.get("operator"))
-            if operator not in (*_ORDERING, "=", "!="):
+            if operator not in (*_ORDERING, "=", "!=", *MEMBERSHIP_OPERATORS):
                 raise _ShapeError("unknown exists where operator")
             left = _guarded_term(comparison.get("left"), primitives)
-            right = _guarded_term(comparison.get("right"), primitives)
+            right = (
+                _membership_operand(comparison.get("right"))
+                if operator in MEMBERSHIP_OPERATORS
+                else _guarded_term(comparison.get("right"), primitives)
+            )
             where_rows.append((operator, left, right))
         base = replace(
             base,

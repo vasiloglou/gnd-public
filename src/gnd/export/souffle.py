@@ -17,6 +17,7 @@ from gnd.model import (
 )
 from gnd.model._includes import guard_bytes, include_reason
 from gnd.population import PopulationLoadError
+from gnd.terms import where_uses_membership
 from gnd.witness import io as witness_io
 from gnd.witness.types import DEFAULT_LIMITS as WITNESS_LIMITS
 
@@ -172,7 +173,7 @@ def admit(model_bytes, candidate_bytes, model_format, candidate_format, referenc
             raise Unsupported("opaque derivation")
         for c in cs:
             a = c.get("aggregate")
-            if c.get("where") and not a:
+            if where_uses_membership(c.get("where")) or (c.get("where") and not a):
                 raise Unsupported("scalar filters")
             if a and (
                 a.get("fn") != "count"

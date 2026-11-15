@@ -40,7 +40,7 @@ Every constraint may declare an `id`, unique across the model, and a `remedy`: a
 | Value-comparison | inline + top-level | yes, except current-time operands → unchecked |
 | Cardinality (object / role) | top-level | yes |
 | Subtype-partition | top-level | partial-observable |
-| Guarded | top-level | yes — atom, comparison, and absence consequents; see [representation-format.md](representation-format.md#guarded-constraints) |
+| Guarded | top-level | yes — atom, comparison, absence, and exists consequents; see [representation-format.md](representation-format.md#guarded-constraints) |
 | Anchored | inline | yes with bound document and anchor sidecar; otherwise unchecked |
 | Textual | top-level | unchecked |
 

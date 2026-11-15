@@ -71,9 +71,13 @@ from gnd.model._unattended import _rule_unattended
 from gnd.terms import (
     DEFAULT_LIMITS,
     FLOAT_FUNCTION_ARITY,
+    MAX_MEMBERSHIP_ITEMS,
+    MEMBERSHIP_OPERATORS,
     NUMERIC_PRIMITIVES,
     analyze_term,
+    compile_membership,
     is_function_term,
+    membership_domain,
     term_variables,
 )
 from gnd.universe import (
@@ -2359,11 +2363,41 @@ def _iter_guarded_consequent_terms(constraint: Any):
             continue
         for role_name, term in bind.items():
             yield f".consequent.{kind}.bind[{role_name}]", term
-    comparison = consequent.get("comparison")
-    if isinstance(comparison, dict):
-        for side in ("left", "right"):
-            if side in comparison:
-                yield f".consequent.comparison.{side}", comparison.get(side)
+    for path, comparison in _iter_guarded_comparisons(consequent):
+        if path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+            yield from _iter_guarded_comparison_terms(path, comparison)
+
+
+def _iter_guarded_comparisons(consequent):
+    if not isinstance(consequent, dict):
+        return
+    direct = consequent.get("comparison")
+    if isinstance(direct, dict):
+        yield ".consequent.comparison", direct
+    exists = consequent.get("exists")
+    if isinstance(exists, dict) and isinstance(exists.get("where"), list):
+        for index, comparison in enumerate(exists["where"]):
+            if isinstance(comparison, dict):
+                yield f".consequent.exists.where[{index}]", comparison
+
+
+def _iter_guarded_memberships(guard):
+    for path, comparison in _iter_guarded_comparisons(guard.get("consequent")):
+        right = comparison.get("right")
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
+            yield comparison.get("left"), right, path
+
+
+def _iter_guarded_comparison_terms(path, comparison):
+    if "left" in comparison:
+        yield f"{path}.left", comparison["left"]
+    if "right" in comparison:
+        right = comparison["right"]
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS and isinstance(right, list):
+            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
+                yield f"{path}.right[{index}]", member
+        else:
+            yield f"{path}.right", right
 
 
 def _rule_guarded_term_ref(doc: dict[str, Any]) -> list[ValidationIssue]:
@@ -2528,46 +2562,63 @@ def _rule_guarded_literal_domain(doc: dict[str, Any]) -> list[ValidationIssue]:
                 return False
         return True
 
-    for ref, guard in guards:
+    def literals(guard):
+        sites = {}
         for suffix, atom in _iter_guarded_atoms(guard):
             if not isinstance(atom, dict) or not isinstance(atom.get("fact_type"), str):
                 continue
             fact = atom["fact_type"]
             for role, value in atom_bind(atom).items():
-                role_type = roles.get(fact, {}).get(role)
-                if role_type not in objects_by_id or _variable_name(value) is not None:
-                    continue
-                if type(value) not in (bool, int, float, str):
-                    continue
-                raw = canonical_scalar(value, None)
-                if not isinstance(raw, Scalar):
-                    continue
-                path = f"{ref}{suffix}.bind[{role}]"
-                try:
-                    domains = chain(
-                        by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
-                    )
-                    restricting = []
-                    for domain_ref, domain in domains:
-                        charge()
-                        key = domain_ref, raw.identity_kind, raw.token
-                        if key not in tested:
-                            tested[key] = excluded(value, raw, domain)
-                        if tested[key]:
-                            restricting.append(domain_ref)
-                except _GuardedLiteralDomainLimit:
-                    issues.append(ValidationIssue(
-                        path=path, severity="warning",
-                        rule_id="semantic:guarded-literal-domain-work-limit",
-                        message="Guarded literal domain validation reached its work limit.",
-                    ))
-                    return issues
-                if restricting:
-                    issues.append(ValidationIssue(
-                        path=path, severity="warning",
-                        rule_id="semantic:guarded-literal-outside-domain",
-                        message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
-                    ))
+                variable = _variable_name(value)
+                if variable is None:
+                    yield f"{suffix}.bind[{role}]", fact, role, value
+                elif suffix.startswith((".antecedent[", ".consequent.exists.atoms[")):
+                    sites.setdefault(variable, set()).add((fact, role))
+        for left, right, prefix in _iter_guarded_memberships(guard):
+            variable = _variable_name(left)
+            roles_for_left = sorted(sites.get(variable, ()))
+            for index, member in enumerate(right[:MAX_MEMBERSHIP_ITEMS]):
+                if isinstance(member, dict) and set(member) in ({"date"}, {"duration_days"}):
+                    member = next(iter(member.values()))
+                for fact, role in roles_for_left:
+                    yield f"{prefix}.right[{index}]", fact, role, member
+
+    for ref, guard in guards:
+        for suffix, fact, role, value in literals(guard):
+            role_type = roles.get(fact, {}).get(role)
+            if role_type not in objects_by_id or _variable_name(value) is not None:
+                continue
+            if type(value) not in (bool, int, float, str):
+                continue
+            raw = canonical_scalar(value, None)
+            if not isinstance(raw, Scalar):
+                continue
+            path = f"{ref}{suffix}"
+            try:
+                domains = chain(
+                    by_role.get((fact, role), ()), chain.from_iterable(domains_for_type(role_type))
+                )
+                restricting = []
+                for domain_ref, domain in domains:
+                    charge()
+                    key = domain_ref, raw.identity_kind, raw.token
+                    if key not in tested:
+                        tested[key] = excluded(value, raw, domain)
+                    if tested[key]:
+                        restricting.append(domain_ref)
+            except _GuardedLiteralDomainLimit:
+                issues.append(ValidationIssue(
+                    path=path, severity="warning",
+                    rule_id="semantic:guarded-literal-domain-work-limit",
+                    message="Guarded literal domain validation reached its work limit.",
+                ))
+                return issues
+            if restricting:
+                issues.append(ValidationIssue(
+                    path=path, severity="warning",
+                    rule_id="semantic:guarded-literal-outside-domain",
+                    message=f"Literal lies outside the value domain declared by {', '.join(restricting)}.",
+                ))
     return issues
 
 
@@ -2757,6 +2808,28 @@ def _guarded_literal_kinds_compatible(left: Any, right: Any) -> bool:
     return isinstance(left, str) and isinstance(right, str)
 
 
+def _membership_comparison_issues(path, comparison, variable_primitives):
+    left = analyze_term(comparison.get("left"), variable_primitives, limits=DEFAULT_LIMITS)
+    if left.issue is not None:
+        yield ValidationIssue(path=f"{path}.left", message=f"membership term is invalid: {left.issue}", rule_id=left.issue)
+    right = comparison.get("right")
+    members = compile_membership(right)
+    domain = membership_domain(left.primitive)
+    if members is None or (domain is not None and domain != members.domain):
+        yield ValidationIssue(
+            path=f"{path}.right",
+            message="Membership requires a non-empty homogeneous list of compatible literals.",
+            rule_id="semantic:membership-list",
+        )
+    elif len(members.keys) < len(right):
+        yield ValidationIssue(
+            path=f"{path}.right",
+            message="Membership list contains duplicate values.",
+            severity="warning",
+            rule_id="semantic:membership-duplicate",
+        )
+
+
 def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
     """Every guarded comparison has compatible resolved operand types."""
     # Local import avoids the module-import cycle: popvalidate imports Model and
@@ -2816,6 +2889,11 @@ def _rule_guarded_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
             )
             for variable, values in variable_primitives.items()
         }
+        if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+            issues.extend(_membership_comparison_issues(
+                f"{path}.consequent.comparison", comparison, collapsed_primitives
+            ))
+            continue
         if isinstance(left, dict) or isinstance(right, dict):
             left_analysis = analyze_term(left, collapsed_primitives, limits=DEFAULT_LIMITS)
             right_analysis = analyze_term(right, collapsed_primitives, limits=DEFAULT_LIMITS)
@@ -2957,6 +3035,11 @@ def _rule_guarded_exists_where_type(doc: dict[str, Any]) -> list[ValidationIssue
         }
         for index, comparison in enumerate(exists.get("where") or []):
             if not isinstance(comparison, dict) or not {"left", "right"} <= comparison.keys():
+                continue
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                issues.extend(_membership_comparison_issues(
+                    f"{path}.consequent.exists.where[{index}]", comparison, collapsed
+                ))
                 continue
             left, right = comparison.get("left"), comparison.get("right")
             analyses = (
@@ -4319,6 +4402,11 @@ def _derivation_head_term_issues(doc: dict[str, Any]) -> list[ValidationIssue]:
         for index, comparison in enumerate(where):
             if not isinstance(comparison, dict):
                 continue
+            if comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                issues.extend(_membership_comparison_issues(
+                    f"{path}.where[{index}]", comparison, variable_primitives
+                ))
+                continue
             analyses = {
                 side: analyze_term(comparison.get(side), variable_primitives, limits=DEFAULT_LIMITS)
                 for side in ("left", "right")
@@ -4430,6 +4518,14 @@ def _rule_derivation_float_head_unquantized(doc: dict[str, Any]) -> list[Validat
 
 def _rule_derivation_term_unbound(doc: dict[str, Any]) -> list[ValidationIssue]:
     return _filter_derivation_term_issues(doc, rule_id="semantic:derivation-term-unbound")
+
+
+def _rule_derivation_membership(doc: dict[str, Any]) -> list[ValidationIssue]:
+    return [
+        issue
+        for rule in ("semantic:membership-list", "semantic:membership-duplicate")
+        for issue in _filter_derivation_term_issues(doc, rule_id=rule)
+    ]
 
 
 def _rule_term_comparison_type(doc: dict[str, Any]) -> list[ValidationIssue]:
@@ -4683,16 +4779,24 @@ def _rule_derivation_unstratified(doc: dict[str, Any]) -> list[ValidationIssue]:
 
 
 def _rule_temporal_language(doc: dict[str, Any]) -> list[ValidationIssue]:
-    """Temporal syntax is v3-only and confined to guarded comparison operands."""
+    """Temporal syntax is v3-only and confined to admitted comparison sites."""
     from gnd.terms import is_temporal_node, temporal_nodes
 
     allowed: set[int] = set()
     for _, constraint in _iter_guarded_constraints(doc):
         consequent = constraint.get("consequent")
-        comparison = consequent.get("comparison") if isinstance(consequent, dict) else None
-        if isinstance(comparison, dict):
-            for side in ("left", "right"):
-                allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
+        for path, comparison in _iter_guarded_comparisons(consequent):
+            if path == ".consequent.comparison" or comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                for side in ("left", "right"):
+                    allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
+    for _, _, clause in _iter_structured_fact_derivations(doc):
+        where = clause.get("where")
+        if not isinstance(where, list):
+            continue
+        for comparison in where:
+            if isinstance(comparison, dict) and comparison.get("operator") in MEMBERSHIP_OPERATORS:
+                for side in ("left", "right"):
+                    allowed.update(id(node) for _, node in temporal_nodes(comparison.get(side)))
     issues = []
     role_types, primitives = _primitive_maps(doc)
     hosts = {
@@ -4855,6 +4959,7 @@ _SEMANTIC_RULES = (
     _rule_derivation_head_needs_round,
     _rule_derivation_float_head_unquantized,
     _rule_derivation_term_unbound,
+    _rule_derivation_membership,
     _rule_term_comparison_type,
     _rule_derivation_head_unbound,
     _rule_derivation_negate_unbound,

@@ -8,10 +8,12 @@ or production-branch coverage claims.
 """
 
 from dataclasses import replace
+from fractions import Fraction
 
 from gnd.constraint_families import FAMILIES, resolve_hook
 from gnd.graphs import strongly_connected_components
 from gnd.semantic_ir import IRConstraint, IRFactType, Scalar, SnapshotIR
+from gnd.terms import MEMBERSHIP_OPERATORS, membership_verdict
 
 
 def scalar_identical(left: Scalar, right: Scalar) -> bool:
@@ -1695,6 +1697,33 @@ def guarded_atom_state(
     return 0
 
 
+def guarded_comparison_state(constraint, names, binding) -> int:
+    left_operand, right_operand = constraint.operands
+    left = guarded_operand_value(left_operand, names, binding)
+    if left is None:
+        return -1
+    if constraint.operator in MEMBERSHIP_OPERATORS:
+        members = right_operand.membership
+        if members is None:
+            return -1
+        if left.kind == "number":
+            raw = Fraction(left.num, left.den)
+            raw = raw.numerator if raw.denominator == 1 else raw
+        elif left.kind == "boolean":
+            raw = left.token == "true"
+        elif left.identity_kind == "string":
+            raw = left.token
+        else:
+            return -1
+        answer = membership_verdict(
+            constraint.operator, raw, members,
+            left_operand.primitive or ("Date" if left.kind == "date" else None),
+        )
+        return -1 if answer is None else int(answer)
+    right = guarded_operand_value(right_operand, names, binding)
+    return -1 if right is None else comparison_pair_state(left, right, constraint.operator)
+
+
 def guarded_result(
     constraint: IRConstraint, snapshot: SnapshotIR
 ) -> tuple[int, list[list[Scalar]]]:
@@ -1712,7 +1741,7 @@ def guarded_result(
         if (
             len(constraint.operands) != 2
             or constraint.consequent
-            or constraint.operator not in ("<", "<=", "=", ">=", ">", "!=")
+            or constraint.operator not in ("<", "<=", "=", ">=", ">", "!=", *MEMBERSHIP_OPERATORS)
         ):
             return -1, empty
     elif len(constraint.consequent) != 1 or constraint.operands:
@@ -1726,13 +1755,7 @@ def guarded_result(
     while binding_index < len(bindings):
         binding = bindings[binding_index]
         if constraint.variant == "comparison":
-            left = guarded_operand_value(constraint.operands[0], names, binding)
-            right = guarded_operand_value(constraint.operands[1], names, binding)
-            state = (
-                -1
-                if left is None or right is None
-                else comparison_pair_state(left, right, constraint.operator)
-            )
+            state = guarded_comparison_state(constraint, names, binding)
         else:
             state = guarded_atom_state(constraint.consequent[0], names, binding, snapshot)
             if state >= 0 and constraint.variant == "absence":

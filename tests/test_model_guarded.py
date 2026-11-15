@@ -57,13 +57,15 @@ def test_guarded_schema_shape_and_operator_home() -> None:
     schema = json.loads(VENDORED_SCHEMA.read_text(encoding='utf-8'))
     defs = schema['$defs']
     assert defs['comparison_operator'] == {'enum': ['<', '<=', '=', '>=', '>', '!=']}
-    assert defs['guarded_comparison']['required'] == ['operator', 'left', 'right']
-    assert defs['guarded_comparison']['properties']['left'] == {'$ref': '#/$defs/term'}
-    assert defs['guarded_comparison']['properties']['right'] == {'$ref': '#/$defs/term'}
+    guarded_legacy, membership = defs['guarded_comparison']['oneOf']
+    assert membership == {'$ref': '#/$defs/membership_comparison'}
+    assert guarded_legacy['required'] == ['operator', 'left', 'right']
+    assert guarded_legacy['properties']['left'] == {'$ref': '#/$defs/term'}
+    assert guarded_legacy['properties']['right'] == {'$ref': '#/$defs/term'}
     assert defs['guarded']['required'] == ['type', 'antecedent', 'consequent']
     assert {branch['$ref'] for branch in defs['top_level_constraint']['allOf'][1]['oneOf']} >= {'#/$defs/guarded'}
     assert '#/$defs/guarded' not in {branch['$ref'] for branch in defs['inline_constraint']['allOf'][1]['oneOf']}
-    operator_sites = (defs['guarded_comparison']['properties']['operator'], defs['value_comparison_inline']['properties']['operator'], defs['value_comparison_cross']['properties']['operator'], defs['dynamic_rule']['properties']['op'])
+    operator_sites = (guarded_legacy['properties']['operator'], defs['value_comparison_inline']['properties']['operator'], defs['value_comparison_cross']['properties']['operator'], defs['dynamic_rule']['properties']['op'])
     assert operator_sites == ({'$ref': '#/$defs/comparison_operator'},) * 4
 
 def test_guarded_minimal_loads_without_warnings_and_cli_validates() -> None:

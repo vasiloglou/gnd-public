@@ -39,7 +39,7 @@ from gnd.semantic_rows import (
 from gnd.semantic_rows import (
     scalar_identity as _scalar_identity,
 )
-from gnd.terms import compare_terms
+from gnd.terms import MEMBERSHIP_OPERATORS, compare_terms
 
 _SPEC_GUARDED_ATOM_STATE = semantic_spec.guarded_atom_state
 GUARDED_EXISTS_WORK_LIMIT = 200_000
@@ -541,7 +541,7 @@ def _indexed_guarded_verdict(
         malformed = malformed or (
             len(constraint.operands) != 2
             or bool(constraint.consequent)
-            or constraint.operator not in {"<", "<=", "=", ">=", ">", "!="}
+            or constraint.operator not in {"<", "<=", "=", ">=", ">", "!=", *MEMBERSHIP_OPERATORS}
         )
     else:
         malformed = malformed or len(constraint.consequent) != 1 or bool(constraint.operands)
@@ -579,13 +579,7 @@ def _indexed_guarded_verdict(
     undecidable = False
     for binding in bindings:
         if constraint.variant == "comparison":
-            left = semantic_spec.guarded_operand_value(constraint.operands[0], names, binding)
-            right = semantic_spec.guarded_operand_value(constraint.operands[1], names, binding)
-            state = (
-                -1
-                if left is None or right is None
-                else semantic_spec.comparison_pair_state(left, right, constraint.operator)
-            )
+            state = semantic_spec.guarded_comparison_state(constraint, names, binding)
         else:
             if semantic_spec.guarded_atom_state is not _SPEC_GUARDED_ATOM_STATE:
                 state = semantic_spec.guarded_atom_state(
@@ -811,10 +805,13 @@ def _indexed_guarded_exists_verdict(
             for operator, left, right in constraint.exists_where:
                 result = compare_terms(
                     operator,
-                    _ir_term_syntax(left),
-                    _ir_term_syntax(right),
+                    (temporal_guarded.term_syntax(left) if operator in MEMBERSHIP_OPERATORS
+                     else _ir_term_syntax(left)),
+                    right.membership if operator in MEMBERSHIP_OPERATORS else _ir_term_syntax(right),
                     python_binding,
                     bound_cross_product=True,
+                    left_primitive=left.primitive,
+
                 )
                 counts["term_nodes"] += result.nodes
                 counts["term_operations"] += result.operations

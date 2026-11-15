@@ -8,6 +8,8 @@ from gnd.artifacts import canonical_json_bytes
 from gnd.errors import ModelValidationError
 from gnd.model import derivation_dependencies, iter_derivation_clauses
 from gnd.model._includes import guard_bytes, include_reason
+from gnd.model_index import ModelIndex
+from gnd.terms import guard_uses_membership, where_uses_membership
 from gnd.witness import io as witness_io
 from gnd.witness.types import DEFAULT_LIMITS as WITNESS_LIMITS
 
@@ -817,6 +819,15 @@ def render_lean(
             numeric_digits=limits.numeric_digits,
         )
         model, candidate, refs = witness_io.intake(md, pd, reference_inputs, limits=wl)
+        if any(
+            guard_uses_membership(constraint.get("consequent"))
+            for constraint in model.constraints if constraint.get("type") == "guarded"
+        ) or any(
+            where_uses_membership(clause.get("where"))
+            for fact in ModelIndex.for_model(model).iter_fact_types_shared()
+            for clause in iter_derivation_clauses(fact.get("derivation_rule"))
+        ):
+            return refused(2, "membership-unsupported")
         r = Renderer(md, model, candidate, refs, limits)
         counts = r.classify()
         r.carriers()

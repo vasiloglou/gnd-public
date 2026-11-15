@@ -98,6 +98,12 @@ class IRObjectType:
 
 
 @dataclass(frozen=True)
+class MembershipSet:
+    domain: str
+    keys: frozenset[object]
+
+
+@dataclass(frozen=True)
 class IROperand:
     kind: str
     fact_type: str = ""
@@ -111,6 +117,7 @@ class IROperand:
     refused: str = ""
     function: str = ""
     arguments: tuple["IROperand", ...] = field(default_factory=tuple)
+    membership: MembershipSet | None = None
 
 
 @dataclass(frozen=True)

@@ -41,6 +41,7 @@ from gnd.terms import (
     evaluate_term,
     is_function_term,
     materialize_scalar,
+    prepare_comparisons,
     term_variables,
 )
 from gnd.universe import resolve_primitive
@@ -525,9 +526,10 @@ def _partial_clause_rows(
             bindings = collapsed
     if clause.get("where"):
         filtered = []
+        where = prepare_comparisons(clause["where"])
         for binding in bindings:
             keep = True
-            for comparison in clause["where"]:
+            for comparison in where:
                 used = set(term_variables(comparison.get("left"))) | set(term_variables(comparison.get("right")))
                 if any(isinstance(binding.get(name), _Wildcard) for name in used):
                     if definite:
@@ -1694,9 +1696,10 @@ def _evaluate_stratified_extensions(
                         if not bindings:
                             record_branch(f"derivation:extension:{derivation}:aggregate-group-absent")
                     filtered = []
+                    where = prepare_comparisons(clause.get("where") or ())
                     for binding in bindings:
                         keep = True
-                        for comparison in clause.get("where") or ():
+                        for comparison in where:
                             result = compare_terms(
                                 str(comparison.get("operator")), comparison.get("left"),
                                 comparison.get("right"), binding, bound_cross_product=aggregate,
@@ -1896,9 +1899,10 @@ def _exact_extension_calculator(
             record_branch(f"derivation:extension:{derivation}:aggregate-group-absent")
         filtered: list[dict[str, Scalar]] = []
         failed: RelationUnavailable | None = None
+        where = prepare_comparisons(rule.get("where") or ())
         for binding in bindings:
             keep = True
-            for comparison in rule.get("where") or ():
+            for comparison in where:
                 result = compare_terms(
                     str(comparison.get("operator")),
                     comparison.get("left"),

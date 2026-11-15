@@ -33,8 +33,9 @@ from typing import Any
 
 from gnd.errors import ModelLoadError, ModelValidationError
 from gnd.graphs import strongly_connected_components
-from gnd.model import load_model_bytes
+from gnd.model import iter_derivation_clauses, load_model_bytes
 from gnd.model_index import ModelIndex
+from gnd.terms import guard_uses_membership, where_uses_membership
 
 from .pyrel_runtime import ExportInputError, _parse_document
 
@@ -2294,6 +2295,15 @@ def render(model_path: Path, target: str) -> str:
         loaded = load_model_bytes(raw, source=str(model_path))
     except (ModelLoadError, ModelValidationError, ReferenceInputError) as error:
         raise ExportInputError(f"invalid model: {error}") from error
+    if any(
+        guard_uses_membership(constraint.get("consequent"))
+        for constraint in loaded.constraints if constraint.get("type") == "guarded"
+    ) or any(
+        where_uses_membership(clause.get("where"))
+        for fact in ModelIndex.for_model(loaded).iter_fact_types_shared()
+        for clause in iter_derivation_clauses(fact.get("derivation_rule"))
+    ):
+        raise ExportInputError("membership-unsupported")
     doc = _parse_document(raw.decode("utf-8"))
     model = _Model(doc)
     reference = _bind_reference(loaded, Path(model_path))   # GND binds references before it checks anything

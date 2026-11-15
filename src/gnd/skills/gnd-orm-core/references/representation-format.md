@@ -535,6 +535,28 @@ remain scalar literals or variables. An `exists` consequent is an object with
 non-empty `atoms` and optional non-empty `where`, whose items reuse the atom
 and exact term-comparison shapes.
 
+### Membership comparisons
+
+Use `in` or `not in` with a term on the left and a list of 1 to 1,024 literals
+on the right. The operators are available in a guarded comparison, an
+existential `where` filter, and a derivation `where` filter.
+
+```yaml
+comparison: {operator: in, left: $status, right: ["A", "S"]}
+```
+
+All members must belong to one domain compatible with the left term. Integer
+and floating-point spellings share exact numeric identity. Boolean values
+remain distinct from numbers. Use `{date: YYYY-MM-DD}` for a calendar date
+and `{duration_days: N}` for a duration. Those domains are distinct from
+ordinary strings and numbers. Variables and functions may occur in the left
+term, while list entries are literals. Duplicate members produce a warning.
+
+`in` holds when the left value belongs to the list. `not in` holds when it
+belongs to the same domain and is absent from the list. An unavailable or
+incompatible left value leaves the comparison unknown. Existing value
+comparisons and dynamic rule operators retain their respective operator sets.
+
 Evaluation enumerates the antecedent's variable bindings. A literal must match
 by scalar identity; a variable repeated within one atom or across atoms must
 carry the same identity at every site. Multi-atom antecedents are joined by

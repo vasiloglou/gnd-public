@@ -16,3 +16,6 @@ guarded rules gain the clause language derivations already have.
 **Readiness.** See the [review disposition](notes/plan-review-disposition.md)
 and the [delegated plan gate](001-plan-gate.md). GC1 proceeds through the
 corpus and spec gate.
+
+GC1 implementation and focused verification are recorded in the
+[candidate note](notes/GC1-candidate.md). Independent diff review is next.

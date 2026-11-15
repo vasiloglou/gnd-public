@@ -97,8 +97,8 @@ Bounded construction and independent labels for asserted guarded cases.
 | `Domain.draw(self, rng) -> Any` | method | 63 | (no docstring) |
 | `Candidate` | class | 74 | (no docstring) |
 | `charge(budget, count) -> None` | function | 79 | (no docstring) |
-| `confirmation_work(pair, guards, budget)` | function | 205 | Charge an upper bound on the checker's guarded joins. |
-| `build_pair(model, index, rule, rng, budget)` | function | 221 | Return an independently evaluated failure and active pass, or a reason. |
+| `confirmation_work(pair, guards, budget)` | function | 214 | Charge an upper bound on the checker's guarded joins. |
+| `build_pair(model, index, rule, rng, budget)` | function | 230 | Return an independently evaluated failure and active pass, or a reason. |
 
 ## gnd.synth.guarded_service — `src/gnd/synth/guarded_service.py`
 Components: synth.service

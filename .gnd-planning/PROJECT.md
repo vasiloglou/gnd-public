@@ -204,5 +204,5 @@ on sense-aware literature ontologies. The partition has one home:
 The owner approved literature-identity plan r3 on 2026-11-15 ([plan gate](milestones/literature-identity/001-plan-gate.md)), with D1–D9 as proposed. Review stopped after round 2, and the bar was not met in that round. The two outline plans are not approved. LI0 (#193 part 9) is implemented and recorded ([003](milestones/literature-identity/003-phase-LI0.md)). LI1 (#193 part 1), the literature regression corpus and its staged assurance report, is implemented and recorded ([006](milestones/literature-identity/006-phase-LI1.md)).
 
 LI0–LI5 are implemented and merged. The [fresh independent reserve](milestones/literature-identity/031-phase-LI5-independent-reserve.md)
-met the L1 scoring threshold. The [renewed panel](milestones/literature-identity/033-panel.md)
-returned three valid responses, leaving the required close review pending.
+met the L1 scoring threshold. Literature-identity [closed on 2026-11-15](milestones/literature-identity/035-milestone-close.md)
+after six valid responses in its renewed close review. The two successor outlines keep their own gates.

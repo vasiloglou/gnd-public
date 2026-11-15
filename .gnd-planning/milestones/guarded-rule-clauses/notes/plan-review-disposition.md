@@ -45,3 +45,41 @@ Two Standard panel plan rounds, with r2 as the confirmation subject. Use the
 [project convergence rules](../../../../.codex/skills/process-phase/references/review-convergence.md)
 and stop at the declared round budget. A plan ruling requires the project
 bar of four valid seats and disposition of remaining blocking concerns.
+
+## Confirmation
+
+Round 2 reviewed plan r2 at `5892c71b`, SHA-256
+`dc823aa2113a4bf2771cab9f4f89b673dd0887a2ffd3d27ff6be90c3147708bf`.
+The panel and finalization each exited 0. The four valid seats met the
+project bar. Gemini returned no JSON object. Kimi returned malformed JSON
+before the response head. The four valid responses were complete. Codex's
+negative-oracle concern lacked an anchored quotation and was checked against
+the original I3 language and the two anchored reports on the same issue.
+[The report](../evidence/plan-review-r2/PANEL-REVIEW.md) retains both agreed
+groups and all sixteen divergent concerns. Raw evidence remains outside Git
+because a raw stream contains a host path. The canonical run digest is
+`d65d882dfbe5c33b0e63f6cba37270ffc782d3375f97e8292a17f24df559b8ba`.
+
+| Round | Valid / attempted | Per-seat counts | On prior-repair text / total | Reviewer-reported blocking / total | Ceiling | Verdicts |
+|---|---|---|---|---|---|---|
+| 1 | 5 / 6 | Claude 9, Codex 5, Qwen 13, Kimi 3, GLM 6 | 0 / 36 | 13 / 36 | high | 5 revise |
+| 2 | 4 / 6 | Claude 6, Codex 3, Qwen 10, GLM 2 | 10 / 21 | 6 / 21 | high | 4 revise |
+
+Round 2's prior-repair rows are Claude's and Codex's existential-precedence
+concerns, Codex's added membership-walk concern, and Qwen's membership
+identity boundary, sample precondition, finite-domain scope, diagnostics
+version rule, unknown aggregate, D1 table and duration granularity concerns.
+The confirmation budget is exhausted.
+
+| Remaining issue | Disposition |
+|---|---|
+| Guarded negation's source relation | Reproduced in extensions.constraint_view_legacy. §2 now binds GC2 to the same effective constraint view as positive guards and specifies asserted outcomes for covered consistent, covered inconsistent, and uncovered fully derived relations. Derivation consistency has its own verdict. Empty covered negative relations do not participate in positive vacuity. |
+| Negative membership differential | I3 and T6 now pair positive membership with a same-domain semiderived atom and negative membership with absence of that atom. The harness asserts relevant coverage, same-domain identity and verdict diversity. |
+| Existential precedence inside a disjunction | The shipped guarded exists evaluator retains an unknown if any assignment is undefined. GC3 preserves local semantics and applies true-over-unknown between alternatives. |
+| Finite-domain synthesis | The completion statement limits this predicate to GC1. T7 specifies the Boolean case and the two existing named reasons. GC2's exclusion example retains an active satisfying binding. |
+| Guarded temporal routing and literal-domain lint | GC1 names indexed, reference, and temporal paths. T3 pins role-resolved list-member lint and T5 pins temporal identity and legacy comparisons. |
+| Exporter and diagnostic controls | The phase specs fix a per-profile expected outcome before implementation. Existing-model v16 bytes and positive-prefix semantics remain acceptance controls. GC1 preserves invalid-model refusal IDs and paths. |
+| Feedback and verbalization | E3 pins business-rule IDs from the public flag. The sources table now includes the verbalization criteria. |
+
+The plan gate will bind r3 after these targeted repairs. The confirmation
+round's reviewer opinions describe r2.

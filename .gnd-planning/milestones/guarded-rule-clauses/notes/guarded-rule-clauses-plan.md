@@ -1,10 +1,9 @@
-# Guarded rule clauses · plan r2
+# Guarded rule clauses · plan r3
 
-**Status — r2 review candidate, 2026-11-15.** The owner selected the Standard
+**Status — r3, 2026-11-15.** The owner selected the Standard
 GND review panel for plan and close and delegated approval rulings with
-`auto=true`. The review of r1 and its dispositions are recorded in
-[the review disposition](plan-review-disposition.md). The plan gate follows
-confirmation of r2.
+`auto=true`. Both reviews and the final amendments are recorded in
+[the review disposition](plan-review-disposition.md).
 
 ## Goal and completion predicates
 
@@ -25,8 +24,8 @@ acceptable" is one rule, not a helper fact type plus a rule
 - **Every form** passes a differential test over covered, decidable generated
   populations and explicit fixtures for applicable unknown outcomes. Guarded
   synthesis produces a failing and a passing case for representative reachable
-  shapes, including the issue examples. An exhaustive finite domain with only
-  one reachable verdict yields a named refusal.
+  shapes, including the issue examples. For GC1, an exhaustive finite domain with only one reachable verdict yields
+  a named refusal.
 - **GC4.** Exporters translate or refuse each new form with a named reason,
   normative docs and the bookrec guarded-rules chapter teach the three forms,
   and an installed-candidate smoke runs the issue's three retail examples.
@@ -59,8 +58,12 @@ by name in each spec. In particular:
    `exists`) is corrected in GC1.
 6. **Measure.** On covered, decidable populations, compare verdicts and the
    set of offending bindings projected onto the shared business variables
-   using canonical ORM identity. Assert coverage and defined terms in the
-   differential harness. For GC2, compare an emptied native guard with a
+   using canonical ORM identity. Each fixed-seed sample has at least 200
+   populations, including satisfied and violated controls. Assert coverage of
+   every predicate read, availability of every comparison used, consistency of
+   covered derived claims, and an active binding wherever the case is meant to
+   exercise one. Use semiderived helper relations or assert the consistency of
+   supplied derived claims. For GC2, compare an emptied native guard with a
    vacuous helper as zero active bindings and assert each public verdict
    separately. For undefined terms, missing coverage, and exhausted work,
    assert expected outcomes directly on both evaluator paths.
@@ -80,7 +83,7 @@ experiment-claim census cannot measure runtime coverage of rule syntax.
 | #195 Summary item 3 | `in` / `not in` with a list-of-literals right side in `term_comparison` and `guarded_comparison` | GC1 I1–I5 |
 | #195 Summary item 1 | `negate` and `where` beside `antecedent` with derivation-clause semantics | GC2 N1–N4 |
 | #195 Summary item 2 | `any_of` consequent over the four existing forms | GC3 A1–A4 |
-| #195 Acceptance bullet 1 | Schema validation, differential test against the helper encoding over generated populations, one-sentence verbalization | GC1–GC3, each criterion 1–3 |
+| #195 Acceptance bullet 1 | Schema validation, differential test against the helper encoding over generated populations, one-sentence verbalization | GC1 I1–I4, GC2 N1–N4, GC3 A1–A4 |
 | #195 Acceptance bullet 2 | `negate` follows derivation stratification | GC2 N2 |
 | #195 Acceptance bullet 3 | `any_of` violations list each alternative's unmet atoms | GC3 A3 |
 | #195 Acceptance bullet 4 | `gnd synth --guarded-cases` yields a failing and a passing case per new form | GC1 I4, GC2 N4, GC3 A4 |
@@ -109,7 +112,7 @@ identity contract. D1 covers all existing sites below.
 
 | Comparison site | GC1 contract |
 |---|---|
-| Guarded top-level consequent | Membership enabled through indexed and reference evaluation |
+| Guarded top-level consequent | Membership enabled through indexed, temporal and reference evaluation |
 | Guarded `exists.where` | Membership enabled through its term filter and guarded synthesis |
 | Ordinary, aggregate-bearing and headless `derivation_rule.where` | Membership enabled through derivation extension filters |
 | `derivation_clause.where`, `derivation_headed_clause.where` | Membership enabled through derivation extension filters |
@@ -121,13 +124,20 @@ filter can prove exclusion by a definite false `where` or a matching negated
 atom. Otherwise an undefined comparison or negated relation with unavailable
 or uncovered rows makes the binding unknown. A ground negated atom is a
 global existence probe, including the shipped-order example. Every variable
-of a negated atom or comparison must occur in a positive atom. A guarded rule
-produces no facts and reads completed extensions, so it adds no dependency
-edges to derivation stratification. Pin a negated derived relation and preserve
-validation refusal for an independently unstratifiable derivation. A
+of a negated atom or comparison must occur in a positive atom. Positive and
+negative atoms read the existing effective view for constraints. For a
+fully derived relation this is the covered claim, with derivation consistency
+reported separately. A semiderived relation uses its effective calculated
+rows. Missing coverage cannot prove an absence. Guarded tests add no facts
+or derivation dependency edges. Pin a consistent covered claim, an inconsistent
+covered claim showing both independent verdicts, and an uncovered derived
+relation. Preserve refusal for an independently unstratifiable derivation. A
 determinate filter-empty guard has zero active bindings and a vacuous verdict.
 A first-empty index continues to describe only a positive join prefix. In
-particular the index is absent when filters alone eliminate the bindings.
+particular the index is absent when filters alone eliminate the bindings. A
+covered empty negated relation never enters the positive any-empty test.
+Count only definite survivors. If an unknown binding remains after exclusion,
+the guarded verdict is unchecked before reporting violations.
 
 **GC3 · `any_of`.** Each alternative is an `atom`, `comparison`, `absence`
 or `exists` consequent and may use the comparison forms shipped in GC1.
@@ -135,7 +145,9 @@ There are at least two alternatives and nesting is refused. Each alternative
 can read the antecedent bindings and its own local `exists` bindings. Per
 binding, a true alternative wins over a data-unknown alternative. When no
 alternative holds, an unknown alternative makes the result unchecked.
-A concrete satisfying existential witness wins over an undefined candidate.
+Each alternative uses its existing consequent semantics. In an `exists`
+alternative an undefined candidate keeps its existing precedence over a
+concrete witness. A true sibling can still decide the disjunction.
 Exhausting the shared work budget records unchecked through the existing
 limit path. A definite violation provides the alternative's index and a reason
 on opt-in diagnostics, including an unmet atom, a false comparison, or a
@@ -173,10 +185,10 @@ review was not run for this plan; each phase spec repeats the consult and runs
 
 | Order | Phase | Acceptance criteria |
 |---|---|---|
-| 1 | **GC1 · membership** | I1 schema and validation accept `in`/`not in` in guarded and term comparisons and refuse empty, oversize, mixed nonnumeric kinds and non-literal lists; value-comparison and dynamic rules still refuse them. I2 reference and production evaluators agree; typed identity (bool vs number, date vs string) and unknown left values tested. I3 differential test: each `in` rule against its helper encoding (a value fact type plus a derivation union) over generated populations yields identical verdicts and offending bindings. I4 one-sentence verbalization, v1 synth pairs for reachable cases, and a named refusal when a proven finite domain forces one verdict. I5 exporter containment for guarded, existential and derivation membership. |
-| 2 | **GC2 · antecedent negate/where** | N1 schema, safety and disconnection refusals; the walks cover negated atoms and `where` terms. N2 stratification argument recorded and tested with a negated derived fact type; uncovered negated relation yields unchecked, not pass. N3 production and reference evaluators agree, `--guarded-diagnostics` counts post-filter bindings, filter-only emptiness is vacuous with no first-empty positive prefix, and the covered/decidable helper differential matches after binding projection. Test active unknown filters separately. N4 verbalization reads as one sentence ("…, unless …") and synth produces a failing and a passing case, including one that passes only because the negated atom is present. |
-| 3 | **GC3 · any_of** | A1 schema and validation (≥2 alternatives, no nesting, per-alternative grounding). A2 three-valued evaluation agrees across evaluators, including joint existential witnesses, undefined candidates, and work exhaustion. Compare covered, decidable cases against the union helper. A3 violation report lists each alternative's index and failure reason on the selected surface and pins bytes and report version for models without the new forms. A4 verbalization and a synth pair per alternative shape. |
-| 4 | **GC4 · exports, docs, smoke** | E1 PyRel rules and runtime translate or refuse each form with a named `ProfileRefusal`; Lean, Ossie and affected Soufflé paths explicitly refuse unsupported forms; existing exports remain byte-stable. E2 normative docs, bookrec chapter 8, report reference and CLI reference updated, with the "Why not a derived fact type" helper patterns shown as the before. E3 installed-candidate smoke of active customer membership, the shipped-code exception, and delivered alternatives plus the existing test-account `exists` control. The GC4 spec pins the issue #195 fixtures, expected pass/fail verdicts, and one-sentence verbalization checks. |
+| 1 | **GC1 · membership** | I1 schema and validation accept `in`/`not in` in guarded and term comparisons and refuse empty, oversize, mixed nonnumeric kinds and non-literal lists; value-comparison and dynamic rules still refuse them. I2 reference and production evaluators agree; typed identity (bool vs number, date vs string) and unknown left values tested. I3 differential test: `in` with an atom and `not in` with an absence of the derived membership witness, using otherwise identical active bindings over generated populations yields identical verdicts and offending bindings. I4 one-sentence verbalization, v1 synth pairs for reachable cases, and a named refusal when a proven finite domain forces one verdict. I5 exporter containment for guarded, existential and derivation membership. |
+| 2 | **GC2 · antecedent negate/where** | N1 schema, safety and disconnection refusals; the walks cover negated atoms and `where` terms. N2 stratification argument recorded and tested with a negated derived fact type; uncovered negated relation yields unchecked, not pass. N3 production and reference evaluators agree, `--guarded-diagnostics` counts post-filter bindings, filter-only emptiness is vacuous with no first-empty positive prefix, and the covered/decidable helper differential matches after binding projection. Test active unknown filters separately. N4 verbalization reads as one sentence ("…, unless …") and synth produces a failing and a passing case, with one satisfying active binding and one excluded binding that would otherwise violate. |
+| 3 | **GC3 · any_of** | A1 schema and validation (≥2 alternatives, no nesting, per-alternative grounding). A2 three-valued evaluation agrees across evaluators, including joint existential witnesses, undefined candidates, and work exhaustion. Compare covered, decidable cases against the union helper. A3 violation report lists each alternative's index and failure reason on the selected surface and pins bytes and report version for models without the new forms. A4 one-sentence verbalization and a synth pair per reachable alternative shape. |
+| 4 | **GC4 · exports, docs, smoke** | E1 PyRel rules and runtime translate or refuse each form with a named `ProfileRefusal`; Lean, Ossie and affected Soufflé paths explicitly refuse unsupported forms; existing exports remain byte-stable. E2 normative docs, bookrec chapter 8, report reference and CLI reference updated, with the "Why not a derived fact type" helper patterns shown as the before. E3 installed-candidate smoke of active customer membership, the shipped-code exception, and delivered alternatives plus the existing test-account `exists` control. The GC4 spec pins the issue #195 fixtures, expected pass/fail verdicts, one-sentence verbalization checks, and `--rule-ids` feedback naming the original rule for each form. |
 
 ## 5. Documentation, skill and compatibility surfaces
 

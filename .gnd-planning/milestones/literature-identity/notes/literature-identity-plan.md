@@ -1,6 +1,6 @@
 # Literature identity and assertions · plan r3
 
-**Status: draft r3, 2026-11-15. Not approved. Review stopped.**
+**Status: r3 approved in record 001 on 2026-11-15. Close evidence appended in §11.**
 
 - **Round 1** of the maintained panel reviewed r1 (SHA-256 `f27c10dc…53bfe3`,
   commit `b75c910e`).
@@ -12,8 +12,8 @@
 - **Repairs.** The r2 changes are marked `(p2)` and the r3 changes `(p3)`.
   The r3 bytes carry no review opinion. The
   [review disposition](plan-review-disposition.md) records both rounds.
-- **Gates.** No owner gate is recorded, and no phase may start implementation
-  before its spec gate. `auto=false`.
+- **Gates.** [001](../001-plan-gate.md) records the owner's r3 approval.
+  Phase gates and their scope are indexed in the [milestone README](../README.md).
 
 ## Goal and completion predicates
 
@@ -709,7 +709,7 @@ triggers.
 
 ## 10. Owner decisions and open questions
 
-All rows are **proposed**. None is ruled.
+The owner ruled D1–D9 as proposed in [001](../001-plan-gate.md). The proposal table remains for provenance.
 
 | ID | Question | Proposal | Cost of the other reading |
 |---|---|---|---|
@@ -722,3 +722,31 @@ All rows are **proposed**. None is ruled.
 | D7 | Rubric mapping of `stretched` | Reject, with the disposition kept in the review record | Abstain hides a known misreading. Approve admits it |
 | D8 | LI0 as a phase or a maintenance PR | A phase, so its record feeds the close sweep | A maintenance PR is faster but sits outside the milestone's sweep |
 | D9 | Plan review | The maintained standard panel, with two rounds at most. The successor plans are reviewed when they start | Reviewing the outlines now produces findings that go stale before they are ready |
+
+
+## 11. Close amendment · 2026-11-15
+
+The owner-approved r3 bytes remain at commit `3aaa1e6d` with SHA-256
+`5ad5b74485a442a8e9fa09ed59c28a4463b812a4119ea6f2959c56cdda7c90de`.
+The original header described a draft with no owner gate. The original
+§10 introduction said all rows were proposed and none ruled. Those
+sentences describe the pre-gate state, superseded by record 001.
+
+The [LI2 record](../010-phase-LI2.md) documents the mismatch between the
+spec's whole-composition timing wording and the coverage-layer control
+actually executable under the bounded wire format. §9's verification
+obligation is met at that layer, with separate end-to-end composition
+cases. The approved corpus and membership rules stay fixed.
+
+The [LI5 phase](../024-phase-LI5.md) records both reserved measurements.
+The model and path policy were committed before either score. The
+first score missed the supported path. Its input correction retains
+the architecture's encoder qualification and is bound separately in
+record 023. The correction is disclosed as a post-first-score input
+change. The close evaluates that result with the first miss retained
+and with no fresh independent reserved claim.
+
+The [close dispositions](close-delta.md) carry the criterion trace and
+the originally approved successor assignments. D1–D9, release,
+publication and certification authority remain governed by their
+existing records.

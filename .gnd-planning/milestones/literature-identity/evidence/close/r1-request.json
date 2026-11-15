@@ -1,0 +1,31 @@
+{
+  "delta": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-identity/notes/close-delta.md",
+    "sha256": "961a29c10775b42faafb303c53e12499b8e1cf1031cb3e3be500342279f1ba55"
+  },
+  "kind": "spec-results-delta",
+  "results": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-identity/notes/close-results.md",
+    "sha256": "5b7ef065b4c69a306b12b3be5ecf5188abe812adb9f343b50fbe6c6cdfcf375b"
+  },
+  "rubric": {
+    "criteria": [
+      "MVP first: classify every concern as blocking, hardening, or completeness, and report blocking concerns first. A concern is blocking only if, left unfixed, the software does not demonstrably do what it claims. Do not manufacture completeness concerns to avoid an empty return -- \"no concerns, and here is what I checked\" is a valid answer.",
+      "Check every exit predicate against the measured phase records and detect any unsupported acceptance claim or missing criterion trace.",
+      "Evaluate C6 and L1 explicitly. The first reserved run missed its supported path. The same key, frozen model and path policy passed after a documented annotation correction. Decide whether the evidence can support a scoped close and what remains a residual.",
+      "Check that replay controls and the composition record carry the relevant source and decision bindings, and that transfer and cycle cases distinguish the stated outcomes.",
+      "Check the open-question sweep and successor partition including the date requirement and part 10 with ruling P3 still pending.",
+      "Cite evidence in the three named close artifacts. Consult other committed records only for direct corroboration. The local reserved ref and private annotation material are outside the review scope.",
+      "Distinguish measured completion, advisory review, the delegated close ruling and delivery authority. Report only concrete consequences on the reviewed bytes."
+    ],
+    "name": "literature-identity milestone close"
+  },
+  "schema_version": 1,
+  "spec": {
+    "media_type": "text/markdown",
+    "path": ".gnd-planning/milestones/literature-identity/notes/literature-identity-plan.md",
+    "sha256": "4f496a6b47f17cf6fe166821e75e924b43857153b391b05825a3f1e46084c1b5"
+  }
+}

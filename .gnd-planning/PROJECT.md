@@ -187,3 +187,18 @@ review rounds (the second stopped by the declared stop rule; r3 carries no
 review opinion). The owner approved both plans at r3 on 2026-11-03 `(a1)`.
 MG1 (public rule rendering, #72) is implemented and recorded in
 [002-phase-MG1.md](milestones/model-growth-guardrails/002-phase-MG1.md).
+
+## literature-identity, literature-interop and literature-depth — planned, 2026-11-14
+
+Three milestones from [issue #193](https://github.com/vasiloglou/gnd-public/issues/193),
+on sense-aware literature ontologies. The partition has one home:
+[literature-identity plan §1.1](milestones/literature-identity/notes/literature-identity-plan.md#11-partition-of-issue-193).
+
+- [literature-identity](milestones/literature-identity/README.md) has the full
+  plan r1 and the LI0 draft spec. It covers parts 9 and 1–4.
+- [literature-interop](milestones/literature-interop/README.md) is an outline
+  covering part 5.
+- [literature-depth](milestones/literature-depth/README.md) is an outline
+  covering parts 6–8. Part 10 is deferred.
+
+None is reviewed or approved.
